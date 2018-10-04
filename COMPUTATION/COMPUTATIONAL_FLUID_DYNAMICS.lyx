@@ -1,0 +1,622 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{physics}
+\usepackage[e]{esvect}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\renewcommand{\vu}[1]{\widehat{\vb*{#1}}}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Computational Fluid Dynamics
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conservation Laws
+\end_layout
+
+\begin_layout Subsection
+General Conservation Laws
+\end_layout
+
+\begin_layout Subsubsection
+In Integral Forms
+\end_layout
+
+\begin_layout Standard
+Suppose
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V$
+\end_inset
+
+ is a connected 
+\noun on
+domain
+\noun default
+ in space.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi$
+\end_inset
+
+ is the 
+\noun on
+density
+\noun default
+ of some physical quantity, i.e.
+ something per unit volume.
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{f}(\phi)$
+\end_inset
+
+ is the 
+\noun on
+flux
+\noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+, i.e.
+ how much 
+\begin_inset Formula $\phi$
+\end_inset
+
+ leaves 
+\begin_inset Formula $V$
+\end_inset
+
+ through its surface 
+\begin_inset Formula $\partial V$
+\end_inset
+
+ in unit time per unit area.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $j(\phi)$
+\end_inset
+
+ is the 
+\noun on
+source
+\noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+, i.e.
+ how much 
+\begin_inset Formula $\phi$
+\end_inset
+
+ generates in unit time per unit volume.
+\end_layout
+
+\begin_layout Standard
+Then, the 
+\noun on
+conservation law
+\noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}j(\phi)\dd{V}-\oint_{\partial V}\vu{n}\cdot\vec{f}(\phi)\dd{S}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the boundary 
+\begin_inset Formula $\partial V$
+\end_inset
+
+ is moving with velocity 
+\begin_inset Formula $\vec{v}^{B}$
+\end_inset
+
+, then
+\begin_inset Formula 
+\[
+\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}-\oint_{\partial V}\vu{n}\cdot\phi\vec{v}^{B}\dd{S}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+In Differential Forms
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\left(\vec{f}(\phi)-\phi\vec{v}^{B}\right)$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth with respect to spatial variables, we can apply Gauss's divergence
+ theorem
+\begin_inset Formula 
+\[
+\oint_{\partial V}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{B}\right)\dd{S}=\int_{V}\div(\vec{f}(\phi)-\phi\vec{v}^{B})\dd{V}
+\]
+
+\end_inset
+
+Then, the conservation law can be written in the differential form
+\begin_inset Formula 
+\[
+\pdv{\phi}{t}+\div(\vec{f}(\phi)-\phi\vec{v}^{B})=j(\phi)
+\]
+
+\end_inset
+
+However, if the 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth prerequisite is not satisfied, we should go back to the integral
+ form.
+\end_layout
+
+\begin_layout Subsubsection
+Discontinuity Condition
+\end_layout
+
+\begin_layout Standard
+Suppose there is a discontinuity surface 
+\begin_inset Formula $S$
+\end_inset
+
+ moving with velocity 
+\begin_inset Formula 
+\[
+\vec{v}^{S}=\vu{e}_{\perp}V_{\perp}^{S}+\vu{e}_{\parallel}V_{\parallel}^{S}
+\]
+
+\end_inset
+
+Choose such a cylindrical control volume 
+\begin_inset Formula $V$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+with an infinitesimal height, then
+\begin_inset Formula 
+\[
+\lim_{h\to0}\vec{v}^{B}=\vec{v}^{S}\qc\lim_{h\to0}\int_{V}\dd{V}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+all the walls are 
+\begin_inset Formula $\perp S$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+the top 
+\begin_inset Formula $S_{+}$
+\end_inset
+
+ (on which 
+\begin_inset Formula $\vu{n}=\vu{e}_{\perp}$
+\end_inset
+
+) and the bottom 
+\begin_inset Formula $S_{-}$
+\end_inset
+
+ (on which 
+\begin_inset Formula $\vu{n}=-\vu{e}_{\perp}$
+\end_inset
+
+) are 
+\begin_inset Formula $\parallel S$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ is sandwiched inside 
+\begin_inset Formula $S_{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{-}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Then, the conservation law contains surface integrals only
+\begin_inset Formula 
+\[
+\lim_{h\to0}\oint_{\partial V}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{S}\right)\dd{S}=\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{S}\right)\dd{S}
+\]
+
+\end_inset
+
+Replace 
+\begin_inset Formula $\vu{n}$
+\end_inset
+
+ with 
+\begin_inset Formula $\vu{e}_{\perp}$
+\end_inset
+
+ and take the limit of 
+\begin_inset Formula $A_{\pm}:=\int_{S_{\pm}}\dd{S}$
+\end_inset
+
+, we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{V_{\perp}^{S}=\frac{f_{+}-f_{-}}{\phi_{+}-\phi_{-}}\qc f_{\pm}=\lim_{h\to\pm0}\vu{e}_{\perp}\cdot\vec{f}}
+\]
+
+\end_inset
+
+which is called the 
+\noun on
+Rankine–Hugoniot condition
+\noun default
+.
+\end_layout
+
+\begin_layout Subsection
+The Linear Advection Equation
+\end_layout
+
+\begin_layout Subsubsection
+As a Conservation Law
+\end_layout
+
+\begin_layout Standard
+The simplest initial-value problem (IVP) is the first-order partial differential
+ equation (PDE) with constant coefficient
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\pdv{u}{t}+a\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)
+\]
+
+\end_inset
+
+with the initial condition (IC)
+\begin_inset Formula 
+\[
+u(t=0,x)=u_{0}(x)\qc x\in(-\infty,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The PDE only make sense in smooth regions.
+ However, if we let 
+\begin_inset Formula $\phi:=u$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{f}:=\vu{e}_{x}au$
+\end_inset
+
+, we can formulate it as a conservation law.
+\end_layout
+
+\begin_layout Subsubsection
+Characteristic Curves
+\end_layout
+
+\begin_layout Standard
+The solution of
+\begin_inset Formula 
+\[
+\dv{x}{t}=a\implies x=at+x_{0}
+\]
+
+\end_inset
+
+is a one-parameter family of parallel curves in 
+\begin_inset Formula $t$
+\end_inset
+
+-
+\begin_inset Formula $x$
+\end_inset
+
+ plane, with 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ as the parameter.
+ Such curves are called the 
+\noun on
+characteristic curves
+\noun default
+ of the PDE.
+\end_layout
+
+\begin_layout Standard
+Along characteristic curves, the rate of change of 
+\begin_inset Formula $u$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=0
+\]
+
+\end_inset
+
+which means 
+\begin_inset Formula $u$
+\end_inset
+
+ remains constant along characteristic curves.
+ The 
+\noun on
+general solution
+\noun default
+ of the IVP is then
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}(x_{0})=u_{0}(x-at)
+\]
+
+\end_inset
+
+The physical meaning of this solution is a wave packet moving with constant
+ speed 
+\begin_inset Formula $a$
+\end_inset
+
+, whose shape remains unchanged.
+\end_layout
+
+\begin_layout Subsubsection
+The Riemann Problem
+\end_layout
+
+\begin_layout Standard
+When the IC is given as
+\begin_inset Formula 
+\[
+u_{0}(x)=\begin{cases}
+u_{-} & x<0\\
+u_{+} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $u_{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{+}$
+\end_inset
+
+ are two constant values, it defines a Riemann problem.
+ The solution is
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}(x-at)=\begin{cases}
+u_{-} & x-at<0\\
+u_{+} & x-at>0
+\end{cases}
+\]
+
+\end_inset
+
+Note that on the discontinuity, the PDE does not make sense; instead, the
+ Rankine-Hugoniot condition
+\begin_inset Formula 
+\[
+a=\frac{au_{+}-au_{-}}{u_{+}-u_{-}}\equiv\frac{f_{+}-f_{-}}{\phi_{+}-\phi_{-}}
+\]
+
+\end_inset
+
+is satisfied.
+\end_layout
+
+\begin_layout Subsection
+Linear Systems of PDEs
+\end_layout
+
+\begin_layout Subsection
+Quasi-linear Systems of PDEs
+\end_layout
+
+\begin_layout Subsection
+The Euler Equation
+\end_layout
+
+\begin_layout Section
+Discretization Methods
+\end_layout
+
+\begin_layout Subsection
+FDM: Finite Difference Methods
+\end_layout
+
+\begin_layout Subsection
+FVM: Finite Volume Methods
+\end_layout
+
+\begin_layout Subsection
+FEM: Finite Element Methods
+\end_layout
+
+\begin_layout Section
+Upwind Schemes
+\end_layout
+
+\begin_layout Subsection
+FVS: Flux Vector Splitting
+\end_layout
+
+\begin_layout Subsection
+FDS: Flux Difference Splitting
+\end_layout
+
+\begin_layout Subsection
+GVC: Group Velocity Control
+\end_layout
+
+\begin_layout Section
+Shock Capturing Methods
+\end_layout
+
+\begin_layout Subsection
+Artificial Viscosity
+\end_layout
+
+\begin_layout Subsection
+TVD: Total Variation Diminishing
+\end_layout
+
+\begin_layout Subsection
+MUSCL: Monotone Upstream-centered Schemes for Conservation Laws
+\end_layout
+
+\begin_layout Subsection
+ENO: Essentially Non-Oscillatory
+\end_layout
+
+\end_body
+\end_document
