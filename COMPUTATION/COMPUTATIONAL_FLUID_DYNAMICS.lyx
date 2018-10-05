@@ -9,8 +9,10 @@
 \usepackage{physics}
 \usepackage[e]{esvect}
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
 \renewcommand{\vu}[1]{\widehat{\vb*{#1}}}
+\renewcommand{\parallel}{/\negthickspace/}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -119,14 +121,29 @@ Suppose
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $V^{C}$
+\end_inset
+
+ is a 
+\noun on
+control volume
+\noun default
+ in space.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\partial V^{C}$
+\end_inset
+
+ is the boundary of 
 \begin_inset Formula $V$
 \end_inset
 
- is a connected 
-\noun on
-domain
-\noun default
- in space.
+, which is moving with a velocity 
+\begin_inset Formula $\vec{u}^{C}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Itemize
@@ -139,11 +156,17 @@ density
 \noun default
  of some physical quantity, i.e.
  something per unit volume.
- 
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\vec{f}(\phi)$
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ is the velocity of fluid particles.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{f}:=\phi\vec{u}$
 \end_inset
 
  is the 
@@ -159,35 +182,7 @@ flux
 \begin_inset Formula $\phi$
 \end_inset
 
- leaves 
-\begin_inset Formula $V$
-\end_inset
-
- through its surface 
-\begin_inset Formula $\partial V$
-\end_inset
-
- in unit time per unit area.
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $j(\phi)$
-\end_inset
-
- is the 
-\noun on
-source
-\noun default
- of 
-\begin_inset Formula $\phi$
-\end_inset
-
-, i.e.
- how much 
-\begin_inset Formula $\phi$
-\end_inset
-
- generates in unit time per unit volume.
+ pass through a fixed surface per unit area in unit time.
 \end_layout
 
 \begin_layout Standard
@@ -202,32 +197,20 @@ conservation law
  can be written as 
 \begin_inset Formula 
 \[
-\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}j(\phi)\dd{V}-\oint_{\partial V}\vu{n}\cdot\vec{f}(\phi)\dd{S}}
+\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\int_{V^{C}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{C}}\vu{n}\cdot\vec{f}\dd{S}=0}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-If the boundary 
-\begin_inset Formula $\partial V$
-\end_inset
-
- is moving with velocity 
-\begin_inset Formula $\vec{v}^{B}$
-\end_inset
-
-, then
+which is usually used for fixed control volumes, and
 \begin_inset Formula 
 \[
-\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}-\oint_{\partial V}\vu{n}\cdot\phi\vec{v}^{B}\dd{S}
+\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\dv{t}\int_{V^{C}}\phi\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\phi\vec{u}^{C}\right)\cdot\vu{n}\dd{S}}
 \]
 
 \end_inset
 
-
+which is usually used for moving control volumes.
 \end_layout
 
 \begin_layout Subsubsection
@@ -236,7 +219,7 @@ In Differential Forms
 
 \begin_layout Standard
 If 
-\begin_inset Formula $\left(\vec{f}(\phi)-\phi\vec{v}^{B}\right)$
+\begin_inset Formula $\vec{f}$
 \end_inset
 
  is 
@@ -244,18 +227,10 @@ If
 \end_inset
 
  smooth with respect to spatial variables, we can apply Gauss's divergence
- theorem
+ theorem, which leads to
 \begin_inset Formula 
 \[
-\oint_{\partial V}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{B}\right)\dd{S}=\int_{V}\div(\vec{f}(\phi)-\phi\vec{v}^{B})\dd{V}
-\]
-
-\end_inset
-
-Then, the conservation law can be written in the differential form
-\begin_inset Formula 
-\[
-\pdv{\phi}{t}+\div(\vec{f}(\phi)-\phi\vec{v}^{B})=j(\phi)
+\boxed{\pdv{\phi}{t}+\div\vec{f}=0}
 \]
 
 \end_inset
@@ -280,23 +255,23 @@ Suppose there is a discontinuity surface
  moving with velocity 
 \begin_inset Formula 
 \[
-\vec{v}^{S}=\vu{e}_{\perp}V_{\perp}^{S}+\vu{e}_{\parallel}V_{\parallel}^{S}
+\vec{u}^{S}=\vu{e}_{\perp}u_{\perp}^{S}+\vu{e}_{\parallel}u_{\parallel}^{S}
 \]
 
 \end_inset
 
-Choose such a cylindrical control volume 
-\begin_inset Formula $V$
+Choose a cylindrical control volume 
+\begin_inset Formula $V^{C}$
 \end_inset
 
-:
+, which satisfies:
 \end_layout
 
 \begin_layout Itemize
 with an infinitesimal height, then
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{v}^{B}=\vec{v}^{S}\qc\lim_{h\to0}\int_{V}\dd{V}=0
+\lim_{h\to0}\vec{u}^{C}=\vec{u}^{S}\qc\lim_{h\to0}\dv{t}\int_{V^{C}}\phi\dd{V}=0
 \]
 
 \end_inset
@@ -309,11 +284,14 @@ all the walls are
 \begin_inset Formula $\perp S$
 \end_inset
 
- 
+.
 \end_layout
 
 \begin_layout Itemize
-the top 
+\begin_inset Formula $S$
+\end_inset
+
+ is sandwiched between the top 
 \begin_inset Formula $S_{+}$
 \end_inset
 
@@ -329,33 +307,22 @@ the top
 \begin_inset Formula $\vu{n}=-\vu{e}_{\perp}$
 \end_inset
 
-) are 
-\begin_inset Formula $\parallel S$
+) of 
+\begin_inset Formula $V^{C}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $S$
+, and 
+\begin_inset Formula $S_{+}\parallel S\parallel S_{-}$
 \end_inset
 
- is sandwiched inside 
-\begin_inset Formula $S_{+}$
-\end_inset
-
- and 
-\begin_inset Formula $S_{-}$
-\end_inset
-
- 
+.
 \end_layout
 
 \begin_layout Standard
-Then, the conservation law contains surface integrals only
+Then, the conservation law is reduced to
 \begin_inset Formula 
 \[
-\lim_{h\to0}\oint_{\partial V}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{S}\right)\dd{S}=\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\vec{f}(\phi)-\phi\vec{v}^{S}\right)\dd{S}
+\lim_{h\to0}\oint_{\partial V}\vu{n}\cdot\left(\vec{f}-\phi\vec{u}^{S}\right)\dd{S}=\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\vec{f}-\phi\vec{u}^{S}\right)\dd{S}
 \]
 
 \end_inset
