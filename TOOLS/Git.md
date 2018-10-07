@@ -182,6 +182,35 @@ git push [alias] [branch]
 
 默认情况下, Git 会尝试跟踪一个仓库的各级目录下的所有文件. 在软件开发过程中, 经常会生成一些临时文件. 若要让 Git 忽略这些文件, 则需要在仓库根目录下的`.gitignore`文件里列举出这些文件名(可以使用通配符, 以使忽略规则作用到同一类文件). [GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的`.gitignore`文件范例.
 
+## GitHub 指南
 
+[GitHub](https://github.com/) 是目前最流行的 Git 项目托管~~兼同性交友~~网站. [GitHub Guides](https://guides.github.com) 介绍了依托该网站进行项目开发的流程和技巧. 这里小结(不是完整翻译)一下其中几篇的要点.
 
+### GitHub Flow
+
+[GitHub Flow](https://guides.github.com/introduction/flow/) 是一种基于 Git 的分支机制和 GitHub 网站进行软件开发的流程. 按时间顺序, 主要包括以下几个步骤.
+
+#### 新建分支
+
+在 Git 项目中, 任何人在任何时候都可以从任何一个分支上分出一个子分支. 子分支中所做的修改, 不会立刻影响到主分支, 而是要经过主分支维护者所主导的代码审查, 才会被主分支合并. 在所有分支中, `master`分支上的代码应当总是处于可部署 (deployable) 的状态.
+
+#### 提交修改
+
+源代码的修改历史也是源代码的一部分, 因此任何修改都应当被如实提交给 Git. 类似于[单一责任原则](https://en.wikipedia.org/wiki/Single_responsibility_principle), 一次提交应当只做一件事, 代表一组相关且内聚的操作, 并且有简洁而清晰的注释, 这样有助于追踪修改历史.
+
+#### 请求拉取
+
+**拉取请求 (Pull Request)** 是指由*子分支开发者*与*主分支维护者*进行对话所发送的消息, 一般用于申请代码审查, 或者交流其他信息. 利用 GitHub 的 `@mention` 机制, 可以在 Pull Request 消息中直接与指定的人员或团队进行交流.
+
+#### 审查代码
+
+在 Pull Request 中, 开发者和维护者可以就代码内容进行交流. 在讨论过程中, 开发者可以随时在子分支上继续提交和推送, GitHub 会动态地显示这些变化.
+
+#### 集成测试
+
+利用 GitHub, 可以在合并前对子分支中的代码进行验证. 在经过代码审查并且通过分支内的单元测试后, 可以将这些修改部署到产品中, 进行系统集成测试.
+
+#### 合并修改
+
+经过验证后, 主分支维护者就可以将子分支中的修改合并到主分支上. 在 GitHub 上, 可以在 Pull Request 里嵌入一些关键词, 用以关联一些**问题 (issue)**. 当 Pull Request 被合并后, 相关的 issue 也随之而被关闭. 关键词使用方法参见 [Closing issues using keywords](https://help.github.com/articles/closing-issues-using-keywords/).
 
