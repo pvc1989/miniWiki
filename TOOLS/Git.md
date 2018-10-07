@@ -15,18 +15,23 @@ Git 是一种分布式的 VCS, 每个项目参与者(甚至用户和旁观者)�
 ### 配置
 
 ```shell
+# 查看配置信息
+git config --list
 # 设置提交时所附加的用户名
 git config --global user.name "[name]"
-```
-
-```shell
 # 设置提交时所附加的邮箱地址
 git config --global user.email "[email address]"
-```
-
-```shell
 # 开启命令行自动高亮
 git config --global color.ui auto
+```
+
+### 获取帮助
+
+```shell
+# 通过以下三种方式, 都可以获得关于 git command 的帮助信息
+git help <command>
+git <command> --help
+man git-<command>
 ```
 
 ### 新建仓库
@@ -37,7 +42,7 @@ git init [project-name]
 ```
 
 ```shell
-# 从指定远程位置获取仓库, 创建本地副本
+# 从指定远程服务器获取仓库, 创建本地副本
 git clone [url]
 ```
 
@@ -56,9 +61,6 @@ git add [file]
 ```shell
 # 查看未暂存的修改
 git diff
-```
-
-```shell
 # 查看已暂存的修改
 git diff --staged
 ```
@@ -71,6 +73,14 @@ git reset [file]
 ```shell
 # 将暂存的内容提交
 git commit -m "[descriptive message]"
+# 将所有修改暂存并提交
+git commit -a -m "[descriptive message]"
+```
+
+```shell
+# 补交到最近一次提交
+git add [forgotten file]
+git commit --amend
 ```
 
 ### 撤销
@@ -78,9 +88,6 @@ git commit -m "[descriptive message]"
 ```shell
 # 撤销自某次提交以后的所有提交, 但保留对文件所做的修改
 git reset [commit]
-```
-
-```shell
 # 撤销自某次提交以后的所有提交, 并丢弃对文件所做的修改
 # !!! 极其危险 !!!
 git reset --hard [commit]
@@ -91,9 +98,6 @@ git reset --hard [commit]
 ```shell
 # 删除文件, 并暂存该操作
 git rm [file]
-```
-
-```shell
 # 将文件从版本控制系统中删除, 但仍保留在磁盘中
 git rm --cached [file]
 ```
@@ -108,11 +112,10 @@ git mv [file-original] [file-renamed]
 ```shell
 # 查看当前仓库的所有分支
 git branch
-```
-
-```shell
 # 新建名为 branch-name 的分支
 git branch [branch-name]
+# 删除指定分支
+git branch -d [branch-name]
 ```
 
 ```shell
@@ -125,16 +128,14 @@ git checkout [branch-name]
 git merge [branch]
 ```
 
-```shell
-# 删除指定分支
-git branch -d [branch-name]
-```
-
 ### 查看历史
 
 ```shell
 # 查看当前分支的版本历史
 git log
+# 或
+git log -p -2
+git log --oneline --decorate --graph --all
 ```
 
 ```shell
@@ -176,6 +177,11 @@ git merge [bookmark]/[branch]
 # 将本地分支推送到 alias 所指向的代码托管网站
 git push [alias] [branch]
 ```
+
+## 忽略规则
+
+默认情况下, Git 会尝试跟踪一个仓库的各级目录下的所有文件. 在软件开发过程中, 经常会生成一些临时文件. 若要让 Git 忽略这些文件, 则需要在仓库根目录下的`.gitignore`文件里列举出这些文件名(可以使用通配符, 以使忽略规则作用到同一类文件). [GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的`.gitignore`文件范例.
+
 
 
 
