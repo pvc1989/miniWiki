@@ -2,7 +2,7 @@
 
 ## 基本概念
 
-**版本控制系统(version control system, VCS)**是一种用来追踪文件修改历史的软件, 是软件开发过程中管理源代码的必备工具. 目前最流行的 VCS 是由 Linux 之父  [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 发起的 [Git](https://en.wikipedia.org/wiki/Git_(software)).
+**版本控制系统(version control system, VCS)**是一种用来追踪文件修改历史的软件, 是软件开发过程中管理源代码的必备工具. 目前最流行的 VCS 是由 Linux 之父  [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 发起的 [Git](https://git-scm.com/).
 
 一个项目中所有被 Git 追踪的文件所组成的集合称为一个**仓库(repository)**. 程序员把修改的内容(连同个人信息及备注)**提交(commit)**给 Git, 由 Git 将当前仓库状态保存为一个**快照(snapshot)**. 凡是被保存为快照的仓库状态, 几乎总能通过 Git 来恢复. 由于一次提交总是对应于一个快照, 因此程序员在讨论时, 往往用"某次提交"表示"某个快照".
 
