@@ -178,17 +178,17 @@ vim name
 如果有以下文件:
 
 ```
-192.168.1.1		host1.school.edu
-192.168.1.2		host2.school.edu
-192.168.1.3		host3.school.edu
+192.168.1.1  host1.school.edu
+192.168.1.2  host2.school.edu
+192.168.1.3  host3.school.edu
 ```
 
 现在要将`host1`, `host2`, `host3`复制并粘贴到各行最后, 即改为以下形式:
 
 ```
-192.168.1.1		host1.school.edu	host1
-192.168.1.2		host2.school.edu  host2
-192.168.1.3		host3.school.edu  host3
+192.168.1.1  host1.school.edu  host1
+192.168.1.2  host2.school.edu  host2
+192.168.1.3  host3.school.edu  host3
 ```
 
 这种需求在 Vim 中可以很容易地实现. 在 COMMAND 模式下:
