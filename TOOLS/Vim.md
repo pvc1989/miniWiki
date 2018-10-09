@@ -1,6 +1,6 @@
 # Vim
 
-Vi 是所有 Linux 系统都自带的命令行界面文本编辑器, 而 Vim (**V**i **im**proved) 则是它的增强版.
+Vi 是所有 Linux 系统都自带的命令行界面文本编辑器, 而 [Vim](https://www.vim.org/) (**V**i **IM**proved) 则是它的增强版.
 
 ## 基本功能
 
