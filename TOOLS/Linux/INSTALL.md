@@ -174,7 +174,7 @@ else
 fi
 ```
 
-保存并退出, 单后用 `source` 命令使其生效 (或重启终端):
+保存并退出, 然后用 `source` 命令使其生效 (或重启终端):
 
 ```shell
 source ~/.bashrc
