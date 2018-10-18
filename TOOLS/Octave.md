@@ -150,7 +150,7 @@ a(:)
 ```octave
 a = [1 2 3 4]
 a(8) = 8  % 自动扩张
-a(10)			% 报错
+a(10)      % 报错
 ```
 
 #### 转置
@@ -219,38 +219,38 @@ d = [a; b]
 在 Octave 中, 各运算符的优先级从高到低 (同组优先级相同) 依次为:
 
 1. 
-	- 函数调用: `f(x)`
-	- 数组访问: `a(1)`
-	- 异构数组访问: `a{1}`
-	- 结构体成员访问: `p.x`
+  - 函数调用: `f(x)`
+  - 数组访问: `a(1)`
+  - 异构数组访问: `a{1}`
+  - 结构体成员访问: `p.x`
 1. 
-	- 后置自增: `a++`
-	- 后置自减: `a--`
+  - 后置自增: `a++`
+  - 后置自减: `a--`
 1. 
-	- 矩阵转置: `a'``a.'`
-	- 矩阵幂: `a^2` 或 `a**2`
-	- 矩阵成员幂: `a.^2` 或 `a.**2`
+  - 矩阵转置: `a'``a.'`
+  - 矩阵幂: `a^2` 或 `a**2`
+  - 矩阵成员幂: `a.^2` 或 `a.**2`
 1. 
-	- 一元加: `+a`
-	- 一元减: `-a`
-	- 前置自增: `--a`
-	- 前置自减: `++a`
-	- 逻辑取反: `~a`  或 `!a`
+  - 一元加: `+a`
+  - 一元减: `-a`
+  - 前置自增: `--a`
+  - 前置自减: `++a`
+  - 逻辑取反: `~a`  或 `!a`
 1. 
-	- 矩阵乘: `a * b` 或 `a .* b`
-	- 矩阵左除: `a / b` 或 `a ./ b`
-	- 矩阵右除: `a \ b` 或 `a .\ b`
+  - 矩阵乘: `a * b` 或 `a .* b`
+  - 矩阵左除: `a / b` 或 `a ./ b`
+  - 矩阵右除: `a \ b` 或 `a .\ b`
 1. 
-	- 二元加: `+a`
-	- 二元减: `-a`
+  - 二元加: `+a`
+  - 二元减: `-a`
 1. 序列生成: `1:10`
 1. 矩阵成员与: `a & b`
 1. 矩阵成员或: `a | b`
 1. 逻辑与: `a && b`
 1. 逻辑或: `a || b`
 1. 
-	- 赋值: `a = 2`
-	- 复合赋值: `a += 2` 等
+  - 赋值: `a = 2`
+  - 复合赋值: `a += 2` 等
 
 ## 控制流
 
@@ -261,20 +261,20 @@ d = [a; b]
 ```octave
 x = rand();
 if x > 0.5
-	printf("large\n");
+  printf("large\n");
 else
-	printf("small\n");
+  printf("small\n");
 end
 ```
 
 ```octave
 x = rand();
 if x > 0.67
-	printf("large\n");
+  printf("large\n");
 elseif x > 0.33  % 不能写成 else if
-	printf("medium\n");
+  printf("medium\n");
 else
-	printf("small\n");
+  printf("small\n");
 end
 ```
 
@@ -282,13 +282,13 @@ end
 x = randi(10)
 switch x
   case 1
-  	printf("x == 1\n");
+    printf("x == 1\n");
   case 2
-  	printf("x == 2\n");
+    printf("x == 2\n");
   case {3, 4, 5}
-  	printf("x == 3 or 4 or 5\n");
+    printf("x == 3 or 4 or 5\n");
   otherwise
-		printf("x > 5\n");
+    printf("x > 5\n");
 end
 ```
 其中任何一个 `case` 后面的代码被执行完后, 控制流直接跳转到 `end`, 这一点与 C/C++ 中的 `switch` 不同.
@@ -301,9 +301,9 @@ a = rand(5);
 x = a(1);
 n = numel(a);
 for k = 1 : n
-	if a(k) > x
-		x = a(k);
-	end
+  if a(k) > x
+    x = a(k);
+  end
 end
 printf("max(a) == %f\n", x);
 ```
@@ -313,10 +313,10 @@ a = rand(5);
 x = a(1);
 k = 1;
 while k <= numel(a)
-	if a(k) > x
-		x = a(k);
-	end
-	++k;
+  if a(k) > x
+    x = a(k);
+  end
+  ++k;
 end
 printf("max(a) == %f\n", x);
 ```
@@ -357,15 +357,15 @@ end
 ```octave
 % 文件名为 f.m
 function f()
-	printf("in f, calling g\n");
-	g()
+  printf("in f, calling g\n");
+  g()
 endf
 function g()
-	printf("in g, calling h\n");
-	h()
+  printf("in g, calling h\n");
+  h()
 end
 function h ()
-	printf("in h\n")
+  printf("in h\n")
 end
 ```
 其中 `f` 为文件外部可见的主函数, `g` 和 `h` 为文件外部不可见但内部可见的子函数.
@@ -384,14 +384,14 @@ addpath("~/Desktop")
 假设在当前工作目录下创建了一个 `fib.m` 文件, 其中定义了一个用递归的方法计算 Fibonacci 数的函数 `fib(n)`
 ```octave
 function result = fib(n)
-	n = round(n);
-	assert(n >= 0)
-	switch n
-	  case {0, 1}
-			result = 1;
-		otherwise
-			result = fib(n-1) + fib(n-2);
-	end
+  n = round(n);
+  assert(n >= 0)
+  switch n
+    case {0, 1}
+      result = 1;
+    otherwise
+      result = fib(n-1) + fib(n-2);
+  end
 end
 ```
 
@@ -446,8 +446,8 @@ profshow(profile("info"), 10);
 ```octave
 a = [1 1]
 function f(a)
-	a(1) = 0;  % 与外部的 a 不是同一个对象
-	a  % 显示 [0 1]
+  a(1) = 0;  % 与外部的 a 不是同一个对象
+  a  % 显示 [0 1]
 end
 f(a)
 a  % 显示 [1 1]
@@ -464,7 +464,7 @@ a  % 显示 [1 1]
 类似于函数 C 中的函数指针, 通过 `@` + 函数名:
 ```octave
 f = @sin
-f(pi)						  % 像函数一样调用
+f(pi)              % 像函数一样调用
 quad(f, 0, pi/2)  % 像变量一样传递
 ```
 
@@ -548,9 +548,9 @@ for t = 0 : dt : 2
   axis("equal");
   axis("off");
   plot(x, y);
-	a = 8 * t;
+  a = 8 * t;
   r = 0.5 * t;
-	plot(cx + r*cos(a), cy + r*sin(a), 'b*');
-	pause(dt);
+  plot(cx + r*cos(a), cy + r*sin(a), 'b*');
+  pause(dt);
 end
 ```
