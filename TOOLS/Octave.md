@@ -369,6 +369,36 @@ addpath("~/Desktop")
 
 **脚本文件 (script)** 与函数文件类似, 也是含有一系列 Octave 命令的 `.m` 文件, 但没有用关键词 `function` 与 `end` 对代码进行封装. 脚本文件中的变量位于脚本调用语句所在的作用域中.
 
+### 运行时间及调用信息
+
+假设在当前工作目录下创建了一个 `fib.m` 文件, 其中定义了一个用递归的方法计算 Fibonacci 数的函数 `fib(n)`
+```octave
+function result = fib(n)
+	n = round(n);
+	assert(n >= 0)
+	switch n
+	  case {0, 1}
+			result = 1;
+		otherwise
+			result = fib(n-1) + fib(n-2);
+	end
+end
+```
+
+利用 `tic`-`toc`, 可以测量函数运行时间:
+```octave
+tic; fib(20); t = toc
+```
+
+利用 `profile`, 可以更精细地测量函数运行时间及调用次数等信息:
+```octave
+profile clear;
+profile on;
+fib(20);
+profile off;
+profshow(profile("info"), 10);
+```
+
 ### 参数传递与作用域
 
 Octave 中, 函数参数的默认传递方式是**按值传递 (pass by value)**, 即被传递的是**值**, 而不是**变量 (的地址)**:
@@ -381,8 +411,24 @@ f(foo)     % 被传递的是 "bar" 这个值, 而不是 foo 这个变量
 按值传递是 Octave 所保证的**语义 (semantics)**, 但该语义不一定是通过创建局部副本 (复制) 来实现的. 如果函数体中没有修改传入参数的值, 则不必进行复制, 例如:
 
 ```octave
-x = rand(1024);  % 8 MB
-f(x);  % f 中没有修改 x 的值, 则不必进行复制
+clear
+
+function a_unchanged(a)
+  c = a(1, 1);
+end
+function a_changed(a)
+  a(1, 1) = 1;
+end
+a = rand(1000); % 8000000 Bytes
+
+profile clear
+profile on
+for i = 1 : 100
+  a_unchanged(a);  % no copy, very fast
+  a_changed(a);    % do copy, very slow
+end
+profile off
+profshow(profile("info"), 10);
 ```
 
 按值传递语义的一个重要推论是, 函数体内无法直接修改外部变量的值:
@@ -420,36 +466,6 @@ quad(     @cos  , 0, pi/2)  % 传入函数句柄
 quad(@(x) cos(x), 0, pi/2)  % 传入匿名函数
 ```
 二者运行结果相同, 但匿名函数效率很低.
-
-### 调用信息
-
-假设在当前工作目录下创建了一个 `fib.m` 文件, 其中定义了一个用递归的方法计算 Fibonacci 数的函数 `fib(n)`
-```octave
-function result = fib(n)
-	n = round(n);
-	assert(n >= 0)
-	switch n
-	  case {0, 1}
-			result = 1;
-		otherwise
-			result = fib(n-1) + fib(n-2);
-	end
-end
-```
-
-利用 `tic`-`toc`, 可以测量函数运行时间:
-```octave
-tic; fib(20); t = toc
-```
-
-利用 `profile`, 可以更精细地测量函数运行时间及调用次数等信息:
-```octave
-profile clear;
-profile on;
-fib(20);
-profile off;
-profshow(profile("info"), 10);
-```
 
 ## 画图
 
