@@ -63,7 +63,7 @@ doc rand
 | ---- | ---- | ------ | ------ | ------ |
 | `logical` | `logical` | `1` |  |  |
 | `char` | `char8` | `1` | `0` | `255` |
-| `int` | `int32` | `8` | `intmin` | `intmax` |
+| `int` | `int32` | `4` | `intmin` | `intmax` |
 | `double` | `double` | `8` | `realmin` | `realmax` |
 | `complex` | `pair<double,double>` | `16` |  |  |
 
@@ -154,7 +154,7 @@ a(:)
 ```octave
 a = [1 2 3 4]
 a(8) = 8  % 自动扩张
-a(10)      % 报错
+a(10)     % 报错
 ```
 
 #### 转置
@@ -367,12 +367,12 @@ end
 function f()
   printf("in f, calling g\n");
   g()
-endf
+end
 function g()
   printf("in g, calling h\n");
   h()
 end
-function h ()
+function h()
   printf("in h\n")
 end
 ```
