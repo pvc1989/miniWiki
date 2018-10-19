@@ -96,12 +96,12 @@ Octave 中的实数, 不是数学中的实数, 但完全等价于 C/C++ 中的 `
 | `NaN` | **N**ot **a** **N**umber | 不定式, 如 `0/0` |
 | `NA` | **N**ot **A**vailable | `NA` 命令 |
 
-Octave 中的复数表示为一对实数, 可以通过在整数或实数常量后紧跟 `i` 或 `I`  或 `j` 或 `J` 来创建, 或利用 `complex` 函数来构造.
+Octave 中的复数表示为一对实数, 可以通过在整数或实数常量后紧跟 `i` 或 `j` 来创建, 或利用 `complex` 函数来构造.
 
 ```octave
 c = 0 + 1i
-d = 0 + 1J
-c*c - c^2
+d = 0 + 1j
+c*c - d^2  % == 0
 ```
 
 ### Matrix
@@ -176,7 +176,7 @@ d = [a; b]
 
 ### String
 
-字符串可以看做是由字符元素构成的特殊矩阵.
+字符串可以看做是由字符元素构成的数组.
 
 ### Cell Array
 
@@ -201,9 +201,8 @@ d = [a; b]
 | `isnumeric(a)` | 判断 `a` 是否为数值型 (整型, 浮点型) |
 | `ismatrix(a)` | 判断 `a` 是否为矩阵 (二维数组) |
 | `ishermitian(a)` | 判断 `a` 是否为共轭对称矩阵 |
-| `isdefinite(a)` | 判断 `a` 是否为正定矩阵 |
 
-以 `is` 开头的判断函数被称作**谓词 (predicate)**, 完整列表参见 GNU Octave 手册的 [4.8 Predicates for Numeric Objects](https://octave.org/doc/interpreter/Predicates-for-Numeric-Objects.html#Predicates-for-Numeric-Objects).
+以 `is` 开头的判断函数被称作**谓词 (predicate)**, 完整列表 (个别函数在 MATLAB 中没有定义) 参见 GNU Octave 手册的 [4.8 Predicates for Numeric Objects](https://octave.org/doc/interpreter/Predicates-for-Numeric-Objects.html#Predicates-for-Numeric-Objects).
 
 获取对象的大小信息:
 
@@ -223,7 +222,7 @@ d = [a; b]
 
 > 运算符优先级混淆会导致程序的语法正确而算法逻辑出错. 当不确定时, 一律主动加上括号, 这样可以从根本上避免此类错误.
 
-在 Octave 中, 各运算符的优先级从高到低 (同组优先级相同) 依次为:
+在 Octave 中, 各运算符 (自增自减运算符和复合赋值运算符在 MATLAB 中没有定义) 的优先级从高到低 (同组优先级相同) 依次为:
 
 | 优先级 | 运算符 | 示例 |
 | ------ | ------ | ---- |
@@ -269,20 +268,20 @@ d = [a; b]
 ```octave
 x = rand();
 if x > 0.5
-  printf("large\n");
+  disp('large');
 else
-  printf("small\n");
+  disp('small');
 end
 ```
 
 ```octave
 x = rand();
 if x > 0.67
-  printf("large\n");
+  disp('large');
 elseif x > 0.33  % 不能写成 else if
-  printf("medium\n");
+  disp('medium');
 else
-  printf("small\n");
+  disp('small');
 end
 ```
 
@@ -290,13 +289,13 @@ end
 x = randi(10)
 switch x
   case 1
-    printf("x == 1\n");
+    disp('x == 1');
   case 2
-    printf("x == 2\n");
+    disp('x == 2');
   case {3, 4, 5}
-    printf("x == 3 or 4 or 5\n");
+    disp('x == 3 or 4 or 5');
   otherwise
-    printf("x > 5\n");
+    disp('x > 5');
 end
 ```
 其中任何一个 `case` 后面的代码被执行完后, 控制流直接跳转到 `end`, 这一点与 C/C++ 中的 `switch` 不同.
@@ -305,7 +304,7 @@ end
 
 寻找矩阵中的最大成员:
 ```octave
-a = rand(5);
+a = rand(1, 5)
 x = a(1);
 n = numel(a);
 for k = 1 : n
@@ -313,20 +312,20 @@ for k = 1 : n
     x = a(k);
   end
 end
-printf("max(a) == %f\n", x);
+disp(sprintf('max(a) == %f', x));
 ```
 或
 ```octave
-a = rand(5);
+a = rand(1, 5)
 x = a(1);
 k = 1;
 while k <= numel(a)
   if a(k) > x
     x = a(k);
   end
-  ++k;
+  k = k + 1;
 end
-printf("max(a) == %f\n", x);
+disp(sprintf('max(a) == %f', x));
 ```
 
 有两种方式可以跳过最内层循环的剩余部分:
@@ -365,15 +364,15 @@ end
 ```octave
 % 文件名为 f.m
 function f()
-  printf("in f, calling g\n");
+  disp('in f, calling g');
   g()
 end
 function g()
-  printf("in g, calling h\n");
+  disp('in g, calling h');
   h()
 end
 function h()
-  printf("in h\n")
+  disp('in h');
 end
 ```
 其中 `f` 为文件外部可见的主函数, `g` 和 `h` 为文件外部不可见但内部可见的子函数.
@@ -410,11 +409,17 @@ tic; fib(20); t = toc
 
 利用 `profile`, 可以更精细地测量函数运行时间及调用次数等信息:
 ```octave
+% Octave 与 MATLAB 均可用
 profile clear;
 profile on;
 fib(20);
 profile off;
-profshow(profile("info"), 10);
+p = profile('info');
+```
+查看测量结果的命令为:
+```octave
+profshow(p, 10);  % 仅 Octave 可用
+profile viewer;   % 仅 MATLAB 可用
 ```
 
 ### 参数传递与作用域
@@ -429,16 +434,16 @@ f(foo)        % 被传递的是 "bar" 这个值, 而不是 foo 这个变量
 按值传递是 Octave 所保证的**语义 (semantics)**, 但该语义不一定是通过创建局部副本 (复制) 来实现的. 如果函数体中没有修改传入参数的值, 则不必进行复制, 例如:
 
 ```octave
-clear
-
-function a_unchanged(a)
-  c = a(1, 1);
+% a_unchanged.m
+function 
 end
+% a_changed.m
 function a_changed(a)
   a(1, 1) = 1;
 end
+% Command Window
+clear
 a = rand(1000); % 8000000 Bytes
-
 profile clear
 profile on
 for i = 1 : 100
@@ -446,19 +451,23 @@ for i = 1 : 100
   a_changed(a);    % do copy, very slow
 end
 profile off
-profshow(profile("info"), 10);
+p = profile('info');
+profshow(p, 10);  % 仅 Octave 可用
+profile viewer;   % 仅 MATLAB 可用
 ```
 
 按值传递语义的一个重要推论是, 函数体内无法直接修改外部变量的值:
 
 ```octave
-a = [1 1]
+% f.m
 function f(a)
   a(1) = 0;  % 与外部的 a 不是同一个对象
-  a  % 显示 [0 1]
+  a
 end
-f(a)
-a  % 显示 [1 1]
+% Command Window
+a = [1 1]
+f(a)  % 显示 [0 1]
+a     % 显示 [1 1]
 ```
 
 这里有两个名为 `a` 的变量, 它们都是**局部 (local)** 变量 (与**全局 (global)** 变量对应), 但是具有不同的**作用域 (scope)**. 作用域是一种数据保护机制, 可以保证外部环境不被局部变量污染. 在 Octave GUI 的**工作空间 (workspace)** 窗口中可以查看当前作用域中的局部变量.
@@ -498,8 +507,10 @@ quad(@(x) cos(x), 0, pi/2)  % 传入匿名函数
 | `contourf(x, y, z)` | 同上, 但有填充 |
 
 ```octave
-x = y = -3 : 0.2 : 3;
-[X, Y, Z] = peaks(x, y);
+x = -3 : 0.2 : 3;
+y = x;
+[X, Y] = meshgrid(x, y);
+Z = peaks(X, Y);
 contour(X, Y, Z);
 ```
 
@@ -511,12 +522,6 @@ contour(X, Y, Z);
 | `contour3(x, y, z)` | 三维等值线图 |
 | `mesh(x, y, z)` | 网格 |
 | `surf(x, y, z)` | 曲面 |
-
-```octave
-x = y = -3 : 0.2 : 3;
-[X, Y, Z] = peaks(x, y);
-mesh(X, Y, Z);
-```
 
 ### 标注
 
@@ -531,10 +536,10 @@ x = 0 : 0.1 : 10;
 hold
 plot(x, sin(x));
 plot(x, cos(x));
-title("Trigonometric Functions");
-xlabel("x");
-ylabel("y");
-legend("sin(x)", "cos(x)");
+title('Trigonometric Functions');
+xlabel('x');
+ylabel('y');
+legend('sin(x)', 'cos(x)');
 ```
 
 ### 简单动画
@@ -553,8 +558,8 @@ dt = 0.02
 for t = 0 : dt : 2
   clf
   hold on
-  axis("equal");
-  axis("off");
+  axis equal
+  axis off
   plot(x, y);
   a = 8 * t;
   r = 0.5 * t;
