@@ -14,6 +14,8 @@ Git 是一种分布式的 VCS, 每个代码贡献者 (甚至用户和第三方�
 
 ## 常用命令
 
+尽管我们可以通过 GUI (如 [GitHub Desktop](https://desktop.github.com), [SourceTree](https://www.sourcetreeapp.com)) 来完成许多常用 Git 操作, 但学习 Git 命令有助于提高对 GUI 中相应操作的理解; 除此之外, 有一些 Git 操作只能通过 CLI 来完成. 因此, 建议 Git 新手以 CLI 为学习重点, 在对常用命令比较熟悉之后, 再根据需要选用 GUI.
+
 ### 配置
 
 ```shell
