@@ -2,13 +2,15 @@
 
 ## 基本概念
 
-**版本控制系统 (version control system, VCS)** 是一种用来追踪文件修改历史的软件, 是软件开发过程中管理源代码的必备工具. 目前最流行的 VCS 是诞生于 2005 年的开源软件 [Git](https://git-scm.com/). 它是由 [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 为了管理 Linux 内核而创建, 并与其他代码贡献者一同开发的.
+*版本控制系统 (Version Control System, VCS)* 是一种用来追踪文件修改历史的软件, 是软件开发过程中管理源代码的必备工具. 目前最流行的 VCS 是诞生于 2005 年的开源软件 [Git](https://git-scm.com/). 它是由 [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 为了管理 Linux 内核而创建, 并与其他代码贡献者一同开发的.
 
-一个项目中所有被 Git 追踪的文件及修改历史所组成的集合称为一个**仓库 (repository)**. 程序员把修改的内容(连同个人信息及备注)**提交 (commit)** 给 Git, 由 Git 将当前仓库状态保存为一个**快照 (snapshot)**. 凡是被保存为快照的仓库状态, 几乎总能通过 Git 来恢复. 由于一次提交总是对应于一个快照, 因此程序员在讨论时, 往往用"某次提交"表示"某个快照".
+一个项目中所有被 Git 追踪的文件及修改历史所组成的集合称为一个*仓库 (repository)*. 程序员把修改的内容 (连同个人信息及备注) *提交 (commit)* 给 Git, 由 Git 将当前仓库状态保存为一个*快照 (snapshot)*. 凡是被保存为快照的状态, 几乎总能通过 Git 来恢复. 一次提交总是对应于一个快照, 因此程序员在讨论时, 往往不加区分地混用 commit 与 snapshot.
 
-Git 的一大特色是支持多**分支 (branch)** 并行开发. 一个仓库至少有一个分支, 代表开发主线, 因此习惯上命名为 `master`, 其最新状态一般代表项目当前的稳定版. 以 `master` 作为根结点, 可以分出一系列相互独立的子分支. 这些子分支又可以作为新的根节点, 分出新的子分支. 全部分支及相互间的主从关系在逻辑上构成一棵树. 在子分支上做过一些开发和提交后, 如果需要在主分支上采纳这些修改, 则需**签出 (checkout)** 到主分支, 然后将子分支上提交的内容**合并 (merge)** 到主分支中.
+Git 的一大特色是支持多*分支 (branch)* 并行开发. 一个仓库至少有一个分支, 代表开发主线, 因此习惯上命名为 `master`, 其最新状态一般代表项目当前的稳定版. 以 `master` 作为根结点, 可以分出一系列相互独立的子分支. 这些子分支又可以作为新的根节点, 分出新的子分支. 全部分支及相互间的主从关系在逻辑上构成一棵树. 在子分支上做过一些开发和提交后, 如果想要在主分支上采纳这些修改, 那么需要先*签出 (checkout)* 到主分支, 再将子分支上提交的内容*合并 (merge)* 到主分支中.
 
-Git 是一种分布式的 VCS, 每个项目参与者(甚至用户和旁观者)都可以在本地主机上获得代码仓库的一份副本. 结合分支机制及代码仓库托管网站(如[GitHub](https://github.com/), [Bitbucket](https://bitbucket.org)), 可以很容易地实现多人远程合作.
+Git 是一种分布式的 VCS, 每个代码贡献者 (甚至用户和第三方观众) 都可以在本地主机上获得代码仓库的一份副本. 结合分支机制及代码仓库托管网站 (如 [GitHub](https://github.com/), [Bitbucket](https://bitbucket.org)), 可以很容易地实现多人远程合作.
+
+[学堂在线](http://www.xuetangx.com/)上的[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/)课程中有一节专门介绍了 Git, 注册后可以[在线观看](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/e007fce98a8c437b9ce97909117ceba2/35663f6870b24a639231fe00a119b18c/).
 
 ## 常用命令
 
@@ -180,11 +182,11 @@ git push [alias] [branch]
 
 ## 忽略规则
 
-默认情况下, Git 会尝试跟踪一个仓库的各级目录下的所有文件. 在软件开发过程中, 经常会生成一些临时文件. 若要让 Git 忽略这些文件, 则需要在仓库根目录下的 `.gitignore` 文件里列举出这些文件名(可以使用通配符, 以使忽略规则作用到同一类文件). [GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的 `.gitignore` 文件范例.
+默认情况下, Git 会尝试跟踪一个仓库的各级目录下的所有文件. 在软件开发过程中, 经常会生成一些临时文件. 如果想要让 Git 忽略这些文件, 那么需要在仓库根目录下的 `.gitignore` 文件里列举出这些文件名 (可以使用通配符, 以使忽略规则作用到同一类文件). [GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的 `.gitignore` 范例.
 
-## GitHub 指南
+## GitHub Guides
 
-[GitHub](https://github.com/) 是目前最流行的 Git 项目托管网站. [GitHub Guides](https://guides.github.com) 介绍了依托该网站进行项目开发的流程和技巧. 这里小结(不是完整翻译)一下其中几篇的要点.
+[GitHub](https://github.com/) 是目前最流行的 Git 项目托管网站. [GitHub Guides](https://guides.github.com) 介绍了依托该网站进行项目开发的流程和技巧. 这里小结 (不是完整翻译) 其中几篇的要点.
 
 ### GitHub Flow
 
@@ -192,7 +194,7 @@ git push [alias] [branch]
 
 #### 新建分支
 
-在 Git 项目中, 任何人在任何时候都可以从任何一个分支上分出一个子分支. 子分支中所做的修改, 不会立刻影响到主分支, 而是要经过主分支维护者所主导的代码审查, 才会被主分支合并. 在所有分支中, `master` 分支上的代码应当总是处于可部署 (deployable) 的状态.
+在 Git 项目中, 任何人在任何时候都可以从任何一个分支上分出一个子分支. 在子分支中所做的修改, 不会立刻影响到主分支, 而是要经过主分支维护者所主导的代码审查, 才会被主分支合并. 在所有分支中, `master` 分支上的代码应当总是处于*可部署的 (deployable)* 状态.
 
 #### 提交修改
 
@@ -200,11 +202,11 @@ git push [alias] [branch]
 
 #### 请求拉取
 
-**拉取请求 (Pull Request)** 是指由*子分支开发者*与*主分支维护者*进行对话所发送的消息, 一般用于申请代码审查, 或者交流其他信息. 利用 GitHub 的 `@mention` 机制, 可以在 Pull Request 消息中直接与指定的人员或团队进行交流.
+*拉取请求 (pull request)* 是指由**子分支开发者**与**主分支维护者**进行对话所发送的消息, 一般用于申请代码审查, 或者交流其他信息. 利用 GitHub 的 `@mention` 机制, 可以在 pull request 消息中直接与指定的人员或团队进行交流.
 
 #### 审查代码
 
-在 Pull Request 中, 开发者和维护者可以就代码内容进行交流. 在讨论过程中, 开发者可以随时在子分支上继续提交和推送, GitHub 会动态地显示这些变化.
+在 pull request 中, 开发者和维护者可以就代码内容进行交流. 在讨论过程中, 开发者可以随时在子分支上继续提交和推送, GitHub 会动态地显示这些变化.
 
 #### 集成测试
 
@@ -212,5 +214,5 @@ git push [alias] [branch]
 
 #### 合并修改
 
-经过验证后, 主分支维护者就可以将子分支中的修改合并到主分支上. 在 GitHub 上, 可以在 Pull Request 里嵌入一些关键词, 用以关联一些**问题 (issue)**. 当 Pull Request 被合并后, 相关的 issue 也随之而被关闭. 关键词使用方法参见 [Closing issues using keywords](https://help.github.com/articles/closing-issues-using-keywords/).
+经过验证后, 主分支维护者就可以将子分支中的修改合并到主分支上. 在 GitHub 上, 可以在 pull request 里嵌入一些关键词, 用以关联一些*问题 (issue)*. 当 pull request 被合并后, 相关的 issue 也随之而被关闭. 关键词使用方法参见 [Closing issues using keywords](https://help.github.com/articles/closing-issues-using-keywords/).
 
