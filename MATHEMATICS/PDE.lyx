@@ -132,6 +132,145 @@ Methods of Characteristics
 Linear Hyperbolic PDEs
 \end_layout
 
+\begin_layout Subsubsection
+The Linear Advection Equation
+\end_layout
+
+\begin_layout Standard
+The simplest initial-value problem (IVP) is given by the first-order partial
+ differential equation (PDE) with a constant coefficient
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\pdv{u}{t}+a\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)
+\]
+
+\end_inset
+
+and the initial condition (IC)
+\begin_inset Formula 
+\[
+u(t=0,x)=u_{0}(x)\qc x\in(-\infty,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The PDE is only meaningful in smooth regions.
+ However, if we let
+\begin_inset Formula 
+\[
+\phi:=u\qc\vec{f}:=f(u)\vu{e}_{x}\qc f(u):=au
+\]
+
+\end_inset
+
+we can write it as a conservation law
+\begin_inset Formula 
+\[
+\pdv{u}{t}+\pdv{f}{x}=0
+\]
+
+\end_inset
+
+for which a weak solution that contains discontinuities is allowed, as long
+ as the weak solution satisfies the jump condition at discontinuities.
+\end_layout
+
+\begin_layout Standard
+The characteristic curve of the PDE passing through 
+\begin_inset Formula $(t_{0},x_{0})$
+\end_inset
+
+ is the solution of
+\begin_inset Formula 
+\[
+\dv{x}{t}=a\qc x(t=0)=x_{0}
+\]
+
+\end_inset
+
+which is
+\begin_inset Formula 
+\[
+x=at+x_{0}
+\]
+
+\end_inset
+
+If we treat 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ as a varying parameter, then all of the characteristic curves together
+ form a one-parameter family of parallel straight lines in 
+\begin_inset Formula $t$
+\end_inset
+
+-
+\begin_inset Formula $x$
+\end_inset
+
+ plane.
+\end_layout
+
+\begin_layout Theorem
+The characteristic curves of the linear advection equation are straight
+ lines.
+\end_layout
+
+\begin_layout Standard
+Along any characteristic curve, the rate of change of 
+\begin_inset Formula $u$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=0
+\]
+
+\end_inset
+
+which means 
+\begin_inset Formula $u$
+\end_inset
+
+ remains constant along a characteristic curve.
+ The solution of the IVP is then
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}(x_{0})=u_{0}(x-at)
+\]
+
+\end_inset
+
+The physical meaning of this solution is a wave packet moving with constant
+ speed 
+\begin_inset Formula $a$
+\end_inset
+
+, whose shape keeps unchanged.
+ This is why it is called the 
+\noun on
+linear advection equation
+\noun default
+ or the 
+\noun on
+single wave equation
+\noun default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Linear Systems of PDEs.
+\end_layout
+
 \begin_layout Subsection
 Nonlinear Hyperbolic PDEs
 \end_layout
@@ -418,6 +557,56 @@ Weak Solutions
 
 \begin_layout Subsection
 Riemann Problems
+\end_layout
+
+\begin_layout Subsubsection
+The Linear Advection Equation
+\end_layout
+
+\begin_layout Standard
+When the IC is given as
+\begin_inset Formula 
+\[
+u_{0}(x)=\begin{cases}
+u_{-} & x<0\\
+u_{+} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $u_{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{+}$
+\end_inset
+
+ are two constants, the gereral solution is
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}(x-at)=\begin{cases}
+u_{-} & x<at\\
+u_{+} & x>at
+\end{cases}
+\]
+
+\end_inset
+
+Note that on the discontinuity (
+\begin_inset Formula $x=at$
+\end_inset
+
+), the PDE does not make sense; instead, the jump condition
+\begin_inset Formula 
+\[
+\frac{f_{+}-f_{-}}{\phi_{+}-\phi_{-}}=\frac{au_{+}-au_{-}}{u_{+}-u_{-}}=a
+\]
+
+\end_inset
+
+is satisfied.
 \end_layout
 
 \begin_layout Section
