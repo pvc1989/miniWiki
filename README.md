@@ -5,6 +5,7 @@
 ### Mathematics
 
 - [Differential Geometry](./MATHEMATICS/DIFFERENTIAL_GEOMETRY.lyx)
+- [Partial Differential Equations](./MATHEMATICS/PDE.lyx)
 
 ### Physics
 
