@@ -140,6 +140,151 @@ Nonlinear Hyperbolic PDEs
 Discontinuities and Weak Solutions
 \end_layout
 
+\begin_layout Standard
+In the previous section, we have seen that even with a smooth IC, the smooth
+ solution of a nonlinear PDE can finally become discontinuous.
+ To handle such cases, we have to extend the notion of solution to a weaker
+ sense.
+\end_layout
+
+\begin_layout Subsubsection
+Conservation Laws
+\end_layout
+
+\begin_layout Standard
+Most of the nonlinear PDEs coming from physics can be formulated as conservation
+s laws, i.e.
+ the law of conservation of some physical quatity (mass, momentum, angular
+ momentum, energy).
+\end_layout
+
+\begin_layout Standard
+Suppose
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V^{C}$
+\end_inset
+
+ is a 
+\noun on
+control volume
+\noun default
+ in space.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\partial V^{C}$
+\end_inset
+
+ is the boundary of 
+\begin_inset Formula $V$
+\end_inset
+
+, which is moving with a velocity 
+\begin_inset Formula $\vec{u}^{C}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi$
+\end_inset
+
+ is the 
+\noun on
+density
+\noun default
+ of some physical quantity, i.e.
+ something per unit volume.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ is the velocity of a fluid particle.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{f}:=\phi\vec{u}$
+\end_inset
+
+ is the 
+\noun on
+flux
+\noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+, i.e.
+ how much 
+\begin_inset Formula $\phi$
+\end_inset
+
+ pass through a 
+\emph on
+fixed
+\emph default
+ surface per unit area in unit time.
+\end_layout
+
+\begin_layout Standard
+Then, the 
+\noun on
+conservation law
+\noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\int_{V^{C}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{C}}\vec{f}\cdot\vu{n}\dd{S}=0}
+\]
+
+\end_inset
+
+which is usually used for fixed control volumes, or
+\begin_inset Formula 
+\[
+\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\dv{t}\int_{V^{C}}\phi\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\phi\vec{u}^{C}\right)\cdot\vu{n}\dd{S}}
+\]
+
+\end_inset
+
+which is usually used for moving control volumes.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth with respect to spatial variables, we can apply Gauss's divergence
+ theorem, which leads to
+\begin_inset Formula 
+\[
+\boxed{\pdv{\phi}{t}+\div\vec{f}=0}
+\]
+
+\end_inset
+
+However, if the 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth prerequisite is not satisfied, we should go back to the integral
+ form.
+\end_layout
+
 \begin_layout Subsubsection
 Discontinuity Condition
 \end_layout
