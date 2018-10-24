@@ -242,7 +242,285 @@ single wave equation
 \end_layout
 
 \begin_layout Subsubsection
-Linear Systems of Hyperbolic PDEs.
+Systems of Linear Hyperbolic PDEs
+\end_layout
+
+\begin_layout Standard
+A system of first-order linear PDEs with two independent variables 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+ is generally written as
+\begin_inset Formula 
+\[
+\pdv{u_{i}}{t}+\sum_{j=1}^{m}a_{ij}\pdv{u_{j}}{x}=0
+\]
+
+\end_inset
+
+or in matrix form
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coefficient matrix 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ determines the behavior of the system.
+ This can be seen from the analysis of the following eigenvalue problems.
+ For simplicity, we will assume 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ to be 
+\emph on
+constant
+\emph default
+ in this section.
+ The more general cases, in which 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ could depend on 
+\begin_inset Formula $t$
+\end_inset
+
+ or 
+\begin_inset Formula $x$
+\end_inset
+
+ or even 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+, will be discussed in the section of 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:Systems-of-Quasilinear-Hyperbolic-PDEs"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+If a scalar 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, a row vector 
+\begin_inset Formula $\bra{L}$
+\end_inset
+
+ and a column vector 
+\begin_inset Formula $\ket{R}$
+\end_inset
+
+ together satisfy the following equations
+\begin_inset Formula 
+\[
+\bra{L}\Matrix{A}=\bra{L}\lambda\qc\Matrix{A}\ket{R}=\lambda\ket{R}
+\]
+
+\end_inset
+
+then we say 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is an 
+\noun on
+eigenvalue
+\noun default
+ of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+, 
+\begin_inset Formula $\bra{L}$
+\end_inset
+
+ is a 
+\noun on
+left eigenvector
+\noun default
+ of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+, 
+\begin_inset Formula $\ket{R}$
+\end_inset
+
+ is a 
+\noun on
+right eigenvector
+\noun default
+ of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+If all of the 
+\begin_inset Formula $m$
+\end_inset
+
+ eigenvalues of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ are real numbers and there are 
+\begin_inset Formula $m$
+\end_inset
+
+ linearly independent (left/right) eigenvectors, then the system of PDEs
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
+\]
+
+\end_inset
+
+ is said to be 
+\noun on
+hyperbolic
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+For a hyperbolic systems, we can collect the right and left eigenvectors
+ into two matrices:
+\begin_inset Formula 
+\[
+\Matrix{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\qc\Matrix{L}:=\begin{bmatrix}\bra{L_{1}}\\
+\vdots\\
+\bra{L_{m}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+They are both invertible, since all of their columns and rows are linearly
+ independent, so 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ can be diagonalised:
+\begin_inset Formula 
+\[
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\implies\Matrix{A}=\Matrix{R}\Matrix{\Lambda}\Matrix{R}^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Matrix{L}\Matrix{A}=\Matrix{\Lambda}\Matrix{L}\implies\Matrix{A}=\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By define a set of 
+\noun on
+characteristic variables
+\noun default
+:
+\begin_inset Formula 
+\[
+\ket{V}:=\Matrix{L}\ket{U}=\begin{bmatrix}\braket{L_{1}}{U}\\
+\vdots\\
+\braket{L_{m}}{U}
+\end{bmatrix}
+\]
+
+\end_inset
+
+the original system
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
+\]
+
+\end_inset
+
+can be decoupled as 
+\begin_inset Formula $m$
+\end_inset
+
+ independent linear advection equations:
+\begin_inset Formula 
+\[
+\ket{V}_{t}+\Matrix{\Lambda}\ket{V}_{x}=\ket{0}\implies\pdv{v_{i}}{t}+\lambda_{i}\pdv{v_{i}}{x}\qc i=1,\dots,m
+\]
+
+\end_inset
+
+which is is called the 
+\noun on
+canonical form
+\noun default
+ or 
+\noun on
+characteristic form
+\noun default
+ of system.
+ Each of them can be solved along its characteristic curve
+\begin_inset Formula 
+\[
+\dv{x}{t}=\lambda_{i}\qc x(t=0)=x^{0}\implies x-\lambda_{i}t=x^{0}
+\]
+
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+v_{i}(t,x)=v_{i}^{0}(x-\lambda_{i}t)
+\]
+
+\end_inset
+
+which can be transformed back to the original variables 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+\ket{U}=\Matrix{L}^{-1}\ket{V}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -559,7 +837,82 @@ What will happen after the breaking? If we think of
 \end_layout
 
 \begin_layout Subsubsection
-Quasilinear Systems of Hyperbolic PDEs.
+Systems of Quasilinear Hyperbolic PDEs
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Systems-of-Quasilinear-Hyperbolic-PDEs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A system of first-order quasilinear PDEs with two independent variables
+ 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+ is generally written as
+\begin_inset Formula 
+\[
+\pdv{u_{i}}{t}+\sum_{j=1}^{m}a_{ij}(t,x,u_{1},\cdots,u_{m})\pdv{u_{j}}{x}+b_{i}(t,x,u_{1},\cdots,u_{m})=0
+\]
+
+\end_inset
+
+or in matrix form
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\Matrix{A}\ket{U}_{x}+\ket{B}=\ket{0}
+\]
+
+\end_inset
+
+in which, the coefficient matrix 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ determines the behavior of the system.
+\end_layout
+
+\begin_layout Standard
+Many systems of first-order nonlinear PDEs can be transformed into this
+ form.
+ For example, the system of conservation laws
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\ket{F}_{x}=\ket{0}\qc\ket{U}=\begin{bmatrix}u_{1}\\
+\vdots\\
+u_{m}
+\end{bmatrix}\qc\ket{F}=\begin{bmatrix}f_{1}(u_{1},\cdots,u_{m})\\
+\vdots\\
+f_{m}(u_{1},\cdots,u_{m})
+\end{bmatrix}
+\]
+
+\end_inset
+
+can be transformed into the quasilinear form with the 
+\noun on
+Jacobian matrix
+\noun default
+:
+\begin_inset Formula 
+\[
+\Matrix{A}:=\pdv{F}{U}=\begin{bmatrix}\pdv{f_{1}}{u_{1}} & \cdots & \pdv{f_{1}}{u_{m}}\\
+\vdots & \vdots & \vdots\\
+\pdv{f_{m}}{u_{1}} & \cdots & \pdv{f_{m}}{u_{m}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+as the coefficient matrix.
 \end_layout
 
 \begin_layout Subsection
