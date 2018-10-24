@@ -161,28 +161,6 @@ u(t=0,x)=u_{0}(x)\qc x\in(-\infty,\infty)
 \end_layout
 
 \begin_layout Standard
-The PDE is only meaningful in smooth regions.
- However, if we let
-\begin_inset Formula 
-\[
-\phi:=u\qc\vec{f}:=f(u)\vu{e}_{x}\qc f(u):=au
-\]
-
-\end_inset
-
-we can write it as a conservation law
-\begin_inset Formula 
-\[
-\pdv{u}{t}+\pdv{f}{x}=0
-\]
-
-\end_inset
-
-for which a weak solution that contains discontinuities is allowed, as long
- as the weak solution satisfies the jump condition at discontinuities.
-\end_layout
-
-\begin_layout Standard
 The characteristic curve of the PDE passing through 
 \begin_inset Formula $(t_{0},x_{0})$
 \end_inset
@@ -209,11 +187,7 @@ If we treat
 
  as a varying parameter, then all of the characteristic curves together
  form a one-parameter family of parallel straight lines in 
-\begin_inset Formula $t$
-\end_inset
-
--
-\begin_inset Formula $x$
+\begin_inset Formula $(t,x)$
 \end_inset
 
  plane.
@@ -356,33 +330,46 @@ u(t=0,x)=u_{0}(x)\qc x\in(-\infty,\infty)
 Since the quasilinear wave equation is the nonlinearized version of the
  linear advection equation, we can try to solve it, at least locally, as
  what we have done for its linear counterpart.
- The solution of
+ 
+\end_layout
+
+\begin_layout Standard
+The characteristic curve of the PDE passing through 
+\begin_inset Formula $(t_{0},x_{0})$
+\end_inset
+
+ is the solution of
 \begin_inset Formula 
 \[
-\dv{x}{t}=a(u)\implies x=a(u)t+x_{0}
+\dv{x}{t}=a(u)\qc x(t=0)=x_{0}
 \]
 
 \end_inset
 
-is a one-parameter family of curves in 
-\begin_inset Formula $(t,x)$
+which is
+\begin_inset Formula 
+\[
+x=a(u)t+x_{0}
+\]
+
 \end_inset
 
- plane, with 
+If we treat 
 \begin_inset Formula $x_{0}$
 \end_inset
 
- as the parameter, which is called the family of 
-\noun on
-characteristic curves
-\noun default
- of the PDE.
+ as a varying parameter, then all of the characteristic curves together
+ form a one-parameter family of curves in 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+ plane.
  However, they are generally no longer parallel to each other.
 \end_layout
 
 \begin_layout Standard
 Let us first assume that before a critical time 
-\begin_inset Formula $t^{*}$
+\begin_inset Formula $t_{*}$
 \end_inset
 
 , the characteristic curves do not intersect with each other.
@@ -442,7 +429,7 @@ If
 \end_inset
 
 , then 
-\begin_inset Formula $x^{1}(0)<x^{2}(0)\implies\forall t>0\colon x^{1}(t)<x^{2}(t)$
+\begin_inset Formula $x_{1}(0)<x_{2}(0)\implies\forall t>0\colon x_{1}(t)<x_{2}(t)$
 \end_inset
 
 .
@@ -451,7 +438,7 @@ If
 \begin_layout Proof
 Using the definition of characteristic curves, i.e.
  
-\begin_inset Formula $\dv{x^{i}}{t}=a\left(u(t,x^{i})\right)$
+\begin_inset Formula $\dv{x_{i}}{t}=a\left(u(t,x_{i})\right)$
 \end_inset
 
 , and the fact that 
@@ -460,13 +447,13 @@ Using the definition of characteristic curves, i.e.
 
  remains unchanged along the characteristic curves, i.e.
  
-\begin_inset Formula $u(t,x^{i})=u_{0}(x^{i}(0))$
+\begin_inset Formula $u(t,x_{i})=u_{0}(x_{i}(0))$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\dv{\left(x^{2}-x^{1}\right)}{t}=a\left(u_{0}\left(x^{2}(0)\right)\right)-a\left(u_{0}\left(x^{1}(0)\right)\right)>0
+\dv{\left(x_{2}-x_{1}\right)}{t}=a\left(u_{0}\left(x_{2}(0)\right)\right)-a\left(u_{0}\left(x_{1}(0)\right)\right)>0
 \]
 
 \end_inset
@@ -485,13 +472,13 @@ If
 \end_inset
 
 , then 
-\begin_inset Formula $x^{1}(0)<x^{2}(0)\implies$
+\begin_inset Formula $x_{1}(0)<x_{2}(0)\implies$
 \end_inset
 
 
 \begin_inset Formula 
 \[
-\exists t^{*}>0:x^{1}(t^{*})=x^{2}(t^{*})\qand\forall t\in(0,t^{*})\colon x^{1}(t)<x^{2}(t)
+\exists t_{*}>0:x_{1}(t_{*})=x_{2}(t_{*})\qand\forall t\in(0,t_{*})\colon x_{1}(t)<x_{2}(t)
 \]
 
 \end_inset
@@ -503,7 +490,7 @@ If
 The proof is similar to the previous theorem, but
 \begin_inset Formula 
 \[
-\dv{\left(x^{2}-x^{1}\right)}{t}=a\left(u_{0}\left(x^{2}(0)\right)\right)-a\left(u_{0}\left(x^{1}(0)\right)\right)<0
+\dv{\left(x_{2}-x_{1}\right)}{t}=a\left(u_{0}\left(x_{2}(0)\right)\right)-a\left(u_{0}\left(x_{1}(0)\right)\right)<0
 \]
 
 \end_inset
@@ -515,7 +502,7 @@ Geometrically, in this case, the characteristic curves converge to each
 
  increases.
  Since they are both straight lines, they will finally (at time 
-\begin_inset Formula $t^{*}>0$
+\begin_inset Formula $t_{*}>0$
 \end_inset
 
 ) intersect.
@@ -536,7 +523,7 @@ When two characteristic curves intersect,
  will have two values
 \begin_inset Formula 
 \[
-u=u_{0}\left(x^{1}(0)\right)\qand u=u_{0}\left(x^{2}(0)\right)
+u=u_{0}\left(x_{1}(0)\right)\qand u=u_{0}\left(x_{2}(0)\right)
 \]
 
 \end_inset
@@ -548,7 +535,7 @@ which are generally inconsistent.
 
 \begin_layout Definition
 Among all the intersecting time 
-\begin_inset Formula $t^{*}$
+\begin_inset Formula $t_{*}$
 \end_inset
 
 , the minimum one is called the 
@@ -556,7 +543,7 @@ Among all the intersecting time
 breaking time
 \noun default
 , denoted as 
-\begin_inset Formula $t^{b}$
+\begin_inset Formula $t_{b}$
 \end_inset
 
 , at which the classical solution breaks and becomes invalid afterwards.
@@ -564,7 +551,7 @@ breaking time
 
 \begin_layout Definition
 What will happen after the breaking? If we think of 
-\begin_inset Formula $u\left(t^{b},x\right)$
+\begin_inset Formula $u\left(t_{b},x\right)$
 \end_inset
 
  as the IC of a new IVP, it will become a Riemann problem, which will be
