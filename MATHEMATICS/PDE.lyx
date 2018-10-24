@@ -444,6 +444,14 @@ They are both invertible, since all of their columns and rows are linearly
 
 \end_inset
 
+If all of the eigenvectors are normalized, then we have
+\begin_inset Formula 
+\[
+\braket{L_{i}}{R_{j}}=\delta_{ij}\qc\Matrix{R}=\Matrix{L}^{-1}\qc\Matrix{A}=\Matrix{R}\Matrix{\Lambda}\Matrix{L}\qc\Matrix{\Lambda}=\Matrix{L}\Matrix{A}\Matrix{R}
+\]
+
+\end_inset
+
 
 \end_layout
 
@@ -458,6 +466,9 @@ characteristic variables
 \ket{V}:=\Matrix{L}\ket{U}=\begin{bmatrix}\braket{L_{1}}{U}\\
 \vdots\\
 \braket{L_{m}}{U}
+\end{bmatrix}=\begin{bmatrix}v_{i}\\
+\vdots\\
+v_{m}
 \end{bmatrix}
 \]
 
@@ -475,7 +486,7 @@ can be decoupled as
 \begin_inset Formula $m$
 \end_inset
 
- independent linear advection equations:
+ independent single wave equations:
 \begin_inset Formula 
 \[
 \ket{V}_{t}+\Matrix{\Lambda}\ket{V}_{x}=\ket{0}\implies\pdv{v_{i}}{t}+\lambda_{i}\pdv{v_{i}}{x}\qc i=1,\dots,m
@@ -508,19 +519,60 @@ v_{i}(t,x)=v_{i}^{0}(x-\lambda_{i}t)
 
 \end_inset
 
-which can be transformed back to the original variables 
+This is a single wave with the shape 
+\begin_inset Formula $v_{i}^{0}(x)$
+\end_inset
+
+ propagating with speed 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The solution to the original system can be obtained by transforming the
+ characteristic variables 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ back into the original variables 
 \begin_inset Formula $u_{i}$
 \end_inset
 
- by
+:
 \begin_inset Formula 
 \[
-\ket{U}=\Matrix{L}^{-1}\ket{V}
+\ket{U}=\Matrix{L}^{-1}\ket{V}=\Matrix{R}\Matrix{V}=\sum_{i=1}^{m}v_{i}^{0}(x-\lambda_{i}t)\ket{R_{i}}
 \]
 
 \end_inset
 
+which means the value of 
+\begin_inset Formula $\ket{U}$
+\end_inset
 
+ at a point 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+ is determined by the initial data at 
+\begin_inset Formula $m$
+\end_inset
+
+ points 
+\begin_inset Formula $(0,x-\lambda_{i}t)$
+\end_inset
+
+, which are the intersection of 
+\begin_inset Formula $m$
+\end_inset
+
+ characteristic curves with the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
 \end_layout
 
 \begin_layout Subsection
