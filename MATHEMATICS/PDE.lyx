@@ -6,7 +6,7 @@
 \origin unavailable
 \textclass paper
 \begin_preamble
-\usepackage[colorlinks, linkcolor=blue]{hyperref}
+\usepackage{hyperref}
 \usepackage{physics}
 \usepackage[e]{esvect}
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
@@ -981,7 +981,7 @@ Discontinuities and Weak Solutions
 \end_layout
 
 \begin_layout Standard
-In the previous section, we have seen that even with a smooth IC, the smooth
+In the previous sections, we have seen that even with a smooth IC, the smooth
  solution of a nonlinear PDE can finally become discontinuous.
  To handle such cases, we have to extend the notion of solution to a weaker
  sense.
@@ -1254,6 +1254,214 @@ Rankine–Hugoniot condition
 
 \begin_layout Subsubsection
 Weak Solutions
+\end_layout
+
+\begin_layout Definition
+If there exists a 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ integrable function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ that satisfies
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{0}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}\ket{U}+\pdv{\phi}{x}\ket{F}\right)\dd{x}\dd{t}+\int_{-\infty}^{+\infty}\phi\ket{U}\dd{x}=\ket{0}
+\]
+
+\end_inset
+
+for any compact supported smooth test function 
+\begin_inset Formula $\phi(t,x)$
+\end_inset
+
+, then 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is called a 
+\noun on
+weak solution
+\noun default
+ of
+\begin_inset Formula 
+\[
+\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Any classical solution solution is also a weak solution.
+\end_layout
+
+\begin_layout Proof
+Since classical solutions are smooth enough, we can move the temporal derivative
+ from 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}\ket{U}\dd{x}\dd{t} & =\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(\pdv{\phi\ket{U}}{t}-\phi\pdv{\ket{U}}{t}\right)\dd{t}\dd{x}\\
+ & =\int_{-\infty}^{+\infty}\eval{\phi\ket{U}}_{0}^{+\infty}\dd{x}-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\phi\pdv{\ket{U}}{t}\dd{t}\dd{x}\\
+ & =-\int_{-\infty}^{+\infty}\eval{\phi\ket{U}}_{t=0}\dd{x}-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\phi\pdv{\ket{U}}{t}\dd{t}\dd{x}
+\end{aligned}
+\]
+
+\end_inset
+
+We drop the 
+\begin_inset Formula $t=+\infty$
+\end_inset
+
+ term since 
+\begin_inset Formula $\phi(t=+\infty,x)=0$
+\end_inset
+
+ by definition.
+ Similarily, we can move the spatial derivative from 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}\ket{F}\dd{x}\dd{t} & =\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(\pdv{\phi\ket{F}}{x}-\phi\pdv{\ket{F}}{x}\right)\dd{t}\dd{x}\\
+ & =\int_{0}^{+\infty}\eval{\phi\ket{F}}_{-\infty}^{+\infty}\dd{t}-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\phi\pdv{\ket{F}}{x}\dd{t}\dd{x}\\
+ & =-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\phi\pdv{\ket{F}}{x}\dd{t}\dd{x}
+\end{aligned}
+\]
+
+\end_inset
+
+We drop the 
+\begin_inset Formula $x=\pm\infty$
+\end_inset
+
+ terms since 
+\begin_inset Formula $\phi(t,x=\pm\infty)=0$
+\end_inset
+
+ by definition.
+ Substitute them into the weak solution definition, we have
+\begin_inset Formula 
+\[
+-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}\phi\left(\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}\right)\dd{t}\dd{x}=\ket{0}
+\]
+
+\end_inset
+
+which leads to the original PDE since 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is chosen arbitrarily.
+\end_layout
+
+\begin_layout Subsubsection
+The Entropy Condition
+\end_layout
+
+\begin_layout Standard
+Mathematically, there might be more than one weak solutions.
+ However, for a problem with physical backgrounds, there is only one solution,
+ which satisfies
+\end_layout
+
+\begin_layout Itemize
+the PDE in smooth regions,
+\end_layout
+
+\begin_layout Itemize
+jump conditions at discontinuities, and
+\end_layout
+
+\begin_layout Itemize
+the entropy condition.
+\end_layout
+
+\begin_layout Standard
+The last condition can be informally stated as: the solution of the inviscid
+ problem
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\ket{F}_{x}=\ket{0}
+\]
+
+\end_inset
+
+is the limit of that of the corresponding viscous problem
+\begin_inset Formula 
+\[
+\ket{U^{\varepsilon}}_{t}+\ket{F^{\varepsilon}}_{x}=\varepsilon\ket{U^{\varepsilon}}_{xx}
+\]
+
+\end_inset
+
+i.e.
+\begin_inset Formula 
+\[
+\lim_{\varepsilon\to0}\ket{U^{\varepsilon}}=\ket{U}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 1-D conservation laws with a convex flux
+\begin_inset Formula 
+\[
+\pdv{u}{t}+\pdv{f}{x}=0\qc f''>0
+\]
+
+\end_inset
+
+the entropy condition is given by 
+\begin_inset CommandInset href
+LatexCommand href
+name "Oleinik"
+target "https://en.wikipedia.org/wiki/Olga_Oleinik"
+literal "false"
+
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\frac{f(u_{-})-f(u)}{u_{-}-u}\ge s\ge\frac{f(u_{+})-f(u)}{u_{+}-u}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\eval{\dv{f}{u}}_{-}\ge s\ge\eval{\dv{f}{u}}_{+}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
