@@ -1106,11 +1106,122 @@ However, if the
 \end_inset
 
  smooth prerequisite is not satisfied, we should go back to the integral
- form.
+ form, which will leads to the 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:Discontinuity-Condition"
+
+\end_inset
+
+.
 \end_layout
 
+\begin_layout Remark*
+Some notation convections:
+\end_layout
+
+\begin_layout Itemize
+For a 3D scalar conservation law, people usually use 
+\begin_inset Formula $u$
+\end_inset
+
+ for the conservation variable and 
+\begin_inset Formula $\vec{{f}}=\sum_{i=1}^{3}\vu{e}_{i}f_{i}$
+\end_inset
+
+ for the flux.
+ So, a 3D scalar conservation law is usually written as
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{u}{t}+\sum_{i=1}^{3}\pdv{f_{i}}{x_{i}}=0}\label{eq:ScalarConservationLaw}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For a 3D vector conservation law, or a system of conservation laws, the
+ notation varies from author to author.
+ I prefer to use
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+a column vector 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ for the conservation variables and 
+\begin_inset Formula $U_{i}:=\braket{i}{U}$
+\end_inset
+
+ to be the 
+\begin_inset Formula $i$
+\end_inset
+
+-th element of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a matrix 
+\begin_inset Formula $\Matrix{F}$
+\end_inset
+
+ for the flux, 
+\begin_inset Formula $\ket{F_{i}}:=\Matrix{F}\ket{i}$
+\end_inset
+
+ for the 
+\begin_inset Formula $i$
+\end_inset
+
+-th column of 
+\begin_inset Formula $\Matrix{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ip{k}{F_{i}}\equiv\mel{k}{F}{i}$
+\end_inset
+
+ for the 
+\begin_inset Formula $k$
+\end_inset
+
+-th elememt of 
+\begin_inset Formula $\ket{F_{i}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a 3D vector conservation law is written as
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{\ket{U}}{t}+\sum_{i=1}^{3}\pdv{\ket{F_{i}}}{x_{i}}=\ket{0}}\label{eq:SystemOfConservationLaws}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Subsubsection
 Discontinuity Condition
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Discontinuity-Condition"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1197,7 +1308,7 @@ All of its walls are
 Then, the conservation law is reduced to
 \begin_inset Formula 
 \[
-\lim_{h\to0}\oint_{\partial V}\left(\vec{f}-\phi\vec{u}^{S}\right)\cdot\vu{n}\dd{S}=\int_{S_{+}\cup S_{-}}\left(\vec{f}-\phi\vec{u}^{S}\right)\cdot\vu{n}\dd{S}
+\int_{S_{+}}\left(\vec{f}-\phi\vec{u}^{S}\right)\cdot\vu{n}\dd{S}+\int_{S_{-}}\left(\vec{f}-\phi\vec{u}^{S}\right)\cdot\vu{n}\dd{S}=0
 \]
 
 \end_inset
@@ -1220,7 +1331,7 @@ Replace
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{u_{\perp}^{S}=\frac{f_{+}-f_{-}}{\phi_{+}-\phi_{-}}\qc f_{\pm}=\lim_{h\to\pm0}\vec{f}\cdot\vu{e}_{\perp}}
+\boxed{(f_{+}-f_{-})=(\phi_{+}-\phi_{-})u_{\perp}^{S}\qc f_{\pm}=\lim_{h\to\pm0}\vec{f}\cdot\vu{e}_{\perp}}
 \]
 
 \end_inset
@@ -1234,6 +1345,24 @@ jump condition
 Rankine–Hugoniot condition
 \noun default
 .
+ 
+\end_layout
+
+\begin_layout Standard
+Following the notation convention mentioned above, the jump condition for
+ a 1D scalar conservation law is usually written as
+\begin_inset Formula 
+\[
+(f_{+}-f_{-})=(u_{+}-u_{-})s
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $s$
+\end_inset
+
+ is the speed of the jump.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1272,15 +1401,17 @@ for any compact supported smooth test function
 \noun on
 weak solution
 \noun default
- of
-\begin_inset Formula 
-\[
-\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}
-\]
+ of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Theorem
@@ -1353,7 +1484,17 @@ We drop the
 
 \end_inset
 
-which leads to the original PDE since 
+which leads to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ since 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -1412,7 +1553,7 @@ i.e.
 \end_layout
 
 \begin_layout Standard
-For 1-D conservation laws with a convex flux
+For 1D conservation laws with a convex flux
 \begin_inset Formula 
 \[
 \pdv{u}{t}+\pdv{f}{x}=0\qc f''>0
@@ -1437,7 +1578,7 @@ literal "false"
 
 \end_inset
 
-or
+or equivalently
 \begin_inset Formula 
 \[
 \eval{\dv{f}{u}}_{-}\ge s\ge\eval{\dv{f}{u}}_{+}
