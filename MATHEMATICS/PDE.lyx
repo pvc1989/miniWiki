@@ -117,7 +117,7 @@ Scalar Hyperbolic Equations
 \end_layout
 
 \begin_layout Subsubsection
-The Linear Wave Equation
+The First Order Linear Wave Equation
 \end_layout
 
 \begin_layout Standard
@@ -127,9 +127,9 @@ The simplest initial-value problem (IVP) is given by the first-order partial
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\pdv{u}{t}+a\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)
-\]
+\begin{equation}
+\pdv{u}{t}+a\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)\label{eq:FirstOrderLinearWaveEquation}
+\end{equation}
 
 \end_inset
 
@@ -213,15 +213,6 @@ The physical meaning of this solution is a wave packet moving with constant
 \end_inset
 
 , whose shape keeps unchanged.
- This is why it is called the 
-\noun on
-linear wave equation
-\noun default
- or the 
-\noun on
-single wave equation
-\noun default
-.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1591,19 +1582,33 @@ or equivalently
 
 \begin_layout Subsection
 Riemann Problems
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Riemann-Problems"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
-The Linear Advection Equation
+The First Order Linear Wave Equation
 \end_layout
 
 \begin_layout Standard
-When the IC is given as
+The simplest Riemann problem is the first order linear wave equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:FirstOrderLinearWaveEquation"
+
+\end_inset
+
+ with the following IC:
 \begin_inset Formula 
 \[
-u^{0}(x)=\begin{cases}
-u_{-} & x<0\\
-u_{+} & x>0
+u(t=0,x)=\begin{cases}
+u_{-}, & x<0\\
+u_{+}, & x>0
 \end{cases}
 \]
 
@@ -1617,30 +1622,227 @@ in which
 \begin_inset Formula $u_{+}$
 \end_inset
 
- are two constants, the gereral solution is
+ are two constants.
+ The gereral solution of this IVP is
 \begin_inset Formula 
 \[
-u(t,x)=u^{0}(x-at)=\begin{cases}
-u_{-} & x<at\\
-u_{+} & x>at
+u(t,x)=\begin{cases}
+u_{-}, & x/t<a\\
+u_{+}, & x/t>a
 \end{cases}
 \]
 
 \end_inset
 
-Note that on the discontinuity (
-\begin_inset Formula $x=at$
+
+\end_layout
+
+\begin_layout Standard
+Note that on the discontinuity 
+\begin_inset Formula $x/t=a$
 \end_inset
 
-), the PDE does not make sense; instead, the jump condition
+, the PDE does not make sense.
+ Instead, the jump condition
 \begin_inset Formula 
 \[
-\frac{f_{+}-f_{-}}{\phi_{+}-\phi_{-}}=\frac{au_{+}-au_{-}}{u_{+}-u_{-}}=a
+\frac{f_{+}-f_{-}}{u_{+}-u_{-}}=\frac{au_{+}-au_{-}}{u_{+}-u_{-}}=a
 \]
 
 \end_inset
 
-is satisfied.
+and the entropy condition
+\begin_inset Formula 
+\[
+\eval{\dv{f}{u}}_{-}=s=\eval{\dv{f}{u}}_{+}=a
+\]
+
+\end_inset
+
+are satisfied.
+\end_layout
+
+\begin_layout Subsubsection
+Linear Hyperbolic Systems of PDEs
+\end_layout
+
+\begin_layout Standard
+The Riemann problem of a linear hyperbolic systems of PDEs is an IVP with
+ the PDE:
+\begin_inset Formula 
+\[
+\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ is a constant matrix and the IC:
+\begin_inset Formula 
+\[
+\ket{U}(t=0,x)=\begin{cases}
+\ket{U_{-}}, & x<0\\
+\ket{U_{+}}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\ket{U_{-}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{+}}$
+\end_inset
+
+ are two constant column vectors.
+\end_layout
+
+\begin_layout Standard
+To solve this IVP, we first project the initial jump onto the the space
+ spanned by 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\ket{U_{-}}=\sum_{i=1}^{m}v_{i}^{-}\ket{R_{i}}\qc\ket{U_{+}}=\sum_{i=1}^{m}v_{i}^{+}\ket{R_{i}}
+\]
+
+\end_inset
+
+The IVP then becomes 
+\begin_inset Formula $m$
+\end_inset
+
+ independent Riemann problems:
+\begin_inset Formula 
+\[
+\pdv{v_{i}}{t}+\lambda_{i}\pdv{v_{i}}{x}=0\qc v_{i}(t=0,x)=\begin{cases}
+v_{i}^{-}, & x<0\\
+v_{i}^{+}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+which we have solved in the previous section.
+ We know the solutions are:
+\begin_inset Formula 
+\[
+v_{i}(t,x)=\begin{cases}
+v_{i}^{-}, & x/t<\lambda_{i}\\
+v_{i}^{+}, & x/t>\lambda_{i}
+\end{cases}
+\]
+
+\end_inset
+
+The general solution of the original IVP is then the superposition of all
+ the 
+\begin_inset Formula $m$
+\end_inset
+
+ independent waves carrying the initial jump.
+ Note that the 
+\begin_inset Formula $i$
+\end_inset
+
+-th wave propagates with speed 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+, so the 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+ space is divided into 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ regions by the 
+\begin_inset Formula $m$
+\end_inset
+
+ characteristic curves.
+ Suppose the eigenvalues have been sorted, i.e.
+\begin_inset Formula 
+\[
+\lambda_{1}<\cdots<\lambda_{m}
+\]
+
+\end_inset
+
+In the region 
+\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+The jumps in the first 
+\begin_inset Formula $k$
+\end_inset
+
+ waves are to the left of 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+, so these 
+\begin_inset Formula $k$
+\end_inset
+
+ waves take their right values on 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The jumps in the other 
+\begin_inset Formula $(m-k)$
+\end_inset
+
+ waves are to the right of 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+, so these 
+\begin_inset Formula $(m-k)$
+\end_inset
+
+ waves take their left values on 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The value of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ at an arbitrary point (except on the characteristic curves) is then
+\begin_inset Formula 
+\[
+\ket{U}(t,x)=\sum_{i=1}^{k}v_{i}^{+}\ket{R_{i}}+\sum_{i=k+1}^{m}v_{i}^{-}\ket{R_{i}}\qc\lambda_{k}<\frac{x}{t}<\lambda
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The Quasilinear Wave Equation
 \end_layout
 
 \begin_layout Section
