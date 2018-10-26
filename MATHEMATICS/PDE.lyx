@@ -243,9 +243,9 @@ If the (phase) speed is a function of
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)
-\]
+\begin{equation}
+\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)\label{eq:QuasilinearWaveEquation}
+\end{equation}
 
 \end_inset
 
@@ -1970,6 +1970,250 @@ The value of
 
 \begin_layout Subsubsection
 The Quasilinear Wave Equation
+\end_layout
+
+\begin_layout Standard
+The Riemann problem for a quasilinear wave equation is an IVP with the PDE
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:QuasilinearWaveEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the following IC:
+\begin_inset Formula 
+\[
+u(t=0,x)=\begin{cases}
+u_{-}, & x<0\\
+u_{+}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $u_{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{+}$
+\end_inset
+
+ are two constants.
+ The general solution will contain three parts, two of them have the same
+ form as that of linear wave equation:
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}, & x/t<\lambda_{-}\\
+?, & x/t\in\left[\lambda_{-},\lambda_{+}\right]\\
+u_{+}, & x/t>\lambda_{+}
+\end{cases}
+\]
+
+\end_inset
+
+Our task is to determine the solution for the second region.
+\end_layout
+
+\begin_layout Paragraph
+Shock Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}>u_{+}$
+\end_inset
+
+, or 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}<u_{+}$
+\end_inset
+
+, we will have 
+\begin_inset Formula $a_{-}>a_{+}$
+\end_inset
+
+, which means the characteristic curves started from the left half of the
+ 
+\begin_inset Formula $x$
+\end_inset
+
+-axis will intersect with those started from the right half of the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
+ In this case, a 
+\noun on
+shock wave
+\noun default
+ separating the two families of parallel characteristic curves will start
+ from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ The speed of the shock wave is determined by the jump condition
+\begin_inset Formula 
+\[
+s=\frac{f_{+}-f_{-}}{u_{+}-u_{-}}
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+a_{-}>s>a_{+}
+\]
+
+\end_inset
+
+is strictly satisfied.
+ The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}, & x/t<s\\
+\text{jump}, & x/t=s\\
+u_{+}, & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Rarefaction Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}<u_{+}$
+\end_inset
+
+, or 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}>u_{+}$
+\end_inset
+
+, we will have 
+\begin_inset Formula $a_{-}<a_{+}$
+\end_inset
+
+, which means the two families of characteristic curves will diverge from
+ each other.
+ In this case, a fan-shaped 
+\noun on
+rarefaction wave
+\noun default
+ separating the two families of parallel characteristic curves will start
+ from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ The speed of the 
+\noun on
+wave head
+\noun default
+ is same as 
+\begin_inset Formula $a_{+}$
+\end_inset
+
+, while that of the 
+\noun on
+wave tail
+\noun default
+ is same as 
+\begin_inset Formula $a_{-}$
+\end_inset
+
+.
+ In the region between them, 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is smooth enough to the PDE, which can be solved from the equation of the
+ characteristic curves:
+\begin_inset Formula 
+\[
+x-a(u)t=x_{0}=0\implies u(t,x)=a^{-1}\left(\frac{x}{t}\right)
+\]
+
+\end_inset
+
+The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}, & x/t<a_{-}\\
+a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
+u_{+}, & x/t>a_{+}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Contact Discontinuity
+\end_layout
+
+\begin_layout Standard
+If neither 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+\end_inset
+
+ nor 
+\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
+\end_inset
+
+ is gauranteed, there might be such discontinuity that satisfies the jump
+ condition
+\begin_inset Formula 
+\[
+s=\frac{f_{+}-f_{-}}{u_{+}-u_{-}}
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+a_{-}=s>a_{+}\qor a_{-}>s=a_{+}\qor a_{-}=s=a_{+}
+\]
+
+\end_inset
+
+In such case, the discontinuity is called a 
+\noun on
+contact discontinuity
+\noun default
+.
 \end_layout
 
 \begin_layout Section
