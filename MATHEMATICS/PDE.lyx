@@ -117,12 +117,13 @@ Scalar Hyperbolic Equations
 \end_layout
 
 \begin_layout Subsubsection
-The First Order Linear Wave Equation
+The Linear Wave Equation
 \end_layout
 
 \begin_layout Standard
-The simplest initial-value problem (IVP) is given by the first-order partial
- differential equation (PDE) with a constant coefficient
+The simplest hyperbolic PDE is the first-order 
+\noun on
+linear wave equation
 \end_layout
 
 \begin_layout Standard
@@ -133,15 +134,32 @@ The simplest initial-value problem (IVP) is given by the first-order partial
 
 \end_inset
 
-and the initial condition (IC)
+in which, 
+\begin_inset Formula $a$
+\end_inset
+
+ is a constant speed.
+\end_layout
+
+\begin_layout Standard
+To define an IVP, we need to supply it with an IC, which is generally given
+ by
 \begin_inset Formula 
-\[
-u(t=0,x)=u^{0}(x)\qc x\in(-\infty,\infty)
-\]
+\begin{equation}
+u(t=0,x)=u^{0}(x)\qc x\in(-\infty,\infty)\label{eq:ScalarInitialCondition}
+\end{equation}
 
 \end_inset
 
+in which, 
+\begin_inset Formula $u^{0}(x)$
+\end_inset
 
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth.
 \end_layout
 
 \begin_layout Standard
@@ -170,19 +188,19 @@ If we treat
 \end_inset
 
  as a varying parameter, then all of the characteristic curves together
- form a one-parameter family of parallel straight lines in 
+ form a one-parameter family of 
+\emph on
+parallel straight lines
+\emph default
+ in 
 \begin_inset Formula $(t,x)$
 \end_inset
 
  plane.
 \end_layout
 
-\begin_layout Theorem
-The characteristic curves of the linear wave equation are straight lines.
-\end_layout
-
 \begin_layout Standard
-Along any characteristic curve, the rate of change of 
+Along any characteristic curve, the change rate of 
 \begin_inset Formula $u$
 \end_inset
 
@@ -202,17 +220,13 @@ which means
  The solution of the IVP is then
 \begin_inset Formula 
 \[
-u(t,x)=u^{0}\left(x^{0}\right)=u^{0}(x-at)
+u(t,x)=u^{0}(x-at)
 \]
 
 \end_inset
 
-The physical meaning of this solution is a wave packet moving with constant
- speed 
-\begin_inset Formula $a$
-\end_inset
-
-, whose shape keeps unchanged.
+The physical interpretation of this solution is a wave packet, whose shape
+ keeps unchanged, moving with a constant speed.
 \end_layout
 
 \begin_layout Subsubsection
@@ -235,7 +249,7 @@ If the (phase) speed is a function of
 
 \end_inset
 
-which is called the 
+which is called the first order 
 \noun on
 quasilinear wave equation
 \noun default
@@ -244,7 +258,7 @@ quasilinear wave equation
 \begin_inset Formula $a(u)=ku$
 \end_inset
 
-, then we have
+, we have
 \begin_inset Formula 
 \[
 \pdv{u}{t}+ku\pdv{u}{x}=0
@@ -265,7 +279,7 @@ Burgers equation.
 \begin_inset Formula $k$
 \end_inset
 
- even if it is equal to 
+ even when it is equal to 
 \begin_inset Formula $1$
 \end_inset
 
@@ -281,22 +295,20 @@ Burgers equation.
 \end_layout
 
 \begin_layout Standard
-The initial condition (IC) is generally given as
-\begin_inset Formula 
-\[
-u(t=0,x)=u^{0}(x)\qc x\in(-\infty,\infty)
-\]
+The initial condition (IC) is the same as 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ScalarInitialCondition"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
 Since the quasilinear wave equation is the nonlinearized version of the
  linear wave equation, we can try to solve it, at least locally, as what
  we have done for its linear counterpart.
- 
 \end_layout
 
 \begin_layout Standard
@@ -314,9 +326,9 @@ The characteristic curve of the PDE passing through
 
 which is
 \begin_inset Formula 
-\[
-x=a(u)t+x^{0}
-\]
+\begin{equation}
+x=a(u)t+x^{0}\label{eq:CharCurveOfQuasilinearWaveEquation}
+\end{equation}
 
 \end_inset
 
@@ -343,7 +355,7 @@ Let us first assume that before a critical time
 \begin_inset Formula $u$
 \end_inset
 
- still keeps unchanged
+ still keeps unchanged:
 \begin_inset Formula 
 \[
 \dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a\pdv{u}{x}=0
@@ -351,19 +363,27 @@ Let us first assume that before a critical time
 
 \end_inset
 
-The solution of the PDE is then
+The solution of the IVP is then
 \begin_inset Formula 
-\[
-u(t,x)=u^{0}(x-a(u)t)
-\]
+\begin{equation}
+u(t,x)=u^{0}(x-a(u)t)\label{eq:GeneralSolutionOfQuasilinearWaveEquation}
+\end{equation}
 
 \end_inset
 
-from which 
+from which, 
 \begin_inset Formula $u$
 \end_inset
 
- can be solved in general, not necessarily in a closed form.
+ can be solved in principle.
+\end_layout
+
+\begin_layout Standard
+The fact that 
+\begin_inset Formula $u$
+\end_inset
+
+ keeps unchanged along a characteristic curve has an important corollary:
 \end_layout
 
 \begin_layout Theorem
@@ -371,15 +391,61 @@ The characteristic curves of the quasilinear wave equation are straight
  lines.
 \end_layout
 
+\begin_layout Proof
+From 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:CharCurveOfQuasilinearWaveEquation"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GeneralSolutionOfQuasilinearWaveEquation"
+
+\end_inset
+
+, we know the slope of the characteristic curve passing through 
+\begin_inset Formula $\left(t^{0},x^{0}\right)$
+\end_inset
+
+ is a constant: 
+\begin_inset Formula 
+\[
+a(u)=a\left(u^{0}\left(x-at\right)\right)=a\left(u^{0}\left(x^{0}\right)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-One question is how long does the classical solution stand valid? The answer
- is it depends on the positiveness of 
-\begin_inset Formula $\dv{a}{u}\dv{u^{0}}{x}$
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have solved the first question: what happens before the critical time
+ 
+\begin_inset Formula $t^{*}$
 \end_inset
 
 .
- Let us first assume 
-\begin_inset Formula $u^{0}$
+ The second question is how long does this solution stand valid? The answer
+ is: it depends on the positiveness of
+\begin_inset Formula 
+\[
+\dv{a}{x^{0}}:=\eval{\dv{\left(a\circ u^{0}\right)}{x}}_{x=x^{0}}
+\]
+
+\end_inset
+
+Let us first assume 
+\begin_inset Formula $u^{0}(x)$
 \end_inset
 
  is 
@@ -391,54 +457,56 @@ One question is how long does the classical solution stand valid? The answer
 
 \begin_layout Theorem
 If 
-\begin_inset Formula $\dv{a}{u}\dv{u^{0}}{x}>0$
+\begin_inset Formula $\forall x^{0}\in(\xi,\eta)\colon\dv{a}{x^{0}}>0$
 \end_inset
 
 , then 
-\begin_inset Formula $x_{1}(0)<x_{2}(0)\implies\forall t>0\colon x_{1}(t)<x_{2}(t)$
+\begin_inset Formula $\forall\xi<x_{1}^{0}<x_{2}^{0}<\eta\implies$
 \end_inset
 
-.
+
+\begin_inset Formula 
+\[
+\forall t>0\colon x_{1}(t)<x_{2}(t)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
 Using the definition of characteristic curves, i.e.
  
-\begin_inset Formula $\dv{x_{i}}{t}=a\left(u(t,x_{i})\right)$
+\begin_inset Formula $\dv{x}{t}=a\left(u\right)$
 \end_inset
 
 , and the fact that 
-\begin_inset Formula $u$
-\end_inset
-
- remains unchanged along the characteristic curves, i.e.
- 
-\begin_inset Formula $u(t,x_{i})=u^{0}(x_{i}(0))$
+\begin_inset Formula $a\left(u\right)=\left(a\circ u^{0}\right)\left(x^{0}\right)$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\dv{\left(x_{2}-x_{1}\right)}{t}=a\left(u^{0}\left(x_{2}(0)\right)\right)-a\left(u^{0}\left(x_{1}(0)\right)\right)>0
+\dv{\left(x_{2}-x_{1}\right)}{t}=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)>0
 \]
 
 \end_inset
 
-Geometrically, in this case, the characteristic curves diverge from each
- other as 
-\begin_inset Formula $t$
+The positiveness is implied by 
+\begin_inset Formula $\dv{a}{x^{0}}>0$
 \end_inset
 
- increases.
+.
 \end_layout
 
 \begin_layout Theorem
 If 
-\begin_inset Formula $\dv{a}{u}\dv{u^{0}}{x}<0$
+\begin_inset Formula $\forall x^{0}\in(\xi,\eta)\colon\dv{a}{x^{0}}<0$
 \end_inset
 
 , then 
-\begin_inset Formula $x_{1}(0)<x_{2}(0)\implies$
+\begin_inset Formula $\forall\xi<x_{1}^{0}<x_{2}^{0}<\eta\implies$
 \end_inset
 
 
@@ -453,25 +521,44 @@ If
 \end_layout
 
 \begin_layout Proof
-The proof is similar to the previous theorem, but
+The proof is similar to the previous theorem, except for the direction of
+ the inequality
 \begin_inset Formula 
 \[
-\dv{\left(x_{2}-x_{1}\right)}{t}=a\left(u^{0}\left(x_{2}(0)\right)\right)-a\left(u^{0}\left(x_{1}(0)\right)\right)<0
+\dv{\left(x_{2}-x_{1}\right)}{t}=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)<0
 \]
 
 \end_inset
 
-Geometrically, in this case, the characteristic curves converge to each
- other as 
-\begin_inset Formula $t$
+The intersecting time 
+\begin_inset Formula $t^{*}$
 \end_inset
 
- increases.
- Since they are both straight lines, they will finally (at time 
-\begin_inset Formula $t^{*}>0$
+ of two characteristic curves emanated from 
+\begin_inset Formula $\left(0,x_{1}^{0}\right)$
 \end_inset
 
-) intersect.
+ and 
+\begin_inset Formula $\left(0,x_{2}^{0}\right)$
+\end_inset
+
+ can be solved from
+\begin_inset Formula 
+\[
+\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)t+x_{1}^{0}=x=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)t+x_{2}^{0}
+\]
+
+\end_inset
+
+which is
+\begin_inset Formula 
+\[
+t^{*}\left(x_{1}^{0},x_{2}^{0}\right)=\frac{x_{1}^{0}-x_{2}^{0}}{\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)}>0
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -489,34 +576,74 @@ When two characteristic curves intersect,
  will have two values
 \begin_inset Formula 
 \[
-u=u^{0}\left(x_{1}(0)\right)\qand u=u^{0}\left(x_{2}(0)\right)
+u=u^{0}\left(x_{1}^{0}\right)\qand u=u^{0}\left(x_{2}^{0}\right)
 \]
 
 \end_inset
 
 which are generally inconsistent.
- This means a discontinuity has arised, although the IC is smooth.
- This will never happen for a linear PDE, such as the linear wave equation.
-\end_layout
-
-\begin_layout Definition
-Among all the intersecting time 
-\begin_inset Formula $t^{*}$
+ Such inconsistent will leads to an infinite 
+\begin_inset Formula $\pdv{u}{x}$
 \end_inset
 
-, the minimum one is called the 
+.
+ On the other hand, 
+\begin_inset Formula $\pdv{u}{x}$
+\end_inset
+
+ can be solved from the general solution 
+\begin_inset Formula $u=u^{0}(x-a(u)t)$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\pdv{u}{x}=\dv{u^{0}}{x^{0}}\left(1-\dv{a}{u}\pdv{u}{x}t\right)\implies\pdv{u}{x}=\frac{\dv{u^{0}}{x^{0}}}{1+t\dv{u^{0}}{x^{0}}\dv{a}{u}}=\frac{\dv{u^{0}}{x^{0}}}{1+t\dv{a}{x^{0}}}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $u^{0}(x)$
+\end_inset
+
+ is assumed to be 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth, the condition for 
+\begin_inset Formula $\pdv{u}{x}\to\infty$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+1+t\dv{a}{x^{0}}=0\implies t^{*}\left(x^{0}\right)=-\left(\dv{a}{x^{0}}\right)^{-1}>0
+\]
+
+\end_inset
+
+Its minimum is defined as the 
 \noun on
 breaking time
 \noun default
-, denoted as 
+:
+\begin_inset Formula 
+\[
+\boxed{t^{b}=\min_{x^{0}\in(\xi,\eta)}-\left(\dv{a}{x^{0}}\right)^{-1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The third question is: what will happen after 
 \begin_inset Formula $t^{b}$
 \end_inset
 
-, at which the classical solution breaks and becomes invalid afterwards.
-\end_layout
-
-\begin_layout Definition
-What will happen after the breaking? If we think of 
+? If we think of 
 \begin_inset Formula $u\left(t^{b},x\right)$
 \end_inset
 
@@ -808,7 +935,7 @@ characteristic form
 
 \end_inset
 
- as
+as
 \begin_inset Formula 
 \[
 v_{i}(t,x)=v_{i}^{0}(x-\lambda_{i}t)
@@ -1592,7 +1719,7 @@ name "subsec:Riemann-Problems"
 \end_layout
 
 \begin_layout Subsubsection
-The First Order Linear Wave Equation
+The Linear Wave Equation
 \end_layout
 
 \begin_layout Standard
