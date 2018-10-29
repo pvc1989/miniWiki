@@ -133,7 +133,7 @@ sudo apt install vim
 
 其中 `apt` 是 Debian/Ubuntu 下的软件包管理命令. 在 CentOS/Fedora 下对应的命令为 `yum`.
 
-### 调整终端文字颜色
+### 调整终端配置
 
 Ubuntu 默认的终端提示格式为
 
@@ -172,6 +172,15 @@ if [ "$color_prompt" = yes ]; then
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
+```
+
+在 `~/.bashrc` 文件中, 另一个建议修改的地方是:
+
+```shell
+# -a 选项会显示隐藏文件的信息, 日常使用中是多余的:
+alias ll='ls -alF'
+# 建议修改为:
+alias ll='ls -lF'
 ```
 
 保存并退出, 然后用 `source` 命令使其生效 (或重启终端):
