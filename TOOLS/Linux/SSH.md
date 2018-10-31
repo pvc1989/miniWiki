@@ -47,26 +47,35 @@ systemctl status ssh
 如果需要, 安装 SSH 客户端软件:
 sudo apt install openssh-server
 ```
-
 登入远程主机上的指定用户:
-
 ```shell
 ssh user@address
 # 按提示输入正确的密码后, 即可登入远程主机.
 ```
-
 或者, 登入远程主机后, 在远程主机上运行某程序:
-
 ```shell
 # 等程序执行完成后, 才切换回本地终端:
 ssh user@address do_something
 # 不等程序执行完, 立即切换回本地终端:
 ssh -f user@address do_something
 ```
+输入 `exit` 则结束本次 SSH 连接 (但一般不会关闭远程主机).
 
 ### 从 Windows 主机访问远程 Linux 主机
 
-首先需要在 Windows 主机上安装 SSH 客户端软件, 例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/). 这些客户端软件一般都提供了虚拟终端, 使用方式和 Linux 终端基本相同.
+首先需要在 Windows 主机上安装 SSH 客户端软件, 例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/). 启动后, 在地址栏输入远程 Linux 主机的 IP 地址和端口号 (默认为 `22`), 然后会弹出一个虚拟终端, 在以下提示信息后面输入用户名
+``` shell
+login as:
+```
+并按提示输入密码, 即可建立 SSH 连接.
+
+### 修改远程 Linux 主机上当前用户的密码
+
+建立远程连接后, 在终端中输入以下命令:
+```shell
+passwd
+```
+然后根据提示输入原密码和新密码, 这样在下次连接时就需要使用新密码了.
 
 ## 传输文件
 
