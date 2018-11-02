@@ -3,21 +3,20 @@
 ## Outline
 
 ### Mathematics
-
 - [Differential Geometry](./MATHEMATICS/DIFFERENTIAL_GEOMETRY.lyx)
 - [Partial Differential Equations](./MATHEMATICS/PDE.lyx)
 
 ### Physics
-
 - [Fluid Mechanics](./PHYSICS/FLUID_MECHANICS.lyx)
 
 ### Algorithms
-
 - [CFD](./ALGORITHMS/CFD.lyx): Computational Fluid Mechanics
 - [Optimization](./ALGORITHMS/OPTIMIZATION.lyx) 
 
-### Tools
+### Programming
+- [Python](./PROGRAMMING/Python.md)
 
+### Tools
 - Markdown
   - [Typora](./TOOLS/Markdown/Typora.md) 
 - [Git](./TOOLS/Git.md) 
@@ -27,3 +26,4 @@
   - [Vim](./TOOLS/Vim.md)
   - [SSH](./TOOLS/Linux/SSH.md): Secure SHell
 - [VTK](./TOOLS/VTK.md)
+
