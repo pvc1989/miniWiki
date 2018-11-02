@@ -277,10 +277,14 @@ if __name__ == '__main__':
 
 ### [NumPy](https://docs.scipy.org) --- Numerical Python
 
+最完整最准确的参考资料是 [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 和 [Numpy User Guide](https://docs.scipy.org/doc/numpy/user/). 由于需要频繁查阅, 为提高页面加载速度, 建议将 [HTML+zip](https://docs.scipy.org/doc/numpy-1.15.1/numpy-html-1.15.1.zip) 下载到本地主机, 解压后打开 `index.html` 即可进入.
+
 [The N-dimensional array (`ndarray`)](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html)
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
 ### [SciPy](https://docs.scipy.org) --- Scientific Python
+
+最完整最准确的参考资料是 [SciPy Reference Guide](https://docs.scipy.org/doc/scipy/reference/). 由于需要频繁查阅, 为提高页面加载速度, 建议下载 [HTML+zip](https://docs.scipy.org/doc/scipy-1.1.0/scipy-html-1.1.0.zip) 到本地主机, 解压后打开 `index.html` 即可进入.
 
 ### [Matplotlib](https://matplotlib.org) --- A Python Plotting Library
 
