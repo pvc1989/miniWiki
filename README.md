@@ -14,17 +14,17 @@
 - [Optimization](./ALGORITHMS/OPTIMIZATION.lyx) 
 
 ### Programming
-- [Python](./PROGRAMMING/Python.md)
+- [Python](./PROGRAMMING/PYTHON.md)
 
 ### Tools
 - Markdown
-  - [Typora](./TOOLS/Markdown/Typora.md) 
-- [Git](./TOOLS/Git.md) 
-- [Octave](./TOOLS/Octave.md)
+  - [Typora](./TOOLS/MARKDOWN/TYPORA.md) 
+- [Git](./TOOLS/GIT.md) 
+- [Octave](./TOOLS/OCTAVE.md)
 - Linux
-  - [Install](./TOOLS/Linux/INSTALL.md) 
-  - [Vim](./TOOLS/Vim.md)
-  - [SSH](./TOOLS/Linux/SSH.md): Secure SHell
-- [Gmsh](./TOOLS/Gmsh.md) --- a free 3D finite element mesh generator
+  - [Install](./TOOLS/LINUX/INSTALL.md) 
+  - [Vim](./TOOLS/LINUX/VIM.md)
+  - [SSH](./TOOLS/LINUX/SSH.md): Secure SHell
+- [Gmsh](./TOOLS/GMSH.md) --- a free 3D finite element mesh generator
 - [VTK](./TOOLS/VTK.md) ---  an open-source, freely available software system for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting
 
