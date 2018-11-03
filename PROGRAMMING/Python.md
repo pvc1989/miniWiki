@@ -66,7 +66,7 @@ len(s)
 min(s)
 max(s)
 s.count(x)
-s.index(x[, i[, j]])	# index of the first occurrence of x in s (at or after index i and before index j)
+s.index(x[, i[, j]])  # index of the first occurrence of x in s (at or after index i and before index j)
 ```
 
 *immutable* 类型可以作为 `hash()` 的输入参数, 从而可以作为 `set` 和 `dict` 的关键词:
@@ -88,13 +88,13 @@ s[i:j:k] = t
 del s[i:j:k] 
 s.append(x)
 s.clear()
-s.copy()	# creates a shallow copy of s
+s.copy()  # creates a shallow copy of s
 s[:]      # same as above
 s += t
-s *= n	# updates s with its contents repeated n times
-s.insert(i, x)	# inserts x into s at the index given by i
-s.pop([i])	# retrieves the item at i and also removes it from s
-s.remove(x)	 # remove the first x from s
+s *= n  # updates s with its contents repeated n times
+s.insert(i, x)  # inserts x into s at the index given by i
+s.pop([i])  # retrieves the item at i and also removes it from s
+s.remove(x)  # remove the first x from s
 s.reverse()
 ```
 
@@ -290,7 +290,7 @@ if __name__ == '__main__':
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
-## Before Serious Progr amming
+## Before Serious Programming
 
 ### [Style Guide](https://www.python.org/dev/peps/pep-0008/)
 
