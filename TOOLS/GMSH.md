@@ -22,6 +22,7 @@ Modules
 gmsh t1.geo -2
 ```
 常用命令行参数:
+
 | 参数 | 功能 |
 | ---- | ---- |
 | `-1`/`-2`/`-3` | 生成一/二/三维网格 |
@@ -29,6 +30,7 @@ gmsh t1.geo -2
 | `-format string` | 选择网格文件格式, 例如 `msh4`, `msh2`, `vtk` |
 | `-bin` | 以二进制模式输出 |
 | `-part n` | 将网格分割为 `n` 块 (用于并行计算) |
+
 完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [3.3 Command-line options](http://gmsh.info/doc/texinfo/gmsh.html#Command_002dline-options).
 
 
