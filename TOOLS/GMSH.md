@@ -511,6 +511,163 @@ Coherence;
 详见 [5.2. Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options).
 
 ### 网格模块
+
+#### 物理实体对网格的影响
+- 如果没有创建物理实体, 那么所有单元都会被写入网格文件.
+- 如果创建了物理实体, 那么
+    - 默认情况下, 只有物理实体上的单元会被写入网格文件, 结点和单元会被重新编号.
+    - 通过设置 `Mesh.SaveAll` 选项或使用命令行参数 `-save_all` 可以保存所有单元.
+
+#### 设定单元尺寸
+单元尺寸可以通过以下三种方式设定:
+- 如果设定了 `Mesh.CharacteristicLengthFromPoints`, 那么可以为每个 `Point` 设定一个*特征长度 (Characteristic Length)*.
+- 如果设定了 `Mesh.CharacteristicLengthFromCurvature`, 那么网格尺寸将与*曲率 (Curvature)* 相适应.
+- 通过背景网格或标量场设定.
+这三种方式可以配合使用, Gmsh 会选用最小的一个.
+
+常用命令:
+```cpp
+// 修改点的特征长度:
+Characteristic Length{pointTagList} = length;
+```
+
+完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [6.3.1. Specifying mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes).
+
+#### 生成结构网格
+Gmsh 所生成的网格都是*非结构的 (unstructured)*, 即各单元的取向和结点邻接关系完全由其结点列表决定, 而不要求相邻单元之间有其他形式的关联, 因此不能算是真正意义上的*结构 (structured)* 网格.
+
+所有结构网格单元 (四边形, 六面体, 三棱柱) 都是通过合并单纯形 (三角形, 四面体) 而得到的:
+```cpp
+// 将指定曲面上的 三角形 合并为 四边形:
+Recombine Surface{surfaceTagList};
+// 将指定空间区域里的 四面体 合并为 六面体 或 三棱柱:
+Recombine Volume{volumeTagList};
+```
+
+##### 通过拉伸生成
+与几何模块中的同名函数类似, 只是多了一个 `layers` 参数:
+```cpp
+// 通过 平移 拉伸:
+Extrude{
+    vectorX, vectorY, vectorZ  // 平移向量
+}{
+    entityList  // 被拉伸对象
+    layers
+};
+// 通过 旋转 拉伸:
+Extrude{
+    {axisX, axisY, axisZ},  // 旋转轴
+    {pointX, pointY, pointZ},  // 旋转轴上任意一点
+    angle
+}{
+    entityList  // 被拉伸对象
+    layers
+};
+// 通过 平移 + 旋转 拉伸:
+Extrude{
+    {vectorX, vectorY, vectorZ},  // 平移向量
+    {axisX, axisY, axisZ},        // 旋转轴
+    {pointX, pointY, pointZ},     // 旋转轴上任意一点
+    angle
+}{
+    entityList  // 被拉伸对象
+    layers
+};
+```
+`layers` 用于设定拉伸方式, 有以下几种形式可以选择:
+```cpp
+Layers{elementNumber};  // 拉伸方向的单元数
+Layers {                    // 两个列表的长度必须一致
+    {elementNumberList},    // 各层的单元数
+    {normalizedHeightList}  // 各层的相对高度
+};
+Recombine Surface{surfaceTagList};  // 将指定曲面上的 三角形 合并为 四边形
+Recombine Volume{volumeTagList};    // 将指定空间区域里的 四面体 合并为 三棱柱 或 六面体
+```
+
+获取拉伸所得实体的标签:
+```cpp
+num[] = Extrude {0,0,1} { Surface{1}; Layers{10}; };
+// num[0] 为拉伸后的顶面
+// num[1] 为拉伸出的空间区域
+```
+
+##### 通过 Transfinite 插值生成
+生成一维结构网格:
+```cpp
+Transfinite Curve{curveTagList} = nodeNumber <Using direction ratio>;
+```
+其中 `direction` 用于表示结点间距的变化方向, 可以是:
+```cpp
+Progression  // 结点间距按几何级数 从一端向另一端 递增/递减
+Bump         // 结点间距按几何级数 从两端向中间 递增/递减
+```
+示例:
+```cpp
+Point(1) = {0, 0, 0};
+Point(2) = {1, 0, 0};
+Line(1) = {1, 2};
+Transfinite Curve{1} = 20 Using Progression 2;
+Mesh 1;
+```
+
+生成二维结构网格:
+```cpp
+Transfinite Surface{surfaceTagList}
+<= {/* 三个或四个顶点 */pointTagList}>
+<orientation>;
+```
+其中 `orientation` 表示三角形的取向:
+```cpp
+Left       // 全部向左倾斜
+Right      // 全部向右倾斜
+Alternate  // 倾斜方向交错变化
+```
+示例:
+```cpp
+SetFactory("OpenCASCADE");
+Rectangle(1) = {0.0, 0.0, 0.0, 3.0, 2.0};
+Transfinite Surface{1} = {PointsOf{Surface{1};}} Right;
+Mesh 2;
+```
+
+生成三维结构网格 (必须先在三维实体的表面生成结构网格):
+```cpp
+Transfinite Volume{volumeTagList}
+<= {/* 六个或八个顶点 */pointTagList}>;
+```
+示例:
+```cpp
+SetFactory("OpenCASCADE");
+Box(1) = {0.0, 0.0, 0.0, 3.0, 2.0, 1.0};
+Transfinite Surface{Boundary{Volume{1};}};
+Recombine Surface{:};
+Transfinite Volume{1};
+Recombine Volume{1};
+Mesh 3;
+```
+
+#### 其他命令
+```cpp
+// 生成 dim 维网格:
+Mesh dim;
+// 通过分裂细化网格:
+RefineMesh;
+// 选择网格优化算法, algorithm 可以是 Gmsh 或 Netgen:
+OptimizeMesh algorithm;
+// 设置单元阶数:
+SetOrder order;
+// 删去冗余结点:
+Coherence Mesh;
+// 将网格分为 part 块:
+PartitionMesh part;
+```
+完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [5.1.8 Miscellaneous](http://gmsh.info/doc/texinfo/gmsh.html#Miscellaneous-geometry-commands).
+
+#### 网格选项
+详见 [6.4. Mesh options](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-options).
+
+
 ### 求解器模块
 暂时不用.
 
