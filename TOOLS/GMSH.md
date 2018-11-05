@@ -394,8 +394,8 @@ Extrude{
 // 通过 平移 + 旋转 拉伸:
 Extrude{
     {vectorX, vectorY, vectorZ},  // 平移向量
-    {axisX, axisY, axisZ},  // 旋转轴
-    {pointX, pointY, pointZ},  // 旋转轴上任意一点
+    {axisX, axisY, axisZ},        // 旋转轴
+    {pointX, pointY, pointZ},     // 旋转轴上任意一点
     angle
 }{
     entityList  // 被拉伸对象
@@ -424,13 +424,10 @@ Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
 ```cpp
 BooleanOperation{passiveEntityList}{toolEntityList}
 ```
-- `BooleanOperation` 代表某种布尔运算, 可以是
-  - `BooleanIntersection`
-  - `BooleanUnion`
-  - `BooleanDifference`
-- `passiveEntityList` 代表*被动 (passive)* 实体列表, `toolEntityList` 代表*工具 (tool)* 实体列表, 可以是
+- `BooleanOperation` 代表某种布尔运算, 可以是 `BooleanIntersection`, `BooleanUnion`, `BooleanDifference` 之一.
+- `passiveEntityList` 代表*被动 (passive)* 实体列表, `toolEntityList` 代表*工具 (tool)* 实体列表, 它们可以是
 ```cpp
-<Physical> Curve | Surface | Volume{tagList};
+<Physical> Curve | Surface | Volume{tagList};  // ; 不能省略
 <... | Delete;>  // 运算完成后删去对应的实体
 ```
 
@@ -439,7 +436,7 @@ BooleanOperation{passiveEntityList}{toolEntityList}
 BooleanOperation(newEntityTag) = {passiveEntityList}{toolEntityList};
 ```
 
-一个简单的布尔运算示例:
+示例:
 ```cpp
 SetFactory("OpenCASCADE");
 Rectangle(1) = {-5, -5, 0, 10, 10};
