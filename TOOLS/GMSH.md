@@ -510,15 +510,18 @@ Coherence;
 #### 几何选项
 详见 [5.2. Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options).
 
-## Running
+### 网格模块
+### 求解器模块
+暂时不用.
 
-## General Tools
+### 后处理模块
+暂时不用.
 
-## Geometry Module
+## MSH 文件说明
 
-## Mesh Module
 
-## Post-processing Module
 
-## File Formats
+
+
+
 
