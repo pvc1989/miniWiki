@@ -224,6 +224,291 @@ Printf("%g", Pi) > "temp.txt";  // 输出到指定文件
 #### 通用选项
 暂时不用.
 
+### 几何模块
+#### CAD 内核
+CAD 内核可以在 GEO 文件头部通过以下命令之一设定:
+```cpp
+SetFactory("built-in");
+SetFactory("OpenCASCADE");
+```
+
+第一种为 Gmsh 自带的简易 CAD 内核, 只支持一些简单几何对象的创建和操作.
+由于采用了*边界表示 (Boundary Representation)* 法, 所有几何实体必须通过*自底向上 (bottom-up)* 方式创建:
+1. 先创建 `Point`, 
+2. 再以 `Point`s 为边界或控制点创建 `Curve`, 
+3. 再以 `Curve`s 为边界创建 `Surface`, 
+4. 最后以 `Surface`s 为边界创建 `Volume`.
+
+第二种为开源 CAD 系统 [OpenCASCADE](https://www.opencascade.com) 的内核, 支持一些高级几何对象的创建和操作.
+如果没有特殊的需求, 建议使用这种内核.
+
+#### 创建初等实体
+只具有几何意义的对象称为*初等实体 (elementary entity)*.
+初等实体在创建时, 被赋予一个正整数 (*非正整数*为系统保留) 编号, [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 中称其为*标签 (tag)*.
+这些 `tag` 满足:
+- 每个初等 `Point` 具有唯一的 `tag` 
+- 每个初等 `Curve` 具有唯一的 `tag` 
+- 每个初等 `Surface` 具有唯一的 `tag` 
+- 每个初等 `Volume` 具有唯一的 `tag` 
+
+多数命令的语法与 C++ 相同, 尤其要注意: 每个语句最后的 `;` 不能省略.
+
+- 圆括号 `()` 中的编号表示*创建*一个新的实体.
+- 花括号 `{}` 中的编号表示*引用*一个已有的实体.
+- 尖括号 `< >` 之间的内容为可选项.
+
+##### 点
+创建三维点:
+```cpp
+Point(pointTag) ={
+    x, y, z  // 直角坐标分量
+    <, /* 单元尺寸 */elementSize>
+};
+```
+
+##### 曲线
+通过连接两点创建直线段:
+```cpp
+Line(curveTag) = {startPointTag, endPointTag};
+```
+
+通过一组点创建样条曲线:
+```cpp
+Bezier(curveTag) = {pointTagList};
+BSpline(curveTag) = {pointTagList};
+Spline(curveTag) = {pointTagList};
+```
+
+创建圆弧:
+```cpp
+// Built-in 或 OpenCASCADE 均可,
+// 如果使用 Built-in 内核, 则弧度必须严格小于 Pi:
+Circle(curveTag) ={
+    startPointTag,
+    centerPointTag,
+    endPointTag
+};
+// 必须用 OpenCASCADE 内核:
+Circle(curveTag) ={
+    centerX, centerY, centerZ,
+    radius<, startAngle, endAngle>
+};
+```
+
+##### 曲面
+如果使用 built-in 内核, 必须按以下流程:
+```cpp
+// 先创建一个或多个曲线环 (Curve Loop):
+Curve Loop(curveLoopTag) = {curveTagList};
+// 再创建平面区域:
+Plane Surface(surfaceTag) = {curveLoopTagList};
+```
+其中, 第一个曲线环表示外边界, 其余曲线环表示内边界. 一个有效的曲线环必须满足:
+- 封闭;
+- 列表中的曲线*有序 (ordered)* 并且具有相同*取向 (oriented)*, 曲线标签前加负号表示反向.
+
+如果使用 OpenCASCADE 内核, 可以通过以下命令快速创建平面区域:
+```cpp
+Disk(surfaceTag) = {
+    centerX, centerY, centerZ,
+    radius  // 圆
+};
+Disk(surfaceTag) = {
+    centerX, centerY, centerZ,
+    radiusX, radiusY  // 椭圆
+};
+Rectangle(surfaceTag) = {
+    cornerX, cornerY, cornerZ,  // 左下角
+    width, height<, /* 圆角半径 */radius>
+};
+```
+
+##### 空间区域
+如果使用 built-in 内核, 必须按以下流程:
+```cpp
+// 先创建一个或多个*曲面环 (Surface Loop)*:
+Surface Loop(surfaceLoopTag) = {surfaceTagList};
+// 再创建空间区域 (三维流形):
+Volume(volumeTag) = {surfaceLoopTagList};
+```
+其中, 第一个曲面环表示外边界, 其余曲面环表示内边界. 一个有效的曲面环必须满足:
+- 封闭;
+- 列表中的曲面*有序 (ordered)* 并且具有相同*取向 (oriented)*, 曲面标签前加负号表示反向.
+
+如果使用 OpenCASCADE 内核, 可以通过以下命令快速创建空间区域 (三维流形):
+```cpp
+Sphere(volumeTag) = { 
+    centerX, centerY, centerZ,
+    radius
+};
+Box(volumeTag) = {
+    cornerX, cornerY, cornerZ,
+    dX, dY, dZ
+};
+Cylinder(volumeTag) = { 
+    centerX, centerY, centerZ,
+    axisX, axisY, axisZ,
+    radius<, angle>
+};
+Torus(volumeTag) = { 
+    centerX, centerY, centerZ,
+    radiusOuter, radiusInner<, angle>
+};
+Cone(volumeTag) = { 
+    centerX, centerY, centerZ,
+    axisX, axisY, axisZ,
+    radiusOuter, radiusInner<, angle>
+};
+Wedge(volumeTag) = { 
+    cornerX, cornerY, cornerZ,
+    dX, dY, /* 延伸方向 */dZ<, /* 顶面宽度 */topX>
+};
+```
+
+##### 复合实体
+复合实体仍然是几何实体, 它由多个具有相同维度的初等实体组成.
+在生成网格时, 这些初等实体的整体将被视作一个几何实体, 即允许一个单元跨越多个初等实体的边界.
+
+```cpp
+Compound Curve(curveTag) = {curveTagList};
+Compound Surface(surfaceTag) = {surfaceTagList};
+```
+
+##### 通过拉伸创建
+通过拉伸低维实体来创建高维实体:
+```cpp
+// 通过 平移 拉伸:
+Extrude{
+    vectorX, vectorY, vectorZ  // 平移向量
+}{
+    entityList  // 被拉伸对象
+};
+// 通过 旋转 拉伸:
+Extrude{
+    {axisX, axisY, axisZ},  // 旋转轴
+    {pointX, pointY, pointZ},  // 旋转轴上任意一点
+    angle
+}{
+    entityList  // 被拉伸对象
+};
+// 通过 平移 + 旋转 拉伸:
+Extrude{
+    {vectorX, vectorY, vectorZ},  // 平移向量
+    {axisX, axisY, axisZ},  // 旋转轴
+    {pointX, pointY, pointZ},  // 旋转轴上任意一点
+    angle
+}{
+    entityList  // 被拉伸对象
+};
+```
+
+#### 创建物理实体
+一组相同维度的初等实体可以组合成一个*物理实体 (physical entity)*, 以便赋予它们物理意义.
+例如: 材料属性, 载荷分布, 边界条件等.
+
+每个物理实体也有唯一的 `tag`, 这里的*唯一*也是针对同一维度的物理实体而言的.
+除此之外, 每个物理实体还可以有一个字符串表示的名称.
+
+```cpp
+Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
+```
+这里的 `Entity` 可以是 `Point`, `Curve`, `Surface`, `Volume` 中的任意一个.
+
+#### 编辑几何实体
+
+##### 布尔运算
+*布尔运算 (Boolean Operation)* 就是将几何区域看作点集的集合运算.
+只有 OpenCASCADE 内核支持布尔运算.
+所有布尔运算都是通过一条作用在两个实体列表上的指令来完成的:
+
+```cpp
+BooleanOperation{passiveEntityList}{toolEntityList}
+```
+- `BooleanOperation` 代表某种布尔运算, 可以是
+  - `BooleanIntersection`
+  - `BooleanUnion`
+  - `BooleanDifference`
+- `passiveEntityList` 代表*被动 (passive)* 实体列表, `toolEntityList` 代表*工具 (tool)* 实体列表, 可以是
+```cpp
+<Physical> Curve | Surface | Volume{tagList};
+<... | Delete;>  // 运算完成后删去对应的实体
+```
+
+新版 Gmsh 支持将运算结果存储为新的实体:
+```cpp
+BooleanOperation(newEntityTag) = {passiveEntityList}{toolEntityList};
+```
+
+一个简单的布尔运算示例:
+```cpp
+SetFactory("OpenCASCADE");
+Rectangle(1) = {-5, -5, 0, 10, 10};
+Disk(2) = {0, 0, 0, 2};
+BooleanDifference(news) = {Surface{1}; Delete;}{Surface{2}; Delete;};
+Mesh 2;
+```
+[demos/boolean](https://gitlab.onelab.info/gmsh/gmsh/tree/master/demos/boolean/) 中有更多示例.
+
+##### 几何变换
+
+```cpp
+// 按相同比例放缩:
+Dilate{
+    {centerX, centerY, centerZ}, 
+    factor
+}{entityList};
+// 按不同比例放缩:
+Dilate{
+    {centerX, centerY, centerZ},
+    {factorX, factorY, factorZ}
+}{entityList};
+// 旋转:
+Rotate{
+    {axisX, axisY, axisZ},
+    {pointX, pointY, pointZ},
+    angle
+}{entityList};
+// 关于平面对称:
+Symmetry{
+    A, B, C, D  // A*x + B*y + C*z + D = 0
+}{entityList};
+// 平移:
+Translate{
+    {vectorX, vectorY, vectorZ},  // 平移向量
+}{entityList};
+```
+其中 `entityList` 可以是
+```cpp
+<Physical> Point | Curve | Surface | Volume{tagList}; ...
+// 或
+Duplicata{<Physical> Point | Curve | Surface | Volume{tagList}; ...};
+```
+
+##### 提取边界
+
+```cpp
+// 提取边界上低一维的实体, 返回其标签:
+Boundary{entityList};
+// 提取边界上低一维的实体, 作为一个复合实体返回其标签:
+CombinedBoundary{entityList};
+// 提取边界上的点, 返回其标签:
+PointsOf{entityList};
+```
+
+##### 删除
+
+```cpp
+删除坐标相同的冗余点:
+Coherence;
+删除列表中的实体:
+<Recursive> Delete{Entity{tagList}; ...};
+```
+这里的 `Entity` 可以是 `Point`, `Curve`, `Surface`, `Volume` 中的任意一个.
+如果列表中的某个实体被列表以外的其他实体所依赖, 则不执行 `Delete` 命令.
+`Recursive` 表示 `Delete` 命令递归地作用到所有次级实体上.
+
+#### 几何选项
+详见 [5.2. Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options).
 
 ## Running
 
