@@ -671,11 +671,4 @@ PartitionMesh part;
 ### 后处理模块
 暂时不用.
 
-## MSH 文件说明
-
-
-
-
-
-
-
+## [MSH 文件说明](./_GMSH/MSH.md)
