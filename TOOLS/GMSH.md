@@ -385,7 +385,7 @@ Extrude{
 };
 // 通过 旋转 拉伸:
 Extrude{
-    {axisX, axisY, axisZ},  // 旋转轴
+    {axisX, axisY, axisZ},     // 旋转轴
     {pointX, pointY, pointZ},  // 旋转轴上任意一点
     angle
 }{

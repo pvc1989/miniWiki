@@ -10,7 +10,7 @@
 - [Fluid Mechanics](./PHYSICS/FLUID_MECHANICS.lyx)
 
 ### Algorithms
-- [CFD](./ALGORITHMS/CFD.lyx): Computational Fluid Mechanics
+- [CFD](./ALGORITHMS/CFD.lyx) --- Computational Fluid Mechanics
 - [Optimization](./ALGORITHMS/OPTIMIZATION.lyx) 
 
 ### Programming
@@ -24,7 +24,7 @@
 - Linux
   - [Install](./TOOLS/LINUX/INSTALL.md) 
   - [Vim](./TOOLS/LINUX/VIM.md)
-  - [SSH](./TOOLS/LINUX/SSH.md): Secure SHell
+  - [SSH](./TOOLS/LINUX/SSH.md) --- Secure SHell
 - [Gmsh](./TOOLS/GMSH.md) --- a free 3D finite element mesh generator
 - [VTK](./TOOLS/VTK.md) ---  an open-source, freely available software system for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting
 
