@@ -68,7 +68,8 @@ s.count(x)
 s.index(x[, i[, j]])  # index of the first occurrence of x in s (at or after index i and before index j)
 ```
 
-*immutable* 类型可以作为 `hash()` 的输入参数, 从而可以作为 `set` 和 `dict` 的关键词:
+*Immutable* 类型可以作为 `hash()` 的输入参数, 从而可以作为 `set` 和 `dict` 的关键词:
+
 ```python
 p = (0.0, 0.2, -0.3)  # a tuple
 print(hash(p))  # hashable
@@ -77,7 +78,8 @@ s.add(p)   # p can be used as a key
 print(p)
 ```
 
-*Mutable* 一般不可以作为 `hash()` 的输入参数, 从而也就不可以作为 `set` 和 `dict` 的关键词, 但它们支持更多与修改 (mutate) 相关的操作:
+*Mutable* 类型一般不可以作为 `hash()` 的输入参数, 从而也就不可以作为 `set` 和 `dict` 的关键词, 但它们支持更多与修改 (mutate) 相关的操作:
+
 ```python
 s[i] = x
 s[i:j] = t
@@ -146,7 +148,7 @@ print(long_str_fast == long_str_slow)  # True
 
 ### Unordered Containers
 
-#### `set`, `frozenset`
+#### [`set`, `frozenset`](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 `set` 属于 mutable 容器, `frozenset` 属于 immutable 容器.
 
 ```python
@@ -161,7 +163,7 @@ print(b.union(c) == b)         # True
 print(b.difference(c))  # {9, 3, 15}
 ```
 
-#### `dict`
+#### [`dict`](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 ```python
 d = {"one": 1, "three": 3, "two": 2, "four": 4}
 values = list(d.values())
