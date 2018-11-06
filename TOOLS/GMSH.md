@@ -1,4 +1,4 @@
-# Gmsh 参考手册阅读笔记
+# [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 阅读笔记
 
 [Gmsh](http://gmsh.info/) 是一款带有简单 CAD 和后处理功能的三维有限元网格生成软件.
 在遵循 [GPL](http://gmsh.info/#Licensing) 条款的前提下, 用户可以修改或重新发布其[源代码](https://gitlab.onelab.info/gmsh/gmsh).
