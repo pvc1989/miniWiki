@@ -52,7 +52,6 @@ print(1 + 1 == 3)  # False
 ### Sequences
 
 #### [Common Sequence Operations](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations)
-所有序列都支持的操作:
 ```python
 x in s
 x not in s
@@ -174,7 +173,7 @@ print(pairs)  # [(1, 'one'), (3, 'three'), (2, 'two'), (4, 'four')]
 
 ### [Data Types](https://docs.python.org/3/library/datatypes.html)
 
-#### [`array`](https://docs.python.org/3/library/array.html#module-array) --- Efficient arrays of numeric values
+#### [`array` --- Efficient arrays of numeric values](https://docs.python.org/3/library/array.html#module-array)
 
 `list` 和 `tuple` 都属于*异质 (heterogeneous)* 容器: 其中的元素可以是不同类型. 这种便利是通过牺牲效率而获得的. 对于*同质 (homogeneous)* 的数据, 这种效率损失可以通过利用标准库的 `array` 来避免:
 
@@ -187,7 +186,7 @@ print(a[0], a[-1])
 ```
 然而, `array` 仅仅是一种容器, 并不支持加减乘除等算术运算. 如果有这类需求, 应该考虑使用 `numpy` 中的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html).
 
-#### [`heapq`](https://docs.python.org/3/library/heapq.html) --- Heap queue algorithm
+#### [`heapq` --- Heap queue algorithm](https://docs.python.org/3/library/heapq.html)
 
 只提供了最小二叉堆算法, 数据存储在一个 `list` 里:
 
@@ -225,7 +224,7 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 
 #### [The Python Profilers](https://docs.python.org/3/library/profile.html)
 
-#### [`timeit`](https://docs.python.org/3/library/timeit.html) --- Measure execution time of small code snippets
+#### [`timeit` --- Measure execution time of small code snippets](https://docs.python.org/3/library/timeit.html)
 
 ```python
 timeit.default_timer()
@@ -243,13 +242,13 @@ print(end - start)
 
 ### [Development Tools](https://docs.python.org/3/library/development.html)
 
-#### [`unittest`](https://docs.python.org/3/library/unittest.html) --- Unit testing framework
+#### [`unittest` --- Unit testing framework](https://docs.python.org/3/library/unittest.html)
 
 清华大学的[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/info)公开课介绍了[单元测试](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/1714014c1c1949cf84074431dc7d6a99/8623fff7bc7c4c69bced4a88620b73db/)的概念.
 
 ### [Python Runtime Services](https://docs.python.org/3/library/python.html)
 
-#### [`abc`](https://docs.python.org/3/library/abc.html) --- Abstract Base Classes
+#### [`abc` --- Abstract Base Classes](https://docs.python.org/3/library/abc.html)
 
 ```python
 import abc
@@ -275,18 +274,19 @@ if __name__ == '__main__':
 
 ## Third-party Libraries
 
-### [NumPy](https://docs.scipy.org) --- Numerical Python
+### [NumPy --- Numerical Python](https://docs.scipy.org)
 
 最完整最准确的参考资料是 [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 和 [Numpy User Guide](https://docs.scipy.org/doc/numpy/user/). 由于需要频繁查阅, 为提高页面加载速度, 建议将 [HTML+zip](https://docs.scipy.org/doc/numpy-1.15.1/numpy-html-1.15.1.zip) 下载到本地主机, 解压后打开 `index.html` 即可进入.
 
 [The N-dimensional array (`ndarray`)](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html)
+
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
-### [SciPy](https://docs.scipy.org) --- Scientific Python
+### [SciPy --- Scientific Python](https://docs.scipy.org)
 
 最完整最准确的参考资料是 [SciPy Reference Guide](https://docs.scipy.org/doc/scipy/reference/). 由于需要频繁查阅, 为提高页面加载速度, 建议下载 [HTML+zip](https://docs.scipy.org/doc/scipy-1.1.0/scipy-html-1.1.0.zip) 到本地主机, 解压后打开 `index.html` 即可进入.
 
-### [Matplotlib](https://matplotlib.org) --- A Python Plotting Library
+### [Matplotlib --- A Python Plotting Library](https://matplotlib.org)
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
