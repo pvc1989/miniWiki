@@ -134,8 +134,50 @@ for i in range(1000000):
 ```
 
 #### [`str`](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+
+`str` 类型, 又称*字符串*类型, 是一种 (通过 Unicode 编码来表示的) 字符构成的 immutable 序列.
+
+Python 中允许使用成对的单引号 `'...'`, 或成对的双引号 `"..."`, 或成对的三重单引号 `'''...'''`来创建字符串. 其中, 单引号对最常用; 而三重单引号对中的内容可以跨行, 一般用于*文档字符串 (docstring)*.
+字符串也可以通过作用在对象上的 `str()` 函数来创建: 凡是定义了 `__str__()` 方法的 Python 类型, 都可以通过作为 `str()` 函数的输入参数.
+
+之前提到的*序列通用操作*以及 *immutable 序列所特有的操作*, 对于 `str` 类型依然适用.
+除此之外, `str` 类型还有一些特殊的操作. 完整列表参见 [String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods), 这里列举一些常用的操作:
+- 小写转大写:
 ```python
-# build large strings
+'hello, world'.capitalize()  # 'Hello, world'
+'hello, world'.title()       # 'Hello, World'
+'hello, world'.upper()       # 'HELLO, WORLD'
+```
+- 将制表符 `\t` 替换为空格, 以使各列为指定宽度, 默认宽度为 `8`:
+```python
+'01\t012\t0123\t01234'.expandtabs( )  # '01      012     0123    01234'
+'01\t012\t0123\t01234'.expandtabs(8)  # '01      012     0123    01234'
+'01\t012\t0123\t01234'.expandtabs(4)  # '01  012 0123    01234'
+'01\t012\t0123\t01234'.expandtabs(3)  # '01 012   0123  01234'
+'01\t012\t0123\t01234'.expandtabs(2)  # '01  012 0123  01234'
+```
+- 构造格式化字符串, 详见 [Format String Syntax](https://docs.python.org/3/library/string.html#formatstrings):
+```python
+'The sum of 1 + 2 is {0}'.format(1+2)  # 'The sum of 1 + 2 is 3'
+'{:<30}'.format('left aligned')  # 'left aligned                  '
+'{:>30}'.format('right aligned') # '                 right aligned'
+'{:,}'.format(1234567890)  # '1,234,567,890'
+point = (3, 5)
+'X: {0[0]};  Y: {0[1]}'.format(point)  # 'X: 3;  Y: 5'
+'{0:e}'.format(314.1592653589793)    # '3.141593e+02'
+'{0:f}'.format(314.1592653589793)    # '314.159265'
+'{0:.4f}'.format(314.1592653589793)  # '314.1593'
+'{0:g}'.format(314.1592653589793)    # '314.159'
+'{0:.4g}'.format(314.1592653589793)  # '314.2'
+```
+- 以指定*分隔符 (delimiter)* 拆分字符串:
+```python
+'3.14, 0, 8'.split(', ')  # ['3.14', '0', '8']
+'3.14,0,8'.split(',')     # ['3.14', '0', '8']
+'3.14 0 8'.split()        # ['3.14', '0', '8']
+```
+- 合并字符串:
+```python
 words = [str(x) for x in range(1000000)]  # a iterable container of strings
 # a trivial but slow method is via the + operator
 long_str_slow = words[0]
