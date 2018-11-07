@@ -6,7 +6,7 @@
 Robert Sedgewick 为大一新生编写的 CS 入门教程, 非常适合*零基础*的初学者.
 
 ### [The Python Tutorial](https://docs.python.org/3/tutorial/index.html)
-最*官方*的教程, 可读性不如前者.
+最*官方*的教程.
 
 ## [数据类型](https://docs.python.org/3/library/stdtypes.html)
 
