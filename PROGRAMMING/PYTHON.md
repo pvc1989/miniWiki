@@ -261,6 +261,94 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 ```
 时间复杂度为 $N \lg K$, 优于先排序再输出的 $N \lg N$.
 
+## 输入输出
+### [`io` --- 输入输出流](https://docs.python.org/3/library/io.html)
+在 Python 中, 文件被抽象成数据*流 (stream)*, 所有文件*读写 (IO)* 操作都是在流对象上进行的. 除此之外, 还有一种*内存中的流 (in-memory stream)*, 它支持所有流上的抽象操作, 但不与某个文件绑定.
+
+本质上, 所有信息在计算机中都是以二进制形式表示的, 因此*二进制读写 (Binary IO)* 适用于所有类型的文件. 但对于文本文件而言, 直接使用二进制读写并不是一种好的方案, 因为字符的二进制表示依赖于编码 (ASCII, UTF-8, Unicode), 一些特殊字符 (换行符) 还与操作系统相关. 为了隔离这些细节, Python 标准库提供了专门的*文本读写 (Text IO)* 接口.
+
+以指定模式打开或创建一个文件, 将其绑定到一个流对象上:
+```python
+f = open('filename.txt', mode='r')  # read-only (default)
+f = open('filename.txt', mode='w')  # write-only
+f = open('filename.txt', mode='a')  # append
+```
+所有被打开的文件都应当被妥善关闭:
+```python
+f.close()
+```
+一种简洁且安全的写法是把 `open()` 置于 `with` 之后:
+```python
+with open('filename.txt') as f:
+    read_data = f.read()
+print(f.closed)  # True
+```
+
+从当前位置开始, 读取指定个数的字符, 返回一个 `str` 对象:
+```python
+s = f.read(4)  # read 4 chars
+s = f.read()   # read all
+```
+从当前位置开始, 读取一行 (到当前行末尾或文件末尾为止), 返回一个 `str` 对象:
+```python
+s = f.readline()  # '\n' included
+```
+
+将字符串写入流:
+```python
+f.write('hello, world\n')
+```
+
+### [`stdio`](https://introcs.cs.princeton.edu/python/code/stdio.py.html) from [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
+
+前一节介绍的文本读写操作要求输入输出对象都是 `str` 类型, 因此在读写 `int` 或 `float` 数据时, 需要频繁地进行类型转换. 
+
+[Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/) 引入了一个 [`stdio`](https://introcs.cs.princeton.edu/python/code/stdio.py.html) 模块, 对*标准输入输出流*上常用数据类型的读写操作进行了封装. [1.5 Input and Output](https://introcs.cs.princeton.edu/python/15inout) 详细介绍了该模块的用法.
+
+要使用该模块, 必须先下载 [`stdio.py`](https://introcs.cs.princeton.edu/python/code/stdio.py) 文件, 然后将其置于 Python 搜索路径中 (例如当前工作目录下).
+
+将任意类型的数据写到*标准输出流 (`stdout`)*:
+```python
+import stdio
+
+x = 3.1415926
+stdio.write(x)  # write '3.1415926' to stdout
+stdio.writeln(x)  # write '3.1415926\n' to stdout
+stdio.writef("%6.2f", x)  # write '  3.14' to stdout
+```
+
+从*标准输入流 (`stdin`)* 读取指定类型的数据:
+```python
+# 查询 stdin 中是否还有待处理数据:
+stdio.isEmpty()
+stdio.hasNextLine()
+# 读取下一个数据 (以空白字符为间隔), 按指定类型返回:
+stdio.readInt()
+stdio.readFloat()
+stdio.readBool()
+stdio.readString()
+stdio.readLine()
+# 读取 stdin 中所有待处理数据, 按指定类型返回:
+stdio.readAll()
+stdio.readAllInts()
+stdio.readAllFloats()
+stdio.readAllBools()
+stdio.readAllStrings()
+stdio.readAllLines()
+```
+
+结合操作系统提供的数据流*重定向 (redirect)* 及*管道 (pipe)* 功能, 可以将该模块应用到一般文本文件上:
+```shell
+# redirecting:
+python3 randomseq.py 1000 > data.txt
+python3 average.py < data.txt
+# piping:
+python3 randomseq.py 1000 | python3 average.py
+```
+这两个模块的功能分别为:
+- [`randomseq.py`](https://introcs.cs.princeton.edu/python/15inout/randomseq.py) : 生成给定数量的随机数, 输出为序列.
+- [`average.py`](https://introcs.cs.princeton.edu/python/15inout/average.py): 计算给定序列的平均值.
+
 ## 软件开发
 
 ### [`profile` --- 函数调用分析](https://docs.python.org/3/library/profile.html)
