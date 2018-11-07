@@ -213,7 +213,6 @@ pairs = [(v, k) for k, v in d.items()]
 print(pairs)  # [(1, 'one'), (3, 'three'), (2, 'two'), (4, 'four')]
 ```
 
-## [The Python Standard Library](https://docs.python.org/3/library)
 ### [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
 
 #### [`array` --- 数值数组](https://docs.python.org/3/library/array.html#module-array)
@@ -262,8 +261,7 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 ```
 时间复杂度为 $N \lg K$, 优于先排序再输出的 $N \lg N$.
 
-
-### [Debugging and Profiling](https://docs.python.org/3/library/debug.html)
+## 软件开发
 
 ### [`profile` --- 函数调用分析](https://docs.python.org/3/library/profile.html)
 
@@ -283,13 +281,9 @@ end = timer()
 print(end - start)
 ```
 
-### [Development Tools](https://docs.python.org/3/library/development.html)
-
 ### [`unittest` --- 单元测试框架](https://docs.python.org/3/library/unittest.html)
 
 清华大学的[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/info)公开课介绍了[单元测试](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/1714014c1c1949cf84074431dc7d6a99/8623fff7bc7c4c69bced4a88620b73db/)的概念.
-
-### [Python Runtime Services](https://docs.python.org/3/library/python.html)
 
 ### [`abc` --- 抽象基类](https://docs.python.org/3/library/abc.html)
 
@@ -315,6 +309,16 @@ if __name__ == '__main__':
     print(c.area())
 ```
 
+### [代码规范](https://www.python.org/dev/peps/pep-0008/)
+
+### [PyCharm --- 集成开发环境](https://www.jetbrains.com/pycharm/)
+
+- [Download](https://www.jetbrains.com/pycharm/download/)
+- [Tutorials](https://confluence.jetbrains.com/display/PYH/PyCharm+Tutorials)
+  - [Getting Started with PyCharm](https://confluence.jetbrains.com/display/PYH/Getting+Started+with+PyCharm)
+  - [Exploring the IDE. Quick Start Guide](https://confluence.jetbrains.com/display/PYH/Exploring+the+IDE.+Quick+Start+Guide)
+  - [Creating and running a Python unit test](https://confluence.jetbrains.com/display/PYH/Creating+and+running+a+Python+unit+test)
+
 ## 数值计算
 
 ### [`numpy`, `scipy`](https://docs.scipy.org)
@@ -334,14 +338,6 @@ if __name__ == '__main__':
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
-## Before Serious Programming
 
-### [代码规范](https://www.python.org/dev/peps/pep-0008/)
 
-### [PyCharm](https://www.jetbrains.com/pycharm/)
 
-- [Download](https://www.jetbrains.com/pycharm/download/)
-- [Tutorials](https://confluence.jetbrains.com/display/PYH/PyCharm+Tutorials)
-  - [Getting Started with PyCharm](https://confluence.jetbrains.com/display/PYH/Getting+Started+with+PyCharm)
-  - [Exploring the IDE. Quick Start Guide](https://confluence.jetbrains.com/display/PYH/Exploring+the+IDE.+Quick+Start+Guide)
-  - [Creating and running a Python unit test](https://confluence.jetbrains.com/display/PYH/Creating+and+running+a+Python+unit+test)
