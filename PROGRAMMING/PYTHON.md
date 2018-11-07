@@ -1,6 +1,6 @@
 # Programming in [Python](https://docs.python.org/3/index.html)
 
-## Quick Start
+## 入门教程
 
 ### [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
 Robert Sedgewick 为大一新生编写的 CS 入门教程, 非常适合*零基础*的初学者.
@@ -8,11 +8,11 @@ Robert Sedgewick 为大一新生编写的 CS 入门教程, 非常适合*零基�
 ### [The Python Tutorial](https://docs.python.org/3/tutorial/index.html)
 最*官方*的教程, 可读性不如前者.
 
-## [Built-in Data Types](https://docs.python.org/3/library/stdtypes.html)
+## [数据类型](https://docs.python.org/3/library/stdtypes.html)
 
-### Numeric Types
+### 数值类型
 
-#### `int`
+#### `int` --- 整数型
 Python 里的 `int` 为无限字长整数: 字长会根据需要自动扩展.
 ```python
 print(2**31)  # 2147483648
@@ -22,7 +22,7 @@ print(2**64)  # 18446744073709551616
 print(2**65)  # 36893488147419103232
 ```
 
-#### `float`
+#### `float` --- 浮点型
 Python 里的 `float` *通常*为 C/C++ 里的 `double`, 即 IEEE 754 里的双精度浮点数.
 ```python
 a = 1.0 / 3
@@ -33,7 +33,7 @@ print(c - b)  # 0.33333333333333337
 print(b - a == c - b)  # False
 ```
 
-#### `complex`
+#### `complex` --- 复数型
 ```python
 x = 4.0
 y = 3.0
@@ -43,15 +43,15 @@ print(z.imag)  # 3.0
 print(z.conjugate())  # (4-3j)
 ```
 
-### Boolean Types
+### 逻辑类型
 ```python
 print(1 + 1 == 2)  # True
 print(1 + 1 == 3)  # False
 ```
 
-### Sequences
+### 顺序容器 (序列)
 
-#### [Common Sequence Operations](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations)
+#### [通用序列操作](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations)
 ```python
 x in s
 x not in s
@@ -133,7 +133,7 @@ for i in range(1000000):
     print(i)
 ```
 
-#### [`str`](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+#### [`str` — 字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
 
 `str` 类型, 又称*字符串*类型, 是一种 (通过 Unicode 编码来表示的) 字符构成的 immutable 序列.
 
@@ -188,9 +188,9 @@ long_str_fast = ', '.join(words)
 print(long_str_fast == long_str_slow)  # True
 ```
 
-### Unordered Containers
+### 无序容器
 
-#### [`set`, `frozenset`](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
+#### [`set`, `frozenset` --- 集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 `set` 属于 mutable 容器, `frozenset` 属于 immutable 容器.
 
 ```python
@@ -205,7 +205,7 @@ print(b.union(c) == b)         # True
 print(b.difference(c))  # {9, 3, 15}
 ```
 
-#### [`dict`](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+#### [`dict` --- 字典](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 ```python
 d = {"one": 1, "three": 3, "two": 2, "four": 4}
 values = list(d.values())
@@ -214,10 +214,9 @@ print(pairs)  # [(1, 'one'), (3, 'three'), (2, 'two'), (4, 'four')]
 ```
 
 ## [The Python Standard Library](https://docs.python.org/3/library)
+### [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
 
-### [Data Types](https://docs.python.org/3/library/datatypes.html)
-
-#### [`array` --- Efficient arrays of numeric values](https://docs.python.org/3/library/array.html#module-array)
+#### [`array` --- 数值数组](https://docs.python.org/3/library/array.html#module-array)
 
 `list` 和 `tuple` 都属于*异质 (heterogeneous)* 容器: 其中的元素可以是不同类型. 这种便利是通过牺牲效率而获得的. 对于*同质 (homogeneous)* 的数据, 这种效率损失可以通过利用标准库的 `array` 来避免:
 
@@ -230,7 +229,7 @@ print(a[0], a[-1])
 ```
 然而, `array` 仅仅是一种容器, 并不支持加减乘除等算术运算. 如果有这类需求, 应该考虑使用 `numpy` 中的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html).
 
-#### [`heapq` --- Heap queue algorithm](https://docs.python.org/3/library/heapq.html)
+#### [`heapq` — 最小堆算法](https://docs.python.org/3/library/heapq.html)
 
 只提供了最小二叉堆算法, 数据存储在一个 `list` 里:
 
@@ -266,9 +265,9 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 
 ### [Debugging and Profiling](https://docs.python.org/3/library/debug.html)
 
-#### [The Python Profilers](https://docs.python.org/3/library/profile.html)
+### [`profile` --- 函数调用分析](https://docs.python.org/3/library/profile.html)
 
-#### [`timeit` --- Measure execution time of small code snippets](https://docs.python.org/3/library/timeit.html)
+### [`timeit` --- 测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
 
 ```python
 timeit.default_timer()
@@ -286,13 +285,13 @@ print(end - start)
 
 ### [Development Tools](https://docs.python.org/3/library/development.html)
 
-#### [`unittest` --- Unit testing framework](https://docs.python.org/3/library/unittest.html)
+### [`unittest` --- 单元测试框架](https://docs.python.org/3/library/unittest.html)
 
 清华大学的[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/info)公开课介绍了[单元测试](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/1714014c1c1949cf84074431dc7d6a99/8623fff7bc7c4c69bced4a88620b73db/)的概念.
 
 ### [Python Runtime Services](https://docs.python.org/3/library/python.html)
 
-#### [`abc` --- Abstract Base Classes](https://docs.python.org/3/library/abc.html)
+### [`abc` --- 抽象基类](https://docs.python.org/3/library/abc.html)
 
 ```python
 import abc
@@ -336,7 +335,7 @@ if __name__ == '__main__':
 
 ## Before Serious Programming
 
-### [Style Guide](https://www.python.org/dev/peps/pep-0008/)
+### [代码规范](https://www.python.org/dev/peps/pep-0008/)
 
 ### [PyCharm](https://www.jetbrains.com/pycharm/)
 
