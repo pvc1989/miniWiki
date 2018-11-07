@@ -261,6 +261,26 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 ```
 时间复杂度为 $N \lg K$, 优于先排序再输出的 $N \lg N$.
 
+## 数值计算
+
+### [`numpy`, `scipy`](https://docs.scipy.org)
+
+最完整最准确的参考资料是
+- [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 
+- [Numpy User Guide](https://docs.scipy.org/doc/numpy/user/)
+- [SciPy Reference Guide](https://docs.scipy.org/doc/scipy/reference/)
+
+由于需要频繁查阅, 建议将 HTML+zip ([`numpy`](https://docs.scipy.org/doc/numpy-1.15.1/numpy-html-1.15.1.zip), [`scipy`](https://docs.scipy.org/doc/scipy-1.1.0/scipy-html-1.1.0.zip)) 到本地主机, 解压后打开 `index.html` 即可进入.
+
+[The N-dimensional array (`ndarray`)](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html)
+
+[NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
+
+## 数据显示
+### [`matplotlib`](https://matplotlib.org)
+
+[Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
+
 ## 输入输出
 ### [`io` --- 输入输出流](https://docs.python.org/3/library/io.html)
 在 Python 中, 文件被抽象成数据*流 (stream)*, 所有文件*读写 (IO)* 操作都是在流对象上进行的. 除此之外, 还有一种*内存中的流 (in-memory stream)*, 它支持所有流上的抽象操作, 但不与某个文件绑定.
@@ -406,26 +426,3 @@ if __name__ == '__main__':
   - [Getting Started with PyCharm](https://confluence.jetbrains.com/display/PYH/Getting+Started+with+PyCharm)
   - [Exploring the IDE. Quick Start Guide](https://confluence.jetbrains.com/display/PYH/Exploring+the+IDE.+Quick+Start+Guide)
   - [Creating and running a Python unit test](https://confluence.jetbrains.com/display/PYH/Creating+and+running+a+Python+unit+test)
-
-## 数值计算
-
-### [`numpy`, `scipy`](https://docs.scipy.org)
-
-最完整最准确的参考资料是
-- [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 
-- [Numpy User Guide](https://docs.scipy.org/doc/numpy/user/)
-- [SciPy Reference Guide](https://docs.scipy.org/doc/scipy/reference/)
-
-由于需要频繁查阅, 建议将 HTML+zip ([`numpy`](https://docs.scipy.org/doc/numpy-1.15.1/numpy-html-1.15.1.zip), [`scipy`](https://docs.scipy.org/doc/scipy-1.1.0/scipy-html-1.1.0.zip)) 到本地主机, 解压后打开 `index.html` 即可进入.
-
-[The N-dimensional array (`ndarray`)](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html)
-
-[NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
-
-### [Matplotlib --- A Python Plotting Library](https://matplotlib.org)
-
-[Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
-
-
-
-
