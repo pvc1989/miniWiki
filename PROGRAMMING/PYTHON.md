@@ -261,6 +261,129 @@ print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 ```
 时间复杂度为 $N \lg K$, 优于先排序再输出的 $N \lg N$.
 
+## 抽象机制
+
+### 函数 (Function)
+定义函数:
+```python
+def fib(n):
+    assert n >= 0, 'n must be positive'
+    n = int(n)
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+```
+调用函数:
+```python
+assert fib(0) == 1
+assert fib(1) == 1
+assert fib(2) == 2
+assert fib(3) == 3
+assert fib(4) == 5
+assert fib(5) == 8
+assert fib(6) == 13
+```
+
+函数名可以作为参数传递给其他函数. 对于特别简单的函数, 可以用 `lambda` 表达式省去定义部分:
+```python
+pairs = [(1, 'd'), (2, 'c'), (3, 'b'), (4, 'a')]
+pairs.sort(key=lambda pair: pair[1])
+print(pairs)  # [(4, 'a'), (3, 'b'), (2, 'c'), (1, 'd')]
+```
+
+### 类 (Class)
+定义类:
+```python
+class Vector(object):
+
+    def __init__(self, x, y):
+        self._x = x
+        self._y = y
+    
+    def __str__(self):
+        return '(' + str(self._x) + ', ' + str(self._y) + ')' 
+
+    def dot(self, vector):
+        assert isinstance(vector, Vector)
+        return self._x * vector._x + self._y * vector._y
+```
+使用类:
+```python
+v = Vector(x=1.0/3, y=1.0 - 2.0/3)
+print(v)  # (0.3333333333333333, 0.33333333333333337)
+print(v.dot(v))  # 0.22222222222222224
+```
+
+### 模块 (Module)
+我们可以把一组常量/函数/类的定义放在一个*脚本 (script)* 文件里, 这样的文件称为*模块 (module)*.
+一个模块中的函数或类可以被其他模块*引入 (import)*, 这样就在各模块之间的就形成了一个*层次结构 (hierarchy)*, 其中最顶层的模块称为*主模块 (main module)*.
+模块提供了一种*命名空间 (namespace)* 管理机制, 可以有效地避免来自不同模块的同名函数/类的冲突.
+
+创建一个 `fibonacci.py` 文件:
+```python
+def fib(n):
+    assert n >= 0, 'n must be positive'
+    n = int(n)
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+
+if __name__ == "__main__":
+    import sys
+    n = int(sys.argv[1])
+    print(fib(n))
+```
+
+模块最主要的功能是向其他模块提供函数/类的定义, 有三种引入方式:
+- 将模块名 `fibonacci` 引入到当前命名空间中:
+```python
+import fibonacci
+fibonacci.fib(10)  # 89
+```
+- 将模块 `fibonacci` 中的函数名 `fib` 引入到当前命名空间中:
+```python
+from fibonacci import fib
+fib(20)  # 10946
+```
+- 将模块 `fibonacci` 中的*所有*公共函数/类名引入到当前命名空间中:
+```python
+from fibonacci import *
+fib(30)  # 1346269
+```
+其中, 第一种方式引起函数/类名冲突的可能性最小, 对命名空间保护得最好; 第三种最差, 要尽量避免.
+
+模块还可以像普通脚本一样被*执行 (executing)*, 通常用于进行简单的测试.
+一种好的习惯是将可执行代码置于文件末尾, 例如:
+```python
+if __name__ == "__main__":
+    import sys
+    n = int(sys.argv[1])
+    print(fib(n))
+```
+这样, 就可以在终端中这样来执行这个脚本:
+``` shell
+python3 fibonacci.py 20
+```
+输出 `10946`.
+
+### 包 (Package)
+包是比模块更高一层的封装.
+一个含有 `__init__.py` 的目录就是一个包, 而该目录下的其他 `.py` 文件就是这个包的子模块.
+
+Python 社区有许多开源的包/模块.
+最常用的获取方式是从 [Python Package Index (PyPI)](https://pypi.org) 安装 (`python3` 对应 `pip3`):
+```shell
+pip --help  # 获取 pip 帮助
+pip list  # 列出已安装的包
+pip install --help  # 安装 pip install 帮助
+pip install numpy  # 安装 numpy
+pip install --upgrade numpy  # 更新 numpy
+pip install --user numpy    # 为当前用户安装 numpy, 是 Debian 系统下的默认方式
+pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
+```
+
 ## 数值计算
 
 ### [`numpy`, `scipy`](https://docs.scipy.org)
