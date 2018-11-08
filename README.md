@@ -18,6 +18,7 @@
 
 ### Tools
 - Markdown
+  - [GitHub Flavored Markdown](https://github.github.com/gfm/)
   - [Typora](./TOOLS/MARKDOWN/TYPORA.md) 
 - [Git](./TOOLS/GIT.md) 
 - [Octave](./TOOLS/OCTAVE.md)
