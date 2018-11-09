@@ -347,7 +347,7 @@ Extrude{
     vectorX, vectorY, vectorZ  // 平移向量
 }{
     entityList  // 被拉伸对象
-};
+}
 // 通过 旋转 拉伸:
 Extrude{
     {axisX, axisY, axisZ},     // 旋转轴
@@ -355,7 +355,7 @@ Extrude{
     angle
 }{
     entityList  // 被拉伸对象
-};
+}
 // 通过 平移 + 旋转 拉伸:
 Extrude{
     {vectorX, vectorY, vectorZ},  // 平移向量
@@ -364,7 +364,7 @@ Extrude{
     angle
 }{
     entityList  // 被拉伸对象
-};
+}
 ```
 
 ### 创建物理实体
@@ -418,26 +418,26 @@ Mesh 2;
 Dilate{
     {centerX, centerY, centerZ}, 
     factor
-}{entityList};
+}{entityList}
 // 按不同比例放缩:
 Dilate{
     {centerX, centerY, centerZ},
     {factorX, factorY, factorZ}
-}{entityList};
+}{entityList}
 // 旋转:
 Rotate{
     {axisX, axisY, axisZ},
     {pointX, pointY, pointZ},
     angle
-}{entityList};
+}{entityList}
 // 关于平面对称:
 Symmetry{
     A, B, C, D  // A*x + B*y + C*z + D = 0
-}{entityList};
+}{entityList}
 // 平移:
 Translate{
     {vectorX, vectorY, vectorZ},  // 平移向量
-}{entityList};
+}{entityList}
 ```
 其中 `entityList` 可以是
 ```cpp
@@ -450,11 +450,11 @@ Duplicata{<Physical> Point | Curve | Surface | Volume{tagList}; ...};
 
 ```cpp
 // 提取边界上低一维的实体, 返回其标签:
-Boundary{entityList};
+Boundary{entityList}
 // 提取边界上低一维的实体, 作为一个复合实体返回其标签:
-CombinedBoundary{entityList};
+CombinedBoundary{entityList}
 // 提取边界上的点, 返回其标签:
-PointsOf{entityList};
+PointsOf{entityList}
 ```
 
 #### 删除
