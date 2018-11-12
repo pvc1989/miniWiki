@@ -9,7 +9,8 @@
 \usepackage{hyperref}
 \usepackage{physics}
 \usepackage[e]{esvect}
-\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+%\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Matrix}[1]{\bqty{#1}}
 \newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
 \renewcommand{\vu}[1]{\widehat{\vb*{#1}}}
@@ -129,7 +130,7 @@ linear wave equation
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)\label{eq:FirstOrderLinearWaveEquation}
+\pdv{u}{t}+a\pdv{u}{x}=0\qc t\in(t_{0},+\infty)\qc x\in(-\infty,+\infty)\label{eq:FirstOrderLinearWaveEquation}
 \end{equation}
 
 \end_inset
@@ -142,17 +143,16 @@ in which,
 \end_layout
 
 \begin_layout Standard
-To define an IVP, we need to supply it with an IC, which is generally given
- by
+To define an IVP, we supply it with an IC, which is generally given as
 \begin_inset Formula 
 \begin{equation}
-u(t=0,x)=u^{0}(x)\qc x\in(-\infty,\infty)\label{eq:ScalarInitialCondition}
+u(t_{0},x_{0})=u_{0}(x_{0})\qc x_{0}\in(-\infty,+\infty)\label{eq:ScalarInitialCondition}
 \end{equation}
 
 \end_inset
 
 in which, 
-\begin_inset Formula $u^{0}(x)$
+\begin_inset Formula $u_{0}$
 \end_inset
 
  is 
@@ -163,14 +163,14 @@ in which,
 \end_layout
 
 \begin_layout Standard
-The characteristic curve of the PDE passing through 
-\begin_inset Formula $\left(t^{0},x^{0}\right)$
+The characteristic curve passing through 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
 \end_inset
 
  is the solution of
 \begin_inset Formula 
 \[
-\dv{x}{t}=a\qc x(t=0)=x^{0}
+\dv{x}{t}=a\qc x(t_{0})=x_{0}
 \]
 
 \end_inset
@@ -178,13 +178,13 @@ The characteristic curve of the PDE passing through
 which is
 \begin_inset Formula 
 \[
-x=at+x^{0}
+\frac{x-x_{0}}{t-t_{0}}=a
 \]
 
 \end_inset
 
 If we treat 
-\begin_inset Formula $x^{0}$
+\begin_inset Formula $x_{0}$
 \end_inset
 
  as a varying parameter, then all of the characteristic curves together
@@ -192,15 +192,16 @@ If we treat
 \emph on
 parallel straight lines
 \emph default
- in 
+ in the 
 \begin_inset Formula $(t,x)$
 \end_inset
 
- plane.
-\end_layout
+ plane (above 
+\begin_inset Formula $t=t_{0}$
+\end_inset
 
-\begin_layout Standard
-Along any characteristic curve, the change rate of 
+).
+ Along any characteristic curve, the change rate of 
 \begin_inset Formula $u$
 \end_inset
 
@@ -213,14 +214,20 @@ Along any characteristic curve, the change rate of
 \end_inset
 
 which means 
+\series bold
+\emph on
+
 \begin_inset Formula $u$
 \end_inset
 
- remains constant along a characteristic curve.
+ remains unchanged along a characteristic curve
+\series default
+\emph default
+.
  The solution of the IVP is then
 \begin_inset Formula 
 \[
-u(t,x)=u^{0}(x-at)
+u(t,x)=u_{0}(x_{0}(t,x))=u_{0}\left(x-\left(t-t_{0}\right)a\right)
 \]
 
 \end_inset
@@ -244,7 +251,7 @@ If the (phase) speed is a function of
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t>0\qc x\in(-\infty,\infty)\label{eq:QuasilinearWaveEquation}
+\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t\in(t_{0},+\infty)\qc x\in(-\infty,+\infty)\label{eq:QuasilinearWaveEquation}
 \end{equation}
 
 \end_inset
@@ -261,7 +268,7 @@ quasilinear wave equation
 , we have
 \begin_inset Formula 
 \[
-\pdv{u}{t}+ku\pdv{u}{x}=0
+\pdv{u}{t}+ku\pdv{u}{x}=0\qc t\in(t_{0},+\infty)\qc x\in(-\infty,+\infty)
 \]
 
 \end_inset
@@ -272,10 +279,18 @@ When
 
 , it is called the 
 \noun on
-Burgers equation.
+inviscid Burgers equation.
 
 \noun default
- We will keep writing the coefficient 
+ Since 
+\begin_inset Formula $u$
+\end_inset
+
+ might be any physical quantity, but the wave speed 
+\begin_inset Formula $ku$
+\end_inset
+
+ must has a dimension of speed, we will keep writing the coefficient 
 \begin_inset Formula $k$
 \end_inset
 
@@ -283,19 +298,11 @@ Burgers equation.
 \begin_inset Formula $1$
 \end_inset
 
-, since the conservative variable 
-\begin_inset Formula $u$
-\end_inset
-
- may be any physical quantity, but the wave speed 
-\begin_inset Formula $ku$
-\end_inset
-
- must has a dimension of speed.
+.
 \end_layout
 
 \begin_layout Standard
-The initial condition (IC) is the same as 
+To define an IVP, we supply it with an IC, which is the same as 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ScalarInitialCondition"
@@ -306,20 +313,20 @@ reference "eq:ScalarInitialCondition"
 \end_layout
 
 \begin_layout Standard
-Since the quasilinear wave equation is the nonlinearized version of the
- linear wave equation, we can try to solve it, at least locally, as what
- we have done for its linear counterpart.
+The quasilinear wave equation is the nonlinearized version of the linear
+ wave equation, we will try to solve it, at least locally, as what we have
+ done for its linear counterpart.
 \end_layout
 
 \begin_layout Standard
-The characteristic curve of the PDE passing through 
-\begin_inset Formula $\left(t^{0},x^{0}\right)$
+The characteristic curve passing through 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
 \end_inset
 
  is the solution of
 \begin_inset Formula 
 \[
-\dv{x}{t}=a(u)\qc x(t=0)=x^{0}
+\dv{x}{t}=a(u)\qc x(t_{0})=x_{0}
 \]
 
 \end_inset
@@ -327,38 +334,49 @@ The characteristic curve of the PDE passing through
 which is
 \begin_inset Formula 
 \begin{equation}
-x=a(u)t+x^{0}\label{eq:CharCurveOfQuasilinearWaveEquation}
+\frac{x-x_{0}}{t-t_{0}}=a(u)\label{eq:CharCurveOfQuasilinearWaveEquation}
 \end{equation}
 
 \end_inset
 
-If we treat 
-\begin_inset Formula $x^{0}$
-\end_inset
-
- as a varying parameter, then all of the characteristic curves together
- form a one-parameter family of curves in 
+Like in the linear case, all of the characteristic curves together form
+ a one-parameter family of curves in the 
 \begin_inset Formula $(t,x)$
 \end_inset
 
- plane.
- However, they are generally no longer parallel to each other.
+ plane (above 
+\begin_inset Formula $t=t_{0}$
+\end_inset
+
+).
+ However, they are no longer parallel to each other in general.
 \end_layout
 
 \begin_layout Standard
-Let us first assume that before a critical time 
-\begin_inset Formula $t^{*}$
+Let us first assume 
+\begin_inset Formula $u_{0}(x_{0})$
 \end_inset
 
-, the characteristic curves do not intersect with each other.
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth.
+ It can be proved that smooth solutions exist, at least in a finite time
+ period 
+\begin_inset Formula $(t_{0},t_{*})$
+\end_inset
+
+.
+ The characteristic curves do not intersect with each other.
  Along any characteristic curve, 
 \begin_inset Formula $u$
 \end_inset
 
- still keeps unchanged:
+ still remains unchanged:
 \begin_inset Formula 
 \[
-\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a\pdv{u}{x}=0
+\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a(u)\pdv{u}{x}=0
 \]
 
 \end_inset
@@ -366,7 +384,7 @@ Let us first assume that before a critical time
 The solution of the IVP is then
 \begin_inset Formula 
 \begin{equation}
-u(t,x)=u^{0}(x-a(u)t)\label{eq:GeneralSolutionOfQuasilinearWaveEquation}
+u(t,x)=u_{0}(x_{0}(t,x))=u_{0}\left(x-\left(t-t_{0}\right)a(u(t,x))\right)\label{eq:GeneralSolutionOfQuasilinearWaveEquation}
 \end{equation}
 
 \end_inset
@@ -375,11 +393,12 @@ from which,
 \begin_inset Formula $u$
 \end_inset
 
- can be solved in principle.
-\end_layout
+ can be solved at any point 
+\begin_inset Formula $(t,x)$
+\end_inset
 
-\begin_layout Standard
-The fact that 
+ in principle.
+ The fact that 
 \begin_inset Formula $u$
 \end_inset
 
@@ -388,32 +407,18 @@ The fact that
 
 \begin_layout Theorem
 The characteristic curves of the quasilinear wave equation are straight
- lines.
-\end_layout
-
-\begin_layout Proof
-From 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:CharCurveOfQuasilinearWaveEquation"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:GeneralSolutionOfQuasilinearWaveEquation"
-
-\end_inset
-
-, we know the slope of the characteristic curve passing through 
-\begin_inset Formula $\left(t^{0},x^{0}\right)$
-\end_inset
-
- is a constant: 
+ lines, whose slopes are
 \begin_inset Formula 
 \[
-a(u)=a\left(u^{0}\left(x-at\right)\right)=a\left(u^{0}\left(x^{0}\right)\right)
+a(u(t,x))=a\left(u_{0}\left(x_{0}\right)\right)
+\]
+
+\end_inset
+
+or using the notation of composite functions
+\begin_inset Formula 
+\[
+a\circ u(t,x)=a\circ u_{0}\left(x_{0}\right)
 \]
 
 \end_inset
@@ -431,43 +436,47 @@ a(u)=a\left(u^{0}\left(x-at\right)\right)=a\left(u^{0}\left(x^{0}\right)\right)
 \begin_layout Standard
 We have solved the first question: what happens before the critical time
  
-\begin_inset Formula $t^{*}$
+\begin_inset Formula $t_{*}$
 \end_inset
 
 .
- The second question is how long does this solution stand valid? The answer
- is: it depends on the positiveness of
+ The second question is how long this solution stands valid.
+ The answer is: it depends on the positiveness of
 \begin_inset Formula 
 \[
-\dv{a}{x^{0}}:=\eval{\dv{\left(a\circ u^{0}\right)}{x}}_{x=x^{0}}
+\dv{a}{x_{0}}:=\dv{a}{u_{0}}\dv{u_{0}}{x_{0}}
 \]
 
 \end_inset
 
-Let us first assume 
-\begin_inset Formula $u^{0}(x)$
-\end_inset
 
- is 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth.
 \end_layout
 
 \begin_layout Theorem
 If 
-\begin_inset Formula $\forall x^{0}\in(\xi,\eta)\colon\dv{a}{x^{0}}>0$
+\begin_inset Formula $\dv{a}{x_{0}}>0$
 \end_inset
 
-, then 
-\begin_inset Formula $\forall\xi<x_{1}^{0}<x_{2}^{0}<\eta\implies$
+ is true for any 
+\begin_inset Formula $x_{0}\in\Omega$
 \end_inset
 
+, in which 
+\begin_inset Formula $\Omega\subset\mathbb{\mathbb{R}}$
+\end_inset
 
+ is an open interval, then for any 
+\begin_inset Formula $\xi_{0},\eta_{0}\in\Omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi_{0}<\eta_{0}$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \[
-\forall t>0\colon x_{1}(t)<x_{2}(t)
+\forall t\in(t_{0},+\infty)\colon\xi(t)<\eta(t)
 \]
 
 \end_inset
@@ -476,43 +485,74 @@ If
 \end_layout
 
 \begin_layout Proof
-Using the definition of characteristic curves, i.e.
- 
+From 
 \begin_inset Formula $\dv{x}{t}=a\left(u\right)$
 \end_inset
 
-, and the fact that 
-\begin_inset Formula $a\left(u\right)=\left(a\circ u^{0}\right)\left(x^{0}\right)$
+ and 
+\begin_inset Formula $a\circ u(t,x)=a\circ u_{0}\left(x_{0}\right)$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\dv{\left(x_{2}-x_{1}\right)}{t}=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)>0
+\dv{x}{t}=a\circ u_{0}(x_{0})
 \]
 
 \end_inset
 
-The positiveness is implied by 
-\begin_inset Formula $\dv{a}{x^{0}}>0$
+so
+\begin_inset Formula 
+\[
+\dv{t}(\eta(t)-\xi(t))=a\circ u_{0}(\eta_{0})-a\circ u_{0}(\xi_{0})
+\]
+
 \end_inset
 
-.
+Since 
+\begin_inset Formula $\xi_{0}<\eta_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\dv{a}{x_{0}}>0$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+a\circ u_{0}(\eta_{0})-a\circ u_{0}(\xi_{0})\implies\dv{t}(\eta(t)-\xi(t))>0
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem
 If 
-\begin_inset Formula $\forall x^{0}\in(\xi,\eta)\colon\dv{a}{x^{0}}<0$
+\begin_inset Formula $\dv{a}{x_{0}}<0$
 \end_inset
 
-, then 
-\begin_inset Formula $\forall\xi<x_{1}^{0}<x_{2}^{0}<\eta\implies$
+ is true for any 
+\begin_inset Formula $x_{0}\in\Omega$
 \end_inset
 
+, in which 
+\begin_inset Formula $\Omega\subset\mathbb{\mathbb{R}}$
+\end_inset
 
+ is an open interval, then for any 
+\begin_inset Formula $\xi_{0},\eta_{0}\in\Omega$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi_{0}<\eta_{0}$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \[
-\exists t^{*}>0:x_{1}(t^{*})=x_{2}(t^{*})\qand\forall t\in(0,t^{*})\colon x_{1}(t)<x_{2}(t)
+\exists t_{*}\in\left(t_{0},+\infty\right):\xi(t_{*})=\eta(t_{*})\qand\forall t\in(0,t_{*})\colon\eta(t)<\xi(t)
 \]
 
 \end_inset
@@ -525,27 +565,31 @@ The proof is similar to the previous theorem, except for the direction of
  the inequality
 \begin_inset Formula 
 \[
-\dv{\left(x_{2}-x_{1}\right)}{t}=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)<0
+\dv{t}(\eta(t)-\xi(t))=a\circ u_{0}(\eta_{0})-a\circ u_{0}(\xi_{0})<0
 \]
 
 \end_inset
 
 The intersecting time 
-\begin_inset Formula $t^{*}$
+\begin_inset Formula $t_{*}$
 \end_inset
 
  of two characteristic curves emanated from 
-\begin_inset Formula $\left(0,x_{1}^{0}\right)$
+\begin_inset Formula $\left(t_{0},\xi_{0}\right)$
 \end_inset
 
  and 
-\begin_inset Formula $\left(0,x_{2}^{0}\right)$
+\begin_inset Formula $\left(t_{0},\eta_{0}\right)$
 \end_inset
 
- can be solved from
+ can be solved from 
+\begin_inset Formula $\xi(t_{*})=\eta(t_{*})$
+\end_inset
+
+, i.e.
 \begin_inset Formula 
 \[
-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)t+x_{1}^{0}=x=\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)t+x_{2}^{0}
+\xi_{0}+\left(t_{*}-t_{0}\right)a\left(u_{0}\left(\xi_{0}\right)\right)=\eta_{0}+\left(t_{*}-t_{0}\right)a\left(u_{0}\left(\eta_{0}\right)\right)
 \]
 
 \end_inset
@@ -553,7 +597,7 @@ The intersecting time
 which is
 \begin_inset Formula 
 \[
-t^{*}\left(x_{1}^{0},x_{2}^{0}\right)=\frac{x_{1}^{0}-x_{2}^{0}}{\left(a\circ u^{0}\right)\left(x_{2}^{0}\right)-\left(a\circ u^{0}\right)\left(x_{1}^{0}\right)}>0
+t_{*}-t_{0}=-\frac{\eta_{0}-\xi_{0}}{a\circ u_{0}(\eta_{0})-a\circ u_{0}(\xi_{0})}>0
 \]
 
 \end_inset
@@ -576,13 +620,13 @@ When two characteristic curves intersect,
  will have two values
 \begin_inset Formula 
 \[
-u=u^{0}\left(x_{1}^{0}\right)\qand u=u^{0}\left(x_{2}^{0}\right)
+u=u_{0}\left(\xi_{0}\right)\qand u=u_{0}\left(\eta_{0}\right)
 \]
 
 \end_inset
 
 which are generally inconsistent.
- Such inconsistent will leads to an infinite 
+ Such inconsistency will leads to an infinite value of 
 \begin_inset Formula $\pdv{u}{x}$
 \end_inset
 
@@ -591,20 +635,24 @@ which are generally inconsistent.
 \begin_inset Formula $\pdv{u}{x}$
 \end_inset
 
- can be solved from the general solution 
-\begin_inset Formula $u=u^{0}(x-a(u)t)$
-\end_inset
-
- as
+ can be solved from the general solution
 \begin_inset Formula 
 \[
-\pdv{u}{x}=\dv{u^{0}}{x^{0}}\left(1-\dv{a}{u}\pdv{u}{x}t\right)\implies\pdv{u}{x}=\frac{\dv{u^{0}}{x^{0}}}{1+t\dv{u^{0}}{x^{0}}\dv{a}{u}}=\frac{\dv{u^{0}}{x^{0}}}{1+t\dv{a}{x^{0}}}
+u(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a(u)\right)
+\]
+
+\end_inset
+
+as
+\begin_inset Formula 
+\[
+\pdv{u}{x}=\frac{\dv{u_{0}}{x_{0}}}{1+\left(t-t_{0}\right)\dv{a}{x_{0}}}
 \]
 
 \end_inset
 
 Since 
-\begin_inset Formula $u^{0}(x)$
+\begin_inset Formula $u_{0}$
 \end_inset
 
  is assumed to be 
@@ -618,7 +666,7 @@ Since
  is
 \begin_inset Formula 
 \[
-1+t\dv{a}{x^{0}}=0\implies t^{*}\left(x^{0}\right)=-\left(\dv{a}{x^{0}}\right)^{-1}>0
+1+\left(t_{*}-t_{0}\right)\dv{a}{x_{0}}=0\implies t_{*}-t_{0}=-\left(\dv{a}{x_{0}}\right)^{-1}
 \]
 
 \end_inset
@@ -630,7 +678,7 @@ breaking time
 :
 \begin_inset Formula 
 \[
-\boxed{t^{b}=\min_{x^{0}\in(\xi,\eta)}-\left(\dv{a}{x^{0}}\right)^{-1}}
+\boxed{t_{b}-t_{0}=\min_{x_{0}\in\Omega}-\left(\dv{a}{x_{0}}\right)^{-1}}
 \]
 
 \end_inset
@@ -639,16 +687,13 @@ breaking time
 \end_layout
 
 \begin_layout Standard
-The third question is: what will happen after 
-\begin_inset Formula $t^{b}$
+The next question is what will happen after the breaking time.
+ If we think of 
+\begin_inset Formula $u\left(t_{b},x_{b}\right)$
 \end_inset
 
-? If we think of 
-\begin_inset Formula $u\left(t^{b},x\right)$
-\end_inset
-
- as the IC of a new IVP, it will become a Riemann problem, which will be
- discussed in the section of 
+ as the IC of a new IVP, it will become a (generalised) Riemann problem,
+ which will be discussed in the section of 
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "subsec:Riemann-Problems"
@@ -681,16 +726,16 @@ A system of first-order linear PDEs with two independent variables
  is generally written as
 \begin_inset Formula 
 \[
-\pdv{u_{i}}{t}+\sum_{j=1}^{m}a_{ij}\pdv{u_{j}}{x}=0
+\pdv{U_{i}}{t}+\sum_{j=1}^{m}A_{ij}(t,x)\pdv{U_{j}}{x}=0\qc i=1,\dots,m
 \]
 
 \end_inset
 
 or in matrix form
 \begin_inset Formula 
-\[
-\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
-\]
+\begin{equation}
+\left(\pdv{t}+\Matrix{A}\pdv{x}\right)\ket{U}=\ket{0}\label{eq:LinearHyperbolicSystemOfPDEs}
+\end{equation}
 
 \end_inset
 
@@ -760,7 +805,10 @@ If a scalar
 
 \end_inset
 
-then we say 
+then we say
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -772,7 +820,10 @@ eigenvalue
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
-, 
+,
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\bra{L}$
 \end_inset
 
@@ -784,7 +835,14 @@ left eigenvector
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
-, 
+ corresponding to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\ket{R}$
 \end_inset
 
@@ -794,6 +852,10 @@ right eigenvector
 \noun default
  of 
 \begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ corresponding to 
+\begin_inset Formula $\lambda$
 \end_inset
 
 .
@@ -820,10 +882,10 @@ If all of the
 \end_inset
 
  linearly independent (left/right) eigenvectors, then the system of PDEs
-\begin_inset Formula 
-\[
-\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
-\]
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearHyperbolicSystemOfPDEs"
 
 \end_inset
 
@@ -836,7 +898,7 @@ hyperbolic
 
 \begin_layout Standard
 For a hyperbolic systems, we can collect the right and left eigenvectors
- into two matrices:
+ into matrices:
 \begin_inset Formula 
 \[
 \Matrix{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\qc\Matrix{L}:=\begin{bmatrix}\bra{L_{1}}\\
@@ -847,15 +909,15 @@ For a hyperbolic systems, we can collect the right and left eigenvectors
 
 \end_inset
 
-They are both invertible, since all of their columns and rows are linearly
- independent, so 
+Since all of their columns and rows are linearly independent, they are both
+ invertible and 
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
  can be diagonalised:
 \begin_inset Formula 
 \[
-\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\implies\Matrix{A}=\Matrix{R}\Matrix{\Lambda}\Matrix{R}^{-1}
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\implies\Matrix{A}=\Matrix{R}\Matrix{\lambda}\Matrix{R}^{-1}
 \]
 
 \end_inset
@@ -863,15 +925,39 @@ They are both invertible, since all of their columns and rows are linearly
 
 \begin_inset Formula 
 \[
-\Matrix{L}\Matrix{A}=\Matrix{\Lambda}\Matrix{L}\implies\Matrix{A}=\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}
+\Matrix{L}\Matrix{A}=\Matrix{\lambda}\Matrix{L}\implies\Matrix{A}=\Matrix{L}^{-1}\Matrix{\lambda}\Matrix{L}
 \]
 
 \end_inset
 
-If all of the eigenvectors are normalized, then we have
+We can prove that the rows of 
+\begin_inset Formula $\Matrix{R}^{-1}$
+\end_inset
+
+ are indeed left eigenvectors of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+.
+ So, we can write 
+\begin_inset Formula $\Matrix{L}=\Matrix{R}^{-1}$
+\end_inset
+
+ and will have
 \begin_inset Formula 
 \[
-\braket{L_{i}}{R_{j}}=\delta_{ij}\qc\Matrix{R}=\Matrix{L}^{-1}\qc\Matrix{A}=\Matrix{R}\Matrix{\Lambda}\Matrix{L}\qc\Matrix{\Lambda}=\Matrix{L}\Matrix{A}\Matrix{R}
+\Matrix{A}=\Matrix{R}\Matrix{\lambda}\Matrix{L}\qc\Matrix{\lambda}=\Matrix{L}\Matrix{A}\Matrix{R}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\ip{L_{i}}{R_{j}}=\begin{cases}
+1, & i=j\\
+0, & i\ne j
+\end{cases}
 \]
 
 \end_inset
@@ -880,40 +966,32 @@ If all of the eigenvectors are normalized, then we have
 \end_layout
 
 \begin_layout Standard
-By define a set of 
+By defining a set of 
 \noun on
 characteristic variables
 \noun default
 :
 \begin_inset Formula 
 \[
-\ket{V}:=\Matrix{L}\ket{U}=\begin{bmatrix}\braket{L_{1}}{U}\\
+\ket{V(t,x)}:=\Matrix{L}\ket{U(t,x)}=\begin{bmatrix}\ip{L_{1}}{U(t,x)}\\
 \vdots\\
-\braket{L_{m}}{U}
-\end{bmatrix}=\begin{bmatrix}v_{i}\\
+\ip{L_{m}}{U(t,x)}
+\end{bmatrix}=\begin{bmatrix}V_{1}(t,x)\\
 \vdots\\
-v_{m}
+V_{m}(t,x)
 \end{bmatrix}
 \]
 
 \end_inset
 
-the original system
-\begin_inset Formula 
-\[
-\ket{U}_{t}+\Matrix{A}\ket{U}_{x}=\ket{0}
-\]
-
-\end_inset
-
-can be decoupled as 
+the original system can be decoupled as 
 \begin_inset Formula $m$
 \end_inset
 
  independent single wave equations:
 \begin_inset Formula 
 \[
-\ket{V}_{t}+\Matrix{\Lambda}\ket{V}_{x}=\ket{0}\implies\pdv{v_{i}}{t}+\lambda_{i}\pdv{v_{i}}{x}\qc i=1,\dots,m
+\left(\pdv{t}+\Matrix{\lambda}\pdv{x}\right)\ket{V}=\ket{0}\implies\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}\qc i=1,\dots,m
 \]
 
 \end_inset
@@ -922,15 +1000,26 @@ which is is called the
 \noun on
 canonical form
 \noun default
- or 
+ or the 
 \noun on
 characteristic form
 \noun default
- of system.
- Each of them can be solved along its characteristic curve
+ of the system.
+ Each of them is supplied with an IC obtained from the same projection:
 \begin_inset Formula 
 \[
-\dv{x}{t}=\lambda_{i}\qc x(t=0)=x^{0}\implies x-\lambda_{i}t=x^{0}
+\ket{V_{0}(x_{0})}:=\Matrix{L}\ket{U_{0}(x_{0})}=\begin{bmatrix}\ip{L_{1}}{U_{0}(x_{0})}\\
+\vdots\\
+\ip{L_{m}}{U_{0}(x_{0})}
+\end{bmatrix}
+\]
+
+\end_inset
+
+and can be solved along its characteristic curve:
+\begin_inset Formula 
+\[
+\dv{x}{t}=\lambda_{i}\qc x(t_{0})=x_{0}\implies\frac{x-x_{0}}{t-t_{0}}=\lambda_{i}
 \]
 
 \end_inset
@@ -938,65 +1027,37 @@ characteristic form
 as
 \begin_inset Formula 
 \[
-v_{i}(t,x)=v_{i}^{0}(x-\lambda_{i}t)
+V_{i}(t,x)=\ip{L_{i}}{U_{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
 \]
 
 \end_inset
 
-This is a single wave with the shape 
-\begin_inset Formula $v_{i}^{0}(x)$
+which is a single wave with the shape 
+\begin_inset Formula $\ip{L_{i}}{U_{0}(x_{0})}$
 \end_inset
 
- propagating with speed 
+ propagating with the characteristic speed 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The solution to the original system can be obtained by transforming the
- characteristic variables 
-\begin_inset Formula $v_{i}$
+ The solution to the original system can be obtained by transforming 
+\begin_inset Formula $\ket{V}$
 \end_inset
 
- back into the original variables 
-\begin_inset Formula $u_{i}$
+ back into 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-\ket{U}=\Matrix{L}^{-1}\ket{V}=\Matrix{R}\Matrix{V}=\sum_{i=1}^{m}v_{i}^{0}(x-\lambda_{i}t)\ket{R_{i}}
+\ket{U(t,x)}=\Matrix{R}\ket{V(t,x)}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
 \]
 
 \end_inset
 
-which means the value of 
-\begin_inset Formula $\ket{U}$
-\end_inset
 
- at a point 
-\begin_inset Formula $(t,x)$
-\end_inset
-
- is determined by the initial data at 
-\begin_inset Formula $m$
-\end_inset
-
- points 
-\begin_inset Formula $(0,x-\lambda_{i}t)$
-\end_inset
-
-, which are the intersection of 
-\begin_inset Formula $m$
-\end_inset
-
- characteristic curves with the 
-\begin_inset Formula $x$
-\end_inset
-
--axis.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1023,7 +1084,7 @@ A system of first-order quasilinear PDEs with two independent variables
  is generally written as
 \begin_inset Formula 
 \[
-\pdv{u_{i}}{t}+\sum_{j=1}^{m}a_{ij}(t,x,u_{1},\cdots,u_{m})\pdv{u_{j}}{x}+b_{i}(t,x,u_{1},\cdots,u_{m})=0
+\pdv{U_{i}}{t}+\sum_{j=1}^{m}A_{ij}(t,x,U_{1},\cdots,U_{m})\pdv{U_{j}}{x}=0\qc i=1,\dots,m
 \]
 
 \end_inset
@@ -1031,51 +1092,449 @@ A system of first-order quasilinear PDEs with two independent variables
 or in matrix form
 \begin_inset Formula 
 \[
-\ket{U}_{t}+\Matrix{A}\ket{U}_{x}+\ket{B}=\ket{0}
+\left(\pdv{t}+\Matrix{A}\pdv{x}\right)\ket{U}=\ket{0}
 \]
 
 \end_inset
 
-in which, the coefficient matrix 
-\begin_inset Formula $\Matrix{A}$
-\end_inset
 
- determines the behavior of the system.
 \end_layout
 
 \begin_layout Standard
-Many systems of first-order nonlinear PDEs can be transformed into this
- form.
- For example, the system of conservation laws
-\begin_inset Formula 
-\[
-\ket{U}_{t}+\ket{F}_{x}=\ket{0}\qc\ket{U}=\begin{bmatrix}u_{1}\\
-\vdots\\
-u_{m}
-\end{bmatrix}\qc\ket{F}=\begin{bmatrix}f_{1}(u_{1},\cdots,u_{m})\\
-\vdots\\
-f_{m}(u_{1},\cdots,u_{m})
-\end{bmatrix}
-\]
-
+Like a linear system, we can perform eigenvalue analysis on a quasilinear
+ system, at least locally.
+ For a quasilinear system, 
+\begin_inset Formula $\Matrix{A}$
 \end_inset
 
-can be transformed into the quasilinear form with the 
-\noun on
-Jacobian matrix
-\noun default
+ depends on 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ now, so do its eigenvalues 
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ and the corresponding eigenvectors 
+\begin_inset Formula $\bra{L_{k}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+.
+ We can still diagonalize 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
 :
 \begin_inset Formula 
 \[
-\Matrix{A}:=\pdv{F}{U}=\begin{bmatrix}\pdv{f_{1}}{u_{1}} & \cdots & \pdv{f_{1}}{u_{m}}\\
-\vdots & \vdots & \vdots\\
-\pdv{f_{m}}{u_{1}} & \cdots & \pdv{f_{m}}{u_{m}}
+\Matrix{A}=\Matrix{R}\Matrix{\lambda}\Matrix{R}^{-1}=\Matrix{L}^{-1}\Matrix{\lambda}\Matrix{L}
+\]
+
+\end_inset
+
+but the system of PDEs cannot be fully decoupled, we can only have
+\begin_inset Formula 
+\[
+\left(\Matrix{L}\pdv{t}+\Matrix{\lambda}\Matrix{L}\pdv{x}\right)\ket{U}=\ket{0}
+\]
+
+\end_inset
+
+each row of which is
+\begin_inset Formula 
+\[
+\mel**{L_{i}}{\pdv{t}+\lambda_{i}\pdv{x}}{U}=0\qc i=1,\dots,m
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The eigenvalue 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ defines a 
+\noun on
+characteristic field
+\noun default
+, which is categorized as 
+\noun on
+genuinely nolinear
+\noun default
+ if
+\begin_inset Formula 
+\[
+\ip{\nabla\lambda_{i}}{R_{i}}\ne0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+or 
+\noun on
+linearly degenerate
+\noun default
+ if
+\begin_inset Formula 
+\[
+\ip{\nabla\lambda_{i}}{R_{i}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\bra{\nabla\lambda_{i}}:=\begin{bmatrix}\pdv{\lambda_{i}}{U_{1}} & \cdots & \pdv{\lambda_{i}}{U_{m}}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+If a scalar function 
+\begin_inset Formula $W(U_{1},\cdots,U_{m})$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\ip{\nabla W}{R_{k}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+then it is called a
+\noun on
+ 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invariant
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each 
+\begin_inset Formula $k$
+\end_inset
+
+, there are 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ independent 
+\noun on
+
+\begin_inset Formula $k$
+\end_inset
+
+-
+\noun default
+Riemann invariants.
+ This can be seen from the following discussion.
+ The 
+\noun on
+characteristic equation
+\noun default
+ of the first order PDE 
+\begin_inset Formula $\ip{\nabla W}{R_{k}}=0$
+\end_inset
+
+ is a system of 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ ODEs:
+\begin_inset Formula 
+\[
+\frac{\dd{U_{1}}}{\ip{1}{R_{k}}}=\cdots=\frac{\dd{U_{m}}}{\ip{m}{R_{k}}}
+\]
+
+\end_inset
+
+There are 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ independent constants in the solution of this ODE system, which can be
+ viewed as 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ independent first-integrals.
+ The geometrical interpretation of its solution is the family of trajectories
+ of the vector field 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+.
+ Along such trajectories, a
+\noun on
+ 
+\begin_inset Formula $k$
+\end_inset
+
+-
+\noun default
+Riemann invariant is a constant :
+\begin_inset Formula 
+\[
+\dd{W}=\ip{\nabla W}{\dd{U}}=\ip{\nabla W}{R_{k}}\frac{\dd{U_{1}}}{\ip{1}{R_{k}}}=0
+\]
+
+\end_inset
+
+so, 
+\noun on
+
+\begin_inset Formula $k$
+\end_inset
+
+-
+\noun default
+Riemann invariants are also first-integrals.
+\end_layout
+
+\begin_layout Subsubsection
+Two Equation Systems
+\end_layout
+
+\begin_layout Standard
+For a quasilinear system with two equations, Riemann invariants can always
+ be found and the system of PDEs can always be diagonalized.
+ This is because
+\end_layout
+
+\begin_layout Itemize
+there is only one independent Riemann invariant for each characteristic
+ field, and
+\end_layout
+
+\begin_layout Itemize
+from the orthogonality identities
+\begin_inset Formula 
+\[
+\ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0\qc\ip{\nabla W_{1}}{R_{1}}=\ip{\nabla W_{2}}{R_{2}}=0
+\]
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\bra{L_{2}}\parallel\bra{\nabla W_{1}}\qc\bra{L_{1}}\parallel\bra{\nabla W_{2}}
+\]
+
+\end_inset
+
+which leads to
+\begin_inset Formula 
+\[
+\bra{\nabla W_{1}}\Matrix{A}=\bra{\nabla W_{1}}\lambda_{2}\qc\bra{\nabla W_{2}}\Matrix{A}=\bra{\nabla W_{2}}\lambda_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system of PDEs can now be turned into a pair of ODEs
+\begin_inset Formula 
+\[
+\begin{aligned}\mel**{\nabla W_{1}}{\pdv{t}+\lambda_{2}\pdv{x}}{U}=\eval{\dv{t}}_{2}W_{1}=0\\
+\mel**{\nabla W_{2}}{\pdv{t}+\lambda_{1}\pdv{x}}{U}=\eval{\dv{t}}_{1}W_{2}=0
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\eval{\dv{t}}_{i}:=\pdv{t}+\lambda_{i}\pdv{x}\qc i=1,2
+\]
+
+\end_inset
+
+are differential operators defined along the characteristic curves
+\begin_inset Formula 
+\[
+\dv{x}{t}=\lambda_{i}\qc i=1,2
+\]
+
+\end_inset
+
+which are no longer straight lines in general.
+ This can be summarized as
+\end_layout
+
+\begin_layout Theorem
+For a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system, the Riemann invariants associated with one characteristic field
+ are constants along the characteristic curves associated with the other
+ characteristic field.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At any point 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+, we have two algebraic equations
+\begin_inset Formula 
+\[
+\begin{aligned}W_{1}\circ\ket{U}(t,x)=W_{1}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{2})\\
+W_{2}\circ\ket{U}(t,x)=W_{2}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{1})
+\end{aligned}
+\]
+
+\end_inset
+
+from which the original variables 
+\begin_inset Formula $\left(U_{1},U_{2}\right)$
+\end_inset
+
+ can be solved.
+\end_layout
+
+\begin_layout Standard
+For example, the governing equation of isentropic gas dynamics in 1D space
+ is
+\begin_inset Formula 
+\[
+\pdv{t}\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}+\pdv{x}\begin{bmatrix}\rho u\\
+\rho u^{2}+p
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}\qc p=C\rho^{\gamma}
+\]
+
+\end_inset
+
+which can be formulated as a quasilinear system by using the fact 
+\begin_inset Formula $a^{2}=\gamma p/\rho$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\left(\pdv{t}+\Matrix{A}\pdv{x}\right)\ket{U}=\ket{0}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\ket{U}:=\begin{bmatrix}U_{1}\\
+U_{2}
+\end{bmatrix}=\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}\qc\Matrix{A}:=\begin{bmatrix}0 & 1\\
+a^{2}-\left(\frac{U_{2}}{U_{1}}\right)^{2} & \frac{2U_{2}}{U_{1}}
+\end{bmatrix}=\begin{bmatrix}0 & 1\\
+a^{2}-u^{2} & 2u
 \end{bmatrix}
 \]
 
 \end_inset
 
-as the coefficient matrix.
+The eigenvalues and eigenvectors of 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ can be found as
+\begin_inset Formula 
+\[
+\begin{aligned}\lambda_{1}=u-a\qc\ket{R_{1}}=\begin{bmatrix}1\\
+u-a
+\end{bmatrix}\\
+\lambda_{2}=u+a\qc\ket{R_{2}}=\begin{bmatrix}1\\
+u+a
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+The corresponding Riemann invariants can be found from the characteristic
+ equations
+\begin_inset Formula 
+\[
+\frac{\dd{\rho}}{1}=\frac{\dd(\rho u)}{u\mp a}\implies\dd{u}\pm\frac{a}{\rho}\dd{\rho}=0
+\]
+
+\end_inset
+
+to be
+\begin_inset Formula 
+\[
+u\pm\int\frac{a}{\rho}\dd{\rho}=\textrm{const}\qor u\pm\frac{2a}{\gamma-1}=\textrm{const}
+\]
+
+\end_inset
+
+Trace along the characteristic curves back to the initial time, we have
+ two algebraic equations
+\begin_inset Formula 
+\[
+\begin{aligned}\left(u+\frac{2a}{\gamma-1}\right)(t,x)=\left(u+\frac{2a}{\gamma-1}\right)\left(t_{0},x_{0}(t,x;\lambda_{2})\right)\\
+\left(u-\frac{2a}{\gamma-1}\right)(t,x)=\left(u-\frac{2a}{\gamma-1}\right)\left(t_{0},x_{0}(t,x;\lambda_{1})\right)
+\end{aligned}
+\]
+
+\end_inset
+
+from which 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ and 
+\begin_inset Formula $a(t,x)=\sqrt{C\gamma\rho^{\gamma-1}(t,x)}$
+\end_inset
+
+ can be solved.
 \end_layout
 
 \begin_layout Subsection
