@@ -9,12 +9,13 @@
 \usepackage{hyperref}
 \usepackage{physics}
 \usepackage[e]{esvect}
-%\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Matrix}[1]{\bqty{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+%\newcommand{\Matrix}[1]{\bqty{#1}}
 \newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
 \renewcommand{\vu}[1]{\widehat{\vb*{#1}}}
 \renewcommand{\parallel}{/\negthickspace/}
+\usepackage{tikz}
 \end_preamble
 \options intoc
 \use_default_options true
@@ -148,8 +149,32 @@ literal "false"
 \begin_layout Standard
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
+symbol "BVP"
+description "Boundary Value Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
 symbol "IC"
 description "Initial Condition"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "IVP"
+description "Initial Value Problem"
 literal "false"
 
 \end_inset
@@ -170,7 +195,7 @@ Method of Characteristics for Hyperbolic PDEs
 \end_layout
 
 \begin_layout Subsection
-Smooth Solutions for Single PDEs
+Smooth Solutions for Single Hyperbolic PDEs
 \end_layout
 
 \begin_layout Subsubsection
@@ -909,7 +934,7 @@ noprefix "false"
  of the smooth solution is the minimum of all these intersecting moments:
 \begin_inset Formula 
 \[
-\boxed{t_{b}=t_{0}+\min_{x_{0}\in\Omega}-\left(\dv{a}{x_{0}}\right)^{-1}}
+t_{b}=t_{0}+\min_{x_{0}\in\Omega}-\left(\dv{a}{x_{0}}\right)^{-1}
 \]
 
 \end_inset
@@ -918,20 +943,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Smooth Solutions for PDE Systems
+Smooth Solutions for Hyperbolic PDE Systems
 \end_layout
 
-\begin_layout Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Dirac's bra-ket Notation]
+\begin_layout Subsubsection
+Notation
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 In mathematical and physical literatures, the notation for vectors, matrices
  and PDE systems is not unified.
  I prefer to adopt 
@@ -1005,7 +1024,7 @@ vector by
 \end_layout
 
 \begin_layout Description
-matrix by a bracket, e.g.
+matrix by an underline, e.g.
  
 \begin_inset Formula $\Matrix{A}$
 \end_inset
@@ -1035,7 +1054,8 @@ bilinear
 \begin_inset space ~
 \end_inset
 
-form by sandwiching the operator inside two vectors, e.g.
+form by sandwiching the operator inside two vectors and dropping its underline,
+ e.g.
  
 \begin_inset Formula $\mel{X}{A}{Y}:=\ip{X}{AY}$
 \end_inset
@@ -1226,7 +1246,7 @@ value
 
 \end_deeper
 \begin_layout Subsubsection
-Linear Hyperbolic PDE Systems
+Linear Systems
 \end_layout
 
 \begin_layout Definition
@@ -1326,7 +1346,7 @@ constant
 , will be discussed in the section of 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "subsec:QuasilinearHyperbolicPdeSystems"
+reference "subsec:QuasilinearHyperbolicSystems"
 
 \end_inset
 
@@ -1654,10 +1674,10 @@ which is a single wave with the shape
 \end_layout
 
 \begin_layout Subsubsection
-Quasilinear Hyperbolic PDE Systems
+Quasilinear Systems
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:QuasilinearHyperbolicPdeSystems"
+name "subsec:QuasilinearHyperbolicSystems"
 
 \end_inset
 
@@ -1694,7 +1714,7 @@ For a quasilinear system,
 or in matrix form
 \begin_inset Formula 
 \begin{equation}
-\left(\pdv{t}+\Matrix{A(U)}\pdv{x}\right)\ket{U}=\ket{0}\label{eq:Quasilinear1dPdeSystem}
+\left(\pdv{t}+\Matrix{A(U)}\pdv{x}\right)\ket{U}=\ket{0}\label{eq:QuasilinearHyperbolicSystem1d}
 \end{equation}
 
 \end_inset
@@ -1796,7 +1816,7 @@ in which
 Unlike a linear system, PDE
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Quasilinear1dPdeSystem"
+reference "eq:QuasilinearHyperbolicSystem1d"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1851,7 +1871,7 @@ In contrast to the linear case,
  cannot be exchanged with the differential operator, so the characteristic
  compatability condition 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:CharacteristicCompatibilityCondition"
 plural "false"
 caps "false"
@@ -1899,7 +1919,7 @@ If a scalar function
 
 then it is called a
 \noun on
- 
+ generalized 
 \begin_inset Formula $k$
 \end_inset
 
@@ -1924,7 +1944,7 @@ The characteristic equation of the first order PDE in this definition is
  ODEs:
 \begin_inset Formula 
 \[
-\frac{\dd{U_{1}}}{\ip{1}{R_{k}}}=\cdots=\frac{\dd{U_{m}}}{\ip{m}{R_{k}}}
+\frac{\dd{U_{1}}}{\ip{1}{R_{k}}}=\cdots=\frac{\dd{U_{m}}}{\ip{m}{R_{k}}}=:\alpha
 \]
 
 \end_inset
@@ -1956,7 +1976,7 @@ There are
 Riemann invariant is a constant:
 \begin_inset Formula 
 \[
-\dd{W}=\ip{\nabla W}{\dd{U}}=\ip{\nabla W}{R_{k}}\frac{\dd{U_{1}}}{\ip{1}{R_{k}}}=0
+\dd{W}=\ip{\nabla W}{\dd{U}}=\ip{\nabla W}{R_{k}}\alpha=0
 \]
 
 \end_inset
@@ -2119,7 +2139,7 @@ status open
 \pdv{t}\begin{bmatrix}\rho\\
 \rho u
 \end{bmatrix}+\pdv{x}\begin{bmatrix}\rho u\\
-\rho u^{2}+p
+\rho uu+p
 \end{bmatrix}=\begin{bmatrix}0\\
 0
 \end{bmatrix}\qc p=C\rho^{\gamma}
@@ -2134,7 +2154,7 @@ status open
 It can be formulated as a quasilinear system 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Quasilinear1dPdeSystem"
+reference "eq:QuasilinearHyperbolicSystem1d"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2347,7 +2367,7 @@ If the smoothness requirement is not satisfied, we should go back to the
  integral form, which will leads to the 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "subsec:JumpCondition"
+reference "subsec:JumpConditions"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2385,7 +2405,7 @@ a vector
 The conservation law is then written as
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+\sum_{i=1}^{3}\pdv{f_{i}}{x_{i}}=0\label{eq:ScalarConservationLaw3d}
+\pdv{u}{t}+\sum_{i=1}^{3}\pdv{f_{i}}{x_{i}}=0\label{eq:SingleConservationLaw3d}
 \end{equation}
 
 \end_inset
@@ -2485,7 +2505,7 @@ th elememt of
 The conservation law is then written as
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:SystemOfConservationLaws-1}
+\boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:SystemOfConservationLaws3d}
 \end{equation}
 
 \end_inset
@@ -2536,9 +2556,9 @@ th elememt of
 \begin_layout Itemize
 The conservation law is then written as
 \begin_inset Formula 
-\[
-\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}
-\]
+\begin{equation}
+\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}\label{eq:SystemOfConservationLaws1d}
+\end{equation}
 
 \end_inset
 
@@ -2558,10 +2578,10 @@ th row is
 \end_layout
 
 \begin_layout Subsubsection
-Jump Condition
+Jump Conditions
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:JumpCondition"
+name "subsec:JumpConditions"
 
 \end_inset
 
@@ -2650,7 +2670,7 @@ All of its walls are
 \begin_layout Standard
 Then, the conservation law on a moving control volume 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:ConservationLawOnMovingControlVolume"
 plural "false"
 caps "false"
@@ -2726,9 +2746,9 @@ s\Delta u=\Delta f\qc\Delta f:=f(u_{+})-f(u_{-})
 For a system of conservation laws, the jump condition must be satisfied
  by each row, that is:
 \begin_inset Formula 
-\[
-s\ket{\Delta U}=\ket{\Delta F}
-\]
+\begin{equation}
+s\ket{\Delta U}=\ket{\Delta F}\label{eq:JumpConditionFor1dSystem}
+\end{equation}
 
 \end_inset
 
@@ -2913,7 +2933,7 @@ which leads to the PDE since
 \end_layout
 
 \begin_layout Subsubsection
-The Entropy Condition
+Entropy Conditions
 \end_layout
 
 \begin_layout Standard
@@ -2975,11 +2995,12 @@ Characteristic curves near the discontinuity curve must run into or at least
 \begin_layout Standard
 For a system of conservation law, the entropy condition is given as
 \begin_inset Formula 
-\[
+\begin{equation}
 \begin{aligned}\lambda_{k}(U_{-})\ge s & \ge\lambda_{k}(U_{+})\\
 \lambda_{k-1}(U_{-})<s & <\lambda_{k+1}(U_{+})
 \end{aligned}
-\]
+\label{eq:EntropyConditionForSystem}
+\end{equation}
 
 \end_inset
 
@@ -3022,16 +3043,25 @@ name "subsec:RiemannProblems"
 
 \end_layout
 
-\begin_layout Subsubsection
-Linear Wave Equation
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riemann Problems]
 \end_layout
 
-\begin_layout Problem
-The simplest Riemann problem is the IVP defined by the first order linear
- wave equation 
+\end_inset
+
+A Riemann problem of a single conservation law in 1D space is the IVP defined
+ by PDE
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LinearWaveEquation"
+reference "eq:SingleConservationLaw1d"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -3039,8 +3069,8 @@ reference "eq:LinearWaveEquation"
 \begin_inset Formula 
 \[
 u(t_{0},x)=\begin{cases}
-u_{-}, & x<0\\
-u_{+}, & x>0
+u_{-}, & x<x_{0}\\
+u_{+}, & x>x_{0}
 \end{cases}
 \]
 
@@ -3057,8 +3087,59 @@ in which
  are constants.
 \end_layout
 
-\begin_layout Solution*
-The gereral solution of this IVP is
+\begin_layout Problem
+A Riemann problem of a system of conservation laws in 1D space is the IVP
+ defined by PDE
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the following IC:
+\begin_inset Formula 
+\[
+\ket{U(t_{0},x)}=\begin{cases}
+\ket{U_{-}}, & x<x_{0}\\
+\ket{U_{+}}, & x>x_{0}
+\end{cases}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\ket{U_{-}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{+}}$
+\end_inset
+
+ are constant column matrices.
+\end_layout
+
+\begin_layout Standard
+Without loss of generality, we shall shift the initial discontinuity from
+ 
+\begin_inset Formula $(t_{0},x_{0})$
+\end_inset
+
+ to 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Linear Wave Equation
+\end_layout
+
+\begin_layout Standard
+The solution is
 \begin_inset Formula 
 \[
 u(t,x)=\begin{cases}
@@ -3109,41 +3190,284 @@ are satisfied, in which
 \end_layout
 
 \begin_layout Subsubsection
-Linear Hyperbolic PDE Systems
+Quasilinear Wave Equation
 \end_layout
 
-\begin_layout Problem
-The Riemann problem of a linear hyperbolic system is an IVP defined by the
- linear PDE system 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LinearPdeSystem1d"
-
+\begin_layout Standard
+Like in the linear case, the solution here also contains 
+\begin_inset Formula $2$
 \end_inset
 
- and the following IC:
+ constant regions, which are connected by 
+\begin_inset Formula $1$
+\end_inset
+
+ region of discontinuity:
 \begin_inset Formula 
 \[
-\ket{U(t_{0},x)}=\begin{cases}
-\ket{U_{-}}, & x<0\\
-\ket{U_{+}}, & x>0
+u(t,x)=\begin{cases}
+u_{-}, & \Omega_{-}\\
+\text{discontinuity}, & \Omega_{D}\\
+u_{+}, & \Omega_{+}
 \end{cases}
 \]
 
 \end_inset
 
-in which, 
-\begin_inset Formula $\ket{U_{-}}$
+In the linear case, these three regions are
+\begin_inset Formula 
+\[
+\begin{aligned}\Omega_{-} & =\left\{ (t,x):x/t<a\right\} \\
+\Omega_{D} & =\left\{ (t,x):x/t=a\right\} \\
+\Omega_{+} & =\left\{ (t,x):x/t>a\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+We can prove that
+\end_layout
+
+\begin_layout Claim
+In the solution of a Riemann problem of a quasilinear wave equation, these
+ three regions are
+\begin_inset Formula 
+\[
+\begin{aligned}\Omega_{-} & =\left\{ (t,x):x/t<a_{-}\right\} \\
+\Omega_{D} & =\left\{ (t,x):x/t\in[a_{-},a_{+}]\right\} \\
+\Omega_{+} & =\left\{ (t,x):x/t>a_{+}\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our task is to determine the solution in the region of discontinuity 
+\begin_inset Formula $\Omega_{D}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Shock Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $f''(u)=a'(u)>0$
 \end_inset
 
  and 
-\begin_inset Formula $\ket{U_{+}}$
+\begin_inset Formula $u_{-}>u_{+}$
 \end_inset
 
- are constant column matrices.
+, or 
+\begin_inset Formula $f''(u)=a'(u)<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}<u_{+}$
+\end_inset
+
+, we will have 
+\begin_inset Formula 
+\[
+a(u_{-})>a(u_{+})
+\]
+
+\end_inset
+
+which means the characteristic curves started from the left half of the
+ 
+\begin_inset Formula $x$
+\end_inset
+
+-axis will 
+\emph on
+intersect
+\emph default
+ with those started from the right half of the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
+ In this case, a 
+\noun on
+shock wave
+\noun default
+ separating the two families of parallel characteristic curves will start
+ from 
+\begin_inset Formula $(t_{0},x=0)$
+\end_inset
+
+.
+ The speed of the shock wave is determined by the jump condition
+\begin_inset Formula 
+\[
+s=\frac{f_{+}-f_{-}}{u_{+}-u_{-}}
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+a_{-}>s>a_{+}
+\]
+
+\end_inset
+
+is strictly satisfied.
+ The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}, & x/t<s\\
+\text{shock}, & x/t=s\\
+u_{+}, & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Solution*
+\begin_layout Paragraph
+Rarefaction Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $f''(u)=a'(u)>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}<u_{+}$
+\end_inset
+
+, or 
+\begin_inset Formula $f''(u)=a'(u)<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}>u_{+}$
+\end_inset
+
+, we will have 
+\begin_inset Formula 
+\[
+a(u_{-})<a(u_{+})
+\]
+
+\end_inset
+
+which means the two families of characteristic curves will 
+\emph on
+diverge
+\emph default
+ from each other.
+ In this case, a fan-shaped 
+\noun on
+rarefaction wave
+\noun default
+ separating the two families of parallel characteristic curves will start
+ from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ The speed of the 
+\noun on
+wave head
+\noun default
+ is 
+\begin_inset Formula $a_{+}$
+\end_inset
+
+, while that of the 
+\noun on
+wave tail
+\noun default
+ is 
+\begin_inset Formula $a_{-}$
+\end_inset
+
+.
+ In the region between them, 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is smooth enough to satisfy the PDE, which can be solved from the equation
+ of the characteristic curves:
+\begin_inset Formula 
+\[
+x/t=a(u)\implies u(t,x)=a^{-1}(x/t)
+\]
+
+\end_inset
+
+The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}, & x/t<a_{-}\\
+a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
+u_{+}, & x/t>a_{+}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Contact Discontinuity
+\end_layout
+
+\begin_layout Standard
+If neither 
+\begin_inset Formula $f''(u)=a'(u)>0$
+\end_inset
+
+ nor 
+\begin_inset Formula $f''(u)=a'(u)<0$
+\end_inset
+
+ is gauranteed, then there might be such a case that
+\begin_inset Formula 
+\[
+a(u_{-})=a(u_{+})
+\]
+
+\end_inset
+
+even though
+\begin_inset Formula 
+\[
+u_{-}\ne u_{+}
+\]
+
+\end_inset
+
+In this case, there will be no mass/momentum/energy flowing across the discontin
+uity, thus it is called a 
+\noun on
+contact discontinuity
+\noun default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Linear Hyperbolic Systems
+\end_layout
+
+\begin_layout Standard
 The first step it to project the initial jump onto the the space spanned
  by 
 \begin_inset Formula $\left\{ \ket{R_{i}}\right\} _{i=1}^{m}$
@@ -3186,9 +3510,8 @@ V_{i}(t,x)=\begin{cases}
 
 \end_layout
 
-\begin_layout Solution*
-The general solution of the original IVP is then the superposition of all
- the 
+\begin_layout Standard
+The solution of the original IVP is then the superposition of all the 
 \begin_inset Formula $m$
 \end_inset
 
@@ -3307,7 +3630,7 @@ th characteristic curve
  Instead, the jump condition
 \begin_inset Formula 
 \[
-s\ket{\Delta U}=\ket{\Delta F}
+s_{k}\Delta_{k}\ket{U}=\Delta_{k}\ket{F}
 \]
 
 \end_inset
@@ -3315,8 +3638,8 @@ s\ket{\Delta U}=\ket{\Delta F}
 and the entropy condition
 \begin_inset Formula 
 \[
-\begin{aligned}\lambda_{k}(U_{-})=s & =\lambda_{k}(U_{+})\\
-\lambda_{k-1}(U_{-})<s & <\lambda_{k+1}(U_{+})
+\begin{aligned}\lambda_{k}(-)=s_{k} & =\lambda_{k}(+)\\
+\lambda_{k-1}(-)<s_{k} & <\lambda_{k+1}(+)
 \end{aligned}
 \]
 
@@ -3325,9 +3648,9 @@ and the entropy condition
 are satisfied, in which
 \begin_inset Formula 
 \[
-\begin{aligned}s & =\lambda_{k}\\
-\ket{\Delta U} & =\ket{R_{k}}\ip{L_{k}}{U_{+}}-\ket{R_{k}}\ip{L_{k}}{U_{-}}\\
-\ket{\Delta F} & =\Matrix{A}\ket{\Delta U}
+\begin{aligned}s_{k} & =\lambda_{k}\\
+\Delta_{k}\ket{U} & =\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}}-\ket{U_{-}}\right)\\
+\Delta_{k}\ket{F} & =\Matrix{A}\Delta_{k}\ket{U}
 \end{aligned}
 \]
 
@@ -3337,55 +3660,175 @@ are satisfied, in which
 \end_layout
 
 \begin_layout Subsubsection
-The Quasilinear Wave Equation
+Conservation Law Systems
+\end_layout
+
+\begin_layout Paragraph
+Structure of Self-Similar Solutions
 \end_layout
 
 \begin_layout Standard
-The Riemann problem for a quasilinear wave equation is an IVP with the PDE
- 
+In the previous sections, all of the solutions of Riemann problems depend
+ only on 
+\begin_inset Formula $x/t$
+\end_inset
+
+.
+ Such solutions are said to be 
+\noun on
+self-similar
+\noun default
+, which means the solutions are still valid under the following transformation
+ of independent variables:
+\begin_inset Formula 
+\[
+(t,x)\to(\alpha t,\alpha x)\qc\forall\alpha>0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For Riemann problems of quasilinear systems, we shall still persue a self-simila
+r solution.
+ By defining a new variable 
+\begin_inset Formula 
+\[
+\xi:=x/t\implies\pdv{t}=\pdv{\xi}{t}\dv{\xi}\qc\pdv{x}=\pdv{\xi}{x}\dv{\xi}
+\]
+
+\end_inset
+
+PDE
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:QuasilinearWaveEquation"
+reference "eq:QuasilinearHyperbolicSystem1d"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and the following IC:
+ can be translated into
 \begin_inset Formula 
 \[
-u(t=0,x)=\begin{cases}
-u_{-}, & x<0\\
-u_{+}, & x>0
-\end{cases}
+\frac{1}{t}\left(\Matrix{A(U)}-\xi\Matrix{E}\right)\dv{\ket{U}}{\xi}=\ket{0}
 \]
 
 \end_inset
 
-in which 
-\begin_inset Formula $u_{-}$
+which implies in smooth regions of the solution, either one of the following
+ two cases must be true:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\dv{\ket{U}}{\xi}=\ket{0}$
+\end_inset
+
+, which means 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ is constant.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\xi$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
  and 
-\begin_inset Formula $u_{+}$
+\begin_inset Formula $\dv{\ket{U}}{\xi}$
 \end_inset
 
- are two constants.
- The general solution will contain three parts, two of them have the same
- form as that of linear wave equation:
-\begin_inset Formula 
-\[
-u(t,x)=\begin{cases}
-u_{-}, & x/t<\lambda_{-}\\
-?, & x/t\in\left[\lambda_{-},\lambda_{+}\right]\\
-u_{+}, & x/t>\lambda_{+}
-\end{cases}
-\]
+ is the corresponding right eigenvector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a quasilinear system that can be formulated as a system of conservation
+ laws, its solution may contain discontinuities, upon which the jump condition
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionFor1dSystem"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-Our task is to determine the solution for the second region.
+ and the entropy condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EntropyConditionForSystem"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ must be satisfied.
+\end_layout
+
+\begin_layout Standard
+There are 
+\begin_inset Formula $m$
+\end_inset
+
+ characteristic fields, so the initial discontinuity will be carried by
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ elementary waves, each of which might be a shock wave, a rarefaction wave,
+ or a contact discontinuity.
+ A shock wave or a rarefaction wave can only occur in a genuinely nonlinear
+ field, while a contact discontinuity can only occur in a linearly degenerated
+ field.
+\end_layout
+
+\begin_layout Standard
+Based on these facts, we claim that:
+\end_layout
+
+\begin_layout Claim
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Structure of Self-Similar Solution]
+\end_layout
+
+\end_inset
+
+The self-similar solution of a system of conservation laws has the following
+ structure: it contains 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ constant regions, which are connected by 
+\begin_inset Formula $m$
+\end_inset
+
+ elementary waves.
+\end_layout
+
+\begin_layout Standard
+Our task is to determine the properties of these elementary waves, such
+ as type, speed, strength, and so on.
 \end_layout
 
 \begin_layout Paragraph
@@ -3393,76 +3836,48 @@ Shock Wave
 \end_layout
 
 \begin_layout Standard
-If 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+A shock wave is a discontinuity where 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $u_{-}>u_{+}$
-\end_inset
-
-, or 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
-\end_inset
-
- and 
-\begin_inset Formula $u_{-}<u_{+}$
-\end_inset
-
-, we will have 
-\begin_inset Formula $a_{-}>a_{+}$
-\end_inset
-
-, which means the characteristic curves started from the left half of the
- 
-\begin_inset Formula $x$
-\end_inset
-
--axis will intersect with those started from the right half of the 
-\begin_inset Formula $x$
-\end_inset
-
--axis.
- In this case, a 
-\noun on
-shock wave
-\noun default
- separating the two families of parallel characteristic curves will start
- from 
-\begin_inset Formula $(0,0)$
+ changes abruptly, as well as 
+\begin_inset Formula $\ket{F}$
 \end_inset
 
 .
- The speed of the shock wave is determined by the jump condition
+ The change of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ satisfies the jump condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionFor1dSystem"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The entropy condition is satisfied with strict inequal signs:
 \begin_inset Formula 
 \[
-s=\frac{f_{+}-f_{-}}{u_{+}-u_{-}}
+\begin{aligned}\lambda_{k}(-)>s_{k} & >\lambda_{k}(+)\\
+\lambda_{k-1}(-)<s_{k} & <\lambda_{k+1}(+)
+\end{aligned}
 \]
 
 \end_inset
 
-and the entropy condition
-\begin_inset Formula 
-\[
-a_{-}>s>a_{+}
-\]
-
-\end_inset
-
-is strictly satisfied.
- The complete solution is then
-\begin_inset Formula 
-\[
-u(t,x)=\begin{cases}
-u_{-}, & x/t<s\\
-\text{jump}, & x/t=s\\
-u_{+}, & x/t>s
-\end{cases}
-\]
-
-\end_inset
-
-
+Geometrically, it implies the characteristic curves on both sides run into
+ the discontinuity curve.
+ Physically, it implies there are mass/momentum/energy flowing across it
+ with entropy increasing.
 \end_layout
 
 \begin_layout Paragraph
@@ -3470,81 +3885,81 @@ Rarefaction Wave
 \end_layout
 
 \begin_layout Standard
-If 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+A rarefaction wave is a region where 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $u_{-}<u_{+}$
-\end_inset
-
-, or 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
-\end_inset
-
- and 
-\begin_inset Formula $u_{-}>u_{+}$
-\end_inset
-
-, we will have 
-\begin_inset Formula $a_{-}<a_{+}$
-\end_inset
-
-, which means the two families of characteristic curves will diverge from
- each other.
- In this case, a fan-shaped 
-\noun on
-rarefaction wave
-\noun default
- separating the two families of parallel characteristic curves will start
- from 
-\begin_inset Formula $(0,0)$
+ changes smoothly, as well as 
+\begin_inset Formula $\ket{F}$
 \end_inset
 
 .
- The speed of the 
-\noun on
-wave head
-\noun default
- is same as 
-\begin_inset Formula $a_{+}$
+ Any 
+\begin_inset Formula $\xi$
 \end_inset
 
-, while that of the 
-\noun on
-wave tail
-\noun default
- is same as 
-\begin_inset Formula $a_{-}$
+ in this region is an eigenvalue of 
+\begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
-.
- In the region between them, 
-\begin_inset Formula $u(t,x)$
+, e.g.
+ 
+\begin_inset Formula $\lambda_{k}$
 \end_inset
 
- is smooth enough to the PDE, which can be solved from the equation of the
- characteristic curves:
+, and 
+\begin_inset Formula $\dv{\ket{U}}{\xi}$
+\end_inset
+
+ is the corresponding right eigenvector, so
 \begin_inset Formula 
 \[
-x-a(u)t=x_{0}=0\implies u(t,x)=a^{-1}\left(\frac{x}{t}\right)
+\frac{\dv{\xi}U_{1}}{\ip{1}{R_{k}}}=\cdots=\frac{\dv{\xi}U_{m}}{\ip{m}{R_{k}}}=:\alpha
 \]
 
 \end_inset
 
-The complete solution is then
+There are 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ generalized 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invarians that are constants along the trajectories of 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
-u_{-}, & x/t<a_{-}\\
-a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
-u_{+}, & x/t>a_{+}
-\end{cases}
+\dv{W}{\xi}=\ip{\nabla W}{\dv{U}{\xi}}=\ip{\nabla W}{R_{k}}\alpha=0
 \]
 
 \end_inset
 
+The 
+\begin_inset Formula $k$
+\end_inset
 
+-characteristic curves diverse from each other, that is
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}(\xi)}{\xi}\ge0\qc\xi\in[\xi_{-},\xi_{+}]
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\xi_{+}$
+\end_inset
+
+ is the speed of the wave head, while 
+\begin_inset Formula $\xi_{-}$
+\end_inset
+
+ is the speed of the wave tail.
 \end_layout
 
 \begin_layout Paragraph
@@ -3552,40 +3967,52 @@ Contact Discontinuity
 \end_layout
 
 \begin_layout Standard
-If neither 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}>0$
+A contact discontinuity is a discontinuity where 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- nor 
-\begin_inset Formula $\dv[2]{f}{u}=\dv{a}{u}<0$
+ changes abruptly, as well as 
+\begin_inset Formula $\ket{F}$
 \end_inset
 
- is gauranteed, there might be such discontinuity that satisfies the jump
- condition
-\begin_inset Formula 
-\[
-s=\frac{f_{+}-f_{-}}{u_{+}-u_{-}}
-\]
-
-\end_inset
-
-and the entropy condition
-\begin_inset Formula 
-\[
-a_{-}=s>a_{+}\qor a_{-}>s=a_{+}\qor a_{-}=s=a_{+}
-\]
-
-\end_inset
-
-In such case, the discontinuity is called a 
-\noun on
-contact discontinuity
-\noun default
 .
+ The change of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ satisfies the jump condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionFor1dSystem"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ However, the entropy condition is satisfied with equal signs:
+\begin_inset Formula 
+\[
+\begin{aligned}\lambda_{k}(-)=s_{k} & =\lambda_{k}(+)\\
+\lambda_{k-1}(-)<s_{k} & <\lambda_{k+1}(+)
+\end{aligned}
+\]
+
+\end_inset
+
+Geometrically, it implies the characteristic curves on both sides are parallel
+ to the discontinuity curve.
+ Physically, it implies there is no mass/momentum/energy flowing across
+ it, and of course no entropy increasing.
 \end_layout
 
 \begin_layout Section
-Analytic Methods for Linear PDEs
+Analytic Methods
 \end_layout
 
 \begin_layout Subsection
