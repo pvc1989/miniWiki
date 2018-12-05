@@ -1,0 +1,1109 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass paper
+\begin_preamble
+\usepackage{physics}
+\usepackage[e]{esvect}
+\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
+%\newcommand{\Mat}[1]{\bqty{#1}}
+\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
+\renewcommand{\parallel}{/\negthickspace/}
+\usepackage{tikz}
+\end_preamble
+\options intoc
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "eulervm" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 0.5cm
+\rightmargin 0.5cm
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Interpolation and Function Approximation
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Section
+Lagrange Polynomials
+\end_layout
+
+\begin_layout Subsection
+General Formulation
+\end_layout
+
+\begin_layout Problem
+Given the 
+\noun on
+measured value
+\noun default
+s of 
+\begin_inset Formula $u$
+\end_inset
+
+ on 
+\begin_inset Formula $N$
+\end_inset
+
+ distinct 
+\noun on
+node
+\noun default
+s 
+\begin_inset Formula $\left\{ \ket{x}_{n}\right\} _{n=1}^{N}$
+\end_inset
+
+, which are 
+\begin_inset Formula $\left\{ \hat{u}_{n}\right\} _{n=1}^{N}$
+\end_inset
+
+.
+ Find an 
+\emph on
+efficient
+\emph default
+ way to calculate the 
+\noun on
+approximated value
+\noun default
+ of 
+\begin_inset Formula $u$
+\end_inset
+
+ on any arbitrary 
+\noun on
+query point
+\noun default
+ 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+, where 
+\emph on
+efficient
+\emph default
+ means 
+\begin_inset Formula $\order{N\lg N}$
+\end_inset
+
+ space and time complexity for preprocessing and 
+\begin_inset Formula $\order{\lg N}$
+\end_inset
+
+ time complexity for each query.
+\end_layout
+
+\begin_layout Subsubsection
+Global Lagrange Polynomials
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Global Lagrange Polynomial]
+\end_layout
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ is a family of 
+\emph on
+global
+\emph default
+ polynomials (whose independent variables are the components of 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+) defined on the 
+\noun on
+global domain
+\noun default
+ 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+ It is called a family of 
+\noun on
+global Lagrange polynomial
+\noun default
+s, if it satisfies the 
+\noun on
+Kronecker delta
+\noun default
+ property:
+\begin_inset Formula 
+\[
+\phi_{I}(\ket{x}_{K})=\delta_{IK}\qc\forall I,K=1,\dots,N
+\]
+
+\end_inset
+
+and forms a 
+\noun on
+partition of unity
+\noun default
+ of the global domain:
+\begin_inset Formula 
+\[
+\sum_{K=1}^{N}\phi_{K}(\ket{x})=1\qc\forall\ket{x}\in\Omega
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Global indices (e.g.
+ 
+\begin_inset Formula $I,K$
+\end_inset
+
+) are capitalized to emphasize they are global.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Global Lagrange Interpolation]
+\end_layout
+
+\end_inset
+
+Given a family of global Lagrange polynomials, the approximated value of
+ 
+\begin_inset Formula $u$
+\end_inset
+
+ can be calculated as
+\begin_inset Formula 
+\begin{equation}
+u\left(\ket{x}\right)=\sum_{K=1}^{N}\hat{u}_{K}\cdot\phi_{K}\left(\ket{x}\right)=\ip{\hat{u}}{\phi(x)}\label{eq:GlobalLagrangeInterpolation}
+\end{equation}
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\bra{\hat{u}}:=\begin{bmatrix}\hat{u}_{1} & \cdots & \hat{u}_{N}\end{bmatrix}
+\]
+
+\end_inset
+
+are the values of 
+\begin_inset Formula $u$
+\end_inset
+
+ measured at each node, and
+\begin_inset Formula 
+\[
+\ket{\phi(x)}=\begin{bmatrix}\phi_{1}\left(\ket{x}\right)\\
+\vdots\\
+\phi_{N}\left(\ket{x}\right)
+\end{bmatrix}
+\]
+
+\end_inset
+
+are the values of 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ evaluated at the query point 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Suppose each evaluation of 
+\begin_inset Formula $\phi_{K}(\ket{x})$
+\end_inset
+
+ takes 
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ time, then each evaluation of Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GlobalLagrangeInterpolation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ will take 
+\begin_inset Formula $\order{N}$
+\end_inset
+
+ time, which is unsatisfying.
+ To reduce it to the required time complexity, we must exploit 
+\emph on
+locality
+\emph default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Local Lagrange Polynomials
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Elememt]
+\end_layout
+
+\end_inset
+
+The global domain 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ can always be divided into a family of 
+\noun on
+element
+\noun default
+s (a.k.a.
+ 
+\noun on
+subdomain
+\noun default
+s, 
+\noun on
+cell
+\noun default
+s) that forms a cover of 
+\begin_inset Formula $\Omega$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\Omega=\bigcup_{e=1}^{E}\Omega_{e}
+\]
+
+\end_inset
+
+without overlapping:
+\begin_inset Formula 
+\[
+\dim\left(\Omega_{i}\cap\Omega_{k}\right)\le\dim(\Omega)-1\qc\forall i,k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Active Index]
+\end_layout
+
+\end_inset
+
+Given a family of functions 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+.
+ An index 
+\begin_inset Formula $K$
+\end_inset
+
+ is 
+\noun on
+active
+\noun default
+ on 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+ if 
+\begin_inset Formula $\phi_{K}(\ket{x})\ne0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Locality]
+\end_layout
+
+\end_inset
+
+A family of functions 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ is said to have 
+\noun on
+locality
+\noun default
+ if 
+\begin_inset Formula $\forall\ket{x}$
+\end_inset
+
+ the size of the set of active indices is significantly smaller than 
+\begin_inset Formula $N$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $\lg N$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Local Lagrange Polynomial]
+\end_layout
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ is a family of 
+\emph on
+element-wise
+\emph default
+ polynomials (whose independent variables are the components of 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+) with 
+\noun on
+locality
+\noun default
+.
+ It is called a family of 
+\noun on
+local Lagrange polynomial
+\noun default
+s, if it satisfies the 
+\noun on
+Kronecker delta
+\noun default
+ property:
+\begin_inset Formula 
+\[
+\phi_{I}(\ket{x}_{K})=\delta_{IK}\qc\forall I,K=1,\dots,N
+\]
+
+\end_inset
+
+and forms a 
+\noun on
+partition of unity
+\noun default
+ of the entire domain:
+\begin_inset Formula 
+\[
+\sum_{K=1}^{N}\phi_{K}(\ket{x})=1\qc\forall\ket{x}\in\Omega
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Local Lagrange Interpolation]
+\end_layout
+
+\end_inset
+
+The formulation is almost the same as that in global Lagrange interpolation,
+ except for the evaluation of
+\begin_inset Formula 
+\[
+\ket{\phi(x)}=\begin{bmatrix}\phi_{1}\left(\ket{x}\right)\\
+\vdots\\
+\phi_{N}\left(\ket{x}\right)
+\end{bmatrix}
+\]
+
+\end_inset
+
+only a few of which are non-zeros.
+ Suppose there are 
+\begin_inset Formula $N_{e}\le\lg N$
+\end_inset
+
+ local polynomials have non-zero values in the 
+\begin_inset Formula $e$
+\end_inset
+
+th element 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+, and 
+\begin_inset Formula $I_{e}$
+\end_inset
+
+ is a function that maps a 
+\noun on
+local index
+\noun default
+ 
+\begin_inset Formula $i$
+\end_inset
+
+ to a 
+\noun on
+global index
+\noun default
+ 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ The approximated value of 
+\begin_inset Formula $u$
+\end_inset
+
+ at a query point 
+\begin_inset Formula $\ket{x}\in\Omega_{e}$
+\end_inset
+
+ is then calculated as
+\begin_inset Formula 
+\begin{equation}
+u\left(\ket{x}\right)=\sum_{i=1}^{N_{e}}\hat{u}_{I_{e}(i)}\cdot\phi_{I_{e}(i)}\left(\ket{x}\right)=\ip{\hat{u}}{\phi(x)}_{e}\qc\ket{x}\in\Omega_{e}\label{eq:LocalLagrangeInterpolation}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Again, suppose each evaluation of 
+\begin_inset Formula $\phi_{I}(\ket{x})$
+\end_inset
+
+ takes 
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ time, then each evaluation of Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LocalLagrangeInterpolation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ will take 
+\begin_inset Formula $\order{\lg N}$
+\end_inset
+
+ time, as long as we can find out which element the query point belongs
+ to within 
+\begin_inset Formula $\order{\lg N}$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Subsection
+On 1D Domains
+\end_layout
+
+\begin_layout Subsubsection
+On Interval 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Existence and Uniqueness]
+\end_layout
+
+\end_inset
+
+Given 
+\begin_inset Formula $(N+1)$
+\end_inset
+
+ sample points in interval 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+a=x_{0}<x_{1}<\cdots<x_{N-1}<x_{N}=b
+\]
+
+\end_inset
+
+There is a unique family of global Lagrange polynomials of order 
+\begin_inset Formula $N$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+L_{K}(x)=\prod_{\substack{I=0\\
+I\ne K
+}
+}^{N}\frac{x-x_{I}}{x_{K}-x_{I}}\qc K=0,\dots,N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Accuracy]
+\end_layout
+
+\end_inset
+
+A function 
+\begin_inset Formula $u\in C^{N+1}[a,b]$
+\end_inset
+
+ can be approximated by
+\begin_inset Formula 
+\[
+u(x)\approx u^{h}(x):=\sum_{K=0}^{N}\hat{u}_{K}\cdot L_{K}(x)\qc\hat{u}_{K}:=u(x_{K})
+\]
+
+\end_inset
+
+with the error to be
+\begin_inset Formula 
+\[
+r(x):=u(x)-u^{h}(x)=\frac{u^{(N+1)}(\eta)}{(N+1)!}\prod_{K=0}^{N}(x-x_{K})
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\eta\in(a,b)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+If 
+\begin_inset Formula $u$
+\end_inset
+
+ is a polynomial of order 
+\begin_inset Formula $M\le N$
+\end_inset
+
+, then 
+\begin_inset Formula $r(x)\equiv0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+If the distribution of sample points is uniform, i.e.
+ 
+\begin_inset Formula $x_{K}=a+Kh$
+\end_inset
+
+, 
+\begin_inset Formula $h:=\frac{b-1}{N}$
+\end_inset
+
+, then 
+\begin_inset Formula $r\in\order{h^{N}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+On Arbitrary Curves
+\end_layout
+
+\begin_layout Standard
+Given an arbitrary curve
+\begin_inset Formula 
+\[
+\ket{x(s)}\qc s\in[a,b]
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $s$
+\end_inset
+
+ is the 
+\noun on
+global parameter
+\noun default
+, there are two ways to interpolate on it:
+\end_layout
+
+\begin_layout Enumerate
+global interpolation on the entire curve;
+\end_layout
+
+\begin_layout Enumerate
+local interpolation on each segment of the curve.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second way is better, since it exploits locality and avoids (severe)
+ oscillation.
+ 
+\end_layout
+
+\begin_layout Standard
+In the preprocessing step, the curve is divided into 
+\begin_inset Formula $E$
+\end_inset
+
+ elements:
+\begin_inset Formula 
+\[
+\Omega_{e}:=\left\{ \ket{x(s)}:s\in[a_{e},b_{e}]\right\} 
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+a=a_{1}<b_{1}=a_{2}<\cdots<b_{E-1}=a_{E}<b_{E}=b
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each query point 
+\begin_inset Formula $\ket{x(s)}$
+\end_inset
+
+, the first step is to find out which 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+ it belongs to, which can be done within
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ time, if the query point is given by 
+\begin_inset Formula $s$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\order{\lg E}$
+\end_inset
+
+ time, if the query point is given by 
+\begin_inset Formula $\ket{x}$
+\end_inset
+
+, in which case we have to search it in a tree (e.g.
+ octree or Kd tree).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second step is to perfrom a coordinate transformation on each element:
+\begin_inset Formula 
+\[
+s=s_{e}(\lambda)\qc\lambda\in[-1,1]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The last step is to perform a 
+\emph on
+local
+\emph default
+ Laglange interpolation on 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+, which is covered by the next section.
+\end_layout
+
+\begin_layout Remark*
+There is another motivation to study Lagrange polynomials on this special
+ interval: in 
+\begin_inset CommandInset href
+LatexCommand href
+name "Gauss--Legendre quadrature"
+target "https://en.wikipedia.org/wiki/Gaussian_quadrature"
+literal "false"
+
+\end_inset
+
+, the points and weights are given on interval 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+On Interval 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center} 
+\backslash
+begin{tikzpicture}   
+\backslash
+draw[dashed]        (-2,0) -- (2,0);   
+\backslash
+filldraw       (-4,0) circle[radius=2pt]         node[above]{$k = 0$}  
+       node[below]{$
+\backslash
+lambda = -1$}     --(-3,0) circle[radius=2pt]     --(-2,0) circle[radius=2pt];
+   
+\backslash
+filldraw       (2,0) circle[radius=2pt]     --(3,0) circle[radius=2pt] 
+     --(4,0) circle [radius=2pt]         node[above]{$n$}         node[below]{$+
+1$}; 
+\backslash
+end{tikzpicture} 
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ is evenly divided by 
+\begin_inset Formula $(n+1)$
+\end_inset
+
+ nodes:
+\begin_inset Formula 
+\[
+\lambda_{k}=\frac{2k-n}{n}\qc k=0,1,\dots,n
+\]
+
+\end_inset
+
+The 
+\begin_inset Formula $k$
+\end_inset
+
+th Lagrange polynomial of order 
+\begin_inset Formula $n$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+L_{k}(\lambda)=\prod_{\substack{i=0\\
+i\ne k
+}
+}^{n}\frac{\lambda-\lambda_{i}}{\lambda_{k}-\lambda_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+On 2D Domains
+\end_layout
+
+\begin_layout Subsubsection
+On Triangles
+\end_layout
+
+\begin_layout Subsubsection
+On Quadrangles
+\end_layout
+
+\begin_layout Subsection
+On 3D Domains
+\end_layout
+
+\begin_layout Subsubsection
+On Tetrahedra
+\end_layout
+
+\begin_layout Subsubsection
+On Hexahedra
+\end_layout
+
+\begin_layout Section
+Hermite Polynomials
+\end_layout
+
+\begin_layout Section
+Orthogonal Functions
+\end_layout
+
+\begin_layout Section
+Least Squares
+\end_layout
+
+\end_body
+\end_document
