@@ -4,14 +4,15 @@
 
 ### Mathematics
 - [Differential Geometry](./MATHEMATICS/DIFFERENTIAL_GEOMETRY.lyx)
-- [Partial Differential Equations](./MATHEMATICS/PDE.lyx)
+- [PDE --- Partial Differential Equations](./MATHEMATICS/PDE.lyx)
 
 ### Physics
 - [Fluid Mechanics](./PHYSICS/FLUID_MECHANICS.lyx)
 
 ### Algorithms
-- [CFD](./ALGORITHMS/CFD.lyx) --- Computational Fluid Mechanics
+- [Interpolation and Function Approximation](./ALGORITHMS/INTERPOLATION.lyx) 
 - [Optimization](./ALGORITHMS/OPTIMIZATION.lyx) 
+- [CFD --- Computational Fluid Mechanics](./ALGORITHMS/CFD.lyx)
 
 ### Programming
 - [Python](./PROGRAMMING/PYTHON.md)
