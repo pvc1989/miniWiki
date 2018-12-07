@@ -11,6 +11,7 @@
 
 ### Algorithms
 - [Interpolation and Function Approximation](./ALGORITHMS/INTERPOLATION.lyx) 
+- [FEM --- Finite Element Method](./ALGORITHMS/FEM.lyx)
 - [Optimization](./ALGORITHMS/OPTIMIZATION.lyx) 
 - [CFD --- Computational Fluid Mechanics](./ALGORITHMS/CFD.lyx)
 
