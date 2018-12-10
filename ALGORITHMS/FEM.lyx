@@ -7,14 +7,11 @@
 \textclass paper
 \begin_preamble
 \usepackage{physics}
+\renewcommand{\grad}{\boldsymbol{\nabla}}
+\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
 \usepackage[e]{esvect}
 \newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-%\newcommand{\Mat}[1]{\bqty{#1}}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\renewcommand{\parallel}{/\negthickspace/}
-\usepackage{tikz}
 \end_preamble
 \options intoc
 \use_default_options true
@@ -111,6 +108,1247 @@ figs-within-sections
 
 \begin_layout Title
 Finite Element Method
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "PDE"
+description "Partial Differential Equation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BC"
+description "Boundary Condition"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BVP"
+description "Boundary Value Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "FEM"
+description "Finite Element Method"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Poisson's Equation
+\end_layout
+
+\begin_layout Subsection
+Problem Definition
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[BVP for Poisson's Equation]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:PoissonBVP"
+
+\end_inset
+
+Solve the 2nd order PDE (known as Poisson's equation) for 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\div\grad u+\bar{s}=0\qc\vec{x}\in\Omega\label{eq:PoissonPDE}
+\end{equation}
+
+\end_inset
+
+subject to the natural BC
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\begin{equation}
+\vec{n}\cdot\grad u=\bar{q}\qc\vec{x}\in\Gamma_{q}\label{eq:PoissonNaturalBC}
+\end{equation}
+
+\end_inset
+
+and the essential BC
+\begin_inset Formula 
+\begin{equation}
+u=\bar{u}\qc\vec{x}\in\Gamma_{u}\label{eq:PoissonEssentialBC}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\Gamma_{q},\Gamma_{u}$
+\end_inset
+
+ are boundaries of 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ satisfying the following conditions
+\begin_inset Formula 
+\[
+\partial\Omega=\Gamma_{q}\cup\Gamma_{u}\qc\dim\left(\Gamma_{q}\cap\Gamma_{u}\right)\le\dim\left(\partial\Omega\right)-1
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $\bar{s},\bar{q},\bar{u}$
+\end_inset
+
+ are known functions of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Analytic Solutions
+\end_layout
+
+\begin_layout Standard
+The degree of matching with analytic solutions (i.e.
+ solutions obtained from analytic methods, e.g.
+ separation of variables, integral transforms) is an important criterion
+ for evaluating numerical methods.
+\end_layout
+
+\begin_layout Subsection
+Weak Form
+\end_layout
+
+\begin_layout Standard
+The highest order of derivatives in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+
+\end_inset
+
+ is two, which requires 
+\begin_inset Formula $u\in C^{2}(\Omega)$
+\end_inset
+
+.
+ This is a 
+\emph on
+strong
+\emph default
+ requirement of smoothness, which can be 
+\emph on
+weaken
+\emph default
+ed by turning the strong form of the problem, i.e.
+ PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+
+\end_inset
+
+ and BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonNaturalBC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, into the corresponding weak form, which is an IDE
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "IDE"
+description "Integral Differential Equation"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The first step is multiplying the LHS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "LHS"
+description "Left Hand Side"
+literal "false"
+
+\end_inset
+
+ of PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+
+\end_inset
+
+ with an arbitrary 
+\noun on
+test function
+\noun default
+ 
+\begin_inset Formula $v(\vec{x})$
+\end_inset
+
+ defined on 
+\begin_inset Formula $\overline{\Omega}:=\Omega\cup\partial\Omega$
+\end_inset
+
+ and integrate the product (provided it is integrable) on 
+\begin_inset Formula $\Omega$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\int_{\Omega}v\left(\div\grad u+\bar{s}\right)\dd{\Omega}=0\qc v\in C^{0}(\Omega)
+\]
+
+\end_inset
+
+This is a necessary condition for 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+ to be a solution of PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then, we can turn the first integral into
+\begin_inset Formula 
+\[
+\int_{\Omega}v\div\grad u\dd{\Omega}=\int_{\Omega}\div\left(v\grad u\right)\dd{\Omega}-\int_{\Omega}\grad v\cdot\grad u\dd{\Omega}
+\]
+
+\end_inset
+
+by using the differential identity
+\begin_inset Formula 
+\[
+\div\left(v\grad u\right)=v\div\grad u+\grad v\cdot\grad u
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The divergence integral can be turned into a boundary integral:
+\begin_inset Formula 
+\[
+\int_{\Omega}\div\left(v\grad u\right)\dd{\Omega}=\int_{\partial\Omega}\vec{n}\cdot v\grad u\dd{\Gamma}
+\]
+
+\end_inset
+
+in which, the RHS
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "RHS"
+description "Right Hand Side"
+literal "false"
+
+\end_inset
+
+ can be separated into two parts:
+\begin_inset Formula 
+\[
+\int_{\partial\Omega}v\vec{n}\cdot\grad u\dd{\Gamma}=\int_{\Gamma_{q}}v\bar{q}\dd{\Gamma}+\int_{\Gamma_{u}}v\vec{n}\cdot\grad u\dd{\Gamma}
+\]
+
+\end_inset
+
+since 
+\begin_inset Formula $\partial\Omega=\Gamma_{q}\cup\Gamma_{u}$
+\end_inset
+
+ and BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonNaturalBC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ must be satisfied by 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+ on 
+\begin_inset Formula $\Gamma_{q}$
+\end_inset
+
+.
+ The last integral can be avoided, if we require 
+\begin_inset Formula $v\left(\vec{x}\right)=0$
+\end_inset
+
+ for 
+\begin_inset Formula $\vec{x}\in\Gamma_{u}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Finally, we obtain the 
+\noun on
+symmetric weak form
+\noun default
+ of BVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:PoissonBVP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which is a corollary of PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+
+\end_inset
+
+ and BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonNaturalBC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\boxed{\int_{\Omega}\grad v\cdot\grad u\dd{\Omega}=\int_{\Omega}v\bar{s}\dd{\Omega}+\int_{\Gamma_{q}}v\bar{q}\dd{\Gamma}}\label{eq:PoissonSymmetricWeakForm}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $v(\vec{x})$
+\end_inset
+
+ is an arbitrary function defined on 
+\begin_inset Formula $\overline{\Omega}:=\Omega\cup\partial\Omega$
+\end_inset
+
+ satisfying
+\begin_inset Formula 
+\[
+v\in C^{1}(\Omega)\qc v(\vec{x}\in\Gamma_{u})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonSymmetricWeakForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the smoothness requirement for 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+ is only 
+\begin_inset Formula $C^{1}(\Omega)$
+\end_inset
+
+, which is 
+\emph on
+weaker
+\emph default
+ than that in PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and is the same for 
+\begin_inset Formula $v(\vec{x})$
+\end_inset
+
+, hence 
+\emph on
+symmetric
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+Trial Functions
+\end_layout
+
+\begin_layout Standard
+The main goal of FEM is to find an approximate solution of BVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:PoissonBVP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For clarity, we shall denote it as 
+\begin_inset Formula $u^{h}(\vec{x})$
+\end_inset
+
+, which is usually written as a linear combination of 
+\begin_inset Formula $N$
+\end_inset
+
+ linearly independent 
+\noun on
+trial function
+\noun default
+s with 
+\begin_inset Formula $C^{1}(\Omega)$
+\end_inset
+
+ smoothness:
+\begin_inset Formula 
+\[
+u(\vec{x})\approx u^{h}(\vec{x})=\sum_{K=1}^{N}\hat{u}_{K}\phi_{K}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\bra{\hat{u}}:=\begin{bmatrix}\hat{u}_{1} & \cdots & \hat{u}_{N}\end{bmatrix}
+\]
+
+\end_inset
+
+is a row matrix of coefficients left to be determined.
+\end_layout
+
+\begin_layout Standard
+The test function 
+\begin_inset Formula $v(\vec{x})$
+\end_inset
+
+ can be chosen arbitrarily, however, the arbitrariness is often restricted
+ on a linear space spanned by 
+\begin_inset Formula $M$
+\end_inset
+
+ linearly independent 
+\noun on
+test function
+\noun default
+s with 
+\begin_inset Formula $C^{1}(\Omega)$
+\end_inset
+
+ smoothness:
+\begin_inset Formula 
+\[
+v(\vec{x})\approx v^{h}(\vec{x})=\sum_{I=1}^{M}\hat{v}_{I}\psi_{I}(\vec{x})=\ip{\hat{v}}{\psi(\vec{x})}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\bra{\hat{v}}:=\begin{bmatrix}\hat{v}_{1} & \cdots & \hat{v}_{M}\end{bmatrix}
+\]
+
+\end_inset
+
+is a row matrix of arbitrary coefficients.
+\end_layout
+
+\begin_layout Standard
+The derivatives of 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $v(\vec{x})$
+\end_inset
+
+ can be approximated by applying the differential operators on 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \psi_{I}\right\} _{I=1}^{M}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\pdv{u^{h}(\vec{x})}{x_{i}}=\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{i}}}\qc\pdv{v^{h}(\vec{x})}{x_{i}}=\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{i}}}
+\]
+
+\end_inset
+
+Substitute 
+\begin_inset Formula $u^{h}(\vec{x})$
+\end_inset
+
+ and 
+\begin_inset Formula $v^{h}(\vec{x})$
+\end_inset
+
+ and their derivatives into weak form 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonSymmetricWeakForm"
+
+\end_inset
+
+, the integrals can be turned into matrix multiplications:
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{\Omega}\grad v\cdot\grad u\dd{\Omega} & =\int_{\Omega}\sum_{i}\pdv{v}{x_{i}}\pdv{u}{x_{i}}\dd{\Omega}\approx\int_{\Omega}\sum_{i}\pdv{v^{h}}{x_{i}}\pdv{u^{h}}{x_{i}}\dd{\Omega}\\
+ & =\int_{\Omega}\sum_{i}\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{i}}}\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}\\
+ & =\bra{\hat{v}}\left(\int_{\Omega}\sum_{i}\dyad{\pdv{\psi(\vec{x})}{x_{i}}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}\right)\ket{\hat{u}}\\
+ & =\mel{\hat{v}}{\Mat{K}}{\hat{u}}
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\Mat{K}=\int_{\Omega}\sum_{i}\dyad{\pdv{\psi(\vec{x})}{x_{i}}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}
+\]
+
+\end_inset
+
+is called the 
+\noun on
+global stiffness matrix
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+Similarily,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{\Omega}v\bar{s}\dd{\Omega} & \approx\int_{\Omega}v^{h}\bar{s}\dd{\Omega}=\int_{\Omega}\ip{\hat{v}}{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\\
+ & =\bra{\hat{v}}\left(\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\right)=\ip{\hat{v}}{F_{s}}
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\ket{F_{s}}=\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}
+\]
+
+\end_inset
+
+is called the 
+\noun on
+interior load vector
+\noun default
+.
+ If the set of trial functions 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ is also used to approximate 
+\begin_inset Formula $\bar{s}(\vec{x})$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+\bar{s}(\vec{x})\approx\bar{s}^{h}(\vec{x})=\sum_{K=1}^{N}\hat{s}_{K}\phi_{K}(\vec{x})=\ip{\hat{s}}{\phi(\vec{x})}
+\]
+
+\end_inset
+
+then 
+\begin_inset Formula $\ket{F_{s}}$
+\end_inset
+
+ can further be decomposed as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{F_{s}} & =\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\approx\int_{\Omega}\ket{\psi(\vec{x})}\ip{\hat{s}}{\phi(\vec{x})}\dd{\Omega}\\
+ & =\left(\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\right)\ket{\hat{s}}=\Mat{K_{s}}\ket{\hat{s}}
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\Mat{K_{s}}=\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarily
+\begin_inset Formula 
+\[
+\int_{\Gamma_{q}}v\bar{q}\dd{\Gamma}\approx\ip{\hat{v}}{F_{q}}\qc\ket{F_{q}}\approx\Mat{K_{q}}\ket{\hat{q}}\qc\Mat{K_{q}}=\int_{\Gamma_{q}}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Substitute all these matrix multiplications into weak form 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonSymmetricWeakForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\mel{\hat{v}}{\Mat{K}}{\hat{u}}=\ip{\hat{v}}{F_{s}}+\ip{\hat{v}}{F_{q}}
+\]
+
+\end_inset
+
+which leads to 
+\begin_inset Formula $M$
+\end_inset
+
+ linear algebraic equations:
+\begin_inset Formula 
+\begin{equation}
+\boxed{\Mat{K}\ket{\hat{u}}=\ket{F_{s}}+\ket{F_{q}}}\label{eq:PoissonAlgebraicEquation}
+\end{equation}
+
+\end_inset
+
+since 
+\begin_inset Formula $\bra{\hat{v}}$
+\end_inset
+
+ is arbitrary.
+\end_layout
+
+\begin_layout Subsection
+Galerkin FEM
+\end_layout
+
+\begin_layout Standard
+A good choice of 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \psi_{I}\right\} _{I=1}^{M}$
+\end_inset
+
+ should allow 
+\emph on
+efficienct
+\emph default
+ evaluation of 
+\begin_inset Formula $\Mat{K},\ket{F_{s}},\ket{F_{q}}$
+\end_inset
+
+ in the preprocessing step (
+\begin_inset Formula $\order{N\lg N}$
+\end_inset
+
+ space and time complexity) and 
+\begin_inset Formula $\ip{\hat{u}}{\phi(\vec{x})}$
+\end_inset
+
+ in the query step (
+\begin_inset Formula $\order{\lg N}$
+\end_inset
+
+ time complexity for each query).
+\end_layout
+
+\begin_layout Standard
+In Galerkin FEM, 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \psi_{I}\right\} _{I=1}^{M}$
+\end_inset
+
+ are chosen to be the same
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \psi_{I}\right\} _{I=1}^{M}$
+\end_inset
+
+ can be chosen to be different, which leads to Petrov–Galerkin methods.
+ 
+\end_layout
+
+\end_inset
+
+, and 
+\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+\end_inset
+
+ are element-wise polynomials defined on a mesh, which is a graph obtained
+ by dividing 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ into a 
+\emph on
+finite
+\emph default
+ number of non-overlapping 
+\noun on
+element
+\noun default
+s (a.k.a.
+ 
+\noun on
+subdomain
+\noun default
+s, 
+\noun on
+cell
+\noun default
+s):
+\begin_inset Formula 
+\[
+\Omega=\bigcup_{e=1}^{E}\Omega_{e}\qc\dim\left(\Omega_{i}\cap\Omega_{k}\right)\le\dim(\Omega)-1\qc\forall i,k=1,\dots,E
+\]
+
+\end_inset
+
+Each element is a polygon formed by connecting a set of 
+\noun on
+node
+\noun default
+s.
+ Each node can be shared by several neighboring elements or owned by a single
+ element.
+\end_layout
+
+\begin_layout Standard
+Typically, an FE
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "FE"
+description "Finite Element"
+literal "false"
+
+\end_inset
+
+ mesh is sparse graph, which means the number of nodes owned by an element,
+ or the number of elements owning a node, is significantly smaller than
+ the total number of nodes or elements.
+ To exploit such sparsity, we shall define each 
+\begin_inset Formula $\phi_{K}$
+\end_inset
+
+ as an element-wise function, which takes a small set of elements as its
+ support.
+ The most intuitive way is to associate each node an element-wise Lagrange
+ polynomial:
+\begin_inset Formula 
+\[
+\phi_{K}(\vec{x})=\begin{cases}
+\text{Lagrange polynomial} & \vec{x}\in\Omega_{e},\vec{x}_{K}\in\overline{\Omega}_{e}\\
+0 & \text{else}
+\end{cases}
+\]
+
+\end_inset
+
+satisfying the 
+\noun on
+Kronecker delta
+\noun default
+ property:
+\begin_inset Formula 
+\[
+\phi_{I}(\vec{x}_{K})=\delta_{IK}\qc\forall I,K=1,\dots,N
+\]
+
+\end_inset
+
+and forms a 
+\noun on
+partition of unity
+\noun default
+ on the global domain:
+\begin_inset Formula 
+\[
+\sum_{K=1}^{N}\phi_{K}(\vec{x})=1\qc\forall\vec{x}\in\Omega
+\]
+
+\end_inset
+
+Under such choice, coefficients (e.g.
+ 
+\begin_inset Formula $\hat{u}_{K},\hat{v}_{K},\hat{s}_{K},\hat{q}_{K}$
+\end_inset
+
+) are just the nodal values.
+\end_layout
+
+\begin_layout Standard
+Within the 
+\begin_inset Formula $e$
+\end_inset
+
+th element 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+, only a small number of 
+\begin_inset Formula $\phi_{K}(\vec{x})$
+\end_inset
+
+ contribute non-zero values.
+ In FEM literatures, they are called 
+\noun on
+nodal shape function
+\noun default
+s and are denoted as
+\begin_inset Formula 
+\[
+\bra{N^{e}(\vec{x})}=\begin{bmatrix}N_{1}^{e}(\vec{x}) & \cdots & N_{n}^{e}(\vec{x})\end{bmatrix}\qc N_{k}^{e}\equiv\phi_{I_{e}(k)},k=1,\dots,n
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of nodes owned by 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+, and 
+\begin_inset Formula $I_{e}$
+\end_inset
+
+ is an index function defined on 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+ that maps a 
+\emph on
+local
+\emph default
+ node index (written in lowercase) to the corresponding 
+\emph on
+global
+\emph default
+ node index (written in uppercase).
+\end_layout
+
+\begin_layout Standard
+The evaluation of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ can now be decomposed into 
+\begin_inset Formula $E$
+\end_inset
+
+ (the total number of elements) pieces:
+\begin_inset Formula 
+\[
+\Mat{K}=\int_{\Omega}\sum_{i}\dyad{\pdv{\phi}{x_{i}}}{\pdv{\phi}{x_{i}}}\dd{\Omega}=\sum_{e}\overbrace{\int_{\Omega_{e}}\sum_{i}\dyad{\pdv{N^{e}}{x_{i}}}{\pdv{N^{e}}{x_{i}}}\dd{\Omega}}^{\Mat{K^{e}}}
+\]
+
+\end_inset
+
+Each 
+\begin_inset Formula $\Mat{K^{e}}$
+\end_inset
+
+ is called a 
+\noun on
+element stiffness matrix
+\noun default
+.
+ Similarily, global load vectors can be decomposed as summations of 
+\noun on
+element load vector
+\noun default
+s:
+\begin_inset Formula 
+\[
+\ket{F_{s}}=\sum_{e}\overbrace{\int_{\Omega_{e}}\ket{N^{e}}\bar{s}\dd{\Omega}}^{\ket{F_{s}^{e}}}\approx\left(\sum_{e}\Mat{K_{s}^{e}}\right)\ket{\hat{s}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ket{F_{q}}=\sum_{e}\overbrace{\int_{\Gamma_{q}\cap\partial\Omega_{e}}\ket{N^{e}}\bar{q}\dd{\Gamma}}^{\ket{F_{q}^{e}}}\approx\left(\sum_{e}\Mat{K_{q}^{e}}\right)\ket{\hat{q}}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\Mat{K_{s}^{e}}=\int_{\Omega_{e}}\dyad{N^{e}}\dd{\Omega}\qc\Mat{K_{q}^{e}}=\int_{\Gamma_{q}\cap\partial\Omega_{e}}\dyad{N^{e}}\dd{\Gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The summation sign 
+\begin_inset Formula $\sum_{e}$
+\end_inset
+
+ should be read as 
+\noun on
+assembly
+\noun default
+, since they are not ordinary matrix summations.
+ Recall that 
+\begin_inset Formula $N_{i}^{e}\equiv\phi_{I_{e}(i)}$
+\end_inset
+
+, the value at the 
+\begin_inset Formula $i$
+\end_inset
+
+th row and 
+\begin_inset Formula $j$
+\end_inset
+
+th column of 
+\begin_inset Formula $\Mat{K^{e}}$
+\end_inset
+
+ should be added onto the 
+\begin_inset Formula $I_{e}(i)$
+\end_inset
+
+th row and 
+\begin_inset Formula $I_{e}(j)$
+\end_inset
+
+th column of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+.
+ Using sparse matrix implemented by hash table, such as 
+\family typewriter
+
+\begin_inset CommandInset href
+LatexCommand href
+name "scipy.sparse.dok_matrix"
+target "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.dok_matrix.html"
+literal "false"
+
+\end_inset
+
+
+\family default
+, 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ can be built with 
+\begin_inset Formula $\order{N}$
+\end_inset
+
+ time and space complexity.
+\end_layout
+
+\begin_layout Subsection
+Essential BC
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+natural
+\emph default
+ BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonNaturalBC"
+
+\end_inset
+
+ is 
+\emph on
+naturally
+\emph default
+ incorporated into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonSymmetricWeakForm"
+
+\end_inset
+
+, which appears as the boundary load vector 
+\begin_inset Formula $\ket{F_{q}}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonAlgebraicEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The 
+\emph on
+essential
+\emph default
+ BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonEssentialBC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, however, needs to be imposed explicitly in one of the following ways.
+\end_layout
+
+\begin_layout Standard
+Recall that in the derivation of weak form 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonSymmetricWeakForm"
+
+\end_inset
+
+, we have required that
+\begin_inset Formula 
+\[
+v=0\qc,\forall\vec{x}\in\Gamma_{u}
+\]
+
+\end_inset
+
+Under the choice of 
+\begin_inset Formula $\left\{ \psi_{I}\right\} _{I=1}^{M}$
+\end_inset
+
+ mentioned above, this condition is now satisfied approximately by setting
+\begin_inset Formula 
+\[
+\hat{v}_{K}=0\qc\forall\vec{x}_{K}\in\Gamma_{u}
+\]
+
+\end_inset
+
+Suppose there is only one node, e.g.
+ the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+th node, locating in 
+\begin_inset Formula $\Gamma_{u}$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $\gamma$
+\end_inset
+
+th row in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonAlgebraicEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is actually a redundant equation, which can be deleted.
+ To recover 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ to a square matrix, it is intuitive to delete the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+th column, however, the product of 
+\begin_inset Formula $\hat{u}_{\gamma}$
+\end_inset
+
+ and this column should be subtracted from the RHS of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonAlgebraicEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to balance this deletion:
+\begin_inset Formula 
+\[
+\ket{F_{s}}+\ket{F_{q}}-\Mat{K}\ket{\gamma}\hat{u}_{\gamma}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\Mat{K}\ket{\gamma}$
+\end_inset
+
+ is the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+th column of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Linear Elastic Solids
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body
