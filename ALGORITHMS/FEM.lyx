@@ -6,6 +6,7 @@
 \origin unavailable
 \textclass paper
 \begin_preamble
+\usepackage{tocbibind}  % add index to toc
 \usepackage{physics}
 \renewcommand{\grad}{\boldsymbol{\nabla}}
 \renewcommand{\div}{\boldsymbol{\nabla}\cdot}
@@ -106,10 +107,6 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Title
-Finite Element Method
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset toc
 LatexCommand tableofcontents
@@ -129,60 +126,8 @@ set_width "auto"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "PDE"
-description "Partial Differential Equation"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "BC"
-description "Boundary Condition"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "BVP"
-description "Boundary Value Problem"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "FEM"
-description "Finite Element Method"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Poisson's Equation
-\end_layout
-
-\begin_layout Subsection
-Problem Definition
 \end_layout
 
 \begin_layout Problem
@@ -200,6 +145,15 @@ status open
 \begin_inset CommandInset label
 LatexCommand label
 name "prob:PoissonBVP"
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BVP"
+description "Boundary Value Problem"
+literal "false"
 
 \end_inset
 
@@ -231,11 +185,29 @@ PDE!Poisson's equation
 
 \end_inset
 
-for 
+which is a 2nd order PDE
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "PDE"
+description "Partial Differential Equation"
+literal "false"
+
+\end_inset
+
+, for 
 \begin_inset Formula $u(\vec{x})$
 \end_inset
 
 , subject to the natural BC
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BC"
+description "Boundary Condition"
+literal "false"
+
+\end_inset
+
+
 \begin_inset Index idx
 status collapsed
 
@@ -417,6 +389,16 @@ test function
 \begin_inset Formula $v(\vec{x})$
 \end_inset
 
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+test function
+\end_layout
+
+\end_inset
+
  defined on 
 \begin_inset Formula $\Omega\cup\partial\Omega$
 \end_inset
@@ -535,6 +517,16 @@ noprefix "false"
 
 \end_inset
 
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+weak form!~ of Poisson's equation
+\end_layout
+
+\end_inset
+
 , which is a corollary of PDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -628,7 +620,16 @@ Discretization
 \end_layout
 
 \begin_layout Standard
-The main goal of FEM is to find an approximate solution of BVP 
+The main goal of FEM
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "FEM"
+description "Finite Element Method"
+literal "false"
+
+\end_inset
+
+ is to find an approximate solution of BVP 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "prob:PoissonBVP"
@@ -655,7 +656,17 @@ s with
 \begin_inset Formula $C^{1}(\Omega)$
 \end_inset
 
- smoothness:
+ smoothness
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+trial function
+\end_layout
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
 u(\vec{x})\approx u^{h}(\vec{x})=\sum_{K=1}^{N}\hat{u}_{K}\phi_{K}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}\qc\phi_{K}\in C^{1}(\Omega\cup\partial\Omega),\forall K
@@ -797,6 +808,16 @@ is called the
 \noun on
 global stiffness matrix
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+matrix!stiffness ~!global ~
+\end_layout
+
+\end_inset
+
 .
 \end_layout
 
@@ -838,6 +859,16 @@ global interior load vector
 \noun on
 global boundary load vector
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+vector!load ~!global ~
+\end_layout
+
+\end_inset
+
 , respectively.
  If the set of trial functions 
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
@@ -1023,8 +1054,18 @@ literal "false"
 
 \end_inset
 
- analysis includes a preprocessing step (build 
-\begin_inset Formula $\Mat{K},\ket{F_{s}},\ket{F_{q}}$
+ analysis
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+finite element!~ analysis
+\end_layout
+
+\end_inset
+
+ includes a preprocessing step (build 
+\begin_inset Formula $\Mat{K},\ket{F}$
 \end_inset
 
  in 
@@ -1063,7 +1104,7 @@ noprefix "false"
 efficienct
 \emph default
  evaluation of 
-\begin_inset Formula $\Mat{K},\ket{F_{s}},\ket{F_{q}}$
+\begin_inset Formula $\Mat{K},\ket{F}$
 \end_inset
 
  in the preprocessing step (
@@ -1079,7 +1120,17 @@ efficienct
 \end_inset
 
  time complexity for each query).
- In Galerkin FEM, 
+ In Galerkin FEM
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+finite element!~ method!Galerkin ~
+\end_layout
+
+\end_inset
+
+, 
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
@@ -1121,6 +1172,16 @@ A
 \noun on
 mesh
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+mesh
+\end_layout
+
+\end_inset
+
  is a graph obtained by dividing 
 \begin_inset Formula $\Omega$
 \end_inset
@@ -1133,7 +1194,17 @@ finite
 \noun on
 element
 \noun default
-s (a.k.a.
+s
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+element
+\end_layout
+
+\end_inset
+
+ (a.k.a.
  
 \noun on
 subdomain
@@ -1174,7 +1245,17 @@ Each element is a polygon formed by connecting a set of
 \noun on
 node
 \noun default
-s.
+s
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+node
+\end_layout
+
+\end_inset
+
+.
  Each node can be shared by several neighboring elements or owned by a single
  element.
  
@@ -1207,7 +1288,17 @@ literal "false"
 
 .
  The most intuitive way is to associate each node an element-wise Lagrange
- polynomial:
+ polynomial
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+polynomial!Lagrange ~!element-wise ~
+\end_layout
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
 \phi_{K}(\vec{x})=\begin{cases}
@@ -1247,7 +1338,18 @@ Under such choice, coefficients (e.g.
 \begin_inset Formula $\hat{u}_{K},\hat{v}_{K},\hat{s}_{K},\hat{q}_{K}$
 \end_inset
 
-) are nodal values of the functions being approximated.
+) are nodal values of the functions being approximated, and the approximation
+ is actually the local Lagrange interpolation
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+interpolation!Lagrange ~!local ~
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1268,7 +1370,17 @@ th element
 \noun on
 nodal shape function
 \noun default
-s and are denoted as
+s
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+nodal shape function
+\end_layout
+
+\end_inset
+
+ and are denoted as
 \begin_inset Formula 
 \[
 \bra{N^{e}(\vec{x})}=\begin{bmatrix}N_{1}^{e}(\vec{x}) & \cdots & N_{n}^{e}(\vec{x})\end{bmatrix}\qc N_{k}^{e}\equiv\phi_{I_{e}(k)},k=1,\dots,n
@@ -1296,11 +1408,31 @@ in which,
 \emph on
 local
 \emph default
- node index (written in lowercase) to the corresponding 
+ node index
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+node!~ index!local ~
+\end_layout
+
+\end_inset
+
+ (written in lowercase) to the corresponding 
 \emph on
 global
 \emph default
- node index (written in uppercase).
+ node index
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+node!~ index!global ~
+\end_layout
+
+\end_inset
+
+ (written in uppercase).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1332,12 +1464,32 @@ Each
 \noun on
 element stiffness matrix
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+matrix!stiffness ~!element ~
+\end_layout
+
+\end_inset
+
 .
  Similarily, global load vectors can be decomposed as summations of 
 \noun on
 element load vector
 \noun default
-s:
+s
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+vector!load ~!element ~
+\end_layout
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
 \ket{F_{s}}=\sum_{e}\overbrace{\int_{\Omega_{e}}\ket{N^{e}}\bar{s}\dd{\Omega}}^{\ket{F_{s}^{e}}}\approx\left(\sum_{e}\Mat{K_{s}^{e}}\right)\ket{\hat{s}}
@@ -1377,6 +1529,16 @@ The summation sign
 \noun on
 assembly
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+matrix!~ assembly
+\end_layout
+
+\end_inset
+
 , since they are not ordinary matrix summations.
 \end_layout
 
@@ -1410,7 +1572,27 @@ th column of
 \end_inset
 
 .
- Using sparse matrix implemented by hash table, such as 
+ Using sparse matrix
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+matrix!sparse ~
+\end_layout
+
+\end_inset
+
+ implemented by hash table
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+hash table
+\end_layout
+
+\end_inset
+
+, such as 
 \family typewriter
 
 \begin_inset CommandInset href
@@ -1490,6 +1672,16 @@ reference "eq:PoissonNaturalBC"
 
 \end_inset
 
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BC!natural ~
+\end_layout
+
+\end_inset
+
  is 
 \emph on
 naturally
@@ -1498,6 +1690,9 @@ naturally
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:PoissonSymmetricWeakForm"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -1527,6 +1722,16 @@ reference "eq:PoissonEssentialBC"
 plural "false"
 caps "false"
 noprefix "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BC!essential ~
+\end_layout
 
 \end_inset
 
@@ -2188,10 +2393,6 @@ which is accurate, and the condition number of
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Section
-Linear Elastic Solids
 \end_layout
 
 \begin_layout Standard
