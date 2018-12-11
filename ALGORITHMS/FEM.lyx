@@ -46,8 +46,8 @@ figs-within-sections
 \spacing single
 \use_hyperref true
 \pdf_bookmarks true
-\pdf_bookmarksnumbered false
-\pdf_bookmarksopen false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
 \pdf_bookmarksopenlevel 1
 \pdf_breaklinks true
 \pdf_pdfborder true
@@ -203,8 +203,24 @@ name "prob:PoissonBVP"
 
 \end_inset
 
-Solve the 2nd order PDE (known as Poisson's equation) for 
-\begin_inset Formula $u(\vec{x})$
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BVP!~ for Poisson's Equation
+\end_layout
+
+\end_inset
+
+Solve the Poisson's equation
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!Poisson's equation
+\end_layout
+
 \end_inset
 
 
@@ -215,7 +231,21 @@ Solve the 2nd order PDE (known as Poisson's equation) for
 
 \end_inset
 
-subject to the natural BC
+for 
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+, subject to the natural BC
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BC!natural ~
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Problem
@@ -227,6 +257,16 @@ subject to the natural BC
 \end_inset
 
 and the essential BC
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BC!essential ~
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 u=\bar{u}\qc\vec{x}\in\Gamma_{u}\label{eq:PoissonEssentialBC}
@@ -235,6 +275,14 @@ u=\bar{u}\qc\vec{x}\in\Gamma_{u}\label{eq:PoissonEssentialBC}
 \end_inset
 
 in which, 
+\begin_inset Formula $\bar{s},\bar{q},\bar{u}$
+\end_inset
+
+ are known functions of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, and 
 \begin_inset Formula $\Gamma_{q},\Gamma_{u}$
 \end_inset
 
@@ -245,20 +293,28 @@ in which,
  satisfying the following conditions
 \begin_inset Formula 
 \[
-\partial\Omega=\Gamma_{q}\cup\Gamma_{u}\qc\dim\left(\Gamma_{q}\cap\Gamma_{u}\right)\le\dim\left(\partial\Omega\right)-1
+\partial\Omega=\Gamma_{q}\cup\Gamma_{u}\qc\Gamma_{q}\cap\Gamma_{u}\doteq\varnothing
 \]
 
 \end_inset
 
-and 
-\begin_inset Formula $\bar{s},\bar{q},\bar{u}$
+where 
+\begin_inset Formula $\doteq$
 \end_inset
 
- are known functions of 
-\begin_inset Formula $\vec{x}$
+ is read as 
+\emph on
+almost equal to
+\emph default
+, which means their intersection is atmost some lower dimensional object:
+\begin_inset Formula 
+\[
+\dim\left(\Gamma_{q}\cap\Gamma_{u}\right)\le\dim\left(\partial\Omega\right)-1
+\]
+
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Subsection
@@ -315,7 +371,16 @@ noprefix "false"
 
 \end_inset
 
-, into the corresponding weak form, which is an IDE
+, into the corresponding weak form
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "WF"
+description "Weak Form|Formulation"
+literal "false"
+
+\end_inset
+
+, which is an IDE
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "IDE"
@@ -353,7 +418,7 @@ test function
 \end_inset
 
  defined on 
-\begin_inset Formula $\overline{\Omega}:=\Omega\cup\partial\Omega$
+\begin_inset Formula $\Omega\cup\partial\Omega$
 \end_inset
 
  and integrate the product (provided it is integrable) on 
@@ -363,7 +428,7 @@ test function
 :
 \begin_inset Formula 
 \[
-\int_{\Omega}v\left(\div\grad u+\bar{s}\right)\dd{\Omega}=0\qc v\in C^{0}(\Omega)
+\int_{\Omega}v\div\grad u\dd{\Omega}+\int_{\Omega}v\bar{s}\dd{\Omega}=0
 \]
 
 \end_inset
@@ -383,7 +448,7 @@ reference "eq:PoissonPDE"
 \end_layout
 
 \begin_layout Standard
-Then, we can turn the first integral into
+We can split the first integral into two parts:
 \begin_inset Formula 
 \[
 \int_{\Omega}v\div\grad u\dd{\Omega}=\int_{\Omega}\div\left(v\grad u\right)\dd{\Omega}-\int_{\Omega}\grad v\cdot\grad u\dd{\Omega}
@@ -403,7 +468,8 @@ by using the differential identity
 \end_layout
 
 \begin_layout Standard
-The divergence integral can be turned into a boundary integral:
+Using Gauss's divergence theorem, the divergence integral can be turned
+ into a boundary integral:
 \begin_inset Formula 
 \[
 \int_{\Omega}\div\left(v\grad u\right)\dd{\Omega}=\int_{\partial\Omega}\vec{n}\cdot v\grad u\dd{\Gamma}
@@ -411,7 +477,15 @@ The divergence integral can be turned into a boundary integral:
 
 \end_inset
 
-in which, the RHS
+Since 
+\begin_inset Formula $\partial\Omega=\Gamma_{q}\cup\Gamma_{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Gamma_{q}\cap\Gamma_{u}\doteq\varnothing$
+\end_inset
+
+, the RHS
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "RHS"
@@ -428,11 +502,7 @@ literal "false"
 
 \end_inset
 
-since 
-\begin_inset Formula $\partial\Omega=\Gamma_{q}\cup\Gamma_{u}$
-\end_inset
-
- and BC 
+in which, BC 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:PoissonNaturalBC"
@@ -442,21 +512,9 @@ noprefix "false"
 
 \end_inset
 
- must be satisfied by 
-\begin_inset Formula $u(\vec{x})$
-\end_inset
-
- on 
-\begin_inset Formula $\Gamma_{q}$
-\end_inset
-
-.
- The last integral can be avoided, if we require 
-\begin_inset Formula $v\left(\vec{x}\right)=0$
-\end_inset
-
- for 
-\begin_inset Formula $\vec{x}\in\Gamma_{u}$
+ has been substituted in.
+ The last integral can be avoided, if we choose 
+\begin_inset Formula $v\left(\vec{x}\in\Gamma_{u}\right)=0$
 \end_inset
 
 .
@@ -507,7 +565,7 @@ in which,
 \end_inset
 
  is an arbitrary function defined on 
-\begin_inset Formula $\overline{\Omega}:=\Omega\cup\partial\Omega$
+\begin_inset Formula $\Omega\cup\partial\Omega$
 \end_inset
 
  satisfying
@@ -522,7 +580,7 @@ v\in C^{1}(\Omega)\qc v(\vec{x}\in\Gamma_{u})=0
 \end_layout
 
 \begin_layout Standard
-Note that in 
+Note that in WF 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:PoissonSymmetricWeakForm"
@@ -554,7 +612,7 @@ noprefix "false"
 
 \end_inset
 
-, and is the same for 
+, and it is the same for 
 \begin_inset Formula $v(\vec{x})$
 \end_inset
 
@@ -566,7 +624,7 @@ symmetric
 \end_layout
 
 \begin_layout Subsection
-Trial Functions
+Discretization
 \end_layout
 
 \begin_layout Standard
@@ -580,12 +638,12 @@ noprefix "false"
 
 \end_inset
 
-.
- For clarity, we shall denote it as 
+, which we shall denote as 
 \begin_inset Formula $u^{h}(\vec{x})$
 \end_inset
 
-, which is usually written as a linear combination of 
+.
+ The most intuitive way is to construct it as a linear combination of 
 \begin_inset Formula $N$
 \end_inset
 
@@ -600,7 +658,7 @@ s with
  smoothness:
 \begin_inset Formula 
 \[
-u(\vec{x})\approx u^{h}(\vec{x})=\sum_{K=1}^{N}\hat{u}_{K}\phi_{K}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}
+u(\vec{x})\approx u^{h}(\vec{x})=\sum_{K=1}^{N}\hat{u}_{K}\phi_{K}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}\qc\phi_{K}\in C^{1}(\Omega\cup\partial\Omega),\forall K
 \]
 
 \end_inset
@@ -637,7 +695,7 @@ s with
  smoothness:
 \begin_inset Formula 
 \[
-v(\vec{x})\approx v^{h}(\vec{x})=\sum_{I=1}^{M}\hat{v}_{I}\psi_{I}(\vec{x})=\ip{\hat{v}}{\psi(\vec{x})}
+v(\vec{x})\approx v^{h}(\vec{x})=\sum_{I=1}^{M}\hat{v}_{I}\psi_{I}(\vec{x})=\ip{\hat{v}}{\psi(\vec{x})}\qc\psi_{I}\in C^{1}(\Omega\cup\partial\Omega),\forall I
 \]
 
 \end_inset
@@ -651,6 +709,15 @@ in which
 \end_inset
 
 is a row matrix of arbitrary coefficients.
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ is usually chosen to be 
+\begin_inset Formula $\order{N}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -676,33 +743,43 @@ The derivatives of
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\pdv{u^{h}(\vec{x})}{x_{i}}=\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{i}}}\qc\pdv{v^{h}(\vec{x})}{x_{i}}=\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{i}}}
+\pdv{u^{h}(\vec{x})}{x_{\alpha}}=\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\qc\pdv{v^{h}(\vec{x})}{x_{\alpha}}=\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{\alpha}}}
 \]
 
 \end_inset
 
+Here we use a Greek letter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ as the index of spatial coordinates.
+\end_layout
+
+\begin_layout Standard
 Substitute 
-\begin_inset Formula $u^{h}(\vec{x})$
+\begin_inset Formula $u^{h},v^{h}$
 \end_inset
 
- and 
-\begin_inset Formula $v^{h}(\vec{x})$
-\end_inset
-
- and their derivatives into weak form 
+ and their derivatives into WF 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:PoissonSymmetricWeakForm"
 
 \end_inset
 
-, the integrals can be turned into matrix multiplications:
+, the integrals can be turned into matrix multiplications.
+\end_layout
+
+\begin_layout Subsubsection
+Global Stiffness Matrix
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{\Omega}\grad v\cdot\grad u\dd{\Omega} & =\int_{\Omega}\sum_{i}\pdv{v}{x_{i}}\pdv{u}{x_{i}}\dd{\Omega}\approx\int_{\Omega}\sum_{i}\pdv{v^{h}}{x_{i}}\pdv{u^{h}}{x_{i}}\dd{\Omega}\\
- & =\int_{\Omega}\sum_{i}\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{i}}}\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}\\
- & =\bra{\hat{v}}\left(\int_{\Omega}\sum_{i}\dyad{\pdv{\psi(\vec{x})}{x_{i}}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}\right)\ket{\hat{u}}\\
- & =\mel{\hat{v}}{\Mat{K}}{\hat{u}}
+\begin{aligned}\int_{\Omega}\grad v\cdot\grad u\dd{\Omega} & =\int_{\Omega}\sum_{\alpha}\pdv{v}{x_{\alpha}}\pdv{u}{x_{\alpha}}\dd{\Omega}\approx\int_{\Omega}\sum_{\alpha}\pdv{v^{h}}{x_{\alpha}}\pdv{u^{h}}{x_{\alpha}}\dd{\Omega}\\
+ & =\int_{\Omega}\sum_{\alpha}\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{\alpha}}}\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}\\
+ & =\bra{\hat{v}}\left(\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}\right)\ket{\hat{u}}=\mel{\hat{v}}{\Mat{K}}{\hat{u}}
 \end{aligned}
 \]
 
@@ -711,7 +788,7 @@ reference "eq:PoissonSymmetricWeakForm"
 in which
 \begin_inset Formula 
 \[
-\Mat{K}=\int_{\Omega}\sum_{i}\dyad{\pdv{\psi(\vec{x})}{x_{i}}}{\pdv{\phi(\vec{x})}{x_{i}}}\dd{\Omega}
+\Mat{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}
 \]
 
 \end_inset
@@ -723,6 +800,10 @@ global stiffness matrix
 .
 \end_layout
 
+\begin_layout Subsubsection
+Global Load Vectors
+\end_layout
+
 \begin_layout Standard
 Similarily,
 \end_layout
@@ -731,7 +812,9 @@ Similarily,
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\Omega}v\bar{s}\dd{\Omega} & \approx\int_{\Omega}v^{h}\bar{s}\dd{\Omega}=\int_{\Omega}\ip{\hat{v}}{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\\
- & =\bra{\hat{v}}\left(\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\right)=\ip{\hat{v}}{F_{s}}
+ & =\bra{\hat{v}}\left(\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\right)\\
+ & =\ip{\hat{v}}{F_{s}}\\
+\int_{\Gamma_{q}}v\bar{q}\dd{\Gamma} & \approx\ip{\hat{v}}{F_{q}}
 \end{aligned}
 \]
 
@@ -740,28 +823,40 @@ Similarily,
 in which
 \begin_inset Formula 
 \[
-\ket{F_{s}}=\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}
+\begin{aligned}\ket{F_{s}} & =\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\\
+\ket{F_{q}} & =\int_{\Gamma_{q}}\ket{\psi(\vec{x})}\bar{q}(\vec{x})\dd{\Omega}
+\end{aligned}
 \]
 
 \end_inset
 
-is called the 
+are called the 
 \noun on
-interior load vector
+global interior load vector
 \noun default
-.
+ and the 
+\noun on
+global boundary load vector
+\noun default
+, respectively.
  If the set of trial functions 
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
  is also used to approximate 
-\begin_inset Formula $\bar{s}(\vec{x})$
+\begin_inset Formula $\bar{s}$
 \end_inset
 
-, i.e.
+ and 
+\begin_inset Formula $\bar{q}$
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-\bar{s}(\vec{x})\approx\bar{s}^{h}(\vec{x})=\sum_{K=1}^{N}\hat{s}_{K}\phi_{K}(\vec{x})=\ip{\hat{s}}{\phi(\vec{x})}
+\begin{aligned}\bar{s}(\vec{x})\approx\bar{s}^{h}(\vec{x}) & =\sum_{K=1}^{N}\hat{s}_{K}\phi_{K}(\vec{x})=\ip{\phi(\vec{x})}{\hat{s}}\\
+\bar{q}(\vec{x})\approx\bar{q}^{h}(\vec{x}) & =\sum_{K=1}^{N}\hat{q}_{K}\phi_{K}(\vec{x})=\ip{\phi(\vec{x})}{\hat{q}}
+\end{aligned}
 \]
 
 \end_inset
@@ -770,14 +865,20 @@ then
 \begin_inset Formula $\ket{F_{s}}$
 \end_inset
 
- can further be decomposed as
+ and 
+\begin_inset Formula $\ket{F_{q}}$
+\end_inset
+
+ can be further decomposed as
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{F_{s}} & =\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\approx\int_{\Omega}\ket{\psi(\vec{x})}\ip{\hat{s}}{\phi(\vec{x})}\dd{\Omega}\\
- & =\left(\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\right)\ket{\hat{s}}=\Mat{K_{s}}\ket{\hat{s}}
+\begin{aligned}\ket{F_{s}} & =\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\approx\int_{\Omega}\ket{\psi(\vec{x})}\ip{\phi(\vec{x})}{\hat{s}}\dd{\Omega}\\
+ & =\left(\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\right)\ket{\hat{s}}\\
+ & =\Mat{K_{s}}\ket{\hat{s}}\\
+\ket{F_{q}} & =\Mat{K_{q}}\ket{\hat{q}}
 \end{aligned}
 \]
 
@@ -786,7 +887,7 @@ then
 in which
 \begin_inset Formula 
 \[
-\Mat{K_{s}}=\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}
+\Mat{K_{s}}=\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\qc\Mat{K_{q}}=\int_{\Gamma_{q}}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Gamma}
 \]
 
 \end_inset
@@ -794,20 +895,12 @@ in which
 
 \end_layout
 
-\begin_layout Standard
-Similarily
-\begin_inset Formula 
-\[
-\int_{\Gamma_{q}}v\bar{q}\dd{\Gamma}\approx\ip{\hat{v}}{F_{q}}\qc\ket{F_{q}}\approx\Mat{K_{q}}\ket{\hat{q}}\qc\Mat{K_{q}}=\int_{\Gamma_{q}}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Gamma}
-\]
-
-\end_inset
-
-
+\begin_layout Subsubsection
+System of Linear Algebraic Equations
 \end_layout
 
 \begin_layout Standard
-Substitute all these matrix multiplications into weak form 
+Substitute all these matrix multiplications into WF 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:PoissonSymmetricWeakForm"
@@ -825,14 +918,19 @@ noprefix "false"
 
 \end_inset
 
-which leads to 
-\begin_inset Formula $M$
+which leads to a system of linear algebraic equations
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "LAE"
+description "Linear Algebraic Equation"
+literal "false"
+
 \end_inset
 
- linear algebraic equations:
+:
 \begin_inset Formula 
 \begin{equation}
-\boxed{\Mat{K}\ket{\hat{u}}=\ket{F_{s}}+\ket{F_{q}}}\label{eq:PoissonAlgebraicEquation}
+\boxed{\Mat{K}\ket{\hat{u}}=\ket{F}\qc\ket{F_{s}}+\ket{F_{q}}}\label{eq:PoissonLAE}
 \end{equation}
 
 \end_inset
@@ -844,12 +942,115 @@ since
  is arbitrary.
 \end_layout
 
+\begin_layout Standard
+By intentionally choosing 
+\begin_inset Formula $M=N$
+\end_inset
+
+ (see 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:PoissonGalerkinFEM"
+
+\end_inset
+
+), we can always make 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ a square matrix.
+ However, 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ is generally singular, since free mode (
+\begin_inset Formula $u(\vec{x})=\text{const}$
+\end_inset
+
+) is in the solution space of PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonPDE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Such singularity of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ is removed by applying the essential BC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonEssentialBC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ (see 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:PoissonImposeEssentialBC"
+
+\end_inset
+
+).
+\end_layout
+
 \begin_layout Subsection
 Galerkin FEM
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PoissonGalerkinFEM"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-A good choice of 
+Generally, the workflow of an FE
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "FE"
+description "Finite Element"
+literal "false"
+
+\end_inset
+
+ analysis includes a preprocessing step (build 
+\begin_inset Formula $\Mat{K},\ket{F_{s}},\ket{F_{q}}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PoissonLAE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and solve it for 
+\begin_inset Formula $\ket{\hat{u}}$
+\end_inset
+
+) and a query step (read 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and evaluate 
+\begin_inset Formula $u^{h}(\vec{x})$
+\end_inset
+
+).
+ A good choice of 
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
@@ -878,10 +1079,7 @@ efficienct
 \end_inset
 
  time complexity for each query).
-\end_layout
-
-\begin_layout Standard
-In Galerkin FEM, 
+ In Galerkin FEM, 
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
@@ -911,8 +1109,19 @@ status collapsed
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
- are element-wise polynomials defined on a mesh, which is a graph obtained
- by dividing 
+ are element-wise polynomials defined on a mesh.
+\end_layout
+
+\begin_layout Subsubsection
+Mesh — Elements and Nodes
+\end_layout
+
+\begin_layout Standard
+A 
+\noun on
+mesh
+\noun default
+ is a graph obtained by dividing 
 \begin_inset Formula $\Omega$
 \end_inset
 
@@ -936,11 +1145,31 @@ cell
 s):
 \begin_inset Formula 
 \[
-\Omega=\bigcup_{e=1}^{E}\Omega_{e}\qc\dim\left(\Omega_{i}\cap\Omega_{k}\right)\le\dim(\Omega)-1\qc\forall i,k=1,\dots,E
+\Omega=\bigcup_{e=1}^{E}\Omega_{e}\qc\Omega_{i}\cap\Omega_{k}\doteq\varnothing,\forall i,k=1,\dots,E
 \]
 
 \end_inset
 
+Again, 
+\begin_inset Formula $\doteq$
+\end_inset
+
+ is read as 
+\emph on
+almost equal to
+\emph default
+, which means their intersection is atmost some lower dimensional object:
+\begin_inset Formula 
+\[
+\dim\left(\Omega_{i}\cap\Omega_{k}\right)\le\dim\left(\Omega\right)-1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Each element is a polygon formed by connecting a set of 
 \noun on
 node
@@ -948,33 +1177,41 @@ node
 s.
  Each node can be shared by several neighboring elements or owned by a single
  element.
+ 
 \end_layout
 
 \begin_layout Standard
-Typically, an FE
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "FE"
-description "Finite Element"
-literal "false"
+Typically, an FE mesh is a sparse graph, which means the number of nodes
+ owned by an element, or the number of elements owning a node, is significantly
+ smaller than the total number of nodes or elements.
+\end_layout
 
-\end_inset
+\begin_layout Subsubsection
+Nodal Shape Functions
+\end_layout
 
- mesh is sparse graph, which means the number of nodes owned by an element,
- or the number of elements owning a node, is significantly smaller than
- the total number of nodes or elements.
- To exploit such sparsity, we shall define each 
+\begin_layout Standard
+To exploit such sparsity, we shall define each 
 \begin_inset Formula $\phi_{K}$
 \end_inset
 
  as an element-wise function, which takes a small set of elements as its
- support.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "support"
+target "https://en.wikipedia.org/wiki/Support_(mathematics)"
+literal "false"
+
+\end_inset
+
+.
  The most intuitive way is to associate each node an element-wise Lagrange
  polynomial:
 \begin_inset Formula 
 \[
 \phi_{K}(\vec{x})=\begin{cases}
-\text{Lagrange polynomial} & \vec{x}\in\Omega_{e},\vec{x}_{K}\in\overline{\Omega}_{e}\\
+\text{Lagrange polynomial} & \vec{x},\vec{x}_{K}\in\Omega_{e}\cup\partial\Omega_{e}\\
 0 & \text{else}
 \end{cases}
 \]
@@ -1010,7 +1247,7 @@ Under such choice, coefficients (e.g.
 \begin_inset Formula $\hat{u}_{K},\hat{v}_{K},\hat{s}_{K},\hat{q}_{K}$
 \end_inset
 
-) are just the nodal values.
+) are nodal values of the functions being approximated.
 \end_layout
 
 \begin_layout Standard
@@ -1066,6 +1303,10 @@ global
  node index (written in uppercase).
 \end_layout
 
+\begin_layout Subsubsection
+Evaluating Matrices on Elements
+\end_layout
+
 \begin_layout Standard
 The evaluation of 
 \begin_inset Formula $\Mat{K}$
@@ -1078,7 +1319,7 @@ The evaluation of
  (the total number of elements) pieces:
 \begin_inset Formula 
 \[
-\Mat{K}=\int_{\Omega}\sum_{i}\dyad{\pdv{\phi}{x_{i}}}{\pdv{\phi}{x_{i}}}\dd{\Omega}=\sum_{e}\overbrace{\int_{\Omega_{e}}\sum_{i}\dyad{\pdv{N^{e}}{x_{i}}}{\pdv{N^{e}}{x_{i}}}\dd{\Omega}}^{\Mat{K^{e}}}
+\Mat{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\phi}{x_{\alpha}}}{\pdv{\phi}{x_{\alpha}}}\dd{\Omega}=\sum_{e}\overbrace{\int_{\Omega_{e}}\sum_{\alpha}\dyad{\pdv{N^{e}}{x_{\alpha}}}{\pdv{N^{e}}{x_{\alpha}}}\dd{\Omega}}^{\Mat{K^{e}}}
 \]
 
 \end_inset
@@ -1087,7 +1328,7 @@ Each
 \begin_inset Formula $\Mat{K^{e}}$
 \end_inset
 
- is called a 
+ is called an 
 \noun on
 element stiffness matrix
 \noun default
@@ -1123,6 +1364,10 @@ in which
 
 \end_layout
 
+\begin_layout Subsubsection
+Assembly
+\end_layout
+
 \begin_layout Standard
 The summation sign 
 \begin_inset Formula $\sum_{e}$
@@ -1133,7 +1378,10 @@ The summation sign
 assembly
 \noun default
 , since they are not ordinary matrix summations.
- Recall that 
+\end_layout
+
+\begin_layout Standard
+Recall that 
 \begin_inset Formula $N_{i}^{e}\equiv\phi_{I_{e}(i)}$
 \end_inset
 
@@ -1180,14 +1428,54 @@ literal "false"
 \end_inset
 
  can be built with 
-\begin_inset Formula $\order{N}$
+\begin_inset Formula $\order{n^{2}E}$
 \end_inset
 
  time and space complexity.
+ Since 
+\begin_inset Formula $n\in\order{10}$
+\end_inset
+
+ and 
+\begin_inset Formula $E\in\order{N}$
+\end_inset
+
+, 
+\begin_inset Formula $\order{n^{2}E}$
+\end_inset
+
+ is essentially 
+\begin_inset Formula $\order{N}$
+\end_inset
+
+, which beats 
+\begin_inset Formula $\order{N^{2}}$
+\end_inset
+
+ using full matrix.
+\end_layout
+
+\begin_layout Standard
+Load vectors can be assembled in the same way with 
+\begin_inset Formula $\order{nE}$
+\end_inset
+
+ time complexity and 
+\begin_inset Formula $\order{N}$
+\end_inset
+
+ space complexity (using full vectors).
 \end_layout
 
 \begin_layout Subsection
-Essential BC
+Imposing Essential BC
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PoissonImposeEssentialBC"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1220,7 +1508,7 @@ reference "eq:PoissonSymmetricWeakForm"
  in 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:PoissonAlgebraicEquation"
+reference "eq:PoissonLAE"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1256,7 +1544,7 @@ reference "eq:PoissonSymmetricWeakForm"
 , we have required that
 \begin_inset Formula 
 \[
-v=0\qc,\forall\vec{x}\in\Gamma_{u}
+v=0\qc\forall\vec{x}\in\Gamma_{u}
 \]
 
 \end_inset
@@ -1273,9 +1561,9 @@ Under the choice of
 
 \end_inset
 
-Suppose there is only one node, e.g.
+Without loss of generality, we may assume there is only one node, e.g.
  the 
-\begin_inset Formula $\gamma$
+\begin_inset Formula $I$
 \end_inset
 
 th node, locating in 
@@ -1283,14 +1571,28 @@ th node, locating in
 \end_inset
 
 .
- The 
-\begin_inset Formula $\gamma$
+\end_layout
+
+\begin_layout Subsubsection
+Deleting Row and Column
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PoissonBCbyDeletingRowAndColumn"
+
 \end_inset
 
-th row in 
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $I$
+\end_inset
+
+th row in LAE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:PoissonAlgebraicEquation"
+reference "eq:PoissonLAE"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1303,41 +1605,586 @@ noprefix "false"
 \end_inset
 
  to a square matrix, it is intuitive to delete the 
-\begin_inset Formula $\gamma$
+\begin_inset Formula $I$
 \end_inset
 
 th column, however, the product of 
-\begin_inset Formula $\hat{u}_{\gamma}$
+\begin_inset Formula $\hat{u}_{I}$
 \end_inset
 
- and this column should be subtracted from the RHS of 
+ and this column should be subtracted from the RHS of LAE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:PoissonAlgebraicEquation"
+reference "eq:PoissonLAE"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- to balance this deletion:
+ to balance this deletion.
+\end_layout
+
+\begin_layout Example*
+Apply 
+\begin_inset Formula $\hat{u}_{2}=2$
+\end_inset
+
+ to the following tiny FE system
 \begin_inset Formula 
 \[
-\ket{F_{s}}+\ket{F_{q}}-\Mat{K}\ket{\gamma}\hat{u}_{\gamma}
+\begin{bmatrix}\begin{array}{rrr}
+1 & -1\\
+-1 & 2 & -1\\
+ & -1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+5\\
+6
+\end{bmatrix}
 \]
 
 \end_inset
 
-in which, 
-\begin_inset Formula $\Mat{K}\ket{\gamma}$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- is the 
-\begin_inset Formula $\gamma$
+
+\end_layout
+
+\begin_layout Solution*
+Substract 
+\begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
 \end_inset
 
-th column of 
+ from 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & 0\\
+-1 & 0 & -1\\
+ & 0 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+5\\
+6
+\end{bmatrix}-\begin{bmatrix}-1\\
+2\\
+-1
+\end{bmatrix}\cdot2=\begin{bmatrix}4\\
+1\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+Delete the 
+\begin_inset Formula $2$
+\end_inset
+
+nd row of the system and the 
+\begin_inset Formula $2$
+\end_inset
+
+nd column of 
 \begin_inset Formula $\Mat{K}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rr}
+1\\
+ & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}4\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Substitute the solution back into the LAE:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & -1\\
+-1 & 2 & -1\\
+ & -1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+-8\\
+6
+\end{bmatrix}
+\]
+
+\end_inset
+
+we find 
+\begin_inset Formula $-8\ne5$
+\end_inset
+
+, which should not be surprising.
+ When 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ is being built, only explict 
+\begin_inset Quotes eld
+\end_inset
+
+forces
+\begin_inset Quotes erd
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $\bar{s},\bar{q}$
+\end_inset
+
+) are taken into account.
+ However, there should be some implicit reaction force applied by the constraint
+s on 
+\begin_inset Formula $\Gamma_{u}$
+\end_inset
+
+.
+ The difference between 
+\begin_inset Formula $-8$
+\end_inset
+
+ and 
+\begin_inset Formula $5$
+\end_inset
+
+ is just the contribution of such reaction force.
+\end_layout
+
+\begin_layout Subsubsection
+Multiplying Large Number
+\end_layout
+
+\begin_layout Standard
+Deleting rows and columns has some side effects, such as reindexing (indices
+ greater than 
+\begin_inset Formula $I$
+\end_inset
+
+ need to be shifted towards 
+\begin_inset Formula $0$
+\end_inset
+
+).
+ The simplest way to avoid such deletion is to substitute 
+\begin_inset Formula $\mel{I}{K}{I}$
+\end_inset
+
+ with a large number 
+\begin_inset Formula $P$
+\end_inset
+
+ and then put 
+\begin_inset Formula $P\hat{u}_{I}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\ip{I}{F}$
+\end_inset
+
+.
+ In this way, only two numbers are modified.
+ However, the solution of 
+\begin_inset Formula $\ket{\hat{u}}$
+\end_inset
+
+ is no longer the same as that obtained in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:PoissonBCbyDeletingRowAndColumn"
+
+\end_inset
+
+, but just an approximation.
+ The larger 
+\begin_inset Formula $P$
+\end_inset
+
+ is, the more accurate 
+\begin_inset Formula $\ket{\hat{u}}$
+\end_inset
+
+ will be.
+ However, large 
+\begin_inset Formula $P$
+\end_inset
+
+ may cause 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ to be ill-conditioned.
+\end_layout
+
+\begin_layout Example*
+Apply 
+\begin_inset Formula $\hat{u}_{2}=2$
+\end_inset
+
+ to the following tiny FE system
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & -1\\
+-1 & 2 & -1\\
+ & -1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+5\\
+6
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+Substitute 
+\begin_inset Formula $\mel{2}{K}{2}$
+\end_inset
+
+ with a large number 
+\begin_inset Formula $P=10000$
+\end_inset
+
+ and put 
+\begin_inset Formula $P\hat{u}_{2}=20000$
+\end_inset
+
+ onto 
+\begin_inset Formula $\ip{2}{F}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & -1\\
+-1 & 10000 & -1\\
+ & -1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+20000\\
+6
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+The solution is
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}4.0012\\
+2.0012\\
+8.0012
+\end{bmatrix}
+\]
+
+\end_inset
+
+which is almost accurate, however, the condition number of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ is 
+\begin_inset Formula $10002.0008\gg1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Modifying Row and Column
+\end_layout
+
+\begin_layout Standard
+The previous two methods can be combined.
+ Instead of deleting the 
+\begin_inset Formula $I$
+\end_inset
+
+th row and column, we shall just set their elements to be 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ To balance such modification, 
+\begin_inset Formula $\Mat{K}\ket{I}\hat{u}_{I}$
+\end_inset
+
+ should be subtracted from 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ as what we do in 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:PoissonBCbyDeletingRowAndColumn"
+
+\end_inset
+
+.
+ Then, substitute 
+\begin_inset Formula $\mel{I}{K}{I}$
+\end_inset
+
+ with a number (not necessarily to be large) 
+\begin_inset Formula $P$
+\end_inset
+
+ and then put 
+\begin_inset Formula $P\hat{u}_{I}$
+\end_inset
+
+ onto 
+\begin_inset Formula $\ip{I}{F}$
+\end_inset
+
+.
+ The solution of 
+\begin_inset Formula $\ket{\hat{u}}$
+\end_inset
+
+ is exactly the same as that obtained by 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:PoissonBCbyDeletingRowAndColumn"
+
+\end_inset
+
+.
+ However, 
+\begin_inset Formula $(3N-1)$
+\end_inset
+
+ numbers are modified, which is significantly larger than the previous method.
+ Using sparse matrix, this can be reduced to 
+\begin_inset Formula $\order{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example*
+Apply 
+\begin_inset Formula $\hat{u}_{2}=2$
+\end_inset
+
+ to the following tiny FE system
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & -1\\
+-1 & 2 & -1\\
+ & -1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+5\\
+6
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+Substract 
+\begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
+\end_inset
+
+ from 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1 & 0\\
+-1 & 0 & -1\\
+ & 0 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}2\\
+5\\
+6
+\end{bmatrix}-\begin{bmatrix}-1\\
+2\\
+-1
+\end{bmatrix}\cdot2=\begin{bmatrix}4\\
+1\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+and set the 
+\begin_inset Formula $2$
+\end_inset
+
+nd row to be all 
+\begin_inset Formula $0$
+\end_inset
+
+s:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1\\
+0 & 0 & 0\\
+ &  & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}4\\
+0\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+Then, substitute 
+\begin_inset Formula $\mel{2}{K}{2}$
+\end_inset
+
+ with a number 
+\begin_inset Formula $P=2$
+\end_inset
+
+ and put 
+\begin_inset Formula $P\hat{u}_{2}=4$
+\end_inset
+
+ onto 
+\begin_inset Formula $\ip{2}{F}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{rrr}
+1\\
+ & 2\\
+ &  & 1
+\end{array}\end{bmatrix}\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}4\\
+4\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+The solution is
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{u}_{1}\\
+\hat{u}_{2}\\
+\hat{u}_{3}
+\end{bmatrix}=\begin{bmatrix}4\\
+2\\
+8
+\end{bmatrix}
+\]
+
+\end_inset
+
+which is accurate, and the condition number of 
+\begin_inset Formula $\Mat{K}$
+\end_inset
+
+ is 
+\begin_inset Formula $2\approx1$
 \end_inset
 
 .
@@ -1348,6 +2195,13 @@ Linear Elastic Solids
 \end_layout
 
 \begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "Index"
+
+\end_inset
+
 
 \end_layout
 
