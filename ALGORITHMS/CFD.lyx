@@ -111,36 +111,755 @@ figs-within-sections
 Computational Fluid Dynamics
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "PDE"
+description "Partial Differential Equation"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BC"
+description "Boundary Condition"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "BVP"
+description "Boundary Value Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "IC"
+description "Initial Condition"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "IVP"
+description "Initial Value Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "RP"
+description "Riemann Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-Discretization Methods
+Model Problems
 \end_layout
 
 \begin_layout Subsection
-FDM: Finite Difference Methods
+Linear Advection Equation
 \end_layout
 
 \begin_layout Subsection
-FVM: Finite Volume Methods
+Convection–Diffusion Equation
 \end_layout
 
 \begin_layout Subsection
-FEM: Finite Element Methods
+Euler Equation
+\end_layout
+
+\begin_layout Problem
+Solve the IVP defined by the system of PDEs:
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\begin{equation}
+\pdv{\ket{U(t,x)}}{t}+\pdv{\ket{F(U(t,x))}}{x}=0\qc t>t_{0}\qc x\in\Omega\subset\mathbb{R}\label{eq:EulerEquation1d}
+\end{equation}
+
+\end_inset
+
+and the IC:
+\begin_inset Formula 
+\[
+\ket{U(t_{0},x_{0})}=\ket{U^{0}(x_{0})}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\ket{U}=\begin{bmatrix}\begin{array}{l}
+\rho\\
+\rho u\\
+\rho\left(\frac{u^{2}}{2}+e\right)
+\end{array}\end{bmatrix}\qc\ket{F}=u\ket{U}+\begin{bmatrix}0\\
+p\\
+pu
+\end{bmatrix}=\begin{bmatrix}\begin{array}{l}
+\rho u\\
+\rho uu+p\\
+\rho u\left(\frac{u^{2}}{2}+h\right)
+\end{array}\end{bmatrix}
+\]
+
+\end_inset
+
+With calorically perfect gas model:
+\begin_inset Formula 
+\[
+p=\rho RT\qc C_{v}=\frac{R}{\gamma-1}\qc C_{p}=\frac{\gamma R}{\gamma-1}
+\]
+
+\end_inset
+
+then 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ can be written as:
+\begin_inset Formula 
+\[
+\ket{U}=\begin{bmatrix}\begin{array}{l}
+\rho\\
+\rho u\\
+\rho\frac{u^{2}}{2}+\frac{1}{\gamma-1}p
+\end{array}\end{bmatrix}\qc\ket{F}=\begin{bmatrix}\begin{array}{l}
+\rho u\\
+\rho uu+p\\
+\rho u\frac{u^{2}}{2}+\frac{\gamma}{\gamma-1}pu
+\end{array}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Riemann Problems
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Shock Tube Problem]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "STP"
+description "Shock Tube Problem"
+literal "false"
+
+\end_inset
+
+Solve the IVP defined by the system of PDEs 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EulerEquation1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in which 
+\begin_inset Formula $\Omega=\mathbb{R}$
+\end_inset
+
+, and the system of ICs:
+\begin_inset Formula 
+\[
+\ket{U(t=0,x)}=\begin{cases}
+\ket{U_{-}^{0}}, & x<0\\
+\ket{U_{+}^{0}}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\ket{U_{-}^{0}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{+}^{0}}$
+\end_inset
+
+ are two constant matrices.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Sod
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Sod]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{-}^{0}=\begin{bmatrix}1\\
+0\\
+1
+\end{bmatrix}\qc\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{+}^{0}=\begin{bmatrix}0.125\\
+0\\
+1
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Lax
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lax]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{-}^{0}=\begin{bmatrix}0.445\\
+0.698\\
+3.528
+\end{bmatrix}\qc\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{+}^{0}=\begin{bmatrix}0.5\\
+0\\
+0.571
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Shu–Osher
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Shu--Osher]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{-}^{0}=\begin{bmatrix}3.857143\\
+2.629369\\
+10\frac{1}{3}
+\end{bmatrix}\qc\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}_{+}^{0}=\begin{bmatrix}1+0.2\sin(50x-25)\\
+0\\
+1
+\end{bmatrix}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Upwind Schemes
+Conservative Schemes
+\end_layout
+
+\begin_layout Standard
+In 1D space, a conservation law can be given as a differential equation
+\begin_inset Formula 
+\[
+\pdv{u(t,x)}{t}+\pdv{f(u(t,x))}{x}=0
+\]
+
+\end_inset
+
+or a integral-differnetial equation
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}\pdv{u(t,x)}{t}\dd{x}+\eval{f(u(t,x))}_{x_{1}}^{x_{2}}=0
+\]
+
+\end_inset
+
+in which, the space interval 
+\begin_inset Formula $[x_{1},x_{2}]$
+\end_inset
+
+ is chosen arbitrarily.
+ If 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+ do not change with 
+\begin_inset Formula $t$
+\end_inset
+
+, then the differential operator with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ can be exchanged with the integral operator with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+\int_{x_{1}}^{x_{2}}\pdv{u(t,x)}{t}\dd{x}=\dv{t}\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}
+\]
+
+\end_inset
+
+the conservation law then becomes
+\begin_inset Formula 
+\[
+\dv{t}\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}+\eval{f(u(t,x))}_{x_{1}}^{x_{2}}=0
+\]
+
+\end_inset
+
+Integrate it on an arbitrary time interval 
+\begin_inset Formula $[t_{1},t_{2}]$
+\end_inset
+
+, it becomes a integral equation
+\begin_inset Formula 
+\begin{equation}
+\left(\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}\right)_{t_{1}}^{t_{2}}+\left(\int_{t_{1}}^{t_{2}}f(u(t,x))\dd{t}\right)_{x_{1}}^{x_{2}}=0\label{eq:IntegralFormOfConservationLaw}
+\end{equation}
+
+\end_inset
+
+which is the starting point of all conservative schemes.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Conservative Scheme]
+\end_layout
+
+\end_inset
+
+If a scheme has the form
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=u_{i}^{n}-\frac{\Delta t}{\Delta x}\left(\hat{f}_{i+1/2}-\hat{f}_{i-1/2}\right)\qc\hat{f}_{i+1/2}=\hat{f}_{i+1/2}\left(u_{i+K}^{n}\right)
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\hat{f}_{i+1/2}$
+\end_inset
+
+ is the numerical flux, and 
+\begin_inset Formula $K$
+\end_inset
+
+ is a pre-selected set of indices, then it is said to be conservative.
+\end_layout
+
+\begin_layout Standard
+There is a consistency requirement on the numerical flux:
+\begin_inset Formula 
+\[
+\hat{f}_{i+1/2}(u,\dots,u)=f(u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cell-Centered FVM]
+\end_layout
+
+\end_inset
+
+Divide the computing domain 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ into 
+\begin_inset Formula $N_{x}$
+\end_inset
+
+ equal-sized intervals:
+\begin_inset Formula 
+\[
+\Omega_{i}:=\left[x_{i-1/2},x_{i+1/2}\right]\qc i=1,\dots,N_{x}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+x_{i+1/2}:=i\Delta x\qc\Delta x=\frac{b-a}{N_{x}}
+\]
+
+\end_inset
+
+The average value of 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ in the 
+\begin_inset Formula $i$
+\end_inset
+
+th cell at time 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ is denoted as:
+\begin_inset Formula 
+\[
+\bar{u}_{i}^{n}:=\frac{1}{\Delta x}\int_{\Omega_{i}}u(t_{n},x)\dd{x}
+\]
+
+\end_inset
+
+which is a piecewise constant approximation of 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
-FVS: Flux Vector Splitting
+Godunov Schemes
 \end_layout
 
-\begin_layout Subsection
-FDS: Flux Difference Splitting
+\begin_layout Standard
+At each 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+, the piecewise constant distribution of 
+\begin_inset Formula $\bar{u}_{i}^{n}$
+\end_inset
+
+ defines a local RP at each intercell boundary 
+\begin_inset Formula $x_{i+1/2}$
+\end_inset
+
+.
+ The first and essential step in all Godunov-type schemes is to solve these
+ local RPs.
+ We shall denote the self-similar solution of the RP at 
+\begin_inset Formula $x_{i+1/2}$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\tilde{u}_{i+1/2}^{n}(\alpha)\qc\alpha:=\frac{x-x_{i+1/2}}{t-t_{n}}
+\]
+
+\end_inset
+
+and the combined solution as 
+\begin_inset Formula $\tilde{u}^{n}(t,x)$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Subsection
-GVC: Group Velocity Control
+\begin_layout Subsubsection
+First Version
+\end_layout
+
+\begin_layout Standard
+If the time step 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ is so small that the solutions of any two RPs do not interfere with each
+ other, then the combined solution is just a simple combination of all the
+ self-similar solutions at each intercell boundary:
+\begin_inset Formula 
+\[
+\tilde{u}^{n}(t,x)=\tilde{u}_{i+1/2}^{n}\left(\frac{x-x_{i+1/2}}{t-t_{n}}\right)\qc x\in\left[x_{i},x_{i+1}\right]
+\]
+
+\end_inset
+
+Then for each 
+\begin_inset Formula $i$
+\end_inset
+
+, the average of 
+\begin_inset Formula $\tilde{u}^{n}(t_{n+1},x)$
+\end_inset
+
+ in 
+\begin_inset Formula $\Omega_{i}$
+\end_inset
+
+ can be taken as the value of 
+\begin_inset Formula $\bar{u}_{i}^{n+1}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\bar{u}_{i}^{n+1}:=\frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t_{n+1},x)\dd{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Second Version
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $\tilde{u}^{n}(t,x)$
+\end_inset
+
+ is the exact solution of an IVP for a conservation law, it can used as
+ the 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ in Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:IntegralFormOfConservationLaw"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which leads to
+\begin_inset Formula 
+\[
+\left(\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t,x)\dd{x}\right)_{t_{n}}^{t_{n+1}}+\left(\int_{t_{n}}^{t_{n+1}}f\left(\tilde{u}^{n}(t,x)\right)\dd{t}\right)_{x_{i-1/2}}^{x_{i+1/2}}=0
+\]
+
+\end_inset
+
+It can be turned into a conservative scheme
+\begin_inset Formula 
+\[
+\bar{u}_{i}^{n+1}=\bar{u}_{i}^{n}-\frac{\Delta t}{\Delta x}\left(\widehat{f}\hat{f}_{i+1/2}^{n}-\hat{f}_{i-1/2}^{n}\right)
+\]
+
+\end_inset
+
+by defining
+\begin_inset Formula 
+\[
+\bar{u}_{i}^{n}:=\frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t_{n},x)\dd{x}
+\]
+
+\end_inset
+
+as the average value, and
+\begin_inset Formula 
+\[
+\hat{f}_{i+1/2}^{n}:=\frac{1}{\Delta t}\int_{t_{n}}^{t_{n+1}}f\left(\tilde{u}^{n}\left(t,x_{i+1/2}\right)\right)\dd{t}
+\]
+
+\end_inset
+
+as the numerical flux.
+\end_layout
+
+\begin_layout Lemma
+The value of 
+\begin_inset Formula $\tilde{u}^{n}\left(t,x\right)$
+\end_inset
+
+ is constant along any intercell boundary 
+\begin_inset Formula $x_{i+1/2}$
+\end_inset
+
+, as long as 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ is small enough.
+\end_layout
+
+\begin_layout Proof
+For each local RP, the self-similar solution 
+\begin_inset Formula $\tilde{u}_{i+1/2}^{n}\left(\frac{x-x_{i+1/2}}{t-t_{n}}\right)$
+\end_inset
+
+ is constant along 
+\begin_inset Formula $x=x_{i+1/2}$
+\end_inset
+
+.
+ Such constancy is true until any of the waves generating from other intercell
+ boundaries arrives at 
+\begin_inset Formula $x_{i+1/2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Under this assumption, the expression for 
+\begin_inset Formula $\hat{f}_{i+1/2}^{n}$
+\end_inset
+
+ can be simplified as
+\begin_inset Formula 
+\[
+\hat{f}_{i+1/2}^{n}=f\left(\tilde{u}_{i+1/2}^{n}(0)\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -152,15 +871,83 @@ Artificial Viscosity
 \end_layout
 
 \begin_layout Subsection
-TVD: Total Variation Diminishing
+Group Velocity Control
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GVC"
+description "Group Velocity Control"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-MUSCL: Monotone Upstream-centered Schemes for Conservation Laws
+TVD
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TVD"
+description "Total Variation Diminishing"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-ENO: Essentially Non-Oscillatory
+MUSCL
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "MUSCL"
+description "Monotone Upstream-centered Schemes for Conservation Laws"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+ENO
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "ENO"
+description "Essentially Non-Oscillatory"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+WENO
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "WENO"
+description "Weighted Essentially Non-Oscillatory"
+literal "false"
+
+\end_inset
+
+ 
 \end_layout
 
 \end_body
