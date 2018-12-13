@@ -1,0 +1,4449 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage{tikz}
+\usepackage{physics}
+\renewcommand{\grad}{\boldsymbol{\nabla}}
+\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage[e]{esvect}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\end_preamble
+\options idxtotoc
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "default" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 0.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle plain
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Method of Characteristics
+\end_layout
+
+\begin_layout Subsection
+Smooth Solutions of Single Hyperbolic PDEs
+\end_layout
+
+\begin_layout Subsubsection
+Linear Wave Equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:LinearWaveEquationWithSmoothIC"
+
+\end_inset
+
+Find a smooth function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ satisfying the PDE
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+a\pdv{u}{x}=0\qc x\in\mathbb{R}\qc t>t_{0}\label{eq:LinearWaveEquation}
+\end{equation}
+
+\end_inset
+
+and the IC
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We use 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ as the spatial variable at 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ to distintuish it from the one at 
+\begin_inset Formula $t$
+\end_inset
+
+, which is 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+u(t_{0},x_{0})=u_{0}(x_{0})\qc x_{0}\in\mathbb{R}\label{eq:SmoothInitialWaveProfile}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $a$
+\end_inset
+
+ is a constant, and 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is a function of 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ with 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smoothness.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The characteristic curves emanating from 
+\begin_inset Formula $t=t_{0}$
+\end_inset
+
+ form a one-parameter family of parallel straight lines.
+\end_layout
+
+\begin_layout Proof
+The characteristic curve emanating from 
+\begin_inset Formula $\left(x_{0},t_{0}\right)$
+\end_inset
+
+, denoted as 
+\begin_inset Formula $x=x(t)$
+\end_inset
+
+, is the solution of the following IVP:
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{x}{t} & =a\qc t>t_{0}\\
+x(t_{0}) & =x_{0}
+\end{aligned}
+\]
+
+\end_inset
+
+which is
+\begin_inset Formula 
+\[
+\frac{x-x_{0}}{t-t_{0}}=a\qc t>t_{0}
+\]
+
+\end_inset
+
+If we treat 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ as a varying parameter, then all of these characteristic curves together
+ form a one-parameter family of parallel straight lines in the 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ plane.
+\end_layout
+
+\begin_layout Lemma
+The value of 
+\begin_inset Formula $u$
+\end_inset
+
+ along any characteristic curve is a constant.
+ 
+\end_layout
+
+\begin_layout Proof
+Along any characteristic curve, the change rate of 
+\begin_inset Formula $u$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a\pdv{u}{x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+The solution of IVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:LinearWaveEquationWithSmoothIC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}\circ x_{0}(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This solution has a clear physical interpretation: a wave packet moving
+ with a constant speed, whose shape keeps unchanged.
+ Physically, the constant coefficient 
+\begin_inset Formula $a$
+\end_inset
+
+ has a dimension of speed.
+\end_layout
+
+\begin_layout Subsubsection
+Quasilinear Wave Equation
+\end_layout
+
+\begin_layout Standard
+If the wave speed is a non-constant function of 
+\begin_inset Formula $u$
+\end_inset
+
+, then IVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:LinearWaveEquationWithSmoothIC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ becomes:
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:QuasilinearWaveEquationWithSmoothIC"
+
+\end_inset
+
+Find a smooth function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ satisfying the PDE
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t>t_{0}\qc x\in\mathbb{R}\label{eq:QuasilinearWaveEquation}
+\end{equation}
+
+\end_inset
+
+and the IC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SmoothInitialWaveProfile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The simplest case is that 
+\begin_inset Formula $a(u)=ku$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:InviscidBurgersEquationWithSmoothIC"
+
+\end_inset
+
+Find a smooth function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ satisfying the PDE
+\begin_inset Formula 
+\[
+\pdv{u}{t}+ku\pdv{u}{x}=0\qc t>t_{0}\qc x\in\mathbb{R}
+\]
+
+\end_inset
+
+and the IC 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SmoothInitialWaveProfile"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem
+When 
+\begin_inset Formula $k=1$
+\end_inset
+
+, the PDE is called 
+\noun on
+inviscid Burgers equation
+\noun default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+ could be any physical quantity, while the wave speed 
+\begin_inset Formula $ku$
+\end_inset
+
+ must has a dimension of speed.
+ It is better to keep writing the coefficient 
+\begin_inset Formula $k$
+\end_inset
+
+, even when 
+\begin_inset Formula $k=1$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+The value of 
+\begin_inset Formula $u$
+\end_inset
+
+ along any characteristic curve is a constant.
+\end_layout
+
+\begin_layout Proof
+Like in IVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:LinearWaveEquationWithSmoothIC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the characteristic curve emanating from 
+\begin_inset Formula $\left(x_{0},t_{0}\right)$
+\end_inset
+
+, denoted as 
+\begin_inset Formula $x=x(t)$
+\end_inset
+
+, is the solution of the following IVP:
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{x}{t} & =a(u(t,x))\qc t>t_{0}\\
+x(t_{0}) & =x_{0}
+\end{aligned}
+\]
+
+\end_inset
+
+Along any characteristic curve, the change rate of 
+\begin_inset Formula $u$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a(u)\pdv{u}{x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+At least in a finite time period 
+\begin_inset Formula $(t_{0},t_{*})$
+\end_inset
+
+, the characteristic curves emanating from 
+\begin_inset Formula $t=t_{0}$
+\end_inset
+
+ form a one-parameter family of straight lines.
+\end_layout
+
+\begin_layout Proof
+Assume the characteristic curves do not intersect with each other at least
+ in a finite time period 
+\begin_inset Formula $(t_{0},t_{*})$
+\end_inset
+
+, which will be proved in the section of 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:BreakingOfSmoothSolution"
+
+\end_inset
+
+.
+ The constancy of 
+\begin_inset Formula $u$
+\end_inset
+
+ immediately implies 
+\begin_inset Formula $a(u)$
+\end_inset
+
+ is also constant along any characteristic curve.
+ The characteristic curve emanating from 
+\begin_inset Formula $\left(x_{0},t_{0}\right)$
+\end_inset
+
+ is then easily solved to be
+\begin_inset Formula 
+\begin{equation}
+\frac{x-x_{0}}{t-t_{0}}=a_{0}\label{eq:CharCurveOfQuasilinearWaveEquation-1}
+\end{equation}
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+a_{0}=a\circ u(t,x)=a\circ u_{0}\circ x_{0}(t,x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, characteristic curves emanated from different initial points are
+ 
+\emph on
+no longer parallel
+\emph default
+ to each other in general.
+\end_layout
+
+\begin_layout Theorem
+The solution of IVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:QuasilinearWaveEquationWithSmoothIC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{equation}
+u(t,x)=u_{0}(x_{0}(t,x))=u_{0}\left(x-\left(t-t_{0}\right)a(u(t,x))\right)\label{eq:SolutionOfQuasilinearWaveEquation}
+\end{equation}
+
+\end_inset
+
+from which, the value of 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ can be solved in principle.
+\end_layout
+
+\begin_layout Subsubsection
+Breaking of Smooth Solutions
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:BreakingOfSmoothSolution"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The smooth solution obtained in the previous section is based upon the assumptio
+n that characteristic curves 
+\emph on
+do not intersect
+\emph default
+ with each other.
+ Its validness depends on the positiveness of
+\begin_inset Formula 
+\[
+\dv{a}{x_{0}}:=\dv{a}{u_{0}}\dv{u_{0}}{x_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $\Omega\subset\mathbb{\mathbb{R}}$
+\end_inset
+
+ is an open interval, 
+\begin_inset Formula $p_{0}<q_{0}$
+\end_inset
+
+ are two points inside it, 
+\begin_inset Formula $x=p(t)$
+\end_inset
+
+ and 
+\begin_inset Formula $x=q(t)$
+\end_inset
+
+ are the equations of the characteristic curves emanating from them.
+\end_layout
+
+\begin_layout Theorem
+If 
+\begin_inset Formula $\forall x_{0}\in\Omega$
+\end_inset
+
+ there is 
+\begin_inset Formula $\dv{a}{x_{0}}>0$
+\end_inset
+
+, then 
+\begin_inset Formula $\forall t>t_{0}$
+\end_inset
+
+ there is 
+\begin_inset Formula $p(t)<q(t)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+From 
+\begin_inset Formula $\dv{x}{t}=a$
+\end_inset
+
+ and 
+\begin_inset Formula $a\circ u(t,x)=a\circ u_{0}\left(x_{0}\right)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\dv{x}{t}=a\circ u_{0}(x_{0})
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\dv{t}(q(t)-p(t))=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\dv{a}{x_{0}}>0$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\begin{aligned}p_{0}<q_{0} & \implies a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})>0\\
+ & \implies\dv{t}(q(t)-p(t))>0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+If 
+\begin_inset Formula $\forall x_{0}\in\Omega$
+\end_inset
+
+ there is 
+\begin_inset Formula $\dv{a}{x_{0}}<0$
+\end_inset
+
+, then 
+\begin_inset Formula $\exists t_{*}>t_{0}$
+\end_inset
+
+ such that 
+\begin_inset Formula $p(t_{*})=q(t_{*})$
+\end_inset
+
+, and 
+\begin_inset Formula $\forall t\in(t_{0},t_{*})$
+\end_inset
+
+ there is 
+\begin_inset Formula $p(t)<q(t)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The proof is almost the same as the previous theorem, except for the direction
+ of the inequality:
+\begin_inset Formula 
+\[
+\dv{t}(q(t)-p(t))=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})<0
+\]
+
+\end_inset
+
+The 
+\noun on
+intersecting moment
+\noun default
+ 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ of two characteristic curves emanated from 
+\begin_inset Formula $\left(p_{0},t_{0}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(q_{0},t_{0}\right)$
+\end_inset
+
+ can be solved from 
+\begin_inset Formula $p(t_{*})=q(t_{*})$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}p_{0}+\left(t_{*}-t_{0}\right)a\circ u_{0}(p_{0})\\
+=q_{0}+\left(t_{*}-t_{0}\right)a\circ u_{0}(q_{0})
+\end{aligned}
+\]
+
+\end_inset
+
+which is
+\begin_inset Formula 
+\[
+t_{*}=t_{0}-\frac{q_{0}-p_{0}}{a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})}>0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When two characteristic curves intersect, 
+\begin_inset Formula $u$
+\end_inset
+
+ will have two values
+\begin_inset Formula 
+\[
+u=u_{0}\left(p_{0}\right)\qand u=u_{0}\left(q_{0}\right)
+\]
+
+\end_inset
+
+which are generally inconsistent.
+ Such inconsistency will leads to 
+\begin_inset Formula $\pdv{u}{x}\to\infty$
+\end_inset
+
+.
+ On the other hand, 
+\begin_inset Formula $\pdv{u}{x}$
+\end_inset
+
+ can be solved from
+\begin_inset Formula 
+\[
+u(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a\circ u_{0}(x_{0})\right)
+\]
+
+\end_inset
+
+as
+\begin_inset Formula 
+\[
+\pdv{u}{x}=\frac{\dv{u_{0}}{x_{0}}}{1+\left(t-t_{0}\right)\dv{a}{x_{0}}}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth, the condition for 
+\begin_inset Formula $\pdv{u}{x}\to\infty$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+1+\left(t_{*}-t_{0}\right)\dv{a}{x_{0}}=0
+\]
+
+\end_inset
+
+which leads to the intersecting moment when the characteristic curve emanated
+ from a 
+\emph on
+specific
+\emph default
+ 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ intersects with some other characteristic curve:
+\begin_inset Formula 
+\[
+t_{*}=t_{0}-\left(\dv{a}{x_{0}}\right)^{-1}
+\]
+
+\end_inset
+
+The 
+\noun on
+breaking moment
+\noun default
+ of the smooth solution is the minimum of all these intersecting moments:
+\begin_inset Formula 
+\[
+t_{b}=\min_{x_{0}\in\Omega}\left\{ t_{0}-\left(\dv{a}{x_{0}}\right)^{-1}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we think of 
+\begin_inset Formula $u\left(t_{b},x_{b}\right)$
+\end_inset
+
+ as the IC of a new IVP, it will become a 
+\noun on
+generalised Riemann problem
+\noun default
+.
+ The special case, in which the left and right states are constants, will
+ be discussed in the section of 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:RiemannProblems"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Smooth Solutions of Hyperbolic PDE Systems
+\end_layout
+
+\begin_layout Subsubsection
+Notation for Matrices
+\end_layout
+
+\begin_layout Standard
+In mathematical literatures, the notation for matrices is not unified.
+ I prefer to adopt 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dirac's bra-ket notation"
+target "https://doi.org/10.1017/S0305004100021162"
+literal "false"
+
+\end_inset
+
+, which is originally invented for quantum mechanics.
+ Symbols used in this document are listed in Table 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Notation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Notation for Matrices
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Notation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Object
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Example
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\SpecialChar LaTeX
+ commands
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Some commands are provided by package 
+\family typewriter
+
+\begin_inset CommandInset href
+LatexCommand href
+name "physics"
+target "https://www.ctan.org/pkg/physics"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+column matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{X}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ket{X}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+column basis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{k}:=\ket{e_{k}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+bra{k}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+row matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bra{Y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ket{Y}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+row basis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bra{i}:=\bra{e_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+bra{i}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+underline{A}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+inner product
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{X}{Y}:=\bra{X}\negthinspace\ket{Y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{X}{Y}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+th row
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{i}{X}:=\ip{e_{i}}{X}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{i}{X}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+th column
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{X}{k}:=\ip{X}{e_{k}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{X}{k}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+matrix element
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mel{i}{A}{k}:=\mel{e_{i}}{A}{e_{k}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+mel{i}{A}{k}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bilinear form
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mel{X}{A}{Y}:=\ip{X}{AY}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+mel{X}{A}{Y}
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Linear Systems
+\end_layout
+
+\begin_layout Problem
+Find 
+\begin_inset Formula $m$
+\end_inset
+
+ smooth functions 
+\begin_inset Formula $\left\{ U_{i}(t,x)\right\} _{i=1}^{m}$
+\end_inset
+
+ satisfying the PDE system
+\begin_inset Formula 
+\[
+\pdv{U_{i}}{t}+\sum_{k=1}^{m}A_{ik}\pdv{U_{k}}{x}=0\qc t>t_{0}\qc x\in\mathbb{{R}}\qc i=1,\dots,m
+\]
+
+\end_inset
+
+and the IC system
+\begin_inset Formula 
+\[
+U_{i}(t_{0},x_{0})=U_{i}^{0}(x_{0})\qc i=1,\dots,m
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $A_{ik}$
+\end_inset
+
+ are constants, and 
+\begin_inset Formula $U_{i}^{0}$
+\end_inset
+
+ are 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth functions of 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the matrix notation introduced in the previous section, the problem
+ can be rewritten in a more compact form: 
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:LinearPdeSystemWithSmoothIC"
+
+\end_inset
+
+Find a column matrix of 
+\begin_inset Formula $m$
+\end_inset
+
+ smooth functions, denoted as 
+\begin_inset Formula $\ket{U(t,x)}$
+\end_inset
+
+, satisfying the PDE
+\begin_inset Formula 
+\begin{equation}
+\left(\pdv{t}+\Mat{A}\pdv{x}\right)\ket{U}=\ket{0}\qc t>t_{0}\qc x\in\mathbb{{R}}\label{eq:LinearPdeSystem1d}
+\end{equation}
+
+\end_inset
+
+and the IC
+\begin_inset Formula 
+\begin{equation}
+\ket{U(t_{0},x_{0})}=\ket{U^{0}(x_{0})}\qc x_{0}\in\mathbb{R}\label{eq:SmoothInitialWaveSystem}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Given a square matrix 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+.
+ If a scalar 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, a row matrix 
+\begin_inset Formula $\bra{L}$
+\end_inset
+
+ and a column matrix 
+\begin_inset Formula $\ket{R}$
+\end_inset
+
+ together satisfy the following equations
+\begin_inset Formula 
+\[
+\bra{L}\Mat{A}=\bra{L}\lambda\qc\Mat{A}\ket{R}=\lambda\ket{R}
+\]
+
+\end_inset
+
+then we say 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is an 
+\noun on
+eigenvalue
+\noun default
+ of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+, 
+\begin_inset Formula $\bra{L}$
+\end_inset
+
+ is a 
+\noun on
+left eigenvector
+\noun default
+ of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ corresponding to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, 
+\begin_inset Formula $\ket{R}$
+\end_inset
+
+ is a 
+\noun on
+right eigenvector
+\noun default
+ of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ corresponding to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Hyperbolic PDE System]
+\end_layout
+
+\end_inset
+
+If all of the 
+\begin_inset Formula $m$
+\end_inset
+
+ eigenvalues of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ in PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearPdeSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are real numbers, and there are 
+\begin_inset Formula $m$
+\end_inset
+
+ linearly independent (left/right) eigenvectors, then the PDE system is
+ said to be 
+\noun on
+hyperbolic
+\noun default
+.
+ Moreover, if all of the 
+\begin_inset Formula $m$
+\end_inset
+
+ real eigenvalues are distinct, then the system is said to be 
+\noun on
+strictly hyperbolic
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+From now on, we shall assume the systems to be studied are strictly hyperbolic,
+ and all of their eigenvalues have been sorted, i.e.
+\begin_inset Formula 
+\[
+\lambda_{1}<\cdots<\lambda_{m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+If PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearPdeSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is strictly hyperbolic, then it can be decomposed as 
+\begin_inset Formula $m$
+\end_inset
+
+ independent linear wave equations.
+\end_layout
+
+\begin_layout Proof
+The eigenvectors corresponding to distinct eigenvalues are linearly independent
+ with each other.
+ We can collect them into matrices, which will be informally called 
+\noun on
+eigenmatrices
+\noun default
+:
+\begin_inset Formula 
+\[
+\Mat{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\qc\Mat{L}:=\begin{bmatrix}\bra{L_{1}}\\
+\vdots\\
+\bra{L_{m}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+They are both invertible, since their columns and rows are linear independent.
+ So 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ can be diagonalised:
+\begin_inset Formula 
+\[
+\Mat{A}\Mat{R}=\Mat{R}\Mat{\lambda}\implies\Mat{A}=\Mat{R}\Mat{\lambda}\Mat{R}^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Mat{L}\Mat{A}=\Mat{\lambda}\Mat{L}\implies\Mat{A}=\Mat{L}^{-1}\Mat{\lambda}\Mat{L}
+\]
+
+\end_inset
+
+The right and left eigenmatrices can be calculated independently.
+ However, we note that
+\begin_inset Formula 
+\[
+\Mat{A}=\Mat{R}\Mat{\lambda}\Mat{R}^{-1}\implies\Mat{R}^{-1}\Mat{A}=\Mat{\lambda}\Mat{R}^{-1}
+\]
+
+\end_inset
+
+which implies 
+\begin_inset Formula $\Mat{R}^{-1}$
+\end_inset
+
+ can be viewed as an 
+\begin_inset Formula $\Mat{L}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\Mat{L}:=\Mat{R}^{-1}\qc\ip{L_{i}}{R_{k}}=\begin{cases}
+1, & i=k\\
+0, & i\ne k
+\end{cases}
+\]
+
+\end_inset
+
+We shall use such 
+\begin_inset Formula $\Mat{L}$
+\end_inset
+
+ from now on.
+\end_layout
+
+\begin_layout Proof
+By defining a set of 
+\noun on
+characteristic variables
+\noun default
+:
+\begin_inset Formula 
+\[
+\ket{V(t,x)}:=\Mat{L}\ket{U(t,x)}=\begin{bmatrix}\ip{L_{1}}{U(t,x)}\\
+\vdots\\
+\ip{L_{m}}{U(t,x)}
+\end{bmatrix}=\begin{bmatrix}V_{1}(t,x)\\
+\vdots\\
+V_{m}(t,x)
+\end{bmatrix}
+\]
+
+\end_inset
+
+the original system can be decoupled as 
+\begin_inset Formula $m$
+\end_inset
+
+ independent linear wave equations:
+\begin_inset Formula 
+\[
+\left(\pdv{t}+\Mat{\lambda}\pdv{x}\right)\ket{V}=\ket{0}\qor\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}\qc i=1,\dots,m
+\]
+
+\end_inset
+
+which is called the 
+\noun on
+characteristic form
+\noun default
+ of PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearPdeSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Theorem
+The solution of IVP 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:LinearPdeSystemWithSmoothIC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\ket{U(t,x)}=\left(\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}$
+\end_inset
+
+ is the projection operator.
+\end_layout
+
+\begin_layout Proof
+Each of the 
+\begin_inset Formula $m$
+\end_inset
+
+ linear wave equations is supplied with an IC obtained from the same projection:
+\begin_inset Formula 
+\[
+\ket{V^{0}(x_{0})}:=\Mat{L}\ket{U^{0}(x_{0})}=\begin{bmatrix}\ip{L_{1}}{U^{0}(x_{0})}\\
+\vdots\\
+\ip{L_{m}}{U^{0}(x_{0})}
+\end{bmatrix}
+\]
+
+\end_inset
+
+and can be solved along the corresponding characteristic curve:
+\begin_inset Formula 
+\[
+\dv{x}{t}=\lambda_{i}\qc x(t_{0})=x_{0}\implies\frac{x-x_{0}}{t-t_{0}}=\lambda_{i}
+\]
+
+\end_inset
+
+which is
+\begin_inset Formula 
+\[
+V_{i}(t,x)=\ip{L_{i}}{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+\]
+
+\end_inset
+
+This is a single wave with the shape 
+\begin_inset Formula $\ip{L_{i}}{U^{0}(x_{0})}$
+\end_inset
+
+ propagating with the speed 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The solution to the original system can be obtained by transforming 
+\begin_inset Formula $\ket{V}$
+\end_inset
+
+ back into 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{U(t,x)} & =\Mat{L}^{-1}\ket{V(t,x)}=\Mat{R}\ket{V(t,x)}\\
+ & =\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\begin{bmatrix}V_{1}(t,x)\\
+\vdots\\
+V_{m}(t,x)
+\end{bmatrix}\\
+ & =\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}\\
+ & =\left(\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Quasilinear Systems
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:QuasilinearHyperbolicSystems"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+Find 
+\begin_inset Formula $m$
+\end_inset
+
+ smooth functions 
+\begin_inset Formula $\left\{ U_{i}(t,x)\right\} _{i=1}^{m}$
+\end_inset
+
+ satisfying the PDE system
+\begin_inset Formula 
+\begin{equation}
+\left(\pdv{t}+\Mat{A(U)}\pdv{x}\right)\ket{U}=\ket{0}\label{eq:QuasilinearHyperbolicSystem1d}
+\end{equation}
+
+\end_inset
+
+and the IC system 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SmoothInitialWaveSystem"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in which 
+\begin_inset Formula $\Mat{A(U)}$
+\end_inset
+
+ is a matrix function of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Like a linear system, 
+\begin_inset Formula $\Mat{A(U)}$
+\end_inset
+
+ can be diagonalized at any arbitrary point 
+\begin_inset Formula $(U_{1},\dots,U_{m})$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\Mat{A(U)} & =\Mat{R(U)}\Mat{\lambda(U)}\Mat{R(U)}^{-1}\\
+ & =\Mat{L(U)}^{-1}\Mat{\lambda(U)}\Mat{L(U)}
+\end{aligned}
+\]
+
+\end_inset
+
+However, PDE system 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:QuasilinearHyperbolicSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ cannot be fully decoupled in general.
+ We can at most have
+\begin_inset Formula 
+\[
+\left(\Mat{L(U)}\pdv{t}+\Mat{\lambda(U)}\Mat{L(U)}\pdv{x}\right)\ket{U}=\ket{0}
+\]
+
+\end_inset
+
+each row of which is a 
+\noun on
+characteristic compatability condition
+\noun default
+, which can be written as a PDE
+\begin_inset Formula 
+\begin{equation}
+\mel**{L_{i}(U)}{\pdv{t}+\lambda_{i}(U)\pdv{x}}{U}=0\qc i=1,\dots,m\label{eq:CharacteristicCompatibilityCondition}
+\end{equation}
+
+\end_inset
+
+or an ODE
+\begin_inset Formula 
+\[
+\ip{L_{i}(U)}{\left(\dv{t}\right)_{i}{U}}=0\qc i=1,\dots,m
+\]
+
+\end_inset
+
+by defining a differential operator
+\begin_inset Formula 
+\[
+\left(\dv{t}\right)_{i}:=\pdv{t}+\lambda_{i}(U)\pdv{x}
+\]
+
+\end_inset
+
+along the characteristic curve
+\begin_inset Formula 
+\[
+\dv{x}{t}=\lambda_{i}(U(t,x))\qc x(t_{0})=x_{0}
+\]
+
+\end_inset
+
+In contrast to the linear case, 
+\begin_inset Formula $\bra{L_{i}(U)}$
+\end_inset
+
+ cannot be exchanged with the differential operator, so the characteristic
+ compatability condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:CharacteristicCompatibilityCondition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ cannot be decoupled into 
+\begin_inset Formula $m$
+\end_inset
+
+ independent PDEs.
+\end_layout
+
+\begin_layout Definition
+For each 
+\begin_inset Formula $i$
+\end_inset
+
+, the function 
+\begin_inset Formula $\lambda_{i}(U_{1},\dots,U_{m})$
+\end_inset
+
+ defines a scalar field in the 
+\begin_inset Formula $U$
+\end_inset
+
+-space, which is called the 
+\noun on
+
+\begin_inset Formula $i$
+\end_inset
+
+th characteristic field
+\noun default
+.
+ A characteristic field is categorized as 
+\noun on
+genuinely nolinear
+\noun default
+ if
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{i}}{R_{i}}\ne0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+or 
+\noun on
+linearly degenerate
+\noun default
+ if
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{i}}{R_{i}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\bra{\grad\lambda_{i}}:=\begin{bmatrix}\pdv{\lambda_{i}}{U_{1}} & \cdots & \pdv{\lambda_{i}}{U_{m}}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Riemann Invariants
+\end_layout
+
+\begin_layout Standard
+A remedy for the difficulty mentioned above, proposed by 
+\begin_inset CommandInset href
+LatexCommand href
+name "Riemann"
+target "https://en.wikipedia.org/wiki/Bernhard_Riemann"
+literal "false"
+
+\end_inset
+
+, is to find 
+\begin_inset Formula $m$
+\end_inset
+
+ independent numbers that might turn the PDE system into a system of 
+\emph on
+algebraic
+\emph default
+ equations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riemann Invariants]
+\end_layout
+
+\end_inset
+
+If a scalar function 
+\begin_inset Formula $W(U_{1},\cdots,U_{m})$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\ip{\grad W}{R_{k}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+then it is called a
+\noun on
+ generalized 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invariant
+\noun default
+.
+ If a scalar function 
+\begin_inset Formula $W(U_{1},\cdots,U_{m})$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\bra{\grad W}\parallel\bra{L_{k}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\]
+
+\end_inset
+
+then it is called a
+\noun on
+ specialized 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invariant
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+A generalizd 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invariant 
+\begin_inset Formula $W$
+\end_inset
+
+ is a constant along the trajectory of 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\ip{\grad W}{R_{k}}$
+\end_inset
+
+ is the directional derivative along 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+, so along the trajectory of 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+, the value of 
+\begin_inset Formula $W$
+\end_inset
+
+ does not change:
+\begin_inset Formula 
+\[
+\dd{W}=\ip{\grad W}{\dd{U}}=\ip{\grad W}{R_{k}}\dd{\xi}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+For each 
+\begin_inset Formula $k$
+\end_inset
+
+, there are 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ independent generalized 
+\noun on
+
+\begin_inset Formula $k$
+\end_inset
+
+-
+\noun default
+Riemann invariants.
+\end_layout
+
+\begin_layout Proof
+The constantness of 
+\begin_inset Formula $W$
+\end_inset
+
+ along 
+\begin_inset Formula $C_{k}$
+\end_inset
+
+ leads to an equation
+\begin_inset Formula 
+\[
+W\left(U_{1},\dots,U_{m}\right)=C
+\]
+
+\end_inset
+
+which defines a hypersurface in the 
+\begin_inset Formula $m$
+\end_inset
+
+-dimensional space 
+\begin_inset Formula $\left(U_{1},\dots,U_{m}\right)$
+\end_inset
+
+.
+ The intersection of 
+\begin_inset Formula $n$
+\end_inset
+
+ such hypersurfaces is an 
+\begin_inset Formula $(m-n)$
+\end_inset
+
+-manifold.
+ The intersection of all such hypersurfaces is 
+\begin_inset Formula $C_{k}$
+\end_inset
+
+, which is a 
+\begin_inset Formula $1$
+\end_inset
+
+-manifold, so 
+\begin_inset Formula $n=m-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $2\times2$
+\end_inset
+
+ Systems
+\end_layout
+
+\begin_layout Standard
+For a quasilinear PDE system with 2 independent variables and 2 dependent
+ variables, a.k.a.
+ a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system, specialized Riemann invariants can always be found and the system
+ of PDEs can always be turned into a system of algebraic equations.
+\end_layout
+
+\begin_layout Lemma
+For a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system, a generalized Riemann invariant associated with one characteristic
+ field is a specialized Riemann invariant associated with the other characterist
+ic field.
+\end_layout
+
+\begin_layout Proof
+For a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system, there is only one independent generalized Riemann invariant for
+ each characteristic field.
+ The orthogonality relations
+\begin_inset Formula 
+\[
+\ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0\qc\ip{\grad W_{1}}{R_{1}}=\ip{\grad W_{2}}{R_{2}}=0
+\]
+
+\end_inset
+
+lead to
+\begin_inset Formula 
+\[
+\bra{L_{2}}\parallel\bra{\grad W_{1}}\qc\bra{L_{1}}\parallel\bra{\grad W_{2}}
+\]
+
+\end_inset
+
+which meet the definition of specialized Riemann invariants.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+For a 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system, a generalized Riemann invariant is constant along any characteristic
+ curve corresponding to the other characteristic field.
+\end_layout
+
+\begin_layout Proof
+The parallel relations
+\begin_inset Formula 
+\[
+\bra{L_{2}}\parallel\bra{\grad W_{1}}\qc\bra{L_{1}}\parallel\bra{\grad W_{2}}
+\]
+
+\end_inset
+
+immediately lead to
+\begin_inset Formula 
+\[
+\bra{\grad W_{1}}\Mat{A}=\bra{\grad W_{1}}\lambda_{2}\qc\bra{\grad W_{2}}\Mat{A}=\bra{\grad W_{2}}\lambda_{1}
+\]
+
+\end_inset
+
+The 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ system of PDEs can now be turned into a pair of ODEs
+\begin_inset Formula 
+\[
+\begin{aligned}\mel**{\grad W_{1}}{\pdv{t}+\lambda_{2}\pdv{x}}{U}=\left(\dv{t}\right)_{2}W_{1}=0\\
+\mel**{\grad W_{2}}{\pdv{t}+\lambda_{1}\pdv{x}}{U}=\left(\dv{t}\right)_{1}W_{2}=0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At any point 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+, we have two algebraic equations
+\begin_inset Formula 
+\[
+\begin{aligned}W_{1}\circ\ket{U}(t,x)=W_{1}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{2})\\
+W_{2}\circ\ket{U}(t,x)=W_{2}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{1})
+\end{aligned}
+\]
+
+\end_inset
+
+from which the original variables 
+\begin_inset Formula $\left(U_{1},U_{2}\right)$
+\end_inset
+
+ can be solved.
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Isentropic Gas Dynamics]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pdv{t}\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}+\pdv{x}\begin{bmatrix}\rho u\\
+\rho uu+p
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}\qc p=C\rho^{\gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+It can be formulated as a quasilinear system 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:QuasilinearHyperbolicSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in which
+\begin_inset Formula 
+\[
+\ket{U}=\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}\qc\Mat{A(U)}=\begin{bmatrix}0 & 1\\
+a^{2}-u^{2} & 2u
+\end{bmatrix}\qc a=\sqrt{C\gamma\rho^{\gamma-1}}
+\]
+
+\end_inset
+
+The eigenvalues and eigenvectors of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ can be found as
+\begin_inset Formula 
+\[
+\begin{aligned}\lambda_{1}=u-a\qc\ket{R_{1}}=\begin{bmatrix}1\\
+u-a
+\end{bmatrix}\\
+\lambda_{2}=u+a\qc\ket{R_{2}}=\begin{bmatrix}1\\
+u+a
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+The corresponding generalized Riemann invariants can be found from
+\begin_inset Formula 
+\[
+\frac{\dd{\rho}}{1}=\frac{\dd(\rho u)}{u\mp a}\implies\dd{u}\pm\frac{a}{\rho}\dd{\rho}=0
+\]
+
+\end_inset
+
+to be
+\begin_inset Formula 
+\[
+\begin{aligned}W_{1} & =u+\int\frac{a}{\rho}\dd{\rho}=u+\frac{2a}{\gamma-1}\\
+W_{2} & =u-\int\frac{a}{\rho}\dd{\rho}=u-\frac{2a}{\gamma-1}
+\end{aligned}
+\]
+
+\end_inset
+
+Trace along the characteristic curves back to the initial point, we have
+ two algebraic equations
+\begin_inset Formula 
+\[
+\begin{aligned}u+\frac{2a}{\gamma-1}=\left(u_{0}+\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{2}=u+a}\\
+u-\frac{2a}{\gamma-1}=\left(u_{0}-\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{1}=u-a}
+\end{aligned}
+\]
+
+\end_inset
+
+from which 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+ can be solved.
+\end_layout
+
+\begin_layout Subsection
+Discontinuities and Weak Solutions
+\end_layout
+
+\begin_layout Standard
+In the previous sections, we have seen that even with a smooth IC, the smooth
+ solution of a quasilinear PDE system can finally become discontinuous.
+ To handle such cases, we have to extend the notion of solutions to a weaker
+ sense.
+\end_layout
+
+\begin_layout Subsubsection
+Conservation Laws
+\end_layout
+
+\begin_layout Standard
+Most of the PDEs with physical backgrounds can be formulated as conservation
+ laws, i.e.
+ the law of conservation of some physical quantity (mass, momentum, angular
+ momentum, energy).
+\end_layout
+
+\begin_layout Standard
+Suppose
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V^{C}$
+\end_inset
+
+ is a 
+\noun on
+control volume
+\noun default
+ in space.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\partial V^{C}$
+\end_inset
+
+ is the boundary of 
+\begin_inset Formula $V$
+\end_inset
+
+, which is moving with a velocity 
+\begin_inset Formula $\vec{u}^{C}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the 
+\noun on
+conservation variable
+\noun default
+, usually the 
+\noun on
+density
+\noun default
+ of some physical quantity.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ is the 
+\noun on
+flux
+\noun default
+, i.e.
+ how much such quantity passes through a 
+\emph on
+fixed
+\emph default
+ surface per unit area within unit time.
+\end_layout
+
+\begin_layout Standard
+Then, the 
+\noun on
+conservation law
+\noun default
+ can be written as 
+\begin_inset Formula 
+\[
+\MDV{}{t}\int_{V^{C}}\rho\dd{V}=\boxed{\int_{V^{C}}\pdv{\rho}{t}\dd{V}+\oint_{\partial V^{C}}\vec{f}\cdot\vu{n}\dd{S}=0}
+\]
+
+\end_inset
+
+which is usually used for 
+\emph on
+fixed
+\emph default
+ control volumes, or
+\begin_inset Formula 
+\begin{equation}
+\MDV{}{t}\int_{V^{C}}\rho\dd{V}=\boxed{\dv{t}\int_{V^{C}}\rho\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\rho\vec{u}^{C}\right)\cdot\vu{n}\dd{S}=0}\label{eq:ConservationLawOnMovingControlVolume}
+\end{equation}
+
+\end_inset
+
+which is usually used for 
+\emph on
+moving
+\emph default
+ control volumes.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth with respect to spatial variables, we can apply Gauss's divergence
+ theorem, which leads to
+\begin_inset Formula 
+\[
+\boxed{\pdv{\rho}{t}+\div\vec{f}=0}
+\]
+
+\end_inset
+
+If the smoothness requirement is not satisfied, we should go back to the
+ integral form, which will leads to the 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "subsec:JumpConditions"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+For a scalar conservation law, people usually use
+\end_layout
+
+\begin_layout Itemize
+a scalar 
+\begin_inset Formula $u$
+\end_inset
+
+ for the conservation variable;
+\end_layout
+
+\begin_layout Itemize
+a vector 
+\begin_inset Formula $\vec{{f}}=\sum_{i=1}^{3}\vu{e}_{i}f_{i}$
+\end_inset
+
+ for the flux in 3D space, and 
+\begin_inset Formula $\vec{{f}}=\vu{e}_{1}f$
+\end_inset
+
+ in 1D space.
+\end_layout
+
+\begin_layout Itemize
+The conservation law is then written as
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+\sum_{i=1}^{3}\pdv{f_{i}}{x_{i}}=0\label{eq:SingleConservationLaw3d}
+\end{equation}
+
+\end_inset
+
+in 3D space and
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+\pdv{f}{x}=0\label{eq:SingleConservationLaw1d}
+\end{equation}
+
+\end_inset
+
+in 1D space.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+For a vector conservation law, or a system of conservation laws, I prefer
+ to use
+\end_layout
+
+\begin_layout Itemize
+a column matrix 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ for the conservation variables,
+\end_layout
+
+\begin_layout Itemize
+a scalar 
+\begin_inset Formula $U_{i}:=\ip{i}{U}$
+\end_inset
+
+ for the 
+\begin_inset Formula $i$
+\end_inset
+
+th element of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Standard
+In 3D space,
+\end_layout
+
+\begin_layout Itemize
+a matrix 
+\begin_inset Formula $\Mat{F}$
+\end_inset
+
+ for the flux, 
+\end_layout
+
+\begin_layout Itemize
+a column matrix 
+\begin_inset Formula $\ket{F_{k}}:=\Mat{F}\ket{k}$
+\end_inset
+
+ for the 
+\begin_inset Formula $k$
+\end_inset
+
+th column of 
+\begin_inset Formula $\Mat{F}$
+\end_inset
+
+, 
+\end_layout
+
+\begin_layout Itemize
+a scalar 
+\begin_inset Formula $F_{ik}:=\ip{i}{F_{k}}\equiv\mel{i}{F}{k}$
+\end_inset
+
+ for the 
+\begin_inset Formula $i$
+\end_inset
+
+th elememt of 
+\begin_inset Formula $\ket{F_{k}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The conservation law is then written as
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:SystemOfConservationLaws3d}
+\end{equation}
+
+\end_inset
+
+in which the 
+\begin_inset Formula $i$
+\end_inset
+
+th row is
+\begin_inset Formula 
+\[
+\pdv{U_{i}}{t}+\sum_{k=1}^{3}\pdv{F_{ik}}{x_{k}}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In 1D space,
+\end_layout
+
+\begin_layout Itemize
+a column matrix 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ for the flux,
+\end_layout
+
+\begin_layout Itemize
+a scalar 
+\begin_inset Formula $F_{i}:=\ip{i}{F}$
+\end_inset
+
+ for the 
+\begin_inset Formula $i$
+\end_inset
+
+th elememt of 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The conservation law is then written as
+\begin_inset Formula 
+\begin{equation}
+\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}\label{eq:SystemOfConservationLaws1d}
+\end{equation}
+
+\end_inset
+
+in which the 
+\begin_inset Formula $i$
+\end_inset
+
+th row is
+\begin_inset Formula 
+\[
+\pdv{U_{i}}{t}+\pdv{F_{i}}{x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Jump Conditions
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:JumpConditions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose there is a discontinuity manifold 
+\begin_inset Formula $S$
+\end_inset
+
+ moving with velocity 
+\begin_inset Formula 
+\[
+\vec{u}^{S}=\vu{e}_{\perp}u_{\perp}^{S}+\vu{e}_{\parallel}u_{\parallel}^{S}
+\]
+
+\end_inset
+
+Choose a cylindrical control volume 
+\begin_inset Formula $V^{C}$
+\end_inset
+
+, which satisfies the following requirements:
+\end_layout
+
+\begin_layout Itemize
+It has an infinitesimal height 
+\begin_inset Formula $h$
+\end_inset
+
+, which means when 
+\begin_inset Formula $h\to0$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\lim_{h\to0}\vec{u}^{C}=\vec{u}^{S}\qc\lim_{h\to0}\dv{t}\int_{V^{C}}\phi\dd{V}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+All of its walls are 
+\begin_inset Formula $\perp S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ is sandwiched between the top surface 
+\begin_inset Formula $S_{+}$
+\end_inset
+
+ (on which 
+\begin_inset Formula $\vu{n}=\vu{e}_{\perp}$
+\end_inset
+
+) and the bottom surface 
+\begin_inset Formula $S_{-}$
+\end_inset
+
+ (on which 
+\begin_inset Formula $\vu{n}=-\vu{e}_{\perp}$
+\end_inset
+
+) of 
+\begin_inset Formula $V^{C}$
+\end_inset
+
+, and 
+\begin_inset Formula $S_{+}\parallel S\parallel S_{-}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Then, the conservation law on a moving control volume 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawOnMovingControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is reduced to
+\begin_inset Formula 
+\[
+\int_{S_{+}}\left(\vec{f}-\rho\vec{u}^{S}\right)\cdot\vu{n}\dd{S}+\int_{S_{-}}\left(\vec{f}-\rho\vec{u}^{S}\right)\cdot\vu{n}\dd{S}=0
+\]
+
+\end_inset
+
+Replace 
+\begin_inset Formula $\vu{n}$
+\end_inset
+
+ with 
+\begin_inset Formula $\pm\vu{e}_{\perp}$
+\end_inset
+
+ and let 
+\begin_inset Formula $\int_{S_{\pm}}\dd{S}\to0$
+\end_inset
+
+, we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{s\Delta\rho=\Delta f}
+\]
+
+\end_inset
+
+which is known as the 
+\noun on
+Rankine–Hugoniot condition
+\noun default
+, a.k.a.
+ the 
+\noun on
+jump condition
+\noun default
+, in which
+\begin_inset Formula 
+\[
+s:=u_{\perp}^{S}\qc\Delta f:=\lim_{h\to+0}\vec{f}\cdot\vu{e}_{\perp}-\lim_{h\to-0}\vec{f}\cdot\vu{e}_{\perp}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a single conservation law in 1D space, the jump condition is usually
+ written as
+\begin_inset Formula 
+\[
+s\Delta u=\Delta f\qc\Delta f:=f(u_{+})-f(u_{-})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a system of conservation laws, the jump condition must be satisfied
+ by each row, that is:
+\begin_inset Formula 
+\begin{equation}
+s\ket{\Delta U}=\ket{\Delta F}\label{eq:JumpConditionFor1dSystem}
+\end{equation}
+
+\end_inset
+
+in which,
+\begin_inset Formula 
+\[
+\ket{\Delta F}:=\ket{F(U_{+})}-\ket{F(U_{-})}
+\]
+
+\end_inset
+
+in 1D space, and
+\begin_inset Formula 
+\[
+\ket{\Delta F}:=\Mat{F(U_{+})}\ket{e_{\perp}}-\Mat{F(U_{-})}\ket{e_{\perp}}
+\]
+
+\end_inset
+
+in 3D space.
+\end_layout
+
+\begin_layout Subsubsection
+Weak Solutions
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Weak Solution of Single Conservation Law]
+\end_layout
+
+\end_inset
+
+If there exists an 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ integrable function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ that satisfies
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}u+\pdv{\phi}{x}f\right)\dd{x}\dd{t}\\
++ & \int_{-\infty}^{+\infty}\phi(t_{0},x_{0})u_{0}(x_{0})\dd{x_{0}}\\
+= & 0
+\end{aligned}
+\]
+
+\end_inset
+
+for any 
+\emph on
+compact supported smooth
+\emph default
+ function 
+\begin_inset Formula $\phi(t,x)$
+\end_inset
+
+, then 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is said to be a weak solution of the single conservation law in 1D space
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SingleConservationLaw1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with the 
+\emph on
+piecewise smooth
+\emph default
+ IC
+\begin_inset Formula 
+\[
+u(t_{0},x_{0})=u_{0}(x_{0})\qc x_{0}\in\mathbb{R}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Any smooth solution is also a weak solution.
+\end_layout
+
+\begin_layout Proof
+For smooth solutions, we can move the temporal derivative from 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to 
+\begin_inset Formula $u$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}u\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{u}{t}+\pdv{\phi u}{t}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}+\int_{-\infty}^{+\infty}\eval{\phi u}_{t_{0}}^{+\infty}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}-\int_{-\infty}^{+\infty}\phi(t_{0},x_{0})u_{0}(x_{0})\dd{x_{0}}
+\end{aligned}
+\]
+
+\end_inset
+
+We drop the 
+\begin_inset Formula $t=+\infty$
+\end_inset
+
+ term since 
+\begin_inset Formula $\phi(t=+\infty,x)=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Similarily, we can move the spatial derivative from 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to 
+\begin_inset Formula $f$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}f\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{f}{x}+\pdv{\phi f}{x}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}+\int_{t_{0}}^{+\infty}\eval{\phi f}_{-\infty}^{+\infty}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}
+\end{aligned}
+\]
+
+\end_inset
+
+We drop the 
+\begin_inset Formula $x=\pm\infty$
+\end_inset
+
+ terms since 
+\begin_inset Formula $\phi(t,x=\pm\infty)=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Substitute them into the definition of weak solution, we have
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\left(\pdv{u}{t}+\pdv{f}{x}\right)\dd{t}\dd{x}=0
+\]
+
+\end_inset
+
+which leads to the PDE since 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is chosen arbitrarily.
+\end_layout
+
+\begin_layout Subsubsection
+Entropy Conditions
+\end_layout
+
+\begin_layout Standard
+Mathematically, there might be more than one weak solutions.
+ However, for a problem with physical backgrounds, there is only one solution,
+ which satisfies
+\end_layout
+
+\begin_layout Itemize
+the PDE in smooth regions,
+\end_layout
+
+\begin_layout Itemize
+jump conditions across discontinuities,
+\end_layout
+
+\begin_layout Itemize
+entropy conditions across discontinuities.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a single conservation law in 1D space, the entropy condition is given
+ by 
+\begin_inset CommandInset href
+LatexCommand href
+name "Lax"
+target "https://en.wikipedia.org/wiki/Peter_Lax"
+literal "false"
+
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+a(u_{-})\ge s\ge a(u_{+})
+\]
+
+\end_inset
+
+which has a clear geometric interpretation:
+\end_layout
+
+\begin_layout Fact
+Characteristic curves near the discontinuity curve must run into or at least
+ be parallel with it as 
+\begin_inset Formula $t$
+\end_inset
+
+ increases.
+\end_layout
+
+\begin_layout Standard
+For a system of conservation law, the entropy condition is given as
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\lambda_{k}(U_{-})\ge s & \ge\lambda_{k}(U_{+})\\
+\lambda_{k-1}(U_{-})<s & <\lambda_{k+1}(U_{+})
+\end{aligned}
+\label{eq:EntropyConditionForSystem}
+\end{equation}
+
+\end_inset
+
+for some index 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Using the terminology of gas dynamics, we can classify various discontinuities:
+\end_layout
+
+\begin_layout Itemize
+If the entropy condition takes an equal sign, it implies a 
+\noun on
+contact discontinuity
+\noun default
+, which means there is no mass/momentum/energy flowing through the discontinuity
+ surface.
+\end_layout
+
+\begin_layout Itemize
+If the entropy condition takes a strict inequal sign, it implies a 
+\noun on
+shock wave
+\noun default
+, across which entropy is strictly increased.
+\end_layout
+
+\begin_layout Subsection
+Riemann Problems
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:RiemannProblems"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "RP"
+description "Riemann Problem"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Introduction
+\end_layout
+
+\begin_layout Standard
+Without loss of generality, we shall shift the initial discontinuity to
+ 
+\begin_inset Formula $(t=0,x=0)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[RP for Single Conservation Law]
+\end_layout
+
+\end_inset
+
+The Riemann problem for a single conservation law in 1D space is the IVP
+ defined by PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SingleConservationLaw1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the following IC:
+\begin_inset Formula 
+\[
+u(0,x)=\begin{cases}
+u_{-}^{0}, & x<0\\
+u_{+}^{0}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $u_{-}^{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{+}^{0}$
+\end_inset
+
+ are two constants.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[RP for Conservation Law System]
+\end_layout
+
+\end_inset
+
+The Riemann problem for a system of conservation laws in 1D space is the
+ IVP defined by PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and the following IC:
+\begin_inset Formula 
+\[
+\ket{U(0,x)}=\begin{cases}
+\ket{U_{-}^{0}}, & x<0\\
+\ket{U_{+}^{0}}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\ket{U_{-}^{0}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{+}^{0}}$
+\end_inset
+
+ are two constant column matrices.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Self-Similarity]
+\end_layout
+
+\end_inset
+
+If the two independent variables are scaled with the same constant:
+\begin_inset Formula 
+\[
+(t,x)\to(\alpha t,\alpha x)\qc\forall\alpha\ne0
+\]
+
+\end_inset
+
+the PDE and IC do not change, then such IVP is said to be 
+\noun on
+self-similar
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The solution of a self-similar IVP depends only on 
+\begin_inset Formula $x/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Riemann problems are self-similar and their solutions depend only on 
+\begin_inset Formula $x/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+RP for Linear Wave Equation
+\end_layout
+
+\begin_layout Standard
+The solution is
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}^{0}, & x/t<a\\
+u_{+}^{0}, & x/t>a
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+On the discontinuity curve 
+\begin_inset Formula $x/t=a$
+\end_inset
+
+, the PDE is not satisfied.
+ Instead, the jump condition
+\begin_inset Formula 
+\[
+s\Delta u=\Delta f
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+a(u_{-})=s=a(u_{+})
+\]
+
+\end_inset
+
+are satisfied, in which
+\begin_inset Formula 
+\[
+s=a\qc\Delta u=u_{+}-u_{-}\qc\Delta f=au_{+}-au_{-}
+\]
+
+\end_inset
+
+They are all contact discontinuities.
+\end_layout
+
+\begin_layout Subsubsection
+RP for Linear Hyperbolic System
+\end_layout
+
+\begin_layout Standard
+Like in the smooth case, the first step is to project the IC onto the space
+ spanned by 
+\begin_inset Formula $\left\{ \ket{R_{i}}\right\} _{i=1}^{m}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\ket{U_{-}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\qc\ket{U_{+}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}
+\]
+
+\end_inset
+
+The IVP then becomes 
+\begin_inset Formula $m$
+\end_inset
+
+ independent RPs for linear wave equations:
+\begin_inset Formula 
+\[
+\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qc V_{i}(0,x)=\begin{cases}
+\ip{L_{i}}{U_{-}^{0}}, & x<0\\
+\ip{L_{i}}{U_{+}^{0}}, & x>0
+\end{cases}
+\]
+
+\end_inset
+
+We know their solutions are:
+\begin_inset Formula 
+\[
+V_{i}(t,x)=\begin{cases}
+\ip{L_{i}}{U_{-}^{0}}, & x/t<\lambda_{i}\\
+\ip{L_{i}}{U_{+}^{0}}, & x/t>\lambda_{i}
+\end{cases}\qc i=1,\dots,m
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The solution of the original RP is then the 
+\emph on
+superposition
+\emph default
+ of all the 
+\begin_inset Formula $m$
+\end_inset
+
+ independent waves carrying the initial jump.
+ Note that the 
+\begin_inset Formula $i$
+\end_inset
+
+th wave propagates with speed 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+, so the 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ plane is divided into 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ regions by the 
+\begin_inset Formula $m$
+\end_inset
+
+ straight characteristic curves.
+ In the 
+\begin_inset Formula $k$
+\end_inset
+
+th region where 
+\begin_inset Formula $\lambda_{k}<x/t<\lambda_{k+1}$
+\end_inset
+
+, we know that
+\end_layout
+
+\begin_layout Itemize
+the jumps in the first 
+\begin_inset Formula $k$
+\end_inset
+
+ waves are to the 
+\emph on
+left
+\emph default
+ of the point 
+\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+\end_inset
+
+, so these waves contributes their 
+\emph on
+right
+\emph default
+ values;
+\end_layout
+
+\begin_layout Itemize
+the jumps in the other 
+\begin_inset Formula $(m-k)$
+\end_inset
+
+ waves are to the 
+\emph on
+right
+\emph default
+ of the point 
+\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+\end_inset
+
+, so these waves contributes their 
+\emph on
+left
+\emph default
+ values;
+\end_layout
+
+\begin_layout Itemize
+the value of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ at the point 
+\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+\end_inset
+
+ (except on the discontinuities) is the superposition of them:
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{U(t,x)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\\
+ & =\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}^{0}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}^{0}}
+\end{aligned}
+\]
+
+\end_inset
+
+which is similar to the smooth case.
+\end_layout
+
+\begin_layout Remark*
+For each 
+\begin_inset Formula $k$
+\end_inset
+
+, the PDE is not satisfied on the 
+\begin_inset Formula $k$
+\end_inset
+
+th characteristic curve 
+\begin_inset Formula $x/t=\lambda_{k}$
+\end_inset
+
+.
+ Instead, the jump condition
+\begin_inset Formula 
+\[
+s_{k}\Delta_{k}\ket{U}=\Delta_{k}\ket{F}
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+\begin{aligned}\lambda_{k}(-)=s_{k} & =\lambda_{k}(+)\\
+\lambda_{k-1}(-)<s_{k} & <\lambda_{k+1}(+)
+\end{aligned}
+\]
+
+\end_inset
+
+are satisfied, in which
+\begin_inset Formula 
+\[
+\begin{aligned}s_{k} & =\lambda_{k}\\
+\Delta_{k}\ket{U} & =\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}^{0}}-\ket{U_{-}^{0}}\right)\\
+\Delta_{k}\ket{F} & =\Mat{A}\Delta_{k}\ket{U}
+\end{aligned}
+\]
+
+\end_inset
+
+They are all contact discontinuities.
+\end_layout
+
+\begin_layout Subsubsection
+RP for Single Conservation Law
+\end_layout
+
+\begin_layout Standard
+The disturbance of the initial discontinuity spreads at a finite speed,
+ so there must be two undisturbed regions in the solution, in which 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ takes its initial value.
+ Such undisturbed regions are connected by a disturbed region.
+ Self-similarity implies that the interfaces of these regions are straight
+ lines emanated from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ So, the solution must have the following form:
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}^{0}, & x/t<a_{-}\\
+u_{D}(x/t), & x/t\in[a_{-},a_{+}]\\
+u_{+}^{0}, & x/t>a_{+}
+\end{cases}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+a(u)=\pdv{f(u)}{u}\qc a_{\pm}=a\left(u_{\pm}^{0}\right)
+\]
+
+\end_inset
+
+Our task is to determine 
+\begin_inset Formula $u_{D}(x/t)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Shock Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $f''(u)=a'(u)>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}^{0}>u_{+}^{0}$
+\end_inset
+
+, or 
+\begin_inset Formula $f''(u)=a'(u)<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}^{0}<u_{+}^{0}$
+\end_inset
+
+, we will have 
+\begin_inset Formula 
+\[
+a_{-}>a_{+}
+\]
+
+\end_inset
+
+which means the characteristic curves emanating from the left half of the
+ 
+\begin_inset Formula $x$
+\end_inset
+
+-axis will 
+\emph on
+run into
+\emph default
+ those emanating from the right half of the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
+ In this case, a 
+\noun on
+shock wave
+\noun default
+ separating the two families of parallel characteristic curves will emanate
+ from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ The speed of the shock wave is determined by the jump condition
+\begin_inset Formula 
+\[
+s=\frac{f\left(u_{+}^{0}\right)-f\left(u_{-}^{0}\right)}{u_{+}^{0}-u_{-}^{0}}
+\]
+
+\end_inset
+
+and the entropy condition
+\begin_inset Formula 
+\[
+a_{-}>s>a_{+}
+\]
+
+\end_inset
+
+is strictly satisfied.
+ The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}^{0}, & x/t<s\\
+\text{shock wave}, & x/t=s\\
+u_{+}^{0}, & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Centered Expansion Wave
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $f''(u)=a'(u)>0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}^{0}<u_{+}^{0}$
+\end_inset
+
+, or 
+\begin_inset Formula $f''(u)=a'(u)<0$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-}^{0}>u_{+}^{0}$
+\end_inset
+
+, we will have 
+\begin_inset Formula 
+\[
+a_{-}<a_{+}
+\]
+
+\end_inset
+
+which means the two families of characteristic curves will 
+\emph on
+diverge
+\emph default
+ from each other.
+ In this case, a fan-shaped 
+\noun on
+centerd expansion wave
+\noun default
+ separating the two families of parallel characteristic curves will start
+ from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+ The speed of the 
+\noun on
+wave head
+\noun default
+ is 
+\begin_inset Formula $a_{+}$
+\end_inset
+
+, while that of the 
+\noun on
+wave tail
+\noun default
+ is 
+\begin_inset Formula $a_{-}$
+\end_inset
+
+.
+ In the region between them, 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is smooth enough to satisfy the PDE, which can be solved from the equation
+ of characteristic curves:
+\begin_inset Formula 
+\[
+x/t=a(u)\implies u(t,x)=a^{-1}(x/t)
+\]
+
+\end_inset
+
+The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}^{0}, & x/t<a_{-}\\
+a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
+u_{+}^{0}, & x/t>a_{+}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Contact Discontinuity
+\end_layout
+
+\begin_layout Standard
+There might be such a case that
+\begin_inset Formula 
+\[
+a_{-}=a_{+}
+\]
+
+\end_inset
+
+even though
+\begin_inset Formula 
+\[
+u_{-}^{0}\ne u_{+}^{0}
+\]
+
+\end_inset
+
+In such case, there will be no mass/momentum/energy flowing across the discontin
+uity, thus it is called a 
+\noun on
+contact discontinuity
+\noun default
+.
+ The speed of the contact discontinuity is the same as the left and right
+ characteristic speed:
+\begin_inset Formula 
+\[
+a_{-}=s=a_{+}
+\]
+
+\end_inset
+
+The complete solution is then
+\begin_inset Formula 
+\[
+u(t,x)=\begin{cases}
+u_{-}^{0}, & x/t<s\\
+\text{contact discontinuity}, & x/t=s\\
+u_{+}^{0}, & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+A contact discontinuity can be seen as a limit case of a shock wave, since
+ it is indeed a discontinuity, across which, the jump condition and the
+ entropy condition are satisfied.
+\end_layout
+
+\begin_layout Remark*
+A contact discontinuity can also be seen as a limit case of a centered expansion
+ wave, when the angle of the fan-shaped region tends to be 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+RP for Conservation Law System
+\end_layout
+
+\begin_layout Lemma
+The self-similar solution of an RP for a system of conservation laws has
+ the following structure: it contains 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ constant regions, which are connected by 
+\begin_inset Formula $m$
+\end_inset
+
+ elementary waves, each of which might be a shock wave, a centered expansion
+ wave, or a contact discontinuity.
+\end_layout
+
+\begin_layout Proof
+There are 
+\begin_inset Formula $m$
+\end_inset
+
+ characteristic fields, so the initial discontinuity will be carried by
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ elementary waves.
+\end_layout
+
+\begin_layout Proof
+Since the solution of an RP is self-similar, we can define the slope as
+ a new independent variable:
+\begin_inset Formula 
+\[
+\alpha:=x/t\implies\pdv{t}=\pdv{\alpha}{t}\dv{\alpha}\qc\pdv{x}=\pdv{\alpha}{x}\dv{\alpha}
+\]
+
+\end_inset
+
+PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:QuasilinearHyperbolicSystem1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be transformed into
+\begin_inset Formula 
+\[
+\frac{1}{t}\left(\Mat{A}-\alpha\Mat{I}\right)\dv{\ket{U}}{\alpha}=\ket{0}
+\]
+
+\end_inset
+
+which implies in smooth regions, either one of the following two cases must
+ be true: 1) 
+\begin_inset Formula $\dv{\ket{U}}{\alpha}=\ket{0}$
+\end_inset
+
+, which means 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ is constant.
+ 2) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\dv{\ket{U}}{\alpha}$
+\end_inset
+
+ is the corresponding right eigenvector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Denote the 
+\begin_inset Formula $(m+1)$
+\end_inset
+
+ constant states as
+\begin_inset Formula 
+\[
+\begin{bmatrix}\ket{U_{(0)+}}\\
+\vdots\\
+\ket{U_{(k-1)+}}\\
+\vdots\\
+\ket{U_{(m)+}}
+\end{bmatrix}=\begin{bmatrix}\ket{U_{(1)-}}\\
+\vdots\\
+\ket{U_{(k)-}}\\
+\vdots\\
+\ket{U_{(m+1)-}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+A shock wave or a expansion wave can only be carried by a genuinely nonlinear
+ field, while a linearly degenerated field can only carry a contact discontinuit
+y.
+\end_layout
+
+\begin_layout Paragraph
+Shock Wave
+\end_layout
+
+\begin_layout Standard
+If the 
+\begin_inset Formula $k$
+\end_inset
+
+th characteristic field is genuinely nonlinear, there might be such a case
+ that
+\begin_inset Formula 
+\[
+\lambda_{k}\left(U_{(k)-}\right)>\lambda_{k}\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+Geometrically, this means the characteristic curves on both sides of the
+ 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave 
+\emph on
+run into each other
+\emph default
+, which implies 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave is a shock wave.
+ Physically, there are mass/momentum/energy flowing across the wave with
+ entropy increasing.
+\end_layout
+
+\begin_layout Standard
+The change of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ must satisfy the jump condition:
+\begin_inset Formula 
+\[
+\left(\ket{U_{(k)+}}-\ket{U_{(k)-}}\right)s_{k}=\ket{F\left(U_{(k)+}\right)}-\ket{F\left(U_{(k)-}\right)}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $s_{k}$
+\end_inset
+
+ is the speed of the shock wave, which is also the slope of the shock wave
+ path.
+\end_layout
+
+\begin_layout Standard
+The entropy condition is satisfied with strict inequal signs:
+\begin_inset Formula 
+\[
+\lambda_{k}\left(U_{(k)-}\right)>s_{k}>\lambda_{k}\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Centered Expansion Wave
+\end_layout
+
+\begin_layout Standard
+If the 
+\begin_inset Formula $k$
+\end_inset
+
+th characteristic field is genuinely nonlinear, there might be such a case
+ that
+\begin_inset Formula 
+\[
+\lambda_{k-1}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)+}\right)<\lambda_{k+1}\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+Geometrically, this means the characteristic curves on both sides of the
+ 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave 
+\emph on
+run away from each other
+\emph default
+, which implies 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave is a centered expansion wave.
+ Inside the wave, the 
+\begin_inset Formula $k$
+\end_inset
+
+-characteristic curves must diverse from each other:
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}(\alpha)}{\alpha}\ge0\qc\alpha\in[a_{-},a_{+}]
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+a_{-}=\lambda_{k}\left(U_{(k)-}\right)\qc a_{+}=\lambda_{k}\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+are the speed of the wave head and the wave tail, respectively.
+\end_layout
+
+\begin_layout Standard
+A centered expansion wave is a smooth region, in which 
+\begin_inset Formula $\alpha:=x/t$
+\end_inset
+
+ is an eigenvalue of 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $\dv{\ket{U}}{\alpha}$
+\end_inset
+
+ is the corresponding right eigenvector.
+ So, the 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ generalized 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invarians are constants across wave:
+\begin_inset Formula 
+\[
+\dv{W}{\alpha}=\ip{\grad W}{\dv{U}{\alpha}}=\ip{\grad W}{R_{k}}=0
+\]
+
+\end_inset
+
+which can be used to determine state inside the wave:
+\begin_inset Formula 
+\[
+W\left(U_{(k)-}\right)=W(U(\alpha))=W\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Contact Discontinuity
+\end_layout
+
+\begin_layout Standard
+If the 
+\begin_inset Formula $k$
+\end_inset
+
+th characteristic field is linearly degenerate, then 
+\begin_inset Formula $\lambda_{k}(U)$
+\end_inset
+
+ does not change with 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\lambda_{k-1}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)-}\right)=\lambda_{k}\left(U_{(k)+}\right)<\lambda_{k+1}\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+Geometrically, this means the characteristic curves on both sides of the
+ 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave 
+\emph on
+run parallelly with each other
+\emph default
+, which implies 
+\begin_inset Formula $k$
+\end_inset
+
+th elementary wave is a contact discontinuity.
+\end_layout
+
+\begin_layout Standard
+Physically, there is no mass/momentum/energy flowing across a contact discontinu
+ity, thus no entropy increasing.
+ The jump condition and the entropy condition are satisfied automatically.
+\end_layout
+
+\begin_layout Standard
+A contact discontinuity can also be seen as a limit case of a centered expansion
+ wave, when the angle of the fan-shaped region tends to be 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ So, the 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ generalized 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann invarians are constants across wave:
+\begin_inset Formula 
+\[
+\dv{W}{\alpha}=\ip{\grad W}{\dv{U}{\alpha}}=\ip{\grad W}{R_{k}}=0
+\]
+
+\end_inset
+
+which can be used to connect states on both sides of the wave:
+\begin_inset Formula 
+\[
+W\left(U_{(k)-}\right)=W\left(U_{(k)+}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
