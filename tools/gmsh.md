@@ -36,6 +36,6 @@ gmsh t1.geo -2
 
 完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [3.3 Command-line options](http://gmsh.info/doc/texinfo/gmsh.html#Command_002dline-options).
 
-## [GEO 文件说明](./_GMSH/GEO.md)
+## [GEO 文件说明](./_gmsh/geo_format.md)
 
-## [MSH 文件说明](./_GMSH/MSH.md)
+## [MSH 文件说明](./_gmsh/msh_format.md)

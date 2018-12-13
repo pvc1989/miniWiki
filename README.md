@@ -10,10 +10,13 @@
 - [Fluid Mechanics](./physics/fluid.lyx)
 
 ### Algorithms
-- [Interpolation and Function Approximation](./algorithms/interpolation.lyx) 
-- [FEM --- Finite Element Method](./algorithms/finite_element.lyx)
-- [Optimization](./algorithms/optimization.lyx) 
-- [CFD --- Computational Fluid Mechanics](./algorithms/computational_fluid_dynamics.lyx)
+- Basic Numerical Algorithms
+  - [Interpolation](./algorithms/interpolation.lyx) 
+  - [Numerical Quadrature](./algorithms/quadrature.lyx) 
+  - [Optimization](./algorithms/optimization.lyx) 
+- PDE Solvers
+  - [FEM --- Finite Element Method](./algorithms/finite_element.lyx)
+  - [CFD --- Computational Fluid Mechanics](./algorithms/computational_fluid_dynamics.lyx)
 
 ### Programming
 - [Python](./programming/python.md)

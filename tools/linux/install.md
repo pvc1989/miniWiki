@@ -43,27 +43,27 @@
 
 从准备好的光盘或 U 盘启动, 进入以下页面:
 
-![](./_INSTALL/WELCOME.png)
+![](./_install/welcome.png)
 
 选择 `Install Ubuntu`, 然后一路默认, 直到进入以下页面:
 
-![](./_INSTALL/INSTALLATION_TYPE.png)
+![](./_install/install_type.png)
 
 选择 `Something else` 并单击 `Continue`, 表示要手动进行磁盘分区和挂载目录. 如果目标计算机上只有一块磁盘并且没有被分区,  那么将会进入以下页面:
 
-![](./_INSTALL/PARTITION_TABLE.png)
+![](./_install/partition_table.png)
 
 如果在 `/dev/sda` 下还有其他磁盘, 比如 `/dev/sdb` 及 `/dev/sdc`, 则需先选中 (单击) 其中一个作为目标磁盘. 这里假设选中的是  `/dev/sda`, 单击 `New Partition Table`, 将会弹出警告信息:
 
-![](./_INSTALL/WARNING.png)
+![](./_install/warning.png)
 
 单击 `Continue` 以确认可以删除 (但不会立即删除) 所有已经存在的分区, 然后单击 `free space` 使其背景变为橙色:
 
-![](./_INSTALL/FREE_SPACE.png)
+![](./_install/free_space.png)
 
 然后单击左下角的 `+`, 弹出一个 `Create partition` 对话框:
 
-![](./_INSTALL/MOUNT_POINT.png)
+![](./_install/mount_point.png)
 
 可修改项包括: 大小/类型/位置/格式/挂载点, 其中最重要的是挂载点的选择. 为了理解分区与挂载点的关系, 我们可以把整块磁盘想象成一个巨大的数组 `a[0:1000)`. 一个分区就相当于一个子数组, 比如 `a[100:200)`, `a[300:400)` 等, 只要它们相互之间没有重叠就行. 挂载点表示这些子数组在文件系统中所对应的目录, 比如 `/`, `/home`, `/usr` 等. 
 
@@ -84,15 +84,15 @@ mv /foo/bigfile /bar
 
 如果对分区和挂载方案不满意, 可以反复利用 `-`/`+` 进行调整. 最终确认无误后, 单击 `Install Now`:
 
-![](./_INSTALL/INSTALL_NOW.png)
+![](./_install/install_now.png)
 
 如果在分区表中没有设置 `swap` 空间, 将会弹出警告信息:
 
-![](./_INSTALL/SWAP.png)
+![](./_install/swap.png)
 
 这是 Linux 的一种在内存与磁盘之间作缓存的机制, 用以缓解内存不够的问题. 现在计算机的内存都很大了, 所以一般不需要设置 `swap` 空间. 单击 `Continue`, 弹出确认对话框:
 
-![](./_INSTALL/WRITE.png)
+![](./_install/write.png)
 
 在单击 `Continue` 确认以前, 分区和挂载方案都不会被写入磁盘. 因此, 这是整个分区和挂载操作最关键的一步, 一定要确保磁盘中的数据可以丢弃或者已经备份过了.
 
@@ -100,7 +100,7 @@ mv /foo/bigfile /bar
 
 在完成分区和挂载操作后, 安装程序就开始将安装介质中的系统文件写入到目标磁盘里. 在此过程中, 安装程序会让安装者设置一些信息, 一路默认就可以了, 直到进入用户名和密码的设置页面:
 
-![](./_INSTALL/USERNAME.png)
+![](./_install/username.png)
 
 其中最关键的是 `username` 和 `password` 的设置. 在 Linux 中, 有超级权限用户 (`root`) 和普通权限用户之分. 因此, 大多数发行版在安装过程中, 会要求安装者设置两次密码:
 
@@ -111,7 +111,7 @@ mv /foo/bigfile /bar
 
 设置完成后, 只需要等待安装程序提示重启. 为了避免重启时再次加载安装介质, 应当在适当的时候 (例如提示可以安全移除安装介质或断电后) 移除安装介质:
 
-![](./_INSTALL/REMOVE.png)
+![](./_install/remove.png)
 
 ## 首次启动后的设置
 
