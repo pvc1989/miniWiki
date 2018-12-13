@@ -4,7 +4,7 @@
 
 ### Mathematics
 - [Differential Geometry](./mathematics/differential_geometry.lyx)
-- [PDE --- Partial Differential Equations](./mathematics/partial_differential_equations.lyx)
+- [PDE --- Partial Differential Equations](./mathematics/PDE.lyx)
 
 ### Physics
 - [Fluid Mechanics](./physics/fluid.lyx)
@@ -16,7 +16,7 @@
   - [Optimization](./algorithms/optimization.lyx) 
 - PDE Solvers
   - [FEM --- Finite Element Method](./algorithms/finite_element.lyx)
-  - [CFD --- Computational Fluid Mechanics](./algorithms/computational_fluid_dynamics.lyx)
+  - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ### Programming
 - [Python](./programming/python.md)
