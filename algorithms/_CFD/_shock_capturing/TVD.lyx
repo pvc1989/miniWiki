@@ -1,0 +1,1755 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage{tikz}
+\usepackage{physics}
+\renewcommand{\grad}{\boldsymbol{\nabla}}
+\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage[e]{esvect}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\end_preamble
+\options idxtotoc
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "default" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 0.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle plain
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection
+TVD Schemes
+\end_layout
+
+\begin_layout Subsubsection
+Monotonicity
+\end_layout
+
+\begin_layout Lemma
+If two initial data 
+\begin_inset Formula $u_{0}(x),v_{0}(x)$
+\end_inset
+
+ for
+\begin_inset Formula 
+\[
+\pdv{u}{t}+\pdv{f(u)}{x}=0
+\]
+
+\end_inset
+
+satisfy
+\begin_inset Formula 
+\[
+u_{0}(x)\ge v_{0}(x)\qc\forall x
+\]
+
+\end_inset
+
+then their corresponding solution 
+\begin_inset Formula $u(t,x),v(t,x)$
+\end_inset
+
+ will satisfy
+\begin_inset Formula 
+\[
+u(t,x)\ge v(t,x)\qc\forall x,t>t_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[General Monotone Scheme]
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:GeneralMonotoneScheme"
+
+\end_inset
+
+A general explicit scheme
+\begin_inset Formula 
+\begin{equation}
+u_{i}^{n+1}=H\left(u_{i+K}^{n}\right)=H\left(u_{i+k_{\min}}^{n},\dots,u_{i+k_{\max}}^{n}\right)
+\end{equation}
+
+\end_inset
+
+is said to be 
+\emph on
+monotone
+\emph default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scheme!monotone ~
+\end_layout
+
+\end_inset
+
+, if
+\begin_inset Formula 
+\begin{equation}
+\pdv{H}{u_{i+k}^{n}}\ge0\qc\forall k\in K
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+Here 
+\begin_inset Formula $K=\left(k_{\min},\dots,k_{\max}\right)$
+\end_inset
+
+ is a set of integers representing the stencil of the scheme.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+If a monotone scheme is applied to two data sets 
+\begin_inset Formula $\left\{ u_{i}^{n}\right\} ,\left\{ v_{i}^{n}\right\} $
+\end_inset
+
+ satisfying 
+\begin_inset Formula 
+\[
+u_{i}^{n}\ge v_{i}^{n}\qc\forall i
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\[
+u_{i}^{n+1}\ge v_{i}^{n+1}\qc\forall i
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+A monotone scheme does not create new extrema, i.e.
+\begin_inset Formula 
+\[
+\left[\min_{i}u_{i}^{n+1},\max_{i}u_{i}^{n+1}\right]\subseteq\left[\min_{i}u_{i}^{n},\max_{i}u_{i}^{n}\right]\qc\forall n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Choose a uniform data set
+\begin_inset Formula 
+\[
+v_{i}^{n}=\min_{k}u_{k}^{n}\qc\forall i
+\]
+
+\end_inset
+
+The definition of minimum gives
+\begin_inset Formula 
+\[
+v_{i}^{n}=\min_{k}u_{k}^{n}\le u_{i}^{n}\qc\forall i
+\]
+
+\end_inset
+
+The previous lemma gaurantees
+\begin_inset Formula 
+\[
+v_{i}^{n+1}\le u_{i}^{n+1}\qc\forall i
+\]
+
+\end_inset
+
+The LHS is actually a constant, which comes from the consistency condition
+ of Scheme 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GeneralMonotoneScheme"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+v_{i}^{n+1}=H\left(\min_{k}u_{k}^{n},\dots,\min_{k}u_{k}^{n}\right)=\min_{k}u_{k}^{n}\qc\forall i
+\]
+
+\end_inset
+
+So
+\begin_inset Formula 
+\[
+\min_{k}u_{k}^{n}=v_{i}^{n+1}\le\min_{i}u_{i}^{n+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The same procedure can be applied to the maxima, which gives
+\begin_inset Formula 
+\[
+\max_{i}u_{i}^{n+1}\le\max_{k}u_{k}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula 
+\[
+\left[\min_{i}u_{i}^{n},\max_{i}u_{i}^{n}\right]\subseteq\cdots\subseteq\left[\min_{i}u_{i}^{0},\max_{i}u_{i}^{0}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Monotonicity Condition for Numerical Flux]
+\end_layout
+
+\end_inset
+
+If a 3-point conservative scheme for the scalar conservation law
+\begin_inset Formula 
+\[
+\begin{aligned}u_{i}^{n+1} & =u_{i}^{n}+\frac{\Delta t}{\Delta x}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right)\\
+ & =u_{i}^{n}+\frac{\Delta t}{\Delta x}\left(\hat{f}\left(u_{i-1}^{n},u_{i}^{n}\right)-\hat{f}\left(u_{i}^{n},u_{i+1}^{n}\right)\right)
+\end{aligned}
+\]
+
+\end_inset
+
+is monotone, then the numerical flux 
+\begin_inset Formula $\hat{f}$
+\end_inset
+
+ is a non–decreasing function of its 1st argument and a non–increasing function
+ of its 2nd argument.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Monotonicity Condition for Linear Scheme]
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:LinearMonotoneScheme"
+
+\end_inset
+
+An explicit linear scheme
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\begin{equation}
+u_{i}^{n+1}=\sum_{k\in K}b_{k}u_{i+k}^{n}
+\end{equation}
+
+\end_inset
+
+for the linear advection equation is monotone, iff
+\begin_inset Formula 
+\begin{equation}
+b_{k}\ge0\qc\forall k\in K
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Monotonicity Condition for Semi-Discretized Linear Scheme]
+\end_layout
+
+\end_inset
+
+An semi-discretized explicit linear scheme
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\dv{u_{i}}{t}=\sum_{k\in K}\beta_{k}u_{i+k}^{n}=\sum_{k\ne0}\beta_{k}\left(u_{i+k}^{n}-u_{i}^{n}\right)
+\]
+
+\end_inset
+
+is monotone, if
+\begin_inset Formula 
+\[
+\beta_{k}\ge0\qc\forall k\ne0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Godunov's Theorem
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:pthOrderAccuracyCondition"
+
+\end_inset
+
+A linear scheme
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=\sum_{k\in K}b_{k}u_{i+k}^{n}
+\]
+
+\end_inset
+
+ for the linear advection equation
+\begin_inset Formula 
+\[
+\pdv{u}{t}+a\pdv{u}{x}=0
+\]
+
+\end_inset
+
+is 
+\begin_inset Formula $p$
+\end_inset
+
+th order accurate in space and time, iff
+\begin_inset Formula 
+\begin{equation}
+\sum_{k\in K}b_{k}k^{r}=(-\sigma)^{r}\qc\forall0\le r\le p\label{eq:pthOrderAccuracyCondition}
+\end{equation}
+
+\end_inset
+
+in which 
+\begin_inset Formula $\sigma:=a\Delta t/\Delta x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The key idea is to find the scheme's modified PDE, and set coefficients
+ of low order terms in the truncation error to be 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ To find the modified PDE, insert the Taylor expansions into the scheme:
+\begin_inset Formula 
+\begin{equation}
+u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(\Delta t)^{r}}{r!}\pdv[r]{u}{t}=\sum_{k\in K}b_{k}\left(u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(k\Delta x)^{r}}{r!}\pdv[r]{u}{x}\right)\label{eq:TaylorExpansionForLinearScheme}
+\end{equation}
+
+\end_inset
+
+which should finally be written as
+\begin_inset Formula 
+\[
+\pdv{u}{t}+a\pdv{u}{x}=\order{\Delta t^{p},\Delta x^{p}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The first two conditions in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pthOrderAccuracyCondition"
+
+\end_inset
+
+ are actually the consistency conditions of the scheme: (i) The coefficients
+ of 
+\begin_inset Formula $u_{i}^{n}$
+\end_inset
+
+ on both sides should be balanced, i.e.
+\begin_inset Formula 
+\[
+\sum_{k\in K}b_{k}=1
+\]
+
+\end_inset
+
+(ii) The coefficients of 
+\begin_inset Formula $\pdv*{u}{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\pdv*{u}{x}$
+\end_inset
+
+ should have the same ratio as those in the original PDE, which leads to
+\begin_inset Formula 
+\[
+\sum_{k\in K}b_{k}k=-\frac{a\Delta t}{\Delta x}=-\sigma
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+With these two conditions, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:TaylorExpansionForLinearScheme"
+
+\end_inset
+
+ becomes a modified PDE with time derivatives on the RHS:
+\begin_inset Formula 
+\[
+\pdv{u}{t}+a\pdv{u}{x}=\frac{1}{\Delta t}\sum_{r=2}^{\infty}\frac{1}{r!}\left(\sum_{k\in K}b_{k}\left(k\Delta x\pdv{x}\right)^{r}-\left(\Delta t\pdv{t}\right)^{r}\right)
+\]
+
+\end_inset
+
+To clarify the derivation, we shall introduce three differential operators:
+\begin_inset Formula 
+\[
+\partial_{t}:=\Delta t\pdv{t}\qc\partial_{x}:=\Delta x\pdv{x}\qc\partial_{T}:=\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}-\partial_{t}^{r}}{r!}
+\]
+
+\end_inset
+
+with which, the modified PDE can be written in a compact form:
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}u+\sigma\partial_{x}u=\partial_{T}u\label{eq:ModifiedPdeWithTimeDerivatives}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We can now represent 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ as a linear combination of 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\partial_{T}$
+\end_inset
+
+.
+ Raise it to the power of 
+\begin_inset Formula $r$
+\end_inset
+
+ and ignore the HOTs
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HOT"
+description "High Order Term"
+literal "false"
+
+\end_inset
+
+ of 
+\begin_inset Formula $\partial_{T}$
+\end_inset
+
+ (which are essentially the HOTs of 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+):
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{t}^{r} & =\left(-\sigma\partial_{x}+\partial_{T}\right)^{r}=\left(-\sigma\partial_{x}\right)^{r}+\binom{r}{1}\left(-\sigma\partial_{x}\right)^{r-1}\partial_{T}+\order{\partial_{T}^{2}}\\
+ & \approx\left(-\sigma\partial_{x}\right)^{r}+r\left(-\sigma\partial_{x}\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)\partial_{x}^{m}-\partial_{t}^{m}}{m!}\\
+ & =\left(-\sigma\right)^{r}\partial_{x}^{r}+r\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)\partial_{x}^{m+r-1}-\partial_{x}^{r-1}\partial_{t}^{m}}{m!}
+\end{aligned}
+\]
+
+\end_inset
+
+The time derivative 
+\begin_inset Formula $\partial_{t}^{m}$
+\end_inset
+
+ can be further approximated by
+\begin_inset Formula 
+\[
+\partial_{t}^{m}=\left(-\sigma\right)^{m}\partial_{x}^{m}+\order{\partial_{T}}\approx\left(-\sigma\right)^{m}\partial_{x}^{m}
+\]
+
+\end_inset
+
+which leads to
+\begin_inset Formula 
+\[
+\partial_{t}^{r}\approx\left(-\sigma\right)^{r}\partial_{x}^{r}+r\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Put this representation of 
+\begin_inset Formula $\partial_{t}^{r}$
+\end_inset
+
+ back into the definition of 
+\begin_inset Formula $\partial_{T}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\partial_{t}u+\sigma\partial_{x}u & =\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}u-\partial_{t}^{r}u}{r!}\\
+ & =\sum_{r=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{r}-\left(-\sigma\right)^{r}}{r!}\partial_{x}^{r}u\\
+ & -\sum_{r=2}^{\infty}\frac{\left(-\sigma\right)^{r-1}}{\left(r-1\right)!}\sum_{m=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{m}-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}u\\
+ & +\order{\partial_{T}^{2}u}
+\end{aligned}
+\label{eq:ModifiedPdeWithoutTimeDerivatives}
+\end{equation}
+
+\end_inset
+
+This is another modified PDE, in which only space derivatives appear on
+ the RHS.
+ Recall the definition of 
+\begin_inset Formula $\partial_{t},\partial_{x},\partial_{T}$
+\end_inset
+
+, the equivalence between 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pthOrderAccuracyCondition"
+
+\end_inset
+
+ and the 
+\begin_inset Formula $p$
+\end_inset
+
+th order accuracy is then obvious.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Godunov]
+\end_layout
+
+\end_inset
+
+Linear monotone schemes for the linear advection equation are at most 1st
+ order accurate.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "lem:pthOrderAccuracyCondition"
+
+\end_inset
+
+ says for a 2nd (or higher) order accurate scheme, there must be
+\begin_inset Formula 
+\[
+\sum_{k\in K}b_{k}k^{0}=(-\sigma)^{0}\qc\sum_{k\in K}b_{k}k^{1}=(-\sigma)^{1}\qc\sum_{k\in K}b_{k}k^{2}=(-\sigma)^{2}
+\]
+
+\end_inset
+
+Substitute 
+\begin_inset Formula $k^{2}\equiv(k+\sigma)^{2}-2k\sigma-\sigma^{2}$
+\end_inset
+
+ into the last identity and use the first two, we have a identity
+\begin_inset Formula 
+\[
+\sigma^{2}=\sum_{k\in K}b_{k}\left(k+\sigma\right)^{2}-2\sigma\cdot\left(-\sigma\right)-\sigma^{2}\cdot1
+\]
+
+\end_inset
+
+which leads to
+\begin_inset Formula 
+\[
+\sum_{k\in K}b_{k}\left(k+\sigma\right)^{2}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Monotonicity condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearMonotoneScheme"
+
+\end_inset
+
+ then requires 
+\begin_inset Formula $b_{k}\left(k+\sigma\right)=0$
+\end_inset
+
+ for each 
+\begin_inset Formula $k$
+\end_inset
+
+: (i) If 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is not an integer, then monotonicity requires 
+\begin_inset Formula $b_{k}=0$
+\end_inset
+
+ for each 
+\begin_inset Formula $k$
+\end_inset
+
+; (ii) If 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is an integer, only 
+\begin_inset Formula $b_{-\sigma}$
+\end_inset
+
+ could be non-zero.
+ Either leads to a trivial scheme.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+Higher order monotone schemes must be nonlinear.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+TV and TVD
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TV"
+description "Total Variation"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+TV!Total Variation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The total variation of a univariate function 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+TV(u):=\lim_{\delta\to0}\sup\frac{1}{\delta}\int_{-\infty}^{\infty}\abs{u(x+\delta)-u(x)}\dd{x}
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $u(x)\in C^{1}(-\infty,\infty)$
+\end_inset
+
+, then it is equivalent to
+\begin_inset Formula 
+\[
+TV(u):=\int_{-\infty}^{\infty}\abs{u'(x)}\dd{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The total variation of a bivariate function 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ at time 
+\begin_inset Formula $t$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+TV(u(t)):=\int_{-\infty}^{\infty}\abs{\pdv{u}{x}}\dd{x}
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $u(t,x)$
+\end_inset
+
+ is a mesh function, then total variation at time 
+\begin_inset Formula $t^{n}$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+TV(u^{n}):=\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+The TV of exact solution of a IVP for the scalar conservation law
+\begin_inset Formula 
+\[
+\pdv{u}{t}+\pdv{f(u)}{x}=0
+\]
+
+\end_inset
+
+is a non-increasing function of time, i.e.
+\begin_inset Formula 
+\[
+TV(u(t_{2}))\le TV(u(t_{1}))\qc\forall t_{2}\ge t_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Monotonicity Preserving Scheme]
+\end_layout
+
+\end_inset
+
+A scheme is said to be monotonicity preserving
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scheme!monotonicity preserving ~
+\end_layout
+
+\end_inset
+
+, if the monotonicity of data 
+\begin_inset Formula $\left\{ u_{i}^{n}\right\} _{i=\infty}^{\infty}$
+\end_inset
+
+ is preserved 
+\begin_inset Formula $\forall n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[TVD Scheme]
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:GeneralTvdScheme"
+
+\end_inset
+
+A general explicit scheme
+\begin_inset Formula 
+\begin{equation}
+u_{i}^{n+1}=H\left(u_{i+K}^{n}\right)=H\left(u_{i+k_{\min}}^{n},\dots,u_{i+k_{\max}}^{n}\right)
+\end{equation}
+
+\end_inset
+
+is said to be TV diminishing
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "TVD"
+description "Total Variation Diminishing"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scheme!TVD ~
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TV!~ Diminishing!~ scheme
+\end_layout
+
+\end_inset
+
+, if
+\begin_inset Formula 
+\begin{equation}
+TV(u^{n+1})\le\qc TV(u^{n})\qc\forall n
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+A monotone scheme is TVD.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+A TVD scheme is monotonicity preserving.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Harten]
+\end_layout
+
+\end_inset
+
+For any scheme of the following form
+\begin_inset Formula 
+\begin{equation}
+u_{i}^{n+1}=u_{i}^{n}-C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\label{eq:HartenTvdScheme}
+\end{equation}
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\begin{aligned}C_{i-1/2}^{-} & =C_{i-1/2}^{-}\left(u_{i-2}^{n},u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n}\right)\\
+C_{i+1/2}^{+} & =C_{i+1/2}^{+}\left(u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},u_{i+2}^{n}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+it is TVD, if 
+\begin_inset Formula $\forall i$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+C_{i-1/2}^{-}\ge0\qand C_{i+1/2}^{+}\ge0\qand C_{i-1/2}^{-}+C_{i+1/2}^{+}\le1\label{eq:HartenTvdCondition}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Apply the scheme at two consecutive points:
+\begin_inset Formula 
+\[
+\begin{alignedat}{2}u_{i}^{n+1} & =u_{i}^{n} & -C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right) & +C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\\
+u_{i+1}^{n+1} & =u_{i+1}^{n} & -C_{i+1/2}^{-}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right) & +C_{i+3/2}^{+}\cdot\left(u_{i+2}^{n}-u_{i+1}^{n}\right)
+\end{alignedat}
+\]
+
+\end_inset
+
+Subtract the first from the second:
+\begin_inset Formula 
+\[
+\begin{aligned}u_{i+1}^{n+1}-u_{i}^{n+1} & =\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\\
+ & +C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+3/2}^{+}\cdot\left(u_{i+2}^{n}-u_{i+1}^{n}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+Taking absolute values on both sides leads to an inequality:
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{u_{i+1}^{n+1}-u_{i}^{n+1}} & \le\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\abs{u_{i+1}^{n}-u_{i}^{n}}\\
+ & +C_{i-1/2}^{-}\abs{u_{i}^{n}-u_{i-1}^{n}}+C_{i+3/2}^{+}\abs{u_{i+2}^{n}-u_{i+1}^{n}}
+\end{aligned}
+\]
+
+\end_inset
+
+in which we have used the non-negativeness of coefficients.
+ Then sum over 
+\begin_inset Formula $i$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n+1}-u_{i}^{n+1}} & \le\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}\\
+ & -\sum_{i=-\infty}^{\infty}C_{i+1/2}^{-}\abs{u_{i+1}^{n}-u_{i}^{n}}+\sum_{i=-\infty}^{\infty}C_{i-1/2}^{-}\abs{u_{i}^{n}-u_{i-1}^{n}}\\
+ & -\sum_{i=-\infty}^{\infty}C_{i+1/2}^{+}\abs{u_{i+1}^{n}-u_{i}^{n}}+\sum_{i=-\infty}^{\infty}C_{i+3/2}^{+}\abs{u_{i+2}^{n}-u_{i+1}^{n}}
+\end{aligned}
+\]
+
+\end_inset
+
+By shifting indices, each of the last two lines cancels.
+ The first line is the comparison between two TVs.
+\end_layout
+
+\begin_layout Subsubsection
+Constructing TVD Schemes
+\end_layout
+
+\begin_layout Standard
+Harten's theorem can be used as a guideline for constructing 5-point TVD
+ schemes.
+ Given a 5-point high order linear scheme, it can be seen as a correction
+ of the 1st order upwind (which is monotone and TVD) scheme.
+ To reconstruct it into a TVD scheme, just multiply the correction term
+ by a limiter (function), which depends on 
+\begin_inset Formula $u^{n}$
+\end_inset
+
+ and thus introduces nonlinearity, and then rewrite the new scheme in the
+ form of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:HartenTvdScheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and derive the condition on the limiter.
+\end_layout
+
+\begin_layout Standard
+The limiter is actually a switcher between the 1st order upwind scheme and
+ the original high order one.
+ It works according to the smoothness of 
+\begin_inset Formula $u^{n}$
+\end_inset
+
+, so we need to find a smoothness indicator first.
+ The simplest one is the ratio of successive gradients:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+r_{i}^{+}:=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}\qor r_{i}^{-}:=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
+\]
+
+\end_inset
+
+The limiter is then naturally defined as a function of 
+\begin_inset Formula $r^{+}$
+\end_inset
+
+ or 
+\begin_inset Formula $r^{-}$
+\end_inset
+
+, which is usually denoted as 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+.
+ There are some prerequisites on 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi(1)\equiv1$
+\end_inset
+
+, which recovers the original high order scheme in smooth regions, where
+ 
+\begin_inset Formula $r^{\pm}\approx1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi(r<0)=0$
+\end_inset
+
+, which chooses the 1st order upwind scheme at local extrema, where 
+\begin_inset Formula $r^{\pm}<0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi(r>0)>0$
+\end_inset
+
+, which can always be satisfied by changing the sign of 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+ where it is negative.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi(r)/r\equiv\phi(1/r)$
+\end_inset
+
+, if we want to use a single 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+ for both 
+\begin_inset Formula $r^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $r^{-}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+From 2nd Order Upwind Scheme
+\end_layout
+
+\begin_layout Standard
+Write the 2nd order upwind scheme
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{3u_{i}-4u_{i-1}+u_{i-2}}{2\Delta x}=0\qc a>0
+\]
+
+\end_inset
+
+into its conservative form:
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sigma=\frac{a\Delta t}{\Delta x}\in(0,1)
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}
+\]
+
+\end_inset
+
+Multiply the correction term by a limiter 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}\phi(r_{i})\qc r_{i}=r_{i}^{+}=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}
+\]
+
+\end_inset
+
+and rewrite the scheme into Harten's form 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:HartenTvdScheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}u_{i}^{n+1}=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}+\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\phi_{i}^{n}\right)\\
+ & +\sigma\cdot\left(u_{i-1}^{n}+\frac{u_{i-1}^{n}-u_{i-2}^{n}}{2}\phi_{i-1}^{n}\right)\\
+=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)\\
+ & -\sigma\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\\
+=u_{i}^{n} & -C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+C_{i-1/2}^{-}=\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\qc C_{i+1/2}^{+}=0
+\]
+
+\end_inset
+
+Condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:HartenTvdCondition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ then becomes
+\begin_inset Formula 
+\[
+0\le\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\le1
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+2-\frac{2}{\sigma}\le\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}-\phi_{i}^{n}\le2
+\]
+
+\end_inset
+
+A 
+\emph on
+sufficient
+\emph default
+ condition given by Sweby, which is irrelevant with 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, is
+\begin_inset Formula 
+\begin{equation}
+\boxed{0<\phi(r)<\min(2,2r)}\label{eq:SwebyTvdCondition}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+From Lax–Wendroff Scheme
+\end_layout
+
+\begin_layout Standard
+Write the Lax–Wendroff Scheme
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}}\qc a>0
+\]
+
+\end_inset
+
+into its conservative form:
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sigma=\frac{a\Delta t}{\Delta x}\in(0,1)
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)
+\]
+
+\end_inset
+
+Multiply the correction term by a limiter 
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)\phi(r_{i})\qc r_{i}=r_{i}^{-}=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
+\]
+
+\end_inset
+
+and rewrite the scheme into Harten's form 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:HartenTvdScheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, in which
+\begin_inset Formula 
+\[
+C_{i-1/2}^{-}=\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\qc C_{i+1/2}^{+}=0
+\]
+
+\end_inset
+
+Condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:HartenTvdCondition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ then becomes
+\begin_inset Formula 
+\[
+0\le\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\le1
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\frac{-2}{1-\sigma}\le\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\le\frac{2}{\sigma}
+\]
+
+\end_inset
+
+Sweby's condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SwebyTvdCondition"
+
+\end_inset
+
+ is still 
+\emph on
+sufficient
+\emph default
+ for it.
+\end_layout
+
+\begin_layout Subsubsection
+Famous Limiters
+\end_layout
+
+\begin_layout Paragraph
+van Leer
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\frac{r+\abs{r}}{1+r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+van Albada
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\frac{r^{2}+r}{1+r^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+minmod
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\mathop{\minmod}(r,1)=\begin{cases}
+\min(r,1) & r\ge0\\
+0 & r<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+superbee
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\max(0,\min(2r,1),\min(r,2))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+MUSCL
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\max\left(0,\min\left(2r,\frac{r+1}{2},2\right)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+alpha
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi(r)=\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
