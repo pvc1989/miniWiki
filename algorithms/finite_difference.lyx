@@ -1,0 +1,630 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage{tikz}
+\usepackage{physics}
+\renewcommand{\grad}{\boldsymbol{\nabla}}
+\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage[e]{esvect}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\end_preamble
+\options idxtotoc
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "default" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 0.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle plain
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Finite Difference Method (FDM)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "FDM"
+description "Finite Difference Method"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Linear Schemes
+\end_layout
+
+\begin_layout Subsubsection
+From Taylor Expansion
+\end_layout
+
+\begin_layout Paragraph
+Choose A Stencil
+\end_layout
+
+\begin_layout Standard
+Given nodal values of function 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ on 
+\emph on
+uniformly
+\emph default
+ distributed (
+\begin_inset Formula $h:=\Delta x$
+\end_inset
+
+) nodes 
+\begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
+\end_inset
+
+, denoted as 
+\begin_inset Formula $u_{i}:=u(x_{i})$
+\end_inset
+
+.
+ Using a linear scheme, 
+\begin_inset Formula $\dv*[p]{u}{x}$
+\end_inset
+
+ at 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is approximated as a linear combination of nodal values on neighboring
+ nodes:
+\begin_inset Formula 
+\begin{equation}
+\eval{\dv[p]{u}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}u_{k}=\sum_{s\in S_{i}}a_{i+s}^{(p)}u_{i+s}\label{eq:GeneralLinearScheme}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $I_{i}\subset I$
+\end_inset
+
+ is an index set, while 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is an index-shift set.
+ Such set of neighboring nodes is called the 
+\noun on
+stencil
+\noun default
+ (or 
+\noun on
+support
+\noun default
+) of the scheme.
+\end_layout
+
+\begin_layout Example*
+Suppose nodal values 
+\begin_inset Formula $u_{i-1},u_{i},u_{i+1}$
+\end_inset
+
+ are chosen to approximate 
+\begin_inset Formula $\eval{\dv{u}{x}}_{i}$
+\end_inset
+
+, then 
+\begin_inset Formula $I_{i}=\left\{ i-1,i,i+1\right\} $
+\end_inset
+
+ while 
+\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Perform Taylor Expansion
+\end_layout
+
+\begin_layout Standard
+Perform Taylor expansion centered at 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $\left\{ u_{i+s}\right\} _{s\in S_{i}}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(sh)^{r}}{r!}
+\]
+
+\end_inset
+
+Substitute all the 
+\begin_inset Formula $\abs{S_{i}}$
+\end_inset
+
+ expansions into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GeneralLinearScheme"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\eval{\pdv[p]{u}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(sh)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Solve Linear Equations
+\end_layout
+
+\begin_layout Standard
+By balancing coefficients of 
+\begin_inset Formula $\eval{\pdv[r]{u}{x}}_{i}$
+\end_inset
+
+ for each 
+\begin_inset Formula $r$
+\end_inset
+
+, we obtain a system of linear equations about 
+\begin_inset Formula $a_{i+s}^{(p)}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\begin{equation}
+\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1\label{eq:SchemeFromTaylor}
+\end{equation}
+
+\end_inset
+
+The same procedure applies for each 
+\begin_inset Formula $p$
+\end_inset
+
+, and thus the coefficient matrix is the same for each 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example*
+Suppose 
+\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
+\end_inset
+
+.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SchemeFromTaylor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ becomes
+\begin_inset Formula 
+\[
+\begin{bmatrix}(-1)^{0} & 0^{0} & 1^{0}\\
+(-1)^{1} & 0^{1} & 1^{1}\\
+(-1)^{2} & 0^{2} & 1^{2}
+\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
+a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
+a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}=\begin{bmatrix}0!/h^{0}\\
+ & 1!/h^{1}\\
+ &  & 2!/h^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\begin{bmatrix}1 & 1 & 1\\
+-1 & 0 & 1\\
+1 & 0 & 1
+\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
+a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
+a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}=\begin{bmatrix}1\\
+ & 1/h\\
+ &  & 2/h^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+from which 
+\begin_inset Formula $a_{i+s}^{(p)}$
+\end_inset
+
+ can be solved as
+\begin_inset Formula 
+\[
+\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
+a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
+a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}=\begin{bmatrix}0 & -1/2h & 1/h^{2}\\
+1 & 0/2h & -2/h^{2}\\
+0 & 1/2h & 1/h^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+Scheme 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:GeneralLinearScheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is then
+\begin_inset Formula 
+\[
+\begin{aligned}u_{i} & =u_{i}\\
+\eval{\dv{u}{x}}_{i} & \approx\frac{u_{i+1}-u_{i-1}}{2h}\\
+\eval{\dv[2]{u}{x}}_{i} & \approx\frac{u_{i}-2u_{i+1}+u_{i+2}}{h^{2}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Python Implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "_finite_difference/scheme_from_taylor.py"
+lstparams "language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+From Lagrange Interpolation
+\end_layout
+
+\begin_layout Paragraph
+Choose A Stencil
+\end_layout
+
+\begin_layout Standard
+This step is almost the same as previous.
+ However, the distribution of nodes is no longer required to be 
+\emph on
+uniform
+\emph default
+, and the following steps can be generalized for higher dimensional cases
+ without difficulty.
+\end_layout
+
+\begin_layout Paragraph
+Perform Lagrange Interpolation
+\end_layout
+
+\begin_layout Standard
+Perform Lagrange interpolation for 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ in the neighborhood of 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+u(x)\approx\sum_{k\in I_{i}}u_{k}L_{k}(x)
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+L_{k}(x)=\prod_{r\in I_{i}\setminus\left\{ k\right\} }\frac{x-x_{k}}{x_{r}-x_{k}}\qc k\in I_{i}
+\]
+
+\end_inset
+
+are Lagrange polynomials satisfying the following conditions:
+\begin_inset Formula 
+\[
+L_{k}(x_{j})=\delta_{jk}\qand\sum_{k\in I_{i}}L_{k}(x)\equiv1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Approximate Derivatives
+\end_layout
+
+\begin_layout Standard
+The derivatives of 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ can be obtained easily from the derivatives of 
+\begin_inset Formula $\left\{ L_{k}\right\} _{k\in I_{i}}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\begin{aligned}\dv[p]{u(x)}{x} & \approx\sum_{k\in I_{i}}u_{k}\dv[p]{L_{i}(x)}{x}\\
+\eval{\dv[p]{u}{x}}_{i} & \approx\sum_{k\in I_{i}}u_{k}\dv[p]{L_{k}(x_{i})}{x}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Time Marching
+\end_layout
+
+\begin_layout Subsubsection
+Explicit v.
+ Implicit
+\end_layout
+
+\begin_layout Standard
+Given 
+\begin_inset Formula $\left\{ u_{i}^{n}\right\} _{i\in I}$
+\end_inset
+
+ (and those on previous time steps if necessary).
+ A scheme is 
+\emph on
+explicit
+\emph default
+, if 
+\begin_inset Formula $\left\{ u_{i}^{n+1}\right\} _{i\in I}$
+\end_inset
+
+ can be calculated directly without solving algebraic equations; otherwise,
+ it is 
+\emph on
+implicit.
+\end_layout
+
+\begin_layout Subsubsection
+Coupled Schemes
+\end_layout
+
+\begin_layout Paragraph
+First Order Upwind
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}=0
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}\qc\sigma:=\frac{a\Delta t}{\Delta x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Lax--Friedrich
+\end_layout
+
+\begin_layout Paragraph
+Lax--Wendroff
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}}
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2}+\sigma^{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{2}\qc\sigma:=\frac{a\Delta t}{\Delta x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Semi-Discretization
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{U}{t}=F(U)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subparagraph
+Runge--Kutta
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}U^{(1)} & =U^{n}+F^{n}\\
+U^{(2)} & =\frac{3U^{n}+\left(U^{(1)}+F^{(1)}\Delta t\right)}{4}\\
+U^{n+1} & =\frac{U^{n}+2\left(U^{(2)}+F^{(2)}\Delta t\right)}{3}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Error Analysis
+\end_layout
+
+\begin_layout Subsubsection
+Truncation Error and Accuracy
+\end_layout
+
+\begin_layout Subsubsection
+Stability
+\end_layout
+
+\begin_layout Subsubsection
+Dissipation v.
+ Dispersion
+\end_layout
+
+\end_body
+\end_document

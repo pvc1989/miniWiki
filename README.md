@@ -15,6 +15,7 @@
   - [Numerical Quadrature](./algorithms/quadrature.lyx) 
   - [Optimization](./algorithms/optimization.lyx) 
 - PDE Solvers
+  - [FDM --- Finite Difference Method](./algorithms/finite_difference.lyx)
   - [FEM --- Finite Element Method](./algorithms/finite_element.lyx)
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
