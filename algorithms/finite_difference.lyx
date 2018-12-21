@@ -614,11 +614,609 @@ Error Analysis
 \end_layout
 
 \begin_layout Subsubsection
-Truncation Error and Accuracy
+Model Equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:PeriodicLinearAdvectionEquation"
+
+\end_inset
+
+Solve the linear advection equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{u}{t}+c\pdv{u}{x}=0\qc c>0\qc x\in(0,2\pi)
+\]
+
+\end_inset
+
+with the periodic condition
+\begin_inset Formula 
+\[
+u(t,x=0)=u(t,x=2\pi)\qc t\in[0,\infty)
+\]
+
+\end_inset
+
+and the initial condition
+\begin_inset Formula 
+\[
+u(t=0,x)=\exp(\sqrt{-1}kx)\qc k\in\mathbb{Z}\qc x\in[0,2\pi]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+The exact solution is
+\begin_inset Formula 
+\[
+u(t,x)=\exp(\sqrt{-1}k(x-ct))\qc t\in[0,\infty)\qc x\in[0,2\pi]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Error
+\end_layout
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $u$
+\end_inset
+
+ is the exact solution of Problem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:PeriodicLinearAdvectionEquation"
+
+\end_inset
+
+ and 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ is approximated one, both come from the same function space 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ The error of 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ is defined as the 
+\noun on
+distance
+\noun default
+ between 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+, if we have introduced a 
+\noun on
+metric
+\noun default
+ (i.e.
+ a distance function) in 
+\begin_inset Formula $X$
+\end_inset
+
+; or as the norm of 
+\begin_inset Formula $\left(u^{h}-u\right)$
+\end_inset
+
+, if we have defined a 
+\noun on
+norm
+\noun default
+ in 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ Since a norm can always induce a metric, and equivalent norms induce the
+ same topology, we can abstractly write the definition of error as
+\begin_inset Formula 
+\[
+\epsilon:=\norm{u^{h}-u}
+\]
+
+\end_inset
+
+The concrete expression of 
+\begin_inset Formula $\norm{\cdot}$
+\end_inset
+
+, however, is not unique.
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$L^p$-norm]
+\end_layout
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\Omega\subset\mathbb{R}^{m}$
+\end_inset
+
+ is a measurable set, and 
+\begin_inset Formula $u:\Omega\to\mathbb{R}$
+\end_inset
+
+ is a measurable function.
+\end_layout
+
+\begin_layout Definition
+For 
+\begin_inset Formula $1\le p<\infty$
+\end_inset
+
+, the 
+\begin_inset Formula $L^{p}$
+\end_inset
+
+-norm of 
+\begin_inset Formula $u$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+\norm{u}_{p}:=\left(\int_{\Omega}\abs{u(x_{1},\dots,x_{m})}^{p}\dd{\Omega}\right)^{1/p}
+\]
+
+\end_inset
+
+if the RHS is Lebesgue integrable.
+\end_layout
+
+\begin_layout Definition
+For 
+\begin_inset Formula $p=\infty$
+\end_inset
+
+, the 
+\begin_inset Formula $L^{\infty}$
+\end_inset
+
+-norm of 
+\begin_inset Formula $u$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+\norm{u}_{\infty}:=\inf\left\{ C\ge0\colon\abs{u(x_{1},\dots,x_{m})}\le C\text{ for almost every }x\right\} 
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $u$
+\end_inset
+
+ is bounded, the infimum of 
+\begin_inset Formula $\abs{u}$
+\end_inset
+
+'s upper bounds becomes the supremum of 
+\begin_inset Formula $\abs{u}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\norm{u}_{\infty}:=\sup_{x\in\Omega}\abs{u(x_{1},\dots,x_{m})}
+\]
+
+\end_inset
+
+which is the limit of the 
+\begin_inset Formula $L^{p}$
+\end_inset
+
+-norm when 
+\begin_inset Formula $p\to\infty$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $u$
+\end_inset
+
+ is continuous, then 
+\begin_inset Formula $\sup_{x\in\Omega}$
+\end_inset
+
+ becomes 
+\begin_inset Formula $\max_{x\in\Omega}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+In 1D space, if 
+\begin_inset Formula $u:[a,b]\to\mathbb{R}$
+\end_inset
+
+ is bounded, the following three are commonly used:
+\begin_inset Formula 
+\[
+\begin{aligned}\norm{u}_{1} & :=\int_{a}^{b}\abs{u(x)}\dd{x}\\
+\norm{u}_{2} & :=\sqrt{\int_{a}^{b}\abs{u(x)}^{2}\dd{x}}\\
+\norm{u}_{\infty} & :=\sup_{x\in[a,b]}\abs{u(x)}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+In numerical computation, however, functions are usually given as column
+ matrices filled with nodal values, e.g.
+\begin_inset Formula 
+\[
+\left\{ u_{i}\right\} _{i=1}^{n}\qc u_{i}:=u(x_{i})\qc x_{i}:=a+i\frac{b-a}{n}\qc i=0,1,\dots,n
+\]
+
+\end_inset
+
+The error is then approximatedly calculated from any one of the following
+ three formulae:
+\begin_inset Formula 
+\[
+\begin{aligned}\norm{u^{h}-u}_{1} & \approx\frac{b-a}{n}\sum_{i=1}^{n}\abs{u_{i}^{h}-u_{i}}\\
+\norm{u^{h}-u}_{2} & \approx\sqrt{\frac{b-a}{n}\sum_{i=1}^{n}\abs{u_{i}^{h}-u_{i}}^{2}}\\
+\norm{u^{h}-u}_{\infty} & :=\max_{i=0}^{n}\abs{u_{i}^{h}-u_{i}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Accuracy
+\end_layout
+
+\begin_layout Definition
+The truncation error of a scheme, denoted as 
+\begin_inset Formula $\varepsilon(h)$
+\end_inset
+
+, is said to be 
+\begin_inset Formula $p$
+\end_inset
+
+th order accurate, if
+\begin_inset Formula 
+\[
+\varepsilon(h)=\order{h^{p}}=Ch^{p}+\order{h^{p+1}}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $C$
+\end_inset
+
+ is a constant.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a linear scheme, the accuracy order can be derived easily from Taylor
+ expansion.
+ However, for a non-linear scheme, the derivation might be too complicated.
+ In both cases, we can measure the accuracy order by first fitting a 
+\begin_inset Formula $\ln\abs{\text{error}}$
+\end_inset
+
+-
+\begin_inset Formula $\ln\abs{h}$
+\end_inset
+
+ curve, which should look like a straight line:
+\begin_inset Formula 
+\[
+\ln\abs{\text{error}}=\ln\abs{C}+p\ln\abs{h}
+\]
+
+\end_inset
+
+the slope of which is the accuracy order.
+ Here, 
+\begin_inset Formula $h$
+\end_inset
+
+ should be chosen moderate: if too large, the data points will hardly distribute
+ along a straight line; if too small, the error will be dominated by floating
+ point arithmetic error.
+\end_layout
+
+\begin_layout Paragraph
+Python Implementation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "_finite_difference/accuracy_measurer.py"
+lstparams "language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Modified Equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{Truncation Error}:=\text{Differential Equation}-\text{Difference Equation}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{Modified Equation}:=\lim_{\Delta t,\Delta x\to0}\text{Difference Equation}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Consistency v.
+ Convergency
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Consistency]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{\Delta t,\Delta x\to0}\text{Difference Equation}=\text{Differential Equation}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Convergency]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{\Delta t,\Delta x\to0}\text{Difference Eqn's Solution}=\text{Differential Eqn's Solution}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
 Stability
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Stability]
+\end_layout
+
+\end_inset
+
+As 
+\begin_inset Formula $t$
+\end_inset
+
+ grows, the error is bounded.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Lax Equivalence Theorem
+\end_layout
+
+\end_inset
+
+For 
+\emph on
+linear
+\emph default
+ problems, if the differential equation is 
+\emph on
+well posed
+\emph default
+ and the difference equation is 
+\emph on
+consistent
+\emph default
+ with the differential equation, then 
+\noun on
+stability
+\noun default
+ 
+\begin_inset Formula $\iff$
+\end_inset
+
+
+\noun on
+ convergency
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Solve the linear advection equation with the first order upwind scheme:
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+c\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}=0
+\]
+
+\end_inset
+
+Substitute 
+\begin_inset Formula $\tilde{E}_{k}^{p,q}\exp(\sqrt{-1}kx)$
+\end_inset
+
+ into it, we have
+\begin_inset Formula 
+\[
+\frac{\tilde{E}_{k}^{p,q+1}-\tilde{E}_{k}^{p,q}}{\Delta t}+c\frac{\tilde{E}_{k}^{p,q}-\tilde{E}_{k}^{p,q}\exp(-\sqrt{-1}k\Delta x)}{\Delta x}=0
+\]
+
+\end_inset
+
+The growing factor is then
+\begin_inset Formula 
+\[
+G_{k}^{p,q}=\frac{\tilde{E}_{k}^{p,q+1}}{\tilde{E}_{k}^{p,q}}=1-\sigma+\sigma\exp(-\sqrt{-1}k\Delta x)\qc\sigma:=\frac{c\Delta t}{\Delta x}
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $G_{k}^{p,q}$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $p$
+\end_inset
+
+ or 
+\begin_inset Formula $q$
+\end_inset
+
+, but does depend on 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ The stability condition is
+\begin_inset Formula 
+\[
+\abs{G_{k}}^{2}=1+4\sigma(\sigma-1)\sin^{2}\frac{k\Delta x}{2}<1\qc\forall k
+\]
+
+\end_inset
+
+which can be simplified to
+\begin_inset Formula 
+\[
+0<\sigma<1
+\]
+
+\end_inset
+
+It is now obvious that the CFL number 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is the critical parameter for stability.
 \end_layout
 
 \begin_layout Subsubsection
