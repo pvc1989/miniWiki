@@ -798,7 +798,7 @@ Linear Advection Equation
 \begin_layout Problem
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:PeriodicLinearAdvectionEquation"
+name "prob:LinearAdvectionEquation"
 
 \end_inset
 
@@ -1143,7 +1143,7 @@ Suppose
  is the exact solution of Problem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:PeriodicLinearAdvectionEquation"
+reference "prob:LinearAdvectionEquation"
 
 \end_inset
 
@@ -1494,7 +1494,7 @@ When apply the 1st order upwind scheme
 for Problem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:PeriodicLinearAdvectionEquation"
+reference "prob:LinearAdvectionEquation"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2134,13 +2134,20 @@ Dissipation v.
 \end_layout
 
 \begin_layout Subsubsection
-Semi-Discretized Analysis
+Numerical Experiments
+\end_layout
+
+\begin_layout Subsubsection
+Effect of Truncation Error
 \end_layout
 
 \begin_layout Standard
 To study the effect of the truncation error of a spatial scheme, we shall
- adopt semi-discretized analysis, which assumes temporal derivatives are
- calculated exactly.
+ adopt 
+\emph on
+semi-discretized
+\emph default
+ analysis, which assumes temporal derivatives are calculated exactly.
 \end_layout
 
 \begin_layout Standard
@@ -2278,8 +2285,255 @@ slower
 Modified Wave Number
 \end_layout
 
-\begin_layout Subsubsection
-Numerical Experiments
+\begin_layout Standard
+The errors introduced by a spatial scheme can be analyzed from another aspect,
+ which focus on the output of the scheme rather than the truncation error.
+\end_layout
+
+\begin_layout Standard
+The exact solution of the linear advection equation
+\begin_inset Formula 
+\[
+\pdv{u}{t}+c\pdv{u}{x}=0\qc x\in(0,2l)
+\]
+
+\end_inset
+
+with the periodic condition
+\begin_inset Formula 
+\[
+u(t,x=0)=u(t,x=2l)\qc\forall t\in\mathbb{R}_{+}
+\]
+
+\end_inset
+
+and the initial condition
+\begin_inset Formula 
+\[
+u(t=0,x)=e^{\sqrt{-1}k\pi x/l}\qc k\in\mathbb{Z}\qc x\in[0,2l]
+\]
+
+\end_inset
+
+is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u(t,x)=e^{\sqrt{-1}K(x-ct)}=A(t)e^{\sqrt{-1}Kx}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+K:=\frac{k\pi}{l}\qc A(t):=e^{-\sqrt{-1}Kct}
+\]
+
+\end_inset
+
+So, the exact spatial derivative is
+\begin_inset Formula 
+\[
+\pdv{u}{x}=\sqrt{-1}Ku
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Divide 
+\begin_inset Formula $[0,2l]$
+\end_inset
+
+ into 
+\begin_inset Formula $N$
+\end_inset
+
+ equal-length pieces:
+\begin_inset Formula 
+\[
+x_{i}:=i\Delta x\qc\Delta x:=\frac{2l}{N}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+The periodic condition then becomes
+\begin_inset Formula 
+\[
+u_{0}(t)=u_{N}(t)
+\]
+
+\end_inset
+
+In general, a linear spatial scheme can be written as
+\begin_inset Formula 
+\[
+\eval{\pdv{u}{x}}_{i}\approx\frac{\sum_{s}b_{s}u_{i+s}}{\Delta x}
+\]
+
+\end_inset
+
+Suppose
+\begin_inset Formula 
+\[
+u_{i}(t)=A(t)e^{\sqrt{-1}Kx_{i}}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\[
+u_{i+s}(t)=A(t)e^{\sqrt{-1}K\left(x_{i}+s\Delta x\right)}=e^{\sqrt{-1}sK\Delta x}u_{i}(t)
+\]
+
+\end_inset
+
+So, the approximated spatial derivative is the product of 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ and a complex number 
+\begin_inset Formula $\tilde{K}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\eval{\pdv{u}{x}}_{i}\approx\tilde{K}u_{i}\qc\tilde{K}:=\frac{1}{\Delta x}\sum_{s}b_{s}e^{\sqrt{-1}sK\Delta x}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\tilde{K}$
+\end_inset
+
+ has the same dimension as 
+\begin_inset Formula $K$
+\end_inset
+
+, it is justified to call it the 
+\noun on
+modified wave number
+\noun default
+ of the spatial scheme.
+ For later use, we shall denote
+\begin_inset Formula 
+\[
+\begin{aligned}\tilde{K}_{r} & :=\Re\tilde{K}=\frac{\sum_{s}b_{s}\cos(sK\Delta x)}{\Delta x}\\
+\tilde{K}_{i} & :=\Im\tilde{K}=\frac{\sum_{s}b_{s}\sin(sK\Delta x)}{\Delta x}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose the IC is calculated exactly on each 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+u_{i}(0)=e^{\sqrt{-1}Kx_{i}}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+The semi-discretized scheme becomes
+\begin_inset Formula 
+\[
+\dv{A(t)}{t}+\tilde{K}cA(t)=0
+\]
+
+\end_inset
+
+whose solution is
+\begin_inset Formula 
+\[
+A(t)=e^{-\tilde{K}ct}
+\]
+
+\end_inset
+
+The approximated solution of the original PDE is then
+\begin_inset Formula 
+\[
+u_{i}(t)=e^{-\tilde{K}ct}e^{\sqrt{-1}Kx_{i}}=e^{\left(\sqrt{-1}K-\tilde{K}\right)ct}e^{\sqrt{-1}K(x_{i}-ct)}
+\]
+
+\end_inset
+
+The first factor is the error introduced by the spatial scheme.
+ The dissipative and dispersive effect can be seen more clearly if we rewrite
+ it as:
+\begin_inset Formula 
+\[
+u_{i}(t)=e^{\gamma_{K}t}e^{\sqrt{-1}K(x_{i}-c_{K}t)}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\begin{aligned}\gamma_{K} & :=-c\tilde{K}_{r}\Delta x=-c\sum_{s}b_{s}\cos(sK\Delta x)\\
+c_{K} & :=c\frac{\tilde{K}_{i}}{K}=c\frac{\sum_{s}b_{s}\sin(sK\Delta x)}{K\Delta x}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[2nd Order Upwind Scheme]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\eval{\pdv{u}{x}}_{i}\approx\frac{3u_{i}-4u_{i-1}+u_{i-2}}{2\Delta x}\qc c>0
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\begin{aligned}\tilde{K}_{r}\Delta x & =\frac{3-4\cos(K\Delta x)+\cos(2K\Delta x)}{2}\\
+\tilde{K}_{i}\Delta x & =\frac{0+4\sin(K\Delta x)-\sin(2K\Delta x)}{2}
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
