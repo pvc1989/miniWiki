@@ -527,11 +527,139 @@ implicit.
 \end_layout
 
 \begin_layout Subsubsection
-Coupled Schemes
+Semi-Discretization
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Semi
+\emph default
+ means spatial and temporal schemes are chosen independently.
+ Usually, people do spatial discretization first, which converts the PDE
+ is to a system of ODEs:
+\begin_inset Formula 
+\[
+\dv{U}{t}=F(U)
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $U$
+\end_inset
+
+ is the column (or row) matrix of 
+\begin_inset Formula $u(t,x_{i})$
+\end_inset
+
+, then choose a time marching scheme for it.
 \end_layout
 
 \begin_layout Paragraph
-First Order Upwind
+Euler
+\end_layout
+
+\begin_layout Standard
+This is the simplest time marching schemes, which uses the 1st order forward
+ difference for to approximate the temporal derivative:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U^{n+1}=U^{n}+F^{n}\Delta t
+\]
+
+\end_inset
+
+which is explicit, or
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U^{n+1}=U^{n}+F^{n+1}\Delta t
+\]
+
+\end_inset
+
+which is implicit.
+\end_layout
+
+\begin_layout Paragraph
+Runge--Kutta
+\end_layout
+
+\begin_layout Standard
+This is a large family of time marching schemes.
+ In CFD, the most frequently used one is the following 3-step 3rd-order
+ RK scheme:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}U^{(1)} & =U^{n}+F^{n}\\
+U^{(2)} & =\frac{3U^{n}+\left(U^{(1)}+F^{(1)}\Delta t\right)}{4}\\
+U^{n+1} & =\frac{U^{n}+2\left(U^{(2)}+F^{(2)}\Delta t\right)}{3}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Coupled Schemes
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Coupled
+\emph default
+ means spatial and temporal schemes are chosen together.
+ With some carefully selected spatial schemes, some coupled schemes may
+ have 2nd order accuracy, even though the temporal scheme is only 1st order
+ accurate.
+\end_layout
+
+\begin_layout Standard
+Assume 
+\begin_inset Formula $a>0$
+\end_inset
+
+ and denote 
+\begin_inset Formula $\sigma:=a\Delta t/\Delta x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+1st Order Upwind
+\end_layout
+
+\begin_layout Standard
+1st order 
+\emph on
+forward
+\emph default
+ difference for 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+, 1st order 
+\emph on
+upwind
+\emph default
+ scheme for 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
@@ -542,10 +670,10 @@ First Order Upwind
 
 \end_inset
 
-or equivalently
+or equivalently in time marching form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}\qc\sigma:=\frac{a\Delta t}{\Delta x}
+u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}
 \]
 
 \end_inset
@@ -554,11 +682,35 @@ u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}\qc\sigma:=\frac{a\Delta t}{\D
 \end_layout
 
 \begin_layout Paragraph
-Lax--Friedrich
+Lax--Wendroff
 \end_layout
 
-\begin_layout Paragraph
-Lax--Wendroff
+\begin_layout Standard
+1st order 
+\emph on
+forward
+\emph default
+ difference for 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+, 2nd order 
+\emph on
+centered
+\emph default
+ difference for 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+, 2nd order 
+\emph on
+centered
+\emph default
+ difference for 
+\begin_inset Formula $\pdv*[2]{x}$
+\end_inset
+
+ in the artificial viscosity term:
 \end_layout
 
 \begin_layout Standard
@@ -569,25 +721,10 @@ Lax--Wendroff
 
 \end_inset
 
-or equivalently
+or equivalently in time marching form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2}+\sigma^{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{2}\qc\sigma:=\frac{a\Delta t}{\Delta x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Semi-Discretization
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dv{U}{t}=F(U)
+u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2}+\sigma^{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{2}
 \]
 
 \end_inset
@@ -596,16 +733,49 @@ Semi-Discretization
 \end_layout
 
 \begin_layout Paragraph
-Runge--Kutta
+Beam–Warming
+\end_layout
+
+\begin_layout Standard
+1st order 
+\emph on
+forward
+\emph default
+ difference for 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+, 2nd order 
+\emph on
+upwind
+\emph default
+ scheme for 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+, 2nd order 
+\emph on
+upwind
+\emph default
+ scheme for 
+\begin_inset Formula $\pdv*[2]{x}$
+\end_inset
+
+ in the artificial viscosity term:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}U^{(1)} & =U^{n}+F^{n}\\
-U^{(2)} & =\frac{3U^{n}+\left(U^{(1)}+F^{(1)}\Delta t\right)}{4}\\
-U^{n+1} & =\frac{U^{n}+2\left(U^{(2)}+F^{(2)}\Delta t\right)}{3}
-\end{aligned}
+\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i-2}^{n}-2u_{i-1}^{n}+u_{i}^{n}}{\Delta x^{2}}
+\]
+
+\end_inset
+
+or equivalently in time marching form:
+\begin_inset Formula 
+\[
+u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2}+\sigma^{2}\frac{u_{i-2}^{n}-2u_{i-1}^{n}+u_{i}^{n}}{2}
 \]
 
 \end_inset
