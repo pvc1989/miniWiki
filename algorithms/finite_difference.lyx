@@ -628,11 +628,11 @@ Coupled
 
 \begin_layout Standard
 Assume 
-\begin_inset Formula $a>0$
+\begin_inset Formula $c>0$
 \end_inset
 
  and denote 
-\begin_inset Formula $\sigma:=a\Delta t/\Delta x$
+\begin_inset Formula $\sigma:=c\Delta t/\Delta x$
 \end_inset
 
 .
@@ -808,23 +808,15 @@ Solve the linear advection equation
 \begin_layout Problem
 \begin_inset Formula 
 \[
-\pdv{u}{t}+c\pdv{u}{x}=0\qc c>0\qc x\in(0,2\pi)
+\pdv{u}{t}+c\pdv{u}{x}=0\qc x\in\mathbb{R}
 \]
 
 \end_inset
 
-with the periodic condition
+with the initial condition
 \begin_inset Formula 
 \[
-u(t,x=0)=u(t,x=2\pi)\qc t\in[0,\infty)
-\]
-
-\end_inset
-
-and the initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc k\in\mathbb{Z}\qc x\in[0,2\pi]
+u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
 \]
 
 \end_inset
@@ -843,44 +835,45 @@ u(t=0,x)=e^{\sqrt{-1}kx}\qc k\in\mathbb{Z}\qc x\in[0,2\pi]
 The exact solution is
 \begin_inset Formula 
 \[
-u(t,x)=e^{\sqrt{-1}k(x-ct)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
+u(t,x)=e^{\sqrt{-1}k(x-ct)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 \]
 
 \end_inset
 
-It can be written as
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
-\]
-
-\end_inset
-
-in which 
+By defining 
 \begin_inset Formula $\omega=kc$
 \end_inset
 
-.
+, it can be written as
+\begin_inset Formula 
+\[
+u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
 Convection–Diffusion Equation
-\end_layout
-
-\begin_layout Problem
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:ConvectionDiffusionEquation"
+name "sect:ConvectionDiffusionEquation"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Problem
 Solve the linear convection–diffusion equation
 \end_layout
 
 \begin_layout Problem
 \begin_inset Formula 
 \[
-\pdv{u}{t}+c\pdv{u}{x}=\alpha\pdv[2]{u}{x}\qc c,\alpha>0\qc x\in(-\infty,\infty)
+\pdv{u}{t}+c\pdv{u}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n]{u}{x}\qc x\in\mathbb{R}
 \]
 
 \end_inset
@@ -888,7 +881,7 @@ Solve the linear convection–diffusion equation
 with the initial condition
 \begin_inset Formula 
 \[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in(-\infty,\infty)
+u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
 \]
 
 \end_inset
@@ -905,21 +898,49 @@ u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in(-\infty,\infty)
 
 \begin_layout Solution*
 Since this equation degenerates to the linear advection equation when 
-\begin_inset Formula $\alpha\to0$
+\begin_inset Formula $\alpha_{n}\to0$
+\end_inset
+
+ for all 
+\begin_inset Formula $n$
 \end_inset
 
 , it is intuitive to suppose the solution here has a similar form:
 \begin_inset Formula 
 \[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
+u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 \]
 
 \end_inset
 
-Substituting it into the PDE leads to
+in which, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ depends on 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
+ Derivatives in the PDE becomes
 \begin_inset Formula 
 \[
-\omega:=kc-\sqrt{-1}\alpha k^{2}
+\begin{aligned}\pdv{u}{t} & =-\sqrt{-1}\omega u\\
+\pdv{u}{x} & =\sqrt{-1}ku\\
+\pdv[2n]{u}{x} & =\left(\sqrt{-1}k\right)^{2n}u=\left(-k^{2}\right)^{n}u
+\end{aligned}
+\]
+
+\end_inset
+
+Substituting them into the PDE leads to
+\begin_inset Formula 
+\[
+\omega=kc-\frac{\gamma_{k}}{\sqrt{-1}}\qc\gamma_{k}:=\sum_{n=1}^{\infty}\alpha_{n}\left(-k^{2}\right)^{n}
 \]
 
 \end_inset
@@ -927,7 +948,7 @@ Substituting it into the PDE leads to
 So, the exact solution is
 \begin_inset Formula 
 \[
-u(t,x)=e^{-\alpha k^{2}t}e^{\sqrt{-1}k(x-ct)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
+u(t,x)=e^{\gamma_{k}t}e^{\sqrt{-1}k(x-ct)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 \]
 
 \end_inset
@@ -936,37 +957,49 @@ u(t,x)=e^{-\alpha k^{2}t}e^{\sqrt{-1}k(x-ct)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
 \end_layout
 
 \begin_layout Solution*
-The first factor indicates that the amplitude attenuates as 
+The factor 
+\begin_inset Formula $e^{\gamma_{k}t}$
+\end_inset
+
+ indicates that the amplitude changes as 
 \begin_inset Formula $t$
 \end_inset
 
  grows.
- If the initial wave profile contains more than one components, then those
- components with larger 
+ Whether the amplitude grows or attenuates depends on the sign of 
+\begin_inset Formula $\gamma_{k}$
+\end_inset
+
+, which then depends on 
 \begin_inset Formula $k$
 \end_inset
 
- will attenuates faster.
+ and 
+\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
 Convection–Dispersion Equation
-\end_layout
-
-\begin_layout Problem
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:ConvectionDispersionEquation"
+name "sect:ConvectionDispersionEquation"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Problem
 Solve the linear convection–dispersion equation
 \end_layout
 
 \begin_layout Problem
 \begin_inset Formula 
 \[
-\pdv{u}{t}+c\pdv{u}{x}=-\beta\pdv[3]{u}{x}\qc c>0\qc x\in(-\infty,\infty)
+\pdv{u}{t}+c\pdv{u}{x}=-\sum_{n=1}^{\infty}\beta_{n}\pdv[2n+1]{u}{x}\qc x\in\text{\ensuremath{\mathbb{R}}}
 \]
 
 \end_inset
@@ -974,7 +1007,7 @@ Solve the linear convection–dispersion equation
 with the initial condition
 \begin_inset Formula 
 \[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in(-\infty,\infty)
+u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\text{\ensuremath{\mathbb{R}}}
 \]
 
 \end_inset
@@ -993,15 +1026,39 @@ u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in(-\infty,\infty)
 Suppose the exact solution still has the form
 \begin_inset Formula 
 \[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
+u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 \]
 
 \end_inset
 
-Substituting it into the PDE leads to
+in which, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ depends on 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
+ Derivatives in the PDE becomes
 \begin_inset Formula 
 \[
-\omega:=k\left(c-\beta k^{2}\right)
+\begin{aligned}\pdv{u}{t} & =-\sqrt{-1}\omega u\\
+\pdv{u}{x} & =\sqrt{-1}ku\\
+\pdv[2n+1]{u}{x} & =\left(\sqrt{-1}k\right)^{2n+1}u=\sqrt{-1}k\left(-k^{2}\right)^{n}u
+\end{aligned}
+\]
+
+\end_inset
+
+Substituting them into the PDE leads to
+\begin_inset Formula 
+\[
+\omega=kc_{k}\qc c_{k}:=c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}
 \]
 
 \end_inset
@@ -1009,7 +1066,7 @@ Substituting it into the PDE leads to
 So, the exact solution is
 \begin_inset Formula 
 \[
-u(t,x)=e^{\sqrt{-1}k\left(x-\left(c-\beta k^{2}\right)t\right)}\qc t\in[0,\infty)\qc x\in[0,2\pi]
+u(t,x)=e^{\sqrt{-1}k(x-c_{k}t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 \]
 
 \end_inset
@@ -1025,7 +1082,7 @@ The propagation speed of the wave is no longer
  but
 \begin_inset Formula 
 \[
-\frac{\omega}{k}=c-\beta k^{2}
+\frac{\omega}{k}=c_{k}=c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}
 \]
 
 \end_inset
@@ -1047,10 +1104,10 @@ dispersion
 \noun on
 group velocity
 \noun default
- of the wave pack:
+:
 \begin_inset Formula 
 \[
-\dv{\omega}{k}=c-3\beta k^{2}
+\dv{\omega}{k}=c+k\dv{c_{k}}{k}=c+\sum_{n=1}^{\infty}(2n+1)\beta_{n}\left(-k^{2}\right)^{n}
 \]
 
 \end_inset
@@ -1068,7 +1125,7 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-Error and Accuracy
+Errors and Accuracy
 \end_layout
 
 \begin_layout Subsubsection
@@ -1704,7 +1761,7 @@ Substitute them into the scheme:
 The modified PDE is then
 \begin_inset Formula 
 \[
-\begin{aligned}\eval{\pdv{u}{t}}_{i}+\eval{\pdv{u}{x}}_{i} & =\frac{a^{2}\Delta t}{2}\left(\cancel{\eval{\pdv[2]{u}{x}}_{i}}+\eval{\pdv[4]{u}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}\right)\\
+\begin{aligned}\eval{\pdv{u}{t}}_{i}+a\eval{\pdv{u}{x}}_{i} & =\frac{a^{2}\Delta t}{2}\left(\cancel{\eval{\pdv[2]{u}{x}}_{i}}+\eval{\pdv[4]{u}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}\right)\\
  & -a\left(\eval{\pdv[3]{u}{x}}_{i}\frac{\Delta x^{2}}{6}+\order{\Delta x^{3}}\right)\\
  & -\left(\cancel{\eval{\pdv[2]{u}{t}}_{i}\frac{\Delta t}{2}}+\eval{\pdv[3]{u}{t}}_{i}\frac{\Delta t^{2}}{6}+\order{\Delta t^{3}}\right)
 \end{aligned}
@@ -2074,6 +2131,155 @@ stability
 \begin_layout Subsection
 Dissipation v.
  Dispersion
+\end_layout
+
+\begin_layout Subsubsection
+Semi-Discretized Analysis
+\end_layout
+
+\begin_layout Standard
+To study the effect of the truncation error of a spatial scheme, we shall
+ adopt semi-discretized analysis, which assumes temporal derivatives are
+ calculated exactly.
+\end_layout
+
+\begin_layout Standard
+Take the 1st order upwind scheme
+\begin_inset Formula 
+\[
+\eval{\pdv{u}{x}}_{i}\approx\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}\qc c>0
+\]
+
+\end_inset
+
+as an example.
+ Inserting Taylor expansion
+\begin_inset Formula 
+\[
+u_{i-1}^{n}=u_{i}^{n}+\eval{\pdv{u}{x}}_{i}\Delta x+\sum_{n=1}^{\infty}\eval{\pdv[2n]{u}{x}}_{i}\frac{(-\Delta x)^{2n}}{(2n)!}+\sum_{n=1}^{\infty}\eval{\pdv[2n+1]{u}{x}}_{i}\frac{(-\Delta x)^{2n+1}}{(2n+1)!}
+\]
+
+\end_inset
+
+into the scheme leads to the modified PDE
+\begin_inset Formula 
+\[
+\pdv{u}{t}+c\pdv{u}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n]{u}{x}-\sum_{n=1}^{\infty}\beta_{n}\pdv[2n+1]{u}{x}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\alpha_{n}:=\frac{c\Delta x^{2n-1}}{(2n)!}>0\qc\beta_{n}:=\frac{c\Delta x^{2n}}{(2n+1)!}>0
+\]
+
+\end_inset
+
+For a given initial condition
+\begin_inset Formula 
+\[
+u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
+\]
+
+\end_inset
+
+we known the exact solution (see Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:ConvectionDiffusionEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:ConvectionDispersionEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) is
+\begin_inset Formula 
+\[
+u(t,x)=e^{\gamma_{k}t}e^{\sqrt{-1}k(x-c_{k}t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\begin{aligned}\gamma_{k} & =\sum_{n=1}^{\infty}\alpha_{n}\left(-k^{2}\right)^{n}=\frac{c}{\Delta x}\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(k\Delta x\right)^{2n}}{(2n)!}\\
+c_{k} & =c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}=c+c\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(k\Delta x\right)^{2n}}{(2n+1)!}
+\end{aligned}
+\]
+
+\end_inset
+
+When 
+\begin_inset Formula $k\Delta x$
+\end_inset
+
+ is sufficiently small, we have
+\begin_inset Formula 
+\[
+\gamma_{k}\approx-\alpha_{1}k^{2}<0\qc c_{k}\approx c-\beta_{1}k^{2}<c
+\]
+
+\end_inset
+
+which means:
+\end_layout
+
+\begin_layout Itemize
+the amplitude 
+\emph on
+attenuates
+\emph default
+ as 
+\begin_inset Formula $t$
+\end_inset
+
+ grows, and wave components with higher 
+\begin_inset Formula $k$
+\end_inset
+
+ attenuate 
+\emph on
+faster
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+the wave propagates 
+\emph on
+slower
+\emph default
+ than the exact one, and wave components with higher 
+\begin_inset Formula $k$
+\end_inset
+
+ propagates 
+\emph on
+slower
+\emph default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Modified Wave Number
+\end_layout
+
+\begin_layout Subsubsection
+Numerical Experiments
 \end_layout
 
 \end_body
