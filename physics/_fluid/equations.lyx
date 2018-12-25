@@ -12,8 +12,11 @@
 \renewcommand{\div}{\boldsymbol{\nabla}\cdot}
 \usepackage[e]{esvect}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
 \newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
 \newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -113,7 +116,57 @@ Governing Equations
 \end_layout
 
 \begin_layout Subsection
-The Continuum Model
+From Atoms to Fields
+\end_layout
+
+\begin_layout Subsubsection
+Atoms and Molecules
+\end_layout
+
+\begin_layout Paragraph
+Average Free Length
+\end_layout
+
+\begin_layout Subsubsection
+Fluid Particles
+\end_layout
+
+\begin_layout Paragraph
+Lagrangian Description
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Lagrange!~ian description
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fields
+\end_layout
+
+\begin_layout Paragraph
+Eulerian Description
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Euler!~ian description
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -121,26 +174,72 @@ Material Derivatives
 \end_layout
 
 \begin_layout Subsubsection
-Control Volumes and Systems
+Control Volume v.
+ System
 \end_layout
 
 \begin_layout Standard
-Any connected domain in space can be chosen as a 
-\noun on
-control volume
-\noun default
- (CV).
- In this document, we denote the control volume as 
+Any connected domain in space, denoted as 
 \begin_inset Formula $V$
 \end_inset
 
- and its boundary, a.k.a.
- the 
+ (or 
+\begin_inset Formula $\Omega$
+\end_inset
+
+), can be chosen as a 
+\noun on
+control volume
+\noun default
+ (CV)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "CV"
+description "Control Volume"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume
+\end_layout
+
+\end_inset
+
+.
+ Its boundary, denoted as 
+\begin_inset Formula $\partial V$
+\end_inset
+
+ (or 
+\begin_inset Formula $\partial\Omega$
+\end_inset
+
+), is called a 
 \noun on
 control surface
 \noun default
- (CS), as 
-\begin_inset Formula $\partial V$
+ (CS)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "CS"
+description "Control Surface"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ surface
+\end_layout
+
 \end_inset
 
 .
@@ -151,8 +250,8 @@ Generally,
 \begin_inset Formula $V$
 \end_inset
 
- can move in space.
- We denote the velocity of 
+ is allowed to move in space.
+ We denote the velocity of a point on 
 \begin_inset Formula $\partial V$
 \end_inset
 
@@ -160,7 +259,16 @@ Generally,
 \begin_inset Formula $\vec{u}^{C}$
 \end_inset
 
-, in order to distinguish it from the velocity of fluid particles 
+ (
+\begin_inset Formula $^{C}$
+\end_inset
+
+ stands for 
+\bar under
+c
+\bar default
+ontrol), in order to distinguish it from the velocity of a fluid particle
+ 
 \begin_inset Formula $\vec{u}$
 \end_inset
 
@@ -181,6 +289,16 @@ a
 \noun on
 system
 \noun default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+control!~ volume!system
+\end_layout
+
+\end_inset
+
 , when 
 \begin_inset Formula $\vec{u}^{C}$
 \end_inset
@@ -193,7 +311,21 @@ system
 \end_layout
 
 \begin_layout Itemize
-a fixed CV, when 
+a 
+\emph on
+fixed
+\emph default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume!fixed ~
+\end_layout
+
+\end_inset
+
+ CV, when 
 \begin_inset Formula $\vec{u}^{C}$
 \end_inset
 
@@ -205,7 +337,35 @@ a fixed CV, when
 \end_layout
 
 \begin_layout Itemize
-a general CV, when 
+a 
+\emph on
+general
+\emph default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume!general ~
+\end_layout
+
+\end_inset
+
+ or 
+\emph on
+moving
+\emph default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume!moving ~
+\end_layout
+
+\end_inset
+
+ CV, when 
 \begin_inset Formula $\vec{u}^{C}$
 \end_inset
 
@@ -213,74 +373,100 @@ a general CV, when
 \end_layout
 
 \begin_layout Subsubsection
-The Reynolds Transport Theorem
+Reynolds Transport Theorem
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Reynolds]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\phi\vec{u}^{C}\cdot\vu{n}\dd{S}}\label{eq:ReynoldsTransportTheoremOnControlVolume}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\phi(t,\vec{x})$
+\end_inset
+
+ is an arbitrary (integrable for 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ and differentiable for 
+\begin_inset Formula $t$
+\end_inset
+
+) function of 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, and 
+\begin_inset Formula $V$
+\end_inset
+
+ is a general CV.
 \end_layout
 
 \begin_layout Standard
-Consider a general CV 
-\begin_inset Formula $V^{C}$
+\begin_inset Separator plain
 \end_inset
 
-, whose boundary 
-\begin_inset Formula $\partial V^{C}$
+
+\end_layout
+
+\begin_layout Proof
+Recall the definition of 
+\begin_inset Formula $\dv*{t}$
 \end_inset
 
- is moving with a velocity 
-\begin_inset Formula $\vec{u}^{C}$
-\end_inset
-
-.
- According to the definition of derivative, the rate of change of some integral
- 
-\begin_inset Formula $\int_{V}\phi\dd{V}$
-\end_inset
-
- at time 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- is
+:
 \begin_inset Formula 
 \[
-\eval{\dv{t}\int_{V^{C}}\phi\dd{V}}_{t_{1}}=\lim_{t_{2}\to t_{1}}\frac{1}{t_{2}-t_{1}}\left[\int_{V_{2}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{1}\dd{V}\right]
+\eval{\dv{t}\int_{V}\phi\dd{V}}_{t_{1}}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}}
 \]
 
 \end_inset
 
 in which 
-\begin_inset Formula $\phi_{i}:=\phi(t_{i})$
+\begin_inset Formula $\phi_{i}:=\phi(t_{i},\vec{x})$
 \end_inset
 
- and 
-\begin_inset Formula $V_{i}^{C}:=V^{C}(t_{i})$
+, 
+\begin_inset Formula $V_{i}:=V(t_{i})$
 \end_inset
 
-.Add the identity 
-\begin_inset Formula $0=\int_{V_{1}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{2}\dd{V}$
+, 
+\begin_inset Formula $i=1,2$
 \end_inset
 
- to it, we have
-\begin_inset Formula 
-\[
-\begin{aligned}\dv{t}\int_{V_{1}^{C}}\phi_{1}\dd{V} & =\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{1}\dd{V}}{t_{2}-t_{1}}\\
- & +\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{2}\dd{V}}{t_{2}-t_{1}}
-\end{aligned}
-\]
-
-\end_inset
-
-in which:
+.
 \end_layout
 
-\begin_layout Itemize
-The first limit is taking on the difference of two integrals on the same
- domain, so the limit sign be put inside the integrals, which leads to a
- partial derivative
+\begin_layout Proof
+Add 
+\begin_inset Formula $0=\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}$
+\end_inset
+
+ to the numerator in the RHS, we have
 \begin_inset Formula 
 \[
-\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{1}{t_{2}-t_{1}}\left[\int_{V_{1}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{1}\dd{V}\right]\\
-=\int_{V_{1}^{C}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}\dd{V}\\
-=\eval{\int_{V^{C}}\pdv{\phi}{t}\dd{V}}_{t_{1}}
+\begin{aligned}\dv{t}\int_{V_{1}}\phi_{1}\dd{V} & =\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}}\\
+ & +\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}
 \end{aligned}
 \]
 
@@ -289,15 +475,32 @@ The first limit is taking on the difference of two integrals on the same
 
 \end_layout
 
-\begin_layout Itemize
-The second limit is taking on the difference of two integrals of a fixed
- integrand, so the net effect is the integral of the integrand on the net
- incremented volume, which leads to a surface integral
+\begin_layout Proof
+The first 
+\begin_inset Formula $\lim$
+\end_inset
+
+ is taking on the difference of two integrals taken on the same domain 
+\begin_inset Formula $V_{1}$
+\end_inset
+
+, so 
+\begin_inset Formula $\lim$
+\end_inset
+
+ can exchange with 
+\begin_inset Formula $\int$
+\end_inset
+
+, which leads to a 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+ inside the integral:
 \begin_inset Formula 
 \[
-\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{1}{t_{2}-t_{1}}\left[\int_{V_{2}^{C}}\phi_{2}\dd{V}-\int_{V_{1}^{C}}\phi_{2}\dd{V}\right]\\
-=\lim_{t_{2}\to t_{1}}\frac{1}{t_{2}-t_{1}}\oint_{\partial V_{1}^{C}}\phi_{2}\vec{u}^{C}(t_{2}-t_{1})\cdot\vu{n}\dd{S}\\
-=\eval{\oint_{\partial V^{C}}\phi\vec{u}^{C}\cdot\vu{n}\dd{S}}_{t_{1}}
+\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}} & =\int_{V_{1}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}\dd{V}\\
+ & =\int_{V_{1}}\eval{\pdv{\phi}{t}}_{t_{1}}\dd{V}
 \end{aligned}
 \]
 
@@ -306,43 +509,97 @@ The second limit is taking on the difference of two integrals of a fixed
 
 \end_layout
 
-\begin_layout Standard
-So, the original derivative of a body integral can be seperated into a body
- integral and a surface integral
+\begin_layout Proof
+The second 
+\begin_inset Formula $\lim$
+\end_inset
+
+ is taking on the difference of two integrals of the same integrand 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+, so the net effect is integrating 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+ on the 
+\emph on
+net incremented volume
+\emph default
+, which leads to a surface integral:
 \begin_inset Formula 
 \[
-\begin{aligned}\boxed{\dv{t}\int_{V^{C}}\phi\dd{V}=\int_{V^{C}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{C}}\phi\vec{u}^{C}\cdot\vu{n}\dd{S}}\end{aligned}
+\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}} & =\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\phi_{2}\frac{\cancel{(t_{2}-t_{1})}\vec{u}_{1}^{C}\cdot\vu{n}_{1}}{\cancel{t_{2}-t_{1}}}\dd{S}\\
+ & =\eval{\oint_{\partial V}\phi\vec{u}^{C}\cdot\vu{n}\dd{S}}_{t_{1}}
+\end{aligned}
 \]
 
 \end_inset
 
+in which 
+\begin_inset Formula $\vec{u}_{1}^{C}:=\vec{u}^{C}(t_{1},\vec{x})$
+\end_inset
 
+, 
+\begin_inset Formula $\vu{n}_{1}:=\vu{n}(t_{1},\vec{x})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Adding them together and dropping 
+\begin_inset Formula $t_{1}$
+\end_inset
+
+ leads to the claim.
 \end_layout
 
 \begin_layout Subsubsection
-The Material Derivative of A Integral
+Material Derivative of An Integral
 \end_layout
 
 \begin_layout Standard
 Generally, physical laws are stated on systems.
- We denote a system as 
+ In this section, we denote a system as 
 \begin_inset Formula $V^{S}$
 \end_inset
 
- to distinguish it from a general control volume 
+ (
+\begin_inset Formula $^{S}$
+\end_inset
+
+ stands for 
+\bar under
+s
+\bar default
+ystem) to distinguish it from a general control volume 
 \begin_inset Formula $V^{C}$
 \end_inset
 
 .
- The 
+\end_layout
+
+\begin_layout Definition
+The 
 \noun on
 material derivative
 \noun default
- of some integral on 
+ of an integral
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+derivative!material ~!~ of an integral
+\end_layout
+
+\end_inset
+
+ taken on 
 \begin_inset Formula $V^{C}$
 \end_inset
 
- is defined to be the rate of change of the integral on the 
+ is defined to be the rate of change of the integral taken on the 
 \begin_inset Formula $V^{S}$
 \end_inset
 
@@ -350,10 +607,10 @@ material derivative
 \begin_inset Formula $V^{C}$
 \end_inset
 
- at that time, i.e.
+ at the same time, i.e.
 \begin_inset Formula 
 \[
-\MDV{}{t}\int_{V^{C}}\phi\dd{V}:=\dv{t}\int_{V^{S}}\phi\dd{V}
+\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}:=\dv{t}\int_{V^{S}}\phi\dd{V}}
 \]
 
 \end_inset
@@ -362,31 +619,233 @@ material derivative
 \end_layout
 
 \begin_layout Standard
-By applying the Reynolds transport theorem and notice that 
-\begin_inset Formula $\vec{u}=\vec{u}^{S}$
+\begin_inset Separator plain
 \end_inset
 
-, we have
+
+\end_layout
+
+\begin_layout Corollary
+For any CV:
+\begin_inset Formula 
+\begin{equation}
+\boxed{\begin{aligned}\MDV{}{t}\int_{V^{C}}\phi\dd{V} & =\int_{V^{C}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{C}}\phi\vec{u}\cdot\vu{n}\dd{S}\\
+ & =\dv{t}\int_{V^{C}}\phi\dd{V}+\oint_{\partial V^{C}}\phi\left(\vec{u}-\vec{u}^{C}\right)\cdot\vu{n}\dd{S}
+\end{aligned}
+}\label{eq:MaterialDerivativeOnControlVolume}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Apply Reynolds transport theorem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ReynoldsTransportTheoremOnControlVolume"
+
+\end_inset
+
+ to 
+\begin_inset Formula $\dv{t}\int_{V^{S}}\phi\dd{V}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\dv{t}\int_{V^{S}}\phi\dd{V}=\int_{V^{S}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{S}}\phi\vec{u}^{S}\cdot\vu{n}\dd{S}\label{eq:ReynoldsTransportTheoremOnSystem}
+\end{equation}
+
+\end_inset
+
+By definition, 
+\begin_inset Formula $V^{S}$
+\end_inset
+
+ coincides with 
+\begin_inset Formula $V^{C}$
+\end_inset
+
+, and 
+\begin_inset Formula $\vec{u}^{S}=\vec{u}$
+\end_inset
+
+ on 
+\begin_inset Formula $\partial V^{S}$
+\end_inset
+
+, there are
 \begin_inset Formula 
 \[
-\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\int_{V^{C}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{C}}\phi\vec{u}\cdot\vu{n}\dd{S}}
+\begin{aligned}\int_{V^{S}}\pdv{\phi}{t}\dd{V} & =\int_{V^{C}}\pdv{\phi}{t}\dd{V}\\
+\oint_{\partial V^{S}}\phi\vec{u}^{S}\cdot\vu{n}\dd{S} & =\oint_{\partial V^{S}}\phi\vec{u}\cdot\vu{n}\dd{S}=\oint_{\partial V^{C}}\phi\vec{u}\cdot\vu{n}\dd{S}
+\end{aligned}
 \]
 
 \end_inset
 
-which is usually used for fixed control volumes, and
+Inserting them into the RHS of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ReynoldsTransportTheoremOnSystem"
+
+\end_inset
+
+ leads to the 1st line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MaterialDerivativeOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The 2nd line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MaterialDerivativeOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ comes immediately by substituting 
+\begin_inset Formula $\int_{V^{C}}\pdv{\phi}{t}\dd{V}$
+\end_inset
+
+ in the 1st line with
 \begin_inset Formula 
 \[
-\boxed{\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\dv{t}\int_{V^{C}}\phi\dd{V}+\oint_{\partial V^{C}}\phi\left(\vec{u}-\vec{u}^{C}\right)\cdot\vu{n}\dd{S}}
+\int_{V^{C}}\pdv{\phi}{t}\dd{V}=\dv{t}\int_{V^{C}}\phi\dd{V}-\oint_{\partial V^{C}}\phi\vec{u}\cdot\vu{n}\dd{S}
 \]
 
 \end_inset
 
-which is usually used for moving control volumes.
+which comes from Reynolds transport theorem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ReynoldsTransportTheoremOnControlVolume"
+
+\end_inset
+
+, too.
 \end_layout
 
 \begin_layout Subsubsection
-The Material Derivative at A Point
+Material Derivative at A Point
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $\phi\vec{u}\in C^{1}(V)$
+\end_inset
+
+, then Gauss's divergence theorem can be applied to the surface integral
+ in the first line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MaterialDerivativeOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which leads to
+\begin_inset Formula 
+\[
+\MDV{}{t}\int_{V}\phi\dd{V}=\int_{V}\left(\pdv{\phi}{t}+\div(\phi\vec{u})\right)\dd{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Apply the mean value theorem on both sides, we have
+\begin_inset Formula 
+\[
+\MDV{\ev{\phi}\abs{V}}{t}=\ev{\pdv{\phi}{t}+\div(\phi\vec{u})}\abs{V}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\abs{V}:=\int_{V}1\dd{V}\qc\ev{\cdots}:=\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, if 
+\begin_inset Formula $\vec{u}\in C^{1}(V)$
+\end_inset
+
+, then 
+\begin_inset Formula $\div{\vec{u}}$
+\end_inset
+
+ exists every where and
+\begin_inset Formula 
+\[
+\MDV{\abs{V}}{t}=\oint_{V}\dd{V}=\ev{\div{\vec{u}}}\abs{V}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Shrink 
+\begin_inset Formula $V$
+\end_inset
+
+ to an infinitesimal body, the variation of the integrand with respect to
+ 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ can be ignored, which leads to
+\begin_inset Formula 
+\[
+\begin{aligned}\MDV{\phi\abs{V}}{t} & \doteq\left(\pdv{\phi}{t}+\div(\phi\vec{u})\right)\abs{V}\\
+\MDV{\abs{V}}{t} & \doteq\left(\div{\vec{u}}\right)\abs{V}
+\end{aligned}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\doteq$
+\end_inset
+
+ means the equality is hold when 
+\begin_inset Formula $\abs{V}\to0$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -394,11 +853,15 @@ If
 \begin_inset Formula $\phi$
 \end_inset
 
- is 
+ is also 
 \begin_inset Formula $C^{1}$
 \end_inset
 
- smooth, we have
+ smooth for 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, then we have
 \begin_inset Formula 
 \[
 \div(\phi\vec{u})=\phi\div\vec{u}+\vec{u}\cdot\grad{\phi}
@@ -406,79 +869,80 @@ If
 
 \end_inset
 
-If 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- is also 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth, then 
-\begin_inset Formula $\phi\vec{u}$
-\end_inset
-
- will automatically be 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth.
- Gauss's divergence theorem can be applied to surface integrals, which leads
- to
+which leads to
 \begin_inset Formula 
 \[
-\MDV{}{t}\int_{V^{C}}\phi\dd{V}=\int_{V^{C}}\left(\pdv{\phi}{t}+\div(\phi\vec{u})\right)\dd{V}
+\MDV{\phi\abs{V}}{t}-\phi\MDV{\abs{V}}{t}\doteq\left(\pdv{\phi}{t}+\vec{u}\cdot\grad{\phi}\right)\abs{V}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Shrink the integral domain to a infinitesimal body, the variation of the
- integrand can be ignored, which leads to
-\begin_inset Formula 
-\[
-\abs{V}\MDV{\phi}{t}+\phi\MDV{\abs{V}}{t}\doteq\left(\pdv{\phi}{t}+\div(\phi\vec{u})\right)\abs{V}\qc\abs{V}=\int_{V^{C}}1\dd{V}
-\]
-
-\end_inset
-
-Here the 
-\begin_inset Formula $\doteq$
-\end_inset
-
- means the equality is in the limit sense, i.e.
- when 
-\begin_inset Formula $\abs{V}\to0$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- is 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth, we have
-\begin_inset Formula 
-\[
-\MDV{\abs{V}}{t}=\int_{V^{C}}\div\vec{u}\dd{V}\doteq\abs{V}\div\vec{u}
-\]
-
-\end_inset
-
-Cancel all the 
-\begin_inset Formula $\abs{V}$
-\end_inset
-
-'s, we get the formula of the material derivative at a point
+It is then natural to 
+\emph on
+denote
+\emph default
+ the parenthesized quantity in the RHS as
 \begin_inset Formula 
 \[
 \boxed{\MDV{\phi}{t}=\pdv{\phi}{t}+\vec{u}\cdot\grad{\phi}}
+\]
+
+\end_inset
+
+which is taken as the 
+\emph on
+definition
+\emph default
+ of the 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+derivative!material ~!~ at a point
+\end_layout
+
+\end_inset
+
+
+\noun on
+material derivative
+\noun default
+ at a point.
+ The 
+\begin_inset Formula $\pdv{t}$
+\end_inset
+
+ is called the 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+derivative!local ~
+\end_layout
+
+\end_inset
+
+local derivative while 
+\begin_inset Formula $\vec{u}\cdot\grad$
+\end_inset
+
+ is called the 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+derivative!convective ~
+\end_layout
+
+\end_inset
+
+convective derivative.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula 
+\[
+\MDV{\phi\abs{V}}{t}=\phi\MDV{\abs{V}}{t}+\abs{V}\MDV{\phi}{t}
 \]
 
 \end_inset
@@ -491,7 +955,7 @@ Conservation Laws
 \end_layout
 
 \begin_layout Subsection
-The Entropy Condition
+Entropy Condition
 \end_layout
 
 \end_body
