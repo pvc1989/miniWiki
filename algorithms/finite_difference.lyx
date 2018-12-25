@@ -125,7 +125,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-Linear Schemes
+Linear Finite Difference Schemes
 \end_layout
 
 \begin_layout Subsection
@@ -498,7 +498,7 @@ Conservative Schemes
 \end_layout
 
 \begin_layout Subsection
-Temporal Discretization
+Time Marching
 \end_layout
 
 \begin_layout Subsubsection
@@ -601,8 +601,8 @@ This is a large family of time marching schemes.
 \begin_inset Formula 
 \[
 \begin{aligned}U^{(1)} & =U^{n}+F^{n}\\
-U^{(2)} & =\frac{3U^{n}+\left(U^{(1)}+F^{(1)}\Delta t\right)}{4}\\
-U^{n+1} & =\frac{U^{n}+2\left(U^{(2)}+F^{(2)}\Delta t\right)}{3}
+U^{(2)} & =\frac{3}{4}U^{n}+\frac{1}{4}\left(U^{(1)}+F^{(1)}\Delta t\right)\\
+U^{n+1} & =\frac{1}{3}U^{n}+\frac{2}{3}\left(U^{(2)}+F^{(2)}\Delta t\right)
 \end{aligned}
 \]
 
@@ -2145,7 +2145,7 @@ Effect of Truncation Error
 To study the effect of the truncation error of a spatial scheme, we shall
  adopt 
 \emph on
-semi-discretized
+semi-discrete
 \emph default
  analysis, which assumes temporal derivatives are calculated exactly.
 \end_layout
@@ -2449,7 +2449,7 @@ u_{i}(0)=e^{\sqrt{-1}Kx_{i}}\qc i=0,1,\dots,N
 
 \end_inset
 
-The semi-discretized scheme becomes
+The semi-discrete scheme becomes
 \begin_inset Formula 
 \[
 \dv{A(t)}{t}+\tilde{K}cA(t)=0
