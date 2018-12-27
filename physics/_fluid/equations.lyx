@@ -13,10 +13,13 @@
 \usepackage[e]{esvect}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
 \renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 \renewcommand{\hat}[1]{\widehat{#1}}
 \renewcommand{\tilde}[1]{\widetilde{#1}}
+
+\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
+\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Tensor}[1]{\vv{\vv{\vb*{#1}}}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -257,6 +260,15 @@ Generally,
 \end_inset
 
  as 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{u}^{c}$"
+description "velocity of a point on a control surface"
+literal "true"
+
+\end_inset
+
+
 \begin_inset Formula $\vec{u}^{c}$
 \end_inset
 
@@ -270,6 +282,15 @@ c
 \bar default
 ontrol volume), in order to distinguish it from the velocity of a fluid
  particle 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{u}$"
+description "velocity of a fluid particle"
+literal "true"
+
+\end_inset
+
+
 \begin_inset Formula $\vec{u}$
 \end_inset
 
@@ -609,6 +630,15 @@ derivative!material ~!~ of an integral
 \end_inset
 
  at the same time, i.e.
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\DDt{}$"
+description "material derivative"
+literal "true"
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \boxed{\DDt{}\int_{V^{c}}\phi\dd{V}:=\dv{t}\int_{V^{m}}\phi\dd{V}}
@@ -1002,7 +1032,916 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
+Thermodynamics and Fluid Models
+\end_layout
+
+\begin_layout Subsubsection
+Ideal Gases
+\end_layout
+
+\begin_layout Subsubsection
+First Law of Thermodynamics
+\end_layout
+
+\begin_layout Subsubsection
+Second Law of Thermodynamics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}s\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\frac{\vec{q}}{T}\right)\dd{S}\ge0\label{eq:2ndLawsOfThermodynamicsIntegralForm}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$s$"
+description "entropy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $s$
+\end_inset
+
+ is the entropy per unit mass, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$T$"
+description "temperature"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $T$
+\end_inset
+
+ is the temperature.
+\end_layout
+
+\begin_layout Standard
+Similarly, the 2nd law of thermodynamics 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:2ndLawsOfThermodynamicsIntegralForm"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\rho\DDt{s}+\div{\left(\frac{\vec{q}}{T}\right)}\dd{S}\ge0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fourier's Law of Heat Conduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{q}=-\kappa\grad{T}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{q}$"
+description "heat flux vector"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+ is the heat flux vector
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+flux!~ vector!heat ~
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
 Conservation Laws
+\end_layout
+
+\begin_layout Subsubsection
+Conservation of Mass
+\end_layout
+
+\begin_layout Axiom
+The total mass in a material body is conserved.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This axiom can be written as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\rho\dd{V}=0\label{eq:ConservationOfMassWithDDt}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\rho$"
+description "density of mass"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the density of mass.
+\end_layout
+
+\begin_layout Subsubsection
+Conservation of Momentum
+\end_layout
+
+\begin_layout Axiom
+The change rate of the total momentum in a material body is equal to the
+ total external force applied on the interior and the boundary of that body.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This axiom can be written as
+\begin_inset Formula 
+\[
+\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\sigma}\dd{S}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{b}$"
+description "body force per unit volume"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\vec{b}$
+\end_inset
+
+ is the vector of external body force per unit volume, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\Tensor{\\sigma}$"
+description "stress tensor"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\Tensor{\sigma}$
+\end_inset
+
+ is the stress tensor
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+tensor!stress ~
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vu{n}$"
+description "unit outward normal vector"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\vu{n}$
+\end_inset
+
+ is the unit outward normal vector, 
+\begin_inset Formula $\vu{n}\cdot\Tensor{\sigma}$
+\end_inset
+
+ is thus the vector of external surface force per unit area.
+\end_layout
+
+\begin_layout Standard
+The stress tensor 
+\begin_inset Formula $\Tensor{\sigma}$
+\end_inset
+
+ can always be separately into an isotropic tensor of pressure
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+tensor!isotropic ~!~ of pressure
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $-p\Tensor{1}$
+\end_inset
+
+ plus a shear stress tensor
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!stress ~!shear ~
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\Tensor{\\tau}$"
+description "shear stress tensor"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\Tensor{\tau}$
+\end_inset
+
+.
+ Here, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\Tensor{1}$"
+description "unit isotropic tensor"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\Tensor{1}$
+\end_inset
+
+ is the unit isotropic tensor
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+tensor!isotropic ~!unit
+\end_layout
+
+\end_inset
+
+ satisfying
+\begin_inset Formula 
+\[
+\Tensor{1}\cdot\vec{v}=\vec{v}=\vec{v}\cdot\Tensor{1}\quad\forall\vec{v}
+\]
+
+\end_inset
+
+The formula for the axiom then becomes
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vu{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\tau}\dd{S}\label{eq:ConservationOfMomentumWithDDt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Conservation of Angular Momentum
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sigma_{\alpha\gamma}=\sigma_{\gamma\alpha}\quad\forall\alpha,\gamma=1,2,3
+\]
+
+\end_inset
+
+or equivalently
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tau_{\alpha\gamma}=\tau_{\gamma\alpha}\quad\forall\alpha,\gamma=1,2,3
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Conservation of Energy
+\end_layout
+
+\begin_layout Axiom
+The change rate of the total energy in a material body is equal to the net
+ rate of generation of heat generated from internal sources plus the total
+ work done by the exterior to the body, minus the net heat loss by conduction.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This axiom can be written as
+\begin_inset Formula 
+\[
+\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V}j\dd{V}-\oint_{\partial V}\vu{n}\cdot\vec{q}\dd{S}\\
+ & +\int_{V}\vec{b}\cdot\vec{u}\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\Tensor{\sigma}\cdot\vec{u}\right)\dd{S}
+\end{aligned}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$e$"
+description "internal energy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $e$
+\end_inset
+
+ is the internal energy (a.k.a.
+ thermodynamic energy) per unit mass, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$j$"
+description "rate of heat generation per unit volume"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $j$
+\end_inset
+
+ is the rate of heat generation per unit volume.
+\end_layout
+
+\begin_layout Standard
+Again, if we take 
+\begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
+\end_inset
+
+ into account, the formula for the axiom then becomes
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned} & \DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}+\oint_{\partial V}\vu{n}\cdotp\vec{u}\dd{S}\\
+= & \int_{V}\left(\vec{b}\cdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\Tensor{\tau}\cdot\vec{u}-\vec{q}\right)\dd{S}
+\end{aligned}
+\label{eq:ConservationOfEnergyWithDDt}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary of Conservation Laws
+\end_layout
+
+\begin_layout Subsubsection
+Integral Equations
+\end_layout
+
+\begin_layout Standard
+Write the three conservation laws (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ConservationOfMassWithDDt"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ConservationOfMomentumWithDDt"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ConservationOfEnergyWithDDt"
+
+\end_inset
+
+) in matrix form:
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}U\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsWithDDt}
+\end{equation}
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+U=\begin{bmatrix}\rho\\
+\vec{u}\rho\\
+E\rho
+\end{bmatrix}\quad\vec{P}=\begin{bmatrix}\vec{0}\\
+p\Tensor{1}\\
+p\vec{u}
+\end{bmatrix}\quad\vec{G}=\begin{bmatrix}\vec{0}\\
+\Tensor{\tau}\\
+\Tensor{\tau}\cdot\vec{u}-\vec{q}
+\end{bmatrix}\quad H=\begin{bmatrix}0\\
+\vec{b}\\
+\vec{b}\cdot\vec{u}+j
+\end{bmatrix}
+\]
+
+\end_inset
+
+Apply the first line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to 
+\begin_inset Formula $\DDt{}\int_{V}\cdots\dd{V}$
+\end_inset
+
+ and denote 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$E:=e+\\frac{1}{2}\\abs{\\vec{u}}^{2}$"
+description "total (internal + kinetic) energy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $E:=e+\abs{\vec{u}}^{2}/2$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{F}=\vec{u}U+\vec{P}$
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsWithDDt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ becomes
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\pdv{U}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsWithoutDDt}
+\end{equation}
+
+\end_inset
+
+This is the most general form of the governing equations of (continuum)
+ fluid dynamics.
+\end_layout
+
+\begin_layout Standard
+Alternatively, if we apply the second line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to 
+\begin_inset Formula $\DDt{}\int_{V}\cdots\dd{V}$
+\end_inset
+
+ and denote
+\begin_inset Formula 
+\[
+\vec{F}^{c}=\vec{F}-\vec{u}^{c}U=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
+\vec{u}\rho\\
+E\rho
+\end{bmatrix}+\begin{bmatrix}\vec{0}\\
+p\Tensor{1}\\
+p\vec{u}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsWithDDt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ will then become
+\begin_inset Formula 
+\begin{equation}
+\dv{t}\int_{V}U\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{F}^{c}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsForMovingControlVolume}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Differential Equations in Conservative Form
+\end_layout
+
+\begin_layout Standard
+If the integrands in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsWithoutDDt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are sufficiently smooth, then Gauss's divergence theorem can be applied
+ to them, which leads to
+\begin_inset Formula 
+\begin{equation}
+\pdv{U}{t}+\div{\vec{F}}=\div{\vec{G}}+H\label{eq:ConservationLawsInDifferentialForm}
+\end{equation}
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\begin{aligned}\pdv{\rho}{t}+\div{\left(\vec{u}\rho\right)} & =0\\
+\pdv{\vec{u}\rho}{t}+\div{\left(\vec{u}\vec{u}\rho+p\Tensor{1}\right)} & =\div{\Tensor{\tau}}+\vec{b}\\
+\pdv{E\rho}{t}+\div{\left(\vec{u}E\rho+p\vec{u}\right)} & =\div{\left(\Tensor{\tau}\cdot\vec{u}-\vec{q}\right)}+\vec{b}\cdot\vec{u}+j
+\end{aligned}
+\]
+
+\end_inset
+
+Using the Cartesian tensor index notation, they are
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\begin{bmatrix}\rho\\
+u_{1}\rho\\
+u_{2}\rho\\
+u_{3}\rho\\
+E\rho
+\end{bmatrix}+\partial_{\alpha}\begin{bmatrix}u_{\alpha}\rho\\
+u_{\alpha}u_{1}\rho+p\delta_{\alpha1}\\
+u_{\alpha}u_{2}\rho+p\delta_{\alpha2}\\
+u_{\alpha}u_{3}\rho+p\delta_{\alpha3}\\
+u_{\alpha}E\rho+pu_{\alpha}
+\end{bmatrix}=\partial_{\alpha}\begin{bmatrix}0\\
+\tau_{\alpha1}\\
+\tau_{\alpha2}\\
+\tau_{\alpha3}\\
+\tau_{\alpha\gamma}u_{\gamma}-q_{\alpha}
+\end{bmatrix}+\begin{bmatrix}0\\
+b_{1}\\
+b_{2}\\
+b_{3}\\
+b_{\alpha}u_{\alpha}+j
+\end{bmatrix}\label{eq:ConservationLaws3dCartesianTensor}
+\end{equation}
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\partial_{t}:=\pdv*{t}$
+\end_inset
+
+, 
+\begin_inset Formula $\partial_{\alpha}:=\pdv*{x_{\alpha}}$
+\end_inset
+
+, 
+\begin_inset Formula $E=e+\frac{1}{2}u_{\alpha}u_{\alpha}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Differential Equations in Non-Conservative Form
+\end_layout
+
+\begin_layout Lemma
+Suppose 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smooth for both 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the density of mass, then 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ operating on an integral can be put inside according to the following rule:
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\phi\rho\dd{V}=\int_{V}\DDt{\phi}\rho\dd{V}\label{eq:DDtInsdeIntegral}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Apply the first line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtOnControlVolume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and Gauss's divergence theorem to the LHS:
+\begin_inset Formula 
+\[
+\begin{aligned}\DDt{}\int_{V}\phi\rho\dd{V} & =\int_{V}\pdv{\phi\rho}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{u}\phi\rho\dd{S}\\
+ & =\int_{V}\left(\pdv{\phi\rho}{t}+\div{\left(\vec{u}\phi\rho\right)}\right)\dd{V}
+\end{aligned}
+\]
+
+\end_inset
+
+Apply 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtAtPoint"
+
+\end_inset
+
+ to the RHS of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtInsdeIntegral"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\int_{V}\DDt{\phi}\rho\dd{V}=\int_{V}\left(\pdv{\phi}{t}\rho+\vec{u}\rho\cdot\grad{\phi}\right)\dd{V}
+\]
+
+\end_inset
+
+Compare these two integrals, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDtInsdeIntegral"
+
+\end_inset
+
+ is true iff
+\begin_inset Formula 
+\[
+\int_{V}\left(\pdv{\rho}{t}+\div{\left(\vec{u}\rho\right)}\right)\phi\dd{V}=0
+\]
+
+\end_inset
+
+The integrand is always zero, since the parenthesized term is the LHS of
+ the equation for mass conservation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $U=W\rho$
+\end_inset
+
+ where 
+\begin_inset Formula $W=\begin{bmatrix}1 & \vec{u} & E\end{bmatrix}^{\dagger}$
+\end_inset
+
+.
+ So, this lemma can be applied to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsWithDDt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which becomes
+\begin_inset Formula 
+\[
+\int_{V}\DDt{W}\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}
+\]
+
+\end_inset
+
+Again, if the integrands are sufficiently smooth, then Gauss's divergence
+ theorem can be applied to them, which leads to
+\begin_inset Formula 
+\[
+\rho\DDt{W}+\div{\vec{P}}=\div{\vec{G}}+H
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\DDt{\rho} & =-\rho\div{\vec{u}}\\
+\rho\DDt{\vec{u}} & =\div{\Tensor{\sigma}}+\vec{b}\\
+\rho\DDt{E} & =\div{\left(\Tensor{\sigma}\cdot\vec{u}-\vec{q}\right)}+\vec{b}\cdot\vec{u}+j
+\end{aligned}
+\label{eq:ConservationLawsNonConservativeForm}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Energy Conservation in Other Forms
+\end_layout
+
+\begin_layout Standard
+Take inner product of the second line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\vec{u}\cdot\rho\DDt{\vec{u}}=\vec{u}\cdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)
+\]
+
+\end_inset
+
+Recall that 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ is a linear operator, the LHS then becomes
+\begin_inset Formula 
+\[
+\vec{u}\cdot\rho\DDt{\vec{u}}=\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}
+\]
+
+\end_inset
+
+The resulting equation
+\begin_inset Formula 
+\[
+\boxed{\rho\DDt{\abs{\vec{u}}^{2}/2}=\vec{u}\cdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)}
+\]
+
+\end_inset
+
+is the formula for the material derivative of kinetic energy per unit mass.
+\end_layout
+
+\begin_layout Standard
+Subtract it from the third line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and recall that 
+\begin_inset Formula $E=e+\abs{\vec{u}}^{2}/2$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\boxed{\rho\DDt{e}=\Tensor{\sigma}\cdot\left(\div{\vec{u}}\right)-\div{\vec{q}}+j}
+\]
+
+\end_inset
+
+which is the formula for the material derivative of internal energy per
+ unit mass.
 \end_layout
 
 \begin_layout Subsection

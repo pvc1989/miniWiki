@@ -12,8 +12,14 @@
 \renewcommand{\div}{\boldsymbol{\nabla}\cdot}
 \usepackage[e]{esvect}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
+\renewcommand{\hat}[1]{\widehat{#1}}
+\renewcommand{\tilde}[1]{\widetilde{#1}}
+
+\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 \newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\newcommand{\Tensor}[1]{\vv{\vv{\vb*{#1}}}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -2640,7 +2646,7 @@ conservation law
  can be written as 
 \begin_inset Formula 
 \[
-\MDV{}{t}\int_{V^{C}}\rho\dd{V}=\boxed{\int_{V^{C}}\pdv{\rho}{t}\dd{V}+\oint_{\partial V^{C}}\vec{f}\cdot\vu{n}\dd{S}=0}
+\DDt{}\int_{V^{C}}\rho\dd{V}=\boxed{\int_{V^{C}}\pdv{\rho}{t}\dd{V}+\oint_{\partial V^{C}}\vec{f}\cdot\vu{n}\dd{S}=0}
 \]
 
 \end_inset
@@ -2652,7 +2658,7 @@ fixed
  control volumes, or
 \begin_inset Formula 
 \begin{equation}
-\MDV{}{t}\int_{V^{C}}\rho\dd{V}=\boxed{\dv{t}\int_{V^{C}}\rho\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\rho\vec{u}^{C}\right)\cdot\vu{n}\dd{S}=0}\label{eq:ConservationLawOnMovingControlVolume}
+\DDt{}\int_{V^{C}}\rho\dd{V}=\boxed{\dv{t}\int_{V^{C}}\rho\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\rho\vec{u}^{C}\right)\cdot\vu{n}\dd{S}=0}\label{eq:ConservationLawOnMovingControlVolume}
 \end{equation}
 
 \end_inset
