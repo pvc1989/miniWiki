@@ -16,6 +16,8 @@
 \renewcommand{\hat}[1]{\widehat{#1}}
 \renewcommand{\tilde}[1]{\widetilde{#1}}
 
+\usepackage[squaren,thinspace]{SIunits}
+
 \newcommand{\minmod}{\mathop{\mathrm{minmod}}}
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 \newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
@@ -171,6 +173,884 @@ Euler!~ian description
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Thermodynamics and Fluid Models
+\end_layout
+
+\begin_layout Subsubsection
+State Variables
+\end_layout
+
+\begin_layout Standard
+A thermodynamic quantity is called 
+\emph on
+extensive
+\emph default
+, if it is proportional to the mass 
+\begin_inset Formula $m$
+\end_inset
+
+ of the system, or 
+\emph on
+intensive
+\emph default
+, if it is independent of 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Extensive quantities can be converted to their 
+\emph on
+specific
+\emph default
+ (or 
+\emph on
+intensive
+\emph default
+) counterparts by dividing by 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Intensive Quantities
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Extensive Quantities
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $T$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+absolute temperature
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$T$"
+description "absolute temperature"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pressure
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$p$"
+description "pressure"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+density of mass
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\rho$"
+description "density of mass"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $m:=\int_{V}\rho\dd{V}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mass
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $v:=1/\rho$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+specific volume
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$v$"
+description "specific volume"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V:=\int_{V}1\dd{V}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+volume
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $e$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+specific internal energy
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$e$"
+description "internal energy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $h:=e+p/\rho$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+specific enthalpy
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$h$"
+description "enthalpy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+specific entropy
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$s$"
+description "entropy per unit mass"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Equations of State
+\end_layout
+
+\begin_layout Standard
+A system in thermodynamic equilibrium can be completely described by 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ Other thermodynamic quantities can be obtained from the equations of state,
+ such as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T=T(p,v)\qor e=e(p,T)\qor h=h(T,v)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Specific Heat Capacities
+\end_layout
+
+\begin_layout Standard
+Define
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c_{v}:=\pdv{e}{T}\qc c_{p}:=\pdv{h}{T}\qc\gamma:=\frac{c_{p}}{c_{v}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c_{v}$
+\end_inset
+
+ is the 
+\noun on
+specific heat capacity at constant volume
+\noun default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$c_v$"
+description "specific heat capacity at constant volume"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c_{p}$
+\end_inset
+
+ is the 
+\noun on
+specific heat capacity at constant pressure
+\noun default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$c_p$"
+description "specific heat capacity at constant pressure"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is the 
+\noun on
+heat capacity ratio
+\noun default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\gamma$"
+description "heat capacity ratio"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Perfect Gases
+\end_layout
+
+\begin_layout Standard
+A gas is
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+thermally perfect
+\emph default
+, if its 
+\begin_inset Formula $c_{v}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{p}$
+\end_inset
+
+ are univariate functions of 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+calorically perfect
+\emph default
+, if its 
+\begin_inset Formula $c_{v}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{p}$
+\end_inset
+
+ are constants.
+\end_layout
+
+\begin_layout Paragraph
+Ideal Gases
+\end_layout
+
+\begin_layout Standard
+For ideal gases, the equation of state is given as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+pV=n\bar{R}T
+\]
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+ is the 
+\noun on
+amount of substance
+\noun default
+ of the gas (in moles)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bar{R}=8.3144598(48)~\joulepermolekelvinnp$
+\end_inset
+
+ is the 
+\noun on
+universal gas constant
+\end_layout
+
+\begin_layout Standard
+or equivalently
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p=\rho RT\qc R=\frac{\bar{R}}{M}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $R$
+\end_inset
+
+ is the gas constant for that gas whose 
+\noun on
+molecular mass
+\noun default
+ is 
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+For ideal gases, there are
+\begin_inset Formula 
+\[
+h=e+RT\qc c_{p}-c_{v}\equiv R\qc c_{v}=\frac{R}{\gamma-1}\qc c_{p}=\frac{\gamma R}{\gamma-1}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $c_{v},c_{p},\gamma$
+\end_inset
+
+ may be functions of 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+First Law of Thermodynamics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta q=\dd{e}+p\dd{v}
+\]
+
+\end_inset
+
+The LHS is 
+\begin_inset Formula $\delta q$
+\end_inset
+
+ rather than 
+\begin_inset Formula $\dd{q}$
+\end_inset
+
+, because the RHS is not an 
+\begin_inset CommandInset href
+LatexCommand href
+name "exact differential"
+target "https://en.wikipedia.org/wiki/Exact_differential"
+literal "false"
+
+\end_inset
+
+.
+ By multiplying an 
+\begin_inset CommandInset href
+LatexCommand href
+name "integrating factor"
+target "https://en.wikipedia.org/wiki/Integrating_factor"
+literal "false"
+
+\end_inset
+
+ 
+\begin_inset Formula $1/T$
+\end_inset
+
+, it becomes exact, which is denoted as 
+\begin_inset Formula $\dd{s}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\dd{s}=\frac{\dd{e}+p\dd{v}}{T}
+\]
+
+\end_inset
+
+Its integral 
+\begin_inset Formula $s$
+\end_inset
+
+ is called the 
+\noun on
+specific entropy
+\noun default
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$s$"
+description "specific entropy"
+literal "true"
+
+\end_inset
+
+, which is essential in the 2nd law of thermodynamics.
+\end_layout
+
+\begin_layout Subsubsection
+Second Law of Thermodynamics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dd{s}=\frac{\delta q_{\text{rev}}}{T}=\frac{\delta q}{T}+\dd{s_{\text{irrev}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dd{s}\ge\frac{\delta q}{T}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dd{s}=\frac{c_{v}\dd{T}}{T}-R\frac{\dd{\rho}}{\rho}=\frac{c_{p}\dd{T}}{T}-R\frac{\dd{p}}{p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+s_{2}-s_{1}=c_{v}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{\rho_{2}}{\rho_{1}}=c_{p}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{p_{2}}{p_{1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}s\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\frac{\vec{q}}{T}\right)\dd{S}\ge0\label{eq:2ndLawsOfThermodynamicsIntegralForm}
+\end{equation}
+
+\end_inset
+
+or
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\rho\DDt{s}+\div{\left(\frac{\vec{q}}{T}\right)}\dd{S}\ge0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fourier's Law of Heat Conduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{q}=-\kappa\grad{T}
+\]
+
+\end_inset
+
+in which, 
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{q}$"
+description "heat flux vector"
+literal "true"
+
+\end_inset
+
+
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+ is the heat flux vector
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+flux!~ vector!heat ~
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -1032,119 +1912,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Thermodynamics and Fluid Models
-\end_layout
-
-\begin_layout Subsubsection
-Ideal Gases
-\end_layout
-
-\begin_layout Subsubsection
-First Law of Thermodynamics
-\end_layout
-
-\begin_layout Subsubsection
-Second Law of Thermodynamics
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\DDt{}\int_{V}s\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\frac{\vec{q}}{T}\right)\dd{S}\ge0\label{eq:2ndLawsOfThermodynamicsIntegralForm}
-\end{equation}
-
-\end_inset
-
-in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$s$"
-description "entropy per unit mass"
-literal "true"
-
-\end_inset
-
-
-\begin_inset Formula $s$
-\end_inset
-
- is the entropy per unit mass, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$T$"
-description "temperature"
-literal "true"
-
-\end_inset
-
-
-\begin_inset Formula $T$
-\end_inset
-
- is the temperature.
-\end_layout
-
-\begin_layout Standard
-Similarly, the 2nd law of thermodynamics 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:2ndLawsOfThermodynamicsIntegralForm"
-
-\end_inset
-
- becomes
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\rho\DDt{s}+\div{\left(\frac{\vec{q}}{T}\right)}\dd{S}\ge0
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Fourier's Law of Heat Conduction
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\vec{q}=-\kappa\grad{T}
-\]
-
-\end_inset
-
-in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\vec{q}$"
-description "heat flux vector"
-literal "true"
-
-\end_inset
-
-
-\begin_inset Formula $\vec{q}$
-\end_inset
-
- is the heat flux vector
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-flux!~ vector!heat ~
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
 Conservation Laws
 \end_layout
 
@@ -1175,20 +1942,7 @@ This axiom can be written as
 
 \end_inset
 
-in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\rho$"
-description "density of mass"
-literal "true"
 
-\end_inset
-
-
-\begin_inset Formula $\rho$
-\end_inset
-
- is the density of mass.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1412,20 +2166,6 @@ This axiom can be written as
 \end_inset
 
 in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$e$"
-description "internal energy per unit mass"
-literal "true"
-
-\end_inset
-
-
-\begin_inset Formula $e$
-\end_inset
-
- is the internal energy (a.k.a.
- thermodynamic energy) per unit mass, 
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "$j$"
@@ -1868,7 +2608,7 @@ or equivalently
 \end_layout
 
 \begin_layout Subsubsection
-Energy Conservation in Other Forms
+Other Forms of Energy Conservation
 \end_layout
 
 \begin_layout Standard
@@ -1918,7 +2658,7 @@ is the formula for the material derivative of kinetic energy per unit mass.
 \end_layout
 
 \begin_layout Standard
-Subtract it from the third line of 
+Subtract it from the 3rd line of 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ConservationLawsNonConservativeForm"
@@ -1942,6 +2682,144 @@ noprefix "false"
 
 which is the formula for the material derivative of internal energy per
  unit mass.
+\end_layout
+
+\begin_layout Paragraph
+Bernoulli's Equation
+\end_layout
+
+\begin_layout Standard
+The surface force term in the energy equation, i.e.
+ the 3rd line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLawsNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, is
+\begin_inset Formula 
+\[
+\begin{aligned}\div{\left(\Tensor{\sigma}\cdot\vec{u}\right)} & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\div{\left(p\vec{u}\right)}\\
+ & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\vec{u}\cdot\grad{p}-p\div{\vec{u}}\\
+ & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\vec{u}\cdot\grad{p}+\frac{p}{\rho}\DDt{\rho}
+\end{aligned}
+\]
+
+\end_inset
+
+in which,
+\begin_inset Formula 
+\[
+\begin{aligned}\vec{u}\cdot\grad{p} & =\DDt{p}-\pdv{p}{t}\\
+p\div{\vec{u}} & =\frac{p}{\rho}\DDt{\rho}=p\rho\DDt{}\frac{1}{\rho}
+\end{aligned}
+\]
+
+\end_inset
+
+Substituting them back into the energy equation and collecting all the 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ terms leads to
+\begin_inset Formula 
+\[
+\rho\DDt{}\left(e+\frac{\abs{\vec{u}}^{2}}{2}+\frac{p}{\rho}\right)=\pdv{p}{t}+\div{\left(\Tensor{\tau}\cdot\vec{u}-\vec{q}\right)}+\vec{b}\cdot\vec{u}+j
+\]
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\vec{b}=\grad{\phi}$
+\end_inset
+
+, the flow is steady and ignore heat source and heat conduction, it becomes
+\begin_inset Formula 
+\begin{equation}
+\boxed{\DDt{}\left(h+\phi+\abs{\vec{u}}^{2}/2\right)=0}\label{eq:BernoulliEquationInDifferentialForm}
+\end{equation}
+
+\end_inset
+
+This is the differential form of Bernoulli's equation.
+\end_layout
+
+\begin_layout Standard
+If the flow is 
+\emph on
+isentropic
+\emph default
+, there is
+\begin_inset Formula 
+\[
+T\dd{s}=\dd{h}-v\dd{p}=0
+\]
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BernoulliEquationInDifferentialForm"
+
+\end_inset
+
+ can be integrated along any 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+trajectory line, e.g.
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $C$
+\end_inset
+
+, which gives
+\begin_inset Formula 
+\begin{equation}
+\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\quad\forall\vec{x}\in C}\label{eq:BernoulliEquationInAlgebraicForm}
+\end{equation}
+
+\end_inset
+
+If the flow is also 
+\emph on
+incompressible
+\emph default
+, it will become
+\begin_inset Formula 
+\begin{equation}
+\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\quad\forall\vec{x}}\label{eq:BernoulliEquationForIncompressibleFlow}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
