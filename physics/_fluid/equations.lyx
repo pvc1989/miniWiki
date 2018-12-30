@@ -176,7 +176,7 @@ Euler!~ian description
 \end_layout
 
 \begin_layout Subsection
-Thermodynamics and Fluid Models
+Thermodynamics
 \end_layout
 
 \begin_layout Subsubsection
@@ -665,7 +665,7 @@ Define
 \begin_layout Standard
 \begin_inset Formula 
 \[
-c_{v}:=\pdv{e}{T}\qc c_{p}:=\pdv{h}{T}\qc\gamma:=\frac{c_{p}}{c_{v}}
+c_{v}:=\eval{\pdv{e}{T}}_{v}\qquad c_{p}:=\eval{\pdv{h}{T}}_{p}\qquad\gamma:=\frac{c_{p}}{c_{v}}
 \]
 
 \end_inset
@@ -830,7 +830,7 @@ or equivalently
 \begin_layout Standard
 \begin_inset Formula 
 \[
-p=\rho RT\qc R=\frac{\bar{R}}{M}
+p=\rho RT\qquad R=\frac{\bar{R}}{M}
 \]
 
 \end_inset
@@ -854,12 +854,12 @@ molecular mass
 For ideal gases, there are
 \begin_inset Formula 
 \[
-h=e+RT\qc c_{p}-c_{v}\equiv R\qc c_{v}=\frac{R}{\gamma-1}\qc c_{p}=\frac{\gamma R}{\gamma-1}
+h=e+RT\qquad c_{p}-c_{v}\equiv R\qquad c_{v}=\frac{R}{\gamma-1}\qquad c_{p}=\frac{\gamma R}{\gamma-1}
 \]
 
 \end_inset
 
-in which, 
+in which 
 \begin_inset Formula $c_{v},c_{p},\gamma$
 \end_inset
 
@@ -872,9 +872,25 @@ in which,
 
 \begin_layout Subsubsection
 First Law of Thermodynamics
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:1stLawOfThermodynamics"
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
+\begin_layout Axiom
+Heat put into a system 
+\begin_inset Formula $=$
+\end_inset
+
+ Increase in internal energy of the system 
+\begin_inset Formula $+$
+\end_inset
+
+ Work done by the system:
 \begin_inset Formula 
 \[
 \delta q=\dd{e}+p\dd{v}
@@ -882,6 +898,17 @@ First Law of Thermodynamics
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The LHS is 
 \begin_inset Formula $\delta q$
 \end_inset
@@ -890,7 +917,11 @@ The LHS is
 \begin_inset Formula $\dd{q}$
 \end_inset
 
-, because the RHS is not an 
+, since 
+\begin_inset Formula $q$
+\end_inset
+
+ is not a state variable and the RHS is generally not an 
 \begin_inset CommandInset href
 LatexCommand href
 name "exact differential"
@@ -913,73 +944,77 @@ literal "false"
 \begin_inset Formula $1/T$
 \end_inset
 
-, it becomes exact, which is denoted as 
-\begin_inset Formula $\dd{s}$
+, the LHS becomes the differential of specific entropy 
+\begin_inset Formula $s$
 \end_inset
 
-:
+ (which is a state variable) and the RHS becomes exact:
 \begin_inset Formula 
 \[
-\dd{s}=\frac{\dd{e}+p\dd{v}}{T}
+\dd{s}=\frac{\delta q}{T}=\frac{\dd{e}+p\dd{v}}{T}
 \]
 
 \end_inset
 
-Its integral 
-\begin_inset Formula $s$
-\end_inset
-
- is called the 
-\noun on
-specific entropy
-\noun default
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$s$"
-description "specific entropy"
-literal "true"
+So, the 1st law of thermodynamics can also be written as
+\begin_inset Formula 
+\begin{equation}
+T\dd{s}=\dd{e}+p\dd{v}=\dd{h}-v\dd{p}\label{eq:1stLawOfThermodynamics}
+\end{equation}
 
 \end_inset
 
-, which is essential in the 2nd law of thermodynamics.
+The 2nd line comes from 
+\begin_inset Formula $h:=e+pv$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
 Second Law of Thermodynamics
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dd{s}=\frac{\delta q_{\text{rev}}}{T}=\frac{\delta q}{T}+\dd{s_{\text{irrev}}}
-\]
+\begin_layout Axiom
+In a reversible cycle, the total entropy of the system does not change.
+ In an irreversible cycle, the total entropy of the system always increases.
+\end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
+For an ideal gas (
+\begin_inset Formula $p=\rho RT$
+\end_inset
+
+), the change of entropy between two states can be evaluated from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1stLawOfThermodynamics"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-\dd{s}\ge\frac{\delta q}{T}
+s_{2}-s_{1}=\int_{T_{1}}^{T_{2}}\frac{c_{v}\dd{T}}{T}-\int_{\rho_{1}}^{\rho_{2}}R\frac{\dd{\rho}}{\rho}=\int_{T_{1}}^{T_{2}}\frac{c_{p}\dd{T}}{T}-\int_{p_{1}}^{p_{2}}R\frac{\dd{p}}{p}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dd{s}=\frac{c_{v}\dd{T}}{T}-R\frac{\dd{\rho}}{\rho}=\frac{c_{p}\dd{T}}{T}-R\frac{\dd{p}}{p}
-\]
-
+If the gas is also calorically perfect (
+\begin_inset Formula $c_{v},c_{p}$
 \end_inset
 
-
+ are constants), the integrals have explicit results:
 \end_layout
 
 \begin_layout Standard
@@ -993,23 +1028,23 @@ s_{2}-s_{1}=c_{v}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{\rho_{2}}{\rho_{1}}=c_{p}\ln\f
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\DDt{}\int_{V}s\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\frac{\vec{q}}{T}\right)\dd{S}\ge0\label{eq:2ndLawsOfThermodynamicsIntegralForm}
-\end{equation}
+\begin_layout Subsubsection
+Third Law of Thermodynamics
+\end_layout
 
+\begin_layout Axiom
+\begin_inset Formula $S=0$
 \end_inset
 
-or
+ when 
+\begin_inset Formula $T=0$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-\rho\DDt{s}+\div{\left(\frac{\vec{q}}{T}\right)}\dd{S}\ge0
-\]
-
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1193,15 +1228,23 @@ material body
 \noun default
 
 \begin_inset Index idx
-status open
+status collapsed
 
 \begin_layout Plain Layout
-control!~ volume!material body
+control!~ volume!material body (system)
 \end_layout
 
 \end_inset
 
-, when 
+
+\noun on
+, 
+\noun default
+which is a 
+\noun on
+system
+\noun default
+ in terms of thermodynamics, when 
 \begin_inset Formula $\vec{u}^{c}$
 \end_inset
 
@@ -1292,7 +1335,7 @@ status open
 
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{u}^{c}\phi\dd{S}}\label{eq:ReynoldsTransportTheoremOnControlVolume}
+\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{u}^{c}\phi\dd{S}}\label{eq:ReynoldsTransportTheorem}
 \end{equation}
 
 \end_inset
@@ -1562,7 +1605,7 @@ For any CV:
 Apply Reynolds transport theorem 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ReynoldsTransportTheoremOnControlVolume"
+reference "eq:ReynoldsTransportTheorem"
 
 \end_inset
 
@@ -1650,7 +1693,7 @@ noprefix "false"
 which comes from Reynolds transport theorem 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ReynoldsTransportTheoremOnControlVolume"
+reference "eq:ReynoldsTransportTheorem"
 
 \end_inset
 
@@ -1700,7 +1743,7 @@ Apply the mean value theorem on both sides, we have
 in which
 \begin_inset Formula 
 \[
-\abs{V}:=\int_{V}1\dd{V}\qc\ev{\cdots}:=\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
+\abs{V}:=\int_{V}1\dd{V}\qquad\ev{\cdots}:=\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
 \]
 
 \end_inset
@@ -1919,19 +1962,8 @@ Conservation Laws
 Conservation of Mass
 \end_layout
 
-\begin_layout Axiom
-The total mass in a material body is conserved.
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This axiom can be written as
+When applied to a control volume, the law can be written as
 \end_layout
 
 \begin_layout Standard
@@ -1949,20 +1981,11 @@ This axiom can be written as
 Conservation of Momentum
 \end_layout
 
-\begin_layout Axiom
-The change rate of the total momentum in a material body is equal to the
- total external force applied on the interior and the boundary of that body.
+\begin_layout Standard
+When applied to a control volume, the law can be written as
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This axiom can be written as
 \begin_inset Formula 
 \[
 \DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\sigma}\dd{S}
@@ -2095,12 +2118,12 @@ tensor!isotropic ~!unit
  satisfying
 \begin_inset Formula 
 \[
-\Tensor{1}\cdot\vec{v}=\vec{v}=\vec{v}\cdot\Tensor{1}\quad\forall\vec{v}
+\Tensor{1}\cdot\vec{v}=\vec{v}=\vec{v}\cdot\Tensor{1}\qquad\forall\vec{v}
 \]
 
 \end_inset
 
-The formula for the axiom then becomes
+The formula for the law then becomes
 \begin_inset Formula 
 \begin{equation}
 \DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vu{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\tau}\dd{S}\label{eq:ConservationOfMomentumWithDDt}
@@ -2118,7 +2141,7 @@ Conservation of Angular Momentum
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\sigma_{\alpha\gamma}=\sigma_{\gamma\alpha}\quad\forall\alpha,\gamma=1,2,3
+\sigma_{\alpha\gamma}=\sigma_{\gamma\alpha}\qquad\forall\alpha,\gamma=1,2,3
 \]
 
 \end_inset
@@ -2129,7 +2152,7 @@ or equivalently
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\tau_{\alpha\gamma}=\tau_{\gamma\alpha}\quad\forall\alpha,\gamma=1,2,3
+\tau_{\alpha\gamma}=\tau_{\gamma\alpha}\qquad\forall\alpha,\gamma=1,2,3
 \]
 
 \end_inset
@@ -2141,21 +2164,16 @@ or equivalently
 Conservation of Energy
 \end_layout
 
-\begin_layout Axiom
-The change rate of the total energy in a material body is equal to the net
- rate of generation of heat generated from internal sources plus the total
- work done by the exterior to the body, minus the net heat loss by conduction.
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
+The conservation law of energy is the alias of the 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:1stLawOfThermodynamics"
+
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-This axiom can be written as
+.
+ When applied to a control volume, it can be written as
 \begin_inset Formula 
 \[
 \begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V}j\dd{V}-\oint_{\partial V}\vu{n}\cdot\vec{q}\dd{S}\\
@@ -2186,7 +2204,7 @@ Again, if we take
 \begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
 \end_inset
 
- into account, the formula for the axiom then becomes
+ into account, the formula for the law then becomes
 \begin_inset Formula 
 \begin{equation}
 \begin{aligned} & \DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}+\oint_{\partial V}\vu{n}\cdotp\vec{u}\dd{S}\\
@@ -2205,7 +2223,7 @@ Summary of Conservation Laws
 \end_layout
 
 \begin_layout Subsubsection
-Integral Equations
+Integral Forms
 \end_layout
 
 \begin_layout Standard
@@ -2244,13 +2262,13 @@ in which
 U=\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
-\end{bmatrix}\quad\vec{P}=\begin{bmatrix}\vec{0}\\
+\end{bmatrix}\qquad\vec{P}=\begin{bmatrix}\vec{0}\\
 p\Tensor{1}\\
 p\vec{u}
-\end{bmatrix}\quad\vec{G}=\begin{bmatrix}\vec{0}\\
+\end{bmatrix}\qquad\vec{G}=\begin{bmatrix}\vec{0}\\
 \Tensor{\tau}\\
 \Tensor{\tau}\cdot\vec{u}-\vec{q}
-\end{bmatrix}\quad H=\begin{bmatrix}0\\
+\end{bmatrix}\qquad H=\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\cdot\vec{u}+j
 \end{bmatrix}
@@ -2362,7 +2380,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsubsection
-Differential Equations in Conservative Form
+Conservative Differential Form
 \end_layout
 
 \begin_layout Standard
@@ -2440,7 +2458,7 @@ in which,
 \end_layout
 
 \begin_layout Subsubsection
-Differential Equations in Non-Conservative Form
+Non-Conservative Differential Form
 \end_layout
 
 \begin_layout Lemma
@@ -2471,7 +2489,7 @@ Suppose
  operating on an integral can be put inside according to the following rule:
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\phi\rho\dd{V}=\int_{V}\DDt{\phi}\rho\dd{V}\label{eq:DDtInsdeIntegral}
+\DDt{}\int_{V}\phi\rho\dd{V}=\int_{V}\DDt{\phi}\rho\dd{V}\label{eq:DDtInsideIntegral}
 \end{equation}
 
 \end_inset
@@ -2517,7 +2535,7 @@ reference "eq:DDtAtPoint"
  to the RHS of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:DDtInsdeIntegral"
+reference "eq:DDtInsideIntegral"
 
 \end_inset
 
@@ -2532,7 +2550,7 @@ reference "eq:DDtInsdeIntegral"
 Compare these two integrals, 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:DDtInsdeIntegral"
+reference "eq:DDtInsideIntegral"
 
 \end_inset
 
@@ -2595,11 +2613,23 @@ Again, if the integrands are sufficiently smooth, then Gauss's divergence
 or equivalently
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\DDt{\rho} & =-\rho\div{\vec{u}}\\
-\rho\DDt{\vec{u}} & =\div{\Tensor{\sigma}}+\vec{b}\\
-\rho\DDt{E} & =\div{\left(\Tensor{\sigma}\cdot\vec{u}-\vec{q}\right)}+\vec{b}\cdot\vec{u}+j
-\end{aligned}
-\label{eq:ConservationLawsNonConservativeForm}
+\DDt{\rho}=-\rho\div{\vec{u}}\label{eq:ConservationOfMassInNonConservativeForm}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\rho\DDt{\vec{u}}=\div{\Tensor{\sigma}}+\vec{b}\label{eq:ConservationOfMomentumInNonConservativeForm}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\rho\DDt{E}=\div{\left(\Tensor{\sigma}\cdot\vec{u}-\vec{q}\right)}+\vec{b}\cdot\vec{u}+j\label{eq:ConservationOfEnergyInNonConservativeForm}
 \end{equation}
 
 \end_inset
@@ -2608,17 +2638,18 @@ or equivalently
 \end_layout
 
 \begin_layout Subsubsection
-Other Forms of Energy Conservation
+Other Forms of Energy Equations
+\end_layout
+
+\begin_layout Paragraph
+Equation for Kinetic Energy
 \end_layout
 
 \begin_layout Standard
-Take inner product of the second line of 
+Take inner product of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
+reference "eq:ConservationOfMomentumInNonConservativeForm"
 
 \end_inset
 
@@ -2648,40 +2679,232 @@ Recall that
 
 The resulting equation
 \begin_inset Formula 
-\[
-\boxed{\rho\DDt{\abs{\vec{u}}^{2}/2}=\vec{u}\cdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)}
-\]
+\begin{equation}
+\boxed{\rho\DDt{\abs{\vec{u}}^{2}/2}=\vec{u}\cdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)}\label{eq:EquationForKineticEnergy}
+\end{equation}
 
 \end_inset
 
 is the formula for the material derivative of kinetic energy per unit mass.
 \end_layout
 
+\begin_layout Paragraph
+Equation for Internal Energy
+\end_layout
+
+\begin_layout Lemma
+Define the inner product of two tensors as 
+\begin_inset Formula $\Tensor{A}:\Tensor{B}=A_{ik}B_{ik}$
+\end_inset
+
+ and the gradient of velocity as 
+\begin_inset Formula $\grad{\vec{u}}:=\vu{e}_{i}\vu{e}_{k}\pdv*{u_{k}}{x_{i}}$
+\end_inset
+
+, there is
+\begin_inset Formula 
+\[
+\div{\left(\Tensor{\sigma}\cdot\vec{u}\right)}=\vec{u}\cdot\left(\div{\Tensor{\sigma}}\right)+\Tensor{\sigma}:\left(\grad{\vec{u}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-Subtract it from the 3rd line of 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Subtract 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsNonConservativeForm"
+reference "eq:EquationForKineticEnergy"
+
+\end_inset
+
+ from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationOfEnergyInNonConservativeForm"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and recall that 
+ and recall 
 \begin_inset Formula $E=e+\abs{\vec{u}}^{2}/2$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\boxed{\rho\DDt{e}=\Tensor{\sigma}\cdot\left(\div{\vec{u}}\right)-\div{\vec{q}}+j}
+\rho\DDt{e}=\Tensor{\sigma}:\left(\grad{\vec{u}}\right)-\div{\vec{q}}+j
 \]
 
 \end_inset
 
-which is the formula for the material derivative of internal energy per
- unit mass.
+
+\end_layout
+
+\begin_layout Standard
+Like any tensor with rank two, the gradient of velocity 
+\begin_inset Formula $\partial_{i}u_{k}$
+\end_inset
+
+ can be decomposed as a symmetric component 
+\begin_inset Formula $E_{ik}$
+\end_inset
+
+, called the 
+\noun on
+strain rate tensor
+\noun default
+, plus an asymmetric component 
+\begin_inset Formula $\Omega_{ik}$
+\end_inset
+
+, called the 
+\noun on
+vorticity tensor
+\noun default
+:
+\begin_inset Formula 
+\[
+\pdv{u_{k}}{x_{i}}=\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)}_{E_{ik}}+\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)}_{\Omega_{ik}}
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\grad{\vec{u}}=\Tensor{E}+\Tensor{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\Tensor{\sigma}:\left(\grad{\vec{u}}\right)=\Tensor{\sigma}:\Tensor{E}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\Tensor{1}:\Tensor{E}=\div{\vec{u}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Apply them together with 
+\begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\Tensor{\sigma}:\left(\grad{\vec{u}}\right)=\Tensor{\tau}:\Tensor{E}-p\div{\vec{u}}
+\]
+
+\end_inset
+
+The equation for internal energy then becomes
+\begin_inset Formula 
+\begin{equation}
+\boxed{\rho\DDt{e}=\Tensor{\tau}:\Tensor{E}-p\div{\vec{u}}-\div{\vec{q}}+j}\label{eq:EquationForInternalEnergy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Equation for Entropy
+\end_layout
+
+\begin_layout Standard
+Recall 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationOfMassInNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset Formula $v=1/\rho$
+\end_inset
+
+, there is
+\begin_inset Formula 
+\[
+\div{\vec{u}}=\rho\DDt{v}
+\]
+
+\end_inset
+
+Move it to the LHS of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EquationForInternalEnergy"
+
+\end_inset
+
+ and recall the 1st law of thermodynamics 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:1stLawOfThermodynamics"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{equation}
+\boxed{\rho T\DDt{s}=\Tensor{\tau}:\Tensor{E}-\div{\vec{q}}+j}\label{eq:EquationForEntropy}
+\end{equation}
+
+\end_inset
+
+which is the equation for entropy.
 \end_layout
 
 \begin_layout Paragraph
@@ -2690,10 +2913,10 @@ Bernoulli's Equation
 
 \begin_layout Standard
 The surface force term in the energy equation, i.e.
- the 3rd line of 
+ 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsNonConservativeForm"
+reference "eq:ConservationOfEnergyInNonConservativeForm"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2704,8 +2927,7 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \begin{aligned}\div{\left(\Tensor{\sigma}\cdot\vec{u}\right)} & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\div{\left(p\vec{u}\right)}\\
- & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\vec{u}\cdot\grad{p}-p\div{\vec{u}}\\
- & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\vec{u}\cdot\grad{p}+\frac{p}{\rho}\DDt{\rho}
+ & =\div{\left(\Tensor{\tau}\cdot\vec{u}\right)}-\vec{u}\cdot\grad{p}-p\div{\vec{u}}
 \end{aligned}
 \]
 
@@ -2802,7 +3024,7 @@ trajectory line, e.g.
 , which gives
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\quad\forall\vec{x}\in C}\label{eq:BernoulliEquationInAlgebraicForm}
+\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}\in C}\label{eq:BernoulliEquationInAlgebraicForm}
 \end{equation}
 
 \end_inset
@@ -2814,7 +3036,7 @@ incompressible
 , it will become
 \begin_inset Formula 
 \begin{equation}
-\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\quad\forall\vec{x}}\label{eq:BernoulliEquationForIncompressibleFlow}
+\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}}\label{eq:BernoulliEquationForIncompressibleFlow}
 \end{equation}
 
 \end_inset
