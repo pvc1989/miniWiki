@@ -155,7 +155,7 @@ Lagrange!~ian description
 \end_layout
 
 \begin_layout Subsubsection
-Scalar and Vector Fields
+Fields
 \end_layout
 
 \begin_layout Paragraph
@@ -169,6 +169,218 @@ status collapsed
 \begin_layout Plain Layout
 Euler!~ian description
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Velocity Gradient
+\end_layout
+
+\begin_layout Standard
+Like the gradient of a scalar, the 
+\noun on
+gradient of velocity
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+tensor!velocity gradient ~
+\end_layout
+
+\end_inset
+
+, denoted as 
+\begin_inset Formula $\grad{\vec{u}}$
+\end_inset
+
+, is defined as such a quantity that satisfies
+\begin_inset Formula 
+\[
+\dd{\vec{u}}=\dd{\vec{x}}\cdot\left(\grad{\vec{u}}\right)
+\]
+
+\end_inset
+
+It can be proved to be
+\begin_inset Formula 
+\[
+\grad{\vec{u}}=\left(\vu{e_{i}}\pdv{x_{i}}\right)\otimes\left(\vu{e_{k}}u_{k}\right)=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)\pdv{u_{k}}{x_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Velocity Decomposition
+\end_layout
+
+\begin_layout Standard
+Like any other rank-
+\begin_inset Formula $2$
+\end_inset
+
+ tensor, it can be decomposed as a symmetric component 
+\begin_inset Formula $\Tensor{E}:=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)E_{ik}$
+\end_inset
+
+, called the 
+\noun on
+strain rate tensor
+\noun default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!strain rate ~
+\end_layout
+
+\end_inset
+
+, plus an anti-symmetric component 
+\begin_inset Formula $\Tensor{\Omega}:=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)\Omega_{ik}$
+\end_inset
+
+, called the 
+\noun on
+angular velocity tensor
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+tensor!angular velocity ~
+\end_layout
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\pdv{u_{k}}{x_{i}}=\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)}_{E_{ik}}+\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)}_{\Omega_{ik}}
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\grad{\vec{u}}=\Tensor{E}+\Tensor{\Omega}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Angular Velocity and Vorticity
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Formula $\mathbb{R}^{3}$
+\end_inset
+
+, the angular velocity tensor 
+\begin_inset Formula $\Tensor{\Omega}$
+\end_inset
+
+ has only 3 independent components, since it is anti-symmetric (
+\begin_inset Formula $\Omega_{ik}=-\Omega_{ki}$
+\end_inset
+
+):
+\begin_inset Formula 
+\[
+\Tensor{\Omega}=\begin{bmatrix}\vu{e}_{1} & \vu{e}_{2} & \vu{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
+-\Omega_{12} & 0 & \Omega_{23}\\
+\Omega_{31} & -\Omega_{23} & 0
+\end{bmatrix}\begin{bmatrix}\vu{e}_{1}\\
+\vu{e}_{2}\\
+\vu{e}_{3}
+\end{bmatrix}
+\]
+
+\end_inset
+
+Define
+\begin_inset Formula 
+\[
+\vec{\Omega}:=\sum_{i=1}^{3}\vu{e}_{i}\Omega_{i}\qquad\begin{bmatrix}\Omega_{1}\\
+\Omega_{2}\\
+\Omega_{3}
+\end{bmatrix}=\begin{bmatrix}\Omega_{23}\\
+\Omega_{31}\\
+\Omega_{12}
+\end{bmatrix}\iff\Omega_{i}\epsilon_{ijk}=\Omega_{jk}
+\]
+
+\end_inset
+
+which can be proved to be a pseudo-vector
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+vector!pseudo-~
+\end_layout
+
+\end_inset
+
+, called the 
+\noun on
+angular velocity vector
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+vector!angular velocity ~
+\end_layout
+
+\end_inset
+
+.
+ The name is appropriate since it is analogous to the angular velocity vector
+ of a rigid body:
+\begin_inset Formula 
+\[
+\dd{\vec{x}}\cdot\Tensor{\Omega}=\dd{x_{j}}\Omega_{jk}\vu{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vu{e}_{k}=\underbrace{\vu{e}_{i}\times\vu{e}_{j}}_{\epsilon_{ijk}\vu{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\times\dd{\vec{x}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The angular velocity vector 
+\begin_inset Formula $\vec{\Omega}$
+\end_inset
+
+ is exactly one half of the 
+\noun on
+vorticity
+\noun default
+ (
+\begin_inset Formula $\vec{\omega}:=\curl{\vec{u}}$
+\end_inset
+
+) at the same point:
+\begin_inset Formula 
+\[
+\vec{\Omega}=\frac{\vec{\omega}}{2}
+\]
 
 \end_inset
 
@@ -2460,6 +2672,45 @@ The formula for the law then becomes
 
 \end_layout
 
+\begin_layout Standard
+The shear stress tensor 
+\begin_inset Formula $\Tensor{\tau}$
+\end_inset
+
+ is related with the strain rate tensor 
+\begin_inset Formula $\Tensor{E}$
+\end_inset
+
+ by the constitutive equation.
+ For Newtonian fluids, this relation is linear:
+\begin_inset Formula 
+\[
+\tau_{ik}=D_{ikrs}E_{rs}
+\]
+
+\end_inset
+
+For isotropic Newtonian fluids, there is only two independent parameters:
+\begin_inset Formula 
+\[
+\begin{aligned}\tau_{ik} & =\mu\left(\pdv{u_{i}}{x_{k}}+\pdv{u_{k}}{x_{i}}-\frac{2}{3}\delta_{ik}\pdv{u_{j}}{x_{j}}\right)+\zeta\delta_{ik}\pdv{u_{j}}{x_{j}}\\
+ & =2\mu E_{ik}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{ik}\pdv{u_{j}}{x_{j}}
+\end{aligned}
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+\Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\div{\vec{u}}\right)\Tensor{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Conservation of Angular Momentum
 \end_layout
@@ -3071,46 +3322,6 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \rho\DDt{e}=\Tensor{\sigma}:\left(\grad{\vec{u}}\right)-\div{\vec{q}}+j
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Like any tensor with rank two, the gradient of velocity 
-\begin_inset Formula $\partial_{i}u_{k}$
-\end_inset
-
- can be decomposed as a symmetric component 
-\begin_inset Formula $E_{ik}$
-\end_inset
-
-, called the 
-\noun on
-strain rate tensor
-\noun default
-, plus an asymmetric component 
-\begin_inset Formula $\Omega_{ik}$
-\end_inset
-
-, called the 
-\noun on
-vorticity tensor
-\noun default
-:
-\begin_inset Formula 
-\[
-\pdv{u_{k}}{x_{i}}=\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)}_{E_{ik}}+\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)}_{\Omega_{ik}}
-\]
-
-\end_inset
-
-or equivalently
-\begin_inset Formula 
-\[
-\grad{\vec{u}}=\Tensor{E}+\Tensor{\Omega}
 \]
 
 \end_inset
