@@ -2692,11 +2692,12 @@ The shear stress tensor
 
 For isotropic Newtonian fluids, there is only two independent parameters:
 \begin_inset Formula 
-\[
+\begin{equation}
 \begin{aligned}\tau_{ik} & =\mu\left(\pdv{u_{i}}{x_{k}}+\pdv{u_{k}}{x_{i}}-\frac{2}{3}\delta_{ik}\pdv{u_{j}}{x_{j}}\right)+\zeta\delta_{ik}\pdv{u_{j}}{x_{j}}\\
  & =2\mu E_{ik}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{ik}\pdv{u_{j}}{x_{j}}
 \end{aligned}
-\]
+\label{eq:NewtonianFluid}
+\end{equation}
 
 \end_inset
 
@@ -3583,6 +3584,502 @@ incompressible
 
 \begin_layout Subsection
 Simplified Equations
+\end_layout
+
+\begin_layout Subsubsection
+Plane Waves
+\end_layout
+
+\begin_layout Standard
+For plane waves, there is a special reference frame, in which
+\end_layout
+
+\begin_layout Itemize
+a vector has only one non-zero component, e.g.
+ 
+\begin_inset Formula $u_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+a scalar or the 1st component of a vector varies only along 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+1D Navier–Stokes Equations
+\end_layout
+
+\begin_layout Standard
+In this frame, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLaws3dCartesianTensor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\rho\\
+u\rho\\
+E\rho
+\end{bmatrix}_{t}+\begin{bmatrix}u\rho\\
+uu\rho+p\\
+uE\rho+pu
+\end{bmatrix}_{x}=\begin{bmatrix}0\\
+\tau\\
+\tau u-q
+\end{bmatrix}_{x}+\begin{bmatrix}0\\
+b\\
+bu+j
+\end{bmatrix}\label{eq:NavierStokes1dConservative}
+\end{equation}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\begin{bmatrix}\cdots\end{bmatrix}_{t}:=\pdv{t}\begin{bmatrix}\cdots\end{bmatrix}\qquad\begin{bmatrix}\cdots\end{bmatrix}_{x}:=\pdv{x}\begin{bmatrix}\cdots\end{bmatrix}\qquad E=e+\frac{u^{2}}{2}\qquad\tau=\tau_{11}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ConservationOfMassInNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ConservationOfMomentumInNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationOfEnergyInNonConservativeForm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) become
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\DDt{\rho} & =-\rho\pdv{u}{x}\\
+\rho\DDt{u} & =\pdv{\left(\tau-p\right)}{x}+b\\
+\rho\DDt{E} & =\pdv{\left(\tau u-q\right)}{x}+bu+j
+\end{aligned}
+\label{eq:NavierStokes1dNonConservative}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Burgers Equations
+\end_layout
+
+\begin_layout Standard
+Assume the fluid is Newtonian 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:NewtonianFluid"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Here we only care about 
+\begin_inset Formula $\tau_{11}$
+\end_inset
+
+, which is
+\begin_inset Formula 
+\[
+\tau_{11}=2\mu E_{11}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{11}\pdv{u_{j}}{x_{j}}\qquad E_{11}=\pdv{u_{1}}{x_{1}}
+\]
+
+\end_inset
+
+Recall that for plane waves, only 
+\begin_inset Formula $u_{1}$
+\end_inset
+
+ is non-zero and only 
+\begin_inset Formula $\pdv*{u_{\alpha}}{x_{1}}$
+\end_inset
+
+ has non-zero values, it becomes
+\begin_inset Formula 
+\[
+\tau_{11}=\left(\zeta+\frac{4}{3}\mu\right)\pdv{u_{1}}{x_{1}}\qor\tau=\left(\zeta+\frac{4}{3}\mu\right)\pdv{u}{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ignore 
+\begin_inset Formula $q$
+\end_inset
+
+ (heat conduction), 
+\begin_inset Formula $j$
+\end_inset
+
+ (heat source), 
+\begin_inset Formula $b$
+\end_inset
+
+ (body force) and the variation of 
+\begin_inset Formula $p$
+\end_inset
+
+ in the 2nd line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:NavierStokes1dNonConservative"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, and suppose 
+\begin_inset Formula $\mu,\zeta$
+\end_inset
+
+ are constants, the momentum equation becomes
+\begin_inset Formula 
+\[
+\DDt{u}=\nu\pdv[2]{u}{x}\qquad\nu=\frac{1}{\rho}\left(\zeta+\frac{4}{3}\mu\right)>0
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{u}{t}+u\pdv{u}{x}=\nu\pdv[2]{u}{x}}\qquad\nu=\frac{1}{\rho}\left(\zeta+\frac{4}{3}\mu\right)>0\label{eq:BurgersEquationViscous}
+\end{equation}
+
+\end_inset
+
+which is known as the 
+\noun on
+Burgers equation
+\noun default
+.
+ When 
+\begin_inset Formula $\nu=0$
+\end_inset
+
+, it becomes its 
+\emph on
+inviscid
+\emph default
+ version
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{u}{t}+u\pdv{u}{x}=0}\label{eq:BurgersEquationInviscid}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Linear Wave Equations
+\end_layout
+
+\begin_layout Standard
+If the variation of 
+\begin_inset Formula $u$
+\end_inset
+
+ is so small that 
+\begin_inset Formula $\forall x_{0}$
+\end_inset
+
+ there is 
+\begin_inset Formula $\abs{u_{x}(x_{0})}\ll1$
+\end_inset
+
+, then
+\begin_inset Formula 
+\[
+u(x)\approx u(x_{0})+u_{x}(x_{0})\cdot\left(x-x_{0}\right)\qand u(x)u_{x}(x)\approx u(x_{0})u_{x}(x)
+\]
+
+\end_inset
+
+Denote 
+\begin_inset Formula $c=u(x_{0})$
+\end_inset
+
+, Burgers equations 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BurgersEquationViscous"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:BurgersEquationInviscid"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ become the equations for linear waves
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{u}{t}+c\pdv{u}{x}=\nu\pdv[2]{u}{x}}\qquad\nu>0\label{eq:LinearConvectionDiffusionEquation}
+\end{equation}
+
+\end_inset
+
+known as the 
+\noun on
+linear convection–diffusion equation
+\noun default
+, and
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{u}{t}+c\pdv{u}{x}=0}\label{eq:LinearAdvectionEquation}
+\end{equation}
+
+\end_inset
+
+known as the 
+\noun on
+linear advection equation
+\noun default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Euler Equations
+\end_layout
+
+\begin_layout Standard
+Ignoring 
+\begin_inset Formula $\tau_{ik}$
+\end_inset
+
+ (shear stress), 
+\begin_inset Formula $q$
+\end_inset
+
+ (heat conduction), 
+\begin_inset Formula $j$
+\end_inset
+
+ (heat source) and 
+\begin_inset Formula $b$
+\end_inset
+
+ (body force) in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ConservationLaws3dCartesianTensor"
+
+\end_inset
+
+ leads to the
+\noun on
+ Euler equations
+\noun default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\rho\\
+u_{1}\rho\\
+u_{2}\rho\\
+u_{3}\rho\\
+E\rho
+\end{bmatrix}_{t}+\begin{bmatrix}u_{\alpha}\rho\\
+u_{\alpha}u_{1}\rho+p\delta_{\alpha1}\\
+u_{\alpha}u_{2}\rho+p\delta_{\alpha2}\\
+u_{\alpha}u_{3}\rho+p\delta_{\alpha3}\\
+u_{\alpha}E\rho+pu_{\alpha}
+\end{bmatrix}_{x_{\alpha}}=\begin{bmatrix}0\\
+0\\
+0\\
+0\\
+0
+\end{bmatrix}\label{eq:EulerEquations3d}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $E=e+u_{\alpha}u_{\alpha}/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Plane Waves
+\end_layout
+
+\begin_layout Standard
+If the flow is also a plane wave, then 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EulerEquations3d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ can be simplified into its 1D version:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\rho\\
+u\rho\\
+E\rho
+\end{bmatrix}_{t}+\begin{bmatrix}u\rho\\
+uu\rho+p\\
+uE\rho+pu
+\end{bmatrix}_{x}=\begin{bmatrix}0\\
+0\\
+0
+\end{bmatrix}\label{eq:EulerEquations1d}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $E=e+uu/2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Equivalently, at least in smooth regions, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EulerEquations1d"
+
+\end_inset
+
+ can be written in a non-conservative form
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho\\
+u\\
+s
+\end{bmatrix}_{t}+\begin{bmatrix}\begin{array}{ccc}
+u & \rho\\
+ & u\\
+ &  & u
+\end{array}\end{bmatrix}\begin{bmatrix}\rho\\
+u\\
+s
+\end{bmatrix}_{x}=\begin{bmatrix}0\\
+-p_{x}/\rho\\
+0
+\end{bmatrix}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho\\
+u\\
+s
+\end{bmatrix}_{t}+\begin{bmatrix}\begin{array}{ccc}
+u & \rho\\
+a^{2}/\rho & u\\
+ &  & u
+\end{array}\end{bmatrix}\begin{bmatrix}\rho\\
+u\\
+s
+\end{bmatrix}_{x}=\begin{bmatrix}0\\
+0\\
+0
+\end{bmatrix}
+\]
+
+\end_inset
+
+by using
+\begin_inset Formula 
+\[
+\frac{1}{\rho}\pdv{p}{x}=\frac{a^{2}}{\rho}\pdv{\rho}{x}\impliedby\begin{cases}
+a^{2}=\gamma p/\rho & \text{calorically perfect gas}\\
+p/\rho^{\gamma}=\text{const} & \text{isentropic flow}
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
