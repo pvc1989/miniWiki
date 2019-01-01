@@ -28,6 +28,7 @@
 \use_default_options true
 \begin_modules
 theorems-ams
+theorems-ams-extended
 eqs-within-sections
 figs-within-sections
 \end_modules
@@ -118,7 +119,7 @@ figs-within-sections
 \begin_body
 
 \begin_layout Section
-Characteristics Method for Hyperbolic PDEs
+Method of Characteristics for Hyperbolic PDEs
 \end_layout
 
 \begin_layout Subsection
@@ -126,7 +127,7 @@ Smooth Solutions of Single Hyperbolic PDEs
 \end_layout
 
 \begin_layout Subsubsection
-Linear Wave Equation
+Linear Advection Equation
 \end_layout
 
 \begin_layout Problem
@@ -137,28 +138,28 @@ name "prob:LinearWaveEquationWithSmoothIC"
 \end_inset
 
 Find a smooth function 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
- satisfying the PDE
+ satisfying the linear advection equation
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a\pdv{u}{x}=0\qc x\in\mathbb{R}\qc t>t_{0}\label{eq:LinearWaveEquation}
+\pdv{u}{t}+a\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:LinearWaveEquation}
 \end{equation}
 
 \end_inset
 
 and the IC
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 We use 
 \begin_inset Formula $x_{0}$
 \end_inset
 
- as the spatial variable at 
-\begin_inset Formula $t_{0}$
+ for the spatial variable at 
+\begin_inset Formula $0$
 \end_inset
 
  to distinguish it from the one at 
@@ -177,7 +178,7 @@ We use
 
 \begin_inset Formula 
 \begin{equation}
-u(t_{0},x_{0})=u_{0}(x_{0})\qc x_{0}\in\mathbb{R}\label{eq:SmoothInitialWaveProfile}
+u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:SmoothInitialWaveProfile}
 \end{equation}
 
 \end_inset
@@ -186,19 +187,23 @@ in which,
 \begin_inset Formula $a$
 \end_inset
 
- is a constant, and 
+ is constant, 
 \begin_inset Formula $u_{0}$
 \end_inset
 
- is a function of 
-\begin_inset Formula $x_{0}$
-\end_inset
-
- with 
+ is a 
 \begin_inset Formula $C^{1}$
 \end_inset
 
- smoothness.
+ smooth function for 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem
+Prove the solution is unique.
 \end_layout
 
 \begin_layout Standard
@@ -209,7 +214,27 @@ in which,
 \end_layout
 
 \begin_layout Lemma
-The characteristic curves emanating from 
+The characteristic curves
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ curve
+\end_layout
+
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearWaveEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ emanating from 
 \begin_inset Formula $t=t_{0}$
 \end_inset
 
@@ -218,7 +243,7 @@ The characteristic curves emanating from
 
 \begin_layout Proof
 The characteristic curve emanating from 
-\begin_inset Formula $\left(x_{0},t_{0}\right)$
+\begin_inset Formula $x_{0}$
 \end_inset
 
 , denoted as 
@@ -228,8 +253,8 @@ The characteristic curve emanating from
 , is the solution of the following IVP:
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{x}{t} & =a\qc t>t_{0}\\
-x(t_{0}) & =x_{0}
+\begin{aligned}\dv{x}{t} & =a\qquad t\in(t_{0},\infty)\\
+x(0) & =x_{0}
 \end{aligned}
 \]
 
@@ -238,7 +263,7 @@ x(t_{0}) & =x_{0}
 which is
 \begin_inset Formula 
 \[
-\frac{x-x_{0}}{t-t_{0}}=a\qc t>t_{0}
+\frac{x-x_{0}}{t-t_{0}}=a\qquad t\in[t_{0},\infty)
 \]
 
 \end_inset
@@ -260,8 +285,17 @@ The value of
 \begin_inset Formula $u$
 \end_inset
 
- along any characteristic curve is a constant.
- 
+ along any characteristic curve of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LinearWaveEquation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is constant.
 \end_layout
 
 \begin_layout Proof
@@ -301,7 +335,7 @@ noprefix "false"
  is
 \begin_inset Formula 
 \[
-u(t,x)=u_{0}\circ x_{0}(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a\right)
+\boxed{u=u_{0}(x-(t-t_{0})a)}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
@@ -356,13 +390,13 @@ name "prob:QuasilinearWaveEquationWithSmoothIC"
 \end_inset
 
 Find a smooth function 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  satisfying the PDE
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a(u)\pdv{u}{x}=0\qc t>t_{0}\qc x\in\mathbb{R}\label{eq:QuasilinearWaveEquation}
+\pdv{u}{t}+a(u)\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:QuasilinearWaveEquation}
 \end{equation}
 
 \end_inset
@@ -388,7 +422,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The simplest case is that 
+The simplest case is 
 \begin_inset Formula $a(u)=ku$
 \end_inset
 
@@ -403,18 +437,22 @@ name "prob:InviscidBurgersEquationWithSmoothIC"
 \end_inset
 
 Find a smooth function 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  satisfying the PDE
 \begin_inset Formula 
 \[
-\pdv{u}{t}+ku\pdv{u}{x}=0\qc t>t_{0}\qc x\in\mathbb{R}
+\pdv{u}{t}+ku\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
 
-and the IC 
+where 
+\begin_inset Formula $k$
+\end_inset
+
+ is constant, and the IC 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:SmoothInitialWaveProfile"
@@ -437,6 +475,16 @@ When
 inviscid Burgers equation
 \noun default
 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!Burgers equation!inviscid ~
+\end_layout
+
+\end_inset
+
+
 \begin_inset Foot
 status collapsed
 
@@ -453,11 +501,15 @@ status collapsed
 \begin_inset Formula $k$
 \end_inset
 
-, even when 
+, unless 
 \begin_inset Formula $k=1$
 \end_inset
 
-.
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ has the dimension of speed.
 \end_layout
 
 \end_inset
@@ -470,51 +522,24 @@ The value of
 \begin_inset Formula $u$
 \end_inset
 
- along any characteristic curve is a constant.
+ along any characteristic curve
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ curve
 \end_layout
 
-\begin_layout Proof
-Like in IVP 
+\end_inset
+
+ of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "prob:LinearWaveEquationWithSmoothIC"
-plural "false"
-caps "false"
-noprefix "false"
+reference "eq:QuasilinearWaveEquation"
 
 \end_inset
 
-, the characteristic curve emanating from 
-\begin_inset Formula $\left(x_{0},t_{0}\right)$
-\end_inset
-
-, denoted as 
-\begin_inset Formula $x=x(t)$
-\end_inset
-
-, is the solution of the following IVP:
-\begin_inset Formula 
-\[
-\begin{aligned}\dv{x}{t} & =a(u(t,x))\qc t>t_{0}\\
-x(t_{0}) & =x_{0}
-\end{aligned}
-\]
-
-\end_inset
-
-Along any characteristic curve, the change rate of 
-\begin_inset Formula $u$
-\end_inset
-
- is
-\begin_inset Formula 
-\[
-\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a(u)\pdv{u}{x}=0
-\]
-
-\end_inset
-
-
+ is constant.
 \end_layout
 
 \begin_layout Standard
@@ -526,10 +551,27 @@ Along any characteristic curve, the change rate of
 
 \begin_layout Lemma
 At least in a finite time period 
-\begin_inset Formula $(t_{0},t_{*})$
+\begin_inset Formula $[t_{0},t_{*})$
 \end_inset
 
-, the characteristic curves emanating from 
+, the characteristic curves
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ curve
+\end_layout
+
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:QuasilinearWaveEquation"
+
+\end_inset
+
+ emanating from 
 \begin_inset Formula $t=t_{0}$
 \end_inset
 
@@ -537,15 +579,14 @@ At least in a finite time period
 \end_layout
 
 \begin_layout Proof
-Assume the characteristic curves do not intersect with each other at least
- in a finite time period 
-\begin_inset Formula $(t_{0},t_{*})$
+Assume the characteristic curves do not intersect with each other in 
+\begin_inset Formula $[t_{0},t_{*})$
 \end_inset
 
 , which will be proved in the section of 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "subsec:BreakingOfSmoothSolution"
+reference "subsec:SmoothSolutionBreaking"
 
 \end_inset
 
@@ -560,7 +601,7 @@ reference "subsec:BreakingOfSmoothSolution"
 
  is also constant along any characteristic curve.
  The characteristic curve emanating from 
-\begin_inset Formula $\left(x_{0},t_{0}\right)$
+\begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
  is then easily solved to be
@@ -574,7 +615,7 @@ reference "subsec:BreakingOfSmoothSolution"
 in which
 \begin_inset Formula 
 \[
-a_{0}=a\circ u(t,x)=a\circ u_{0}\circ x_{0}(t,x)
+a_{0}=a\circ u(x,t)=a\circ u_{0}\circ x_{0}(x,t)
 \]
 
 \end_inset
@@ -599,7 +640,7 @@ no longer parallel
 \end_layout
 
 \begin_layout Theorem
-The solution of IVP 
+The smooth solution of IVP 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "prob:QuasilinearWaveEquationWithSmoothIC"
@@ -612,23 +653,27 @@ noprefix "false"
  is
 \begin_inset Formula 
 \begin{equation}
-u(t,x)=u_{0}(x_{0}(t,x))=u_{0}\left(x-\left(t-t_{0}\right)a(u(t,x))\right)\label{eq:SolutionOfQuasilinearWaveEquation}
+\boxed{u=u_{0}(x-(t-t_{0})a(u))}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:SolutionOfQuasilinearWaveEquation}
 \end{equation}
 
 \end_inset
 
 from which, the value of 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u$
 \end_inset
 
- can be solved in principle.
+ can be solved at 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ in principle.
 \end_layout
 
 \begin_layout Subsubsection
 Breaking of Smooth Solutions
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:BreakingOfSmoothSolution"
+name "subsec:SmoothSolutionBreaking"
 
 \end_inset
 
@@ -655,7 +700,7 @@ do not intersect
 
 \begin_layout Standard
 Suppose 
-\begin_inset Formula $\Omega\subset\mathbb{\mathbb{R}}$
+\begin_inset Formula $\Omega\subset\mathbb{(-\infty,\infty)}$
 \end_inset
 
  is an open interval, 
@@ -670,7 +715,8 @@ Suppose
 \begin_inset Formula $x=q(t)$
 \end_inset
 
- are the equations of the characteristic curves emanating from them.
+ are the equations of the characteristic curves emanating from them, respectivel
+y.
 \end_layout
 
 \begin_layout Theorem
@@ -679,11 +725,11 @@ If
 \end_inset
 
  there is 
-\begin_inset Formula $\dv{a}{x_{0}}>0$
+\begin_inset Formula $\dv*{a}{x_{0}}>0$
 \end_inset
 
 , then 
-\begin_inset Formula $\forall t>t_{0}$
+\begin_inset Formula $\forall t\in[t_{0},\infty)$
 \end_inset
 
  there is 
@@ -695,11 +741,11 @@ If
 
 \begin_layout Proof
 From 
-\begin_inset Formula $\dv{x}{t}=a$
+\begin_inset Formula $\dv*{x}{t}=a$
 \end_inset
 
  and 
-\begin_inset Formula $a\circ u(t,x)=a\circ u_{0}\left(x_{0}\right)$
+\begin_inset Formula $a\circ u(x,t)=a\circ u_{0}\left(x_{0}\right)$
 \end_inset
 
 , we have
@@ -713,20 +759,20 @@ From
 so
 \begin_inset Formula 
 \[
-\dv{t}(q(t)-p(t))=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})
+\dv{(q(t)-p(t))}{t}=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})
 \]
 
 \end_inset
 
 Since 
-\begin_inset Formula $\dv{a}{x_{0}}>0$
+\begin_inset Formula $\dv*{a}{x_{0}}>0$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
 \begin{aligned}p_{0}<q_{0} & \implies a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})>0\\
- & \implies\dv{t}(q(t)-p(t))>0
+ & \implies\dv{(q(t)-p(t))}{t}>0
 \end{aligned}
 \]
 
@@ -741,11 +787,11 @@ If
 \end_inset
 
  there is 
-\begin_inset Formula $\dv{a}{x_{0}}<0$
+\begin_inset Formula $\dv*{a}{x_{0}}<0$
 \end_inset
 
 , then 
-\begin_inset Formula $\exists t_{*}>t_{0}$
+\begin_inset Formula $\exists t_{*}>0$
 \end_inset
 
  such that 
@@ -753,7 +799,7 @@ If
 \end_inset
 
 , and 
-\begin_inset Formula $\forall t\in(t_{0},t_{*})$
+\begin_inset Formula $\forall t\in[t_{0},t_{*})$
 \end_inset
 
  there is 
@@ -765,10 +811,10 @@ If
 
 \begin_layout Proof
 The proof is almost the same as the previous theorem, except for the direction
- of the inequality:
+ of inequality:
 \begin_inset Formula 
 \[
-\dv{t}(q(t)-p(t))=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})<0
+\dv{(q(t)-p(t))}{t}=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})<0
 \]
 
 \end_inset
@@ -796,9 +842,7 @@ intersecting moment
 :
 \begin_inset Formula 
 \[
-\begin{aligned}p_{0}+\left(t_{*}-t_{0}\right)a\circ u_{0}(p_{0})\\
-=q_{0}+\left(t_{*}-t_{0}\right)a\circ u_{0}(q_{0})
-\end{aligned}
+p_{0}+(t_{*}-t_{0})a\circ u_{0}(p_{0})=q_{0}+(t_{*}-t_{0})a\circ u_{0}(q_{0})
 \]
 
 \end_inset
@@ -806,7 +850,7 @@ intersecting moment
 which is
 \begin_inset Formula 
 \[
-t_{*}=t_{0}-\frac{q_{0}-p_{0}}{a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})}>0
+t_{*}-t_{0}=-\frac{q_{0}-p_{0}}{a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})}>0
 \]
 
 \end_inset
@@ -836,18 +880,20 @@ u=u_{0}\left(p_{0}\right)\qand u=u_{0}\left(q_{0}\right)
 
 which are generally inconsistent.
  Such inconsistency will leads to 
-\begin_inset Formula $\pdv{u}{x}\to\infty$
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
 \end_inset
 
 .
  On the other hand, 
-\begin_inset Formula $\pdv{u}{x}$
+\begin_inset Formula $\pdv*{u}{x}$
 \end_inset
 
  can be solved from
 \begin_inset Formula 
 \[
-u(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a\circ u_{0}(x_{0})\right)
+\begin{aligned}u & =u_{0}(x-(t-t_{0})a(u))\\
+\pdv{u}{x} & =\dv{u_{0}}{x_{0}}\left(1-(t-t_{0})\dv{a}{u}\pdv{u}{x}\right)
+\end{aligned}
 \]
 
 \end_inset
@@ -855,27 +901,23 @@ u(t,x)=u_{0}\left(x-\left(t-t_{0}\right)a\circ u_{0}(x_{0})\right)
 as
 \begin_inset Formula 
 \[
-\pdv{u}{x}=\frac{\dv{u_{0}}{x_{0}}}{1+\left(t-t_{0}\right)\dv{a}{x_{0}}}
+\pdv{u}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{a}{x_{0}}}
 \]
 
 \end_inset
 
 Since 
-\begin_inset Formula $u_{0}$
+\begin_inset Formula $u_{0}\in C^{1}(-\infty,\infty)$
 \end_inset
 
- is 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth, the condition for 
-\begin_inset Formula $\pdv{u}{x}\to\infty$
+, the condition for 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
 \end_inset
 
  is
 \begin_inset Formula 
 \[
-1+\left(t_{*}-t_{0}\right)\dv{a}{x_{0}}=0
+1+(t_{*}-t_{0})\dv{a}{x_{0}}=0
 \]
 
 \end_inset
@@ -892,7 +934,7 @@ specific
  intersects with some other characteristic curve:
 \begin_inset Formula 
 \[
-t_{*}=t_{0}-\left(\dv{a}{x_{0}}\right)^{-1}
+t_{*}-t_{0}=\frac{-1}{\dv*{a}{x_{0}}}
 \]
 
 \end_inset
@@ -904,7 +946,7 @@ breaking moment
  of the smooth solution is the minimum of all these intersecting moments:
 \begin_inset Formula 
 \[
-t_{b}=\min_{x_{0}\in\Omega}\left\{ t_{0}-\left(\dv{a}{x_{0}}\right)^{-1}\right\} 
+\boxed{t_{b}-t_{0}=\min_{x_{0}\in\Omega}\left\{ \frac{-1}{\dv*{a}{x_{0}}}\right\} }
 \]
 
 \end_inset
@@ -914,13 +956,23 @@ t_{b}=\min_{x_{0}\in\Omega}\left\{ t_{0}-\left(\dv{a}{x_{0}}\right)^{-1}\right\}
 
 \begin_layout Standard
 If we think of 
-\begin_inset Formula $u\left(t_{b},x_{b}\right)$
+\begin_inset Formula $u\left(x_{b},t_{b}\right)$
 \end_inset
 
  as the IC of a new IVP, it will become a 
 \noun on
 generalized Riemann problem
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!generalized ~
+\end_layout
+
+\end_inset
+
 .
  The special case, in which the left and right states are constants, will
  be discussed in the section of 
@@ -1442,21 +1494,21 @@ Find
 \end_inset
 
  smooth functions 
-\begin_inset Formula $\left\{ U_{i}(t,x)\right\} _{i=1}^{m}$
+\begin_inset Formula $\left\{ U_{i}(x,t)\right\} _{i=1}^{m}$
 \end_inset
 
- satisfying the PDE system
+ satisfying the system of PDEs
 \begin_inset Formula 
 \[
-\pdv{U_{i}}{t}+\sum_{k=1}^{m}A_{ik}\pdv{U_{k}}{x}=0\qc t>t_{0}\qc x\in\mathbb{{R}}\qc i=1,\dots,m
+\pdv{U_{i}}{t}+\sum_{k=1}^{m}A_{ik}\pdv{U_{k}}{x}=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\qquad i=1,\dots,m
 \]
 
 \end_inset
 
-and the IC system
+and the system of smooth ICs
 \begin_inset Formula 
 \[
-U_{i}(t_{0},x_{0})=U_{i}^{0}(x_{0})\qc i=1,\dots,m
+U_{i}(x_{0},t_{0})=U_{i}^{0}(x_{0})\qquad i=1,\dots,m
 \]
 
 \end_inset
@@ -1488,8 +1540,8 @@ in which,
 \end_layout
 
 \begin_layout Standard
-Using the matrix notation introduced in the previous section, the problem
- can be rewritten in a more compact form: 
+Using the matrix notation just introduced, the problem can be rewritten
+ in a more compact form:
 \end_layout
 
 \begin_layout Problem
@@ -1504,21 +1556,21 @@ Find a column matrix of
 \end_inset
 
  smooth functions, denoted as 
-\begin_inset Formula $\ket{U(t,x)}$
+\begin_inset Formula $\ket{U(x,t)}$
 \end_inset
 
 , satisfying the PDE
 \begin_inset Formula 
 \begin{equation}
-\left(\pdv{t}+\Mat{A}\pdv{x}\right)\ket{U}=\ket{0}\qc t>t_{0}\qc x\in\mathbb{{R}}\label{eq:LinearPdeSystem1d}
+\left(\pdv{t}+\Mat{A}\pdv{x}\right)\ket{U}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:LinearPdeSystem1d}
 \end{equation}
 
 \end_inset
 
-and the IC
+and the smooth IC
 \begin_inset Formula 
 \begin{equation}
-\ket{U(t_{0},x_{0})}=\ket{U^{0}(x_{0})}\qc x_{0}\in\mathbb{R}\label{eq:SmoothInitialWaveSystem}
+\ket{U(x_{0},t_{0})}=\ket{U^{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:SmoothInitialWaveSystem}
 \end{equation}
 
 \end_inset
@@ -1547,7 +1599,7 @@ Given a square matrix
  together satisfy the following equations
 \begin_inset Formula 
 \[
-\bra{L}\Mat{A}=\bra{L}\lambda\qc\Mat{A}\ket{R}=\lambda\ket{R}
+\bra{L}\Mat{A}=\bra{L}\lambda\qquad\Mat{A}\ket{R}=\lambda\ket{R}
 \]
 
 \end_inset
@@ -1560,6 +1612,16 @@ then we say
 \noun on
 eigenvalue
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~value
+\end_layout
+
+\end_inset
+
  of 
 \begin_inset Formula $\Mat{A}$
 \end_inset
@@ -1572,6 +1634,16 @@ eigenvalue
 \noun on
 left eigenvector
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~vector!left ~
+\end_layout
+
+\end_inset
+
  of 
 \begin_inset Formula $\Mat{A}$
 \end_inset
@@ -1588,6 +1660,16 @@ left eigenvector
 \noun on
 right eigenvector
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~vector!right ~
+\end_layout
+
+\end_inset
+
  of 
 \begin_inset Formula $\Mat{A}$
 \end_inset
@@ -1694,10 +1776,20 @@ The eigenvectors corresponding to distinct eigenvalues are linearly independent
 \noun on
 eigenmatrices
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~matrix
+\end_layout
+
+\end_inset
+
 :
 \begin_inset Formula 
 \[
-\Mat{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\qc\Mat{L}:=\begin{bmatrix}\bra{L_{1}}\\
+\Mat{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\qquad\Mat{L}:=\begin{bmatrix}\bra{L_{1}}\\
 \vdots\\
 \bra{L_{m}}
 \end{bmatrix}
@@ -1746,7 +1838,7 @@ which implies
 :
 \begin_inset Formula 
 \[
-\Mat{L}:=\Mat{R}^{-1}\qc\ip{L_{i}}{R_{k}}=\begin{cases}
+\Mat{L}:=\Mat{R}^{-1}\qquad\ip{L_{i}}{R_{k}}=\begin{cases}
 1, & i=k\\
 0, & i\ne k
 \end{cases}
@@ -1769,12 +1861,12 @@ characteristic variables
 :
 \begin_inset Formula 
 \[
-\ket{V(t,x)}:=\Mat{L}\ket{U(t,x)}=\begin{bmatrix}\ip{L_{1}}{U(t,x)}\\
+\ket{V(x,t)}:=\Mat{L}\ket{U(x,t)}=\begin{bmatrix}\ip{L_{1}}{U(x,t)}\\
 \vdots\\
-\ip{L_{m}}{U(t,x)}
-\end{bmatrix}=\begin{bmatrix}V_{1}(t,x)\\
+\ip{L_{m}}{U(x,t)}
+\end{bmatrix}=\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
-V_{m}(t,x)
+V_{m}(x,t)
 \end{bmatrix}
 \]
 
@@ -1787,7 +1879,7 @@ the original system can be decoupled as
  independent linear wave equations:
 \begin_inset Formula 
 \[
-\left(\pdv{t}+\Mat{\lambda}\pdv{x}\right)\ket{V}=\ket{0}\qor\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}\qc i=1,\dots,m
+\left(\pdv{t}+\Mat{\lambda}\pdv{x}\right)\ket{V}=\ket{0}\qor\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}\qquad i=1,\dots,m
 \]
 
 \end_inset
@@ -1796,7 +1888,17 @@ which is called the
 \noun on
 characteristic form
 \noun default
- of PDE 
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ form
+\end_layout
+
+\end_inset
+
+ ofPDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:LinearPdeSystem1d"
@@ -1824,16 +1926,12 @@ noprefix "false"
  is
 \begin_inset Formula 
 \[
-\ket{U(t,x)}=\left(\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+\boxed{\ket{U(x,t)}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U^{0}(x-(t-t_{0})\lambda_{i})}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
 
-in which, 
-\begin_inset Formula $\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}$
-\end_inset
 
- is the projection operator.
 \end_layout
 
 \begin_layout Proof
@@ -1855,7 +1953,10 @@ Each of the
 and can be solved along the corresponding characteristic curve:
 \begin_inset Formula 
 \[
-\dv{x}{t}=\lambda_{i}\qc x(t_{0})=x_{0}\implies\frac{x-x_{0}}{t-t_{0}}=\lambda_{i}
+\frac{x-x_{0}}{t-t_{0}}=\lambda_{i}\impliedby\begin{cases}
+\dv*{x}{t}=\lambda_{i} & t\in(t_{0},\infty)\\
+x(0)=x_{0}
+\end{cases}
 \]
 
 \end_inset
@@ -1863,7 +1964,7 @@ and can be solved along the corresponding characteristic curve:
 which is
 \begin_inset Formula 
 \[
-V_{i}(t,x)=\ip{L_{i}}{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+V_{i}(x,t)=\ip{L_{i}}{U^{0}(x-(t-t_{0})\lambda_{i})}
 \]
 
 \end_inset
@@ -1892,13 +1993,12 @@ The solution to the original system can be obtained by transforming
 :
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(t,x)} & =\Mat{L}^{-1}\ket{V(t,x)}=\Mat{R}\ket{V(t,x)}\\
- & =\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\begin{bmatrix}V_{1}(t,x)\\
+\begin{aligned}\ket{U(x,t)} & =\Mat{L}^{-1}\ket{V(x,t)}=\Mat{R}\ket{V(x,t)}\\
+ & =\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{m}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
-V_{m}(t,x)
+V_{m}(x,t)
 \end{bmatrix}\\
- & =\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}\\
- & =\left(\sum_{i=1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U^{0}\left(x-\left(t-t_{0}\right)\lambda_{i}\right)}
+ & =\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U^{0}(x-(t-t_{0})\lambda_{i})}
 \end{aligned}
 \]
 
@@ -1924,7 +2024,7 @@ Find
 \end_inset
 
  smooth functions 
-\begin_inset Formula $\left\{ U_{i}(t,x)\right\} _{i=1}^{m}$
+\begin_inset Formula $\left\{ U_{i}(x,t)\right\} _{i=1}^{m}$
 \end_inset
 
  satisfying the PDE system
@@ -1935,7 +2035,7 @@ Find
 
 \end_inset
 
-and the IC system 
+and the smooth IC system 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:SmoothInitialWaveSystem"
@@ -1998,10 +2098,20 @@ each row of which is a
 \noun on
 characteristic compatibility condition
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ compatibility condition
+\end_layout
+
+\end_inset
+
 , which can be written as a PDE
 \begin_inset Formula 
 \begin{equation}
-\mel**{L_{i}(U)}{\pdv{t}+\lambda_{i}(U)\pdv{x}}{U}=0\qc i=1,\dots,m\label{eq:CharacteristicCompatibilityCondition}
+\mel**{L_{i}(U)}{\pdv{t}+\lambda_{i}(U)\pdv{x}}{U}=0\qquad i=1,\dots,m\label{eq:CharacteristicCompatibilityCondition}
 \end{equation}
 
 \end_inset
@@ -2009,7 +2119,7 @@ characteristic compatibility condition
 or an ODE
 \begin_inset Formula 
 \[
-\ip{L_{i}(U)}{\left(\dv{t}\right)_{i}{U}}=0\qc i=1,\dots,m
+\ip{L_{i}(U)}{\left(\dv{t}\right)_{i}{U}}=0\qquad i=1,\dots,m
 \]
 
 \end_inset
@@ -2022,14 +2132,14 @@ by defining a differential operator
 
 \end_inset
 
-along the characteristic curve
-\begin_inset Formula 
-\[
-\dv{x}{t}=\lambda_{i}(U(t,x))\qc x(t_{0})=x_{0}
-\]
-
+along the characteristic curve 
+\begin_inset Formula $\dv*{x}{t}=\lambda_{i}$
 \end_inset
 
+.
+\end_layout
+
+\begin_layout Standard
 In contrast to the linear case, 
 \begin_inset Formula $\bra{L_{i}(U)}$
 \end_inset
@@ -2081,7 +2191,7 @@ genuinely nonlinear
  if
 \begin_inset Formula 
 \[
-\ip{\grad\lambda_{i}}{R_{i}}\ne0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\ip{\grad\lambda_{i}}{R_{i}}\ne0\qquad\forall(U_{1},\cdots,U_{m})\in\Omega\subset(-\infty,\infty)^{m}
 \]
 
 \end_inset
@@ -2093,7 +2203,7 @@ linearly degenerate
  if
 \begin_inset Formula 
 \[
-\ip{\grad\lambda_{i}}{R_{i}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\ip{\grad\lambda_{i}}{R_{i}}=0\qquad\forall(U_{1},\cdots,U_{m})\in\Omega\subset(-\infty,\infty)^{m}
 \]
 
 \end_inset
@@ -2153,13 +2263,13 @@ status open
 \end_inset
 
 If a scalar function 
-\begin_inset Formula $W(U_{1},\cdots,U_{m})$
+\begin_inset Formula $\phi(U_{1},\cdots,U_{m})$
 \end_inset
 
  satisfies
 \begin_inset Formula 
 \[
-\ip{\grad W}{R_{k}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\ip{\grad{\phi}}{R_{k}}=0\qquad\forall(U_{1},\cdots,U_{m})\in\Omega\subset(-\infty,\infty)^{m}
 \]
 
 \end_inset
@@ -2172,15 +2282,28 @@ then it is called a
 
 -Riemann invariant
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!generalized ~
+\end_layout
+
+\end_inset
+
 .
- If a scalar function 
-\begin_inset Formula $W(U_{1},\cdots,U_{m})$
+\end_layout
+
+\begin_layout Definition
+If a scalar function 
+\begin_inset Formula $\psi(U_{1},\cdots,U_{m})$
 \end_inset
 
  satisfies
 \begin_inset Formula 
 \[
-\bra{\grad W}\parallel\bra{L_{k}}=0\qc\forall\ket{U}\in\Omega\subset\mathbb{R}^{m}
+\bra{\grad{\psi}}\parallel\bra{L_{k}}=0\qquad\forall(U_{1},\cdots,U_{m})\in\Omega\subset(-\infty,\infty)^{m}
 \]
 
 \end_inset
@@ -2193,6 +2316,16 @@ then it is called a
 
 -Riemann invariant
 \noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!specialized ~
+\end_layout
+
+\end_inset
+
 .
 \end_layout
 
@@ -2209,10 +2342,10 @@ A generalized
 \end_inset
 
 -Riemann invariant 
-\begin_inset Formula $W$
+\begin_inset Formula $\phi$
 \end_inset
 
- is a constant along the trajectory of 
+ is constant along the trajectory of 
 \begin_inset Formula $\ket{R_{k}}$
 \end_inset
 
@@ -2220,27 +2353,39 @@ A generalized
 \end_layout
 
 \begin_layout Proof
-\begin_inset Formula $\ip{\grad W}{R_{k}}$
+\begin_inset Formula $\ip{\grad{\phi}}{R_{k}}$
 \end_inset
 
- is the directional derivative along 
+ is the directional derivative of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ along 
 \begin_inset Formula $\ket{R_{k}}$
 \end_inset
 
-, so along the trajectory of 
+.
+ So, along 
+\begin_inset Formula $\ket{\dd{U}}=\ket{R_{k}}\dd{\xi}$
+\end_inset
+
+, which is an infinitesimal segment along the trajectory of 
 \begin_inset Formula $\ket{R_{k}}$
 \end_inset
 
-, the value of 
-\begin_inset Formula $W$
-\end_inset
-
- does not change:
+, there is
 \begin_inset Formula 
 \[
-\dd{W}=\ip{\grad W}{\dd{U}}=\ip{\grad W}{R_{k}}\dd{\xi}=0
+\dd{\phi}=\ip{\grad{\phi}}{\dd{U}}=\ip{\grad{\phi}}{R_{k}}\dd{\xi}=0
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -2268,17 +2413,21 @@ Riemann invariants.
 
 \begin_layout Proof
 The constancy of 
-\begin_inset Formula $W$
+\begin_inset Formula $\phi$
 \end_inset
 
  along 
 \begin_inset Formula $C_{k}$
 \end_inset
 
- leads to an equation
+ (the trajectory of 
+\begin_inset Formula $\ket{R_{k}}$
+\end_inset
+
+) leads to an algebraic equation
 \begin_inset Formula 
 \[
-W\left(U_{1},\dots,U_{m}\right)=C
+\phi\left(U_{1},\dots,U_{m}\right)=C
 \]
 
 \end_inset
@@ -2287,11 +2436,11 @@ which defines a hyper-surface in the
 \begin_inset Formula $m$
 \end_inset
 
--dimensional space 
+-dimensional 
 \begin_inset Formula $\left(U_{1},\dots,U_{m}\right)$
 \end_inset
 
-.
+ space.
  The intersection of 
 \begin_inset Formula $n$
 \end_inset
@@ -2317,6 +2466,7 @@ which defines a hyper-surface in the
 \end_layout
 
 \begin_layout Subsubsection
+Riemann Invariants for 
 \begin_inset Formula $2\times2$
 \end_inset
 
@@ -2351,23 +2501,138 @@ For a
 
  system, there is only one independent generalized Riemann invariant for
  each characteristic field.
- The orthogonality relations
+ The 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+orthogonality condition 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+between left and right eigenvectors
 \begin_inset Formula 
 \[
-\ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0\qc\ip{\grad W_{1}}{R_{1}}=\ip{\grad W_{2}}{R_{2}}=0
+\ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0
 \]
 
 \end_inset
 
-lead to
+and the 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+definition of generalized Riemann invariants
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!generalized ~
+\end_layout
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
 \begin_inset Formula 
 \[
-\bra{L_{2}}\parallel\bra{\grad W_{1}}\qc\bra{L_{1}}\parallel\bra{\grad W_{2}}
+\ip{\grad{\phi}_{1}}{R_{1}}=\ip{\grad{\phi}_{2}}{R_{2}}=0
 \]
 
 \end_inset
 
-which meet the definition of specialized Riemann invariants.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+lead to the following parallel relations
+\begin_inset Formula 
+\[
+\bra{L_{2}}\parallel\bra{\grad{\phi}_{1}}\qquad\bra{L_{1}}\parallel\bra{\grad{\phi}_{2}}
+\]
+
+\end_inset
+
+which meet the definition of specialized Riemann invariants
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!specialized ~
+\end_layout
+
+\end_inset
+
+.
+ Ignore the scaling coefficient, we can write
+\begin_inset Formula 
+\[
+\psi_{1}=\phi_{2}\qquad\psi_{2}=\phi_{1}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2382,23 +2647,33 @@ For a
 \begin_inset Formula $2\times2$
 \end_inset
 
- system, a generalized Riemann invariant is constant along any characteristic
- curve corresponding to the other characteristic field.
+ system, a specialized Riemann invariant 
+\begin_inset Formula $\psi_{i}$
+\end_inset
+
+ is constant along any characteristic curve 
+\begin_inset Formula $\dv*{x}{t}=\lambda_{i}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
-The parallel relations
+\begin_inset Formula $\forall i=1,2$
+\end_inset
+
+, the parallel relation
 \begin_inset Formula 
 \[
-\bra{L_{2}}\parallel\bra{\grad W_{1}}\qc\bra{L_{1}}\parallel\bra{\grad W_{2}}
+\bra{L_{i}}\parallel\bra{\grad{\psi}_{i}}
 \]
 
 \end_inset
 
-immediately lead to
+leads to
 \begin_inset Formula 
 \[
-\bra{\grad W_{1}}\Mat{A}=\bra{\grad W_{1}}\lambda_{2}\qc\bra{\grad W_{2}}\Mat{A}=\bra{\grad W_{2}}\lambda_{1}
+\bra{\grad{\psi}_{i}}\Mat{A}=\bra{\grad{\psi}_{i}}\lambda_{i}
 \]
 
 \end_inset
@@ -2407,12 +2682,10 @@ The
 \begin_inset Formula $2\times2$
 \end_inset
 
- system of PDEs can now be turned into a pair of ODEs
+ system of PDEs can then be turned into a pair of ODEs
 \begin_inset Formula 
 \[
-\begin{aligned}\mel**{\grad W_{1}}{\pdv{t}+\lambda_{2}\pdv{x}}{U}=\left(\dv{t}\right)_{2}W_{1}=0\\
-\mel**{\grad W_{2}}{\pdv{t}+\lambda_{1}\pdv{x}}{U}=\left(\dv{t}\right)_{1}W_{2}=0
-\end{aligned}
+\mel**{\grad{\psi}_{i}}{\pdv{t}+\lambda_{i}\pdv{x}}{U}=\left(\dv{t}\right)_{i}\psi_{i}=0\qquad i=1,2
 \]
 
 \end_inset
@@ -2429,27 +2702,42 @@ The
 
 \begin_layout Standard
 At any point 
-\begin_inset Formula $(t,x)$
+\begin_inset Formula $(x,t)$
 \end_inset
 
 , we have two algebraic equations
 \begin_inset Formula 
 \[
-\begin{aligned}W_{1}\circ\ket{U}(t,x)=W_{1}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{2})\\
-W_{2}\circ\ket{U}(t,x)=W_{2}\circ\ket{U_{0}}\circ x_{0}(t,x;\lambda_{1})
-\end{aligned}
+\eval{\psi_{i}(U_{1},U_{2})}_{(x,t)}=\eval{\psi_{i}(U_{1},U_{2})}_{(x_{0},t_{0})}\qquad i=1,2
 \]
 
 \end_inset
 
-from which the original variables 
+in which 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ is obtained by tracing back along the characteristic curve 
+\begin_inset Formula $\dv*{x}{t}=\lambda_{i}$
+\end_inset
+
+ passing through 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+.
+ The original variables 
 \begin_inset Formula $\left(U_{1},U_{2}\right)$
 \end_inset
 
- can be solved.
+ at 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ can then be solved.
 \end_layout
 
-\begin_layout Problem
+\begin_layout Example
 \begin_inset ERT
 status open
 
@@ -2469,7 +2757,7 @@ status open
 \rho uu+p
 \end{bmatrix}=\begin{bmatrix}0\\
 0
-\end{bmatrix}\qc p=C\rho^{\gamma}
+\end{bmatrix}\qquad p=C\rho^{\gamma}
 \]
 
 \end_inset
@@ -2493,9 +2781,9 @@ noprefix "false"
 \[
 \ket{U}=\begin{bmatrix}\rho\\
 \rho u
-\end{bmatrix}\qc\Mat{A(U)}=\begin{bmatrix}0 & 1\\
+\end{bmatrix}\qquad\Mat{A(U)}=\begin{bmatrix}0 & 1\\
 a^{2}-u^{2} & 2u
-\end{bmatrix}\qc a=\sqrt{C\gamma\rho^{\gamma-1}}
+\end{bmatrix}\qquad a=\sqrt{C\gamma\rho^{\gamma-1}}
 \]
 
 \end_inset
@@ -2507,10 +2795,10 @@ The eigenvalues and eigenvectors of
  can be found as
 \begin_inset Formula 
 \[
-\begin{aligned}\lambda_{1}=u-a\qc\ket{R_{1}}=\begin{bmatrix}1\\
+\begin{aligned}\lambda_{1}=u-a\qquad\ket{R_{1}}=\begin{bmatrix}1\\
 u-a
 \end{bmatrix}\\
-\lambda_{2}=u+a\qc\ket{R_{2}}=\begin{bmatrix}1\\
+\lambda_{2}=u+a\qquad\ket{R_{2}}=\begin{bmatrix}1\\
 u+a
 \end{bmatrix}
 \end{aligned}
@@ -2529,9 +2817,17 @@ The corresponding generalized Riemann invariants can be found from
 to be
 \begin_inset Formula 
 \[
-\begin{aligned}W_{1} & =u+\int\frac{a}{\rho}\dd{\rho}=u+\frac{2a}{\gamma-1}\\
-W_{2} & =u-\int\frac{a}{\rho}\dd{\rho}=u-\frac{2a}{\gamma-1}
+\begin{aligned}\phi_{1} & =u+\int\frac{a}{\rho}\dd{\rho}=u+\frac{2a}{\gamma-1}\\
+\phi_{2} & =u-\int\frac{a}{\rho}\dd{\rho}=u-\frac{2a}{\gamma-1}
 \end{aligned}
+\]
+
+\end_inset
+
+So, the specialized Riemann invariants are
+\begin_inset Formula 
+\[
+\psi_{1}=\phi_{2}=u-\frac{2a}{\gamma-1}\qquad\psi_{2}=\phi_{1}=u+\frac{2a}{\gamma-1}
 \]
 
 \end_inset
@@ -2540,8 +2836,8 @@ Trace along the characteristic curves back to the initial point, we have
  two algebraic equations
 \begin_inset Formula 
 \[
-\begin{aligned}u+\frac{2a}{\gamma-1}=\left(u_{0}+\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{2}=u+a}\\
-u-\frac{2a}{\gamma-1}=\left(u_{0}-\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{1}=u-a}
+\begin{aligned}u-\frac{2a}{\gamma-1} & =\left(u_{0}-\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{1}=u-a}\\
+u+\frac{2a}{\gamma-1} & =\left(u_{0}+\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{2}=u+a}
 \end{aligned}
 \]
 
@@ -2564,7 +2860,7 @@ Discontinuities and Weak Solutions
 
 \begin_layout Standard
 In the previous sections, we have seen that even with a smooth IC, the smooth
- solution of a quasilinear PDE system can finally become discontinuous.
+ solution of a quasilinear PDE (system) can finally become discontinuous.
  To handle such cases, we have to extend the notion of solutions to a weaker
  sense.
 \end_layout
@@ -2574,44 +2870,103 @@ Conservation Laws
 \end_layout
 
 \begin_layout Standard
-Most of the PDEs with physical backgrounds can be formulated as conservation
- laws, i.e.
- the law of conservation of some physical quantity (mass, momentum, angular
- momentum, energy).
-\end_layout
-
-\begin_layout Standard
 Suppose
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $V^{C}$
+\begin_inset Formula $V$
 \end_inset
 
  is a 
 \noun on
 control volume
 \noun default
+ (CV)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "CV"
+description "Control Volume"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume
+\end_layout
+
+\end_inset
+
  in space.
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\partial V^{C}$
+\begin_inset Formula $\partial V$
 \end_inset
 
  is the boundary of 
 \begin_inset Formula $V$
 \end_inset
 
-, which is moving with a velocity 
-\begin_inset Formula $\vec{u}^{C}$
+, known as a 
+\noun on
+control surface
+\noun default
+ (CS)
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "CS"
+description "Control Surface"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ surface
+\end_layout
+
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\rho$
+\begin_inset Formula $\vec{u}^{c}$
+\end_inset
+
+
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "$\\vec{u}^{c}$"
+description "velocity of a point on a control surface"
+literal "true"
+
+\end_inset
+
+ is the velocity of a point on 
+\begin_inset Formula $\partial V$
+\end_inset
+
+ (
+\begin_inset Formula $^{c}$
+\end_inset
+
+ stands for 
+\bar under
+c
+\bar default
+ontrol volume)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi$
 \end_inset
 
  is the 
@@ -2631,14 +2986,14 @@ density
 
  is the 
 \noun on
-flux
+flux vector
 \noun default
 , i.e.
  how much such quantity passes through a 
 \emph on
 fixed
 \emph default
- surface per unit area within unit time.
+ surface in space per unit area within unit time.
 \end_layout
 
 \begin_layout Standard
@@ -2646,22 +3001,22 @@ Then, the
 \noun on
 conservation law
 \noun default
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
  can be written as 
 \begin_inset Formula 
-\[
-\DDt{}\int_{V^{C}}\rho\dd{V}=\boxed{\int_{V^{C}}\pdv{\rho}{t}\dd{V}+\oint_{\partial V^{C}}\vec{f}\cdot\vu{n}\dd{S}=0}
-\]
+\begin{equation}
+\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{f}\dd{S}=0\label{ConservationLawIntegralForm}
+\end{equation}
 
 \end_inset
 
-which is usually used for 
-\emph on
-fixed
-\emph default
- control volumes, or
+or equivalently
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V^{C}}\rho\dd{V}=\boxed{\dv{t}\int_{V^{C}}\rho\dd{V}+\oint_{\partial V^{C}}\left(\vec{f}-\rho\vec{u}^{C}\right)\cdot\vu{n}\dd{S}=0}\label{eq:ConservationLawOnMovingControlVolume}
+\dv{t}\int_{V}\phi\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\vec{f}-\phi\vec{u}^{c}\right)\dd{S}=0\label{eq:ConservationLawOnMovingControlVolume}
 \end{equation}
 
 \end_inset
@@ -2683,10 +3038,17 @@ If
 \end_inset
 
  smooth with respect to spatial variables, we can apply Gauss's divergence
- theorem, which leads to
+ theorem to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "ConservationLawIntegralForm"
+
+\end_inset
+
+, which leads to
 \begin_inset Formula 
 \[
-\boxed{\pdv{\rho}{t}+\div\vec{f}=0}
+\pdv{\phi}{t}+\div\vec{f}=0
 \]
 
 \end_inset
@@ -2705,72 +3067,13 @@ noprefix "false"
 .
 \end_layout
 
-\begin_layout Remark*
-For a scalar conservation law, people usually use
-\end_layout
-
-\begin_layout Itemize
-a scalar 
-\begin_inset Formula $u$
-\end_inset
-
- for the conservation variable;
-\end_layout
-
-\begin_layout Itemize
-a vector 
-\begin_inset Formula $\vec{{f}}=\sum_{i=1}^{3}\vu{e}_{i}f_{i}$
-\end_inset
-
- for the flux in 3D space, and 
-\begin_inset Formula $\vec{{f}}=\vu{e}_{1}f$
-\end_inset
-
- in 1D space.
-\end_layout
-
-\begin_layout Itemize
-The conservation law is then written as
-\begin_inset Formula 
-\begin{equation}
-\pdv{u}{t}+\sum_{i=1}^{3}\pdv{f_{i}}{x_{i}}=0\label{eq:SingleConservationLaw3d}
-\end{equation}
-
-\end_inset
-
-in 3D space and
-\begin_inset Formula 
-\begin{equation}
-\pdv{u}{t}+\pdv{f}{x}=0\label{eq:SingleConservationLaw1d}
-\end{equation}
-
-\end_inset
-
-in 1D space.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark*
-For a vector conservation law, or a system of conservation laws, I prefer
- to use
-\end_layout
-
-\begin_layout Itemize
-a column matrix 
+\begin_layout Notation
+For a vector conservation law, or a system of conservation laws, we use
+ a column matrix 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- for the conservation variables,
-\end_layout
-
-\begin_layout Itemize
-a scalar 
+ for the conservation variables, a scalar 
 \begin_inset Formula $U_{i}:=\ip{i}{U}$
 \end_inset
 
@@ -2782,55 +3085,47 @@ th element of
 \begin_inset Formula $\ket{U}$
 \end_inset
 
-;
-\end_layout
-
-\begin_layout Standard
-In 3D space,
-\end_layout
-
-\begin_layout Itemize
-a matrix 
-\begin_inset Formula $\Mat{F}$
-\end_inset
-
- for the flux, 
-\end_layout
-
-\begin_layout Itemize
-a column matrix 
-\begin_inset Formula $\ket{F_{k}}:=\Mat{F}\ket{k}$
-\end_inset
-
- for the 
-\begin_inset Formula $k$
-\end_inset
-
-th column of 
-\begin_inset Formula $\Mat{F}$
-\end_inset
-
-, 
-\end_layout
-
-\begin_layout Itemize
-a scalar 
-\begin_inset Formula $F_{ik}:=\ip{i}{F_{k}}\equiv\mel{i}{F}{k}$
-\end_inset
-
- for the 
-\begin_inset Formula $i$
-\end_inset
-
-th element of 
-\begin_inset Formula $\ket{F_{k}}$
-\end_inset
-
 .
 \end_layout
 
-\begin_layout Itemize
-The conservation law is then written as
+\begin_layout Notation
+In 3D space, we use a column matrix of vectors (or tensors) 
+\begin_inset Formula $\VecKet{F}$
+\end_inset
+
+ for the flux, which can be decomposed as 
+\begin_inset Formula $\VecKet{F}=\sum_{k=1}^{3}\vu{e}_{k}\ket{F_{k}}$
+\end_inset
+
+.
+ The conservation law is then written in one of the following forms
+\begin_inset Formula 
+\begin{equation}
+\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\VecKet{F}-\vec{u}^{c}\ket{U}\right)\dd{S}=\ket{0}\label{eq:ConservationLawSystemOnMovingControlVolume}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{F}\dd{S}=\ket{0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pdv{\ket{U}}{t}+\div{\VecKet{F}}=\ket{0}
+\]
+
+\end_inset
+
+In Cartesian coordinates, the last one is
+\end_layout
+
+\begin_layout Notation
 \begin_inset Formula 
 \begin{equation}
 \boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:SystemOfConservationLaws3d}
@@ -2838,71 +3133,59 @@ The conservation law is then written as
 
 \end_inset
 
-in which the 
-\begin_inset Formula $i$
-\end_inset
-
-th row is
-\begin_inset Formula 
-\[
-\pdv{U_{i}}{t}+\sum_{k=1}^{3}\pdv{F_{ik}}{x_{k}}=0
-\]
-
-\end_inset
-
 
 \end_layout
 
-\begin_layout Standard
-In 1D space,
-\end_layout
-
-\begin_layout Itemize
-a column matrix 
-\begin_inset Formula $\ket{F}$
+\begin_layout Notation
+In 1D space, only one component of 
+\begin_inset Formula $\VecKet{F}$
 \end_inset
 
- for the flux,
-\end_layout
+ is non-zero, so the subscripts can be ignored.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws3d"
 
-\begin_layout Itemize
-a scalar 
-\begin_inset Formula $F_{i}:=\ip{i}{F}$
 \end_inset
 
- for the 
-\begin_inset Formula $i$
-\end_inset
-
-th element of 
-\begin_inset Formula $\ket{F}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-The conservation law is then written as
+ becomes
 \begin_inset Formula 
 \begin{equation}
-\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}\label{eq:SystemOfConservationLaws1d}
+\boxed{\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}}\label{eq:SystemOfConservationLaws1d}
 \end{equation}
 
 \end_inset
 
-in which the 
-\begin_inset Formula $i$
+
+\end_layout
+
+\begin_layout Notation
+Scalar conservation laws are just special cases of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws3d"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-th row is
-\begin_inset Formula 
-\[
-\pdv{U_{i}}{t}+\pdv{F_{i}}{x}=0
-\]
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SystemOfConservationLaws1d"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
+, in which 
+\begin_inset Formula $\ket{\phantom{U}}$
+\end_inset
 
+ can be ignored.
 \end_layout
 
 \begin_layout Subsubsection
@@ -2930,7 +3213,7 @@ Suppose there is a discontinuity manifold
 \end_inset
 
 Choose a cylindrical control volume 
-\begin_inset Formula $V^{C}$
+\begin_inset Formula $V$
 \end_inset
 
 , which satisfies the following requirements:
@@ -2941,14 +3224,10 @@ It has an infinitesimal height
 \begin_inset Formula $h$
 \end_inset
 
-, which means when 
-\begin_inset Formula $h\to0$
-\end_inset
-
-,
+, which means
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{u}^{C}=\vec{u}^{S}\qc\lim_{h\to0}\dv{t}\int_{V^{C}}\phi\dd{V}=0
+\lim_{h\to0}\vec{u}^{c}=\vec{u}^{S}\qquad\lim_{h\to0}\dv{t}\int_{V}\ket{U}\dd{V}=\ket{0}
 \]
 
 \end_inset
@@ -2985,7 +3264,7 @@ All of its walls are
 \end_inset
 
 ) of 
-\begin_inset Formula $V^{C}$
+\begin_inset Formula $V$
 \end_inset
 
 , and 
@@ -2999,7 +3278,7 @@ All of its walls are
 Then, the conservation law on a moving control volume 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawOnMovingControlVolume"
+reference "eq:ConservationLawSystemOnMovingControlVolume"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3009,7 +3288,7 @@ noprefix "false"
  is reduced to
 \begin_inset Formula 
 \[
-\int_{S_{+}}\left(\vec{f}-\rho\vec{u}^{S}\right)\cdot\vu{n}\dd{S}+\int_{S_{-}}\left(\vec{f}-\rho\vec{u}^{S}\right)\cdot\vu{n}\dd{S}=0
+\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\VecKet{F}-\vec{u}^{S}\ket{U}\right)\dd{S}=0
 \]
 
 \end_inset
@@ -3027,12 +3306,9 @@ Replace
 \end_inset
 
 , we have
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{s\Delta\rho=\Delta f}
+\boxed{\left(\ket{U_{+}}-\ket{U_{-}}\right)s=\vu{e}_{\perp}\cdot\left(\ket*{\vec{F}_{+}}-\ket*{\vec{F}_{-}}\right)}\qquad s:=\vu{e}_{\perp}\cdot\vec{u}^{S}
 \]
 
 \end_inset
@@ -3046,10 +3322,14 @@ Rankine–Hugoniot condition
 \noun on
 jump condition
 \noun default
-, in which
+.
+\end_layout
+
+\begin_layout Standard
+For a system of conservation laws in 1D space, it becomes
 \begin_inset Formula 
 \[
-s:=u_{\perp}^{S}\qc\Delta f:=\lim_{h\to+0}\vec{f}\cdot\vu{e}_{\perp}-\lim_{h\to-0}\vec{f}\cdot\vu{e}_{\perp}
+\left(\ket{U_{+}}-\ket{U_{-}}\right)s=\ket{F_{+}}-\ket{F_{-}}
 \]
 
 \end_inset
@@ -3058,45 +3338,15 @@ s:=u_{\perp}^{S}\qc\Delta f:=\lim_{h\to+0}\vec{f}\cdot\vu{e}_{\perp}-\lim_{h\to-
 \end_layout
 
 \begin_layout Standard
-For a single conservation law in 1D space, the jump condition is usually
- written as
+For a single conservation law in 1D space, it becomes
 \begin_inset Formula 
 \[
-s\Delta u=\Delta f\qc\Delta f:=f(u_{+})-f(u_{-})
+\left(U_{+}-U_{-}\right)s=F_{+}-F_{-}
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-For a system of conservation laws, the jump condition must be satisfied
- by each row, that is:
-\begin_inset Formula 
-\begin{equation}
-s\ket{\Delta U}=\ket{\Delta F}\label{eq:JumpConditionFor1dSystem}
-\end{equation}
-
-\end_inset
-
-in which,
-\begin_inset Formula 
-\[
-\ket{\Delta F}:=\ket{F(U_{+})}-\ket{F(U_{-})}
-\]
-
-\end_inset
-
-in 1D space, and
-\begin_inset Formula 
-\[
-\ket{\Delta F}:=\Mat{F(U_{+})}\ket{e_{\perp}}-\Mat{F(U_{-})}\ket{e_{\perp}}
-\]
-
-\end_inset
-
-in 3D space.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3119,7 +3369,7 @@ If there exists an
 \end_inset
 
  integrable function 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  that satisfies
@@ -3128,8 +3378,8 @@ If there exists an
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}u+\pdv{\phi}{x}f\right)\dd{x}\dd{t}\\
-+ & \int_{-\infty}^{+\infty}\phi(t_{0},x_{0})u_{0}(x_{0})\dd{x_{0}}\\
+\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}u+\pdv{\phi}{x}f\right)\dd{x}\dd{t}\\
++ & \int_{-\infty}^{+\infty}\phi(x_{0},0)u_{0}(x_{0})\dd{x_{0}}\\
 = & 0
 \end{aligned}
 \]
@@ -3141,11 +3391,11 @@ for any
 compact supported smooth
 \emph default
  function 
-\begin_inset Formula $\phi(t,x)$
+\begin_inset Formula $\phi(x,t)$
 \end_inset
 
 , then 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  is said to be a weak solution of the single conservation law in 1D space
@@ -3166,7 +3416,7 @@ piecewise smooth
  IC
 \begin_inset Formula 
 \[
-u(t_{0},x_{0})=u_{0}(x_{0})\qc x_{0}\in\mathbb{R}
+u(x_{0},0)=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
 \]
 
 \end_inset
@@ -3190,10 +3440,10 @@ For smooth solutions, we can move the temporal derivative from
 :
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}u\dd{x}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{u}{t}+\pdv{\phi u}{t}\right)\dd{t}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}+\int_{-\infty}^{+\infty}\eval{\phi u}_{t_{0}}^{+\infty}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}-\int_{-\infty}^{+\infty}\phi(t_{0},x_{0})u_{0}(x_{0})\dd{x_{0}}
+\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}u\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(-\phi\pdv{u}{t}+\pdv{\phi u}{t}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}+\int_{-\infty}^{+\infty}\eval{\phi u}_{0}^{+\infty}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}-\int_{-\infty}^{+\infty}\phi(x_{0},0)u_{0}(x_{0})\dd{x_{0}}
 \end{aligned}
 \]
 
@@ -3223,10 +3473,10 @@ Similarly, we can move the spatial derivative from
 :
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}f\dd{x}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{f}{x}+\pdv{\phi f}{x}\right)\dd{t}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}+\int_{t_{0}}^{+\infty}\eval{\phi f}_{-\infty}^{+\infty}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}
+\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}f\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(-\phi\pdv{f}{x}+\pdv{\phi f}{x}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}+\int_{0}^{+\infty}\eval{\phi f}_{-\infty}^{+\infty}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}
 \end{aligned}
 \]
 
@@ -3248,7 +3498,7 @@ We drop the
 Substitute them into the definition of weak solution, we have
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\left(\pdv{u}{t}+\pdv{f}{x}\right)\dd{t}\dd{x}=0
+\int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\left(\pdv{u}{t}+\pdv{f}{x}\right)\dd{t}\dd{x}=0
 \]
 
 \end_inset
@@ -3381,6 +3631,16 @@ literal "false"
 \end_inset
 
 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -3505,7 +3765,7 @@ status open
 If the two independent variables are scaled with the same constant:
 \begin_inset Formula 
 \[
-(t,x)\to(\alpha t,\alpha x)\qc\forall\alpha\ne0
+(x,t)\to(\alpha t,\alpha x)\qquad\forall\alpha\ne0
 \]
 
 \end_inset
@@ -3555,7 +3815,7 @@ RP for Linear Wave Equation
 The solution is
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
+u(x,t)=\begin{cases}
 u_{-}^{0}, & x/t<a\\
 u_{+}^{0}, & x/t>a
 \end{cases}
@@ -3591,7 +3851,7 @@ a(u_{-})=s=a(u_{+})
 are satisfied, in which
 \begin_inset Formula 
 \[
-s=a\qc\Delta u=u_{+}-u_{-}\qc\Delta f=au_{+}-au_{-}
+s=a\qquad\Delta u=u_{+}-u_{-}\qquad\Delta f=au_{+}-au_{-}
 \]
 
 \end_inset
@@ -3612,7 +3872,7 @@ Like in the smooth case, the first step is to project the IC onto the space
 :
 \begin_inset Formula 
 \[
-\ket{U_{-}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\qc\ket{U_{+}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}
+\ket{U_{-}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\qquad\ket{U_{+}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}
 \]
 
 \end_inset
@@ -3624,7 +3884,7 @@ The IVP then becomes
  independent RPs for linear wave equations:
 \begin_inset Formula 
 \[
-\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qc V_{i}(0,x)=\begin{cases}
+\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(0,x)=\begin{cases}
 \ip{L_{i}}{U_{-}^{0}}, & x<0\\
 \ip{L_{i}}{U_{+}^{0}}, & x>0
 \end{cases}
@@ -3635,10 +3895,10 @@ The IVP then becomes
 We know their solutions are:
 \begin_inset Formula 
 \[
-V_{i}(t,x)=\begin{cases}
+V_{i}(x,t)=\begin{cases}
 \ip{L_{i}}{U_{-}^{0}}, & x/t<\lambda_{i}\\
 \ip{L_{i}}{U_{+}^{0}}, & x/t>\lambda_{i}
-\end{cases}\qc i=1,\dots,m
+\end{cases}\qquad i=1,\dots,m
 \]
 
 \end_inset
@@ -3740,7 +4000,7 @@ the value of
  (except on the discontinuities) is the superposition of them:
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(t,x)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\\
+\begin{aligned}\ket{U(x,t)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\\
  & =\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}^{0}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}^{0}}
 \end{aligned}
 \]
@@ -3803,7 +4063,7 @@ RP for Single Conservation Law
 \begin_layout Standard
 The disturbance of the initial discontinuity spreads at a finite speed,
  so there must be two undisturbed regions in the solution, in which 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  takes its initial value.
@@ -3817,7 +4077,7 @@ The disturbance of the initial discontinuity spreads at a finite speed,
  So, the solution must have the following form:
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
+u(x,t)=\begin{cases}
 u_{-}^{0}, & x/t<a_{-}\\
 u_{D}(x/t), & x/t\in[a_{-},a_{+}]\\
 u_{+}^{0}, & x/t>a_{+}
@@ -3829,7 +4089,7 @@ u_{+}^{0}, & x/t>a_{+}
 in which
 \begin_inset Formula 
 \[
-a(u)=\pdv{f(u)}{u}\qc a_{\pm}=a\left(u_{\pm}^{0}\right)
+a(u)=\pdv{f(u)}{u}\qquad a_{\pm}=a\left(u_{\pm}^{0}\right)
 \]
 
 \end_inset
@@ -3914,7 +4174,7 @@ is strictly satisfied.
  The complete solution is then
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
+u(x,t)=\begin{cases}
 u_{-}^{0}, & x/t<s\\
 \text{shock wave}, & x/t=s\\
 u_{+}^{0}, & x/t>s
@@ -3988,14 +4248,14 @@ wave tail
 
 .
  In the region between them, 
-\begin_inset Formula $u(t,x)$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
  is smooth enough to satisfy the PDE, which can be solved from the equation
  of characteristic curves:
 \begin_inset Formula 
 \[
-x/t=a(u)\implies u(t,x)=a^{-1}(x/t)
+x/t=a(u)\implies u(x,t)=a^{-1}(x/t)
 \]
 
 \end_inset
@@ -4003,7 +4263,7 @@ x/t=a(u)\implies u(t,x)=a^{-1}(x/t)
 The complete solution is then
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
+u(x,t)=\begin{cases}
 u_{-}^{0}, & x/t<a_{-}\\
 a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
 u_{+}^{0}, & x/t>a_{+}
@@ -4054,7 +4314,7 @@ a_{-}=s=a_{+}
 The complete solution is then
 \begin_inset Formula 
 \[
-u(t,x)=\begin{cases}
+u(x,t)=\begin{cases}
 u_{-}^{0}, & x/t<s\\
 \text{contact discontinuity}, & x/t=s\\
 u_{+}^{0}, & x/t>s
@@ -4117,7 +4377,7 @@ Since the solution of an RP is self-similar, we can define the slope as
  a new independent variable:
 \begin_inset Formula 
 \[
-\alpha:=x/t\implies\pdv{t}=\pdv{\alpha}{t}\dv{\alpha}\qc\pdv{x}=\pdv{\alpha}{x}\dv{\alpha}
+\alpha:=x/t\implies\pdv{t}=\pdv{\alpha}{t}\dv{\alpha}\qquad\pdv{x}=\pdv{\alpha}{x}\dv{\alpha}
 \]
 
 \end_inset
@@ -4316,7 +4576,7 @@ th elementary wave is a centered expansion wave.
 -characteristic curves must diverse from each other:
 \begin_inset Formula 
 \[
-\dv{\lambda_{k}(\alpha)}{\alpha}\ge0\qc\alpha\in[a_{-},a_{+}]
+\dv{\lambda_{k}(\alpha)}{\alpha}\ge0\qquad\alpha\in[a_{-},a_{+}]
 \]
 
 \end_inset
@@ -4324,7 +4584,7 @@ th elementary wave is a centered expansion wave.
 in which
 \begin_inset Formula 
 \[
-a_{-}=\lambda_{k}\left(U_{(k)-}\right)\qc a_{+}=\lambda_{k}\left(U_{(k)+}\right)
+a_{-}=\lambda_{k}\left(U_{(k)-}\right)\qquad a_{+}=\lambda_{k}\left(U_{(k)+}\right)
 \]
 
 \end_inset
@@ -4357,7 +4617,7 @@ A centered expansion wave is a smooth region, in which
 -Riemann invariants are constants across wave:
 \begin_inset Formula 
 \[
-\dv{W}{\alpha}=\ip{\grad W}{\dv{U}{\alpha}}=\ip{\grad W}{R_{k}}=0
+\dv{W}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
@@ -4438,7 +4698,7 @@ A contact discontinuity can also be seen as a limit case of a centered expansion
 -Riemann invariants are constants across wave:
 \begin_inset Formula 
 \[
-\dv{W}{\alpha}=\ip{\grad W}{\dv{U}{\alpha}}=\ip{\grad W}{R_{k}}=0
+\dv{W}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
