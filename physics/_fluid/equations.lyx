@@ -1087,7 +1087,7 @@ in which
 First Law of Thermodynamics
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:1stLawOfThermodynamics"
+name "sec:Law1ofThermodynamics"
 
 \end_inset
 
@@ -1176,7 +1176,7 @@ literal "false"
 So, the 1st law of thermodynamics can also be written as
 \begin_inset Formula 
 \begin{equation}
-T\dd{s}=\dd{e}+p\dd{v}=\dd{h}-v\dd{p}\label{eq:1stLawOfThermodynamics}
+T\dd{s}=\dd{e}+p\dd{v}=\dd{h}-v\dd{p}\label{eq:Law1ofThermodynamics}
 \end{equation}
 
 \end_inset
@@ -1534,7 +1534,7 @@ For a calorically ideal gas (
 which comes from the 1st law of thermodynamics 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:1stLawOfThermodynamics"
+reference "eq:Law1ofThermodynamics"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2747,7 +2747,7 @@ Conservation of Energy
 The conservation law of energy is the alias of the 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:1stLawOfThermodynamics"
+reference "sec:Law1ofThermodynamics"
 
 \end_inset
 
@@ -2830,7 +2830,7 @@ reference "eq:ConservationOfEnergyWithDDt"
 ) in matrix form:
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsWithDDt}
+\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
 \end{equation}
 
 \end_inset
@@ -2838,27 +2838,21 @@ reference "eq:ConservationOfEnergyWithDDt"
 in which
 \begin_inset Formula 
 \[
-\ket{U}=\begin{bmatrix}\rho\\
+\begin{aligned}\ket{U} & =\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
-\end{bmatrix}\qquad\ket{H}=\begin{bmatrix}0\\
+\end{bmatrix} & \VecKet{P} & =\begin{bmatrix}\vec{0}\\
+p\Tensor{1}\\
+p\vec{u}
+\end{bmatrix}\\
+\VecKet{G} & =\begin{bmatrix}\vec{0}\\
+\Tensor{\tau}\\
+\Tensor{\tau}\cdot\vec{u}-\vec{q}
+\end{bmatrix} & \ket{H} & =\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\cdot\vec{u}+j
 \end{bmatrix}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\VecKet{P}=\begin{bmatrix}\vec{0}\\
-p\Tensor{1}\\
-p\vec{u}
-\end{bmatrix}\qquad\VecKet{G}=\begin{bmatrix}\vec{0}\\
-\Tensor{\tau}\\
-\Tensor{\tau}\cdot\vec{u}-\vec{q}
-\end{bmatrix}
+\end{aligned}
 \]
 
 \end_inset
@@ -2917,7 +2911,7 @@ noprefix "false"
  becomes
 \begin_inset Formula 
 \begin{equation}
-\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsWithoutDDt}
+\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
 \end{equation}
 
 \end_inset
@@ -2968,7 +2962,7 @@ noprefix "false"
  will then become
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsForMovingControlVolume}
+\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
 \end{equation}
 
 \end_inset
@@ -2995,7 +2989,7 @@ noprefix "false"
  to them, which leads to
 \begin_inset Formula 
 \begin{equation}
-\pdv{\ket{U}}{t}+\div{\VecKet{F}}=\div{\VecKet{G}}+\ket{H}\label{eq:ConservationLawsInDifferentialForm}
+\boxed{\pdv{\ket{U}}{t}+\div{\VecKet{F}}=\div{\VecKet{G}}+\ket{H}}\label{eq:ConservationLawsDifferentialForm}
 \end{equation}
 
 \end_inset
@@ -3014,17 +3008,17 @@ or equivalently
 Using the Cartesian tensor index notation, they are
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}\begin{bmatrix}\rho\\
+\pdv{t}\begin{bmatrix}\rho\\
 u_{1}\rho\\
 u_{2}\rho\\
 u_{3}\rho\\
 E\rho
-\end{bmatrix}+\partial_{\alpha}\begin{bmatrix}u_{\alpha}\rho\\
+\end{bmatrix}+\pdv{x_{\alpha}}\begin{bmatrix}u_{\alpha}\rho\\
 u_{\alpha}u_{1}\rho+p\delta_{\alpha1}\\
 u_{\alpha}u_{2}\rho+p\delta_{\alpha2}\\
 u_{\alpha}u_{3}\rho+p\delta_{\alpha3}\\
 u_{\alpha}E\rho+pu_{\alpha}
-\end{bmatrix}=\partial_{\alpha}\begin{bmatrix}0\\
+\end{bmatrix}=\pdv{x_{\alpha}}\begin{bmatrix}0\\
 \tau_{\alpha1}\\
 \tau_{\alpha2}\\
 \tau_{\alpha3}\\
@@ -3034,20 +3028,12 @@ b_{1}\\
 b_{2}\\
 b_{3}\\
 b_{\alpha}u_{\alpha}+j
-\end{bmatrix}\label{eq:ConservationLaws3dCartesianTensor}
+\end{bmatrix}\label{eq:NavierStokes3dConservative}
 \end{equation}
 
 \end_inset
 
-in which, 
-\begin_inset Formula $\partial_{t}:=\pdv*{t}$
-\end_inset
-
-, 
-\begin_inset Formula $\partial_{\alpha}:=\pdv*{x_{\alpha}}$
-\end_inset
-
-, 
+where 
 \begin_inset Formula $E=e+\frac{1}{2}u_{\alpha}u_{\alpha}$
 \end_inset
 
@@ -3446,7 +3432,7 @@ reference "eq:EquationForInternalEnergy"
  and recall the 1st law of thermodynamics 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:1stLawOfThermodynamics"
+reference "eq:Law1ofThermodynamics"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3519,7 +3505,7 @@ Suppose
 , the flow is steady and ignore heat source and heat conduction, it becomes
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\left(h+\phi+\abs{\vec{u}}^{2}/2\right)=0}\label{eq:BernoulliEquationInDifferentialForm}
+\boxed{\DDt{}\left(h+\phi+\abs{\vec{u}}^{2}/2\right)=0}\label{eq:BernoulliEquationDifferentialForm}
 \end{equation}
 
 \end_inset
@@ -3543,7 +3529,7 @@ T\dd{s}=\dd{h}-v\dd{p}=0
 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:BernoulliEquationInDifferentialForm"
+reference "eq:BernoulliEquationDifferentialForm"
 
 \end_inset
 
@@ -3581,7 +3567,7 @@ trajectory line, e.g.
 , which gives
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}\in C}\label{eq:BernoulliEquationInAlgebraicForm}
+\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}\in C}\label{eq:BernoulliEquationAlgebraicForm}
 \end{equation}
 
 \end_inset
@@ -3593,7 +3579,7 @@ incompressible
 , it will become
 \begin_inset Formula 
 \begin{equation}
-\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}}\label{eq:BernoulliEquationForIncompressibleFlow}
+\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}}\label{eq:BernoulliEquationIncompressible}
 \end{equation}
 
 \end_inset
@@ -3649,7 +3635,7 @@ a scalar or the 1st component of a vector varies only along
 In this frame, 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaws3dCartesianTensor"
+reference "eq:NavierStokes3dConservative"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3954,7 +3940,7 @@ Ignoring
  (body force) in 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaws3dCartesianTensor"
+reference "eq:NavierStokes3dConservative"
 
 \end_inset
 
@@ -4016,7 +4002,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{bmatrix}\rho\\
+\boxed{\begin{bmatrix}\rho\\
 u\rho\\
 E\rho
 \end{bmatrix}_{t}+\begin{bmatrix}u\rho\\
@@ -4025,7 +4011,7 @@ uE\rho+pu
 \end{bmatrix}_{x}=\begin{bmatrix}0\\
 0\\
 0
-\end{bmatrix}\label{eq:EulerEquations1d}
+\end{bmatrix}}\label{eq:EulerEquations1d}
 \end{equation}
 
 \end_inset
