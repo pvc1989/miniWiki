@@ -21,7 +21,8 @@
 \newcommand{\minmod}{\mathop{\mathrm{minmod}}}
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 \newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Tensor}[1]{\vv{\vv{\vb*{#1}}}}
+\newcommand{\Tensor}[1]{\vv{\vec{#1}}}  % ket of vec
+\newcommand{\VecKet}[1]{\ket*{\vec{#1}}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -209,7 +210,7 @@ tensor!velocity gradient ~
 It can be proved to be
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\left(\vu{e_{i}}\pdv{x_{i}}\right)\otimes\left(\vu{e_{k}}u_{k}\right)=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)\pdv{u_{k}}{x_{i}}
+\grad{\vec{u}}=\left(\vu{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vu{e}_{k}u_{k}\right)=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)\pdv{u_{k}}{x_{i}}
 \]
 
 \end_inset
@@ -227,7 +228,7 @@ Like any other rank-
 \end_inset
 
  tensor, it can be decomposed as a symmetric component 
-\begin_inset Formula $\Tensor{E}:=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)E_{ik}$
+\begin_inset Formula $\Tensor{E}:=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)E_{ik}$
 \end_inset
 
 , called the 
@@ -245,7 +246,7 @@ tensor!strain rate ~
 \end_inset
 
 , plus an anti-symmetric component 
-\begin_inset Formula $\Tensor{\Omega}:=\left(\vu{e_{i}}\otimes\vu{e_{k}}\right)\Omega_{ik}$
+\begin_inset Formula $\Tensor{\Omega}:=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)\Omega_{ik}$
 \end_inset
 
 , called the 
@@ -2797,7 +2798,7 @@ Again, if we take
 \end_layout
 
 \begin_layout Subsection
-Summary of Conservation Laws
+Summary of Governing Equations
 \end_layout
 
 \begin_layout Subsubsection
@@ -2829,7 +2830,7 @@ reference "eq:ConservationOfEnergyWithDDt"
 ) in matrix form:
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}U\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsWithDDt}
+\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsWithDDt}
 \end{equation}
 
 \end_inset
@@ -2837,18 +2838,26 @@ reference "eq:ConservationOfEnergyWithDDt"
 in which
 \begin_inset Formula 
 \[
-U=\begin{bmatrix}\rho\\
+\ket{U}=\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
-\end{bmatrix}\qquad\vec{P}=\begin{bmatrix}\vec{0}\\
-p\Tensor{1}\\
-p\vec{u}
-\end{bmatrix}\qquad\vec{G}=\begin{bmatrix}\vec{0}\\
-\Tensor{\tau}\\
-\Tensor{\tau}\cdot\vec{u}-\vec{q}
-\end{bmatrix}\qquad H=\begin{bmatrix}0\\
+\end{bmatrix}\qquad\ket{H}=\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\cdot\vec{u}+j
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\VecKet{P}=\begin{bmatrix}\vec{0}\\
+p\Tensor{1}\\
+p\vec{u}
+\end{bmatrix}\qquad\VecKet{G}=\begin{bmatrix}\vec{0}\\
+\Tensor{\tau}\\
+\Tensor{\tau}\cdot\vec{u}-\vec{q}
 \end{bmatrix}
 \]
 
@@ -2881,11 +2890,21 @@ literal "true"
 \begin_inset Formula $E:=e+\abs{\vec{u}}^{2}/2$
 \end_inset
 
-, 
-\begin_inset Formula $\vec{F}=\vec{u}U+\vec{P}$
+ and
+\begin_inset Formula 
+\[
+\VecKet{F}=\vec{u}\ket{U}+\VecKet{P}=\vec{u}\begin{bmatrix}\rho\\
+\vec{u}\rho\\
+E\rho
+\end{bmatrix}+\begin{bmatrix}\vec{0}\\
+p\Tensor{1}\\
+p\vec{u}
+\end{bmatrix}
+\]
+
 \end_inset
 
-, 
+
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ConservationLawsWithDDt"
@@ -2898,7 +2917,7 @@ noprefix "false"
  becomes
 \begin_inset Formula 
 \begin{equation}
-\int_{V}\pdv{U}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsWithoutDDt}
+\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsWithoutDDt}
 \end{equation}
 
 \end_inset
@@ -2925,7 +2944,7 @@ noprefix "false"
  and denote
 \begin_inset Formula 
 \[
-\vec{F}^{c}=\vec{F}-\vec{u}^{c}U=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
+\ket*{\vec{F}^{c}}=\VecKet{F}-\vec{u}^{c}\ket{U}=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
 \end{bmatrix}+\begin{bmatrix}\vec{0}\\
@@ -2949,7 +2968,7 @@ noprefix "false"
  will then become
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{V}U\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{F}^{c}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}\label{eq:ConservationLawsForMovingControlVolume}
+\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:ConservationLawsForMovingControlVolume}
 \end{equation}
 
 \end_inset
@@ -2976,7 +2995,7 @@ noprefix "false"
  to them, which leads to
 \begin_inset Formula 
 \begin{equation}
-\pdv{U}{t}+\div{\vec{F}}=\div{\vec{G}}+H\label{eq:ConservationLawsInDifferentialForm}
+\pdv{\ket{U}}{t}+\div{\VecKet{F}}=\div{\VecKet{G}}+\ket{H}\label{eq:ConservationLawsInDifferentialForm}
 \end{equation}
 
 \end_inset
@@ -3153,11 +3172,11 @@ The integrand is always zero, since the parenthesized term is the LHS of
 
 \begin_layout Standard
 Note that 
-\begin_inset Formula $U=W\rho$
+\begin_inset Formula $\ket{U}=\ket{W}\rho$
 \end_inset
 
  where 
-\begin_inset Formula $W=\begin{bmatrix}1 & \vec{u} & E\end{bmatrix}^{\dagger}$
+\begin_inset Formula $\ket{W}=\begin{bmatrix}1 & \vec{u} & E\end{bmatrix}^{\dagger}$
 \end_inset
 
 .
@@ -3174,7 +3193,7 @@ noprefix "false"
 , which becomes
 \begin_inset Formula 
 \[
-\int_{V}\DDt{W}\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\vec{G}\dd{S}+\int_{V}H\dd{V}
+\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}
 \]
 
 \end_inset
@@ -3183,7 +3202,7 @@ Again, if the integrands are sufficiently smooth, then Gauss's divergence
  theorem can be applied to them, which leads to
 \begin_inset Formula 
 \[
-\rho\DDt{W}+\div{\vec{P}}=\div{\vec{G}}+H
+\rho\DDt{\ket{W}}+\div{\VecKet{P}}=\div{\VecKet{G}}+\ket{H}
 \]
 
 \end_inset
