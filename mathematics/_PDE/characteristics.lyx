@@ -16,7 +16,7 @@
 \renewcommand{\hat}[1]{\widehat{#1}}
 \renewcommand{\tilde}[1]{\widetilde{#1}}
 
-\usepackage[squaren,thinspace]{SIunits}
+%\usepackage[squaren,thinspace]{SIunits}
 
 \newcommand{\minmod}{\mathop{\mathrm{minmod}}}
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
@@ -1839,8 +1839,8 @@ which implies
 \begin_inset Formula 
 \[
 \Mat{L}:=\Mat{R}^{-1}\qquad\ip{L_{i}}{R_{k}}=\begin{cases}
-1, & i=k\\
-0, & i\ne k
+1 & i=k\\
+0 & i\ne k
 \end{cases}
 \]
 
@@ -3141,7 +3141,7 @@ In Cartesian coordinates, the last one is
 \begin_layout Notation
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:SystemOfConservationLaws3d}
+\boxed{\pdv{\ket{U}}{t}+\sum_{k=1}^{3}\pdv{\ket{F_{k}}}{x_{k}}=\ket{0}}\label{eq:ConservationLaws3dSystem}
 \end{equation}
 
 \end_inset
@@ -3158,14 +3158,14 @@ In 1D space, only one component of
  Equation 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SystemOfConservationLaws3d"
+reference "eq:ConservationLaws3dSystem"
 
 \end_inset
 
  becomes
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}}\label{eq:SystemOfConservationLaws1d}
+\boxed{\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}}\label{eq:ConservationLaws1dSystem}
 \end{equation}
 
 \end_inset
@@ -3177,7 +3177,7 @@ reference "eq:SystemOfConservationLaws3d"
 Scalar conservation laws are just special cases of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SystemOfConservationLaws3d"
+reference "eq:ConservationLaws3dSystem"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3187,7 +3187,7 @@ noprefix "false"
  and 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SystemOfConservationLaws1d"
+reference "eq:ConservationLaws1dSystem"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3209,7 +3209,7 @@ noprefix "false"
 for 3D problems, and
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{U}{t}+\pdv{F}{x}=0}
+\boxed{\pdv{U}{t}+\pdv{F}{x}=0}\label{eq:ConservationLaw1dScalar}
 \end{equation}
 
 \end_inset
@@ -3457,7 +3457,7 @@ If there exists an
 \end_inset
 
  integrable function 
-\begin_inset Formula $u(x,t)$
+\begin_inset Formula $U(x,t)$
 \end_inset
 
  that satisfies
@@ -3466,8 +3466,8 @@ If there exists an
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}u+\pdv{\phi}{x}f\right)\dd{x}\dd{t}\\
-+ & \int_{-\infty}^{+\infty}\phi(x_{0},0)u_{0}(x_{0})\dd{x_{0}}\\
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U+\pdv{\phi}{x}F\right)\dd{x}\dd{t}\\
++ & \int_{-\infty}^{+\infty}\phi(x_{0},t_{0})U_{0}(x_{0})\dd{x_{0}}\\
 = & 0
 \end{aligned}
 \]
@@ -3483,28 +3483,24 @@ compact supported smooth
 \end_inset
 
 , then 
-\begin_inset Formula $u(x,t)$
+\begin_inset Formula $U(x,t)$
 \end_inset
 
- is said to be a weak solution of the single conservation law in 1D space
- 
+ is said to be a weak solution of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SingleConservationLaw1d"
-plural "false"
-caps "false"
-noprefix "false"
+reference "eq:ConservationLaw1dScalar"
 
 \end_inset
 
- with the 
+ (a scalar conservation law in 1D space) with the 
 \emph on
 piecewise smooth
 \emph default
  IC
 \begin_inset Formula 
 \[
-u(x_{0},0)=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
+U(x_{0},t_{0})=U_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
 \]
 
 \end_inset
@@ -3528,10 +3524,10 @@ For smooth solutions, we can move the temporal derivative from
 :
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}u\dd{x}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(-\phi\pdv{u}{t}+\pdv{\phi u}{t}\right)\dd{t}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}+\int_{-\infty}^{+\infty}\eval{\phi u}_{0}^{+\infty}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{u}{t}\dd{t}\dd{x}-\int_{-\infty}^{+\infty}\phi(x_{0},0)u_{0}(x_{0})\dd{x_{0}}
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{t}U\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{U}{t}+\pdv{\phi U}{t}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{U}{t}\dd{t}\dd{x}+\int_{-\infty}^{+\infty}\eval{\phi U}_{t_{0}}^{+\infty}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{U}{t}\dd{t}\dd{x}-\int_{-\infty}^{+\infty}\phi(x_{0},t_{0})U_{0}(x_{0})\dd{x_{0}}
 \end{aligned}
 \]
 
@@ -3555,16 +3551,16 @@ Similarly, we can move the spatial derivative from
 \end_inset
 
  to 
-\begin_inset Formula $f$
+\begin_inset Formula $F$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-\begin{aligned} & \int_{0}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}f\dd{x}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}\left(-\phi\pdv{f}{x}+\pdv{\phi f}{x}\right)\dd{t}\dd{x}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}+\int_{0}^{+\infty}\eval{\phi f}_{-\infty}^{+\infty}\dd{t}\\
-= & \int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\pdv{f}{x}\dd{t}\dd{x}
+\begin{aligned} & \int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\pdv{\phi}{x}F\dd{x}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(-\phi\pdv{F}{x}+\pdv{\phi F}{x}\right)\dd{t}\dd{x}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{F}{x}\dd{t}\dd{x}+\int_{t_{0}}^{+\infty}\eval{\phi F}_{-\infty}^{+\infty}\dd{t}\\
+= & \int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\pdv{F}{x}\dd{t}\dd{x}
 \end{aligned}
 \]
 
@@ -3583,10 +3579,10 @@ We drop the
 \end_layout
 
 \begin_layout Proof
-Substitute them into the definition of weak solution, we have
+Substitute them back into the definition of weak solution, we have
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\int_{0}^{+\infty}-\phi\left(\pdv{u}{t}+\pdv{f}{x}\right)\dd{t}\dd{x}=0
+\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}-\phi\left(\pdv{U}{t}+\pdv{F}{x}\right)\dd{t}\dd{x}=0
 \]
 
 \end_inset
@@ -3596,6 +3592,50 @@ which leads to the PDE since
 \end_inset
 
  is chosen arbitrarily.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For conservation law systems, just replace 
+\begin_inset Formula $U$
+\end_inset
+
+ with 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ with 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+.
+ For 3D problems, just replace 
+\begin_inset Formula $F$
+\end_inset
+
+ with 
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+ with 
+\begin_inset Formula $\grad$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -3641,7 +3681,7 @@ literal "false"
  as
 \begin_inset Formula 
 \[
-a(u_{-})\ge s\ge a(u_{+})
+a(U_{-})\ge u^{s}\ge a(U_{+})
 \]
 
 \end_inset
@@ -3659,12 +3699,19 @@ Characteristic curves near the discontinuity curve must run into or at least
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 For a system of conservation law, the entropy condition is given as
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\lambda_{k}(U_{-})\ge s & \ge\lambda_{k}(U_{+})\\
-\lambda_{k-1}(U_{-})<s & <\lambda_{k+1}(U_{+})
-\end{aligned}
+\begin{gathered}\lambda_{k}(U_{-})\ge u^{s}\ge\lambda_{k}(U_{+})\\
+\lambda_{k-1}(U_{-})<u^{s}<\lambda_{k+1}(U_{+})
+\end{gathered}
 \label{eq:EntropyConditionForSystem}
 \end{equation}
 
@@ -3736,9 +3783,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Without loss of generality, we shall shift the initial discontinuity to
- 
-\begin_inset Formula $(t=0,x=0)$
+Without loss of generality, we shall only discuss Riemann problems in 1D
+ space and shift the initial discontinuity to 
+\begin_inset Formula $(x_{0},t_{0})=(0,0)$
 \end_inset
 
 .
@@ -3759,7 +3806,7 @@ The Riemann problem for a single conservation law in 1D space is the IVP
  defined by PDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SingleConservationLaw1d"
+reference "eq:ConservationLaw1dScalar"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3769,20 +3816,20 @@ noprefix "false"
  and the following IC:
 \begin_inset Formula 
 \[
-u(0,x)=\begin{cases}
-u_{-}^{0}, & x<0\\
-u_{+}^{0}, & x>0
+U(x,0)=\begin{cases}
+U_{-} & x<0\\
+U_{+} & x>0
 \end{cases}
 \]
 
 \end_inset
 
 in which 
-\begin_inset Formula $u_{-}^{0}$
+\begin_inset Formula $U_{-}$
 \end_inset
 
  and 
-\begin_inset Formula $u_{+}^{0}$
+\begin_inset Formula $U_{+}$
 \end_inset
 
  are two constants.
@@ -3810,7 +3857,7 @@ The Riemann problem for a system of conservation laws in 1D space is the
  IVP defined by PDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:SystemOfConservationLaws1d"
+reference "eq:ConservationLaws1dSystem"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3820,23 +3867,57 @@ noprefix "false"
  and the following IC:
 \begin_inset Formula 
 \[
-\ket{U(0,x)}=\begin{cases}
-\ket{U_{-}^{0}}, & x<0\\
-\ket{U_{+}^{0}}, & x>0
+\ket{U(x,0)}=\begin{cases}
+\ket{U_{-}} & x<0\\
+\ket{U_{+}} & x>0
 \end{cases}
 \]
 
 \end_inset
 
 in which, 
-\begin_inset Formula $\ket{U_{-}^{0}}$
+\begin_inset Formula $\ket{U_{-}}$
 \end_inset
 
  and 
-\begin_inset Formula $\ket{U_{+}^{0}}$
+\begin_inset Formula $\ket{U_{+}}$
 \end_inset
 
  are two constant column matrices.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+The value of 
+\begin_inset Formula $U$
+\end_inset
+
+ at 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ is mathematically undefined, which does not affect the solution obtained
+ in the following sections, but may cause unpleasant results when implemented
+ in computer programs.
+ To remove such pitfall, we shall use the mean value of 
+\begin_inset Formula $U_{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $U_{+}$
+\end_inset
+
+ for 
+\begin_inset Formula $U(0,0)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Definition
@@ -3850,19 +3931,20 @@ status open
 
 \end_inset
 
-If the two independent variables are scaled with the same constant:
+An IVP is said to be 
+\emph on
+self-similar
+\emph default
+, if the PDE and IC do not change when the independent variables are scaled
+ with the same constant, e.g.
 \begin_inset Formula 
 \[
-(x,t)\to(\alpha t,\alpha x)\qquad\forall\alpha\ne0
+(x,t)\to(\alpha x,\alpha t)\qquad\forall\alpha\ne0
 \]
 
 \end_inset
 
-the PDE and IC do not change, then such IVP is said to be 
-\noun on
-self-similar
-\noun default
-.
+
 \end_layout
 
 \begin_layout Standard
@@ -3888,7 +3970,8 @@ The solution of a self-similar IVP depends only on
 \end_layout
 
 \begin_layout Theorem
-Riemann problems are self-similar and their solutions depend only on 
+Riemann problems in 1D space are self-similar and their solutions depend
+ only on 
 \begin_inset Formula $x/t$
 \end_inset
 
@@ -3896,19 +3979,25 @@ Riemann problems are self-similar and their solutions depend only on
 \end_layout
 
 \begin_layout Subsubsection
-RP for Linear Wave Equation
+RP for Linear Advection Equation
 \end_layout
 
-\begin_layout Standard
-The solution is
+\begin_layout Solution*
 \begin_inset Formula 
 \[
-u(x,t)=\begin{cases}
-u_{-}^{0}, & x/t<a\\
-u_{+}^{0}, & x/t>a
+U(x,t)=\begin{cases}
+U_{-} & x/t<a\\
+U_{+} & x/t>a
 \end{cases}
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -3923,7 +4012,7 @@ On the discontinuity curve
  Instead, the jump condition
 \begin_inset Formula 
 \[
-s\Delta u=\Delta f
+\eval{U}_{-}^{+}u^{s}=\eval{F}_{-}^{+}
 \]
 
 \end_inset
@@ -3931,15 +4020,15 @@ s\Delta u=\Delta f
 and the entropy condition
 \begin_inset Formula 
 \[
-a(u_{-})=s=a(u_{+})
+a(U_{-})=u^{s}=a(U_{+})
 \]
 
 \end_inset
 
-are satisfied, in which
+where
 \begin_inset Formula 
 \[
-s=a\qquad\Delta u=u_{+}-u_{-}\qquad\Delta f=au_{+}-au_{-}
+u^{s}=a\qquad F=aU
 \]
 
 \end_inset
@@ -3960,7 +4049,7 @@ Like in the smooth case, the first step is to project the IC onto the space
 :
 \begin_inset Formula 
 \[
-\ket{U_{-}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\qquad\ket{U_{+}^{0}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}
+\ket{U_{-}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}}\qquad\ket{U_{+}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}}
 \]
 
 \end_inset
@@ -3972,9 +4061,9 @@ The IVP then becomes
  independent RPs for linear wave equations:
 \begin_inset Formula 
 \[
-\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(0,x)=\begin{cases}
-\ip{L_{i}}{U_{-}^{0}}, & x<0\\
-\ip{L_{i}}{U_{+}^{0}}, & x>0
+\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(x,0)=\begin{cases}
+\ip{L_{i}}{U_{-}} & x<0\\
+\ip{L_{i}}{U_{+}} & x>0
 \end{cases}
 \]
 
@@ -3984,8 +4073,8 @@ We know their solutions are:
 \begin_inset Formula 
 \[
 V_{i}(x,t)=\begin{cases}
-\ip{L_{i}}{U_{-}^{0}}, & x/t<\lambda_{i}\\
-\ip{L_{i}}{U_{+}^{0}}, & x/t>\lambda_{i}
+\ip{L_{i}}{U_{-}} & x/t<\lambda_{i}\\
+\ip{L_{i}}{U_{+}} & x/t>\lambda_{i}
 \end{cases}\qquad i=1,\dots,m
 \]
 
@@ -4024,16 +4113,27 @@ th wave propagates with speed
 \begin_inset Formula $m$
 \end_inset
 
- straight characteristic curves.
- In the 
+ straight characteristic curves emanating from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In the 
 \begin_inset Formula $k$
 \end_inset
 
-th region where 
-\begin_inset Formula $\lambda_{k}<x/t<\lambda_{k+1}$
+th region where
+\begin_inset Formula 
+\[
+\lambda_{k}<x/t<\lambda_{k+1}\qquad k=1,\dots,m-1
+\]
+
 \end_inset
 
-, we know that
+we know that
 \end_layout
 
 \begin_layout Itemize
@@ -4045,8 +4145,8 @@ the jumps in the first
 \emph on
 left
 \emph default
- of the point 
-\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+ of 
+\begin_inset Formula $(x,t)$
 \end_inset
 
 , so these waves contributes their 
@@ -4065,8 +4165,8 @@ the jumps in the other
 \emph on
 right
 \emph default
- of the point 
-\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+ of 
+\begin_inset Formula $(x,t)$
 \end_inset
 
 , so these waves contributes their 
@@ -4081,21 +4181,81 @@ the value of
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- at the point 
-\begin_inset Formula $x/t\in(\lambda_{k},\lambda_{k+1})$
+ at 
+\begin_inset Formula $(x,t)$
 \end_inset
 
- (except on the discontinuities) is the superposition of them:
+ (except for those locate on the discontinuities) is the superposition of
+ them:
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(x,t)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}^{0}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}^{0}}\\
- & =\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}^{0}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}^{0}}
+\begin{aligned}\ket{U(x,t)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}}\\
+ & =\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}}
 \end{aligned}
 \]
 
 \end_inset
 
 which is similar to the smooth case.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the 
+\begin_inset Formula $0$
+\end_inset
+
+th region where 
+\begin_inset Formula $x/t<\lambda_{1}$
+\end_inset
+
+ and the 
+\begin_inset Formula $m$
+\end_inset
+
+th region where 
+\begin_inset Formula $x/t>\lambda_{m}$
+\end_inset
+
+, none of the single waves arrive, so 
+\begin_inset Formula $\ket{U(x,t)}=\ket{U_{-}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{+}}$
+\end_inset
+
+ respectively.
+\end_layout
+
+\begin_layout Standard
+The complete solution is then
+\begin_inset Formula 
+\[
+\ket{U(x,t)}=\begin{cases}
+\ket{U_{-}} & x/t<\lambda_{1}\\
+\ket{U_{*}} & x/t\in(\lambda_{k},\lambda_{k+1})\\
+\ket{U_{+}} & x/t>\lambda_{m}
+\end{cases}\qc k=1,\dots,m-1
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\ket{U_{*}}=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Remark*
@@ -4115,7 +4275,7 @@ th characteristic curve
  Instead, the jump condition
 \begin_inset Formula 
 \[
-s_{k}\Delta_{k}\ket{U}=\Delta_{k}\ket{F}
+\eval{\ket{U}}_{k-}^{k+}u_{k}^{s}=\eval{\ket{F}}_{k-}^{k+}
 \]
 
 \end_inset
@@ -4123,9 +4283,9 @@ s_{k}\Delta_{k}\ket{U}=\Delta_{k}\ket{F}
 and the entropy condition
 \begin_inset Formula 
 \[
-\begin{aligned}\lambda_{k}(-)=s_{k} & =\lambda_{k}(+)\\
-\lambda_{k-1}(-)<s_{k} & <\lambda_{k+1}(+)
-\end{aligned}
+\begin{gathered}\lambda_{k}(t\lambda_{k}-0,t)=u_{k}^{s}=\lambda_{k}(t\lambda_{k}+0,t)\\
+\lambda_{k-1}(t\lambda_{k}-0,t)<u_{k}^{s}<\lambda_{k+1}(t\lambda_{k}+0,t)
+\end{gathered}
 \]
 
 \end_inset
@@ -4133,9 +4293,12 @@ and the entropy condition
 are satisfied, in which
 \begin_inset Formula 
 \[
-\begin{aligned}s_{k} & =\lambda_{k}\\
-\Delta_{k}\ket{U} & =\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}^{0}}-\ket{U_{-}^{0}}\right)\\
-\Delta_{k}\ket{F} & =\Mat{A}\Delta_{k}\ket{U}
+\begin{aligned}u_{k}^{s} & =\lambda_{k}\\
+\eval{\ket{U}}_{k-}^{k+} & =\ket{U(t\lambda_{k}+0,t)}-\ket{U(t\lambda_{k}-0,t)}\\
+ & =\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}}-\ket{U_{-}}\right)\\
+\eval{\ket{F}}_{k-}^{k+} & =\Mat{A}\ket{U(t\lambda_{k}+0,t)}-\Mat{A}\ket{U(t\lambda_{k}-0,t)}\\
+ & =\Mat{A}\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}}-\ket{U_{-}}\right)\\
+ & =\lambda_{k}\dyad{R_{k}}{L_{k}}\left(\ket{U_{+}}-\ket{U_{-}}\right)
 \end{aligned}
 \]
 
@@ -4151,11 +4314,11 @@ RP for Single Conservation Law
 \begin_layout Standard
 The disturbance of the initial discontinuity spreads at a finite speed,
  so there must be two undisturbed regions in the solution, in which 
-\begin_inset Formula $u(x,t)$
+\begin_inset Formula $U(x,t)$
 \end_inset
 
  takes its initial value.
- Such undisturbed regions are connected by a disturbed region.
+ These two undisturbed regions are connected by a disturbed region.
  Self-similarity implies that the interfaces of these regions are straight
  lines emanated from 
 \begin_inset Formula $(0,0)$
@@ -4165,10 +4328,10 @@ The disturbance of the initial discontinuity spreads at a finite speed,
  So, the solution must have the following form:
 \begin_inset Formula 
 \[
-u(x,t)=\begin{cases}
-u_{-}^{0}, & x/t<a_{-}\\
-u_{D}(x/t), & x/t\in[a_{-},a_{+}]\\
-u_{+}^{0}, & x/t>a_{+}
+U(x,t)=\begin{cases}
+U_{-} & x/t<a_{-}\\
+U_{*} & x/t\in[a_{-},a_{+}]\\
+U_{+} & x/t>a_{+}
 \end{cases}
 \]
 
@@ -4177,13 +4340,17 @@ u_{+}^{0}, & x/t>a_{+}
 in which
 \begin_inset Formula 
 \[
-a(u)=\pdv{f(u)}{u}\qquad a_{\pm}=a\left(u_{\pm}^{0}\right)
+a=\pdv{F}{U}\qquad a_{\pm}=a(U_{\pm})
 \]
 
 \end_inset
 
 Our task is to determine 
-\begin_inset Formula $u_{D}(x/t)$
+\begin_inset Formula $u_{*}$
+\end_inset
+
+, which is a function depends on 
+\begin_inset Formula $x/t$
 \end_inset
 
 .
@@ -4195,19 +4362,19 @@ Shock Wave
 
 \begin_layout Standard
 If 
-\begin_inset Formula $f''(u)=a'(u)>0$
+\begin_inset Formula $F''(U)>0$
 \end_inset
 
  and 
-\begin_inset Formula $u_{-}^{0}>u_{+}^{0}$
+\begin_inset Formula $U_{-}>U_{+}$
 \end_inset
 
 , or 
-\begin_inset Formula $f''(u)=a'(u)<0$
+\begin_inset Formula $F''(U)<0$
 \end_inset
 
  and 
-\begin_inset Formula $u_{-}^{0}<u_{+}^{0}$
+\begin_inset Formula $U_{-}<U_{+}$
 \end_inset
 
 , we will have 
@@ -4218,8 +4385,7 @@ a_{-}>a_{+}
 
 \end_inset
 
-which means the characteristic curves emanating from the left half of the
- 
+which means the characteristic curves emanating from one half of the 
 \begin_inset Formula $x$
 \end_inset
 
@@ -4227,7 +4393,7 @@ which means the characteristic curves emanating from the left half of the
 \emph on
 run into
 \emph default
- those emanating from the right half of the 
+ those emanating from the other half of the 
 \begin_inset Formula $x$
 \end_inset
 
@@ -4245,7 +4411,7 @@ shock wave
  The speed of the shock wave is determined by the jump condition
 \begin_inset Formula 
 \[
-s=\frac{f\left(u_{+}^{0}\right)-f\left(u_{-}^{0}\right)}{u_{+}^{0}-u_{-}^{0}}
+u^{s}=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}
 \]
 
 \end_inset
@@ -4253,7 +4419,7 @@ s=\frac{f\left(u_{+}^{0}\right)-f\left(u_{-}^{0}\right)}{u_{+}^{0}-u_{-}^{0}}
 and the entropy condition
 \begin_inset Formula 
 \[
-a_{-}>s>a_{+}
+a_{-}>u^{s}>a_{+}
 \]
 
 \end_inset
@@ -4262,10 +4428,10 @@ is strictly satisfied.
  The complete solution is then
 \begin_inset Formula 
 \[
-u(x,t)=\begin{cases}
-u_{-}^{0}, & x/t<s\\
-\text{shock wave}, & x/t=s\\
-u_{+}^{0}, & x/t>s
+U(x,t)=\begin{cases}
+U_{-} & x/t<u^{s}\\
+\text{shock wave} & x/t=u^{s}\\
+U_{+} & x/t>u^{s}
 \end{cases}
 \]
 
@@ -4280,19 +4446,19 @@ Centered Expansion Wave
 
 \begin_layout Standard
 If 
-\begin_inset Formula $f''(u)=a'(u)>0$
+\begin_inset Formula $F''(U)>0$
 \end_inset
 
  and 
-\begin_inset Formula $u_{-}^{0}<u_{+}^{0}$
+\begin_inset Formula $U_{-}<U_{+}$
 \end_inset
 
 , or 
-\begin_inset Formula $f''(u)=a'(u)<0$
+\begin_inset Formula $F''(U)<0$
 \end_inset
 
  and 
-\begin_inset Formula $u_{-}^{0}>u_{+}^{0}$
+\begin_inset Formula $U_{-}>U_{+}$
 \end_inset
 
 , we will have 
@@ -4343,18 +4509,27 @@ wave tail
  of characteristic curves:
 \begin_inset Formula 
 \[
-x/t=a(u)\implies u(x,t)=a^{-1}(x/t)
+u(x,t)=a^{-1}(x/t)\impliedby x/t=a(u)
 \]
 
 \end_inset
 
-The complete solution is then
+where 
+\begin_inset Formula $a^{-1}$
+\end_inset
+
+ means the inverse function of 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ The complete solution is then
 \begin_inset Formula 
 \[
-u(x,t)=\begin{cases}
-u_{-}^{0}, & x/t<a_{-}\\
-a^{-1}(x/t), & x/t\in\left[a_{-},a_{+}\right]\\
-u_{+}^{0}, & x/t>a_{+}
+U(x,t)=\begin{cases}
+U_{-} & x/t<a_{-}\\
+a^{-1}(x/t) & x/t\in\left[a_{-},a_{+}\right]\\
+U_{+} & x/t>a_{+}
 \end{cases}
 \]
 
@@ -4379,12 +4554,12 @@ a_{-}=a_{+}
 even though
 \begin_inset Formula 
 \[
-u_{-}^{0}\ne u_{+}^{0}
+U_{-}\ne U_{+}
 \]
 
 \end_inset
 
-In such case, there will be no mass/momentum/energy flowing across the discontin
+In this case, there will be no mass/momentum/energy flowing across the discontin
 uity, thus it is called a 
 \noun on
 contact discontinuity
@@ -4394,7 +4569,7 @@ contact discontinuity
  characteristic speed:
 \begin_inset Formula 
 \[
-a_{-}=s=a_{+}
+a_{-}=u^{s}=a_{+}
 \]
 
 \end_inset
@@ -4402,10 +4577,10 @@ a_{-}=s=a_{+}
 The complete solution is then
 \begin_inset Formula 
 \[
-u(x,t)=\begin{cases}
-u_{-}^{0}, & x/t<s\\
-\text{contact discontinuity}, & x/t=s\\
-u_{+}^{0}, & x/t>s
+U(x,t)=\begin{cases}
+U_{-} & x/t<u^{s}\\
+\text{contact} & x/t=u^{s}\\
+U_{+} & x/t>u^{s}
 \end{cases}
 \]
 
@@ -4422,8 +4597,8 @@ A contact discontinuity can be seen as a limit case of a shock wave, since
 
 \begin_layout Remark*
 A contact discontinuity can also be seen as a limit case of a centered expansion
- wave, when the angle of the fan-shaped region tends to be 
-\begin_inset Formula $0$
+ wave, when the angle of the fan-shaped region shrinks to 
+\begin_inset Formula $0^{\circ}$
 \end_inset
 
 .
@@ -4458,11 +4633,11 @@ There are
 \end_inset
 
  elementary waves.
-\end_layout
-
-\begin_layout Proof
-Since the solution of an RP is self-similar, we can define the slope as
- a new independent variable:
+ Since the solution of an RP is self-similar, we can define the 
+\noun on
+slope
+\noun default
+ as a new independent variable:
 \begin_inset Formula 
 \[
 \alpha:=x/t\implies\pdv{t}=\pdv{\alpha}{t}\dv{\alpha}\qquad\pdv{x}=\pdv{\alpha}{x}\dv{\alpha}
@@ -4488,17 +4663,15 @@ noprefix "false"
 
 \end_inset
 
-which implies in smooth regions, either one of the following two cases must
- be true: 1) 
-\begin_inset Formula $\dv{\ket{U}}{\alpha}=\ket{0}$
+which implies in smooth regions, either 
+\begin_inset Formula $\dv*{\ket{U}}{\alpha}=\ket{0}$
 \end_inset
 
 , which means 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- is constant.
- 2) 
+ is constant, or 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -4507,7 +4680,7 @@ which implies in smooth regions, either one of the following two cases must
 \end_inset
 
  and 
-\begin_inset Formula $\dv{\ket{U}}{\alpha}$
+\begin_inset Formula $\dv*{\ket{U}}{\alpha}$
 \end_inset
 
  is the corresponding right eigenvector.
@@ -4521,35 +4694,65 @@ which implies in smooth regions, either one of the following two cases must
 \end_layout
 
 \begin_layout Standard
-Denote the 
-\begin_inset Formula $(m+1)$
+Denote the slope on the right and left side of 
+\begin_inset Formula $k$
 \end_inset
 
- constant states as
-\begin_inset Formula 
-\[
-\begin{bmatrix}\ket{U_{(0)+}}\\
-\vdots\\
-\ket{U_{(k-1)+}}\\
-\vdots\\
-\ket{U_{(m)+}}
-\end{bmatrix}=\begin{bmatrix}\ket{U_{(1)-}}\\
-\vdots\\
-\ket{U_{(k)-}}\\
-\vdots\\
-\ket{U_{(m+1)-}}
-\end{bmatrix}
-\]
-
+th elementary wave as 
+\begin_inset Formula $\alpha_{k+}$
 \end_inset
 
+ and 
+\begin_inset Formula $\alpha_{k-}$
+\end_inset
 
+ respectively.
+ For shock waves, there are there 
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{k}^{s}=\alpha_{k\pm}$
+\end_inset
+
+ ; for centered expansion waves, there are 
+\begin_inset Formula $\alpha_{k-}<\alpha_{k+}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{k}(\alpha_{k\pm})=\alpha_{k\pm}$
+\end_inset
+
+; for contact discontinuities, there are there 
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+\end_inset
+
+, 
+\begin_inset Formula $u_{k}^{s}=\alpha_{k\pm}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{k}(\alpha_{k\pm})=\alpha_{k\pm}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+\end_inset
+
+ cannot imply 
+\begin_inset Formula $\ket{U(\alpha_{k-})}=\ket{U(\alpha_{k+})}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
-A shock wave or a expansion wave can only be carried by a genuinely nonlinear
- field, while a linearly degenerated field can only carry a contact discontinuit
-y.
+A shock wave or a centered expansion wave can only be carried by a genuinely
+ nonlinear field, while a linearly degenerated field can only carry a contact
+ discontinuity.
 \end_layout
 
 \begin_layout Paragraph
@@ -4565,21 +4768,16 @@ th characteristic field is genuinely nonlinear, there might be such a case
  that
 \begin_inset Formula 
 \[
-\lambda_{k}\left(U_{(k)-}\right)>\lambda_{k}\left(U_{(k)+}\right)
+\lambda_{k}(\alpha_{k-})>\lambda_{k}(\alpha_{k+})
 \]
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides of the
- 
-\begin_inset Formula $k$
-\end_inset
-
-th elementary wave 
+Geometrically, this means the characteristic curves on both sides run 
 \emph on
-run into each other
+into
 \emph default
-, which implies 
+ each other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
@@ -4600,24 +4798,29 @@ The change of
  must satisfy the jump condition:
 \begin_inset Formula 
 \[
-\left(\ket{U_{(k)+}}-\ket{U_{(k)-}}\right)s_{k}=\ket{F\left(U_{(k)+}\right)}-\ket{F\left(U_{(k)-}\right)}
+\eval{\ket{U}}_{k-}^{k+}u_{k}^{s}=\eval{\ket{F}}_{k-}^{k+}
 \]
 
 \end_inset
 
 in which 
-\begin_inset Formula $s_{k}$
+\begin_inset Formula $u_{k}^{s}$
 \end_inset
 
  is the speed of the shock wave, which is also the slope of the shock wave
- path.
+ path, i.e.
+ 
+\begin_inset Formula $u_{k}^{s}=\alpha_{k\pm}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 The entropy condition is satisfied with strict unequal signs:
 \begin_inset Formula 
 \[
-\lambda_{k}\left(U_{(k)-}\right)>s_{k}>\lambda_{k}\left(U_{(k)+}\right)
+\lambda_{k}(\alpha_{k-})>u_{k}^{s}>\lambda_{k}(\alpha_{k+})
 \]
 
 \end_inset
@@ -4638,21 +4841,17 @@ th characteristic field is genuinely nonlinear, there might be such a case
  that
 \begin_inset Formula 
 \[
-\lambda_{k-1}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)+}\right)<\lambda_{k+1}\left(U_{(k)+}\right)
+\lambda_{k-1}(\alpha_{k-})<\lambda_{k}(\alpha_{k-})<\lambda_{k}(\alpha_{k+})<\lambda_{k+1}(\alpha_{k+})
 \]
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides of the
+Geometrically, this means the characteristic curves on both sides wave run
  
-\begin_inset Formula $k$
-\end_inset
-
-th elementary wave 
 \emph on
-run away from each other
+away
 \emph default
-, which implies 
+ from each other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
@@ -4672,7 +4871,7 @@ th elementary wave is a centered expansion wave.
 in which
 \begin_inset Formula 
 \[
-a_{-}=\lambda_{k}\left(U_{(k)-}\right)\qquad a_{+}=\lambda_{k}\left(U_{(k)+}\right)
+a_{-}=\lambda_{k}(\alpha_{k-})=\alpha_{k-}\qquad a_{+}=\lambda_{k}(\alpha_{k+})=\alpha_{k+}
 \]
 
 \end_inset
@@ -4690,7 +4889,7 @@ A centered expansion wave is a smooth region, in which
 \end_inset
 
  and 
-\begin_inset Formula $\dv{\ket{U}}{\alpha}$
+\begin_inset Formula $\dv*{\ket{U}}{\alpha}$
 \end_inset
 
  is the corresponding right eigenvector.
@@ -4705,7 +4904,7 @@ A centered expansion wave is a smooth region, in which
 -Riemann invariants are constants across wave:
 \begin_inset Formula 
 \[
-\dv{W}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
+\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
@@ -4713,7 +4912,7 @@ A centered expansion wave is a smooth region, in which
 which can be used to determine state inside the wave:
 \begin_inset Formula 
 \[
-W\left(U_{(k)-}\right)=W(U(\alpha))=W\left(U_{(k)+}\right)
+\phi(\alpha_{k-})=\phi(\alpha)=\phi(\alpha_{k+})\qquad\alpha\in[\alpha_{k-},\alpha_{k+}]
 \]
 
 \end_inset
@@ -4731,31 +4930,26 @@ If the
 \end_inset
 
 th characteristic field is linearly degenerate, then 
-\begin_inset Formula $\lambda_{k}(U)$
+\begin_inset Formula $\lambda_{k}$
 \end_inset
 
  does not change with 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
-:
+, which implies
 \begin_inset Formula 
 \[
-\lambda_{k-1}\left(U_{(k)-}\right)<\lambda_{k}\left(U_{(k)-}\right)=\lambda_{k}\left(U_{(k)+}\right)<\lambda_{k+1}\left(U_{(k)+}\right)
+\lambda_{k-1}(\alpha_{k-})<\lambda_{k}(\alpha_{k-})=\lambda_{k}(\alpha_{k+})<\lambda_{k+1}(\alpha_{k+})
 \]
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides of the
- 
-\begin_inset Formula $k$
-\end_inset
-
-th elementary wave 
+Geometrically, this means the characteristic curves on both sides run 
 \emph on
-run parallel with each other
+parallel
 \emph default
-, which implies 
+ with each other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
@@ -4783,10 +4977,10 @@ A contact discontinuity can also be seen as a limit case of a centered expansion
 \begin_inset Formula $k$
 \end_inset
 
--Riemann invariants are constants across wave:
+-Riemann invariants are constants across the wave:
 \begin_inset Formula 
 \[
-\dv{W}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
+\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
@@ -4794,7 +4988,7 @@ A contact discontinuity can also be seen as a limit case of a centered expansion
 which can be used to connect states on both sides of the wave:
 \begin_inset Formula 
 \[
-W\left(U_{(k)-}\right)=W\left(U_{(k)+}\right)
+\phi(\alpha_{k-})=\phi(\alpha_{k+})
 \]
 
 \end_inset
