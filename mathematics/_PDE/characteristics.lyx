@@ -3099,6 +3099,19 @@ In 3D space, we use a column matrix of vectors (or tensors)
 
 .
  The conservation law is then written in one of the following forms
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
 \dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\VecKet{F}-\vec{u}^{c}\ket{U}\right)\dd{S}=\ket{0}\label{eq:ConservationLawSystemOnMovingControlVolume}
@@ -3108,17 +3121,17 @@ In 3D space, we use a column matrix of vectors (or tensors)
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 \int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecKet{F}\dd{S}=\ket{0}
-\]
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 \pdv{\ket{U}}{t}+\div{\VecKet{F}}=\ket{0}
-\]
+\end{equation}
 
 \end_inset
 
@@ -3185,7 +3198,36 @@ noprefix "false"
 \begin_inset Formula $\ket{\phantom{U}}$
 \end_inset
 
- can be ignored.
+ can be ignored, that is
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{U}{t}+\sum_{k=1}^{3}\pdv{F_{k}}{x_{k}}=0}
+\end{equation}
+
+\end_inset
+
+for 3D problems, and
+\begin_inset Formula 
+\begin{equation}
+\boxed{\pdv{U}{t}+\pdv{F}{x}=0}
+\end{equation}
+
+\end_inset
+
+for 1D problems.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -3207,7 +3249,7 @@ Suppose there is a discontinuity manifold
  moving with velocity 
 \begin_inset Formula 
 \[
-\vec{u}^{S}=\vu{e}_{\perp}u_{\perp}^{S}+\vu{e}_{\parallel}u_{\parallel}^{S}
+\vec{u}^{s}=\vu{e}_{\perp}u_{\perp}^{s}+\vu{e}_{\parallel}u_{\parallel}^{s}
 \]
 
 \end_inset
@@ -3216,7 +3258,7 @@ Choose a cylindrical control volume
 \begin_inset Formula $V$
 \end_inset
 
-, which satisfies the following requirements:
+ satisfying the following requirements:
 \end_layout
 
 \begin_layout Itemize
@@ -3227,7 +3269,7 @@ It has an infinitesimal height
 , which means
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{u}^{c}=\vec{u}^{S}\qquad\lim_{h\to0}\dv{t}\int_{V}\ket{U}\dd{V}=\ket{0}
+\lim_{h\to0}\vec{u}^{c}=\vec{u}^{s}\qquad\lim_{h\to0}\int_{V}\ket{U}\dd{V}=\ket{0}
 \]
 
 \end_inset
@@ -3288,7 +3330,7 @@ noprefix "false"
  is reduced to
 \begin_inset Formula 
 \[
-\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\VecKet{F}-\vec{u}^{S}\ket{U}\right)\dd{S}=0
+\int_{S_{+}\cup S_{-}}\vu{n}\cdot\left(\VecKet{F}-\vec{u}^{s}\ket{U}\right)\dd{S}=0
 \]
 
 \end_inset
@@ -3308,8 +3350,36 @@ Replace
 , we have
 \begin_inset Formula 
 \[
-\boxed{\left(\ket{U_{+}}-\ket{U_{-}}\right)s=\vu{e}_{\perp}\cdot\left(\ket*{\vec{F}_{+}}-\ket*{\vec{F}_{-}}\right)}\qquad s:=\vu{e}_{\perp}\cdot\vec{u}^{S}
+\left(\vu{e}_{\perp}\cdot\vec{u}^{s}\right)\left(\ket{U_{+}}-\ket{U_{-}}\right)=\vu{e}_{\perp}\cdot\ket*{\vec{F}_{+}}-\vu{e}_{\perp}\cdot\ket*{\vec{F}_{-}}
 \]
+
+\end_inset
+
+or written in a more compact form
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:JumpConditions"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\boxed{\eval{\ket{U}}_{-}^{+}u_{\perp}^{s}=\eval{\ket{F_{\perp}}}_{-}^{+}}\qquad u_{\perp}^{s}:=\vu{e}_{\perp}\cdot\vec{u}^{s}\qquad\ket{F_{\perp}}:=\vu{e}_{\perp}\cdot\VecKet{F}
+\end{equation}
 
 \end_inset
 
@@ -3326,23 +3396,41 @@ jump condition
 \end_layout
 
 \begin_layout Standard
-For a system of conservation laws in 1D space, it becomes
+In 1D space, only one component of a vector is non-zero, for which the subscript
+ can be ignored:
 \begin_inset Formula 
 \[
-\left(\ket{U_{+}}-\ket{U_{-}}\right)s=\ket{F_{+}}-\ket{F_{-}}
+\vu{e}_{\perp}=\vu{e}_{1}\qquad\vec{u}^{s}=\vu{e}_{1}u^{s}\qquad\VecKet{F}=\vu{e}_{1}\ket{F}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-For a single conservation law in 1D space, it becomes
+The jump condition can then be simplified as
 \begin_inset Formula 
-\[
-\left(U_{+}-U_{-}\right)s=F_{+}-F_{-}
-\]
+\begin{equation}
+\eval{\ket{U}}_{-}^{+}u^{s}=\eval{\ket{F}}_{-}^{+}
+\end{equation}
+
+\end_inset
+
+for a system of conservation laws, and
+\begin_inset Formula 
+\begin{equation}
+\eval{U}_{-}^{+}u^{s}=\eval{F}_{-}^{+}
+\end{equation}
+
+\end_inset
+
+for a single conservation law.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
