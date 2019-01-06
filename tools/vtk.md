@@ -2,7 +2,7 @@
 
 [VTK](https://www.vtk.org) 是一款开源**数据显示 (Data Visualization)** 程序库, 而 [ParaView](https://www.paraview.org) 可以看作是它的前端.
 
-[The VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf) 中的 *19.3 VTK File Formats* 详细介绍了两种文件格式 (`.vtk` 与 `.xml`), 这里小结其中的要点.
+The VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf)) 中的 *19.3 VTK File Formats* 详细介绍了两种文件格式 (`.vtk` 与 `.xml`), 这里小结其中的要点.
 
 ## `.vtk` 格式
 
@@ -60,6 +60,7 @@ SPACING s_x s_y s_z
 结构网格只给出结点位置信息, 节点编号及网格拓扑隐含在其中.
 ```vtk
 DATASET STRUCTURED_GRID
+DIMENSIONS n_x n_y n_z
 POINTS n dataType
 x[0] y[0] z[0]
 x[1] y[1] z[1]
