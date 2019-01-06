@@ -119,7 +119,7 @@ figs-within-sections
 \begin_body
 
 \begin_layout Section
-Method of Characteristics for Hyperbolic PDEs
+Method of Characteristics
 \end_layout
 
 \begin_layout Subsection
@@ -4994,6 +4994,1841 @@ which can be used to connect states on both sides of the wave:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+RP for 1D Euler Equations
+\end_layout
+
+\begin_layout Problem
+Solve the 1D Euler equations
+\begin_inset Formula 
+\[
+\pdv{\ket{U}}{t}+\pdv{\ket{F}}{x}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\ket{U}=\begin{bmatrix}\rho\\
+u\rho\\
+E\rho
+\end{bmatrix}\qquad\ket{F}=\begin{bmatrix}u\rho\\
+uu\rho+p\\
+uE\rho+pu
+\end{bmatrix}\qquad E=e+\frac{u^{2}}{2}
+\]
+
+\end_inset
+
+with the IC
+\begin_inset Formula 
+\[
+\ket{U(x,0)}=\begin{cases}
+\ket{U_{-}} & x<0\\
+\ket{U_{+}} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+for calorically ideal gases:
+\begin_inset Formula 
+\[
+p=\rho RT\qquad e=\frac{RT}{\gamma-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Jacobian Matrix
+\end_layout
+
+\begin_layout Standard
+From the gas model, we have
+\begin_inset Formula 
+\[
+a^{2}=\gamma RT=\frac{\gamma p}{\rho}\qquad E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\qquad H=E+\frac{p}{\rho}=\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}
+\]
+
+\end_inset
+
+Rewrite other variables and 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+'s components in terms of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+'s components 
+\begin_inset Formula $U_{1},U_{2},U_{3}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\rho=U_{1}\qquad u=\frac{U_{2}}{U_{1}}\qquad p=\left(\gamma-1\right)\left(U_{3}-\frac{U_{2}^{2}}{2U_{1}}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}F_{1} & =U_{2}\\
+F_{2} & =(\gamma-1)U_{3}+\frac{3-\gamma}{2}\frac{U_{2}^{2}}{U_{1}}\\
+F_{3} & =\frac{U_{2}}{U_{1}}\left(\gamma U_{3}-\frac{\gamma-1}{2}\frac{U_{2}^{2}}{U_{1}}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+The Jacobian matrix is then
+\begin_inset Formula 
+\[
+\begin{aligned}\Mat{A} & =\begin{bmatrix}\pdv*{F_{1}}{U_{1}} & \pdv*{F_{1}}{U_{2}} & \pdv*{F_{1}}{U_{3}}\\
+\pdv*{F_{2}}{U_{1}} & \pdv*{F_{2}}{U_{2}} & \pdv*{F_{2}}{U_{3}}\\
+\pdv*{F_{3}}{U_{1}} & \pdv*{F_{3}}{U_{2}} & \pdv*{F_{3}}{U_{3}}
+\end{bmatrix}\\
+ & =\begin{bmatrix}0 & 1 & 0\\
+\frac{\gamma-3}{2}\left(\frac{U_{2}}{U_{1}}\right)^{2} & \left(3-\gamma\right)\frac{U_{2}}{U_{1}} & \gamma-1\\
+\left(\left(\gamma-1\right)\left(\frac{U_{2}}{U_{1}}\right)^{3}-\gamma\frac{U_{3}}{U_{1}}\frac{U_{2}}{U_{1}}\right) & \left(\gamma\frac{U_{3}}{U_{1}}+\frac{3-3\gamma}{2}\left(\frac{U_{2}}{U_{1}}\right)^{2}\right) & \gamma\frac{U_{2}}{U_{1}}
+\end{bmatrix}\\
+ & =\begin{bmatrix}0 & 1 & 0\\
+\frac{\gamma-3}{2}u^{2} & \left(3-\gamma\right)u & \gamma-1\\
+\left(\frac{\gamma-2}{2}u^{3}-\frac{ua^{2}}{\gamma-1}\right) & \left(\frac{3-2\gamma}{2}u^{2}+\frac{a^{2}}{\gamma-1}\right) & \gamma u
+\end{bmatrix}\impliedby\frac{U_{3}}{U_{1}}=\frac{a^{2}}{\gamma^{2}-\gamma}+\frac{u^{2}}{2}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Characteristic Fields
+\end_layout
+
+\begin_layout Standard
+Solve the characteristic problem
+\begin_inset Formula 
+\[
+\Mat{A}\ket{R}=\lambda\ket{R}
+\]
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\begin{aligned}\lambda_{1} & =u-a & \lambda_{2} & =u & \lambda_{3} & =u+a\\
+\ket{R_{1}} & =\begin{bmatrix}1\\
+u-a\\
+H-ua
+\end{bmatrix} & \ket{R_{2}} & =\begin{bmatrix}1\\
+u\\
+u^{2}/2
+\end{bmatrix} & \ket{R_{3}} & =\begin{bmatrix}1\\
+u+a\\
+H+ua
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+The 1st and 3rd characteristic fields are genuinely nonlinear, while the
+ 2nd one is linearly degenerated.
+\end_layout
+
+\begin_layout Proof
+The key step is to find 
+\begin_inset Formula $\bra{\grad{\lambda}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The 2nd one is easy, since 
+\begin_inset Formula $\lambda_{2}=U_{2}/U_{1}$
+\end_inset
+
+, there is
+\begin_inset Formula 
+\[
+\bra{\grad{\lambda_{2}}}=\frac{1}{U_{1}}\begin{bmatrix}-\frac{U_{2}}{U_{1}} & 1 & 0\end{bmatrix}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ip{\grad{\lambda_{2}}}{R_{2}}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}\begin{bmatrix}1\\
+u\\
+u^{2}/2
+\end{bmatrix}=0
+\]
+
+\end_inset
+
+so it is linearly degenerated.
+\end_layout
+
+\begin_layout Proof
+The other two are trickier, for which, we need to find out 
+\begin_inset Formula $\bra{\grad{a}}$
+\end_inset
+
+ first:
+\begin_inset Formula 
+\[
+\begin{aligned}\bra{\grad{a}} & =\frac{\bra{\grad{\left(a^{2}\right)}}}{2a}\\
+ & =\frac{\gamma^{2}-\gamma}{2a}\bra{\grad{\left(\frac{U_{3}}{U_{1}}-\frac{1}{2}\left(\frac{U_{2}}{U_{1}}\right)^{2}\right)}}\\
+ & =\frac{\gamma^{2}-\gamma}{2a}\frac{1}{U_{1}}\begin{bmatrix}\left(\left(\frac{U_{2}}{U_{1}}\right)^{2}-\frac{U_{3}}{U_{1}}\right) & -\frac{U_{2}}{U_{1}} & 1\end{bmatrix}\\
+ & =\frac{\gamma^{2}-\gamma}{2a\rho}\begin{bmatrix}\left(\frac{u^{2}}{2}-\frac{a^{2}}{\gamma^{2}-\gamma}\right) & -u & 1\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\[
+\bra{\grad{\lambda_{1}}}=\bra{\grad{u}}-\bra{\grad{a}}\qquad\bra{\grad{\lambda_{3}}}=\bra{\grad{u}}+\bra{\grad{a}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ip{\grad{\lambda_{1}}}{R_{1}}=-\frac{1+\gamma}{2}\frac{a}{\rho}\ne0\qquad\ip{\grad{\lambda_{3}}}{R_{3}}=\frac{1+\gamma}{2}\frac{a}{\rho}\ne0
+\]
+
+\end_inset
+
+so they are genuinely nonlinear.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+The elementary wave associated with 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $\lambda_{3}$
+\end_inset
+
+ is either a shock, or a rarefaction, or a contact, while that associated
+ with 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+ can only be a contact.
+\end_layout
+
+\begin_layout Paragraph
+Riemann Invariants
+\end_layout
+
+\begin_layout Lemma
+For 
+\begin_inset Formula $\lambda_{2}=u$
+\end_inset
+
+, the two generalized Riemann invariants are 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ are the first integrals of
+\begin_inset Formula 
+\[
+\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u}=\frac{\dd{(E\rho)}}{u^{2}/2}
+\]
+
+\end_inset
+
+since
+\begin_inset Formula 
+\[
+\begin{aligned}\dd{u}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u}\\
+\dd{p}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(E\rho)}}{u^{2}/2}\qc\dd{u}=0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+For 
+\begin_inset Formula $\lambda_{1}=u-a$
+\end_inset
+
+, the two generalized Riemann invariants are 
+\begin_inset Formula $p\rho^{-\gamma}$
+\end_inset
+
+ and 
+\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+From
+\begin_inset Formula 
+\[
+\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u-a}=\frac{\dd{(E\rho)}}{H-ua}
+\]
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\begin{aligned}\rho\dd{u}+a\dd{\rho}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u-a}\\
+\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}=0 & \impliedby\begin{cases}
+\frac{\dd{\rho}}{1}=\frac{\dd{(E\rho)}}{H-ua}\\
+H=E+p/\rho\\
+E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\\
+\rho\dd{u}+a\dd{\rho}=0
+\end{cases}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By multiplying an integral factor 
+\begin_inset Formula $\frac{1-\gamma}{\rho^{\gamma}}$
+\end_inset
+
+, the LHS of the 2nd line becomes an exact differential:
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}\right) & =\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{\dd{p}}{1-\gamma}+\frac{\gamma p}{\gamma-1}\frac{\dd{\rho}}{\rho}\right)\\
+ & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma-1}\dd{\rho}\\
+ & =\dd{\left(p\rho^{-\gamma}\right)}
+\end{aligned}
+\]
+
+\end_inset
+
+So 
+\begin_inset Formula $p\rho^{-\gamma}$
+\end_inset
+
+ is a generalized Riemann invariant.
+ Physically, this invariant means the progress is isentropic.
+\end_layout
+
+\begin_layout Proof
+Under the isentropic condition, we have
+\begin_inset Formula 
+\[
+\begin{aligned}\dd{a} & =\dd{\sqrt{\gamma p\rho^{-1}}}=\dd{\sqrt{\underbrace{\gamma p\rho^{-\gamma}}_{\text{const}}\rho^{\gamma-1}}}=\sqrt{\gamma p\rho^{-\gamma}}\dd{\rho^{\frac{\gamma-1}{2}}}\\
+ & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma-1}{2}\rho^{\frac{\gamma-1}{2}-1}\dd{\rho}=\frac{\gamma-1}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}\\
+ & =\frac{\gamma-1}{2}\frac{a\dd{\rho}}{\rho}
+\end{aligned}
+\]
+
+\end_inset
+
+Using this result and multiplying 
+\begin_inset Formula $\rho\dd{u}+a\dd{\rho}=0$
+\end_inset
+
+ with an integral factor 
+\begin_inset Formula $\frac{1}{\rho}$
+\end_inset
+
+, the LHS becomes an exact differential:
+\begin_inset Formula 
+\[
+\frac{1}{\rho}\left(\rho\dd{u}+a\dd{\rho}\right)=\dd{u}+\frac{2}{\gamma-1}\dd{a}=\dd{\left(u+\frac{2a}{\gamma-1}\right)}
+\]
+
+\end_inset
+
+which then indicates 
+\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\end_inset
+
+ is also a generalized Riemann invariant.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+For 
+\begin_inset Formula $\lambda_{3}=u+a$
+\end_inset
+
+, the two generalized Riemann invariants are 
+\begin_inset Formula $p\rho^{-\gamma}$
+\end_inset
+
+ and 
+\begin_inset Formula $u-\frac{2a}{\gamma-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Solution Structure
+\end_layout
+
+\begin_layout Standard
+The complete solution is 4 constant regions 
+\begin_inset Formula $\left\{ C_{i}\right\} _{i=1}^{4}$
+\end_inset
+
+ (
+\begin_inset Formula $C$
+\end_inset
+
+ standards for 
+\bar under
+c
+\bar default
+onstant) connected by 3 elementary waves 
+\begin_inset Formula $\left\{ E_{k}\right\} _{k=1}^{3}$
+\end_inset
+
+ (
+\begin_inset Formula $E$
+\end_inset
+
+ standards for 
+\bar under
+e
+\bar default
+lementary):
+\begin_inset Formula 
+\begin{equation}
+\ket{U(x,t)}=\begin{cases}
+\ket{U_{-}} & x/t\in C_{1}=(-\infty,\alpha_{1-})\\
+\ket{U_{1*}} & x/t\in E_{1}=[\alpha_{1-},\alpha_{1+}]\\
+\ket{U_{2-}} & x/t\in C_{2}=(\alpha_{1+},\alpha_{2-})\\
+\ket{U_{2*}} & x/t\in E_{2}=[\alpha_{2-},\alpha_{2+}]\\
+\ket{U_{2+}} & x/t\in C_{3}=(\alpha_{2+},\alpha_{3-})\\
+\ket{U_{3*}} & x/t\in E_{3}=[\alpha_{3-},\alpha_{3+}]\\
+\ket{U_{+}} & x/t\in C_{4}=(\alpha_{3+},\infty)
+\end{cases}\label{eq:RiemannSolutionStructureForEuler1d}
+\end{equation}
+
+\end_inset
+
+in which
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ket{U_{\pm}}$
+\end_inset
+
+ are the initial values already known.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ \ket{U_{k*}}\right\} _{k=1}^{3}$
+\end_inset
+
+ are the values of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 
+\emph on
+inside
+\emph default
+ each wave:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+For a shock or a contact, the wave region is infinitesimal thin (
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+\end_inset
+
+), 
+\begin_inset Formula $\ket{U_{k*}}$
+\end_inset
+
+ is mathematically undefined, which we shall taken as the mean value of
+ both sides, i.e.
+ 
+\begin_inset Formula $\ket{U_{k*}}:=\frac{1}{2}\ket{U(\alpha_{k-})}+\frac{1}{2}\ket{U(\alpha_{k+})}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For a rarefaction, the wave region is fan shaped (
+\begin_inset Formula $\alpha_{k-}<\alpha_{k+}$
+\end_inset
+
+), inside which 
+\begin_inset Formula $\ket{U_{k*}}$
+\end_inset
+
+ can be uniquely determined.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\ket{U_{2-}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ket{U_{2+}}$
+\end_inset
+
+ are the values of 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ inside the regions to the 
+\emph on
+left
+\emph default
+ and 
+\emph on
+right
+\emph default
+ of 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+, which is a contact (
+\begin_inset Formula $\alpha_{2-}=\alpha_{2+}$
+\end_inset
+
+):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Since 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ are the Riemann invariants for 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+, there are 
+\begin_inset Formula $u_{2-}=u_{2+}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2-}=p_{2+}$
+\end_inset
+
+, it is then reasonable to drop the 
+\begin_inset Formula $\pm$
+\end_inset
+
+'s for them.
+\end_layout
+
+\begin_layout Itemize
+Generally, 
+\begin_inset Formula $\rho_{2-}\ne\rho_{2+}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Shock Relations
+\end_layout
+
+\begin_layout Lemma
+For 1D Euler equations, the jump condition for a shock
+\begin_inset Formula 
+\[
+\eval{\ket{U}}_{-}^{+}u^{s}=\eval{\ket{F}}_{-}^{+}
+\]
+
+\end_inset
+
+is equivalent to
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}(u_{1}-v)\rho_{1} & =(u_{2}-v)\rho_{2}\\
+(u_{1}-v)u_{1}\rho_{1}+p_{1} & =(u_{2}-v)u_{2}\rho_{2}+p_{2}\\
+(u_{1}-v)E_{1}\rho_{1}+p_{1}u_{1} & =(u_{2}-v)E_{2}\rho_{2}+p_{2}u_{2}
+\end{aligned}
+\label{eq:JumpConditionEuler1d}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $v=u^{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $E=e+u^{2}/2$
+\end_inset
+
+, or in relative speed 
+\begin_inset Formula $v_{i}=u_{i}-u^{s}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}v_{1}\rho_{1} & =v_{2}\rho_{2}\\
+v_{1}^{2}\rho_{1}+p_{1} & =v_{2}^{2}\rho_{2}+p_{2}\\
+h_{1}+v_{1}^{2}/2 & =h_{2}+v_{2}^{2}/2
+\end{aligned}
+\label{eq:JumpConditionEuler1dInRelativeSpeed}
+\end{equation}
+
+\end_inset
+
+where and 
+\begin_inset Formula $h=e+p/\rho$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+For calorically ideal gases, the states on the two sides of a shock are
+ related by
+\begin_inset Formula 
+\begin{equation}
+u_{2}-u_{1}=v_{2}-v_{2}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
++1 & m>0\\
+-1 & m<0
+\end{cases}\label{eq:AbsoluteSpeedChangeVsPressureChangeForShock}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $P:=\frac{\gamma+1}{2}p_{2}+\frac{\gamma-1}{2}p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $m:=v_{1}\rho_{1}=v_{2}\rho_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Treat 
+\begin_inset Formula $\rho_{1},u_{1},p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ as known variables, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ becomes a system of 3 independent algebraic equations for 3 unknowns 
+\begin_inset Formula $\rho_{2},u_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ Represent 
+\begin_inset Formula $\rho_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ in terms of 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ (and the knowns), we will obtain an equation for 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Multiply the 1st line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ and subtract it from the 2nd line, we have
+\begin_inset Formula 
+\[
+(u_{1}-v)(u_{1}-u_{2})\rho_{1}=p_{2}-p_{1}
+\]
+
+\end_inset
+
+from which
+\begin_inset Formula 
+\[
+v=u_{1}+\frac{p_{2}-p_{1}}{u_{2}-u_{1}}\frac{1}{\rho_{1}}
+\]
+
+\end_inset
+
+Substitute it back into the 1st line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and solve for 
+\begin_inset Formula $\rho_{2}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\rho_{2}=\frac{u_{1}-v}{u_{2}-v}\rho_{1}=\frac{p_{2}-p_{1}}{p_{2}-p_{1}-(u_{2}-u_{1})^{2}\rho_{1}}\rho_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Substitute these expressions for 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho_{2}$
+\end_inset
+
+ into the 3rd line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we obtain a quadratic equation for 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+Au_{2}^{2}+Bu_{2}+C=0
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+A=-2\rho_{1}P\qquad B=4Pu_{1}\rho_{1}\qquad C=2(p_{2}-p_{1})^{2}-2Pu_{1}^{2}\rho_{1}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+B^{2}-4AC=16(p_{2}-p_{1})^{2}\rho_{1}P
+\]
+
+\end_inset
+
+from which 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ can be solved to be
+\begin_inset Formula 
+\[
+u_{2}=\frac{-B\pm\sqrt{B^{2}-4AC}}{2A}=u_{1}\mp\frac{\abs{p_{2}-p_{1}}}{\sqrt{\rho_{1}P}}
+\]
+
+\end_inset
+
+An immediate corollary is
+\begin_inset Formula 
+\begin{equation}
+v_{2}-v_{1}=\mp\frac{\abs{p_{2}-p_{1}}}{\sqrt{\rho_{1}P}}\label{eq:RelativeSpeedChangeVsPressureChangeForShock}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The the 2nd line of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1dInRelativeSpeed"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ indicates
+\begin_inset Formula 
+\[
+v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-m}
+\]
+
+\end_inset
+
+Compare it with 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:RelativeSpeedChangeVsPressureChangeForShock"
+
+\end_inset
+
+ and consider each possibility for the sign of 
+\begin_inset Formula $m$
+\end_inset
+
+, we can remove 
+\begin_inset Formula $\abs{\cdots}$
+\end_inset
+
+ and determine the sign of the RHS:
+\begin_inset Formula 
+\[
+v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
++1 & m>0\\
+-1 & m<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Rarefaction Relations
+\end_layout
+
+\begin_layout Lemma
+For 1D Euler equations, states on the two sides of a 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+-rarefaction are related by
+\begin_inset Formula 
+\begin{equation}
+\frac{p_{1}}{\rho_{1}^{\gamma}}=\frac{p_{2}}{\rho_{2}^{\gamma}}\qquad u_{1}+\frac{2a_{1}}{\gamma-1}=u_{2}+\frac{2a_{2}}{\gamma-1}\label{eq:RiemannInvariantsEuler}
+\end{equation}
+
+\end_inset
+
+while
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+For calorically ideal gases, the states on the two sides of a rarefaction
+ are related by
+\begin_inset Formula 
+\[
+u_{2}=u_{1}-\frac{2a_{1}}{\gamma-1}\left[\left(\frac{p_{2}}{p_{1}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]\cdot\begin{cases}
++1 & \text{for }\lambda_{1}\text{-rarefaction}\\
+-1 & \text{for }\lambda_{3}\text{-rarefaction}
+\end{cases}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a_{1}=\sqrt{\gamma p_{1}/\rho_{1}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Entropy Conditions
+\end_layout
+
+\begin_layout Standard
+In jump conditions (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:JumpConditionEuler1d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1dInRelativeSpeed"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and shock relations (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:AbsoluteSpeedChangeVsPressureChangeForShock"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:RelativeSpeedChangeVsPressureChangeForShock"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we have not specified the 
+\noun on
+direction
+\noun default
+ of the shock, i.e.
+ from which side fluid particles run across the shock to the other side.
+ In this section, we shall use a relative reference frame fixed on that
+ shock, and use subscript 
+\begin_inset Formula $_{-}$
+\end_inset
+
+ for the undisturbed region and 
+\begin_inset Formula $_{+}$
+\end_inset
+
+ for the disturbed region.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $v_{\pm}$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ have the same sign.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+When a fluid particle run across a shock, it is entropy-increasingly compressed,
+ which means
+\begin_inset Formula 
+\[
+s_{-}<s_{+}\qquad p_{-}<p_{+}\qquad\rho_{-}<\rho_{+}\qquad T_{-}<T_{+}\qquad0<a_{-}<a_{+}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\abs{v_{-}}>\abs{v_{+}}\qquad M_{-}>M_{+}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $M=\abs{v}/a$
+\end_inset
+
+ is the 
+\noun on
+relative Mach number
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+number!Mach ~!relative ~
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:RelativeMachRelationForShock"
+
+\end_inset
+
+The flow before a shock is supersonic, which that after a shock is subsonic,
+ i.e.
+ 
+\begin_inset Formula $M_{-}>1>M_{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For a 
+\emph on
+left
+\emph default
+ running (
+\begin_inset Formula $v_{\pm}>0$
+\end_inset
+
+) shock, by definition, the region to the 
+\emph on
+left
+\emph default
+ of the shock is 
+\emph on
+undisturbed
+\emph default
+.
+\end_layout
+
+\begin_layout Corollary
+A shock is left running iff it is associated with 
+\begin_inset Formula $\lambda_{1}=u-a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:RelativeMachRelationForShock"
+
+\end_inset
+
+ together with the positiveness of 
+\begin_inset Formula $v_{\pm}$
+\end_inset
+
+ indicates that
+\begin_inset Formula 
+\[
+\frac{v_{-}}{a_{-}}=\frac{u_{-}-u^{s}}{a_{-}}>1>\frac{u_{+}-u^{s}}{a_{+}}=\frac{v_{+}}{a_{+}}
+\]
+
+\end_inset
+
+which then leads to Lax's entropy condition
+\begin_inset Formula 
+\[
+u_{-}-a_{-}>u^{s}>u_{+}-a_{-}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, for a 
+\emph on
+right
+\emph default
+ running (
+\begin_inset Formula $v_{\pm}<0$
+\end_inset
+
+) shock, by definition, the region to the 
+\emph on
+right
+\emph default
+ of the shock is 
+\emph on
+undisturbed
+\emph default
+.
+\end_layout
+
+\begin_layout Corollary
+A shock is right running (
+\begin_inset Formula $v_{\pm}<0$
+\end_inset
+
+) iff it is associated with 
+\begin_inset Formula $\lambda_{3}=u+a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:RelativeMachRelationForShock"
+
+\end_inset
+
+ together with the negativeness of 
+\begin_inset Formula $v_{\pm}$
+\end_inset
+
+ indicates that
+\begin_inset Formula 
+\[
+\frac{\abs{v_{-}}}{a_{-}}=\frac{-(u_{-}-u^{s})}{a_{-}}>1>\frac{-(u_{+}-u^{s})}{a_{+}}=\frac{\abs{v_{-}}}{a_{-}}
+\]
+
+\end_inset
+
+which then leads to Lax's entropy condition
+\begin_inset Formula 
+\[
+u_{+}+a_{+}>u^{s}>u_{-}+a_{-}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Pressure Functions
+\end_layout
+
+\begin_layout Lemma
+The following univariate function for 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+f(p_{2};p_{1},\rho_{1})=\begin{cases}
+(p_{2}-p_{1})/\sqrt{\rho_{1}P} & p_{2}>p_{1}\\
+0 & p_{2}=p_{1}\\
+\frac{2a_{1}}{\gamma-1}\left[\left(p_{2}/p_{1}\right)^{\frac{\gamma-1}{2\gamma}}-1\right] & p_{2}<p_{1}
+\end{cases}\label{eq:PressureFunctionForSingleWave}
+\end{equation}
+
+\end_inset
+
+is continuously differentiable and monotonically increasing for any fixed
+ positive values of 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho_{1}$
+\end_inset
+
+, where
+\begin_inset Formula 
+\[
+P=\frac{\gamma+1}{2}p_{2}+\frac{\gamma-1}{2}p_{1}\qquad a_{1}=\sqrt{\frac{\gamma p_{1}}{\rho_{1}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Denote
+\begin_inset Formula 
+\[
+f_{1}(p_{2})=\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}P}}\qquad f_{2}(p_{2})=\frac{2a_{1}}{\gamma-1}\left[\left(p_{2}/p_{1}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]
+\]
+
+\end_inset
+
+It is obvious that 
+\begin_inset Formula $f_{1}(p_{1})=0=f_{2}(p_{1})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The differentiability of 
+\begin_inset Formula $f$
+\end_inset
+
+ comes from the fact that
+\begin_inset Formula 
+\[
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{1}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{1}+\epsilon)
+\]
+
+\end_inset
+
+which is justified from
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}\dv{f_{1}}{p_{2}} & =\frac{1}{\sqrt{\rho_{1}P}}+\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}}}\dv{P^{-1/2}}{p_{2}}\\
+ & =\frac{1}{\sqrt{\rho_{1}P}}+\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}}}\left(-\frac{1}{2}P^{-3/2}\right)\dv{P}{p_{2}}\\
+ & =\frac{1}{\sqrt{\rho_{1}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}\right)\\
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{1}+\epsilon) & =\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}
+\end{alignedat}
+\]
+
+\end_inset
+
+and
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}\dv{f_{2}}{p_{2}} & =\frac{2a_{1}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{2}}{p_{1}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{1}}\\
+ & =\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}\left(\frac{p_{2}}{p_{1}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
+\lim_{\epsilon\to0^{+}}f_{2}'(p_{1}+\epsilon) & =\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}
+\end{alignedat}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The monotonicity of 
+\begin_inset Formula $f$
+\end_inset
+
+ comes from 
+\begin_inset Formula $f'(p_{2})>0$
+\end_inset
+
+ for any 
+\begin_inset Formula $p_{2}>0$
+\end_inset
+
+ where
+\begin_inset Formula 
+\[
+f'(p_{2})=\begin{cases}
+\frac{1}{\sqrt{\rho_{1}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}\right) & p_{2}>p_{1}\\
+\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}} & p_{2}=p_{1}\\
+\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}\left(p_{2}/p_{1}\right)^{-\frac{\gamma+1}{2\gamma}} & p_{2}<p_{1}
+\end{cases}
+\]
+
+\end_inset
+
+The 2nd and 3rd cases are trivial, while the 1st one is positive since when
+ 
+\begin_inset Formula $p_{2}>p_{1}$
+\end_inset
+
+, there is
+\begin_inset Formula 
+\[
+1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}=1-\frac{1}{2}\frac{p_{2}-p_{1}}{p_{2}+\frac{\gamma-1}{\gamma+1}p_{1}}>1-\frac{1}{2}>0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+The following univariate function for 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\label{eq:PressureFunctionForDoubleWave}
+\end{equation}
+
+\end_inset
+
+is continuously differentiable and monotonically increasing for any fixed
+ positive values of 
+\begin_inset Formula $p_{\pm},\rho_{\pm}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+States Beside the 
+\begin_inset Formula $\lambda_{2}$
+\end_inset
+
+-Contact
+\end_layout
+
+\begin_layout Standard
+Recall the solution structure 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:RiemannSolutionStructureForEuler1d"
+
+\end_inset
+
+ discussed above, we've already known that the 2nd elementary wave 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+ is always a contact, across which the two generalized Riemann invariants,
+ i.e.
+ 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+, are constant, which we shall denote as 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+.
+ Such constancy holds in 
+\begin_inset Formula $C_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $C_{3}$
+\end_inset
+
+, so 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ are constant across 
+\begin_inset Formula $C_{2}\cup E_{2}\cup C_{3}$
+\end_inset
+
+, which are the right values of 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ for 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ and the left values for 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ is a left running shock if 
+\begin_inset Formula $p_{2}>p_{-}$
+\end_inset
+
+, or a rarefaction if 
+\begin_inset Formula $p_{2}<p_{-}$
+\end_inset
+
+.
+ In either case, there is
+\begin_inset Formula 
+\[
+u_{2}-u_{-}=-f(p_{2};p_{-},\rho_{-})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ is defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PressureFunctionForSingleWave"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ is a right running shock if 
+\begin_inset Formula $p_{2}>p_{+}$
+\end_inset
+
+, or a rarefaction if 
+\begin_inset Formula $p_{2}<p_{+}$
+\end_inset
+
+.
+ In either case, there is
+\begin_inset Formula 
+\[
+u_{2}-u_{+}=+f(p_{2};p_{+},\rho_{+})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ is defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:PressureFunctionForSingleWave"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+For any fixed 
+\begin_inset Formula $u_{\pm}$
+\end_inset
+
+ and fixed positive values of 
+\begin_inset Formula $p_{\pm},\rho_{\pm}$
+\end_inset
+
+, the following equation has a unique solution for 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{+}-u_{-}=F(p_{2};p_{\pm},\rho_{\pm})
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ is then
+\begin_inset Formula 
+\[
+u_{2}=\frac{u_{-}+u_{+}}{2}+f(p_{2};p_{+},\rho_{+})-f(p_{2};p_{-},\rho_{-})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Other States
+\end_layout
+
+\begin_layout Standard
+Once 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ are obtained, we can tell the type of 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ immediately.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ is a shock, its speed can be determined from the shock relation to be
+\begin_inset Formula 
+\[
+v=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
+\]
+
+\end_inset
+
+and the density on the other side of the shock, i.e.
+ 
+\begin_inset Formula $\rho_{2-}$
+\end_inset
+
+, is
+\begin_inset Formula 
+\[
+\rho_{2-}=\frac{u_{-}-v}{u_{2}-v}\rho_{-}=\frac{p_{2}-p_{-}}{\frac{p_{2}-p_{-}}{\rho_{-}}-(u_{2}-u_{-})^{2}}
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+, the analysis is almost the same, except for the subscripts, where 
+\begin_inset Formula $_{-}$
+\end_inset
+
+ should be replaced with 
+\begin_inset Formula $_{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ is a rarefaction, there will be two generalized Riemann invariants across
+ the wave:
+\begin_inset Formula 
+\[
+\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{-}}{\rho_{-}^{\gamma}}\qquad\phi_{2}=u+\frac{2a}{\gamma-1}=u_{-}+\frac{2a_{-}}{\gamma-1}
+\]
+
+\end_inset
+
+From which, we have
+\begin_inset Formula 
+\[
+a_{2}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{a_{2}^{2}}
+\]
+
+\end_inset
+
+The head and tail of the wave is then
+\begin_inset Formula 
+\[
+\alpha_{1-}=\lambda_{1}(\alpha_{1-})=u_{-}-a_{-}\qquad\alpha_{1+}=\lambda_{1}(\alpha_{1+})=u_{2}-a_{2}
+\]
+
+\end_inset
+
+respectively.
+ States inside the wave can be determined as
+\begin_inset Formula 
+\[
+\begin{gathered}a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad u=\frac{x}{t}+a\impliedby\begin{cases}
+u-a=x/t\\
+u+\frac{2a}{\gamma-1}=\phi_{2}
+\end{cases}\\
+\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
+\gamma p/\rho=a^{2}\\
+p/\rho^{\gamma}=\phi_{1}
+\end{cases}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ is a rarefaction, the analysis is almost the same, these formulae become
+\begin_inset Formula 
+\[
+\begin{gathered}\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{+}}{\rho_{+}^{\gamma}}\qquad\phi_{2}=u-\frac{2a}{\gamma-1}=u_{+}-\frac{2a_{+}}{\gamma-1}\\
+a_{2}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2-}=\frac{\gamma p_{2}}{a_{2}^{2}}\\
+\alpha_{3-}=\lambda_{3}(\alpha_{3-})=u_{2}+a_{2}\qquad\alpha_{3+}=\lambda_{3}(\alpha_{3+})=u_{+}+a_{+}\\
+a=\frac{\gamma-1}{\gamma+1}\left(\frac{x}{t}-\phi_{2}\right)\qquad u=\frac{x}{t}-a\impliedby\begin{cases}
+u+a=x/t\\
+u-\frac{2a}{\gamma-1}=\phi_{2}
+\end{cases}\\
+\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
+\gamma p/\rho=a^{2}\\
+p/\rho^{\gamma}=\phi_{1}
+\end{cases}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Degenerated Cases
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $p_{2}=p_{-}$
+\end_inset
+
+ or 
+\begin_inset Formula $p_{2}=p_{+}$
+\end_inset
+
+, the corresponding wave will be a infinitesimal weak shock, across which
+ 
+\begin_inset Formula $p,u,\rho$
+\end_inset
+
+ do not change.
 \end_layout
 
 \end_body
