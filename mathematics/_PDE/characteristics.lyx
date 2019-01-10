@@ -6683,7 +6683,7 @@ Pressure Functions
 
 \begin_layout Lemma
 The following univariate function for 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{2}\ge0$
 \end_inset
 
 
@@ -6836,7 +6836,7 @@ The 2nd and 3rd cases are trivial, while the 1st one is positive since when
 
 \begin_layout Corollary
 The following univariate function for 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{2}\ge0$
 \end_inset
 
 
@@ -6852,7 +6852,18 @@ is continuously differentiable and monotonically increasing for any fixed
 \begin_inset Formula $p_{\pm},\rho_{\pm}$
 \end_inset
 
-.
+, and there is
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula 
+\[
+\lim_{p_{2}\to0^{+}}F(p_{2};p_{\pm},\rho_{\pm})=-\frac{2a_{-}}{\gamma-1}-\frac{2a_{+}}{\gamma-1}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -7025,27 +7036,35 @@ reference "eq:PressureFunctionForSingleWave"
 \end_layout
 
 \begin_layout Theorem
-For any fixed 
-\begin_inset Formula $u_{\pm}$
-\end_inset
-
- and fixed positive values of 
+For any fixed positive values of 
 \begin_inset Formula $p_{\pm},\rho_{\pm}$
 \end_inset
 
-, the following equation has a unique solution for 
-\begin_inset Formula $p_{2}$
+, if 
+\begin_inset Formula $u_{-}-u_{+}>F(0;p_{\pm},\rho_{\pm})$
 \end_inset
 
-
+ or equivalently
 \begin_inset Formula 
 \[
-u_{-}-u_{+}=F(p_{2};p_{\pm},\rho_{\pm})
+u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
 \]
 
 \end_inset
 
-and 
+then the following equation for 
+\begin_inset Formula $p_{2}>0$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+u_{-}-u_{+}=F(p_{2};p_{\pm},\rho_{\pm})\label{eq:EquationForP2}
+\end{equation}
+
+\end_inset
+
+will have a unique solution, in which case 
 \begin_inset Formula $u_{2}$
 \end_inset
 
@@ -7073,7 +7092,7 @@ Other States
 
 \begin_layout Standard
 Once 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{2}>0$
 \end_inset
 
  and 
@@ -7126,6 +7145,23 @@ For
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $p_{2}=p_{-}$
+\end_inset
+
+ or 
+\begin_inset Formula $p_{2}=p_{+}$
+\end_inset
+
+, the corresponding wave will be a infinitesimal weak shock, across which
+ 
+\begin_inset Formula $p,u,\rho$
+\end_inset
+
+ do not change.
 \end_layout
 
 \begin_layout Standard
@@ -7206,24 +7242,209 @@ p/\rho^{\gamma}=\phi_{1}
 \end_layout
 
 \begin_layout Paragraph
-Degenerated Cases
+Generation of Vacuum
 \end_layout
 
 \begin_layout Standard
-When 
-\begin_inset Formula $p_{2}=p_{-}$
+If 
+\begin_inset Formula $u_{-}-u_{+}\le F(0;p_{\pm},\rho_{\pm})$
 \end_inset
 
- or 
-\begin_inset Formula $p_{2}=p_{+}$
+ or equivalently
+\begin_inset Formula 
+\begin{equation}
+u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:VacuumCondition}
+\end{equation}
+
 \end_inset
 
-, the corresponding wave will be a infinitesimal weak shock, across which
+then Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EquationForP2"
+
+\end_inset
+
+ for 
+\begin_inset Formula $p_{2}>0$
+\end_inset
+
+ will have no solution, which indicates something is wrong in the derivation
+ of Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:EquationForP2"
+
+\end_inset
+
+.
+ Physically, pressure is a measure of the intensity of gas molecules' thermal
+ motion, so 
+\begin_inset Formula $p=0$
+\end_inset
+
+ can only appears in a region of vacuum.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VacuumCondition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is then called the 
+\noun on
+vacuum condition
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+condition!vacuum ~
+\end_layout
+
+\end_inset
+
+, which means if the initial velocity gap 
+\begin_inset Formula $(u_{-}-u_{+})$
+\end_inset
+
+ is sufficiently large, the flow field will be torn into two independent
+ regions, i.e.
  
-\begin_inset Formula $p,u,\rho$
+\begin_inset Formula $C_{1}\cup E_{1}$
 \end_inset
 
- do not change.
+ and 
+\begin_inset Formula $E_{3}\cup C_{4}$
+\end_inset
+
+, being connected by a vacuumed region, i.e.
+ 
+\begin_inset Formula $C_{2}\cup E_{2}\cup C_{3}$
+\end_inset
+
+.
+ It is reasonable to set 
+\begin_inset Formula $\rho_{2}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{2}=0$
+\end_inset
+
+ (
+\begin_inset Formula $a_{2}=0$
+\end_inset
+
+) inside the vacuumed region.
+ However, 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+ does not have to be 
+\begin_inset Formula $0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $p_{\pm}>p_{2}=0$
+\end_inset
+
+, 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ will both be rarefactions, inside which, states can be determined from
+ the two Riemann invariants.
+ For 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+, they are
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{-}}{\rho_{-}^{\gamma}}\qquad\phi_{2}=u+\frac{2a}{\gamma-1}=u_{-}+\frac{2a_{-}}{\gamma-1}
+\]
+
+\end_inset
+
+The speed of 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+'s head is simply
+\begin_inset Formula 
+\[
+v_{1-}=u_{-}-a_{-}
+\]
+
+\end_inset
+
+To find the speed of its tail, we shall use 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+, which leads to
+\begin_inset Formula 
+\[
+v_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
+v_{1+}=u_{1+}-a_{1+}\\
+u_{-}+\frac{2a_{-}}{\gamma-1}=u_{1+}+\frac{2a_{1+}}{\gamma-1}\\
+a_{1+}=a_{2}=0
+\end{cases}
+\]
+
+\end_inset
+
+Similarly, the speed of 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+'s head and tail are
+\begin_inset Formula 
+\[
+v_{1+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}+\frac{2a_{+}}{\gamma-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Recall the vacuum condition 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:VacuumCondition"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+v_{1-}<v_{1+}<v_{3-}<v_{3+}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
