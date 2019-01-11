@@ -7091,40 +7091,32 @@ Other States
 \end_layout
 
 \begin_layout Standard
-Once 
-\begin_inset Formula $p_{2}>0$
-\end_inset
-
- and 
-\begin_inset Formula $u_{2}$
-\end_inset
-
- are obtained, we can tell the type of 
-\begin_inset Formula $E_{1}$
-\end_inset
-
- immediately.
-\end_layout
-
-\begin_layout Standard
 If 
+\begin_inset Formula $p_{2}>p_{-}$
+\end_inset
+
+ then 
 \begin_inset Formula $E_{1}$
 \end_inset
 
- is a shock, its speed can be determined from the shock relation to be
+ is a shock.
+ Its head and tail, which coincide with each other, can be determined from
+ the jump relation 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:JumpConditionEuler1d"
+
+\end_inset
+
+ as
 \begin_inset Formula 
 \[
-v=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
+v_{1\pm}=v=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
 \]
 
 \end_inset
 
-and the density on the other side of the shock, i.e.
- 
-\begin_inset Formula $\rho_{2-}$
-\end_inset
-
-, is
+The density on the other side of the shock is then
 \begin_inset Formula 
 \[
 \rho_{2-}=\frac{u_{-}-v}{u_{2}-v}\rho_{-}
@@ -7132,11 +7124,16 @@ and the density on the other side of the shock, i.e.
 
 \end_inset
 
-For 
+If 
+\begin_inset Formula $p_{2}>p_{+}$
+\end_inset
+
+ then 
 \begin_inset Formula $E_{3}$
 \end_inset
 
-, the analysis is almost the same, except for the subscripts where 
+ is a shock.
+ The analysis is almost the same, except for the subscripts where 
 \begin_inset Formula $_{-}$
 \end_inset
 
@@ -7148,7 +7145,7 @@ For
 \end_layout
 
 \begin_layout Standard
-When 
+If 
 \begin_inset Formula $p_{2}=p_{-}$
 \end_inset
 
@@ -7166,11 +7163,15 @@ When
 
 \begin_layout Standard
 If 
+\begin_inset Formula $p_{2}<p_{-}$
+\end_inset
+
+ then 
 \begin_inset Formula $E_{1}$
 \end_inset
 
- is a rarefaction, there will be two generalized Riemann invariants across
- the wave:
+ is a rarefaction.
+ There are two generalized Riemann invariants
 \begin_inset Formula 
 \[
 \phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{-}}{\rho_{-}^{\gamma}}\qquad\phi_{2}=u+\frac{2a}{\gamma-1}=u_{-}+\frac{2a_{-}}{\gamma-1}
@@ -7178,15 +7179,19 @@ If
 
 \end_inset
 
-From which, we have
+from which, we have
 \begin_inset Formula 
 \[
-a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{a_{2-}^{2}}
+a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{\left(a_{2-}\right)^{2}}
 \]
 
 \end_inset
 
-The head and tail of the wave is then
+The head and tail of the wave can be determined from the eigenvalue 
+\begin_inset Formula $\lambda_{1}=u-a$
+\end_inset
+
+ as
 \begin_inset Formula 
 \[
 v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_{2-}
@@ -7194,19 +7199,29 @@ v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_
 
 \end_inset
 
-respectively.
- States inside the wave can be determined as
+For a point inside it, i.e.
+ 
+\begin_inset Formula $x/t\in[v_{1-},v_{1+}]$
+\end_inset
+
+, there are
 \begin_inset Formula 
 \[
-\begin{gathered}a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad u=\frac{x}{t}+a\impliedby\begin{cases}
+a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad u=\frac{x}{t}+a\impliedby\begin{cases}
 u-a=x/t\\
 u+\frac{2a}{\gamma-1}=\phi_{2}
-\end{cases}\\
+\end{cases}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
 \rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
 \gamma p/\rho=a^{2}\\
 p/\rho^{\gamma}=\phi_{1}
 \end{cases}
-\end{gathered}
 \]
 
 \end_inset
@@ -7216,24 +7231,65 @@ p/\rho^{\gamma}=\phi_{1}
 
 \begin_layout Standard
 If 
+\begin_inset Formula $p_{2}<p_{+}$
+\end_inset
+
+ then 
 \begin_inset Formula $E_{3}$
 \end_inset
 
- is a rarefaction, the analysis is almost the same, these formulae become
+ is a rarefaction.
+ There are two generalized Riemann invariants
 \begin_inset Formula 
 \[
-\begin{gathered}\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{+}}{\rho_{+}^{\gamma}}\qquad\phi_{2}=u-\frac{2a}{\gamma-1}=u_{+}-\frac{2a_{+}}{\gamma-1}\\
-a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{a_{2+}^{2}}\\
-v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a_{+}\\
+\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{+}}{\rho_{+}^{\gamma}}\qquad\phi_{2}=u-\frac{2a}{\gamma-1}=u_{+}-\frac{2a_{+}}{\gamma-1}
+\]
+
+\end_inset
+
+from which, we have
+\begin_inset Formula 
+\[
+a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{\left(a_{2+}\right)^{2}}
+\]
+
+\end_inset
+
+The head and tail of the wave can be determined from the eigenvalue 
+\begin_inset Formula $\lambda_{3}=u+a$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a_{+}
+\]
+
+\end_inset
+
+For a point inside it, i.e.
+ 
+\begin_inset Formula $x/t\in[v_{3-},v_{3+}]$
+\end_inset
+
+, there are
+\begin_inset Formula 
+\[
 a=\frac{\gamma-1}{\gamma+1}\left(\frac{x}{t}-\phi_{2}\right)\qquad u=\frac{x}{t}-a\impliedby\begin{cases}
 u+a=x/t\\
 u-\frac{2a}{\gamma-1}=\phi_{2}
-\end{cases}\\
+\end{cases}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
 \rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
 \gamma p/\rho=a^{2}\\
 p/\rho^{\gamma}=\phi_{1}
 \end{cases}
-\end{gathered}
 \]
 
 \end_inset
@@ -7417,7 +7473,7 @@ Similarly, the speed of
 's head and tail are
 \begin_inset Formula 
 \[
-v_{1+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}+\frac{2a_{+}}{\gamma-1}
+v_{3+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}
 \]
 
 \end_inset
@@ -7436,6 +7492,10 @@ noprefix "false"
 
 \end_inset
 
+ and 
+\begin_inset Formula $\gamma>1$
+\end_inset
+
 , we have
 \begin_inset Formula 
 \[
@@ -7444,7 +7504,7 @@ v_{1-}<v_{1+}<v_{3-}<v_{3+}
 
 \end_inset
 
-
+which justify the choice of subscripts.
 \end_layout
 
 \end_body
