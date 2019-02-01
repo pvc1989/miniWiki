@@ -44,6 +44,7 @@ VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf
 ### Dataset Structure
 
 描述结点及单元的`几何`位置与`拓扑`连接关系, 以 `DATASET type` 为第一行, 后接具体数据, 其中 `type` 可以是以下几种之一:
+
 | `type`              | 中译名 |
 | ------------------- | ---- |
 | `STRUCTURED_POINTS` | 等距点阵 |
