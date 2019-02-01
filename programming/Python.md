@@ -1,18 +1,13 @@
-# Programming in [Python](https://docs.python.org/3/index.html)
+# 入门教程
 
-## 入门教程
+- [The Python Tutorial](https://docs.python.org/3/tutorial/index.html) --- 最`官方`的教程
+- [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/) --- Robert Sedgewick 为大一新生编写的 CS 入门教程, 非常适合`零基础`的初学者.
 
-### [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
-Robert Sedgewick 为大一新生编写的 CS 入门教程, 非常适合*零基础*的初学者.
+# [数据类型](https://docs.python.org/3/library/stdtypes.html)
 
-### [The Python Tutorial](https://docs.python.org/3/tutorial/index.html)
-最*官方*的教程.
+## 数值类型
 
-## [数据类型](https://docs.python.org/3/library/stdtypes.html)
-
-### 数值类型
-
-#### `int` --- 整数型
+### `int`
 Python 里的 `int` 为无限字长整数: 字长会根据需要自动扩展.
 ```python
 print(2**31)  # 2147483648
@@ -22,8 +17,8 @@ print(2**64)  # 18446744073709551616
 print(2**65)  # 36893488147419103232
 ```
 
-#### `float` --- 浮点型
-Python 里的 `float` *通常*为 C/C++ 里的 `double`, 即 IEEE 754 里的双精度浮点数.
+### `float`
+Python 里的 `float` `通常`为 C/C++ 里的 `double`, 即 IEEE 754 里的双精度浮点数.
 ```python
 a = 1.0 / 3
 b = 2.0 / 3
@@ -33,7 +28,7 @@ print(c - b)  # 0.33333333333333337
 print(b - a == c - b)  # False
 ```
 
-#### `complex` --- 复数型
+### `complex`
 ```python
 x = 4.0
 y = 3.0
@@ -43,15 +38,15 @@ print(z.imag)  # 3.0
 print(z.conjugate())  # (4-3j)
 ```
 
-### 逻辑类型
+## 逻辑类型
 ```python
 print(1 + 1 == 2)  # True
 print(1 + 1 == 3)  # False
 ```
 
-### 顺序容器 (序列)
+## 顺序容器 (序列)
 
-#### [通用序列操作](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations)
+### [通用序列操作](https://docs.python.org/3/library/stdtypes.html#common-sequence-operations)
 ```python
 x in s
 x not in s
@@ -68,7 +63,7 @@ s.count(x)
 s.index(x[, i[, j]])  # index of the first occurrence of x in s (at or after index i and before index j)
 ```
 
-*Immutable* 类型可以作为 `hash()` 的输入参数, 从而可以作为 `set` 和 `dict` 的关键词:
+`Immutable` 类型可以作为 `hash()` 的输入参数, 从而可以作为 `set` 和 `dict` 的关键词:
 
 ```python
 p = (0.0, 0.2, -0.3)  # a tuple
@@ -78,7 +73,7 @@ s.add(p)   # p can be used as a key
 print(p)
 ```
 
-*Mutable* 类型一般不可以作为 `hash()` 的输入参数, 从而也就不可以作为 `set` 和 `dict` 的关键词, 但它们支持更多与修改 (mutate) 相关的操作:
+`Mutable` 类型一般不可以作为 `hash()` 的输入参数, 从而也就不可以作为 `set` 和 `dict` 的关键词, 但它们支持更多与修改 (mutate) 相关的操作:
 
 ```python
 s[i] = x
@@ -99,11 +94,11 @@ s.remove(x)  # remove the first x from s
 s.reverse()
 ```
 
-#### [`list`](https://docs.python.org/3/library/stdtypes.html#lists), [`tuple`](https://docs.python.org/3/library/stdtypes.html#tuples), [`range`](https://docs.python.org/3/library/stdtypes.html#ranges)
+### `list`, `tuple`, `range`
 
-`list` 属于 mutable 容器, `tuple` 和 `range` 属于 immutable 容器.
+[`list`](https://docs.python.org/3/library/stdtypes.html#lists) 属于 mutable 容器, [`tuple`](https://docs.python.org/3/library/stdtypes.html#tuples) 和 [`range`](https://docs.python.org/3/library/stdtypes.html#ranges) 属于 immutable 容器.
 
-Python 里*一切皆引用*, *赋值 (assign)*的含义是: 将左端的*符号*与右端的*数据*进行*绑定 (bind)*. 比较下面两个赋值语句: 
+Python 里`一切皆引用`, `赋值 (assign)` 的含义是: 将左端的`符号`与右端的`数据`进行`绑定 (bind)`. 比较下面两个赋值语句: 
 ```python
 a = [1, 2, 3]
 b = a
@@ -112,7 +107,7 @@ print(a, b, c)  # [1, 2, 3] [1, 2, 3] [1, 2, 3]
 a[1] = 0
 print(a, b, c)  # [1, 0, 3] [1, 0, 3] [1, 2, 3]
 ```
-第一个没有实际拷贝数据, 第二个对数据进行了*浅*拷贝. 其中, *浅 (shallow)* 表示只拷贝元素的第一层引用:
+第一个没有实际拷贝数据, 第二个对数据进行了`浅`拷贝. 其中, `浅 (shallow)` 表示只拷贝元素的第一层引用:
 ```python
 a = [[1, 2], [3, 4], [5, 6]]
 b = a
@@ -133,14 +128,14 @@ for i in range(1000000):
     print(i)
 ```
 
-#### [`str` — 字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+### `str` --- [字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
 
-`str` 类型, 又称*字符串*类型, 是一种 (通过 Unicode 编码来表示的) 字符构成的 immutable 序列.
+`str` 是一种 (通过 Unicode 编码来表示的) 字符构成的 immutable 序列.
 
-Python 中允许使用成对的单引号 `'...'`, 或成对的双引号 `"..."`, 或成对的三重单引号 `'''...'''`来创建字符串. 其中, 单引号对最常用; 而三重单引号对中的内容可以跨行, 一般用于*文档字符串 (docstring)*.
+Python 中允许使用成对的单引号 `'...'`, 或成对的双引号 `"..."`, 或成对的三重单引号 `'''...'''` 来创建字符串. 其中, 单引号对最常用; 而三重单引号对中的内容可以跨行, 一般用于`文档字符串 (docstring)`.
 字符串也可以通过作用在对象上的 `str()` 函数来创建: 凡是定义了 `__str__()` 方法的 Python 类型, 都可以通过作为 `str()` 函数的输入参数.
 
-之前提到的*序列通用操作*以及 *immutable 序列所特有的操作*, 对于 `str` 类型依然适用.
+之前提到的`序列通用操作`以及 `immutable 序列所特有的操作`, 对于 `str` 类型依然适用.
 除此之外, `str` 类型还有一些特殊的操作. 完整列表参见 [String Methods](https://docs.python.org/3/library/stdtypes.html#string-methods), 这里列举一些常用的操作:
 - 小写转大写:
 ```python
@@ -170,7 +165,7 @@ point = (3, 5)
 '{0:g}'.format(314.1592653589793)    # '314.159'
 '{0:.4g}'.format(314.1592653589793)  # '314.2'
 ```
-- 以指定*分隔符 (delimiter)* 拆分字符串:
+- 以指定`分隔符 (delimiter)` 拆分字符串:
 ```python
 '3.14, 0, 8'.split(', ')  # ['3.14', '0', '8']
 '3.14,0,8'.split(',')     # ['3.14', '0', '8']
@@ -188,9 +183,10 @@ long_str_fast = ', '.join(words)
 print(long_str_fast == long_str_slow)  # True
 ```
 
-### 无序容器
+## 无序容器
 
-#### [`set`, `frozenset` --- 集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
+### `set`, `frozenset` --- [无序集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
+
 `set` 属于 mutable 容器, `frozenset` 属于 immutable 容器.
 
 ```python
@@ -205,7 +201,8 @@ print(b.union(c) == b)         # True
 print(b.difference(c))  # {9, 3, 15}
 ```
 
-#### [`dict` --- 字典](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+### `dict` --- [字典 (dictionary)](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+
 ```python
 d = {"one": 1, "three": 3, "two": 2, "four": 4}
 values = list(d.values())
@@ -213,11 +210,11 @@ pairs = [(v, k) for k, v in d.items()]
 print(pairs)  # [(1, 'one'), (3, 'three'), (2, 'two'), (4, 'four')]
 ```
 
-### [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
+## 标准库中的[数据类型](https://docs.python.org/3/library/datatypes.html)
 
-#### [`array` --- 数值数组](https://docs.python.org/3/library/array.html#module-array)
+### `array` --- [数组](https://docs.python.org/3/library/array.html#module-array)
 
-`list` 和 `tuple` 都属于*异质 (heterogeneous)* 容器: 其中的元素可以是不同类型. 这种便利是通过牺牲效率而获得的. 对于*同质 (homogeneous)* 的数据, 这种效率损失可以通过利用标准库的 `array` 来避免:
+`list` 和 `tuple` 都属于`异质 (heterogeneous)` 容器: 其中的元素可以是不同类型. 这种便利是通过牺牲效率而获得的. 对于`同质 (homogeneous)` 的数据, 这种效率损失可以通过改用标准库提供的 `array` 来避免:
 
 ```python
 import array
@@ -226,11 +223,11 @@ a.append(3)
 a.append(5)
 print(a[0], a[-1])
 ```
-然而, `array` 仅仅是一种容器, 并不支持加减乘除等算术运算. 如果有这类需求, 应该考虑使用 `numpy` 中的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html).
+然而, `array` 仅仅是一种容器, 并不支持加减乘除等算术运算. 如果有这类需求, 应该考虑改用 `numpy` 提供的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html).
 
-#### [`heapq` — 最小堆算法](https://docs.python.org/3/library/heapq.html)
+### `heapq` --- [最小二叉堆算法](https://docs.python.org/3/library/heapq.html)
 
-只提供了最小二叉堆算法, 数据存储在一个 `list` 里:
+`heapq` 只提供了最小二叉堆`算法`, 数据需要存储在一个 `list` 里:
 
 ```python
 import heapq
@@ -242,7 +239,7 @@ y = heap[0]  # access the top element without popping it
 heapq.heappushpop(heap, x)  # better than a heappush() followed by a heappop()
 heapq.heapreplace(heap, x)  # better than a heappop() followed by a heappush()
 ```
-典型应用场景为 "从 $N$ 个元素的容器中找出最大的 $K$ 个数据":
+典型应用场景为 "从 `N​` 个元素的容器中找出最大的 `K​` 个数据":
 
 ```python
 import heapq
@@ -259,11 +256,11 @@ for x in huge_container:
         pass
 print(heap)  # [-9, -8, -5, -6, -7, -1, -4, 0, -3, -2]
 ```
-时间复杂度为 $N \lg K$, 优于先排序再输出的 $N \lg N$.
+时间复杂度为 `N lg K​`, 优于先排序再输出的 ​`N lg N​`.
 
-## 抽象机制
+# 抽象机制
 
-### 函数 (Function)
+## 函数 (Function)
 定义函数:
 ```python
 def fib(n):
@@ -292,7 +289,7 @@ pairs.sort(key=lambda pair: pair[1])
 print(pairs)  # [(4, 'a'), (3, 'b'), (2, 'c'), (1, 'd')]
 ```
 
-### 类 (Class)
+## 类 (Class)
 定义类:
 ```python
 class Vector(object):
@@ -315,10 +312,10 @@ print(v)  # (0.3333333333333333, 0.33333333333333337)
 print(v.dot(v))  # 0.22222222222222224
 ```
 
-### 模块 (Module)
-我们可以把一组常量/函数/类的定义放在一个*脚本 (script)* 文件里, 这样的文件称为*模块 (module)*.
-一个模块中的函数或类可以被其他模块*引入 (import)*, 这样就在各模块之间的就形成了一个*层次结构 (hierarchy)*, 其中最顶层的模块称为*主模块 (main module)*.
-模块提供了一种*命名空间 (namespace)* 管理机制, 可以有效地避免来自不同模块的同名函数/类的冲突.
+## 模块 (Module)
+我们可以把一组常量/函数/类的定义放在一个`脚本 (script)` 文件里, 这样的文件称为`模块 (module)`.
+一个模块中的函数或类可以被其他模块`引入 (import)`, 这样就在各模块之间的就形成了一个`层次结构 (hierarchy)`, 其中最顶层的模块称为`主模块 (main module)`.
+模块提供了一种`命名空间 (namespace)` 管理机制, 可以有效地避免来自不同模块的同名函数/类的冲突.
 
 创建一个 `fibonacci.py` 文件:
 ```python
@@ -347,14 +344,14 @@ fibonacci.fib(10)  # 89
 from fibonacci import fib
 fib(20)  # 10946
 ```
-- 将模块 `fibonacci` 中的*所有*公共函数/类名引入到当前命名空间中:
+- 将模块 `fibonacci` 中的`所有`公共函数/类名引入到当前命名空间中:
 ```python
 from fibonacci import *
 fib(30)  # 1346269
 ```
 其中, 第一种方式引起函数/类名冲突的可能性最小, 对命名空间保护得最好; 第三种最差, 要尽量避免.
 
-模块还可以像普通脚本一样被*执行 (executing)*, 通常用于进行简单的测试.
+模块还可以像普通脚本一样被`执行 (executing)`, 通常用于进行简单的测试.
 一种好的习惯是将可执行代码置于文件末尾, 例如:
 ```python
 if __name__ == "__main__":
@@ -368,7 +365,7 @@ python3 fibonacci.py 20
 ```
 输出 `10946`.
 
-### 包 (Package)
+## 包 (Package)
 包是比模块更高一层的封装.
 一个含有 `__init__.py` 的目录就是一个包, 而该目录下的其他 `.py` 文件就是这个包的子模块.
 
@@ -384,9 +381,9 @@ pip install --user numpy    # 为当前用户安装 numpy, 是 Debian 系统下�
 pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 ```
 
-## 数值计算
+# 数值计算
 
-### [`numpy`, `scipy`](https://docs.scipy.org)
+## `numpy`, `scipy` --- [数值与科学计算](https://www.scipy.org)
 
 最完整最准确的参考资料是
 - [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 
@@ -399,16 +396,15 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
-## 数据显示
-### [`matplotlib`](https://matplotlib.org)
+## `matplotlib` --- [数据显示](https://matplotlib.org)
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
-## 输入输出
-### [`io` --- 输入输出流](https://docs.python.org/3/library/io.html)
-在 Python 中, 文件被抽象成数据*流 (stream)*, 所有文件*读写 (IO)* 操作都是在流对象上进行的. 除此之外, 还有一种*内存中的流 (in-memory stream)*, 它支持所有流上的抽象操作, 但不与某个文件绑定.
+# 文件读写
+## `io` --- [用于数据流的工具](https://docs.python.org/3/library/io.html)
+在 Python 中, 文件被抽象成数据`流 (stream)`, 所有文件`读写 (IO)` 操作都是在流对象上进行的. 除此之外, 还有一种`内存中的流 (in-memory stream)`, 它支持所有流上的抽象操作, 但不与某个文件绑定.
 
-本质上, 所有信息在计算机中都是以二进制形式表示的, 因此*二进制读写 (Binary IO)* 适用于所有类型的文件. 但对于文本文件而言, 直接使用二进制读写并不是一种好的方案, 因为字符的二进制表示依赖于编码 (ASCII, UTF-8, Unicode), 一些特殊字符 (换行符) 还与操作系统相关. 为了隔离这些细节, Python 标准库提供了专门的*文本读写 (Text IO)* 接口.
+本质上, 所有信息在计算机中都是以二进制形式表示的, 因此`二进制读写 (Binary IO)` 适用于所有类型的文件. 但对于文本文件而言, 直接使用二进制读写并不是一种好的方案, 因为字符的二进制表示依赖于编码 (ASCII, UTF-8, Unicode), 一些特殊字符 (换行符) 还与操作系统相关. 为了隔离这些细节, Python 标准库提供了专门的`文本读写 (Text IO)` 接口.
 
 以指定模式打开或创建一个文件, 将其绑定到一个流对象上:
 ```python
@@ -442,15 +438,15 @@ s = f.readline()  # '\n' included
 f.write('hello, world\n')
 ```
 
-### [`stdio`](https://introcs.cs.princeton.edu/python/code/stdio.py.html) from [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
+## `stdio` from [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
 
 前一节介绍的文本读写操作要求输入输出对象都是 `str` 类型, 因此在读写 `int` 或 `float` 数据时, 需要频繁地进行类型转换. 
 
-[Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/) 引入了一个 [`stdio`](https://introcs.cs.princeton.edu/python/code/stdio.py.html) 模块, 对*标准输入输出流*上常用数据类型的读写操作进行了封装. [1.5 Input and Output](https://introcs.cs.princeton.edu/python/15inout) 详细介绍了该模块的用法.
+[Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/) 引入了一个 [`stdio`](https://introcs.cs.princeton.edu/python/code/stdio.py.html) 模块, 对`标准输入输出流 (stdio)`上常用数据类型的读写操作进行了封装. [1.5 Input and Output](https://introcs.cs.princeton.edu/python/15inout) 详细介绍了该模块的用法.
 
-要使用该模块, 必须先下载 [`stdio.py`](https://introcs.cs.princeton.edu/python/code/stdio.py) 文件, 然后将其置于 Python 搜索路径中 (例如当前工作目录下).
+要使用该模块, 必须先下载 [`stdio.py`](https://introcs.cs.princeton.edu/python/code/stdio.py) 文件, 然后将其置于 Python 搜索路径中 (例如`当前工作目录`下).
 
-将任意类型的数据写到*标准输出流 (`stdout`)*:
+将任意类型的数据写到`标准输出流 (stdout)`:
 ```python
 import stdio
 
@@ -460,7 +456,7 @@ stdio.writeln(x)  # write '3.1415926\n' to stdout
 stdio.writef("%6.2f", x)  # write '  3.14' to stdout
 ```
 
-从*标准输入流 (`stdin`)* 读取指定类型的数据:
+从`标准输入流 (stdin)` 读取指定类型的数据:
 ```python
 # 查询 stdin 中是否还有待处理数据:
 stdio.isEmpty()
@@ -480,7 +476,7 @@ stdio.readAllStrings()
 stdio.readAllLines()
 ```
 
-结合操作系统提供的数据流*重定向 (redirect)* 及*管道 (pipe)* 功能, 可以将该模块应用到一般文本文件上:
+结合操作系统提供的数据流`重定向 (redirect)` 及`管道 (pipe)` 功能, 可以将该模块应用到一般文本文件上:
 ```shell
 # redirecting:
 python3 randomseq.py 1000 > data.txt
@@ -492,11 +488,11 @@ python3 randomseq.py 1000 | python3 average.py
 - [`randomseq.py`](https://introcs.cs.princeton.edu/python/15inout/randomseq.py) : 生成给定数量的随机数, 输出为序列.
 - [`average.py`](https://introcs.cs.princeton.edu/python/15inout/average.py): 计算给定序列的平均值.
 
-## 软件开发
+# 软件开发
 
-### [`profile` --- 函数调用分析](https://docs.python.org/3/library/profile.html)
+## `profile` --- [函数调用分析](https://docs.python.org/3/library/profile.html)
 
-### [`timeit` --- 测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
+## `timeit` --- [测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
 
 ```python
 timeit.default_timer()
@@ -512,7 +508,7 @@ end = timer()
 print(end - start)
 ```
 
-### [`unittest` --- 单元测试框架](https://docs.python.org/3/library/unittest.html)
+## `unittest` --- [单元测试框架](https://docs.python.org/3/library/unittest.html)
 
 清华大学的[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/info)公开课介绍了[单元测试](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/1714014c1c1949cf84074431dc7d6a99/8623fff7bc7c4c69bced4a88620b73db/)的概念.
 
@@ -536,7 +532,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-### [`abc` --- 抽象基类](https://docs.python.org/3/library/abc.html)
+## `abc` --- [抽象基类](https://docs.python.org/3/library/abc.html)
 
 ```python
 import abc
@@ -560,9 +556,9 @@ if __name__ == '__main__':
     print(c.area())
 ```
 
-### [代码规范](https://www.python.org/dev/peps/pep-0008/)
+## PEP 8 --- [代码规范](https://www.python.org/dev/peps/pep-0008/)
 
-### [PyCharm --- 集成开发环境](https://www.jetbrains.com/pycharm/)
+## PyCharm --- [集成开发环境](https://www.jetbrains.com/pycharm/)
 
 - [Download](https://www.jetbrains.com/pycharm/download/)
 - [Tutorials](https://confluence.jetbrains.com/display/PYH/PyCharm+Tutorials)
