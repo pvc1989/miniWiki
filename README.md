@@ -1,29 +1,30 @@
-# NOTES
+# 大纲
 
-## Outline
+## 数学
+- [微分几何](./mathematics/differential_geometry.lyx)
+- [偏微分方程](./mathematics/PDE.lyx)
 
-### Mathematics
-- [Differential Geometry](./mathematics/differential_geometry.lyx)
-- [PDE --- Partial Differential Equations](./mathematics/PDE.lyx)
+## 物理
+- 经典力学
+  - 分析力学
+  - 连续介质力学
+    - [流体力学](./physics/fluid.lyx)
 
-### Physics
-- [Fluid Mechanics](./physics/fluid.lyx)
-
-### Algorithms
-- Basic Numerical Algorithms
-  - [Interpolation](./algorithms/interpolation.lyx) 
-  - [Numerical Quadrature](./algorithms/quadrature.lyx) 
-  - [Optimization](./algorithms/optimization.lyx) 
-- PDE Solvers
-  - [FDM --- Finite Difference Method](./algorithms/finite_difference.lyx)
-  - [FEM --- Finite Element Method](./algorithms/finite_element.lyx)
+## 算法
+- 基础数值算法
+  - [插值](./algorithms/interpolation.lyx) 
+  - [数值求积](./algorithms/quadrature.lyx) 
+  - [优化](./algorithms/optimization.lyx) 
+- 微分方程
+  - [FDM --- Finite Difference Methods](./algorithms/finite_difference.lyx)
+  - [FEM --- Finite Element Methods](./algorithms/finite_element.lyx)
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
-### Programming
+## 程序设计
 - [Python](./programming/python.md)
 - [设计模式](./programming/DesignPatterns.md)
 
-### Tools
+## 工具
 - LaTeX
   - [LyX](./tools/LyX.md)
 - Markdown
