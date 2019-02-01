@@ -181,6 +181,72 @@ int main() {
 >
 > 提供一个接口, 用来创建一族相互关联或相互依赖的 (产品) 对象, 而不指定具体的 (产品) 类.
 
+#### 角色
+
+| 类名            | 作用                                                         |
+| --------------- | ------------------------------------------------------------ |
+| AbstractProduct | 定义产品的接口                                               |
+| ConcreteProduct | 实现 AbstractProduct 所定义的接口, 定义将被 ConcreteFactory 创建的产品 |
+| AbstractFactory | 定义创建 AbstractProduct 的接口                              |
+| ConcreteFactory | 实现 AbstractFactory 所定义的接口, 定义创建 ConcreteProduct 的操作 |
+| Client          | 仅使用 AbstractFactory 和 AbstractProduct 所定义的接口       |
+
+#### 示例
+```java
+// AbstractProduct
+public interface AbstractProductA {
+  public abstract void doA();
+}
+public interface AbstractProductB {
+  public abstract void doB();
+}
+// ConcreteProduct
+public class ProductA1 implements AbstractProductA {
+  @Override
+  public void doA{ /*...*/ }
+}
+public class ProductA2 implements AbstractProductA {
+  @Override
+  public void doA{ /*...*/ }
+}
+public class ProductB1 implements AbstractProductB {
+  @Override
+  public void doB{ /*...*/ }
+}
+public class ProductB2 implements AbstractProductB {
+  @Override
+  public void doB{ /*...*/ }
+}
+// AbstractFactory
+public interface AbstractFactory {
+  public abstract AbstractProductA CreateProductA();
+  public abstract AbstractProductB CreateProductB();
+}
+// ConcreteFactory
+public class ConcreteFactory1 implements AbstractFactory {
+  @Override
+  public AbstractProductA CreateProductA() { return new ProductA1(); }
+  @Override
+  public AbstractProductB CreateProductB() { return new ProductB1(); }
+}
+public class ConcreteFactory2 implements AbstractFactory {
+  @Override
+  public AbstractProductA CreateProductA() { return new ProductA2(); }
+  @Override
+  public AbstractProductB CreateProductB() { return new ProductB2(); }
+}
+// Client
+public class Client {
+  public static void main() {
+    AbstractFactory f = new ConcreteFactory1();
+    AbstractProductA a = f.CreateProductA();
+    a.doA();
+    AbstractProductB b = f.CreateProductB();
+    b.doB();
+  }
+}
+```
+
 ### 构造器 (Builder) 模式
 
 > Separate the construction of a complex object from its representation so that the same construction process can create different representations.
