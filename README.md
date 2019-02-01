@@ -34,6 +34,6 @@
   - [Install](./tools/linux/install.md) 
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
-- [Gmsh](./tools/Gmsh.md) --- a free 3D finite element mesh generator
-- [VTK](./tools/vtk.md) ---  an open-source, freely available software system for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting
+- [Gmsh](./tools/Gmsh.md) --- CAD, 非结构网格
+- [ParaView](./tools/ParaView.md) --- 数据显示
 
