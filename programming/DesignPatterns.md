@@ -191,7 +191,7 @@ int main() {
 | ConcreteFactory | 实现 AbstractFactory 所定义的接口, 定义创建 ConcreteProduct 的操作 |
 | Client          | 仅使用 AbstractFactory 和 AbstractProduct 所定义的接口       |
 
-#### 示例
+#### Java 示例
 ```java
 // AbstractProduct
 public interface AbstractProductA {
@@ -244,6 +244,90 @@ public class Client {
     AbstractProductB b = f.CreateProductB();
     b.doB();
   }
+}
+```
+
+#### C++ 示例
+
+```cpp
+#include <memory>
+#include <string>
+
+// AbstractProduct + AbstractFactory
+class AbstractProductA {
+ public:
+  virtual ~AbstractProductA() { }
+  virtual void useA() = 0;
+};
+class AbstractProductB {
+ public:
+  virtual ~AbstractProductB() { }
+  virtual void useB() = 0;
+};
+class AbstractFactory {
+ public:
+  virtual ~AbstractFactory() { }
+  virtual std::unique_ptr<AbstractProductA> CreateProductA() = 0;
+  virtual std::unique_ptr<AbstractProductB> CreateProductB() = 0;
+};
+
+// ConreteProduct1 + ConcreteFactory1
+class ProductA1 : public AbstractProductA {
+ public:
+  virtual void useA() override { std::cout << "using ProductA1\n"; }
+};
+class ProductB1 : public AbstractProductB {
+ public:
+  virtual void useB() override { std::cout << "using ProductB1\n"; }
+};
+class ConcreteFactory1 : public AbstractFactory {
+ public:
+  virtual std::unique_ptr<AbstractProductA> CreateProductA() override {
+    return std::make_unique<ProductA1>();
+  }
+  virtual std::unique_ptr<AbstractProductB> CreateProductB() override {
+    return std::make_unique<ProductB1>();
+  }
+};
+
+// ConreteProduct2 + ConcreteFactory2
+class ProductA2 : public AbstractProductA {
+ public:
+  virtual void useA() override { std::cout << "using ProductA2\n"; }
+};
+class ProductB2 : public AbstractProductB {
+ public:
+  virtual void useB() override { std::cout << "using ProductB2\n"; }
+};
+class ConcreteFactory2 : public AbstractFactory {
+ public:
+  virtual std::unique_ptr<AbstractProductA> CreateProductA() override {
+    return std::make_unique<ProductA2>();
+  }
+  virtual std::unique_ptr<AbstractProductB> CreateProductB() override {
+    return std::make_unique<ProductB2>();
+  }
+};
+
+// Client
+int main(int argc, char* argv[]) {
+  assert(argc == 2);
+  int i = std::stoi(argv[1]);
+  std::unique_ptr<AbstractFactory> pf(nullptr);
+  switch (i) {
+    case 1:
+      pf.reset(new ConcreteFactory1());
+      break;
+    case 2:
+      pf.reset(new ConcreteFactory2());
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  auto pa = pf->CreateProductA();
+  pa->useA();
+  pf->CreateProductB()->useB();
 }
 ```
 
