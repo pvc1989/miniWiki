@@ -21,7 +21,7 @@
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ## 程序设计
-- [Python](./programming/python.md)
+- [Python](./programming/Python.md)
 - [设计模式](./programming/DesignPatterns.md)
 
 ## 工具
