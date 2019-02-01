@@ -28,12 +28,12 @@
 - Markdown
   - [GitHub Flavored Markdown](https://github.github.com/gfm/)
   - [Typora](./tools/markdown/typora.md) 
-- [Git](./tools/git.md) 
-- [Octave](./tools/octave.md)
+- [Git](./tools/Git.md) 
+- [Octave](./tools/Octave.md)
 - Linux
   - [Install](./tools/linux/install.md) 
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
-- [Gmsh](./tools/gmsh.md) --- a free 3D finite element mesh generator
+- [Gmsh](./tools/Gmsh.md) --- a free 3D finite element mesh generator
 - [VTK](./tools/vtk.md) ---  an open-source, freely available software system for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting
 
