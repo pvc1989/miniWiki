@@ -3,7 +3,7 @@ Gmsh 自定义了一种脚本语言, 用各种命令驱动主程序执行
 - 构造几何对象
 - 划分网格
 - 按指定格式输出
-等功能. 这些命令以字符形式存储于 GEO 文件 (即 `.geo` 文件) 中. 当 GEO 文件被加载时, *文本解析器 (parser)* 会将字符形式的命令解析到对应的可执行代码.
+等功能. 这些命令以字符形式存储于 GEO 文件 (即 `.geo` 文件) 中. 当 GEO 文件被加载时, `文本解析器 (parser)` 会将字符形式的命令解析到对应的可执行代码.
 > GEO 命令的语法与 C++ 较为接近. 在代码编辑器(如 [Visual Studio Code](https://code.visualstudio.com)) 中, 将 GEO 文件的语言设置为 C++, 可以高亮显示一些信息, 有助于提高可读性.
 
 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 采用如下符号约定:
@@ -16,7 +16,7 @@ Gmsh 自定义了一种脚本语言, 用各种命令驱动主程序执行
 6. 重复项用 `...` 表示.
 
 ## 通用命令及选项
-在这里, *通用*指的是某项功能不专属于几何/网格/求解器/后处理模块.
+在这里, `通用`指的是某项功能不专属于几何/网格/求解器/后处理模块.
 
 ### 注释
 注释是给人阅读的辅助信息, parser 会忽略这些内容.
@@ -29,11 +29,11 @@ GEO 文件里的注释采用 C++ 风格:
 
 ### 表达式
 GEO 表达式的取值有两种类型: 字符型, 浮点型 (没有整型).
-对于计算结果有确定取值类型的表达式, 可以根据计算结果的类型将其归为*浮点型表达式 (Floating Point Expressions)* 或*字符型表达式 (Character Expressions)*.
-此外, 还有一种计算结果类型不定的表达式, 专门用于表示颜色信息, 因此称为*颜色表达式 (Color Expressions)*.
+对于计算结果有确定取值类型的表达式, 可以根据计算结果的类型将其归为`浮点型表达式 (Floating Point Expressions)` 或`字符型表达式 (Character Expressions)`.
+此外, 还有一种计算结果类型不定的表达式, 专门用于表示颜色信息, 因此称为`颜色表达式 (Color Expressions)`.
 
 #### 浮点型表达式
-符号后接 `~{floatExpr}` 表示用 `_` 将该符号和 `floatExpr` 的计算结果*串接 (concatenate)* 起来. 例如:
+符号后接 `~{floatExpr}` 表示用 `_` 将该符号和 `floatExpr` 的计算结果`串接 (concatenate)` 起来. 例如:
 ```cpp
 For i In {1:3}
     x~{i} = i;
@@ -48,7 +48,7 @@ x_3 = 3;
 
 `[]` 用于从列表中抽取一项, `#` 用于获取列表长度.
 
-`Entity{:}` 表示提取*所有*同类实体. 其中 `Entity` 可以是 `Point`, `Curve`, `Surface`, `Volume` 之一.
+`Entity{:}` 表示提取`所有`同类实体. 其中 `Entity` 可以是 `Point`, `Curve`, `Surface`, `Volume` 之一.
 
 预定义的浮点型表达式:
 ```cpp
@@ -112,7 +112,7 @@ DefineString(charExpr, onelabOptions)
 ```
 
 #### 颜色表达式
-*颜色表达式 (Colors Expressions)* 用于表示颜色信息, 可以是以下任意一种形式:
+`颜色表达式 (Colors Expressions)` 用于表示颜色信息, 可以是以下任意一种形式:
 ```cpp
 colorName
 {red, green, blue}  // [0, 255] 之间的整数, 表示红绿蓝分量数值
@@ -122,7 +122,7 @@ colorOption
 
 ### 运算符
 GEO 文件里的运算符与 C/C++ 里的同名运算符类似.
-但有一个例外: 这里的*逻辑或 (logical or)* 运算符 `||` 总是会对其两侧的表达式求值; 而在 C/C++ 里, 只要第一个表达式的值为 `true`, 则不会对第二个表达式求值.
+但有一个例外: 这里的`逻辑或 (logical or)` 运算符 `||` 总是会对其两侧的表达式求值; 而在 C/C++ 里, 只要第一个表达式的值为 `true`, 则不会对第二个表达式求值.
 
 运算符优先级:
 1. `()`, `[]`, `.`, `#`
@@ -198,7 +198,7 @@ SetFactory("OpenCASCADE");
 ```
 
 第一种为 Gmsh 自带的简易 CAD 内核, 只支持一些简单几何对象的创建和操作.
-由于采用了*边界表示 (Boundary Representation)* 法, 所有几何实体必须通过*自底向上 (bottom-up)* 方式创建:
+由于采用了`边界表示法 (Boundary Representation)`, 所有几何实体必须`自底向上 (bottom-up)` 创建:
 1. 先创建 `Point`, 
 2. 再以 `Point`s 为边界或控制点创建 `Curve`, 
 3. 再以 `Curve`s 为边界创建 `Surface`, 
@@ -208,8 +208,8 @@ SetFactory("OpenCASCADE");
 如果没有特殊的需求, 建议使用这种内核.
 
 ### 创建初等实体
-只具有几何意义的对象称为*初等实体 (elementary entity)*.
-初等实体在创建时, 被赋予一个正整数 (*非正整数*为系统保留) 编号, [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 中称其为*标签 (tag)*.
+只具有几何意义的对象称为`初等实体 (elementary entity)`.
+初等实体在创建时, 被赋予一个正整数 (`非正整数`为系统保留) 编号, [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 中称其为`标签 (tag)`.
 这些 `tag` 满足:
 - 每个初等 `Point` 具有唯一的 `tag` 
 - 每个初等 `Curve` 具有唯一的 `tag` 
@@ -218,8 +218,8 @@ SetFactory("OpenCASCADE");
 
 多数命令的语法与 C++ 相同, 尤其要注意: 每个语句最后的 `;` 不能省略.
 
-- 圆括号 `()` 中的编号表示*创建*一个新的实体.
-- 花括号 `{}` 中的编号表示*引用*一个已有的实体.
+- 圆括号 `()` 中的编号表示`创建`一个新的实体.
+- 花括号 `{}` 中的编号表示`引用`一个已有的实体.
 - 尖括号 `< >` 之间的内容为可选项.
 
 #### `Point`s
@@ -270,7 +270,7 @@ Plane Surface(surfaceTag) = {curveLoopTagList};
 ```
 其中, 第一个曲线环表示外边界, 其余曲线环表示内边界. 一个有效的曲线环必须满足:
 - 封闭;
-- 列表中的曲线*有序 (ordered)* 并且具有相同*取向 (oriented)*, 曲线标签前加负号表示反向.
+- 列表中的曲线`有序 (ordered)` 并且具有相同`取向 (oriented)`, 曲线标签前加负号表示反向.
 
 如果使用 OpenCASCADE 内核, 可以通过以下命令快速创建平面区域:
 ```cpp
@@ -291,14 +291,14 @@ Rectangle(surfaceTag) = {
 #### `Volume`s
 如果使用 built-in 内核, 必须按以下流程:
 ```cpp
-// 先创建一个或多个*曲面环 (Surface Loop)*:
+// 先创建一个或多个`曲面环 (Surface Loop)`:
 Surface Loop(surfaceLoopTag) = {surfaceTagList};
 // 再创建空间区域 (三维流形):
 Volume(volumeTag) = {surfaceLoopTagList};
 ```
 其中, 第一个曲面环表示外边界, 其余曲面环表示内边界. 一个有效的曲面环必须满足:
 - 封闭;
-- 列表中的曲面*有序 (ordered)* 并且具有相同*取向 (oriented)*, 曲面标签前加负号表示反向.
+- 列表中的曲面`有序 (ordered)` 并且具有相同`取向 (oriented)`, 曲面标签前加负号表示反向.
 
 如果使用 OpenCASCADE 内核, 可以通过以下命令快速创建空间区域 (三维流形):
 ```cpp
@@ -368,10 +368,10 @@ Extrude{
 ```
 
 ### 创建物理实体
-一组相同维度的初等实体可以组合成一个*物理实体 (physical entity)*, 以便赋予它们物理意义.
+一组相同维度的初等实体可以组合成一个`物理实体 (physical entity)`, 以便赋予它们物理意义.
 例如: 材料属性, 载荷分布, 边界条件等.
 
-每个物理实体也有唯一的 `tag`, 这里的*唯一*也是针对同一维度的物理实体而言的.
+每个物理实体也有唯一的 `tag`, 这里的`唯一`也是针对同一维度的物理实体而言的.
 除此之外, 每个物理实体还可以有一个字符串表示的名称.
 
 ```cpp
@@ -382,7 +382,7 @@ Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
 ### 编辑几何实体
 
 #### 布尔运算
-*布尔运算 (Boolean Operation)* 就是将几何区域看作点集的集合运算.
+`布尔运算 (Boolean Operation)` 就是将几何区域看作点集的集合运算.
 只有 OpenCASCADE 内核支持布尔运算.
 所有布尔运算都是通过一条作用在两个实体列表上的指令来完成的:
 
@@ -390,7 +390,7 @@ Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
 BooleanOperation{passiveEntityList}{toolEntityList}
 ```
 - `BooleanOperation` 代表某种布尔运算, 可以是 `BooleanIntersection`, `BooleanUnion`, `BooleanDifference` 之一.
-- `passiveEntityList` 代表*被动 (passive)* 实体列表, `toolEntityList` 代表*工具 (tool)* 实体列表, 它们可以是
+- `passiveEntityList` 代表`被动 (passive)` 实体列表, `toolEntityList` 代表`工具 (tool)` 实体列表, 它们可以是
 ```cpp
 <Physical> Curve | Surface | Volume{tagList};  // ; 不能省略
 <... | Delete;>  // 运算完成后删去对应的实体
@@ -482,8 +482,8 @@ Coherence;
 
 ### 设定单元尺寸
 单元尺寸可以通过以下三种方式设定:
-- 如果设定了 `Mesh.CharacteristicLengthFromPoints`, 那么可以为每个 `Point` 设定一个*特征长度 (Characteristic Length)*.
-- 如果设定了 `Mesh.CharacteristicLengthFromCurvature`, 那么网格尺寸将与*曲率 (Curvature)* 相适应.
+- 如果设定了 `Mesh.CharacteristicLengthFromPoints`, 那么可以为每个 `Point` 设定一个`特征长度 (Characteristic Length)`.
+- 如果设定了 `Mesh.CharacteristicLengthFromCurvature`, 那么网格尺寸将与`曲率 (Curvature)` 相适应.
 - 通过背景网格或标量场设定.
 这三种方式可以配合使用, Gmsh 会选用最小的一个.
 
@@ -496,7 +496,7 @@ Characteristic Length{pointTagList} = length;
 完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [6.3.1. Specifying mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes).
 
 ### 生成结构网格
-Gmsh 所生成的网格都是*非结构的 (unstructured)*, 即各单元的取向和结点邻接关系完全由其结点列表决定, 而不要求相邻单元之间有其他形式的关联, 因此不能算是真正意义上的*结构 (structured)* 网格.
+Gmsh 所生成的网格都是`非结构的 (unstructured)`, 即各单元的取向和结点邻接关系完全由其结点列表决定, 而不要求相邻单元之间有其他形式的关联, 因此不能算是真正意义上的`结构 (structured)` 网格.
 
 所有结构网格单元 (四边形, 六面体, 三棱柱) 都是通过合并单纯形 (三角形, 四面体) 而得到的:
 ```cpp
