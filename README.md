@@ -21,6 +21,7 @@
 
 ### Programming
 - [Python](./programming/python.md)
+- [设计模式](./programming/DesignPatterns.md)
 
 ### Tools
 - LaTeX
