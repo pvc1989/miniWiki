@@ -23,6 +23,8 @@
 - [Python](./programming/python.md)
 
 ### Tools
+- LaTeX
+  - [LyX](./tools/LyX.md)
 - Markdown
   - [GitHub Flavored Markdown](https://github.github.com/gfm/)
   - [Typora](./tools/markdown/typora.md) 
