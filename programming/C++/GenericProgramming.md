@@ -229,6 +229,52 @@ template <typename Type> class Bar {
 };
 ```
 
+# 模板成员
+
+## 非模板类的模板成员
+
+为`非模板类`定义`模板函数成员`:
+
+```cpp
+class DebugDelete {
+ public:
+  DebugDelete(std::ostream& s = std::cerr) : os(s) { }
+  template <typename T> void operator()(T* p) const {
+    os << "deleting unique_ptr" << std::endl;
+    delete p; 
+  }
+ private:
+  std::ostream& os;
+};
+```
+该类的实例可以用于替代 `delete`:
+```cpp
+int* ip = new int;
+DebugDelete()(ip);  // 临时对象
+
+DebugDelete del;
+double* dp = new double;
+std::unique_ptr<int, DebugDelete> dp(new int, del);
+```
+
+## 模板类的模板成员
+
+为`模板类`声明`模板函数`成员, 二者拥有各自独立的模板形参:
+
+```cpp
+template <typename T> class Blob {
+  template <typename Iter> Blob(Iter b, Iter e);
+};
+```
+如果在模板类的外部定义模板函数成员, 应当
+- 先给出类的模板形参列表
+- 再给出成员的模板形参列表
+```cpp
+template <typename T>
+template <typename Iter>
+Blob<T>::Blob(Iter b, Iter e)
+    : data(std::make_shared<std::vector<T>>(b, e)) {}
+```
 
 # 模板参数
 
