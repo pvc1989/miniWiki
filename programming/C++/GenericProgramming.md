@@ -363,11 +363,110 @@ Numbers<long double> lots_of_precision;
 Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
 ```
 
-# 类型参数推导
+# 类型推断
+
+## 类型转换
+在推断`模板实参`的过程中, 只对`函数实参`进行非常有限的类型转换:
+
+- 忽略 (形参或实参的) 顶层 `const`
+- 如果某个函数形参是`指向常量`的引用或指针, 则传入的引用或指针实参不必`指向常量`
+- 如果函数形参不是`引用`, 则传入的`数组`或`函数`将被转换为`指针`
+  
+
+## 显式模板实参
+```cpp
+template <typename T1, typename T2, typename T3> T1 sum(T2, T3);
+```
+这里的 `T1` 必须`显式`给出, 而 `T2` 和 `T3` 可以由函数实参推断:
+```cpp
+int i = 0;
+long lng = 1;
+auto val3 = sum<long long>(i, lng);  // long long sum(int, long)
+```
+
+## (C++11) 后置返回类型
+
+如果返回类型是引用, 则只需要借助于 `decltype` 关键词:
+
+```cpp
+template <typename Iter>
+auto fcn(Iter beg, Iter end) -> decltype(*beg) {
+  // ...
+  return *beg;
+}
+```
+
+如果返回类型不是引用, 则还需要借助于 `std::remove_reference` 模板类的 `type` 成员:
+
+```cpp
+#include <type_traits>
+template <typename Iter>
+auto fcn2(Iter beg, Iter end) ->
+    typename std::remove_reference<decltype(*beg)>::type {
+  // ...
+  return *beg;
+}
+```
+
+## 模板函数的地址
+使用模板函数的地址时, 上下文必须确保所有模板形参可以被唯一地确定:
+```cpp
+template <typename T> int compare(const T&, const T&);
+// pf1 指向 compare<int>
+int (*pf1)(const int&, const int&) = compare;
+// 重载的 func
+void func(int(*)(const double&, const double&));
+void func(int(*)(const int&, const int&));
+func(compare);       // 错误: T 没有被唯一地确定
+func(compare<int>);  // 正确: T 被唯一 (显式) 地确定为 int
+```
+
+## 以引用作为函数形参类型
+
+### 左值引用
+
+如果函数形参类型为 `T&`, 则实参必须是`左值`:
+```cpp
+template <typename T> void f1(T&);
+f1(i);   // 实参类型为 int, T 被推断为 int
+f1(ci);  // 实参类型为 const int, T 被推断为 const int
+f1(5);   // 错误: 实参必须是左值
+```
+
+如果函数形参类型为 `const T&`, 则实参可以是任意类型:
+```cpp
+template <typename T> void f2(const T&);
+f2(i);   // 实参类型为 int, T 被推断为 int
+f2(ci);  // 实参类型为 const int, T 被推断为 int
+f2(5);   // 实参类型为 int&&, 可以被 const int& 绑定, T 被推断为 int
+```
+
+### 右值引用
+
+如果函数形参类型为 `T&&`, 则实参也可以是任意类型, 这是因为有如下`引用折叠`:
+
+> 除了 `X&& &&` 折叠为 `X&&` 之外, 其他情形 (`X& &`, `X& &&`, `X&& &`) 均折叠为 `X&`.
+
+```cpp
+template <typename T> void f3(T&&);
+f3(i);   // 实参类型为 int, T 被推断为 int&
+f3(ci);  // 实参类型为 const int, T 被推断为 const int&
+f3(42);  // 实参类型为 int&&, T 被推断为 int
+```
+### 完美转发
+如果函数形参类型为 `T&&`, 则用 `std::forward` 转发相应的实参可以`保留其所有类型信息`:
+
+```cpp
+#include <utility>
+template <typename T> intermediary(T&& arg) {
+  finalFunc(std::forward<T>(arg));
+  // ...
+}
+```
 
 # 实例化
 
-# 特化
+# 特殊化
 
-# 可变参数模板
+# 可变形参模板
 
