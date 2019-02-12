@@ -2,7 +2,7 @@
 `T` 的实际类型将根据 `compare` 的`静态`调用方式在`编译期`决定:
 
 ```cpp
-template <typename T>  // 模板参数列表
+template <typename T>  // 模板形参列表
 int compare(const T& v1, const T& v2) {
   if (v1 < v2) return -1;
   if (v2 < v1) return 1;
@@ -10,15 +10,16 @@ int compare(const T& v1, const T& v2) {
 }
 ```
 
-`inline`, `constexpr` 等修饰符应当位于`模板参数列表`与`返回值类型`之间:
+`inline`, `constexpr` 等修饰符应当位于`模板形参列表`与`返回值类型`之间:
+
 ```cpp
 template <typename T>
 inline T min(const T&, const T&);
 ```
 
 编写模板函数应当
-- 尽量减少对参数类型的要求.
-- 用`指向常量的引用`作为函数参数类型,  这样可以使得代码也适用于不可拷贝的类型.
+- 尽量减少对模板形参的要求.
+- 用`指向常量的引用`作为函数形参类型,  这样可以使得代码也适用于不可拷贝的类型.
 - 只用 `<` 进行比较操作, 这样用于实例化模板的类型实参只需要支持 `<` 而不必支持 `>`.
 
 ## 函数重载
@@ -168,7 +169,7 @@ template<typename T> using twin = pair<T, T>;
 // authors 的类型是 pair<string, string>
 twin<string> authors;
 ```
-这一机制可以用来固定一个或多个模板参数:
+这一机制可以用来固定一个或多个模板形参:
 ```cpp
 // 固定第二个类型:
 template <typename T> using partNo = pair<T, unsigned>;
@@ -222,7 +223,7 @@ template <typename T> class C2 {
 };
 ```
 
-### (C++11) 将模板类型参数设为友元
+### (C++11) 将模板类型形参设为友元
 ```cpp
 template <typename Type> class Bar {
   friend Type;
@@ -276,7 +277,91 @@ Blob<T>::Blob(Iter b, Iter e)
     : data(std::make_shared<std::vector<T>>(b, e)) {}
 ```
 
-# 模板参数
+# 模板形参
+
+## 类型形参
+
+在模板形参列表中, 关键词 `class` 与 `typename` 没有区别:
+
+```cpp
+template <typename T, class U>
+int calc(const T&, const U&);
+```
+
+## 非类型形参
+非类型形参的值在`编译期`确定 (人为`指定`或由编译器`推断`), 因此必须为`常量表达式 (constexpr)`:
+
+```cpp
+template<unsigned N, unsigned M>
+int compare(const char (&p1)[N], const char (&p2)[M]) {
+  return strcmp(p1, p2);
+}
+// 如果以如下方式调用
+compare("hi", "mom");
+// 该模板将被实例化为
+int compare(const char (&p1)[3], const char (&p2)[4]);
+```
+
+## 模板形参的作用域
+模板形参遵循一般的作用域规则, 但已经被模板形参占用的名字在模板内部`不得`被复用:
+
+```cpp
+typedef double A;
+template <typename A, typename B> 
+void f(A a, B b) {
+  A tmp = a;  // tmp 的类型为模板形参 A 而不是 double
+  double B;   // 错误: B 已被模板形参占用, 不可复用
+}
+// 错误: 复用模板形参名
+template <typename V, typename V>  // ...
+```
+
+## 模板声明
+与函数形参名类似, 同一模板的模板形参名在各处声明或定义中不必保持一致.
+
+一个文件所需的所有模板声明, 应当集中出现在该文件头部, 并位于所有用到这些模板名的代码之前.
+
+## 模板形参的类型成员
+默认情况下, 编译器认为由 `::` 获得的名字不是一个类型. 因此, 如果要使用模板形参的类型成员, 必须用关键词 `typename` 加以修饰:
+```cpp
+// T 为一种 容器类型, 并且拥有一个类型成员 value_type
+template <typename T>
+typename T::value_type top(const T& c) {
+  if (!c.empty())
+    return c.back();
+  else
+    return typename T::value_type();
+}
+```
+
+## (C++11) 默认模板实参
+```cpp
+template <typename T, typename F = std::less<T>>
+int compare(const T& v1, const T& v2, F f = F()) {
+  if (f(v1, v2)) return -1;
+  if (f(v2, v1)) return 1;
+  return 0;
+}
+```
+调用时, 可以 (而非必须) 为其提供一个比较器:
+
+```cpp
+bool i = compare(0, 42);
+bool j = compare(item1, item2, compareIsbn);
+```
+
+如果为所有模板形参都指定了默认模板实参, 并且希望用它们来进行默认实例化, 则必须在模板名后面紧跟 `<>`, 例如:
+
+```cpp
+template <class T = int> class Numbers {
+ public:
+  Numbers(T v = 0): val(v) { }
+ private:
+  T val; 
+};
+Numbers<long double> lots_of_precision;
+Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
+```
 
 # 类型参数推导
 
