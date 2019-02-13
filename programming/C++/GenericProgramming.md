@@ -27,7 +27,7 @@ inline T min(const T&, const T&);
 - 如果正好有一个函数的匹配程度比其他函数更高, 则它将被选中.
 - 如果匹配程度最高的函数有多个, 则
   - 如果其中只有一个`非模板`, 则它将被选中.
-  - 如果其中没有非模板, 且有一个`模板`比其他的更加`特殊化 (specialized)`, 则它将被选中.
+  - 如果其中没有非模板, 且有一个`模板`比其他的更加`特化 (specialized)`, 则它将被选中.
   - 否则, 该调用有歧义, 编译时会报错.
 
 # 模板类
@@ -519,6 +519,90 @@ template class Blob<string>;  // 实例化定义, 所有成员函数将被实例
 template int compare(const int&, const int&);  // 实例化定义
 ```
 
+# 特化 (Specialization)
+
+## 模板函数的特化
+假设有以下两个版本的同名函数:
+```cpp
+// 版本一, 用于比较两个 任意类型的对象:
+template <typename T>
+int compare(const T&, const T&);
+// 版本二, 用于比较两个 字符串字面值 或 字符数组:
+template <size_t N, size_t M>
+int compare(const char (&)[N], const char (&)[M]);
+```
+在第二个例子中, `T` 被推断为 `const char*`, 因此比较的是两个`地址`:
+```cpp
+// 传入 字符串字面值, 实例化并调用 compare(const char (&)[3], const char (&)[4])
+compare("hi", "mom");
+// 传入 指向字符常量的指针, 实例化并调用 compare(const char*&, const char*&)
+const char* p1 = "hi";
+const char* p2 = "mom";
+compare(p1, p2);
+```
+为了使这种情形下的语义变为`比较两个 (C-风格) 字符串`, 应当对版本一进行`特化 (specialization)`:
+```cpp
+#include <cstring>
+template <>  // 为 T 为 const char* 的情形提供特化版本
+int compare(const char* const& p1, const char* const& p2) {
+  return std::strcmp(p1, p2);
+}
+```
+
+`特化`对模板进行`实例化`, 而不是`重载`同名函数, 因此不会影响重载函数的匹配.
+
+模板及其特化应当在同一个头文件中进行声明, 并且应当先给出所有同名`模板`, 再紧随其后给出所有`特化`.
+
+## 模板类的特化
+
+### (C++11) `std::hash` 的特化
+`std::hash` 是一个模板类, 定义在头文件 `<functional>` 中:
+```cpp
+template <class Key>
+struct hash;
+```
+标准库中的无序容器 (例如 `std::unordered_set<Key>`) 以 `std::hash<Key>` 为其默认散列函数.
+对 `std::hash` 进行特化, 必须为其定义:
+- 一个重载的调用运算符: `std::size_t operator()(const Key& key) const noexcept`
+- 两个类型成员 (C++17 淘汰): `argument_type` 和 `result_type`
+- 默认构造函数: 可以采用隐式定义的版本
+- 拷贝赋值运算符: 可以采用隐式定义的版本
+
+假设有一个自定义类型 `Key`:
+```cpp
+class Key {
+ public:
+  std::size_t hash() const noexcept;
+}
+bool operator==(const Key& lhs, const Key& rhs);  // Key 必须支持 == 运算符
+```
+则 `std::hash<Key>` 可以定义为
+```cpp
+namespace std {
+template <>
+struct hash<Key> {
+  typedef Key argument_type;
+  typedef size_t result_type;
+  size_t operator()(const Key& key) const noexcept { return key.hash(); }
+  // 默认构造函数 和 拷贝赋值运算符 采用隐式定义的版本
+};
+}
+```
+
+### 偏特化 (Partial Specialization)
+`偏特化` (又称`部分特化`) 只指定`一部分模板实参`或`模板形参的一部分属性`.
+只有模板类可以进行偏特化. 偏特化的模板类依然是模板类.
+
+`std::remove_reference` 就是通过一系列偏特化 (只指定`模板形参的一部分属性`) 来完成工作的:
+```cpp
+// 原始版本
+template <class T> struct remove_reference {
+  typedef T type;
+};
+// 偏特化版本, 分别适用于`左值`和`右值`引用
+template <class T> struct remove_reference<T&> { typedef T type; };
+template <class T> struct remove_reference<T&&> { typedef T type; };
+```
 
 # 可变形参模板
 
