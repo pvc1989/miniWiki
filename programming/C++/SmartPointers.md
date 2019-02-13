@@ -1,4 +1,82 @@
 # 动态内存
+一个`进程 (process)` 的`虚拟存储空间 (virtual memory space)` 分为以下几个部分:
+| 类型 | 用途 |
+| ---- | ---- |
+| 静态 (static) 内存 | 全局对象; 局部静态变量; 类的静态数据成员 |
+| 栈 (stack) 内存 | 非静态局部对象 |
+| 堆 (heap) 内存 | 运行期动态分配的对象 |
+这里的`堆内存`就是通常所说的`动态 (dynamic)` 内存.
+
+需要用到动态内存的场合包括:
+- 运行前不知道所需空间, 例如: 容器.
+- 运行前不知道对象的具体类型, 例如: 多态 (polymorphism).
+- 运行时在多个对象之间共享数据.
+
+# 直接管理动态内存（少用）
+## `new` --- 分配内存并初始化对象
+
+### 值初始化
+默认情况下, 动态分配对象时采用的是`默认初始化`.
+若要进行`值初始化`, 需要在类型名后面紧跟 `()`, 例如
+```cpp
+std::string* ps1 = new std::string;   // 默认初始化为空字符串
+std::string* ps = new std::string();  // 值初始化为空字符串
+int* pi1 = new int;    // 默认初始化为不确定值
+int* pi2 = new int();  // 值初始化为 0
+```
+
+### 常值对象
+动态分配的常值对象必须由`指向常量的指针`接管, 并且在创建时被初始化:
+```cpp
+const int* pci = new const int(1024);
+const std::string* pcs = new const std::string;
+```
+
+### 内存耗尽
+内存空间在运行期有可能被耗尽, 在此情况下, `new` (默认) 将抛出 `std::bad_alloc` 异常.
+为阻止抛出异常, 可以在 `new` 与类型名之间插入 `(nothrow)`, 例如:
+```cpp
+#include <new>
+int* p1 = new int;            // 如果分配失败, 将抛出 std::bad_alloc
+int* p2 = new (nothrow) int;  // 如果分配失败, 将返回 nullptr
+```
+
+## `delete` --- 析构对象并释放内存
+
+传递给 `delete` 的指针必须是`指向动态对象的指针`或 `nullptr`.
+
+通常, 编译器无法判断一个指针所指的
+- 对象是否是动态的
+- 内存空间是否已经被释放
+
+### 内存泄漏 (Memory Leak)
+```cpp
+Foo* factory(T arg) { return new Foo(arg); }
+void use_factory(T arg) {
+  Foo *p = factory(arg)  // factory 返回一个指向动态内存的指针
+  // 使用 p
+  delete p;  // 调用者负责将其释放
+}
+```
+如果 `use_factory` 在返回前没有释放 `p` 所指向的动态内存, 则 `use_factory` 的调用者将不再有机会将其释放, 可用的动态内存空间将会变小 --- 这种现象被称为`内存泄漏`.
+
+### 悬垂指针 (Dangling Pointer)
+在执行完 `delete p;` 之后, `p` 将成为一个`悬垂的`指针, 对其进行
+- 解引用, 并进行
+  - 读: 会返回无意义的值
+  - 写: (有可能) 会破坏有效数据
+- 二次释放: 会破坏内存空间
+为避免这些陷阱, 应当
+- 将 `delete p;` 尽可能靠近 `p` 的作用域末端, 或者
+- 在 `delete p;` 后面紧跟 `p = nullptr;`
+即便如此, 由于同一个动态对象有可能被多个指针所指向, 还是有可能发生危险:
+```cpp
+int* p(new int(42));
+auto q = p;   // p 和 q 指向同一块动态内存
+delete p;     // 释放
+p = nullptr;  // p 不再指向该地址
+              // q 仍然指向该地址, 对其进行 解引用 或 二次释放 都有可能造成破坏
+```
 
 # 智能指针
 
