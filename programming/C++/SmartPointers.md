@@ -1,5 +1,5 @@
 # 动态内存
-一个`进程 (process)` 的`虚拟存储空间 (virtual memory space)` 分为以下几个部分:
+一个`进程 (process)` 的`虚拟内存空间 (virtual memory space)` 分为以下几个部分:
 | 类型 | 用途 |
 | ---- | ---- |
 | 静态 (static) 内存 | 全局对象; 局部静态变量; 类的静态数据成员 |
@@ -12,17 +12,17 @@
 - 运行前不知道对象的具体类型, 例如: 多态 (polymorphism).
 - 运行时在多个对象之间共享数据.
 
-# 直接管理动态内存（少用）
-## `new` --- 分配内存并初始化对象
+# 直接管理动态内存（慎用）
+## `new` --- 分配内存并构造对象
 
 ### 值初始化
 默认情况下, 动态分配对象时采用的是`默认初始化`.
 若要进行`值初始化`, 需要在类型名后面紧跟 `()`, 例如
 ```cpp
-std::string* ps1 = new std::string;   // 默认初始化为空字符串
-std::string* ps = new std::string();  // 值初始化为空字符串
-int* pi1 = new int;    // 默认初始化为不确定值
-int* pi2 = new int();  // 值初始化为 0
+std::string* ps1 = new std::string;   // 默认初始化 为 空字符串
+std::string* ps = new std::string();  // 值初始化 为 空字符串
+int* pi1 = new int;    // 默认初始化 为 不确定值
+int* pi2 = new int();  // 值初始化 为 0
 ```
 
 ### 常值对象
