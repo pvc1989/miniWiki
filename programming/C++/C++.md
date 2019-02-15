@@ -20,11 +20,11 @@
 
 ## 关联容器
 
-## [智能指针](./C++/SmartPointers.md)
+## [动态内存管理](./DynamicMemoryManagement.md)
 
-# 库作者的工具
+# 库开发工具
 
-## [面向对象编程](./C++/ObjectOrientedProgramming.md)
+## [面向对象编程](./ObjectOrientedProgramming.md)
 
-## [泛型编程](./C++/GenericProgramming.md)
+## [泛型编程](./GenericProgramming.md)
 
