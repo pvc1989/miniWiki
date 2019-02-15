@@ -1,7 +1,7 @@
-# 动态内存
+# 内存分类
 一个`进程 (process)` 的`虚拟内存空间 (virtual memory space)` 分为以下几个部分:
 
-| 类型 | 用途 |
+| 分类 | 用途 |
 | ---- | ---- |
 | 静态 (static) 内存 | 全局对象; 局部静态变量; 类的静态数据成员 |
 | 栈 (stack) 内存 | 非静态局部对象 |
@@ -220,7 +220,7 @@ int main() {
 ## (C++11) `std::shared_ptr`
 
 ### 创建
-推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr` :
+推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr`:
 ```cpp
 auto up = std::make_shared<T>(args);
 ```
