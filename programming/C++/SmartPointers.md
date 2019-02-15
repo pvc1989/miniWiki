@@ -94,8 +94,11 @@ std::weak_ptr<T> wp;
 ```
 
 #### 用作判断条件
+只支持 `std::shared_ptr` 和 `std::shared_ptr`.
+非空为真.
 
 #### 解引用及访问成员
+只支持 `std::shared_ptr` 和 `std::shared_ptr`.
 ```cpp
 *p;      // 解引用, 获得 p 所指对象的 (左值) 引用
 p->mem;  // 等价于 (*p).mem
@@ -323,6 +326,8 @@ void Widget::process() {
 ```
 
 ## (C++11) `std::weak_ptr`
+`std::weak_ptr` 不支持`条件判断`或`解引用`等常用的指针操作, 因此不是一种独立的智能指针, 而必须与 `std::shared_ptr` 配合使用. 
+
 ### 创建
 指向一个 `std::shared_ptr` 所管理的对象, 但不改变其引用计数:
 ```cpp
@@ -330,15 +335,26 @@ std::weak_ptr<T> wp(sp);
 ```
 
 ### 引用计数
+获取引用计数的操作与 `std::shared_ptr` 类似:
 ```cpp
 // 返回与之共享所有权的 std::shared_ptr 的引用计数:
 w.use_count();
 // 等价于 w.use_count() == 0:
 w.expired();
+```
+
+如果引用计数不为零, 通常希望执行`解引用`以获取所管理的对象.
+但在`判断引用计数是否为零`与`解引用`这两步之间, 所管理的对象有可能被其他线程析构了, 因此需要将两步合并为一个`原子`操作:
+```cpp
 // 如果 expired() 返回 true, 则返回一个空的 std::shared_ptr
 // 否则, 返回一个与之共享所有权的 std::shared_ptr, 引用计数 + 1
 w.lock();
 ```
+
+以上所说的`引用计数`均指 `std::shared_ptr` 的个数.
+除此之外, `控制块`中还有一个`弱引用计数 (weak count)`, 用于统计指向同一对象的 `std::weak_ptr` 的数量.
+因此, `std::weak_ptr` 的创建, 析构, 赋值等操作都会更新`弱引用计数`.
+为避免`数据竞争`, 更新引用计数操作都是`原子的`.
 
 ### 拷贝与移动
 一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr` , 但不改变引用计数:
@@ -351,6 +367,33 @@ w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
 ```cpp
 w.reset();
 ```
+
+### 应用场景
+#### 缓存复杂操作
+工厂方法返回 `std::shared_ptr` 而非 `std::unique_ptr`
+```cpp
+std::shared_ptr<const Widget> fastLoadWidget(WidgetID id) {
+  static std::unordered_map<WidgetID, std::weak_ptr<const Widget>> cache;
+  auto objPtr = cache[id].lock();
+  if (!objPtr) {
+    objPtr = loadWidget(id);
+    cache[id] = objPtr;
+  }
+  return objPtr;
+}
+```
+
+#### 实现 Observer 模式
+Observer 模式要求: `Subject` 的状态发生变化时, 应当通知所有的 `Observer`.
+这一需求可以通过在 `Subject` 对象中维护一个存储 `std::weak_ptr<Observer>` 对象的容器来实现.
+
+#### 避免 `std::shared_ptr` 成环
+对于非树结构, 全部使用 `std::shared_ptr` 有可能形成环.
+当环外的所有对象都不再指向环内的任何一个成员时, 环内的成员就成了孤儿, 从而造成内存泄露.
+
+对于树结构, `parent` 的生存期总是大于其 `child`, 因此
+- `parent` 指向 `child` 的指针应当选用 `std::unique_ptr`
+- `child` 指向 `parent` 的指针可以选用`裸指针`
 
 ## (C++11) `std::make_shared` 与 (C++14) `std::make_unique`
 
