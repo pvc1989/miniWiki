@@ -22,7 +22,7 @@
 
 ## 程序设计
 - [Python](./programming/Python.md)
-- [C++](./programming/C++.md)
+- [C++](./programming/C++/C++.md)
 - [设计模式](./programming/DesignPatterns.md)
 
 ## 工具
