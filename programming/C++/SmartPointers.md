@@ -88,8 +88,9 @@ C++11 引入了三种智能指针: `std::unique_ptr`, `std::shared_ptr`, `std::w
 #### 默认初始化
 默认初始化为空指针:
 ```cpp
-shared_ptr<T> sp;
-unique_ptr<T> up;
+std::shared_ptr<T> sp;
+std::unique_ptr<T> up;
+std::weak_ptr<T> wp;
 ```
 
 #### 用作判断条件
@@ -174,6 +175,7 @@ unique_ptr<int> clone(int x) {
 - `std::unique_ptr` 可以很容易地转为 `std::shared_ptr`.
 - 将裸指针赋值给 `std::unique_ptr` 的错误在编译期能够被发现.
 
+
 借助于 `release` 和 `reset` 可以移交管理权:
 ```cpp
 auto p1 = make_unique<string>("hello");
@@ -191,11 +193,87 @@ p2.reset(p3.release());
 - `std::unique_ptr<T>` --- 用于管理单个动态对象.
 - `std::unique_ptr<T[]>` --- 用于管理动态数组, 只应当用于接管从 C-风格 API 所获得的动态数组.
 
-## **`make`** 函数
+## (C++11) `std::shared_ptr`
 
-`std::make_shared` 由 C++11 引入, 而 `std::make_unique` 则是由 C++14 引入.
+### 创建
+推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr` 对象:
+```cpp
+auto up = std::make_shared<T>(args);
+```
+该函数依次完成三个任务:
+1. 动态分配所需内存
+2. 用 `args` 初始化 `T` 类型的对象
+3. 返回指向该对象的 `std::shared_ptr`
 
 
+一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr` 对象: 
+```cpp
+std::shared_ptr<T> p(q);     // p 指向 q 所指对象
+std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
+```
+具体语义取决于 `q` 的类型:
+
+| `q` 的类型                | 语义                                           |
+| ------------------------- | ---------------------------------------------- |
+| 裸指针 (必须是 直接初始化)  | `p` 接管 `q` 所指对象                          |
+| `std::shared_ptr<T>` 对象 | `p` 与 `q` 分享所指对象的所有权                |
+| `std::unique_ptr<T>` 对象 | `p` 接管 `q` 所指对象, 并将 `q` 指向 `nullptr` |
+
+### 引用计数
+一个裸指针可以被多个 `std::shared_ptr` 对象共享所有权.
+管理同一裸指针的 `std::shared_ptr` 对象的个数称为它们的`引用计数 (reference count)`:
+```cpp
+p.use_count();  // 获取 引用计数
+p.unique();     // 判断 引用计数 是否为 1
+```
+
+### 拷贝与移动
+用一个 `std::shared_ptr` 对象对另一个同类对象进行`拷贝赋值`会改变二者的引用计数:
+```cpp
+p = q;  // p 的引用计数 - 1, q 的引用计数 + 1
+```
+同理, 用一个 `std::shared_ptr` 对象`拷贝初始化`另一个同类对象会增加其引用计数:
+```cpp
+auto p = q;  // q 的引用计数 + 1, p 的引用计数与之相同
+```
+
+### `reset` --- 重设裸指针
+只有当引用计数为 `1` 时, 重设裸指针才会 `delete` 之前所管理的裸指针:
+```cpp
+p.reset(q, d);  // 接管 裸指针 q, 并将 deleter 替换为 d
+p.reset(q);     // 接管 裸指针 q
+p.reset();      // 接管 空指针
+```
+
+## (C++11) `std::weak_ptr`
+### 创建
+指向一个 `std::shared_ptr` 对象所管理的对象, 但不改变其引用计数:
+```cpp
+std::weak_ptr<T> wp(sp);
+```
+
+### 引用计数
+```cpp
+// 返回与之共享所有权的 std::shared_ptr 的引用计数:
+w.use_count();
+// 等价于 w.use_count() == 0:
+w.expired();
+// 如果 expired() 返回 true, 则返回一个空的 std::shared_ptr
+// 否则, 返回一个与之共享所有权的 std::shared_ptr, 引用计数 + 1
+w.lock();
+```
+
+### 拷贝与移动
+一个 `std::weak_ptr` 或 `std::shared_ptr` 对象可以`拷贝赋值`给另一个 `std::weak_ptr` 对象, 但不改变引用计数:
+```cpp
+w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
+```
+
+### `reset` --- 重设裸指针
+只将自己所管理的裸指针设为 `nullptr`, 不负责析构对象或释放内存:
+```cpp
+w.reset();
+```
 
 `make` 函数有助于减少代码重复 (例如与 `auto` 配合可以少写一次类型), 并提高`异常安全性`, 例如在如下代码中
 
