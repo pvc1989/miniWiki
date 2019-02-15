@@ -78,38 +78,118 @@ p = nullptr;  // p 不再指向该地址
               // q 仍然指向该地址, 对其进行 解引用 或 二次释放 都有可能造成破坏
 ```
 
-# 智能指针
+# 智能 (Smart) 指针
+`智能指针`对普通指针进行了封装, 因此可以将普通指针形象地称为`裸 (raw) 指针`.
 
-## **`std::unique_ptr`**
+C++11 引入了三种智能指针: `std::unique_ptr`, `std::shared_ptr`, `std::weak_ptr`.
 
-`std::unique_ptr` 用于管理`独占所有权`的资源, 具有以下优点:
+## 公共操作
+### 与裸指针相同的操作
+#### 默认初始化
+默认初始化为空指针:
+```cpp
+shared_ptr<T> sp;
+unique_ptr<T> up;
+```
 
+#### 用作判断条件
+
+#### 解引用及访问成员
+```cpp
+*p;      // 解引用, 获得 p 所指对象的 (左值) 引用
+p->mem;  // 等价于 (*p).mem
+```
+
+### `swap` --- 交换所管理的裸指针
+`p` 和 `q` 必须是同一类型的智能指针:
+```cpp
+p.swap(q);
+std::swap(p, q);
+```
+
+### `get` --- 获得所管理的裸指针 (慎用)
+```cpp
+p.get();
+```
+该方法仅用于向`只接受裸指针`并且`不会将传入的指针 delete 掉`的函数传递参数.
+
+## (C++11) `std::unique_ptr`
+
+`std::unique_ptr` 用于管理`独占所有权`的资源 (通常是内存), 具有以下优点:
 1. 体积小 --- 默认情况下, 与`裸指针`大小相同.
-2. 速度快 --- 大多数操作 (含 `operator*()`) 执行与`裸指针`相同的指令.
-3. `move`-only --- 确保独占所有权.
+2. 速度快 --- 大多数操作 (含解引用) 执行与`裸指针`相同的指令.
+3. 只能`移动` --- 不能`拷贝`与`赋值`, 确保独占所有权.
 
+### 创建
+推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr` 对象:
+```cpp
+auto up = std::make_unique<T>(args);
+```
+该函数依次完成三个任务:
+1. 动态分配所需内存
+2. 用 `args` 初始化 `T` 类型的对象
+3. 返回指向该对象的 `std::unique_ptr`
 
+### 指定 deleter
+`deleter 类型`是 `std::unique_ptr 类型`的一部分.
+每一个 `std::unique_ptr 对象`所拥有的 `deleter 对象`是在`编译期`绑定的, 因此无法在`运行期`更换.
 
-资源析构默认借助于 `operator delete()` 来完成, 也可以在创建时为其指定其他的 deleter. 如果被指定的 deleter 是:
-
+如果没有显式指定 deleter, 那么将采用 `delete`.
+如果被指定的 deleter 是
 - `函数指针` 或 `含有内部状态的函数对象`, 则 `std::unique_ptr` 的体积比裸指针大.
 - `不含有内部状态的函数对象` (例如 无捕获的 lambda 表达式), 则 `std::unique_ptr` 的体积与裸指针相同.
 
+### `reset` --- 重设裸指针
+一个 `std::unique_ptr` 对象独占其所指对象的所有权, 因此重设裸指针总是会 `delete` 它之前所管理的裸指针:
+```cpp
+// 接管裸指针 q:
+u.reset(q);
+// 将自己设为空指针:
+u.reset(nullptr);
+u.reset();
+u = nullptr;
+```
 
+### `release` --- 让渡所有权
+```cpp
+u.release();
+```
+该方法依次完成三个任务:
+1. 返回其所管理的`裸指针` (通常由另一个智能指针接管)
+2. 放弃对所指对象的所有权
+3. 将自己设为空指针
 
-`std::unique_ptr` 的类型参数支持两种形式:
+### 不支持拷贝或赋值
+特例: 即将被销毁的 `std::unique_ptr` 可以被拷贝或赋值.
+例如在函数 (工厂方法) 中构造一个 `std::unique_ptr` 对象并将其返回:
+```cpp
+unique_ptr<int> clone(int x) {
+  auto up = make_unique<int>(x);
+  // ...
+  return up;
+}
+```
 
-- `std:: unique_ptr<T>` --- 用于单个对象.
-- `std::unique_ptr<T[]>` --- 用于对象数组, 几乎只应当用于管理从 C-风格 API 所获得的动态内存.
-
-
-
-`std::unique_ptr` 非常适合用作工厂方法的返回类型, 这是因为:
-
+`std::unique_ptr` 非常适合用作`工厂方法`的返回类型, 这是因为:
 - `std::unique_ptr` 可以很容易地转为 `std::shared_ptr`.
-- 将裸指针 (例如返回自 `new`) 赋值给 `std::unique_ptr` 的错误在编译期能够被发现.
+- 将裸指针赋值给 `std::unique_ptr` 的错误在编译期能够被发现.
 
+借助于 `release` 和 `reset` 可以移交管理权:
+```cpp
+auto p1 = make_unique<string>("hello");
+// 此时, p1 指向 "hello"
+unique_ptr<string> p2(p1.release());
+// 此时, p1 为空, p2 指向 "hello"
+auto p3 = make_unique<string>("world");
+// 此时, p1 为空, p2 指向 "hello", p3 指向 "world"
+p2.reset(p3.release());
+// 此时, p1 为空, p2 指向 "world", p3 为空
+```
 
+### 接管动态数组
+`std::unique_ptr` 支持两种形式的类型参数:
+- `std::unique_ptr<T>` --- 用于管理单个动态对象.
+- `std::unique_ptr<T[]>` --- 用于管理动态数组, 只应当用于接管从 C-风格 API 所获得的动态数组.
 
 ## **`make`** 函数
 
