@@ -440,3 +440,134 @@ auto spv = std::make_shared<std::vector<int>>(initList);
 对于 `std::shared_ptr`, 不应或无法使用 `make` 函数的情形还包括: 
 - 需要指定内存管理方案 (allocator, deleter) 的类.
 - 系统内存紧张, 对象体积庞大, 且 `std::weak_ptr` 比相应的 `std::shared_ptr` 存活得更久.
+
+## `pImpl` --- 指向实现的指针
+### 动机
+假设 `Widget` 是一个含有数据成员的类.
+在定义 `Widget` 之前, 必须在 `widget.h` 中引入定义成员类型的头文件:
+
+```cpp
+// widget.h
+#include <vector>
+#include "gadget.h"
+
+class Widget {
+ public:
+  Widget();
+  // ...
+ private:
+  std::vector<double> data;
+  Gadget g1, g2, g3;
+};
+```
+`Widget` 的`用户` 必须引入 `widget.h` --- 这样就间接地引入了 (它可能并不需要的) `<vector>` 和 `gadget.h`, 从而会造成`编译时间过长`以及`用户对实现的依赖` (这些头文件更新后, 需要重新编译 `Widget` 及其`用户`).
+
+所谓 `pImpl` 就是用`指向实现的指针 (pointer to implementation)` 代替数据成员, 将 `Widget` 对成员数据类型的依赖从`头文件`移入`源文件`, 从而隔离`用户`与`实现`.
+
+### 用 裸指针 实现
+```cpp
+// widget.h
+class Widget {
+ public:
+  Widget();   // 不是默认行为 (需要分配资源), 需要显式声明
+  ~Widget();  // 不是默认行为 (需要释放资源), 需要显式声明
+  // 其他成员方法 ...
+ private:
+  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
+  Impl* pImpl;  // 裸指针
+};
+```
+```cpp
+// widget.cpp
+#include <vector>
+#include "gadget.h"
+#include "widget.h"
+
+struct Widget::Impl {
+  std::vector<double> data;
+  Gadget g1, g2, g3;
+};
+
+// 实现构造和析构函数:
+Widget::Widget() : pImpl(new Impl) { }  // 分配资源
+Widget::~Widget() { delete pImpl; }     // 释放资源
+```
+
+### 用 `std::shared_ptr` 实现
+```cpp
+// widget.h
+#include <memory>
+class Widget {
+ public:
+  // 构造和析构函数均采用默认版本
+  // 其他成员方法 ...
+ private:
+  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
+  std::shared_ptr<Impl> pImpl;  // 代替裸指针
+};
+```
+```cpp
+// widget.cpp
+#include <vector>
+#include "gadget.h"
+#include "widget.h"
+
+struct Widget::Impl {
+  std::vector<double> data;
+  Gadget g1, g2, g3;
+};
+```
+
+### 用 `std::unique_ptr` 实现
+```cpp
+// widget.h
+#include <memory>
+class Widget {
+ public:
+  // 尽管希望使用 默认析构函数, 但还是要显式声明, 因为:
+  // 编译器在生成 默认析构函数 时, 通常要求 std::unique_ptr<Impl> 中的 Impl 是完整类型.
+  // 因此需要在 widget.h 中显式声明, 而将 (默认的) 实现移到 widget.cpp 中.
+  Widget();
+  ~Widget();
+  // 尽管希望使用 默认移动操作, 但还是要显式声明, 因为:
+  // 显式声明析构函数 会阻止编译器生成 默认移动操作, 并且
+  // 默认移动操作内部 会在抛出异常时调用 默认析构函数.
+  Widget(Widget&& rhs);
+  Widget& operator=(Widget&& rhs);
+  // 拷贝操作 需要显式声明, 因为:
+  // 编译器不会为含有 move-only 成员 (std::unique_ptr) 的类生成 默认拷贝操作, 并且
+  // 默认拷贝操作 是 浅拷贝, 通常不符合语义要求.
+  Widget(const Widget& rhs);
+  Widget& operator=(const Widget& rhs);
+  // 其他成员方法 ...
+ private:
+  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
+  std::unique_ptr<Impl> pImpl;  // 代替裸指针
+};
+```
+```cpp
+// widget.cpp
+#include <vector>
+#include "gadget.h"
+#include "widget.h"
+
+struct Widget::Impl {
+  std::vector<double> data;
+  Gadget g1, g2, g3;
+};
+// 至此, Impl 已经是完整类型.
+
+// 实现构造和析构函数, 采用默认版本:
+Widget::Widget() = default;
+Widget::~Widget() = default;
+// 实现移动操作, 采用默认版本:
+Widget::Widget(Widget&& rhs) = default;
+Widget& Widget::operator=(Widget&& rhs) = default;
+// 实现拷贝操作:
+Widget& Widget::operator=(const Widget& rhs) {
+  *pImpl = *rhs.pImpl;  // 深拷贝
+  return *this;
+}
+Widget::Widget(const Widget& rhs)
+    : pImpl(std::make_unique<Impl>(*rhs.pImpl)) { }
+```
