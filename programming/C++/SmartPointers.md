@@ -122,7 +122,7 @@ p.get();
 3. 只能`移动` --- 不能`拷贝`与`赋值`, 确保独占所有权.
 
 ### 创建
-推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr` 对象:
+推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr` :
 ```cpp
 auto up = std::make_unique<T>(args);
 ```
@@ -141,7 +141,7 @@ auto up = std::make_unique<T>(args);
 - `不含有内部状态的函数对象` (例如 无捕获的 lambda 表达式), 则 `std::unique_ptr` 的体积与裸指针相同.
 
 ### `reset` --- 重设裸指针
-一个 `std::unique_ptr` 对象独占其所指对象的所有权, 因此重设裸指针总是会 `delete` 它之前所管理的裸指针:
+一个 `std::unique_ptr` 独占其所指对象的所有权, 因此重设裸指针总是会 `delete` 它之前所管理的裸指针:
 ```cpp
 // 接管裸指针 q:
 u.reset(q);
@@ -162,7 +162,7 @@ u.release();
 
 ### 不支持拷贝或赋值
 特例: 即将被销毁的 `std::unique_ptr` 可以被拷贝或赋值.
-例如在函数 (工厂方法) 中构造一个 `std::unique_ptr` 对象并将其返回:
+例如在函数 (工厂方法) 中构造一个 `std::unique_ptr` 并将其返回:
 ```cpp
 unique_ptr<int> clone(int x) {
   auto up = make_unique<int>(x);
@@ -193,10 +193,29 @@ p2.reset(p3.release());
 - `std::unique_ptr<T>` --- 用于管理单个动态对象.
 - `std::unique_ptr<T[]>` --- 用于管理动态数组, 只应当用于接管从 C-风格 API 所获得的动态数组.
 
+与`裸指针`类似, 可以用 `operator[]` 访问数组成员:
+```cpp
+#include <iostream>
+#include <memory>
+ 
+int main() {
+  const int size = 10; 
+  std::unique_ptr<int[]> factorial(new int[size]);
+
+  for (int i = 0; i < size; ++i) {
+    factorial[i] = (i == 0) ? 1 : i * factorial[i-1];
+  }
+
+  for (int i = 0; i < size; ++i) {
+    std::cout << i << ": " << factorial[i] << '\n';
+  }
+}
+```
+
 ## (C++11) `std::shared_ptr`
 
 ### 创建
-推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr` 对象:
+推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr` :
 ```cpp
 auto up = std::make_shared<T>(args);
 ```
@@ -206,7 +225,7 @@ auto up = std::make_shared<T>(args);
 3. 返回指向该对象的 `std::shared_ptr`
 
 
-一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr` 对象: 
+一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr` : 
 ```cpp
 std::shared_ptr<T> p(q);     // p 指向 q 所指对象
 std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
@@ -220,22 +239,39 @@ std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
 | `std::unique_ptr<T>` 对象 | `p` 接管 `q` 所指对象, 并将 `q` 指向 `nullptr` |
 
 ### 引用计数
-一个裸指针可以被多个 `std::shared_ptr` 对象共享所有权.
-管理同一裸指针的 `std::shared_ptr` 对象的个数称为它们的`引用计数 (reference count)`:
+尽管标准没有规定 `std::shared_ptr` 的实现方式, 但几乎所有标准库的实现所采用的方案都是`引用计数 (reference count)`.
+一个`裸指针`可以被多个 `std::shared_ptr` 共享所有权, 管理同一`裸指针`的 `std::shared_ptr` 的个数称为它们的`引用计数`:
 ```cpp
 p.use_count();  // 获取 引用计数
 p.unique();     // 判断 引用计数 是否为 1
 ```
 
+引用计数需要存储在`动态内存`里, 并通过存储在 `std::shared_ptr` 中的指针来`间接访问`, 因此 `std::shared_ptr` 的大小是`裸指针`的两倍.
+
+为避免`数据竞争 (data racing)`, 增减引用计数的操作必须是`原子的 (atomic)`, 因此读写引用计数会比`非原子操作`消耗更多资源.
+
+### 指定 deleter
+不同于 `std::unique_ptr`, `deleter 类型`不是 `std::shared_ptr 类型`的一部分.
+每一个 `std::shared_ptr 对象`所绑定的 `deleter 对象`可以在`运行期`更换.
+
+如果没有显式指定 deleter, 那么将采用 `delete`.
+如果被指定的 deleter 是
+- `函数指针` 或 `含有内部状态的函数对象`, 则它将会与`引用计数` (以及`弱引用计数 (weak count)`) 一道, 作为`控制块 (control block)` 的一部分, 存储在动态内存中.
+- `不含有内部状态的函数对象` (例如 无捕获的 lambda 表达式), 则它不会占据`控制块`的空间.
+
+所谓共享`所有权`, 实际上是通过共享`控制块`来实现的.
+
 ### 拷贝与移动
-用一个 `std::shared_ptr` 对象对另一个同类对象进行`拷贝赋值`会改变二者的引用计数:
+用一个 `std::shared_ptr` 对另一个同类对象进行`拷贝赋值`会改变二者的引用计数:
 ```cpp
 p = q;  // p 的引用计数 - 1, q 的引用计数 + 1
 ```
-同理, 用一个 `std::shared_ptr` 对象`拷贝初始化`另一个同类对象会增加其引用计数:
+同理, 用一个 `std::shared_ptr` `拷贝初始化`另一个同类对象会增加其引用计数:
 ```cpp
 auto p = q;  // q 的引用计数 + 1, p 的引用计数与之相同
 ```
+
+`移动赋值`与`移动初始化`不需要改变引用计数.
 
 ### `reset` --- 重设裸指针
 只有当引用计数为 `1` 时, 重设裸指针才会 `delete` 之前所管理的裸指针:
@@ -245,9 +281,50 @@ p.reset(q);     // 接管 裸指针 q
 p.reset();      // 接管 空指针
 ```
 
+### `shared_from_this`
+```cpp
+class Widget {
+ public:
+  void process();
+ private:
+  std::vector<std::shared_ptr<Widget>> processedWidgets;
+};
+```
+如果 `process` 的实现中, 用裸指针 `this` 创建了新的 `std::shared_ptr`:
+```cpp
+void Widget::process() {
+  // ...
+  processedWidgets.emplace_back(this);
+  // ...
+}
+```
+则有可能造成两个独立的 `std::shared_ptr` 管理同一个动态对象.
+为避免这种情形, 应当
+- 对外: 将构造函数设为私有, 改用工厂方法来创建 `std::shared_ptr`
+- 对内: 借助于标准库模板类 `std::enable_shared_from_this` 提供的 `shared_from_this` 方法来获取 `std::shared_ptr`
+```cpp
+#include <memory>
+class Widget: public std::enable_shared_from_this<Widget> {
+ public:
+  void process();
+  // 工厂方法:
+  template<typename... Ts>
+  static std::shared_ptr<Widget> create(Ts&&... params);
+ private:
+  std::vector<std::shared_ptr<Widget>> processedWidgets;
+  // 构造函数设为 private
+  // ...
+};
+void Widget::process() {
+  // ...
+  processedWidgets.emplace_back(shared_from_this());
+  // ...
+}
+```
+
 ## (C++11) `std::weak_ptr`
 ### 创建
-指向一个 `std::shared_ptr` 对象所管理的对象, 但不改变其引用计数:
+指向一个 `std::shared_ptr` 所管理的对象, 但不改变其引用计数:
 ```cpp
 std::weak_ptr<T> wp(sp);
 ```
@@ -264,7 +341,7 @@ w.lock();
 ```
 
 ### 拷贝与移动
-一个 `std::weak_ptr` 或 `std::shared_ptr` 对象可以`拷贝赋值`给另一个 `std::weak_ptr` 对象, 但不改变引用计数:
+一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr` , 但不改变引用计数:
 ```cpp
 w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
 ```
@@ -304,7 +381,7 @@ processWidget(std::make_unique<Widget>(),
               computePriority());
 ```
 
-在无法使用 `make` 函数的情况下 (例如指定 deleter 或传入列表初始化参数), 一定要确保由 `new` 获得的动态内存`在一条语句内`被智能指针接管, 并且在该语句内`不做任何其他的事`.
+在不应或无法使用 `make` 函数的情况下, 一定要确保由 `new` 获得的动态内存`在一条语句内`被智能指针接管, 并且在该语句内`不做任何其他的事`.
 
 ### 列表初始化
 `make` 函数用 `()` 进行完美转发, 因此无法直接使用对象的列表初始化构造函数.
@@ -314,7 +391,7 @@ auto initList = { 10, 20 };
 auto spv = std::make_shared<std::vector<int>>(initList);
 ```
 
-### 不宜使用 `make` 函数的情形
-对于 `std::shared_ptr`, 不宜使用 `make` 函数的情形还包括: 
-- 采用特制内存管理方案的类.
+### 不使用 `make` 函数的情形
+对于 `std::shared_ptr`, 不应或无法使用 `make` 函数的情形还包括: 
+- 需要指定内存管理方案 (allocator, deleter) 的类.
 - 系统内存紧张, 对象体积庞大, 且 `std::weak_ptr` 比相应的 `std::shared_ptr` 存活得更久.
