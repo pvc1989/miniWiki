@@ -106,6 +106,25 @@ std::weak_ptr<T> wp;
 p->mem;  // 等价于 (*p).mem
 ```
 
+### 异常安全
+`智能指针`负责释放资源, 即使在其`离开作用域`或`重置`前抛出了异常:
+```cpp
+void f() {
+  auto sp = std::make_shared<int>(42); 
+  // 中间代码可能抛出异常, 并且没有被 f 捕获
+  return;  // std::shared_ptr 负责释放资源, 即使异常没有被捕获
+}
+```
+而用`裸指针`则有可能造成内存泄漏:
+Memory that we manage directly is \Red{not automatically freed} when an exception occurs, which is a common case of memory leak:
+```cpp
+void f() {
+  int* ip = new int(42);
+  // 中间代码可能抛出异常, 并且没有被 f 捕获
+  delete ip;  // 手动释放资源, 但有可能因为 异常没有被捕获 而运行不到这一行, 造成内存泄漏
+}
+```
+
 ### `swap` --- 交换所管理的裸指针
 `p` 和 `q` 必须是同一类型的智能指针:
 ```cpp
