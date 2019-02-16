@@ -617,8 +617,8 @@ int* pArray = new int[42];
 数组`元素个数`是数组`类型`的一部分.
 可以先定义`类型别名`, 然后就可以像普通类型一样创建动态对象:
 ```cpp
-typedef int arrayType[42];
-int* pArray = new arrayType;
+typedef int Array[42];
+int* pArray = new Array;
 ```
 
 ## `std::allocator`
@@ -627,41 +627,20 @@ int* pArray = new arrayType;
 标准库定义的 `std::allocator` 模板类可以将`分配内存`与`构造对象`两个操作分离:
 ```cpp
 #include <memory>
-std::allocator<T> alloc;      // 创建 allocator 对象
-auto p = alloc.allocate(n);   // 分配整块内存, 不进行构造, 返回首元素地址
-alloc.deallocate(p, n);       // 释放整块内存, p 指向首元素
-alloc.construct(p, args);     // 构造对象, 存储于 p 所指向的位置, p 不必是首元素地址
-alloc.destroy(p);             // 析构 p 所指向的对象
+std::allocator<T> a;      // 创建 allocator 对象
+auto p = a.allocate(n);   // 分配整块内存, 不进行构造, 返回首元素地址
+a.deallocate(p, n);       // 释放整块内存, p 指向首元素
+a.construct(p, args);     // 构造对象, 存储于 p 所指向的位置, p 不必是首元素地址
+a.destroy(p);             // 析构 p 所指向的对象
 ```
 
-标准库还提供了两个算法, 用于在 (由 `std::allocator` 获得的) 未初始化的内存中构造对象:
+标准库还提供了一组算法, 用于在 (由 `std::allocator` 获得的) 未初始化的内存中构造对象:
 ```cpp
 #include <algorithm>
-
-uninitialized_copy(b, e, b2);
-uninitialized_copy_n(b, n, b2);
-uninitialized_fill(b, e, t);
-uninitialized_fill_n(b, n, t);
-```
-用例:
-```cpp
-#include <algorithm>
-#include <memory>
-#include <vector>
-
-int main() {
-  const int n = 2;
-  const double x = 1.0;
-  auto v = std::vector<double>(n, x);  // n 个 x
-
-  std::allocator<double> a;
-  const auto p = a.allocate(2*n);
-  // 从 v 中 copy 元素, 用于在 [p, p+n) 中构造元素, 返回 p+n:
-  std::uninitialized_copy(v.begin(), v.end(), p);
-  // 将剩余元素构造为 2.0:
-  std::uninitialized_fill_n(p+1*n, n, 2.0);
-  a.deallocate(p, 2*n);
-  
-  return 0;
-}
+// 从另一个容器中 copy 或 move:
+uninitialized_copy(b, e, p);    // 返回 p+n
+uninitialized_copy_n(b, n, p);  // 返回 p+n
+// 在一段范围内用值 t 进行构造:
+uninitialized_fill(b, e, t);    // 返回 void
+uninitialized_fill_n(b, n, t);  // 返回 b+n
 ```
