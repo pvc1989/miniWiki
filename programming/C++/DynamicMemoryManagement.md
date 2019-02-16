@@ -23,19 +23,10 @@
 ```cpp
 int* p = new int;
 ```
-
-大多数情况下应当优先选用标准库提供的`容器类`而不是`动态数组`.
-如果要显式创建`动态数组`, 则需要在`类型名`后面紧跟数组`元素个数`, 并且`元素个数`必须是`字面值`或 `constexpr`.
-如果分配成功, 则返回一个指向该数组第一个元素的指针, 否则抛出异常:
-```cpp
-int* pArray = new int[42];
-```
-数组`元素个数`是数组`类型`的一部分.
-可以先定义`类型别名`, 然后就可以像普通类型一样创建动态对象:
-```cpp
-typedef int arrayType[42];
-int* pArray = new arrayType;
-```
+`new` 语句依次完成三个任务:
+1. 动态分配所需内存
+2. 默认初始化对象
+3. 返回指向该对象的`裸指针`
 
 ### 值初始化
 默认情况下, 动态分配对象时采用的是`默认初始化`.
@@ -614,3 +605,63 @@ Widget::Widget(const Widget& rhs)
     : pImpl(std::make_unique<Impl>(*rhs.pImpl)) { }
 ```
 
+# 动态数组
+
+## 直接管理动态数组（慎用）
+大多数情况下应当优先选用标准库提供的`容器类`而不是`动态数组`.
+如果要显式创建`动态数组`, 则需要在`类型名`后面紧跟数组`元素个数`.
+如果分配成功, 则返回一个指向该数组第一个元素的指针, 否则抛出异常:
+```cpp
+int* pArray = new int[42];
+```
+数组`元素个数`是数组`类型`的一部分.
+可以先定义`类型别名`, 然后就可以像普通类型一样创建动态对象:
+```cpp
+typedef int arrayType[42];
+int* pArray = new arrayType;
+```
+
+## `std::allocator`
+通常, `new` 会依次完成`分配内存`和`构造对象`两个任务.
+在某些情况下, 这些默认初始化或值初始化的对象会`立即`被其他参数所构造的对象覆盖, 于是 `new` 所执行的`构造对象`操作就成了多余的.
+标准库定义的 `std::allocator` 模板类可以将`分配内存`与`构造对象`两个操作分离:
+```cpp
+#include <memory>
+std::allocator<T> alloc;      // 创建 allocator 对象
+auto p = alloc.allocate(n);   // 分配整块内存, 不进行构造, 返回首元素地址
+alloc.deallocate(p, n);       // 释放整块内存, p 指向首元素
+alloc.construct(p, args);     // 构造对象, 存储于 p 所指向的位置, p 不必是首元素地址
+alloc.destroy(p);             // 析构 p 所指向的对象
+```
+
+标准库还提供了两个算法, 用于在 (由 `std::allocator` 获得的) 未初始化的内存中构造对象:
+```cpp
+#include <algorithm>
+
+uninitialized_copy(b, e, b2);
+uninitialized_copy_n(b, n, b2);
+uninitialized_fill(b, e, t);
+uninitialized_fill_n(b, n, t);
+```
+用例:
+```cpp
+#include <algorithm>
+#include <memory>
+#include <vector>
+
+int main() {
+  const int n = 2;
+  const double x = 1.0;
+  auto v = std::vector<double>(n, x);  // n 个 x
+
+  std::allocator<double> a;
+  const auto p = a.allocate(2*n);
+  // 从 v 中 copy 元素, 用于在 [p, p+n) 中构造元素, 返回 p+n:
+  std::uninitialized_copy(v.begin(), v.end(), p);
+  // 将剩余元素构造为 2.0:
+  std::uninitialized_fill_n(p+1*n, n, 2.0);
+  a.deallocate(p, 2*n);
+  
+  return 0;
+}
+```
