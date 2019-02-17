@@ -135,7 +135,19 @@ class Screen {
 ```
 
 ## 类型成员
-
+一个类可以在其内部定义新的`类型`或`类型别名`作为自己的成员.
+`类型成员`必须在使用前被定义, 因此通常将它们集中定义在类的头部.
+`类型成员`与`数据成员`和`函数成员`遵循相同的访问控制规则:
+```cpp
+class Screen {
+ public:
+  typedef std::string::size_type Position;
+ private:
+  Position cursor = 0;
+  Position height = 0, width = 0;
+  std::string contents;
+};
+```
 ## 类作用域
 
 ## 非成员函数接口
