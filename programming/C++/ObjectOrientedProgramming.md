@@ -387,6 +387,50 @@ class Vector {
 | 基类 (base class) | 父类 (superclass) | 定义自己和派生类`共有的 (common)` 成员 |
 | 派生类 (derived class) | 子类 (subclass) | 定义自己`特有的 (specific)` 成员 |
 
+### 声明与定义
+一个类只有被`定义`过 (而不仅仅被`声明`过), 才能被用作基类
+```cpp
+class Base;
+class Derived : public Base { ... };  // 错误: 用作基类的 Quote 还没有被定义
+```
+
+派生列表只出现在派生类的`定义`中, 而不出现在派生类的`声明`中:
+```cpp
+class Derived : public Base;  // 错误: 派生列表 只出现在 派生类定义 中
+class Derived;                // 正确: 派生列表 不出现在 派生类声明 中
+```
+
+### 构造函数
+`派生类构造函数`必须用`基类构造函数`来初始化`派生类对象的基类部分`:
+```cpp
+class Quote {
+  std::string _title;
+  double price;
+ public:
+  Quote(const std::string& title, double price)
+      : _title(title), _price(price) { }
+  // ...
+};
+class BulkQuote : public Quote {
+  std::size_t _amount;
+  double _discount;
+ public:
+  BulkQuote(const std::string& title, double price, 
+            std::size_t amount, double discount)
+      : Quote(title, price),  // 用 基类构造函数 来初始化 派生类对象的基类部分
+        _amount(amount), _discount(discount) { }
+  // ...
+};
+```
+
+### 静态数据成员
+基类中定义的静态数据成员被继承体系中的所有派生类共享.
+
+### (C++11) 阻止继承
+类名后面紧跟 `final` 关键词, 表示该类不可以被用作基类:
+```cpp
+class NoDerived final { /* ... */ };
+```
 
 ## 继承级别与访问控制
 
