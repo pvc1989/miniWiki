@@ -432,11 +432,65 @@ class BulkQuote : public Quote {
 class NoDerived final { /* ... */ };
 ```
 
-## 继承级别与访问控制
+## 继承级别
 
+### 成员访问修饰符
 
-### `class` 与 `struct` 的区别
-对于继承级别, 二者的区别仅在于:
+| 修饰符      | 派生类的成员或友元 | 其他对象 |
+| ----------- | ---- | ---- |
+| `public`    | 可访问 | 可访问 |
+| `protected` | 可访问 | 不可访问 |
+| `private`   | 不可访问 | 不可访问 |
+
+派生类的成员或友元, 只能通过`派生类对象`来访问基类的 `protected` 成员.
+派生类对象本身, 对于基类的 `protected` 成员, 没有特殊的权限.
+
+```cpp
+class Base {
+ protected:
+  int _protected_i;  // 基类的 protected 成员
+};
+class Derived : public Base {
+  friend void visit(Derived& d);
+  friend void visit(Base& b);
+  int _private_i;  // 派生类的 private 成员
+};
+// 正确: 可以通过 派生类对象 访问 基类的 protected 成员:
+void visit(Derived &d) { d._private_i = d._protected_i = 0; }
+// 错误: 只能通过 派生类对象 访问 基类的 protected 成员:
+clobber(Base &b) { b._protected_i = 0; }
+```
+在派生类中, 尽管基类的 `public` 和 `protected` 成员可以被直接访问, 还是应该`使用基类的公共接口`来访问基类成员.
+
+### 派生访问修饰符
+派生访问修饰符用于规定`派生类的用户` (包括`下一级派生类`) 对`继承自基类的成员`的访问权限:
+- 基类的 `private` 成员无法被派生类访问, 因此不受继承级别的影响.
+- 基类的 `public` 和 `protected` 成员可以被派生类访问, 因此受继承级别的影响:
+  - `public` 继承:
+    - 基类的 `public` 成员 → 派生类的 `public` 成员
+    - 基类的 `protected` 成员 → 派生类的 `protected` 成员
+  - `protected` 继承: 基类的 `public` 和 `protected` 成员 → 派生类的 `protected` 成员
+  - `private` 继承: 基类的 `public` 和 `protected` 成员 → 派生类的 `private` 成员
+
+### 改变访问级别
+基类的 `public` 和 `protected` 成员在派生类中可以用 `using 声明`改变其访问级别:
+```cpp
+class Base {
+ public:
+  std::size_t size() const { return n; }
+ protected:
+  std::size_t n;
+};
+// private 继承, 基类的 public 和 protected 成员 → 派生类的 private 成员:
+class Derived : private Base {  
+ public:
+  using Base::size;  // 提升为 派生类的 public 成员
+ protected:
+  using Base::n;     // 提升为 派生类的 protected 成员
+};
+```
+
+### 默认的继承级别
 
 | 关键词  | 默认的继承级别 |
 | ------ | ---------------------- |
@@ -444,6 +498,9 @@ class NoDerived final { /* ... */ };
 | `class` | `private` |
 
 为提高代码可读性, 应当`显式`写出继承级别.
+
+### 友元关系不被继承
+基类的友元与派生类的友元是相互独立的, 必须为每个类独立声明各自的友元.
 
 ## 自动类型转换
 
@@ -462,7 +519,7 @@ class NoDerived final { /* ... */ };
 
 #### 派生类指针或引用 到 基类指针或引用
 可以用`指向基类对象`的指针 (包括智能指针) 或引用来`指向派生类对象`.
-这种自动类型转换仅适用于指针或引用.
+这种自动类型转换仅适用于指针或引用, 并且其可访问性与基类的 `public` 成员相同.
 
 用容器管理继承体系的对象时, 几乎总是以`基类指针` (包括智能指针) 为元素类型, 然后将`派生类指针`存储到的容器中:
 ```cpp
