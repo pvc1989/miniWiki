@@ -426,7 +426,7 @@ class BulkQuote : public Quote {
 ### 静态数据成员
 基类中定义的静态数据成员被继承体系中的所有派生类共享.
 
-### (C++11) 阻止继承
+### (C++11) `final` --- 禁止继承
 类名后面紧跟 `final` 关键词, 表示该类不可以被用作基类:
 ```cpp
 class NoDerived final { /* ... */ };
@@ -554,4 +554,125 @@ Derived* pd = pb;  // 错误: 无法从 Base* 转换到 Derived*
 一般情况下, 可以用 `std::static_cast` 来执行静态类型转换, 该转换将在`编译期`发生.
 
 ## 虚函数与动态绑定
+### 声明与定义
+如果基类期望某个成员函数被派生类`重写 (override)`, 则需要在`声明的前端`用关键词 `virtual` 进行修饰.
+关键词 `virtual` 只在类的内部对虚函数进行`声明`时使用.
+如果一个成员函数在基类中被声明为虚的, 那么它在派生类中也将是虚的 (即使没有用关键词 `virtual` 进行声明).
 
+虚函数在基类和派生类中必须具有相同的`函数签名`, 即`形参类型`和`返回类型`必须相同.
+由于存在动态绑定机制, 对于返回类型允许存在一个例外: 如果虚函数在基类中的返回类型是`指向基类的指针`, 那么它在派生类中的返回类型可以是`指向派生类的指针`.
+
+```cpp
+class Shape {
+ public:
+  virtual ~Shape() { std::cout << "~Shape()" << std::endl; }
+  virtual double getArea() const { return 0.0; };
+};
+class Rectangle : public Shape {
+ public:
+  Rectangle(const double& length, const double& width)
+      : _length(length), _width(width) { }
+  ~Rectangle() { std::cout << "~Rectangle()" << std::endl; }    
+  virtual double getArea() const override {
+    return _length * _width; 
+  }
+ private:
+  double _length;
+  double _width;
+};
+class Circle : public Shape {
+ public:
+  Circle(const double& x, const double& y, const double& r)
+      : _x(x), _y(y), _r(r) { }
+  ~Circle() { std::cout << "~Circle()" << std::endl; }    
+  virtual double getArea() const override { 
+    return _r * _r * 3.141592653589793; 
+  }
+ private:
+  double _x;
+  double _y;
+  double _r;
+};
+```
+
+#### 纯虚函数与抽象基类
+通常, 编译器无法判断一个虚函数是否会被用到, 因此必须为每一个虚函数给出`定义`, 而不仅仅是`声明`.
+作为例外, 纯虚函数表示`抽象操作`, 其`定义`不需要在基类中给出, 而是延迟到派生类中.
+`声明`纯虚函数只需要在声明的末尾加上 `= 0`.
+
+含有纯虚函数的类称为`抽象基类`, 表示派生类的`抽象接口`.
+抽象基类无法创建对象.
+
+### 动态绑定 (Dynamic Binding)
+`动态绑定`是指: 如果一个`指向基类的指针或引用`实际指向的是一个`派生类对象`, 那么`通过它调用虚函数`将会在`运行期`被解析为`调用相应的派生类版本`.
+```cpp
+int main() {
+  auto pShape = std::make_unique<Shape>();
+  std::cout << pShape->getArea() << std::endl;  // 调用 Shape::getArea()
+  auto pRectangle = std::make_unique<Rectangle>(4.0, 3.0);
+  pShape.reset(pRectangle.release());  // 用指向 Shape 的指针接管 Rectangle 对象
+  std::cout << pShape->getArea() << std::endl;  // 调用 Rectangle::getArea()
+  auto pCircle = std::make_unique<Circle>(0.0, 0.0, 1.0);
+  pShape.reset(pCircle.release());  // 用指向 Shape 的指针接管 Circle 对象
+  std::cout << pShape->getArea() << std::endl;  // 调用 Circle::getArea()
+}
+```
+输出
+```cpp
+0
+~Shape()  // 第一次 reset(), 此时管理的是 Shape 对象, 因此调用 ~Shape()
+12
+~Rectangle()  // 第二次 reset(), 此时管理的是 Rectangle 对象, 因此调用 ~Rectangle()
+~Shape()      // ~Rectangle() 会调用 ~Shape()
+3.14159
+~Circle()  // pShape 离开作用域, 此时管理的是 Circle 对象, 因此调用 ~Circle()
+~Shape()   // ~Circle() 会调用 ~Shape()
+```
+
+#### 基类的析构函数
+为支持动态资源管理, 基类应将`析构函数`声明为虚的, 这样编译器才能够知道应该调用哪个版本的 `delete`.
+
+#### 绕开动态绑定机制
+可以用 `::` 显式指定虚函数版本:
+```cpp
+int main() {
+  auto pShape = std::make_unique<Shape>();
+  auto pRectangle = std::make_unique<Rectangle>(4.0, 3.0);
+  pShape.reset(pRectangle.release());  // 用指向 Shape 的指针接管 Rectangle 对象
+  std::cout << pShape->getArea() << std::endl;  // 调用 Rectangle::getArea()
+  std::cout << pShape->Shape::getArea() << std::endl;  // 调用 Shape::getArea()
+}
+```
+输出
+```cpp
+~Shape()  // 调用 reset(), 此时管理的是 Shape 对象, 因此调用 ~Shape()
+12  // 调用 Rectangle::getArea()
+0   // 调用 Shape::getArea()
+~Rectangle()  // pShape 离开作用域, 此时管理的是 Rectangle 对象, 因此调用 ~Rectangle()
+~Shape()      // ~Rectangle() 会调用 ~Shape()
+```
+
+### (C++11) `override` --- 检查函数签名
+在派生类中定义一个与基类中的虚函数`同名`但`形参列表不同`的成员函数是合法的.
+编译器会将其视作与虚函数无关的一个新的成员.
+
+为了避免在重写虚函数时无意中写错形参列表, 可以用在虚函数的形参列表 (包括 `const`) 后面紧跟关键词 `override`.
+如果在派生类中被标注为 `override` 的虚函数与基类版本的虚函数具有不同的形参列表, 编译器将会报错.
+
+### (C++11) `final` --- 禁止重写
+如果要禁止派生类对一个虚函数进行重写, 可以在基类中的虚函数形参列表 (包括 `const`) 后面紧跟关键词 `final`:
+```cpp
+class Shape {
+ public:
+  virtual ~Shape() = default;
+  virtual void noOverride() const final { }
+};
+class Rectangle : public Shape {
+ public:
+  virtual void noOverride() const { }  // 错误: 禁止重写 final 函数
+};
+```
+
+### 默认实参 (少用)
+如果通过`指向基类`的指针或引用调用虚函数, 将会使用`基类版本`的默认实参.
+因此, 派生类版本的虚函数应当使用与基类版本相同的默认实参.
