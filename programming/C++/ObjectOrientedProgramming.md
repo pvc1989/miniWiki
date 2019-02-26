@@ -352,7 +352,7 @@ template <typename T>
 class Vector {
  public:
   Vector& operator=(Vector&& rhs) noexcept {  // 不抛出异常
-    if (this == &rhs) {  // 自己给自己复制, 不做任何事
+    if (this == &rhs) {  // 自己给自己赋值, 不做任何事
       ;
     } else {
       free();  // 析构 被赋值对象 中的元素, 释放内存
