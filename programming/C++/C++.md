@@ -1,8 +1,6 @@
 # 语法基础
 
-## 基本类型
-
-## 简单容器
+## 数据类型
 
 ## 表达式
 
@@ -22,9 +20,9 @@
 
 ## [动态内存管理](./DynamicMemoryManagement.md)
 
-# 库开发工具
+# 抽象机制
 
-## [面向对象编程](./ObjectOrientedProgramming.md)
+## [类](./class.md)
 
-## [泛型编程](./GenericProgramming.md)
+## [模板](./template.md)
 
