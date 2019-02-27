@@ -24,5 +24,7 @@
 
 ## [类](./class.md)
 
-## [模板](./template.md)
+## 模板
+### [泛型编程 (Generic Programming) --- 编译期多态](./generic.md)
 
+### [元编程 (Metaprogramming) --- 编译期计算](./metaprogramming.md)
