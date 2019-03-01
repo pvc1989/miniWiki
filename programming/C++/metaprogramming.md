@@ -10,6 +10,76 @@
 ⚠️过度使用元编程会使得代码可读性变差, 编译时间变长, 测试和维护难度加大.
 
 # 类型函数
+在 C++ 中, 类型函数不是普通[函数](./function.md), 而是借助于[模板类](./generic.md)实现的编译期类型运算机制.
+
+## `std::remove_reference_t`
+定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于 remove 类型实参的 reference:
+```cpp
+namespace std{
+template <class T> struct remove_reference      { typedef T type; };
+template <class T> struct remove_reference<T&>  { typedef T type; };
+template <class T> struct remove_reference<T&&> { typedef T type; };
+}
+```
+使用时, 它以类型实参为输入, 以类型成员为输出.
+受语法所限, 模板类的类型成员必须通过 `typename` 来访问, 这使得代码变得冗长:
+```cpp
+#include <type_traits>
+
+int main() {
+  typename std::remove_reference<int  >::type x{0};  // 等价于 int x{0};
+  typename std::remove_reference<int& >::type y{0};  // 等价于 int y{0};
+  typename std::remove_reference<int&&>::type z{0};  // 等价于 int z{0};
+}
+```
+C++14 为标准库中的大多数类型函数提供了以 `_t` 为后缀的类型别名, 例如:
+```cpp
+namespace std{
+template <class T>
+using remove_reference_t = typename remove_reference<T>::type;
+}
+```
+这样在使用时就可以将 `typename` 和 `::type` 省略, 从而使代码变得简洁:
+```cpp
+#include <type_traits>
+
+int main() {
+  std::remove_reference_t<int  > x{0};  // 等价于 int x{0};
+  std::remove_reference_t<int& > y{0};  // 等价于 int y{0};
+  std::remove_reference_t<int&&> z{0};  // 等价于 int z{0};
+}
+```
+
+### `std::move` 的实现
+定义在 `<utility>` 中的函数 `std::move()` 用于将实参强制转换为右值引用.
+一种可能的实现方式为:
+```cpp
+#include <type_traits>  // std::remove_reference_t
+
+namespace std{
+template <class T>
+remove_reference_t<T>&& move(T&& t) {
+  // T 可能被推断为引用, 先用 remove_reference_t 将其去除
+  // 再用 static_cast 将所得类型强制转换为 右值引用
+  return static_cast<remove_reference_t<T>&&>(t);
+}
+}
+```
+
+### `std::forward` 的实现
+定义在 `<utility>` 中的模板函数 `std::forward<T>()` 用于完美转发实参 --- 保留所有类型 (含引用) 信息.
+一种可能的实现方式为:
+```cpp
+#include <type_traits>  // std::remove_reference_t
+
+namespace std{
+template <class T>
+T&& forward(remove_reference_t<T>&  t) { return static_cast<T&&>(t); }
+template <class T>
+T&& forward(remove_reference_t<T>&& t) { return static_cast<T&&>(t); }
+}
+```
+
 
 # (C++11) 可变参数模板 (Variadic Templates)
 模板形参数量可变的模板函数或模板类称为`可变参数模板`.
