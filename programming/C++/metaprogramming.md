@@ -13,6 +13,7 @@
 在 C++ 中, 类型函数不是普通[函数](./function.md), 而是借助于[模板类](./generic.md)实现的编译期类型运算机制.
 
 ## 移除或添加引用
+### `std::remove_reference`
 定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于 remove 类型实参的 reference:
 ```cpp
 namespace std{
