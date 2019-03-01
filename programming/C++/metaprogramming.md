@@ -12,7 +12,7 @@
 # 类型函数
 在 C++ 中, 类型函数不是普通[函数](./function.md), 而是借助于[模板类](./generic.md)实现的编译期类型运算机制.
 
-## `std::remove_reference_t`
+## 移除或添加引用
 定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于 remove 类型实参的 reference:
 ```cpp
 namespace std{
@@ -32,14 +32,15 @@ int main() {
   typename std::remove_reference<int&&>::type z{0};  // 等价于 int z{0};
 }
 ```
-C++14 为标准库中的大多数类型函数提供了以 `_t` 为后缀的类型别名, 例如:
+#### 别名 --- 省略 `::type` 和 `typename`
+C++14 为它提供了以 `_t` 为后缀的别名, 例如:
 ```cpp
 namespace std{
 template <class T>
 using remove_reference_t = typename remove_reference<T>::type;
 }
 ```
-这样在使用时就可以将 `typename` 和 `::type` 省略, 从而使代码变得简洁:
+这样在使用时就可以省略 `::type` 和 `typename`, 从而使代码变得简洁:
 ```cpp
 #include <type_traits>
 
@@ -50,7 +51,7 @@ int main() {
 }
 ```
 
-### `std::move` 的实现
+#### `std::move` 的实现
 定义在 `<utility>` 中的函数 `std::move()` 用于将实参强制转换为右值引用.
 一种可能的实现方式为:
 ```cpp
@@ -66,7 +67,7 @@ remove_reference_t<T>&& move(T&& t) {
 }
 ```
 
-### `std::forward` 的实现
+#### `std::forward` 的实现
 定义在 `<utility>` 中的模板函数 `std::forward<T>()` 用于完美转发实参 --- 保留所有类型 (含引用) 信息.
 一种可能的实现方式为:
 ```cpp
@@ -78,6 +79,58 @@ T&& forward(remove_reference_t<T>&  t) { return static_cast<T&&>(t); }
 template <class T>
 T&& forward(remove_reference_t<T>&& t) { return static_cast<T&&>(t); }
 }
+```
+
+## 谓词 --- `std::is_*`
+谓词 [predicate] 是指返回值类型为 `bool` 的函数.
+在 C++ 模板元编程中, 它是通过含有 `bool` 型成员的模板类来实现的.
+
+### `std::is_empty`
+定义在`<type_traits>` 中的模板类 `std::is_empty` 用于判断一个类的对象是否不占存储空间:
+```cpp
+namespace std {
+template <class T> struct is_empty;
+}
+```
+它含有一个 `bool` 型静态数据成员 `value`, 可以用作`返回值`.
+#### 别名 --- 省略 `::value`
+C++17 为它提供了以 `_v` 为后缀的别名, 例如:
+```cpp
+namespace std {
+template <class T>
+inline constexpr bool is_empty_v = is_empty<T>::value;
+}
+```
+这样在使用时就可以省略 `::value`, 从而使代码变得简洁:
+```cpp
+#include <iostream>
+#include <type_traits>
+
+// 对象不占存储空间的类:
+struct HasNothing { };
+struct HasStaticDataMember { static int m; };
+struct HasNonVirtualMethod { void pass(); };
+
+// 对象占据存储空间的类:
+struct HasNonStaticDataMember { int m; };
+struct HasVirtualMethod { virtual void pass(); };
+
+template <class T>
+void print() {
+  std::cout << (std::is_empty_v<T> ? true : false) << ' ';
+}
+
+int main() {
+  print<HasNothing>();
+  print<HasStaticDataMember>();
+  print<HasNonVirtualMethod>();
+  print<HasNonStaticDataMember>();
+  print<HasVirtualMethod>();
+}
+```
+运行结果:
+```cpp
+1 1 1 0 0
 ```
 
 
