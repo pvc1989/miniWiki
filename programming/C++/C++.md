@@ -23,6 +23,7 @@
 # 抽象机制
 
 ## [类](./class.md)
+### 面向对象编程 --- 运行期多态
 
 ## 模板
 ### [泛型编程 (Generic Programming) --- 编译期多态](./generic.md)

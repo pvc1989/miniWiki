@@ -171,8 +171,8 @@ using conditional_t = typename conditional<B, T, F>::type;
 ```
 
 ### 从多个类型中选取一个
-目前, 标准库没有提供类似于 `std::conditional` 的从`多个`类型中选取一个的方法.
-如果将来有这样的方法被补充进标准库中, 那么大致应当有如下用例:
+目前, 标准库没有提供从`多个`类型中选取一个的方法.
+如果将来有这样的方法 (暂且命名为 `std::select`) 被补充进标准库中, 那么它大致应当支持如下用法:
 ```cpp
 #include <iostream>
 #include <type_traits>
@@ -184,7 +184,8 @@ int main() {
   static_assert(std::is_same_v<T3, double>);  // C++17
 }
 ```
-`std::select` 的实现需要借助于模板特化和递归:
+在这里, `std::select` 以第一个模板实参为序号, 从后面的模板实参列表中选出对应的类型.
+它的实现需要用到模板类的[特化](./generic.md#模板类的特化)和[递归](#模板类递归)以及[变参数模板](#变参数模板)等机制:
 ```cpp
 namespace std{
 // 通用版本, 禁止实例化
@@ -212,7 +213,7 @@ using select_t = typename select<N, Cases...>::type;
 ## 递归
 C++ 元编程中没有类似于 `for` 或 `while` 的`循环` [loop] 机制, 其 `迭代` [iteration] 语义都是通过`递归` [recursion] 来实现的.
 
-### 基于函数形参
+### 非模板函数递归
 ```cpp
 constexpr int factorial(int i) {
   return (i < 2) ? 1 : i*factorial(i-1);
@@ -226,7 +227,7 @@ int main() {
 }
 ```
 
-### 基于模板形参
+### 模板函数递归
 ```cpp
 template <int I>
 constexpr int factorial() {
@@ -245,7 +246,8 @@ int main() {
   static_assert(factorial<3>() == 6);
 }
 ```
-或
+
+### 模板类递归
 ```cpp
 template <int I>
 struct factorial {
@@ -265,15 +267,15 @@ int main() {
 }
 ```
 
-# (C++11) 可变参数模板 (Variadic Templates)
-模板形参数量可变的模板函数或模板类称为`可变参数模板`.
+# 变参数模板
+C++11 引入了`参数包` [parameter pack], 用到了参数包的模板称为`变参数` [variadic] 模板.
 
-## 形参包 (Parameter Pack)
-数量可变的一组 (`模板`或`函数`) 形参称为`形参包`.
+## 参数包
+接受零个或多个 (`模板`或`函数`) 实参的 (`模板`或`函数`) 形参称为`参数包`.
 ```cpp
-// Args 是一个 模板形参包, 可含有 零或多个 模板形参:
+// Args 是一个 模板参数包, 可含有 零或多个 模板形参:
 template <typename T, typename... Args>
-// rest 是一个 函数形参包, 可含有 零或多个 函数形参:
+// rest 是一个 函数参数包, 可含有 零或多个 函数形参:
 void foo(const T& t, const Args&... rest);
 ```
 在如下调用中
@@ -281,11 +283,11 @@ void foo(const T& t, const Args&... rest);
 int i = 0;
 double d = 3.14;
 string s = "how now brown cow";
-foo(i, s, 42, d);  // 形参包中含有 3 个形参
-foo(s, 42, "hi");  // 形参包中含有 2 个形参
-foo(d, s);         // 形参包中含有 1 个形参
-foo("hi");         // 形参包中含有 0 个形参
-编译器会实例化出以下 4 个版本的 `foo`:
+foo(i, s, 42, d);  // 参数包中含有 3 个形参
+foo(s, 42, "hi");  // 参数包中含有 2 个形参
+foo(d, s);         // 参数包中含有 1 个形参
+foo("hi");         // 参数包中含有 0 个形参
+编译器会实例化出以下四个版本的 `foo`:
 ```cpp
 void foo(const int&, const string&, const int&, const double&);
 void foo(const string&, const int&, const char(&)[3]);
@@ -293,8 +295,8 @@ void foo(const double&, const string&);
 void foo(const char(&)[3]);
 ```
 
-### `sizeof...` 运算符
-形参包中的形参个数可以由 `sizeof...` 运算符获得:
+## 参数包的大小
+参数包的大小可以由 `sizeof...` 运算符获得:
 ```cpp
 template<typename... Args>
 void g(Args... args) {
@@ -302,10 +304,11 @@ void g(Args... args) {
   cout << sizeof...(args) << endl;
 }
 ```
-该表达式是一个 `constexpr`, 因此不会对实参求值.
+该表达式是 `constexpr`, 因此不会对实参求值.
 
-## 递归的模板函数
-可变参数模板函数通常是`递归的`. 作为`递归终止条件`的 (模板) 函数必须在`可变参数`的版本之前声明:
+## 递归的变参数模板函数
+变参数模板函数通常是`递归的`.
+作为`递归终止条件`的 (模板) 函数必须在`变参数`版本之前声明:
 ```cpp
 #include <iostream>
 
@@ -314,7 +317,8 @@ template<typename T>
 std::ostream& print(std::ostream& os, const T& t) {
   return os << t;
 }
-// 可变参数的版本
+
+// 变参数版本
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   os << t << ", ";
@@ -327,8 +331,8 @@ int main() {
 }
 ```
 
-## 包的展开
-位于包右侧的 `...` 表示对其按相应的`模式 (pattern)` 进行展开:
+## 参数包的展开
+位于参数包右侧的 `...` 表示对其按相应的`模式` [pattern] 进行展开:
 ```cpp
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
@@ -336,9 +340,11 @@ std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   return print(os, rest...);
 }
 ```
-在这里, `const Args&...` 对函数形参包 `Args` 按模式 `const Args&` 进行展开, `rest...` 对函数实参包 `rest` 按模式 `rest` 进行展开.
+在这里
+- `const Args&...` 对类型参数包 `Args` 按模式 `const Args&` 进行展开.
+- `rest...` 对函数参数包 `rest` 按模式 `rest` 进行展开.
 
-需要展开的包可以具有更加复杂的模式:
+需要展开的参数包可以具有更加复杂的模式:
 ```cpp
 // 对 print 的每一个实参调用 debug_rep
 template <typename... Args>
@@ -348,8 +354,8 @@ std::ostream& errorMsg(std::ostream& os, const Args&... rest) {
 }
 ```
 
-## 包的转发
-之前定义过的 `print` 在末尾不换行.
+## 参数包的转发
+上面定义的 `print` 在末尾不换行.
 若要添加一个末尾换行的版本, 可以基于 `print` 定义一个 `println`:
 ```cpp
 #include <iostream>
@@ -360,7 +366,7 @@ template<typename T>
 std::ostream& print(std::ostream& os, const T& t) {
   return os << t;
 }
-// 可变参数的版本
+// 变参数的版本
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   os << t << ", ";
@@ -378,7 +384,7 @@ int main() {
   return 0;
 }
 ```
-在这里, `std::forward<Args>(args)...` 中的`模板实参包 Args` 和`函数实参包 args` 将被同时展开:
+在这里, `std::forward<Args>(args)...` 中的`模板实参包` (`Args`) 和`函数实参包` (`args`) 将被同时展开:
 ```cpp
 std::forward<T1>(t1), ..., std::forward<Tn>(tn)
 ```
