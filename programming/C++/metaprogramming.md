@@ -209,6 +209,61 @@ using select_t = typename select<N, Cases...>::type;
 }
 ```
 
+## 递归
+C++ 元编程中没有类似于 `for` 或 `while` 的`循环` [loop] 机制, 其 `迭代` [iteration] 语义都是通过`递归` [recursion] 来实现的.
+
+### 基于函数形参
+```cpp
+constexpr int factorial(int i) {
+  return (i < 2) ? 1 : i*factorial(i-1);
+}
+
+int main() {
+  static_assert(factorial(0) == 1);
+  static_assert(factorial(1) == 1);
+  static_assert(factorial(2) == 2);
+  static_assert(factorial(3) == 6);
+}
+```
+
+### 基于模板形参
+```cpp
+template <int I>
+constexpr int factorial() {
+  return I * factorial<I-1>();
+}
+
+template <>
+constexpr int factorial<0>() {
+  return 1;
+}
+
+int main() {
+  static_assert(factorial<0>() == 1);
+  static_assert(factorial<1>() == 1);
+  static_assert(factorial<2>() == 2);
+  static_assert(factorial<3>() == 6);
+}
+```
+或
+```cpp
+template <int I>
+struct factorial {
+  static constexpr int value = I * factorial<I-1>::value;
+};
+
+template <>
+struct factorial<0> {
+  static constexpr int value = 1;
+};
+
+int main() {
+  static_assert(factorial<0>::value == 1);
+  static_assert(factorial<1>::value == 1);
+  static_assert(factorial<2>::value == 2);
+  static_assert(factorial<3>::value == 6);
+}
+```
 
 # (C++11) 可变参数模板 (Variadic Templates)
 模板形参数量可变的模板函数或模板类称为`可变参数模板`.
