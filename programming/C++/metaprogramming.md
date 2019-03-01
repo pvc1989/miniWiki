@@ -34,7 +34,7 @@ int main() {
 }
 ```
 #### 别名 --- 省略 `::type` 和 `typename`
-C++14 为它提供了以 `_t` 为后缀的别名, 例如:
+C++14 为它提供了以 `_t` 为后缀的别名:
 ```cpp
 namespace std{
 template <class T>
@@ -95,7 +95,7 @@ template <class T> struct is_empty;
 ```
 它含有一个 `bool` 型静态数据成员 `value`, 可以用作`返回值`.
 #### 别名 --- 省略 `::value`
-C++17 为它提供了以 `_v` 为后缀的别名, 例如:
+C++17 为它提供了以 `_v` 为后缀的别名:
 ```cpp
 namespace std {
 template <class T>
@@ -132,6 +132,81 @@ int main() {
 运行结果:
 ```cpp
 1 1 1 0 0
+```
+
+# 控制结构
+
+## 选择
+### `?:` --- 从两个值中选取一个
+选择运算符根据`条件`在两个`值` [value] 之间进行选择.
+
+### `std::conditional` --- 从两个类型中选取一个
+定义在`<type_traits>` 中的模板类 `std::conditional` 根据`条件`在两个`类型` [type] 之间进行选择:
+```cpp
+#include <iostream>
+#include <type_traits>
+ 
+int main() {
+  using T = std::conditional<true, int, double>::type;  // C++11
+  using F = std::conditional_t<false, int, double>;     // C++14
+  static_assert(std::is_same_v<T, int>);     // C++17
+  static_assert(std::is_same_v<F, double>);  // C++17
+}
+```
+一种可能的实现:
+```cpp
+namespace std {
+// 通用版本, 用于 B == true 的情形:
+template <bool B, class T, class F>
+struct conditional { typedef T type; };  
+
+// 特利版本, 用于 B == false 的情形:
+template <class T, class F>
+struct conditional<false, T, F> { typedef F type; };
+
+// C++14 引入的别名:
+template <bool B, class T, class F>
+using conditional_t = typename conditional<B, T, F>::type;
+}
+```
+
+### 从多个类型中选取一个
+目前, 标准库没有提供类似于 `std::conditional` 的从`多个`类型中选取一个的方法.
+如果将来有这样的方法被补充进标准库中, 那么大致应当有如下用例:
+```cpp
+#include <iostream>
+#include <type_traits>
+ 
+int main() {
+  using T2 = std::select<2, int, long, float, double>::type;  // 仿 C++11
+  using T3 = std::select_t<3, int, long, float, double>;      // 仿 C++14
+  static_assert(std::is_same_v<T2, float>);   // C++17
+  static_assert(std::is_same_v<T3, double>);  // C++17
+}
+```
+`std::select` 的实现需要借助于模板特化和递归:
+```cpp
+namespace std{
+// 通用版本, 禁止实例化
+template<unsigned N, typename... Cases>
+struct select;
+
+// 特化版本 (N > 0):
+template <unsigned N, typename T, typename... Cases>
+struct select<N, T, Cases...> {
+  using type = typename select<N-1, Cases...>::type;
+};
+
+// 特化版本 (N == 0):
+template <typename T, typename... Cases>
+struct select<0, T, Cases...> {
+  using type = T; 
+};
+
+// 标准库风格的类型别名:
+template<unsigned N, typename... Cases>
+using select_t = typename select<N, Cases...>::type;
+}
 ```
 
 
