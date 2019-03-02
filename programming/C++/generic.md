@@ -7,7 +7,6 @@
 
 ## 语法
 `T` 的实际类型将根据 `compare` 的`静态`调用方式在`编译期`决定:
-
 ```cpp
 template <typename T>  // 模板形参列表
 int compare(const T& v1, const T& v2) {
@@ -18,14 +17,13 @@ int compare(const T& v1, const T& v2) {
 ```
 
 `inline`, `constexpr` 等修饰符应当位于`模板形参列表`与`返回值类型`之间:
-
 ```cpp
 template <typename T>
 inline T min(const T&, const T&);
 ```
 
 | 建议 | 目的 |
-| ----| ---- |
+| --- | --- |
 | 尽量减少对 `T` 的要求          | 扩大模板函数的适用范围 |
 | 用 `const T&` 作为函数形参类型 | 支持不可拷贝类型       |
 | 只用 `<` 进行比较操作          | `T` 不必支持其他运算符 |
@@ -37,6 +35,281 @@ inline T min(const T&, const T&);
   - 如果其中只有一个`非模板`, 则它将被选中.
   - 如果其中没有非模板, 且有一个模板的`特化 (specialization)` 程度更高, 则它将被选中.
   - 否则, 该调用有歧义, 编译时会报错.
+
+## 模板类型推断
+### 一般形式
+不失一般性, 考虑如下模板函数定义
+```cpp
+template <typename T>
+void func(ParamType ParamType) { /* ... */ }
+```
+和调用语句
+```cpp
+func(arg);  // arg 的类型为 ArgType
+```
+其中,
+- 函数形参类型 `ParamType` 可以是 `T`, 也可以是基于 `T` 的复合类型 (例如 `T*`, `T&`, `T&&`) 或容器类型 (例如 `std::vector<T>).
+- 函数实参 `arg` 可以是右值表达式 (例如 `1+1`), 也可以是左值表达式 (例如以下任何一个变量).
+```cpp
+      int     x =  0;
+const int    cx =  x;
+      int&   rx =  x;
+const int&  rcx =  x;
+		  int&& rrx =  0;
+      int*   px = &x;
+const int*  pcx = &x;
+int* const  cpx = &x;
+```
+
+编译器通过比较`函数形参类型` (即 `ParamType`) 与`函数实参类型` (即 `ArgType`) 来推断 `T`.
+> `推断规则[0]`: 忽略 `ArgType` 的`引用`属性.
+
+### `ParamType` 既非指针又非引用
+> `推断规则[1]`: 忽略 `ArgType` 的`引用`属性后, 继续忽略其顶层 `const` (及 `volatile`) 属性, 所得到的类型就是 `T`.
+
+#### `ParamType` 为 `T` (常用)
+推断过程及结果为:
+
+| `arg` | `ArgType`    | 忽略引用       | 忽略顶层 `const` | `T`          |
+| ----- | ------------ | ------------- | -------------- | ------------ |
+| `0`   | `int`        | `int`         | `int`          | `int`        |
+| `x`   | `int`        | `int`         | `int`          | `int`        |
+| `cx`  | `int const`  | `int const`   | `int`👈        | `int`        |
+| `rx`  | `int&`       | `int` 👈      | `int`          | `int`        |
+| `rcx` | `int const&` | `int const`👈 | `int`👈        | `int`        |
+| `rrx` | `int&&`      | `int`👈       | `int`          | `int`        |
+| `px`  | `int*`       | `int*`        | `int*`         | `int*`       |
+| `pcx` | `int const*` | `int const*`  | `int const*`   | `int const*` |
+| `cpx` | `int* const` | `int* const`  | `int*`👈       | `int*`       |
+
+#### `ParamType` 为 `const T` 或等价的 `T const`
+推断过程及 `T` 的推断结果与 `ParamType` 为 `T` 的情形相同, 而 `ParamType` 只比 `T` 多一个顶层 `const`.
+例如上表中最后三行的推断结果分别为:
+
+| `arg` | `ArgType`    | 忽略顶层 `const` | `T`          | `const T`            |
+| ----- | ------------ | --------------- | ------------ | -------------------- |
+| `px`  | `int*`       | `int*`          | `int*`       | `int* const`👈       |
+| `pcx` | `int const*` | `int const*`    | `int const*` | `int const* const`👈 |
+| `cpx` | `int* const` | `int*`👈        | `int*`       | `int* const`👈       |
+
+### `ParamType` 为指针
+`ArgType` 必须是指针类型 (或引向指针的引用). 
+
+> `推断规则[2]`: 忽略 `ArgType` 的`引用`属性后, 继续忽略其顶层 `const` (及 `volatile`) 属性, 再与 `ParamType` 进行比较, 以所需修饰符最少的类型作为 `T`.
+
+#### `ParamType` 为 `T*`
+底层 `const` 会被推断为 `T` 的一部分:
+
+| `arg` | `ArgType`    | 忽略顶层 `const` | `T*`         | `T`         |
+| ----- | ------------ | --------------- | ------------ | ----------- |
+| `px`  | `int*`       | `int*`          | `int*`       | `int`       |
+| `pcx` | `int const*` | `int const*`    | `int const*` | `int const` |
+| `cpx` | `int* const` | `int*`👈        | `int*`       | `int`       |
+
+#### `ParamType` 为 `T* const`
+推断过程及 `T` 的推断结果与上一种情形相同, 只是 `ParamType` 会多一个顶层 `const`.
+
+#### `ParamType` 为 `const T*` 或等价的 `T const*`
+底层 `const` 不会被推断为 `T` 的一部分:
+
+| `arg` | `ArgType`    | 忽略顶层 `const` | `const T*`     | `T`   |
+| ----- | ------------ | --------------- | -------------- | ----- |
+| `px`  | `int*`       | `int*`          | `const int*`👈 | `int` |
+| `pcx` | `int const*` | `int const*`    | `const int*`   | `int` |
+| `cpx` | `int* const` | `int*`👈        | `const int*`👈 | `int` |
+
+#### `ParamType` 为 `const T* const` 或等价的 `T const* const`
+推断过程及 `T` 的推断结果与上一种情形相同, 只是 `ParamType` 会多一个顶层 `const`.
+
+### `ParamType` 为引用
+> `推断规则[3]`: 忽略 `ArgType` 的`引用`属性后, 再与 `ParamType` 进行比较, 以所需修饰符最少的类型作为 `T`.
+
+#### `ParamType` 为 `T&`
+`arg` 必须是左值表达式, 并且其顶层和底层 `const` 都会被推断为 `T` 的一部分.
+具体推断过程及结果如下:
+
+| `arg` | `ArgType`    | `T&`          | `T`          |
+| ----- | ------------ | ------------- | ------------ |
+| `x`   | `int`        | `int&`        | `int`        |
+| `cx`  | `int const`  | `int const&`  | `int const`  |
+| `px`  | `int*`       | `int*&`       | `int*`       |
+| `pcx` | `int const*` | `int const*&` | `int const*` |
+| `cpx` | `int* const` | `int* const&` | `int* const` |
+
+#### `ParamType` 为 `const T&` 或等价的 `T const&`  (常用)
+`arg` 可以是任意 (左值或右值) 表达式, 并且其底层 `const` 会被推断为 `T` 的一部分, 而其顶层 `const` 则会被忽略.
+具体推断过程及结果如下:
+
+| `arg` | `ArgType`    | `T const&`          | `T`          |
+| ----- | ------------ | ------------------- | ------------ |
+| `0`   | `int`        | `int const&`        | `int`        |
+| `x`   | `int`        | `int const&`        | `int`        |
+| `cx`  | `int const`  | `int const&`        | `int`👈      |
+| `px`  | `int*`       | `int* const&`       | `int*`       |
+| `pcx` | `int const*` | `int const* const&` | `int const*` |
+| `cpx` | `int* const` | `int* const&`       | `int*`👈     |
+
+#### `ParamType` 为 `T&&` (常用)
+> 形如 `T&&` 并且其中的 `T` 需要被推断的引用称为`万能` [universal] 引用. --- [Meyers (2014)]().
+
+> `推断规则[4]`: 如果 `arg` 是`左值表达式`, 则 `T` 为`左值引用`; 否则 `T` 为不含引用的类型.
+
+由于 `T` 有可能被推断为`左值引用`, 因此 `ParamType` 含有多个引用的情形, 为此引入如下`引用折叠` [reference-collapsing] 机制:
+> 除了 `X&& &&` 折叠为 `X&&` 之外, 其他情形 (`X& &`, `X& &&`, `X&& &`) 均折叠为 `X&`, 其中 `X` 为任何不含引用的类型.
+
+根据以上规则, `arg` 可以是任意类型.
+
+| `arg` | `ArgType`    | `T`           | `T&&`         |
+| ----- | ------------ | ------------- | ------------- |
+| `0`   | `int`        | `int`         | `int&&`       |
+| `x`   | `int`        | `int&`        | `int&`        |
+| `cx`  | `int const`  | `int const&`  | `int const&`  |
+| `px`  | `int*`       | `int*&`       | `int*&`       |
+| `pcx` | `int const*` | `int const*&` | `int const*&` |
+| `cpx` | `int* const` | `int* const&` | `int* const&` |
+
+万能引用几乎总是配合 `std::forward<T>()`  (定义在 `<utility>` 中) 使用, 以达到`完美转发`实参的目的.
+这里的`完美`是指: 避免不必要的复制或移动, 并且保留实参的所有类型信息 (包括`引用`, `const`, `volatile` 属性).
+典型应用场景为`向构造函数完美转发实参`:
+```cpp
+#include <utility>
+#include <vector>
+
+template <class T>
+std::vector<T> build(T&& x) {
+  auto v =  std::vector<T>(std::forward<T>(x));
+  // decorate v
+  return v;
+}
+```
+
+[`std::forward` 的实现](./metaprogramming.md#`std::forward`-的实现)需要借助于[模板元编程](./metaprogramming.md)技术.
+
+### `arg` 为数组或函数
+> `推断规则[5]`: 如果 `ArgType` 是`数组`或`函数`(或引向数组或函数的引用) 并且 `ParamType` 不含引用属性, 则 `ArgType` 将`退化` [decay] 为`指针`.
+
+```cpp
+template <typename T, typename U>
+void f(T, U&) { /* ... */ }
+
+// arg 为数组:
+const char book[] = "C++ Primer";  // book 的类型为 const char[11]
+f(book, book);  // 函数签名为 void f(const char*, const char(&)[11])
+
+// arg 为函数:
+int g(double);
+f(g, g);  // 函数签名为 void f(int (*)(double), int (&)(double))
+```
+## 其他类型推断
+### `auto` 类型推断
+#### 一般情况 --- 与模板类型推断相同
+在绝大多数情况下, `auto` 类型推断与模板类型推断具有相同的法则, 因为 `auto` 就是模板类型形参 `T`, 而其他元素有如下对应关系:
+
+| `auto` 语句          | `param` | `ParamType`   | `arg` | `ArgType` |
+| -------------------- | ------- | ------------- | ----- | --------- |
+| `auto i = 0;`        | `i`     | `auto`        | `0`   | `int`     |
+| `const auto& j = 1;` | `j`     | `const auto&` | `0`   | `int`     |
+| `auto&& k = 2;`      | `k`     | `auto&&`      | `0`   | `int`     |
+
+C++14 将 `auto` 用作`函数返回类型`或 `lambda 形参类型`:
+```cpp
+auto func(int* p) {
+  return *p;  // *p 的类型是 int&, auto 被推断为 int
+}
+
+auto is_positive = [](const auto& x) { return x > 0; };
+is_positive(3.14);  // auto 被推断为 double
+is_positive(-256);  // auto 被推断为 int
+```
+用到的类型推断法则都与模板类型推断法则相同.
+
+#### 特殊情况 --- 列表初始化
+对于 `int`, 以下四种初始化方式 (几乎) 完全等价, 得到的都是 `int` 型变量:
+```cpp
+int a = 1;
+int b(2);
+int c = { 3 };
+int d{ 4 };
+```
+但对于 `auto`, 后两种初始化方式得到的是含有一个元素的 `std::initializer_list<int>` 对象:
+```cpp
+auto a = 1;
+auto b(2);
+auto c = { 3 };
+auto d{ 4 };
+```
+这是`唯一`一处 `auto` 类型推断不同于模板类型推断的地方.
+二者的区别在下面的例子中体现得更为明显:
+```cpp
+#include <initializer_list>
+
+auto x = { 1, 2, 3 };  // x 为含有 3 个元素的 std::initializer_list<int> 对象
+
+// "等价" 的模板函数定义和调用:
+template <typename T>
+void f(T param) { /* ... */ }
+
+f(x);            // 正确: T 推断为 std::initializer_list<int>
+f({ 1, 2, 3 });  // 错误: 模板类型推断失败
+
+// "正确" 的模板函数定义和调用:
+template <typename T>
+void g(std::initializer_list<T> param) { /* ... */ }
+
+g(x);            // 正确: T 推断为 std::initializer_list<int>
+g({ 1, 2, 3 });  // 正确: T 推断为 int
+```
+
+###  `decltype` 类型推断
+`decltype` 是一种`修饰符` [specifier], 它作用在表达式 `expr` 上得到其类型 `ExprType`:
+- 一般情况下, `ExprType` 是 `expr` 的完整 (含`引用`及 `const` 属性) 类型.
+- 如果 `expr` 是`除变量名以外的左值表达式`, 则 `ExprType` 还需修饰为 `左值引用`.
+
+### 函数返回类型推断
+如果返回类型是引用, 则只需要借助于 `decltype` 关键词:
+```cpp
+template <typename Iter>
+auto func(Iter beg, Iter end) -> decltype(*beg) {
+  // ...
+  return *beg;
+}
+```
+如果返回类型不是引用, 则还需要借助于 `std::remove_reference` 模板类的 `type` 成员:
+```cpp
+#include <type_traits>
+template <typename Iter>
+auto func2(Iter beg, Iter end) ->
+    typename std::remove_reference<decltype(*beg)>::type {
+  // ...
+  return *beg;
+}
+```
+
+## 显式模板实参
+```cpp
+template <typename T1, typename T2, typename T3> T1 sum(T2, T3);
+```
+这里的 `T2` 和 `T3` 可以由函数实参推断, 而 `T1` 必须`显式`给出:
+```cpp
+int i = 0;
+long lng = 1;
+auto val3 = sum<long long>(i, lng);  // long long sum(int, long)
+```
+
+## 模板函数的地址
+使用模板函数的地址时, 必须确保所有模板形参可以被唯一地确定:
+```cpp
+template <typename T> int compare(const T&, const T&);
+
+// T 可以被唯一地确定为 int, pf1 指向 compare<int> 的地址
+int (*pf1)(const int&, const int&) = compare;
+
+// 重载的 func, 均以函数指针为形参类型:
+void func(int(*)(const double&, const double&));
+void func(int(*)(const int&, const int&));
+func(compare<int>);  // 正确: T 被唯一地确定为 int
+func(compare);       // 错误: T 无法被唯一地确定
+```
 
 # 模板类
 
@@ -371,107 +644,6 @@ Numbers<long double> lots_of_precision;
 Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
 ```
 
-# 类型推断
-
-## 类型转换
-在推断`模板实参`的过程中, 只对`函数实参`进行非常有限的类型转换:
-
-- 忽略 (形参或实参的) 顶层 `const`
-- 如果某个函数形参是`指向常量`的引用或指针, 则传入的引用或指针实参不必`指向常量`
-- 如果函数形参不是`引用`, 则传入的`数组`或`函数`将被转换为`指针`
-  
-
-## 显式模板实参
-```cpp
-template <typename T1, typename T2, typename T3> T1 sum(T2, T3);
-```
-这里的 `T1` 必须`显式`给出, 而 `T2` 和 `T3` 可以由函数实参推断:
-```cpp
-int i = 0;
-long lng = 1;
-auto val3 = sum<long long>(i, lng);  // long long sum(int, long)
-```
-
-## (C++11) 后置返回类型
-
-如果返回类型是引用, 则只需要借助于 `decltype` 关键词:
-
-```cpp
-template <typename Iter>
-auto fcn(Iter beg, Iter end) -> decltype(*beg) {
-  // ...
-  return *beg;
-}
-```
-
-如果返回类型不是引用, 则还需要借助于 `std::remove_reference` 模板类的 `type` 成员:
-
-```cpp
-#include <type_traits>
-template <typename Iter>
-auto fcn2(Iter beg, Iter end) ->
-    typename std::remove_reference<decltype(*beg)>::type {
-  // ...
-  return *beg;
-}
-```
-
-## 模板函数的地址
-使用模板函数的地址时, 上下文必须确保所有模板形参可以被唯一地确定:
-```cpp
-template <typename T> int compare(const T&, const T&);
-// pf1 指向 compare<int>
-int (*pf1)(const int&, const int&) = compare;
-// 重载的 func
-void func(int(*)(const double&, const double&));
-void func(int(*)(const int&, const int&));
-func(compare);       // 错误: T 没有被唯一地确定
-func(compare<int>);  // 正确: T 被唯一 (显式) 地确定为 int
-```
-
-## 以引用作为函数形参类型
-
-### 左值引用
-
-如果函数形参类型为 `T&`, 则实参必须是`左值`:
-```cpp
-template <typename T> void f1(T&);
-f1(i);   // 实参类型为 int, T 被推断为 int
-f1(ci);  // 实参类型为 const int, T 被推断为 const int
-f1(5);   // 错误: 实参必须是左值
-```
-
-如果函数形参类型为 `const T&`, 则实参可以是任意类型:
-```cpp
-template <typename T> void f2(const T&);
-f2(i);   // 实参类型为 int, T 被推断为 int
-f2(ci);  // 实参类型为 const int, T 被推断为 int
-f2(5);   // 实参类型为 int&&, 可以被 const int& 绑定, T 被推断为 int
-```
-
-### 右值引用
-
-如果函数形参类型为 `T&&`, 则实参也可以是任意类型, 这是因为有如下`引用折叠`:
-
-> 除了 `X&& &&` 折叠为 `X&&` 之外, 其他情形 (`X& &`, `X& &&`, `X&& &`) 均折叠为 `X&`.
-
-```cpp
-template <typename T> void f3(T&&);
-f3(i);   // 实参类型为 int, T 被推断为 int&
-f3(ci);  // 实参类型为 const int, T 被推断为 const int&
-f3(42);  // 实参类型为 int&&, T 被推断为 int
-```
-### 完美转发
-如果函数形参类型为 `T&&`, 则用 `std::forward` 转发相应的实参可以`保留其所有类型信息`:
-
-```cpp
-#include <utility>
-template <typename T> intermediary(T&& arg) {
-  finalFunc(std::forward<T>(arg));
-  // ...
-}
-```
-
 # 实例化 (Instantiation)
 
 ## 构建过程
@@ -572,7 +744,7 @@ struct hash;
 标准库中的无序容器 (例如 `std::unordered_set<Key>`) 以 `std::hash<Key>` 为其默认散列函数.
 对 `std::hash` 进行特化, 必须为其定义:
 - 一个重载的调用运算符: `std::size_t operator()(const Key& key) const noexcept`
-- 两个类型成员 (C++17 淘汰): `argument_type` 和 `result_type`
+- 两个类型成员 (C++17 淘汰): `argment_type` 和 `result_type`
 - 默认构造函数: 可以采用隐式定义的版本
 - 拷贝赋值运算符: 可以采用隐式定义的版本
 
@@ -589,7 +761,7 @@ bool operator==(const Key& lhs, const Key& rhs);  // Key 必须支持 == 运算�
 namespace std {
 template <>
 struct hash<Key> {
-  typedef Key argument_type;
+  typedef Key argment_type;
   typedef size_t result_type;
   size_t operator()(const Key& key) const noexcept { return key.hash(); }
   // 默认构造函数 和 拷贝赋值运算符 采用隐式定义的版本
