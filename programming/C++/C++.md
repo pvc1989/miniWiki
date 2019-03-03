@@ -18,7 +18,7 @@
 
 ## 关联容器
 
-## [动态内存管理](./DynamicMemoryManagement.md)
+## [动态内存管理](./memory.md)
 
 # 抽象机制
 
