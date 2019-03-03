@@ -223,7 +223,7 @@ is_positive(-256);  // auto 被推断为 int
 ```
 用到的类型推断法则都与模板类型推断法则相同.
 
-#### 特殊情况 --- 列表初始化
+#### 唯一例外 --- 列表初始化
 对于 `int`, 以下四种初始化方式 (几乎) 完全等价, 得到的都是 `int` 型变量:
 ```cpp
 int a = 1;
@@ -264,6 +264,36 @@ g({ 1, 2, 3 });  // 正确: T 推断为 int
 `decltype` 是一种`修饰符` [specifier], 它作用在表达式 `expr` 上得到其类型 `ExprType`:
 - 一般情况下, `ExprType` 是 `expr` 的完整 (含`引用`及 `const` 属性) 类型.
 - 如果 `expr` 是`除变量名以外的左值表达式`, 则 `ExprType` 还需修饰为 `左值引用`.
+
+```cpp
+#include <type_traits>  // std::is_same
+using std::is_same_v;   // C++17
+
+int i = 0;
+static_assert(is_same_v<decltype(i), int>);     // 变量名
+static_assert(is_same_v<decltype((i)), int&>);  // 左值表达式
+
+int&& rri = 0;
+static_assert(is_same_v<decltype(rri), int&&>);    // 变量名
+static_assert(is_same_v<decltype((rri)), int&>);   // 左值表达式 + 引用折叠
+
+void f(const int& x) {
+  static_assert(is_same_v<decltype(x), const int&>);  // 保留 引用 和 const 属性
+}
+auto* pf = f;
+auto& rf = f;
+static_assert(is_same_v<decltype(f), void(const int&)>);      // 函数
+static_assert(is_same_v<decltype(pf), void(*)(const int&)>);  // 指向函数的指针
+static_assert(is_same_v<decltype(rf), void(&)(const int&)>);  // 引向函数的引用
+
+int a[] = { 1, 2, 3 };
+auto* pa = a;
+auto& ra = a;
+static_assert(is_same_v<decltype(a), int[3]>);      // 数组
+static_assert(is_same_v<decltype(pa), int*>);       // 指向数组首元的指针
+static_assert(is_same_v<decltype(ra), int(&)[3]>);  // 引向数组的引用
+static_assert(is_same_v<decltype(a[0]), int&>);     // 引向数组元素的引用
+```
 
 ### 函数返回类型推断
 如果返回类型是引用, 则只需要借助于 `decltype` 关键词:
