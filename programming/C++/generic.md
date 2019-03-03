@@ -296,22 +296,59 @@ static_assert(is_same_v<decltype(a[0]), int&>);     // 引向数组元素的引�
 ```
 
 ### 函数返回类型推断
-如果返回类型是引用, 则只需要借助于 `decltype` 关键词:
+#### 一般形式
+不失一般性, 考虑如下函数:
 ```cpp
-template <typename Iter>
-auto func(Iter beg, Iter end) -> decltype(*beg) {
+ReturnType func(ParamType param) {
   // ...
-  return *beg;
+  return expr;  // expr 的类型为 ExprType
 }
 ```
-如果返回类型不是引用, 则还需要借助于 `std::remove_reference` 模板类的 `type` 成员:
+
+#### C++11 --- 后置返回类型
+不失一般性, 如果希望以 `ExprType` 作为 `ReturnType`, 则只需要形式化地以 `auto` 作为 `ReturnType`, 并在函数形参列表后紧跟 `-> decltype(expr)`:
+```cpp
+auto func(ParamType param) -> decltype(expr) {
+  // ...
+  return expr;
+}
+```
+在这里, `auto` 只是一个占位符, 实际推断工作是由 `decltype` 来负责的.
+
+如果 `expr` 是一个`非变量名左值表达式`, 则 [`decltype` 类型推断规则](#`decltype`-类型推断) 会为 `ExprType` 附加一个`左值引用`修饰符.
+如果希望返去掉引用属性 (无论是 `ExprType` 本身所含有的, 还是 `decltype` 附加的), 则还需要借助于 [`std::remove_reference`](./metaprogramming.md#`std::remove_reference`) (定义在 `<type_traits>` 中):
 ```cpp
 #include <type_traits>
-template <typename Iter>
-auto func2(Iter beg, Iter end) ->
-    typename std::remove_reference<decltype(*beg)>::type {
+
+auto func(ParamType param)
+    -> typename std::remove_reference<decltype(expr)>::type {
   // ...
-  return *beg;
+  return expr;
+}
+```
+
+#### C++14 --- 前置返回类型
+C++14 允许以 `auto` 作为返回类型:
+```cpp
+auto func(ParamType param) {
+  // ...
+  return expr;
+}
+```
+在这里, `auto` 的确承担了类型推断任务, 采用的是[模板类型推断机制](#一般情况-----与模板类型推断相同), 因此 `expr` 的`引用`和顶层 `const` (或`volatile`) 属性会丢失.
+
+如果以 `decltype(auto)` 作为 `ReturnType`, 则采用的是 [`decltype` 类型推断规则](#`decltype`-类型推断):
+```cpp
+decltype(auto) func(ParamType param) {
+  // ...
+  return expr;
+}
+```
+⚠️以 `decltype(auto)` 作为 `ReturnType` 需要避免返回引向局部变量的引用:
+```cpp
+decltype(auto) func() {
+  auto v = { 1, 2, 3 };
+  return v[0];
 }
 ```
 
