@@ -1,4 +1,6 @@
-# 概述
+# 元编程
+
+## 概述
 以程序`实体` [entity] (例如 C++ 中的`类`或`函数`) 为运算对象的编程方式称为`元编程` [metaprogramming].
 
 在 C++ 中, 元编程主要通过以下语言机制来实现:
@@ -9,11 +11,11 @@
 
 ⚠️过度使用元编程会使得代码可读性变差, 编译时间变长, 测试和维护难度加大.
 
-# 类型函数
+## 类型函数
 在 C++ 中, 类型函数不是普通[函数](./function.md), 而是借助于[模板类](./generic.md)实现的编译期类型运算机制.
 
-## 移除或添加引用
-### `std::remove_reference`
+### 移除或添加引用
+#### `std::remove_reference`
 定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于 remove 类型实参的 reference:
 ```cpp
 namespace std{
@@ -33,7 +35,7 @@ int main() {
   typename std::remove_reference<int&&>::type z{0};  // 等价于 int z{0};
 }
 ```
-#### 别名 --- 省略 `::type` 和 `typename`
+##### 别名 --- 省略 `::type` 和 `typename`
 C++14 为它提供了以 `_t` 为后缀的别名:
 ```cpp
 namespace std{
@@ -52,7 +54,7 @@ int main() {
 }
 ```
 
-#### `std::move` 的实现
+##### `std::move` 的实现
 定义在 `<utility>` 中的函数 `std::move()` 用于将实参强制转换为右值引用.
 一种可能的实现方式为:
 ```cpp
@@ -68,7 +70,7 @@ remove_reference_t<T>&& move(T&& t) {
 }
 ```
 
-#### `std::forward` 的实现
+##### `std::forward` 的实现
 定义在 `<utility>` 中的模板函数 `std::forward<T>()` 用于完美转发实参 --- 保留所有类型 (含引用) 信息.
 一种可能的实现方式为:
 ```cpp
@@ -82,11 +84,11 @@ T&& forward(remove_reference_t<T>&& t) { return static_cast<T&&>(t); }
 }
 ```
 
-## 谓词 --- `std::is_*`
+### 谓词 --- `std::is_*`
 谓词 [predicate] 是指返回值类型为 `bool` 的函数.
 在 C++ 模板元编程中, 它是通过含有 `bool` 型成员的模板类来实现的.
 
-### `std::is_empty`
+#### `std::is_empty`
 定义在`<type_traits>` 中的模板类 `std::is_empty` 用于判断一个类的对象是否不占存储空间:
 ```cpp
 namespace std {
@@ -94,7 +96,7 @@ template <class T> struct is_empty;
 }
 ```
 它含有一个 `bool` 型静态数据成员 `value`, 可以用作`返回值`.
-#### 别名 --- 省略 `::value`
+##### 别名 --- 省略 `::value`
 C++17 为它提供了以 `_v` 为后缀的别名:
 ```cpp
 namespace std {
@@ -134,13 +136,13 @@ int main() {
 1 1 1 0 0
 ```
 
-# 控制结构
+## 控制结构
 
-## 选择
-### `?:` --- 从两个值中选取一个
+### 选择
+#### `?:` --- 从两个值中选取一个
 选择运算符根据`条件`在两个`值` [value] 之间进行选择.
 
-### `std::conditional` --- 从两个类型中选取一个
+#### `std::conditional` --- 从两个类型中选取一个
 定义在`<type_traits>` 中的模板类 `std::conditional` 根据`条件`在两个`类型` [type] 之间进行选择:
 ```cpp
 #include <iostream>
@@ -170,7 +172,7 @@ using conditional_t = typename conditional<B, T, F>::type;
 }
 ```
 
-### 从多个类型中选取一个
+#### 从多个类型中选取一个
 目前, 标准库没有提供从`多个`类型中选取一个的方法.
 如果将来有这样的方法 (暂且命名为 `std::select`) 被补充进标准库中, 那么它大致应当支持如下用法:
 ```cpp
@@ -210,10 +212,10 @@ using select_t = typename select<N, Cases...>::type;
 }
 ```
 
-## 递归
+### 递归
 C++ 元编程中没有类似于 `for` 或 `while` 的`循环` [loop] 机制, 其 `迭代` [iteration] 语义都是通过`递归` [recursion] 来实现的.
 
-### 非模板函数递归
+#### 非模板函数递归
 ```cpp
 constexpr int factorial(int i) {
   return (i < 2) ? 1 : i*factorial(i-1);
@@ -227,7 +229,7 @@ int main() {
 }
 ```
 
-### 模板函数递归
+#### 模板函数递归
 ```cpp
 template <int I>
 constexpr int factorial() {
@@ -247,7 +249,7 @@ int main() {
 }
 ```
 
-### 模板类递归
+#### 模板类递归
 ```cpp
 template <int I>
 struct factorial {
@@ -267,10 +269,10 @@ int main() {
 }
 ```
 
-# 变参数模板
+## 变参数模板
 C++11 引入了`参数包` [parameter pack], 用到了参数包的模板称为`变参数` [variadic] 模板.
 
-## 参数包
+### 参数包
 接受零个或多个 (`模板`或`函数`) 实参的 (`模板`或`函数`) 形参称为`参数包`.
 ```cpp
 // Args 是一个 模板参数包, 可含有 零或多个 模板形参:
@@ -295,7 +297,7 @@ void foo(const double&, const string&);
 void foo(const char(&)[3]);
 ```
 
-## 参数包的大小
+### 参数包的大小
 参数包的大小可以由 `sizeof...` 运算符获得:
 ```cpp
 template<typename... Args>
@@ -306,7 +308,7 @@ void g(Args... args) {
 ```
 该表达式是 `constexpr`, 因此不会对实参求值.
 
-## 递归的变参数模板函数
+### 递归的变参数模板函数
 变参数模板函数通常是`递归的`.
 作为`递归终止条件`的 (模板) 函数必须在`变参数`版本之前声明:
 ```cpp
@@ -331,7 +333,7 @@ int main() {
 }
 ```
 
-## 参数包的展开
+### 参数包的展开
 位于参数包右侧的 `...` 表示对其按相应的`模式` [pattern] 进行展开:
 ```cpp
 template <typename T, typename... Args>
@@ -354,7 +356,7 @@ std::ostream& errorMsg(std::ostream& os, const Args&... rest) {
 }
 ```
 
-## 参数包的转发
+### 参数包的转发
 上面定义的 `print` 在末尾不换行.
 若要添加一个末尾换行的版本, 可以基于 `print` 定义一个 `println`:
 ```cpp

@@ -1,11 +1,13 @@
-# 模板函数
+# 泛型编程
 
-## 提升 (Lifting)
+## 模板函数
+
+### 提升 (Lifting)
 `提升 (lifting)` 是指从一个或多个`具体的 (concrete)` 普通函数出发, 提取出一个`抽象的 (abstract)` 模板函数的过程, 是一种特殊的`泛化 (generalization)`.
 
 [标准库算法](./algorithm.md)是`提升`和`模板函数`的典型示例.
 
-## 语法
+### 语法
 `T` 的实际类型将根据 `compare` 的`静态`调用方式在`编译期`决定:
 ```cpp
 template <typename T>  // 模板形参列表
@@ -28,7 +30,7 @@ inline T min(const T&, const T&);
 | 用 `const T&` 作为函数形参类型 | 支持不可拷贝类型       |
 | 只用 `<` 进行比较操作          | `T` 不必支持其他运算符 |
 
-## 对函数重载的影响
+### 对函数重载的影响
 编译器首先根据`类型转换次数`对所有待选 (模板和非模板) 函数进行排序:
 - 如果正好有一个函数的匹配程度比其他函数更高, 则它将被选中.
 - 如果匹配程度最高的函数有多个, 则
@@ -36,8 +38,8 @@ inline T min(const T&, const T&);
   - 如果其中没有非模板, 且有一个模板的`特化 (specialization)` 程度更高, 则它将被选中.
   - 否则, 该调用有歧义, 编译时会报错.
 
-## 模板类型推断
-### 一般形式
+### 模板类型推断
+#### 一般形式
 不失一般性, 考虑如下模板函数定义
 ```cpp
 template <typename T>
@@ -64,10 +66,10 @@ int* const  cpx = &x;
 编译器通过比较`函数形参类型` (即 `ParamType`) 与`函数实参类型` (即 `ArgType`) 来推断 `T`.
 > `推断规则[0]`: 忽略 `ArgType` 的`引用`属性.
 
-### `ParamType` 既非指针又非引用
+#### `ParamType` 既非指针又非引用
 > `推断规则[1]`: 忽略 `ArgType` 的`引用`属性后, 继续忽略其顶层 `const` (及 `volatile`) 属性, 所得到的类型就是 `T`.
 
-#### `ParamType` 为 `T` (常用)
+##### `ParamType` 为 `T` (常用)
 推断过程及结果为:
 
 | `arg` | `ArgType`    | 忽略引用       | 忽略顶层 `const` | `T`          |
@@ -82,7 +84,7 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const*`  | `int const*`   | `int const*` |
 | `cpx` | `int* const` | `int* const`  | `int*`👈       | `int*`       |
 
-#### `ParamType` 为 `const T` 或等价的 `T const`
+##### `ParamType` 为 `const T` 或等价的 `T const`
 推断过程及 `T` 的推断结果与 `ParamType` 为 `T` 的情形相同, 而 `ParamType` 只比 `T` 多一个顶层 `const`.
 例如上表中最后三行的推断结果分别为:
 
@@ -92,12 +94,12 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const*`    | `int const*` | `int const* const`👈 |
 | `cpx` | `int* const` | `int*`👈        | `int*`       | `int* const`👈       |
 
-### `ParamType` 为指针
+#### `ParamType` 为指针
 `ArgType` 必须是指针类型 (或引向指针的引用). 
 
 > `推断规则[2]`: 忽略 `ArgType` 的`引用`属性后, 继续忽略其顶层 `const` (及 `volatile`) 属性, 再与 `ParamType` 进行比较, 以所需修饰符最少的类型作为 `T`.
 
-#### `ParamType` 为 `T*`
+##### `ParamType` 为 `T*`
 底层 `const` 会被推断为 `T` 的一部分:
 
 | `arg` | `ArgType`    | 忽略顶层 `const` | `T*`         | `T`         |
@@ -106,10 +108,10 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const*`    | `int const*` | `int const` |
 | `cpx` | `int* const` | `int*`👈        | `int*`       | `int`       |
 
-#### `ParamType` 为 `T* const`
+##### `ParamType` 为 `T* const`
 推断过程及 `T` 的推断结果与上一种情形相同, 只是 `ParamType` 会多一个顶层 `const`.
 
-#### `ParamType` 为 `const T*` 或等价的 `T const*`
+##### `ParamType` 为 `const T*` 或等价的 `T const*`
 底层 `const` 不会被推断为 `T` 的一部分:
 
 | `arg` | `ArgType`    | 忽略顶层 `const` | `const T*`     | `T`   |
@@ -118,13 +120,13 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const*`    | `const int*`   | `int` |
 | `cpx` | `int* const` | `int*`👈        | `const int*`👈 | `int` |
 
-#### `ParamType` 为 `const T* const` 或等价的 `T const* const`
+##### `ParamType` 为 `const T* const` 或等价的 `T const* const`
 推断过程及 `T` 的推断结果与上一种情形相同, 只是 `ParamType` 会多一个顶层 `const`.
 
-### `ParamType` 为引用
+#### `ParamType` 为引用
 > `推断规则[3]`: 忽略 `ArgType` 的`引用`属性后, 再与 `ParamType` 进行比较, 以所需修饰符最少的类型作为 `T`.
 
-#### `ParamType` 为 `T&`
+##### `ParamType` 为 `T&`
 `arg` 必须是左值表达式, 并且其顶层和底层 `const` 都会被推断为 `T` 的一部分.
 具体推断过程及结果如下:
 
@@ -136,7 +138,7 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const*&` | `int const*` |
 | `cpx` | `int* const` | `int* const&` | `int* const` |
 
-#### `ParamType` 为 `const T&` 或等价的 `T const&`  (常用)
+##### `ParamType` 为 `const T&` 或等价的 `T const&`  (常用)
 `arg` 可以是任意 (左值或右值) 表达式, 并且其底层 `const` 会被推断为 `T` 的一部分, 而其顶层 `const` 则会被忽略.
 具体推断过程及结果如下:
 
@@ -149,7 +151,7 @@ int* const  cpx = &x;
 | `pcx` | `int const*` | `int const* const&` | `int const*` |
 | `cpx` | `int* const` | `int* const&`       | `int*`👈     |
 
-#### `ParamType` 为 `T&&` (常用)
+##### `ParamType` 为 `T&&` (常用)
 > 形如 `T&&` 并且其中的 `T` 需要被推断的引用称为`万能` [universal] 引用. --- [Meyers (2014)]().
 
 > `推断规则[4]`: 如果 `arg` 是`左值表达式`, 则 `T` 为`左值引用`; 否则 `T` 为不含引用的类型.
@@ -185,7 +187,7 @@ std::vector<T> build(T&& x) {
 
 [`std::forward` 的实现](./metaprogramming.md#`std::forward`-的实现)需要借助于[模板元编程](./metaprogramming.md)技术.
 
-### `arg` 为数组或函数
+#### `arg` 为数组或函数
 > `推断规则[5]`: 如果 `ArgType` 是`数组`或`函数`(或引向数组或函数的引用) 并且 `ParamType` 不含引用属性, 则 `ArgType` 将`退化` [decay] 为`指针`.
 
 ```cpp
@@ -200,9 +202,9 @@ f(book, book);  // 函数签名为 void f(const char*, const char(&)[11])
 int g(double);
 f(g, g);  // 函数签名为 void f(int (*)(double), int (&)(double))
 ```
-## 其他类型推断
-### `auto` 类型推断
-#### 一般情况 --- 与模板类型推断相同
+### 其他类型推断
+#### `auto` 类型推断
+##### 一般情况 --- 与模板类型推断相同
 在绝大多数情况下, `auto` 类型推断与模板类型推断具有相同的法则, 因为 `auto` 就是模板类型形参 `T`, 而其他元素有如下对应关系:
 
 | `auto` 语句          | `param` | `ParamType`   | `arg` | `ArgType` |
@@ -223,7 +225,7 @@ is_positive(-256);  // auto 被推断为 int
 ```
 用到的类型推断法则都与模板类型推断法则相同.
 
-#### 唯一例外 --- 列表初始化
+##### 唯一例外 --- 列表初始化
 对于 `int`, 以下四种初始化方式 (几乎) 完全等价, 得到的都是 `int` 型变量:
 ```cpp
 int a = 1;
@@ -260,7 +262,7 @@ g(x);            // 正确: T 推断为 std::initializer_list<int>
 g({ 1, 2, 3 });  // 正确: T 推断为 int
 ```
 
-###  `decltype` 类型推断
+####  `decltype` 类型推断
 `decltype` 是一种`修饰符` [specifier], 它作用在表达式 `expr` 上得到其类型 `ExprType`:
 - 一般情况下, `ExprType` 是 `expr` 的完整 (含`引用`及 `const` 属性) 类型.
 - 如果 `expr` 是`除变量名以外的左值表达式`, 则 `ExprType` 还需修饰为 `左值引用`.
@@ -295,8 +297,8 @@ static_assert(is_same_v<decltype(ra), int(&)[3]>);  // 引向数组的引用
 static_assert(is_same_v<decltype(a[0]), int&>);     // 引向数组元素的引用
 ```
 
-### 函数返回类型推断
-#### 一般形式
+#### 函数返回类型推断
+##### 一般形式
 不失一般性, 考虑如下函数:
 ```cpp
 ReturnType func(ParamType param) {
@@ -305,7 +307,7 @@ ReturnType func(ParamType param) {
 }
 ```
 
-#### C++11 --- 后置返回类型
+##### C++11 --- 后置返回类型
 不失一般性, 如果希望以 `ExprType` 作为 `ReturnType`, 则只需要形式化地以 `auto` 作为 `ReturnType`, 并在函数形参列表后紧跟 `-> decltype(expr)`:
 ```cpp
 auto func(ParamType param) -> decltype(expr) {
@@ -327,7 +329,7 @@ auto func(ParamType param)
 }
 ```
 
-#### C++14 --- 前置返回类型
+##### C++14 --- 前置返回类型
 C++14 允许以 `auto` 作为返回类型:
 ```cpp
 auto func(ParamType param) {
@@ -352,7 +354,7 @@ decltype(auto) func() {
 }
 ```
 
-## 显式模板实参
+### 显式模板实参
 ```cpp
 template <typename T1, typename T2, typename T3> T1 sum(T2, T3);
 ```
@@ -363,7 +365,7 @@ long lng = 1;
 auto val3 = sum<long long>(i, lng);  // long long sum(int, long)
 ```
 
-## 模板函数的地址
+### 模板函数的地址
 使用模板函数的地址时, 必须确保所有模板形参可以被唯一地确定:
 ```cpp
 template <typename T> int compare(const T&, const T&);
@@ -378,7 +380,7 @@ func(compare<int>);  // 正确: T 被唯一地确定为 int
 func(compare);       // 错误: T 无法被唯一地确定
 ```
 
-# 模板类
+## 模板类
 
 ```cpp
 template <typename T> class Blob {
@@ -401,11 +403,11 @@ template <typename T> class Blob {
 };
 ```
 
-## 定义成员函数
+### 定义成员函数
 模板类的成员函数可以在类的内部或外部定义.
 在内部定义的成员函数是隐式内联的.
 
-### 在外部定义成员函数
+#### 在外部定义成员函数
 在模板类外部定义的成员函数以 `template` 关键词 + 模板类的形参列表 开始, 例如:
 ```cpp
 template <typename T>
@@ -430,7 +432,7 @@ void Blob<T>::pop_back() {
 }
 ```
 
-### 在外部定义构造函数
+#### 在外部定义构造函数
 ```cpp
 template <typename T>
 Blob<T>::Blob() : data(std::make_shared<std::vector<T>>()) {}
@@ -443,7 +445,7 @@ Blob<T>::Blob(std::initializer_list<T> il)
 Blob<string> articles = {"a", "an", "the"};
 ```
 
-## 定义静态成员
+### 定义静态成员
 `Foo` 的每个`实例化 (instantiation)` 都有其自己的静态成员 (数据或方法) `实例 (instance)`:
 ```cpp
 template <typename T> class Foo {
@@ -459,9 +461,9 @@ template <typename T>
 size_t Foo<T>::ctr = 0;  // 定义并初始化 ctr
 ```
 
-## 使用模板类名
+### 使用模板类名
 
-### 在内部使用类名
+#### 在内部使用类名
 `模板类名 (name of a class template)`  (不带模板实参) 不是一种`类型名 (name of a type)`, 但在模板类自己的作用域内, 可以不受此限制:
 
 ```cpp
@@ -491,7 +493,7 @@ BlobPtr<T>& operator++();
 BlobPtr<T>& operator--();
 ```
 
-### 在外部引用类名
+#### 在外部引用类名
 在模板类外部定义成员时, 模板类的作用域起始于 (带模板实参的) 类名. 因此在 `::` 之前需要显式写出模板实参, 而在其之后则不用:
 ```cpp
 template <typename T>
@@ -502,7 +504,7 @@ BlobPtr<T> BlobPtr<T>::operator++(int) {
 }
 ```
 
-### (C++11) 模板类型别名
+#### (C++11) 模板类型别名
 `实例化的 (instantiated)` 模板类是一种具体类型, 可以用 `typedef` 为其定义别名, 而对模板名称则不可以:
 
 ```cpp
@@ -525,7 +527,7 @@ template <typename T> using partNo = pair<T, unsigned>;
 partNo<string> books;
 ```
 
-## 友元 (少用)
+### 友元 (少用)
 
 `友元 (friend)` 机制破坏了类的封装, 因此要尽量少用.
 
@@ -533,7 +535,7 @@ partNo<string> books;
 
 如果 (模板或非模板) 类的友元本身就是一个模板 (函数或类), 那么友元关系有以下几种可能.
 
-### 一一对应的模板友元
+#### 一一对应的模板友元
 ```cpp
 // 前置声明:
 template <typename> class BlobPtr;
@@ -548,7 +550,7 @@ template <typename T> class Blob {
 };
 ```
 
-### 一般与特定的模板友元
+#### 一般与特定的模板友元
 一个 (模板或非模板) 类可以指定一个模板类的`所有`或`特定`的实例化作为其友元:
 ```cpp
 // 前置声明:
@@ -571,16 +573,16 @@ template <typename T> class C2 {
 };
 ```
 
-### (C++11) 将模板类型形参设为友元
+#### (C++11) 将模板类型形参设为友元
 ```cpp
 template <typename Type> class Bar {
   friend Type;
 };
 ```
 
-# 模板成员
+## 模板成员
 
-## 非模板类的模板成员
+### 非模板类的模板成员
 
 为`非模板类`定义`模板函数成员`:
 
@@ -606,7 +608,7 @@ double* dp = new double;
 std::unique_ptr<int, DebugDelete> dp(new int, del);
 ```
 
-## 模板类的模板成员
+### 模板类的模板成员
 
 为`模板类`声明`模板函数`成员, 二者拥有各自独立的模板形参:
 
@@ -625,9 +627,9 @@ Blob<T>::Blob(Iter b, Iter e)
     : data(std::make_shared<std::vector<T>>(b, e)) {}
 ```
 
-# 模板形参
+## 模板形参
 
-## 类型形参
+### 类型形参
 
 在模板形参列表中, 关键词 `class` 与 `typename` 没有区别:
 
@@ -636,7 +638,7 @@ template <typename T, class U>
 int calc(const T&, const U&);
 ```
 
-## 非类型形参
+### 非类型形参
 非类型形参的值在`编译期`确定 (人为`指定`或由编译器`推断`), 因此必须为`常量表达式 (constexpr)`:
 
 ```cpp
@@ -650,7 +652,7 @@ compare("hi", "mom");
 int compare(const char (&p1)[3], const char (&p2)[4]);
 ```
 
-## 模板形参的作用域
+### 模板形参的作用域
 模板形参遵循一般的作用域规则, 但已经被模板形参占用的名字在模板内部`不得`被复用:
 
 ```cpp
@@ -664,12 +666,12 @@ void f(A a, B b) {
 template <typename V, typename V>  // ...
 ```
 
-## 模板声明
+### 模板声明
 与函数形参名类似, 同一模板的模板形参名在各处声明或定义中不必保持一致.
 
 一个文件所需的所有模板声明, 应当集中出现在该文件头部, 并位于所有用到这些模板名的代码之前.
 
-## 模板形参的类型成员
+### 模板形参的类型成员
 默认情况下, 编译器认为由 `::` 获得的名字不是一个类型. 因此, 如果要使用模板形参的类型成员, 必须用关键词 `typename` 加以修饰:
 ```cpp
 // T 为一种 容器类型, 并且拥有一个类型成员 value_type
@@ -682,7 +684,7 @@ typename T::value_type top(const T& c) {
 }
 ```
 
-## (C++11) 默认模板实参
+### (C++11) 默认模板实参
 ```cpp
 template <typename T, typename F = std::less<T>>
 int compare(const T& v1, const T& v2, F f = F()) {
@@ -711,14 +713,14 @@ Numbers<long double> lots_of_precision;
 Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
 ```
 
-# 实例化 (Instantiation)
+## 实例化 (Instantiation)
 
-## 构建过程
+### 构建过程
 这里笼统地将 C++ 程序的构建过程分为以下两个步骤:
 1. 编译 --- 由`编译器 (compiler)` 将`源 (source) 文件`转化为`目标 (object) 文件`
 2. 链接 --- 由`链接器 (linker)` 将一个或多个`目标文件`转化为一个`可执行 (executive) 文件`
 
-## 实例化
+### 实例化
 `模板定义`是一种特殊的源码, 其中含有待定的`模板形参`, 因此编译器无法立即生成目标码.
 如果模板在定义后被使用, 则编译器将对其进行`实例化 (instantiation)`:
 
@@ -730,7 +732,7 @@ Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
   - 编译器 (通常) 会为源文件中的每一种模板实参 (组合) 生成一个独立的`实例 (instance)`, 对应于目标文件中的一段目标码.
   - 编译器 (通常) 只会为那些被使用的成员函数生成实例.
 
-## (C++11) 显式实例化
+### (C++11) 显式实例化
 对于一个模板, 必须知道其`定义`才能进行实例化.
 因此, 通常将模板的`定义`置于头文件 (`.h` 或 `.hpp`) 中.
 这样做的好处是代码简单, 错误容易在`编译期 (compile-time)` 被发现, 
@@ -766,9 +768,9 @@ template class Blob<string>;  // 实例化定义, 所有成员函数将被实例
 template int compare(const int&, const int&);  // 实例化定义
 ```
 
-# 特化 (Specialization)
+## 特化 (Specialization)
 
-## 模板函数的特化
+### 模板函数的特化
 假设有以下两个版本的同名函数:
 ```cpp
 // 版本一, 用于比较两个 任意类型的对象:
@@ -800,9 +802,9 @@ int compare(const char* const& p1, const char* const& p2) {
 
 模板及其特化应当在同一个头文件中进行声明, 并且应当先给出所有同名`模板`, 再紧随其后给出所有`特化`.
 
-## 模板类的特化
+### 模板类的特化
 
-### (C++11) `std::hash` 的特化
+#### (C++11) `std::hash` 的特化
 `std::hash` 是一个模板类, 定义在头文件 `<functional>` 中:
 ```cpp
 template <class Key>
@@ -836,7 +838,7 @@ struct hash<Key> {
 }
 ```
 
-### 偏特化 (Partial Specialization)
+#### 偏特化 (Partial Specialization)
 `偏特化` (又称`部分特化`) 只指定`一部分模板实参`或`模板形参的一部分属性`.
 只有模板类可以进行偏特化. 偏特化的模板类依然是模板类.
 

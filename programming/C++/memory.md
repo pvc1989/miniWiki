@@ -1,4 +1,6 @@
-# 内存分类
+# 动态内存管理
+
+## 内存分类
 一个`进程 (process)` 的`虚拟内存空间 (virtual memory space)` 分为以下几个部分:
 
 | 分类 | 用途 |
@@ -14,10 +16,10 @@
 - 运行前不知道对象的具体类型, 例如: 多态 (polymorphism).
 - 运行时在多个对象之间共享数据.
 
-# 直接管理动态对象（慎用）
-## `new` 运算符
+## 直接管理动态对象（慎用）
+### `new` 运算符
 
-### 分配内存并构造对象
+#### 分配内存并构造对象
 置于`类型名`之前的 `new` 运算符用于创建`单个动态对象`.
 如果分配成功, 则返回一个指向该对象的指针, 否则抛出异常:
 ```cpp
@@ -28,7 +30,7 @@ int* p = new int;
 2. 默认初始化对象
 3. 返回指向该对象的`裸指针`
 
-### 值初始化
+#### 值初始化
 默认情况下, 动态分配对象时采用的是`默认初始化`.
 若要进行`值初始化`, 需要在类型名后面紧跟 `()`, 例如
 ```cpp
@@ -38,14 +40,14 @@ int* pi1 = new int;    // 默认初始化 为 不确定值
 int* pi2 = new int();  // 值初始化 为 0
 ```
 
-### 常值对象
+#### 常值对象
 动态分配的常值对象必须由`指向常量的指针`接管, 并且在创建时被初始化:
 ```cpp
 const int* pci = new const int(1024);
 const std::string* pcs = new const std::string;
 ```
 
-### 内存耗尽
+#### 内存耗尽
 内存空间在运行期有可能被耗尽, 在此情况下, `new` (默认) 将抛出 `std::bad_alloc` 异常.
 为阻止抛出异常, 可以在 `new` 与类型名之间插入 `(nothrow)`, 例如:
 ```cpp
@@ -54,9 +56,9 @@ int* p1 = new int;            // 如果分配失败, 将抛出 std::bad_alloc
 int* p2 = new (nothrow) int;  // 如果分配失败, 将返回 nullptr
 ```
 
-## `delete` 运算符
+### `delete` 运算符
 
-### 析构对象并释放内存
+#### 析构对象并释放内存
 传递给 `delete` 的指针必须是`指向动态对象的指针`或 `nullptr`:
 ```cpp
 delete p;     // 析构并释放 单个动态对象
@@ -65,7 +67,7 @@ delete[] pa;  // 析构并释放 动态数组
 
 通常, 编译器无法判断一个指针`所指的对象是否是动态的`, 也无法判断`所指的内存空间是否已经被释放`.
 
-### 内存泄漏 (Memory Leak)
+#### 内存泄漏 (Memory Leak)
 ```cpp
 Foo* factory(T arg) { return new Foo(arg); }
 void use_factory(T arg) {
@@ -76,7 +78,7 @@ void use_factory(T arg) {
 ```
 如果 `use_factory` 在返回前没有释放 `p` 所指向的动态内存, 则 `use_factory` 的调用者将不再有机会将其释放, 可用的动态内存空间将会变小 --- 这种现象被称为`内存泄漏`.
 
-### 悬垂指针 (Dangling Pointer)
+#### 悬垂指针 (Dangling Pointer)
 在执行完 `delete p;` 之后, `p` 将成为一个`悬垂的`指针, 对其进行
 - 解引用, 并进行
   - 读: 会返回无意义的值
@@ -94,14 +96,14 @@ p = nullptr;  // p 不再指向该地址
               // q 仍然指向该地址, 对其进行 解引用 或 二次释放 都有可能造成破坏
 ```
 
-# 智能 (Smart) 指针
+## 智能 (Smart) 指针
 `智能指针`对普通指针进行了封装, 因此可以将普通指针形象地称为`裸 (raw) 指针`.
 
 C++11 引入了三种智能指针: `std::unique_ptr`, `std::shared_ptr`, `std::weak_ptr`.
 
-## 公共操作
-### 与裸指针相同的操作
-#### 默认初始化
+### 公共操作
+#### 与裸指针相同的操作
+##### 默认初始化
 默认初始化为空指针:
 ```cpp
 std::shared_ptr<T> sp;
@@ -109,18 +111,18 @@ std::unique_ptr<T> up;
 std::weak_ptr<T> wp;
 ```
 
-#### 用作判断条件
+##### 用作判断条件
 只支持 `std::shared_ptr` 和 `std::shared_ptr`.
 非空为真.
 
-#### 解引用及访问成员
+##### 解引用及访问成员
 只支持 `std::shared_ptr` 和 `std::shared_ptr`.
 ```cpp
 *p;      // 解引用, 获得 p 所指对象的 (左值) 引用
 p->mem;  // 等价于 (*p).mem
 ```
 
-### 异常安全
+#### 异常安全
 `智能指针`负责释放资源, 即使在其`离开作用域`或`重置`前抛出了异常:
 ```cpp
 void f() {
@@ -139,27 +141,27 @@ void f() {
 }
 ```
 
-### `swap` --- 交换所管理的裸指针
+#### `swap` --- 交换所管理的裸指针
 `p` 和 `q` 必须是同一类型的智能指针:
 ```cpp
 p.swap(q);
 std::swap(p, q);
 ```
 
-### `get` --- 获得所管理的裸指针 (慎用)
+#### `get` --- 获得所管理的裸指针 (慎用)
 ```cpp
 p.get();
 ```
 该方法仅用于向`只接受裸指针`并且`不会将传入的指针 delete 掉`的函数传递参数.
 
-## (C++11) `std::unique_ptr`
+### (C++11) `std::unique_ptr`
 
 `std::unique_ptr` 用于管理`独占所有权`的资源 (通常是内存), 具有以下优点:
 1. 体积小 --- 默认情况下, 与`裸指针`大小相同.
 2. 速度快 --- 大多数操作 (含解引用) 执行与`裸指针`相同的指令.
 3. 只能`移动` --- 不能`拷贝`与`赋值`, 确保独占所有权.
 
-### 创建
+#### 创建
 推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr` :
 ```cpp
 auto up = std::make_unique<T>(args);
@@ -169,7 +171,7 @@ auto up = std::make_unique<T>(args);
 2. 用 `args` 初始化 `T` 类型的对象
 3. 返回指向该对象的 `std::unique_ptr`
 
-### 指定 deleter
+#### 指定 deleter
 `deleter 类型`是 `std::unique_ptr 类型`的一部分.
 每一个 `std::unique_ptr 对象`所拥有的 `deleter 对象`是在`编译期`绑定的, 因此无法在`运行期`更换.
 
@@ -178,7 +180,7 @@ auto up = std::make_unique<T>(args);
 - `函数指针` 或 `含有内部状态的函数对象`, 则 `std::unique_ptr` 的体积比裸指针大.
 - `不含有内部状态的函数对象` (例如 无捕获的 lambda 表达式), 则 `std::unique_ptr` 的体积与裸指针相同.
 
-### `reset` --- 重设裸指针
+#### `reset` --- 重设裸指针
 一个 `std::unique_ptr` 独占其所指对象的所有权, 因此重设裸指针总是会 `delete` 它之前所管理的裸指针:
 ```cpp
 // 接管裸指针 q:
@@ -189,7 +191,7 @@ u.reset();
 u = nullptr;
 ```
 
-### `release` --- 让渡所有权
+#### `release` --- 让渡所有权
 ```cpp
 u.release();
 ```
@@ -198,7 +200,7 @@ u.release();
 2. 放弃对所指对象的所有权
 3. 将自己设为空指针
 
-### 不支持拷贝或赋值
+#### 不支持拷贝或赋值
 特例: 即将被销毁的 `std::unique_ptr` 可以被拷贝或赋值.
 例如在函数 (工厂方法) 中构造一个 `std::unique_ptr` 并将其返回:
 ```cpp
@@ -226,7 +228,7 @@ p2.reset(p3.release());
 // 此时, p1 为空, p2 指向 "world", p3 为空
 ```
 
-### 接管动态数组
+#### 接管动态数组
 `std::unique_ptr` 支持两种形式的类型参数:
 - `std::unique_ptr<T>` --- 用于管理单个动态对象.
 - `std::unique_ptr<T[]>` --- 用于管理动态数组, 只应当用于接管从 C-风格 API 所获得的动态数组.
@@ -250,9 +252,9 @@ int main() {
 }
 ```
 
-## (C++11) `std::shared_ptr`
+### (C++11) `std::shared_ptr`
 
-### 创建
+#### 创建
 推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr`:
 ```cpp
 auto up = std::make_shared<T>(args);
@@ -276,7 +278,7 @@ std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
 | `std::shared_ptr<T>` 对象 | `p` 与 `q` 分享所指对象的所有权                |
 | `std::unique_ptr<T>` 对象 | `p` 接管 `q` 所指对象, 并将 `q` 指向 `nullptr` |
 
-### 引用计数
+#### 引用计数
 尽管标准没有规定 `std::shared_ptr` 的实现方式, 但几乎所有标准库的实现所采用的方案都是`引用计数 (reference count)`.
 一个`裸指针`可以被多个 `std::shared_ptr` 共享所有权, 管理同一`裸指针`的 `std::shared_ptr` 的个数称为它们的`引用计数`:
 ```cpp
@@ -288,7 +290,7 @@ p.unique();     // 判断 引用计数 是否为 1
 
 为避免`数据竞争 (data racing)`, 增减引用计数的操作必须是`原子的 (atomic)`, 因此读写引用计数会比`非原子操作`消耗更多资源.
 
-### 指定 deleter
+#### 指定 deleter
 不同于 `std::unique_ptr`, `deleter 类型`不是 `std::shared_ptr 类型`的一部分.
 每一个 `std::shared_ptr 对象`所绑定的 `deleter 对象`可以在`运行期`更换.
 
@@ -299,7 +301,7 @@ p.unique();     // 判断 引用计数 是否为 1
 
 所谓共享`所有权`, 实际上是通过共享`控制块`来实现的.
 
-### 拷贝与移动
+#### 拷贝与移动
 用一个 `std::shared_ptr` 对另一个同类对象进行`拷贝赋值`会改变二者的引用计数:
 ```cpp
 p = q;  // p 的引用计数 - 1, q 的引用计数 + 1
@@ -311,7 +313,7 @@ auto p = q;  // q 的引用计数 + 1, p 的引用计数与之相同
 
 `移动赋值`与`移动初始化`不需要改变引用计数.
 
-### `reset` --- 重设裸指针
+#### `reset` --- 重设裸指针
 只有当引用计数为 `1` 时, 重设裸指针才会 `delete` 之前所管理的裸指针:
 ```cpp
 p.reset(q, d);  // 接管 裸指针 q, 并将 deleter 替换为 d
@@ -319,7 +321,7 @@ p.reset(q);     // 接管 裸指针 q
 p.reset();      // 接管 空指针
 ```
 
-### `shared_from_this`
+#### `shared_from_this`
 ```cpp
 class Widget {
  public:
@@ -360,16 +362,16 @@ void Widget::process() {
 }
 ```
 
-## (C++11) `std::weak_ptr`
+### (C++11) `std::weak_ptr`
 `std::weak_ptr` 不支持`条件判断`或`解引用`等常用的指针操作, 因此不是一种独立的智能指针, 而必须与 `std::shared_ptr` 配合使用. 
 
-### 创建
+#### 创建
 指向一个 `std::shared_ptr` 所管理的对象, 但不改变其引用计数:
 ```cpp
 std::weak_ptr<T> wp(sp);
 ```
 
-### 引用计数
+#### 引用计数
 获取引用计数的操作与 `std::shared_ptr` 类似:
 ```cpp
 // 返回与之共享所有权的 std::shared_ptr 的引用计数:
@@ -391,20 +393,20 @@ w.lock();
 因此, `std::weak_ptr` 的创建, 析构, 赋值等操作都会读写`弱引用计数`.
 为避免`数据竞争`, 读写引用计数操作都是`原子的`, 从而会比`非原子操作`消耗更多资源.
 
-### 拷贝与移动
+#### 拷贝与移动
 一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr` , 但不改变引用计数:
 ```cpp
 w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
 ```
 
-### `reset` --- 重设裸指针
+#### `reset` --- 重设裸指针
 只将自己所管理的裸指针设为 `nullptr`, 不负责析构对象或释放内存:
 ```cpp
 w.reset();
 ```
 
-### 应用场景
-#### 缓存复杂操作
+#### 应用场景
+##### 缓存复杂操作
 工厂方法返回 `std::shared_ptr` 而非 `std::unique_ptr`
 ```cpp
 std::shared_ptr<const Widget> fastLoadWidget(WidgetID id) {
@@ -418,11 +420,11 @@ std::shared_ptr<const Widget> fastLoadWidget(WidgetID id) {
 }
 ```
 
-#### 实现 Observer 模式
+##### 实现 Observer 模式
 Observer 模式要求: `Subject` 的状态发生变化时, 应当通知所有的 `Observer`.
 这一需求可以通过在 `Subject` 对象中维护一个存储 `std::weak_ptr<Observer>` 对象的容器来实现.
 
-#### 避免 `std::shared_ptr` 成环
+##### 避免 `std::shared_ptr` 成环
 对于非树结构, 全部使用 `std::shared_ptr` 有可能形成环.
 当环外的所有对象都不再指向环内的任何一个成员时, 环内的成员就成了孤儿, 从而造成内存泄露.
 
@@ -430,16 +432,16 @@ Observer 模式要求: `Subject` 的状态发生变化时, 应当通知所有的
 - `parent` 指向 `child` 的指针应当选用 `std::unique_ptr`
 - `child` 指向 `parent` 的指针可以选用`裸指针`
 
-## (C++11) `std::make_shared` 与 (C++14) `std::make_unique`
+### (C++11) `std::make_shared` 与 (C++14) `std::make_unique`
 
-### 节省资源
+#### 节省资源
 对于 `std::make_shared` 和 `std::allocate_shared`, 用 `make` 函数可以节省存储空间和运行时间:
 ```cpp
 std::shared_ptr<Widget> spw(new Widget);  // 分配 2 次
 auto spw = std::make_shared<Widget>();    // 分配 1 次
 ```
 
-### 异常安全
+#### 异常安全
 `make` 函数有助于减少代码重复 (例如与 `auto` 配合可以少写一次类型), 并提高`异常安全`.
 例如在如下代码中
 ```cpp
@@ -461,7 +463,7 @@ processWidget(std::make_unique<Widget>(),
 
 在不应或无法使用 `make` 函数的情况下, 一定要确保由 `new` 获得的动态内存`在一条语句内`被智能指针接管, 并且在该语句内`不做任何其他的事`.
 
-### 列表初始化
+#### 列表初始化
 `make` 函数用 `()` 进行完美转发, 因此无法直接使用对象的列表初始化构造函数.
 一种解决办法是先用 `auto` 创建一个 `std::initializer_list` 对象, 再将其传入 `make` 函数:
 ```cpp
@@ -469,13 +471,13 @@ auto initList = { 10, 20 };
 auto spv = std::make_shared<std::vector<int>>(initList);
 ```
 
-### 不使用 `make` 函数的情形
+#### 不使用 `make` 函数的情形
 对于 `std::shared_ptr`, 不应或无法使用 `make` 函数的情形还包括: 
 - 需要指定内存管理方案 (allocator, deleter) 的类.
 - 系统内存紧张, 对象体积庞大, 且 `std::weak_ptr` 比相应的 `std::shared_ptr` 存活得更久.
 
-## `pImpl` --- 指向实现的指针
-### 动机
+### `pImpl` --- 指向实现的指针
+#### 动机
 假设 `Widget` 是一个含有数据成员的类.
 在定义 `Widget` 之前, 必须在 `widget.h` 中引入定义成员类型的头文件:
 
@@ -497,7 +499,7 @@ class Widget {
 
 所谓 `pImpl` 就是用`指向实现的指针 (pointer to implementation)` 代替数据成员, 将 `Widget` 对成员数据类型的依赖从`头文件`移入`源文件`, 从而隔离`用户`与`实现`.
 
-### 用 裸指针 实现
+#### 用 裸指针 实现
 ```cpp
 // widget.h
 class Widget {
@@ -526,7 +528,7 @@ Widget::Widget() : pImpl(new Impl) { }  // 分配资源
 Widget::~Widget() { delete pImpl; }     // 释放资源
 ```
 
-### 用 `std::shared_ptr` 实现
+#### 用 `std::shared_ptr` 实现
 ```cpp
 // widget.h
 #include <memory>
@@ -551,7 +553,7 @@ struct Widget::Impl {
 };
 ```
 
-### 用 `std::unique_ptr` 实现
+#### 用 `std::unique_ptr` 实现
 ```cpp
 // widget.h
 #include <memory>
@@ -605,9 +607,9 @@ Widget::Widget(const Widget& rhs)
     : pImpl(std::make_unique<Impl>(*rhs.pImpl)) { }
 ```
 
-# 动态数组
+## 动态数组
 
-## 直接管理动态数组（慎用）
+### 直接管理动态数组（慎用）
 大多数情况下应当优先选用标准库提供的`容器类`而不是`动态数组`.
 如果要显式创建`动态数组`, 则需要在`类型名`后面紧跟数组`元素个数`.
 如果分配成功, 则返回一个指向该数组第一个元素的指针, 否则抛出异常:
@@ -621,7 +623,7 @@ typedef int Array[42];
 int* pArray = new Array;
 ```
 
-## `std::allocator`
+### `std::allocator`
 通常, `new` 会依次完成`分配内存`和`构造对象`两个任务.
 在某些情况下, 这些默认初始化或值初始化的对象会`立即`被其他参数所构造的对象覆盖, 于是 `new` 所执行的`构造对象`操作就成了多余的.
 标准库定义的 `std::allocator` 模板类可以将`分配内存`与`构造对象`两个操作分离:
