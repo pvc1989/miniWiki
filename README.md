@@ -31,7 +31,7 @@
 - Markdown
   - [GitHub Flavored Markdown](https://github.github.com/gfm/)
   - [Typora](./tools/markdown/typora.md) 
-- [Git](./tools/Git.md) 
+- [Git](./tools/Git.md) --- 版本控制
 - 构建工具
   - [CMake](../../tools/build.md#CMake) --- 跨平台构建
 - [Octave](./tools/Octave.md)

@@ -17,8 +17,8 @@
 - [类](./class.md)
   - 面向对象编程 --- 运行期多态
 - 模板
-  - [泛型编程 (Generic Programming) --- 编译期多态](./generic.md)
-  - [元编程 (Metaprogramming) --- 编译期计算](./metaprogramming.md)
+  - [泛型编程 (Generic Programming)](./generic.md) --- 编译期多态
+  - [元编程 (Metaprogramming](./metaprogramming.md) --- 编译期计算
 
 ## 开发工具
 - [构建工具](../../tools/build.md)
