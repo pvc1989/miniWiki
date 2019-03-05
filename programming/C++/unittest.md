@@ -216,6 +216,62 @@ int main(int argc, char **argv) {
 ```
 
 ### 构建
-#### 手动构建 (Linux)
+#### 获取源代码
+首先, 将托管在 [GitHub](https://github.com/google/googletest) 上的源代码仓库克隆到本地:
+```shell
+git clone https://github.com/google/googletest.git
+```
+克隆成功后, 在当前目录 (运行 `git clone` 时所在的目录) 下将得到一个 `googletest` 目录, 其结构大致如下:
+```shell
+googletest
+├── README.md
+├── CMakeLists.txt
+├── googlemock
+│   ├── CMakeLists.txt
+│   ├── docs
+│   ├── include
+│   ├── src
+│   ├── test
+│   ├── ...
+├── googletest
+│   ├── CMakeLists.txt
+│   ├── docs
+│   ├── include
+│   ├── samples
+│   ├── src
+│   ├── test
+│   └── ...
+├── ...
+```
+其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../../tools/build.md#CMake) --- 这是目前最简单最通用的自动构建方式.
 
-#### 自动构建 (CMake)
+#### 构建为独立的库
+假设源文件目录 (必须含有 `CMakeLists.txt`) 为 `source-dir`, 用于存放构建产物的目录为 `build-dir`, 则构建过程如下:
+```shell
+# 生成本地构建文件, 例如 Makefile:
+cmake [options] -S source-dir -B build-dir
+# 调用本地构建工具, 例如 make:
+cmake --build build-dir
+```
+其中, `[opitions]` 是可选项 (使用时不写 `[]`), 用于设置 (或覆盖 `CMakeLists.txt` 中设置过的) CMake 变量的值.
+一般形式为 `-D var=value` (注意 `=` 两边没有空格), 常用的有 (可以组合使用):
+
+| `var` (大小写敏感)               | `value` (大小写敏感) | 含义                                |
+| -------------------------------- | -------------------- | ----------------------------------- |
+| `CMAKE_CXX_FLAGS`                | `-std=c++11`         | 启用 C++11 标准                     |
+| `gtest_build_samples`            | `ON`                 | 构建 `googletest/samples/` 中的示例 |
+| `gtest_build_tests`              | `ON`                 | 构建 `googletest/tests/` 中的测试   |
+| `GTEST_CREATE_SHARED_LIBRARY`    | `1`                  | 生成动态链接库                      |
+| `GTEST_LINKED_AS_SHARED_LIBRARY` | `1`                  | 使用动态链接库                      |
+
+在[图形用户界面的 CMake](https://cmake.org/download/) 里, 这些 CMake 变量可以分组显式, 查找和修改起来非常方便.
+
+#### 集成到本地项目
+
+|         方式         | 难度 |  路径  |  源代码  |      目标码      | 更新方式 |
+| :------------------: | :--: | :----: | :------: | :--------------: | :------: |
+| 源代码复制进本地项目 | 容易 | 无依赖 | 大量重复 |     大量重复     |  纯手动  |
+|   构建为公共静态库   | 中等 | 被依赖 | 只需一份 | 可执行文件中重复 |  半自动  |
+|   构建为公共动态库   | 中等 | 被依赖 | 只需一份 |     只需一份     |  半自动  |
+|  作为子项目参与构建  | 困难 | 无依赖 | 大量重复 |     大量重复     |  全自动  |
+

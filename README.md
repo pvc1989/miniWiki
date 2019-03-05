@@ -32,6 +32,8 @@
   - [GitHub Flavored Markdown](https://github.github.com/gfm/)
   - [Typora](./tools/markdown/typora.md) 
 - [Git](./tools/Git.md) 
+- 构建工具
+  - [CMake](../../tools/build.md#CMake) --- 跨平台构建
 - [Octave](./tools/Octave.md)
 - Linux
   - [Install](./tools/linux/install.md) 
