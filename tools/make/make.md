@@ -175,6 +175,7 @@ library.o : library.c
 
 #### 示例
 以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./demo/Makefile).
+
 ⚠️其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 文件的`相对路径`, 或项目根目录的`绝对路径` (推荐).
 
 ## CMake
