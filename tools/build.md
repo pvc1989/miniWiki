@@ -1,4 +1,68 @@
 # 构建工具
+## 手动构建
+### 构建过程
+对于用静态语言 (例如 C/C++) 编写的程序, 必须经过`构建` [build] 才能得到可以运行的程序.
+下面用一个简单的例子来说明构建过程的主要步骤.
+
+#### 源文件
+假设有如下简单的 C 语言项目:
+```
+project
+├── include
+│   └── math.h
+├── src
+│   └── math.c
+└── test
+    └── test_math.c
+```
+各文件大致内容如下:
+- [`include/math.h`](./project/include/math.h) --- 声明函数 `factorial()`, 用于计算正整数的阶乘.
+- [`src/math.c`](./project/src/math.c) --- 实现 `factorial()` 的功能.
+- [`test/test_math.c`](./project/test/test_math.c) --- 在 `main()` 中调用 `factorial()`, 测试其正确性.
+
+为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `project` 的完整路径.
+为避免污染源文件目录, 应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建.
+
+#### 编译
+采用默认的编译选项:
+```shell
+# 编译 src/math.c, 得到二进制的目标文件 math.o
+cc -c ${PROJECT_PATH}/src/math.c
+# 编译 test/test_math.c, 得到二进制的目标文件 test_math.o
+cc -c ${PROJECT_PATH}/test/test_math.c
+```
+
+#### 打包
+两种打包方式:
+```shell
+# 将 math.o 打包为静态库 libmath.a
+ar -rcs libmath.a math.o
+# 将 math.o 打包为动态库 libmath.so
+cc -shared -fpic -o libmath.so math.o 
+```
+
+#### 链接
+三种链接方式:
+```shell
+# 将 test_math.o 和目标文件 math.o 链接进 test_math_o
+cc -o test_math_o test_math.o math.o
+# 将 test_math.o 和动态库 libmath.so 链接进 test_math_so
+cc -dynamic -o test_math_so test_math.o -L. -lmath
+# 将 test_math.o 和静态库 libmath.a 链接进 test_math_a
+cc -static -o test_math_a test_math.o -L. -lmath
+```
+⚠️ 在 macOS 系统下, [无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html), 因此第三种方式不被支持.
+
+### 使用构建工具的动机
+手动构建的缺点:
+- 代码更新后, 重新构建的过程非常繁琐.
+- 构建参数 (编译和链接选项) 容易写错.
+- 构建参数无法体现在源代码中.
+
+好的自动构建工具应当具有以下特性:
+- 代码更新后, 能够自动识别并更新需要重新编译和链接的文件.
+- 不依赖于具体环境 (操作系统, 编译器).
+- 构建参数作为源代码的一部分, 保存在构建文件中.
 
 ## GNU Make
 
