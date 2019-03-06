@@ -34,7 +34,7 @@
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
 - [Git](./tools/Git.md) --- 版本控制
-- [CMake](./tools/build.md#CMake) --- 跨平台构建
+- [CMake](./tools/build/build.md#CMake) --- 跨平台构建
 - LaTeX --- 结构化文档排版
   - [LyX](./tools/LyX.md)
 - Markdown --- 轻量级笔记
