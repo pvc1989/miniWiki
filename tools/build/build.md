@@ -7,7 +7,7 @@
 #### 源文件
 假设有如下简单的 C 语言项目:
 ```
-project
+demo
 ├── include
 │   └── math.h
 ├── src
@@ -16,11 +16,11 @@ project
     └── test_math.c
 ```
 各文件大致内容如下:
-- [`include/math.h`](./project/include/math.h) --- 声明函数 `factorial()`, 用于计算正整数的阶乘.
-- [`src/math.c`](./project/src/math.c) --- 实现 `factorial()` 的功能.
-- [`test/test_math.c`](./project/test/test_math.c) --- 在 `main()` 中调用 `factorial()`, 测试其正确性.
+- [`include/math.h`](./demo/include/math.h) --- 声明函数 `factorial()`, 用于计算正整数的阶乘.
+- [`src/math.c`](./demo/src/math.c) --- 实现 `factorial()` 的功能.
+- [`test/test_math.c`](./demo/test/test_math.c) --- 在 `main()` 中调用 `factorial()`, 测试其正确性.
 
-为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `project` 的完整路径.
+为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径.
 为避免污染源文件目录, 应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建.
 
 #### 编译
