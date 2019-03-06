@@ -1,12 +1,12 @@
 # GNU Octave
 
-[Octave](https://www.gnu.org/software/octave/) 是一款开源数值计算软件: 在满足 [GPL](https://www.gnu.org/software/octave/license.html) 条款的前提下, 任何人都可以自由地获取并重新发布其源代码.
-
-Octave 也可以看做是一种类似于 [MATLAB](https://www.mathworks.com) 的动态语言: 它的基础语法和许多库函数与 MATLAB 兼容, 因而在一定程度上可以将其作为后者的替代品.
+[Octave](https://www.gnu.org/software/octave/) 是一款开源的数值计算软件. 
+它所采用动态编程语言和许多库函数与 [MATLAB](https://www.mathworks.com/products/matlab.html) 兼容, 因而在一定程度上可以用作后者的替代品.
 
 ## 安装
 
-最符合开源精神的安装方式是从源代码编译. 如果想跳过编译选项设置及依赖性检查, 可以从[这里](https://www.gnu.org/software/octave/#install)下载各种操作系统下已经编译好的二进制安装文件.
+最符合开源精神的安装方式是从源代码编译.
+如果想跳过编译选项设置及依赖性检查, 可以直接[下载](https://www.gnu.org/software/octave/#install)各种操作系统下已经编译好的二进制安装文件.
 
 ## 运行
 

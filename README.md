@@ -21,7 +21,7 @@
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ## 程序设计
-- [Octave](./programming/Octave.md)
+- [Octave](./programming/Octave.md) --- 开源的 [MATLAB](https://www.mathworks.com/products/matlab.html) 替代品
 - [Python](./programming/Python.md)
 - [C++](./programming/C++/C++.md)
 - [设计模式](./programming/DesignPatterns.md)
