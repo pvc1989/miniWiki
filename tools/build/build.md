@@ -55,16 +55,127 @@ cc -static -o test_math_a test_math.o -L. -lmath
 
 ### 使用构建工具的动机
 手动构建的缺点:
-- 代码更新后, 重新构建的过程非常繁琐.
+- 源代码更新后, 重新构建的过程非常繁琐.
 - 构建参数 (编译和链接选项) 容易写错.
 - 构建参数无法体现在源代码中.
 
 好的自动构建工具应当具有以下特性:
-- 代码更新后, 能够自动识别并更新需要重新编译和链接的文件.
+- 源代码更新后, 能够自动识别并更新需要重新编译和链接的文件.
 - 不依赖于具体环境 (操作系统, 编译器).
 - 构建参数作为源代码的一部分, 保存在构建文件中.
 
 ## GNU Make
+### 参考资料
+- [官方文档](https://www.gnu.org/software/make)
+
+### `make` 命令
+一般形式:
+```shell
+make [options] [targets]
+```
+其中, `[options]` 表示一个或多个[选项](#选项), `[targets]` 表示一个或多个[目标](#目标), 实际使用时不写 `[ ]`.
+
+#### 选项
+常用选项:
+
+|     选项      | 含义                                     |
+| :-----------: | ---------------------------------------- |
+|     `-n`      | 显式 (但不实际执行) 将要执行的构建命令   |
+| `-f filename` | 用名为 `filename` 的文件驱动 `make` 程序 |
+
+#### 目标
+一个目标表示一个定义在 [`Makefile` 文件](#`Makefile`-文件)中的构建任务, 通常为`可执行文件`或`静态/动态库`的文件名, 也可以只是一个标签 ().
+如果没有为 `make` 命令指定目标, 则以 `Makefile` 文件中的`第一个`目标为默认目标.
+
+一个目标可以被重复构建多次.
+每次构建前, `make` 会自动检查该目标的依赖项: 只有依赖项需要被更新时, 才会在依赖项全部被更新后, 重新构建该目标.
+这项检查是递归进行的, 因此最终将传递到被更新过的源文件上.
+
+### `Makefile` 文件
+`Makefile` 文件是驱动 [`make` 命令](#`make`-命令) 的脚本文件:
+- 默认文件名为 `Makefile` 或 `makefile`.
+- 也可以用其他文件名, 但必须在 `make` 命令后面用 `-f filename` 来指定.
+
+`Makefile` 文件主要用来定义构建[目标](#目标), 一般形式为:
+```Makefile
+# comments
+targets : prerequisites
+	commands
+```
+各字段的含义如下:
+
+|      字段        |                            含义                         |
+| :-------------: | :-----------------------------------------------------: |
+|    `targets`    |                   一个或多个[目标](#目标)                  |
+| `prerequisites` | 当前 `targets` 的依赖项, 一般是文件名, 也可以是其他 `targets` |
+|   `commands`    | 编译/链接/操作系统命令, 缩进必须用制表符, 每一行都是独立进程     |
+|    `comment`    |                注释, 以 `#` 开始, 到行尾结束               |
+
+#### 目标
+一般情况下, 一个目标对应于一个同名文件, 构建该目标就是构建该文件.
+
+除此之外, 有一类特殊的目标, 只表示一组构建行为, 而不生成对应的同名文件, 常用的有 `all` 和 `clean`.
+这类目标统一地被标注为 `.PHONY` 这个特殊目标的 prerequisites:
+```Makefile
+.PHONY: all clean
+```
+虽然 `all` 和 `clean` 在`语法` [syntax] 上没有特殊含义, 但几乎所有项目都是按如下`语义` [semantics] 来使用的:
+- `all` --- 构建所有当前 `Makefile` 文件中的所有目标.
+- `clean` --- 删除构建过程中生成的所有目标文件和可执行文件.
+
+#### 变量
+常用的内置变量:
+```Makefile
+CC        # C 编译命令
+CFLAGS    # C 编译选项
+CXX       # C++ 编译命令
+CXXFLAGS  # C++ 编译选项
+ARCLAGS   # 打包选项
+LDFLAGS   # 链接选项
+MAKE      # 构建工具命令
+```
+为变量赋值:
+```Makefile
+var  = value  # 允许递归
+var := value  # 禁止递归
+var += value  # 在 var 当前的值上追加 value
+var ?= value  # 仅在 var 为空时, 将其赋值为 value
+```
+使用变量的值:
+```Makefile
+$(CC)
+$(CXX)
+```
+用特殊符号表示的常用值:
+```Makefile
+$@     # 当前 targets
+$<     # 第一个 prerequisite
+$?     # 更新时间晚于当前 targets 的 prerequisites
+$^     # 所有的 prerequisites, 用空格分隔
+$(@D)  # 当前 targets 所在的 directory
+$(@F)  # 当前 targets 所在的 file
+$(<D)  # 第一个 prerequisite 所在的 directory
+$(<F)  # 第一个 prerequisite 所在的 file
+```
+
+#### 通配符
+`%` 表示 for-each, 例如:
+```Makefile
+OBJS = main.o library.o
+$(OBJS) : %.o : %.c
+    $(CC) -c $(CFLAGS) $< -o $@
+```
+相当于
+```Makefile
+main.o : main.c
+    $(CC) -c $(CFLAGS) main.c -o main.o
+library.o : library.c
+    $(CC) -c $(CFLAGS) library.c -o library.o
+```
+
+#### 示例
+以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./demo/Makefile).
+⚠️其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 文件的`相对路径`, 或项目根目录的`绝对路径` (推荐).
 
 ## CMake
 ### 参考资料
@@ -94,7 +205,7 @@ cc -static -o test_math_a test_math.o -L. -lmath
 
 ### `cmake` 命令
 CMake 参与的构建过程可以分为以下两个阶段:
-1. CMake 读取 `CMakeLists.txt` 文件, 生成`本地构建工具` [native-build-tool] (例如 `make`) 所需的`本地构建文件` [native-build-file] (例如 `makefile`):
+1. CMake 读取 `CMakeLists.txt` 文件, 生成`本地构建工具` [native-build-tool] (例如 `make`) 所需的`本地构建文件` [native-build-file] (例如 `Makefile`):
 ```shell
 cmake [<options>] <source-dir>
 cmake [<options>] <existing-build-dir>

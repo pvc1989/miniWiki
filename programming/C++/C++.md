@@ -21,5 +21,5 @@
   - [元编程 (Metaprogramming](./metaprogramming.md) --- 编译期计算
 
 ## 开发工具
-- [构建工具](../../tools/build.md)
+- [构建工具](../../tools/build/build.md)
 - [单元测试](./unittest.md)
