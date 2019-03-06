@@ -1,4 +1,4 @@
-# GNU Octave 入门
+# GNU Octave
 
 [Octave](https://www.gnu.org/software/octave/) 是一款开源数值计算软件: 在满足 [GPL](https://www.gnu.org/software/octave/license.html) 条款的前提下, 任何人都可以自由地获取并重新发布其源代码.
 

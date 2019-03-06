@@ -21,6 +21,7 @@
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ## 程序设计
+- [Octave](./programming/Octave.md)
 - [Python](./programming/Python.md)
 - [C++](./programming/C++/C++.md)
 - [设计模式](./programming/DesignPatterns.md)
@@ -34,7 +35,6 @@
 - [Git](./tools/Git.md) --- 版本控制
 - 构建工具
   - [CMake](../../tools/build.md#CMake) --- 跨平台构建
-- [Octave](./tools/Octave.md)
 - Linux
   - [Install](./tools/linux/install.md) 
   - [Vim](./tools/linux/vim.md)
