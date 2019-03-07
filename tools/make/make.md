@@ -184,10 +184,9 @@ library.o : library.c
 - [帮助文档](https://cmake.org/cmake/help/latest/)
   - [cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html) --- 主程序 (命令行界面)
   - [cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html) --- 系统配置
-  - [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html) --- 命令列表
-  - [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html) --- 语法定义
 
-#### 视频教程
+#### 入门教程
+- [CMake Tutorial](https://cmake.org/cmake-tutorial/) --- A step-by-step tutorial covering common build system use cases that CMake helps to address.
 - [Programming in C++](https://www.ece.uvic.ca/~frodo/cppbook/) by Michael Adams from University of Victoria
   - Lecture Slides [(Version 2019-02-04)](https://www.ece.uvic.ca/~frodo/cppbook/downloads/lecture_slides_for_programming_in_c++-2019-02-04.pdf)
   - Video Presentations (YouTube)
@@ -236,21 +235,105 @@ cmake --find-package [<options>]
 
 ### `CMakeLists.txt` 文件
 `CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由`命令` [command] 和`注释` [comment] 组成:
-
 - 命令的名称`不区分大小写`, 形式上与函数调用类似.
 - 命令的操作对象称为`变量` [variable], 变量的名称`区分大小写`.
 - 注释一般以 `#` 开始, 至行尾结束.
 
-#### 常用脚本命令
+完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html).
+
+#### 常用命令
+完整列表参见 [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html).
+
+设置项目所允许的最低的 CMake 版本:
 ```cmake
-# 限制 CMake 的最低版本
-cmake_minimum_required(VERSION 3.1)
-
-# 向终端输出信息
-message("Hello World")
-
-# 为变量 X 赋值
-set(X "Hello World")
-# 取变量 X 的值
-message(${X})
+cmake_minimum_required(VERSION 3.0)
 ```
+
+设置项目信息:
+```cmake
+project(<PROJECT-NAME> [<language-name>...])
+project(<PROJECT-NAME>
+        [VERSION <major>[.<minor>[.<patch>[.<tweak>]]]]
+        [DESCRIPTION <project-description-string>]
+        [HOMEPAGE_URL <url-string>]
+        [LANGUAGES <language-name>...])
+```
+
+创建供用户选择的可选项:
+```cmake
+option(<variable> "<help_text>" [value])
+```
+
+添加头文件搜索路径:
+```cmake
+include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])
+```
+
+添加含有子项目的子目录:
+```cmake
+add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
+```
+
+向终端输出信息:
+```cmake
+message([<mode>] "message to display" ...)
+# 例如 (自动添加换行符);
+message("hello, world")
+​```
+
+设置变量的值:
+​```cmake
+# 设置局部变量:
+set(<variable> <value>... [PARENT_SCOPE])
+# 设置缓存变量:
+set(<variable> <value>... CACHE <type> <docstring> [FORCE])
+# 设置环境变量:
+set(ENV{<variable>} [<value>])
+```
+
+#### 常用变量
+完整列表参见 [`cmake-variables(7)`](https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html).
+
+#### 创建目标
+添加构建可执行文件的目标:
+```cmake
+add_executable(<name> [WIN32] [MACOSX_BUNDLE]
+               [EXCLUDE_FROM_ALL]
+               [source1] [source2 ...])
+```
+
+添加构建库的目标:
+```cmake
+add_library(<name> [STATIC | SHARED | MODULE]
+            [EXCLUDE_FROM_ALL]
+            [source1] [source2 ...])
+```
+
+#### 链接
+一般形式:
+```cmake
+target_link_libraries(<target> ... <item>... ...)
+```
+其中,
+- `<target>` 必须是以 `add_executable()` 或 `add_library()` 命令添加的目标.
+- `item` 可以是
+  - 当前项目的库目标
+  - 某个库文件的完整路径
+  - 某个库文件的文件名
+  - 链接选项
+
+#### 示例
+依然以[手动构建](#手动构建)中的项目为例, 源文件目录结构如下:
+```
+demo
+├── include
+│   └── math.h
+├── src
+│   └── math.c
+└── test
+    └── test_math.c
+```
+创建三个 `CMakeLists.txt` 文件:
+- [`demo/CMakeLists.txt`](./demo/CMakeLists.txt) --- 用于管理整个项目.
+- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) --- 用于构建 `libmath`.
+- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) --- 用于构建 `test_math`.
