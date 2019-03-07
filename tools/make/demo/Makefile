@@ -5,7 +5,7 @@ PROJECT_DIR = .
 # Points to the location of libraries
 LIB_DIR = .
 
-TESTS = test_math_o test_math_so test_math_a
+TESTS = test_math_o.exe test_math_so.exe test_math_a.exe
 LIBS = libmath.so libmath.a
 OBJS = test_math.o math.o
 
@@ -16,13 +16,13 @@ all: $(LIBS) $(TESTS)
 clean:
 	rm -f $(OBJS) $(LIBS) $(TESTS)
 
-test_math_o: test_math.o math.o
+test_math_o.exe: test_math.o math.o
 	$(CC) -o $@ $^
 
-test_math_so: test_math.o libmath.so
+test_math_so.exe: test_math.o libmath.so
 	$(CC) -o $@ -dynamic $< -L$(LIB_DIR) -lmath
 
-test_math_a: test_math.o libmath.a
+test_math_a.exe: test_math.o libmath.a
 	$(CC) -o $@ -static $< -L$(LIB_DIR) -lmath
 
 test_math.o: $(PROJECT_DIR)/test/test_math.c
