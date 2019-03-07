@@ -280,3 +280,17 @@ cmake --build build-dir
 2. 在本地项目的 `CMakeLists.txt` 文件中添加命令, 构建 Google Test 和本地测试.
 
 官方文档的 [Incorporating Into An Existing CMake Project](https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project) 一节给出了这两个文件的模板.
+这里给出一个简单的 C++ 项目示例, [源文件目录](./unittest/googletest/)结构如下, 用 [CMake](../make.md#CMake) 来组织构建:
+```
+googletest
+├── CMakeLists.txt
+├── CMakeLists.txt.in
+├── include
+│   └── math.h
+├── src
+│   ├── CMakeLists.txt
+│   └── math.cpp
+└── test
+    ├── CMakeLists.txt
+    └── test_math.cpp
+```
