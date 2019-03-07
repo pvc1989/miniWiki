@@ -243,7 +243,7 @@ googletest
 │   └── ...
 ├── ...
 ```
-其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../../tools/make.md#CMake) --- 这是目前最简单最通用的自动构建方式.
+其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../make.md#CMake) --- 这是目前最简单最通用的自动构建方式.
 
 #### 构建为独立的库
 假设源文件目录 (必须含有 `CMakeLists.txt`) 为 `source-dir`, 构建产物存放在 `build-dir`, 则构建过程如下:

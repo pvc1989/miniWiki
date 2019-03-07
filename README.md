@@ -23,19 +23,22 @@
   - [CFD --- Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ### 程序设计
-- [Octave](./programming/Octave.md) --- 开源的 [MATLAB](https://www.mathworks.com/products/matlab.html) 替代品
-- [Python](./programming/Python.md)
-- [C++](./programming/C++/C++.md)
-- [设计模式](./programming/DesignPatterns.md)
+- 设计思想
+    - [设计模式](./programming/DesignPatterns.md)
+- 编程语言
+    - [Octave](./programming/Octave.md) --- 开源的 [MATLAB](https://www.mathworks.com/products/matlab.html) 替代品
+    - [Python](./programming/Python.md)
+    - [C++](./programming/C++.md)
+- 构建工具
+    - [Git](./programming/Git.md) --- 版本控制
+    - [GNU Make](./programming/make.md#GNU-Make)
+    - [CMake](./programming/make.md#CMake) --- 跨平台构建
 
 ### 工具
 - Linux --- 开源操作系统
   - [Install](./tools/linux/install.md) 
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
-- [Git](./tools/Git.md) --- 版本控制
-- [GNU Make](./tools/make.md#GNU-Make)
-- [CMake](./tools/make.md#CMake) --- 跨平台构建
 - LaTeX --- 结构化文档排版
   - [LyX](./tools/LyX.md)
 - Markdown --- 轻量级笔记
