@@ -40,6 +40,7 @@
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
 - LaTeX --- 结构化文档排版
+  - [慕子的知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
   - [LyX](./tools/LyX.md)
 - Markdown --- 轻量级笔记
   - [GitHub Flavored Markdown](https://github.github.com/gfm/) --- 最常用的增强版 Markdown
