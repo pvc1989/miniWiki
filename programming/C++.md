@@ -21,5 +21,6 @@
   - [元编程 (Metaprogramming](./metaprogramming.md) --- 编译期计算
 
 ## 开发工具
+- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 - [构建工具](./make.md)
 - [单元测试](./C++/unittest.md)
