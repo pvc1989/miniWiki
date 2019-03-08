@@ -1,7 +1,7 @@
 # 构建工具
 ## 手动构建
 ### 构建过程
-对于用静态语言 (例如 C/C++) 编写的程序, 必须经过 <构建|build> 才能得到可以运行的软件.
+对于用静态语言 (例如 C/C++) 编写的程序, 必须经过 <构建::build> 才能得到可以运行的软件.
 下面用一个简单的例子来说明构建的主要步骤.
 
 #### 源文件
@@ -73,7 +73,7 @@ cc -static -o test_math_a.exe test_math.o -L. -lmath
 ```shell
 make [options] [targets]
 ```
-其中, `[options]` 表示一个或多个[选项](#选项), `[targets]` 表示一个或多个[目标](#目标), 实际使用时不写 `[ ]`.
+其中, `options` 表示一个或多个[选项](#选项), `targets` 表示一个或多个[目标](#目标), 实际使用时不写 `[ ]`.
 
 #### 选项
 常用选项:
@@ -84,7 +84,7 @@ make [options] [targets]
 | `-f filename` | 用名为 `filename` 的文件驱动 `make` 程序 |
 
 #### 目标
-一个 <目标|target> 表示一个定义在 [`Makefile`](#`Makefile`-文件) 中的构建任务, 通常为 <可执行文件|executable> 或 <库|library> 的文件名, 也可以只是一个 <标签|tag>.
+一个 <目标::target> 表示一个定义在 [`Makefile`](#`Makefile`-文件) 中的构建任务, 通常为 <可执行文件::executable> 或 <库::library> 的文件名, 也可以只是一个 <标签::tag>.
 如果没有为 `make` 指定目标, 则以 `Makefile` 中的第 `1` 个目标为默认目标.
 
 一个目标可以被重复构建多次.
@@ -121,7 +121,7 @@ targets : prerequisites
 ```Makefile
 .PHONY: all clean
 ```
-虽然 `all` 和 `clean` 在 <语法|syntax> 上没有特殊含义, 但几乎所有项目都是按如下 <语义|semantics> 来使用的:
+虽然 `all` 和 `clean` 在 <语法::syntax> 上没有特殊含义, 但几乎所有项目都是按如下 <语义::semantics> 来使用的:
 - `all` --- 构建所有当前 `Makefile` 中的所有目标.
 - `clean` --- 删除构建过程中生成的所有目标文件和可执行文件.
 
@@ -200,21 +200,21 @@ library.o : library.c
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
 ### 术语
-- <源文件目录|source dir> (又称 <源文件树|source tree>) --- 项目源码文件的 (顶层) 目录, 必须含有一个 `CMakeLists.txt`.
-- <构建目录|build dir> (又称 <构建树|build tree> 或 <二进制树|binary tree>) --- 存放构建产物 (目标文件/库文件/可执行文件) 的目录.
-- <内部构建|in-source build> --- 构建目录在源文件目录下 (⚠️ 会污染源文件目录, 不推荐). 
-- <外部构建|out-of-source build> --- 构建目录在源文件目录外 (推荐).                  
-- <构建配置|build configuration> --- 由一组构建工具 (编译器/链接器) 选项所构成的构建参数集.
+- <源文件目录::source dir> (又称 <源文件树::source tree>) --- 项目源码文件的 (顶层) 目录, 必须含有一个 `CMakeLists.txt`.
+- <构建目录::build dir> (又称 <构建树::build tree> 或 <二进制树::binary tree>) --- 存放构建产物 (目标文件/库文件/可执行文件) 的目录.
+- <内部构建::in-source build> --- 构建目录在源文件目录下 (⚠️ 会污染源文件目录, 不推荐). 
+- <外部构建::out-of-source build> --- 构建目录在源文件目录外 (推荐).                  
+- <构建配置::build configuration> --- 由一组构建工具 (编译器/链接器) 选项所构成的构建参数集.
 
 ### `cmake` 命令
 CMake 参与的构建过程可以分为以下两个阶段:
-1. CMake 读取 `CMakeLists.txt`, 生成 <本地构建工具|native build tool> (例如 `make`) 所需的 <本地构建文件|native build file> (例如 `Makefile`):
+1. CMake 读取 `CMakeLists.txt`, 生成 <本地构建工具::native build tool> (例如 `make`) 所需的 <本地构建文件::native build file> (例如 `Makefile`):
 ```shell
 cmake [<options>] <source-dir>
 cmake [<options>] <existing-build-dir>
 cmake [<options>] -S <source-dir> -B <build-dir>
 ```
-2. 本地构建工具读取本地构建文件, 调用 <本地工具链|native tool chain> 进行构建.
+2. 本地构建工具读取本地构建文件, 调用 <本地工具链::native tool chain> 进行构建.
 这一步可借助 CMake 以跨平台的方式来完成:
 ```shell
 cmake --build <build-dir> [<options>] [-- <build-tool-options>]
@@ -237,9 +237,9 @@ cmake --find-package [<options>]
 ```
 
 ### `CMakeLists.txt` 文件
-`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由 <命令|command> 和 <注释|comment> 组成:
+`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由 <命令::command> 和 <注释::comment> 组成:
 - 命令的名称 <不区分大小写>, 形式上与函数调用类似.
-- 命令的操作对象称为 <变量|variable>, 变量的名称 <区分大小写>.
+- 命令的操作对象称为 <变量::variable>, 变量的名称 <区分大小写>.
 - 注释一般以 `#` 开始, 至行尾结束.
 
 完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html).
