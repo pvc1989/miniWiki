@@ -1,8 +1,8 @@
 # 构建工具
 ## 手动构建
 ### 构建过程
-对于用静态语言 (例如 C/C++) 编写的程序, 必须经过`构建` [build] 才能得到可以运行的程序.
-下面用一个简单的例子来说明构建过程的主要步骤.
+对于用静态语言 (例如 C/C++) 编写的程序, 必须经过 <构建|build> 才能得到可以运行的软件.
+下面用一个简单的例子来说明构建的主要步骤.
 
 #### 源文件
 假设有如下简单的 C 语言项目:
@@ -16,9 +16,9 @@ demo
     └── test_math.c
 ```
 各文件大致内容如下:
-- [`include/math.h`](./make/demo/include/math.h) --- 声明函数 `factorial()`, 用于计算正整数的阶乘.
-- [`src/math.c`](./make/demo/src/math.c) --- 实现 `factorial()` 的功能.
-- [`test/test_math.c`](./make/demo/test/test_math.c) --- 在 `main()` 中调用 `factorial()`, 测试其正确性.
+- [`include/math.h`](./make/demo/include/math.h) --- 声明函数 `factorial`, 用于计算正整数的阶乘.
+- [`src/math.c`](./make/demo/src/math.c) --- 实现 `factorial` 的功能.
+- [`test/test_math.c`](./make/demo/test/test_math.c) --- 在 `main` 中调用 `factorial`, 测试其正确性.
 
 为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径.
 为避免污染源文件目录, 应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建.
@@ -84,19 +84,21 @@ make [options] [targets]
 | `-f filename` | 用名为 `filename` 的文件驱动 `make` 程序 |
 
 #### 目标
-一个目标表示一个定义在 [`Makefile` 文件](#`Makefile`-文件)中的构建任务, 通常为`可执行文件`或`静态/动态库`的文件名, 也可以只是一个标签 ().
-如果没有为 `make` 命令指定目标, 则以 `Makefile` 文件中的`第一个`目标为默认目标.
+一个 <目标|target> 表示一个定义在 [`Makefile`](#`Makefile`-文件) 中的构建任务, 通常为 <可执行文件|executable> 或 <库|library> 的文件名, 也可以只是一个 <标签|tag>.
+如果没有为 `make` 指定目标, 则以 `Makefile` 中的第 `1` 个目标为默认目标.
 
 一个目标可以被重复构建多次.
 每次构建前, `make` 会自动检查该目标的依赖项: 只有依赖项需要被更新时, 才会在依赖项全部被更新后, 重新构建该目标.
 这项检查是递归进行的, 因此最终将传递到被更新过的源文件上.
 
 ### `Makefile` 文件
-`Makefile` 文件是驱动 [`make` 命令](#`make`-命令) 的脚本文件:
-- 默认文件名为 `Makefile` 或 `makefile`.
-- 也可以用其他文件名, 但必须在 `make` 命令后面用 `-f filename` 来指定.
+`Makefile` 是驱动 [`make` 命令](#`make`-命令)的脚本文件:
 
-`Makefile` 文件主要用来定义构建[目标](#目标), 一般形式为:
+- 默认文件名为 `Makefile` 或 `makefile`.
+- 也可以用其他文件名, 但必须在 `make` 后面用 `-f filename` 来指定.
+
+`Makefile` 主要用来定义构建[目标](#目标), 一般形式为:
+
 ```Makefile
 # comments
 targets : prerequisites
@@ -119,8 +121,8 @@ targets : prerequisites
 ```Makefile
 .PHONY: all clean
 ```
-虽然 `all` 和 `clean` 在`语法` [syntax] 上没有特殊含义, 但几乎所有项目都是按如下`语义` [semantics] 来使用的:
-- `all` --- 构建所有当前 `Makefile` 文件中的所有目标.
+虽然 `all` 和 `clean` 在 <语法|syntax> 上没有特殊含义, 但几乎所有项目都是按如下 <语义|semantics> 来使用的:
+- `all` --- 构建所有当前 `Makefile` 中的所有目标.
 - `clean` --- 删除构建过程中生成的所有目标文件和可执行文件.
 
 #### 变量
@@ -176,13 +178,14 @@ library.o : library.c
 #### 示例
 以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./make/demo/Makefile).
 
-⚠️其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 文件的`相对路径`, 或项目根目录的`绝对路径` (推荐).
+⚠️ 其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 的 <相对路径>, 或项目根目录的 <绝对路径> (推荐).
 
 ## CMake
 ### 参考资料
 #### 官方文档
 - [帮助文档](https://cmake.org/cmake/help/latest/)
-  - [cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html) --- 主程序 (命令行界面)
+  - [cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html) --- 命令行界面程序
+  - [ccmake(1)](https://cmake.org/cmake/help/latest/manual/ccmake.1.html) --- 文字形式的图形界面程序
   - [cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html) --- 系统配置
 
 #### 入门教程
@@ -197,22 +200,22 @@ library.o : library.c
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
 ### 术语
-- `源文件目录` [source-dir] (又称 `源文件树` [source-tree]) --- 项目源码文件的 (顶层) 目录, 必须含有一个 `CMakeLists.txt` 文件.
-- `构建目录` [build-dir] (又称 `构建树` [build-tree], `二进制树` [binary-tree]) --- 存放构建产物 (目标文件, 库文件, 可执行文件等) 的目录.
-- `内部构建` [in-source build] --- 构建目录在源文件目录下 (⚠️会污染源文件目录).      
-- `外部构建` [out-of-source build] --- 构建目录在源文件目录外 (推荐).                  
-- `构建配置` [build-configuration] --- 由一组构建工具 (编译器, 链接器) 选项所构成的构建参数集.
+- <源文件目录|source dir> (又称 <源文件树|source tree>) --- 项目源码文件的 (顶层) 目录, 必须含有一个 `CMakeLists.txt`.
+- <构建目录|build dir> (又称 <构建树|build tree> 或 <二进制树|binary tree>) --- 存放构建产物 (目标文件/库文件/可执行文件) 的目录.
+- <内部构建|in-source build> --- 构建目录在源文件目录下 (⚠️ 会污染源文件目录, 不推荐). 
+- <外部构建|out-of-source build> --- 构建目录在源文件目录外 (推荐).                  
+- <构建配置|build configuration> --- 由一组构建工具 (编译器/链接器) 选项所构成的构建参数集.
 
 ### `cmake` 命令
 CMake 参与的构建过程可以分为以下两个阶段:
-1. CMake 读取 `CMakeLists.txt` 文件, 生成`本地构建工具` [native-build-tool] (例如 `make`) 所需的`本地构建文件` [native-build-file] (例如 `Makefile`):
+1. CMake 读取 `CMakeLists.txt`, 生成 <本地构建工具|native build tool> (例如 `make`) 所需的 <本地构建文件|native build file> (例如 `Makefile`):
 ```shell
 cmake [<options>] <source-dir>
 cmake [<options>] <existing-build-dir>
 cmake [<options>] -S <source-dir> -B <build-dir>
 ```
-2. 本地构建工具读取 (上一步生成的) 本地构建文件, 调用`本地工具链` [native-tool-chain] (预处理器 [preprocessor], 编译器 [compiler], 汇编器 [assembler], 链接器 [linker]) 进行构建.
-这一步可以借助于 CMake 以跨平台的方式来完成:
+2. 本地构建工具读取本地构建文件, 调用 <本地工具链|native tool chain> 进行构建.
+这一步可借助 CMake 以跨平台的方式来完成:
 ```shell
 cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 ```
@@ -234,9 +237,9 @@ cmake --find-package [<options>]
 ```
 
 ### `CMakeLists.txt` 文件
-`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由`命令` [command] 和`注释` [comment] 组成:
-- 命令的名称`不区分大小写`, 形式上与函数调用类似.
-- 命令的操作对象称为`变量` [variable], 变量的名称`区分大小写`.
+`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由 <命令|command> 和 <注释|comment> 组成:
+- 命令的名称 <不区分大小写>, 形式上与函数调用类似.
+- 命令的操作对象称为 <变量|variable>, 变量的名称 <区分大小写>.
 - 注释一般以 `#` 开始, 至行尾结束.
 
 完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html).
@@ -315,7 +318,7 @@ add_library(<name> [STATIC | SHARED | MODULE]
 target_link_libraries(<target> ... <item>... ...)
 ```
 其中,
-- `<target>` 必须是以 `add_executable()` 或 `add_library()` 命令添加的目标.
+- `target` 必须是以 `add_executable` 或 `add_library` 命令添加的目标.
 - `item` 可以是
   - 当前项目的库目标
   - 某个库文件的完整路径
