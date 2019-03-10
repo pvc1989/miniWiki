@@ -69,6 +69,9 @@ int* const  cpx = &x;
 #### `ParamType` 既非指针又非引用
 > `推断规则[1]`: 忽略 `ArgType` 的`引用`属性后, 继续忽略其顶层 `const` (及 `volatile`) 属性, 所得到的类型就是 `T`.
 
+对于 <传值::pass-by-value> 调用, 在函数内部所使用的对象是函数实参的`独立副本`, 
+因此函数实参的顶层 `const` (及 `volatile`) 属性没有影响.
+
 ##### `ParamType` 为 `T` (常用)
 推断过程及结果为:
 
