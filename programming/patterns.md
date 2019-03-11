@@ -1,8 +1,8 @@
-## 语言支持
+## 语言实现机制
 
 ### Java
 
-#### 接口继承
+#### 接口实现
 
 ```java
 public interface Comparable<T> {
@@ -31,7 +31,7 @@ public class Point implements Comparable<Point> {
 
 #### 子类扩展
 
-Every class is a subclass of [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html).
+所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
 
 ```java
 public class Object {
@@ -96,8 +96,6 @@ int main() {
 
 #### 继承 + 模板
 
-This is a mimic of Java's `interface` + `implements` mechanism.
-
 ```cpp
 #include <iostream>
 
@@ -130,7 +128,7 @@ int main() {
 }
 ```
 
-#### 模板
+#### 模板 + 概念 (C++20)
 
 ```cpp
 
@@ -308,7 +306,7 @@ int main(int argc, char* argv[]) {
 ### 原型 (Prototype) 模式
 > Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
 >
-> 为将要创建的各种对象指定原型实例, 通过复制原型来创建新的对象.
+> 为将要创建的各种对象指定原型实例, 通过复制该原型来创建新的对象.
 
 ### 单例 (Singleton) 模式
 > Ensure a class only has one instance, and provide a global point of access to it.
@@ -321,43 +319,45 @@ int main(int argc, char* argv[]) {
 
 > Convert the interface of a class into another interface clients expect.
 >
-> 将一个类 (现有) 的接口转换为客户端所期待的接口.
+> 将一个类的接口转换为客户端所期待的接口.
 
 ### 桥接 (Bridge) 模式
 
 > Decouple an abstraction from its implementation so that the two can vary independently.
 >
-> 将`抽象`与其`实现`解耦, 从而允许二者独立变化.
+> 将 <抽象> 与 <实现> 解耦, 从而允许二者独立变化.
 
 ### 复合 (Composite) 模式
 
 > Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
 >
-> 将对象组织成树结构, 让客户端以统一的方式对待`独立对象`与`对象组合`.
+> 通过将对象组织成树结构, 来表示部分与整体的层次结构.
+> 该模式让客户端以统一的方式对待 <独立对象> 与 <对象组合>.
 
 ### 装饰器 (Decorator) 模式
 
 > Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
 >
 > 为对象动态地添加责任.
+> 该模式为扩展功能提供了一种可以替代 <子类> 机制的灵活方案.
 
 ### 门面 (Facade) 模式
 
 > Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
 >
-> 为子系统接口集提供统一的高层接口, 从而使得子系统更易用.
+> 为子系统接口集提供统一的高层接口, 使子系统更易用.
 
 ### 共享元 (Flyweight) 模式
 
 > Use sharing to support large numbers of fine-grained objects efficiently.
 >
-> 通过共享来高效使用大规模细粒度对象.
+> 通过共享来支持高效使用大规模细粒度对象.
 
 ### 代理 (Proxy) 模式
 
 > Provide a surrogate or placeholder for another object to control access to it.
 >
-> 为 (不易访问的) 对象提供代理或占位符以控制对它的访问。
+> 为对象提供代理或占位符, 以控制对它的访问。
 
 ## 行为型模式
 
@@ -389,19 +389,19 @@ int main(int argc, char* argv[]) {
 
 > Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.
 >
-> 用一个 (仲裁者) 对象来封装一组对象的交互行为, 从而避免这组对象之间的显式引用, 以便独立改变其交互行为.
+> 定义一个 (仲裁者) 对象来封装一组对象的交互方式, 通过避免这组对象之间的显式引用来促进松耦合, 以便独立改变其交互行为.
 
 ### 备忘录 (Memento) 模式
 
 > Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
 >
-> 在不破坏封装的前提下, 捕获并外化一个对象的内部状态, 使得该对象在将来能够被恢复到该状态.
+> 在不破坏封装的情况下, 捕获并外化一个对象的内部状态, 使得该对象在将来能够被恢复到该状态.
 
 ### 观察者 (Observer) 模式
 
 > Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
 >
-> 定义多个`观察者`与一个`被观察者`的依赖关系, 以便`被观察者`的状态发生改变时, 所有`观察者`自动获得通知及更新.
+> 定义多个 <观察者> 与一个 <被观察者> 的依赖关系, 以便 <被观察者> 的状态发生改变时, 所有 <观察者> 自动获得通知并更新.
 
 ### 状态 (State) 模式
 
@@ -412,15 +412,19 @@ int main(int argc, char* argv[]) {
 ### 策略 (Strategy) 模式
 
 > Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+>
+> 定义一组算法, 对每一个进行封装, 并使他们可以相互替换.
+> 该模式使得算法和使用它的客户端可以独立变化.
 
 ### 模板方法 (Template Method) 模式
 
 > Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
 >
-> 定义算法的框架, 将某些步骤的实现延迟到派生类中, 以便允许派生类 在不改变算法的结构情况下 重写这些步骤.
+> 定义算法的框架, 将某些步骤的实现延迟到派生类中.
+> 该模式使得派生类可以在不改变算法的结构情况下重写某些步骤.
 
 ### 访客 (Visitor) 模式
 
 > Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
 >
-> 将作用于某个对象成员的操作表示为一个 (访客) 对象, 以便 在不改变这些成员类型的情况下 定义新的操作.
+> 将作用于某个对象成员的操作表示为一个 (访客) 对象, 以便在不改变这些成员类型的情况下定义新的操作.
