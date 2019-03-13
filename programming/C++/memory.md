@@ -633,9 +633,9 @@ int* pArray = new Array;
 ```
 
 ### `std::allocator`
-通常, `new` 会依次完成`分配内存`和`构造对象`两个任务.
-在某些情况下, 这些默认初始化或值初始化的对象会`立即`被其他参数所构造的对象覆盖, 于是 `new` 所执行的`构造对象`操作就成了多余的.
-标准库定义的 `std::allocator` 模板类可以将`分配内存`与`构造对象`两个操作分离:
+通常, `new` 会依次完成 <分配内存> 和 <构造对象> 两个操作.
+对于动态数组, 后一个操作是多余的, 因为 `new` 所构造出来的对象会 <立即> 被其他参数所构造的对象覆盖.
+标准库定义的 `std::allocator` 模板类可以将 <分配内存> 与 <构造对象> 两个操作分离:
 ```cpp
 #include <memory>
 std::allocator<T> a;      // 创建 allocator 对象
@@ -645,13 +645,15 @@ a.construct(p, args);     // 构造对象, 存储于 p 所指向的位置, p 不
 a.destroy(p);             // 析构 p 所指向的对象
 ```
 
-标准库还提供了一组算法, 用于在 (由 `std::allocator` 获得的) 未初始化的内存中构造对象:
+`<memory>` 提供了一组相应的算法, 用于在 (由 `std::allocator` 获得的) <未初始化的::uninitialized> 内存中填入对象:
 ```cpp
-#include <algorithm>
-// 从另一个容器中 copy 或 move:
+#include <memory>
+// 从另一个容器中 copy 或 move (C++17):
 std::uninitialized_copy(b, e, p);    // 返回 p+n
+std::uninitialized_move(b, e, p);    // 返回 p+n
 std::uninitialized_copy_n(b, n, p);  // 返回 p+n
-// 在一段范围内用值 t 进行构造:
+std::uninitialized_move_n(b, n, p);  // 返回 p+n
+// 在一段范围内用 t 进行构造:
 std::uninitialized_fill(b, e, t);    // 返回 void
 std::uninitialized_fill_n(b, n, t);  // 返回 b+n
 ```
