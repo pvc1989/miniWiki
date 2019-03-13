@@ -104,7 +104,7 @@ C++11 引入了三种智能指针: `std::unique_ptr`, `std::shared_ptr`, `std::w
 ### 公共操作
 #### 与裸指针相同的操作
 ##### 默认初始化
-默认初始化为空指针:
+默认初始化为 `nullptr`:
 ```cpp
 std::shared_ptr<T> sp;
 std::unique_ptr<T> up;
@@ -162,7 +162,7 @@ p.get();
 3. 只能`移动` --- 不能`拷贝`与`赋值`, 确保独占所有权.
 
 #### 创建
-推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr` :
+推荐使用 (C++14) `std::make_unique` 函数来创建 `std::unique_ptr`:
 ```cpp
 auto up = std::make_unique<T>(args);
 ```
@@ -183,22 +183,29 @@ auto up = std::make_unique<T>(args);
 #### `reset` --- 重设裸指针
 一个 `std::unique_ptr` 独占其所指对象的所有权, 因此重设裸指针总是会 `delete` 它之前所管理的裸指针:
 ```cpp
-// 接管裸指针 q:
-u.reset(q);
-// 将自己设为空指针:
-u.reset(nullptr);
-u.reset();
-u = nullptr;
+// 声明:
+void reset( pointer ptr = pointer() ) noexcept;
+// 用例:
+u.reset(q);        // 接管裸指针 q
+u.reset(nullptr);  // 接管 nullptr
+u.reset();         // 同上
+u = nullptr;       // 同上
 ```
+该方法通过以下 `3` 步来实现其功能, 其中至少需要进行 `1` 次裸指针赋值操作:
+1. 在所管理的裸指针上调用 `delete` 以释放资源.
+2. 将所管理的裸指针赋值为传入的裸指针实参或 `nullptr`.
 
 #### `release` --- 让渡所有权
 ```cpp
-u.release();
+// 声明:
+pointer release() noexcept;
+// 用例:
+auto p = u.release();
 ```
-该方法依次完成三个任务:
-1. 返回其所管理的`裸指针` (通常由另一个智能指针接管)
-2. 放弃对所指对象的所有权
-3. 将自己设为空指针
+该方法通过以下 `3` 步来实现其功能, 其中至少需要进行 `2` 次裸指针赋值 (含初始化) 操作:
+1. 用所管理的裸指针初始化一个临时裸指针变量 (第 `1` 次).
+2. 将所管理的裸指针设为 `nullptr` (第 `2` 次).
+3. 返回第 `1` 步创建的裸指针变量 (通常由另一个智能指针接管).
 
 #### 不支持拷贝或赋值
 特例: 即将被销毁的 `std::unique_ptr` 可以被拷贝或赋值.
@@ -265,7 +272,7 @@ auto up = std::make_shared<T>(args);
 3. 返回指向该对象的 `std::shared_ptr`
 
 
-一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr` : 
+一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr`: 
 ```cpp
 std::shared_ptr<T> p(q);     // p 指向 q 所指对象
 std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
@@ -318,7 +325,7 @@ auto p = q;  // q 的引用计数 + 1, p 的引用计数与之相同
 ```cpp
 p.reset(q, d);  // 接管 裸指针 q, 并将 deleter 替换为 d
 p.reset(q);     // 接管 裸指针 q
-p.reset();      // 接管 空指针
+p.reset();      // 接管 nullptr
 ```
 
 #### `shared_from_this`
@@ -394,7 +401,7 @@ w.lock();
 为避免`数据竞争`, 读写引用计数操作都是`原子的`, 从而会比`非原子操作`消耗更多资源.
 
 #### 拷贝与移动
-一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr` , 但不改变引用计数:
+一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr`, 但不改变引用计数:
 ```cpp
 w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
 ```
