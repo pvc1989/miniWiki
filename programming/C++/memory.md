@@ -48,13 +48,15 @@ const std::string* pcs = new const std::string;
 ```
 
 #### 内存耗尽
-内存空间在运行期有可能被耗尽, 在此情况下, `new` (默认) 将抛出 `std::bad_alloc` 异常.
-为阻止抛出异常, 可以在 `new` 与类型名之间插入 `(nothrow)`, 例如:
+内存空间在运行期有可能被耗尽, 此时分配内存的操作会失败.
+- 在默认情况下, 分配失败会抛出 `std::bad_alloc` (定义在 `new` 中) 异常.
+- 如果在 `new` 与类型名之间插入 `(nothrow)` (括号不可省略), 则分配失败不会抛出异常, 而是以 `nullptr` 作为返回值. 这种形式被称为 placement `new`.
 ```cpp
 #include <new>
 int* p1 = new int;            // 如果分配失败, 将抛出 std::bad_alloc
 int* p2 = new (nothrow) int;  // 如果分配失败, 将返回 nullptr
 ```
+⚠️ 使用 placement `new` 一定要检查返回是否为 `nullptr`.
 
 ### `delete` 运算符
 
