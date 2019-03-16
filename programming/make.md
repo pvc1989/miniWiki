@@ -282,10 +282,10 @@ add_subdirectory(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 message([<mode>] "message to display" ...)
 # 例如 (自动添加换行符);
 message("hello, world")
-​```
+```
 
 设置变量的值:
-​```cmake
+```cmake
 # 设置局部变量:
 set(<variable> <value>... [PARENT_SCOPE])
 # 设置缓存变量:
