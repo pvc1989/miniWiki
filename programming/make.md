@@ -53,6 +53,27 @@ cc -static -o test_math_a.exe test_math.o -L. -lmath
 ```
 ⚠️ 在 macOS 系统下, [无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html), 因此第三种方式不被支持.
 
+#### 运行
+```shell
+./test_math_o.exe
+./test_math_so.exe
+./test_math_a.exe
+```
+运行结果均为:
+```shell
+factorial(1) == 1
+factorial(2) == 2
+factorial(3) == 6
+factorial(12) == 479001600
+factorial(13) == 1932053504
+factorial(13) / factorial(12) == 4
+```
+
+#### 清理
+```shell
+rm *.exe *.a *.so *.o
+```
+
 ### 使用构建工具的动机
 手动构建的缺点:
 - 源代码更新后, 重新构建的过程非常繁琐.
