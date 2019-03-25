@@ -1,53 +1,61 @@
 # VTK --- Visualization Toolkit
 
-[VTK](https://www.vtk.org) 是一款跨平台的 **数据显示 (Data Visualization)** 开源程序库.
+在不同的语境下, [VTK](https://www.vtk.org) 可能表示:
+- 一款跨平台的 **数据显示 (Data Visualization)** 开源程序库.
+- VTK 程序所使用的默认[文件格式](#文件格式), 包括[传统 VTK 格式](#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)两种.
+- [传统 VTK 格式](#传统-VTK-格式)文件的默认扩展名.
 
 ## 文件格式
 
-VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf)) 中的 `19.3 VTK File Formats` 详细介绍了两种文件格式: [VTK](#传统-VTK-格式) 与 [XML](#现代-XML-格式), 这里小结其要点.
+VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf)) 中的 **19.3 VTK File Formats** 一节详细定义了[传统 VTK 格式](#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式), 这里小结其要点.
 
 ### 传统 VTK 格式
 
-这是一种只支持 **串行读写 (Sserial IO)** 的简单文本文件格式.
-这种文件包含五个基本部分 (分节介绍), 其中前三项为必需, 后两种可选.
+这是一种只支持 **串行读写 (Serial IO)** 的简单文本文件格式, 以 `.vtk` 为默认扩展名.
+这种文件包含五个基本部分, 其中前三项为必需, 后两种可选:
+- [Version and Identifier](#Version-and-Identifier)
+- [Header](#Header)
+- [File Format](#File-Format)
+- [DataSet Structure](#DataSet-Structure)
+- [DataSet Attributes](#DataSet-Attributes)
 
 一些约定:
 - `dataType` 表示数据类型, 常用的有 `int`, `long`, `float`, `double`.
 - 关键词不区分大小写, 习惯上全部采用大写形式.
 - 数组指标从 `0` 开始.
-- Geometry 部分必须出现在 Attributes 之前.
-- Attributes 中的结点或单元数据个数必须与 Geometry 中的结点或单元个数一致.
+- [DataSet Structure](#DataSet-Structure) 必须出现在 [DataSet Attributes](#DataSet-Attributes) 之前.
+- [DataSet Attributes](#DataSet-Attributes) 中的结点或单元数据个数必须与 [DataSet Structure](#DataSet-Structure) 中的一致.
 
 #### Version and Identifier
-只占一行, 内容为:  
+只占一行, 其中 `x.x` 为 **文件格式** 的版本号 (不是 VTK 程序库的版本号), 当前为 `3.0`:  
 ```vtk
 ## vtk DataFile Version x.x
 ```
-其中 `x.x` 为文件格式的版本号, 当前为 `3.0`.
 
 #### Header
-描述文件基本信息的字符串, 以 `\n` 结尾, 最长含 `256` 个字符.
+概述文件内容的字符串 (给人看的辅助信息, 不影响数据读写), 以 `\n` 结尾, 最长含 `256` 个字符.
 
 #### File Format
-只占一行, 内容为 `ASCII` 或 `BINARY`, 表示 **数据** 的存储方式.
+表示 **数据** 的存储方式, 可以是 `ASCII` 或 `BINARY` 之一.
 无论 **数据** 以文本还是二进制形式存储, **关键词** 总是以文本形式出现的.
 
-#### Dataset Structure
+#### DataSet Structure
+描述结点的 **坐标** 及 **拓扑关系**.
+以 `DATASET type` 为第一行, 后接具体数据, 其中 `type` 可以是以下几种之一:
 
-描述结点及单元的 **几何** 位置与 **拓扑** 连接关系, 以 `DATASET type` 为第一行, 后接具体数据, 其中 `type` 可以是以下几种之一:
+| `type`              | `vtkDataSet` 的派生类  | 含义 |
+| ------------------- | --------------------- | --------------------- |
+| `STRUCTURED_POINTS` | `vtkImageData`        | 等距点阵 |
+| `RECTILINEAR_GRID`  | `vtkRectlinearGrid`   | 非等距点阵 |
+| `STRUCTURED_GRID`   | `vtkStructuredGrid`   | 结构网格 |
+| `UNSTRUCTURED_GRID` | `vtkUnstructuredGrid` | 非结构网格 |
+| `POLYDATA`          | `vtkPolyData`         | 多边形数据 |
+| `FIELD`             | `vtkField`            | 场 |
 
-| `type`              | 中译名 |
-| ------------------- | ---- |
-| `STRUCTURED_POINTS` | 等距点阵 |
-| `STRUCTURED_GRID`   | 结构网格 |
-| `RECTILINEAR_GRID`  | 直线网格 |
-| `UNSTRUCTURED_GRID` | 非结构网格 |
-| `POLYDATA`          | 多边形数据 |
-| `FIELD`             | 场 |
-
-对于隐含拓扑的数据结构, 例如 `vtkImageData` 或 `vtkStructuredGrid`,  约定 `X` 方向增长得最快, `Y` 方向次之, `Z` 方向最慢.
+对于隐含拓扑结构的类型 (例如 `STRUCTURED_POINTS`, `RECTILINEAR_GRID`), 约定 `X` 方向的结点编号增长得最快, `Y` 方向次之, `Z` 方向最慢.
 
 ##### `STRUCTURED_POINTS`
+该类型对数据 **规律性 (Regularity)** 的要求最高, 定义一个对象所需的信息量最少, 只有 **原点坐标** 和每个方向的 **结点总数** 与 **结点间距** 需要显式给出:
 ```vtk
 DATASET STRUCTURED_POINTS
 DIMENSIONS n_x n_y n_z
@@ -55,20 +63,8 @@ ORIGIN x y z
 SPACING s_x s_y s_z
 ```
 
-##### `STRUCTURED_GRID`
-结构网格只给出结点位置信息, 节点编号及网格拓扑隐含在其中.
-```vtk
-DATASET STRUCTURED_GRID
-DIMENSIONS n_x n_y n_z
-POINTS n dataType
-x[0] y[0] z[0]
-x[1] y[1] z[1]
-...
-x[n-1] y[n-1] z[n-1]
-```
-
 ##### `RECTILINEAR_GRID`
-直线网格只给出三个递增的坐标序列, 结点位置与编号及网格拓扑隐含在其中.
+该类型放松了 `STRUCTURED_POINTS` 中对 **结点等距** 的要求, 允许每个方向的结点间距 **独立变化**, 因此需要显式给出三个独立递增的 **坐标序列**:
 ```vtk
 DATASET RECTILINEAR_GRID
 DIMENSIONS n_x n_y n_z
@@ -80,8 +76,20 @@ Z_COORDINATES n_z dataType
 z[0] z[1] ... z[n_z-1]
 ```
 
+##### `STRUCTURED_GRID`
+该类型放松了 `RECTILINEAR_GRID` 中对 **结点沿直线分布** 的要求, 但仍需保持 **结构化的 (Structured)** 拓扑, 因此需要显式给出所有 **结点坐标**:
+```vtk
+DATASET STRUCTURED_GRID
+POINTS n dataType
+x[0] y[0] z[0]
+x[1] y[1] z[1]
+...
+x[n-1] y[n-1] z[n-1]
+```
+⚠️ VTK 中的一个 **结构网格** 相当于 ICEM 所生成的结构网格中的一个 **区块 (Block)**.
+
 ##### `UNSTRUCTURED_GRID`
-非结构网格的 **几何** 信息由 **结点位置** 给出 (与结构网格类似):
+该类型放松了 `STRUCTURED_GRID` 中对拓扑结构的要求, 允许结点以 **非结构化的 (Unstructured)** 方式连接, 因此除了需要显式给出 **结点位置**:
 ```vtk
 DATASET UNSTRUCTURED_GRID
 POINTS n dataType
@@ -90,34 +98,30 @@ x[1] y[1] z[1]
 ...
 x[n-1] y[n-1] z[n-1]
 ```
-而 **拓扑** 信息则紧随其后, 由 **各单元结点列表**:
+还需要显式给出 **各单元结点列表** (即 **结点拓扑关系**) 及 **各单元类型**:
 ```vtk
 CELLS n size
-nPoints[0], i, j, k, l, ... 
-nPoints[1], i, j, k, l, ... 
+nPoints[0], i, j, k, ... 
+nPoints[1], i, j, k, ... 
 ...
-nPoints[n-1], i, j, k, l, ...
-```
-及 **单元类型**:
-```vtk
+nPoints[n-1], i, j, k, ...
 CELL_TYPES n
 type[0]
 type[1]
 ...
 type[n-1]
 ```
-给出, 其中
+其中
 - `CELLS` 后的参数:
-  - `n`: 单元总数
-  - `size`: 各行所需整数个数之和
-- `CELL_TYPES`后的参数:
-  - `n`: 单元总数, 必须与 `CELLS` 后的 `n` 一致
-  - `type`: 由整数表示的单元类型, 详见 [`vtkCell.h`]()
+  - `n` 表示单元总数
+  - `size` 表示 `nPoints` 中各元素累加之和
+- `CELL_TYPES` 后的参数:
+  - `n` 表示单元总数, 必须与 `CELLS` 后的 `n` 一致
+  - `type` 表示单元类型, 详见 [`vtkCellType.h`](https://vtk.org/doc/nightly/html/vtkCellType_8h.html)
 
 ##### `POLYDATA`
-`POLYDATA` 由初等几何对象 (`POINTS`, `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS`) 拼接而成.
-**几何** 信息由 `POINTS` 给出, 格式与结构网格中的 `POINTS` 字段一致:
-
+该类型表示最一般的数据集, 由初等几何对象 (`POINTS`, `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS`) 拼凑而成.
+**结点位置** 由 `POINTS` 字段给出 (与 `STRUCTURED_GRID` 中的 `POINTS` 字段一致):
 ```vtk
 DATASET POLYDATA
 POINTS n dataType
@@ -126,8 +130,7 @@ x[1] y[1] z[1]
 ...
 x[n-1] y[n-1] z[n-1]
 ```
-**拓扑** 信息由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 字段给出, 格式与非结构网格中 `CELLS` 字段类似:
-
+**拓扑关系** 由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 字段给出 (与 `UNSTRUCTURED_GRID` 中的 `CELLS` 字段类似):
 ```vtk
 VERTICES n size
 nPoints[0], i[0], j[0], k[0], ...
@@ -138,10 +141,10 @@ nPoints[n-1], i[n-1], j[n-1], k[n-1], ...
 
 ##### `FIELD`
 
-#### Dataset Attributes
-描述结点或单元上携带的物理属性, 以 `POINT_DATA` 或 `CELL_DATA` 开始, 后接一个表示 `POINT` 或 `CELL` 数量的整数 (以下记为 `n`), 之后各行给出具体信息.
+#### DataSet Attributes
+描述结点或单元上携带的物理信息, 以 `POINT_DATA` 或 `CELL_DATA` 开始, 后接一个表示 `POINT` 或 `CELL` 数量的整数 (以下记为 `n`), 之后各行给出具体信息.
 
-VTK 支持以下几种属性:
+VTK 支持以下几种 Attribute:
 
 | Attribute Name        | 中译名 |
 | --------------------- | ----- |
@@ -154,7 +157,7 @@ VTK 支持以下几种属性:
 | `TENSORS`             | 张量 |
 | `FIELD`               | 场 |
 
-每种属性都有一个字符串 (以下用 `dataName` 表示) 与之关联, 用以区分各个物理量.
+每种 Attribute 都有一个字符串 (以下用 `dataName` 表示) 与之关联, 用以区分各个物理量.
 如果格式要求里没有给出 `dataType`, 那么数据类型取决于文件类型:
 
 - `ASCII`: 在 `[0.0, 1.0]` 之间取值的 `float`
@@ -226,6 +229,7 @@ t20[n-1] t21[n-1] t22[n-1]
 
 #### PyEVTK --- 按 XML 格式输出数据
 [PyEVTK](https://bitbucket.org/pauloh/pyevtk) 用于将 Python 程序中的数据输出为 XML 格式的文件.
+完全用 Python & Cython 实现, 可以独立于 VTK 程序库进行编译和安装.
 安装后即可在本地 Python 程序中 `import` 该模块, 具体用法可以参照 `src/examples` 目录下的示例.
 
 ## ParaView --- GUI 前端
