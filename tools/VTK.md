@@ -11,7 +11,7 @@ VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf
 
 ### 传统 VTK 格式
 
-这是一种只支持 **串行读写 (Serial IO)** 的简单文本文件格式, 以 `.vtk` 为默认扩展名.
+这是一种只支持 **串行读写 (Serial IO)** 的简单格式, 以 `.vtk` 为默认扩展名.
 这种文件包含五个基本部分, 其中前三项为必需, 后两种可选:
 - [Version and Identifier](#Version-and-Identifier)
 - [Header](#Header)
@@ -27,7 +27,7 @@ VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf
 - [DataSet Attributes](#DataSet-Attributes) 中的结点或单元数据个数必须与 [DataSet Structure](#DataSet-Structure) 中的一致.
 
 #### Version and Identifier
-只占一行, 其中 `x.x` 为 **文件格式** 的版本号 (不是 VTK 程序库的版本号), 当前为 `3.0`:  
+只占一行, 其中 `x.x` 为 **文件格式** 的版本号 (不是 VTK 程序库的版本号):  
 ```vtk
 ## vtk DataFile Version x.x
 ```
@@ -43,16 +43,16 @@ VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf
 描述结点的 **坐标** 及 **拓扑关系**.
 以 `DATASET type` 为第一行, 后接具体数据, 其中 `type` 可以是以下几种之一:
 
-| `type`              | `vtkDataSet` 的派生类  | 含义 |
-| ------------------- | --------------------- | --------------------- |
-| `STRUCTURED_POINTS` | `vtkImageData`        | 等距点阵 |
+| `type`              | `vtkDataSet` 的派生类  | 含义       |
+| ------------------- | --------------------- | --------- |
+| `STRUCTURED_POINTS` | `vtkImageData`        | 等距点阵   |
 | `RECTILINEAR_GRID`  | `vtkRectlinearGrid`   | 非等距点阵 |
-| `STRUCTURED_GRID`   | `vtkStructuredGrid`   | 结构网格 |
+| `STRUCTURED_GRID`   | `vtkStructuredGrid`   | 结构网格   |
 | `UNSTRUCTURED_GRID` | `vtkUnstructuredGrid` | 非结构网格 |
 | `POLYDATA`          | `vtkPolyData`         | 多边形数据 |
-| `FIELD`             | `vtkField`            | 场 |
+| `FIELD`             | `vtkField`            | 场        |
 
-对于隐含拓扑结构的类型 (例如 `STRUCTURED_POINTS`, `RECTILINEAR_GRID`), 约定 `X` 方向的结点编号增长得最快, `Y` 方向次之, `Z` 方向最慢.
+对于隐含拓扑结构的类型 (例如 `STRUCTURED_POINTS`, `RECTILINEAR_GRID`), 约定 `X` 方向的 **结点编号** 增长得最快, `Y` 方向次之, `Z` 方向最慢.
 
 ##### `STRUCTURED_POINTS`
 该类型对数据 **规律性 (Regularity)** 的要求最高, 定义一个对象所需的信息量最少, 只有 **原点坐标** 和每个方向的 **结点总数** 与 **结点间距** 需要显式给出:
@@ -225,7 +225,34 @@ t20[n-1] t21[n-1] t22[n-1]
 ##### `FIELD`
 
 ### 现代 XML 格式
-这是一种支持 **随机访问 (Random Access)** 和 **并行读写 (Parallel IO)** 的文件格式.
+这是一种支持 **随机访问 (Random Access)** 和 **并行读写 (Parallel IO)** 的文件格式, 以 `.vt?` 为默认扩展名, 其中 `?` 可以是 `[irsup]` 之一:
+
+| 扩展名 | 数据集类型              |
+| ----- | --------------------- |
+| `vti` | `vtkImageData`        |
+| `vtr` | `vtkRectlinearGrid`   |
+| `vts` | `vtkStructuredGrid`   |
+| `vtu` | `vtkUnstructuredGrid` |
+| `vtp` | `vtkPolyData`         |
+
+#### API 示例
+- 输出非结构网格: [Python](./VTK/ugrid_demo.py)
+
+⚠️ 要运行以上示例, 必须先在本地[构建 VTK 程序库及 Python 模块](https://vtk.org/Wiki/VTK/Configure_and_Build).
+
+如果构建成功, 应当可以运行以下命令
+```shell
+python3 ugrid_demo.py 
+```
+在当前目录下将会生成四个文件:
+```shell
+.
+├── ugrid_demo.py
+├── ugrid_demo_ascii.vtk
+├── ugrid_demo_ascii.vtu
+├── ugrid_demo_binary.vtk
+└── ugrid_demo_binary.vtu
+```
 
 #### PyEVTK --- 按 XML 格式输出数据
 [PyEVTK](https://bitbucket.org/pauloh/pyevtk) 用于将 Python 程序中的数据输出为 XML 格式的文件.
