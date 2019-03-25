@@ -6,8 +6,7 @@
 - [传统 VTK 格式](#传统-VTK-格式)文件的默认扩展名.
 
 ## 文件格式
-
-VTK User's Guide ([PDF](https://www.kitware.com/products/books/VTKUsersGuide.pdf)) 中的 **19.3 VTK File Formats** 一节详细定义了[传统 VTK 格式](#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式), 这里小结其要点.
+[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf) 中的 *19.3 VTK File Formats* 一节详细定义了[传统 VTK 格式](#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式), 这里小结其要点.
 
 ### 传统 VTK 格式
 
@@ -80,6 +79,7 @@ z[0] z[1] ... z[n_z-1]
 该类型放松了 `RECTILINEAR_GRID` 中对 **结点沿直线分布** 的要求, 但仍需保持 **结构化的 (Structured)** 拓扑, 因此需要显式给出所有 **结点坐标**:
 ```vtk
 DATASET STRUCTURED_GRID
+DIMENSIONS n_x n_y n_z
 POINTS n dataType
 x[0] y[0] z[0]
 x[1] y[1] z[1]
@@ -262,7 +262,7 @@ python3 ugrid_demo.py
 ## ParaView --- GUI 前端
 [ParaView](https://www.paraview.org) 是基于 VTK 实现的跨平台 GUI 前端.
 
-启动后, 在 `Help` 列表中有各种本地或在线文档的链接.
+启动后, 在 `Help` 列表中有各种本地或在线文档的链接, 其中 *Getting Started* 可用于快速入门.
 
 使用 ParaView 主要分三个基本步骤:
 1. 从数据文件中 **读取 (Read)** 原始数据.
