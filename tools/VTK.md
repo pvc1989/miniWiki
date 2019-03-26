@@ -80,63 +80,65 @@ z[0] z[1] ... z[n_z-1]
 ```vtk
 DATASET STRUCTURED_GRID
 DIMENSIONS n_x n_y n_z
-POINTS n dataType
+POINTS nPoints dataType
 x[0] y[0] z[0]
 x[1] y[1] z[1]
 ...
-x[n-1] y[n-1] z[n-1]
+x[nPoints-1] y[nPoints-1] z[nPoints-1]
 ```
+其中, 等式 `nPoints == n_x * n_y * n_z` 必须成立.
 ⚠️ VTK 中的一个 **结构网格** 相当于 ICEM 所生成的结构网格中的一个 **区块 (Block)**.
 
 ##### `UNSTRUCTURED_GRID`
 该类型放松了 `STRUCTURED_GRID` 中对拓扑结构的要求, 允许结点以 **非结构化的 (Unstructured)** 方式连接, 因此除了需要显式给出 **结点位置**:
 ```vtk
 DATASET UNSTRUCTURED_GRID
-POINTS n dataType
+POINTS nPoints dataType
 x[0] y[0] z[0]
 x[1] y[1] z[1]
 ...
-x[n-1] y[n-1] z[n-1]
+x[nPoints-1] y[nPoints-1] z[nPoints-1]
 ```
 还需要显式给出 **各单元结点列表** (即 **结点拓扑关系**) 及 **各单元类型**:
 ```vtk
-CELLS n size
+CELLS nCells nIntegers
 nPoints[0], i, j, k, ... 
 nPoints[1], i, j, k, ... 
 ...
-nPoints[n-1], i, j, k, ...
-CELL_TYPES n
+nPoints[nCells-1], i, j, k, ...
+CELL_TYPES nCells
 type[0]
 type[1]
 ...
-type[n-1]
+type[nCells-1]
 ```
 其中
 - `CELLS` 后的参数:
-  - `n` 表示单元总数
-  - `size` 表示 `nPoints` 中各元素累加之和
+  - `nCells` 表示单元总数
+  - `nIntegers` 表示存储结点拓扑关系所需的整数个数
+  - `nPoints[i]` 表示第 `i` 个单元的结点个数
 - `CELL_TYPES` 后的参数:
-  - `n` 表示单元总数, 必须与 `CELLS` 后的 `n` 一致
-  - `type` 表示单元类型, 详见 [`vtkCellType.h`](https://vtk.org/doc/nightly/html/vtkCellType_8h.html)
+  - `nCells` 表示单元总数, 必须与 `CELLS` 后的一致
+  - `type[i]` 表示第 `i` 个单元的类型, 详见 [`vtkCellType.h`](https://vtk.org/doc/nightly/html/vtkCellType_8h.html)
 
 ##### `POLYDATA`
 该类型表示最一般的数据集, 由初等几何对象 (`POINTS`, `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS`) 拼凑而成.
 **结点位置** 由 `POINTS` 字段给出 (与 `STRUCTURED_GRID` 中的 `POINTS` 字段一致):
 ```vtk
 DATASET POLYDATA
-POINTS n dataType
+POINTS nPoints dataType
 x[0] y[0] z[0]
 x[1] y[1] z[1]
 ...
-x[n-1] y[n-1] z[n-1]
+x[nPoints-1] y[nPoints-1] z[nPoints-1]
 ```
-**拓扑关系** 由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 字段给出 (与 `UNSTRUCTURED_GRID` 中的 `CELLS` 字段类似):
+**拓扑关系** 由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 等字段给出 (与 `UNSTRUCTURED_GRID` 中的 `CELLS` 字段类似):
 ```vtk
-VERTICES n size
+LINES nLines size
 nPoints[0], i[0], j[0], k[0], ...
 nPoints[1], i[1], j[1], k[1], ...
 ...
-nPoints[n-1], i[n-1], j[n-1], k[n-1], ...
+nPoints[nLines-1], i[nLines-1], j[nLines-1], k[nLines-1], ...
 ```
 
 ##### `FIELD`
