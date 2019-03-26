@@ -1,19 +1,27 @@
 import vtk
 
+xyz =((0, 0, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0), (2, 0, 0), (2, 1, 0))
+
 # 创建 vtkPoints (点集) 对象
 points = vtk.vtkPoints()
-points.SetNumberOfPoints(6)
-# void vtkPoints::InsertPoint(vtkIdType id, double x, double y, double z)
-points.InsertPoint(0, 0, 0, 0)
-points.InsertPoint(1, 1, 0, 0)
-points.InsertPoint(2, 1, 1, 0)
-points.InsertPoint(3, 0, 1, 0)
-points.InsertPoint(4, 2, 0, 0)
-points.InsertPoint(5, 2, 1, 0)
+points.SetNumberOfPoints(len(xyz))
+# 创建 vtkFloatArray (float 型数组) 对象
+vectors = vtk.vtkFloatArray()
+# virtual void vtkAbstractArray::SetName(const char* name)	
+vectors.SetName("Position")
+vectors.SetNumberOfComponents(3)
+vectors.SetNumberOfTuples(len(xyz))
+for i in range(6):
+  points.InsertPoint(i, xyz[i])
+  vectors.InsertTuple(i, xyz[i])
 
 # 创建 vtkUnstructuredGrid (非结构网格) 对象
 grid = vtk.vtkUnstructuredGrid()
 grid.SetPoints(points)
+# vtkPointData* vtkDataSet::GetPointData()
+pointData = grid.GetPointData()
+# int vtkDataSetAttributes::SetVectors(vtkDataArray* da)
+pointData.SetVectors(vectors)
 
 # void vtkUnstructuredGrid::Allocate(vtkIdType numCells=1000, int extSize=1000)
 # extSize 现已弃用, 不需要设置
