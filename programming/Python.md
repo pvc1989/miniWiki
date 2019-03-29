@@ -438,6 +438,14 @@ s = f.readline()  # '\n' included
 f.write('hello, world\n')
 ```
 
+## `sys.stdin`, `sys.stdout`, `sys.stderr` --- [标准输入输出](https://docs.python.org/3/library/sys.html#sys.stdin)
+从标准输入 (`stdin`) 中逐行读取信息并进行处理:
+```python
+import sys
+for line in sys.stdin:
+    # Process each line, which is an str object.
+```
+
 ## `stdio` from [Introduction to Programming in Python](https://introcs.cs.princeton.edu/python/)
 
 前一节介绍的文本读写操作要求输入输出对象都是 `str` 类型, 因此在读写 `int` 或 `float` 数据时, 需要频繁地进行类型转换. 
