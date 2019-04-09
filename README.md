@@ -27,6 +27,7 @@
   - [设计原则](./programming/principles.md)
   - [设计模式](./programming/patterns.md)
 - 编程语言
+  - [UML](./programming/UML.md) --- 统一建模语言
   - [Octave](./programming/Octave.md) --- 开源的 [MATLAB](https://www.mathworks.com/products/matlab.html) 替代品
   - [Python](./programming/Python.md)
   - [C++](./programming/C++.md)
