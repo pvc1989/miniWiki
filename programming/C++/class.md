@@ -45,6 +45,21 @@
 
 ⚠️ 友元机制破坏了类的封装，因此要少用。
 
+### 类型成员
+一个类可以含有类型成员，可以是已知类型的 **别名**，也可以是定义在其内部的 **嵌套类 (nested class)**。
+类型成员必须在使用前被定义，因此通常将它们集中定义在类的头部。
+类型成员与[数据成员](#数据成员)和[函数成员](#函数成员)遵循相同的[访问控制](#访问控制)规则：
+```cpp
+class Screen {
+ public:
+  typedef std::string::size_type Position;
+ private:
+  Position _cursor = 0;
+  Position _height = 0;
+  Position _width = 0;
+};
+```
+
 ### 数据成员
 
 ### 函数成员
@@ -127,24 +142,6 @@ class Screen {
   static const char kBackground;
 };
 ```
-
-### 类型成员
-一个类可以在其内部定义新的`类型`或`类型别名`作为自己的成员.
-`类型成员`必须在使用前被定义, 因此通常将它们集中定义在类的头部.
-`类型成员`与`数据成员`和`函数成员`遵循相同的访问控制规则:
-```cpp
-class Screen {
- public:
-  typedef std::string::size_type Position;
- private:
-  Position cursor = 0;
-  Position height = 0, width = 0;
-  std::string contents;
-};
-```
-### 类作用域
-
-### 非成员函数接口
 
 ### 构造函数 (Constructor)
 构造函数是一种`以类名作为函数名`的特殊成员函数, 用于构造该类的对象.
