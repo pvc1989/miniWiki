@@ -24,7 +24,7 @@
 
 ### 编程
 - 设计思想
-  - [设计原则](./programming/principles.md)
+  - [设计原则](./programming/principles/README.md)
   - [设计模式](./programming/patterns.md)
 - 编程语言
   - [UML](./programming/UML.md) --- 统一建模语言
