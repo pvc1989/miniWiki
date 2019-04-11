@@ -41,9 +41,7 @@
   - [Install](./tools/linux/install.md) 
   - [Vim](./tools/linux/vim.md)
   - [SSH](./tools/linux/ssh.md) --- Secure SHell
-- LaTeX --- 结构化文档排版
-  - [慕子的知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
-  - [LyX](./tools/LyX.md)
+- [LaTeX](./tools/LaTeX/README.md) --- 结构化文档排版系统
 - [Markdown](./tools/Markdown.md) --- 轻量级标记语言
 - [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
 - [VTK](./tools/VTK/README.md) --- 数据显示
