@@ -47,5 +47,6 @@
 - Markdown --- 轻量级笔记
   - [GitHub Flavored Markdown](https://github.github.com/gfm/) --- 最常用的增强版 Markdown
   - [Typora](./tools/markdown/typora.md) --- 支持实时渲染的 Markdown 编辑器
-- [Gmsh](./tools/Gmsh.md) --- 简易 CAD + 非结构网格生成器
-- [VTK](./tools/VTK.md) --- 数据显示
+  - [Typora](./tools/Markdown.md)
+- [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
+- [VTK](./tools/VTK/README.md) --- 数据显示

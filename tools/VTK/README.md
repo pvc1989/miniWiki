@@ -238,7 +238,7 @@ t20[n-1] t21[n-1] t22[n-1]
 | `vtp` | `vtkPolyData`         |
 
 #### API 示例
-- 输出非结构网格: [Python](./VTK/ugrid_demo.py)
+- 输出非结构网格: [Python](./ugrid_demo.py)
 
 ⚠️ 要运行以上示例, 必须先在本地[构建 VTK 程序库及 Python 模块](https://vtk.org/Wiki/VTK/Configure_and_Build).
 
