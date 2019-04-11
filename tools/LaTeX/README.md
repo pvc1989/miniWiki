@@ -15,7 +15,9 @@ texdoc ctex
 ```
 3. 创建中文文档 [`hello.tex`](./hello.tex)，用 `xelatex` 命令编译：
 ```shell
-xelatex hello.tex
+mkdir build
+cd build
+xelatex ../hello.tex
 ```
 
 ## TeXStudio
