@@ -243,7 +243,7 @@ googletest
 │   └── ...
 ├── ...
 ```
-其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../make.md#CMake) --- 这是目前最简单最通用的自动构建方式.
+其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../../make/README.md#CMake) --- 这是目前最简单最通用的自动构建方式.
 
 #### 构建为独立的库
 假设源文件目录 (必须含有 `CMakeLists.txt`) 为 `source-dir`, 构建产物存放在 `build-dir`, 则构建过程如下:
@@ -280,7 +280,7 @@ cmake --build build-dir
 2. 在本地项目的 `CMakeLists.txt` 文件中添加命令, 构建 Google Test 和本地测试.
 
 官方文档的 [Incorporating Into An Existing CMake Project](https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project) 一节给出了这两个文件的模板.
-这里给出一个简单的 C++ 项目示例, [源文件目录](./unittest/googletest/)结构如下, 用 [CMake](../make.md#CMake) 来组织构建:
+这里给出一个简单的 C++ 项目示例, [源文件目录](./googletest/)结构如下, 用 [CMake](../../make/README.md#CMake) 来组织构建:
 ```
 googletest
 ├── CMakeLists.txt

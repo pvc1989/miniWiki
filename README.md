@@ -30,11 +30,11 @@
   - [UML](./programming/UML.md) --- 统一建模语言
   - [Octave](./programming/Octave.md) --- 开源的 [MATLAB](https://www.mathworks.com/products/matlab.html) 替代品
   - [Python](./programming/Python.md)
-  - [C++](./programming/C++.md)
+  - [C++](./programming/C++/README.md)
 - 构建工具
   - [Git](./programming/Git.md) --- 版本控制
-  - [GNU Make](./programming/make.md#GNU-Make)
-  - [CMake](./programming/make.md#CMake) --- 跨平台构建
+  - [GNU Make](./programming/make/README.md#GNU-Make)
+  - [CMake](./programming/make/README.md#CMake) --- 跨平台构建
 
 ### 工具
 - Linux --- 开源操作系统

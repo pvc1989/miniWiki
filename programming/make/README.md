@@ -16,9 +16,9 @@ demo
     └── test_math.c
 ```
 各文件大致内容如下:
-- [`include/math.h`](./make/demo/include/math.h) --- 声明函数 `factorial`, 用于计算正整数的阶乘.
-- [`src/math.c`](./make/demo/src/math.c) --- 实现 `factorial` 的功能.
-- [`test/test_math.c`](./make/demo/test/test_math.c) --- 在 `main` 中调用 `factorial`, 测试其正确性.
+- [`include/math.h`](./demo/include/math.h) --- 声明函数 `factorial`, 用于计算正整数的阶乘.
+- [`src/math.c`](./demo/src/math.c) --- 实现 `factorial` 的功能.
+- [`test/test_math.c`](./demo/test/test_math.c) --- 在 `main` 中调用 `factorial`, 测试其正确性.
 
 为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径.
 为避免污染源文件目录, 应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建.
@@ -197,7 +197,7 @@ library.o : library.c
 ```
 
 #### 示例
-以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./make/demo/Makefile).
+以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./demo/Makefile).
 
 ⚠️ 其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 的 <相对路径>, 或项目根目录的 <绝对路径> (推荐).
 
@@ -358,6 +358,6 @@ demo
     └── test_math.c
 ```
 创建三个 `CMakeLists.txt` 文件:
-- [`demo/CMakeLists.txt`](./make/demo/CMakeLists.txt) --- 用于管理整个项目.
-- [`demo/src/CMakeLists.txt`](./make/demo/src/CMakeLists.txt) --- 用于构建 `libmath`.
-- [`demo/src/CMakeLists.txt`](./make/demo/src/CMakeLists.txt) --- 用于构建 `test_math`.
+- [`demo/CMakeLists.txt`](./demo/CMakeLists.txt) --- 用于管理整个项目.
+- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) --- 用于构建 `libmath`.
+- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) --- 用于构建 `test_math`.
