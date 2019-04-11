@@ -125,7 +125,7 @@ passwd
 
 ### 安装 Vim
 
-Vim 是 Linux 系统下常用的一款 CLI 文本编辑器. 打开终端 (`[Ctrl] + [Alt] + T`) 并尝试以下命令:
+[Vim](../Vim.md) 是 Linux 系统下常用的一款 CLI 文本编辑器. 打开终端 (`[Ctrl] + [Alt] + T`) 并尝试以下命令:
 
 ```shell
 vim --version
