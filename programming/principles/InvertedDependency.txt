@@ -1,35 +1,35 @@
 @startuml
 package "Application" {
   interface PriorityQueue {
-    {abstract} +push(X) : void
-    {abstract} +top() : X
-    {abstract} +pop() : void
+    {abstract} +push()
+    {abstract} +top()
+    {abstract} +pop()
   }
   class TaskScheduler {
-    - pq : PriorityQueue
-    +addTask(Task) : void
-    +popTask() : Task
+    - aPriorityQueue
+    +addTask()
+    +popTask()
   }
-  PriorityQueue <-- TaskScheduler
+  PriorityQueue <--* TaskScheduler
 }
 package "Algorithm" {
   interface Vector {
-    {abstract} +operator[](int) : X
-    {abstract} #resize(int) : void
+    {abstract} +at()
+    {abstract} #resize()
   }
   class BinaryHeap {
-    -vector : Vector
-    +push(X) : void
-    +top() : X
-    +pop() : void
+    -aVector
+    +push()
+    +top()
+    +pop()
   }
   PriorityQueue <|-- BinaryHeap
-  Vector <-- BinaryHeap
+  Vector <--* BinaryHeap
 }
 package "DataStructure" {
   class DynamicArray {
-    +operator[](int) : X
-    #resize(int) : void
+    +at()
+    #resize()
   }
   Vector <|-- DynamicArray
 }
