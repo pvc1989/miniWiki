@@ -24,8 +24,8 @@
 
 ### 程序设计
 - 设计思想
-  - Design Patterns // [设计模式](./programming/patterns.md)
-  - Design Principles // [设计原则](./programming/principles/README.md)
+  - [设计原则](./programming/principles/README.md) // Design Principles
+  - [设计模式](./programming/patterns.md) // Design Patterns
 - 编程语言
   - [C++](./programming/C++/README.md)
   - [Octave](./programming/Octave.md) --- [MATLAB](https://www.mathworks.com/products/matlab.html) 的开源替代品
