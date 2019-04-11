@@ -37,11 +37,10 @@
   - [CMake](./programming/make/README.md#CMake) --- 跨平台构建
 
 ### 工具
-- Linux --- 开源操作系统
-  - [Install](./tools/linux/install.md) 
-  - [Vim](./tools/linux/vim.md)
-  - [SSH](./tools/linux/ssh.md) --- Secure SHell
+- [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
 - [LaTeX](./tools/LaTeX/README.md) --- 结构化文档排版系统
 - [Markdown](./tools/Markdown.md) --- 轻量级标记语言
-- [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
+- [SSH](./tools/SSH.md) --- Secure SHell
+- [Ubuntu](./tools/Ubuntu/README.md)
+- [Vim](./tools/Vim.md) --- 文本编辑器
 - [VTK](./tools/VTK/README.md) --- 数据显示
