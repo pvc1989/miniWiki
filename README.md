@@ -41,6 +41,6 @@
 - [LaTeX](./tools/LaTeX/README.md) --- 结构化文档排版系统
 - [Markdown](./tools/Markdown.md) --- 轻量级标记语言
 - [SSH](./tools/SSH.md) --- Secure SHell
-- [Ubuntu](./tools/Ubuntu/README.md)
+- [Linux](./tools/Linux/README.md)
 - [Vim](./tools/Vim.md) --- 文本编辑器
 - [VTK](./tools/VTK/README.md) --- 数据显示
