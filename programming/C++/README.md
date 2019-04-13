@@ -16,8 +16,8 @@
 ## 抽象机制
 - 类 (Class)
   - [创建类型](./class.md)
-  - [拷贝控制](./copy_control.md)
   - [运算符重载](./operator.md)
+  - [拷贝控制](./copy_control.md)
   - [继承与动态绑定](./inheritance.md) --- 运行期多态
 - 模板 (Template)
   - [泛型编程 (Generic Programming)](./generic.md) --- 编译期多态
