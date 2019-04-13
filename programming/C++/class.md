@@ -118,6 +118,7 @@ class Account {
 如果其初始值已经在类内给定，则类外不得再给定初始值：
 ```cpp
 // account.cpp
+#include "account.h"
 constexpr int Account::kLength;
 ```
 
