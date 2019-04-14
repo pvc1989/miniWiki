@@ -3,23 +3,23 @@
 ## 大纲
 
 ### 数学
-- 微分几何 // [Differential Geometry](./mathematics/differential_geometry.lyx)
+- 微分几何 // [Differential Geometry](./mathematics/DifferentialGeometry.lyx)
 - 偏微分方程 // [Partial Differential Equations](./mathematics/PDE.lyx)
 
 ### 物理
 - 经典力学
   - 分析力学
   - 连续介质力学
-    - 流体力学 // [Fluid Mechanics](./physics/fluid.lyx)
+    - 流体力学 // [Fluid Mechanics](./physics/FluidMechanics.lyx)
 
 ### 算法
 - 基础数值算法
-  - 插值 // [Interpolation](./algorithms/interpolation.lyx) 
-  - 数值积分 // [Quadrature](./algorithms/quadrature.lyx) 
-  - 优化 // [Optimization](./algorithms/optimization.lyx) 
+  - 插值 // [Interpolation](./algorithms/Interpolation.lyx) 
+  - 数值积分 // [Quadrature](./algorithms/Quadrature.lyx) 
+  - 优化 // [Optimization](./algorithms/Optimization.lyx) 
 - 微分方程数值解法
-  - 有限差分法 // [Finite Difference Methods](./algorithms/finite_difference.lyx)
-  - 有限单元法 // [Finite Element Methods](./algorithms/finite_element.lyx)
+  - 有限差分法 // [Finite Difference Methods](./algorithms/FiniteDifference.lyx)
+  - 有限单元法 // [Finite Element Methods](./algorithms/FiniteElement.lyx)
   - 计算流体力学 // [Computational Fluid Mechanics](./algorithms/CFD.lyx)
 
 ### 程序设计
