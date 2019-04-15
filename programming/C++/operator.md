@@ -8,7 +8,7 @@
 程序员只能对已有的运算符进行 **重载 (overload)**，而不能创造新的运算符；在重载时，只能修改形参类型，而不能改变形参个数。
 
 ### 示例
-为方便叙述，下面以 `Point` 为例，为其重载运算符：
+下面以 `Point` 为例，为其重载运算符：
 ```cpp
 // point.h
 #include <iostream>
@@ -22,6 +22,8 @@ class Point {
   // 下标运算符
   double& operator[](int i);
   const double& operator[](int i) const;
+  // 类型转换运算符
+  explicit operator bool() const;
   // 普通方法
   const double& x() const { return _x; }
   const double& y() const { return _y; }
@@ -208,6 +210,31 @@ class PointHandle {
 auto point_handle = PointHandle(1.0, 2.0);
 assert(point_handle->x() == (*point_handle)[0]);
 ```
+
+#### 类型转换运算符
+这种运算符的函数名为 `operator` + 目标类型，形参列表为空，没有返回类型，通常应为 [`const` 成员函数](./class#`const`-成员函数)：
+```cpp
+// point.cpp
+#include "point.h"
+Point::operator bool() const {
+  return _x != 0.0 || _y != 0.0;
+}
+```
+
+与只需要一个实参的 non-`explicit` 构造函数类似，non-`explicit` 类型转换运算符 **可能** 被 **隐式地** 用于类型转换，从而绕开类型检查机制。
+⚠️ 应当尽量避免隐式类型转换。
+
+`explicit` 类型转换运算符 **只能** 被 **显式地** 调用，
+唯一的例外是 `operator bool()`，即使被声明为 `explicit` 也可以被 **隐式地** 调用：
+```cpp
+// client.cpp
+auto origin = Point();
+auto point = Point(1.0, 2.0);
+assert(origin == false);
+assert(point == true);
+```
+
+⚠️ 除 `explicit operator bool()` 之外，应当避免重载类型转换运算符。
 
 ### 通常重载为方法成员的运算符
 
