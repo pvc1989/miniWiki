@@ -165,7 +165,7 @@ const double& Point::operator[](int i) const {
 
 #### 函数调用运算符
 一个类可以定义多个函数调用运算符 `operator()`，相互之间以形参的类型或数量来区分。
-支持 `operator()` 的对象被称为 **函数对象 (function object)** 或 **函子 (functor)**，其行为可以通过设置其内部 **状态 (state)** 的方式来 **订制 (customize)**。
+支持 `operator()` 的对象被称为[函数对象（函子）](./function.md#函数对象)，其行为可以通过设置其内部 **状态 (state)** 的方式来 **订制 (customize)**。
 ```cpp
 // point.h
 class PointBuilder {
