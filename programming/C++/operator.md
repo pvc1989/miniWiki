@@ -221,7 +221,7 @@ Point::operator bool() const {
 }
 ```
 
-与只需要一个实参的 non-`explicit` 构造函数类似，non-`explicit` 类型转换运算符 **可能** 被 **隐式地** 用于类型转换，从而绕开类型检查机制。
+与只需要一个实参的 non-[`explicit` 构造函数](./class.md#`explicit`-构造函数)类似，non-`explicit` 类型转换运算符 **可能** 被 **隐式地** 用于类型转换，从而绕开类型检查机制。
 ⚠️ 应当尽量避免隐式类型转换。
 
 `explicit` 类型转换运算符 **只能** 被 **显式地** 调用，
