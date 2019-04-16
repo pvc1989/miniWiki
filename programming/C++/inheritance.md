@@ -48,46 +48,47 @@ class NoDerived final { };
 
 ## 继承级别
 
-### 成员访问修饰符
+### 访问级别
+除了 [`public` 和 `private`](./class.md#访问控制)，基类还可以用 `protected` 来实现更精细的访问控制：
 
-| 修饰符      | 派生类的成员或友元 | 其他对象 |
+| 修饰符      | 派生类的成员或 `friend` | 其他对象 |
 | ----------- | ---- | ---- |
 | `public`    | 可访问 | 可访问 |
 | `protected` | 可访问 | 不可访问 |
 | `private`   | 不可访问 | 不可访问 |
 
-派生类的成员或友元, 只能通过`派生类对象`来访问基类的 `protected` 成员.
-派生类对象本身, 对于基类的 `protected` 成员, 没有特殊的权限.
+派生类的成员或 `friend`
+- 只能通过 **派生类对象** 来访问基类的 `protected` 成员。
+- 对于 **基类对象** 的 `protected` 成员没有特殊的访问权限。
 
 ```cpp
 class Base {
  protected:
-  int _protected_i;  // 基类的 protected 成员
+  int _protected;  // 基类的 protected 成员
 };
 class Derived : public Base {
   friend void visit(Derived& d);
   friend void visit(Base& b);
-  int _private_i;  // 派生类的 private 成员
+  int _private;  // 派生类的 private 成员
 };
 // ✔️ 可以通过 派生类对象 访问 基类的 protected 成员:
-void visit(Derived &d) { d._private_i = d._protected_i = 0; }
-// ❌ 只能通过 派生类对象 访问 基类的 protected 成员:
-clobber(Base &b) { b._protected_i = 0; }
+void visit(Derived &d) { d._private = d._protected = 0; }
+// ❌ 不能访问 基类对象的 protected 成员:
+visit(Base &b) { b._protected_i = 0; }
 ```
-在派生类中, 尽管基类的 `public` 和 `protected` 成员可以被直接访问, 还是应该`使用基类的公共接口`来访问基类成员.
 
-### 派生访问修饰符
-派生访问修饰符用于规定`派生类的客户` (包括`下一级派生类`) 对`继承自基类的成员`的访问权限:
-- 基类的 `private` 成员无法被派生类访问, 因此不受继承级别的影响.
-- 基类的 `public` 和 `protected` 成员可以被派生类访问, 因此受继承级别的影响:
-  - `public` 继承:
-    - 基类的 `public` 成员 → 派生类的 `public` 成员
-    - 基类的 `protected` 成员 → 派生类的 `protected` 成员
-  - `protected` 继承: 基类的 `public` 和 `protected` 成员 → 派生类的 `protected` 成员
-  - `private` 继承: 基类的 `public` 和 `protected` 成员 → 派生类的 `private` 成员
+在派生类中，尽管可以直接访问基类的 `public` 和 `protected` 成员，还是应该使用基类的公共接口来访问基类成员。
+
+### 继承保护级别
+**派生访问修饰符 (derivation access specifier)** 用于规定 **继承保护级别 (inheritance protection level)**，即规定派生类的 **使用者 (client)**（包括 **下一级派生类**）对 **继承自基类的成员** 的访问权限：
+- 基类的 `private` 成员无法被派生类访问，不受继承级别的影响。
+- 基类的 `public` 和 `protected` 成员可以被派生类访问，受继承级别的影响：
+  - `public` 继承：基类的 `public`/`protected` 成员 → 派生类的 `public`/`protected` 成员。
+  - `protected` 继承：基类的 `public`/`protected` 成员 → 派生类的 `protected` 成员。
+  - `private` 继承：基类的 `public`/`protected` 成员 → 派生类的 `private` 成员。
 
 ### 改变访问级别
-基类的 `public` 和 `protected` 成员在派生类中可以用 `using 声明`改变其访问级别:
+在派生类中，可以用 `using` 改变基类 `public`/`protected` 成员的访问级别：
 ```cpp
 class Base {
  public:
@@ -95,7 +96,7 @@ class Base {
  protected:
   std::size_t n;
 };
-// private 继承, 基类的 public 和 protected 成员 → 派生类的 private 成员:
+// private 继承，基类的 public 和 protected 成员 → 派生类的 private 成员：
 class Derived : private Base {  
  public:
   using Base::size;  // 提升为 派生类的 public 成员
@@ -104,17 +105,18 @@ class Derived : private Base {
 };
 ```
 
-### 默认的继承级别
+### `class` v. `struct`
+`class` 与 `struct` 的区别仅仅体现在[默认的访问级别](./class.md#`class`-v.-`struct`)和默认的继承级别上：
 
-| 关键词  | 默认的继承级别 |
-| ------ | ---------------------- |
-| `struct` | `public` |
-| `class` | `private` |
+| 关键词  | 默认的继承级别 | 默认的继承级别 |
+| ------ | ----------- | ----------- |
+| `struct` | `public` | `public` |
+| `class` | `private` | `private` |
 
-为提高代码可读性, 应当`显式`写出继承级别.
+为提高代码可读性，应当 **显式** 写出访问级别和继承级别。
 
-### 友元关系不被继承
-基类的友元与派生类的友元是相互独立的, 必须为每个类独立声明各自的友元.
+### `friend` 不被继承
+基类与派生类的 `friend` 是相互独立的，必须为每个类独立声明 `friend`。
 
 ## 自动类型转换
 
