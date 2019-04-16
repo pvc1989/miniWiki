@@ -1,55 +1,49 @@
 # 继承与动态绑定
 
-## 基类与派生类
+## 基类 v. 派生类
 
 | 名称 | 同义词 | 任务 |
 | ---- | ---- | ---- |
-| 基类 (base class) | 父类 (superclass) | 定义自己和派生类`共有的 (common)` 成员 |
-| 派生类 (derived class) | 子类 (subclass) | 定义自己`特有的 (specific)` 成员 |
+| 基类 (base class) | 超类 (superclass) | 定义自己和派生类 **共有的 (common)** 成员 |
+| 派生类 (derived class) | 子类 (subclass) | 定义自己 **特有的 (specific)** 成员 |
 
-### 声明与定义
-一个类只有被 **定义** 过 (而不仅仅被 **声明** 过), 才能被用作基类
+### 声明 v. 定义
+一个类只有被 **定义** 过（而不仅仅被 **声明** 过）才能被用作基类：
 ```cpp
-class Base;
-class Derived : public Base { ... };  // 错误: 用作基类的 Quote 还没有被定义
+class Base;  // 声明
+class Derived : public Base { };  // ❌ 用作基类的 Base 还没有被定义
 ```
 
-派生列表只出现在派生类的 **定义** 中, 而不出现在派生类的 **声明** 中:
+派生列表只出现在派生类的 **定义** 中，而不出现在派生类的 **声明** 中：
 ```cpp
-class Derived : public Base;  // 错误: 派生列表 只出现在 派生类定义 中
-class Derived;                // 正确: 派生列表 不出现在 派生类声明 中
+class Derived : public Base;  // ❌ 派生列表 只出现在 定义 中
+class Derived;                // ✔️ 派生列表 不出现在 声明 中
 ```
 
-### 构造函数
-`派生类构造函数`必须用`基类构造函数`来初始化`派生类对象的基类部分`:
+### [构造函数](./class.md#构造函数)
+派生类的构造函数必须用 **基类的构造函数** 来初始化派生类对象的 **基类部分**：
 ```cpp
-class Quote {
-  std::string _title;
-  double price;
+class Point {
+  double _x;
+  double _y;
  public:
-  Quote(const std::string& title, double price)
-      : _title(title), _price(price) { }
-  // ...
+  Point(double x, double y) : _x(x), _y(y) { }
 };
-class BulkQuote : public Quote {
-  std::size_t _amount;
-  double _discount;
+class Particle : public Point {
+  double _mass;
  public:
-  BulkQuote(const std::string& title, double price, 
-            std::size_t amount, double discount)
-      : Quote(title, price),  // 用 基类构造函数 来初始化 派生类对象的基类部分
-        _amount(amount), _discount(discount) { }
-  // ...
+  Particle(double x, double y, double mass)
+      : Point(x, y) /* 用 基类构造函数 初始化 基类部分 */, _mass(mass) { }
 };
 ```
 
 ### 静态数据成员
-基类中定义的静态数据成员被继承体系中的所有派生类共享.
+基类中的静态数据成员被继承体系中的所有派生类共享，既可以通过基类来访问，也可以通过派生类访问（前提是该基类成员对派生类可见）。
 
-### (C++11) `final` --- 禁止继承
-类名后面紧跟 `final` 关键词, 表示该类不可以被用作基类:
+### 禁止继承
+类名后面紧跟 `final` 关键词，表示该类不可以被用作基类：
 ```cpp
-class NoDerived final { /* ... */ };
+class NoDerived final { };
 ```
 
 ## 继承级别
@@ -75,9 +69,9 @@ class Derived : public Base {
   friend void visit(Base& b);
   int _private_i;  // 派生类的 private 成员
 };
-// 正确: 可以通过 派生类对象 访问 基类的 protected 成员:
+// ✔️ 可以通过 派生类对象 访问 基类的 protected 成员:
 void visit(Derived &d) { d._private_i = d._protected_i = 0; }
-// 错误: 只能通过 派生类对象 访问 基类的 protected 成员:
+// ❌ 只能通过 派生类对象 访问 基类的 protected 成员:
 clobber(Base &b) { b._protected_i = 0; }
 ```
 在派生类中, 尽管基类的 `public` 和 `protected` 成员可以被直接访问, 还是应该`使用基类的公共接口`来访问基类成员.
@@ -164,8 +158,8 @@ Derived& rd = b;   // 错误
 即使一个`基类指针或引用`的确指向一个`派生类对象`, 这种自动转换也不存在:
 ```cpp
 Derived d;
-Base* pb = &d;     // 正确: 可以从 Derived* 转换到 Base*
-Derived* pd = pb;  // 错误: 无法从 Base* 转换到 Derived*
+Base* pb = &d;     // ✔️ 可以从 Derived* 转换到 Base*
+Derived* pd = pb;  // ❌ 无法从 Base* 转换到 Derived*
 ```
 
 #### 强制类型转换 (慎用)
@@ -289,7 +283,7 @@ class Shape {
 };
 class Rectangle : public Shape {
  public:
-  virtual void noOverride() const { }  // 错误: 禁止重写 final 函数
+  virtual void noOverride() const { }  // ❌ 禁止重写 final 函数
 };
 ```
 
