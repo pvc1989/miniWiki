@@ -42,7 +42,7 @@ java -jar ${PLANTUML_PATH}/plantuml.jar -tsvg Inheritance.txt
 
 | PNG | SVG |
 | :-: | :-: |
-| ![](./UML/Inheritance.png) | ![](./UML/Inheritance.svg)|
+| ![](./Inheritance.png) | ![](./Inheritance.svg)|
 
 ### 用 PlantUML 画 Sequence Diagram
 
