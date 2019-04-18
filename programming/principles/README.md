@@ -5,7 +5,7 @@
 | 缩写  |              全称                |                中译               |
 | :---: | :-----------------------------: | :------------------------------: |
 | `SRP` | Single Resposibility Principle  |    [单一责任原则](#单一责任原则)     |
-| `OCP` |     Open--Closed Principle      |        [开闭原则](#开闭原则)        |
+| `OCP` |     Open--Closed Principle      |    [开放封闭原则](#开放封闭原则)     |
 | `LSP` |  Liskov Substitution Principle  | [Liskov 替换原则](#Liskov-替换原则) |
 | `ISP` | Interface Segregation Principle |    [接口分离原则](#接口分离原则)     |
 | `DIP` | Dependency Inversion Principle  |    [依赖倒置原则](#依赖倒置原则)     |
@@ -14,13 +14,15 @@
 
 > A class should have only one reason to change.
 
-## 开闭原则
+## 开放封闭原则
 
 > Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.
 
 ## Liskov 替换原则
 
 > Subtypes must be substitutable for their base types.
+
+
 
 ## 接口分离原则
 
