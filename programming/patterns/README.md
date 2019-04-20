@@ -1,8 +1,10 @@
+# 设计模式
+
 ## 语言实现机制
 
 ### Java
 
-#### 接口实现
+#### `implements` an `interface`
 
 ```java
 public interface Comparable<T> {
@@ -29,7 +31,7 @@ public class Point implements Comparable<Point> {
 }
 ```
 
-#### 子类扩展
+#### `extends` a `class`
 
 所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
 
@@ -94,7 +96,7 @@ int main() {
 }
 ```
 
-#### 继承 + 模板
+#### 继承 + `template`
 
 ```cpp
 #include <iostream>
@@ -127,13 +129,6 @@ int main() {
   std::cout << p.compareTo(o) << std::endl;
 }
 ```
-
-#### 模板 + 概念 (C++20)
-
-```cpp
-
-```
-
 
 ## 创建型模式
 
