@@ -22,7 +22,222 @@
 
 > Subtypes must be substitutable for their base types.
 
+该原则源自于 Barbara Liskov [1988] 对 **子类 (subtype)** 所作的定义：
 
+> If for each object `o1` of type `S` there is an object `o2` of type `T` such that for all programs `P` defined in terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2` then `S` is a *subtype* of `T`.
+
+这里的 *object* 在 C++ 中应当理解为 **指针** 或 **引用**。
+
+### 语言实现机制
+在 C++、Java、Python 等主流 OOP 语言中，LSP 主要是通过虚函数机制来实现的。
+
+假设需要这样一个几何库：
+- 所有几何类型都是 `Shape` 的派生类。
+- 所有几何类型都要实现一个返回当前几何对象面积的 `area()` 成员。
+- 某个应用需要将 `area()` 成员封装为一个普通函数，符合 LSP 的设计应当允许以下的简单实现：
+
+```cpp
+inline double area(const Shape& shape) { return shape.area(); }
+```
+
+#### 原始设计
+不了解[虚函数](#基于虚函数的设计符合-LSP)的 C++ 新手可能会给出如下设计：
+```cpp
+struct Shape {
+  double area() const { return -1; }
+};
+
+struct Point : public Shape {
+  double x;
+  double y;
+  Point(double a, double b) : x(a), y(b) { }
+  double area() const { return 0; }
+};
+
+class LineSegment : public Shape {
+  Point _head;
+  Point _tail;
+ public:
+  LineSegment(const Point& head, const Point& tail)
+      : _head(head), _tail(tail) { }
+  double area() const { return 0; }
+};
+
+class Circle : public Shape {
+  Point _center;
+  double _radius;
+ public:
+  Circle(const Point& point, double radius)
+      : _center(point), _radius(radius) { }
+  double area() const { return 3.1415926 * _radius * _radius; }
+};
+```
+该设计违反了 LSP：将 **派生类对象的指针或引用** 传递给封装函数，实际调用的总是基类的 `area()` 成员，得到的返回值总是 `-1`，从而无法通过下面的单元测试：
+```cpp
+#include <cassert>
+
+int main() {
+  auto p = Point(0, 0);
+  auto q = Point(1, 0);
+  assert(p.area() == area(p));
+  auto ls = LineSegment(p, q);
+  assert(ls.area() == area(ls));
+  auto c = Circle(p, 2);
+  assert(c.area() == area(c));
+}
+```
+
+#### 基于虚函数的设计符合 LSP
+如果在基类中将 `area()` 成员声明为虚函数，那么封装函数中的 `shape.area()` 将会在 **运行期 (run-time)** 自动转发到相应类型的 `area()` 成员，从而有效地解决上述问题：
+```cpp
+struct Shape {
+  virtual ~Shape() = default;
+  virtual double area() const { return -1; }
+};
+
+struct Point : public Shape {
+  double x;
+  double y;
+  Point(double a, double b) : x(a), y(b) { }
+  double area() const override { return 0; }
+};
+
+class LineSegment : public Shape {
+  Point _head;
+  Point _tail;
+ public:
+  LineSegment(const Point& head, const Point& tail)
+    	: _head(head), _tail(tail) { }
+  double area() const override { return 1; }
+};
+
+class Circle : public Shape {
+  Point _center;
+  double _radius;
+ public:
+  Circle(const Point& point, double radius)
+    	: _center(point), _radius(radius) { }
+  double area() const { return 3.1415926 * _radius * _radius; }
+};
+```
+
+#### 基于 RTTI 的设计违反 LSP
+如果不使用[虚函数](#基于虚函数的设计符合-LSP)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
+一种实现方式：在基类中定义一个枚举成员 `type`，通过派生类的构造函数对其进行初始化，用于表示当前几何对象的类型。
+
+```cpp
+struct Shape {
+  enum class Type { Shape, Point, LineSegment, Circle };
+  const Type type;
+  Shape(Type t) : type(t) { }
+  double area() const { return -1; }
+};
+
+struct Point : public Shape {
+  double x;
+  double y;
+  Point(double a, double b)
+      : Shape(Shape::Type::Point), x(a), y(b) { }
+  double area() const { return 0; }
+};
+
+class LineSegment : public Shape {
+  Point _head;
+  Point _tail;
+ public:
+  LineSegment(const Point& head, const Point& tail)
+      : Shape(Shape::Type::LineSegment), _head(head), _tail(tail) { }
+  double area() const { return 1; }
+};
+
+class Circle : public Shape {
+  Point _center;
+  double _radius;
+ public:
+  Circle(const Point& point, double radius)
+      : Shape(Shape::Type::Circle), _center(point), _radius(radius) { }
+  double area() const { return 3.1415926 * _radius * _radius; }
+};
+```
+在封装函数的实现中，利用对象的动态类型信息，将任务转发到相应的成员函数：
+```cpp
+inline double area(const Shape& shape) {
+  switch (shape.type) {
+    case Shape::Type::Point:
+      return static_cast<const Point&>(shape).area();
+    case Shape::Type::LineSegment:
+  	  return static_cast<const LineSegment&>(shape).area();
+    case Shape::Type::Circle:
+  	 	return static_cast<const Circle&>(shape).area();
+    default:
+      return shape.area();
+  }
+}
+```
+该设计存在以下缺陷：
+- 浪费资源：`type` 在每个对象中都要占据存储空间，对于需要生成大量几何对象的应用，这样的开销是不可忽视的。
+- 违反 [OCP](#OCP)：引入新的派生类（例如 `Rectangle`）会迫使基类重新定义其枚举类型成员，并迫使封装函数引入新的 `case`。
+- 违反 [DIP](#DIP)：封装函数依赖于所有具体的派生类。
+
+### 正方形不是长方形
+
+尽管在几何意义上，所有的正方形 (`Square`) 都是长方形 (`Rectangle`) ；
+但是将 `Square` 定义为 `Rectangle` 的派生类是一种糟糕的设计。
+
+```cpp
+#include <cassert>
+
+struct Point {
+  double x;
+  double y;
+  Point(double a, double b) : x(a), y(b) { }
+};
+
+class Rectangle {
+  Point _left_bottom;
+  double _height;
+  double _width;
+ public:
+  Rectangle(Point& point, double height, double width)
+      : _left_bottom(point), _height(height), _width(width) { }
+  virtual ~Rectangle() = default;
+  virtual void setHeight(double height) { _height = height; }
+  virtual void setWidth(double width) { _width = width; }
+  double area() const { return _height * _width; }
+};
+
+class Square : public Rectangle {
+ public:
+  Square(Point& point, double length) : Rectangle(point, length, length) { }
+  virtual void setHeight(double length) {
+    Rectangle::setHeight(length);
+    Rectangle::setWidth(length);
+  }
+  virtual void setWidth(double length) {
+    Rectangle::setHeight(length);
+    Rectangle::setWidth(length);
+  }
+};
+
+void test(Rectangle& r, double height, double width) {
+  r.setHeight(height);
+  r.setWidth(width);
+  assert(r.area() == height * width);
+}
+
+int main() {
+  auto p = Point(0, 0);
+  auto r = Rectangle(p, 3, 5);
+  test(r, 3, 5);  // passed
+  auto s = Square(p, 4);
+  test(s, 3, 5);  // failed
+}
+```
+
+该设计存在以下缺陷：
+
+- 浪费资源：`Square` 的 `_height` 总是等于 `_width`，不需要像 `Rectangle` 那样存储为两个独立成员。
+- 违反 LSP：所有 `Rectangle` 都应当能通过单元测试 `test(Rectangle&, int, int)`，但当 `height != width` 时 `Square` 却无法通过该测试。因此，从行为上看，a `Square` is *NOT* a `Rectangle` 。
 
 ## ISP
 
