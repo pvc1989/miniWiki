@@ -3,29 +3,29 @@
 ## 大纲
 
 ### 数学
-- 微分几何 // [Differential Geometry](./mathematics/DifferentialGeometry.lyx)
-- 偏微分方程 // [Partial Differential Equations](./mathematics/PDE.lyx)
+- [微分几何 (Differential Geometry)](./mathematics/DifferentialGeometry.lyx)
+- [偏微分方程 (Partial Differential Equations)](./mathematics/PDE.lyx)
 
 ### 物理
 - 经典力学
   - 分析力学
   - 连续介质力学
-    - 流体力学 // [Fluid Mechanics](./physics/FluidMechanics.lyx)
+    - [流体力学 (Fluid Mechanics)](./physics/FluidMechanics.lyx)
 
 ### 算法
 - 基础数值算法
-  - 插值 // [Interpolation](./algorithms/Interpolation.lyx) 
-  - 数值积分 // [Quadrature](./algorithms/Quadrature.lyx) 
-  - 优化 // [Optimization](./algorithms/Optimization.lyx) 
+  - [插值 (Interpolation)](./algorithms/Interpolation.lyx) 
+  - [数值积分 (Quadrature)](./algorithms/Quadrature.lyx) 
+  - [优化 (Optimization)](./algorithms/Optimization.lyx) 
 - 微分方程数值解法
-  - 有限差分法 // [Finite Difference Methods](./algorithms/FiniteDifference.lyx)
-  - 有限单元法 // [Finite Element Methods](./algorithms/FiniteElement.lyx)
-  - 计算流体力学 // [Computational Fluid Mechanics](./algorithms/CFD.lyx)
+  - [有限差分法 (Finite Difference Methods)](./algorithms/FiniteDifference.lyx)
+  - [有限单元法 (Finite Element Methods)](./algorithms/FiniteElement.lyx)
+  - [计算流体力学 (Computational Fluid Mechanics)](./algorithms/CFD.lyx)
 
 ### 程序设计
 - 设计思想
-  - [设计原则](./programming/principles/README.md) // Design Principles
-  - [设计模式](./programming/patterns.md) // Design Patterns
+  - [设计原则 (Design Principles)](./programming/principles/README.md)
+  - [设计模式 (Design Patterns)](./programming/patterns/README.md)
 - 编程语言
   - [C++](./programming/C++/README.md)
   - [Octave](./programming/Octave.md) --- [MATLAB](https://www.mathworks.com/products/matlab.html) 的开源替代品
