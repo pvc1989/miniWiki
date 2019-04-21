@@ -14,49 +14,19 @@
 
 ## Structural Patterns
 
-### 适配器 (Adapter) 模式
+### [Adapter](./Adapter/README.md)
 
-> Convert the interface of a class into another interface clients expect.
->
-> 将一个类的接口转换为客户端所期待的接口.
+### [Bridge](./Bridge/README.md)
 
-### 桥接 (Bridge) 模式
+### [Composite](./Composite/README.md)
 
-> Decouple an abstraction from its implementation so that the two can vary independently.
->
-> 将 <抽象> 与 <实现> 解耦, 从而允许二者独立变化.
+### [Decorator](./Decorator/README.md)
 
-### 复合 (Composite) 模式
+### [Facade](./Facade/README.md)
 
-> Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
->
-> 通过将对象组织成树结构, 来表示部分与整体的层次结构.
-> 该模式让客户端以统一的方式对待 <独立对象> 与 <对象组合>.
+### [Flyweight](./Flyweight/README.md)
 
-### 装饰器 (Decorator) 模式
-
-> Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
->
-> 为对象动态地添加责任.
-> 该模式为扩展功能提供了一种可以替代 <子类> 机制的灵活方案.
-
-### 门面 (Facade) 模式
-
-> Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
->
-> 为子系统接口集提供统一的高层接口, 使子系统更易用.
-
-### 共享元 (Flyweight) 模式
-
-> Use sharing to support large numbers of fine-grained objects efficiently.
->
-> 通过共享来支持高效使用大规模细粒度对象.
-
-### 代理 (Proxy) 模式
-
-> Provide a surrogate or placeholder for another object to control access to it.
->
-> 为对象提供代理或占位符, 以控制对它的访问。
+### [Proxy](./Proxy/README.md)
 
 ## Behavioral Patterns
 
