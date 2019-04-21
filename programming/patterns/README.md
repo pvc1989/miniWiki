@@ -1,6 +1,6 @@
-# 设计模式
+# Design Patterns
 
-## 创建型模式
+## Creational Patterns
 
 ### [Abstract Factory](./AbstractFactory/README.md)
 
@@ -25,7 +25,7 @@
 >
 > 确保一个类只有一个实例, 并为其提供一个全局访问点.
 
-## 结构型模式
+## Structural Patterns
 
 ### 适配器 (Adapter) 模式
 
@@ -71,7 +71,7 @@
 >
 > 为对象提供代理或占位符, 以控制对它的访问。
 
-## 行为型模式
+## Behavioral Patterns
 
 ### 责任链 (Chain of Responsibility) 模式
 
@@ -141,7 +141,7 @@
 >
 > 将作用于某个对象成员的操作表示为一个 (访客) 对象, 以便在不改变这些成员类型的情况下定义新的操作.
 
-## 语言实现机制
+## Language Support
 
 ### Java
 
@@ -208,7 +208,7 @@ public class Point extends Object {
 
 ### C++
 
-#### 继承
+#### Inheritance
 
 ```c++
 #include <iostream>
@@ -237,7 +237,7 @@ int main() {
 }
 ```
 
-#### 继承 + `template`
+#### Inheritance + `template`
 
 ```cpp
 #include <iostream>
