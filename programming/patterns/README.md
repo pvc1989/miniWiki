@@ -1,135 +1,5 @@
 # 设计模式
 
-## 语言实现机制
-
-### Java
-
-#### `implements` an `interface`
-
-```java
-public interface Comparable<T> {
-  public abstract int compareTo(T that);
-}
-
-public class Point implements Comparable<Point> {
-  private final double x;
-  private final double y;
-  
-  public Point(double x, double y) {
-    this.x = x;
-    this.y = y;
-  }
-  
-  @Override
-  public int compareTo(Point that) {
-    if (this.x < that.x) return -1;
-    if (this.x > that.x) return +1;
-    if (this.y < that.y) return -1;
-    if (this.y > that.y) return +1;
-    return 0;
-  }
-}
-```
-
-#### `extends` a `class`
-
-所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
-
-```java
-public class Object {
-  public String toString();
-}
-
-public class Point extends Object {
-  private final double x;
-  private final double y;
-  
-  public Point(double x, double y) {
-    this.x = x;
-    this.y = y;
-  }
-  
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('(');
-    sb.append(this.x);
-    sb.append(',').append(' ');
-    sb.append(this.y);
-    sb.append(')');
-    return sb.toString();
-  }
-  
-  // extended methods
-  // ...
-}
-```
-
-### C++
-
-#### 继承
-
-```c++
-#include <iostream>
-#include <string>
-
-class Object {
- public:
-  virtual std::string to_string() = 0;
-};
-
-class Point : public Object {
- private:
-  const double _x;
-  const double _y;
-  
- public:
-  Point(double x, double y) : _x(x), _y(y) { }
-  virtual std::string to_string() override {
-    return '(' + std::to_string(_x) + ',' + ' ' + std::to_string(_y) + ')';
-  }
-};
-
-int main() {
-  Point p = Point(1.0, 0.0);
-  std::cout << p.to_string() << std::endl;
-}
-```
-
-#### 继承 + `template`
-
-```cpp
-#include <iostream>
-
-template<class T>
-class Comparable {
-  virtual int compareTo(const T& that) = 0;
-};
-
-class Point : public Comparable<Point> {
- private:
-  const double _x;
-  const double _y;
-  
- public:
-  Point(double x, double y) : _x(x), _y(y) { }
-  virtual int compareTo(const Point& that) override {
-    if (_x < that._x) return -1;
-    if (_x > that._x) return +1;
-    if (_y < that._y) return -1;
-    if (_y > that._y) return +1;
-    return 0;
-  }
-};
-
-int main() {
-  using P = Point;
-  P o = P(0.0, 0.0);
-  P p = P(1.0, 0.0);
-  std::cout << p.compareTo(o) << std::endl;
-}
-```
-
 ## 创建型模式
 
 ### [Abstract Factory](./AbstractFactory/README.md)
@@ -270,3 +140,133 @@ int main() {
 > Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
 >
 > 将作用于某个对象成员的操作表示为一个 (访客) 对象, 以便在不改变这些成员类型的情况下定义新的操作.
+
+## 语言实现机制
+
+### Java
+
+#### `implements` an `interface`
+
+```java
+public interface Comparable<T> {
+  public abstract int compareTo(T that);
+}
+
+public class Point implements Comparable<Point> {
+  private final double x;
+  private final double y;
+  
+  public Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  
+  @Override
+  public int compareTo(Point that) {
+    if (this.x < that.x) return -1;
+    if (this.x > that.x) return +1;
+    if (this.y < that.y) return -1;
+    if (this.y > that.y) return +1;
+    return 0;
+  }
+}
+```
+
+#### `extends` a `class`
+
+所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
+
+```java
+public class Object {
+  public String toString();
+}
+
+public class Point extends Object {
+  private final double x;
+  private final double y;
+  
+  public Point(double x, double y) {
+    this.x = x;
+    this.y = y;
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append('(');
+    sb.append(this.x);
+    sb.append(',').append(' ');
+    sb.append(this.y);
+    sb.append(')');
+    return sb.toString();
+  }
+  
+  // extended methods
+  // ...
+}
+```
+
+### C++
+
+#### 继承
+
+```c++
+#include <iostream>
+#include <string>
+
+class Object {
+ public:
+  virtual std::string to_string() = 0;
+};
+
+class Point : public Object {
+ private:
+  const double _x;
+  const double _y;
+  
+ public:
+  Point(double x, double y) : _x(x), _y(y) { }
+  virtual std::string to_string() override {
+    return '(' + std::to_string(_x) + ',' + ' ' + std::to_string(_y) + ')';
+  }
+};
+
+int main() {
+  Point p = Point(1.0, 0.0);
+  std::cout << p.to_string() << std::endl;
+}
+```
+
+#### 继承 + `template`
+
+```cpp
+#include <iostream>
+
+template<class T>
+class Comparable {
+  virtual int compareTo(const T& that) = 0;
+};
+
+class Point : public Comparable<Point> {
+ private:
+  const double _x;
+  const double _y;
+  
+ public:
+  Point(double x, double y) : _x(x), _y(y) { }
+  virtual int compareTo(const Point& that) override {
+    if (_x < that._x) return -1;
+    if (_x > that._x) return +1;
+    if (_y < that._y) return -1;
+    if (_y > that._y) return +1;
+    return 0;
+  }
+};
+
+int main() {
+  using P = Point;
+  P o = P(0.0, 0.0);
+  P p = P(1.0, 0.0);
+  std::cout << p.compareTo(o) << std::endl;
+}
+```
