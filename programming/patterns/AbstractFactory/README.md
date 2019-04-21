@@ -1,4 +1,4 @@
-# 抽象工厂模式
+# Abstract Factory
 
 ## 定义
 > Provide an interface for creating families of related or dependent objects without specifying their concrete classes.

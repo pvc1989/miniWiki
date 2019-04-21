@@ -4,26 +4,13 @@
 
 ### [Abstract Factory](./AbstractFactory/README.md)
 
-### Builder
+### [Builder](./Builder/README.md)
 
-> Separate the construction of a complex object from its representation so that the same construction process can create different representations.
->
-> 分离复杂对象的构造与表示, 从而使同一构造过程可用于不同表示.
+### [Factory Method](./FactoryMethod/README.md)
 
-### Factory Method
-> Define an interface for creating an object, but let subclasses decide which class to instantiate.
->
-> (在基类中) 定义一个创建 (产品) 对象的接口, 但由派生类决定实例化哪一个 (具体的产品) 类.
+### [Prototype](./Prototype/README.md)
 
-### Prototype
-> Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
->
-> 为将要创建的各种对象指定原型实例, 通过复制该原型来创建新的对象.
-
-### Singleton
-> Ensure a class only has one instance, and provide a global point of access to it.
->
-> 确保一个类只有一个实例, 并为其提供一个全局访问点.
+### [Singleton](./Singleton/README.md)
 
 ## Structural Patterns
 
