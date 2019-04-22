@@ -1,7 +1,10 @@
 # Abstract Factory
 
-## 定义
-> Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+## 意图
+Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+
+## 别名
+Kit
 
 ## [结构](./Demo.txt)
 ![](./Demo.svg)
