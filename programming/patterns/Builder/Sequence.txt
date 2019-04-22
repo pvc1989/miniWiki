@@ -1,0 +1,36 @@
+@startuml
+participant Client order 1
+participant Director order 2
+participant ConcreteBuilder order 3
+
+activate Client
+
+Client -> ConcreteBuilder: new ConcreteBuilder()
+activate ConcreteBuilder
+Client <-- ConcreteBuilder: aConcreteBuilder
+deactivate ConcreteBuilder
+
+Client -> Director: new Director(aConcreteBuilder)
+activate Director
+Client <-- Director: aDirector
+deactivate Director
+
+Client -> Director: buildProduct()
+activate Director
+  Director -> ConcreteBuilder: buildPartA()
+  activate ConcreteBuilder
+  Director <-- ConcreteBuilder
+  deactivate ConcreteBuilder
+
+  Director -> ConcreteBuilder: buildPartB()
+  activate ConcreteBuilder
+  Director <-- ConcreteBuilder
+  deactivate ConcreteBuilder
+
+  Director -> ConcreteBuilder: getProduct()
+  activate ConcreteBuilder
+  Director <-- ConcreteBuilder: aProduct
+  deactivate ConcreteBuilder
+Client <-- Director
+deactivate Director
+@enduml

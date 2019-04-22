@@ -1,0 +1,24 @@
+@startuml
+Director *-> Builder
+Builder <|-- ConcreteBuilder
+ConcreteBuilder .> Product
+Director <-- Client
+Client -> ConcreteBuilder
+
+class Director {
+  +Director(Builder)
+  +buildProduct()
+}
+interface Builder {
+  {abstract} +buildPartA()
+  +buildPartB()
+}
+class ConcreteBuilder {
+  +buildPartA()
+  +buildPartB()
+  +getProduct() : Product
+}
+
+hide empty attributes
+hide empty methods
+@enduml

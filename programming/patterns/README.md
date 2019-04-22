@@ -6,6 +6,7 @@
 ![](./AbstractFactory/Demo.svg)
 
 ### [Builder](./Builder/README.md)
+![](./Builder/Class.svg)
 
 ### [Factory Method](./FactoryMethod/README.md)
 ![](./FactoryMethod/Demo.svg)
