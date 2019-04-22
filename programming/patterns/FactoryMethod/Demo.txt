@@ -1,0 +1,18 @@
+@startuml
+interface AbstractProduct
+interface AbstractCreator {
+  {abstract} +factoryMethod() : AbstractProduct
+  +otherMethod()
+}
+AbstractProduct <.left. AbstractCreator
+
+AbstractProduct <|-- ConcreteProduct
+AbstractCreator <|-- ConcreteCreator
+ConcreteProduct <.left. ConcreteCreator
+class ConcreteCreator {
+  +factoryMethod() : ConcreteProduct
+}
+
+hide empty attributes
+hide empty methods
+@enduml
