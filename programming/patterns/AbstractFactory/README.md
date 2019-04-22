@@ -6,8 +6,8 @@ Provide an interface for creating families of related or dependent objects witho
 ## 别名
 Kit
 
-## [结构](./Demo.txt)
-![](./Demo.svg)
+## [类图](./Class.txt)
+![](./Class.svg)
 
 - 接口层
   - `抽象产品X` --- 定义第 `X` 种产品的接口，这里的 `X` 可以是 `A` 或 `B`。

@@ -3,16 +3,16 @@
 ## Creational Patterns
 
 ### [Abstract Factory](./AbstractFactory/README.md)
-![](./AbstractFactory/Demo.svg)
+![](./AbstractFactory/Class.svg)
 
 ### [Builder](./Builder/README.md)
 ![](./Builder/Class.svg)
 
 ### [Factory Method](./FactoryMethod/README.md)
-![](./FactoryMethod/Demo.svg)
+![](./FactoryMethod/Class.svg)
 
 ### [Prototype](./Prototype/README.md)
-![](./Prototype/Demo.svg)
+![](./Prototype/Class.svg)
 
 ### [Singleton](./Singleton/README.md)
 

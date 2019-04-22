@@ -6,5 +6,5 @@ Define an interface for creating an object, but let subclasses decide which clas
 ## 别名
 Virtual Constructor
 
-## [结构](./Demo.txt)
-![](./Demo.svg)
+## [类图](./Class.txt)
+![](./Class.svg)
