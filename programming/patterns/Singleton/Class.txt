@@ -1,0 +1,31 @@
+@startuml
+class NonDerivableSingleton {
+  {static} -instance : NonDerivableSingleton*
+  {static} +getInstance() : NonDerivableSingleton*
+  #NonDerivableSingleton()
+}
+class BaseSingleton {
+  {static} -instance : BaseSingleton*
+  {static} -registry : Map<String, BaseSingleton*>
+  __
+  {static} +getInstance() : BaseSingleton*
+  #BaseSingleton()
+  ..
+  {static} #register(String, BaseSingleton*)
+  {static} #lookup(String) : BaseSingleton*
+}
+class DerivedSingleton {
+  {static} -instance : DerivedSingleton
+  {static} +getInstance() : DerivedSingleton*
+  #DerivedSingleton()
+}
+
+BaseSingleton <|-- DerivedSingleton
+NonDerivableSingleton <-left[hidden]- BaseSingleton
+
+note left of DerivedSingleton
+  DerivedSingleton::DerivedSingleton() {
+    BaseSingleton::register("DerivedSingleton", this);
+  }
+end note
+@enduml

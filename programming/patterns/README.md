@@ -15,6 +15,7 @@
 ![](./Prototype/Class.svg)
 
 ### [Singleton](./Singleton/README.md)
+![](./Singleton/Class.svg)
 
 ## Structural Patterns
 
