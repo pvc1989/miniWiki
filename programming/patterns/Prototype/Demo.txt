@@ -1,0 +1,15 @@
+@startuml
+interface Product {
+  {abstract} +clone() : Product
+}
+Product <-- Client
+note right of Client: Product aNewProduct = aProduct.clone();
+
+Product <|- ConcreteProduct
+class ConcreteProduct {
+  +clone() : ConcreteProduct
+}
+
+hide empty attributes
+hide empty methods
+@enduml

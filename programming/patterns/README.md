@@ -11,6 +11,7 @@
 ![](./FactoryMethod/Demo.svg)
 
 ### [Prototype](./Prototype/README.md)
+![](./Prototype/Demo.svg)
 
 ### [Singleton](./Singleton/README.md)
 
