@@ -3,7 +3,7 @@
 ## Creational Patterns
 
 ### [Abstract Factory](./AbstractFactory/README.md)
-![](./AbstractFactory/AbstractFactoryDemo.svg)
+![](./AbstractFactory/Demo.svg)
 
 ### [Builder](./Builder/README.md)
 

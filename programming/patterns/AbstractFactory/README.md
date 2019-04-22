@@ -3,8 +3,8 @@
 ## 定义
 > Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
 
-## [类图](./AbstractFactoryDemo.txt)
-![](./AbstractFactoryDemo.svg)
+## [结构](./Demo.txt)
+![](./Demo.svg)
 
 - 接口层
   - `抽象产品X` --- 定义第 `X` 种产品的接口，这里的 `X` 可以是 `A` 或 `B`。
@@ -16,6 +16,6 @@
 
 ⚠️ `抽象产品X` 的实现方式 `i` 可以自由扩展，而种类 `X` 不易扩展。
 
-## [Java 示例](./AbstractFactoryDemo.java)
+## [Java 示例](./Demo.java)
 
-## [C++ 示例](./AbstractFactoryDemo.cpp)
+## [C++ 示例](./Demo.cpp)

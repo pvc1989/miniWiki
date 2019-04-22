@@ -1,4 +1,4 @@
-public class AbstractFactoryDemo {
+public class Demo {
   // AbstractProducts
   public interface AbstractProductA {
     public abstract void doA();
