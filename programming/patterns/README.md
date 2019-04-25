@@ -29,6 +29,7 @@
 ![](./Composite/Class.svg)
 
 ### [Decorator](./Decorator/README.md)
+![](./Decorator/Class.svg)
 
 ### [Facade](./Facade/README.md)
 

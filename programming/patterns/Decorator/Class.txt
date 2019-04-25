@@ -1,0 +1,42 @@
+@startuml
+Component <|- ConcreteComponent
+Component <|-- Decorator
+Decorator <|-- BehaviorDecorator
+Decorator <|- StateDecorator
+
+interface Component {
+  {abstract} +operation()
+}
+
+class ConcreteComponent {
+  +operation()
+}
+class Decorator {
+  -aComponent : Component
+  +operation()
+  +addedBehavior()
+}
+note left of Decorator
+  Decorator::operation() {
+    aComponent.operation();
+  }
+end note
+
+class BehaviorDecorator {
+  +operation()
+  +addedBehavior()
+}
+note left of BehaviorDecorator
+  StateDecorator::operation() {
+    Decorator::operation();
+    addedBehavior();
+  }
+end note
+class StateDecorator {
+  -addedState
+  +operation()
+}
+
+hide empty attributes
+hide empty methods
+@enduml
