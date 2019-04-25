@@ -1,0 +1,24 @@
+@startuml
+Client -right-> Abstraction
+Abstraction <|-- RefinedAbstraction
+Abstraction o-right-> Implementor
+Implementor <|-- ConcreteImplementorA
+Implementor <|-- ConcreteImplementorB
+
+class Abstraction {
+  -anImplementor : Implementor*
+  +operation()
+}
+interface Implementor {
+  {abstract} +operationImpl()
+}
+class ConcreteImplementorA {
+  +operationImpl()
+}
+class ConcreteImplementorB {
+  +operationImpl()
+}
+
+hide empty attributes
+hide empty methods
+@enduml

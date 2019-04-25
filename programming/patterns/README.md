@@ -23,6 +23,7 @@
 ![](./Adapter/Class.svg)
 
 ### [Bridge](./Bridge/README.md)
+![](./Bridge/Class.svg)
 
 ### [Composite](./Composite/README.md)
 
