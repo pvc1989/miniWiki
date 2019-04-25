@@ -1,0 +1,36 @@
+@startuml
+Target <-- Client
+Target <|-- ClassAdapter
+Target <|-- ObjectAdapter
+Adaptee <|-- ClassAdapter
+Adaptee <--o ObjectAdapter
+
+interface Target {
+  {abstract} +request()
+}
+class Adaptee {
+  +specificRequest()
+}
+class ClassAdapter {
+  +request()
+}
+class ObjectAdapter {
+  -anAdaptee
+  +request()
+}
+
+note bottom of ObjectAdapter
+  ObjectAdapter::request() {
+    return anAdaptee.specificRequest();
+  }
+end note
+
+note bottom of ClassAdapter
+  ClassAdapter::request() {
+    return Adaptee::specificRequest();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml

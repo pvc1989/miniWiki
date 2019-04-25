@@ -20,6 +20,7 @@
 ## Structural Patterns
 
 ### [Adapter](./Adapter/README.md)
+![](./Adapter/Class.svg)
 
 ### [Bridge](./Bridge/README.md)
 
