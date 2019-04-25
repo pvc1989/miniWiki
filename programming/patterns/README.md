@@ -26,6 +26,7 @@
 ![](./Bridge/Class.svg)
 
 ### [Composite](./Composite/README.md)
+![](./Composite/Class.svg)
 
 ### [Decorator](./Decorator/README.md)
 

@@ -1,0 +1,33 @@
+@startuml
+Client -> Component
+Component <|- Leaf
+Component <|-- Composite
+Component <--o Composite
+
+interface Component {
+  {abstract} +operation()
+  {abstract} +add(Component)
+  {abstract} +remove(Component)
+  {abstract} +getChild(int)
+}
+class Leaf {
+  +operation()
+}
+class Composite {
+  -children : List<Component>
+  +operation()
+  +add(Component)
+  +remove(Component)
+  +getChild(int)
+}
+
+note right of Composite
+  Composite::operation() {
+    for (auto& c : children)
+      c.operation();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml
