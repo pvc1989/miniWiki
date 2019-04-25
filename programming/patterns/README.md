@@ -36,6 +36,7 @@
 ### [Flyweight](./Flyweight/README.md)
 
 ### [Proxy](./Proxy/README.md)
+![](./Proxy/Class.svg)
 
 ## Behavioral Patterns
 

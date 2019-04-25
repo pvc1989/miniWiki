@@ -1,0 +1,26 @@
+@startuml
+Client -> Subject
+Subject <|- RealSubject
+Subject <|-- Proxy
+RealSubject <--o Proxy
+
+interface Subject {
+  {abstract} +request()
+}
+class RealSubject {
+  +request()
+}
+
+class Proxy {
+  -aRealSubject
+  +request()
+}
+note right of Proxy
+  Proxy::request() {
+    aRealSubject.request();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml
