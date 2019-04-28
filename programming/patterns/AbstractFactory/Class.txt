@@ -1,40 +1,54 @@
 @startuml
-interface 抽象产品A {
+interface AbstractProductA {
   {abstract} +doA()
 }
-interface 抽象产品B {
+interface AbstractProductB {
   {abstract} +doB()
 }
-interface 抽象工厂 {
-  {abstract} +createA()
-  {abstract} +createB()
+interface AbstractFactory {
+  {abstract} +createA() : AbstractProductA
+  {abstract} +createB() : AbstractProductB
 }
 interface Client
-Client -down-> 抽象工厂
+Client -down-> AbstractFactory
 
-抽象工厂 .up.> 抽象产品A
-抽象工厂 .up.> 抽象产品B
+AbstractFactory .up.> AbstractProductA
+AbstractFactory .up.> AbstractProductB
 
-抽象产品A <|-- 具体产品A1
-抽象产品A <|-- 具体产品A2
-抽象产品B <|-- 具体产品B1
-抽象产品B <|-- 具体产品B2
+AbstractProductA <|-- ConcreteProductA1
+AbstractProductA <|-- ConcreteProductA2
+AbstractProductB <|-- ConcreteProductB1
+AbstractProductB <|-- ConcreteProductB2
 
-具体产品A1 <.. 具体工厂A1B1
-具体产品B1 <.. 具体工厂A1B1
-抽象工厂 <|-- 具体工厂A1B1
+class ConcreteProductA1 {
+  doA()
+}
+class ConcreteProductA2 {
+  doA()
+}
+class ConcreteProductB1 {
+  doB()
+}
+class ConcreteProductB2 {
+  doB()
+}
 
-具体产品A1 <.. 具体工厂A1B2
-具体产品B2 <.. 具体工厂A1B2
-抽象工厂 <|-- 具体工厂A1B2
+ConcreteProductA1 <.. ConcreteFactory1
+ConcreteProductB1 <.. ConcreteFactory1
+AbstractFactory <|-- ConcreteFactory1
 
-具体产品A2 <.. 具体工厂A2B1
-具体产品B1 <.. 具体工厂A2B1
-抽象工厂 <|-- 具体工厂A2B1
+ConcreteProductA2 <.. ConcreteFactory2
+ConcreteProductB2 <.. ConcreteFactory2
+AbstractFactory <|-- ConcreteFactory2
 
-具体产品A2 <.. 具体工厂A2B2
-具体产品B2 <.. 具体工厂A2B2
-抽象工厂 <|-- 具体工厂A2B2
+class ConcreteFactory1 {
+  createA() : ConcreteProductA1
+  createB() : ConcreteProductB1
+}
+class ConcreteFactory2 {
+  createA() : ConcreteProductA2
+  createB() : ConcreteProductB2
+}
 
 hide empty attributes
 hide empty methods
