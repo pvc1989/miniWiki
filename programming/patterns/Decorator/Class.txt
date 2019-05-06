@@ -14,7 +14,6 @@ class ConcreteComponent {
 class Decorator {
   -aComponent : Component
   +operation()
-  +addedBehavior()
 }
 note left of Decorator
   Decorator::operation() {
@@ -24,10 +23,10 @@ end note
 
 class BehaviorDecorator {
   +operation()
-  +addedBehavior()
+  -addedBehavior()
 }
 note left of BehaviorDecorator
-  StateDecorator::operation() {
+  BehaviorDecorator::operation() {
     Decorator::operation();
     addedBehavior();
   }
