@@ -35,6 +35,7 @@
 ![](./Facade/Class.svg)
 
 ### [Flyweight](./Flyweight/README.md)
+![](./Flyweight/Class.svg)
 
 ### [Proxy](./Proxy/README.md)
 ![](./Proxy/Class.svg)

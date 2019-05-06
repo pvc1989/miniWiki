@@ -1,0 +1,27 @@
+@startuml
+Flyweight <--* FlyweightFactory
+Flyweight <|-- SharedFlyweight
+Flyweight <|-- UnsharedFlyweight
+FlyweightFactory <-- Client
+SharedFlyweight <-- Client
+UnsharedFlyweight <-- Client
+
+interface Flyweight {
+  {abstract} +do(extrinsicState)
+}
+class SharedFlyweight {
+  -intrinsicState
+  +do(extrinsicState)
+}
+class UnsharedFlyweight {
+  -allState
+  +do(extrinsicState)
+}
+class FlyweightFactory {
+  -flyweights : Map<Key, Flyweight>
+  +getFlyweight(Key) : Flyweight
+}
+
+hide empty attributes
+hide empty methods
+@enduml
