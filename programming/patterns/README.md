@@ -32,6 +32,7 @@
 ![](./Decorator/Class.svg)
 
 ### [Facade](./Facade/README.md)
+![](./Facade/Class.svg)
 
 ### [Flyweight](./Flyweight/README.md)
 
