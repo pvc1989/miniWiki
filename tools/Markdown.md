@@ -68,16 +68,16 @@ $$
 
 ##### 调用 `.js` 文件
 更符合模块化原则的方案是：将全局自定义宏写入 `.js` 文件，由上述文件中的 `extensions` 对其进行调用。
-以 [`physics.js`](https://github.com/ickc/MathJax-third-party-extensions/tree/gh-pages/physics) 为例：将该文件放入 `/Applications/Typora.app/Contents/Resources/TypeMark/lib/MathJax-2.6.1/extensions/TeX/` 文件夹中，然后在 `/Applications/Typora.app/Contents/Resources/TypeMark/index.html` 文件中的 `extensions` 尾部追加 `"physics.cs"`：
+以 [`physics.js`](https://github.com/ickc/MathJax-third-party-extensions/tree/gh-pages/physics) 为例：将该文件放入 `/Applications/Typora.app/Contents/Resources/TypeMark/lib/MathJax-2.6.1/extensions/TeX/` 文件夹中，然后在 `/Applications/Typora.app/Contents/Resources/TypeMark/index.html` 文件中的 `extensions` 尾部追加 `"physics.js"`：
 ```js
 TeX: {
     extensions: ["noUndefined.js", "autoload-all.js", "AMSmath.js", "AMSsymbols.js", "mediawiki-texvc.js", "physics.js"]
 },
 ```
-设置完成后，在数学环境中可以直接使用 `physics.cs` 中定义过的命令，效果在重启 Typora 后可见：
+设置完成后，在数学环境中可以直接使用 `physics.js` 中定义过的命令，效果在重启 Typora 后可见：
 $$
 \ket{\psi}\bra{\phi}
 $$
 
 MathJax 提供了一些模仿同名 LaTeX 宏包的[第三方扩展文件](https://github.com/mathjax/MathJax-third-party-extensions/tree/master/legacy)。
-如果对其效果不满意，可以自己写一个 `mymacros.js` 文件，调用方式和这里的 `physics.cs` 相同。
+如果对其效果不满意，可以自己写一个 `mymacros.js` 文件，调用方式和这里的 `physics.js` 相同。
