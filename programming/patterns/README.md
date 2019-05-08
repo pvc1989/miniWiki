@@ -49,6 +49,7 @@
 ![](./Command/Class.svg)
 
 ### [Interpreter](./Interpreter/README.md)
+![](./Interpreter/Class.svg)
 
 ### [Iterator](./Iterator/README.md)
 

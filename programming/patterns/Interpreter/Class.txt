@@ -1,0 +1,22 @@
+@startuml
+Context <- AbstractExpression
+Context <-- Client
+AbstractExpression <-- Client
+AbstractExpression <|- TerminalExpression
+AbstractExpression <|-- NonterminalExpression
+AbstractExpression <--* NonterminalExpression
+
+interface AbstractExpression {
+  {abstract} +Interpret(Context)
+}
+class TerminalExpression {
+  +Interpret(Context)
+}
+class NonterminalExpression {
+  -children : List<AbstractExpression>
+  +Interpret(Context)
+}
+
+hide empty attributes
+hide empty methods
+@enduml
