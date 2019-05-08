@@ -55,6 +55,7 @@
 ![](./Iterator/Class.svg)
 
 ### [Mediator](./Mediator/README.md)
+![](./Mediator/Class.svg)
 
 ### [Memento](./Memento/README.md)
 
