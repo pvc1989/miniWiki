@@ -1,0 +1,23 @@
+@startuml
+Context *-> Strategy 
+Strategy <|-- ConcreteStrategy1
+Strategy <|-- ConcreteStrategy2
+
+class Context {
+  -Strategy : Strategy*
+  +SetStrategy(Strategy*)
+  +UseStrategy()
+}
+interface Strategy {
+  {abstract} +AlgorithmInterface()
+}
+class ConcreteStrategy1 {
+  +AlgorithmInterface()
+}
+class ConcreteStrategy2 {
+  +AlgorithmInterface()
+}
+
+hide empty attributes
+hide empty methods
+@enduml

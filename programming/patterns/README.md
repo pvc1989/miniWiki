@@ -67,6 +67,7 @@
 ![](./State/Class.svg)
 
 ### [Strategy](./Strategy/README.md)
+![](./Strategy/Class.svg)
 
 ### [Template Method](./TemplateMethod/README.md)
 
