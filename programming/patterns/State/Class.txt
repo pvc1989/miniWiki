@@ -1,0 +1,29 @@
+@startuml
+Context *-> State 
+State <|-- ConcreteState1
+State <|-- ConcreteState2
+
+class Context {
+  -state : State*
+  +Request()
+  +ChangeState()
+}
+interface State {
+  {abstract} +Handle()
+}
+class ConcreteState1 {
+  +Handle()
+}
+class ConcreteState2 {
+  +Handle()
+}
+
+note bottom of Context
+  Context::Request() {
+    state->Handle();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml

@@ -64,6 +64,7 @@
 ![](./Observer/Class.svg)
 
 ### [State](./State/README.md)
+![](./State/Class.svg)
 
 ### [Strategy](./Strategy/README.md)
 
