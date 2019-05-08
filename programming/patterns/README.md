@@ -43,6 +43,7 @@
 ## Behavioral Patterns
 
 ### [Chain of Responsibility](./ChainOfResponsibility/README.md)
+![](./ChainOfResponsibility/Class.svg)
 
 ### [Command](./Command/README.md)
 

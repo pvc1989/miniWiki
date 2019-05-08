@@ -1,0 +1,30 @@
+@startuml
+Client -> Handler
+Handler <|-- ConcreteHandler
+
+class Handler {
+  -successor : Handler*
+  {abstract} +Handle()
+}
+class ConcreteHandler {
+  +Handle()
+  -CanHandle() : bool
+  -Do()
+}
+
+note right of Handler
+  Handler::Handle() {
+    successor->Handle();
+  }
+end note
+
+note right of ConcreteHandler
+  ConcreteHandler::Handle() {
+    if (CanHandle()) { Do(); }
+    else { successor->Handle(); }
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml
