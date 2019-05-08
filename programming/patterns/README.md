@@ -46,6 +46,7 @@
 ![](./ChainOfResponsibility/Class.svg)
 
 ### [Command](./Command/README.md)
+![](./Command/Class.svg)
 
 ### [Interpreter](./Interpreter/README.md)
 

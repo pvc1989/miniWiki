@@ -1,0 +1,34 @@
+@startuml
+Invoker o-> Command
+Command <|- ConcreteCommand
+ConcreteCommand -> Receiver
+Receiver <-- Client
+ConcreteCommand <..Client
+
+interface Invoker {
+  {abstract} +Store(Command*)
+}
+interface Command {
+  {abstract} +Execute()
+}
+class ConcreteCommand {
+  -receiver : Receiver*
+  +SetReceiver(Receiver*)
+  +Execute()
+}
+class Receiver {
+  +Action()
+}
+
+note bottom of ConcreteCommand
+  ConcreteCommand::SetReceiver(Receiver* r) {
+    receiver = r;
+  }
+  ConcreteCommand::Execute() {
+    receiver->Action();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml
