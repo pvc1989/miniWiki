@@ -1,0 +1,26 @@
+@startuml
+AbstractClass <|- ConcreteClass
+
+interface AbstractClass {
+  +TemplateMethod()
+  {abstract} +PrimitiveOperation1()
+  {abstract} +PrimitiveOperation2()
+}
+class ConcreteClass {
+  +PrimitiveOperation1()
+  +PrimitiveOperation2()
+}
+
+note left of AbstractClass
+  AbstractClass::TemplateMethod() {
+    ...
+    PrimitiveOperation1();
+    ...
+    PrimitiveOperation2();
+    ...
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml

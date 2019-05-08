@@ -70,6 +70,7 @@
 ![](./Strategy/Class.svg)
 
 ### [Template Method](./TemplateMethod/README.md)
+![](./TemplateMethod/Class.svg)
 
 ### [Visitor](./Visitor/README.md)
 
