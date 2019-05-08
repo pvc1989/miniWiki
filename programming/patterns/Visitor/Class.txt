@@ -1,0 +1,37 @@
+@startuml
+Client --> ObjectStructure
+ObjectStructure -> Element
+Element <|-- ElementA
+Element <|-- ElementB
+Client --> Visitor
+Visitor <|-- Visitor1
+Visitor <|-- Visitor2
+
+interface Element {
+  {abstract} +Accept(Visitor*)
+}
+class ElementA {
+  +Accept(Visitor* v) { v->VisitA(this); }
+  +OperationA()
+}
+class ElementB {
+  +Accept(Visitor* v) { v->VisitB(this); }
+  +OperationB()
+}
+
+interface Visitor {
+  {abstract} +VisitA(ElementA*)
+  {abstract} +VisitB(ElementB*)
+}
+class Visitor1 {
+  +VisitA(ElementA*)
+  +VisitB(ElementB*)
+}
+class Visitor2 {
+  +VisitA(ElementA*)
+  +VisitB(ElementB*)
+}
+
+hide empty attributes
+hide empty methods
+@enduml

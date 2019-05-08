@@ -73,6 +73,7 @@
 ![](./TemplateMethod/Class.svg)
 
 ### [Visitor](./Visitor/README.md)
+![](./Visitor/Class.svg)
 
 ## Language Support
 
