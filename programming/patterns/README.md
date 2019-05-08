@@ -61,6 +61,7 @@
 ![](./Memento/Class.svg)
 
 ### [Observer](./Observer/README.md)
+![](./Observer/Class.svg)
 
 ### [State](./State/README.md)
 

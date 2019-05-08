@@ -1,0 +1,44 @@
+@startuml
+Subject -> Observer 
+Subject <|-- ConcreteSubject
+Observer <|-- ConcreteObserver
+ConcreteSubject <- ConcreteObserver
+ConcreteSubject --> State
+ConcreteObserver --> State
+
+class Subject {
+  -observers : List<Observer*>
+  +Attach(Observer*)
+  +Detach(Observer*)
+  +Notify()
+}
+class ConcreteSubject {
+  -state : State
+  +GetState()
+  +SetState()
+}
+interface Observer {
+  {abstract} +Update()
+}
+class ConcreteObserver {
+  -state : State
+  -subject : Subject*
+  +Update()
+}
+
+note left of Subject
+ Subject::Notify() {
+   for (auto& o : observers)
+     o->Update();
+ }
+end note
+
+note right of ConcreteObserver
+  ConcreteObserver::Update() {
+    state = subject->GetState();
+  }
+end note
+
+hide empty attributes
+hide empty methods
+@enduml
