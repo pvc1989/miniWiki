@@ -52,6 +52,7 @@
 ![](./Interpreter/Class.svg)
 
 ### [Iterator](./Iterator/README.md)
+![](./Iterator/Class.svg)
 
 ### [Mediator](./Mediator/README.md)
 
