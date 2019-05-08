@@ -58,6 +58,7 @@
 ![](./Mediator/Class.svg)
 
 ### [Memento](./Memento/README.md)
+![](./Memento/Class.svg)
 
 ### [Observer](./Observer/README.md)
 

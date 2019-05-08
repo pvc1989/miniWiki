@@ -1,0 +1,20 @@
+@startuml
+State <-- Originator
+State <-- Memento
+Originator .> Memento
+Memento <- CareTaker
+
+class Originator {
+  -state : State
+  +CreateMemento()
+  +SetMemento(Memento)
+}
+class Memento {
+  -state : State
+  +GetState()
+  +SetState()
+}
+
+hide empty attributes
+hide empty methods
+@enduml
