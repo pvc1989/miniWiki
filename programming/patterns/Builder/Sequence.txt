@@ -4,33 +4,32 @@ participant Director order 2
 participant ConcreteBuilder order 3
 
 activate Client
-
-Client -> ConcreteBuilder: new ConcreteBuilder()
-activate ConcreteBuilder
-Client <-- ConcreteBuilder: aConcreteBuilder
-deactivate ConcreteBuilder
-
-Client -> Director: new Director(aConcreteBuilder)
-activate Director
-Client <-- Director: aDirector
-deactivate Director
-
-Client -> Director: buildProduct()
-activate Director
-  Director -> ConcreteBuilder: buildPartA()
+  Client -> ConcreteBuilder: ConcreteBuilder()
   activate ConcreteBuilder
-  Director <-- ConcreteBuilder
+  Client <-- ConcreteBuilder: aConcreteBuilder
   deactivate ConcreteBuilder
 
-  Director -> ConcreteBuilder: buildPartB()
-  activate ConcreteBuilder
-  Director <-- ConcreteBuilder
-  deactivate ConcreteBuilder
+  Client -> Director: Director(aConcreteBuilder)
+  activate Director
+  Client <-- Director: aDirector
+  deactivate Director
 
-  Director -> ConcreteBuilder: getProduct()
+  Client -> Director: Construct()
+  activate Director
+    Director -> ConcreteBuilder: BuildPartA()
+    activate ConcreteBuilder
+    Director <-- ConcreteBuilder
+    deactivate ConcreteBuilder
+
+    Director -> ConcreteBuilder: BuildPartB()
+    activate ConcreteBuilder
+    Director <-- ConcreteBuilder
+    deactivate ConcreteBuilder
+  Client <-- Director
+  deactivate Director
+
+  Client -> ConcreteBuilder: GetProduct()
   activate ConcreteBuilder
-  Director <-- ConcreteBuilder: aProduct
+  Client <-- ConcreteBuilder : aProduct
   deactivate ConcreteBuilder
-Client <-- Director
-deactivate Director
 @enduml
