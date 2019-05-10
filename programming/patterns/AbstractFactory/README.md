@@ -1,10 +1,8 @@
-# Abstract Factory
+# Abstract Factory (Kit)
 
 ## 意图
 Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
 
-## 别名
-Kit
 
 ## [类图](./Class.txt)
 ![](./Class.svg)
