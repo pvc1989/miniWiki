@@ -1,16 +1,16 @@
 @startuml
-interface AbstractProduct
-interface AbstractCreator {
-  {abstract} +factoryMethod() : AbstractProduct
-  +otherMethod()
-}
-AbstractProduct <.left. AbstractCreator
-
+AbstractProduct <. AbstractCreator
 AbstractProduct <|-- ConcreteProduct
 AbstractCreator <|-- ConcreteCreator
-ConcreteProduct <.left. ConcreteCreator
+ConcreteProduct <. ConcreteCreator
+
+interface AbstractProduct
+interface AbstractCreator {
+  {abstract} +Create() : AbstractProduct*
+  +OtherMethod()
+}
 class ConcreteCreator {
-  +factoryMethod() : ConcreteProduct
+  +Create() : ConcreteProduct*
 }
 
 hide empty attributes
