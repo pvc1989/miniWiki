@@ -1,13 +1,13 @@
 @startuml
-interface Product {
-  {abstract} +clone() : Product
-}
-Product <-- Client
-note right of Client: Product aNewProduct = aProduct.clone();
+Prototype <|- ConcretePrototype
+Prototype <-- Client
 
-Product <|- ConcreteProduct
-class ConcreteProduct {
-  +clone() : ConcreteProduct
+interface Prototype {
+  {abstract} +Clone() : Prototype*
+}
+note right of Client: Prototype* aNewPrototype = aPrototype->Clone();
+class ConcretePrototype {
+  +Clone() : ConcretePrototype*
 }
 
 hide empty attributes
