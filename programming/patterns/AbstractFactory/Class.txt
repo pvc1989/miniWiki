@@ -1,55 +1,39 @@
 @startuml
-interface AbstractProductA {
-  {abstract} +doA()
-}
-interface AbstractProductB {
-  {abstract} +doB()
-}
-interface AbstractFactory {
-  {abstract} +createA() : AbstractProductA
-  {abstract} +createB() : AbstractProductB
-}
-interface Client
-Client -down-> AbstractFactory
+Client --> Factory
+Client -left-> ProductA
+Client -right-> ProductB
 
-AbstractFactory .up.> AbstractProductA
-AbstractFactory .up.> AbstractProductB
+ProductA <.. Factory
+ProductB <.. Factory
+ProductA <|-- ProductA1
+ProductA <|-- ProductA2
+ProductB <|-- ProductB1
+ProductB <|-- ProductB2
 
-AbstractProductA <|-- ConcreteProductA1
-AbstractProductA <|-- ConcreteProductA2
-AbstractProductB <|-- ConcreteProductB1
-AbstractProductB <|-- ConcreteProductB2
+ProductA1 <.. Factory1
+ProductB1 <.. Factory1
+Factory <|-- Factory1
 
-class ConcreteProductA1 {
-  +doA()
-}
-class ConcreteProductA2 {
-  +doA()
-}
-class ConcreteProductB1 {
-  +doB()
-}
-class ConcreteProductB2 {
-  +doB()
-}
+ProductA2 <.. Factory2
+ProductB2 <.. Factory2
+Factory <|-- Factory2
 
-ConcreteProductA1 <.. ConcreteFactory1
-ConcreteProductB1 <.. ConcreteFactory1
-AbstractFactory <|-- ConcreteFactory1
+interface ProductA
+interface ProductB
 
-ConcreteProductA2 <.. ConcreteFactory2
-ConcreteProductB2 <.. ConcreteFactory2
-AbstractFactory <|-- ConcreteFactory2
-
-class ConcreteFactory1 {
-  +createA() : ConcreteProductA1
-  +createB() : ConcreteProductB1
+interface Factory {
+  {abstract} +CreateA() : ProductA*
+  {abstract} +CreateB() : ProductB*
 }
-class ConcreteFactory2 {
-  +createA() : ConcreteProductA2
-  +createB() : ConcreteProductB2
+class Factory1 {
+  +CreateA() : ProductA1*
+  +CreateB() : ProductB1*
+}
+class Factory2 {
+  +CreateA() : ProductA2*
+  +CreateB() : ProductB2*
 }
 
-hide empty attributes
+hide empty fields
 hide empty methods
 @enduml
