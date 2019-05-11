@@ -1,4 +1,4 @@
-# PVC 的个人学习笔记
+# 学习笔记
 
 ## 大纲
 
@@ -20,7 +20,7 @@
 - 微分方程数值解法
   - [有限差分法 (Finite Difference Methods)](./algorithms/FiniteDifference.lyx)
   - [有限单元法 (Finite Element Methods)](./algorithms/FiniteElement.lyx)
-  - [计算流体力学 (Computational Fluid Mechanics)](./algorithms/CFD.lyx)
+  - [计算流体力学 (Computational Fluid Dynamics)](./algorithms/CFD.lyx)
 
 ### 程序设计
 - 设计思想
