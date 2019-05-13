@@ -89,3 +89,54 @@ bad_variant_access   // <variant> (C++17)
 bad_optional_access  // <optional> (C++17)
 ```
 
+#### 抛出 (`throw`)
+如果一个操作可能发生运行期错误，则应当用 `throw` 语句 **抛出** 一个异常：
+```cpp
+// array.h
+#include <stdexcept>
+
+template <int N>
+class Array {
+  int _a[N];
+ public:
+  int size() const noexcept {  // 不会抛出异常的操作应当用 noexcept 标识
+    return N;
+  }
+  int& at(int i) {
+    if (i < 0 or i >= N) {
+      // 如果发生下标越界，则抛出一个 std::out_of_range 对象
+      throw std::out_of_range("The given index is out of range.");
+    }
+    return _a[i];
+  }
+};
+```
+
+#### 捕获 (`catch`)
+用户应当将可能抛出的异常的操作置于 `try` 代码块（用`{ }`表示边界）中，并紧随其后用一个或多个 `catch` 子句进行 **捕获**：
+```cpp
+#include <iostream>
+#include "array.h"
+
+int main() {
+  auto anArray = Array<10>();
+  try {
+    for (int i = 0; i != anArray.size(); ++i) {
+      anArray.at(i) = i;  // OK
+    }
+    anArray.at(anArray.size()) = anArray.size();  // 越界
+  } catch (std::out_of_range& e) {
+    std::cerr << e.what() << std::endl;
+  } catch (...) {
+    throw;
+  }
+  for (int i = 0; i != anArray.size(); ++i) {
+    std::cout << anArray.at(i) << ' ';
+  }
+  std::cout << std::endl;
+}
+```
+这里的两条 `catch` 子句体现了两种典型的处理策略：
+- 对于 `std::out_of_range` 类型的异常，用 `what()` 方法打印提示信息。
+- 对于其他类型的异常，用 `throw;` 语句将其重新抛出。
+
