@@ -37,3 +37,55 @@
 
 主要缺点：系统行为依赖于用户提供的具体实现。
 
+### 异常机制
+C++ 语言提供的 **异常 (exception)** 机制只用来处理 **同步 (synchronous)** 事件（数组越界、读写错误等），而不能（直接）处理 **异步 (asynchronous)** 事件（键盘中断、电源故障等)。
+
+#### 标准库异常类
+任何可复制的对象都可以被用作异常。
+
+标准库中用到的异常以 `std::exception`（定义在 `<exception>` 中）为共同基类。
+除构造和析构函数外，它含有两个公共的方法成员：
+- `operator=()` 用于异常对象的复制。
+- `what()` 返回构造时传入的字符串。
+
+标准库中用到的其他异常定义在 `<stdexcept>` 等头文件中。
+它们形成了一个继承体系（用缩进层次表示）：
+- 常用的标准库异常类：
+```cpp
+// <stdexcept>
+logic_error
+  invalid_argument
+  domain_error
+  length_error
+  out_of_range
+  future_error (C++11)
+runtime_error
+  range_error
+  overflow_error
+  underflow_error
+  regex_error (C++11)
+  nonexistent_local_time (C++20)
+  ambiguous_local_time (C++20)
+  tx_exception(TM TS)
+  system_error (C++11)
+    ios_base::failure (C++11)
+    filesystem::filesystem_error (C++17)
+// <typeinfo>
+bad_typeid
+bad_cast
+  bad_any_cast (C++17)
+// <new>
+bad_alloc
+  bad_array_new_length (C++11)
+// <memory>
+bad_weak_ptr (C++11)
+```
+- 不太常用的标准库异常类：
+```cpp
+bad_exception        // <exception>
+bad_function_call    // <functional> (C++11)
+ios_base::failure    // <ios> (until C++11)
+bad_variant_access   // <variant> (C++17)
+bad_optional_access  // <optional> (C++17)
+```
+
