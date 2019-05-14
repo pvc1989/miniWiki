@@ -173,3 +173,88 @@ struct Points {
 - 容器操作所依赖的自定义操作（`operator=()`, `swap()`）不会使容器处于无效状态。
 - 析构函数不会抛出异常。
 
+### 资源管理
+#### 资源泄露
+在 C++ 中，动态资源是通过成对的 **获取 (acquire)** 和 **释放 (release)** 操作来管理的。
+例如，动态内存通过成对的 `new` 和 `delete` 语句来管理：
+```cpp
+#include <cassert>
+#include <iostream>
+
+void Use(int* a, int n) {
+  for (int i = 0; i != n; ++i) {
+    a[i] = i;
+    std::cout << a[i] << ' ';
+  }
+  std::cout << std::endl;
+}
+
+int main(int argc, const char* argv[]) {
+  assert(argc > 1);
+  int n = atoi(argv[1]);
+  auto a = new int[n];  // 获取资源
+  Use(a, n);            // 使用资源
+  delete[] a;           // 释放资源
+}
+```
+如果在 `Use()` 中增加越界检查，则它抛出的异常可能使 `main()` 中的 `delete` 语句无法被执行，从而造成内存泄露：
+```cpp
+void Use(int* a, int n) {
+  for (int i = 0; i != n; ++i) {
+    if (i < 0 or i >= n) {
+      throw std::out_of_range("The given index is out of range.");
+    }
+    a[i] = i;
+    std::cout << a[i] << ' ';
+  }
+  std::cout << std::endl;
+}
+```
+
+#### RAII
+**RAII (Resource Acquisition Is Initialization)** 用一个[代理](../patterns/Proxy/README.md)对象来管理动态资源：在构造函数里获取资源，在析构函数里释放资源。
+该技术利用了以下事实：当程序的执行点即将离开一个 **作用域 (scope)** 时（无论是因为正常执行完该作用域内的所有语句，还是因为抛出异常），属于该作用域的 **对象 (object)** 会依次被析构（即调用析构函数）。
+
+标准库设施（容器、[智能指针](./memory.md#智能指针)）普遍采用 RAII 来管理动态资源。
+
+利用 RAII，[上面](#资源泄露)的例子可以改写为以下形式：
+```cpp
+#include <cassert>
+#include <iostream>
+#include <stdexcept>
+
+template <class T>
+class Array {
+  T* _a;
+  const int _n;
+ public: 
+  explicit Array(int n) : _a(new T[n]), _n(n) { }
+  ~Array() noexcept { delete[] _a; }
+  int size() const noexcept { return _n; }
+  int& operator[](int i) {
+    if (i < 0 or i >= _n) {
+      throw std::out_of_range("The given index is out of range.");
+    }
+    return _a[i];
+  }
+};
+
+void Use(Array<int>& a) {
+  for (int i = 0; i != a.size(); ++i) {
+    if (i < 0 or i >= a.size()) {
+      throw std::out_of_range("The given index is out of range.");
+    }
+    a[i] = i;
+    std::cout << a[i] << ' ';
+  }
+  std::cout << std::endl;
+}
+
+int main(int argc, const char* argv[]) {
+  assert(argc > 1);
+  int n = atoi(argv[1]);
+  auto a = Array<int>(n);  // 创建对象时获取资源
+  Use(a);  // 使用资源，可能会抛出异常
+  // 无论是否抛出异常，离开作用域前都会析构对象，释放资源
+}
+```
