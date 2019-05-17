@@ -6,28 +6,28 @@ Adaptee <|-- ClassAdapter
 Adaptee <--o ObjectAdapter
 
 interface Target {
-  {abstract} +request()
+  {abstract} +Request()
 }
 class Adaptee {
-  +specificRequest()
+  +SpecificRequest()
 }
 class ClassAdapter {
-  +request()
+  +Request()
 }
 class ObjectAdapter {
   -anAdaptee
-  +request()
+  +Request()
 }
 
 note bottom of ObjectAdapter
-  ObjectAdapter::request() {
-    return anAdaptee.specificRequest();
+  ObjectAdapter::Request() {
+    return anAdaptee.SpecificRequest();
   }
 end note
 
 note bottom of ClassAdapter
-  ClassAdapter::request() {
-    return Adaptee::specificRequest();
+  ClassAdapter::Request() {
+    return Adaptee::SpecificRequest();
   }
 end note
 
