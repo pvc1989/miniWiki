@@ -1,30 +1,30 @@
 @startuml
-Client -> Component
-Component <|- Leaf
-Component <|-- Composite
-Component <--o Composite
+Client -> Node
+Node <|- Leaf
+Node <|-- Tree
+Node <--o Tree
 
-interface Component {
-  {abstract} +operation()
-  {abstract} +add(Component)
-  {abstract} +remove(Component)
-  {abstract} +getChild(int)
+interface Node {
+  {abstract} +Request()
+  {abstract} +Add(Node)
+  {abstract} +Remove(Node)
+  {abstract} +GetChild(int)
 }
 class Leaf {
-  +operation()
+  +Request()
 }
-class Composite {
-  -children : List<Component>
-  +operation()
-  +add(Component)
-  +remove(Component)
-  +getChild(int)
+class Tree {
+  -children : List<Node*>
+  +Request()
+  +Add(Node)
+  +Remove(Node)
+  +GetChild(int)
 }
 
-note right of Composite
-  Composite::operation() {
-    for (auto& c : children)
-      c.operation();
+note right of Tree
+  Tree::Request() {
+    for (auto c : children)
+      c->Request();
   }
 end note
 
