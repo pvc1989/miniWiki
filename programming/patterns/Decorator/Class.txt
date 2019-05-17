@@ -1,39 +1,40 @@
 @startuml
+Client -> Component
 Component <|- ConcreteComponent
 Component <|-- Decorator
 Decorator <|-- BehaviorDecorator
 Decorator <|- StateDecorator
 
 interface Component {
-  {abstract} +operation()
+  {abstract} +Request()
 }
 
 class ConcreteComponent {
-  +operation()
+  +Request()
 }
 class Decorator {
-  -aComponent : Component
-  +operation()
+  -aComponent : Component*
+  +Request()
 }
 note left of Decorator
-  Decorator::operation() {
-    aComponent.operation();
+  Decorator::Request() {
+    aComponent->Request();
   }
 end note
 
 class BehaviorDecorator {
-  +operation()
-  -addedBehavior()
+  +Request()
+  -AddedOperation()
 }
 note left of BehaviorDecorator
-  BehaviorDecorator::operation() {
-    Decorator::operation();
-    addedBehavior();
+  BehaviorDecorator::Request() {
+    Decorator::Request();
+    AddedOperation();
   }
 end note
 class StateDecorator {
   -addedState
-  +operation()
+  +Request()
 }
 
 hide empty attributes
