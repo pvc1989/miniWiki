@@ -7,19 +7,20 @@ SharedFlyweight <-- Client
 UnsharedFlyweight <-- Client
 
 interface Flyweight {
-  {abstract} +do(extrinsicState)
+  {abstract} +Request(ExtrinsicState)
 }
 class SharedFlyweight {
-  -intrinsicState
-  +do(extrinsicState)
+  -intrinsicState : IntrinsicState
+  +Request(ExtrinsicState)
 }
 class UnsharedFlyweight {
-  -allState
-  +do(extrinsicState)
+  -intrinsicState : IntrinsicState
+  -extrinsicState : ExtrinsicState
+  +Request(ExtrinsicState)
 }
 class FlyweightFactory {
-  -flyweights : Map<Key, Flyweight>
-  +getFlyweight(Key) : Flyweight
+  -flyweights : Map<Key, Flyweight*>
+  +GetFlyweight(Key) : Flyweight
 }
 
 hide empty attributes
