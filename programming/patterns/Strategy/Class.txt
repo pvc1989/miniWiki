@@ -1,21 +1,17 @@
 @startuml
-Context *-> Strategy 
-Strategy <|-- ConcreteStrategy1
-Strategy <|-- ConcreteStrategy2
+Client *-> Strategy 
+Strategy <|- ConcreteStrategy
 
-class Context {
-  -Strategy : Strategy*
+class Client {
+  -strategy : Strategy*
   +SetStrategy(Strategy*)
-  +UseStrategy()
+  +GetData()
 }
 interface Strategy {
-  {abstract} +AlgorithmInterface()
+  {abstract} +DoSomething()
 }
-class ConcreteStrategy1 {
-  +AlgorithmInterface()
-}
-class ConcreteStrategy2 {
-  +AlgorithmInterface()
+class ConcreteStrategy {
+  +DoSomething()
 }
 
 hide empty attributes
