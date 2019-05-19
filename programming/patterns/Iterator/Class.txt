@@ -5,13 +5,16 @@ ConcreteContainer ..> ConcreteIterator
 ConcreteContainer <-- ConcreteIterator
 
 interface Container {
-  {abstract} +CreateIterator()
+  {abstract} +CreateIterator() : Iterator*
 }
 interface Iterator {
   {abstract} +First()
   {abstract} +Next()
   {abstract} +Done()
   {abstract} +CurrentItem()
+}
+class ConcreteContainer {
+  +CreateIterator() : ConcreteIterator*
 }
 
 hide empty attributes
