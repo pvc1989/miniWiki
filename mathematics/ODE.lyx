@@ -1,0 +1,2282 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\begin_preamble
+\usepackage{ctex}
+\usepackage{tikz}
+\usepackage{physics}
+\renewcommand{\grad}{\boldsymbol{\nabla}}
+\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage[e]{esvect}
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Operator}[1]{\mathop{\mathsf{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Conj}[1]{{{#1}^*}}
+\end_preamble
+\options idxtotoc
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "helvet" "default"
+\font_typewriter "default" "default"
+\font_math "default" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 0.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle plain
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+常微分方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+二阶线性齐次常微分方程
+\end_layout
+
+\begin_layout Standard
+最一般的二阶线性齐次常微分方程具有以下形式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p_{0}u''+p_{1}u'+p_{2}u=0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的未知函数，
+\begin_inset Formula $p_{0}$
+\end_inset
+
+（不恒为零）、
+\begin_inset Formula $p_{1}$
+\end_inset
+
+、
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ 都是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的已知函数。
+\end_layout
+
+\begin_layout Standard
+由于 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 不恒为零，只需引入 
+\begin_inset Formula $P:=p_{1}/p_{0}$
+\end_inset
+
+，
+\begin_inset Formula $Q:=p_{2}/p_{0}$
+\end_inset
+
+ 就可以将上述方程改写为首项系数为 
+\begin_inset Formula $1$
+\end_inset
+
+ 的形式
+\begin_inset Formula 
+\begin{equation}
+u''+Pu'+Qu=0\label{eq:二阶线性齐次ODE首项系数为一}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+奇点分类
+\end_layout
+
+\begin_layout Subsubsection
+有限远点
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有限远的常点与奇点]
+\end_layout
+
+\end_inset
+
+对于方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+
+\end_inset
+
+，如果 
+\begin_inset Formula $P$
+\end_inset
+
+ 和 
+\begin_inset Formula $Q$
+\end_inset
+
+ 在有限远点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 处取有限值，则称 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 为该方程的
+\emph on
+常点
+\emph default
+ (ordinary point)，否则称 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 为该方程的
+\emph on
+奇点
+\emph default
+ (singular point)。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有限远奇点的分类]
+\end_layout
+
+\end_inset
+
+ 如果有限远点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 是方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+
+\end_inset
+
+的奇点，但 
+\begin_inset Formula $(x-x_{0})P(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $(x-x_{0})^{2}Q(x)$
+\end_inset
+
+ 在点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 处仍取有限值，则称 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 为该方程的
+\emph on
+正则
+\emph default
+ (regular) 奇点，否则称 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 为该方程
+\emph on
+非正则
+\emph default
+ (irregular) 或
+\emph on
+本质
+\emph default
+ (essential) 奇点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+无穷远点
+\end_layout
+
+\begin_layout Standard
+以上定义是针对有限远点给出的。方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在 
+\begin_inset Formula $x\to\infty$
+\end_inset
+
+ 时的行为可以借助于变量替换 
+\begin_inset Formula $x=1/z$
+\end_inset
+
+ 来研究。在此变换下，方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\begin{equation}
+w''+\frac{2z-P(1/z)}{z^{2}}w'+\frac{Q(1/z)}{z^{4}}w=0\label{eq:二阶线性齐次ODE接近无穷远点}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $w$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $z$
+\end_inset
+
+ 的函数，并且
+\begin_inset Formula $w(z)\equiv u(1/z)\equiv u(x)$
+\end_inset
+
+。于是，关于
+\begin_inset Formula $u(x)$
+\end_inset
+
+的方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在
+\begin_inset Formula $x\to0$
+\end_inset
+
+时的行为等价于关于
+\begin_inset Formula $w(z)$
+\end_inset
+
+的方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE接近无穷远点"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+在
+\begin_inset Formula $z\to0$
+\end_inset
+
+时的行为。
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无穷远点的奇异性]
+\end_layout
+
+\end_inset
+
+ 在变换 
+\begin_inset Formula $x=1/z$
+\end_inset
+
+ 作用下，如果 
+\begin_inset Formula $z_{0}=0$
+\end_inset
+
+ 是方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE接近无穷远点"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的常点/正则奇点/本质奇点，则 
+\begin_inset Formula $x_{0}=\infty$
+\end_inset
+
+ 是方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的常点/正则奇点/本质奇点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+在
+\emph on
+复平面
+\emph default
+（或更确切地讲
+\emph on
+复球面
+\emph default
+）上，从任何方向趋向的
+\emph on
+无穷远
+\emph default
+ (the infinity) 都被视为同一个点。因此，上面的定义不区分 
+\begin_inset Formula $\pm\infty$
+\end_inset
+
+ 是合理的，正如（一般情况下）不必区分 
+\begin_inset Formula $\pm0$
+\end_inset
+
+ 一样。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+小结
+\end_layout
+
+\begin_layout Standard
+表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:常见二阶线性齐次ODE的奇点分布"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+列出了数学物理中常见的二阶线性常微分方程的奇点。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:常见二阶线性齐次ODE的奇点分布"
+
+\end_inset
+
+常见二阶线性齐次常微分方程的奇点
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+名称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+正则奇点
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+本质奇点
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+超几何
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x(x-1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(1+a+b)x+c$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $ab$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0,1,\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Legendre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1-x^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-2x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $l(l+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-1,1,\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Chebyshev
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1-x^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-1,1,\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+合流超几何
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c-x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bessel
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x^{2}-\nu^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Laguerre
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1-x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+简谐
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hermite
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-2x$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2\alpha$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+幂级数解
+\end_layout
+
+\begin_layout Subsubsection
+Frobenius 方法
+\end_layout
+
+\begin_layout Standard
+假设在方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解在方程的有限远常点或正则奇点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 附近可以展开为幂级数：
+\begin_inset Formula 
+\[
+u(x)=\left(x-x_{0}\right)^{s}\left[a_{0}+a_{1}\left(x-x_{0}\right)+a_{2}\left(x-x_{0}\right)^{2}+\cdots\right]=\sum_{i=0}^{\infty}a_{i}\left(x-x_{0}\right)^{s+i}\quad a_{0}\ne0
+\]
+
+\end_inset
+
+根据有限远常点或正则奇点的定义，
+\begin_inset Formula $P$
+\end_inset
+
+ 和 
+\begin_inset Formula $Q$
+\end_inset
+
+ 也应当可以在点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 附近展开为幂级数：
+\begin_inset Formula 
+\[
+P(x)=\sum_{j=-1}^{\infty}p_{j}\left(x-x_{0}\right)^{j}\qquad Q(x)=\sum_{k=-2}^{\infty}q_{k}\left(x-x_{0}\right)^{k}
+\]
+
+\end_inset
+
+将这三个幂级数代入方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，得到
+\begin_inset Formula 
+\[
+\begin{aligned}0 & =\sum_{i=0}^{\infty}a_{i}(s+i)(s+i-1)\left(x-x_{0}\right)^{s+i-2}\\
+ & +\sum_{j=-1}^{\infty}p_{j}\left(x-x_{0}\right)^{j}\times\sum_{i=0}^{\infty}a_{i}(s+i)\left(x-x_{0}\right)^{s+i-1}\\
+ & +\sum_{k=-2}^{\infty}q_{k}\left(x-x_{0}\right)^{k}\times\sum_{i=0}^{\infty}a_{i}\left(x-x_{0}\right)^{s+i}
+\end{aligned}
+\]
+
+\end_inset
+
+合并 
+\begin_inset Formula $(x-x_{0})$
+\end_inset
+
+ 的同幂次项，再令各项系数为 
+\begin_inset Formula $0$
+\end_inset
+
+，得到一组关于 
+\begin_inset Formula $s$
+\end_inset
+
+、
+\begin_inset Formula $\left\{ a_{i}\right\} _{i=0}^{\infty}$
+\end_inset
+
+ 的恒等式。
+\end_layout
+
+\begin_layout Standard
+由「最低次项 
+\begin_inset Formula $\left(x-x_{0}\right)^{s-2}$
+\end_inset
+
+ 的系数为 
+\begin_inset Formula $0$
+\end_inset
+
+」得到的恒等式
+\begin_inset Formula 
+\begin{equation}
+s(s-1)+p_{-1}s+q_{-2}=0\label{eq:指标方程}
+\end{equation}
+
+\end_inset
+
+被称作
+\emph on
+指标方程
+\emph default
+ (indicial equation)，其中 
+\begin_inset Formula $p_{-1}$
+\end_inset
+
+、
+\begin_inset Formula $q_{-2}$
+\end_inset
+
+ 均为已知系数，因此它是一个关于 
+\begin_inset Formula $s$
+\end_inset
+
+ 的一元二次方程。对于数学物理中常见的二阶线性常微分方程，这两个解通常都是实数。
+\end_layout
+
+\begin_layout Standard
+由「次低次项 
+\begin_inset Formula $\left(x-x_{0}\right)^{s-1}$
+\end_inset
+
+ 的系数为 
+\begin_inset Formula $0$
+\end_inset
+
+」得到的恒等式
+\begin_inset Formula 
+\[
+a_{1}(s+1)s+p_{-1}a_{1}(s+1)+p_{0}a_{0}s+q_{-2}a_{1}+q_{-1}a_{0}=0
+\]
+
+\end_inset
+
+可以用指标方程简化为
+\begin_inset Formula 
+\begin{equation}
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\label{eq:次低次项对应的恒等式}
+\end{equation}
+
+\end_inset
+
+当 
+\begin_inset Formula $2s+p_{-1}\ne0$
+\end_inset
+
+ 时，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 有唯一确定的值；反之，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 的值不定，通常可以取为 
+\begin_inset Formula $0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+由「后续各项（即 
+\begin_inset Formula $\left(x-x_{0}\right)^{s+n}$
+\end_inset
+
+ 其中 
+\begin_inset Formula $n=0,1,2,\dots$
+\end_inset
+
+）系数为 
+\begin_inset Formula $0$
+\end_inset
+
+」得到的恒等式
+\begin_inset Formula 
+\[
+a_{n+2}(s+n+2)(s+n+1)+\sum_{j=-1}^{n+1}p_{j}a_{n+1-j}(s+n+1-j)+\sum_{k=-2}^{n}q_{k}a_{n-k}=0
+\]
+
+\end_inset
+
+经过整理，可以改写为
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}a_{n+2} & =-\frac{\sum_{j=0}^{n+1}p_{j}a_{n+1-j}(s+n+1-j)+\sum_{k=-1}^{n}q_{k}a_{n-k}}{(s+n+2)(s+n+1+p_{-1})+q_{-2}}\\
+ & =:f(a_{0},a_{1},\dots,a_{n},a_{n+1})
+\end{aligned}
+\label{eq:递推关系}
+\end{equation}
+
+\end_inset
+
+这是一个用已知系数表示未知系数的
+\emph on
+递推关系
+\emph default
+ (recurrence relation)。
+\end_layout
+
+\begin_layout Subsubsection
+Fuchs 定理
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Fuchs定理"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Fuchs]
+\end_layout
+
+\end_inset
+
+在方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的
+\emph on
+常点
+\emph default
+或
+\emph on
+正则奇点
+\emph default
+附近，Frobenius 方法
+\emph on
+至少
+\emph default
+可以给出一个幂级数形式的解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+如果指标方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:指标方程"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的两个解 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+ 和 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+(s_{1}-s_{2})\notin\mathbb{Z}
+\]
+
+\end_inset
+
+则 Frobenius 方法可以在方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的常点或正则奇点 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 附近给出两个线性无关的幂级数解
+\begin_inset Formula 
+\[
+\begin{aligned}u_{1}(x) & =(x-x_{0})^{s_{1}}\sum_{i=0}^{\infty}a_{i}(x-x_{0})^{i}\qquad a_{0}\ne0\\
+u_{2}(x) & =(x-x_{0})^{s_{2}}\sum_{k=0}^{\infty}b_{k}(x-x_{0})^{k}\qquad b_{0}\ne0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+以上定理没有否认 Frobenius 方法在 
+\begin_inset Formula $(s_{1}-s_{2})\in\mathbb{Z}$
+\end_inset
+
+ 时给出两个线性无关解的可能性。下一小节就给出了这样一个示例。
+\end_layout
+
+\begin_layout Subsubsection
+简谐方程在 
+\begin_inset Formula $x_{0}=0$
+\end_inset
+
+ 附近的解
+\end_layout
+
+\begin_layout Standard
+将幂级数形式的解
+\begin_inset Formula 
+\[
+u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\quad a_{0}\ne0
+\]
+
+\end_inset
+
+代入简谐方程
+\begin_inset Formula 
+\[
+u''+\omega^{2}u=0\qquad\omega\ne0
+\]
+
+\end_inset
+
+得到指标方程
+\begin_inset Formula 
+\[
+s(s-1)=0\implies s=0,1
+\]
+
+\end_inset
+
+和递推关系
+\begin_inset Formula 
+\begin{equation}
+a_{n+2}=\frac{-\omega^{2}}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:简谐函数的系数递推关系}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $s=0$
+\end_inset
+
+，则恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:次低次项对应的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot0=0
+\]
+
+\end_inset
+
+此时 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取任意值。由递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:简谐函数的系数递推关系"
+
+\end_inset
+
+可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2n}=\frac{(-1)^{n}\omega^{2n}}{(2n)!}a_{0}\qquad a_{2n+1}=\frac{(-1)^{n}\omega^{2n+1}}{(2n+1)!}\frac{a_{1}}{\omega}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+于是，方程的解可以表示为
+\begin_inset Formula 
+\[
+\begin{aligned}u(x) & =\sum_{n=0}^{\infty}a_{2n}x^{2n}+\sum_{n=0}^{\infty}a_{2n+1}x^{2n+1}\\
+ & =a_{0}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n}}{(2n)!}+\frac{a_{1}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n+1}}{(2n+1)!}\\
+ & =a_{0}\cos\omega x+\frac{a_{1}}{\omega}\sin\omega x
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 和 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 为待定参数，由边界条件确定。
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $s=1$
+\end_inset
+
+，则恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:次低次项对应的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot2=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 必须为 
+\begin_inset Formula $0$
+\end_inset
+
+。由递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:简谐函数的系数递推关系"
+
+\end_inset
+
+可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2n}=\frac{(-1)^{n}\omega^{2n+1}}{(2n+1)!}\frac{a_{0}}{\omega}\qquad a_{2n+1}=0\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+于是，方程的解可以表示为
+\begin_inset Formula 
+\[
+u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n+1}}{(2n+1)!}=\frac{a_{0}}{\omega}\sin\omega x
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数，由边界条件确定。
+\end_layout
+
+\begin_layout Standard
+综上，通过 Frobenius 方法可以得到简谐方程的两个线性无关解：
+\begin_inset Formula $\cos\omega x$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sin\omega x$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+第二解
+\end_layout
+
+\begin_layout Subsubsection
+Wronskian
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Wronskian]
+\end_layout
+
+\end_inset
+
+对于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个至少 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 阶可导的函数 
+\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{n}$
+\end_inset
+
+，称以下行列式为它们的 Wronskian
+\begin_inset Formula 
+\[
+W_{12\cdots n}(x):=\begin{vmatrix}\begin{array}{llll}
+u_{1} & u_{2} & \cdots & u_{n}\\
+u_{1}' & u_{2}' & \cdots & u_{n}'\\
+\cdots & \cdots & \cdots & \cdots\\
+u_{1}^{(n-1)} & u_{2}^{(n-1)} & \cdots & u_{n}^{(n-1)}
+\end{array}\end{vmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+对于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个至少 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 阶可导的函数 
+\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{n}$
+\end_inset
+
+，如果它们的 Wronskian 不恒为零，则它们线性无关；否则，它们线性相关。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+关于 
+\begin_inset Formula $\left\{ k_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 的线性代数方程
+\begin_inset Formula 
+\[
+\begin{bmatrix}\begin{array}{llll}
+u_{1} & u_{2} & \cdots & u_{n}\\
+u_{1}' & u_{2}' & \cdots & u_{n}'\\
+\cdots & \cdots & \cdots & \cdots\\
+u_{1}^{(n-1)} & u_{2}^{(n-1)} & \cdots & u_{n}^{(n-1)}
+\end{array}\end{bmatrix}\begin{bmatrix}k_{1}\\
+k_{2}\\
+\cdots\\
+k_{n}
+\end{bmatrix}=\begin{bmatrix}0\\
+0\\
+\cdots\\
+0
+\end{bmatrix}
+\]
+
+\end_inset
+
+有非零解 
+\begin_inset Formula $\iff$
+\end_inset
+
+ 
+\begin_inset Formula $W_{12\cdots n}(x)\equiv0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+二阶线性齐次常微分方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+至多有两个线性无关解：
+\begin_inset Formula $u_{1}(x)$
+\end_inset
+
+ 和 
+\begin_inset Formula $u_{2}(x)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+假设方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+有三个线性无关解 
+\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{3}$
+\end_inset
+
+，它们的 Wronskian 为
+\begin_inset Formula 
+\[
+W_{12\cdots n}=\begin{vmatrix}\begin{array}{lll}
+u_{1} & u_{2} & u_{3}\\
+u_{1}' & u_{2}' & u_{3}'\\
+u_{1}'' & u_{2}'' & u_{3}''
+\end{array}\end{vmatrix}=-u_{1}'W_{23}'+u_{2}'W_{13}'-u_{3}'W_{12}'
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+W_{ik}':=\dv{x}\begin{vmatrix}\begin{array}{ll}
+u_{i} & u_{k}\\
+u_{i}' & u_{k}'
+\end{array}\end{vmatrix}=\begin{vmatrix}\begin{array}{ll}
+u_{i} & u_{k}\\
+u_{i}'' & u_{k}''
+\end{array}\end{vmatrix}\qquad i,k=1,2,3
+\]
+
+\end_inset
+
+同时，由方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知
+\begin_inset Formula 
+\[
+\frac{u_{i}''}{u_{i}}+P\frac{u_{i}'}{u_{i}}=-Q=\frac{u_{k}''}{u_{k}}+P\frac{u_{k}'}{u_{k}}\qquad i,k=1,2,3
+\]
+
+\end_inset
+
+两端同乘 
+\begin_inset Formula $u_{i}u_{k}$
+\end_inset
+
+ 并移项，可得
+\begin_inset Formula 
+\[
+u_{i}u_{k}''-u_{k}u_{i}''+P\cdot\left(u_{i}u_{k}'-u_{k}u_{i}'\right)=0\qquad i,k=1,2,3
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+W_{ik}'=-P\begin{vmatrix}\begin{array}{ll}
+u_{i} & u_{k}\\
+u_{i}' & u_{k}'
+\end{array}\end{vmatrix}=-P\cdot W_{ik}\qquad i,k=1,2,3
+\]
+
+\end_inset
+
+于是
+\begin_inset Formula 
+\[
+\begin{aligned}W(x;u_{1},u_{2},u_{3}) & =-u_{1}'P\begin{vmatrix}\begin{array}{ll}
+u_{2} & u_{3}\\
+u_{2}' & u_{3}'
+\end{array}\end{vmatrix}+u_{2}'P\begin{vmatrix}\begin{array}{ll}
+u_{1} & u_{3}\\
+u_{1}' & u_{3}'
+\end{array}\end{vmatrix}-u_{3}'P\begin{vmatrix}\begin{array}{ll}
+u_{1} & u_{2}\\
+u_{1}' & u_{2}'
+\end{array}\end{vmatrix}\\
+ & =P\begin{vmatrix}\begin{array}{lll}
+u_{1} & u_{2} & u_{3}\\
+u_{1}' & u_{2}' & u_{3}'\\
+u_{1}' & u_{2}' & u_{3}'
+\end{array}\end{vmatrix}\equiv0
+\end{aligned}
+\]
+
+\end_inset
+
+这与假设矛盾。
+\end_layout
+
+\begin_layout Subsubsection
+积分形式的第二解
+\end_layout
+
+\begin_layout Standard
+假设已经获得了方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:二阶线性齐次ODE首项系数为一"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的一个解 
+\begin_inset Formula $u_{1}$
+\end_inset
+
+，并且存在另一个与之线性无关的解 
+\begin_inset Formula $u_{2}$
+\end_inset
+
+，则由
+\begin_inset Formula 
+\[
+W_{12}'=-P\cdot W_{12}\implies\frac{\dd{W_{12}}}{W_{12}}=-P\dd{x}
+\]
+
+\end_inset
+
+可以推出（省略 
+\begin_inset Formula $W$
+\end_inset
+
+ 的下标）
+\begin_inset Formula 
+\[
+\ln\frac{W(x)}{W(a)}=\implies W(x)=W(a)\exp\left(-\int_{a}^{x}P(\xi)\dd{\xi}\right)
+\]
+
+\end_inset
+
+考虑到
+\begin_inset Formula 
+\[
+W(x)=u_{1}u_{2}'-u_{2}u_{1}'=u_{1}^{2}\dv{x}\frac{u_{2}}{u_{1}}
+\]
+
+\end_inset
+
+于是有
+\begin_inset Formula 
+\[
+\dv{x}\frac{u_{2}}{u_{1}}=W(a)u_{1}^{-2}\exp\left(-\int_{a}^{x}P(\xi)\dd{\xi}\right)
+\]
+
+\end_inset
+
+直接积分可得
+\begin_inset Formula 
+\[
+u_{2}(x)=u_{1}(x)W(a)\int_{b}^{x}u_{1}^{-2}(\eta)\exp\left(-\int_{a}^{\eta}P(\xi)\dd{\xi}\right)\dd{\eta}
+\]
+
+\end_inset
+
+通过引入适当的系数，总是可以令 
+\begin_inset Formula $W(a)=1$
+\end_inset
+
+，于是第二解的一般形式（积分下限可以省略）可以表示为
+\begin_inset Formula 
+\begin{equation}
+u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\exp\left(-\int^{\eta}P(\xi)\dd{\xi}\right)\dd{\eta}\label{eq:积分形式的第二解}
+\end{equation}
+
+\end_inset
+
+如果恰好有 
+\begin_inset Formula $P(x)\equiv0$
+\end_inset
+
+，则第二解的一般形式可以简化为
+\begin_inset Formula 
+\[
+u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\dd{\eta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+以上积分形式的第二解通常只具有理论意义，实际计算往往难以实施，需要用其他方法寻找第二解。
+\end_layout
+
+\begin_layout Subsubsection
+幂级数解形式的第二解
+\end_layout
+
+\begin_layout Standard
+按照 Frobenius 方法中的步骤，可以得到指标方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:指标方程"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。将它的两个解记为 
+\begin_inset Formula $s_{1}=\sigma$
+\end_inset
+
+ 和 
+\begin_inset Formula $s_{2}=\sigma-n$
+\end_inset
+
+，代回指标方程可以得到
+\begin_inset Formula 
+\[
+p_{-1}-1=n-2\sigma
+\]
+
+\end_inset
+
+不失一般性，下面只考虑 
+\begin_inset Formula $n\in\mathbb{N}_{+}$
+\end_inset
+
+ 的情形。
+\end_layout
+
+\begin_layout Standard
+根据
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "sec:Fuchs定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，
+\begin_inset Formula $s_{1}=\sigma$
+\end_inset
+
+ 所对应的幂级数解
+\begin_inset Formula 
+\[
+u_{1}(x)=(x-x_{0})^{\sigma}\sum_{i=0}^{\infty}a_{i}(x-x_{0})^{i}
+\]
+
+\end_inset
+
+总是可以通过 Frobenius 方法得到。将它和 
+\begin_inset Formula $P(x)$
+\end_inset
+
+ 的幂级数展开式代入积分形式的第二解
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:积分形式的第二解"
+
+\end_inset
+
+，得到
+\begin_inset Formula 
+\[
+u_{2}(x)=u_{1}(x)\cdot\int_{b}^{x}\frac{\exp\left(-\int_{a}^{\eta}\sum_{j=-1}^{\infty}p_{j}\left(\xi-x_{0}\right)^{j}\dd{\xi}\right)}{(\eta-x_{0})^{2\sigma}\left(\sum_{i=0}^{\infty}a_{i}(\eta-x_{0})^{i}\right)^{2}}\dd{\eta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+先考虑指数函数项中的积分
+\begin_inset Formula 
+\[
+\int_{a}^{\eta}\sum_{j=-1}^{\infty}p_{j}\left(\xi-x_{0}\right)^{j}\dd{\xi}=p_{-1}\ln\left(\eta-x_{0}\right)+\sum_{j=0}^{\infty}\frac{p_{j}}{j+1}\left(\eta-x_{0}\right)^{j+1}+C_{a}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{a}$
+\end_inset
+
+ 是与积分下限 
+\begin_inset Formula $a$
+\end_inset
+
+ 有关的积分常数。于是指数函数项可以整理为幂级数形式
+\begin_inset Formula 
+\[
+\begin{aligned} & \exp\left(-\int_{a}^{\eta}\sum_{j=-1}^{\infty}p_{j}\left(\xi-x_{0}\right)^{j}\dd{\xi}\right)\\
+= & (\eta-x_{0})^{-p_{-1}}\cdot\exp\left(-\sum_{j=0}^{\infty}\frac{p_{j}}{j+1}\left(\eta-x_{0}\right)^{j+1}\right)\cdot\exp(-C_{a})\\
+= & \frac{1-\sum_{j=0}^{\infty}\frac{p_{j}}{j+1}\left(\eta-x_{0}\right)^{j+1}+\left(-\sum_{j=0}^{\infty}\frac{p_{j}}{j+1}\left(\eta-x_{0}\right)^{j+1}\right)^{2}+\cdots}{(\eta-x_{0})^{n+1-2\sigma}E_{a}}\\
+= & \frac{\sum_{j=0}^{\infty}b_{j}\left(\eta-x_{0}\right)^{j}}{(\eta-x_{0})^{n+1-2\sigma}}
+\end{aligned}
+\]
+
+\end_inset
+
+这里利用了 
+\begin_inset Formula $p_{-1}-1=n-2\sigma$
+\end_inset
+
+，指数函数的 Taylor 展开式 
+\begin_inset Formula $\exp x=\sum_{k=0}^{\infty}\frac{x^{k}}{k!}$
+\end_inset
+
+，将常数 
+\begin_inset Formula $\exp(C_{a})$
+\end_inset
+
+ 表示为 
+\begin_inset Formula $E_{a}$
+\end_inset
+
+ 并将其吸收进幂级数的系数 
+\begin_inset Formula $\left\{ b_{j}\right\} _{j=0}^{\infty}$
+\end_inset
+
+ 中。
+\end_layout
+
+\begin_layout Standard
+再考虑被积函数的分母，对其作 Taylor 展开得到
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{1}{(\eta-x_{0})^{2\sigma}\left(\sum_{i=0}^{\infty}a_{i}(\eta-x_{0})^{i}\right)^{2}} & =\frac{1}{(\eta-x_{0})^{2\sigma}\left(1+\sum_{i=1}^{\infty}a_{i}(\eta-x_{0})^{i}\right)^{2}}\\
+ & =\frac{\sum_{k=0}^{\infty}\binom{-2}{k}\left(\sum_{i=1}^{\infty}a_{i}(\eta-x_{0})^{i}\right)^{k}}{(\eta-x_{0})^{2\sigma}}\\
+ & =\frac{\sum_{k=0}^{\infty}c_{k}(\eta-x_{0})^{k}}{(\eta-x_{0})^{2\sigma}}
+\end{aligned}
+\]
+
+\end_inset
+
+这里利用了幂函数的 Taylor 展开式 
+\begin_inset Formula $(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+将以上两个结果代回到第二解的表达式中，得到
+\begin_inset Formula 
+\[
+\begin{aligned}u_{2}(x)= & u_{1}(x)\cdot\int_{b}^{x}\frac{\sum_{j=0}^{\infty}b_{j}\left(\eta-x_{0}\right)^{j}}{(\eta-x_{0})^{n+1-2\sigma}}\cdot\frac{\sum_{k=0}^{\infty}c_{k}(\eta-x_{0})^{k}}{(\eta-x_{0})^{2\sigma}}\dd{\eta}\\
+= & u_{1}(x)\cdot\int_{b}^{x}\frac{\sum_{j=0}^{\infty}d_{j}\left(\eta-x_{0}\right)^{j}}{(\eta-x_{0})^{n+1}}\dd{\eta}\\
+= & u_{1}(x)\cdot\int_{b}^{x}\frac{d_{n}}{\eta-x_{0}}\dd{\eta}\\
++ & u_{1}(x)\cdot\int_{b}^{x}\frac{\sum_{j=0}^{n-1}d_{j}\left(\eta-x_{0}\right)^{j}+\sum_{j=n+1}^{\infty}d_{j}\left(\eta-x_{0}\right)^{j}}{(\eta-x_{0})^{n+1}}\dd{\eta}\\
+= & u_{1}(x)\cdot d_{n}\ln\abs{x-x_{0}}+C_{b}\\
++ & u_{1}(x)\cdot\left(\sum_{j=0}^{n-1}\frac{d_{j}}{j-n}\left(\eta-x_{0}\right)^{j-n}+\sum_{j=n+1}^{\infty}\frac{d_{j}}{j-n}\left(\eta-x_{0}\right)^{j-n}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{b}$
+\end_inset
+
+ 是与积分下限 
+\begin_inset Formula $b$
+\end_inset
+
+ 有关的积分常数。考虑到 
+\begin_inset Formula $u_{1}(x)=\sum_{i=0}^{\infty}a_{i}(x-x_{0})^{i+\sigma}$
+\end_inset
+
+，最后一行的幂级数应当从 
+\begin_inset Formula $(x-x_{0})^{\sigma-n}$
+\end_inset
+
+ 项开始。
+\end_layout
+
+\begin_layout Standard
+综上，对应于 
+\begin_inset Formula $s_{2}=\sigma-n$
+\end_inset
+
+ 的第二解应当具有以下形式
+\begin_inset Formula 
+\[
+u_{2}(x)=u_{1}(x)\cdot\ln\abs{x-x_{0}}+(x-x_{0})^{s_{2}}\sum_{i=0}^{\infty}b_{i}(x-x_{0})^{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Bessel 方程在 
+\begin_inset Formula $x_{0}=0$
+\end_inset
+
+ 附近的解
+\end_layout
+
+\begin_layout Standard
+\start_of_appendix
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "Index"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
