@@ -4,6 +4,7 @@
 
 ### 数学
 - [微分几何 (Differential Geometry)](./mathematics/DifferentialGeometry.lyx)
+- [常微分方程 (Ordinary Differential Equations)](./mathematics/ODE.lyx)
 - [偏微分方程 (Partial Differential Equations)](./mathematics/PDE.lyx)
 
 ### 物理
