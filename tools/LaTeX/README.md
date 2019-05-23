@@ -34,10 +34,10 @@ xelatex ../hello.tex
 
 #### 文档设置
 打开 LyX，新建一个文档（「文档类」可任选），然后进入「文档」→「首选项」进行如下设置：
-1.「LaTeX 导言区」→ `\usepackage{ctex}`。
-2.「语言」→「语言」→「汉语 (简体中文)」。
-2.「语言」→「文件编码」→「其他」→「Unicode (XeTeX) (utf8)」。
-3.「字体」→「使用非 TeX 字体（通过 XeTeX/LuaTeX）」。
+1. 「LaTeX 导言区」→ `\usepackage{ctex}`。
+2. 「语言」→「语言」→「汉语 (简体中文)」。
+2. 「语言」→「文件编码」→「其他」→「Unicode (XeTeX) (utf8)」。
+3. 「字体」→「使用非 TeX 字体（通过 XeTeX/LuaTeX）」。
 
 ### 代码高亮
 
@@ -50,8 +50,8 @@ pip3 install pygments
 
 #### 文档设置
 进入「文档」→「首选项」进行如下设置：
-1.「程序列表」→「语法高亮支持包」→「Minted」
-2.「程序列表」→「空白处」可以设置 `minted` 宏包参数，例如：
+1. 「程序列表」→「语法高亮支持包」→「Minted」
+2. 「程序列表」→「空白处」可以设置 `minted` 宏包参数，例如：
 ```latex
 style=xcode
 frame=leftline
@@ -59,5 +59,5 @@ baselinestretch={1.0}
 breaklines=true
 fontsize={\footnotesize}
 ```
-3.「输出格式」→「允许运行外部程序」。
+3. 「输出格式」→「允许运行外部程序」。
 4. 首次编译该文档时，会弹出警告对话框，选择「对该文档总是允许」。
