@@ -17,6 +17,8 @@
 \newcommand{\Operator}[1]{\mathop{\mathsf{#1}}\nolimits}
 \newcommand{\Space}[1]{{\mathcal{#1}}}
 \newcommand{\Conj}[1]{{{#1}^*}}
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -144,7 +146,7 @@ set_width "auto"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-p_{0}u''+p_{1}u'+p_{2}u=0
+p_{0}(x)\dv[2]{u}{x}+p_{1}(x)\dv{u}{x}+p_{2}(x)u=0
 \]
 
 \end_inset
@@ -153,15 +155,15 @@ p_{0}u''+p_{1}u'+p_{2}u=0
 \begin_inset Formula $u$
 \end_inset
 
- 是关于 
+ 是以 
 \begin_inset Formula $x$
 \end_inset
 
- 的未知函数，
+ 为自变量的未知函数，
 \begin_inset Formula $p_{0}$
 \end_inset
 
-（不恒为零）、
+、
 \begin_inset Formula $p_{1}$
 \end_inset
 
@@ -169,43 +171,62 @@ p_{0}u''+p_{1}u'+p_{2}u=0
 \begin_inset Formula $p_{2}$
 \end_inset
 
- 都是关于 
+ 都是以 
 \begin_inset Formula $x$
 \end_inset
 
- 的已知函数。
+ 为自变量的已知连续函数。
 \end_layout
 
 \begin_layout Standard
-由于 
+表
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:常见二阶线性齐次ODE的奇点分布"
+
+\end_inset
+
+列出了数学物理中常见的二阶线性齐次常微分方程。
+\end_layout
+
+\begin_layout Subsection
+方程的奇点
+\end_layout
+
+\begin_layout Standard
+不失一般性，假设 
 \begin_inset Formula $p_{0}$
 \end_inset
 
- 不恒为零，只需引入 
-\begin_inset Formula $P:=p_{1}/p_{0}$
+ 只可能有孤立零点。在此基础上，可以引入只可能有孤立奇点的 
+\begin_inset Formula $P=p_{1}/p_{0}$
 \end_inset
 
-，
-\begin_inset Formula $Q:=p_{2}/p_{0}$
+ 和 
+\begin_inset Formula $Q=p_{2}/p_{0}$
 \end_inset
 
- 就可以将上述方程改写为首项系数为 
+，将上述方程改写为首项系数为 
 \begin_inset Formula $1$
 \end_inset
 
- 的形式
+ 的标准形式
 \begin_inset Formula 
 \begin{equation}
-u''+Pu'+Qu=0\label{eq:二阶线性齐次ODE首项系数为一}
+\dv[2]{u}{x}+P(x)\dv{u}{x}+Q(x)u=0\label{eq:二阶线性齐次ODE的标准形式}
 \end{equation}
 
 \end_inset
 
 
-\end_layout
+\begin_inset Formula $P$
+\end_inset
 
-\begin_layout Subsection
-奇点分类
+ 和 
+\begin_inset Formula $Q$
+\end_inset
+
+ 的奇点分布及类型决定了方程的解的行为，因而被称为方程的奇点。
 \end_layout
 
 \begin_layout Subsubsection
@@ -226,7 +247,7 @@ status open
 对于方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 
 \end_inset
 
@@ -286,7 +307,7 @@ status open
  是方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 
 \end_inset
 
@@ -340,7 +361,7 @@ reference "eq:二阶线性齐次ODE首项系数为一"
 以上定义是针对有限远点给出的。方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -358,14 +379,14 @@ noprefix "false"
  来研究。在此变换下，方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 
 \end_inset
 
 变为
 \begin_inset Formula 
 \begin{equation}
-w''+\frac{2z-P(1/z)}{z^{2}}w'+\frac{Q(1/z)}{z^{4}}w=0\label{eq:二阶线性齐次ODE接近无穷远点}
+\dv[2]{w}{z}+\frac{2z-P(1/z)}{z^{2}}\dv{w}{z}+\frac{Q(1/z)}{z^{4}}w=0\label{eq:接近无穷远点的二阶线性齐次ODE}
 \end{equation}
 
 \end_inset
@@ -374,51 +395,43 @@ w''+\frac{2z-P(1/z)}{z^{2}}w'+\frac{Q(1/z)}{z^{4}}w=0\label{eq:二阶线性齐�
 \begin_inset Formula $w$
 \end_inset
 
- 是关于 
+ 是以 
 \begin_inset Formula $z$
 \end_inset
 
- 的函数，并且
+ 为自变量的函数，并且
 \begin_inset Formula $w(z)\equiv u(1/z)\equiv u(x)$
 \end_inset
 
-。于是，关于
-\begin_inset Formula $u(x)$
-\end_inset
-
-的方程
+。于是，方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-在
-\begin_inset Formula $x\to0$
+在 
+\begin_inset Formula $x\to\infty$
 \end_inset
 
-时的行为等价于关于
-\begin_inset Formula $w(z)$
-\end_inset
-
-的方程
+ 时的行为等价于方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE接近无穷远点"
+reference "eq:接近无穷远点的二阶线性齐次ODE"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-在
+在 
 \begin_inset Formula $z\to0$
 \end_inset
 
-时的行为。
+ 时的行为。
 \end_layout
 
 \begin_layout Definition
@@ -432,18 +445,14 @@ status open
 
 \end_inset
 
- 在变换 
-\begin_inset Formula $x=1/z$
-\end_inset
-
- 作用下，如果 
+如果 
 \begin_inset Formula $z_{0}=0$
 \end_inset
 
  是方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE接近无穷远点"
+reference "eq:接近无穷远点的二阶线性齐次ODE"
 plural "false"
 caps "false"
 noprefix "false"
@@ -457,7 +466,7 @@ noprefix "false"
  是方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -483,11 +492,11 @@ noprefix "false"
 \emph on
 复球面
 \emph default
-）上，从任何方向趋向的
+）上，从任何路径得到的
 \emph on
 无穷远
 \emph default
- (the infinity) 都被视为同一个点。因此，上面的定义不区分 
+ (the infinity) 被视为同一个点。因此，在上面的定义中不区分 
 \begin_inset Formula $\pm\infty$
 \end_inset
 
@@ -506,7 +515,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsubsection
-小结
+常见方程的奇点
 \end_layout
 
 \begin_layout Standard
@@ -520,7 +529,7 @@ noprefix "false"
 
 \end_inset
 
-列出了数学物理中常见的二阶线性常微分方程的奇点。
+列出了数学物理中常见的二阶线性齐次常微分方程的奇点。
 \begin_inset Float table
 wide false
 sideways false
@@ -548,10 +557,8 @@ name "tab:常见二阶线性齐次ODE的奇点分布"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="6">
+<lyxtabular version="3" rows="9" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -561,7 +568,7 @@ name "tab:常见二阶线性齐次ODE的奇点分布"
 \begin_inset Text
 
 \begin_layout Plain Layout
-名称
+方程名称
 \end_layout
 
 \end_inset
@@ -570,34 +577,7 @@ name "tab:常见二阶线性齐次ODE的奇点分布"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $p_{0}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $p_{1}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $p_{2}$
-\end_inset
-
-
+一般形式
 \end_layout
 
 \end_inset
@@ -635,31 +615,7 @@ name "tab:常见二阶线性齐次ODE的奇点分布"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $x(x-1)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $(1+a+b)x+c$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $ab$
+\begin_inset Formula $x(x-1)u''+[(1+a+b)x+c]u'+abu=0$
 \end_inset
 
 
@@ -683,7 +639,7 @@ name "tab:常见二阶线性齐次ODE的奇点分布"
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+无
 \end_layout
 
 \end_inset
@@ -703,31 +659,7 @@ Legendre
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1-x^{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $-2x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $l(l+1)$
+\begin_inset Formula $(1-x^{2})u''-2xu'+l(l+1)u=0$
 \end_inset
 
 
@@ -751,7 +683,7 @@ Legendre
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+无
 \end_layout
 
 \end_inset
@@ -771,31 +703,7 @@ Chebyshev
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1-x^{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $-x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $n^{2}$
+\begin_inset Formula $(1-x^{2})u''-xu'+n^{2}u=0$
 \end_inset
 
 
@@ -819,7 +727,7 @@ Chebyshev
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+无
 \end_layout
 
 \end_inset
@@ -839,31 +747,7 @@ Chebyshev
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $c-x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $-a$
+\begin_inset Formula $xu''+(c-x)u'-au=0$
 \end_inset
 
 
@@ -910,31 +794,7 @@ Bessel
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $x^{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $x^{2}-\nu^{2}$
+\begin_inset Formula $x^{2}u''+xu'+(x^{2}-\nu^{2})u=0$
 \end_inset
 
 
@@ -981,31 +841,7 @@ Laguerre
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1-x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $n^{2}$
+\begin_inset Formula $xu''+(1-x)u'+n^{2}u=0$
 \end_inset
 
 
@@ -1052,7 +888,7 @@ Laguerre
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1$
+\begin_inset Formula $u''+k^{2}u=0$
 \end_inset
 
 
@@ -1064,31 +900,7 @@ Laguerre
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $0$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\omega^{2}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+无
 \end_layout
 
 \end_inset
@@ -1120,7 +932,7 @@ Hermite
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1$
+\begin_inset Formula $u''-2xu'+2\alpha u=0$
 \end_inset
 
 
@@ -1132,31 +944,7 @@ Hermite
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $-2x$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $2\alpha$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+无
 \end_layout
 
 \end_inset
@@ -1191,7 +979,7 @@ Hermite
 \end_layout
 
 \begin_layout Subsection
-幂级数解
+幂级数形式的解
 \end_layout
 
 \begin_layout Subsubsection
@@ -1202,7 +990,7 @@ Frobenius 方法
 假设在方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1216,11 +1004,19 @@ noprefix "false"
  附近可以展开为幂级数：
 \begin_inset Formula 
 \[
-u(x)=\left(x-x_{0}\right)^{s}\left[a_{0}+a_{1}\left(x-x_{0}\right)+a_{2}\left(x-x_{0}\right)^{2}+\cdots\right]=\sum_{i=0}^{\infty}a_{i}\left(x-x_{0}\right)^{s+i}\quad a_{0}\ne0
+u(x)=\left(x-x_{0}\right)^{s}\sum_{i=0}^{\infty}a_{i}\left(x-x_{0}\right)^{i}\qquad a_{0}\ne0
 \]
 
 \end_inset
 
+如果 
+\begin_inset Formula $s\ge0$
+\end_inset
+
+，则为 Taylor 级数，否则为 Laurent 级数。
+\end_layout
+
+\begin_layout Standard
 根据有限远常点或正则奇点的定义，
 \begin_inset Formula $P$
 \end_inset
@@ -1244,7 +1040,7 @@ P(x)=\sum_{j=-1}^{\infty}p_{j}\left(x-x_{0}\right)^{j}\qquad Q(x)=\sum_{k=-2}^{\
 将这三个幂级数代入方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1293,7 +1089,7 @@ noprefix "false"
 」得到的恒等式
 \begin_inset Formula 
 \begin{equation}
-s(s-1)+p_{-1}s+q_{-2}=0\label{eq:指标方程}
+s(s-1)+p_{-1}s+q_{-2}=0\label{eq:最一般的指标方程}
 \end{equation}
 
 \end_inset
@@ -1314,7 +1110,17 @@ s(s-1)+p_{-1}s+q_{-2}=0\label{eq:指标方程}
 \begin_inset Formula $s$
 \end_inset
 
- 的一元二次方程。对于数学物理中常见的二阶线性常微分方程，这两个解通常都是实数。
+ 的一元二次方程。对于表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:常见的二阶线性齐次ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中所列的方程，这两个解都是实数。
 \end_layout
 
 \begin_layout Standard
@@ -1385,10 +1191,10 @@ a_{n+2}(s+n+2)(s+n+1)+\sum_{j=-1}^{n+1}p_{j}a_{n+1-j}(s+n+1-j)+\sum_{k=-2}^{n}q_
 经过整理，可以改写为
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}a_{n+2} & =-\frac{\sum_{j=0}^{n+1}p_{j}a_{n+1-j}(s+n+1-j)+\sum_{k=-1}^{n}q_{k}a_{n-k}}{(s+n+2)(s+n+1+p_{-1})+q_{-2}}\\
+\begin{aligned}a_{n+2} & =\frac{-\sum_{j=0}^{n+1}p_{j}a_{n+1-j}(s+n+1-j)-\sum_{k=-1}^{n}q_{k}a_{n-k}}{(s+n+2)(s+n+1+p_{-1})+q_{-2}}\\
  & =:f(a_{0},a_{1},\dots,a_{n},a_{n+1})
 \end{aligned}
-\label{eq:递推关系}
+\label{eq:系数递推关系}
 \end{equation}
 
 \end_inset
@@ -1425,7 +1231,7 @@ status open
 在方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1458,7 +1264,7 @@ noprefix "false"
 如果指标方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:指标方程"
+reference "eq:最一般的指标方程"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1484,7 +1290,7 @@ noprefix "false"
 则 Frobenius 方法可以在方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1520,7 +1326,7 @@ u_{2}(x) & =(x-x_{0})^{s_{2}}\sum_{k=0}^{\infty}b_{k}(x-x_{0})^{k}\qquad b_{0}\n
 \begin_inset Formula $(s_{1}-s_{2})\in\mathbb{Z}$
 \end_inset
 
- 时给出两个线性无关解的可能性。下一小节就给出了这样一个示例。
+ 时给出两个线性无关解的可能性。下一小节就给出了这样一个实例。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1535,7 +1341,7 @@ u_{2}(x) & =(x-x_{0})^{s_{2}}\sum_{k=0}^{\infty}b_{k}(x-x_{0})^{k}\qquad b_{0}\n
 将幂级数形式的解
 \begin_inset Formula 
 \[
-u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\quad a_{0}\ne0
+u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\qquad a_{0}\ne0
 \]
 
 \end_inset
@@ -1548,7 +1354,7 @@ u''+\omega^{2}u=0\qquad\omega\ne0
 
 \end_inset
 
-得到指标方程
+得到指标方程（及其解）
 \begin_inset Formula 
 \[
 s(s-1)=0\implies s=0,1
@@ -1648,7 +1454,7 @@ a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot2=0
 
 \end_inset
 
-
+此时 
 \begin_inset Formula $a_{1}$
 \end_inset
 
@@ -1698,8 +1504,260 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\f
 。
 \end_layout
 
+\begin_layout Subsubsection
+Bessel 方程在正半轴上的解
+\end_layout
+
+\begin_layout Standard
+将幂级数形式的解
+\begin_inset Formula 
+\[
+u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\qquad a_{0}\ne0
+\]
+
+\end_inset
+
+代入 Bessel 方程（改写为首项系数为 
+\begin_inset Formula $1$
+\end_inset
+
+ 的标准形式）
+\begin_inset Formula 
+\[
+u''+\frac{1}{x}u'+\left(1-\frac{\nu^{2}}{x^{2}}\right)u=0\qquad\nu\ge0
+\]
+
+\end_inset
+
+得到指标方程（及其解）
+\begin_inset Formula 
+\[
+s^{2}-\nu^{2}=0\implies s=\pm\nu
+\]
+
+\end_inset
+
+和递推关系
+\begin_inset Formula 
+\begin{equation}
+a_{n+2}=\frac{-a_{n}}{(s+n+2)^{2}-\nu^{2}}\qquad n=0,1,2,\dots\label{eq:Bessel函数的系数递推关系}
+\end{equation}
+
+\end_inset
+
+将递推关系应用于偶数项，得到
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2n}= & \frac{-a_{2n-2}}{(s+2n)-\nu^{2}}=\frac{-a_{2n-2}}{(2n+s+\nu)(2n+s-\nu)}\\
+= & \frac{-1}{(2n+s+\nu)(2n+s-\nu)}\times\cdots\times\frac{-1}{(2+s+\nu)(2+s-\nu)}\times a_{0}\\
+= & \frac{-1}{\left(n+\frac{s+\nu}{2}\right)\left(n+\frac{s-\nu}{2}\right)}\times\cdots\times\frac{-1}{\left(1+\frac{s+\nu}{2}\right)\left(1+\frac{s-\nu}{2}\right)}\times\frac{a_{0}}{2^{2n}}\\
+= & \frac{\Gamma\left(1+\frac{s+\nu}{2}\right)}{\Gamma\left(n+1+\frac{s+\nu}{2}\right)}\times\frac{\Gamma\left(1+\frac{s-\nu}{2}\right)}{\Gamma\left(n+1+\frac{s-\nu}{2}\right)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $s=\nu$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+a_{2n}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)^{n}}{2^{2n}}a_{0}
+\]
+
+\end_inset
+
+由此可得 Bessel 方程的第一个解
+\begin_inset Formula 
+\[
+u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1+\nu)}\left(\frac{x}{2}\right)^{2n+\nu}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $2^{\nu}\Gamma(1+\nu)$
+\end_inset
+
+ 总是可以吸收进待定系数 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 中，而
+\begin_inset Formula 
+\[
+\Bessel{\nu}=\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1+\nu)}\left(\frac{x}{2}\right)^{2n+\nu}
+\]
+
+\end_inset
+
+被称为 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 阶 Bessel 函数。
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $s=-\nu$
+\end_inset
+
+，则有 
+\begin_inset Formula $-\nu$
+\end_inset
+
+ 阶 Bessel 函数
+\begin_inset Formula 
+\[
+\Bessel{-\nu}=\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu}
+\]
+
+\end_inset
+
+如果 
+\begin_inset Formula $\nu\notin\mathbb{Z}$
+\end_inset
+
+，则它与 
+\begin_inset Formula $\Bessel{\nu}$
+\end_inset
+
+ 线性无关，因此也就是所要寻找的第二解；如果 
+\begin_inset Formula $\nu=n\in\mathbb{Z}$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+\Bessel{-n}(x)=(-1)^{n}\Bessel{n}(x)\qquad\forall n\in\mathbb{Z}
+\]
+
+\end_inset
+
+真正的第二解需要用其他方法获得，参见第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Bessel方程的第二解"
+
+\end_inset
+
+节。
+\end_layout
+
+\begin_layout Paragraph
+忽略奇数项的依据
+\end_layout
+
+\begin_layout Standard
+以上求解过程隐含了 
+\begin_inset Formula $a_{1}=0$
+\end_inset
+
+ （从而所有奇数项系数都为零）的假设。下面给出这样做的依据。
+\end_layout
+
+\begin_layout Standard
+对于 Bessel 方程，由「次低次项 
+\begin_inset Formula $\left(x-x_{0}\right)^{s-1}$
+\end_inset
+
+ 的系数为 
+\begin_inset Formula $0$
+\end_inset
+
+」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:次低次项对应的恒等式"
+
+\end_inset
+
+可以简化为
+\begin_inset Formula 
+\[
+a_{1}\cdot(2s+1)=0
+\]
+
+\end_inset
+
+显然，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 只有在 
+\begin_inset Formula $2s+1=0$
+\end_inset
+
+ 时可能取非零值。
+\end_layout
+
+\begin_layout Standard
+将递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Bessel函数的系数递推关系"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+应用于奇数项，并利用 
+\begin_inset Formula $s+1=-s$
+\end_inset
+
+，得到
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2n+1}= & \frac{-a_{2n-1}}{(s+2n+1)^{2}-\nu^{2}}=\frac{-a_{2n-1}}{(2n-s+\nu)(2n-s-\nu)}\\
+= & \frac{-1}{(2n-s+\nu)(2n-s-\nu)}\times\cdots\times\frac{-1}{(2-s+\nu)(2-s-\nu)}\times a_{1}\\
+= & \frac{-1}{\left(n+\frac{\nu-s}{2}\right)\left(n-\frac{\nu+s}{2}\right)}\times\cdots\times\frac{-1}{\left(1+\frac{\nu-s}{2}\right)\left(1-\frac{\nu+s}{2}\right)}\times\frac{a_{1}}{2^{2n}}\\
+= & \frac{\Gamma\left(1+\frac{\nu-s}{2}\right)}{\Gamma\left(n+1+\frac{\nu-s}{2}\right)}\times\frac{\Gamma\left(1-\frac{\nu+s}{2}\right)}{\Gamma\left(n+1-\frac{\nu+s}{2}\right)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\end{aligned}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $s=\nu=-\frac{1}{2}$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+a_{2n+1}=\frac{1}{n!}\times\frac{\Gamma(1-\nu)}{\Gamma(n+1-\nu)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $s=-\nu=-\frac{1}{2}$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+a_{2n+1}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\]
+
+\end_inset
+
+这两个结果都已经被只考虑偶数项得到的 
+\begin_inset Formula $\Bessel{\pm1/2}$
+\end_inset
+
+ 所囊括，因此忽略奇数项是合理的。
+\end_layout
+
 \begin_layout Subsection
-第二解
+线性独立的第二解
 \end_layout
 
 \begin_layout Subsubsection
@@ -1726,13 +1784,13 @@ status open
 \end_inset
 
  阶可导的函数 
-\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ u_{i}\right\} _{i=1}^{n}$
 \end_inset
 
 ，称以下行列式为它们的 Wronskian
 \begin_inset Formula 
 \[
-W_{12\cdots n}(x):=\begin{vmatrix}\begin{array}{llll}
+W(x;u_{1},\dots,u_{n})\equiv W_{12\cdots n}(x):=\begin{vmatrix}\begin{array}{llll}
 u_{1} & u_{2} & \cdots & u_{n}\\
 u_{1}' & u_{2}' & \cdots & u_{n}'\\
 \cdots & \cdots & \cdots & \cdots\\
@@ -1762,7 +1820,7 @@ u_{1}^{(n-1)} & u_{2}^{(n-1)} & \cdots & u_{n}^{(n-1)}
 \end_inset
 
  阶可导的函数 
-\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ u_{i}\right\} _{i=1}^{n}$
 \end_inset
 
 ，如果它们的 Wronskian 不恒为零，则它们线性无关；否则，它们线性相关。
@@ -1823,7 +1881,7 @@ k_{n}
 二阶线性齐次常微分方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1831,11 +1889,11 @@ noprefix "false"
 \end_inset
 
 至多有两个线性无关解：
-\begin_inset Formula $u_{1}(x)$
+\begin_inset Formula $u_{1}$
 \end_inset
 
  和 
-\begin_inset Formula $u_{2}(x)$
+\begin_inset Formula $u_{2}$
 \end_inset
 
 。
@@ -1852,7 +1910,7 @@ noprefix "false"
 假设方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1860,10 +1918,10 @@ noprefix "false"
 \end_inset
 
 有三个线性无关解 
-\begin_inset Formula $\left\{ u_{i}(x)\right\} _{i=1}^{3}$
+\begin_inset Formula $\left\{ u_{i}\right\} _{i=1}^{3}$
 \end_inset
 
-，它们的 Wronskian 为
+。它们的 Wronskian 为
 \begin_inset Formula 
 \[
 W_{12\cdots n}=\begin{vmatrix}\begin{array}{lll}
@@ -1892,7 +1950,7 @@ u_{i}'' & u_{k}''
 同时，由方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1953,7 +2011,7 @@ u_{1}' & u_{2}' & u_{3}'
 
 \end_inset
 
-这与假设矛盾。
+这与「三个解线性无关」的假设矛盾。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1961,10 +2019,10 @@ u_{1}' & u_{2}' & u_{3}'
 \end_layout
 
 \begin_layout Standard
-假设已经获得了方程
+假设已经（通过猜想或 Frobenius 方法）获得了方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:二阶线性齐次ODE首项系数为一"
+reference "eq:二阶线性齐次ODE的标准形式"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1979,7 +2037,7 @@ noprefix "false"
 \begin_inset Formula $u_{2}$
 \end_inset
 
-，则由
+，则由上一节得到的结果
 \begin_inset Formula 
 \[
 W_{12}'=-P\cdot W_{12}\implies\frac{\dd{W_{12}}}{W_{12}}=-P\dd{x}
@@ -1987,7 +2045,7 @@ W_{12}'=-P\cdot W_{12}\implies\frac{\dd{W_{12}}}{W_{12}}=-P\dd{x}
 
 \end_inset
 
-可以推出（省略 
+可以推出（以下省略 
 \begin_inset Formula $W$
 \end_inset
 
@@ -2002,7 +2060,7 @@ W_{12}'=-P\cdot W_{12}\implies\frac{\dd{W_{12}}}{W_{12}}=-P\dd{x}
 考虑到
 \begin_inset Formula 
 \[
-W(x)=u_{1}u_{2}'-u_{2}u_{1}'=u_{1}^{2}\dv{x}\frac{u_{2}}{u_{1}}
+W(x)=-\left(u_{1}'u_{2}-u_{1}u_{2}'\right)=-u_{1}^{2}\dv{x}\frac{u_{2}}{u_{1}}
 \]
 
 \end_inset
@@ -2010,7 +2068,7 @@ W(x)=u_{1}u_{2}'-u_{2}u_{1}'=u_{1}^{2}\dv{x}\frac{u_{2}}{u_{1}}
 于是有
 \begin_inset Formula 
 \[
-\dv{x}\frac{u_{2}}{u_{1}}=W(a)u_{1}^{-2}\exp\left(-\int_{a}^{x}P(\xi)\dd{\xi}\right)
+\dv{x}\frac{u_{2}}{u_{1}}=-W(a)\frac{\exp\left(-\int_{a}^{x}P(\xi)\dd{\xi}\right)}{u_{1}^{2}(x)}
 \]
 
 \end_inset
@@ -2018,19 +2076,19 @@ W(x)=u_{1}u_{2}'-u_{2}u_{1}'=u_{1}^{2}\dv{x}\frac{u_{2}}{u_{1}}
 直接积分可得
 \begin_inset Formula 
 \[
-u_{2}(x)=u_{1}(x)W(a)\int_{b}^{x}u_{1}^{-2}(\eta)\exp\left(-\int_{a}^{\eta}P(\xi)\dd{\xi}\right)\dd{\eta}
+u_{2}(x)=-W(a)u_{1}(x)\int_{b}^{x}\frac{\exp\left(-\int_{a}^{\eta}P(\xi)\dd{\xi}\right)}{u_{1}^{2}(\eta)}\dd{\eta}
 \]
 
 \end_inset
 
-通过引入适当的系数，总是可以令 
-\begin_inset Formula $W(a)=1$
+通过引入适当的系数，总可以令 
+\begin_inset Formula $-W(a)=1$
 \end_inset
 
 ，于是第二解的一般形式（积分下限可以省略）可以表示为
 \begin_inset Formula 
 \begin{equation}
-u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\exp\left(-\int^{\eta}P(\xi)\dd{\xi}\right)\dd{\eta}\label{eq:积分形式的第二解}
+\boxed{u_{2}(x)=u_{1}(x)\int^{x}\frac{\exp\left(-\int^{\eta}P(\xi)\dd{\xi}\right)}{u_{1}^{2}(\eta)}\dd{\eta}}\label{eq:积分形式的第二解}
 \end{equation}
 
 \end_inset
@@ -2039,10 +2097,10 @@ u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\exp\left(-\int^{\eta}P(\xi)\dd{\xi}\ri
 \begin_inset Formula $P(x)\equiv0$
 \end_inset
 
-，则第二解的一般形式可以简化为
+，则第二解的一般形式可以进一步简化为
 \begin_inset Formula 
 \[
-u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\dd{\eta}
+u_{2}(x)=u_{1}(x)\int^{x}\frac{\dd{\eta}}{u_{1}^{2}(\eta)}
 \]
 
 \end_inset
@@ -2054,22 +2112,42 @@ u_{2}(x)=u_{1}(x)\int^{x}u_{1}^{-2}(\eta)\dd{\eta}
 以上积分形式的第二解通常只具有理论意义，实际计算往往难以实施，需要用其他方法寻找第二解。
 \end_layout
 
+\begin_layout Example*
+由简谐方程 
+\begin_inset Formula $u''+\omega^{2}u=0$
+\end_inset
+
+ 的第一解 
+\begin_inset Formula $u_{1}(x)=\cos x$
+\end_inset
+
+ 可以直接得到与之线性无关的第二解
+\begin_inset Formula 
+\[
+u_{2}(x)=u_{1}(x)\int^{x}\frac{\dd{\eta}}{u_{1}^{2}(\eta)}=\cos x\int^{x}\frac{\dd{\eta}}{\cos^{2}\eta}=\cos x\cdot\tan x=\sin x
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 幂级数解形式的第二解
 \end_layout
 
 \begin_layout Standard
-按照 Frobenius 方法中的步骤，可以得到指标方程
+将指标方程
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:指标方程"
+reference "eq:最一般的指标方程"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-。将它的两个解记为 
+的两个解记为 
 \begin_inset Formula $s_{1}=\sigma$
 \end_inset
 
@@ -2116,7 +2194,7 @@ u_{1}(x)=(x-x_{0})^{\sigma}\sum_{i=0}^{\infty}a_{i}(x-x_{0})^{i}
 \end_inset
 
 总是可以通过 Frobenius 方法得到。将它和 
-\begin_inset Formula $P(x)$
+\begin_inset Formula $P$
 \end_inset
 
  的幂级数展开式代入积分形式的第二解
@@ -2126,7 +2204,7 @@ reference "eq:积分形式的第二解"
 
 \end_inset
 
-，得到
+，可以得到
 \begin_inset Formula 
 \[
 u_{2}(x)=u_{1}(x)\cdot\int_{b}^{x}\frac{\exp\left(-\int_{a}^{\eta}\sum_{j=-1}^{\infty}p_{j}\left(\xi-x_{0}\right)^{j}\dd{\xi}\right)}{(\eta-x_{0})^{2\sigma}\left(\sum_{i=0}^{\infty}a_{i}(\eta-x_{0})^{i}\right)^{2}}\dd{\eta}
@@ -2202,10 +2280,14 @@ u_{2}(x)=u_{1}(x)\cdot\int_{b}^{x}\frac{\exp\left(-\int_{a}^{\eta}\sum_{j=-1}^{\
 \end_inset
 
 这里利用了幂函数的 Taylor 展开式 
-\begin_inset Formula $(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}$
+\begin_inset Formula 
+\[
+(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}=\sum_{k=0}^{\infty}\frac{\alpha(\alpha-1)\cdots(\alpha-k+1)}{k!}x^{k}
+\]
+
 \end_inset
 
-。
+
 \end_layout
 
 \begin_layout Standard
@@ -2235,11 +2317,23 @@ u_{2}(x)=u_{1}(x)\cdot\int_{b}^{x}\frac{\exp\left(-\int_{a}^{\eta}\sum_{j=-1}^{\
 \begin_inset Formula $u_{1}(x)=\sum_{i=0}^{\infty}a_{i}(x-x_{0})^{i+\sigma}$
 \end_inset
 
-，最后一行的幂级数应当从 
+，最后一行的乘积应当是一个以 
 \begin_inset Formula $(x-x_{0})^{\sigma-n}$
 \end_inset
 
- 项开始。
+ 为最低次项的幂级数。如果 
+\begin_inset Formula $d_{n}\ne0$
+\end_inset
+
+，可以将其从等式两边除去，并将 
+\begin_inset Formula $u_{2}(x)/d_{n}$
+\end_inset
+
+ 重新记为 
+\begin_inset Formula $u_{2}(x)$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -2259,11 +2353,205 @@ u_{2}(x)=u_{1}(x)\cdot\ln\abs{x-x_{0}}+(x-x_{0})^{s_{2}}\sum_{i=0}^{\infty}b_{i}
 \end_layout
 
 \begin_layout Subsubsection
-Bessel 方程在 
-\begin_inset Formula $x_{0}=0$
+Bessel 方程在正半轴上的第二解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Bessel方程的第二解"
+
 \end_inset
 
- 附近的解
+
+\end_layout
+
+\begin_layout Standard
+如果 
+\begin_inset Formula $\nu\notin\mathbb{Z}$
+\end_inset
+
+，则 Bessel 函数 
+\begin_inset Formula $\Bessel{\pm\nu}$
+\end_inset
+
+ 就是 Bessel 方程的两个线性无关解。它们的 Wronskian 为
+\begin_inset Formula 
+\[
+\begin{aligned}W(x;\Bessel{\nu},\Bessel{-\nu})= & \Bessel{\nu}(x)\Bessel{-\nu}'(x)-\Bessel{\nu}'(x)\Bessel{-\nu}(x)\\
+= & W(a)\exp\left(-\int_{a}^{x}P(\xi)\dd{\xi}\right)\\
+= & W(a)\abs{\frac{a}{x}}=Ax^{-1}
+\end{aligned}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $\Bessel{\pm\nu}$
+\end_inset
+
+ 的级数展开式考察 
+\begin_inset Formula $\Bessel{\nu}\Bessel{-\nu}'$
+\end_inset
+
+ 及 
+\begin_inset Formula $\Bessel{\nu}'\Bessel{-\nu}$
+\end_inset
+
+ 中的 
+\begin_inset Formula $x^{-1}$
+\end_inset
+
+ 项：
+\begin_inset Formula 
+\[
+\begin{aligned}\Bessel{\nu}(x)\Bessel{-\nu}'(x)= & \sum_{m=0}^{\infty}\frac{(-1)^{m}/m!}{\Gamma(m+1+\nu)}\left(\frac{x}{2}\right)^{2m+\nu}\times\left(\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu}\right)'\\
+= & \sum_{m=0}^{\infty}\frac{(-1)^{m}/m!}{\Gamma(m+1+\nu)}\left(\frac{x}{2}\right)^{2m+\nu}\times\sum_{n=0}^{\infty}\frac{\frac{(-1)^{n}}{n!}\cdot\frac{2n-\nu}{2}}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu-1}\\
+= & \frac{(-1)^{0}/0!}{\Gamma(0+1+\nu)}\left(\frac{x}{2}\right)^{2\cdot0+\nu}\times\frac{\frac{(-1)^{0}}{0!}\cdot\frac{2\cdot0-\nu}{2}}{\Gamma(0+1-\nu)}\left(\frac{x}{2}\right)^{2\cdot0-\nu-1}+\cdots\\
+= & \frac{-\nu}{\Gamma(1+\nu)\Gamma(1-\nu)}x^{-1}+\cdots
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\Bessel{\nu}'(x)\Bessel{-\nu}(x)= & \left(\sum_{m=0}^{\infty}\frac{(-1)^{m}/m!}{\Gamma(m+1+\nu)}\left(\frac{x}{2}\right)^{2m+\nu}\right)'\times\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu}\\
+= & \sum_{m=0}^{\infty}\frac{\frac{(-1)^{m}}{m!}\cdot\frac{2m+\nu}{2}}{\Gamma(m+1+\nu)}\left(\frac{x}{2}\right)^{2m+\nu-1}\times\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu}\\
+= & \frac{\frac{(-1)^{0}}{0!}\cdot\frac{2\cdot0+\nu}{2}}{\Gamma(0+1+\nu)}\left(\frac{x}{2}\right)^{2\cdot0+\nu-1}\times\frac{(-1)^{0}/0!}{\Gamma(0+1-\nu)}\left(\frac{x}{2}\right)^{2\cdot0-\nu}+\cdots\\
+= & \frac{\nu}{\Gamma(1+\nu)\Gamma(1-\nu)}x^{-1}+\cdots
+\end{aligned}
+\]
+
+\end_inset
+
+因此有
+\begin_inset Formula 
+\[
+W(x;\Bessel{\nu},\Bessel{-\nu})=\frac{-2\nu}{\Gamma(1+\nu)\Gamma(1-\nu)}x^{-1}=\frac{-2\sin\nu\pi}{\pi}x^{-1}
+\]
+
+\end_inset
+
+最后一步利用了 Gamma 函数的性质
+\begin_inset Formula 
+\[
+\Gamma(1+\nu)=\nu\Gamma(\nu)\qquad\Gamma(\nu)\Gamma(1-\nu)=\frac{\pi}{\sin\nu\pi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在此基础上，考察 
+\begin_inset Formula $\Bessel{\nu}$
+\end_inset
+
+ 与 
+\begin_inset Formula $u_{2}=c_{1}\Bessel{\nu}+c_{2}\Bessel{-\nu}$
+\end_inset
+
+ 的 Wronskian
+\begin_inset Formula 
+\[
+W(x;\Bessel{\nu},u_{2})=c_{2}W(x;\Bessel{\nu},\Bessel{-\nu})=\frac{-2\sin\nu\pi}{\pi}c_{2}x^{-1}
+\]
+
+\end_inset
+
+如果 
+\begin_inset Formula $\nu\notin\mathbb{Z}$
+\end_inset
+
+，则 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ 取任意非零值都能使 
+\begin_inset Formula $W\ne0$
+\end_inset
+
+。如果 
+\begin_inset Formula $\nu\in\mathbb{Z}$
+\end_inset
+
+，则 
+\begin_inset Formula $W\ne0$
+\end_inset
+
+ 要求 
+\begin_inset Formula $\sin\nu\pi$
+\end_inset
+
+ 被约去，这可以通过取 
+\begin_inset Formula $c_{2}=-1/\sin\nu\pi$
+\end_inset
+
+ 来实现，此时有
+\begin_inset Formula 
+\[
+W\left(x;\Bessel{\nu},c_{1}\Bessel{\nu}-\frac{\Bessel{-\nu}}{\sin\nu\pi}\right)=\frac{2}{\pi x}\ne0\qquad\forall x>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ 的选取应当使
+\begin_inset Formula 
+\[
+u_{2}=c_{1}\Bessel{\nu}-\frac{\Bessel{-\nu}}{\sin\nu\pi}=\frac{c_{1}\Bessel{\nu}\sin\nu\pi-\Bessel{-\nu}}{\sin\nu\pi}
+\]
+
+\end_inset
+
+ 在 
+\begin_inset Formula $\nu\to n\in\mathbb{Z}$
+\end_inset
+
+ 时为 
+\begin_inset Formula $\frac{0}{0}$
+\end_inset
+
+ 型不定式，这样其极限才可能为有限值。考虑到
+\begin_inset Formula 
+\[
+\Bessel{-n}(x)=(-1)^{n}\Bessel{n}(x)=\Bessel{n}(x)\cos n\pi\qquad\forall n\in\mathbb{Z}
+\]
+
+\end_inset
+
+应当取 
+\begin_inset Formula $c_{1}=\cos\nu\pi/\sin\nu\pi$
+\end_inset
+
+，于是得到 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 阶 Neumann 函数
+\begin_inset Formula 
+\[
+\boxed{\Neumann{\nu}(x)=\frac{\cos\nu\pi\Bessel{\nu}(x)-\Bessel{-\nu}(x)}{\sin\nu\pi}\qquad\forall x>0}
+\]
+
+\end_inset
+
+无论 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是否是整数，它都与 
+\begin_inset Formula $\Bessel{\nu}$
+\end_inset
+
+ 线性无关，因而 
+\begin_inset Formula $\Neumann{\nu}$
+\end_inset
+
+ 就是所要寻找的第二解。
 \end_layout
 
 \begin_layout Section
@@ -2561,7 +2849,7 @@ name "thm:自伴随算符的特征值问题"
 
 \begin_layout Theorem
 在区间 
-\begin_inset Formula $[a,b]$
+\begin_inset Formula $(a,b)$
 \end_inset
 
  上定义二阶线性微分算符
@@ -2576,6 +2864,10 @@ name "thm:自伴随算符的特征值问题"
 \begin_inset Formula $p_{0}$
 \end_inset
 
+、
+\begin_inset Formula $p_{0}'$
+\end_inset
+
  和 
 \begin_inset Formula $p_{2}$
 \end_inset
@@ -2584,7 +2876,7 @@ name "thm:自伴随算符的特征值问题"
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的实函数。如果有
+ 上的连续实函数。如果有
 \end_layout
 
 \begin_layout Theorem
@@ -2686,7 +2978,7 @@ p_{0}(x)\ne0\qquad\forall x\in(a,b)
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的非负函数
+ 上的正值函数 
 \begin_inset Formula 
 \[
 w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
@@ -2724,7 +3016,7 @@ P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\fra
 
 \begin_layout Theorem
 在区间 
-\begin_inset Formula $[a,b]$
+\begin_inset Formula $(a,b)$
 \end_inset
 
  上定义二阶线性微分算符
@@ -2751,7 +3043,7 @@ P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\fra
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的实函数，
+ 上的连续实函数，并且 
 \begin_inset Formula $p_{0}$
 \end_inset
 
@@ -2774,7 +3066,7 @@ P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\fra
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的非负函数
+ 上的正值函数
 \begin_inset Formula 
 \[
 w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
@@ -2821,7 +3113,7 @@ Sturm–Liouville 型方程
 Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方程
 \begin_inset Formula 
 \begin{equation}
-\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad\forall x\in[a,b]\label{eq:Sturm–LiouvilleODE}
+\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad\forall x\in(a,b)\label{eq:Sturm–LiouvilleODE}
 \end{equation}
 
 \end_inset
@@ -2832,6 +3124,10 @@ Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方�
 
  是待定常数，
 \begin_inset Formula $p$
+\end_inset
+
+、
+\begin_inset Formula $p'$
 \end_inset
 
 、
@@ -2846,11 +3142,15 @@ Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方�
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的非负实函数，并且 
+ 上的连续实函数，并且 
 \begin_inset Formula $p$
 \end_inset
 
  的零点只能位于端点，
+\begin_inset Formula $p$
+\end_inset
+
+、
 \begin_inset Formula $\rho$
 \end_inset
 
@@ -2859,6 +3159,13 @@ Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方�
 \end_inset
 
  内恒为正。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2915,7 +3222,7 @@ reference "eq:自伴随的二阶线性微分算符"
 \begin_inset Formula $\rho$
 \end_inset
 
- 是更一般的非负实函数（包括 
+ 是更一般的正值函数（包括 
 \begin_inset Formula $\rho(x)\equiv1$
 \end_inset
 
@@ -2971,7 +3278,37 @@ noprefix "false"
 \begin_inset Formula $p_{2}$
 \end_inset
 
-。
+。反之，任何二阶线性微分算符
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:一般的二阶线性微分算符"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的本征值问题也都可以化为 Sturm–Liouville 型方程，只要取
+\begin_inset Formula 
+\[
+p(x)=\exp(\int\frac{p_{1}(x)}{p_{0}(x)}\dd{x})\qquad\rho(x)=\frac{p(x)}{-p_{0}(x)}\qquad q(x)=p_{2}(x)\rho(x)
+\]
+
+\end_inset
+
+不失一般性，这里假定了 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上恒为负（反之，总可以在本征值问题两边同时取负号，再将负号吸收进 
+\begin_inset Formula $\lambda$
+\end_inset
+
+）。
 \end_layout
 
 \begin_layout Subsubsection
@@ -2979,7 +3316,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Theorem
-带有（第一、二、三类或周期、自然）边界条件的 Sturm--Liouville 型方程
+带有（第一、二、三类齐次或周期、有界）边界条件的 Sturm--Liouville 型方程
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:Sturm–LiouvilleODE"
@@ -3204,6 +3541,520 @@ reference "thm:自伴随算符的特征值问题"
 \end_inset
 
 的特殊版本。
+\end_layout
+
+\begin_layout Subsection
+常见的正交函数族
+\end_layout
+
+\begin_layout Subsubsection
+简谐函数
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=1\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(0,2L)
+\]
+
+\end_inset
+
+得到简谐方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u''+\lambda u=0\qquad\forall x\in(0,2L)
+\]
+
+\end_inset
+
+它的通解为
+\begin_inset Formula 
+\[
+u(x)=\begin{cases}
+C_{1}\cosh\sqrt{-\lambda}x+C_{2}\sinh\sqrt{-\lambda}x & \lambda<0\\
+C_{1}+C_{2}x & \lambda=0\\
+C_{1}\cos\sqrt{\lambda}x+C_{2}\sin\sqrt{\lambda}x & \lambda>0
+\end{cases}
+\]
+
+\end_inset
+
+（第一、二、三类齐次或周期、有界）边界条件使得 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取正实数。
+\end_layout
+
+\begin_layout Subsubsection
+Legendre 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=1-x^{2}\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(-1,1)
+\]
+
+\end_inset
+
+得到 Legendre 方程
+\begin_inset Formula 
+\[
+(1-x^{2})u''-2xu'+\lambda u=0
+\]
+
+\end_inset
+
+（第一、二、三类齐次或周期、有界）边界条件使得 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取 
+\begin_inset Formula $l(l+1)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+Chebyshev 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=\sqrt{1-x^{2}}\qquad q(x)=0\qquad\rho(x)=\frac{1}{\sqrt{1-x^{2}}}\qquad(a,b)=(-1,1)
+\]
+
+\end_inset
+
+得到 Chebyshev 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(1-x^{2})u''-xu'+\lambda u=0
+\]
+
+\end_inset
+
+（第一、二、三类齐次或周期、有界）边界条件使得 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取 
+\begin_inset Formula $n^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+Bessel 函数
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=x\qquad q(x)=\frac{\nu^{2}}{x}\qquad\rho(x)=x\qquad(a,b)=(0,\infty)
+\]
+
+\end_inset
+
+得到 Bessel 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x^{2}u''+xu'+(\lambda x^{2}-\nu^{2})u=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Laguerre 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=x\exp(-x)\qquad q(x)=0\qquad\rho(x)=\exp(-x)\qquad(a,b)=(0,\infty)
+\]
+
+\end_inset
+
+得到 Laguerre 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+xu''+(1-x)u'+\lambda u=0
+\]
+
+\end_inset
+
+（第一、二、三类齐次或周期、有界）边界条件使得 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取 
+\begin_inset Formula $n^{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+Hermite 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,\infty)
+\]
+
+\end_inset
+
+得到 Hermite 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u''-2xu'+\lambda u=0
+\]
+
+\end_inset
+
+按照 Frobenius 方法可以得到指标方程（及其解）
+\begin_inset Formula 
+\[
+s(s-1)=0\implies s=0,1
+\]
+
+\end_inset
+
+次低次项系数为零条件
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+a_{1}\cdot2s=0
+\]
+
+\end_inset
+
+和递推关系
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{2(s+n)-\lambda}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,2,4,\dots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+先考虑 
+\begin_inset Formula $s=0$
+\end_inset
+
+，此时 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取任意值（不妨取为零），递推关系为
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 不属于 
+\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，则所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\approx a_{2k+2}=\frac{2(2k+1)}{(2k+2)(2k+1)}a_{2k}=\frac{a_{2k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp(x^{2})=\sum_{k=0}^{\infty}\frac{(x^{2})^{k}}{k!}=\sum_{k=0}^{\infty}\frac{x^{2k}}{k!}=\sum_{k=0}^{\infty}b_{2k}x^{2k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=0}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to\pm\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $\exp(x^{2})$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}\exp(x^{2})\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+下面考虑 
+\begin_inset Formula $s=1$
+\end_inset
+
+，此时 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 必须为零，递推关系为
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 不属于 
+\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，则所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\approx\frac{2(2n+3)}{(2n+3)(2n+2)}a_{2k}=\frac{a_{2n}}{n+1}
+\]
+
+\end_inset
+
+这与 
+\begin_inset Formula $s=0$
+\end_inset
+
+ 中的情况类似，因此级数解 
+\begin_inset Formula $u_{s=1}(x)=x\sum_{k=0}^{\infty}a_{2k}x^{2k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to\pm\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $x\exp(x^{2})$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}x^{2}\exp(x^{2})\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=1}(x)=x\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $(-\infty,+\infty)$
+\end_inset
+
+ 上平方可积」导致 Hermite 方程中的 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是偶数，并且相应的解为 
+\begin_inset Formula $\lambda/2$
+\end_inset
+
+ 次多项式。如果最高次项系数取为 
+\begin_inset Formula $2^{\lambda/2}$
+\end_inset
+
+，则得到 Hermite 多项式，记为 
+\begin_inset Formula $H_{\lambda/2}$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\lambda=2(2n)$
+\end_inset
+
+，则相应的 
+\begin_inset Formula $2n$
+\end_inset
+
+ 次 Hermite 多项式为
+\begin_inset Formula 
+\[
+\begin{aligned}H_{2n}(x)= & a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n} & n= & 0,1,2,\dots\\
+a_{2n}= & 2^{\lambda/2}=2^{2n}\\
+a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & 1,2,\dots,n
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\lambda=2(2n+1)$
+\end_inset
+
+，则相应的 
+\begin_inset Formula $2n+1$
+\end_inset
+
+ 次 Hermite 多项式为
+\begin_inset Formula 
+\[
+\begin{aligned}H_{2n+1}(x)= & x(a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n}) & n= & 0,1,2,\dots\\
+a_{2n}= & 2^{2n+1}\\
+a_{2k-2}= & \frac{(2k+1)(2k)}{2(2k-1)-\lambda}a_{2k} & k= & 1,2,\dots,n
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
