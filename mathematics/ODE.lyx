@@ -1143,7 +1143,7 @@ a_{1}(s+1)s+p_{-1}a_{1}(s+1)+p_{0}a_{0}s+q_{-2}a_{1}+q_{-1}a_{0}=0
 可以用指标方程简化为
 \begin_inset Formula 
 \begin{equation}
-a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\label{eq:次低次项对应的恒等式}
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\label{eq:由次低次项系数为零导出的恒等式}
 \end{equation}
 
 \end_inset
@@ -1341,7 +1341,7 @@ u_{2}(x) & =(x-x_{0})^{s_{2}}\sum_{k=0}^{\infty}b_{k}(x-x_{0})^{k}\qquad b_{0}\n
 将幂级数形式的解
 \begin_inset Formula 
 \[
-u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\qquad a_{0}\ne0
+u(x)=\sum_{n=0}^{\infty}a_{n}x^{n+s}\qquad a_{0}\ne0
 \]
 
 \end_inset
@@ -1362,10 +1362,10 @@ s(s-1)=0\implies s=0,1
 
 \end_inset
 
-和递推关系
+和系数递推关系
 \begin_inset Formula 
 \begin{equation}
-a_{n+2}=\frac{-\omega^{2}}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:简谐函数的系数递推关系}
+a_{n+2}=\frac{-\omega^{2}}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:简谐方程的解的系数递推关系}
 \end{equation}
 
 \end_inset
@@ -1373,76 +1373,18 @@ a_{n+2}=\frac{-\omega^{2}}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:简
 
 \end_layout
 
-\begin_layout Standard
-若 
-\begin_inset Formula $s=0$
-\end_inset
-
-，则恒等式
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:次低次项对应的恒等式"
-
-\end_inset
-
-变为
-\begin_inset Formula 
-\[
-a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot0=0
-\]
-
-\end_inset
-
-此时 
-\begin_inset Formula $a_{1}$
-\end_inset
-
- 可以取任意值。由递推关系
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:简谐函数的系数递推关系"
-
-\end_inset
-
-可以得到两组独立的系数
-\begin_inset Formula 
-\[
-a_{2n}=\frac{(-1)^{n}\omega^{2n}}{(2n)!}a_{0}\qquad a_{2n+1}=\frac{(-1)^{n}\omega^{2n+1}}{(2n+1)!}\frac{a_{1}}{\omega}\qquad n=0,1,2,\dots
-\]
-
-\end_inset
-
-于是，方程的解可以表示为
-\begin_inset Formula 
-\[
-\begin{aligned}u(x) & =\sum_{n=0}^{\infty}a_{2n}x^{2n}+\sum_{n=0}^{\infty}a_{2n+1}x^{2n+1}\\
- & =a_{0}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n}}{(2n)!}+\frac{a_{1}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n+1}}{(2n+1)!}\\
- & =a_{0}\cos\omega x+\frac{a_{1}}{\omega}\sin\omega x
-\end{aligned}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $a_{0}$
-\end_inset
-
- 和 
-\begin_inset Formula $a_{1}$
-\end_inset
-
- 为待定参数，由边界条件确定。
-\end_layout
-
-\begin_layout Standard
-若 
+\begin_layout Paragraph
 \begin_inset Formula $s=1$
 \end_inset
 
-，则恒等式
+ 的情形
+\end_layout
+
+\begin_layout Standard
+由「次低次项系数为零」得到的恒等式
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:次低次项对应的恒等式"
+reference "eq:由次低次项系数为零导出的恒等式"
 
 \end_inset
 
@@ -1454,33 +1396,48 @@ a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot2=0
 
 \end_inset
 
-此时 
+因此 
 \begin_inset Formula $a_{1}$
 \end_inset
 
- 必须为 
-\begin_inset Formula $0$
-\end_inset
-
-。由递推关系
+ 必须为零。系数递推关系
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:简谐函数的系数递推关系"
+reference "eq:简谐方程的解的系数递推关系"
 
 \end_inset
 
-可以得到两组独立的系数
+变为
 \begin_inset Formula 
 \[
-a_{2n}=\frac{(-1)^{n}\omega^{2n+1}}{(2n+1)!}\frac{a_{0}}{\omega}\qquad a_{2n+1}=0\qquad n=0,1,2,\dots
+a_{n+2}=\frac{-\omega^{2}}{(n+3)(n+2)}a_{n}\qquad n=0,1,2,\dots
 \]
 
 \end_inset
 
-于是，方程的解可以表示为
+按奇偶项可以分别写为
 \begin_inset Formula 
 \[
-u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{n}(\omega x)^{2n+1}}{(2n+1)!}=\frac{a_{0}}{\omega}\sin\omega x
+\begin{aligned}a_{2k} & =\frac{-\omega^{2}}{(2k+1)(2k)}a_{2k-2}\\
+a_{2k+1} & =\frac{-\omega^{2}}{(2k+2)(2k+1)}a_{2k-1}
+\end{aligned}
+\qquad k=1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2k}=\frac{(-1)^{k}\omega^{2k+1}}{(2k+1)!}\frac{a_{0}}{\omega}\qquad a_{2k+1}=0\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k+1}}{(2k+1)!}=\frac{a_{0}}{\omega}\sin\omega x
 \]
 
 \end_inset
@@ -1489,19 +1446,115 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\f
 \begin_inset Formula $a_{0}$
 \end_inset
 
- 为待定参数，由边界条件确定。
+ 为待定参数。
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $s=0$
+\end_inset
+
+ 的情形
 \end_layout
 
 \begin_layout Standard
-综上，通过 Frobenius 方法可以得到简谐方程的两个线性无关解：
-\begin_inset Formula $\cos\omega x$
+由「次低次项系数为零」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:由次低次项系数为零导出的恒等式"
+
 \end_inset
 
- 和 
-\begin_inset Formula $\sin\omega x$
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot0=0
+\]
+
 \end_inset
 
-。
+因此 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取任意值。系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:简谐方程的解的系数递推关系"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{-\omega^{2}}{(n+2)(n+1)}a_{n}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+按奇偶项可以分别写为
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2k} & =\frac{-\omega^{2}}{(2k)(2k-1)}a_{2k-2}\\
+a_{2k+1} & =\frac{-\omega^{2}}{(2k+1)(2k)}a_{2k-1}
+\end{aligned}
+\qquad k=1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2k}=\frac{(-1)^{k}\omega^{2k}}{(2k)!}a_{0}\qquad a_{2k+1}=\frac{(-1)^{k}\omega^{2k+1}}{(2k+1)!}\frac{a_{1}}{\omega}\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+\begin{aligned}u_{s=0}(x) & =\sum_{k=0}^{\infty}a_{2k}x^{2k}+\sum_{k=0}^{\infty}a_{2k+1}x^{2k+1}\\
+ & =a_{0}\sum_{k=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k}}{(2k)!}+\frac{a_{1}}{\omega}\sum_{k=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k+1}}{(2k+1)!}\\
+ & =a_{0}\cos\omega x+\frac{a_{1}}{\omega}\sin\omega x
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取为零（因为它所引导的函数与 
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 只相差一个常系数）。
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，通过 Frobenius 方法可以得到简谐方程的两个线性无关解
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sin\omega x\qquad u_{s=0}(x)=\cos\omega x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+这里能够将解写成初等函数形式只是一个例外。对于一般的方程，通常不能将幂级数形式的解表示为封闭形式，但是可以将它们定义为新的特殊函数，例如下面的
+ Bessel 函数。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1512,16 +1565,12 @@ Bessel 方程在正半轴上的解
 将幂级数形式的解
 \begin_inset Formula 
 \[
-u(x)=\sum_{i=0}^{\infty}a_{i}x^{s+i}\qquad a_{0}\ne0
+u(x)=\sum_{n=0}^{\infty}a_{n}x^{n+s}\qquad a_{0}\ne0
 \]
 
 \end_inset
 
-代入 Bessel 方程（改写为首项系数为 
-\begin_inset Formula $1$
-\end_inset
-
- 的标准形式）
+代入 Bessel 方程（改写为首项系数为一的标准形式）
 \begin_inset Formula 
 \[
 u''+\frac{1}{x}u'+\left(1-\frac{\nu^{2}}{x^{2}}\right)u=0\qquad\nu\ge0
@@ -1537,21 +1586,36 @@ s^{2}-\nu^{2}=0\implies s=\pm\nu
 
 \end_inset
 
-和递推关系
+和系数递推关系
 \begin_inset Formula 
 \begin{equation}
-a_{n+2}=\frac{-a_{n}}{(s+n+2)^{2}-\nu^{2}}\qquad n=0,1,2,\dots\label{eq:Bessel函数的系数递推关系}
+a_{n+2}=\frac{-a_{n}}{(s+n+2)^{2}-\nu^{2}}\qquad n=0,1,2,\dots\label{eq:Bessel方程的解的系数递推关系}
 \end{equation}
 
 \end_inset
 
-将递推关系应用于偶数项，得到
+
+\end_layout
+
+\begin_layout Paragraph
+只考虑偶数项
+\end_layout
+
+\begin_layout Standard
+将系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Bessel方程的解的系数递推关系"
+
+\end_inset
+
+应用于偶数项，得到
 \begin_inset Formula 
 \[
-\begin{aligned}a_{2n}= & \frac{-a_{2n-2}}{(s+2n)-\nu^{2}}=\frac{-a_{2n-2}}{(2n+s+\nu)(2n+s-\nu)}\\
-= & \frac{-1}{(2n+s+\nu)(2n+s-\nu)}\times\cdots\times\frac{-1}{(2+s+\nu)(2+s-\nu)}\times a_{0}\\
-= & \frac{-1}{\left(n+\frac{s+\nu}{2}\right)\left(n+\frac{s-\nu}{2}\right)}\times\cdots\times\frac{-1}{\left(1+\frac{s+\nu}{2}\right)\left(1+\frac{s-\nu}{2}\right)}\times\frac{a_{0}}{2^{2n}}\\
-= & \frac{\Gamma\left(1+\frac{s+\nu}{2}\right)}{\Gamma\left(n+1+\frac{s+\nu}{2}\right)}\times\frac{\Gamma\left(1+\frac{s-\nu}{2}\right)}{\Gamma\left(n+1+\frac{s-\nu}{2}\right)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\begin{aligned}a_{2k} & =\frac{-a_{2k-2}}{(s+2k)-\nu^{2}}=\frac{-a_{2k-2}}{(2k+s+\nu)(2k+s-\nu)}\\
+ & =\frac{-1}{(2k+s+\nu)(2k+s-\nu)}\cdot\cdots\cdot\frac{-1}{(2+s+\nu)(2+s-\nu)}\cdot a_{0}\\
+ & =\frac{-1}{\left(k+\frac{s+\nu}{2}\right)\left(k+\frac{s-\nu}{2}\right)}\cdot\cdots\cdot\frac{-1}{\left(1+\frac{s+\nu}{2}\right)\left(1+\frac{s-\nu}{2}\right)}\cdot\frac{a_{0}}{2^{2n}}\\
+ & =\frac{\Gamma\left(1+\frac{s+\nu}{2}\right)}{\Gamma\left(n+1+\frac{s+\nu}{2}\right)}\cdot\frac{\Gamma\left(1+\frac{s-\nu}{2}\right)}{\Gamma\left(n+1+\frac{s-\nu}{2}\right)}\cdot\frac{(-1)^{n}}{2^{2n}}a_{0}\qquad k=0,1,2,\dots
 \end{aligned}
 \]
 
@@ -1568,7 +1632,7 @@ a_{n+2}=\frac{-a_{n}}{(s+n+2)^{2}-\nu^{2}}\qquad n=0,1,2,\dots\label{eq:Bessel�
 ，则有
 \begin_inset Formula 
 \[
-a_{2n}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)^{n}}{2^{2n}}a_{0}
+a_{2k}=\frac{\Gamma(1+\nu)}{\Gamma(k+1+\nu)}\cdot\frac{1}{k!}\cdot\frac{(-1)^{k}}{2^{2k}}a_{0}\qquad k=0,1,2,\dots
 \]
 
 \end_inset
@@ -1576,7 +1640,7 @@ a_{2n}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)^{
 由此可得 Bessel 方程的第一个解
 \begin_inset Formula 
 \[
-u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1+\nu)}\left(\frac{x}{2}\right)^{2n+\nu}
+u_{s=\nu}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{k=0}^{\infty}\frac{(-1)^{k}/k!}{\Gamma(k+1+\nu)}\left(\frac{x}{2}\right)^{2k+\nu}
 \]
 
 \end_inset
@@ -1592,7 +1656,7 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\i
  中，而
 \begin_inset Formula 
 \[
-\Bessel{\nu}=\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1+\nu)}\left(\frac{x}{2}\right)^{2n+\nu}
+\Bessel{\nu}(x)=\sum_{k=0}^{\infty}\frac{(-1)^{k}/k!}{\Gamma(k+1+\nu)}\left(\frac{x}{2}\right)^{2k+\nu}
 \]
 
 \end_inset
@@ -1609,14 +1673,14 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\i
 \begin_inset Formula $s=-\nu$
 \end_inset
 
-，则有 
+，则类似地有 
 \begin_inset Formula $-\nu$
 \end_inset
 
  阶 Bessel 函数
 \begin_inset Formula 
 \[
-\Bessel{-\nu}=\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(n+1-\nu)}\left(\frac{x}{2}\right)^{2n-\nu}
+\Bessel{-\nu}(x)=\sum_{k=0}^{\infty}\frac{(-1)^{k}/k!}{\Gamma(k+1-\nu)}\left(\frac{x}{2}\right)^{2k-\nu}
 \]
 
 \end_inset
@@ -1629,7 +1693,7 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\i
 \begin_inset Formula $\Bessel{\nu}$
 \end_inset
 
- 线性无关，因此也就是所要寻找的第二解；如果 
+ 线性无关，因此也就是所要寻找的第二解。如果 
 \begin_inset Formula $\nu=n\in\mathbb{Z}$
 \end_inset
 
@@ -1641,14 +1705,14 @@ u(x)=\sum_{n=0}^{\infty}a_{2n}x^{2n+\nu}=a_{0}2^{\nu}\Gamma(1+\nu)\sum_{n=0}^{\i
 
 \end_inset
 
-真正的第二解需要用其他方法获得，参见第
+因此需要用其他方法寻找真正的第二解（参见第
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Bessel方程的第二解"
 
 \end_inset
 
-节。
+节）。
 \end_layout
 
 \begin_layout Paragraph
@@ -1664,25 +1728,20 @@ reference "sec:Bessel方程的第二解"
 \end_layout
 
 \begin_layout Standard
-对于 Bessel 方程，由「次低次项 
-\begin_inset Formula $\left(x-x_{0}\right)^{s-1}$
-\end_inset
-
- 的系数为 
-\begin_inset Formula $0$
-\end_inset
-
-」得到的恒等式
+对于 Bessel 方程，由「次低次项系数为零」得到的恒等式
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:次低次项对应的恒等式"
+reference "eq:由次低次项系数为零导出的恒等式"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
 可以简化为
 \begin_inset Formula 
 \[
-a_{1}\cdot(2s+1)=0
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot(2s+1)=0
 \]
 
 \end_inset
@@ -1699,10 +1758,10 @@ a_{1}\cdot(2s+1)=0
 \end_layout
 
 \begin_layout Standard
-将递推关系
+将系数递推关系
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:Bessel函数的系数递推关系"
+reference "eq:Bessel方程的解的系数递推关系"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1716,35 +1775,35 @@ noprefix "false"
 ，得到
 \begin_inset Formula 
 \[
-\begin{aligned}a_{2n+1}= & \frac{-a_{2n-1}}{(s+2n+1)^{2}-\nu^{2}}=\frac{-a_{2n-1}}{(2n-s+\nu)(2n-s-\nu)}\\
-= & \frac{-1}{(2n-s+\nu)(2n-s-\nu)}\times\cdots\times\frac{-1}{(2-s+\nu)(2-s-\nu)}\times a_{1}\\
-= & \frac{-1}{\left(n+\frac{\nu-s}{2}\right)\left(n-\frac{\nu+s}{2}\right)}\times\cdots\times\frac{-1}{\left(1+\frac{\nu-s}{2}\right)\left(1-\frac{\nu+s}{2}\right)}\times\frac{a_{1}}{2^{2n}}\\
-= & \frac{\Gamma\left(1+\frac{\nu-s}{2}\right)}{\Gamma\left(n+1+\frac{\nu-s}{2}\right)}\times\frac{\Gamma\left(1-\frac{\nu+s}{2}\right)}{\Gamma\left(n+1-\frac{\nu+s}{2}\right)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+\begin{aligned}a_{2k+1} & =\frac{-a_{2k-1}}{(s+2k+1)^{2}-\nu^{2}}=\frac{-a_{2k-1}}{(2k-s+\nu)(2k-s-\nu)}\\
+ & =\frac{-1}{(2k-s+\nu)(2k-s-\nu)}\cdot\cdots\cdot\frac{-1}{(2-s+\nu)(2-s-\nu)}\cdot a_{1}\\
+ & =\frac{-1}{\left(k+\frac{\nu-s}{2}\right)\left(k-\frac{\nu+s}{2}\right)}\cdot\cdots\cdot\frac{-1}{\left(1+\frac{\nu-s}{2}\right)\left(1-\frac{\nu+s}{2}\right)}\cdot\frac{a_{1}}{2^{2k}}\\
+ & =\frac{\Gamma\left(1+\frac{\nu-s}{2}\right)}{\Gamma\left(k+1+\frac{\nu-s}{2}\right)}\cdot\frac{\Gamma\left(1-\frac{\nu+s}{2}\right)}{\Gamma\left(k+1-\frac{\nu+s}{2}\right)}\cdot\frac{(-1)^{k}}{2^{2k}}a_{1}\qquad k=0,1,2,\dots
 \end{aligned}
 \]
 
 \end_inset
 
 若 
-\begin_inset Formula $s=\nu=-\frac{1}{2}$
+\begin_inset Formula $s=-\frac{1}{2}=\nu$
 \end_inset
 
 ，则有
 \begin_inset Formula 
 \[
-a_{2n+1}=\frac{1}{n!}\times\frac{\Gamma(1-\nu)}{\Gamma(n+1-\nu)}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+a_{2k+1}=\frac{1}{k!}\cdot\frac{\Gamma(1-\nu)}{\Gamma(k+1-\nu)}\cdot\frac{(-1)^{k}}{2^{2k}}a_{1}\qquad k=0,1,2,\dots
 \]
 
 \end_inset
 
 若 
-\begin_inset Formula $s=-\nu=-\frac{1}{2}$
+\begin_inset Formula $s=-\frac{1}{2}=-\nu$
 \end_inset
 
 ，则有
 \begin_inset Formula 
 \[
-a_{2n+1}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)^{n}}{2^{2n}}a_{1}
+a_{2k+1}=\frac{\Gamma(1+\nu)}{\Gamma(k+1+\nu)}\cdot\frac{1}{k!}\cdot\frac{(-1)^{k}}{2^{2k}}a_{1}\qquad k=0,1,2,\dots
 \]
 
 \end_inset
@@ -1754,6 +1813,258 @@ a_{2n+1}=\frac{\Gamma(1+\nu)}{\Gamma(n+1+\nu)}\times\frac{1}{n!}\times\frac{(-1)
 \end_inset
 
  所囊括，因此忽略奇数项是合理的。
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，通过 Frobenius 方法可以得到 Bessel 方程的两个解
+\begin_inset Formula 
+\[
+u_{s=\pm\nu}(x)=\Bessel{\pm\nu}(x)
+\]
+
+\end_inset
+
+它们是否线性无关取决于 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是否为整数。
+\end_layout
+
+\begin_layout Subsubsection
+Hermite 方程在 
+\begin_inset Formula $x_{0}=0$
+\end_inset
+
+ 附近的解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Hermite方程的幂级数解"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将幂级数形式的解
+\begin_inset Formula 
+\[
+u(x)=\sum_{n=0}^{\infty}a_{n}x^{n+s}\qquad a_{0}\ne0
+\]
+
+\end_inset
+
+代入 Hermite 方程
+\begin_inset Formula 
+\[
+u''-2xu'+\lambda u=0
+\]
+
+\end_inset
+
+得到指标方程（及其解）
+\begin_inset Formula 
+\[
+s(s-1)=0\implies s=0,1
+\]
+
+\end_inset
+
+和系数递推关系
+\begin_inset Formula 
+\begin{equation}
+a_{n+2}=\frac{2(s+n)-\lambda}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:Hermite方程的解的系数递推关系}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $s=1$
+\end_inset
+
+ 的情形
+\end_layout
+
+\begin_layout Standard
+由「次低次项系数为零」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:由次低次项系数为零导出的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot2=0
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 必须为零。系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Hermite方程的解的系数递推关系"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{2(n+1)-\lambda}{(n+3)(n+2)}a_{n}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+按奇偶项可以分别写为
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2k} & =\frac{2(2k-1)-\lambda}{(2k+1)(2k)}a_{2k-2}\\
+a_{2k+1} & =\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k-1}
+\end{aligned}
+\qquad k=1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2k}=\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}\frac{2^{2k}k!}{(2k+1)!}a_{0}\qquad a_{2k+1}=0\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k+1}=a_{0}\sum_{k=0}^{\infty}\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}\frac{2^{2k}k!}{(2k+1)!}x^{2k+1}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数。
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $s=0$
+\end_inset
+
+ 的情形
+\end_layout
+
+\begin_layout Standard
+由「次低次项系数为零」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:由次低次项系数为零导出的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot0=0
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取任意值。系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Hermite方程的解的系数递推关系"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{2(n)-\lambda}{(n+2)(n+1)}a_{n}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+按奇偶项可以分别写为
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2k} & =\frac{2(2k-2)-\lambda}{(2k)(2k-1)}a_{2k-2}\\
+a_{2k+1} & =\frac{2(2k-1)-\lambda}{(2k+1)(2k)}a_{2k-1}
+\end{aligned}
+\qquad k=1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+\begin{aligned}a_{2k} & =\binom{k-1-\frac{\lambda}{4}}{n}\frac{2^{2k}k!}{(2k)!}a_{0}\\
+a_{2k+1} & =\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}\frac{2^{2k}k!}{(2k+1)!}a_{1}
+\end{aligned}
+\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{n=0}^{\infty}a_{2k}x^{2k}+\sum_{k=0}^{\infty}a_{2k+1}x^{2k+1}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取为零（因为它所引导的函数与 
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 只相差一个常系数）。
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，通过 Frobenius 方法可以得到 Hermite 方程的两个线性无关解
+\begin_inset Formula 
+\[
+\begin{aligned}u_{s=1}(x) & =\sum_{k=0}^{\infty}\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k+1}}{(2k+1)!}\\
+u_{s=0}(x) & =\sum_{k=0}^{\infty}\binom{k-1-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k}}{(2k)!}
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3113,7 +3424,7 @@ Sturm–Liouville 型方程
 Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方程
 \begin_inset Formula 
 \begin{equation}
-\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad\forall x\in(a,b)\label{eq:Sturm–LiouvilleODE}
+\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad x\in(a,b)\label{eq:Sturm–LiouvilleODE}
 \end{equation}
 
 \end_inset
@@ -3769,7 +4080,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,\infty)
+p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,+\infty)
 \]
 
 \end_inset
@@ -3780,34 +4091,24 @@ p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,\in
 \begin_layout Standard
 \begin_inset Formula 
 \[
-u''-2xu'+\lambda u=0
+u''-2xu'+\lambda u=0\qquad x\in(-\infty,+\infty)
 \]
 
 \end_inset
 
-按照 Frobenius 方法可以得到指标方程（及其解）
-\begin_inset Formula 
-\[
-s(s-1)=0\implies s=0,1
-\]
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Hermite方程的幂级数解"
 
 \end_inset
 
-次低次项系数为零条件
-\end_layout
-
-\begin_layout Standard
+节中，已经由 Frobenius 方法求得了它的两个线性无关解
 \begin_inset Formula 
 \[
-a_{1}\cdot2s=0
-\]
-
-\end_inset
-
-和递推关系
-\begin_inset Formula 
-\[
-a_{n+2}=\frac{2(s+n)-\lambda}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,2,4,\dots
+\begin{aligned}u_{s=1}(x) & =\sum_{k=0}^{\infty}\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k+1}}{(2k+1)!}\\
+u_{s=0}(x) & =\sum_{k=0}^{\infty}\binom{k-1-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k}}{(2k)!}
+\end{aligned}
 \]
 
 \end_inset
@@ -3815,39 +4116,30 @@ a_{n+2}=\frac{2(s+n)-\lambda}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,2,4,\dots
 
 \end_layout
 
+\begin_layout Paragraph
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 的平方可积条件
+\end_layout
+
 \begin_layout Standard
-先考虑 
-\begin_inset Formula $s=0$
-\end_inset
-
-，此时 
-\begin_inset Formula $a_{1}$
-\end_inset
-
- 可以取任意值（不妨取为零），递推关系为
-\begin_inset Formula 
-\[
-a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\qquad k=0,1,2,\dots
-\]
-
-\end_inset
-
 若 
-\begin_inset Formula $\lambda$
+\begin_inset Formula $\lambda\notin\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
 \end_inset
 
- 不属于 
-\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+，则 
+\begin_inset Formula $u_{s=1}$
 \end_inset
 
-，则所有系数都不可能为零，并且对于充分大的 
+ 的所有系数都不可能为零，并且对于充分大的 
 \begin_inset Formula $k$
 \end_inset
 
  有
 \begin_inset Formula 
 \[
-a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\approx a_{2k+2}=\frac{2(2k+1)}{(2k+2)(2k+1)}a_{2k}=\frac{a_{2k}}{k+1}
+a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\approx\frac{2(2k+3)}{(2k+3)(2k+2)}a_{2k}=\frac{a_{2k}}{k+1}
 \]
 
 \end_inset
@@ -3863,7 +4155,94 @@ a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\approx a_{2k+2}=\frac{2(2k+1)}
 中的系数
 \begin_inset Formula 
 \[
-b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}\qquad k=0,1,2,\dots
+b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=1}(x)=x\cdot\sum_{n=0}^{\infty}a_{2k}x^{2k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to\pm\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $x\exp(x^{2})$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}x^{2}\exp(x^{2})\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=1}(x)=x\cdot\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的平方可积条件
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 不属于 
+\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，则 
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\approx\frac{2(2k+1)}{(2k+2)(2k+1)}a_{2k}=\frac{a_{2k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp(x^{2})=\sum_{k=0}^{\infty}\frac{(x^{2})^{k}}{k!}=\sum_{k=0}^{\infty}\frac{x^{2k}}{k!}=\sum_{k=0}^{\infty}b_{2k}x^{2k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}
 \]
 
 \end_inset
@@ -3907,84 +4286,8 @@ u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
 
 \end_layout
 
-\begin_layout Standard
-下面考虑 
-\begin_inset Formula $s=1$
-\end_inset
-
-，此时 
-\begin_inset Formula $a_{1}$
-\end_inset
-
- 必须为零，递推关系为
-\begin_inset Formula 
-\[
-a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\qquad k=0,1,2,\dots
-\]
-
-\end_inset
-
-若 
-\begin_inset Formula $\lambda$
-\end_inset
-
- 不属于 
-\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
-\end_inset
-
-，则所有系数都不可能为零，并且对于充分大的 
-\begin_inset Formula $k$
-\end_inset
-
- 有
-\begin_inset Formula 
-\[
-a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\approx\frac{2(2n+3)}{(2n+3)(2n+2)}a_{2k}=\frac{a_{2n}}{n+1}
-\]
-
-\end_inset
-
-这与 
-\begin_inset Formula $s=0$
-\end_inset
-
- 中的情况类似，因此级数解 
-\begin_inset Formula $u_{s=1}(x)=x\sum_{k=0}^{\infty}a_{2k}x^{2k}$
-\end_inset
-
- 在 
-\begin_inset Formula $x\to\pm\infty$
-\end_inset
-
- 时的行为与 
-\begin_inset Formula $x\exp(x^{2})$
-\end_inset
-
- 一致。这样的解不满足平方可积条件
-\begin_inset Formula 
-\[
-\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}x^{2}\exp(x^{2})\dd{x}\to+\infty
-\]
-
-\end_inset
-
-因此特征值 
-\begin_inset Formula $\lambda$
-\end_inset
-
- 必须取自 
-\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
-\end_inset
-
-，以使无穷多项的级数截断为有限项的多项式
-\begin_inset Formula 
-\[
-u_{s=1}(x)=x\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+1)
-\]
-
-\end_inset
-
-
+\begin_layout Paragraph
+小结
 \end_layout
 
 \begin_layout Standard
@@ -3992,7 +4295,7 @@ u_{s=1}(x)=x\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+
 \begin_inset Formula $(-\infty,+\infty)$
 \end_inset
 
- 上平方可积」导致 Hermite 方程中的 
+ 上平方可积」的要求导致 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -4025,7 +4328,7 @@ u_{s=1}(x)=x\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+
 \[
 \begin{aligned}H_{2n}(x)= & a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n} & n= & 0,1,2,\dots\\
 a_{2n}= & 2^{\lambda/2}=2^{2n}\\
-a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & 1,2,\dots,n
+a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & n,n-1,\dots,2,1
 \end{aligned}
 \]
 
@@ -4046,9 +4349,9 @@ a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & 1,2,\dots,n
  次 Hermite 多项式为
 \begin_inset Formula 
 \[
-\begin{aligned}H_{2n+1}(x)= & x(a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n}) & n= & 0,1,2,\dots\\
+\begin{aligned}H_{2n+1}(x)= & x\cdot(a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n}) & n= & 0,1,2,\dots\\
 a_{2n}= & 2^{2n+1}\\
-a_{2k-2}= & \frac{(2k+1)(2k)}{2(2k-1)-\lambda}a_{2k} & k= & 1,2,\dots,n
+a_{2k-2}= & \frac{(2k+1)(2k)}{2(2k-1)-\lambda}a_{2k} & k= & n,n-1,\dots,2,1
 \end{aligned}
 \]
 
