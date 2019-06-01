@@ -19,6 +19,7 @@
 \newcommand{\Conj}[1]{{{#1}^*}}
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -3972,21 +3973,143 @@ p(x)=\sqrt{1-x^{2}}\qquad q(x)=0\qquad\rho(x)=\frac{1}{\sqrt{1-x^{2}}}\qquad(a,b
 
 \begin_layout Standard
 \begin_inset Formula 
+\begin{equation}
+(1-x^{2})u''-xu'+\lambda u=0\qquad x\in(-1,1)\label{eq:Chebyshev方程}
+\end{equation}
+
+\end_inset
+
+利用变量替换 
+\begin_inset Formula $x=\cos\theta$
+\end_inset
+
+ 可以将此方程化为简谐方程
+\begin_inset Formula 
+\begin{equation}
+\dv[2]{u}{\theta}+\lambda u=0\qquad\theta\in(0,\pi)\label{eq:与Chebyshev方程等价的简谐方程}
+\end{equation}
+
+\end_inset
+
+它的通解是熟知的简谐函数
+\begin_inset Formula 
 \[
-(1-x^{2})u''-xu'+\lambda u=0
+u(\theta)=C_{1}\cos\sqrt{\lambda}\theta+C_{2}\sin\sqrt{\lambda}\theta\qquad\theta\in[0,\pi]
 \]
 
 \end_inset
 
-（第一、二、三类齐次或周期、有界）边界条件使得 
+
+\end_layout
+
+\begin_layout Paragraph
 \begin_inset Formula $\lambda$
 \end_inset
 
- 只能取 
-\begin_inset Formula $n^{2}$
+ 只能取完全平方数
+\end_layout
+
+\begin_layout Standard
+在变量替换 
+\begin_inset Formula $x=\cos\theta$
 \end_inset
 
-。
+ 作用下，Chebyshev 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Chebyshev方程"
+
+\end_inset
+
+的（第一、二、三类齐次或周期、有界）边界条件可以导出简谐方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:与Chebyshev方程等价的简谐方程"
+
+\end_inset
+
+的第二类齐次边界条件
+\begin_inset Formula 
+\[
+\eval{\dv{u}{\theta}}_{\theta=0,\pi}=\eval{-\sqrt{1-x^{2}}\dv{u}{x}}_{x=1,-1}=0
+\]
+
+\end_inset
+
+由此可得 
+\begin_inset Formula $C_{2}=0$
+\end_inset
+
+ 且 
+\begin_inset Formula $\sqrt{\lambda}=n\in\mathbb{N}$
+\end_inset
+
+ 即 
+\begin_inset Formula $\lambda=n^{2}$
+\end_inset
+
+ 只能是完全平方数。不失一般性，可以取 
+\begin_inset Formula $C_{1}=1$
+\end_inset
+
+， 于是得到 Chebyshev 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Chebyshev方程"
+
+\end_inset
+
+的解
+\begin_inset Formula 
+\[
+\ChebyshevI{n}(x)=\cos n\theta=\cos(n\arccos x)\qquad x\in[-1,1]
+\]
+
+\end_inset
+
+它是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的多项式，被称为第一类 Chebyshev 多项式。
+\end_layout
+
+\begin_layout Proof
+由 Euler 公式和二项式定理有
+\begin_inset Formula 
+\[
+\begin{aligned}\cos n\theta+\sqrt{-1}\sin n\theta & =\exp(\sqrt{-1}n\theta)\\
+ & =\left(\cos\theta+\sqrt{-1}\sin\theta\right)^{n}\\
+ & =\sum_{k=0}^{n}\binom{n}{k}\left(\cos\theta\right)^{n-k}\left(\sqrt{-1}\sin\theta\right)^{k}
+\end{aligned}
+\]
+
+\end_inset
+
+只考虑实部（即 
+\begin_inset Formula $k=0,2,4,\dots$
+\end_inset
+
+ 的项）可得
+\begin_inset Formula 
+\[
+\begin{aligned}\cos n\theta & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}\left(\cos\theta\right)^{n-2l}\left(\sqrt{-1}\sin\theta\right)^{2l}\\
+ & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}\left(\cos\theta\right)^{n-2l}\left(\cos^{2}\theta-1\right)^{l}\\
+ & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}x^{n-2l}\left(x^{2}-1\right)^{l}
+\end{aligned}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\ChebyshevI{n}(x)$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的多项式。
 \end_layout
 
 \begin_layout Subsubsection
