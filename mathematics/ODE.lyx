@@ -20,6 +20,8 @@
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
 \newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -1556,6 +1558,250 @@ u_{s=1}(x)=\sin\omega x\qquad u_{s=0}(x)=\cos\omega x
 \begin_layout Remark*
 这里能够将解写成初等函数形式只是一个例外。对于一般的方程，通常不能将幂级数形式的解表示为封闭形式，但是可以将它们定义为新的特殊函数，例如下面的
  Bessel 函数。
+\end_layout
+
+\begin_layout Subsubsection
+Legendre 方程在 
+\begin_inset Formula $x_{0}=0$
+\end_inset
+
+ 附近的解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Legendre方程的幂级数解"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将幂级数形式的解
+\begin_inset Formula 
+\[
+u(x)=\sum_{n=0}^{\infty}a_{n}x^{n+s}\qquad a_{0}\ne0
+\]
+
+\end_inset
+
+代入 Legendre 方程
+\begin_inset Formula 
+\[
+(1-x^{2})u''-2xu'+\lambda u=0
+\]
+
+\end_inset
+
+得到指标方程（及其解）
+\begin_inset Formula 
+\[
+s(s-1)=0\implies s=0,1
+\]
+
+\end_inset
+
+和系数递推关系
+\begin_inset Formula 
+\begin{equation}
+a_{n+2}=\frac{(s+n)(s+n+1)-\lambda}{(s+n+2)(s+n+1)}a_{n}\qquad n=0,1,2,\dots\label{eq:Legendre方程的解的系数递推关系}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $s=1$
+\end_inset
+
+ 的情形
+\end_layout
+
+\begin_layout Standard
+由「次低次项系数为零」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:由次低次项系数为零导出的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot2=0
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 必须为零。系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Legendre方程的解的系数递推关系"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{(n+1)(n+2)-\lambda}{(n+3)(n+2)}a_{n}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2k}=a_{0}\cdot f_{2k}\qquad a_{2k+1}=0\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f_{2k}$
+\end_inset
+
+ 定义为
+\begin_inset Formula 
+\[
+\begin{aligned}f_{0} & =1\\
+f_{2k+2} & =\frac{(2k+1)(2k+2)-\lambda}{(2k+3)(2k+2)}f_{2k}\qquad k=0,1,2,\dots
+\end{aligned}
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=1}(x)=a_{0}\sum_{k=0}^{\infty}f_{2k}x^{2k+1}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数。
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $s=0$
+\end_inset
+
+ 的情形
+\end_layout
+
+\begin_layout Standard
+由「次低次项系数为零」得到的恒等式
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:由次低次项系数为零导出的恒等式"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{1}(2s+p_{-1})+a_{0}(p_{0}s+q_{-1})=0\implies a_{1}\cdot0=0
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取任意值。系数递推关系
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Legendre方程的解的系数递推关系"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+变为
+\begin_inset Formula 
+\[
+a_{n+2}=\frac{(n)(n+1)-\lambda}{(n+2)(n+1)}a_{n}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+由此可以得到两组独立的系数
+\begin_inset Formula 
+\[
+a_{2k}=a_{0}\cdot g_{2k}\qquad a_{2k+1}=a_{1}\cdot f_{2k}\qquad k=0,1,2,\dots
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f_{2k}$
+\end_inset
+
+ 已经在 
+\begin_inset Formula $s=1$
+\end_inset
+
+ 的情形中定义过，而 
+\begin_inset Formula $g_{2k}$
+\end_inset
+
+ 定义为
+\begin_inset Formula 
+\[
+\begin{aligned}g_{0} & =1\\
+g_{2k+2} & =\frac{(2k)(2k+1)-\lambda}{(2k+2)(2k+1)}g_{2k}\qquad k=0,1,2,\dots
+\end{aligned}
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=0}(x)=a_{0}\sum_{n=0}^{\infty}g_{2k}x^{2k}+a_{1}\sum_{k=0}^{\infty}f_{2k}x^{2k+1}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数，
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ 可以取为零（因为它所引导的函数与 
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 只相差一个常系数）。
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，通过 Frobenius 方法可以得到 Legendre 方程的两个解
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sum_{k=0}^{\infty}f_{2k}x^{2k+1}\qquad u_{s=0}(x)=\sum_{k=0}^{\infty}g_{2k}x^{2k}
+\]
+
+\end_inset
+
+它们的奇偶性不同，因此一定是线性无关的。
 \end_layout
 
 \begin_layout Subsubsection
@@ -3885,7 +4131,7 @@ p(x)=1\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(0,2L)
 \begin_layout Standard
 \begin_inset Formula 
 \[
-u''+\lambda u=0\qquad\forall x\in(0,2L)
+u''+\lambda u=0\qquad x\in(0,2L)
 \]
 
 \end_inset
@@ -3932,20 +4178,214 @@ p(x)=1-x^{2}\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(-1,1)
 得到 Legendre 方程
 \begin_inset Formula 
 \[
-(1-x^{2})u''-2xu'+\lambda u=0
+(1-x^{2})u''-2xu'+\lambda u=0\qquad x\in(-1,1)
 \]
 
 \end_inset
 
-（第一、二、三类齐次或周期、有界）边界条件使得 
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Legendre方程的幂级数解"
+
+\end_inset
+
+节中，已经由 Frobenius 方法求得了它的两个线性无关解
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sum_{k=0}^{\infty}f_{2k}x^{2k+1}\qquad u_{s=0}(x)=\sum_{k=0}^{\infty}g_{2k}x^{2k}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{gathered}f_{0}=g_{0}=1\\
+\begin{aligned}f_{2k+2} & =\frac{(2k+1)(2k+2)-\lambda}{(2k+3)(2k+2)}f_{2k}\\
+g_{2k+2} & =\frac{(2k)(2k+1)-\lambda}{(2k+2)(2k+1)}g_{2k}
+\end{aligned}
+\qquad k=0,1,2,\dots
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+特征值只能取相邻整数的乘积
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum_{k=0}^{\infty}f_{2k}x^{2k+1}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sum_{k=0}^{\infty}g_{2k}x^{2k}$
+\end_inset
+
+ 的收敛半径可以由以下极限得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\lim_{k\to\infty}\abs{\frac{f_{2k+2}}{f_{2k}}}=\lim_{k\to\infty}\abs{\frac{g_{2k+2}}{g_{2k}}}=1
+\]
+
+\end_inset
+
+为了使方程的解在 
+\begin_inset Formula $x=\pm1$
+\end_inset
+
+ 处有界，
 \begin_inset Formula $\lambda$
 \end_inset
 
- 只能取 
-\begin_inset Formula $l(l+1)$
+ 只能取相邻整数的乘积 
+\begin_inset Formula $n(n+1)$
 \end_inset
 
-。
+，以使这两个级数之一截断为多项式，相应的系数递推关系分别为
+\begin_inset Formula 
+\[
+\begin{aligned}f_{2k+2} & =\frac{(2k+1)(2k+2)-n(n+1)}{(2k+3)(2k+2)}f_{2k}=\frac{(2k+1-n)(2k+2+n)}{(2k+3)(2k+2)}f_{2k}\\
+g_{2k+2} & =\frac{(2k)(2k+1)-n(n+1)}{(2k+2)(2k+1)}g_{2k}=\frac{(2k-n)(2k+1+n)}{(2k+2)(2k+1)}g_{2k}
+\end{aligned}
+\]
+
+\end_inset
+
+二者分别在 
+\begin_inset Formula $n=2k+1$
+\end_inset
+
+ 和 
+\begin_inset Formula $n=2k$
+\end_inset
+
+ 时截断。
+\end_layout
+
+\begin_layout Paragraph
+统一的系数递推关系
+\end_layout
+
+\begin_layout Standard
+如果将截断后的 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式统一地记为
+\begin_inset Formula 
+\[
+\sum_{k=0}^{\lfloor n/2\rfloor}C_{n-2k}x^{n-2k}=C_{n}x^{n}+C_{n-2}x^{n-1}+\cdots+C_{n-2\lfloor n/2\rfloor}x^{n-2\lfloor n/2\rfloor}
+\]
+
+\end_inset
+
+则以上两个系数递推关系可以统一地写为
+\begin_inset Formula 
+\[
+C_{k-2}=\frac{(k-1)(k)}{(k-2-n)(k-1+n)}C_{k}\qquad k=n,n-2,\dots,n-2\lfloor n/2\rfloor
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}C_{n-2k} & =\frac{(n-2k+1)(n-2k+2)}{(-2k)(2n-2k+1)}C_{n-2k+2}\\
+ & =\frac{n!/(n-2k)!}{\prod_{l=1}^{k}(-2l)(2n-2l+1)}C_{n}\\
+ & =\frac{n!}{(n-2k)!}\cdot\frac{1}{(-2)^{k}k!}\cdot\frac{(2n-2k-1)!!}{(2n-1)!!}C_{n}
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个分式中的
+\emph on
+跳阶乘
+\emph default
+可以用恒等式
+\begin_inset Formula 
+\[
+(2n)!!=2^{n}n!\qquad(2n-1)!!=\frac{(2n)!}{(2n)!!}
+\]
+
+\end_inset
+
+化为
+\begin_inset Formula 
+\[
+\frac{(2n-2k-1)!!}{(2n-1)!!}=\frac{(2n)!!}{(2n)!}\cdot\frac{(2n-2k)!}{(2n-2k)!!}=\frac{2^{n}n!}{(2n)!}\cdot\frac{(2n-2k)!}{2^{n-k}(n-k)!}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+C_{n-2k}=\frac{(-1)^{k}(2n-2k)!}{k!(n-k)!(n-2k)!}\cdot\frac{(n!)^{2}}{(2n)!}C_{n}\qquad k=0,1,\dots,\lfloor n/2\rfloor
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ 上有界」导致 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是相邻整数的乘积 
+\begin_inset Formula $n(n+1)$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。如果最高次项系数取为 
+\begin_inset Formula $\frac{(2n)!}{2^{n}(n!)^{2}}$
+\end_inset
+
+，则得到 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶 Legendre 多项式
+\begin_inset Formula 
+\[
+\Legendre{n}(x)=\frac{1}{2^{n}}\sum_{k=0}^{\lfloor n/2\rfloor}\frac{(-1)^{k}(2n-2k)!}{k!(n-k)!(n-2k)!}x^{n-2k}
+\]
+
+\end_inset
+
+前几阶 Legendre 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Legendre{0}(x) & =1 & \Legendre{1}(x) & =x\\
+\Legendre{2}(x) & =\frac{3x^{2}-1}{2} & \Legendre{3}(x) & =\frac{5x^{3}-3x}{2}\\
+\Legendre{4}(x) & =\frac{35x^{4}-30x^{2}+3}{8} & \Legendre{5}(x) & =\frac{63x^{5}-70x^{3}+15x}{8}
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -4003,10 +4443,7 @@ u(\theta)=C_{1}\cos\sqrt{\lambda}\theta+C_{2}\sin\sqrt{\lambda}\theta\qquad\thet
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Formula $\lambda$
-\end_inset
-
- 只能取完全平方数
+特征值只能取完全平方数
 \end_layout
 
 \begin_layout Standard
@@ -4067,11 +4504,11 @@ reference "eq:Chebyshev方程"
 
 \end_inset
 
-它是关于 
+（可以证明）它是关于 
 \begin_inset Formula $x$
 \end_inset
 
- 的多项式，被称为第一类 Chebyshev 多项式。
+ 的多项式，因此被称为第一类 Chebyshev 多项式。
 \end_layout
 
 \begin_layout Proof
@@ -4418,23 +4855,27 @@ u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
 \begin_inset Formula $(-\infty,+\infty)$
 \end_inset
 
- 上平方可积」的要求导致 
+ 上平方可积」导致 
 \begin_inset Formula $\lambda$
 \end_inset
 
- 必须是偶数，并且相应的解为 
-\begin_inset Formula $\lambda/2$
+ 必须是偶数 
+\begin_inset Formula $2m$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $m$
 \end_inset
 
  次多项式。如果最高次项系数取为 
-\begin_inset Formula $2^{\lambda/2}$
+\begin_inset Formula $2^{m}$
 \end_inset
 
-，则得到 Hermite 多项式，记为 
-\begin_inset Formula $H_{\lambda/2}$
+，则得到 
+\begin_inset Formula $m$
 \end_inset
 
-：
+ 阶 Hermite 多项式：
 \end_layout
 
 \begin_layout Itemize
@@ -4446,12 +4887,12 @@ u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
 \begin_inset Formula $2n$
 \end_inset
 
- 次 Hermite 多项式为
+ 阶 Hermite 多项式为
 \begin_inset Formula 
 \[
-\begin{aligned}H_{2n}(x)= & a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n} & n= & 0,1,2,\dots\\
-a_{2n}= & 2^{\lambda/2}=2^{2n}\\
-a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & n,n-1,\dots,2,1
+\begin{aligned}\Hermite{2n}(x) & =C_{0}+C_{2}x^{2}+\cdots+C_{2n}x^{2n} & n & =0,1,2,\dots\\
+C_{2n} & =2^{\lambda/2} & \lambda & =2(2n)\\
+C_{k-2} & =\frac{(k)(k-1)}{2(k-2)-\lambda}C_{k} & k & =2n,2n-2,\dots,4,2
 \end{aligned}
 \]
 
@@ -4469,12 +4910,31 @@ a_{2k-2}= & \frac{(2k)(2k-1)}{2(2k-2)-\lambda}a_{2k} & k= & n,n-1,\dots,2,1
 \begin_inset Formula $2n+1$
 \end_inset
 
- 次 Hermite 多项式为
+ 阶 Hermite 多项式为
 \begin_inset Formula 
 \[
-\begin{aligned}H_{2n+1}(x)= & x\cdot(a_{0}+a_{2}x^{2}+\cdots+a_{2n}x^{2n}) & n= & 0,1,2,\dots\\
-a_{2n}= & 2^{2n+1}\\
-a_{2k-2}= & \frac{(2k+1)(2k)}{2(2k-1)-\lambda}a_{2k} & k= & n,n-1,\dots,2,1
+\begin{aligned}\Hermite{2n+1}(x) & =C_{1}x+C_{3}x^{3}+\cdots+C_{2n+1}x^{2n+1} & n & =0,1,2,\dots\\
+C_{2n+1} & =2^{\lambda/2} & \lambda & =2(2n+1)\\
+C_{k-2} & =\frac{(k+1)(k)}{2(k-1)-\lambda}C_{k} & k & =2n+1,2n-1,\dots,5,3
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+前几阶 Hermite 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Hermite{0}(x) & =1\\
+\Hermite{1}(x) & =2x\\
+\Hermite{2}(x) & =4x^{2}-2\\
+\Hermite{3}(x) & =8x^{3}-12x\\
+\Hermite{4}(x) & =16x^{4}-48x^{2}+12\\
+\Hermite{5}(x) & =32x^{5}-160x^{3}+120x\\
+\Hermite{6}(x) & =64x^{5}-480x^{4}+720x^{2}-120
 \end{aligned}
 \]
 
