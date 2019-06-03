@@ -20,6 +20,7 @@
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
 \newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
 \newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
 \newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
 \end_preamble
@@ -2080,6 +2081,81 @@ u_{s=\pm\nu}(x)=\Bessel{\pm\nu}(x)
 \end_inset
 
  是否为整数。
+\end_layout
+
+\begin_layout Subsubsection
+Laguerre 方程在 
+\begin_inset Formula $x_{0}=0$
+\end_inset
+
+ 附近的解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Laguerre方程的幂级数解"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将幂级数形式的解
+\begin_inset Formula 
+\[
+u(x)=\sum_{n=0}^{\infty}a_{n}x^{n+s}\qquad a_{0}\ne0
+\]
+
+\end_inset
+
+代入 Laguerre 方程（改写为首项系数为一的标准形式）
+\begin_inset Formula 
+\[
+u''+\left(\frac{1}{x}-1\right)u'+\frac{\lambda}{x}u=0\qquad\nu\ge0
+\]
+
+\end_inset
+
+得到指标方程（及其解）
+\begin_inset Formula 
+\[
+s(s-1)+p_{-1}s+q_{-2}=0\implies s^{2}=0\implies s=0
+\]
+
+\end_inset
+
+和系数递推关系
+\begin_inset Formula 
+\begin{equation}
+a_{n+1}=\frac{n-\lambda}{(n+1)^{2}}a_{n}\qquad n=0,1,2,\dots\label{eq:Laguerre方程的解的系数递推关系}
+\end{equation}
+
+\end_inset
+
+由此可以得到系数
+\begin_inset Formula 
+\[
+a_{n}=\binom{n-1-\lambda}{n}\frac{a_{0}}{n!}\qquad n=0,1,2,\dots
+\]
+
+\end_inset
+
+于是方程的解可以表示为
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{n=0}^{\infty}a_{n}x^{n}=a_{0}\sum_{n=0}^{\infty}\binom{n-1-\lambda}{n}\frac{x^{n}}{n!}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 为待定参数。
+\end_layout
+
+\begin_layout Remark*
+指标方程的两个解相同，因此 Frobenius 方法只能给出 Laguerre 方程的 一个解。
 \end_layout
 
 \begin_layout Subsubsection
@@ -4609,20 +4685,165 @@ p(x)=x\exp(-x)\qquad q(x)=0\qquad\rho(x)=\exp(-x)\qquad(a,b)=(0,\infty)
 \begin_layout Standard
 \begin_inset Formula 
 \[
-xu''+(1-x)u'+\lambda u=0
+xu''+(1-x)u'+\lambda u=0\qquad x\in(0,\infty)
 \]
 
 \end_inset
 
-（第一、二、三类齐次或周期、有界）边界条件使得 
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Laguerre方程的幂级数解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+节中，已经由 Frobenius 方法求得了它的一个解
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{k=0}^{\infty}a_{k}x^{k}=\sum_{k=0}^{\infty}\binom{k-1-\lambda}{k}\frac{x^{k}}{k!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+特征值只能取非负整数
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda\notin\mathbb{N}$
+\end_inset
+
+，则 
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{k+1}=\frac{k-\lambda}{(k+1)^{2}}a_{k}\approx\frac{k+1}{(k+1)^{2}}a_{k}=\frac{a_{k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp x=\sum_{k=0}^{\infty}\frac{x^{k}}{k!}=\sum_{k=0}^{\infty}b_{k}x^{k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{k+1}=\frac{1}{(k+1)!}=\frac{b_{k}}{k+1}
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=0}(x)=\sum_{k=0}^{\infty}a_{k}x^{k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to+\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $\exp x$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{0}^{+\infty}u^{*}(x)u(x)\exp(-x)\dd{x}\approx\int_{0}^{+\infty}\exp x\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
 \begin_inset Formula $\lambda$
 \end_inset
 
- 只能取 
-\begin_inset Formula $n^{2}$
+ 必须取自 
+\begin_inset Formula $\mathbb{N}$
 \end_inset
 
-。
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}\qquad\lambda=n\in\mathbb{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+小结
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $(0,+\infty)$
+\end_inset
+
+ 上平方可积」导致 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是非负整数 
+\begin_inset Formula $n$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。如果最低次项系数取为 
+\begin_inset Formula $1$
+\end_inset
+
+，则得到 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶 Laguerre 多项式：
+\begin_inset Formula 
+\[
+\Laguerre{n}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}=\frac{\exp x}{n!}\dv[n]{x}\left[x^{n}\exp(-x)\right]
+\]
+
+\end_inset
+
+前几阶 Laguerre 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Laguerre{0}(x) & =1\\
+\Laguerre{1}(x) & =1-x\\
+2!\Laguerre{2}(x) & =2!-4x+x^{2}\\
+3!\Laguerre{3}(x) & =3!-18x+9x^{2}-x^{3}\\
+4!\Laguerre{4}(x) & =4!-96x+72x^{2}-16x^{3}+x^{4}\\
+5!\Laguerre{5}(x) & =5!-600x+600x^{2}-200x^{3}+25x^{4}-x^{5}\\
+6!\Laguerre{6}(x) & =6!-4320x+5400x^{2}-2400x^{3}+450x^{4}-36x^{5}+x^{6}
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
