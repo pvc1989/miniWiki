@@ -6,14 +6,18 @@
 \origin unavailable
 \textclass scrartcl
 \begin_preamble
+\usepackage{ctex}
 \usepackage{tikz}
 \usepackage{physics}
+\usepackage{bm}
 \renewcommand{\grad}{\boldsymbol{\nabla}}
 \renewcommand{\div}{\boldsymbol{\nabla}\cdot}
 \usepackage[e]{esvect}
 \renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Operator}[1]{\mathop{\bm{\mathsf{#1}}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Conj}[1]{\overline{#1}}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -23,7 +27,7 @@ eqs-within-sections
 figs-within-sections
 \end_modules
 \maintain_unincluded_children false
-\language english
+\language chinese-simplified
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -32,7 +36,7 @@ figs-within-sections
 \font_typewriter "default" "default"
 \font_math "default" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -109,7 +113,356 @@ figs-within-sections
 \begin_body
 
 \begin_layout Section
-Green's Functions
+Green 函数法
+\end_layout
+
+\begin_layout Subsection
+Dirac 函数
+\end_layout
+
+\begin_layout Subsubsection
+作为普通函数序列的极限
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+不同内积空间的比较
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $l^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $L^{2}(a,b)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+维数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n=N$
+\end_inset
+
+ 或 
+\begin_inset Formula $\aleph_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\aleph_{1}=2^{\aleph_{0}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+标准内积
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sum_{k=1}^{n}u_{k}v_{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单位正交基
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \ket{k}:=\ket{e_{k}}\right\} _{k=1}^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \ket{x}:=\ket{e_{x}}\right\} _{x\in(a,b)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+正交关系
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{k}{l}=\delta_{kl}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{\tilde{x}}{x}=\delta(x-\tilde{x})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+正交投影
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{k}=\ip{k}{u}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u(x)=\ip{x}{u}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Operator{1}=$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sum_{k=1}^{n}\dyad{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{a}^{b}\dyad{x}\dd{x}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{u}=$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sum_{k=1}^{n}\ket{k}u_{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{a}^{b}\ket{x}u(x)\dd{x}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+常微分方程的 Green 函数
+\end_layout
+
+\begin_layout Subsection
+偏微分方程的 Green 函数
 \end_layout
 
 \end_body
