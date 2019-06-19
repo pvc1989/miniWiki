@@ -5,8 +5,7 @@
 ### 数学
 - [复分析 (Complex Analysis)](./mathematics/ComplexAnalysis.lyx)
 - [微分几何 (Differential Geometry)](./mathematics/DifferentialGeometry.lyx)
-- [常微分方程 (Ordinary Differential Equations)](./mathematics/ODE.lyx)
-- [偏微分方程 (Partial Differential Equations)](./mathematics/PDE.lyx)
+- [微分方程 (Differential Equations)](./mathematics/DifferentialEquations.lyx)
 - [特殊函数 (Special Functions)](./mathematics/SpecialFunctions.lyx)
 
 ### 物理
