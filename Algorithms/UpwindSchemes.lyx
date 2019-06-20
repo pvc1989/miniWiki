@@ -4,35 +4,45 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass scrreprt
 \begin_preamble
-\usepackage{tikz}
-\usepackage{physics}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage{ctex}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\usepackage[arrowdel]{physics}
+\usepackage[squaren, thinspace]{SIunits}
+\usepackage{upgreek}
+\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Conj}[1]{\overline{#1}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \end_preamble
 \options idxtotoc
 \use_default_options true
+\master CFD.lyx
 \begin_modules
 theorems-ams
 eqs-within-sections
 figs-within-sections
 \end_modules
-\maintain_unincluded_children false
-\language english
+\maintain_unincluded_children true
+\language chinese-simplified
 \language_package default
-\inputencoding auto
+\inputencoding utf8-plain
 \fontencoding global
 \font_roman "palatino" "default"
 \font_sans "helvet" "default"
 \font_typewriter "default" "default"
 \font_math "default" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -57,7 +67,7 @@ figs-within-sections
 \pdf_backref false
 \pdf_pdfusetitle true
 \pdf_pagemode FullScreen
-\papersize a5paper
+\papersize b5paper
 \use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
@@ -78,7 +88,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -93,12 +103,11 @@ figs-within-sections
 \paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
-\quotes_style english
+\quotes_style cjk
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -108,8 +117,12 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Subsection
-Conservative Schemes
+\begin_layout Chapter
+迎风格式
+\end_layout
+
+\begin_layout Section
+守恒型格式
 \end_layout
 
 \begin_layout Standard
@@ -289,8 +302,8 @@ which is a piecewise constant approximation of
 .
 \end_layout
 
-\begin_layout Subsection
-Godunov's Schemes
+\begin_layout Section
+Godunov 格式
 \end_layout
 
 \begin_layout Standard
@@ -328,8 +341,8 @@ and the combined solution as
 .
 \end_layout
 
-\begin_layout Subsubsection
-First Version
+\begin_layout Subsection
+原始版本
 \end_layout
 
 \begin_layout Standard
@@ -374,8 +387,8 @@ Then for each
 
 \end_layout
 
-\begin_layout Subsubsection
-Second Version
+\begin_layout Subsection
+改进版本
 \end_layout
 
 \begin_layout Standard
@@ -477,6 +490,46 @@ Under this assumption, the expression for
 \[
 \hat{f}_{i+1/2}^{n}=f\left(\tilde{u}_{i+1/2}^{n}(0)\right)
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+数值通量
+\end_layout
+
+\begin_layout Subsection
+Roe
+\end_layout
+
+\begin_layout Subsection
+HLL
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HLL"
+description "Harten, Lax, van Leer"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+HLLC
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "HLLC"
+description "HLL Contact"
+literal "false"
 
 \end_inset
 
