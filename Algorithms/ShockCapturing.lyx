@@ -4,36 +4,47 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass scrreprt
 \begin_preamble
-\usepackage{tikz}
-\usepackage{physics}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage{ctex}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
-\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\usepackage[arrowdel]{physics}
+\usepackage[squaren, thinspace]{SIunits}
+\usepackage{upgreek}
+\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Conj}[1]{\overline{#1}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Tensor}[1]{{\vv{\vec{#1}}}}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \end_preamble
 \options idxtotoc
 \use_default_options true
+\master CFD.lyx
 \begin_modules
 theorems-ams
+theorems-ams-extended
 eqs-within-sections
 figs-within-sections
 \end_modules
-\maintain_unincluded_children false
-\language english
+\maintain_unincluded_children true
+\language chinese-simplified
 \language_package default
-\inputencoding auto
+\inputencoding utf8-plain
 \fontencoding global
 \font_roman "palatino" "default"
 \font_sans "helvet" "default"
 \font_typewriter "default" "default"
 \font_math "default" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -58,7 +69,7 @@ figs-within-sections
 \pdf_backref false
 \pdf_pdfusetitle true
 \pdf_pagemode FullScreen
-\papersize a5paper
+\papersize b5paper
 \use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
@@ -79,7 +90,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -94,12 +105,11 @@ figs-within-sections
 \paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
-\quotes_style english
+\quotes_style cjk
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -109,15 +119,25 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Subsection
-TVD Schemes
+\begin_layout Chapter
+激波捕捉
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Section
+
+\lang english
+TVD（总变差衰减）
+\end_layout
+
+\begin_layout Subsection
+
+\lang english
 Monotonicity
 \end_layout
 
 \begin_layout Lemma
+
+\lang english
 If two initial data 
 \begin_inset Formula $u_{0}(x),v_{0}(x)$
 \end_inset
@@ -154,6 +174,8 @@ u(t,x)\ge v(t,x)\qc\forall x,t>t_{0}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -161,6 +183,8 @@ u(t,x)\ge v(t,x)\qc\forall x,t>t_{0}
 \end_layout
 
 \begin_layout Definition
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -208,6 +232,8 @@ monotone
 status open
 
 \begin_layout Plain Layout
+
+\lang english
 scheme!monotone ~
 \end_layout
 
@@ -242,6 +268,8 @@ Here
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -249,6 +277,8 @@ Here
 \end_layout
 
 \begin_layout Lemma
+
+\lang english
 If a monotone scheme is applied to two data sets 
 \begin_inset Formula $\left\{ u_{i}^{n}\right\} ,\left\{ v_{i}^{n}\right\} $
 \end_inset
@@ -273,6 +303,8 @@ u_{i}^{n+1}\ge v_{i}^{n+1}\qc\forall i
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -280,6 +312,8 @@ u_{i}^{n+1}\ge v_{i}^{n+1}\qc\forall i
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 A monotone scheme does not create new extrema, i.e.
 \begin_inset Formula 
 \[
@@ -292,6 +326,8 @@ A monotone scheme does not create new extrema, i.e.
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -299,6 +335,8 @@ A monotone scheme does not create new extrema, i.e.
 \end_layout
 
 \begin_layout Proof
+
+\lang english
 Choose a uniform data set
 \begin_inset Formula 
 \[
@@ -351,6 +389,8 @@ So
 \end_layout
 
 \begin_layout Proof
+
+\lang english
 The same procedure can be applied to the maxima, which gives
 \begin_inset Formula 
 \[
@@ -363,6 +403,8 @@ The same procedure can be applied to the maxima, which gives
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -370,6 +412,8 @@ The same procedure can be applied to the maxima, which gives
 \end_layout
 
 \begin_layout Corollary
+
+\lang english
 \begin_inset Formula 
 \[
 \left[\min_{i}u_{i}^{n},\max_{i}u_{i}^{n}\right]\subseteq\cdots\subseteq\left[\min_{i}u_{i}^{0},\max_{i}u_{i}^{0}\right]
@@ -381,6 +425,8 @@ The same procedure can be applied to the maxima, which gives
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -388,6 +434,8 @@ The same procedure can be applied to the maxima, which gives
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -417,6 +465,8 @@ is monotone, then the numerical flux
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -424,6 +474,8 @@ is monotone, then the numerical flux
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -458,6 +510,8 @@ An explicit linear scheme
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset Formula 
 \begin{equation}
 u_{i}^{n+1}=\sum_{k\in K}b_{k}u_{i+k}^{n}
@@ -490,6 +544,8 @@ end{subequations}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -497,6 +553,8 @@ end{subequations}
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -511,6 +569,8 @@ An semi-discretized explicit linear scheme
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset Formula 
 \[
 \dv{u_{i}}{t}=\sum_{k\in K}\beta_{k}u_{i+k}^{n}=\sum_{k\ne0}\beta_{k}\left(u_{i+k}^{n}-u_{i}^{n}\right)
@@ -529,11 +589,15 @@ is monotone, if
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
+
+\lang english
 Godunov's Theorem
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -549,6 +613,8 @@ Linear monotone schemes for the linear advection equation are at most 1st
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -556,6 +622,8 @@ Linear monotone schemes for the linear advection equation are at most 1st
 \end_layout
 
 \begin_layout Proof
+
+\lang english
 Theorem 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -598,6 +666,8 @@ which leads to
 \end_layout
 
 \begin_layout Proof
+
+\lang english
 Monotonicity condition 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -638,6 +708,8 @@ reference "eq:LinearMonotoneScheme"
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -645,21 +717,29 @@ reference "eq:LinearMonotoneScheme"
 \end_layout
 
 \begin_layout Corollary
+
+\lang english
 Higher order monotone schemes must be nonlinear.
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
+
+\lang english
 TV and TVD
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "TV"
@@ -673,6 +753,8 @@ literal "false"
 status open
 
 \begin_layout Plain Layout
+
+\lang english
 TV!Total Variation
 \end_layout
 
@@ -682,6 +764,8 @@ TV!Total Variation
 \end_layout
 
 \begin_layout Definition
+
+\lang english
 The total variation of a univariate function 
 \begin_inset Formula $u(x)$
 \end_inset
@@ -710,6 +794,8 @@ TV(u):=\int_{-\infty}^{\infty}\abs{u'(x)}\dd{x}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -717,6 +803,8 @@ TV(u):=\int_{-\infty}^{\infty}\abs{u'(x)}\dd{x}
 \end_layout
 
 \begin_layout Definition
+
+\lang english
 The total variation of a bivariate function 
 \begin_inset Formula $u(t,x)$
 \end_inset
@@ -753,6 +841,8 @@ TV(u^{n}):=\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -760,6 +850,8 @@ TV(u^{n}):=\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 The TV of exact solution of a IVP for the scalar conservation law
 \begin_inset Formula 
 \[
@@ -780,6 +872,8 @@ TV(u(t_{2}))\le TV(u(t_{1}))\qc\forall t_{2}\ge t_{1}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -787,6 +881,8 @@ TV(u(t_{2}))\le TV(u(t_{1}))\qc\forall t_{2}\ge t_{1}
 \end_layout
 
 \begin_layout Definition
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -802,6 +898,8 @@ A scheme is said to be monotonicity preserving
 status open
 
 \begin_layout Plain Layout
+
+\lang english
 scheme!monotonicity preserving ~
 \end_layout
 
@@ -819,6 +917,8 @@ scheme!monotonicity preserving ~
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -826,6 +926,8 @@ scheme!monotonicity preserving ~
 \end_layout
 
 \begin_layout Definition
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -878,6 +980,8 @@ literal "false"
 status collapsed
 
 \begin_layout Plain Layout
+
+\lang english
 TV!TVD!TV Diminishing
 \end_layout
 
@@ -888,6 +992,8 @@ TV!TVD!TV Diminishing
 status open
 
 \begin_layout Plain Layout
+
+\lang english
 scheme!TVD ~
 \end_layout
 
@@ -898,6 +1004,8 @@ scheme!TVD ~
 status open
 
 \begin_layout Plain Layout
+
+\lang english
 TV!TVD!~ scheme
 \end_layout
 
@@ -928,6 +1036,8 @@ end{subequations}
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -935,10 +1045,14 @@ end{subequations}
 \end_layout
 
 \begin_layout Lemma
+
+\lang english
 A monotone scheme is TVD.
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -946,10 +1060,14 @@ A monotone scheme is TVD.
 \end_layout
 
 \begin_layout Lemma
+
+\lang english
 A TVD scheme is monotonicity preserving.
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -957,6 +1075,8 @@ A TVD scheme is monotonicity preserving.
 \end_layout
 
 \begin_layout Theorem
+
+\lang english
 \begin_inset ERT
 status open
 
@@ -1001,6 +1121,8 @@ C_{i-1/2}^{-}\ge0\qand C_{i+1/2}^{+}\ge0\qand C_{i-1/2}^{-}+C_{i+1/2}^{+}\le1\la
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
@@ -1008,6 +1130,8 @@ C_{i-1/2}^{-}\ge0\qand C_{i+1/2}^{+}\ge0\qand C_{i-1/2}^{-}+C_{i+1/2}^{+}\le1\la
 \end_layout
 
 \begin_layout Proof
+
+\lang english
 Apply the scheme at two consecutive points:
 \begin_inset Formula 
 \[
@@ -1058,11 +1182,15 @@ By shifting indices, each of the last two lines cancels.
  The first line is the comparison between two TVs.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
+
+\lang english
 Constructing TVD Schemes
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 Harten's theorem can be used as a guideline for constructing 5-point TVD
  schemes.
  Given a 5-point high order linear scheme, it can be seen as a correction
@@ -1087,6 +1215,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 The limiter is actually a switcher between the 1st order upwind scheme and
  the original high order one.
  It works according to the smoothness of 
@@ -1098,6 +1228,8 @@ The limiter is actually a switcher between the 1st order upwind scheme and
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 r_{i}^{+}:=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}\qor r_{i}^{-}:=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
@@ -1126,6 +1258,8 @@ The limiter is then naturally defined as a function of
 \end_layout
 
 \begin_layout Itemize
+
+\lang english
 \begin_inset Formula $\phi(1)\equiv1$
 \end_inset
 
@@ -1138,6 +1272,8 @@ The limiter is then naturally defined as a function of
 \end_layout
 
 \begin_layout Itemize
+
+\lang english
 \begin_inset Formula $\phi(r<0)=0$
 \end_inset
 
@@ -1150,6 +1286,8 @@ The limiter is then naturally defined as a function of
 \end_layout
 
 \begin_layout Itemize
+
+\lang english
 \begin_inset Formula $\phi(r>0)>0$
 \end_inset
 
@@ -1161,6 +1299,8 @@ The limiter is then naturally defined as a function of
 \end_layout
 
 \begin_layout Itemize
+
+\lang english
 \begin_inset Formula $\phi(r)/r\equiv\phi(1/r)$
 \end_inset
 
@@ -1180,17 +1320,23 @@ The limiter is then naturally defined as a function of
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 From 2nd Order Upwind Scheme
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 Write the 2nd order upwind scheme
 \begin_inset Formula 
 \[
@@ -1303,11 +1449,15 @@ sufficient
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 From Lax–Wendroff Scheme
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 Write the Lax–Wendroff Scheme
 \begin_inset Formula 
 \[
@@ -1402,15 +1552,21 @@ sufficient
  for it.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
+
+\lang english
 Famous Limiters
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 van Leer
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 \phi(r)=\frac{r+\abs{r}}{1+r}
@@ -1421,11 +1577,15 @@ van Leer
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 van Albada
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 \phi(r)=\frac{r^{2}+r}{1+r^{2}}
@@ -1436,14 +1596,18 @@ van Albada
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 minmod
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
-\phi(r)=\mathop{\minmod}(r,1)=\begin{cases}
+\phi(r)=\min\mod(r,1)=\begin{cases}
 \min(r,1) & r\ge0\\
 0 & r<0
 \end{cases}
@@ -1454,11 +1618,15 @@ minmod
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 superbee
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 \phi(r)=\max(0,\min(2r,1),\min(r,2))
@@ -1469,11 +1637,15 @@ superbee
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 MUSCL
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 \phi(r)=\max\left(0,\min\left(2r,\frac{r+1}{2},2\right)\right)
@@ -1484,11 +1656,15 @@ MUSCL
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
+
+\lang english
 alpha
 \end_layout
 
 \begin_layout Standard
+
+\lang english
 \begin_inset Formula 
 \[
 \phi(r)=\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)
@@ -1497,6 +1673,88 @@ alpha
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+
+\lang english
+MUSCL（用于守恒律的单调迎风格式）
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "MUSCL"
+description "Monotone Upstream-centered Schemes for Conservation Laws"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+WENO（加权基本无振荡）
+\end_layout
+
+\begin_layout Subsection
+ENO — Essentially Non-Oscillatory
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "ENO"
+description "Essentially Non-Oscillatory"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+WENO — Weighted ENO
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "WENO"
+description "Weighted ENO"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+\lang english
+GVC（群速度控制）
+\end_layout
+
+\begin_layout Standard
+
+\lang english
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "GVC"
+description "Group Velocity Control"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+
+\lang english
+人工黏性
 \end_layout
 
 \end_body
