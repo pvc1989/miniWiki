@@ -7,17 +7,11 @@
 \textclass scrartcl
 \begin_preamble
 \usepackage{ctex}
-\usepackage{tikz}
-\usepackage{physics}
-\usepackage{bm}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Operator}[1]{\mathop{\bm{\mathsf{#1}}}\nolimits}
-\newcommand{\Space}[1]{{\mathcal{#1}}}
+\usepackage[arrowdel]{physics}
+\usepackage{unicode-math}
 \newcommand{\Conj}[1]{\overline{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -29,12 +23,12 @@ figs-within-sections
 \maintain_unincluded_children false
 \language chinese-simplified
 \language_package default
-\inputencoding auto
+\inputencoding utf8-plain
 \fontencoding global
 \font_roman "palatino" "default"
 \font_sans "helvet" "default"
 \font_typewriter "default" "default"
-\font_math "default" "auto"
+\font_math "default" "default"
 \font_default_family default
 \use_non_tex_fonts true
 \font_sc true
@@ -82,7 +76,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -97,12 +91,11 @@ figs-within-sections
 \paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
-\quotes_style english
+\quotes_style cjk
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -112,15 +105,28 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Section
+\begin_layout Title
 Green 函数法
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Author
+PVC
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Dirac 函数
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 作为普通函数序列的极限
 \end_layout
 
@@ -131,15 +137,11 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-不同内积空间的比较
+典型内积空间的比较
 \end_layout
 
 \end_inset
@@ -181,7 +183,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $L^{2}(a,b)$
+\begin_inset Formula $L_{\rho}^{2}(a,b)$
 \end_inset
 
 
@@ -234,7 +236,10 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-标准内积
+\begin_inset Formula $\ip{u}{v}=$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -255,7 +260,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}$
+\begin_inset Formula $\int_{a}^{b}\Conj{u}(x)v(x)\rho(x)\dd{x}$
 \end_inset
 
 
@@ -269,7 +274,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-单位正交基
+标准基
 \end_layout
 
 \end_inset
@@ -304,42 +309,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-正交关系
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ip{k}{l}=\delta_{kl}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\ip{\tilde{x}}{x}=\delta(x-\tilde{x})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-正交投影
+投影
 \end_layout
 
 \end_inset
@@ -361,6 +331,41 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Formula $u(x)=\ip{x}{u}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+正交性
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{k}{l}=\updelta_{kl}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{\tilde{x}}{x}\rho(x)=\updelta(x-\tilde{x})$
 \end_inset
 
 
@@ -398,7 +403,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\int_{a}^{b}\dyad{x}\dd{x}$
+\begin_inset Formula $\int_{a}^{b}\dyad{x}\rho(x)\dd{x}$
 \end_inset
 
 
@@ -436,7 +441,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\int_{a}^{b}\ket{x}u(x)\dd{x}$
+\begin_inset Formula $\int_{a}^{b}\ket{x}u(x)\rho(x)\dd{x}$
 \end_inset
 
 
@@ -457,12 +462,23 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 常微分方程的 Green 函数
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 偏微分方程的 Green 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "Index"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
