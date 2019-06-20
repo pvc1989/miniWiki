@@ -4,35 +4,47 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass scrreprt
 \begin_preamble
-\usepackage{tikz}
-\usepackage{physics}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage{ctex}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
+\usepackage[arrowdel]{physics}
+\usepackage[squaren, thinspace]{SIunits}
+\usepackage{upgreek}
+\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Conj}[1]{\overline{#1}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Tensor}[1]{{\vv{\vec{#1}}}}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \end_preamble
 \options idxtotoc
 \use_default_options true
+\master CFD.lyx
 \begin_modules
 theorems-ams
+theorems-ams-extended
 eqs-within-sections
 figs-within-sections
 \end_modules
-\maintain_unincluded_children false
-\language english
+\maintain_unincluded_children true
+\language chinese-simplified
 \language_package default
-\inputencoding auto
+\inputencoding utf8-plain
 \fontencoding global
 \font_roman "palatino" "default"
 \font_sans "helvet" "default"
 \font_typewriter "default" "default"
 \font_math "default" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -57,7 +69,7 @@ figs-within-sections
 \pdf_backref false
 \pdf_pdfusetitle true
 \pdf_pagemode FullScreen
-\papersize a5paper
+\papersize b5paper
 \use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
@@ -78,7 +90,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -93,12 +105,11 @@ figs-within-sections
 \paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
-\quotes_style english
+\quotes_style cjk
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -108,8 +119,8 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Title
-Finite Difference Method
+\begin_layout Chapter
+有限差分格式
 \end_layout
 
 \begin_layout Standard
@@ -125,18 +136,14 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-Linear Finite Difference Schemes
+空间离散格式
 \end_layout
 
 \begin_layout Subsection
-Spatial Discretization
-\end_layout
-
-\begin_layout Subsubsection
 From Taylor Expansion
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Choose A Stencil
 \end_layout
 
@@ -215,7 +222,7 @@ Suppose nodal values
 .
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Perform Taylor Expansion
 \end_layout
 
@@ -258,7 +265,7 @@ reference "eq:GeneralLinearScheme"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Solve Linear Equations
 \end_layout
 
@@ -394,7 +401,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Python Implementation
 \end_layout
 
@@ -409,11 +416,11 @@ lstparams "language=Python"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 From Lagrange Interpolation
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Choose A Stencil
 \end_layout
 
@@ -427,7 +434,7 @@ uniform
  without difficulty.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Perform Lagrange Interpolation
 \end_layout
 
@@ -467,7 +474,7 @@ L_{k}(x_{j})=\delta_{jk}\qand\sum_{k\in I_{i}}L_{k}(x)\equiv1
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Approximate Derivatives
 \end_layout
 
@@ -493,15 +500,15 @@ The derivatives of
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Conservative Schemes
 \end_layout
 
-\begin_layout Subsection
-Time Marching
+\begin_layout Section
+时间推进格式
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Explicit v.
  Implicit
 \end_layout
@@ -526,7 +533,7 @@ explicit
 implicit.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Semi-Discretization
 \end_layout
 
@@ -556,7 +563,7 @@ in which,
 , then choose a time marching scheme for it.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Euler
 \end_layout
 
@@ -587,7 +594,7 @@ U^{n+1}=U^{n}+F^{n+1}\Delta t
 which is implicit.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Runge--Kutta
 \end_layout
 
@@ -611,7 +618,7 @@ U^{n+1} & =\frac{1}{3}U^{n}+\frac{2}{3}\left(U^{(2)}+F^{(2)}\Delta t\right)
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Coupled Schemes
 \end_layout
 
@@ -638,7 +645,7 @@ Assume
 .
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 1st Order Upwind
 \end_layout
 
@@ -681,7 +688,7 @@ u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Lax--Wendroff
 \end_layout
 
@@ -732,7 +739,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2}+\sigma^{2}\frac{u_
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Beam–Warming
 \end_layout
 
@@ -784,14 +791,10 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2}+\sigma
 \end_layout
 
 \begin_layout Section
-Error Analysis
+修正方程
 \end_layout
 
 \begin_layout Subsection
-Model Equations
-\end_layout
-
-\begin_layout Subsubsection
 Linear Advection Equation
 \end_layout
 
@@ -855,7 +858,7 @@ u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Convection–Diffusion Equation
 \begin_inset CommandInset label
 LatexCommand label
@@ -981,7 +984,7 @@ The factor
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Convection–Dispersion Equation
 \begin_inset CommandInset label
 LatexCommand label
@@ -1124,11 +1127,11 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Subsection
-Errors and Accuracy
+\begin_layout Section
+误差与精度
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 \begin_inset Formula $L^{p}$
 \end_inset
 
@@ -1361,7 +1364,7 @@ The error is then approximated by any one of the following formulae:
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Order of Accuracy
 \end_layout
 
@@ -1430,7 +1433,7 @@ Its slope is the accuracy order.
  point arithmetic errors.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection*
 Python Implementation
 \end_layout
 
@@ -1445,8 +1448,8 @@ lstparams "language=Python"
 
 \end_layout
 
-\begin_layout Subsection
-Stability
+\begin_layout Section
+稳定性
 \end_layout
 
 \begin_layout Definition
@@ -1467,10 +1470,6 @@ As
  grows, the error is bounded.
 \end_layout
 
-\begin_layout Subsubsection
-von Neumann Stability Analysis
-\end_layout
-
 \begin_layout Standard
 The concrete expression of the stability condition depends on both the original
  PDE and the scheme.
@@ -1478,7 +1477,7 @@ The concrete expression of the stability condition depends on both the original
  which is applicable for any linear PDEs with linear schemes.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsection
 First Order Upwind
 \end_layout
 
@@ -1660,16 +1659,15 @@ which can be simplified to
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsection
 Lax–Wendroff
 \end_layout
 
-\begin_layout Subsection
-Consistency v.
- Convergency
+\begin_layout Section
+相容性与收敛性
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Modified PDE
 \end_layout
 
@@ -1780,7 +1778,7 @@ in which, we have used the fact
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Consistency
 \end_layout
 
@@ -2057,7 +2055,7 @@ reference "eq:pthOrderAccuracyCondition"
 th order accuracy is then obvious.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Convergency
 \end_layout
 
@@ -2128,17 +2126,16 @@ stability
 .
 \end_layout
 
+\begin_layout Section
+耗散与色散
+\end_layout
+
 \begin_layout Subsection
-Dissipation v.
- Dispersion
+数值实验
 \end_layout
 
-\begin_layout Subsubsection
-Numerical Experiments
-\end_layout
-
-\begin_layout Subsubsection
-Effect of Truncation Error
+\begin_layout Subsection
+截断误差的影响
 \end_layout
 
 \begin_layout Standard
@@ -2281,8 +2278,8 @@ slower
 .
 \end_layout
 
-\begin_layout Subsubsection
-Modified Wave Number
+\begin_layout Subsection
+修正波数
 \end_layout
 
 \begin_layout Standard
