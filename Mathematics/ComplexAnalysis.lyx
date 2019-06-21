@@ -8,6 +8,8 @@
 \begin_preamble
 \usepackage{ctex}
 \usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
 \usepackage{physics}
 \usepackage{upgreek}
 \renewcommand{\grad}{\boldsymbol{\nabla}}
@@ -5681,7 +5683,185 @@ reference "lem:Jordan"
 \begin_inset Formula $z=0,\infty$
 \end_inset
 
-，引入以下四条辅助线
+，引入位于同一个单值分枝上的四条辅助线，构成一个闭合路径（记为 
+\begin_inset Formula $C$
+\end_inset
+
+），如
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[thick,>=Stealth]{
+\end_layout
+
+\begin_layout Plain Layout
+
+% Large Circle 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[fill=gray!20, name path=Large] (0,0) circle[radius=3];
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path (-3,0) node[right]{$C_{R}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% Small Circle 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[fill=white, name path=Small] (0,0) circle[radius=0.8];
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path (-0.8,0) node[left]{$C_{
+\backslash
+delta}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% Cut
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill[white, name path=Box] (0,-0.2) rectangle (3.1,0.2); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[name intersections={of=Large and Box, by={A,B}}]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+path[name intersections={of=Small and Box, by={C,D}}]; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>] (C) -- node[midway,above]{$L_{0}$} (A);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>] (B) -- node[midway,below]{$L_{2
+\backslash
+uppi}$} (D);
+\end_layout
+
+\begin_layout Plain Layout
+
+% Axes
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, thin] (0,0) -- (3.5,0) node[below]{$x$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, thin] (0,0) -- (0,3.5) node[left]{$y$};
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 \begin{aligned}L_{0} & =\left\{ z=\rho\mathrm{e}^{\mathrm{i}0}:\rho\in(\delta,R)\right\} \\
@@ -5689,16 +5869,46 @@ C_{R} & =\left\{ z=R\mathrm{e}^{\mathrm{i}\theta}:\theta\in(0,2\uppi)\right\} \\
 L_{2\uppi} & =\left\{ z=\rho\mathrm{e}^{\mathrm{i}2\uppi}:\rho\in(\delta,R)\right\} \\
 C_{\delta} & =\left\{ z=\delta\mathrm{e}^{\mathrm{i}\theta}:\theta\in(0,2\uppi)\right\} 
 \end{aligned}
-,\quad\delta>0,R>0
 \]
 
 \end_inset
 
-它们都位于同一个单值分枝上，并且构成了一个闭合路径（记为 
-\begin_inset Formula $C$
+
+\end_layout
+
 \end_inset
 
-）。待求的定积分可以转化为以下形式（记 
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:根式函数的积分路径"
+
+\end_inset
+
+根式函数的积分路径
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:根式函数的积分路径"
+
+\end_inset
+
+所示。于是待求的定积分可以转化为以下形式（记 
 \begin_inset Formula $\nu:=\mathrm{e}^{\mathrm{i}\uppi}$
 \end_inset
 
