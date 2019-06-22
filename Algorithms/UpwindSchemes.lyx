@@ -11,7 +11,7 @@
 \usepackage[arrowdel]{physics}
 \usepackage[squaren, thinspace]{SIunits}
 \usepackage{upgreek}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\renewcommand{\vec}[1]{\vv{\vb*{#1}}}  % \vv in esvect, \vb in physics
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
 \newcommand{\Conj}[1]{\overline{#1}}
@@ -97,8 +97,8 @@ figs-within-sections
 \topmargin 0.5cm
 \rightmargin 0.5cm
 \bottommargin 0.5cm
-\secnumdepth 3
-\tocdepth 3
+\secnumdepth 2
+\tocdepth 2
 \paragraph_separation indent
 \paragraph_indentation default
 \is_math_indent 0
@@ -118,377 +118,680 @@ figs-within-sections
 \begin_body
 
 \begin_layout Chapter
-迎风格式
+有限体积法（FVM）
 \end_layout
 
 \begin_layout Section
+有限体积离散
+\end_layout
+
+\begin_layout Subsection
+对网格的要求
+\end_layout
+
+\begin_layout Standard
+在最一般的意义下，凡是能够将几何区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 用有限个
+\emph on
+子区域
+\emph default
+（subdomain）的并集来覆盖的
+\emph on
+图
+\emph default
+（graph）都可以被称为
+\emph on
+网格
+\emph default
+（mesh/grid）。通常只用到具有简单几何外形（例如：圆、多边形）的子区域，它们又被称为
+\emph on
+单元
+\emph default
+（element/cell）。定义单元所用到的点（例如：顶点、内点）被称为
+\emph on
+结点
+\emph default
+（node/vertex）。一个结点可以由多个单元共享（例如：三角形单元的顶点），也可以被某一个单元独占（例如：三角形单元的内点）。为方便叙述，引入如下记号：
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+符号
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+简写
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+含义
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G(\Omega)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+覆盖区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 的网格
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第 
+\begin_inset Formula $e$
+\end_inset
+
+ 号单元
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号结点
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $E(G)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $E$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+网格 
+\begin_inset Formula $G$
+\end_inset
+
+ 中所有单元（编号）的集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(G)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+网格 
+\begin_inset Formula $G$
+\end_inset
+
+ 中所有结点（编号）的集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(\Omega_{e})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V_{e}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+单元 
+\begin_inset Formula $\Omega_{e}$
+\end_inset
+
+ 中所有结点（编号）的集合
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上是从几何的角度来定义网格、单元、结点等概念的。在 FVM 中，控制体（及其边界控制面）具有重要的物理意义，它既可以与单元一一对应，也可以基于结点定义。相应地
+，物理量既可以按控制体存储，也可以按结点存储。最自然的方案是「以单元为控制体，将物理量按单元存储」，因此通常要求：网格恰好填满整个区域，且相邻单元之间没有（实质
+性的）重叠，即
+\begin_inset Formula 
+\[
+\Omega=\bigcup_{e\in E}\Omega_{e}\quad\land\quad\forall\,i,k\in E:\int_{\Omega_{i}\cap\Omega_{k}}\dd{\Omega}=0
+\]
+
+\end_inset
+
+这里并没有要求 
+\begin_inset Formula $\Omega_{i}\cap\Omega_{k}=\varnothing$
+\end_inset
+
+（实际上，相邻单元（即 
+\begin_inset Formula $\Omega_{i}\cap\Omega_{k}\ne\varnothing$
+\end_inset
+
+ 的情形）的公共边界在基于 Riemann 解的 FVM 中具有特别重要的意义）。除此之外，FVM 对网格没有更多的要求。这种网格的灵活性正是
+ FVM 相对于 FDM 的优势之一。
+\end_layout
+
+\begin_layout Standard
+对于一维问题，非重叠网格的变化方式十分有限：通常用 
+\begin_inset Formula $N+1$
+\end_inset
+
+ 个结点 
+\begin_inset Formula $\left\{ x_{i}\right\} _{i=0}^{N}$
+\end_inset
+
+ 将一维区间 
+\begin_inset Formula $\Omega:=[a,b]$
+\end_inset
+
+ 分割为首尾相连的 
+\begin_inset Formula $N$
+\end_inset
+
+ 个单元 
+\begin_inset Formula $\left\{ \Omega_{e}\right\} _{e=1}^{N}$
+\end_inset
+
+。结点编号顺序可以相当随意，不要求 
+\begin_inset Formula $\forall\,i,j\in V:x_{i}<x_{j}$
+\end_inset
+
+，因此不能简单地认为 
+\begin_inset Formula $\forall\,e\in E:\Omega_{e}=[x_{e-1},x_{e}]$
+\end_inset
+
+。这里的 
+\begin_inset Formula $N+1$
+\end_inset
+
+ 个结点都是单元的边界点，除此之外，可以在每个单元内部分布一些结点（用于构造高阶格式）。为方便叙述，引入记号 
+\begin_inset Formula $x_{e\pm\nicefrac{1}{2}}$
+\end_inset
+
+，它应当理解为「第 
+\begin_inset Formula $e$
+\end_inset
+
+ 号单元的右（左）侧边界结点的 
+\begin_inset Formula $x$
+\end_inset
+
+ 值」
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+而不是「
+\begin_inset Formula $x_{e}$
+\end_inset
+
+（第 
+\begin_inset Formula $e$
+\end_inset
+
+ 号结点的 
+\begin_inset Formula $x$
+\end_inset
+
+ 值）与 
+\begin_inset Formula $x_{e\pm1}$
+\end_inset
+
+（第 
+\begin_inset Formula $e\pm1$
+\end_inset
+
+ 号结点的 
+\begin_inset Formula $x$
+\end_inset
+
+ 值）的平均值」
+\end_layout
+
+\end_inset
+
+，因此显然有 
+\begin_inset Formula $\forall\,e\in E:x_{e-\nicefrac{1}{2}}<x_{e+\nicefrac{1}{2}}$
+\end_inset
+
+。按此记法，第 
+\begin_inset Formula $e$
+\end_inset
+
+ 号单元的长度（一维体积）可以记为
+\begin_inset Formula 
+\[
+h_{e}:=\int_{\Omega_{e}}\dd{\Omega}\equiv\eval{x}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}},\quad\forall\,e\in E
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 守恒型格式
 \end_layout
 
 \begin_layout Standard
-In 1D space, a conservation law can be given as a differential equation
+尽管（标量）守恒律通常表示为偏微分方程形式
 \begin_inset Formula 
 \[
-\pdv{u(t,x)}{t}+\pdv{f(u(t,x))}{x}=0
+\pdv{U}{t}+\divergence\vec{F}=0,\quad\forall\,\vec{x}\in\Omega
 \]
 
 \end_inset
 
-or a integral-differnetial equation
+但它实际上是对微分积分方程
 \begin_inset Formula 
 \[
-\int_{x_{1}}^{x_{2}}\pdv{u(t,x)}{t}\dd{x}+\eval{f(u(t,x))}_{x_{1}}^{x_{2}}=0
+\int_{\Omega_{e}}\pdv{U}{t}\dd{\Omega}+\oint_{\partial\Omega_{e}}\vec{n}\vdot\vec{F}\dd{\Gamma}=0,\quad\forall\,\Omega_{e}\subset\Omega
 \]
 
 \end_inset
 
-in which, the space interval 
-\begin_inset Formula $[x_{1},x_{2}]$
+应用 Gauss 散度定理而得到的。后者对通量 
+\begin_inset Formula $\vec{F}$
 \end_inset
 
- is chosen arbitrarily.
- If 
-\begin_inset Formula $x_{1}$
+ 的光滑性要求低于前者，因而具有更广的适用性。如果所选控制体保持静止，则可以将 
+\begin_inset Formula $\pdv{t}$
 \end_inset
 
- and 
-\begin_inset Formula $x_{2}$
+ 提到 
+\begin_inset Formula $\int\dd{\Omega}$
 \end_inset
 
- do not change with 
-\begin_inset Formula $t$
-\end_inset
-
-, then the differential operator with respect to 
-\begin_inset Formula $t$
-\end_inset
-
- can be exchanged with the integral operator with respect to 
-\begin_inset Formula $x$
-\end_inset
-
-, i.e.
+ 外，从而得到第二种形式的微分积分方程
 \begin_inset Formula 
 \[
-\int_{x_{1}}^{x_{2}}\pdv{u(t,x)}{t}\dd{x}=\dv{t}\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}
+\dv{t}\int_{\Omega_{e}}U\dd{\Omega}+\oint_{\partial\Omega_{e}}\vec{n}\vdot\vec{F}\dd{\Gamma}=0,\quad\forall\,\text{定常}\,\Omega_{e}\subset\Omega
 \]
 
 \end_inset
 
-the conservation law then becomes
-\begin_inset Formula 
-\[
-\dv{t}\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}+\eval{f(u(t,x))}_{x_{1}}^{x_{2}}=0
-\]
-
-\end_inset
-
-Integrate it on an arbitrary time interval 
-\begin_inset Formula $[t_{1},t_{2}]$
-\end_inset
-
-, it becomes a integral equation
-\begin_inset Formula 
-\begin{equation}
-\left(\int_{x_{1}}^{x_{2}}u(t,x)\dd{x}\right)_{t_{1}}^{t_{2}}+\left(\int_{t_{1}}^{t_{2}}f(u(t,x))\dd{t}\right)_{x_{1}}^{x_{2}}=0\label{eq:IntegralFormOfConservationLaw}
-\end{equation}
-
-\end_inset
-
-which is the starting point of all conservative schemes.
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Conservative Scheme]
-\end_layout
-
-\end_inset
-
-If a scheme has the form
-\begin_inset Formula 
-\[
-u_{i}^{n+1}=u_{i}^{n}-\frac{\Delta t}{\Delta x}\left(\hat{f}_{i+1/2}-\hat{f}_{i-1/2}\right)\qc\hat{f}_{i+1/2}=\hat{f}_{i+1/2}\left(u_{i+K}^{n}\right)
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $\hat{f}_{i+1/2}$
-\end_inset
-
- is the numerical flux, and 
-\begin_inset Formula $K$
-\end_inset
-
- is a pre-selected set of indices, then it is said to be conservative.
+它是所有守恒型格式的基础。
 \end_layout
 
 \begin_layout Standard
-There is a consistency requirement on the numerical flux:
+对于一维问题，以上公式可以简化为
 \begin_inset Formula 
 \[
-\hat{f}_{i+1/2}(u,\dots,u)=f(u)
+\begin{aligned}\pdv{U}{t} & +\pdv{F}{x}=0,\quad\forall\,x\in(a,b)\\
+\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\pdv{U}{t}\dd{x} & +\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}})\subset(a,b)\\
+\dv{t}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}U\dd{x} & +\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,\text{定常的}\,(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}})\subset(a,b)
+\end{aligned}
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Cell-Centered FVM]
-\end_layout
-
-\end_inset
-
-Divide the computing domain 
-\begin_inset Formula $[a,b]$
-\end_inset
-
- into 
-\begin_inset Formula $N_{x}$
-\end_inset
-
- equal-sized intervals:
-\begin_inset Formula 
-\[
-\Omega_{i}:=\left[x_{i-1/2},x_{i+1/2}\right]\qc i=1,\dots,N_{x}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-x_{i+1/2}:=i\Delta x\qc\Delta x=\frac{b-a}{N_{x}}
-\]
-
-\end_inset
-
-The average value of 
-\begin_inset Formula $u(t,x)$
-\end_inset
-
- in the 
-\begin_inset Formula $i$
-\end_inset
-
-th cell at time 
-\begin_inset Formula $t_{n}$
-\end_inset
-
- is denoted as:
-\begin_inset Formula 
-\[
-\bar{u}_{i}^{n}:=\frac{1}{\Delta x}\int_{\Omega_{i}}u(t_{n},x)\dd{x}
-\]
-
-\end_inset
-
-which is a piecewise constant approximation of 
-\begin_inset Formula $u(t,x)$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Section
-Godunov 格式
+Godunov 型格式
+\end_layout
+
+\begin_layout Subsection
+局部 Riemann 问题
 \end_layout
 
 \begin_layout Standard
-At each 
+Godunov 假设：在 
 \begin_inset Formula $t_{n}$
 \end_inset
 
-, the piecewise constant distribution of 
-\begin_inset Formula $\bar{u}_{i}^{n}$
+ 时刻，物理量 
+\begin_inset Formula $U$
 \end_inset
 
- defines a local RP at each intercell boundary 
-\begin_inset Formula $x_{i+1/2}$
-\end_inset
-
-.
- The first and essential step in all Godunov-type schemes is to solve these
- local RPs.
- We shall denote the self-similar solution of the RP at 
-\begin_inset Formula $x_{i+1/2}$
-\end_inset
-
- as
+ 在每个控制体（单元）内按常数分布
 \begin_inset Formula 
 \[
-\tilde{u}_{i+1/2}^{n}(\alpha)\qc\alpha:=\frac{x-x_{i+1/2}}{t-t_{n}}
+U(t_{n},x)=\overline{U}_{e}^{n},\quad\forall\,x\in(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}}),\quad\forall\,e\in E
 \]
 
 \end_inset
 
-and the combined solution as 
-\begin_inset Formula $\tilde{u}^{n}(t,x)$
+这种分布相当于在每个控制体边界上分别定义了一个（以 
+\begin_inset Formula $\xi:=x-x_{e\pm\nicefrac{1}{2}}$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Subsection
-原始版本
-\end_layout
-
-\begin_layout Standard
-If the time step 
-\begin_inset Formula $\Delta t$
+ 和 
+\begin_inset Formula $\tau:=t-t_{n}$
 \end_inset
 
- is so small that the solutions of any two RPs do not interfere with each
- other, then the combined solution is just a simple combination of all the
- self-similar solutions at each intercell boundary:
-\begin_inset Formula 
-\[
-\tilde{u}^{n}(t,x)=\tilde{u}_{i+1/2}^{n}\left(\frac{x-x_{i+1/2}}{t-t_{n}}\right)\qc x\in\left[x_{i},x_{i+1}\right]
-\]
-
-\end_inset
-
-Then for each 
-\begin_inset Formula $i$
-\end_inset
-
-, the average of 
-\begin_inset Formula $\tilde{u}^{n}(t_{n+1},x)$
-\end_inset
-
- in 
-\begin_inset Formula $\Omega_{i}$
-\end_inset
-
- can be taken as the value of 
-\begin_inset Formula $\bar{u}_{i}^{n+1}$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\bar{u}_{i}^{n+1}:=\frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t_{n+1},x)\dd{x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-改进版本
-\end_layout
-
-\begin_layout Standard
-Since 
-\begin_inset Formula $\tilde{u}^{n}(t,x)$
-\end_inset
-
- is the exact solution of an IVP for a conservation law, it can used as
- the 
-\begin_inset Formula $u(t,x)$
-\end_inset
-
- in Equation 
+ 为局部变量的）局部 Riemann 问题。求解这些局部 Riemann 问题是所有 Godunov 型格式的首要步骤。按照《
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:IntegralFormOfConservationLaw"
-plural "false"
-caps "false"
-noprefix "false"
+LatexCommand nameref
+reference "subsec:RiemannProblems"
 
 \end_inset
 
-, which leads to
-\begin_inset Formula 
-\[
-\left(\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t,x)\dd{x}\right)_{t_{n}}^{t_{n+1}}+\left(\int_{t_{n}}^{t_{n+1}}f\left(\tilde{u}^{n}(t,x)\right)\dd{t}\right)_{x_{i-1/2}}^{x_{i+1/2}}=0
-\]
+》中介绍的方法，可以获得正确的（从而也是精确的）解。但是在实际计算中，求精确解的计算量往往过大，因此需要寻求 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Riemann-问题的近似解"
 
 \end_inset
 
-It can be turned into a conservative scheme
-\begin_inset Formula 
-\[
-\bar{u}_{i}^{n+1}=\bar{u}_{i}^{n}-\frac{\Delta t}{\Delta x}\left(\widehat{f}\hat{f}_{i+1/2}^{n}-\hat{f}_{i-1/2}^{n}\right)
-\]
-
-\end_inset
-
-by defining
-\begin_inset Formula 
-\[
-\bar{u}_{i}^{n}:=\frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{u}^{n}(t_{n},x)\dd{x}
-\]
-
-\end_inset
-
-as the average value, and
-\begin_inset Formula 
-\[
-\hat{f}_{i+1/2}^{n}:=\frac{1}{\Delta t}\int_{t_{n}}^{t_{n+1}}f\left(\tilde{u}^{n}\left(t,x_{i+1/2}\right)\right)\dd{t}
-\]
-
-\end_inset
-
-as the numerical flux.
+。
 \end_layout
 
-\begin_layout Lemma
-The value of 
-\begin_inset Formula $\tilde{u}^{n}\left(t,x\right)$
-\end_inset
-
- is constant along any intercell boundary 
-\begin_inset Formula $x_{i+1/2}$
-\end_inset
-
-, as long as 
-\begin_inset Formula $\Delta t$
-\end_inset
-
- is small enough.
-\end_layout
-
-\begin_layout Proof
-For each local RP, the self-similar solution 
-\begin_inset Formula $\tilde{u}_{i+1/2}^{n}\left(\frac{x-x_{i+1/2}}{t-t_{n}}\right)$
-\end_inset
-
- is constant along 
-\begin_inset Formula $x=x_{i+1/2}$
-\end_inset
-
-.
- Such constancy is true until any of the waves generating from other intercell
- boundaries arrives at 
-\begin_inset Formula $x_{i+1/2}$
-\end_inset
-
-.
+\begin_layout Subsection
+Godunov 的格式
 \end_layout
 
 \begin_layout Standard
-Under this assumption, the expression for 
-\begin_inset Formula $\hat{f}_{i+1/2}^{n}$
-\end_inset
-
- can be simplified as
+Riemann 问题的精确解（关于局部变量）具有自相似性，因此可以将它们记为
 \begin_inset Formula 
 \[
-\hat{f}_{i+1/2}^{n}=f\left(\tilde{u}_{i+1/2}^{n}(0)\right)
+\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}\left(\frac{x-x_{e\pm\nicefrac{1}{2}}}{t-t_{n}}\right),\quad\forall\,(x,t)\,\text{充分接近\,}(x_{e\pm\nicefrac{1}{2}},t_{n}),\quad\forall\,e\in E
+\]
+
+\end_inset
+
+这里的「充分接近」是指「任意两个局部 Riemann 问题的解不发生
+\emph on
+干涉
+\emph default
+（interference）」，或者说「任意两个波不发生碰撞」。将这些局部 Riemann 问题的解拼接起来，就得到在充分短的时段 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+ 内的全局精确解，记为 
+\begin_inset Formula $\widetilde{U}^{n}(x,t)$
+\end_inset
+
+。除了极简单的情况，一般而言，
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\end_inset
+
+ 在各个控制体内已经不再是常数。
+\end_layout
+
+\begin_layout Subsubsection*
+第一个版本
+\end_layout
+
+\begin_layout Standard
+为了在 
+\begin_inset Formula $t_{n+1}$
+\end_inset
+
+ 时刻重新得到分段常数形式的 
+\begin_inset Formula $U$
+\end_inset
+
+，Godunov 采取的第一个方案是对精确解 
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\end_inset
+
+ 作空间平均，即引入定义（并直接计算）
+\begin_inset Formula 
+\[
+\overline{U}_{e}^{n+1}:=\frac{1}{h_{e}}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x},\quad\forall\,e\in E
+\]
+
+\end_inset
+
+以此作为下一个时刻的初始条件。
+\end_layout
+
+\begin_layout Standard
+这种做法的一个显著缺点是：求平均值的积分需要根据 
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\end_inset
+
+ 的形式分为几段来计算。
+\end_layout
+
+\begin_layout Subsubsection*
+第二个版本
+\end_layout
+
+\begin_layout Standard
+作为改进，Godunov 采取的第二个方案是将积分形式的守恒律
+\begin_inset Formula 
+\[
+\dv{t}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}U\dd{x}+\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,e\in E
+\]
+
+\end_inset
+
+中的 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 用 
+\begin_inset Formula $\widetilde{U}^{n}(x,t)$
+\end_inset
+
+ 替换，并在时段 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+ 上积分，从而得到离散形式的守恒律
+\begin_inset Formula 
+\[
+\eval[\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x,t)\dd{t}|_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,e\in E
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\circ$
+\end_inset
+
+ 表示函数的复合，即 
+\begin_inset Formula $F\circ U(x,t)\equiv F(U(x,t))$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+注意到这些 Riemann 问题的初始条件是分段常数分布
+\begin_inset Formula 
+\[
+\widetilde{U}^{n}(x,t_{n})\equiv\overline{U}_{e}^{n},\quad\forall\,x\in(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}}),\quad\forall\,e\in E
+\]
+
+\end_inset
+
+并（仿照版本一）引入定义（但不直接计算）
+\begin_inset Formula 
+\[
+\overline{U}_{e}^{n+1}:=\frac{1}{h_{e}}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x},\quad\forall\,e\in E
+\]
+
+\end_inset
+
+则第一个积分可以化简为
+\begin_inset Formula 
+\[
+\eval[\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\overline{U}_{e}^{n+1}-\overline{U}_{e}^{n}\right)h_{e},\quad\forall\,e\in E
 \]
 
 \end_inset
@@ -496,8 +799,67 @@ Under this assumption, the expression for
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Standard
+为了化简第二个积分，引入
+\emph on
 数值通量
+\emph default
+（numerical flux）函数
+\begin_inset Formula 
+\[
+\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}:=\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x_{e\pm\nicefrac{1}{2}},t)\dd{t},\quad\forall\,e\in E
+\]
+
+\end_inset
+
+在充分短的时段 
+\begin_inset Formula $(t_{n},t_{n+1}]$
+\end_inset
+
+ 内，被积函数中的 
+\begin_inset Formula $\widetilde{U}^{n}(x_{e\pm\nicefrac{1}{2}},t)=\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0)$
+\end_inset
+
+ 为常量，因此这里的积分并不需要真正去计算，而是可以直接得到
+\begin_inset Formula 
+\[
+\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}=F\circ\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0),\quad\forall\,e\in E
+\]
+
+\end_inset
+
+于是第二个积分可以化简为
+\begin_inset Formula 
+\[
+\eval[\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x,t)\dd{t}|_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=\left(\widehat{F}_{e+\nicefrac{1}{2}}^{n}-\widehat{F}_{e-\nicefrac{1}{2}}^{n}\right)(t_{n+1}-t_{n}),\quad\forall\,e\in E
+\]
+
+\end_inset
+
+从而得到了显式迭代格式
+\begin_inset Formula 
+\[
+\boxed{\overline{U}_{e}^{n+1}=\overline{U}_{e}^{n}-\frac{t_{n+1}-t_{n}}{h_{e}}\left(\widehat{F}_{e+\nicefrac{1}{2}}^{n}-\widehat{F}_{e-\nicefrac{1}{2}}^{n}\right),\quad\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}=F\circ\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0),\quad\forall\,e\in E}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+通量差分分裂
+\end_layout
+
+\begin_layout Section
+Riemann 问题的近似解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Riemann-问题的近似解"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
