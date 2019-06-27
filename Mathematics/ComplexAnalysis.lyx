@@ -31,6 +31,7 @@
 \use_default_options true
 \begin_modules
 theorems-ams-bytype
+theorems-ams-extended-bytype
 figs-within-sections
 \end_modules
 \maintain_unincluded_children false
@@ -2057,6 +2058,35 @@ status open
 
 \begin_layout Plain Layout
 
+[双曲函数]
+\end_layout
+
+\end_inset
+
+宗量为复数的双曲函数定义为
+\begin_inset Formula 
+\[
+\cosh z:=\frac{\mathrm{e}^{z}+\mathrm{e}^{-z}}{2},\quad\sinh z:=\frac{\mathrm{e}^{z}-\mathrm{e}^{-z}}{2},\quad\forall\,z\in\mathbb{C}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 [三角函数]
 \end_layout
 
@@ -2501,7 +2531,7 @@ status open
 \end_inset
 
   是 
-\begin_inset Formula $\exp(z^{-k})$
+\begin_inset Formula $\exp(z^{-n})$
 \end_inset
 
  的
@@ -3417,6 +3447,108 @@ status open
 
 \end_layout
 
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭合路径的方向]
+\end_layout
+
+\end_inset
+
+若不加说明，沿闭合路径 
+\begin_inset Formula $C$
+\end_inset
+
+ 的积分 
+\begin_inset Formula $\oint_{C}f(z)\dd{z}$
+\end_inset
+
+ 表示「沿闭合曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 所围区域的边界的正向行走」，并且「边界的正向」总是使区域位于前进方向左侧。
+\end_layout
+
+\begin_layout Notation
+如果区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 是单连通的，则「边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 的正向」为逆时针方向，因此
+\begin_inset Formula 
+\[
+\oint_{\partial D}f(z)\dd{z}\equiv\ointctrclockwise_{\partial D}f(z)\dd{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+如果区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 是复连通的，则「外部边界 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ 的正向」为逆时针方向，而「内部边界 
+\begin_inset Formula $\left\{ C_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 的正向」为顺时针方向，因此
+\begin_inset Formula 
+\[
+\begin{aligned}\oint_{\partial D}f(z)\dd{z} & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}+\sum_{k=1}^{n}\ointclockwise_{C_{k}}f(z)\dd{z}\\
+ & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\ointctrclockwise_{C_{k}}f(z)\dd{z}\\
+ & \equiv\oint_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\oint_{C_{k}}f(z)\dd{z}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+整数次幂函数在单位圆上的积分具有特殊意义：
+\begin_inset Formula 
+\begin{equation}
+\oint_{\abs{z-a}=1}(z-a)^{n}\dd{z}=\int_{0}^{2\uppi}\mathrm{e}^{\mathrm{i}n\theta}\cdot\mathrm{e}^{\mathrm{i}\theta}\mathrm{i}\dd{\theta}=\begin{cases}
+\eval{\frac{\left(\mathrm{e}^{\mathrm{i}\theta}\right)^{n+1}}{n+1}}_{0}^{2\pi}=0 & n\ne-1\\
+2\uppi\mathrm{i} & n=-1
+\end{cases}\label{eq:整数次幂函数在闭合回路上的积分}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 常用引理
 \end_layout
@@ -3779,96 +3911,7 @@ M_{R}\to0\implies & \to0
 \end_layout
 
 \begin_layout Subsection
-沿闭合路径的积分
-\end_layout
-
-\begin_layout Standard
-若不加说明，沿闭合路径 
-\begin_inset Formula $C$
-\end_inset
-
- 的积分 
-\begin_inset Formula $\oint_{C}f(z)\dd{z}$
-\end_inset
-
- 表示「沿闭合曲线 
-\begin_inset Formula $C$
-\end_inset
-
- 所围区域的边界的正向行走」，并且「边界的正向」总是使区域位于前进方向左侧。
-\end_layout
-
-\begin_layout Standard
-如果区域 
-\begin_inset Formula $D$
-\end_inset
-
- 是单连通的，则「边界 
-\begin_inset Formula $\partial D$
-\end_inset
-
- 的正向」为逆时针方向，因此
-\begin_inset Formula 
-\[
-\oint_{\partial D}f(z)\dd{z}\equiv\ointctrclockwise_{\partial D}f(z)\dd{z}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-如果区域 
-\begin_inset Formula $D$
-\end_inset
-
- 是复连通的，则「外部边界 
-\begin_inset Formula $C_{0}$
-\end_inset
-
- 的正向」为逆时针方向，而「内部边界 
-\begin_inset Formula $\left\{ C_{k}\right\} _{k=1}^{n}$
-\end_inset
-
- 的正向」为顺时针方向，因此
-\begin_inset Formula 
-\[
-\begin{aligned}\oint_{\partial D}f(z)\dd{z} & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}+\sum_{k=1}^{n}\ointclockwise_{C_{k}}f(z)\dd{z}\\
- & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\ointctrclockwise_{C_{k}}f(z)\dd{z}\\
- & \equiv\oint_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\oint_{C_{k}}f(z)\dd{z}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 Cauchy 定理
-\end_layout
-
-\begin_layout Example
-整数次幂函数在单位圆上的积分具有特殊意义：
-\begin_inset Formula 
-\begin{equation}
-\oint_{\abs{z-a}=1}(z-a)^{n}\dd{z}=\int_{0}^{2\uppi}\mathrm{e}^{\mathrm{i}n\theta}\cdot\mathrm{e}^{\mathrm{i}\theta}\mathrm{i}\dd{\theta}=\begin{cases}
-\eval{\frac{\left(\mathrm{e}^{\mathrm{i}\theta}\right)^{n+1}}{n+1}}_{0}^{2\pi}=0 & n\ne-1\\
-2\uppi\mathrm{i} & n=-1
-\end{cases}\label{eq:整数次幂函数在闭合回路上的积分}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Theorem
@@ -3967,7 +4010,7 @@ reference "thm:Cauchy--Riemann"
 \end_layout
 
 \begin_layout Corollary
-复变函数在其解析区域内的路径积分与积分路径无关。
+解析函数在（解析区域内的）开路径上的积分只与路径的端点有关。
 \end_layout
 
 \begin_layout Standard
@@ -4509,10 +4552,6 @@ status open
 \end_layout
 
 \begin_layout Section
-收敛圆
-\end_layout
-
-\begin_layout Section
 Taylor 展开
 \end_layout
 
@@ -4803,6 +4842,57 @@ f_{2}(z) & z\in D_{2}\setminus D_{1}
 以上延拓过程可以一直持续到：解析区域覆盖除奇点以外的整个复平面（或更一般的 Riemann 面）。
 \end_layout
 
+\begin_layout Theorem
+设函数 
+\begin_inset Formula $f_{1}(z)$
+\end_inset
+
+ 和 
+\begin_inset Formula $f_{2}(z)$
+\end_inset
+
+ 分别在区域 
+\begin_inset Formula $D_{1}$
+\end_inset
+
+ 和 
+\begin_inset Formula $D_{2}$
+\end_inset
+
+ 内解析，且 
+\begin_inset Formula $D_{1}\cap D_{2}$
+\end_inset
+
+ 的面积不为零。如果 
+\begin_inset Formula $f_{1}(z)=f_{2}(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $D_{1}\cap D_{2}$
+\end_inset
+
+ 中的任意一条有限长的线段上处处成立，则 
+\begin_inset Formula $f_{1}(z)$
+\end_inset
+
+ 和 
+\begin_inset Formula $f_{2}(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $D_{1}\cap D_{2}$
+\end_inset
+
+ 上等价。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Laurent 展开
 \end_layout
@@ -4953,11 +5043,19 @@ status open
 \begin_inset Formula $f(z)$
 \end_inset
 
- 的孤立奇点。根据 Laurent 级数 
+ 的孤立奇点，
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $s$
+\end_inset
+
+ 的邻域内解析，从而有 Laurent 展开 
 \begin_inset Formula $f(z)=\sum_{k=-\infty}^{\infty}(z-s)^{k}a_{k}$
 \end_inset
 
- 中的负幂项个数，可以将孤立奇点分为三种类型：
+，根据其中的负幂项个数，可以将孤立奇点分为三种类型：
 \end_layout
 
 \begin_layout Definition
@@ -5021,6 +5119,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+非正式地，可以将「可去奇点」称为「零阶极点」，将「本质奇点」称为「无穷阶极点」。
 \end_layout
 
 \begin_layout Theorem
@@ -5113,7 +5215,7 @@ status open
 \end_layout
 
 \begin_layout Definition
-所有有限远奇点都是极点的函数称为
+全体有限远奇点都是极点的函数称为
 \emph on
 亚纯
 \emph default
@@ -5605,11 +5707,19 @@ status open
 
 \end_inset
 
-则称它为瑕积分 
+则称它为 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上的积分值，记为 
 \begin_inset Formula $\int_{a}^{b}f(x)\dd{x}$
 \end_inset
 
- 的值。
+。
 \end_layout
 
 \begin_layout Definition
@@ -5621,12 +5731,28 @@ status open
 
 \end_inset
 
-则称它为瑕积分 
-\begin_inset Formula $\int_{a}^{b}f(x)\dd{x}$
+则称它为 
+\begin_inset Formula $f(x)$
 \end_inset
 
- 的 Cauchy 主值，记作 
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上的
+\emph on
+瑕积分
+\emph default
+（flaw integral）的 Cauchy 
+\emph on
+主值
+\emph default
+（principal value），记作 
 \begin_inset Formula $\pv{\int_{a}^{b}f(x)\dd{x}}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\fint_{a}^{b}f(x)\dd{x}$
 \end_inset
 
 。
@@ -5711,7 +5837,7 @@ name "thm:推广的留数定理"
 \end_layout
 
 \begin_layout Section
-用于计算定积分
+计算定积分
 \end_layout
 
 \begin_layout Subsection
@@ -6061,7 +6187,7 @@ reference "lem:大圆弧"
 \end_layout
 
 \begin_layout Standard
-在 Fourier 分析中，经常会遇到形如 
+在 Fourier 变换中，经常会遇到形如 
 \begin_inset Formula $\int_{-\infty}^{\infty}f(x)\mathrm{e}^{\mathrm{i}kx}\dd{x}$
 \end_inset
 
@@ -6090,7 +6216,7 @@ reference "lem:Jordan"
 计算积分
 \begin_inset Formula 
 \[
-\pv{\int_{-\infty}^{\infty}\frac{\cos kx}{x}\dd{x}}=0,\quad\int_{-\infty}^{\infty}\frac{\sin kx}{x}\dd{x}=\uppi
+\fint_{-\infty}^{\infty}\frac{\cos kx}{x}\dd{x},\quad\int_{-\infty}^{\infty}\frac{\sin kx}{x}\dd{x}
 \]
 
 \end_inset
@@ -6128,7 +6254,7 @@ reference "thm:推广的留数定理"
 。
 \begin_inset Formula 
 \[
-\pv{\int_{-\infty}^{\infty}\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}}=\lim_{R\to\infty}\lim_{\delta\to0}\left(\int_{-R}^{-\delta}+\int_{+\delta}^{+R}\right)\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}=\lim_{R\to\infty}\lim_{\delta\to0}\left(\oint_{C}-\int_{C_{R}}\right)\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}
+\fint_{-\infty}^{\infty}\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}=\lim_{R\to\infty}\lim_{\delta\to0}\left(\int_{-R}^{-\delta}+\int_{+\delta}^{+R}\right)\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}=\lim_{R\to\infty}\lim_{\delta\to0}\left(\oint_{C}-\int_{C_{R}}\right)\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}
 \]
 
 \end_inset
@@ -6183,7 +6309,7 @@ reference "lem:Jordan"
 综合以上结果，得到
 \begin_inset Formula 
 \[
-\pv{\int_{-\infty}^{\infty}\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}}=\uppi\mathrm{i}
+\fint_{-\infty}^{\infty}\frac{\mathrm{e}^{\mathrm{i}kz}}{z}\dd{z}=\uppi\mathrm{i}
 \]
 
 \end_inset
@@ -6191,7 +6317,7 @@ reference "lem:Jordan"
 分别取实部和虚部即得
 \begin_inset Formula 
 \[
-\pv{\int_{-\infty}^{\infty}\frac{\cos kx}{x}\dd{x}}=0,\quad\int_{-\infty}^{\infty}\frac{\sin kx}{x}\dd{x}=\uppi
+\fint_{-\infty}^{\infty}\frac{\cos kx}{x}\dd{x}=0,\quad\int_{-\infty}^{\infty}\frac{\sin kx}{x}\dd{x}=\uppi
 \]
 
 \end_inset
@@ -6207,7 +6333,23 @@ reference "lem:Jordan"
 \end_layout
 
 \begin_layout Subsection
-含根式函数的无穷积分
+含多值函数的无穷积分
+\end_layout
+
+\begin_layout Standard
+在复变函数意义下，根式函数 
+\begin_inset Formula $\sqrt[n]{z}$
+\end_inset
+
+ 和对数函数 
+\begin_inset Formula $\ln z$
+\end_inset
+
+ 是以 
+\begin_inset Formula $z=0,\infty$
+\end_inset
+
+ 为枝点的多值函数。因此在构造积分路径时，应当使其避开割线（限制在单值分枝上）。
 \end_layout
 
 \begin_layout Standard
@@ -6215,23 +6357,33 @@ reference "lem:Jordan"
 \begin_inset Formula $\int_{0}^{\infty}x^{\alpha-1}f(x)\dd{x}$
 \end_inset
 
- 的积分，其中实参数 
+ 的积分，其中 
 \begin_inset Formula $\alpha\in(0,1)$
 \end_inset
 
-，延拓后的函数 
+ 为有理参数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+参数 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 也可以是实的：只需要利用 
+\begin_inset Formula $z^{\alpha}\equiv\mathrm{e}^{\alpha\ln z}$
+\end_inset
+
+ 就能将其转化为含对数函数的无穷积分。
+\end_layout
+
+\end_inset
+
+， 函数 
 \begin_inset Formula $f(z)$
 \end_inset
 
  在正实轴上单值且无奇点。
-\end_layout
-
-\begin_layout Standard
-在复变函数意义下，根式函数（或更一般的非整数次幂函数）是以 
-\begin_inset Formula $z=0,\infty$
-\end_inset
-
- 为枝点的多值函数。因此在构造积分路径时，应当使其避开割线（限制在单值分枝上）。
 \end_layout
 
 \begin_layout Example
@@ -6487,11 +6639,11 @@ C_{\delta} & =\left\{ z=\delta\mathrm{e}^{\mathrm{i}\theta}:\theta\in(0,2\uppi)\
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:根式函数的积分路径"
+name "fig:多值函数的积分路径"
 
 \end_inset
 
-根式函数的积分路径
+多值函数的积分路径
 \end_layout
 
 \end_inset
@@ -6504,7 +6656,7 @@ name "fig:根式函数的积分路径"
 图
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "fig:根式函数的积分路径"
+reference "fig:多值函数的积分路径"
 
 \end_inset
 
@@ -6612,8 +6764,8 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsection
-含对数函数的无穷积分
+\begin_layout Standard
+同样积分路径可以用于计算含对数函数的积分。
 \end_layout
 
 \begin_layout Example
@@ -6639,15 +6791,17 @@ noprefix "false"
 \end_layout
 
 \begin_layout Solution*
-为避开多值函数 
-\begin_inset Formula $\ln z$
+利用图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:多值函数的积分路径"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
- 的枝点 
-\begin_inset Formula $z=0,\infty$
-\end_inset
-
-，可以利用上一节中的积分路径。
+中的积分路径：
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{0}^{\infty}\frac{\left(\ln x\right)^{2}}{1+x+x^{2}}\dd{x} & =\lim_{R\to\infty}\lim_{\delta\to0}\int_{L_{0}}\frac{\left(\ln z\right)^{2}}{1+z+z^{2}}\dd{z}\\
@@ -6747,7 +6901,7 @@ noprefix "false"
 \begin_inset Formula $\int_{0}^{\infty}\frac{\left(\ln x\right)^{n}}{1+x+x^{2}}\dd{x}$
 \end_inset
 
-，应当从 
+，需要从 
 \begin_inset Formula $\int_{0}^{\infty}\frac{\left(\ln x\right)^{n+1}}{1+x+x^{2}}\dd{x}$
 \end_inset
 
@@ -6770,7 +6924,656 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-用于计算级数和
+计算级数和
+\end_layout
+
+\begin_layout Standard
+函数 
+\begin_inset Formula $g(z)=\uppi\cot\uppi z$
+\end_inset
+
+ 的所有奇点 
+\begin_inset Formula $S_{g}:=\left\{ n\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 都是一阶极点，它们均匀地分布在实轴上，并且具有相同的留数：
+\begin_inset Formula 
+\[
+\Res g(n)=\eval{\frac{\uppi\cos\uppi z}{\left(\sin\uppi z\right)'}}_{z=n}=1,\quad\forall\,n\in\mathbb{Z}
+\]
+
+\end_inset
+
+利用这一性质，可以将形如 
+\begin_inset Formula $\sum_{n}f(n)$
+\end_inset
+
+ 的求和转化为 
+\begin_inset Formula $\sum_{n}f(n)\Res g(n)$
+\end_inset
+
+，其中函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 应当满足 
+\begin_inset Formula $\lim_{\abs{z}\to0}zf(z)=0$
+\end_inset
+
+（级数 
+\begin_inset Formula $\sum_{n}f(n)$
+\end_inset
+
+ 收敛的必要条件），并且只拥有（有限个）孤立奇点（将 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的全体有限远奇点的集合记为 
+\begin_inset Formula $S_{f}$
+\end_inset
+
+）。如果 
+\begin_inset Formula $z=n$
+\end_inset
+
+ 不是 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的零点，则显然有 
+\begin_inset Formula $f(n)\Res g(n)=\Res f(n)g(n)$
+\end_inset
+
+；反之，即使 
+\begin_inset Formula $z=n$
+\end_inset
+
+ 恰好是 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的零点，也依然有 
+\begin_inset Formula $f(n)\Res g(n)=0\cdot1=\Res f(n)g(n)$
+\end_inset
+
+。因此，待求的级数和可以进一步化为 
+\begin_inset Formula $\sum_{n}f(n)=\sum_{n}\Res f(n)g(n)$
+\end_inset
+
+，这提示我们考虑形如 
+\begin_inset Formula $I_{N}:=\oint_{C_{N}}f(z)g(z)\dd{z}$
+\end_inset
+
+ 的积分。
+\end_layout
+
+\begin_layout Standard
+积分路径 
+\begin_inset Formula $C_{N}$
+\end_inset
+
+ 可以取作「以 
+\begin_inset Formula $z=0$
+\end_inset
+
+ 为对称中心、
+\begin_inset Formula $N+\nicefrac{1}{2}$
+\end_inset
+
+ 为半边长的正方形」，如
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[thin, >=Stealth, radius=2pt]{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>, thick] (2.5, -2.5) -- (2.5, 2.5) node[above right]{$A$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>, thick] (2.5, 2.5) -- (-2.5, 2.5) node[above right]{$B$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>, thick] (-2.5, 2.5) -- (-2.5, -2.5) node[above right]{$C$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->>, thick] (-2.5, -2.5) -- (2.5, -2.5) node[above right]{$D$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (0, 0) -- (3.5, 0) node[below]{$x$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->] (0, 0) -- (0, 3.5) node[left]{$y$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (0, 2.5-0.3) circle node[right]{$N$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (0, 2.5+0.3) circle node[right]{$N+1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (2.5-0.3, 0) circle node[right, rotate=-90]{$N$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (2.5+0.3, 0) circle node[right, rotate=-90]{$N+1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+} 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\begin{aligned}R & =N+\frac{1}{2}\\
+AB & =\left\{ z=x+\mathrm{i}R:x\in(-R,R)\right\} \\
+BC & =\left\{ z=-R+\mathrm{i}y:y\in(-R,R)\right\} \\
+CD & =\left\{ z=x-\mathrm{i}R:x\in(-R,R)\right\} \\
+DA & =\left\{ z=R+\mathrm{i}y:y\in(-R,R)\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:计算级数和所用的积分路径"
+
+\end_inset
+
+计算级数和所用的积分路径
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+图
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:计算级数和所用的积分路径"
+
+\end_inset
+
+所示。选择这样的积分路径，是为了便于证明以下引理：
+\end_layout
+
+\begin_layout Lemma
+存在不依赖于 
+\begin_inset Formula $N$
+\end_inset
+
+ 的常数 
+\begin_inset Formula $M>0$
+\end_inset
+
+，使得在积分路径 
+\begin_inset Formula $C_{N}$
+\end_inset
+
+ 上有 
+\begin_inset Formula $\abs{\cot\uppi z}\le M$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 
+\begin_inset Formula $z=x+\mathrm{i}y$
+\end_inset
+
+ 代入三角函数与指数函数的恒等式，得到
+\begin_inset Formula 
+\[
+\cos\uppi z=\frac{\mathrm{e}^{-\mathrm{i}\uppi x}\left(\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}+\mathrm{e}^{\uppi y}\right)}{2},\quad\sin\uppi z=\frac{\mathrm{e}^{-\mathrm{i}\uppi x}\left(\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}-\mathrm{e}^{\uppi y}\right)}{2\mathrm{i}}
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $BC$
+\end_inset
+
+ 和 
+\begin_inset Formula $DA$
+\end_inset
+
+ 上：
+\begin_inset Formula 
+\[
+x=\pm(N+\nicefrac{1}{2}),\quad\mathrm{e}^{\mathrm{i}2\uppi x}=-1\implies\abs{\cot\uppi z}=\abs{\frac{\sinh\uppi y}{\cosh\uppi y}}=\abs{\tanh\uppi y}\in[0,1)
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $AB$
+\end_inset
+
+ 上：
+\begin_inset Formula 
+\[
+y=N+\nicefrac{1}{2},\quad\mathrm{e}^{-\uppi y}\to0,\quad\mathrm{e}^{\uppi y}\to\infty\implies\abs{\cot\uppi z}=\abs{\frac{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}+\mathrm{e}^{\uppi y}}{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}-\mathrm{e}^{\uppi y}}}\to\abs{\frac{+\mathrm{e}^{\uppi y}}{-\mathrm{e}^{\uppi y}}}\to1
+\]
+
+\end_inset
+
+同理，在 
+\begin_inset Formula $CD$
+\end_inset
+
+ 上：
+\begin_inset Formula 
+\[
+y=-(N+\nicefrac{1}{2}),\quad\mathrm{e}^{\uppi y}\to0,\quad\mathrm{e}^{-\uppi y}\to\infty\implies\abs{\cot\uppi z}=\abs{\frac{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}+\mathrm{e}^{\uppi y}}{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}-\mathrm{e}^{\uppi y}}}\to\abs{\frac{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}}{\mathrm{e}^{\mathrm{i}2\uppi x}\mathrm{e}^{-\uppi y}}}\to1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据该引理，以及 
+\begin_inset Formula $\lim_{\abs{z}\to0}zf(z)=0$
+\end_inset
+
+，可知 
+\begin_inset Formula $f(z)g(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $C_{N}$
+\end_inset
+
+ 上满足
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "lem:大圆弧"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+引理的条件，从而有 
+\begin_inset Formula $\lim_{N\to\infty}I_{N}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+另一方面，由
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:留数定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+I_{N}:=\oint_{C_{N}}f(z)g(z)\dd{z}=2\uppi\mathrm{i}\sum_{s\in\left(S_{f}\cup S_{g}\right)\cap C_{N}}\Res f(s)g(s)
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $N\to\infty$
+\end_inset
+
+ 时，有 
+\begin_inset Formula $I_{N}\to0$
+\end_inset
+
+ 以及 
+\begin_inset Formula $\left(S_{f}\cup S_{g}\right)\cap C_{N}\to S_{f}\cup S_{g}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+0=\sum_{s\in S_{f}\cup S_{g}}\Res f(s)g(s)\implies\sum_{s\in S_{g}\setminus S_{f}}f(s)=\sum_{n\in S_{g}\setminus S_{f}}f(n)=-\sum_{s\in S_{f}}\Res f(s)g(s)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+计算级数和
+\begin_inset Formula 
+\[
+S=\sum_{n=1}^{\infty}\frac{1}{n^{2}+a^{2}},\quad a\notin\mathbb{Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+定义 
+\begin_inset Formula $f(z)=(z^{2}+a^{2})^{-1}$
+\end_inset
+
+，可以验证它满足 
+\begin_inset Formula $\lim_{\abs{z}\to0}zf(z)=0$
+\end_inset
+
+，并且只拥有 
+\begin_inset Formula $\pm\mathrm{i}a$
+\end_inset
+
+ 这两个一阶极点，它们都不是 
+\begin_inset Formula $g(z)$
+\end_inset
+
+ 的奇点，因此是 
+\begin_inset Formula $f(z)g(z)$
+\end_inset
+
+ 的一阶极点，此处的留数为
+\begin_inset Formula 
+\[
+\eval{\Res f(z)g(z)}_{z=\pm\mathrm{i}a}=\eval{\frac{\uppi\cot\uppi z}{(z^{2}+a^{2})'}}_{z=\pm\mathrm{i}a}=\frac{\uppi\cot(\pm\mathrm{i}\uppi a)}{\pm2\mathrm{i}a}=\frac{\uppi\coth\uppi a}{-2a}
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $S_{f}=\left\{ \pm\mathrm{i}a\right\} $
+\end_inset
+
+ 以及
+\begin_inset Formula 
+\[
+\sum_{n\in S_{g}\setminus S_{f}}f(n)=\sum_{n=-\infty}^{-1}f(n)+\sum_{n=1}^{\infty}f(n)+f(0)=2S+\frac{1}{a^{2}}
+\]
+
+\end_inset
+
+于是有
+\begin_inset Formula 
+\[
+2S+\frac{1}{a^{2}}=\sum_{s\in S_{g}\setminus S_{f}}f(s)=-\sum_{s\in S_{f}}\Res f(s)g(s)=\frac{\uppi\coth\uppi a}{a}\implies S=\frac{\uppi\coth\uppi a}{a}-\frac{1}{2a^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+计算级数和
+\begin_inset Formula 
+\[
+S=\sum_{k=1}^{\infty}\frac{1}{k^{n}},\quad\frac{n}{2}\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+定义 
+\begin_inset Formula $f(z)=z^{-n}$
+\end_inset
+
+，可以验证它满足 
+\begin_inset Formula $\lim_{\abs{z}\to0}zf(z)=0$
+\end_inset
+
+，并且只拥有 
+\begin_inset Formula $z=0$
+\end_inset
+
+ 这一个 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶极点，它也是 
+\begin_inset Formula $g(z)$
+\end_inset
+
+ 的一阶极点，因此是 
+\begin_inset Formula $f(z)g(z)$
+\end_inset
+
+ 的 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 阶极点，此处的留数为
+\begin_inset Formula 
+\[
+\eval{\Res f(z)g(z)}_{z=0}=\frac{\uppi\cot\uppi z}{z^{n}}\,\text{的}\,a_{-1}=\uppi\cot\uppi z\,\text{的}\,a_{n-1}
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula 
+\[
+\cot z=\frac{1}{z}-\frac{1}{3}z-\frac{1}{45}z^{3}-\frac{2}{945}z^{5}-\cdots\implies\cot\uppi z=\frac{1}{\uppi z}-\frac{\uppi}{3}z-\frac{\uppi^{3}}{45}z^{3}-\frac{2\uppi^{5}}{945}z^{5}-\cdots
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+\eval{\Res f(z)g(z)}_{z=0}=\uppi\cdot\begin{cases}
+-\uppi/3, & n=2\\
+-\uppi^{3}/45, & n=4\\
+-\uppi^{5}2/945, & n=6
+\end{cases}
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $S_{f}=\left\{ 0\right\} $
+\end_inset
+
+ 以及
+\begin_inset Formula 
+\[
+\sum_{n\in S_{g}\setminus S_{f}}f(n)=\sum_{n=-\infty}^{-1}f(n)+\sum_{n=1}^{\infty}f(n)=2S
+\]
+
+\end_inset
+
+于是有
+\begin_inset Formula 
+\[
+2S=\sum_{s\in S_{g}\setminus S_{f}}f(s)=-\sum_{s\in S_{f}}\Res f(s)g(s)=-\eval{\Res f(z)g(z)}_{z=0}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\sum_{k=1}^{\infty}\frac{1}{k^{n}}=S=\begin{cases}
+\uppi^{2}/6, & n=2\\
+\uppi^{4}/90, & n=4\\
+\uppi^{6}/945, & n=6\\
+\dots & \dots
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
