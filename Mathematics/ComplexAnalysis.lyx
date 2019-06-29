@@ -8084,7 +8084,7 @@ I_{R}=\oint_{C_{R}}\frac{f(\zeta)}{(z-\zeta)\zeta}\dd{\zeta}=2\uppi\mathrm{i}\su
 \begin_inset Float table
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -8421,12 +8421,31 @@ reference "thm:Mittag–Leffler"
  的极点展开
 \begin_inset Formula 
 \[
-\begin{aligned}\sec z-\sec0 & =\left(\sum_{n=-\infty}^{-1}+\sum_{n=0}^{\infty}\right)\left(\frac{1}{z-(n+\nicefrac{1}{2})\uppi}+\frac{1}{(n+\nicefrac{1}{2})\uppi}\right)(-1)^{n+1}\\
-n:=-m-1\implies & =\sum_{m=0}^{\infty}\left(\frac{(-1)^{-m}}{z-(-m-\nicefrac{1}{2})\uppi}+\frac{(-1)^{-m}}{(-m-\nicefrac{1}{2})\uppi}\right)\\
- & +\sum_{n=0}^{\infty}\left(\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})\uppi}+\frac{(-1)^{n+1}}{(n+\nicefrac{1}{2})\uppi}\right)\\
-m:=n\implies & =\sum_{n=0}^{\infty}\left(\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})\uppi}+\frac{(-1)^{n}}{z+(n+\nicefrac{1}{2})\uppi}\right)\\
- & +\sum_{m=0}^{\infty}\left(\frac{(-1)^{n+1}}{(n+\nicefrac{1}{2})\uppi}-\frac{(-1)^{n}}{(n+\nicefrac{1}{2})\uppi}\right)\\
- & =\sum_{n=0}^{\infty}\frac{(-1)^{n}(2n+1)\uppi}{(n+\nicefrac{1}{2})^{2}\uppi^{2}-z^{2}}+\frac{2}{\uppi}\sum_{n=0}^{\infty}\frac{(-1)^{n+1}}{(n+\nicefrac{1}{2})}
+\sec z-\sec0=\left(\sum_{n=-\infty}^{-1}+\sum_{n=0}^{\infty}\right)\left(\frac{1}{z-(n+\nicefrac{1}{2})\uppi}+\frac{1}{(n+\nicefrac{1}{2})\uppi}\right)(-1)^{n+1}
+\]
+
+\end_inset
+
+其中负指标可以通过 
+\begin_inset Formula $n=-m-1$
+\end_inset
+
+ 变换为正指标：
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{n=-\infty}^{-1}\left(\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})\uppi}+\frac{(-1)^{n+1}}{(n+\nicefrac{1}{2})\uppi}\right) & =\sum_{m=0}^{\infty}\left(\frac{(-1)^{-m}}{z-(-m-\nicefrac{1}{2})\uppi}+\frac{(-1)^{-m}}{(-m-\nicefrac{1}{2})\uppi}\right)\\
+ & =\sum_{m=0}^{\infty}\left(\frac{(-1)^{m}}{z+(m+\nicefrac{1}{2})\uppi}+\frac{(-1)^{m+1}}{(m+\nicefrac{1}{2})\uppi}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+代回原式并重新安排求和顺序即得
+\begin_inset Formula 
+\[
+\begin{aligned}\sec z-\sec0 & =\left(\sum_{m=0}^{\infty}\frac{(-1)^{m}}{z+(m+\nicefrac{1}{2})\uppi}+\sum_{n=0}^{\infty}\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})\uppi}\right)\\
+ & +\left(\sum_{m=0}^{\infty}\frac{(-1)^{m+1}}{(m+\nicefrac{1}{2})\uppi}+\sum_{n=0}^{\infty}\frac{(-1)^{n+1}}{(n+\nicefrac{1}{2})\uppi}\right)\\
+ & =\sum_{n=0}^{\infty}\frac{(-1)^{n}(2n+1)\uppi}{(n+\nicefrac{1}{2})^{2}\uppi^{2}-z^{2}}-\frac{2}{\uppi}\sum_{n=0}^{\infty}\frac{(-1)^{n}}{n+\nicefrac{1}{2}}
 \end{aligned}
 \]
 
@@ -8436,7 +8455,15 @@ m:=n\implies & =\sum_{n=0}^{\infty}\left(\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})
 \begin_inset Formula $-\sec0$
 \end_inset
 
- 相互抵消，最后剩下的就是需要证明的结果。
+ 相互抵消，最后剩下的就是需要证明的结果：
+\begin_inset Formula 
+\[
+\sec z=\sum_{n=0}^{\infty}\frac{(-1)^{n}(2n+1)\uppi}{(n+\nicefrac{1}{2})^{2}\uppi^{2}-z^{2}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8447,11 +8474,397 @@ m:=n\implies & =\sum_{n=0}^{\infty}\left(\frac{(-1)^{n+1}}{z-(n+\nicefrac{1}{2})
 \end_layout
 
 \begin_layout Subsection
-极点和零点的个数
+极点与零点的个数
+\end_layout
+
+\begin_layout Standard
+亚纯函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在其零点或极点 
+\begin_inset Formula $z=s$
+\end_inset
+
+ 附近总是可以表示为 
+\begin_inset Formula $f(z)=(z-s)^{k}g(z)$
+\end_inset
+
+，其中 
+\begin_inset Formula $k\in\mathbb{Z}$
+\end_inset
+
+，
+\begin_inset Formula $g(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $z=s$
+\end_inset
+
+ 附近解析且 
+\begin_inset Formula $g(s)\ne0$
+\end_inset
+
+。由等式
+\begin_inset Formula 
+\[
+\frac{f'(z)}{f(z)}=\frac{\left[(z-s)^{k}\right]'g(z)+(z-s)^{k}g'(z)}{(z-s)^{k}g(z)}=\frac{k}{z-s}+\frac{g'(z)}{g(z)}
+\]
+
+\end_inset
+
+可知：
+\begin_inset Formula $z=s$
+\end_inset
+
+ 是 
+\begin_inset Formula $f'(z)/f(z)$
+\end_inset
+
+ 的一阶极点。设 
+\begin_inset Formula $C$
+\end_inset
+
+ 为不经过 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的零点或极点的任意简单闭合路径，由
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:留数定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\frac{1}{2\uppi\mathrm{i}}\oint_{C}\frac{f'(z)}{f(z)}\dd{z}=\sum_{s\in C}k=\left(\sum_{s\in C\land k>0}k\right)-\left(\sum_{s\in C\land k<0}\abs{k}\right)=Z_{f}-P_{f}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $Z_{f}$
+\end_inset
+
+ 与 
+\begin_inset Formula $P_{f}$
+\end_inset
+
+ 分别表示 
+\begin_inset Formula $C$
+\end_inset
+
+ 所围区域（也用 
+\begin_inset Formula $C$
+\end_inset
+
+ 表示）内零点（Zero）与极点（Pole）阶数之和。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Rouché]
+\end_layout
+
+\end_inset
+
+如果 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 与 
+\begin_inset Formula $g(z)$
+\end_inset
+
+ 在单连通区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，并且在边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上满足 
+\begin_inset Formula $\abs{f(z)}>\abs{g(z)}$
+\end_inset
+
+，则 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 与 
+\begin_inset Formula $f(z)+g(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $D$
+\end_inset
+
+ 内的零点个数相等。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+二者的零点个数分别为
+\begin_inset Formula 
+\[
+\oint_{\partial D}\frac{f'(z)}{f(z)}\dd{z}=\mathrm{i}2\uppi Z_{f},\quad\oint_{\partial D}\frac{f'(z)+g'(z)}{f(z)+g(z)}\dd{z}=\mathrm{i}2\uppi Z_{f+g}
+\]
+
+\end_inset
+
+考察第一个积分
+\begin_inset Formula 
+\[
+\oint_{\partial D}\frac{f'(z)}{f(z)}\dd{z}=\oint_{\partial D}\left[\ln f(z)\right]'\dd{z}=\eval{\ln f(z)}_{R\exp(\mathrm{i}0)}^{R\exp(\mathrm{i}2\uppi)}=\mathrm{i}\eval{\arg f(z)}_{R\exp(\mathrm{i}0)}^{R\exp(\mathrm{i}2\uppi)}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $Z_{f}$
+\end_inset
+
+ 的几何意义为：沿 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 绕行一周，函数值 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的辐角变化了 
+\begin_inset Formula $Z_{f}$
+\end_inset
+
+ 个 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+类似地，考察第二个积分的被积函数：
+\begin_inset Formula 
+\[
+f+g=(1+\nicefrac{g}{f})f\implies\arg(f+g)=\arg(1+\nicefrac{g}{f})+\arg f
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $\abs{f(z)}>\abs{g(z)}$
+\end_inset
+
+ 即 
+\begin_inset Formula $\abs{g/f}\in[0,1)$
+\end_inset
+
+ 可知 
+\begin_inset Formula $\arg(1+\nicefrac{g}{f})\in(-\nicefrac{\uppi}{2},\nicefrac{\uppi}{2})$
+\end_inset
+
+，因此这一项对 
+\begin_inset Formula $Z_{f+g}$
+\end_inset
+
+ 的贡献为零，从而有 
+\begin_inset Formula $Z_{f+g}=Z_{f}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 整函数的乘积展开
+\end_layout
+
+\begin_layout Standard
+设 
+\begin_inset Formula $f$
+\end_inset
+
+ 为整函数，则 
+\begin_inset Formula $f'/f$
+\end_inset
+
+ 一定是亚纯函数，并且 
+\begin_inset Formula $f$
+\end_inset
+
+ 的零点（将它们的集合记为 
+\begin_inset Formula $Z_{f}$
+\end_inset
+
+）就是 
+\begin_inset Formula $f'/f$
+\end_inset
+
+ 的极点，相应的留数为 
+\begin_inset Formula $\Res f'(s)/f(s)=f'(s)/f'(s)=1$
+\end_inset
+
+，因此有极点展开式
+\begin_inset Formula 
+\[
+\frac{f'(z)}{f(z)}=\frac{f'(0)}{f(0)}+\sum_{s\in Z_{f}}\left(\frac{1}{z-s}+\frac{1}{s}\right)\Res\frac{f'(s)}{f(s)}=\frac{f'(0)}{f(0)}+\sum_{s\in Z_{f}}\left(\frac{1}{z-s}+\frac{1}{s}\right)
+\]
+
+\end_inset
+
+这里假定了 
+\begin_inset Formula $f(0)\ne0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+对两端沿同样的路径作定积分，分别得到
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{0}^{z}\frac{f'(\zeta)}{f(\zeta)}\dd{\zeta} & =\int_{0}^{z}\left[\ln f(\zeta)\right]'\dd{\zeta}=\eval{\ln f(\zeta)}_{0}^{z}=\ln\frac{f(z)}{f(0)}\\
+\int_{0}^{z}\frac{f'(0)}{f(0)}\dd{\zeta} & =z\frac{f'(0)}{f(0)}\\
+\int_{0}^{z}\sum_{s\in Z_{f}}\left(\frac{1}{\zeta-s}+\frac{1}{s}\right)\dd{\zeta} & =\sum_{s\in Z_{f}}\eval(\ln(\zeta-s)+\frac{\zeta}{s}|_{0}^{z}=\sum_{s\in Z_{f}}\left[\ln(1-\frac{z}{s})+\frac{z}{s}\right]
+\end{aligned}
+\]
+
+\end_inset
+
+因此有
+\begin_inset Formula 
+\[
+\ln\frac{f(z)}{f(0)}=z\frac{f'(0)}{f(0)}+\sum_{s\in Z_{f}}\left[\ln(1-\frac{z}{s})+\frac{z}{s}\right]
+\]
+
+\end_inset
+
+写成指数形式，即得 
+\begin_inset Formula $f$
+\end_inset
+
+ 的无穷乘积展开
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{f(z)}{f(0)}=\exp(z\frac{f'(0)}{f(0)})\prod_{s\in Z_{f}}\left(1-\frac{z}{s}\right)\exp(\frac{z}{s})}\label{eq:整函数的无穷乘积展开}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+验证
+\begin_inset Formula 
+\[
+\cos z=\prod_{n=1}^{\infty}\left[1-\left(\frac{z}{(n-\nicefrac{1}{2})\uppi}\right)^{2}\right],\quad\sin z=z\prod_{n=1}^{\infty}\left[1-\left(\frac{z}{n\uppi}\right)^{2}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\cos z$
+\end_inset
+
+ 满足 
+\begin_inset Formula $\cos(0)=1\ne0$
+\end_inset
+
+，直接代入
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:整函数的无穷乘积展开"
+
+\end_inset
+
+式就得到所需验证的无穷乘积展开。
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\sin0=0$
+\end_inset
+
+ 导致
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:整函数的无穷乘积展开"
+
+\end_inset
+
+式不适用于 
+\begin_inset Formula $\sin z$
+\end_inset
+
+，因此需要构造辅助函数 
+\begin_inset Formula $f(z)=z^{-1}\sin z$
+\end_inset
+
+，它满足 
+\begin_inset Formula $f(0)=1\ne0$
+\end_inset
+
+，并且 
+\begin_inset Formula $f'(0)=0$
+\end_inset
+
+，其零点集合为 
+\begin_inset Formula $Z_{f}=\left\{ n\uppi\right\} _{n\in\mathbb{Z}\land n\ne0}$
+\end_inset
+
+，因此有
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{f(z)}{1} & =\exp(z\frac{0}{1})\left[\prod_{n=-\infty}^{-1}\left(1-\frac{z}{n\uppi}\right)\exp(\frac{z}{n\uppi})\right]\left[\prod_{n=1}^{\infty}\left(1-\frac{z}{n\uppi}\right)\exp(\frac{z}{n\uppi})\right]\\
+ & =1\cdot\left[\prod_{n=1}^{\infty}\left(1-\frac{z}{n\uppi}\right)\left(1-\frac{z}{-n\uppi}\right)\right]\left[\prod_{n=1}^{\infty}\exp(\frac{z}{n\uppi})\exp(\frac{z}{-n\uppi})\right]\\
+ & =\prod_{n=1}^{\infty}\left[1-\left(\frac{z}{n\uppi}\right)^{2}\right]
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
