@@ -4,24 +4,22 @@
 
 ### 数学
 - [复分析（Complex Analysis）](./Mathematics/ComplexAnalysis.lyx)
-- [微分几何（Differential Geometry）](./Mathematics/DifferentialGeometry.lyx)
 - [微分方程（Differential Equations）](./Mathematics/DifferentialEquations.lyx)
 - [特殊函数（Special Functions）](./Mathematics/SpecialFunctions.lyx)
+- [微分几何（Differential Geometry）](./Mathematics/DifferentialGeometry.lyx)
 
 ### 物理
 - [流体力学（Fluid Mechanics）](./Physics/FluidMechanics.lyx)
-  - [计算流体力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
+  - [计算流体动力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
 
 ### 算法
-- 基础数值算法
-  - [插值（Interpolation）](./Algorithms/Interpolation.lyx) 
-  - [数值积分（Quadrature）](./Algorithms/Quadrature.lyx) 
-  - [优化（Optimization）](./Algorithms/Optimization.lyx) 
+- [通用数值算法（Numerical Algorithms）](./Algorithms/NumericalAlgorithms.lyx)
+- [优化方法（Optimization）](./Algorithms/Optimization.lyx) 
 - 微分方程数值解法
   - [有限差分法（Finite Difference Methods）](./Algorithms/FiniteDifference.lyx)
   - [有限体积法（Finite Volume Methods）](./Algorithms/FiniteVolume.lyx)
   - [有限单元法（Finite Element Methods）](./Algorithms/FiniteElement.lyx)
-  - [计算流体力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
+  - [计算流体动力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
 
 ### 编程
 - 设计思想
