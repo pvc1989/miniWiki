@@ -1,6 +1,36 @@
 # 编辑书签
 
 ## PDF
+### [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)
+#### 用法实例
+```bash
+# 将 toc.txt 中的目录添加到 book.pdf，另存为 new-book.pdf
+python3 pdfbookmarker.py book.pdf toc.txt new-book.pdf
+# 将 toc.txt 中的目录添加到 book.pdf，另存为 book-new.pdf（默认文件名）
+python3 pdfbookmarker.py book.pdf toc.txt
+```
+其中 `toc.txt` 为纯文本文件，每一行由三部分构成：
+```
+<nested level>"<bookmark title>"|<page number>
+```
+例如：
+```
++"目录"|3
++"1  第一章标题"|5
+++"1.1  第一节标题"|5
+++"1.1  第二节标题"|9
+```
+[PVC](https://github.com/pvcStillInGradSchool/pdfbookmarker) 在 [RussellLuo](https://github.com/RussellLuo/pdfbookmarker) 的基础上，增加了对页码偏移的支持：用独占一行的 `#n` 表示「自下一行起，页码值 `+n`」。
+因此，以上目录文件可以等价地写为：
+
+```txt
+#1
++"目录"|2
+#4
++"1  第一章标题"|1
+++"1.1  第一节标题"|1
+++"1.1  第二节标题"|5
+```
 
 ## DjVu
 ### [DJVUSED](http://djvu.sourceforge.net/doc/man/djvused.html)
