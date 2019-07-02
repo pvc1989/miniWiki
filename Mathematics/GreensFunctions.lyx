@@ -454,6 +454,152 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+作为广义函数
+\end_layout
+
+\begin_layout Subsection
+计算级数和
+\end_layout
+
+\begin_layout Standard
+如果把复数级数 
+\begin_inset Formula $\sum_{k}f(k)$
+\end_inset
+
+ 中的通项 
+\begin_inset Formula $f(k)$
+\end_inset
+
+ 分解为两个复数的乘积 
+\begin_inset Formula $\Conj{u}_{k}v_{k}$
+\end_inset
+
+，并且将 
+\begin_inset Formula $u_{k}$
+\end_inset
+
+ 和 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ 分别看作是（Hilbert 空间中的）向量 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\ket{v}$
+\end_inset
+
+ 在标准基 
+\begin_inset Formula $\ket{k}$
+\end_inset
+
+ 上的投影，则待求的级数和可以通过计算内积得到：
+\begin_inset Formula 
+\[
+\sum_{k}f(k)=\sum_{k}\Conj{u}_{k}v_{k}=\sum_{k}\ip{u}{k}\ip{k}{v}=\mel{u}{\Operator{1}}{v}=\ip{u}{v}
+\]
+
+\end_inset
+
+这里利用了完备性条件 
+\begin_inset Formula $\Operator{1}=\sum_{k}\dyad{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Example
+证明
+\begin_inset Formula 
+\[
+\sum_{k\in\mathbb{Z}}\frac{(-1)^{k}}{k+\nicefrac{1}{2}}=2\sum_{k=0}^{\infty}\frac{(-1)^{k}}{k+\nicefrac{1}{2}}=\uppi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+第一个等号可以通过指标变换 
+\begin_inset Formula $k=-n-1$
+\end_inset
+
+ 证得：
+\begin_inset Formula 
+\[
+\sum_{k=-\infty}^{-1}\frac{(-1)^{k}}{k+\nicefrac{1}{2}}=\sum_{n=0}^{\infty}\frac{(-1)^{-n-1}}{-n-\nicefrac{1}{2}}=\sum_{n=0}^{\infty}\frac{(-1)^{n}}{n+\nicefrac{1}{2}}
+\]
+
+\end_inset
+
+下面证明第二个等号。注意到
+\begin_inset Formula 
+\[
+\int_{-\uppi}^{\uppi}\mathrm{e}^{-\mathrm{i}kx}\updelta(x)\dd{x}=1,\quad\int_{-\uppi}^{\uppi}\mathrm{e}^{-\mathrm{i}kx}\mathrm{e}^{\mathrm{i}ax}\dd{x}=\frac{2\sin(k-a)\uppi}{k-a},\quad\forall\:k\in\mathbb{Z}\land k\ne a
+\]
+
+\end_inset
+
+如果取 
+\begin_inset Formula $a=-\nicefrac{1}{2}$
+\end_inset
+
+ 就有 
+\begin_inset Formula $k-a=k+\nicefrac{1}{2}$
+\end_inset
+
+ 以及 
+\begin_inset Formula $\sin(k-a)\uppi=(-1)^{k}$
+\end_inset
+
+，它们分别是通项 
+\begin_inset Formula $f(k)$
+\end_inset
+
+ 的分母和分子，因此可以作分解
+\begin_inset Formula 
+\[
+f(k)=1\cdot\frac{(-1)^{k}}{k+\nicefrac{1}{2}}=u_{k}v_{k}=\ip{k}{u}\ip{k}{v},\quad\forall\,k\in\mathbb{Z}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\ip{u}{v}=\int_{-\uppi}^{\uppi}\Conj{u}(x)v(x)\dd{x},\quad\ket{k}=\frac{\mathrm{e}^{\mathrm{i}kx}}{\sqrt{2\uppi}},\quad u(x)=\sqrt{2\uppi}\updelta(x),\quad v(x)=\frac{\sqrt{2\uppi}}{2}\exp(-\mathrm{i}\frac{x}{2})
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\sum_{k\in\mathbb{Z}}f(k)=\ip{u}{v}=\int_{-\uppi}^{\uppi}\sqrt{2\uppi}\updelta(x)\cdot\frac{\sqrt{2\uppi}}{2}\exp(-\mathrm{i}\frac{x}{2})\dd{k}=\uppi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 常微分方程的 Green 函数
 \end_layout
