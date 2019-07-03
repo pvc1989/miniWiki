@@ -6,23 +6,25 @@
 \origin unavailable
 \textclass scrreprt
 \begin_preamble
-\usepackage{tikz}
-\usepackage{physics}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage{ctex}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\renewcommand{\hat}[1]{\widehat{#1}}
-\renewcommand{\tilde}[1]{\widetilde{#1}}
-
-\usepackage[squaren,thinspace]{SIunits}
-
-\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\usepackage[arrowdel]{physics}
+\usepackage[squaren, thinspace]{SIunits}
+\usepackage{upgreek}
+\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Conj}[1]{\overline{#1}}
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Tensor}[1]{\vv{\vec{#1}}}  % ket of vec
-\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Tensor}[1]{{\vv{\vec{#1}}}}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -108,7 +110,6 @@ figs-within-sections
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -122,27 +123,41 @@ figs-within-sections
 流动方程
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+主文件：物理::流体力学，算法::CFD
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-From Atoms to Fields
+从微观到宏观
 \end_layout
 
 \begin_layout Subsection
-Atoms and Molecules
-\end_layout
-
-\begin_layout Subsubsection
-Average Free Length
-\end_layout
-
-\begin_layout Subsection
-Fluid Particles
-\end_layout
-
-\begin_layout Subsubsection
-Lagrangian Description
+分子
 \end_layout
 
 \begin_layout Standard
+动理学理论（Kinetic Theory）
+\end_layout
+
+\begin_layout Standard
+平均自由程（Average Free Length）
+\end_layout
+
+\begin_layout Subsection
+物质点（流体微团）
+\end_layout
+
+\begin_layout Standard
+Lagrangian Description
 \begin_inset Index idx
 status collapsed
 
@@ -156,14 +171,11 @@ Lagrange!~ian description
 \end_layout
 
 \begin_layout Subsection
-Fields
-\end_layout
-
-\begin_layout Subsubsection
-Eulerian Description
+张量场
 \end_layout
 
 \begin_layout Standard
+Eulerian Description
 \begin_inset Index idx
 status collapsed
 
@@ -177,7 +189,7 @@ Euler!~ian description
 \end_layout
 
 \begin_layout Subsubsection
-Velocity Gradient
+速度梯度
 \end_layout
 
 \begin_layout Standard
@@ -216,10 +228,6 @@ It can be proved to be
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsubsection
-Velocity Decomposition
 \end_layout
 
 \begin_layout Standard
@@ -283,7 +291,7 @@ or equivalently
 \end_layout
 
 \begin_layout Subsubsection
-Angular Velocity and Vorticity
+角速度与涡量
 \end_layout
 
 \begin_layout Standard
@@ -389,11 +397,11 @@ vorticity
 \end_layout
 
 \begin_layout Section
-Thermodynamics
+热力学
 \end_layout
 
 \begin_layout Subsection
-State Variables
+状态变量
 \end_layout
 
 \begin_layout Standard
@@ -839,7 +847,7 @@ literal "true"
 \end_layout
 
 \begin_layout Subsection
-Equations of State
+状态方程
 \end_layout
 
 \begin_layout Standard
@@ -1084,7 +1092,7 @@ in which
 \end_layout
 
 \begin_layout Subsection
-First Law of Thermodynamics
+热力学第一定律
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Law1ofThermodynamics"
@@ -1189,7 +1197,7 @@ The 2nd line comes from
 \end_layout
 
 \begin_layout Subsection
-Second Law of Thermodynamics
+热力学第二定律
 \end_layout
 
 \begin_layout Axiom
@@ -1568,7 +1576,7 @@ s_{2}-s_{1}=c_{v}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{\rho_{2}}{\rho_{1}}=c_{p}\ln\f
 \end_layout
 
 \begin_layout Subsection
-Third Law of Thermodynamics
+热力学第三定律
 \end_layout
 
 \begin_layout Axiom
@@ -1590,7 +1598,7 @@ Third Law of Thermodynamics
 \end_layout
 
 \begin_layout Subsection
-Fourier's Law of Heat Conduction
+热传导
 \end_layout
 
 \begin_layout Standard
@@ -1628,12 +1636,11 @@ flux!~ vector!heat ~
 \end_layout
 
 \begin_layout Section
-Material Derivatives
+物质导数（随体导数）
 \end_layout
 
 \begin_layout Subsection
-Control Volume v.
- Material Body
+控制体与物质体
 \end_layout
 
 \begin_layout Standard
@@ -1857,7 +1864,7 @@ control!~ volume!moving ~
 \end_layout
 
 \begin_layout Subsection
-Reynolds Transport Theorem
+Reynolds 输运定理
 \end_layout
 
 \begin_layout Theorem
@@ -2040,7 +2047,7 @@ Adding them together and dropping
 \end_layout
 
 \begin_layout Subsection
-Material Derivative of An Integral
+控制体上的物质导数
 \end_layout
 
 \begin_layout Standard
@@ -2240,7 +2247,7 @@ reference "eq:ReynoldsTransportTheorem"
 \end_layout
 
 \begin_layout Subsection
-Material Derivative at A Point
+物质点上的物质导数
 \end_layout
 
 \begin_layout Standard
@@ -2494,11 +2501,11 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Conservation Laws
+守恒律
 \end_layout
 
 \begin_layout Subsection
-Conservation of Mass
+质量守恒
 \end_layout
 
 \begin_layout Standard
@@ -2530,7 +2537,7 @@ When applied to a control volume, the law can be written as
 \end_layout
 
 \begin_layout Subsection
-Conservation of Momentum
+动量守恒
 \end_layout
 
 \begin_layout Standard
@@ -2740,7 +2747,7 @@ or equivalently
 \end_layout
 
 \begin_layout Subsection
-Conservation of Angular Momentum
+角动量守恒
 \end_layout
 
 \begin_layout Standard
@@ -2779,7 +2786,7 @@ or equivalently
 \end_layout
 
 \begin_layout Subsection
-Conservation of Energy
+能量守恒
 \end_layout
 
 \begin_layout Standard
@@ -2850,11 +2857,11 @@ Again, if we take
 \end_layout
 
 \begin_layout Section
-Summary of Governing Equations
+小结
 \end_layout
 
 \begin_layout Subsection
-Integral Forms
+积分形式
 \end_layout
 
 \begin_layout Standard
@@ -3036,7 +3043,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Conservative Differential Form
+守恒型微分形式
 \end_layout
 
 \begin_layout Standard
@@ -3119,7 +3126,7 @@ where
 \end_layout
 
 \begin_layout Subsection
-Non-Conservative Differential Form
+非守恒型微分形式
 \end_layout
 
 \begin_layout Lemma
@@ -3298,12 +3305,12 @@ or equivalently
 
 \end_layout
 
-\begin_layout Subsection
-Other Forms of Energy Equations
+\begin_layout Section
+能量方程的其他形式
 \end_layout
 
-\begin_layout Subsubsection
-Equation for Kinetic Energy
+\begin_layout Subsection
+动能方程
 \end_layout
 
 \begin_layout Standard
@@ -3349,8 +3356,8 @@ The resulting equation
 is the formula for the material derivative of kinetic energy per unit mass.
 \end_layout
 
-\begin_layout Subsubsection
-Equation for Internal Energy
+\begin_layout Subsection
+内能方程
 \end_layout
 
 \begin_layout Lemma
@@ -3473,8 +3480,8 @@ The equation for internal energy then becomes
 
 \end_layout
 
-\begin_layout Subsubsection
-Equation for Entropy
+\begin_layout Subsection
+熵方程
 \end_layout
 
 \begin_layout Standard
@@ -3528,8 +3535,8 @@ noprefix "false"
 which is the equation for entropy.
 \end_layout
 
-\begin_layout Subsubsection
-Bernoulli's Equation
+\begin_layout Subsection
+Bernoulli 方程
 \end_layout
 
 \begin_layout Standard
@@ -3666,11 +3673,11 @@ incompressible
 \end_layout
 
 \begin_layout Section
-Simplified Equations
+简化方程
 \end_layout
 
 \begin_layout Subsection
-Plane Waves
+平面波
 \end_layout
 
 \begin_layout Standard
@@ -4015,7 +4022,7 @@ linear advection equation
 \end_layout
 
 \begin_layout Subsection
-Euler Equations
+Euler 方程
 \end_layout
 
 \begin_layout Standard
