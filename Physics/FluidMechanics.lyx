@@ -4,24 +4,27 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass scrartcl
+\textclass scrreprt
 \begin_preamble
-\usepackage{tikz}
-\usepackage{physics}
-\renewcommand{\grad}{\boldsymbol{\nabla}}
-\renewcommand{\div}{\boldsymbol{\nabla}\cdot}
+\usepackage{ctex}
 \usepackage[e]{esvect}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\renewcommand{\hat}[1]{\widehat{#1}}
-\renewcommand{\tilde}[1]{\widetilde{#1}}
-
-\usepackage[squaren,thinspace]{SIunits}
-
-\newcommand{\minmod}{\mathop{\mathrm{minmod}}}
+\usepackage[arrowdel]{physics}
+\usepackage[squaren, thinspace]{SIunits}
+\usepackage{upgreek}
+\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
+\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
+\newcommand{\Conj}[1]{\overline{#1}}
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Tensor}[1]{\vv{\vv{\vb*{#1}}}}
+\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
+\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Space}[1]{{\mathcal{#1}}}
+\newcommand{\Tensor}[1]{{\vv{\vec{#1}}}}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \end_preamble
 \options idxtotoc
 \use_default_options true
@@ -31,16 +34,17 @@ theorems-ams-extended
 eqs-within-sections
 figs-within-sections
 \end_modules
-\language english
+\maintain_unincluded_children true
+\language chinese-simplified
 \language_package default
-\inputencoding auto
+\inputencoding utf8-plain
 \fontencoding global
 \font_roman "palatino" "default"
 \font_sans "helvet" "default"
 \font_typewriter "default" "default"
 \font_math "default" "auto"
 \font_default_family default
-\use_non_tex_fonts false
+\use_non_tex_fonts true
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -65,7 +69,7 @@ figs-within-sections
 \pdf_backref false
 \pdf_pdfusetitle true
 \pdf_pagemode FullScreen
-\papersize a5paper
+\papersize b5paper
 \use_geometry true
 \use_package amsmath 1
 \use_package amssymb 1
@@ -86,7 +90,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -95,18 +99,17 @@ figs-within-sections
 \topmargin 0.5cm
 \rightmargin 0.5cm
 \bottommargin 0.5cm
-\secnumdepth 3
-\tocdepth 3
+\secnumdepth 2
+\tocdepth 2
 \paragraph_separation indent
 \paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
-\quotes_style english
+\quotes_style cjk
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
-\paperpagestyle empty
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\paperpagestyle plain
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -116,78 +119,26 @@ figs-within-sections
 
 \begin_body
 
-\begin_layout Title
-Fluid Mechanics
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomencl_print
-LatexCommand printnomenclature
-set_width "auto"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand input
-filename "_fluid/equations.lyx"
+LatexCommand include
+filename "FluidEquations.lyx"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "_fluid/inviscid_incompressible.lyx"
-
-\end_inset
-
-
+\begin_layout Chapter
+无黏不可压流
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "_fluid/inviscid_compressible.lyx"
-
-\end_inset
-
-
+\begin_layout Chapter
+无黏可压流
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "_fluid/viscous.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset index_print
-LatexCommand printindex
-type "idx"
-name "Index"
-
-\end_inset
-
-
+\begin_layout Chapter
+黏性流
 \end_layout
 
 \end_body
