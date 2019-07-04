@@ -22,23 +22,23 @@
 
 ### 编程
 - 设计思想
-  - [设计原则（Design Principles）](./Programming/principles/README.md)
-  - [设计模式（Design Patterns）](./Programming/patterns/README.md)
+  - [设计原则（Design Principles）](./programming/principles/README.md)
+  - [设计模式（Design Patterns）](./programming/patterns/README.md)
 - 编程语言
-  - [C++](./Programming/C++/README.md)
-  - [Octave](./Programming/Octave.md) --- [MATLAB](https://www.mathworks.com/products/matlab.html) 的开源替代品
-  - [Python](./Programming/Python.md)
-  - [UML](./Programming/UML.md) --- 统一建模语言
+  - [C++](./programming/cpp/README.md)
+  - [Octave/MATLAB](./programming/octave.md)
+  - [Python](./programming/python.md)
+  - [UML（统一建模语言）](./programming/uml/README.md)
 - 构建工具
-  - [Git](./Programming/Git.md) --- 版本控制系统
-  - [Make](./Programming/make/README.md) --- 批量构建工具
+  - [Git（分布式版本控制系统）](./programming/git.md)
+  - [Make（批量构建工具）](./programming/make/README.md)
 
 ### 工具
-- [Gmsh](./Tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
-- [LaTeX](./Tools/LaTeX/README.md) --- 结构化文档排版系统
-- [Linux](./Tools/Linux/README.md) --- 开源操作系统
-- [Markdown](./Tools/Markdown.md) --- 轻量级标记语言
-- [SSH](./Tools/SSH.md) --- Secure SHell
-- [Vim](./Tools/Vim.md) --- 文本编辑器
-- [VTK](./Tools/VTK/README.md) --- 数据显示
-- [编辑书签](./Tools/BookMarkers.md)
+- [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
+- [LaTeX](./tools/LaTeX/README.md) --- 结构化文档排版系统
+- [Linux](./tools/Linux/README.md) --- 开源操作系统
+- [Markdown](./tools/Markdown.md) --- 轻量级标记语言
+- [SSH](./tools/SSH.md) --- Secure SHell
+- [Vim](./tools/Vim.md) --- 文本编辑器
+- [VTK](./tools/VTK/README.md) --- 数据显示
+- [编辑书签](./tools/BookMarkers.md)
