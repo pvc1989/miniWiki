@@ -34,11 +34,11 @@
   - [Make（批量构建工具）](./programming/make/README.md)
 
 ### 工具
-- [Gmsh](./tools/Gmsh/README.md) --- 简易 CAD + 非结构网格生成器
-- [LaTeX](./tools/LaTeX/README.md) --- 结构化文档排版系统
-- [Linux](./tools/Linux/README.md) --- 开源操作系统
-- [Markdown](./tools/Markdown.md) --- 轻量级标记语言
-- [SSH](./tools/SSH.md) --- Secure SHell
-- [Vim](./tools/Vim.md) --- 文本编辑器
-- [VTK](./tools/VTK/README.md) --- 数据显示
-- [编辑书签](./tools/BookMarkers.md)
+- [Gmsh](./tools/gmsh/README.md) --- 简易 CAD + 非结构网格生成器
+- [LaTeX](./tools/latex/README.md) --- 结构化文档排版系统
+- [Linux](./tools/linux/README.md) --- 开源操作系统
+- [Markdown](./tools/markdown.md) --- 轻量级标记语言
+- [SSH](./tools/ssh.md) --- Secure SHell
+- [Vim](./tools/vim.md) --- 文本编辑器
+- [VTK](./tools/vtk/README.md) --- 数据显示
+- [编辑书签](./tools/bookmark.md)
