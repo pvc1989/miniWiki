@@ -3,23 +3,22 @@
 ## 大纲
 
 ### 数学
-- [复分析（Complex Analysis）](./Mathematics/ComplexAnalysis.lyx)
-- [微分方程（Differential Equations）](./Mathematics/DifferentialEquations.lyx)
-- [特殊函数（Special Functions）](./Mathematics/SpecialFunctions.lyx)
-- [微分几何（Differential Geometry）](./Mathematics/DifferentialGeometry.lyx)
+- [复分析（Complex Analysis）](./mathematics/complex_analysis/README.lyx)
+- [微分方程（Differential Equations）](./mathematics/ode_and_pde/README.lyx)
+- [特殊函数（Special Functions）](./mathematics/special_functions/README.lyx)
+- [微分几何（Differential Geometry）](./mathematics/differential_geometry/README.lyx)
 
 ### 物理
-- [流体力学（Fluid Mechanics）](./Physics/FluidMechanics.lyx)
-  - [计算流体动力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
+- [空气动力学（Aerodynamics）](./physics/aerodynamics/README.lyx)
+  - [计算流体动力学（Computational Fluid Dynamics）](./algorithms/cfd/README.lyx)
 
 ### 算法
-- [通用数值算法（Numerical Algorithms）](./Algorithms/NumericalAlgorithms.lyx)
-- [优化方法（Optimization）](./Algorithms/Optimization.lyx) 
-- 微分方程数值解法
-  - [有限差分法（Finite Difference Methods）](./Algorithms/FiniteDifference.lyx)
-  - [有限体积法（Finite Volume Methods）](./Algorithms/FiniteVolume.lyx)
-  - [有限单元法（Finite Element Methods）](./Algorithms/FiniteElement.lyx)
-  - [计算流体动力学（Computational Fluid Dynamics）](./Algorithms/CFD.lyx)
+- [数值分析（Numerical Analysis](./algorithms/numerical_analysis/README.lyx)
+- [优化方法（Optimization）](./algorithms/optimization/README.lyx) 
+- [有限单元法（Finite Element Methods）](./algorithms/finite_element/README.lyx)
+- [计算流体动力学（Computational Fluid Dynamics）](./algorithms/cfd/README.lyx)
+  - [有限差分法（Finite Difference Methods）](./algorithms/cfd/finite_difference.lyx)
+  - [有限体积法（Finite Volume Methods）](./algorithms/cfd/finite_volume.lyx)
 
 ### 编程
 - 设计思想
