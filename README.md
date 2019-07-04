@@ -14,7 +14,7 @@
 
 ### 算法
 - [数值分析（Numerical Analysis](./algorithms/numerical_analysis/README.lyx)
-- [优化方法（Optimization）](./algorithms/optimization/README.lyx) 
+- [优化方法（Optimization）](./algorithms/optimization/README.lyx)
 - [有限单元法（Finite Element Methods）](./algorithms/finite_element/README.lyx)
 - [计算流体动力学（Computational Fluid Dynamics）](./algorithms/cfd/README.lyx)
   - [有限差分法（Finite Difference Methods）](./algorithms/cfd/finite_difference.lyx)
@@ -34,11 +34,11 @@
   - [Make（批量构建工具）](./programming/make/README.md)
 
 ### 工具
-- [Gmsh](./tools/gmsh/README.md) --- 简易 CAD + 非结构网格生成器
-- [LaTeX](./tools/latex/README.md) --- 结构化文档排版系统
-- [Linux](./tools/linux/README.md) --- 开源操作系统
-- [Markdown](./tools/markdown.md) --- 轻量级标记语言
-- [SSH](./tools/ssh.md) --- Secure SHell
-- [Vim](./tools/vim.md) --- 文本编辑器
-- [VTK](./tools/vtk/README.md) --- 数据显示
-- [编辑书签](./tools/bookmark.md)
+- [Gmsh（简易 CAD 系统 + 非结构网格生成器）](./tools/gmsh/README.md)
+- [LaTeX（结构化文档排版系统）](./tools/latex/README.md)
+- [Linux（开源操作系统）](./tools/linux/README.md)
+- [Markdown（轻量级标记语言）](./tools/markdown.md)
+- [SSH（Secure SHell）](./tools/ssh.md)
+- [Vim（CLI 文本编辑器）](./tools/vim.md)
+- [VTK（数据显示程序库）](./tools/vtk/README.md)
+- [书签编辑工具](./tools/bookmark.md)
