@@ -2,7 +2,7 @@
 
 ## PDF
 ### [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)
-#### 用法实例
+#### 用法示例
 ```bash
 # 将 toc.txt 中的目录添加到 book.pdf，另存为 new-book.pdf
 python3 pdfbookmarker.py book.pdf toc.txt new-book.pdf
@@ -39,7 +39,7 @@ python3 pdfbookmarker.py book.pdf toc.txt
 - `-s` 执行完命令后保存文件
 - `-u` 按 UTF-8 输出
 
-#### 用法实例
+#### 用法示例
 ```bash
 # 打印第 3 页的文字
 djvused file.djvu -e 'select 3; print-pure-txt'
