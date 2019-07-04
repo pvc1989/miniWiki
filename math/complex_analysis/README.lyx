@@ -29,9 +29,10 @@
 \end_preamble
 \options idxtotoc
 \use_default_options true
+\master ../../README.lyx
 \begin_modules
-theorems-ams-bytype
-theorems-ams-extended-bytype
+theorems-ams
+theorems-ams-extended
 figs-within-sections
 \end_modules
 \maintain_unincluded_children false
@@ -90,7 +91,7 @@ figs-within-sections
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -110,6 +111,7 @@ figs-within-sections
 \papercolumns 1
 \papersides 1
 \paperpagestyle plain
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -3002,7 +3004,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Joukowski]
+[Joukowski 翼型]
 \end_layout
 
 \end_inset
@@ -3035,54 +3037,27 @@ w(z)=\frac{1}{2}\left(z+\frac{c^{2}}{z}\right),\quad c\in(0,\infty)
 \begin_inset Formula $w$
 \end_inset
 
--平面上的翼型（
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Joukowski"
-
-\end_inset
-
-Joukowski 变换
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename JoukowskiAirfoil.pdf
-	width 100text%
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-图
+-平面上的 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Joukowski"
+LatexCommand nameref
+reference "fig:Joukowski-翼型"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-）。其中：
+（由代码
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "code:joukowski_airfoil"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+生成）。其中：
 \end_layout
 
 \begin_layout Example
@@ -3124,6 +3099,57 @@ noprefix "false"
 \end_inset
 
  的连线与实轴所夹的锐角。
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "joukowski_airfoil.py"
+lstparams "language=Python,caption={生成 Joukowski 翼型},label={code:joukowski_airfoil}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Joukowski-翼型"
+
+\end_inset
+
+Joukowski 翼型
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename joukowski_airfoil.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

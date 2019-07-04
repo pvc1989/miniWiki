@@ -52,4 +52,4 @@ for a in curves_in_w:
     plt.plot(a.real, a.imag, 'b--')
 # write
 plt.tight_layout()
-plt.savefig('JoukowskiAirfoil.pdf')
+plt.savefig('joukowski_airfoil.pdf')
