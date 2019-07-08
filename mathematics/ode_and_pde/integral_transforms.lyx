@@ -116,6 +116,1096 @@ theorems-ams-extended
 Fourier 变换法
 \end_layout
 
+\begin_layout Subsection
+Fourier 级数
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Stone–Weierstrass]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Stone--Weierstrass"
+
+\end_inset
+
+如果（定义在 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ 上的）函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在（
+\begin_inset Formula $n$
+\end_inset
+
+ 维）闭区间 
+\begin_inset Formula $D=\left\{ (x_{1},\dots,x_{n}):a_{i}\le x_{i}\le b_{i},i=1,\dots,n\right\} $
+\end_inset
+
+ 上连续，则有唯一的多项式展开：
+\begin_inset Formula 
+\[
+f(x_{1},\dots,x_{n})=\sum_{k_{1},\dots,k_{n}=0}^{\infty}A_{k_{1}\dots k_{n}}x_{1}^{k_{1}}\cdots x_{n}^{k_{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑 
+\begin_inset Formula $n=2$
+\end_inset
+
+ 的情形：此时可以引入极坐标 
+\begin_inset Formula $x_{1}=x=\rho\cos\theta$
+\end_inset
+
+，
+\begin_inset Formula $x_{2}=y=\rho\sin\theta$
+\end_inset
+
+。如果将问题的研究范围限制在单位圆周（
+\begin_inset Formula $\rho=1$
+\end_inset
+
+）上，则上述结论可以表示为
+\begin_inset Formula 
+\[
+\begin{aligned}f(\theta) & =\sum_{k,l=0}^{\infty}A_{kl}\cos[k](\theta)\sin[l](\theta)=\sum_{k,l=0}^{\infty}A_{kl}\cdot\left(\frac{\mathrm{e}^{\mathrm{i}\theta}+\mathrm{e}^{-\mathrm{i}\theta}}{2}\right)^{k}\left(\frac{\mathrm{e}^{\mathrm{i}\theta}-\mathrm{e}^{-\mathrm{i}\theta}}{2\mathrm{i}}\right)^{l}\\
+ & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\mathrm{i}n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos n\theta+\mathrm{i}\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin n\theta
+\end{aligned}
+\]
+
+\end_inset
+
+第二行的结果被称为「Fourier 级数」。
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Stone--Weierstrass"
+
+\end_inset
+
+ 定理保证了：每一个以 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+ 为周期的连续函数都可以唯一地展开为形如 
+\begin_inset Formula $\sum_{n}c_{n}\exp(\mathrm{i}n\theta)$
+\end_inset
+
+ 的 Fourier 级数。
+\end_layout
+
+\begin_layout Standard
+为了获得 
+\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+，通常将展开式 
+\begin_inset Formula $f(\theta)=\sum_{k}c_{k}\exp(\mathrm{i}k\theta)$
+\end_inset
+
+ 代入积分 
+\begin_inset Formula $\int_{0}^{2\uppi}\exp(-\mathrm{i}l\theta)f(\theta)\dd{\theta}$
+\end_inset
+
+，并利用
+\begin_inset Formula 
+\[
+\int_{0}^{2\uppi}\exp(\mathrm{i}k\theta-\mathrm{i}l\theta)\dd{\theta}=\begin{cases}
+\int_{0}^{2\uppi}1\dd{\theta}=2\uppi & k=l\\
+\eval{\frac{\exp(\mathrm{i}k\theta-\mathrm{i}l\theta)}{k-l}}_{0}^{2\uppi}=0 & k\ne l
+\end{cases}\qquad\forall\,k,l\in\mathbb{Z}
+\]
+
+\end_inset
+
+即得：
+\begin_inset Formula 
+\[
+c_{n}=\frac{1}{2\uppi}\int_{0}^{2\uppi}\exp(-\mathrm{i}kn\theta)f(\theta)\dd{\theta}\qquad\forall\,n\in\mathbb{Z}
+\]
+
+\end_inset
+
+值得注意的是：这里的积分并不要求 
+\begin_inset Formula $f(\theta)$
+\end_inset
+
+ 连续。
+\end_layout
+
+\begin_layout Standard
+另一方面，由任何一组系数 
+\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 所构造的 Fourier 级数 
+\begin_inset Formula $\sum_{n}c_{n}\exp(\mathrm{i}n\theta)$
+\end_inset
+
+，只要它处处收敛，那么它就是一个以 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+ 为周期的连续函数，即使导出 
+\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 的那个函数本身并不连续。
+\end_layout
+
+\begin_layout Example*
+将以下含有间断的函数展开为 Fourier 级数：
+\end_layout
+
+\begin_layout Example*
+\begin_inset Formula 
+\[
+S(\theta)=\begin{cases}
+S(\theta+2n\uppi) & n\in\mathbb{Z}\\
+1 & \theta\in[0,\uppi)\\
+0 & \theta\in[\uppi,2\uppi)
+\end{cases}\qquad T(\theta)=\begin{cases}
+T(\theta+2n\uppi) & n\in\mathbb{Z}\\
+\theta & \theta\in[0,2\uppi)
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+也就是说：某些含有间断的函数也可以作 Fourier 级数展开，但是所得的级数未必与原函数等价。由此可以引出几个问题：
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:Fourier-级数"
+
+\end_inset
+
+什么样的函数可以作 Fourier 级数展开？如果可以展开，那么所得的级数与原函数之间是什么关系？
+\end_layout
+
+\begin_layout Problem
+什么样的系数可以构造出处处收敛的 Fourier 级数？
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了回答这些问题，需要引入一些泛函分析的概念：
+\end_layout
+
+\begin_layout Itemize
+首先引入「函数空间 
+\begin_inset Formula $V$
+\end_inset
+
+」：它是由定义在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上的「几乎处处连续」的函数的全体所构成的（复）向量空间。这里的「几乎处处连续」是指：函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 至多含「可列（Enumerable）」个间断点，这样它的所有间断点至多构成一个零测度集。如果要强调函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 的向量属性，则将其记作 
+\begin_inset Formula $\ket{f}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+在 
+\begin_inset Formula $V$
+\end_inset
+
+ 上可以引入「内积（Inner Product）」以及由它所导出的「范数（Norm）」:
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{a}^{b}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\norm{\ket{u}}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\,\ket{u},\ket{v}\in V
+\]
+
+\end_inset
+
+这里的积分应当理解为 Lebesgue 积分。若无特殊说明，下面只考虑由满足 
+\begin_inset Formula $\norm{u}<\infty$
+\end_inset
+
+ 的 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 所构成的子空间 
+\begin_inset Formula $L^{2}(a,b)\subset V$
+\end_inset
+
+，它是「完备的（Complete）」：作为线性赋范空间，它是一个 Banach 空间；作为线性内积空间，它是一个 Hilbert 空间。
+\end_layout
+
+\begin_layout Itemize
+有了内积就可以找到 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 的一组「正交（Orthogonal）基」
+\begin_inset Formula $\left\{ \ket{g_{n}}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 及相应的「单位正交（Orthonormal）基」
+\begin_inset Formula $\left\{ \ket{e_{n}}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\norm{g_{l}}\cdot\updelta_{kl}\qquad\ket{e_{k}}:=\frac{\ket{g_{k}}}{\norm{g_{k}}}\implies\ip{e_{k}}{e_{l}}=\updelta_{kl}\qquad\forall\,k,l\in\mathbb{N}
+\]
+
+\end_inset
+
+于是有「正交分解（Orthogonal Decomposition）」：
+\begin_inset Formula 
+\[
+\ket{u}=\sum_{n}\ket{e_{n}}\overbrace{\ip{e_{n}}{u}}^{u_{n}}=\overbrace{\sum_{n}\dyad{e_{n}}}^{\Operator{1}}\ket{u}\qquad\forall\,\ket{u}\in L^{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{n}=\ip{e_{n}}{u}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\ket{e_{n}}$
+\end_inset
+
+ 上的「投影（Projection）」，
+\begin_inset Formula $\Operator{1}$
+\end_inset
+
+ 是 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 上的「单位算符（Identity Operator）」，等式 
+\begin_inset Formula $\Operator{1}=\sum_{n}\dyad{e_{n}}$
+\end_inset
+
+ 被称为「完备性关系（Completeness Relation）」。
+\end_layout
+
+\begin_layout Itemize
+有了范数就可以定义「零函数」：它是在定义域内「几乎处处为零（至多在一个零测度集上取有限的非零值）」的函数，因此其范数一定为零。如果两个函数的差是一个零函数，则称
+它们「几乎处处相等（至多在一个零测度集上不相等）」，用 
+\begin_inset Formula $\doteq$
+\end_inset
+
+ 表示。这组关系具有自反性、对称性、传递性，因而可以被视为是一种「等价关系（Equivalence Relation）」：
+\begin_inset Formula 
+\[
+\ket{u}\doteq\ket{v}\iff\norm{u-v}=0
+\]
+
+\end_inset
+
+由此可以定义「等价类（Equivalence Class）」：
+\begin_inset Formula 
+\[
+\left\llbracket \ket{u}\right\rrbracket \equiv\left\llbracket u\right\rrbracket :=\left\{ \ket{v}:\ket{u}\doteq\ket{v}\right\} \qquad\forall\,\ket{u}\in L^{2}
+\]
+
+\end_inset
+
+及「商空间（Quotient Space）」：
+\begin_inset Formula 
+\[
+(L^{2}/\doteq):=\left\{ \left\llbracket u\right\rrbracket :\ket{u}\in L^{2}\right\} 
+\]
+
+\end_inset
+
+及其内积：
+\begin_inset Formula 
+\[
+\ip{\left\llbracket u\right\rrbracket }{\left\llbracket v\right\rrbracket }\equiv\ip{u}{v}_{L^{2}/\doteq}:=\ip{u}{v}_{L^{2}}\qquad\forall\,\left\llbracket u\right\rrbracket ,\left\llbracket v\right\rrbracket \in L^{2}/\doteq
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+用 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 表示所有满足 
+\begin_inset Formula $\sum_{n}\abs{u_{n}}^{2}<\infty$
+\end_inset
+
+ 的可数维数组 
+\begin_inset Formula $[u]$
+\end_inset
+
+ 所构成的（复）向量空间，它在如下内积及其所导出的范数定义下也是完备的：
+\begin_inset Formula 
+\[
+\ip{u}{v}_{l^{2}}:=\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{[u]}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\,[u],[v]\in l^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 中的每一个成员 
+\begin_inset Formula $[u]$
+\end_inset
+
+ 都确定了 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 中的一个向量 
+\begin_inset Formula $\ket{u}=\sum_{n}u_{n}\ket{e_{n}}$
+\end_inset
+
+，这是因为
+\begin_inset Formula 
+\[
+\norm{u}^{2}=\Conj{\left(\sum_{k}u_{k}\ket{e_{k}}\right)}\left(\sum_{n}u_{n}\ket{e_{n}}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}u_{n}\overbrace{\ip{e_{k}}{e_{n}}_{L^{2}}}^{\updelta_{kn}}=\sum_{n}\abs{u_{n}}^{2}<\infty
+\]
+
+\end_inset
+
+这样就建立了 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 到 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 的「单射（Injection）」，以及 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 到 
+\begin_inset Formula $L^{2}/\doteq$
+\end_inset
+
+ 的「双射（bijection）」。
+\end_layout
+
+\begin_layout Itemize
+这种映射是保内积的：
+\begin_inset Formula 
+\[
+\ip{u}{v}_{L^{2}/\doteq}=\ip{u}{v}_{L^{2}}=\Conj{\left(\sum_{k}u_{k}\ket{e_{k}}\right)}\left(\sum_{n}v_{n}\ket{e_{n}}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{e_{k}}{e_{n}}_{L^{2}}}_{\updelta_{kn}}=\ip{u}{v}_{l^{2}}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 与 
+\begin_inset Formula $L^{2}/\doteq$
+\end_inset
+
+ 同构：
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 既可以表示 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 中的一个向量（函数），又可以表示 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 中与之对应的向量（数组）；
+\begin_inset Formula $\ip{u}{v}$
+\end_inset
+
+ 既可以表示 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ 中的内积，又可以表示 
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 中的内积。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有了这些概念，不难发现：Fourier 级数不过是 
+\begin_inset Formula $L^{2}(0,2\uppi)$
+\end_inset
+
+ 上的特例，这里的内积和单位正交基分别是：
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{0}^{2\uppi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ \ip{\theta}{e_{n}}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\right\} _{n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+现在可以回答前面提出的问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:Fourier-级数"
+
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L^{2}(0,2\uppi)$
+\end_inset
+
+ 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等（至多只相差一个零函数）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $l^{2}$
+\end_inset
+
+ 中的任意一个数组都可以构造出处处收敛的 Fourier 级数，从而定义了一个以 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+ 为周期的连续函数，这个函数自然属于 
+\begin_inset Formula $L^{2}(0,2\uppi)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+Fourier 积分
+\end_layout
+
+\begin_layout Subsection
+Fourier 变换的定义
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Fourier 变换]
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:积分变换的一般形式"
+
+\end_inset
+
+中取 
+\begin_inset Formula $(a,b)=(-\infty,+\infty)$
+\end_inset
+
+ 为积分区间、
+\begin_inset Formula $K(k,x)=\exp(-\mathrm{i}kx)/\sqrt{2\uppi}$
+\end_inset
+
+ 为积分变换的核
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+在一些文献中，
+\begin_inset Formula $K(k,x)$
+\end_inset
+
+ 不含 
+\begin_inset Formula $1/\sqrt{2\uppi}$
+\end_inset
+
+ 因子，或者指数中不含负号，这些差别都不会对 Fourier 分析的一般结论产生实质性的影响。
+\end_layout
+
+\end_inset
+
+，就得到「Fourier 变换（及其反演）」：
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\boxed{F(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x}\qquad f(x)=\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F(k)\dd{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+常用 Fourier 变换对
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $f(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $F(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\updelta(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\uppi}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-a\abs{x})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\uppi}}\frac{2a}{a^{2}+k^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $a>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\uppi}}\frac{2a}{a^{2}+x^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-a\abs{k})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $a>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-ax^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2a}}\exp(-\frac{1}{4a}k^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $a>0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-x^{2}/2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-k^{2}/2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+上一行中 
+\begin_inset Formula $a=\nicefrac{1}{2}$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+求证
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+代入 Fourier 变换的定义，得到
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\uppi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\nicefrac{\mathrm{i}k}{2a}\right)^{2}-\left(\nicefrac{\mathrm{i}k}{2a}\right)^{2}\right])\dd{x}\\
+ & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\uppi}}\int_{-\infty+\nicefrac{\mathrm{i}k}{2a}}^{+\infty+\nicefrac{\mathrm{i}k}{2a}}\exp(-az^{2})\dd{z}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $z=x+\nicefrac{\mathrm{i}k}{2a}$
+\end_inset
+
+。被积函数 
+\begin_inset Formula $\exp(-az^{2})$
+\end_inset
+
+ 是
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:整函数"
+
+\end_inset
+
+（没有有限远的奇点），因此由
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:留数定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知：
+\begin_inset Formula 
+\[
+\int_{-\infty+\nicefrac{\mathrm{i}k}{2a}}^{+\infty+\nicefrac{\mathrm{i}k}{2a}}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\uppi}{a}}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}\exp(-ax^{2})\dd{x}=\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\uppi}}\sqrt{\frac{\uppi}{a}}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+定义在二维空间中函数 
+\begin_inset Formula $f(x,y)$
+\end_inset
+
+ 可以依次在 
+\begin_inset Formula $x$
+\end_inset
+
+-、
+\begin_inset Formula $y$
+\end_inset
+
+-方向上作 Fourier 变换
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+这里借用了复合函数的记号 
+\begin_inset Formula $F\circ f$
+\end_inset
+
+ 来表示积分变换，尽管积分变换与复合函数是两个不同的概念。
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}F_{x}\circ f(k;y) & =\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x,y)\dd{x}\\
+F_{y}\circ F_{x}\circ f(k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}ly)}{\sqrt{2\uppi}}F_{x}\circ f(k;y)\dd{y}\\
+ & =\int_{\mathbb{R}_{y}}\left[\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx-\mathrm{i}ly)}{2\uppi}f(x,y)\dd{x}\right]\dd{y}
+\end{aligned}
+\]
+
+\end_inset
+
+以及用 Fourier 积分表示：
+\begin_inset Formula 
+\[
+\begin{aligned}F_{x}\circ f(k;y) & =\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}ly)}{\sqrt{2\uppi}}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\\
+f(x,y) & =\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F_{x}\circ f(k;l)\dd{k}\\
+ & =\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\right]\dd{k}
+\end{aligned}
+\]
+
+\end_inset
+
+这种「二重 Fourier 变换（及其反演）」也可以依次在 
+\begin_inset Formula $y$
+\end_inset
+
+-、
+\begin_inset Formula $x$
+\end_inset
+
+-方向上实施，所得结果与之相同，因此可以将它们统一地定义为「二维空间的 Fourier 变换（及其反演）」：
+\begin_inset Formula 
+\[
+\begin{aligned}F(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}kx-\mathrm{i}ly)}{2\uppi}f(x,y)\dd{x}\dd{y}\\
+f(x,y) & =\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F(k,l)\dd{k}\dd{l}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上讨论可以推广到更一般的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维空间。如果引入记号：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathbb{R}_{x}^{n} & =\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\quad & \vec{x} & =(x_{1},\dots,x_{n})\in\mathbb{R}_{x}^{n}\quad & \dd[n]{x} & =\dd{x_{1}}\cdots\dd{x_{n}}\\
+\mathbb{R}_{k}^{n} & =\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\quad & \vec{k} & =(k_{1},\dots,k_{n})\in\mathbb{R}_{k}^{n}\quad & \dd[n]{k} & =\dd{k_{1}}\cdots\dd{k_{n}}
+\end{aligned}
+\]
+
+\end_inset
+
+并且在形式上定义「内积
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+向量 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ 分别属于不同的向量空间，因此这里的「内积」不是一般意义下属于某个向量空间的内积。
+\end_layout
+
+\end_inset
+
+」：
+\begin_inset Formula 
+\[
+\vec{k}\vdot\vec{x}=k_{1}x_{1}+\cdots+k_{n}x_{n}
+\]
+
+\end_inset
+
+则「
+\begin_inset Formula $n$
+\end_inset
+
+ 维空间的 Fourier 变换（及其反演）」可以写为更紧凑的形式：
+\begin_inset Formula 
+\[
+\boxed{F(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\exp(-\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}f(\vec{x})\dd[n]{x}\qquad f(\vec{x})=\dotsint_{\mathbb{R}_{k}^{n}}\frac{\exp(+\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}F(\vec{k})\dd[n]{k}}
+\]
+
+\end_inset
+
+在不致引起混淆的情况下，积分号 
+\begin_inset Formula $\dotsint$
+\end_inset
+
+ 可以进一步简化为 
+\begin_inset Formula $\int$
+\end_inset
+
+ 并忽略积分区域。
+\end_layout
+
+\begin_layout Subsection
+Fourier 变换的性质
+\end_layout
+
 \begin_layout Section
 Laplace 变换法
 \end_layout
