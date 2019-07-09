@@ -685,6 +685,173 @@ reference "prob:Fourier-级数"
 Fourier 积分
 \end_layout
 
+\begin_layout Standard
+若函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 以 
+\begin_inset Formula $2a$
+\end_inset
+
+ 为周期，则只需作变量替换 
+\begin_inset Formula $x/a=\theta/\uppi$
+\end_inset
+
+，即可将它转化为以 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+ 为周期的函数。此时，函数空间为 
+\begin_inset Formula $L^{2}(-a,+a)$
+\end_inset
+
+，内积和单位基向量分别为：
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{-a}^{+a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ \ip{x}{n}:=\frac{\exp(\mathrm{i}n\uppi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+Fourier 级数为：
+\begin_inset Formula 
+\[
+f(x)\equiv\ip{x}{f}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\mathrm{i}n\uppi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{-a}^{+a}\frac{\exp(-\mathrm{i}n\uppi z/a)}{\sqrt{2a}}f(z)\dd{z}}_{\ip{n}{f}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果要将以上结果推广到非周期函数，则应考虑 
+\begin_inset Formula $a\to\infty$
+\end_inset
+
+ 的情形。定义 
+\begin_inset Formula $k:=n\uppi/a$
+\end_inset
+
+，它的物理意义是：周期函数 
+\begin_inset Formula $\exp(\mathrm{i}kx)$
+\end_inset
+
+ 在长为 
+\begin_inset Formula $2\uppi$
+\end_inset
+
+ 的区间内所含完整波形的个数，因此被称为「波数（Wave Number）」。
+\end_layout
+
+\begin_layout Itemize
+当 
+\begin_inset Formula $a<\infty$
+\end_inset
+
+ 时，
+\begin_inset Formula $k$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $n$
+\end_inset
+
+ 的离散函数，不妨记作 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+，并定义 
+\begin_inset Formula $\Delta k:=k_{n+1}-k_{n}=\uppi/a$
+\end_inset
+
+。于是 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的 Fourier 级数展开可以写为
+\begin_inset Formula 
+\[
+f(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\uppi}}\underbrace{\left[\int_{-a}^{+a}\frac{\exp(-\mathrm{i}k_{n}z)}{\sqrt{2\uppi}}f(z)\dd{z}\right]}_{F(k_{n})}\Delta k=\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\uppi}}F(k_{n})\Delta k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+当 
+\begin_inset Formula $a\to\infty$
+\end_inset
+
+ 时，
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 趋向于取遍 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 上的所有值。如果将 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 视为连续变量 
+\begin_inset Formula $k$
+\end_inset
+
+ 在第 
+\begin_inset Formula $n$
+\end_inset
+
+ 个区间内任意一点的取值，则上式右端成为 Riemann 和。如果它的极限存在，则一定等于以下 Riemann 积分：
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(\mathrm{i}kx)}{\sqrt{2\uppi}}F(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\uppi}}F(k_{n})\Delta k
+\]
+
+\end_inset
+
+它被称为非周期函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的「Fourier 积分」，其中：
+\begin_inset Formula 
+\[
+F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x}
+\]
+
+\end_inset
+
+依然可以被称为函数 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 的「Fourier 系数」，只不过这里是关于「连续指标」
+\begin_inset Formula $k$
+\end_inset
+
+ 的函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+尽管以上讨论过程用到了 Riemann 积分，但所得结果可以用 Lebesgue 积分重新加以解释，从而将适用范围推广到 
+\begin_inset Formula $L^{2}(-\infty,+\infty)$
+\end_inset
+
+。
+\end_layout
+
 \begin_layout Subsection
 Fourier 变换的定义
 \end_layout
