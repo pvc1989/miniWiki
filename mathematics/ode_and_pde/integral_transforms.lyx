@@ -640,7 +640,7 @@ name "prob:Fourier-级数"
  上的特例，这里的内积和单位正交基分别是：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{0}^{2\uppi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ \ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}:=\int_{0}^{2\uppi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -663,7 +663,15 @@ reference "prob:Fourier-级数"
 \begin_inset Formula $L^{2}(0,2\uppi)$
 \end_inset
 
- 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等（至多只相差一个零函数）。
+ 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等（至多只相差一个零函数）：
+\begin_inset Formula 
+\[
+\sum_{n}f_{n}\exp(\mathrm{i}n\theta)=\lim_{\varepsilon\to0}\frac{f(\theta-\varepsilon)+f(\theta+\varepsilon)}{2}\doteq f(\theta)\qquad\forall\,\theta
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -709,7 +717,7 @@ Fourier 积分
 ，内积和单位基向量分别为：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{-a}^{+a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ \ip{x}{n}:=\frac{\exp(\mathrm{i}n\uppi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}:=\int_{-a}^{+a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}:=\frac{\exp(\mathrm{i}n\uppi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -837,6 +845,14 @@ F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x
  的函数。
 \end_layout
 
+\begin_layout Itemize
+尽管以上讨论过程用到了 Riemann 积分，但所得结果可以用 Lebesgue 积分重新加以解释，从而将适用范围推广到 
+\begin_inset Formula $L^{2}(-\infty,+\infty)$
+\end_inset
+
+。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -845,11 +861,106 @@ F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x
 \end_layout
 
 \begin_layout Standard
-尽管以上讨论过程用到了 Riemann 积分，但所得结果可以用 Lebesgue 积分重新加以解释，从而将适用范围推广到 
-\begin_inset Formula $L^{2}(-\infty,+\infty)$
+与 Fourier 级数的情况类似，
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 与 
+\begin_inset Formula $F(k)$
+\end_inset
+
+ 不过是同一个向量的两种等价的表示：
+\end_layout
+
+\begin_layout Itemize
+在 Fourier 级数的分析中，单位基向量表示为：
+\begin_inset Formula 
+\[
+e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\qquad n\in\mathbb{Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在 Fourier 积分的分析中，可以引入类似「单位基向量」：
+\begin_inset Formula 
+\[
+e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\uppi}}\qquad k\in\mathbb{R}_{k}
+\]
+
+\end_inset
+
+这里不过是用连续指标 
+\begin_inset Formula $k$
+\end_inset
+
+ 替代了离散指标 
+\begin_inset Formula $n$
+\end_inset
+
+。此时的「单位正交性」应当理解为：
+\begin_inset Formula 
+\[
+\ip{e_{k}}{e_{k_{0}}}\equiv\ip{k}{k_{0}}=\updelta(k-k_{0})\qquad\forall\,k,k_{0}\in\mathbb{R}_{k}
+\]
+
+\end_inset
+
+由此可以导出 
+\begin_inset Formula $L^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 上的完备性关系：
+\begin_inset Formula $\Operator{1}_{k}\equiv\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}$
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\ket{f}\in L^{2}(\mathbb{R}_{x})$
+\end_inset
+
+ 的 
+\begin_inset Formula $x$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{x}{f}\equiv f(x)$
+\end_inset
+
+，向量 
+\begin_inset Formula $\ket{F}\in L^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 的 
+\begin_inset Formula $k$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{k}{F}\equiv F(k)$
+\end_inset
+
+，二者「几乎」是同一个向量：
+\begin_inset Formula 
+\[
+\ip{x}{f}\equiv f(x)\doteq\int_{\mathbb{R}_{k}}\overbrace{\frac{\exp(\mathrm{i}kx)}{\sqrt{2\uppi}}}^{\ip{x}{k}}\overbrace{F(k)}^{\ip{k}{F}}\dd{k}=\bra{x}\overbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}^{\Operator{1}_{k}}\ket{F}=\ip{x}{F}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -906,7 +1017,7 @@ status collapsed
 \begin_layout Definition
 \begin_inset Formula 
 \[
-\boxed{F(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x}\qquad f(x)=\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F(k)\dd{k}}
+\boxed{F(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\uppi}}f(x)\dd{x}\qquad f(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F(k)\dd{k}}
 \]
 
 \end_inset
@@ -1011,7 +1122,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+广义函数
 \end_layout
 
 \end_inset
@@ -1307,9 +1418,9 @@ F_{y}\circ F_{x}\circ f(k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}ly)}{
 以及用 Fourier 积分表示：
 \begin_inset Formula 
 \[
-\begin{aligned}F_{x}\circ f(k;y) & =\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}ly)}{\sqrt{2\uppi}}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\\
-f(x,y) & =\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F_{x}\circ f(k;l)\dd{k}\\
- & =\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\right]\dd{k}
+\begin{aligned}F_{x}\circ f(k;y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}ly)}{\sqrt{2\uppi}}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\\
+f(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F_{x}\circ f(k;l)\dd{k}\\
+ & \doteq\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\right]\dd{k}
 \end{aligned}
 \]
 
@@ -1327,7 +1438,7 @@ f(x,y) & =\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\uppi}}F_{x}\ci
 \begin_inset Formula 
 \[
 \begin{aligned}F(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}kx-\mathrm{i}ly)}{2\uppi}f(x,y)\dd{x}\dd{y}\\
-f(x,y) & =\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F(k,l)\dd{k}\dd{l}
+f(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\uppi}F(k,l)\dd{k}\dd{l}
 \end{aligned}
 \]
 
@@ -1384,7 +1495,7 @@ status collapsed
  维空间的 Fourier 变换（及其反演）」可以写为更紧凑的形式：
 \begin_inset Formula 
 \[
-\boxed{F(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\exp(-\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}f(\vec{x})\dd[n]{x}\qquad f(\vec{x})=\dotsint_{\mathbb{R}_{k}^{n}}\frac{\exp(+\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}F(\vec{k})\dd[n]{k}}
+\boxed{F(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\exp(-\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}f(\vec{x})\dd[n]{x}\qquad f(\vec{x})\doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\exp(+\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}F(\vec{k})\dd[n]{k}}
 \]
 
 \end_inset
@@ -1400,8 +1511,99 @@ status collapsed
  并忽略积分区域。
 \end_layout
 
+\begin_layout Standard
+与一维的情况类似，
+\begin_inset Formula $f(\vec{x})$
+\end_inset
+
+ 与 
+\begin_inset Formula $F(\vec{k})$
+\end_inset
+
+ 不过是同一个向量的两种等价的表示：
+\end_layout
+
+\begin_layout Itemize
+首先定义 
+\begin_inset Formula $L^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 上的「单位正交基」：
+\begin_inset Formula 
+\[
+e_{\vec{k}}(\vec{x})\equiv\ip{\vec{x}}{e_{\vec{k}}}\equiv\ip{\vec{x}}{\vec{k}}:=\frac{\exp(\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}\qquad\forall\,\vec{k}\in\mathbb{R}_{k}^{n}
+\]
+
+\end_inset
+
+此时的「单位正交性」应当理解为：
+\begin_inset Formula 
+\[
+\ip{e_{\vec{k}}}{e_{\vec{k}_{0}}}\equiv\ip{\vec{k}}{\vec{k}_{0}}=\updelta(\vec{k}-\vec{k}_{0})\qquad\forall\,\vec{k},\vec{k}_{0}\in\mathbb{R}_{k}^{n}
+\]
+
+\end_inset
+
+由此可以导出 
+\begin_inset Formula $L^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 上的完备性关系：
+\begin_inset Formula $\Operator{1}_{k}\equiv\dotsint_{\mathbb{R}_{k}^{n}}\dyad{\vec{k}}\dd[n]{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\ket{f}\in L^{2}(\mathbb{R}_{x}^{n})$
+\end_inset
+
+ 的 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{\vec{x}}{f}\equiv f(\vec{x})$
+\end_inset
+
+，向量 
+\begin_inset Formula $\ket{F}\in L^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 的 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{\vec{k}}{F}\equiv F(\vec{k})$
+\end_inset
+
+，二者「几乎」是同一个向量：
+\begin_inset Formula 
+\[
+\ip{\vec{x}}{f}\equiv f(\vec{x})\doteq\int_{\mathbb{R}_{k}^{n}}\overbrace{\frac{\exp(\mathrm{i}\vec{k}\vdot\vec{x})}{(2\uppi)^{n/2}}}^{\ip{\vec{x}}{\vec{k}}}\overbrace{F(\vec{k})}^{\ip{\vec{k}}{F}}\dd[n]{k}=\bra{\vec{x}}\overbrace{\left(\int_{\mathbb{R}_{k}^{n}}\dyad{\vec{k}}\dd[n]{k}\right)}^{\Operator{1}_{k}}\ket{F}=\ip{\vec{x}}{F}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Fourier 变换的性质
+\end_layout
+
+\begin_layout Subsection
+Fourier 变换的应用
 \end_layout
 
 \begin_layout Section
