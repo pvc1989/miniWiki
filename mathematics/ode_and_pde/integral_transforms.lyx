@@ -264,7 +264,11 @@ reference "thm:Stone--Weierstrass"
 
 \end_inset
 
-即得：
+即得函数 
+\begin_inset Formula $f(\theta)$
+\end_inset
+
+ 的「Fourier 系数」：
 \begin_inset Formula 
 \[
 c_{n}=\frac{1}{2\uppi}\int_{0}^{2\uppi}\exp(-\mathrm{i}kn\theta)f(\theta)\dd{\theta}\qquad\forall\,n\in\mathbb{Z}
@@ -272,7 +276,11 @@ c_{n}=\frac{1}{2\uppi}\int_{0}^{2\uppi}\exp(-\mathrm{i}kn\theta)f(\theta)\dd{\th
 
 \end_inset
 
-值得注意的是：这里的积分并不要求 
+它是关于「离散指标」
+\begin_inset Formula $n$
+\end_inset
+
+ 的函数。值得注意的是：这里的积分并不要求 
 \begin_inset Formula $f(\theta)$
 \end_inset
 
@@ -329,7 +337,7 @@ T(\theta+2n\uppi) & n\in\mathbb{Z}\\
 \end_layout
 
 \begin_layout Standard
-也就是说：某些含有间断的函数也可以作 Fourier 级数展开，但是所得的级数未必与原函数等价。由此可以引出几个问题：
+也就是说：某些含有间断的函数也可以展开为 Fourier 级数，但是所得的级数未必与原函数等价。由此可以引出几个问题：
 \end_layout
 
 \begin_layout Problem
@@ -339,7 +347,7 @@ name "prob:Fourier-级数"
 
 \end_inset
 
-什么样的函数可以作 Fourier 级数展开？如果可以展开，那么所得的级数与原函数之间是什么关系？
+什么样的函数可以展开为 Fourier 级数？如果可以展开，那么所得的级数与原函数之间是什么关系？
 \end_layout
 
 \begin_layout Problem
@@ -425,7 +433,7 @@ name "prob:Fourier-级数"
 ：
 \begin_inset Formula 
 \[
-\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\norm{g_{l}}\cdot\updelta_{kl}\qquad\ket{e_{k}}:=\frac{\ket{g_{k}}}{\norm{g_{k}}}\implies\ip{e_{k}}{e_{l}}=\updelta_{kl}\qquad\forall\,k,l\in\mathbb{N}
+\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\norm{g_{l}}\cdot\updelta_{kl}\qquad\ket{k}\equiv\ket{e_{k}}:=\frac{\ket{g_{k}}}{\norm{g_{k}}}\implies\ip{k}{l}=\updelta_{kl}\qquad\forall\,k,l\in\mathbb{N}
 \]
 
 \end_inset
@@ -433,13 +441,13 @@ name "prob:Fourier-级数"
 于是有「正交分解（Orthogonal Decomposition）」：
 \begin_inset Formula 
 \[
-\ket{u}=\sum_{n}\ket{e_{n}}\overbrace{\ip{e_{n}}{u}}^{u_{n}}=\overbrace{\sum_{n}\dyad{e_{n}}}^{\Operator{1}}\ket{u}\qquad\forall\,\ket{u}\in L^{2}
+\ket{u}=\sum_{n}\ket{n}\overbrace{\ip{n}{u}}^{u_{n}}=\overbrace{\sum_{n}\dyad{n}}^{\Operator{1}}\ket{u}\qquad\forall\,\ket{u}\in L^{2}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $u_{n}=\ip{e_{n}}{u}$
+\begin_inset Formula $u_{n}=\ip{n}{u}$
 \end_inset
 
  是 
@@ -447,7 +455,7 @@ name "prob:Fourier-级数"
 \end_inset
 
  在 
-\begin_inset Formula $\ket{e_{n}}$
+\begin_inset Formula $\ket{n}$
 \end_inset
 
  上的「投影（Projection）」，
@@ -459,7 +467,7 @@ name "prob:Fourier-级数"
 \end_inset
 
  上的「单位算符（Identity Operator）」，等式 
-\begin_inset Formula $\Operator{1}=\sum_{n}\dyad{e_{n}}$
+\begin_inset Formula $\Operator{1}=\sum_{n}\dyad{n}$
 \end_inset
 
  被称为「完备性关系（Completeness Relation）」。
@@ -543,13 +551,13 @@ name "prob:Fourier-级数"
 \end_inset
 
  中的一个向量 
-\begin_inset Formula $\ket{u}=\sum_{n}u_{n}\ket{e_{n}}$
+\begin_inset Formula $\ket{u}=\sum_{n}u_{n}\ket{n}$
 \end_inset
 
 ，这是因为
 \begin_inset Formula 
 \[
-\norm{u}^{2}=\Conj{\left(\sum_{k}u_{k}\ket{e_{k}}\right)}\left(\sum_{n}u_{n}\ket{e_{n}}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}u_{n}\overbrace{\ip{e_{k}}{e_{n}}_{L^{2}}}^{\updelta_{kn}}=\sum_{n}\abs{u_{n}}^{2}<\infty
+\norm{u}^{2}=\Conj{\left(\sum_{k}u_{k}\ket{k}\right)}\left(\sum_{n}u_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}u_{n}\overbrace{\ip{k}{n}_{L^{2}}}^{\updelta_{kn}}=\sum_{n}\abs{u_{n}}^{2}<\infty
 \]
 
 \end_inset
@@ -577,7 +585,7 @@ name "prob:Fourier-级数"
 这种映射是保内积的：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{L^{2}/\doteq}=\ip{u}{v}_{L^{2}}=\Conj{\left(\sum_{k}u_{k}\ket{e_{k}}\right)}\left(\sum_{n}v_{n}\ket{e_{n}}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{e_{k}}{e_{n}}_{L^{2}}}_{\updelta_{kn}}=\ip{u}{v}_{l^{2}}
+\ip{u}{v}_{L^{2}/\doteq}=\ip{u}{v}_{L^{2}}=\Conj{\left(\sum_{k}u_{k}\ket{k}\right)}\left(\sum_{n}v_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{k}{n}_{L^{2}}}_{\updelta_{kn}}=\ip{u}{v}_{l^{2}}
 \]
 
 \end_inset
@@ -632,7 +640,7 @@ name "prob:Fourier-级数"
  上的特例，这里的内积和单位正交基分别是：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{0}^{2\uppi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ \ip{\theta}{e_{n}}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}:=\int_{0}^{2\uppi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ \ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\uppi}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
