@@ -3,6 +3,14 @@
 ## 参考资料
 - [慕子的知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
 
+## 常用宏包
+### `siunitx`
+```latex
+$ \SI[<options>]{<number>}[<preunit>]{<unit>} $
+$ R = \SI{8.3144598(48)}{J.mol^{-1}.K^{-1}} $
+$ R = \SI{8.3144598(48)}{\joule\per\kelvin\per\mole} $
+```
+
 ## TeXLive
 [TeXLive](https://tug.org/texlive/) 是一款开源、跨平台的 TeX 发行版。
 
