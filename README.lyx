@@ -6,32 +6,44 @@
 \origin unavailable
 \textclass ctex-report
 \begin_preamble
-% S
-\usepackage[squaren, thinspace]{SIunits}
-% T
-\usepackage{tikz}
-\usetikzlibrary{intersections}
-\usetikzlibrary{arrows.meta}
-% U
 % more mathematical symbols
 %% symbols for physics
 \usepackage{physics}
+\usepackage{siunitx}
+\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
+\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
+\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
+\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 %% arrow-based vector and tensor
 \usepackage[g]{esvect}
 \renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
 \newcommand{\Tensor}[1]{\vv{\vv{#1}}}  % \vv in esvect
+%% special functions
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
-\newcommand{\Conj}[1]{\overline{#1}}
-\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
+\newcommand{\ConHypGeo}{\sideset{_{1}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
 \newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
+\newcommand{\HypGeo}{\sideset{_{2}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
 \newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
 \newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
-\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
 \newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
-\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
-\usepackage[euler-digits, euler-hat-accent, OT1]{eulervm}
-\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
+% pictures
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
+% fonts
+\usepackage[euler-digits, OT1]{eulervm}
+\ctexset{
+  part/format += \sffamily,
+  chapter/format += \sffamily,
+  section/format += \sffamily,
+  subsection/format += \sffamily,
+  subsubsection/format += \sffamily,
+  paragraph/format += \sffamily,
+  subparagraph/format += \sffamily,
+}
+%% deprecated
+\newcommand{\Conj}[1]{\overline{#1}}
 \end_preamble
 \use_default_options true
 \begin_modules
