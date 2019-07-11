@@ -8,12 +8,10 @@
 \begin_preamble
 \usepackage[colorlinks, linkcolor=blue]{hyperref}
 \usepackage{physics}
-\usepackage[e]{esvect}
+\usepackage[g]{esvect}
+\renewcommand{\vec}[1]{\vv{#1}}
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
-\renewcommand{\vec}[1]{\vv{\vb*{#1}}}
-\renewcommand{\vu}[1]{\widehat{\vb*{#1}}}
-\renewcommand{\parallel}{/\negthickspace/}
+\usepackage[euler-digits, euler-hat-accent, OT1]{eulervm}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -90,19 +88,15 @@ theorems-ams
 
 \begin_body
 
-\begin_layout Section
-Geometry in 
-\begin_inset Formula $\mathbb{R}^{3}$
-\end_inset
-
-
+\begin_layout Chapter
+三维 Geometry
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Vectors
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Dot Product
 \end_layout
 
@@ -118,7 +112,7 @@ dot product of two vectors
 
 \begin_inset Formula 
 \[
-\vec{A}=\sum_{i=1}^{3}\vu{e}_{i}A_{i}\qc\vec{B}=\sum_{i=1}^{3}\vu{e}_{i}B_{i}
+\vec{A}=\sum_{i=1}^{3}\vu*{e}_{i}A_{i}\qc\vec{B}=\sum_{i=1}^{3}\vu*{e}_{i}B_{i}
 \]
 
 \end_inset
@@ -236,7 +230,7 @@ Suppose
  is constant.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Cross Product
 \end_layout
 
@@ -248,7 +242,7 @@ cross product
  of two vectors
 \begin_inset Formula 
 \[
-\vec{A}=\sum_{i=1}^{3}\vu{e}_{i}A_{i}\qc\vec{B}=\sum_{i=1}^{3}\vu{e}_{i}B_{i}
+\vec{A}=\sum_{i=1}^{3}\vu*{e}_{i}A_{i}\qc\vec{B}=\sum_{i=1}^{3}\vu*{e}_{i}B_{i}
 \]
 
 \end_inset
@@ -256,7 +250,7 @@ cross product
 is defined to be a vector
 \begin_inset Formula 
 \[
-\vec{A}\times\vec{B}=\begin{vmatrix}\vu{e}_{1} & \vu{e}_{2} & \vu{e}_{3}\\
+\vec{A}\times\vec{B}=\begin{vmatrix}\vu*{e}_{1} & \vu*{e}_{2} & \vu*{e}_{3}\\
 A_{1} & A_{2} & A_{3}\\
 B_{1} & B_{2} & B_{3}
 \end{vmatrix}
@@ -369,7 +363,7 @@ Suppose
  is constant.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Triple Product
 \end_layout
 
@@ -385,7 +379,7 @@ triple product of three vectors
 
 \begin_inset Formula 
 \[
-\vec{A}=\sum_{i=1}^{3}\vu{e}_{i}A_{i}\qc\vu{b}=\sum_{i=1}^{3}\vu{e}_{i}B_{i}\qc\vec{C}=\sum_{i=1}^{3}\vu{e}_{i}C_{i}
+\vec{A}=\sum_{i=1}^{3}\vu*{e}_{i}A_{i}\qc\vu*{b}=\sum_{i=1}^{3}\vu*{e}_{i}B_{i}\qc\vec{C}=\sum_{i=1}^{3}\vu*{e}_{i}C_{i}
 \]
 
 \end_inset
@@ -437,11 +431,11 @@ Suppose
 .
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Curves
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Smooth Curves
 \end_layout
 
@@ -522,7 +516,7 @@ smooth curve
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Curve Length
 \end_layout
 
@@ -637,7 +631,7 @@ Suppose
  is the curve-length parameter.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Frenet Frame
 \end_layout
 
@@ -661,9 +655,9 @@ unit binormal vector
 , respectively)
 \begin_inset Formula 
 \[
-\begin{aligned}\vu{t} & :=\vec{r}_{s}\\
-\vu{n} & :=\frac{\vu{t}_{s}}{\norm{\vu{t}_{s}}}=\frac{\vec{r}_{ss}}{\norm{\vec{r}_{ss}}}\\
-\vu{b} & :=\vu{t}\times\vu{n}
+\begin{aligned}\vu*{t} & :=\vec{r}_{s}\\
+\vu*{n} & :=\frac{\vu*{t}_{s}}{\norm{\vu*{t}_{s}}}=\frac{\vec{r}_{ss}}{\norm{\vec{r}_{ss}}}\\
+\vu*{b} & :=\vu*{t}\times\vu*{n}
 \end{aligned}
 \]
 
@@ -681,7 +675,7 @@ Frenet frame
 For general parameters, they can be found as
 \begin_inset Formula 
 \[
-\vu{t}=\frac{\vec{r}_{t}}{\norm{\vec{r}_{t}}}\qc\vu{b}=\frac{\vec{r}_{t}\times\vec{r}_{tt}}{\norm{\vec{r}_{t}\times\vec{r}_{tt}}}\qc\vu{n}=\vu{b}\times\vu{t}
+\vu*{t}=\frac{\vec{r}_{t}}{\norm{\vec{r}_{t}}}\qc\vu*{b}=\frac{\vec{r}_{t}\times\vec{r}_{tt}}{\norm{\vec{r}_{t}\times\vec{r}_{tt}}}\qc\vu*{n}=\vu*{b}\times\vu*{t}
 \]
 
 \end_inset
@@ -689,7 +683,7 @@ For general parameters, they can be found as
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Curvature
 \end_layout
 
@@ -705,7 +699,7 @@ bends
 
 \begin_inset Formula 
 \[
-\kappa(s):=\norm{\vu{t}_{s}}=\norm{\vec{r}_{ss}}
+\kappa(s):=\norm{\vu*{t}_{s}}=\norm{\vec{r}_{ss}}
 \]
 
 \end_inset
@@ -717,7 +711,7 @@ bends
 By definition, curvature is always non-negative.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Torsion
 \end_layout
 
@@ -731,7 +725,7 @@ torsion
 twists
 \begin_inset Formula 
 \[
-\tau=\pm\norm{\vu{b}_{s}}
+\tau=\pm\norm{\vu*{b}_{s}}
 \]
 
 \end_inset
@@ -742,7 +736,7 @@ in which, the sign is determined as follows.
  Since
 \begin_inset Formula 
 \[
-\vu{b}_{s}=\vu{t}_{s}\times\vu{n}+\vu{t}\times\vu{n}_{s}=\vu{t}\times\vu{n}_{s}
+\vu*{b}_{s}=\vu*{t}_{s}\times\vu*{n}+\vu*{t}\times\vu*{n}_{s}=\vu*{t}\times\vu*{n}_{s}
 \]
 
 \end_inset
@@ -750,7 +744,7 @@ in which, the sign is determined as follows.
  we can prove that
 \begin_inset Formula 
 \[
-\vu{n}\times\vu{b}_{s}=\vec{0}\iff\vu{n}\parallel\vu{b}_{s}
+\vu*{n}\times\vu*{b}_{s}=\vec{0}\iff\vu*{n}\parallel\vu*{b}_{s}
 \]
 
 \end_inset
@@ -758,7 +752,7 @@ in which, the sign is determined as follows.
 so we can always choose the sign to ensure
 \begin_inset Formula 
 \[
-\vu{b}_{s}=-\tau\vu{n}
+\vu*{b}_{s}=-\tau\vu*{n}
 \]
 
 \end_inset
@@ -770,7 +764,7 @@ so we can always choose the sign to ensure
 By definition, torsion can be negative.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Frenet Formula
 \end_layout
 
@@ -778,7 +772,7 @@ Frenet Formula
 From
 \begin_inset Formula 
 \[
-\vu{t}_{s}=\kappa\vu{n}\qc\vu{b}_{s}=-\tau\vu{n}
+\vu*{t}_{s}=\kappa\vu*{n}\qc\vu*{b}_{s}=-\tau\vu*{n}
 \]
 
 \end_inset
@@ -786,7 +780,7 @@ From
 
 \begin_inset Formula 
 \[
-\vu{t}=\vu{n}\times\vu{b}\qc\vu{n}=\vu{b}\times\vu{t}\qc\vu{b}=\vu{t}\times\vu{n}
+\vu*{t}=\vu*{n}\times\vu*{b}\qc\vu*{n}=\vu*{b}\times\vu*{t}\qc\vu*{b}=\vu*{t}\times\vu*{n}
 \]
 
 \end_inset
@@ -794,7 +788,7 @@ From
 we have
 \begin_inset Formula 
 \[
-\vu{n}_{s}=-\tau\vu{n}\times\vu{t}+\vu{b}\times\kappa\vu{n}=\tau\vu{b}-\kappa\vu{t}
+\vu*{n}_{s}=-\tau\vu*{n}\times\vu*{t}+\vu*{b}\times\kappa\vu*{n}=\tau\vu*{b}-\kappa\vu*{t}
 \]
 
 \end_inset
@@ -802,15 +796,15 @@ we have
 Write in matrix form, we have
 \begin_inset Formula 
 \[
-\dv{s}\begin{bmatrix}\vu{t}\\
-\vu{n}\\
-\vu{b}
+\dv{s}\begin{bmatrix}\vu*{t}\\
+\vu*{n}\\
+\vu*{b}
 \end{bmatrix}=\begin{bmatrix} & \kappa\\
 -\kappa &  & \tau\\
  & -\tau
-\end{bmatrix}\begin{bmatrix}\vu{t}\\
-\vu{n}\\
-\vu{b}
+\end{bmatrix}\begin{bmatrix}\vu*{t}\\
+\vu*{n}\\
+\vu*{b}
 \end{bmatrix}
 \]
 
@@ -836,7 +830,7 @@ One application of the Frenet formula is the calculation of curvature and
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Approximate Curve
 \end_layout
 
@@ -852,7 +846,7 @@ From
 
 \begin_inset Formula 
 \[
-\vec{r}_{s}=\vu{t}\qc\vec{r}_{ss}=\kappa\vu{n}\qc\vec{r}_{sss}=\kappa_{s}\vu{n}+\kappa\vu{n}_{s}=\kappa_{s}\vu{n}+\kappa\left(\tau\vu{b}-\kappa\vu{t}\right)
+\vec{r}_{s}=\vu*{t}\qc\vec{r}_{ss}=\kappa\vu*{n}\qc\vec{r}_{sss}=\kappa_{s}\vu*{n}+\kappa\vu*{n}_{s}=\kappa_{s}\vu*{n}+\kappa\left(\tau\vu*{b}-\kappa\vu*{t}\right)
 \]
 
 \end_inset
@@ -864,7 +858,7 @@ approximate curve
 
 \begin_inset Formula 
 \[
-\vec{r}^{*}(s)=s\vu{t}(0)+\frac{s^{2}}{2}\kappa(0)\vu{n}(0)+\frac{s^{3}}{6}\kappa(0)\tau(0)\vu{b}(0)
+\vec{r}^{*}(s)=s\vu*{t}(0)+\frac{s^{2}}{2}\kappa(0)\vu*{n}(0)+\frac{s^{3}}{6}\kappa(0)\tau(0)\vu*{b}(0)
 \]
 
 \end_inset
@@ -880,13 +874,13 @@ whose curvature and torsion are identical with the original curve
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Fundamental Theorem of Curves
 \end_layout
 
 \begin_layout Theorem
 Given a right-handed orthogonal frame 
-\begin_inset Formula $\left\{ \vu{t}_{0},\vu{n}_{0},\vu{b}_{0}\right\} $
+\begin_inset Formula $\left\{ \vu*{t}_{0},\vu*{n}_{0},\vu*{b}_{0}\right\} $
 \end_inset
 
  at point 
@@ -900,11 +894,11 @@ Given a right-handed orthogonal frame
 , a unique curve can be determined.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section
 Surfaces
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Smooth Surfaces
 \end_layout
 
@@ -985,11 +979,11 @@ smooth surface
 .
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Fundamental Forms
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 First Fundamental Form
 \end_layout
 
@@ -1021,7 +1015,7 @@ in which
 The first fundamental form depicts the metric induced on a surface.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Second Fundamental Form
 \end_layout
 
@@ -1065,7 +1059,7 @@ we try to evaluate the distance of a nearby point to the tangent plane
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\vu{m}:=\frac{\vec{r}_{u}\times\vec{r}_{v}}{\norm{\vec{r}_{u}\times\vec{r}_{v}}}}
+\boxed{\vu*{m}:=\frac{\vec{r}_{u}\times\vec{r}_{v}}{\norm{\vec{r}_{u}\times\vec{r}_{v}}}}
 \]
 
 \end_inset
@@ -1141,8 +1135,8 @@ to
  is then
 \begin_inset Formula 
 \[
-\begin{aligned}d(\epsilon=\dd{t}) & =\vu{m}\cdot\left(\vec{r}_{t}\dd{t}+\vec{r}_{tt}\frac{(\dd{t})^{2}}{2}+\cdots\right)\\
- & =\vu{m}\cdot\left(\dd{\vec{r}}+\frac{\dd[2]{\vec{r}}}{2}+\cdots\right)
+\begin{aligned}d(\epsilon=\dd{t}) & =\vu*{m}\cdot\left(\vec{r}_{t}\dd{t}+\vec{r}_{tt}\frac{(\dd{t})^{2}}{2}+\cdots\right)\\
+ & =\vu*{m}\cdot\left(\dd{\vec{r}}+\frac{\dd[2]{\vec{r}}}{2}+\cdots\right)
 \end{aligned}
 \]
 
@@ -1165,7 +1159,7 @@ in which
 Since
 \begin_inset Formula 
 \[
-\vu{m}\cdot\vec{r}_{t}=0\qc\vu{m}\cdot\vec{r}_{u}=\vu{m}\cdot\vec{r}_{v}=0
+\vu*{m}\cdot\vec{r}_{t}=0\qc\vu*{m}\cdot\vec{r}_{u}=\vu*{m}\cdot\vec{r}_{v}=0
 \]
 
 \end_inset
@@ -1173,7 +1167,7 @@ Since
 we have
 \begin_inset Formula 
 \[
-2d(\dd{t})=\vu{m}\cdot\dd[2]{\vec{r}}=\vu{m}\cdot\vec{r}_{uu}\dd{u}\dd{u}+2\vu{m}\cdot\vec{r}_{uv}\dd{u}\dd{v}+\vu{m}\cdot\vec{r}_{vv}\dd{u}\dd{v}
+2d(\dd{t})=\vu*{m}\cdot\dd[2]{\vec{r}}=\vu*{m}\cdot\vec{r}_{uu}\dd{u}\dd{u}+2\vu*{m}\cdot\vec{r}_{uv}\dd{u}\dd{v}+\vu*{m}\cdot\vec{r}_{vv}\dd{u}\dd{v}
 \]
 
 \end_inset
@@ -1189,7 +1183,7 @@ second fundamental form of a surface
 , i.e.
 \begin_inset Formula 
 \[
-\boxed{\mathrm{II}(\dd{u},\dd{v}):=\vu{m}\cdot\dd[2]{\vec{r}}=L\dd{u}\dd{u}+2M\dd{u}\dd{v}+N\dd{v}\dd{v}}
+\boxed{\mathrm{II}(\dd{u},\dd{v}):=\vu*{m}\cdot\dd[2]{\vec{r}}=L\dd{u}\dd{u}+2M\dd{u}\dd{v}+N\dd{v}\dd{v}}
 \]
 
 \end_inset
@@ -1197,7 +1191,7 @@ second fundamental form of a surface
 in which
 \begin_inset Formula 
 \[
-\boxed{{L:=\vu{m}\cdot\vec{r}_{uu}\qc M:=\vu{m}\cdot\vec{r}_{uv}\qc N:=\vu{m}\cdot\vec{r}_{vv}}}
+\boxed{{L:=\vu*{m}\cdot\vec{r}_{uu}\qc M:=\vu*{m}\cdot\vec{r}_{uv}\qc N:=\vu*{m}\cdot\vec{r}_{vv}}}
 \]
 
 \end_inset
@@ -1209,11 +1203,11 @@ in which
 The second fundamental form depicts the distortion of a surface.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Curvatures
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Normal Curvatures
 \end_layout
 
@@ -1225,24 +1219,24 @@ normal curvature of a curve on a surface
  is defined as
 \begin_inset Formula 
 \[
-\kappa_{n}:=\kappa\vu{n}\cdot\vu{m}
+\kappa_{n}:=\kappa\vu*{n}\cdot\vu*{m}
 \]
 
 \end_inset
 
 in which 
-\begin_inset Formula $\vu{n}$
+\begin_inset Formula $\vu*{n}$
 \end_inset
 
  and 
-\begin_inset Formula $\vu{m}$
+\begin_inset Formula $\vu*{m}$
 \end_inset
 
  are the unit normal vectors of the curve and the surface, respectively.
  To calculate it, we use the following facts
 \begin_inset Formula 
 \[
-\vec{r}_{ss}=\kappa\vu{n}\qc\mathrm{II}=\vu{m}\cdot\dd[2]{\vec{r}}=\vu{m}\cdot\vec{r}_{ss}\dd{s}^{2}\qc\mathrm{I}=\dd{s}^{2}
+\vec{r}_{ss}=\kappa\vu*{n}\qc\mathrm{II}=\vu*{m}\cdot\dd[2]{\vec{r}}=\vu*{m}\cdot\vec{r}_{ss}\dd{s}^{2}\qc\mathrm{I}=\dd{s}^{2}
 \]
 
 \end_inset
@@ -1250,7 +1244,7 @@ in which
 then
 \begin_inset Formula 
 \[
-\boxed{\kappa_{n}=\kappa\vu{n}\cdot\vu{m}=\frac{\mathrm{II}}{\mathrm{I}}}
+\boxed{\kappa_{n}=\kappa\vu*{n}\cdot\vu*{m}=\frac{\mathrm{II}}{\mathrm{I}}}
 \]
 
 \end_inset
@@ -1258,7 +1252,7 @@ then
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Principal Curvatures
 \end_layout
 
@@ -1300,7 +1294,7 @@ principal directions
 .
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Gaussian Curvature
 \end_layout
 
@@ -1345,7 +1339,7 @@ K=\frac{\det\Matrix{B}}{\det\Matrix{G}}=\frac{LN-M^{2}}{EG-F^{2}}
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 Mean Curvature
 \end_layout
 
