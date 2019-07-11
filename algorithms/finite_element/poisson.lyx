@@ -841,7 +841,7 @@ Global Stiffness Matrix
 \[
 \begin{aligned}\int_{\Omega}\grad v\cdot\grad u\dd{\Omega} & =\int_{\Omega}\sum_{\alpha}\pdv{v}{x_{\alpha}}\pdv{u}{x_{\alpha}}\dd{\Omega}\approx\int_{\Omega}\sum_{\alpha}\pdv{v^{h}}{x_{\alpha}}\pdv{u^{h}}{x_{\alpha}}\dd{\Omega}\\
  & =\int_{\Omega}\sum_{\alpha}\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{\alpha}}}\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}\\
- & =\bra{\hat{v}}\left(\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}\right)\ket{\hat{u}}=\mel{\hat{v}}{\Mat{K}}{\hat{u}}
+ & =\bra{\hat{v}}\left(\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}\right)\ket{\hat{u}}=\mel{\hat{v}}{\Matrix{K}}{\hat{u}}
 \end{aligned}
 \]
 
@@ -850,7 +850,7 @@ Global Stiffness Matrix
 in which
 \begin_inset Formula 
 \[
-\Mat{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}
+\Matrix{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\psi(\vec{x})}{x_{\alpha}}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\dd{\Omega}
 \]
 
 \end_inset
@@ -971,8 +971,8 @@ then
 \[
 \begin{aligned}\ket{F_{s}} & =\int_{\Omega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\Omega}\approx\int_{\Omega}\ket{\psi(\vec{x})}\ip{\phi(\vec{x})}{\hat{s}}\dd{\Omega}\\
  & =\left(\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\right)\ket{\hat{s}}\\
- & =\Mat{K_{s}}\ket{\hat{s}}\\
-\ket{F_{q}} & =\Mat{K_{q}}\ket{\hat{q}}
+ & =\Matrix{K_{s}}\ket{\hat{s}}\\
+\ket{F_{q}} & =\Matrix{K_{q}}\ket{\hat{q}}
 \end{aligned}
 \]
 
@@ -981,7 +981,7 @@ then
 in which
 \begin_inset Formula 
 \[
-\Mat{K_{s}}=\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\qc\Mat{K_{q}}=\int_{\Gamma_{q}}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Gamma}
+\Matrix{K_{s}}=\int_{\Omega}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Omega}\qc\Matrix{K_{q}}=\int_{\Gamma_{q}}\dyad{\psi(\vec{x})}{\phi(\vec{x})}\dd{\Gamma}
 \]
 
 \end_inset
@@ -1011,7 +1011,7 @@ noprefix "false"
 , we have
 \begin_inset Formula 
 \[
-\mel{\hat{v}}{\Mat{K}}{\hat{u}}=\ip{\hat{v}}{F_{s}}+\ip{\hat{v}}{F_{q}}
+\mel{\hat{v}}{\Matrix{K}}{\hat{u}}=\ip{\hat{v}}{F_{s}}+\ip{\hat{v}}{F_{q}}
 \]
 
 \end_inset
@@ -1028,7 +1028,7 @@ literal "false"
 :
 \begin_inset Formula 
 \begin{equation}
-\boxed{\Mat{K}\ket{\hat{u}}=\ket{F}\qc\ket{F_{s}}+\ket{F_{q}}}\label{eq:PoissonLAE}
+\boxed{\Matrix{K}\ket{\hat{u}}=\ket{F}\qc\ket{F_{s}}+\ket{F_{q}}}\label{eq:PoissonLAE}
 \end{equation}
 
 \end_inset
@@ -1055,12 +1055,12 @@ reference "subsec:PoissonGalerkinFEM"
 \end_inset
 
 ), we can always make 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  a square matrix.
  However, 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  is generally singular, since free mode (
@@ -1079,7 +1079,7 @@ noprefix "false"
 
 .
  Such singularity of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  is removed by applying the essential BC 
@@ -1140,7 +1140,7 @@ finite element!~ analysis
 \end_inset
 
  includes a preprocessing step (build 
-\begin_inset Formula $\Mat{K},\ket{F}$
+\begin_inset Formula $\Matrix{K},\ket{F}$
 \end_inset
 
  in 
@@ -1203,7 +1203,7 @@ query!~ point
 efficienct
 \emph default
  evaluation of 
-\begin_inset Formula $\Mat{K},\ket{F}$
+\begin_inset Formula $\Matrix{K},\ket{F}$
 \end_inset
 
  in the preprocessing step (
@@ -1589,7 +1589,7 @@ Evaluating Matrices on Elements
 
 \lang english
 The evaluation of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  can now be decomposed into 
@@ -1599,13 +1599,13 @@ The evaluation of
  (the total number of elements) pieces:
 \begin_inset Formula 
 \[
-\Mat{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\phi}{x_{\alpha}}}{\pdv{\phi}{x_{\alpha}}}\dd{\Omega}=\sum_{e}\overbrace{\int_{\Omega_{e}}\sum_{\alpha}\dyad{\pdv{N^{e}}{x_{\alpha}}}{\pdv{N^{e}}{x_{\alpha}}}\dd{\Omega}}^{\Mat{K^{e}}}
+\Matrix{K}=\int_{\Omega}\sum_{\alpha}\dyad{\pdv{\phi}{x_{\alpha}}}{\pdv{\phi}{x_{\alpha}}}\dd{\Omega}=\sum_{e}\overbrace{\int_{\Omega_{e}}\sum_{\alpha}\dyad{\pdv{N^{e}}{x_{\alpha}}}{\pdv{N^{e}}{x_{\alpha}}}\dd{\Omega}}^{\Matrix{K^{e}}}
 \]
 
 \end_inset
 
 Each 
-\begin_inset Formula $\Mat{K^{e}}$
+\begin_inset Formula $\Matrix{K^{e}}$
 \end_inset
 
  is called an 
@@ -1644,7 +1644,7 @@ vector!load ~!element ~
 :
 \begin_inset Formula 
 \[
-\ket{F_{s}}=\sum_{e}\overbrace{\int_{\Omega_{e}}\ket{N^{e}}\bar{s}\dd{\Omega}}^{\ket{F_{s}^{e}}}\approx\left(\sum_{e}\Mat{K_{s}^{e}}\right)\ket{\hat{s}}
+\ket{F_{s}}=\sum_{e}\overbrace{\int_{\Omega_{e}}\ket{N^{e}}\bar{s}\dd{\Omega}}^{\ket{F_{s}^{e}}}\approx\left(\sum_{e}\Matrix{K_{s}^{e}}\right)\ket{\hat{s}}
 \]
 
 \end_inset
@@ -1652,7 +1652,7 @@ vector!load ~!element ~
 
 \begin_inset Formula 
 \[
-\ket{F_{q}}=\sum_{e}\overbrace{\int_{\Gamma_{q}\cap\partial\Omega_{e}}\ket{N^{e}}\bar{q}\dd{\Gamma}}^{\ket{F_{q}^{e}}}\approx\left(\sum_{e}\Mat{K_{q}^{e}}\right)\ket{\hat{q}}
+\ket{F_{q}}=\sum_{e}\overbrace{\int_{\Gamma_{q}\cap\partial\Omega_{e}}\ket{N^{e}}\bar{q}\dd{\Gamma}}^{\ket{F_{q}^{e}}}\approx\left(\sum_{e}\Matrix{K_{q}^{e}}\right)\ket{\hat{q}}
 \]
 
 \end_inset
@@ -1660,7 +1660,7 @@ vector!load ~!element ~
 in which
 \begin_inset Formula 
 \[
-\Mat{K_{s}^{e}}=\int_{\Omega_{e}}\dyad{N^{e}}\dd{\Omega}\qc\Mat{K_{q}^{e}}=\int_{\Gamma_{q}\cap\partial\Omega_{e}}\dyad{N^{e}}\dd{\Gamma}
+\Matrix{K_{s}^{e}}=\int_{\Omega_{e}}\dyad{N^{e}}\dd{\Omega}\qc\Matrix{K_{q}^{e}}=\int_{\Gamma_{q}\cap\partial\Omega_{e}}\dyad{N^{e}}\dd{\Gamma}
 \]
 
 \end_inset
@@ -1755,7 +1755,7 @@ th row and
 \end_inset
 
 th column of 
-\begin_inset Formula $\Mat{K^{e}}$
+\begin_inset Formula $\Matrix{K^{e}}$
 \end_inset
 
  should be added onto the 
@@ -1767,7 +1767,7 @@ th row and
 \end_inset
 
 th column of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
 .
@@ -1819,7 +1819,7 @@ literal "false"
 \end_inset
 
 , 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  can be built with 
@@ -2035,7 +2035,7 @@ noprefix "false"
 
  is actually a redundant equation, which can be deleted.
  To recover 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  to a square matrix, it is intuitive to delete the 
@@ -2100,7 +2100,7 @@ Apply
 
 \lang english
 Substract 
-\begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
+\begin_inset Formula $\Matrix{K}\ket{2}\hat{u}_{2}$
 \end_inset
 
  from 
@@ -2140,7 +2140,7 @@ nd row of the system and the
 \end_inset
 
 nd column of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
 :
@@ -2294,7 +2294,7 @@ reference "subsec:PoissonBCbyDeletingRowAndColumn"
 \end_inset
 
  may cause 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  to be ill-conditioned.
@@ -2404,7 +2404,7 @@ The solution is
 \end_inset
 
 which is almost accurate, however, the condition number of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  is 
@@ -2434,7 +2434,7 @@ th row and column, we shall just set their elements to be
 
 .
  To balance such modification, 
-\begin_inset Formula $\Mat{K}\ket{I}\hat{u}_{I}$
+\begin_inset Formula $\Matrix{K}\ket{I}\hat{u}_{I}$
 \end_inset
 
  should be subtracted from 
@@ -2531,7 +2531,7 @@ Apply
 
 \lang english
 Substract 
-\begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
+\begin_inset Formula $\Matrix{K}\ket{2}\hat{u}_{2}$
 \end_inset
 
  from 
@@ -2652,7 +2652,7 @@ The solution is
 \end_inset
 
 which is accurate, and the condition number of 
-\begin_inset Formula $\Mat{K}$
+\begin_inset Formula $\Matrix{K}$
 \end_inset
 
  is 
