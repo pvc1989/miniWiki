@@ -118,22 +118,38 @@ theorems-chap
 \end_layout
 
 \begin_layout Standard
+「积分变换（Integral Transform）」是指通过积分
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-F(t)=\int_{a}^{b}K(t,\tau)f(\tau)\dd{\tau}\label{eq:积分变换的一般形式}
+\widetilde{u}(t)=\int_{a}^{b}K(t,\tau)u(\tau)\dd{\tau}\label{eq:积分变换的一般形式}
 \end{equation}
 
 \end_inset
 
-其中 
+将「以 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 为自变量的原函数 
+\begin_inset Formula $u$
+\end_inset
+
+」变换为「以 
+\begin_inset Formula $t$
+\end_inset
+
+ 为自变量的象函数 
+\begin_inset Formula $\widetilde{u}$
+\end_inset
+
+」的过程，其中 
 \begin_inset Formula $K(t,\tau)$
 \end_inset
 
  称为该积分变换的「核（Kernel）」。
-\end_layout
-
-\begin_layout Standard
-反演（逆变换）
 \end_layout
 
 \begin_layout Section
@@ -162,26 +178,30 @@ name "thm:Stone--Weierstrass"
 
 \end_inset
 
-如果（定义在 
+如果定义在 
 \begin_inset Formula $\mathbb{R}^{n}$
 \end_inset
 
- 上的）函数 
-\begin_inset Formula $f$
+ 上的函数 
+\begin_inset Formula $u$
 \end_inset
 
- 在（
+ 在 
 \begin_inset Formula $n$
 \end_inset
 
- 维）闭区间 
-\begin_inset Formula $D=\left\{ (x_{1},\dots,x_{n}):a_{i}\le x_{i}\le b_{i},i=1,\dots,n\right\} $
-\end_inset
-
- 上连续，则有唯一的多项式展开：
+ 维闭区间
 \begin_inset Formula 
 \[
-f(x_{1},\dots,x_{n})=\sum_{k_{1},\dots,k_{n}=0}^{\infty}A_{k_{1}\dots k_{n}}x_{1}^{k_{1}}\cdots x_{n}^{k_{n}}
+D=\left\{ (x_{1},...,x_{n}):a_{i}\le x_{i}\le b_{i},i=1,...,n\right\} 
+\]
+
+\end_inset
+
+上连续，则有唯一的多项式展开：
+\begin_inset Formula 
+\[
+u(x_{1},...,x_{n})=\sum_{k_{1},...,k_{n}=0}^{\infty}A_{k_{1},...,k_{n}}x_{1}^{k_{1}}\cdots x_{n}^{k_{n}}
 \]
 
 \end_inset
@@ -216,8 +236,8 @@ f(x_{1},\dots,x_{n})=\sum_{k_{1},\dots,k_{n}=0}^{\infty}A_{k_{1}\dots k_{n}}x_{1
 ）上，则上述结论可以表示为
 \begin_inset Formula 
 \[
-\begin{aligned}f(\theta) & =\sum_{k,l=0}^{\infty}A_{kl}\cos[k](\theta)\sin[l](\theta)=\sum_{k,l=0}^{\infty}A_{kl}\cdot\left(\frac{\mathrm{e}^{\mathrm{i}\theta}+\mathrm{e}^{-\mathrm{i}\theta}}{2}\right)^{k}\left(\frac{\mathrm{e}^{\mathrm{i}\theta}-\mathrm{e}^{-\mathrm{i}\theta}}{2\mathrm{i}}\right)^{l}\\
- & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\mathrm{i}n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos n\theta+\mathrm{i}\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin n\theta
+\begin{aligned}u(\theta) & =\sum_{k,l=0}^{\infty}A_{k,l}\cos[k](\theta)\sin[l](\theta)=\sum_{k,l=0}^{\infty}A_{k,l}\cdot\left(\frac{\ee^{\ii\theta}+\ee^{-\ii\theta}}{2}\right)^{k}\left(\frac{\ee^{\ii\theta}-\ee^{-\ii\theta}}{2\ii}\right)^{l}\\
+ & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\ii n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos n\theta+\ii\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin n\theta
 \end{aligned}
 \]
 
@@ -230,15 +250,26 @@ reference "thm:Stone--Weierstrass"
 
 \end_inset
 
- 定理保证了：每一个以 
+ 定理保证了：
+\end_layout
+
+\begin_layout Corollary*
+每一个以 
 \begin_inset Formula $2\pi$
 \end_inset
 
  为周期的连续函数都可以唯一地展开为形如 
-\begin_inset Formula $\sum_{n}c_{n}\exp(\mathrm{i}n\theta)$
+\begin_inset Formula $\sum_{n\in\mathbb{Z}}c_{n}\exp(\ii n\theta)$
 \end_inset
 
  的 Fourier 级数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -246,43 +277,51 @@ reference "thm:Stone--Weierstrass"
 \begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
 \end_inset
 
-，通常将展开式 
-\begin_inset Formula $f(\theta)=\sum_{k}c_{k}\exp(\mathrm{i}k\theta)$
+，只需将展开式 
+\begin_inset Formula $u(\theta)=\sum_{k}c_{k}\exp(\ii k\theta)$
 \end_inset
 
  代入积分 
-\begin_inset Formula $\int_{0}^{2\pi}\exp(-\mathrm{i}l\theta)f(\theta)\dd{\theta}$
+\begin_inset Formula $\int_{0}^{2\pi}\exp(-\ii l\theta)u(\theta)\dd{\theta}$
 \end_inset
 
 ，并利用
 \begin_inset Formula 
 \[
-\int_{0}^{2\pi}\exp(\mathrm{i}k\theta-\mathrm{i}l\theta)\dd{\theta}=\begin{cases}
+\int_{0}^{2\pi}\exp(\ii k\theta-\ii l\theta)\dd{\theta}=\begin{cases}
 \int_{0}^{2\pi}1\dd{\theta}=2\pi & k=l\\
-\eval{\frac{\exp(\mathrm{i}k\theta-\mathrm{i}l\theta)}{k-l}}_{0}^{2\pi}=0 & k\ne l
+\eval{\frac{\exp(\ii k\theta-\ii l\theta)}{k-l}}_{0}^{2\pi}=0 & k\ne l
 \end{cases}\qquad\forall\,k,l\in\mathbb{Z}
 \]
 
 \end_inset
 
 即得函数 
-\begin_inset Formula $f(\theta)$
+\begin_inset Formula $u(\theta)$
 \end_inset
 
  的「Fourier 系数」：
 \begin_inset Formula 
 \[
-c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\mathrm{i}n\theta)f(\theta)\dd{\theta}\qquad\forall\,n\in\mathbb{Z}
+c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\ii n\theta)u(\theta)\dd{\theta}\qquad\forall\,n\in\mathbb{Z}
 \]
 
 \end_inset
 
-它是关于「离散指标」
+它是关于「离散指标（Discrete Index）」
 \begin_inset Formula $n$
 \end_inset
 
- 的函数。值得注意的是：这里的积分并不要求 
-\begin_inset Formula $f(\theta)$
+ 的函数，完全由函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 确定，因此不妨记作 
+\begin_inset Formula $u_{n}\equiv c_{n}$
+\end_inset
+
+。值得注意的是：这里的积分并不要求 
+\begin_inset Formula $u(\theta)$
 \end_inset
 
  连续。
@@ -290,11 +329,11 @@ c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\mathrm{i}n\theta)f(\theta)\dd{\theta}\
 
 \begin_layout Standard
 另一方面，由任何一组系数 
-\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
 \end_inset
 
  所构造的 Fourier 级数 
-\begin_inset Formula $\sum_{n}c_{n}\exp(\mathrm{i}n\theta)$
+\begin_inset Formula $\sum_{n}u_{n}\exp(\ii n\theta)$
 \end_inset
 
 ，只要它处处收敛，那么它就是一个以 
@@ -302,10 +341,14 @@ c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\mathrm{i}n\theta)f(\theta)\dd{\theta}\
 \end_inset
 
  为周期的连续函数，即使导出 
-\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
 \end_inset
 
- 的那个函数本身并不连续。
+ 的那个函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 本身并不连续。
 \end_layout
 
 \begin_layout Example*
@@ -376,15 +419,15 @@ name "prob:Fourier-级数"
 \end_inset
 
  上的「几乎处处连续」的函数的全体所构成的（复）向量空间。这里的「几乎处处连续」是指：函数 
-\begin_inset Formula $f$
+\begin_inset Formula $u$
 \end_inset
 
- 至多含「可列（Enumerable）」个间断点，这样它的所有间断点至多构成一个零测度集。如果要强调函数 
-\begin_inset Formula $f$
+ 至多含「可列（Enumerable）」个间断点，这样它的所有间断点至多构成一个零「测度（Measure）」集。如果要强调函数 
+\begin_inset Formula $u$
 \end_inset
 
  的向量属性，则将其记作 
-\begin_inset Formula $\ket{f}$
+\begin_inset Formula $\ket{u}$
 \end_inset
 
 。
@@ -415,11 +458,19 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}(a,b)\subset\mathcal{V}$
 \end_inset
 
-，它是「完备的（Complete）」：作为线性赋范空间，它是一个 Banach 空间；作为线性内积空间，它是一个 Hilbert 空间。
+，它是「完备的（Complete）」：在 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 中，任何一个 Cauchy 序列的极限点均属于 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+。作为赋范空间，它是一个 Banach 空间；作为内积空间，它是一个 Hilbert 空间。
 \end_layout
 
 \begin_layout Itemize
-有了内积就可以找到 
+有了内积，就可以找到 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
@@ -434,7 +485,7 @@ name "prob:Fourier-级数"
 ：
 \begin_inset Formula 
 \[
-\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\norm{g_{l}}\cdot\delta_{kl}\qquad\ket{k}\equiv\ket{e_{k}}:=\frac{\ket{g_{k}}}{\norm{g_{k}}}\implies\ip{k}{l}=\delta_{kl}\qquad\forall\,k,l\in\mathbb{N}
+\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\delta_{kl}\cdot\norm{g_{l}}\qquad\ip{k}{l}\equiv\ip{e_{k}}{e_{l}}=\delta_{kl}\qquad\forall\,k,l\in\mathbb{N}
 \]
 
 \end_inset
@@ -480,7 +531,7 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\doteq$
 \end_inset
 
- 表示。这组关系具有自反性、对称性、传递性，因而可以被视为是一种「等价关系（Equivalence Relation）」：
+ 表示。这种二元关系具有自反性、对称性、传递性，因而可以被视为是一种「等价关系（Equivalence Relation）」：
 \begin_inset Formula 
 \[
 \ket{u}\doteq\ket{v}\iff\norm{u-v}=0
@@ -504,10 +555,10 @@ name "prob:Fourier-级数"
 
 \end_inset
 
-及其内积：
+商空间上的内积（也就是两个等价类的内积）定义为「代表元」的内积：
 \begin_inset Formula 
 \[
-\ip{\left\llbracket u\right\rrbracket }{\left\llbracket v\right\rrbracket }\equiv\ip{u}{v}_{\mathcal{L}^{2}/\doteq}:=\ip{u}{v}_{\mathcal{L}^{2}}\qquad\forall\,\left\llbracket u\right\rrbracket ,\left\llbracket v\right\rrbracket \in\mathcal{L}^{2}/\doteq
+\ip{\left\llbracket u\right\rrbracket }{\left\llbracket v\right\rrbracket }\equiv\ip{u}{v}_{\mathcal{L}^{2}/\doteq}:=\ip{u}{v}_{\mathcal{L}^{2}}\qquad\forall\,\ket{u}\in\left\llbracket u\right\rrbracket ,\forall\,\ket{v}\in\left\llbracket v\right\rrbracket ,\forall\,\left\llbracket u\right\rrbracket ,\left\llbracket v\right\rrbracket \in\mathcal{L}^{2}/\doteq
 \]
 
 \end_inset
@@ -517,21 +568,25 @@ name "prob:Fourier-级数"
 
 \begin_layout Itemize
 用 
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  表示所有满足 
 \begin_inset Formula $\sum_{n}\abs{u_{n}}^{2}<\infty$
 \end_inset
 
- 的可数维数组 
-\begin_inset Formula $[u]$
+ 的 
+\begin_inset Formula $\aleph_{0}$
+\end_inset
+
+ 维数组 
+\begin_inset Formula $[u]:=(...,u_{-1},u_{0},u_{1},...)$
 \end_inset
 
  所构成的（复）向量空间，它在如下内积及其所导出的范数定义下也是完备的：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\mathit{l}^{2}}:=\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{[u]}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\,[u],[v]\in\mathit{l}^{2}
+\ip{u}{v}_{\ell^{2}}:=\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{[u]}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\,[u],[v]\in\ell^{2}
 \]
 
 \end_inset
@@ -540,7 +595,7 @@ name "prob:Fourier-级数"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  中的每一个成员 
@@ -564,7 +619,7 @@ name "prob:Fourier-级数"
 \end_inset
 
 这样就建立了 
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  到 
@@ -572,27 +627,27 @@ name "prob:Fourier-级数"
 \end_inset
 
  的「单射（Injection）」，以及 
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  到 
 \begin_inset Formula $\mathcal{L}^{2}/\doteq$
 \end_inset
 
- 的「双射（bijection）」。
+ 的「双射（Bijection）」。
 \end_layout
 
 \begin_layout Itemize
 这种映射是保内积的：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\ip{u}{v}_{\mathcal{L}^{2}}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}v_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{k}{n}_{\mathcal{L}^{2}}}_{\delta_{kn}}=\ip{u}{v}_{\mathit{l}^{2}}
+\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\ip{u}{v}_{\mathcal{L}^{2}}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}v_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{k}{n}_{\mathcal{L}^{2}}}_{\delta_{kn}}=\ip{u}{v}_{\ell^{2}}
 \]
 
 \end_inset
 
 因此 
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  与 
@@ -607,11 +662,19 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
- 中的一个向量（函数），又可以表示 
-\begin_inset Formula $\mathit{l}^{2}$
+ 中的一个向量（函数 
+\begin_inset Formula $u$
 \end_inset
 
- 中与之对应的向量（数组）；
+），又可以表示 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中与之对应的向量（数组 
+\begin_inset Formula $[u]$
+\end_inset
+
+）；
 \begin_inset Formula $\ip{u}{v}$
 \end_inset
 
@@ -620,7 +683,7 @@ name "prob:Fourier-级数"
 \end_inset
 
  中的内积，又可以表示 
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  中的内积。
@@ -641,7 +704,7 @@ name "prob:Fourier-级数"
  上的特例，这里的内积和单位正交基分别是：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{0}^{2\pi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}:=\int_{0}^{2\pi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -664,10 +727,10 @@ reference "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
 \end_inset
 
- 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等（至多只相差一个零函数）：
+ 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等：
 \begin_inset Formula 
 \[
-\sum_{n}f_{n}\exp(\mathrm{i}n\theta)=\lim_{\varepsilon\to0}\frac{f(\theta-\varepsilon)+f(\theta+\varepsilon)}{2}\doteq f(\theta)\qquad\forall\,\theta
+\sum_{n}u_{n}\exp(\ii n\theta)=\lim_{\varepsilon\to0}\frac{u(\theta-\varepsilon)+u(\theta+\varepsilon)}{2}\doteq u(\theta)\qquad\forall\,\theta\in(0,2\pi)
 \]
 
 \end_inset
@@ -676,7 +739,7 @@ reference "prob:Fourier-级数"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathit{l}^{2}$
+\begin_inset Formula $\ell^{2}$
 \end_inset
 
  中的任意一个数组都可以构造出处处收敛的 Fourier 级数，从而定义了一个以 
@@ -699,7 +762,7 @@ reference "prob:Fourier-级数"
 
 \begin_layout Standard
 若函数 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  以 
@@ -715,13 +778,13 @@ reference "prob:Fourier-级数"
 \end_inset
 
  为周期的函数。此时，函数空间为 
-\begin_inset Formula $\mathcal{L}^{2}(-a,+a)$
+\begin_inset Formula $\mathcal{L}^{2}(0,2a)$
 \end_inset
 
 ，内积和单位基向量分别为：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{-a}^{+a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}:=\frac{\exp(\mathrm{i}n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}:=\int_{0}^{2a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}:=\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -729,7 +792,7 @@ reference "prob:Fourier-级数"
 Fourier 级数为：
 \begin_inset Formula 
 \[
-f(x)\equiv\ip{x}{f}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\mathrm{i}n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{-a}^{+a}\frac{\exp(-\mathrm{i}n\pi z/a)}{\sqrt{2a}}f(z)\dd{z}}_{\ip{n}{f}}
+u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2a}\frac{\exp(-\ii n\pi x'/a)}{\sqrt{2a}}u(x')\dd{x'}}_{\ip{n}{u}}
 \]
 
 \end_inset
@@ -742,16 +805,16 @@ f(x)\equiv\ip{x}{f}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\mathrm{i}n
 \end_layout
 
 \begin_layout Standard
-如果要将以上结果推广到非周期函数，则应考虑 
+考虑 
 \begin_inset Formula $a\to\infty$
 \end_inset
 
- 的情形。定义 
+ 的情形，可以将以上结果推广到非周期函数。定义 
 \begin_inset Formula $k:=n\pi/a$
 \end_inset
 
 ，它的物理意义是：周期函数 
-\begin_inset Formula $\exp(\mathrm{i}kx)$
+\begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  在长为 
@@ -783,13 +846,13 @@ f(x)\equiv\ip{x}{f}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\mathrm{i}n
 \end_inset
 
 。于是 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  的 Fourier 级数展开可以写为
 \begin_inset Formula 
 \[
-f(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\pi}}\underbrace{\left[\int_{-a}^{+a}\frac{\exp(-\mathrm{i}k_{n}z)}{\sqrt{2\pi}}f(z)\dd{z}\right]}_{F(k_{n})}\Delta k=\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\pi}}F(k_{n})\Delta k
+u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\left[\int_{-a}^{+a}\frac{\exp(-\ii k_{n}x')}{\sqrt{2\pi}}u(x')\dd{x'}\right]}_{u_{n}}\Delta k=\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}u_{n}\Delta k
 \]
 
 \end_inset
@@ -822,28 +885,48 @@ f(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\pi}}\underb
 \begin_inset Formula $n$
 \end_inset
 
- 个区间内任意一点的取值，则上式右端成为 Riemann 和。如果它的极限存在，则一定等于以下 Riemann 积分：
+ 个区间内任意一点的取值，并将 
+\begin_inset Formula $u_{n}$
+\end_inset
+
+ 视为（以 
+\begin_inset Formula $k$
+\end_inset
+
+ 为自变量的）函数 
+\begin_inset Formula $\widetilde{u}$
+\end_inset
+
+ 在 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 处的取值，记作 
+\begin_inset Formula $u_{n}\equiv\widetilde{u}(k_{n})$
+\end_inset
+
+，则上式右端成为 Riemann 和。如果它的极限存在，则一定等于以下 Riemann 积分：
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi}}F(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\mathrm{i}k_{n}x)}{\sqrt{2\pi}}F(k_{n})\Delta k
+\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\widetilde{u}(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\widetilde{u}(k_{n})\Delta k
 \]
 
 \end_inset
 
 它被称为非周期函数 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  的「Fourier 积分」，其中：
 \begin_inset Formula 
 \[
-F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}f(x)\dd{x}
+\widetilde{u}(k):=\lim_{a\to\infty}\widetilde{u}(k_{n})=\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}
 \]
 
 \end_inset
 
 依然可以被称为函数 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  的「Fourier 系数」，只不过这里是关于「连续指标」
@@ -870,11 +953,11 @@ F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}f(x)\dd{x}
 
 \begin_layout Standard
 与 Fourier 级数的情况类似，
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  与 
-\begin_inset Formula $F(k)$
+\begin_inset Formula $\widetilde{u}(k)$
 \end_inset
 
  不过是同一个向量的两种等价的表示：
@@ -884,7 +967,7 @@ F(k):=\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}f(x)\dd{x}
 在 Fourier 级数的分析中，单位基向量表示为：
 \begin_inset Formula 
 \[
-e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\mathrm{i}n\theta)}{\sqrt{2\pi}}\qquad n\in\mathbb{Z}
+e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\qquad n\in\mathbb{Z}
 \]
 
 \end_inset
@@ -896,7 +979,7 @@ e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\mathrm{i}
 在 Fourier 积分的分析中，可以引入类似「单位基向量」：
 \begin_inset Formula 
 \[
-e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi}}\qquad k\in\mathbb{R}_{k}
+e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qquad k\in\mathbb{R}_{k}
 \]
 
 \end_inset
@@ -912,7 +995,7 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi
 。此时的「单位正交性」应当理解为：
 \begin_inset Formula 
 \[
-\ip{e_{k}}{e_{k_{0}}}\equiv\ip{k}{k_{0}}=\delta(k-k_{0})\qquad\forall\,k,k_{0}\in\mathbb{R}_{k}
+\ip{e_{i}}{e_{j}}\equiv\ip{i}{j}=\delta(i-j)\qquad\forall\,i,j\in\mathbb{R}_{k}
 \]
 
 \end_inset
@@ -930,7 +1013,7 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi
 
 \begin_layout Itemize
 向量 
-\begin_inset Formula $\ket{f}\in\mathcal{L}^{2}(\mathbb{R}_{x})$
+\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x})$
 \end_inset
 
  的 
@@ -938,11 +1021,11 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi
 \end_inset
 
 -分量为 
-\begin_inset Formula $\ip{x}{f}\equiv f(x)$
+\begin_inset Formula $\ip{x}{u}\equiv u(x)$
 \end_inset
 
 ，向量 
-\begin_inset Formula $\ket{F}\in\mathcal{L}^{2}(\mathbb{R}_{k})$
+\begin_inset Formula $\ket{\widetilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k})$
 \end_inset
 
  的 
@@ -950,13 +1033,13 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi
 \end_inset
 
 -分量为 
-\begin_inset Formula $\ip{k}{F}\equiv F(k)$
+\begin_inset Formula $\ip{k}{\widetilde{u}}\equiv\widetilde{u}(k)$
 \end_inset
 
 ，二者「几乎」是同一个向量：
 \begin_inset Formula 
 \[
-\ip{x}{f}\equiv f(x)\doteq\int_{\mathbb{R}_{k}}\overbrace{\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi}}}^{\ip{x}{k}}\overbrace{F(k)}^{\ip{k}{F}}\dd{k}=\bra{x}\overbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}^{\Operator{1}_{k}}\ket{F}=\ip{x}{F}
+\ip{x}{u}\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\underbrace{\frac{\exp(\ii kx)}{\sqrt{2\pi}}}_{\ip{x}{k}}\underbrace{\widetilde{u}(k)}_{\ip{k}{\widetilde{u}}}\dd{k}=\bra{x}\underbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}_{\Operator{1}_{k}}\ket{\widetilde{u}}=\ip{x}{\widetilde{u}}
 \]
 
 \end_inset
@@ -977,22 +1060,22 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\mathrm{i}kx)}{\sqrt{2\pi
 
 \begin_layout Standard
 将非周期函数 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
  表示为 Fourier 积分，需要先计算它的 Fourier 系数 
-\begin_inset Formula $F(k)$
+\begin_inset Formula $\widetilde{u}(k)$
 \end_inset
 
 ，这一过程被称为「Fourier 变换」；而将所得的 
-\begin_inset Formula $F(k)$
+\begin_inset Formula $\widetilde{u}(k)$
 \end_inset
 
  代入 Fourier 积分以获得 
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
- 的过程，则称为「Fourier 变换的反演」：
+ 的过程，则称为 Fourier 变换的「反演」：
 \end_layout
 
 \begin_layout Definition
@@ -1018,7 +1101,7 @@ reference "eq:积分变换的一般形式"
 \end_inset
 
  为积分区间、
-\begin_inset Formula $K(k,x)=\exp(-\mathrm{i}kx)/\sqrt{2\pi}$
+\begin_inset Formula $K(k,x)=\exp(-\ii kx)/\sqrt{2\pi}$
 \end_inset
 
  为积分变换的核
@@ -1045,7 +1128,7 @@ status collapsed
 \begin_layout Definition
 \begin_inset Formula 
 \[
-\boxed{F(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}f(x)\dd{x}\qquad f(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\pi}}F(k)\dd{k}}
+\boxed{\mathscr{F}[u](k)\equiv\widetilde{u}(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}\qquad\mathscr{F}^{-1}[\widetilde{u}](x)\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\widetilde{u}(k)\dd{k}}
 \]
 
 \end_inset
@@ -1091,7 +1174,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $f(x)$
+\begin_inset Formula $u(x)$
 \end_inset
 
 
@@ -1103,7 +1186,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $F(k)$
+\begin_inset Formula $\widetilde{u}(k)$
 \end_inset
 
 
@@ -1150,7 +1233,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-Fourier 积分发散
+Fourier 积分发散，但仍有意义。
 \end_layout
 
 \end_inset
@@ -1181,7 +1264,7 @@ Fourier 积分发散
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1189,7 +1272,7 @@ Fourier 积分发散
 \begin_inset Formula $a>0$
 \end_inset
 
-
+。二者在形式上恰好对称。
 \end_layout
 
 \end_inset
@@ -1220,14 +1303,10 @@ Fourier 积分发散
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-其中 
-\begin_inset Formula $a>0$
-\end_inset
-
 
 \end_layout
 
@@ -1259,7 +1338,7 @@ Fourier 积分发散
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1267,7 +1346,11 @@ Fourier 积分发散
 \begin_inset Formula $a>0$
 \end_inset
 
+。下一行是 
+\begin_inset Formula $a=\nicefrac{1}{2}$
+\end_inset
 
+ 的特例。
 \end_layout
 
 \end_inset
@@ -1302,11 +1385,7 @@ Fourier 积分发散
 \begin_inset Text
 
 \begin_layout Plain Layout
-上一行中 
-\begin_inset Formula $a=\nicefrac{1}{2}$
-\end_inset
-
- 的特例
+二者在形式上恰好对称。
 \end_layout
 
 \end_inset
@@ -1324,11 +1403,11 @@ Fourier 积分发散
 
 \end_layout
 
-\begin_layout Example
+\begin_layout Example*
 求证
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})\qquad\forall\,a>0
 \]
 
 \end_inset
@@ -1347,15 +1426,15 @@ Fourier 积分发散
 代入 Fourier 变换的定义，得到
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\nicefrac{\mathrm{i}k}{2a}\right)^{2}-\left(\nicefrac{\mathrm{i}k}{2a}\right)^{2}\right])\dd{x}\\
- & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\int_{-\infty+\nicefrac{\mathrm{i}k}{2a}}^{+\infty+\nicefrac{\mathrm{i}k}{2a}}\exp(-az^{2})\dd{z}
+\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\nicefrac{\ii k}{2a}\right)^{2}-\left(\nicefrac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
+ & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\int_{-\infty+\nicefrac{\ii k}{2a}}^{+\infty+\nicefrac{\ii k}{2a}}\exp(-az^{2})\dd{z}
 \end{aligned}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $z=x+\nicefrac{\mathrm{i}k}{2a}$
+\begin_inset Formula $z=x+\nicefrac{\ii k}{2a}$
 \end_inset
 
 。被积函数 
@@ -1382,7 +1461,7 @@ noprefix "false"
 可知：
 \begin_inset Formula 
 \[
-\int_{-\infty+\nicefrac{\mathrm{i}k}{2a}}^{+\infty+\nicefrac{\mathrm{i}k}{2a}}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
+\int_{-\infty+\nicefrac{\ii k}{2a}}^{+\infty+\nicefrac{\ii k}{2a}}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
 \]
 
 \end_inset
@@ -1390,7 +1469,7 @@ noprefix "false"
 从而有
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\sqrt{\frac{\pi}{a}}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\sqrt{\frac{\pi}{a}}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
 \]
 
 \end_inset
@@ -1410,38 +1489,24 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-定义在二维空间中函数 
-\begin_inset Formula $f(x,y)$
+定义在二维空间上的函数 
+\begin_inset Formula $u(x,y)$
 \end_inset
 
  可以依次在 
 \begin_inset Formula $x$
 \end_inset
 
--、
+-方向、
 \begin_inset Formula $y$
 \end_inset
 
--方向上作 Fourier 变换
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-这里借用了复合函数的记号 
-\begin_inset Formula $F\circ f$
-\end_inset
-
- 来表示积分变换，尽管积分变换与复合函数是两个不同的概念。
-\end_layout
-
-\end_inset
-
-：
+-方向上作 Fourier 变换：
 \begin_inset Formula 
 \[
-\begin{aligned}F_{x}\circ f(k;y) & =\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx)}{\sqrt{2\pi}}f(x,y)\dd{x}\\
-F_{y}\circ F_{x}\circ f(k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}ly)}{\sqrt{2\pi}}F_{x}\circ f(k;y)\dd{y}\\
- & =\int_{\mathbb{R}_{y}}\left[\int_{\mathbb{R}_{x}}\frac{\exp(-\mathrm{i}kx-\mathrm{i}ly)}{2\pi}f(x,y)\dd{x}\right]\dd{y}
+\begin{aligned}\mathscr{F}_{x}[u](k;y) & =\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x,y)\dd{x}\\
+\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{y}\\
+ & =\int_{\mathbb{R}_{y}}\left[\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\right]\dd{y}
 \end{aligned}
 \]
 
@@ -1450,9 +1515,9 @@ F_{y}\circ F_{x}\circ f(k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}ly)}{
 以及用 Fourier 积分表示：
 \begin_inset Formula 
 \[
-\begin{aligned}F_{x}\circ f(k;y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}ly)}{\sqrt{2\pi}}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\\
-f(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\pi}}F_{x}\circ f(k;l)\dd{k}\\
- & \doteq\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\pi}F_{y}\circ F_{x}\circ f(k,l)\dd{l}\right]\dd{k}
+\begin{aligned}\mathscr{F}_{x}[u](k;y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\\
+u(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{k}\\
+ & \doteq\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\right]\dd{k}
 \end{aligned}
 \]
 
@@ -1469,8 +1534,8 @@ f(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\mathrm{i}kx)}{\sqrt{2\pi}}F_{x}
 -方向上实施，所得结果与之相同，因此可以将它们统一地定义为「二维空间的 Fourier 变换（及其反演）」：
 \begin_inset Formula 
 \[
-\begin{aligned}F(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\mathrm{i}kx-\mathrm{i}ly)}{2\pi}f(x,y)\dd{x}\dd{y}\\
-f(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}kx+\mathrm{i}ly)}{2\pi}F(k,l)\dd{k}\dd{l}
+\begin{aligned}\mathscr{F}[u](k,l)\equiv\widetilde{u}(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\dd{y}\\
+\mathscr{F}^{-1}[\widetilde{u}](x,y)\equiv u(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\widetilde{u}(k,l)\dd{k}\dd{l}
 \end{aligned}
 \]
 
@@ -1487,8 +1552,8 @@ f(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\mathrm{i}k
  维空间。如果引入记号：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathbb{R}_{x}^{n} & =\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\quad & \vec{x} & =(x_{1},\dots,x_{n})\in\mathbb{R}_{x}^{n}\quad & \dd[n]{x} & =\dd{x_{1}}\cdots\dd{x_{n}}\\
-\mathbb{R}_{k}^{n} & =\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\quad & \vec{k} & =(k_{1},\dots,k_{n})\in\mathbb{R}_{k}^{n}\quad & \dd[n]{k} & =\dd{k_{1}}\cdots\dd{k_{n}}
+\begin{aligned}\mathbb{R}_{x}^{n} & =\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\quad & \vec{x} & =(x_{1},...,x_{n})\in\mathbb{R}_{x}^{n}\quad & \dd[n]{x} & =\dd{x_{1}}\cdots\dd{x_{n}}\\
+\mathbb{R}_{k}^{n} & =\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\quad & \vec{k} & =(k_{1},...,k_{n})\in\mathbb{R}_{k}^{n}\quad & \dd[n]{k} & =\dd{k_{1}}\cdots\dd{k_{n}}
 \end{aligned}
 \]
 
@@ -1527,7 +1592,10 @@ status collapsed
  维空间的 Fourier 变换（及其反演）」可以写为更紧凑的形式：
 \begin_inset Formula 
 \[
-\boxed{F(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\mathrm{e}^{-\mathrm{i}\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}f(\vec{x})\dd[n]{x}\qquad f(\vec{x})\doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\mathrm{e}^{+\mathrm{i}\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}F(\vec{k})\dd[n]{k}}
+\boxed{\begin{aligned}\mathscr{F}[u](\vec{k})\equiv\widetilde{u}(\vec{k}) & =\dotsint_{\mathbb{R}_{x}^{n}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}u(\vec{x})\dd[n]{x}\\
+\mathscr{F}^{-1}[\widetilde{u}](\vec{k})\equiv u(\vec{x}) & \doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\ee^{+\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\widetilde{u}(\vec{k})\dd[n]{k}
+\end{aligned}
+}
 \]
 
 \end_inset
@@ -1545,11 +1613,11 @@ status collapsed
 
 \begin_layout Standard
 与一维的情况类似，
-\begin_inset Formula $f(\vec{x})$
+\begin_inset Formula $u(\vec{x})$
 \end_inset
 
  与 
-\begin_inset Formula $F(\vec{k})$
+\begin_inset Formula $\widetilde{u}(\vec{k})$
 \end_inset
 
  不过是同一个向量的两种等价的表示：
@@ -1563,7 +1631,7 @@ status collapsed
  上的「单位正交基」：
 \begin_inset Formula 
 \[
-e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}:=\frac{\mathrm{e}^{\mathrm{i}\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\qquad\forall\,\vec{k}\in\mathbb{R}_{k}^{n}
+e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}:=\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\qquad\forall\,\vec{k}\in\mathbb{R}_{k}^{n}
 \]
 
 \end_inset
@@ -1571,12 +1639,12 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 此时的「单位正交性」应当理解为：
 \begin_inset Formula 
 \[
-\ip{e_{\vec{k}}}{e_{\vec{k}'}}\equiv\ip*{\vec{k}}{\vec{k}'}=\delta(\vec{k}-\vec{k}')\qquad\forall\,\vec{k},\vec{k}'\in\mathbb{R}_{k}^{n}
+\ip{e_{\vec{\imath}}}{e_{\vec{\jmath}}}\equiv\ip*{\vec{\imath}}{\vec{\jmath}}=\int\frac{\ee^{\ii(\vec{\jmath}-\vec{\imath})\vdot\vec{x}}}{(2\pi)^{n}}\dd[n]{x}=\delta(\vec{\imath}-\vec{\jmath})\qquad\forall\,\vec{\imath},\vec{\jmath}\in\mathbb{R}_{k}^{n}
 \]
 
 \end_inset
 
-å由此可以导出 
+由此可以导出 
 \begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
 \end_inset
 
@@ -1589,7 +1657,7 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 
 \begin_layout Itemize
 向量 
-\begin_inset Formula $\ket{f}\in\mathcal{L}^{2}(\mathbb{R}_{x}^{n})$
+\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x}^{n})$
 \end_inset
 
  的 
@@ -1597,11 +1665,11 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 \end_inset
 
 -分量为 
-\begin_inset Formula $\ip{\vec{x}}{f}\equiv f(\vec{x})$
+\begin_inset Formula $\ip{\vec{x}}{u}\equiv u(\vec{x})$
 \end_inset
 
 ，向量 
-\begin_inset Formula $\ket{F}\in\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
+\begin_inset Formula $\ket{\widetilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
 \end_inset
 
  的 
@@ -1609,13 +1677,13 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 \end_inset
 
 -分量为 
-\begin_inset Formula $\ip{\vec{k}}{F}\equiv F(\vec{k})$
+\begin_inset Formula $\ip*{\vec{k}}{\widetilde{u}}\equiv\widetilde{u}(\vec{k})$
 \end_inset
 
 ，二者「几乎」是同一个向量：
 \begin_inset Formula 
 \[
-\ip*{\vec{x}}{f}\equiv f(\vec{x})\doteq\int_{\mathbb{R}_{k}^{n}}\overbrace{\frac{\mathrm{e}^{\mathrm{i}\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}}^{\ip*{\vec{x}}{\vec{k}}}\overbrace{F(\vec{k})}^{\ip*{\vec{k}}{F}}\dd[n]{k}=\bra{\vec{x}}\overbrace{\left(\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}\right)}^{\Operator{1}_{k}}\ket{F}=\ip*{\vec{x}}{F}
+\ip*{\vec{x}}{u}\equiv u(\vec{x})\doteq\int_{\mathbb{R}_{k}^{n}}\underbrace{\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}}_{\ip*{\vec{x}}{\vec{k}}}\underbrace{\widetilde{u}(\vec{k})}_{\ip*{\vec{k}}{F}}\dd[n]{k}=\bra{\vec{x}}\underbrace{\left(\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}\right)}_{\Operator{1}_{k}}\ket{F}=\ip*{\vec{x}}{\widetilde{u}}
 \]
 
 \end_inset
@@ -1649,7 +1717,7 @@ Fourier 变换的局限性
 \begin_layout Standard
 \begin_inset Formula 
 \[
-F(s)=\int_{0}^{\infty}\mathrm{e}^{-st}f(x)\dd{t}
+u(s)=\int_{0}^{\infty}\ee^{-st}u(x)\dd{t}
 \]
 
 \end_inset
