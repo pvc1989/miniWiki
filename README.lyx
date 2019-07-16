@@ -16,8 +16,8 @@
 \newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
 %% arrow-based vector and tensor
 \usepackage[g]{esvect}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
-\newcommand{\Tensor}[1]{\vv{\vv{#1}}}  % \vv in esvect
+\renewcommand\vec[1]{\vv{#1}}  % \vv in esvect
+\newcommand\Tensor[1]{\vv{\vv{#1}}}  % \vv in esvect
 %% constants
 \newcommand\ii{\mathtt{i}}
 \newcommand\ee{\mathtt{e}}
@@ -35,7 +35,6 @@
 \usetikzlibrary{intersections}
 \usetikzlibrary{arrows.meta}
 % fonts
-\usepackage[euler-hat-accent, OT1]{eulervm}
 \ctexset{
   part/name = {第,卷},
   part/format += \sffamily,
@@ -46,6 +45,10 @@
   paragraph/format += \sffamily,
   subparagraph/format += \sffamily,
 }
+\usepackage[euler-hat-accent, OT1]{eulervm}
+\renewcommand\vec[1]{\vv{\mathbold{#1}}}  % \vv in esvect, \mathbold in eulervm
+\renewcommand\Tensor[1]{\vv{\vv{\mathbold{#1}}}}  % \vv in esvect, \mathbold in eulervm
+\renewcommand\Operator[1]{\mathop{\hat{\mathbold{#1}}}\nolimits}  % \mathbold in eulervm
 %% deprecated
 \newcommand{\Conj}[1]{\overline{#1}}
 \end_preamble
