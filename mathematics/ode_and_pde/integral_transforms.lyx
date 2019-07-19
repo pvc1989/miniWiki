@@ -112,7 +112,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-积分变换
+积分变换法
 \end_layout
 
 \begin_layout Section
@@ -1011,6 +1011,32 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qqu
 \end_inset
 
 。
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+由 
+\begin_inset Formula $\ip{k}=\delta(0)=\infty$
+\end_inset
+
+ 可知 
+\begin_inset Formula $\ket{k}\notin\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+，因此它不是 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 的单位基向量，而是一个比 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 更大的（广义）函数空间的单位基向量。
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -1129,9 +1155,9 @@ status collapsed
 
 \begin_layout Definition
 \begin_inset Formula 
-\[
-\boxed{\mathscr{F}[u](k)\equiv\widetilde{u}(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}\qquad\mathscr{F}^{-1}[\widetilde{u}](x)\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\widetilde{u}(k)\dd{k}}
-\]
+\begin{equation}
+\boxed{\mathscr{F}[u](k)\equiv\widetilde{u}(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}\qquad\mathscr{F}^{-1}[\widetilde{u}](x)\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\widetilde{u}(k)\dd{k}}\label{eq:FourierTransform}
+\end{equation}
 
 \end_inset
 
@@ -1340,7 +1366,7 @@ Fourier 积分发散，但仍有意义。
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1383,11 +1409,11 @@ Fourier 积分发散，但仍有意义。
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-二者在形式上恰好对称。
+原函数与象函数恰好对称。
 \end_layout
 
 \end_inset
@@ -1406,7 +1432,7 @@ Fourier 积分发散，但仍有意义。
 \end_layout
 
 \begin_layout Example*
-求证
+验证
 \begin_inset Formula 
 \[
 \int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})\qquad\forall\,a>0
@@ -1428,15 +1454,15 @@ Fourier 积分发散，但仍有意义。
 代入 Fourier 变换的定义，得到
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\nicefrac{\ii k}{2a}\right)^{2}-\left(\nicefrac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
- & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\int_{-\infty+\nicefrac{\ii k}{2a}}^{+\infty+\nicefrac{\ii k}{2a}}\exp(-az^{2})\dd{z}
+\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\frac{\ii k}{2a}\right)^{2}-\left(\frac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
+ & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}
 \end{aligned}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $z=x+\nicefrac{\ii k}{2a}$
+\begin_inset Formula $z=x+\ii\frac{k}{2a}$
 \end_inset
 
 。被积函数 
@@ -1463,7 +1489,7 @@ noprefix "false"
 可知：
 \begin_inset Formula 
 \[
-\int_{-\infty+\nicefrac{\ii k}{2a}}^{+\infty+\nicefrac{\ii k}{2a}}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
+\int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
 \]
 
 \end_inset
@@ -1709,19 +1735,726 @@ Laplace 变换
 \end_layout
 
 \begin_layout Subsection
-Fourier 变换的局限性
+对 Fourier 变换的改进
 \end_layout
 
 \begin_layout Standard
-定义及适用范围
+Fourier 变换
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:FourierTransform"
+
+\end_inset
+
+要求原函数属于 
+\begin_inset Formula $\mathcal{L}^{2}(-\infty,+\infty)$
+\end_inset
+
+，这就排除了许多常见的函数（常值函数、线性函数、三角函数等）。为了扩大 Fourier 变换的适用范围，需要对它的核 
+\begin_inset Formula $\exp(-\ii\omega t)$
+\end_inset
+
+ 作适当的改进，其中一种方案是：乘上一个指数衰减因子 
+\begin_inset Formula $\exp(-\sigma t)$
+\end_inset
+
+，并且将积分区间限制在 
+\begin_inset Formula $[0^{-},\infty)$
+\end_inset
+
+ 上（相当于再乘上一个单位阶跃函数），这样就得到了「Laplace 变换」：
+\begin_inset Formula 
+\begin{equation}
+\mathscr{L}[u](p)\equiv\widetilde{u}(p):=\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a\label{eq:LaplaceTransform}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $p=\sigma+\ii\omega$
+\end_inset
+
+ 是复变量；
+\begin_inset Formula $a$
+\end_inset
+
+ 被称为「收敛横标」，它是由 
+\begin_inset Formula $u$
+\end_inset
+
+ 的渐进行为决定的实常数，其意义体现在以下「Laplace 变换存在的充分条件」中：
+\end_layout
+
+\begin_layout Theorem*
+如果 
+\begin_inset Formula $\exists\,M>0$
+\end_inset
+
+ 以及 
+\begin_inset Formula $a\in\mathbb{R}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\abs{u(t)}<M\ee^{at}$
+\end_inset
+
+ 几乎处处成立，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LaplaceTransform"
+
+\end_inset
+
+式中的积分在区域 
+\begin_inset Formula $\left\{ p\in\mathbb{C}:\Re p>a\right\} $
+\end_inset
+
+ 上收敛。
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+常用 Laplace 变换对
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+收敛横标
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta(t-t_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-pt_{0}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{0}\in\mathbb{R}_{+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p^{n+1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n=1$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n=0$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/(p-p_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{0}\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Re p_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cos(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p/(p^{2}+\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+即 
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+ 中 
+\begin_inset Formula $p_{0}=\pm\ii\omega$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sin(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega/(p^{2}+\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $\omega\in\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cosh(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p/(p^{2}-\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+即 
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+ 中 
+\begin_inset Formula $p_{0}=\pm\omega$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\abs{\omega}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sinh(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega/(p^{2}-\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $\omega\in\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt{1/t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt{\pi/p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+例
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:倒数平方根的 Laplace 变换"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:倒数平方根的 Laplace 变换"
+
+\end_inset
+
+验证
 \begin_inset Formula 
 \[
-u(s)=\int_{0}^{\infty}\ee^{-st}u(x)\dd{t}
+\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}=\sqrt{\frac{\pi}{p}}
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+利用 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 函数的定义及特殊值 
+\begin_inset Formula $\Gamma(\nicefrac{1}{2})=\sqrt{\pi}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\Gamma(x):=\int_{0}^{\infty}\ee^{-t}t^{x-1}\dd{t}\implies\Gamma(\nicefrac{1}{2}) & =\int_{0}^{\infty}\frac{\ee^{-t}}{\sqrt{t}}\dd{t}=\int_{-\infty}^{+\infty}\ee^{-x^{2}}\dd{x}=\sqrt{\pi}\\
+pt\to t\implies & =\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{pt}}\dd(pt)=\sqrt{p}\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1731,8 +2464,488 @@ u(s)=\int_{0}^{\infty}\ee^{-st}u(x)\dd{t}
 Laplace 变换的性质
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Laplace 变换的性质
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+性质名称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+线性性质
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha u(t)+\beta v(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha\widetilde{u}(p)+\beta\widetilde{v}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（原函数的）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dv{t}u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\widetilde{u}(p)-u(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dv[n]{t}u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p^{n}\widetilde{u}(p)-\sum_{k=1}^{n}p^{n-k}u^{(k-1)}(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（像函数的）
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-tu(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dv{p}\widetilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(-t)^{n}u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dv[n]{p}\widetilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+积分定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{0}^{t}u(\tau)\dd{\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{u}(p)/p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+位移定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{u}(p-p_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\eta(t-t_{0})u(t-t_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-pt_{0}}\widetilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+卷积定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widetilde{u}(p)\widetilde{v}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+验证 Laplace 变换的卷积定理。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将卷积代入 Laplace 变换的定义：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right] & =\int_{0}^{\infty}\ee^{-pt}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right]\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\triangle_{\tau,t}(h):=\left\{ (\tau,t):\tau\in[0,t],t\in[0,h]\right\} $
+\end_inset
+
+ 是 
+\begin_inset Formula $(\tau,t)$
+\end_inset
+
+ 平面上的三角形积分区域。引入坐标变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}\tau\\
+t
+\end{bmatrix}=\begin{bmatrix}1 & 0\\
+1 & 1
+\end{bmatrix}\begin{bmatrix}x\\
+y
+\end{bmatrix}\implies\det(\pdv{(\tau,t)}{(x,y)})=1\implies\dd{\tau}\dd{t}=\dd{x}\dd{y}
+\]
+
+\end_inset
+
+于是 
+\begin_inset Formula $\triangle_{\tau,t}(h)$
+\end_inset
+
+ 变换为 
+\begin_inset Formula $\triangle_{x,y}(h):=\left\{ (x,y):x\in[0,h],y\in[0,h],x+y\in[0,h]\right\} $
+\end_inset
+
+，取极限就得到 
+\begin_inset Formula 
+\[
+\lim_{h\to\infty}\triangle_{x,y}(h)=\left\{ (x,y):x\in[0,\infty),y\in[0,\infty)\right\} \equiv\mathbb{R}_{x}^{+}\times\mathbb{R}_{y}^{+}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right] & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{x,y}(h)}\ee^{-px}\ee^{-py}u(x)v(y)\dd{x}\dd{y}\\
+ & =\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-px}u(x)\dd{x}\right]}_{\widetilde{u}(p)}\cdot\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-py}v(y)\dd{y}\right]}_{\widetilde{v}(p)}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Laplace 变换的反演
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathscr{L}^{-1}[\widetilde{u}](t)\equiv u(t)\doteq\frac{1}{2\pi\ii}\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\ee^{pt}\widetilde{u}(p)\dd{p}\qquad t>0
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
