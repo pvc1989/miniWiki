@@ -1751,21 +1751,25 @@ reference "eq:FourierTransform"
 \end_inset
 
 ，这就排除了许多常见的函数（常值函数、线性函数、三角函数等）。为了扩大 Fourier 变换的适用范围，需要对它的核 
-\begin_inset Formula $\exp(-\ii\omega t)$
+\begin_inset Formula $\ee^{-\ii\omega t}/\sqrt{2\pi}$
 \end_inset
 
- 作适当的改进，其中一种方案是：乘上一个指数衰减因子 
-\begin_inset Formula $\exp(-\sigma t)$
+ 作适当的改造，其中一种方案是：乘上一个指数衰减因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
 \end_inset
 
 ，并且将积分区间限制在 
 \begin_inset Formula $[0^{-},\infty)$
 \end_inset
 
- 上（相当于再乘上一个单位阶跃函数），这样就得到了「Laplace 变换」：
+ 上（相当于再乘上一个单位阶跃函数 
+\begin_inset Formula $\eta(t)$
+\end_inset
+
+），这样就得到了「Laplace 变换」：
 \begin_inset Formula 
 \begin{equation}
-\mathscr{L}[u](p)\equiv\widetilde{u}(p):=\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a\label{eq:LaplaceTransform}
+\boxed{\mathscr{L}[u](p)\equiv\widetilde{u}(p):=\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a}\label{eq:LaplaceTransform}
 \end{equation}
 
 \end_inset
@@ -1779,10 +1783,14 @@ reference "eq:FourierTransform"
 \end_inset
 
  被称为「收敛横标」，它是由 
-\begin_inset Formula $u$
+\begin_inset Formula $u(t)$
 \end_inset
 
- 的渐进行为决定的实常数，其意义体现在以下「Laplace 变换存在的充分条件」中：
+ 在 
+\begin_inset Formula $t\to\infty$
+\end_inset
+
+ 时的渐进行为决定的实常数，其意义体现在以下「Laplace 变换存在的充分条件」中：
 \end_layout
 
 \begin_layout Theorem*
@@ -1809,7 +1817,11 @@ reference "eq:LaplaceTransform"
 \begin_inset Formula $\left\{ p\in\mathbb{C}:\Re p>a\right\} $
 \end_inset
 
- 上收敛。
+ 上绝对收敛，并且由这个积分所定义的函数 
+\begin_inset Formula $\widetilde{u}(p)$
+\end_inset
+
+ 在该区域内解析。
 \end_layout
 
 \begin_layout Standard
@@ -1829,6 +1841,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:常用-Laplace-变换对"
+
+\end_inset
+
 常用 Laplace 变换对
 \end_layout
 
@@ -1875,7 +1893,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-备注
+收敛横标
 \end_layout
 
 \end_inset
@@ -1884,7 +1902,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-收敛横标
+备注
 \end_layout
 
 \end_inset
@@ -1919,7 +1937,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $t_{0}\in\mathbb{R}_{+}$
+\begin_inset Formula $-\infty$
 \end_inset
 
 
@@ -1931,7 +1949,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $-\infty$
+\begin_inset Formula $t_{0}\in\mathbb{R}_{+}$
 \end_inset
 
 
@@ -1965,11 +1983,11 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $n\in\mathbb{N}$
+\begin_inset Formula $0$
 \end_inset
 
 
@@ -1977,11 +1995,11 @@ status open
 
 \end_inset
 </cell>
-<cell multirow="3" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $0$
+\begin_inset Formula $n\in\mathbb{N}$
 \end_inset
 
 
@@ -2003,7 +2021,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2015,23 +2033,27 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $n=1$
-\end_inset
-
- 的特例
-\end_layout
-
-\end_inset
-</cell>
 <cell multirow="4" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+ 中 
+\begin_inset Formula $n=1$
+\end_inset
+
+ 的特例
 \end_layout
 
 \end_inset
@@ -2050,7 +2072,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2062,23 +2084,27 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $n=0$
-\end_inset
-
- 的特例
-\end_layout
-
-\end_inset
-</cell>
 <cell multirow="4" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+ 中 
+\begin_inset Formula $n=0$
+\end_inset
+
+ 的特例
 \end_layout
 
 \end_inset
@@ -2109,11 +2135,11 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $p_{0}\in\mathbb{C}$
+\begin_inset Formula $\Re p_{0}$
 \end_inset
 
 
@@ -2121,11 +2147,11 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\Re p_{0}$
+\begin_inset Formula $p_{0}\in\mathbb{C}$
 \end_inset
 
 
@@ -2159,11 +2185,22 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-即 
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $\exp(p_{0}t)$
 \end_inset
 
@@ -2172,18 +2209,6 @@ status open
 \end_inset
 
  的特例
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $0$
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -2214,7 +2239,16 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+<cell multirow="4" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2222,15 +2256,6 @@ status open
 \begin_inset Formula $\omega\in\mathbb{R}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2262,11 +2287,22 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-即 
+\begin_inset Formula $\abs{\omega}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $\exp(p_{0}t)$
 \end_inset
 
@@ -2275,18 +2311,6 @@ status open
 \end_inset
 
  的特例
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="3" alignment="center" valignment="middle" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\abs{\omega}$
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -2317,7 +2341,16 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2325,15 +2358,6 @@ status open
 \begin_inset Formula $\omega\in\mathbb{R}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -2369,11 +2393,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-例
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "exa:倒数平方根的 Laplace 变换"
-
+\begin_inset Formula $0$
 \end_inset
 
 
@@ -2385,7 +2405,11 @@ reference "exa:倒数平方根的 Laplace 变换"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $-\infty$
+例
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:倒数平方根的 Laplace 变换"
+
 \end_inset
 
 
@@ -2416,7 +2440,7 @@ name "exa:倒数平方根的 Laplace 变换"
 验证
 \begin_inset Formula 
 \[
-\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}=\sqrt{\frac{\pi}{p}}
+\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}=\sqrt{\frac{\pi}{p}}\qquad\forall\,p\ne0
 \]
 
 \end_inset
@@ -2474,6 +2498,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Laplace-变换的性质"
+
+\end_inset
+
 Laplace 变换的性质
 \end_layout
 
@@ -2867,7 +2897,7 @@ Laplace 变换的性质
 将卷积代入 Laplace 变换的定义：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right] & =\int_{0}^{\infty}\ee^{-pt}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right]\dd{t}\\
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\int_{0}^{\infty}\ee^{-pt}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right]\dd{t}\\
  & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}
 \end{aligned}
 \]
@@ -2915,7 +2945,7 @@ y
 从而有
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right] & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}\\
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}\\
  & =\lim_{h\to\infty}\iint_{\triangle_{x,y}(h)}\ee^{-px}\ee^{-py}u(x)v(y)\dd{x}\dd{y}\\
  & =\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-px}u(x)\dd{x}\right]}_{\widetilde{u}(p)}\cdot\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-py}v(y)\dd{y}\right]}_{\widetilde{v}(p)}
 \end{aligned}
@@ -2938,14 +2968,120 @@ Laplace 变换的反演
 \end_layout
 
 \begin_layout Standard
+在实际应用中，灵活运用
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "tab:常用-Laplace-变换对"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "tab:Laplace-变换的性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，已经能够对一些具有特殊形式的象函数作反演。本节讨论获取任意象函数反演的一般方法。
+\end_layout
+
+\begin_layout Standard
+在构造 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LaplaceTransform"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的过程中，衰减因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+ 和单位阶跃函数 
+\begin_inset Formula $\eta(t)$
+\end_inset
+
+ 是乘在 Fourier 变换的核 
+\begin_inset Formula $\ee^{-\ii\omega t}/\sqrt{2\pi}$
+\end_inset
+
+ 上的。从另一个角度看，也可以将它们看作是乘在原函数 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 上的因子，因此「对 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 作 Laplace 变换」相当于「对 
+\begin_inset Formula $u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+ 作 Fourier 变换」：
 \begin_inset Formula 
 \[
-\mathscr{L}^{-1}[\widetilde{u}](t)\equiv u(t)\doteq\frac{1}{2\pi\ii}\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\ee^{pt}\widetilde{u}(p)\dd{p}\qquad t>0
+\widetilde{u}(p)\equiv\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\equiv\int_{-\infty}^{+\infty}\frac{\ee^{-\ii\omega t}}{\sqrt{2\pi}}\underbrace{\left[u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\right]}_{v(t)}\dd{t}\equiv\widetilde{v}(\omega)
 \]
 
 \end_inset
 
+后者的反演是已知的：
+\begin_inset Formula 
+\[
+u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\infty}\frac{\ee^{+\ii\omega t}}{\sqrt{2\pi}}\widetilde{v}(\omega)\dd{\omega}
+\]
 
+\end_inset
+
+利用 
+\begin_inset Formula $p=\sigma+\ii\omega$
+\end_inset
+
+ 并从被积函数中提出因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+，就得到
+\begin_inset Formula 
+\[
+u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\widetilde{v}(\omega)\dd{\omega}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{pt}}{2\pi\ii}\widetilde{u}(p)\dd{p}
+\]
+
+\end_inset
+
+约去等式两端的公因子，并且只关注 
+\begin_inset Formula $t>0$
+\end_inset
+
+ 的部分（有 
+\begin_inset Formula $\eta(t)=1$
+\end_inset
+
+），所得结果就是「Laplace 变换的反演」：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\mathscr{L}^{-1}[\widetilde{u}](t)\equiv u(t)\doteq\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\ee^{pt}}{2\pi\ii}\widetilde{u}(p)\dd{p}\qquad t>0}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sigma=\Re p$
+\end_inset
+
+ 是位于收敛横标右侧的任意实数。
 \end_layout
 
 \begin_layout Subsection
