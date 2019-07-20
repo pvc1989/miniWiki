@@ -3085,7 +3085,298 @@ u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{
 \end_layout
 
 \begin_layout Subsection
-用 Laplace 变换解微分方程
+在初值问题中的应用
+\end_layout
+
+\begin_layout Standard
+利用 Laplace 变换，可以将线性常系数常微分方程（组）转化为代数方程（组），后者通常更易求解，对所得代数方程（组）的解作反演，就得到原微分方程（组）的解。
+\end_layout
+
+\begin_layout Example*
+求以下初值问题的解
+\begin_inset Formula 
+\[
+\begin{gathered}\left(M\dv[2]{t}+C\dv{t}+K\right)u(t)=F(t)\qquad t>0\\
+u(0)=u_{0}\qquad\dv{u(0)}{t}=\dot{u}_{0}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+对方程两端同时作 Laplace 变换：
+\begin_inset Formula 
+\[
+M\cdot\left[p^{2}\widetilde{u}(p)-pu_{0}-\dot{u}_{0}\right]+C\cdot\left[p\widetilde{u}(p)-u_{0}\right]+K\cdot\widetilde{u}(p)=\widetilde{F}(p)
+\]
+
+\end_inset
+
+解出 
+\begin_inset Formula $\widetilde{u}(p)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\widetilde{u}(p)=\frac{(Mp+C)u_{0}+M\dot{u}_{0}+\widetilde{F}(p)}{Mp^{2}+Cp+K}\equiv\frac{\left(p+\frac{C}{M}\right)u_{0}+\dot{u}_{0}+\frac{1}{M}\widetilde{F}(p)}{p^{2}+\frac{C}{M}p+\frac{K}{M}}
+\]
+
+\end_inset
+
+下面只需要求出它的反演。
+\end_layout
+
+\begin_layout Solution*
+为方便叙述，定义以下参数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+这些名称的含义将体现在最终的结果中。
+\end_layout
+
+\end_inset
+
+：「自然频率（Natural Frequency）」
+\begin_inset Formula $\omega_{0}:=\sqrt{K/M}$
+\end_inset
+
+；「阻尼比（Damping Ratio）」
+\begin_inset Formula $\zeta:=\nicefrac{1}{2}\sqrt{C/M}/\omega_{0}\equiv\nicefrac{1}{2}\sqrt{C/K}$
+\end_inset
+
+，暂且假定 
+\begin_inset Formula $\zeta\in[0,1)$
+\end_inset
+
+；「衰减速率（Decay Rate）」
+\begin_inset Formula $\sigma:=\zeta\omega_{0}$
+\end_inset
+
+；「阻尼频率（Damped Frequency）」
+\begin_inset Formula $\omega_{d}:=\sqrt{1-\zeta^{2}}\omega_{0}$
+\end_inset
+
+。于是有
+\begin_inset Formula 
+\[
+\widetilde{u}(p)=\frac{p+\sigma}{(p+\sigma)^{2}+\omega_{d}^{2}}u_{0}+\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\sigma u_{0}+\dot{u}_{0}}{\omega_{d}}+\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\widetilde{F}(p)}{M\omega_{d}}
+\]
+
+\end_inset
+
+利用表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:常用-Laplace-变换对"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Laplace-变换的性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，容易得到
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}^{-1}\left[\frac{p+\sigma}{(p+\sigma)^{2}+\omega_{d}^{2}}\right](t) & =\ee^{-\sigma t}\cos(\omega_{d}t)\\
+\mathscr{L}^{-1}\left[\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\right](t) & =\ee^{-\sigma t}\sin(\omega_{d}t)\\
+\mathscr{L}^{-1}\left[\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\widetilde{F}(p)}{M\omega_{d}}\right](t) & =\int_{0}^{t}\ee^{-\sigma\tau}\sin(\omega_{d}\tau)\frac{F(t-\tau)}{M\omega_{d}}\dd{\tau}
+\end{aligned}
+\]
+
+\end_inset
+
+利用三角公式，可以将前两项合并为一项：
+\begin_inset Formula 
+\[
+\cos(\omega_{d}t)+\frac{\sigma u_{0}+\dot{u}_{0}}{\omega_{d}}\sin(\omega_{d}t)=A\cos(\omega_{d}t+\alpha)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\alpha:=\arctan\frac{\sigma u_{0}+\dot{u}_{0}}{-\omega_{d}}$
+\end_inset
+
+ 称为「初始相位（Initial Phase）」， 
+\begin_inset Formula $A:=\sqrt{1+\tan[2](\alpha)}$
+\end_inset
+
+ 称为「振幅（Amplitude）」。
+\end_layout
+
+\begin_layout Solution*
+综上，原初值问题的解为：
+\begin_inset Formula 
+\begin{equation}
+u(t)=A\ee^{-\sigma t}\cos(\omega_{d}t+\alpha)+\int_{0}^{t}\frac{\ee^{-\sigma\tau}\sin(\omega_{d}\tau)}{M\omega_{d}}F(t-\tau)\dd{\tau}\label{eq:MCKF系统初值问题的解}
+\end{equation}
+
+\end_inset
+
+显然：初始条件 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\dot{u}_{0}$
+\end_inset
+
+ 的只影响解的第一项（称为「瞬态响应」）；方程的非齐次项 
+\begin_inset Formula $F(t)$
+\end_inset
+
+ 只影响解的第二项（称为「稳态响应」）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[共振]
+\end_layout
+
+\end_inset
+
+当 
+\begin_inset Formula $\zeta=0$
+\end_inset
+
+ （即 
+\begin_inset Formula $C=0$
+\end_inset
+
+）时：
+\begin_inset Formula $\omega_{d}=\omega_{0}=\sqrt{K/M}$
+\end_inset
+
+，
+\begin_inset Formula $M\omega_{d}=\sqrt{KM}$
+\end_inset
+
+，
+\begin_inset Formula $\sigma=0$
+\end_inset
+
+，
+\begin_inset Formula $\alpha=\arctan(-\dot{u}_{0}/\omega_{0})$
+\end_inset
+
+，
+\begin_inset Formula $A=\sqrt{1+(\dot{u}_{0}/\omega_{0})^{2}}$
+\end_inset
+
+。于是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MCKF系统初值问题的解"
+
+\end_inset
+
+式可以简化为
+\begin_inset Formula 
+\begin{equation}
+u(t)=\sqrt{1+\frac{M\dot{u}_{0}^{2}}{K}}\cos(\omega_{0}t+\alpha)+\int_{0}^{t}\frac{\sin(\omega_{0}\tau)}{\sqrt{KM}}F(t-\tau)\dd{\tau}\label{eq:MKF系统初值问题的解}
+\end{equation}
+
+\end_inset
+
+可见瞬态响应项没有衰减。
+\end_layout
+
+\begin_layout Remark*
+如果进一步有 
+\begin_inset Formula $F(t)=2\ii\sqrt{KM}\exp(\ii\omega t)$
+\end_inset
+
+，暂且假定 
+\begin_inset Formula $\omega\ne\pm\omega_{0}$
+\end_inset
+
+，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MKF系统初值问题的解"
+
+\end_inset
+
+式中的稳态响应项可以显式积出：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{0}^{t}\frac{\sin(\omega_{0}\tau)}{\sqrt{KM}}F(t-\tau)\dd{\tau} & =\int_{0}^{t}\left(\ee^{\ii\omega_{0}\tau}-\ee^{-\ii\omega_{0}\tau}\right)\ee^{\ii\omega t}\ee^{-\ii\omega\tau}\dd{\tau}\\
+ & =\ee^{\ii\omega t}\left[\frac{\ee^{\ii(\omega_{0}-\omega)\tau}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{\ii(-\omega_{0}-\omega)\tau}}{\ii(-\omega_{0}-\omega)}\right]_{0}^{t}\\
+ & =\frac{\ee^{\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{-\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(-\omega_{0}-\omega)}
+\end{aligned}
+\]
+
+\end_inset
+
+可见在稳态响应中，既含有系统固有的频率成分 
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+，又含有外部载荷的频率成分 
+\begin_inset Formula $\omega$
+\end_inset
+
+。当 
+\begin_inset Formula $\omega\to\omega_{0}$
+\end_inset
+
+ 时，第一项可以化为导数，第二项可以化为正弦函数：
+\begin_inset Formula 
+\[
+\lim_{\omega\to\omega_{0}}\left[\frac{\ee^{\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{-\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(-\omega_{0}-\omega)}\right]=t\exp(\ii\omega_{0}t)-\frac{\sin(\omega_{0}t)}{\omega_{0}}
+\]
+
+\end_inset
+
+其中第一项的振幅随时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 线性增长，表示能量的聚集，这种现象被称为「共振（Resonance）」。当 
+\begin_inset Formula $\omega\to-\omega_{0}$
+\end_inset
+
+ 时，也有类似的现象。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
