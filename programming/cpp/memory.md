@@ -270,112 +270,117 @@ int main() {
 }
 ```
 
-### (C++11) `std::shared_ptr`
+### `std::shared_ptr`
 
 #### 创建
-推荐使用 (C++11) `std::make_shared` 函数来创建 `std::shared_ptr`:
+推荐使用 `std::make_shared()` 函数来创建 `std::shared_ptr` 对象：
 ```cpp
-auto up = std::make_shared<T>(args);
+auto sp = std::make_shared<T>(args);
 ```
-该函数依次完成三个任务:
-1. 动态分配所需内存
-2. 用 `args` 初始化 `T` 类型的对象
-3. 返回指向该对象的 `std::shared_ptr`
+该函数依次完成三个任务：
+1. 动态分配所需内存。
+2. 用 `args` 初始化 `T` 类型的对象。
+3. 返回指向该对象的 `std::shared_ptr`。
 
 
-一般只在已有一个指针 `q` 的情况下, 才会显式使用构造函数来创建 `std::shared_ptr`: 
+⚠️ 只在一种情况下，才会显式使用 `std::shared_ptr` 的构造函数，那就是：
+已经存在另一个指向「动态」对象的指针 `q`，并且希望它被 `std::shared_ptr` 接管。
 ```cpp
-std::shared_ptr<T> p(q);     // p 指向 q 所指对象
-std::shared_ptr<T> p(q, d);  // p 指向 q 所指对象, 并指定 deleter
+std::shared_ptr<T> sp(q);     // sp 指向 q 所指对象
+std::shared_ptr<T> sp(q, d);  // sp 指向 q 所指对象, 并指定删除器
 ```
 具体语义取决于 `q` 的类型:
 
 | `q` 的类型                | 语义                                           |
-| ------------------------- | ---------------------------------------------- |
-| 裸指针 (必须是 直接初始化)  | `p` 接管 `q` 所指对象                          |
-| `std::shared_ptr<T>` 对象 | `p` 与 `q` 分享所指对象的所有权                |
-| `std::unique_ptr<T>` 对象 | `p` 接管 `q` 所指对象, 并将 `q` 指向 `nullptr` |
+| ------------------------ | --------------------------------------------- |
+| 原始指针（必须是直接初始化）  | `sp` 接管 `q` 所指对象 |
+| `std::shared_ptr<T>` 对象 | `sp` 分享 `q` 所指对象的所有权 |
+| `std::unique_ptr<T>` 对象 | `sp` 接管 `q` 所指对象，并令 `q` 指向 `nullptr` |
 
 #### 引用计数
-尽管标准没有规定 `std::shared_ptr` 的实现方式, 但几乎所有标准库的实现所采用的方案都是`引用计数 (reference count)`.
-一个`裸指针`可以被多个 `std::shared_ptr` 共享所有权, 管理同一`裸指针`的 `std::shared_ptr` 的个数称为它们的`引用计数`:
+尽管 C++ 标准没有规定 `std::shared_ptr` 的实现方式，但几乎所有的实现都采用了「引用计数 (reference count)」方案。
+一个「原始指针」可以被多个 `std::shared_ptr` 共享所有权，管理同一「原始指针」的 `std::shared_ptr` 的个数称为它的「引用计数」：
 ```cpp
-p.use_count();  // 获取 引用计数
-p.unique();     // 判断 引用计数 是否为 1
+sp.use_count();  // 获取「引用计数」
+sp.unique();     // 判断「引用计数」是否为 1
 ```
+这一方案存在以下性能缺陷：
+- 空间开销：引用计数作为「控制块 (control block)」，需要存储在「动态内存」里，并通过 `std::shared_ptr` 对象中的指针来访问。因此 `std::shared_ptr` 的大小至少是「原始指针」的 `2` 倍。
+- 时间开销：为避免「数据竞争 (data racing)」，增减引用计数的操作必须是「原子的 (atomic)」。因此「读写引用计数」会比「非原子」操作消耗更多时间。
 
-引用计数需要存储在`动态内存`里, 并通过存储在 `std::shared_ptr` 中的指针来`间接访问`, 因此 `std::shared_ptr` 的大小是`裸指针`的两倍.
+#### 删除器
+与 `std::unique_ptr` 不同，「删除器的类型」不是「`std::shared_ptr` 类型」的一部分。
+每一个「`std::shared_ptr` 对象」所绑定的「删除器对象」可以在「运行期」更换。
 
-为避免`数据竞争 (data racing)`, 增减引用计数的操作必须是`原子的 (atomic)`, 因此读写引用计数会比`非原子操作`消耗更多资源.
+如果没有显式指定删除器，那么将采用 `delete`。
+删除器不会影响 `std::shared_ptr` 对象的大小，但是会间接影响「控制块」的大小：
+- 如果删除器是「函数指针」或「含有数据成员的函数对象」，则它将会作为「控制块」的一部分，存储在动态内存中。
+- 如果删除器是「不含有数据成员的函数对象」，例如「未捕获参数的 lambda 表达式」，则它不会占据「控制块」的空间。
 
-#### 指定 deleter
-不同于 `std::unique_ptr`, `deleter 类型`不是 `std::shared_ptr 类型`的一部分.
-每一个 `std::shared_ptr 对象`所绑定的 `deleter 对象`可以在`运行期`更换.
-
-如果没有显式指定 deleter, 那么将采用 `delete`.
-如果被指定的 deleter 是
-- `函数指针` 或 `含有内部状态的函数对象`, 则它将会与`引用计数` (以及`弱引用计数 (weak count)`) 一道, 作为`控制块 (control block)` 的一部分, 存储在动态内存中.
-- `不含有内部状态的函数对象` (例如 无捕获的 lambda 表达式), 则它不会占据`控制块`的空间.
-
-所谓共享`所有权`, 实际上是通过共享`控制块`来实现的.
+所谓「共享所有权」，正是通过「共享控制块」来实现的。
 
 #### 拷贝与移动
-用一个 `std::shared_ptr` 对另一个同类对象进行`拷贝赋值`会改变二者的引用计数:
+用一个 `std::shared_ptr` 对另一个 `std::shared_ptr` 进行「拷贝赋值 (copy-assign)」会改变二者的引用计数：
 ```cpp
-p = q;  // p 的引用计数 - 1, q 的引用计数 + 1
+p = q;  // p 的引用计数 - 1，q 的引用计数 + 1
 ```
-同理, 用一个 `std::shared_ptr` `拷贝初始化`另一个同类对象会增加其引用计数:
+同理，用一个 `std::shared_ptr`「拷贝初始化 (copy-initialize)」另一个 `std::shared_ptr` 会增加前者的引用计数：
 ```cpp
-auto p = q;  // q 的引用计数 + 1, p 的引用计数与之相同
+auto p = q;  // q 的引用计数 + 1，p 的引用计数与之相同
 ```
 
-`移动赋值`与`移动初始化`不需要改变引用计数.
+「移动赋值 (move-assign)」与「移动初始化 (move-initialize)」不需要改变引用计数。
 
-#### `reset` --- 重设裸指针
-只有当引用计数为 `1` 时, 重设裸指针才会 `delete` 之前所管理的裸指针:
+#### `reset()`
+如果当前「引用计数」为 `1`，则 `delete` 当前所管理的原始指针，然后接管传入的原始指针；
+否则跳过 `delete` 操作。
 ```cpp
-p.reset(q, d);  // 接管 裸指针 q, 并将 deleter 替换为 d
-p.reset(q);     // 接管 裸指针 q
+p.reset(q, d);  // 接管「原始指针」q，并将「删除器」替换为 d
+p.reset(q);     // 接管「原始指针」q
 p.reset();      // 接管 nullptr
 ```
 
-#### `shared_from_this`
+#### `shared_from_this()`
+`this` 是「原始指针」，用它去创建 `std::shared_ptr`，所得结果的引用计数为 `1`。
+考虑以下情形：
 ```cpp
-class Widget {
+class Request {
  public:
   void process();
  private:
-  std::vector<std::shared_ptr<Widget>> processedWidgets;
+  std::vector<std::shared_ptr<Request>> processed_requests_;
 };
 ```
-如果 `process` 的实现中, 用裸指针 `this` 创建了新的 `std::shared_ptr`:
+如果在 `process` 的实现中，用 `this` 创建了新的 `std::shared_ptr`：
 ```cpp
-void Widget::process() {
+void Request::process() {
   // ...
-  processedWidgets.emplace_back(this);
+  processed_requests_.emplace_back(this);
   // ...
 }
 ```
-则有可能造成两个独立的 `std::shared_ptr` 管理同一个动态对象.
-为避免这种情形, 应当
-- 对外: 将构造函数设为私有, 改用工厂方法来创建 `std::shared_ptr`
-- 对内: 借助于标准库模板类 `std::enable_shared_from_this` 提供的 `shared_from_this` 方法来获取 `std::shared_ptr`
+则有可能造成
+- 一个「非动态」对象被一个 `std::shared_ptr` 管理，或者
+- 「一个」动态对象被「两个」独立的 `std::shared_ptr` 管理。
+为避免以上情形，应当
+- 对外：将 `Request` 的「构造函数」设为 `private`，改用「工厂方法」来创建 `std::shared_ptr`。
+- 对内：借助于标准库模板类 `std::enable_shared_from_this` 提供的 `shared_from_this()` 来获取 `std::shared_ptr`。
 ```cpp
 #include <memory>
-class Widget: public std::enable_shared_from_this<Widget> {
+class Request: public std::enable_shared_from_this<Request> {
  public:
   void process();
-  // 工厂方法:
+  // 工厂方法：
   template<typename... Ts>
-  static std::shared_ptr<Widget> create(Ts&&... params);
+  static std::shared_ptr<Request> create(Ts&&... params);
  private:
-  std::vector<std::shared_ptr<Widget>> processedWidgets;
-  // 构造函数设为 private
+  std::vector<std::shared_ptr<Request>> processed_requests_;
+  // 「构造函数」设为 private
   // ...
 };
-void Widget::process() {
+void Request::process() {
   // ...
-  processedWidgets.emplace_back(shared_from_this());
+  processed_requests_.emplace_back(shared_from_this());
   // ...
 }
 ```
