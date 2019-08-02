@@ -153,19 +153,19 @@ void f() {
 }
 ```
 
-#### `swap`
+#### `swap()`
 交换两个同一类型的「智能指针」所管理的「原始指针」：
 ```cpp
 p.swap(q);
 std::swap(p, q);
 ```
 
-#### `get` ⚠️
+#### `get()` ⚠️
 返回「智能指针」所管理的「原始指针」：
 ```cpp
 auto p = sp.get();
 ```
-该方法仅用于向「只接受原始指针」且「不会 `delete` 被传入的指针」的函数传递参数。
+⚠️ 该方法仅用于向「只接受原始指针」且「不会 `delete` 被传入的指针」的函数传递参数。
 
 ### `std::unique_ptr`
 
@@ -175,25 +175,25 @@ auto p = sp.get();
 3. 独占所有权：不能「拷贝 (copy)」或「赋值 (assign)」，只能「移动 (move)」。
 
 #### 创建
-自 C++14 起，推荐使用 `std::make_unique` 函数来创建 `std::unique_ptr` 对象：
+自 C++14 起，推荐使用 `std::make_unique()` 函数来创建 `std::unique_ptr` 对象：
 ```cpp
 auto up = std::make_unique<T>(args);
 ```
 该函数依次完成三个任务：
 1. 动态分配所需内存。
 2. 用 `args` 初始化 `T` 类型的对象。
-3. 返回指向该 `T` 对象的 `std::unique_ptr` 对象。
+3. 返回指向该对象的 `std::unique_ptr`。
 
-#### 指定删除器
+#### 删除器
 「删除器的类型」是「`std::unique_ptr` 类型」的一部分。
 每一个「`std::unique_ptr` 对象」所拥有的「删除器对象」是在「编译期」绑定的，因此无法在「运行期」更换。
 如果没有显式指定删除器，那么将采用 `delete`。
 
-删除器的大小是 `std::unique_ptr` 对象的一部分：
+删除器是 `std::unique_ptr` 对象的一部分：
 - 如果删除器是「函数指针」或「含有数据成员的函数对象」，则相应的 `std::unique_ptr` 比「原始指针」大。
 - 「不含有数据成员的函数对象」，例如「未捕获参数的 lambda 表达式」，则相应的 `std::unique_ptr` 与「原始指针」具有相同的大小。
 
-#### `reset`
+#### `reset()`
 `delete` 当前所管理的原始指针，然后接管传入的原始指针，含一次原始指针的赋值操作。
 
 `std::unique_ptr` 独占其所指对象的所有权，因此要确保
@@ -209,7 +209,7 @@ up.reset();         // 同上
 up = nullptr;       // 同上（不推荐）
 ```
 
-#### `release`
+#### `release()`
 让渡当前所管理的原始指针的所有权。
 ```cpp
 // 声明:
@@ -237,7 +237,7 @@ unique_ptr<int> clone(int x) {
 - `std::unique_ptr` 可以很容易地转为 `std::shared_ptr`。
 - 将原始指针赋值给 `std::unique_ptr` 的错误在「编译期」就能被发现。
 
-联合使用 `release` 与 `reset`，可以在两个 `std::unique_ptr` 对象之间「传递所有权」：
+联合使用 `release()` 与 `reset()`，可以在两个 `std::unique_ptr` 对象之间「传递所有权」：
 ```cpp
 auto p1 = std::make_unique<int>(16);    // p1 指向 16
 std::unique_ptr<int> p2(p1.release());  // p1 为空，p2 指向 16
