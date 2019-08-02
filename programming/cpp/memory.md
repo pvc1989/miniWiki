@@ -32,7 +32,7 @@ int* p = new int;
 
 #### 值初始化
 默认情况下，动态分配对象时采用的是「默认 (default) 初始化」。
-若要进行「值 (value) 初始化」，需要在「类型名」后面紧跟 `()` 或 `{ }`，例如
+若要进行「值 (value) 初始化」，需要在「类型名」后面紧跟 `()` 或 `{}`，例如
 ```cpp
 std::string* ps1 = new std::string;    // 默认初始化 为 空字符串
 std::string* ps2 = new std::string();  // 值初始化 为 空字符串
@@ -354,14 +354,15 @@ class Request {
 如果在 `process` 的实现中，用 `this` 创建了新的 `std::shared_ptr`：
 ```cpp
 void Request::process() {
-  // ...
+  // 其他成员方法 ...
   processed_requests_.emplace_back(this);
-  // ...
+  // 其他成员方法 ...
 }
 ```
 则有可能造成
 - 一个「非动态」对象被一个 `std::shared_ptr` 管理，或者
 - 「一个」动态对象被「两个」独立的 `std::shared_ptr` 管理。
+
 为避免以上情形，应当
 - 对外：将 `Request` 的「构造函数」设为 `private`，改用「工厂方法」来创建 `std::shared_ptr`。
 - 对内：借助于标准库模板类 `std::enable_shared_from_this` 提供的 `shared_from_this()` 来获取 `std::shared_ptr`。
@@ -376,12 +377,12 @@ class Request: public std::enable_shared_from_this<Request> {
  private:
   std::vector<std::shared_ptr<Request>> processed_requests_;
   // 「构造函数」设为 private
-  // ...
+  // 其他成员方法 ...
 };
 void Request::process() {
-  // ...
+  // 其他成员方法 ...
   processed_requests_.emplace_back(shared_from_this());
-  // ...
+  // 其他成员方法 ...
 }
 ```
 
@@ -456,219 +457,220 @@ std::shared_ptr<const Request> FastLoad(RequestId id) {
 此时可以考虑用「循环 (iteration)」代替「递归 (recursion)」来实现树的析构函数。
 - `child` 指向 `parent` 的指针可以选用「原始指针」。
 
-### (C++11) `std::make_shared` 与 (C++14) `std::make_unique`
+### `make` 函数
+尽量用 `std::make_unique()` 创建 `std::unique_ptr` 对象，用 `std::make_shared()` 创建 `std::shared_ptr` 对象。
 
 #### 节省资源
-对于 `std::make_shared` 和 `std::allocate_shared`, 用 `make` 函数可以节省存储空间和运行时间:
+对于 `std::make_shared()` 和 `std::allocate_shared()`，除被管理的动态对象外，「控制块」也需要动态分配内存。
+用 `make` 函数可以节省「存储空间」和「运行时间」：
 ```cpp
-std::shared_ptr<Widget> spw(new Widget);  // 分配 2 次
-auto spw = std::make_shared<Widget>();    // 分配 1 次
+std::shared_ptr<Object> sp1(new Object);  // 分配 2 次
+auto sp2 = std::make_shared<Object>();     // 分配 1 次
 ```
 
 #### 异常安全
-`make` 函数有助于减少代码重复 (例如与 `auto` 配合可以少写一次类型), 并提高`异常安全`.
-例如在如下代码中
+`make` 函数有助于减少代码重复（例如：与 `auto` 配合可以少写一次「类型名」）并确保「异常安全」。
+在如下语句中
 ```cpp
-processWidget(std::unique_ptr<Widget>(new Widget), 
-              computePriority());
+ProcessRequest(std::unique_ptr<Request>(new Request), ComputePriority());
 ```
-编译器只能保证`参数在被传入函数之前被取值`, 因此实际的运行顺序可能是:
+编译器只保证「参数在被传入函数之前被求值」，因此实际的运行顺序可能是
 ```cpp
-new Widget
-computePriority()
-std::unique_ptr<Widget>()
+new Request
+ComputePriority()  // 可能抛出异常
+std::unique_ptr<Request>()
 ```
-如果第 2 行抛出了异常, 则由 `new` 获得的动态内存来不及被 `std::unique_ptr` 接管, 从而有可能发生泄漏.
+如果第 `2` 行抛出了异常，则由 `new` 获得的动态内存来不及被 `std::unique_ptr` 接管，从而有可能发生泄漏。
 用 `make` 函数就可以避免这种情况的发生:
 ```cpp
-processWidget(std::make_unique<Widget>(), 
-              computePriority());
+ProcessRequest(std::make_unique<Request>(), computePriority());
+```
+实际的运行顺序只能是
+```cpp
+std::make_unique<Request>()
+ComputePriority()  // 可能抛出异常
+```
+或
+```cpp
+ComputePriority()  // 可能抛出异常
+std::make_unique<Request>()
 ```
 
-在不应或无法使用 `make` 函数的情况下, 一定要确保由 `new` 获得的动态内存`在一条语句内`被智能指针接管, 并且在该语句内`不做任何其他的事`.
+在[不应或无法使用 `make` 函数的情况](#不应或无法使用的情形)下，一定要确保：
+由 `new` 获得的动态内存「在一条语句内」被智能指针接管，并且在该语句内「不做任何其他的事」。
 
-#### 列表初始化
-`make` 函数用 `()` 进行完美转发, 因此无法直接使用对象的列表初始化构造函数.
-一种解决办法是先用 `auto` 创建一个 `std::initializer_list` 对象, 再将其传入 `make` 函数:
+#### 不应或无法使用的情形
+`make` 函数用 `()` 进行完美转发，因此无法直接使用「列表初始化构造函数」。
+一种解决办法是：先用 `auto` 创建一个 `std::initializer_list` 对象，再将其传给 `make` 函数：
 ```cpp
-auto initList = { 10, 20 };
-auto spv = std::make_shared<std::vector<int>>(initList);
+auto init_list = { 10, 20 };
+auto spv = std::make_shared<std::vector<int>>(init_list);
 ```
 
-#### 不使用 `make` 函数的情形
-对于 `std::shared_ptr`, 不应或无法使用 `make` 函数的情形还包括: 
-- 需要指定内存管理方案 (allocator, deleter) 的类.
-- 系统内存紧张, 对象体积庞大, 且 `std::weak_ptr` 比相应的 `std::shared_ptr` 存活得更久.
+对于 `std::shared_ptr`，不应或无法使用 `make` 函数的情形还包括：
+- 需要指定内存管理方案（分配器、删除器）的类。
+- 系统内存紧张，对象体积巨大，且 `std::weak_ptr` 比相应的 `std::shared_ptr` 存活得更久。
 
-### `pImpl` --- 指向实现的指针
-#### 动机
-假设 `Widget` 是一个含有数据成员的类.
-在定义 `Widget` 之前, 必须在 `widget.h` 中引入定义成员类型的头文件:
+### `pImpl` 技术
 
+#### 隔离依赖关系
+假设在原始设计中，`Algorithm` 是一个含有 `Implementor` 类型数据成员的类：
 ```cpp
-// widget.h
-#include <vector>
-#include "gadget.h"
+// algorithm.h
+#include "implementor.hpp"
 
-class Widget {
+class Algorithm {
  public:
-  Widget();
-  // ...
- private:
-  std::vector<double> data;
-  Gadget g1, g2, g3;
-};
-```
-`Widget` 的`用户` 必须引入 `widget.h` --- 这样就间接地引入了 (它可能并不需要的) `<vector>` 和 `gadget.h`, 从而会造成`编译时间过长`以及`用户对实现的依赖` (这些头文件更新后, 需要重新编译 `Widget` 及其`用户`).
-
-所谓 `pImpl` 就是用`指向实现的指针 (pointer to implementation)` 代替数据成员, 将 `Widget` 对成员数据类型的依赖从`头文件`移入`源文件`, 从而隔离`用户`与`实现`.
-
-#### 用 裸指针 实现
-```cpp
-// widget.h
-class Widget {
- public:
-  Widget();   // 不是默认行为 (需要分配资源), 需要显式声明
-  ~Widget();  // 不是默认行为 (需要释放资源), 需要显式声明
+  Algorithm();
   // 其他成员方法 ...
  private:
-  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
-  Impl* pImpl;  // 裸指针
+  Implementor implementor_;
+};
+```
+使用 `Algorithm` 的 `Application`（定义在 `application.cpp` 中）必须引入 `algorithm.hpp`，
+这样就间接地引入了 `implementor.hpp`，从而会造成「编译时间过长」，
+以及「高层依赖于低层（`implementor.hpp` 更新后，必须重新编译 `algorithm.cpp` 及 `application.cpp`）」。
+
+所谓 `pImpl` 就是用「指向实现的指针 (Pointer to IMPLementation)」代替「数据成员」，
+将 `Algorithm` 对 `Implementor` 的依赖从 `algorithm.hpp` 移入 `algorithm.cpp`，
+从而将 `Application` 与 `Implementor` 隔离。
+
+基于这一技术所设计的架构，完全符合[依赖倒置原则](DIP)，甚至用 C 语言也可以做到「面向对象编程 (Object Oriented Programming, OOP)」。
+
+#### 用「原始指针」实现
+```cpp
+// algorithm.h
+class Algorithm {
+ public:
+  Algorithm();   // 需要「分配」资源：不是默认行为，需要显式声明
+  ~Algorithm();  // 需要「释放」资源：不是默认行为，需要显式声明
+  // 其他成员方法 ...
+ private:
+  struct Implementor;   // 在 algorithm.h 中只需「声明」，在 algorithm.cpp 中「实现」
+  Implementor* pImpl_;  // 原始指针
 };
 ```
 ```cpp
-// widget.cpp
-#include <vector>
-#include "gadget.h"
-#include "widget.h"
-
-struct Widget::Impl {
-  std::vector<double> data;
-  Gadget g1, g2, g3;
+// algorithm.cpp
+#include "implementor.hpp"  // 定义 RealImplementor
+#include "algorithm.hpp"
+struct Algorithm::Implementor {
+  RealImplementor implementor;
 };
-
-// 实现构造和析构函数:
-Widget::Widget() : pImpl(new Impl) { }  // 分配资源
-Widget::~Widget() { delete pImpl; }     // 释放资源
+// 实现「构造」和「析构」函数:
+Algorithm::Algorithm() : pImpl_(new Implementor) { }  // 分配
+Algorithm::~Algorithm() { delete pImpl_; }            // 释放
 ```
 
 #### 用 `std::shared_ptr` 实现
 ```cpp
-// widget.h
+// algorithm.h
 #include <memory>
-class Widget {
+class Algorithm {
  public:
-  // 构造和析构函数均采用默认版本
+  // 「构造」和「析构」函数均采用默认版本
   // 其他成员方法 ...
  private:
-  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
-  std::shared_ptr<Impl> pImpl;  // 代替裸指针
+  struct Implementor;  // 在 algorithm.h 中只需「声明」，在 algorithm.cpp 中「实现」
+  std::shared_ptr<Implementor> pImpl_;  // 代替「原始指针」
 };
 ```
 ```cpp
-// widget.cpp
-#include <vector>
-#include "gadget.h"
-#include "widget.h"
-
-struct Widget::Impl {
-  std::vector<double> data;
-  Gadget g1, g2, g3;
+// algorithm.cpp
+#include "implementor.hpp"  // 定义 RealImplementor
+#include "algorithm.hpp"
+struct Algorithm::Implementor {
+  Implementor implementor;
 };
 ```
 
 #### 用 `std::unique_ptr` 实现
 ```cpp
-// widget.h
+// algorithm.h
 #include <memory>
-class Widget {
+class Algorithm {
  public:
-  // 尽管希望使用 默认析构函数, 但还是要显式声明, 因为:
-  // 编译器在生成 默认析构函数 时, 通常要求 std::unique_ptr<Impl> 中的 Impl 是完整类型.
-  // 因此需要在 widget.h 中显式声明, 而将 (默认的) 实现移到 widget.cpp 中.
-  Widget();
-  ~Widget();
-  // 尽管希望使用 默认移动操作, 但还是要显式声明, 因为:
-  // 显式声明析构函数 会阻止编译器生成 默认移动操作, 并且
-  // 默认移动操作内部 会在抛出异常时调用 默认析构函数.
-  Widget(Widget&& rhs);
-  Widget& operator=(Widget&& rhs);
-  // 拷贝操作 需要显式声明, 因为:
-  // 编译器不会为含有 move-only 成员 (std::unique_ptr) 的类生成 默认拷贝操作, 并且
-  // 默认拷贝操作 是 浅拷贝, 通常不符合语义要求.
-  Widget(const Widget& rhs);
-  Widget& operator=(const Widget& rhs);
+  // 尽管希望使用「默认析构」函数，但还是要「显式声明」，因为：编译器在生成「默认析构」函数时，
+  // 通常要求 std::unique_ptr<Implementor> 中的 Implementor 是完整类型。
+  // 因此需要在 algorithm.h 中「显式声明」，从而将「默认实现」移到 algorithm.cpp 中。
+  Algorithm();
+  ~Algorithm();
+  // 尽管希望使用「默认移动」操作，但还是要「显式声明」，因为：
+  // 1. 显式声明「析构」函数，会阻止编译器生成「默认移动」操作。
+  // 2.「默认移动」操作在捕获异常时需要调用「默认析构」函数。
+  Algorithm(Algorithm&& rhs);
+  Algorithm& operator=(Algorithm&& rhs);
+  // 「拷贝」操作需要「显式声明」，因为：
+  // 1. 编译器不会为含有 move-only 成员 (std::unique_ptr) 的类生成「默认拷贝」操作。
+  // 2. 「默认拷贝」操作是「浅拷贝 (shallow copy)」，通常不符合拷贝语义。
+  Algorithm(const Algorithm& rhs);
+  Algorithm& operator=(const Algorithm& rhs);
   // 其他成员方法 ...
  private:
-  struct Impl;  // 封装数据成员的类型, 在 widget.h 仅作声明, 在 widget.cpp 中实现
-  std::unique_ptr<Impl> pImpl;  // 代替裸指针
+  struct Implementor;  // 在 algorithm.h 中只需「声明」，在 algorithm.cpp 中「实现」
+  std::unique_ptr<Implementor> pImpl_;  // 代替「原始指针」
 };
 ```
 ```cpp
-// widget.cpp
-#include <vector>
-#include "gadget.h"
-#include "widget.h"
-
-struct Widget::Impl {
-  std::vector<double> data;
-  Gadget g1, g2, g3;
-};
-// 至此, Impl 已经是完整类型.
-
-// 实现构造和析构函数, 采用默认版本:
-Widget::Widget() = default;
-Widget::~Widget() = default;
-// 实现移动操作, 采用默认版本:
-Widget::Widget(Widget&& rhs) = default;
-Widget& Widget::operator=(Widget&& rhs) = default;
-// 实现拷贝操作:
-Widget& Widget::operator=(const Widget& rhs) {
-  *pImpl = *rhs.pImpl;  // 深拷贝
+// algorithm.cpp
+#include "implementor.hpp"  // 定义 RealImplementor
+#include "algorithm.hpp"
+struct Algorithm::Implementor {
+  RealImplementor implementor;
+};  // 至此，Implementor 已经是完整类型。
+// 实现「构造」和「析构」函数，采用默认版本：
+Algorithm::Algorithm() = default;
+Algorithm::~Algorithm() = default;
+// 实现「移动」操作，采用默认版本：
+Algorithm::Algorithm(Algorithm&& rhs) = default;
+Algorithm& Algorithm::operator=(Algorithm&& rhs) = default;
+// 实现「拷贝」操作：
+Algorithm& Algorithm::operator=(const Algorithm& rhs) {
+  *pImpl_ = *rhs.pImpl_;  // 深拷贝
   return *this;
 }
-Widget::Widget(const Widget& rhs)
-    : pImpl(std::make_unique<Impl>(*rhs.pImpl)) { }
+Algorithm::Algorithm(const Algorithm& rhs)
+    : pImpl_(std::make_unique<Implementor>(*rhs.pImpl_)) { }
 ```
 
 ## 动态数组
 
-### 直接管理动态数组（慎用）
-大多数情况下应当优先选用标准库提供的`容器类`而不是`动态数组`.
-如果要显式创建`动态数组`, 则需要在`类型名`后面紧跟数组`元素个数`.
-如果分配成功, 则返回一个指向该数组第一个元素的指针, 否则抛出异常:
+### 直接管理动态数组 ⚠️
+大多数情况下应当优先选用标准库提供的「容器类」而不是「动态数组」。
+如果要显式创建动态数组，则需要在「类型名」后面紧跟「对象个数」。
+如果分配成功，则返回「指向数组第一个对象的指针」，否则抛出异常：
 ```cpp
-int* pArray = new int[42];
+auto pArray = new int[42];
 ```
-数组`元素个数`是数组`类型`的一部分.
-可以先定义`类型别名`, 然后就可以像普通类型一样创建动态对象:
+数组「对象个数」是数组「类型」的一部分。
+可以先定义「类型别名」，然后就可以像普通类型一样创建动态对象：
 ```cpp
 typedef int Array[42];
-int* pArray = new Array;
+auto pArray = new Array;
 ```
 
 ### `std::allocator`
-通常, `new` 会依次完成 <分配内存> 和 <构造对象> 两个操作.
-对于动态数组, 后一个操作是多余的, 因为 `new` 所构造出来的对象会 <立即> 被其他参数所构造的对象覆盖.
-标准库定义的 `std::allocator` 模板类可以将 <分配内存> 与 <构造对象> 两个操作分离:
+通常，`new` 会依次完成「分配内存」和「构造对象」两个操作。
+对于动态数组，后一个操作通常是多余的：`new` 所构造出来的对象通常会「立即」被其他参数所构造的对象覆盖。
+标准库定义的 `std::allocator` 模板类可以将「分配内存」与「构造对象」两个操作分离：
 ```cpp
 #include <memory>
 std::allocator<T> a;      // 创建 allocator 对象
-auto p = a.allocate(n);   // 分配整块内存, 不进行构造, 返回首元素地址
-a.deallocate(p, n);       // 释放整块内存, p 指向首元素
-a.construct(p, args);     // 构造对象, 存储于 p 所指向的位置, p 不必是首元素地址
-a.destroy(p);             // 析构 p 所指向的对象
+auto p = a.allocate(n);   // 「分配」整块内存，不进行「构造」，返回首元地址
+a.deallocate(p, n);       // 「释放」整块内存，p 指向首元
+a.construct(p, args);     // 「构造」单个对象，p 不必是首元地址，存储于 p 所指向的位置
+a.destroy(p);             // 「析构」单个对象，p 不必是首元地址
 ```
 
-`<memory>` 提供了一组相应的算法, 用于在 (由 `std::allocator` 获得的) <未初始化的::uninitialized> 内存中填入对象:
+`<memory>` 提供了一组相应的算法，用于在（由 `std::allocator` 获得的）「未初始化的 (uninitialized)」内存（块）中填入对象：
 ```cpp
 #include <memory>
-// 从另一个容器中 copy 或 move (C++17):
-std::uninitialized_copy(b, e, p);    // 返回 p+n
-std::uninitialized_move(b, e, p);    // 返回 p+n
-std::uninitialized_copy_n(b, n, p);  // 返回 p+n
-std::uninitialized_move_n(b, n, p);  // 返回 p+n
-// 在一段范围内用 t 进行构造:
+// 从另一个容器中 copy 或 move (C++17)：
+std::uninitialized_copy(b, e, p);    // 返回 p + n
+std::uninitialized_move(b, e, p);    // 返回 p + n
+std::uninitialized_copy_n(b, n, p);  // 返回 p + n
+std::uninitialized_move_n(b, n, p);  // 返回 p + n
+// 在一段范围内用 t 进行构造：
 std::uninitialized_fill(b, e, t);    // 返回 void
-std::uninitialized_fill_n(b, n, t);  // 返回 b+n
+std::uninitialized_fill_n(b, n, t);  // 返回 b + n
 ```
