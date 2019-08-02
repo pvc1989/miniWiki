@@ -306,7 +306,7 @@ sp.unique();     // 判断「引用计数」是否为 1
 ```
 这一方案存在以下性能缺陷：
 - 空间开销：引用计数作为「控制块 (control block)」，需要存储在「动态内存」里，并通过 `std::shared_ptr` 对象中的指针来访问。因此 `std::shared_ptr` 的大小至少是「原始指针」的 `2` 倍。
-- 时间开销：为避免「数据竞争 (data racing)」，增减引用计数的操作必须是「原子的 (atomic)」。因此「读写引用计数」会比「非原子」操作消耗更多时间。
+- 时间开销：为避免「数据竞争 (data racing)」，增减「引用计数」的操作必须是「原子的 (atomic)」。因此，隐含「读写引用计数」的操作（构造、析构、赋值）会比「非原子」操作消耗更多时间。
 
 #### 删除器
 与 `std::unique_ptr` 不同，「删除器的类型」不是「`std::shared_ptr` 类型」的一部分。
@@ -385,75 +385,76 @@ void Request::process() {
 }
 ```
 
-### (C++11) `std::weak_ptr`
-`std::weak_ptr` 不支持`条件判断`或`解引用`等常用的指针操作, 因此不是一种独立的智能指针, 而必须与 `std::shared_ptr` 配合使用. 
+### `std::weak_ptr`
+`std::weak_ptr` 不支持「条件判断」或「解引用」等常用的指针操作，因此不是一种独立的智能指针，它必须与 `std::shared_ptr` 配合使用。
 
 #### 创建
-指向一个 `std::shared_ptr` 所管理的对象, 但不改变其引用计数:
+指向一个 `std::shared_ptr` 所管理的对象，但不改变其引用计数：
 ```cpp
 std::weak_ptr<T> wp(sp);
 ```
 
 #### 引用计数
-获取引用计数的操作与 `std::shared_ptr` 类似:
+获取引用计数的操作与 `std::shared_ptr` 类似：
 ```cpp
-// 返回与之共享所有权的 std::shared_ptr 的引用计数:
-w.use_count();
-// 等价于 w.use_count() == 0:
-w.expired();
+wp.use_count();  // 返回与之共享所有权的 std::shared_ptr 的引用计数
+wp.expired();    // 等价于 wp.use_count() == 0
 ```
 
-如果引用计数不为零, 通常希望执行`解引用`以获取所管理的对象.
-但在`判断引用计数是否为零`与`解引用`这两步之间, 所管理的对象有可能被其他线程析构了, 因此需要将两步合并为一个`原子`操作:
+如果引用计数不为零，通常希望执行「解引用」以获取所管理的对象。
+但在「判断引用计数是否为零」与「解引用」这两步之间，所管理的对象有可能被其他「线程 (thread)」析构了，因此需要将两步合并为一个「原子」操作：
 ```cpp
 // 如果 expired() 返回 true, 则返回一个空的 std::shared_ptr
 // 否则, 返回一个与之共享所有权的 std::shared_ptr, 引用计数 + 1
-w.lock();
+wp.lock();
 ```
 
-以上所说的`引用计数`均指 `std::shared_ptr` 的个数.
-除此之外, `控制块`中还有一个`弱引用计数 (weak count)`, 用于统计指向同一对象的 `std::weak_ptr` 的数量.
-因此, `std::weak_ptr` 的创建, 析构, 赋值等操作都会读写`弱引用计数`.
-为避免`数据竞争`, 读写引用计数操作都是`原子的`, 从而会比`非原子操作`消耗更多资源.
+以上所说的「引用计数」均指 `std::shared_ptr` 的个数。
+除此之外，「控制块」中还有一个「弱计数 (weak count)」，用于统计指向同一对象的 `std::weak_ptr` 的数量。
+因此，`std::weak_ptr` 的构造、析构、赋值等操作都会「读写弱计数」。
+与 `std::shared_ptr` 的「引用计数」类似：为避免「数据竞争 (data racing)」，增减「弱计数」的操作必须是「原子的 (atomic)」。
+因此，隐含「读写弱计数」的操作（构造、析构、赋值）会比「非原子」操作消耗更多时间。
 
-#### 拷贝与移动
-一个 `std::weak_ptr` 或 `std::shared_ptr` 可以`拷贝赋值`给另一个 `std::weak_ptr`, 但不改变引用计数:
+#### 拷贝赋值
+一个 `std::weak_ptr` 或 `std::shared_ptr` 可以「拷贝赋值 (copy-assign)」给另一个 `std::weak_ptr`，但不改变「引用计数」：
 ```cpp
-w = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
+wp = p;  // p 可以是 std::weak_ptr 或 std::shared_ptr
 ```
 
-#### `reset` --- 重设裸指针
-只将自己所管理的裸指针设为 `nullptr`, 不负责析构对象或释放内存:
+#### `reset()`
+只将自己所管理的原始指针设为 `nullptr`，不负责「析构对象」或「释放内存」：
 ```cpp
-w.reset();
+wp.reset();
 ```
 
 #### 应用场景
 ##### 缓存复杂操作
-工厂方法返回 `std::shared_ptr` 而非 `std::unique_ptr`
+「工厂方法」返回 `std::shared_ptr` 而非 `std::unique_ptr`：
 ```cpp
-std::shared_ptr<const Widget> fastLoadWidget(WidgetID id) {
-  static std::unordered_map<WidgetID, std::weak_ptr<const Widget>> cache;
-  auto objPtr = cache[id].lock();
-  if (!objPtr) {
-    objPtr = loadWidget(id);
-    cache[id] = objPtr;
+std::shared_ptr<const Request> FastLoad(RequestId id) {
+  static std::unordered_map<RequestId, std::weak_ptr<const Request>> cache;
+  auto obj_ptr = cache[id].lock();
+  if (!obj_ptr) {
+    obj_ptr = RealLoad(id);
+    cache[id] = obj_ptr;
   }
-  return objPtr;
+  return obj_ptr;
 }
 ```
 
 ##### 实现 Observer 模式
-Observer 模式要求: `Subject` 的状态发生变化时, 应当通知所有的 `Observer`.
-这一需求可以通过在 `Subject` 对象中维护一个存储 `std::weak_ptr<Observer>` 对象的容器来实现.
+[Observer 模式](../patterns/observer/README.md)要求：`Subject` 的状态发生变化时，应当通知所有的 `Observer`。
+这一需求可以通过在 `Subject` 对象中维护一个存储 `std::weak_ptr<Observer>` 对象的容器来实现。
 
 ##### 避免 `std::shared_ptr` 成环
-对于非树结构, 全部使用 `std::shared_ptr` 有可能形成环.
-当环外的所有对象都不再指向环内的任何一个成员时, 环内的成员就成了孤儿, 从而造成内存泄露.
+对于「图 (graph)」结构，全部结点都使用 `std::shared_ptr` 有可能形成「环 (cycle)」。
+当环外的所有对象都不再指向环内的任何一个成员时，环内的成员就成了「孤儿 (orphan)」，从而造成「内存泄露」。
 
-对于树结构, `parent` 的生存期总是大于其 `child`, 因此
-- `parent` 指向 `child` 的指针应当选用 `std::unique_ptr`
-- `child` 指向 `parent` 的指针可以选用`裸指针`
+对于「树 (tree)」结构，`parent` 的生存期总是覆盖其 `child`，因此
+- `parent` 指向 `child` 的指针应当选用 `std::unique_ptr`。
+⚠️ 如果树的深度过大（例如：长达 `10000000000ul` 的「链表 (linked list)」），有可能导致 `std::unique_ptr` 的析构函数递归爆栈。
+此时可以考虑用「循环 (iteration)」代替「递归 (recursion)」来实现树的析构函数。
+- `child` 指向 `parent` 的指针可以选用「原始指针」。
 
 ### (C++11) `std::make_shared` 与 (C++14) `std::make_unique`
 
