@@ -57,15 +57,13 @@ auto pcs = new const std::string("hello");
 #### 内存耗尽
 内存空间在运行期有可能被耗尽，此时「分配内存」的任务无法完成。
 - 在默认情况下，分配失败会抛出 `std::bad_alloc`。
-- 如果在 `new` 与「类型名」之间插入 `(std::nothrow)`，则分配失败时不会抛出异常，而是以 `nullptr` 作为返回值。
+- 如果在 `new` 与「类型名」之间插入 `(std::nothrow)`，则分配失败时不会抛出异常，而是以 `nullptr` 作为返回值。⚠️ 使用这种形式一定要记得检查返回值是否为 `nullptr`。
 - `std::bad_alloc` 及 `std::nothrow` 都定义在 `<new>` 中。
 ```cpp
 #include <new>
 int* p1 = new int;                 // 如果分配失败, 将抛出 std::bad_alloc
 int* p2 = new (std::nothrow) int;  // 如果分配失败, 将返回 nullptr
 ```
-⚠️ 使用 `new (std::nothrow)` 一定要检查返回是否为 `nullptr`。
-
 ### `delete`
 
 #### 析构对象 + 释放内存
@@ -248,8 +246,7 @@ p2.reset(p3.release());                 // p1 为空，p2 指向 32，p3 为空
 #### 接管动态数组 ⚠️
 `std::unique_ptr` 支持两种形式的类型参数：
 - `std::unique_ptr<T>` 用于管理「单个动态对象」。
-- `std::unique_ptr<T[]>` 用于管理「动态数组」。
-⚠️ 第二种形式只应当用于：接管 C-style API 所返回的动态数组。
+- `std::unique_ptr<T[]>` 用于管理「动态数组」。⚠️ 这种形式只应当用于：接管 C-style API 所返回的动态数组。
 
 与「原始指针」类似，可以用 `[]` 访问数组成员：
 ```cpp
