@@ -209,7 +209,7 @@ assert(point_handle->x() == (*point_handle)[0]);
 ```
 
 ### 类型转换运算符 ⚠️
-「类型转换 (type cast) 运算符」的函数名为 `operator_TargetType`，形参列表为空，没有返回类型，通常应为 [`const` 成员函数](./class#`const`-成员函数)：
+「类型转换 (type cast) 运算符」的函数名为 `operator TargetType`，形参列表为空，没有返回类型，通常应为 [`const` 成员函数](./class#`const`-成员函数)：
 
 ```cpp
 // point.cpp
