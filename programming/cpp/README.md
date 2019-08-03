@@ -15,7 +15,7 @@
 - [动态内存管理](./memory/README.md)：[原始指针](./memory/raw_pointers.md)，[智能指针](./memory/smart_pointers.md)
 
 ## 面向对象
-- 类机制：[创建类型](./class/class.md)，[运算符重载](./class/operator.md)，[拷贝控制](./class/copy_control.md)，[继承与动态绑定](./class/inheritance.md)
+- 类机制：[创建类型](./class/class.md)，[运算符重载](./class/operator.md)，[拷贝控制](./class/copy_control.md)，[继承与动态](./class/inheritance.md)
 - 模板机制：[泛型编程](./template/generic.md)，[元编程](./template/metaprogramming.md)
 
 ## 开发工具
