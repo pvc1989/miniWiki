@@ -256,7 +256,7 @@ int main() {
 
 下面的示例体现了 *依赖关系* 和 *接口所有权* 的双重倒置：
 
-![](./InvertedDependency.svg)
+![](./inverted_dependency.svg)
 
 - 在高层模块 `Application` 中，`TaskScheduler` 的 `addTask(), popTask()` 方法用到了 `PriorityQueue` 接口所提供的 `push(), top(), pop()` 服务；而实现这些服务所用到的算法，并不需要暴露给 `TaskScheduler`。
 - 在中层模块 `Algorithm` 中，`BinaryHeap` 借助于 `Vector` 接口的 `at()` 服务，实现了 `PriorityQueue` 接口；而由 `Vector` 隐式提供的 `resize()` 服务，并不需要暴露给 `BinaryHeap`。
