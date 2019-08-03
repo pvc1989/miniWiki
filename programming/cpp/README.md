@@ -12,7 +12,7 @@
 - 顺序容器
 - [算法](./algorithm.md)
 - 关联容器
-- [动态内存管理](./memory/README.md)
+- [动态内存管理](./memory/README.md)：[原始指针 ⚠️](./memory/raw_pointers.md#原始指针)，[智能指针](./memory/smart_pointers.md#智能指针)
 
 ## 类机制
 - [创建类型](./class.md)
