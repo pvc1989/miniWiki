@@ -40,7 +40,12 @@
 inline double GetArea(const Shape& shape) { return shape.GetArea(); }
 ```
 
-#### 原始设计
+下面给出三种设计方案：
+- [原始设计 ⚠️](#原始设计-⚠️)
+- [基于 RTTI 的设计 ⚠️](#基于-RTTI-的设计-⚠️)
+- [基于虚函数设计](#基于虚函数的设计)
+
+### 原始设计 ⚠️
 不了解[虚函数](#基于虚函数的设计)的新手可能会给出如下设计：
 ```cpp
 struct Shape {
@@ -83,38 +88,7 @@ int main() {
 }
 ```
 
-#### 基于虚函数的设计
-如果将 *基类的 `GetArea()` 成员* 声明为虚函数，那么非成员接口函数中的 `shape.GetArea()` 将会在 **运行期 (run-time)** 自动转发到相应 *派生类的 `GetArea()` 成员*，从而有效地解决上述问题：
-```cpp
-struct Shape {
-  virtual ~Shape() = default;
-  virtual double GetArea() const { return -1; }
-};
-struct Point : public Shape {
-  double x;
-  double y;
-  Point(double a, double b) : x(a), y(b) { }
-  double GetArea() const override { return 0; }
-};
-class LineSegment : public Shape {
-  Point head_;
-  Point tail_;
- public:
-  LineSegment(const Point& head, const Point& tail)
-    	: head_(head), tail_(tail) { }
-  double GetArea() const override { return 1; }
-};
-class Circle : public Shape {
-  Point center_;
-  double radius_;
- public:
-  Circle(const Point& point, double radius)
-    	: center_(point), radius_(radius) { }
-  double GetArea() const { return 3.1415926 * radius_ * radius_; }
-};
-```
-
-#### 基于 RTTI 的设计 ⚠️
+### 基于 RTTI 的设计 ⚠️
 如果不使用[虚函数](#基于虚函数的设计)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
 一种实现方式：在基类中定义一个枚举成员 `type`，在派生类的构造函数中对其进行初始化，用于表示当前几何对象的类型。
 ```cpp
@@ -168,10 +142,41 @@ inline double GetArea(const Shape& shape) {
 - 违反 [OCP](#OCP)：引入新的派生类（例如 `Rectangle`）会迫使基类重新定义其枚举类型成员，并迫使非成员接口函数引入新的 `case`。
 - 违反 [DIP](#DIP)：非成员接口函数依赖于所有具体的派生类。
 
-### 正方形 v. 长方形 ⚠️
+### 基于虚函数的设计
+如果将 *基类的 `GetArea()` 成员* 声明为虚函数，那么非成员接口函数中的 `shape.GetArea()` 将会在 **运行期 (run-time)** 自动转发到相应 *派生类的 `GetArea()` 成员*，从而有效地解决上述问题：
+```cpp
+struct Shape {
+  virtual ~Shape() = default;
+  virtual double GetArea() const { return -1; }
+};
+struct Point : public Shape {
+  double x;
+  double y;
+  Point(double a, double b) : x(a), y(b) { }
+  double GetArea() const override { return 0; }
+};
+class LineSegment : public Shape {
+  Point head_;
+  Point tail_;
+ public:
+  LineSegment(const Point& head, const Point& tail)
+    	: head_(head), tail_(tail) { }
+  double GetArea() const override { return 1; }
+};
+class Circle : public Shape {
+  Point center_;
+  double radius_;
+ public:
+  Circle(const Point& point, double radius)
+    	: center_(point), radius_(radius) { }
+  double GetArea() const { return 3.1415926 * radius_ * radius_; }
+};
+```
 
-尽管在几何意义上，所有的 `Square` 都是 `Rectangle`；
-但是在程序设计中，将 `Square` 定义为 `Rectangle` 的派生类是一种糟糕的设计。
+### 正方形 v. 长方形 ⚠️
+派生机制不应过度使用，例如以下著名案例：
+- 在几何意义上，所有的 `Square` 都是 `Rectangle`。
+- 在程序设计中，将 `Square` 定义为 `Rectangle` 的派生类是一种糟糕的设计。
 
 ```cpp
 #include <cassert>
@@ -181,12 +186,12 @@ struct Point {
   Point(double a, double b) : x(a), y(b) { }
 };
 class Rectangle {
-  Point _left_bottom;
+  Point left_bottom_;
   double height_;
   double width_;
  public:
   Rectangle(Point& point, double height, double width)
-      : _left_bottom(point), height_(height), width_(width) { }
+      : left_bottom_(point), height_(height), width_(width) { }
   virtual ~Rectangle() = default;
   virtual void SetHeight(double height) { height_ = height; }
   virtual void SetWidth(double width) { width_ = width; }
@@ -236,7 +241,7 @@ int main() {
 *依赖倒置* 首先是指源代码 *依赖关系*（通常表现为 `#include` 或 `import` 语句）与程序 *控制流* 的倒置。
 
 *依赖关系* 的倒置通常也意味着 *接口所有权* 的倒置：
-接口代表一种服务，其所有权应当归属于服务的 *使用者*（高层策略模块）而非 *提供者*（底层实现模块）。
+接口代表一种服务，其所有权应当归属于服务的 *使用者（高层策略模块）* 而非 *提供者（底层实现模块）*。
 
 下面的示例体现了 *依赖关系* 和 *接口所有权* 的双重倒置：
 
@@ -260,5 +265,5 @@ int main() {
 ### 面向对象设计 v. 面向对象语言
 使用面向对象语言 (C++/Java/Python) 进行编程 *不等于* 面向对象编程。
 一段程序是否是面向对象的，取决于程序中的依赖关系是否是倒置的，而与所使用的编程语言无关。
-这种依赖关系的倒置是通过 **多态 (polymorphism)** 来实现的，多态既可以是静态的（编译期绑定），也可以是动态的（运行期绑定）。
+这种依赖关系的倒置是通过 **多态 (polymorphism)** 来实现的，多态既可以是 *静态的（编译期绑定）*，也可以是 *动态的（运行期绑定）*。
 面向对象语言通过一定的语法机制，让多态变得更容易、更简洁、更安全。
