@@ -1,13 +1,11 @@
 # 运算符重载
 
-## 简介
 **运算符 (operator)** 是一种特殊的函数：函数名总是以 `operator` 起始，后面紧跟某种特殊符号（如 `+`, `++`, `+=`）。
-运算符可以是[普通函数](#重载为普通函数的运算符)，也可以是类的[方法成员](#重载为方法成员的运算符)（隐式地以 `this` 指针为第一个形参）。
+运算符可以是普通函数，也可以是类的方法成员（隐式地以 `this` 为第一个形参）。
 
 运算符的种类和[优先级](https://en.cppreference.com/w/cpp/language/operator_precedence)都是由语言规范所确定的。
 程序员只能对已有的运算符进行 **重载 (overload)**，而不能创造新的运算符；在重载时，只能修改形参类型，而不能改变形参个数。
 
-### 示例
 下面以 `Point` 为例，为其重载运算符：
 ```cpp
 // point.h
@@ -47,12 +45,10 @@ bool operator<(const Point& lhs, const Point& rhs);
 constexpr Point Point::kOrigin;
 ```
 
-## 重载为普通函数的运算符
+## 必须重载为普通函数的运算符
 
-### 必须重载为普通函数的运算符
-
-#### 读写运算符
-读写运算符通常需要访问私有成员，因此通常需要声明为 `friend`。
+### 读写运算符
+**读写 (IO) 运算符** 通常需要访问私有成员，因此通常需要声明为 `friend`。
 
 输出运算符 `<<` 应当尽量减少对输出格式的修改（例如：不应添加换行符）：
 ```cpp
@@ -60,7 +56,7 @@ constexpr Point Point::kOrigin;
 #include "point.h"
 #include <iostream>
 std::ostream& operator<<(std::ostream& os, const Point& point) {
-  os << '(' << point._x << ", " << point._y << ')';
+  os << '(' << point.x_ << ", " << point.y_ << ')';
   return os;
 }
 ```
@@ -71,18 +67,18 @@ std::ostream& operator<<(std::ostream& os, const Point& point) {
 #include "point.h"
 #include <iostream>
 std::istream& operator>>(std::istream& is, Point& point) {
-  is >> point._x >> point._y;
+  is >> point.x_ >> point._y;
   if (!is)
     point = Point();  // 输入失败，恢复到默认状态
   return is;
 }
 ```
 
-### 通常重载为普通函数的运算符
+## 通常重载为普通函数的运算符
 **对称的 (symmetric)** 二元运算符通常应当重载为普通函数。
 
-#### 算术运算符
-算术运算符通常返回一个新的对象（或代理）。
+### 算术运算符
+**算术 (arithmetic) 运算符** 通常返回一个新的对象（或代理）。
 
 对于定义了[算术运算符](#算术运算符)和相应的[复合赋值运算符](复合赋值运算符)的类，应当将算术运算委托给[复合赋值运算符](复合赋值运算符)，这样可以避免将非成员的[算术运算符](#算术运算符)声明为 `friend`：
 ```cpp
@@ -95,44 +91,43 @@ Point operator+(const Point& lhs, const Point& rhs) {
 }
 ```
 
-#### 关系运算符
-关系运算符总是返回 `bool` 值。
+### 关系运算符
+**关系 (relational) 运算符** 总是返回 `bool` 值。
 
-`==` 关系应当是 **传递的 (transitive)**，即由 `a == b && b == c` 可以推出 `a == c`。
-类似的，`<`, `<=`, `>`, `>=` 也应当是 **传递的**。
+`==` 关系应当是 **传递的 (transitive)**，即： `a == b && b == c` 意味着 `a == c`。
+类似的，`<`、`<=`、`>`、`>=` 也应当是 *传递的*。
 
 如果定义了 `==`，则通常也应该定义 `!=`，并用其中一个实现另一个。
 
-`<` 关系应当定义出一个 **严格弱序**，并且与 `==` 及 `!=` 兼容，即 `a != b` 意味着 `a < b` 或 `b < a`。
+`<` 关系应当定义出一个 **严格弱序 (strict weak order)**，并且与 `==` 及 `!=` 兼容，即：`a != b` 意味着 `a < b` 或 `b < a`。
 
 ```cpp
 // point.cpp
 #include "point.h"
 bool operator==(const Point& lhs, const Point& rhs) {
-  return lhs._x == rhs._x && lhs._y == rhs._y;
+  return lhs.x_ == rhs.x_ && lhs.y_ == rhs._y;
 }
 bool operator!=(const Point& lhs, const Point& rhs) {
   return !(lhs == rhs);
 }
 bool operator<(const Point& lhs, const Point& rhs) {
-  return lhs._x < rhs._x || lhs._x == rhs._x && lhs._y < rhs._y;
+  return lhs.x_ < rhs.x_ || lhs.x_ == rhs.x_ && lhs.y_ < rhs._y;
 }
 ```
 
-#### 位运算符
+### 位运算符
 
-## 重载为方法成员的运算符
+## 必须重载为方法成员的运算符
 
-### 必须重载为方法成员的运算符
+### 赋值运算符
+**赋值 (assignment) 运算符** 应当返回 *对 **左端项 (Left Hand Side, LHS)** 的引用*。
 
-#### 赋值运算符
-赋值运算符应当返回 **左端项 (Left Hand Side, LHS)** 的引用。
 ```cpp
 // point.cpp
 #include "point.h"
 Point& Point::operator=(double const (array&) [2]) {
-  _x = array[0];
-  _y = array[1];
+  x_ = array[0];
+  y_ = array[1];
   return *this;
 }
 ```
@@ -144,10 +139,11 @@ double array[2] = { 0.1, 0.2 };
 point = array;
 ```
 
-#### 下标运算符
-如果要定义下标运算符 `operator[]`，通常定义两个版本：
-- 普通成员函数：只能用于 non-`const` 对象，返回内部数据的 non-`const` 引用。
-- [`const` 成员函数](./class#`const`-成员函数)：可以用于任何对象，返回内部数据的 `const` 引用。
+### 下标运算符
+**下标 (subscript) 运算符** 通常应定义两个版本：
+
+- 普通成员函数：只能用于 non-`const` 对象，返回 *对内部数据的 non-`const` 引用*。
+- [`const` 成员函数](./class#`const`-成员函数)：可以用于任何对象，返回 *对内部数据的 `const` 引用*。
 
 ```cpp
 #include <cassert>
@@ -163,19 +159,20 @@ const double& Point::operator[](int i) const {
 }
 ```
 
-#### 函数调用运算符
-一个类可以定义多个函数调用运算符 `operator()`，相互之间以形参的类型或数量来区分。
-支持 `operator()` 的对象被称为[函数对象（函子）](./function.md#函数对象)，其行为可以通过设置其内部 **状态 (state)** 的方式来 **订制 (customize)**。
+### 函数调用运算符
+**函数调用 (function call) 运算符** 可以在同一个类种重载多次，相互之间以形参的类型或数量来区分。
+支持 `operator()` 的对象被称为[函数对象](./function.md#函数对象)，其行为可以通过设置其内部 **状态 (state)** 的方式来 **订制 (customize)**。
+
 ```cpp
 // point.h
 class PointBuilder {
  public:
-  PointBuilder(double x, double y) : _base_point(x, y) { }
+  PointBuilder(double x, double y) : _basepoint_(x, y) { }
   Point operator(double x, double y) {
-    return Point(x + _base_point.x(), y + _base_point.y());
+    return Point(x + _basepoint_.x(), y + _basepoint_.y());
   }
  private:
-  Point _base_point;
+  Point _basepoint_;
 }
 ```
 ```cpp
@@ -187,21 +184,21 @@ assert(point.x() == 0.0);
 assert(point.y() == 0.0);
 ```
 
-#### 成员访问运算符
-成员访问运算符 `operator->` 通常与[解引用运算符](#解引用运算符) `operator*` 成对地重载，用于模拟指针的行为。
+### 成员访问运算符
+**成员访问 (member access) 运算符** `operator->` 通常与[解引用运算符](#解引用运算符) `operator*` 成对地重载，用于模拟指针的行为。
 
-`operator->` 的返回类型，可以是一个指针，或者是另一个支持 `operator->` 的对象。
+`operator->` 的返回类型，可以是一个指针，或者是一个支持 `operator->` 的对象（例如：迭代器）。
 
 ```cpp
 // point.h
 class PointHandle {
  public:
-  PointHandle(double x = 0.0, double y = 0.0) : _point(new Point(x, y)) { }
-  ~PointHandle() { delete _point; }
-  Point* operator->() const { return _point; }
-  Point& operator*() const { return *_point; }
+  PointHandle(double x = 0.0, double y = 0.0) : point_(new Point(x, y)) { }
+  ~PointHandle() { delete point_; }
+  Point* operator->() const { return point_; }
+  Point& operator*() const { return *point_; }
  private:
-  Point* _point;
+  Point* point_;
 };
 ```
 ```cpp
@@ -211,21 +208,23 @@ auto point_handle = PointHandle(1.0, 2.0);
 assert(point_handle->x() == (*point_handle)[0]);
 ```
 
-#### 类型转换运算符
-这种运算符的函数名为 `operator` + 目标类型，形参列表为空，没有返回类型，通常应为 [`const` 成员函数](./class#`const`-成员函数)：
+### 类型转换运算符 ⚠️
+**类型转换 (type cast) 运算符** 的函数名为 `operator_TargetType`，形参列表为空，没有返回类型，通常应为 [`const` 成员函数](./class#`const`-成员函数)：
+
 ```cpp
 // point.cpp
 #include "point.h"
 Point::operator bool() const {
-  return _x != 0.0 || _y != 0.0;
+  return x_ != 0.0 || y_ != 0.0;
 }
 ```
 
-与只需要一个实参的 non-[`explicit` 构造函数](./class.md#`explicit`-构造函数)类似，non-`explicit` 类型转换运算符 **可能** 被 **隐式地** 用于类型转换，从而绕开类型检查机制。
+与只需要一个实参的 non-[`explicit` 构造函数](./class.md#`explicit`-构造函数)类似，non-`explicit` 类型转换运算符 *可能* 被 *隐式地* 用于类型转换，从而绕开类型检查机制。
 ⚠️ 应当尽量避免隐式类型转换。
 
-`explicit` 类型转换运算符 **只能** 被 **显式地** 调用，
-唯一的例外是 `operator bool()`，即使被声明为 `explicit` 也可以被 **隐式地** 调用：
+`explicit` 类型转换运算符 *只能* 被 *显式地* 调用，
+唯一的例外是 `operator bool()`，即使被声明为 `explicit` 也可以被 *隐式地* 调用：
+
 ```cpp
 // client.cpp
 auto origin = Point();
@@ -236,14 +235,14 @@ assert(point == true);
 
 ⚠️ 除 `explicit operator bool()` 之外，应当避免重载类型转换运算符。
 
-### 通常重载为方法成员的运算符
+## 通常重载为方法成员的运算符
 
-#### 复合赋值运算符
+### 复合赋值运算符
 
-#### 自增自减运算符
+### 自增自减运算符
 如果要自增运算符 `operator++`（或自减运算符 `operator--`），通常定义两个版本：
-- 前置版本：返回新值的引用。
-- 后置版本：返回旧值的副本（不含引用）。
+- **前置 (prefix) 版本**：返回新值的引用。
+- **后置 (suffix) 版本**：返回旧值的副本（不含引用）。
 
 ```cpp
 // point.h
@@ -254,5 +253,5 @@ class PointIterator {
 };
 ```
 
-#### 解引用运算符
-解引用运算符 `operator*` 通常与[成员访问运算符](#成员访问运算符) `operator->` 成对地重载，用于模拟指针的行为，其返回类型必须是一个引用。
+### 解引用运算符
+**解引用 (dereference) 运算符** `operator*` 通常与[成员访问运算符](#成员访问运算符) `operator->` 成对地重载，用于模拟指针的行为，其返回类型必须是一个引用。
