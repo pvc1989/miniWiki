@@ -1,6 +1,6 @@
 # 设计原则
 
-面向对象设计的五个基本原则（首字母串接起来构成 `SOLID`）：
+**面向对象设计 (Object Oriented Design, OOD)** 的五个基本原则（首字母串接起来构成 `SOLID`）：
 
 |    缩写     |              全称               |     中译名      |
 | :---------: | :-----------------------------: | :-------------: |
@@ -26,218 +26,202 @@
 
 > If for each object `o1` of type `S` there is an object `o2` of type `T` such that for all programs `P` defined in terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2` then `S` is a *subtype* of `T`.
 
-这里的 *object* 在 C++ 中应当理解为 **指针** 或 **引用**。
+这里的 *object* 在 C++ 中应当理解为 **指针 (pointer)** 或 **引用 (reference)**。
 
 ### 语言实现机制
-在 C++、Java、Python 等主流 OOP 语言中，LSP 主要是通过虚函数机制来实现的。
+在 C++、Java、Python 等主流面向对象语言中，LSP 主要是通过虚函数机制来实现的。
 
 假设需要这样一个几何库：
 - 所有几何类型都是 `Shape` 的派生类。
-- 所有几何类型都要实现一个返回当前几何对象面积的 `area()` 成员。
-- 某个应用需要将 `area()` 成员封装为一个普通函数，符合 LSP 的设计应当允许以下的简单实现：
+- 所有几何类型都要实现一个返回当前几何对象面积的 `GetArea()` 成员。
+- 某个应用需要将 `GetArea()` 成员封装为一个 *非成员接口函数*，符合 LSP 的设计应当允许以下的简单实现：
 
 ```cpp
-inline double area(const Shape& shape) { return shape.area(); }
+inline double GetArea(const Shape& shape) { return shape.GetArea(); }
 ```
 
 #### 原始设计
-不了解[虚函数](#基于虚函数的设计符合-LSP)的 C++ 新手可能会给出如下设计：
+不了解[虚函数](#基于虚函数的设计)的新手可能会给出如下设计：
 ```cpp
 struct Shape {
-  double area() const { return -1; }
+  double GetArea() const { return -1; }
 };
-
 struct Point : public Shape {
   double x;
   double y;
   Point(double a, double b) : x(a), y(b) { }
-  double area() const { return 0; }
+  double GetArea() const { return 0; }
 };
-
 class LineSegment : public Shape {
-  Point _head;
-  Point _tail;
+  Point head_;
+  Point tail_;
  public:
   LineSegment(const Point& head, const Point& tail)
-      : _head(head), _tail(tail) { }
-  double area() const { return 0; }
+      : head_(head), tail_(tail) { }
+  double GetArea() const { return 0; }
 };
-
 class Circle : public Shape {
-  Point _center;
-  double _radius;
+  Point center_;
+  double radius_;
  public:
   Circle(const Point& point, double radius)
-      : _center(point), _radius(radius) { }
-  double area() const { return 3.1415926 * _radius * _radius; }
+      : center_(point), radius_(radius) { }
+  double GetArea() const { return 3.1415926 * radius_ * radius_; }
 };
 ```
-该设计违反了 LSP：将 **派生类对象的指针或引用** 传递给封装函数，实际调用的总是基类的 `area()` 成员，得到的返回值总是 `-1`，从而无法通过下面的单元测试：
+该设计违反了 LSP：将 *派生类对象* 传递给接收 *基类引用* 的非成员接口函数，实际调用的总是 *基类的 `GetArea()` 成员*，得到的返回值总是 `-1`，从而无法通过下面的单元测试：
 ```cpp
 #include <cassert>
-
 int main() {
   auto p = Point(0, 0);
   auto q = Point(1, 0);
-  assert(p.area() == area(p));
+  assert(p.GetArea() == GetArea(p));
   auto ls = LineSegment(p, q);
-  assert(ls.area() == area(ls));
+  assert(ls.GetArea() == GetArea(ls));
   auto c = Circle(p, 2);
-  assert(c.area() == area(c));
+  assert(c.GetArea() == GetArea(c));
 }
 ```
 
-#### 基于虚函数的设计符合 LSP
-如果在基类中将 `area()` 成员声明为虚函数，那么封装函数中的 `shape.area()` 将会在 **运行期 (run-time)** 自动转发到相应类型的 `area()` 成员，从而有效地解决上述问题：
+#### 基于虚函数的设计
+如果将 *基类的 `GetArea()` 成员* 声明为虚函数，那么非成员接口函数中的 `shape.GetArea()` 将会在 **运行期 (run-time)** 自动转发到相应 *派生类的 `GetArea()` 成员*，从而有效地解决上述问题：
 ```cpp
 struct Shape {
   virtual ~Shape() = default;
-  virtual double area() const { return -1; }
+  virtual double GetArea() const { return -1; }
 };
-
 struct Point : public Shape {
   double x;
   double y;
   Point(double a, double b) : x(a), y(b) { }
-  double area() const override { return 0; }
+  double GetArea() const override { return 0; }
 };
-
 class LineSegment : public Shape {
-  Point _head;
-  Point _tail;
+  Point head_;
+  Point tail_;
  public:
   LineSegment(const Point& head, const Point& tail)
-    	: _head(head), _tail(tail) { }
-  double area() const override { return 1; }
+    	: head_(head), tail_(tail) { }
+  double GetArea() const override { return 1; }
 };
-
 class Circle : public Shape {
-  Point _center;
-  double _radius;
+  Point center_;
+  double radius_;
  public:
   Circle(const Point& point, double radius)
-    	: _center(point), _radius(radius) { }
-  double area() const { return 3.1415926 * _radius * _radius; }
+    	: center_(point), radius_(radius) { }
+  double GetArea() const { return 3.1415926 * radius_ * radius_; }
 };
 ```
 
-#### 基于 RTTI 的设计违反 LSP
-如果不使用[虚函数](#基于虚函数的设计符合-LSP)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
-一种实现方式：在基类中定义一个枚举成员 `type`，通过派生类的构造函数对其进行初始化，用于表示当前几何对象的类型。
-
+#### 基于 RTTI 的设计 ⚠️
+如果不使用[虚函数](#基于虚函数的设计)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
+一种实现方式：在基类中定义一个枚举成员 `type`，在派生类的构造函数中对其进行初始化，用于表示当前几何对象的类型。
 ```cpp
 struct Shape {
   enum class Type { Shape, Point, LineSegment, Circle };
   const Type type;
   Shape(Type t) : type(t) { }
-  double area() const { return -1; }
+  double GetArea() const { return -1; }
 };
-
 struct Point : public Shape {
   double x;
   double y;
   Point(double a, double b)
       : Shape(Shape::Type::Point), x(a), y(b) { }
-  double area() const { return 0; }
+  double GetArea() const { return 0; }
 };
-
 class LineSegment : public Shape {
-  Point _head;
-  Point _tail;
+  Point head_;
+  Point tail_;
  public:
   LineSegment(const Point& head, const Point& tail)
-      : Shape(Shape::Type::LineSegment), _head(head), _tail(tail) { }
-  double area() const { return 1; }
+      : Shape(Shape::Type::LineSegment), head_(head), tail_(tail) { }
+  double GetArea() const { return 1; }
 };
-
 class Circle : public Shape {
-  Point _center;
-  double _radius;
+  Point center_;
+  double radius_;
  public:
   Circle(const Point& point, double radius)
-      : Shape(Shape::Type::Circle), _center(point), _radius(radius) { }
-  double area() const { return 3.1415926 * _radius * _radius; }
+      : Shape(Shape::Type::Circle), center_(point), radius_(radius) { }
+  double GetArea() const { return 3.1415926 * radius_ * radius_; }
 };
 ```
-在封装函数的实现中，利用对象的动态类型信息，将任务转发到相应的成员函数：
+在非成员接口函数的实现中，利用对象的动态类型信息，将任务转发到相应的成员函数：
 ```cpp
-inline double area(const Shape& shape) {
+inline double GetArea(const Shape& shape) {
   switch (shape.type) {
     case Shape::Type::Point:
-      return static_cast<const Point&>(shape).area();
+      return static_cast<const Point&>(shape).GetArea();
     case Shape::Type::LineSegment:
-  	  return static_cast<const LineSegment&>(shape).area();
+  	  return static_cast<const LineSegment&>(shape).GetArea();
     case Shape::Type::Circle:
-  	 	return static_cast<const Circle&>(shape).area();
+  	 	return static_cast<const Circle&>(shape).GetArea();
     default:
-      return shape.area();
+      return shape.GetArea();
   }
 }
 ```
 该设计存在以下缺陷：
 - 浪费资源：`type` 在每个对象中都要占据存储空间，对于需要生成大量几何对象的应用，这样的开销是不可忽视的。
-- 违反 [OCP](#OCP)：引入新的派生类（例如 `Rectangle`）会迫使基类重新定义其枚举类型成员，并迫使封装函数引入新的 `case`。
-- 违反 [DIP](#DIP)：封装函数依赖于所有具体的派生类。
+- 违反 [OCP](#OCP)：引入新的派生类（例如 `Rectangle`）会迫使基类重新定义其枚举类型成员，并迫使非成员接口函数引入新的 `case`。
+- 违反 [DIP](#DIP)：非成员接口函数依赖于所有具体的派生类。
 
-### 正方形不是长方形
+### 正方形 v. 长方形 ⚠️
 
-尽管在几何意义上，所有的正方形 (`Square`) 都是长方形 (`Rectangle`) ；
-但是将 `Square` 定义为 `Rectangle` 的派生类是一种糟糕的设计。
+尽管在几何意义上，所有的 `Square` 都是 `Rectangle`；
+但是在程序设计中，将 `Square` 定义为 `Rectangle` 的派生类是一种糟糕的设计。
 
 ```cpp
 #include <cassert>
-
 struct Point {
   double x;
   double y;
   Point(double a, double b) : x(a), y(b) { }
 };
-
 class Rectangle {
   Point _left_bottom;
-  double _height;
-  double _width;
+  double height_;
+  double width_;
  public:
   Rectangle(Point& point, double height, double width)
-      : _left_bottom(point), _height(height), _width(width) { }
+      : _left_bottom(point), height_(height), width_(width) { }
   virtual ~Rectangle() = default;
-  virtual void setHeight(double height) { _height = height; }
-  virtual void setWidth(double width) { _width = width; }
-  double area() const { return _height * _width; }
+  virtual void SetHeight(double height) { height_ = height; }
+  virtual void SetWidth(double width) { width_ = width; }
+  double GetArea() const { return height_ * width_; }
 };
-
 class Square : public Rectangle {
  public:
   Square(Point& point, double length) : Rectangle(point, length, length) { }
-  virtual void setHeight(double length) {
-    Rectangle::setHeight(length);
-    Rectangle::setWidth(length);
+  virtual void SetHeight(double length) {
+    Rectangle::SetHeight(length);
+    Rectangle::SetWidth(length);
   }
-  virtual void setWidth(double length) {
-    Rectangle::setHeight(length);
-    Rectangle::setWidth(length);
+  virtual void SetWidth(double length) {
+    Rectangle::SetHeight(length);
+    Rectangle::SetWidth(length);
   }
 };
-
-void test(Rectangle& r, double height, double width) {
-  r.setHeight(height);
-  r.setWidth(width);
-  assert(r.area() == height * width);
+void Test(Rectangle& r, double height, double width) {
+  r.SetHeight(height);
+  r.SetWidth(width);
+  assert(r.GetArea() == height * width);
 }
-
 int main() {
   auto p = Point(0, 0);
   auto r = Rectangle(p, 3, 5);
-  test(r, 3, 5);  // passed
+  Test(r, 3, 5);  // passed
   auto s = Square(p, 4);
-  test(s, 3, 5);  // failed
+  Test(s, 3, 5);  // failed
 }
 ```
 
 该设计存在以下缺陷：
 
-- 浪费资源：`Square` 的 `_height` 总是等于 `_width`，不需要像 `Rectangle` 那样存储为两个独立成员。
-- 违反 LSP：所有 `Rectangle` 都应当能通过单元测试 `test(Rectangle&, int, int)`，但当 `height != width` 时 `Square` 却无法通过该测试。因此，从行为上看，a `Square` is *NOT* a `Rectangle` 。
+- 浪费资源：`Square` 的 `height_` 总是等于 `width_`，不需要像 `Rectangle` 那样存储为两个独立成员。
+- 违反 LSP：所有 `Rectangle` 都应当能通过单元测试 `Test(Rectangle&, int, int)`，但当 `height != width` 时 `Square` 却无法通过该测试。因此，从行为上看，a `Square` is *NOT* a `Rectangle`。
 
 ## ISP
 
@@ -249,10 +233,10 @@ int main() {
 > Abstractions should not depend on details. Details should depend on abstractions.
 
 ### 倒置的含义
-*依赖倒置* 首先是指源代码 *依赖关系* （通常表现为 `#include` 或 `import` 语句）与程序 *控制流* 的倒置。
+*依赖倒置* 首先是指源代码 *依赖关系*（通常表现为 `#include` 或 `import` 语句）与程序 *控制流* 的倒置。
 
 *依赖关系* 的倒置通常也意味着 *接口所有权* 的倒置：
-接口代表一种服务，其所有权应当归属于服务的使用者（高层策略模块）而非提供者（底层实现模块）。
+接口代表一种服务，其所有权应当归属于服务的 *使用者*（高层策略模块）而非 *提供者*（底层实现模块）。
 
 下面的示例体现了 *依赖关系* 和 *接口所有权* 的双重倒置：
 
@@ -276,5 +260,5 @@ int main() {
 ### 面向对象设计 v. 面向对象语言
 使用面向对象语言 (C++/Java/Python) 进行编程 *不等于* 面向对象编程。
 一段程序是否是面向对象的，取决于程序中的依赖关系是否是倒置的，而与所使用的编程语言无关。
-这种依赖关系的倒置是通过 *polymorphism* 来实现的，polymorphism 既可以是静态的（编译期绑定），也可以是动态的（运行期绑定）。
-面向对象语言通过一定的语法机制，让 polymorphism 变得更容易、更简洁、更安全。
+这种依赖关系的倒置是通过 **多态 (polymorphism)** 来实现的，多态既可以是静态的（编译期绑定），也可以是动态的（运行期绑定）。
+面向对象语言通过一定的语法机制，让多态变得更容易、更简洁、更安全。
