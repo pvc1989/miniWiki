@@ -168,7 +168,7 @@ const double& Point::operator[](int i) const {
 class PointBuilder {
  public:
   PointBuilder(double x, double y) : _basepoint_(x, y) { }
-  Point operator(double x, double y) {
+  Point operator()(double x, double y) {
     return Point(x + _basepoint_.x(), y + _basepoint_.y());
   }
  private:
