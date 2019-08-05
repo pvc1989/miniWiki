@@ -9,9 +9,8 @@
 
 ## 标准库
 - 文件读写
-- 顺序容器
+- 容器：顺序容器，关联容器，迭代器
 - [算法](./algorithm.md)
-- 关联容器
 - [动态内存管理](./memory/README.md)：[原始指针](./memory/raw_pointers.md)，[智能指针](./memory/smart_pointers.md)
 
 ## 面向对象
