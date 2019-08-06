@@ -18,6 +18,6 @@
 - 模板机制：[泛型编程](./template/generic.md)，[元编程](./template/metaprogramming.md)
 
 ## 开发工具
-- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+- [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)（非官方中文版：[Google C++ 风格指南](https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)）
 - [构建工具](../make/README.md)
 - [单元测试](./unittest/README.md)
