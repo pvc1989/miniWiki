@@ -19,5 +19,5 @@
 
 ## 开发工具
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)（非官方中文版：[Google C++ 风格指南](https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)）
-- [构建工具](../make/README.md)
-- [单元测试](./unittest/README.md)
+- [构建工具](../make/README.md)：[GNU Make](../make/README.md#GUN-Make)，[CMake](../make/README.md#CMake)
+- [单元测试](./unittest/README.md)：[Google Test](./unittest/README.md#Google-Test)
