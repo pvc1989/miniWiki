@@ -8,23 +8,23 @@
 - 测试应当能够 *快速* 编译和运行。
 
 # Google Test
-[Google Test](https://github.com/google/googletest) 是一个开源的 C++ 测试框架，主要用来做单元测试。
+[Google Test](https://github.com/google/googletest) 是一个开源的 C++ 测试「框架 (framework)」，主要用来做单元测试。
 
 ## 文档
 必读：
-- (Primer](https://github.com/google/googletest/blob/master/googletest/docs/primer.md)
-- (Generic Build Instructions](https://github.com/google/googletest/blob/master/googletest/README.md)
+- [Primer](https://github.com/google/googletest/blob/master/googletest/docs/primer.md)
+- [Generic Build Instructions](https://github.com/google/googletest/blob/master/googletest/README.md)（即《[构建](#构建)》一节）
 
 选读：
-- (Samples](https://github.com/google/googletest/blob/master/googletest/docs/samples.md)
-- (Advanced Topics](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md)
-- (FAQ](https://github.com/google/googletest/blob/master/googletest/docs/faq.md)
+- [Samples](https://github.com/google/googletest/blob/master/googletest/docs/samples.md)
+- [Advanced Topics](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md)
+- [FAQ](https://github.com/google/googletest/blob/master/googletest/docs/faq.md)
 
 ## 术语
 
-由于历史的原因，Google Test 所采用的术语与其他测试框架或文献所采用的通用术语略有区别：
+由于历史原因，Google Test 所采用的术语与其他测试框架或文献所采用的通用术语略有区别：
 
-| 名称     | 通用术语   | Google 术语 (旧) | 含义                     |
+| 名称     | 通用术语   | Google 术语（旧） | 含义                     |
 | ------- | --------- | --------------- | ----------------------- |
 | 断言    | Assertion  | Assertion       | 程序正确运行时应当成立的条件 |
 | 测试函数 | Test Case  | Test (Function) | 由一组断言组成的单个测试用例 |
