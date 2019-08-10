@@ -13,7 +13,7 @@
 ## 类型函数
 类型函数不是[普通函数](./function.md)，而是借助于[模板类](./generic.md)实现的（以 *类型* 或 *编译期常量* 为运算对象的）编译期运算机制。
 
-### `std::remove_reference_t`
+### `std::remove_reference`
 定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于「移除 (remove)」类型实参的「引用 (reference)」：
 ```cpp
 namespace std{
@@ -51,7 +51,7 @@ int main() {
 
 ### `std::move()` 的实现
 定义在 `<utility>` 中的函数 `std::move()` 用于 *将实参强制转换为右值引用*。
-借助于 [`std::remove_reference_t`](#`std::remove_reference_t`) 可以给出它的一种实现：
+借助于 [`std::remove_reference`](#`std::remove_reference`) 可以给出它的一种实现：
 ```cpp
 #include <type_traits>  // std::remove_reference_t
 namespace std{
@@ -66,7 +66,7 @@ remove_reference_t<T>&& move(T&& t) {
 
 ### `std::forward<T>()` 的实现
 定义在 `<utility>` 中的模板函数 `std::forward<T>()` 用于 *完美转发实参*，即 *保留函数实参的所有类型信息（含引用属性）*。
-借助于 [`std::remove_reference_t`](#`std::remove_reference_t`) 和[引用折叠机制](./generic.md#引用折叠)可以给出它的一种实现：
+借助于 [`std::remove_reference`](#`std::remove_reference`) 和[引用折叠](./type_deduction.md#`ParaType-=-T-&&`)机制可以给出它的一种实现：
 ```cpp
 #include <type_traits>  // std::remove_reference_t
 namespace std{
