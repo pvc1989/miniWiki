@@ -6,10 +6,11 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage[g]{esvect}
 \usepackage{physics}
 \usepackage{siunitx}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
+\usepackage[g]{esvect}
+\renewcommand{\vec}[1]{\vv{\boldsymbol{#1}}}  % \vv in esvect
+\newcommand{\Tensor}[1]{\vv{\vv{\boldsymbol{#1}}}}  % \vv in esvect
 \newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
 \newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
 \newcommand{\Conj}[1]{\overline{#1}}
@@ -20,8 +21,6 @@
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
 \newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
 \newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
-\newcommand{\Tensor}[1]{\vv{\vv{#1}}}  % \vv in esvect
-\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
 \usepackage{mathspec}
 \setmainfont{Palatino Linotype}
 \usepackage[heading]{ctex}
@@ -1661,7 +1660,7 @@ reference "eq:ConservationOfEnergyWithDDt"
 ) in matrix form:
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
+\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
 \end{equation}
 
 \end_inset
@@ -1672,11 +1671,11 @@ in which
 \begin{aligned}\ket{U} & =\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
-\end{bmatrix} & \VecInKet{P} & =\begin{bmatrix}\vec{0}\\
+\end{bmatrix} & \ket*{\vec{P}} & =\begin{bmatrix}\vec{0}\\
 p\Tensor{1}\\
 p\vec{u}
 \end{bmatrix}\\
-\VecInKet{G} & =\begin{bmatrix}\vec{0}\\
+\ket*{\vec{G}} & =\begin{bmatrix}\vec{0}\\
 \Tensor{\tau}\\
 \Tensor{\tau}\cdot\vec{u}-\vec{q}
 \end{bmatrix} & \ket{H} & =\begin{bmatrix}0\\
@@ -1718,7 +1717,7 @@ literal "true"
  and
 \begin_inset Formula 
 \[
-\VecInKet{F}=\vec{u}\ket{U}+\VecInKet{P}=\vec{u}\begin{bmatrix}\rho\\
+\ket*{\vec{F}}=\vec{u}\ket{U}+\ket*{\vec{P}}=\vec{u}\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
 \end{bmatrix}+\begin{bmatrix}\vec{0}\\
@@ -1742,7 +1741,7 @@ noprefix "false"
  becomes
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{F}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
+\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{F}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
 \end{equation}
 
 \end_inset
@@ -1769,7 +1768,7 @@ noprefix "false"
  and denote
 \begin_inset Formula 
 \[
-\ket*{\vec{F}^{c}}=\VecInKet{F}-\vec{u}^{c}\ket{U}=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
+\ket*{\vec{F}^{c}}=\ket*{\vec{F}}-\vec{u}^{c}\ket{U}=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
 \end{bmatrix}+\begin{bmatrix}\vec{0}\\
@@ -1793,7 +1792,7 @@ noprefix "false"
  will then become
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
+\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
 \end{equation}
 
 \end_inset
@@ -1833,7 +1832,7 @@ noprefix "false"
  to them, which leads to
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\div{\VecInKet{F}}=\div{\VecInKet{G}}+\ket{H}}\label{eq:ConservationLawsDifferentialForm}
+\boxed{\pdv{\ket{U}}{t}+\div{\ket*{\vec{F}}}=\div{\ket*{\vec{G}}}+\ket{H}}\label{eq:ConservationLawsDifferentialForm}
 \end{equation}
 
 \end_inset
@@ -2023,7 +2022,7 @@ noprefix "false"
 , which becomes
 \begin_inset Formula 
 \[
-\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}
+\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}
 \]
 
 \end_inset
@@ -2032,7 +2031,7 @@ Again, if the integrands are sufficiently smooth, then Gauss's divergence
  theorem can be applied to them, which leads to
 \begin_inset Formula 
 \[
-\rho\DDt{\ket{W}}+\div{\VecInKet{P}}=\div{\VecInKet{G}}+\ket{H}
+\rho\DDt{\ket{W}}+\div{\ket*{\vec{P}}}=\div{\ket*{\vec{G}}}+\ket{H}
 \]
 
 \end_inset
