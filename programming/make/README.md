@@ -1,11 +1,17 @@
 # 构建工具
-## 手动构建
-### 构建过程
-对于用静态语言 (例如 C/C++) 编写的程序, 必须经过 <构建::build> 才能得到可以运行的软件.
-下面用一个简单的例子来说明构建的主要步骤.
+- [手动构建](#手动构建)
+  - [手动构建过程](#手动构建过程)
+  - [使用构建工具的动机](#使用构建工具的动机)
+- [GNU Make](#GNU-Make)
+- [CMake](#CMake)
 
-#### 源文件
-假设有如下简单的 C 语言项目:
+# 手动构建
+## 手动构建过程
+对于用静态语言（例如 [C++](../cpp/README.md)）编写的程序，必须经过「构建 (build)」才能得到「可运行的 (runnable)」软件。
+下面用一个简单的例子来说明构建的主要步骤。
+
+### 源文件 (Source Files)
+假设有如下简单的 C 语言项目：
 ```
 demo
 ├── include
@@ -15,16 +21,16 @@ demo
 └── test
     └── test_math.c
 ```
-各文件大致内容如下:
-- [`include/math.h`](./demo/include/math.h) --- 声明函数 `factorial`, 用于计算正整数的阶乘.
-- [`src/math.c`](./demo/src/math.c) --- 实现 `factorial` 的功能.
-- [`test/test_math.c`](./demo/test/test_math.c) --- 在 `main` 中调用 `factorial`, 测试其正确性.
+各文件大致内容如下：
+- [`include/math.h`](./demo/include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
+- [`src/math.c`](./demo/src/math.c) 实现 `factorial` 的功能。
+- [`test/test_math.c`](./demo/test/test_math.c) 在 `main` 中调用 `factorial` 对其进行测试。
 
-为叙述方便, 下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径.
-为避免污染源文件目录, 应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建.
+为叙述方便，下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径。
+为避免污染源文件目录，应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建。
 
-#### 编译
-采用默认的编译选项:
+### 编译 (Compile)
+采用默认的编译选项：
 ```shell
 # 编译 src/math.c, 得到二进制的目标文件 math.o
 cc -c ${PROJECT_PATH}/src/math.c
@@ -32,8 +38,8 @@ cc -c ${PROJECT_PATH}/src/math.c
 cc -c ${PROJECT_PATH}/test/test_math.c
 ```
 
-#### 打包
-两种打包方式:
+### 打包 (Package)
+两种打包方式：
 ```shell
 # 将 math.o 打包为静态库 libmath.a
 ar -rcs libmath.a math.o
@@ -41,8 +47,8 @@ ar -rcs libmath.a math.o
 cc -shared -fpic -o libmath.so math.o 
 ```
 
-#### 链接
-三种链接方式:
+### 链接 (Link)
+三种链接方式：
 ```shell
 # 将 test_math.o 和目标文件 math.o 链接进 test_math_o
 cc -o test_math_o.exe test_math.o math.o
@@ -51,15 +57,15 @@ cc -dynamic -o test_math_so.exe test_math.o -L. -lmath
 # 将 test_math.o 和静态库 libmath.a 链接进 test_math_a
 cc -static -o test_math_a.exe test_math.o -L. -lmath
 ```
-⚠️ 在 macOS 系统下, [无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html), 因此第三种方式不被支持.
+⚠️ 在 macOS 系统下，[无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html)，因此无法实现第三种方式。
 
-#### 运行
+### 运行 (Run)
 ```shell
 ./test_math_o.exe
 ./test_math_so.exe
 ./test_math_a.exe
 ```
-运行结果均为:
+运行结果均为：
 ```shell
 factorial(1) == 1
 factorial(2) == 2
@@ -68,35 +74,32 @@ factorial(12) == 479001600
 factorial(13) == 1932053504
 factorial(13) / factorial(12) == 4
 ```
+其中 `factorial(13)` 超出了 `int` 可容纳的范围，发生了「上溢 (overflow)」。
 
-#### 清理
+### 清理 (Clean)
 ```shell
 rm *.exe *.a *.so *.o
 ```
 
-### 使用构建工具的动机
-手动构建的缺点:
-- 源代码更新后, 重新构建的过程非常繁琐.
-- 构建参数 (编译和链接选项) 容易写错.
-- 构建参数无法体现在源代码中.
+## 使用构建工具的动机
 
-好的自动构建工具应当具有以下特性:
-- 源代码更新后, 能够自动识别并更新需要重新编译和链接的文件.
-- 不依赖于具体环境 (操作系统, 编译器).
-- 构建参数作为源代码的一部分, 保存在构建文件中.
+|                    |                      手动构建                      |        （理想的）自动构建         |
+| :----------------: | :------------------------------------------------: | :-------------------------------: |
+|  更新 *源代码* 后  |                 重新构建的过程繁琐                 | *自动识别* 并更新需要受影响的文件 |
+| 编译选项、链接选项 | 依赖于环境（操作系统、编译器）；无法体现在源代码中 |  不依赖于环境；是源代码的一部分   |
 
-## GNU Make
-### 参考资料
+# GNU Make
+## 参考资料
 - [官方文档](https://www.gnu.org/software/make)
 
-### `make` 命令
+## `make` 命令
 一般形式:
 ```shell
 make [options] [targets]
 ```
 其中, `options` 表示一个或多个[选项](#选项), `targets` 表示一个或多个[目标](#目标), 实际使用时不写 `[ ]`.
 
-#### 选项
+### 选项
 常用选项:
 
 |     选项      | 含义                                     |
@@ -104,7 +107,7 @@ make [options] [targets]
 |     `-n`      | 显式 (但不实际执行) 将要执行的构建命令   |
 | `-f filename` | 用名为 `filename` 的文件驱动 `make` 程序 |
 
-#### 目标
+### 目标
 一个 <目标::target> 表示一个定义在 [`Makefile`](#`Makefile`-文件) 中的构建任务, 通常为 <可执行文件::executable> 或 <库::library> 的文件名, 也可以只是一个 <标签::tag>.
 如果没有为 `make` 指定目标, 则以 `Makefile` 中的第 `1` 个目标为默认目标.
 
@@ -112,7 +115,7 @@ make [options] [targets]
 每次构建前, `make` 会自动检查该目标的依赖项: 只有依赖项需要被更新时, 才会在依赖项全部被更新后, 重新构建该目标.
 这项检查是递归进行的, 因此最终将传递到被更新过的源文件上.
 
-### `Makefile` 文件
+## `Makefile` 文件
 `Makefile` 是驱动 [`make` 命令](#`make`-命令)的脚本文件:
 
 - 默认文件名为 `Makefile` 或 `makefile`.
@@ -134,7 +137,7 @@ targets : prerequisites
 |   `commands`    | 编译/链接/操作系统命令, 缩进必须用制表符, 每一行都是独立进程     |
 |    `comment`    |                注释, 以 `#` 开始, 到行尾结束               |
 
-#### 目标
+### 目标
 一般情况下, 一个目标对应于一个同名文件, 构建该目标就是构建该文件.
 
 除此之外, 有一类特殊的目标, 只表示一组构建行为, 而不生成对应的同名文件, 常用的有 `all` 和 `clean`.
@@ -146,7 +149,7 @@ targets : prerequisites
 - `all` --- 构建所有当前 `Makefile` 中的所有目标.
 - `clean` --- 删除构建过程中生成的所有目标文件和可执行文件.
 
-#### 变量
+### 变量
 常用的内置变量:
 ```Makefile
 CC        # C 编译命令
@@ -181,7 +184,7 @@ $(<D)  # 第一个 prerequisite 所在的 directory
 $(<F)  # 第一个 prerequisite 所在的 file
 ```
 
-#### 通配符
+### 通配符
 `%` 表示 for-each, 例如:
 ```Makefile
 OBJS = main.o library.o
@@ -196,20 +199,20 @@ library.o : library.c
     $(CC) -c $(CFLAGS) library.c -o library.o
 ```
 
-#### 示例
+### 示例
 以[手动构建](#手动构建)中的项目为例, 其构建过程可以写进 [`Makefile`](./demo/Makefile).
 
 ⚠️ 其中的 `PROJECT_DIR` 必须是项目根目录相对于该 `Makefile` 的 <相对路径>, 或项目根目录的 <绝对路径> (推荐).
 
-## CMake
-### 参考资料
-#### 官方文档
+# CMake
+## 参考资料
+### 官方文档
 - [帮助文档](https://cmake.org/cmake/help/latest/)
   - [cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html) --- 命令行界面程序
   - [ccmake(1)](https://cmake.org/cmake/help/latest/manual/ccmake.1.html) --- 文字形式的图形界面程序
   - [cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html) --- 系统配置
 
-#### 入门教程
+### 入门教程
 - [CMake Tutorial](https://cmake.org/cmake-tutorial/) --- A step-by-step tutorial covering common build system use cases that CMake helps to address.
 - [Programming in C++](https://www.ece.uvic.ca/~frodo/cppbook/) by Michael Adams from University of Victoria
   - Lecture Slides [(Version 2019-02-04)](https://www.ece.uvic.ca/~frodo/cppbook/downloads/lecture_slides_for_programming_in_c++-2019-02-04.pdf)
@@ -220,14 +223,14 @@ library.o : library.c
       - [CMake --- Introduction](https://youtu.be/Ak6cGZshduY)
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
-### 术语
+## 术语
 - <源文件目录::source dir> (又称 <源文件树::source tree>) --- 项目源码文件的 (顶层) 目录, 必须含有一个 `CMakeLists.txt`.
 - <构建目录::build dir> (又称 <构建树::build tree> 或 <二进制树::binary tree>) --- 存放构建产物 (目标文件/库文件/可执行文件) 的目录.
 - <内部构建::in-source build> --- 构建目录在源文件目录下 (⚠️ 会污染源文件目录, 不推荐). 
 - <外部构建::out-of-source build> --- 构建目录在源文件目录外 (推荐).                  
 - <构建配置::build configuration> --- 由一组构建工具 (编译器/链接器) 选项所构成的构建参数集.
 
-### `cmake` 命令
+## `cmake` 命令
 CMake 参与的构建过程可以分为以下两个阶段:
 1. CMake 读取 `CMakeLists.txt`, 生成 <本地构建工具::native build tool> (例如 `make`) 所需的 <本地构建文件::native build file> (例如 `Makefile`):
 ```shell
@@ -241,7 +244,7 @@ cmake [<options>] -S <source-dir> -B <build-dir>
 cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 ```
 
-#### 常用选项
+### 常用选项
 ```shell
 # 查看帮助
 cmake --help[-<topic>]
@@ -257,7 +260,7 @@ cmake -E <command> [<options>]
 cmake --find-package [<options>]
 ```
 
-### `CMakeLists.txt` 文件
+## `CMakeLists.txt` 文件
 `CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件, 它由 <命令::command> 和 <注释::comment> 组成:
 - 命令的名称 <不区分大小写>, 形式上与函数调用类似.
 - 命令的操作对象称为 <变量::variable>, 变量的名称 <区分大小写>.
@@ -265,7 +268,7 @@ cmake --find-package [<options>]
 
 完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html).
 
-#### 常用命令
+### 常用命令
 完整列表参见 [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html).
 
 设置项目所允许的最低的 CMake 版本:
@@ -315,10 +318,10 @@ set(<variable> <value>... CACHE <type> <docstring> [FORCE])
 set(ENV{<variable>} [<value>])
 ```
 
-#### 常用变量
+### 常用变量
 完整列表参见 [`cmake-variables(7)`](https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html).
 
-#### 创建目标
+### 创建目标
 添加构建可执行文件的目标:
 ```cmake
 add_executable(<name> [WIN32] [MACOSX_BUNDLE]
@@ -333,7 +336,7 @@ add_library(<name> [STATIC | SHARED | MODULE]
             [source1] [source2 ...])
 ```
 
-#### 链接
+### 链接
 一般形式:
 ```cmake
 target_link_libraries(<target> ... <item>... ...)
@@ -346,7 +349,7 @@ target_link_libraries(<target> ... <item>... ...)
   - 某个库文件的文件名
   - 链接选项
 
-#### 示例
+### 示例
 依然以[手动构建](#手动构建)中的项目为例, 源文件目录结构如下:
 ```
 demo
