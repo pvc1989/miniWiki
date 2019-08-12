@@ -220,7 +220,7 @@ tensor!velocity gradient ~
 It can be proved to be
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\left(\vu{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vu{e}_{k}u_{k}\right)=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)\pdv{u_{k}}{x_{i}}
+\grad{\vec{u}}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}
 \]
 
 \end_inset
@@ -234,7 +234,7 @@ Like any other rank-
 \end_inset
 
  tensor, it can be decomposed as a symmetric component 
-\begin_inset Formula $\Tensor{E}:=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)E_{ik}$
+\begin_inset Formula $\Tensor{E}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)E_{ik}$
 \end_inset
 
 , called the 
@@ -252,7 +252,7 @@ tensor!strain rate ~
 \end_inset
 
 , plus an anti-symmetric component 
-\begin_inset Formula $\Tensor{\Omega}:=\left(\vu{e}_{i}\otimes\vu{e}_{k}\right)\Omega_{ik}$
+\begin_inset Formula $\Tensor{\Omega}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\Omega_{ik}$
 \end_inset
 
 , called the 
@@ -308,12 +308,12 @@ In
 ):
 \begin_inset Formula 
 \[
-\Tensor{\Omega}=\begin{bmatrix}\vu{e}_{1} & \vu{e}_{2} & \vu{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
+\Tensor{\Omega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
 -\Omega_{12} & 0 & \Omega_{23}\\
 \Omega_{31} & -\Omega_{23} & 0
-\end{bmatrix}\begin{bmatrix}\vu{e}_{1}\\
-\vu{e}_{2}\\
-\vu{e}_{3}
+\end{bmatrix}\begin{bmatrix}\vec{e}_{1}\\
+\vec{e}_{2}\\
+\vec{e}_{3}
 \end{bmatrix}
 \]
 
@@ -322,7 +322,7 @@ In
 Define
 \begin_inset Formula 
 \[
-\vec{\Omega}:=\sum_{i=1}^{3}\vu{e}_{i}\Omega_{i}\qquad\begin{bmatrix}\Omega_{1}\\
+\vec{\Omega}:=\sum_{i=1}^{3}\vec{e}_{i}\Omega_{i}\qquad\begin{bmatrix}\Omega_{1}\\
 \Omega_{2}\\
 \Omega_{3}
 \end{bmatrix}=\begin{bmatrix}\Omega_{23}\\
@@ -362,7 +362,7 @@ vector!angular velocity ~
  of a rigid body:
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\cdot\Tensor{\Omega}=\dd{x_{j}}\Omega_{jk}\vu{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vu{e}_{k}=\underbrace{\vu{e}_{i}\times\vu{e}_{j}}_{\epsilon_{ijk}\vu{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\times\dd{\vec{x}}
+\dd{\vec{x}}\cdot\Tensor{\Omega}=\dd{x_{j}}\Omega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\times\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\times\dd{\vec{x}}
 \]
 
 \end_inset
@@ -640,7 +640,7 @@ status open
 
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{u}^{c}\phi\dd{S}}\label{eq:ReynoldsTransportTheorem}
+\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vec{n}\cdot\vec{u}^{c}\phi\dd{S}}\label{eq:ReynoldsTransportTheorem}
 \end{equation}
 
 \end_inset
@@ -779,8 +779,8 @@ net incremented volume
 , which leads to a surface integral:
 \begin_inset Formula 
 \[
-\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}} & =\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vu{n}_{1}\cdot\cancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\cancel{t_{2}-t_{1}}}\phi_{2}\dd{S}\\
- & =\eval{\oint_{\partial V}\vu{n}\cdot\vec{u}^{c}\phi\dd{S}}_{t_{1}}
+\begin{aligned}\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}} & =\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\cdot\cancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\cancel{t_{2}-t_{1}}}\phi_{2}\dd{S}\\
+ & =\eval{\oint_{\partial V}\vec{n}\cdot\vec{u}^{c}\phi\dd{S}}_{t_{1}}
 \end{aligned}
 \]
 
@@ -791,7 +791,7 @@ in which
 \end_inset
 
 , 
-\begin_inset Formula $\vu{n}_{1}:=\vu{n}(t_{1},\vec{x})$
+\begin_inset Formula $\vec{n}_{1}:=\vec{n}(t_{1},\vec{x})$
 \end_inset
 
 .
@@ -888,8 +888,8 @@ literal "true"
 For any CV:
 \begin_inset Formula 
 \begin{equation}
-\boxed{\begin{aligned}\DDt{}\int_{V^{c}}\phi\dd{V} & =\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{c}}\vu{n}\cdot\vec{u}\phi\dd{S}\\
- & =\dv{t}\int_{V^{c}}\phi\dd{V}+\oint_{\partial V^{c}}\vu{n}\cdot\left(\vec{u}-\vec{u}^{c}\right)\phi\dd{S}
+\boxed{\begin{aligned}\DDt{}\int_{V^{c}}\phi\dd{V} & =\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{c}}\vec{n}\cdot\vec{u}\phi\dd{S}\\
+ & =\dv{t}\int_{V^{c}}\phi\dd{V}+\oint_{\partial V^{c}}\vec{n}\cdot\left(\vec{u}-\vec{u}^{c}\right)\phi\dd{S}
 \end{aligned}
 }\label{eq:DDtOnControlVolume}
 \end{equation}
@@ -921,7 +921,7 @@ reference "eq:ReynoldsTransportTheorem"
 :
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{V^{m}}\phi\dd{V}=\int_{V^{m}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{m}}\vu{n}\cdot\vec{u}^{m}\phi\dd{S}\label{eq:ReynoldsTransportTheoremOnMaterialBody}
+\dv{t}\int_{V^{m}}\phi\dd{V}=\int_{V^{m}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{m}}\vec{n}\cdot\vec{u}^{m}\phi\dd{S}\label{eq:ReynoldsTransportTheoremOnMaterialBody}
 \end{equation}
 
 \end_inset
@@ -946,7 +946,7 @@ By definition,
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{V^{m}}\pdv{\phi}{t}\dd{V} & =\int_{V^{c}}\pdv{\phi}{t}\dd{V}\\
-\oint_{\partial V^{m}}\vu{n}\cdot\vec{u}^{m}\phi\dd{S} & =\oint_{\partial V^{m}}\vu{n}\cdot\vec{u}\phi\dd{S}=\oint_{\partial V^{c}}\vu{n}\cdot\vec{u}\phi\dd{S}
+\oint_{\partial V^{m}}\vec{n}\cdot\vec{u}^{m}\phi\dd{S} & =\oint_{\partial V^{m}}\vec{n}\cdot\vec{u}\phi\dd{S}=\oint_{\partial V^{c}}\vec{n}\cdot\vec{u}\phi\dd{S}
 \end{aligned}
 \]
 
@@ -990,7 +990,7 @@ noprefix "false"
  in the 1st line with
 \begin_inset Formula 
 \[
-\int_{V^{c}}\pdv{\phi}{t}\dd{V}=\dv{t}\int_{V^{c}}\phi\dd{V}-\oint_{\partial V^{c}}\vu{n}\cdot\vec{u}\phi\dd{S}
+\int_{V^{c}}\pdv{\phi}{t}\dd{V}=\dv{t}\int_{V^{c}}\phi\dd{V}-\oint_{\partial V^{c}}\vec{n}\cdot\vec{u}\phi\dd{S}
 \]
 
 \end_inset
@@ -1319,7 +1319,7 @@ When applied to a control volume, the law can be written as
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\sigma}\dd{S}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\cdot\Tensor{\sigma}\dd{S}
 \]
 
 \end_inset
@@ -1363,18 +1363,18 @@ tensor!stress ~
 , 
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
-symbol "$\\vu{n}$"
+symbol "$\\vec{n}$"
 description "unit outward normal vector"
 literal "true"
 
 \end_inset
 
 
-\begin_inset Formula $\vu{n}$
+\begin_inset Formula $\vec{n}$
 \end_inset
 
  is the unit outward normal vector, 
-\begin_inset Formula $\vu{n}\cdot\Tensor{\sigma}$
+\begin_inset Formula $\vec{n}\cdot\Tensor{\sigma}$
 \end_inset
 
  is thus the vector of external surface force per unit area.
@@ -1457,7 +1457,7 @@ tensor!isotropic ~!unit
 The formula for the law then becomes
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vu{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vu{n}\cdot\Tensor{\tau}\dd{S}\label{eq:ConservationOfMomentumWithDDt}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\cdot\Tensor{\tau}\dd{S}\label{eq:ConservationOfMomentumWithDDt}
 \end{equation}
 
 \end_inset
@@ -1573,8 +1573,8 @@ reference "sec:Law1ofThermodynamics"
  When applied to a control volume, it can be written as
 \begin_inset Formula 
 \[
-\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V}j\dd{V}-\oint_{\partial V}\vu{n}\cdot\vec{q}\dd{S}\\
- & +\int_{V}\vec{b}\cdot\vec{u}\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\Tensor{\sigma}\cdot\vec{u}\right)\dd{S}
+\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V}j\dd{V}-\oint_{\partial V}\vec{n}\cdot\vec{q}\dd{S}\\
+ & +\int_{V}\vec{b}\cdot\vec{u}\dd{V}+\oint_{\partial V}\vec{n}\cdot\left(\Tensor{\sigma}\cdot\vec{u}\right)\dd{S}
 \end{aligned}
 \]
 
@@ -1604,8 +1604,8 @@ Again, if we take
  into account, the formula for the law then becomes
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned} & \DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}+\oint_{\partial V}\vu{n}\cdotp\vec{u}\dd{S}\\
-= & \int_{V}\left(\vec{b}\cdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vu{n}\cdot\left(\Tensor{\tau}\cdot\vec{u}-\vec{q}\right)\dd{S}
+\begin{aligned} & \DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}+\oint_{\partial V}\vec{n}\cdotp\vec{u}\dd{S}\\
+= & \int_{V}\left(\vec{b}\cdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\cdot\left(\Tensor{\tau}\cdot\vec{u}-\vec{q}\right)\dd{S}
 \end{aligned}
 \label{eq:ConservationOfEnergyWithDDt}
 \end{equation}
@@ -1661,7 +1661,7 @@ reference "eq:ConservationOfEnergyWithDDt"
 ) in matrix form:
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
+\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
 \end{equation}
 
 \end_inset
@@ -1742,7 +1742,7 @@ noprefix "false"
  becomes
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecInKet{F}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
+\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{F}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
 \end{equation}
 
 \end_inset
@@ -1793,7 +1793,7 @@ noprefix "false"
  will then become
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vu{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
+\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\cdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
 \end{equation}
 
 \end_inset
@@ -1945,7 +1945,7 @@ noprefix "false"
  and Gauss's divergence theorem to the LHS:
 \begin_inset Formula 
 \[
-\begin{aligned}\DDt{}\int_{V}\phi\rho\dd{V} & =\int_{V}\pdv{\phi\rho}{t}\dd{V}+\oint_{\partial V}\vu{n}\cdot\vec{u}\phi\rho\dd{S}\\
+\begin{aligned}\DDt{}\int_{V}\phi\rho\dd{V} & =\int_{V}\pdv{\phi\rho}{t}\dd{V}+\oint_{\partial V}\vec{n}\cdot\vec{u}\phi\rho\dd{S}\\
  & =\int_{V}\left(\pdv{\phi\rho}{t}+\div{\left(\vec{u}\phi\rho\right)}\right)\dd{V}
 \end{aligned}
 \]
@@ -2023,7 +2023,7 @@ noprefix "false"
 , which becomes
 \begin_inset Formula 
 \[
-\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vu{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vu{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}
+\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vec{n}\cdot\VecInKet{P}\dd{S}=\oint_{\partial V}\vec{n}\cdot\VecInKet{G}\dd{S}+\int_{V}\ket{H}\dd{V}
 \]
 
 \end_inset
@@ -2125,7 +2125,7 @@ Define the inner product of two tensors as
 \end_inset
 
  and the gradient of velocity as 
-\begin_inset Formula $\grad{\vec{u}}:=\vu{e}_{i}\vu{e}_{k}\pdv*{u_{k}}{x_{i}}$
+\begin_inset Formula $\grad{\vec{u}}:=\vec{e}_{i}\vec{e}_{k}\pdv*{u_{k}}{x_{i}}$
 \end_inset
 
 , there is
