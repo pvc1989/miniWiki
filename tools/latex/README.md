@@ -1,6 +1,7 @@
 # LaTeX
 
 ## 参考链接
+- [CTAN](https://ctan.org/)
 - [慕子的知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
 
 ## 发行版与编辑器
@@ -9,7 +10,7 @@
 [TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX 发行版。
 
 1. 下载并 *完整* 安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
-2. 安装完成后，应当可以用以下命令打开《[CTeX 宏集手册](https://ctan.org/pkg/ctex)》：
+2. 安装完成后，应当可以用以下命令打开 [`ctex` 宏包](https://ctan.org/pkg/ctex)的文档《[CTeX 宏集手册](https://ctan.org/pkg/ctex)》：
 ```shell
 texdoc ctex
 ```
@@ -18,9 +19,12 @@ texdoc ctex
 [TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX 编辑器。
 
 ## 中文支持
-0. 卸载 CTeX 套装，原因参见[《2018年，为什么不推荐使用 CTeX 套装了》](https://zhuanlan.zhihu.com/p/45174503)。
+0. 卸载 CTeX 套装，原因参见《[2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)》。
 1. 完整安装 [TeX Live](#TeX-Live)。
-2. 创建中文文档 [`hello.tex`](./hello.tex)，用 `xelatex` 命令编译：
+2. 从以下两种方式中任选一种，创建中文文档 [`hello.tex`](./hello.tex)：
+  - CTeX 文档类，例如 `ctexart`、`ctexrep`、`ctexbook`。
+  - 其他文档类 +  [CTeX 宏包](https://ctan.org/pkg/ctex)。
+3. 用 `xelatex` 命令编译：
 ```shell
 mkdir build
 cd build
