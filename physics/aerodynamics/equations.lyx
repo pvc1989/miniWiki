@@ -185,38 +185,102 @@ Euler!~ian description
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Section
+速度的导数
+\end_layout
+
+\begin_layout Subsection
 速度梯度
 \end_layout
 
 \begin_layout Standard
-Like the gradient of a scalar, the 
-\noun on
-gradient of velocity
-\noun default
+在「向量分析 (vector analysis)」中，
+\begin_inset Formula $\grad{\phi}$
+\end_inset
 
+ 表示「标量 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的梯度 (gradient of a scalar 
+\begin_inset Formula $\phi$
+\end_inset
+
+)」
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
-tensor!velocity gradient ~
+gradient!~ of a scalar
 \end_layout
 
 \end_inset
 
-, denoted as 
-\begin_inset Formula $\grad{\vec{u}}$
-\end_inset
-
-, is defined as such a quantity that satisfies
+，它是一个满足以下微分等式的向量：
 \begin_inset Formula 
 \[
-\dd{\vec{u}}=\dd{\vec{x}}\cdot\left(\grad{\vec{u}}\right)
+\dd{\phi}=\dd{\vec{x}}\vdot\grad{\phi}
 \]
 
 \end_inset
 
-It can be proved to be
+类似地，在「张量分析 (tensor analysis)」中，
+\begin_inset Formula $\grad{\vec{u}}$
+\end_inset
+
+ 表示「向量 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 的梯度 (gradient of a vector 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+)」
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+gradient!~ of a vector
+\end_layout
+
+\end_inset
+
+，它是一个满足以下微分等式的「二阶张量 (tensor of rank 2)」
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!~ of rank 2
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\dd{\vec{u}}=\dd{\vec{x}}\vdot\left(\grad{\vec{u}}\right)
+\]
+
+\end_inset
+
+它是向量 
+\begin_inset Formula $\grad=\sum_{i}\vec{e}_{i}\pdv{x_{i}}$
+\end_inset
+
+ 与向量 
+\begin_inset Formula $\vec{u}=\sum_{k}\vec{e}_{k}u_{k}$
+\end_inset
+
+ 的「张量积 (tensor product)」。在直角坐标系下，基向量 
+\begin_inset Formula $\vec{e}_{i}$
+\end_inset
+
+ 是常量，因此可以提到微分号外，于是 
+\begin_inset Formula $\grad{\vec{u}}$
+\end_inset
+
+ 可以写成以下形式（求和约定：重复的下标表示求和）：
 \begin_inset Formula 
 \[
 \grad{\vec{u}}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}
@@ -224,23 +288,72 @@ It can be proved to be
 
 \end_inset
 
+如果 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 表示速度，则 
+\begin_inset Formula $\grad{\vec{u}}$
+\end_inset
+
+ 就是「速度梯度张量 (velocity gradient tensor)」
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!velocity gradient ~
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Theorem*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Helmholtz]
+\end_layout
+
+\end_inset
+
+任何二阶张量都可以分解为两个二阶张量之和，其中一个是「对称的 (symmetric)」，另一个是「反对称的 (anti-symmetric)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-Like any other rank-
-\begin_inset Formula $2$
+对于速度 
+\begin_inset Formula $\vec{u}$
 \end_inset
 
- tensor, it can be decomposed as a symmetric component 
-\begin_inset Formula $\Tensor{E}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)E_{ik}$
+，它的对称部分是「应变率张量 (strain rate tensor)」
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!angular velocity ~
+\end_layout
+
 \end_inset
 
-, called the 
-\noun on
-strain rate tensor
-\noun default
+：
+\begin_inset Formula 
+\[
+\Tensor{E}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)E_{ik},\qquad E_{ik}:=\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)
+\]
 
+\end_inset
+
+而反对称部分是「角速度张量 (angular velocity tensor)」
 \begin_inset Index idx
 status open
 
@@ -250,66 +363,64 @@ tensor!strain rate ~
 
 \end_inset
 
-, plus an anti-symmetric component 
-\begin_inset Formula $\Tensor{\Omega}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\Omega_{ik}$
-\end_inset
-
-, called the 
-\noun on
-angular velocity tensor
-\noun default
-
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-tensor!angular velocity ~
-\end_layout
-
-\end_inset
-
-:
+：
 \begin_inset Formula 
 \[
-\pdv{u_{k}}{x_{i}}=\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)}_{E_{ik}}+\underbrace{\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)}_{\Omega_{ik}}
+\Tensor{\varOmega}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\varOmega_{ik},\qquad\varOmega_{ik}:=\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)
 \]
 
 \end_inset
 
-or equivalently
+可以验证：
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\Tensor{E}+\Tensor{\Omega}
+\grad{\vec{u}}=\Tensor{E}+\Tensor{\varOmega},\qquad\pdv{u_{k}}{x_{i}}=E_{ik}+\varOmega_{ik}
 \]
 
 \end_inset
 
-
+通常，
+\emph on
+单箭头
+\emph default
+表示
+\emph on
+一阶张量
+\emph default
+（即
+\emph on
+向量
+\emph default
+）；因此，这里用
+\emph on
+双箭头
+\emph default
+表示
+\emph on
+二阶张量
+\emph default
+是很自然的。对于更高阶的张量，一般不再以箭头表示，而是采用「指标记法 (index notation)」。
 \end_layout
 
-\begin_layout Subsubsection
-角速度与涡量
+\begin_layout Subsection
+角速度
 \end_layout
 
 \begin_layout Standard
-In 
-\begin_inset Formula $\mathbb{R}^{3}$
+在三维空间中，角速度张量 
+\begin_inset Formula $\Tensor{\varOmega}$
 \end_inset
 
-, the angular velocity tensor 
-\begin_inset Formula $\Tensor{\Omega}$
+ 只有三个独立「分量 (component)」。这是其反对称性 (
+\begin_inset Formula $\varOmega_{ik}=-\varOmega_{ki}$
 \end_inset
 
- has only 3 independent components, since it is anti-symmetric (
-\begin_inset Formula $\Omega_{ik}=-\Omega_{ki}$
-\end_inset
-
-):
+) 的直接推论：
 \begin_inset Formula 
 \[
-\Tensor{\Omega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
--\Omega_{12} & 0 & \Omega_{23}\\
-\Omega_{31} & -\Omega_{23} & 0
+\Tensor{\varOmega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \varOmega_{12} & -\varOmega_{31}\\
+-\varOmega_{12} & 0 & \varOmega_{23}\\
+\varOmega_{31} & -\varOmega_{23} & 0
 \end{bmatrix}\begin{bmatrix}\vec{e}_{1}\\
 \vec{e}_{2}\\
 \vec{e}_{3}
@@ -318,23 +429,39 @@ In
 
 \end_inset
 
-Define
+如果在形式上用这三个（张量的）分量构造一个
+\emph on
+向量
+\emph default
+ 
+\begin_inset Formula $\vec{\varOmega}:=\sum_{i=1}^{3}\vec{e}_{i}\varOmega_{i}$
+\end_inset
+
+，其中
 \begin_inset Formula 
 \[
-\vec{\Omega}:=\sum_{i=1}^{3}\vec{e}_{i}\Omega_{i}\qquad\begin{bmatrix}\Omega_{1}\\
-\Omega_{2}\\
-\Omega_{3}
-\end{bmatrix}=\begin{bmatrix}\Omega_{23}\\
-\Omega_{31}\\
-\Omega_{12}
-\end{bmatrix}\iff\Omega_{i}\epsilon_{ijk}=\Omega_{jk}
+\begin{bmatrix}\varOmega_{1}\\
+\varOmega_{2}\\
+\varOmega_{3}
+\end{bmatrix}=\begin{bmatrix}\varOmega_{23}\\
+\varOmega_{31}\\
+\varOmega_{12}
+\end{bmatrix}\iff\varOmega_{i}\epsilon_{ijk}=\varOmega_{jk},\qquad\epsilon_{ijk}=\begin{cases}
++1 & ijk=123,231,312\\
+-1 & ijk=321,132,213\\
+0 & \text{else}
+\end{cases}
 \]
 
 \end_inset
 
-which can be proved to be a pseudo-vector
+则 
+\begin_inset Formula $\vec{\varOmega}$
+\end_inset
+
+ 是一个「伪向量 (pseudo-vector)」
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 vector!pseudo-~
@@ -342,13 +469,9 @@ vector!pseudo-~
 
 \end_inset
 
-, called the 
-\noun on
-angular velocity vector
-\noun default
-
+。它被称为流体微团的「角速度向量 (angular velocity vector)」
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 vector!angular velocity ~
@@ -356,12 +479,14 @@ vector!angular velocity ~
 
 \end_inset
 
-.
- The name is appropriate since it is analogous to the angular velocity vector
- of a rigid body:
+，二者之间存在以下微分等式
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\cdot\Tensor{\Omega}=\dd{x_{j}}\Omega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\times\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\times\dd{\vec{x}}
+\dd{\vec{x}}\cdot\Tensor{\varOmega}=\dd{x_{j}}\varOmega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\varOmega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\times\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\varOmega_{i}\dd{x_{j}}=\vec{\varOmega}\times\dd{\vec{x}}
 \]
 
 \end_inset
@@ -369,23 +494,43 @@ vector!angular velocity ~
 
 \end_layout
 
-\begin_layout Standard
-The angular velocity vector 
-\begin_inset Formula $\vec{\Omega}$
 \end_inset
 
- is exactly one half of the 
-\noun on
-vorticity
-\noun default
- (
-\begin_inset Formula $\vec{\omega}:=\curl{\vec{u}}$
-\end_inset
-
-) at the same point:
+：
 \begin_inset Formula 
 \[
-\vec{\Omega}=\frac{\vec{\omega}}{2}
+\dd{\vec{x}}\cdot\Tensor{\varOmega}=\vec{\varOmega}\times\dd{\vec{x}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+涡量
+\end_layout
+
+\begin_layout Standard
+速度的旋度被称为「涡量 (vorticity)」：
+\begin_inset Formula 
+\[
+\vec{\omega}:=\curl{\vec{u}}=\begin{vmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\\
+\pdv*{x_{1}} & \pdv*{x_{2}} & \pdv*{x_{3}}\\
+u_{1} & u_{2} & u_{3}
+\end{vmatrix}
+\]
+
+\end_inset
+
+可以验证：它恰好是角速度 
+\begin_inset Formula $\vec{\varOmega}$
+\end_inset
+
+ 的二倍：
+\begin_inset Formula 
+\[
+\vec{\omega}=2\vec{\varOmega}
 \]
 
 \end_inset
@@ -407,7 +552,7 @@ Any connected domain in space, denoted as
 \end_inset
 
  (or 
-\begin_inset Formula $\Omega$
+\begin_inset Formula $\varOmega$
 \end_inset
 
 ), can be chosen as a 
@@ -439,7 +584,7 @@ control!~ volume
 \end_inset
 
  (or 
-\begin_inset Formula $\partial\Omega$
+\begin_inset Formula $\partial\varOmega$
 \end_inset
 
 ), is called a 
