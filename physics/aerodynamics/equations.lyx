@@ -186,11 +186,18 @@ Euler!~ian description
 \end_layout
 
 \begin_layout Section
-速度的导数
+速度的空间导数
 \end_layout
 
 \begin_layout Subsection
 速度梯度
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:速度梯度"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -246,12 +253,12 @@ gradient!~ of a vector
 
 \end_inset
 
-」，它是一个满足以下微分等式的「二阶张量 (tensor of rank 2)
+」，它是一个满足以下微分等式的「二阶张量 (tensor of rank two)
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-tensor!~ of rank 2
+tensor!~ of rank two
 \end_layout
 
 \end_inset
@@ -259,7 +266,7 @@ tensor!~ of rank 2
 」：
 \begin_inset Formula 
 \[
-\dd{\vec{u}}=\dd{\vec{x}}\vdot\left(\grad{\vec{u}}\right)
+\dd{\vec{u}}=\dd{\vec{x}}\vdot\grad{\vec{u}}
 \]
 
 \end_inset
@@ -283,7 +290,7 @@ tensor!~ of rank 2
  可以写成以下形式（求和约定：重复的下标表示求和）：
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}
+\grad{\vec{u}}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}=\vec{e}_{i}\vec{e}_{k}\partial_{i}u_{k}
 \]
 
 \end_inset
@@ -348,7 +355,7 @@ tensor!angular velocity ~
 」：
 \begin_inset Formula 
 \[
-\Tensor{E}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)E_{ik},\qquad E_{ik}:=\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}+\pdv{u_{i}}{x_{k}}\right)
+\Tensor{E}:=\vec{e}_{i}\vec{e}_{k}E_{ik},\qquad E_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}+\partial_{k}u_{i}\right)
 \]
 
 \end_inset
@@ -366,7 +373,7 @@ tensor!strain rate ~
 」：
 \begin_inset Formula 
 \[
-\Tensor{\varOmega}:=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\varOmega_{ik},\qquad\varOmega_{ik}:=\frac{1}{2}\left(\pdv{u_{k}}{x_{i}}-\pdv{u_{i}}{x_{k}}\right)
+\Tensor{\varOmega}:=\vec{e}_{i}\vec{e}_{k}\varOmega_{ik},\qquad\varOmega_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}-\partial_{k}u_{i}\right)
 \]
 
 \end_inset
@@ -374,7 +381,7 @@ tensor!strain rate ~
 可以验证：
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\Tensor{E}+\Tensor{\varOmega},\qquad\pdv{u_{k}}{x_{i}}=E_{ik}+\varOmega_{ik}
+\grad{\vec{u}}=\Tensor{E}+\Tensor{\varOmega},\qquad\partial_{i}u_{k}=E_{ik}+\varOmega_{ik},\qquad\partial_{k}u_{i}=E_{ik}-\varOmega_{ik}
 \]
 
 \end_inset
@@ -399,7 +406,17 @@ tensor!strain rate ~
 \emph on
 二阶张量
 \emph default
-是很自然的。对于更高阶的张量，一般不再以箭头表示，而是采用「指标记法 (index notation)」。
+是很自然的。
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+对于更高阶的张量，一般不再以箭头表示，而是采用「指标记法 (index notation)」。
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -522,7 +539,7 @@ vector!angular velocity ~
 \begin_inset Formula 
 \[
 \vec{\omega}:=\curl{\vec{u}}=\begin{vmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\\
-\pdv*{x_{1}} & \pdv*{x_{2}} & \pdv*{x_{3}}\\
+\partial_{1} & \partial_{2} & \partial_{3}\\
 u_{1} & u_{2} & u_{3}
 \end{vmatrix}
 \]
@@ -819,7 +836,7 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\vdot\cancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\cancel{t_{2}-t_{1}}}\phi_{2}\dd{S}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}\right)_{t_{1}}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\vdot\bcancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}\dd{S}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}\right)_{t_{1}}
 \]
 
 \end_inset
@@ -1255,7 +1272,7 @@ derivative!material ~!~ at a point
 
 \end_inset
 
-」，
+」或「随体导数」，
 \begin_inset Formula $\vec{u}\vdot\grad$
 \end_inset
 
@@ -1287,16 +1304,27 @@ derivative!local ~
 \end_layout
 
 \begin_layout Section
-守恒律
+四大守恒定律
 \end_layout
 
 \begin_layout Subsection
 质量守恒
 \end_layout
 
-\begin_layout Standard
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[质量守恒]
+\end_layout
+
+\end_inset
+
+
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 conservation!~ of mass
@@ -1304,17 +1332,56 @@ conservation!~ of mass
 
 \end_inset
 
+物质体 
+\begin_inset Formula $V^{m}$
+\end_inset
+
+ 内所含总质量 
+\begin_inset Formula $\int_{V^{m}}\rho\dd{V}$
+\end_inset
+
+ 不随时间变化，即
+\begin_inset Formula 
+\[
+\dv{t}\int_{V^{m}}\rho\dd{V}=0
+\]
+
+\end_inset
+
+其中标量 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 为「质量密度 (density of mass)」，表示单位体积流体的质量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-When applied to a control volume, the law can be written as
+对于更一般的控制体 
+\begin_inset Formula $V$
+\end_inset
+
+，时间全导数 
+\begin_inset Formula $\dv{t}$
+\end_inset
+
+ 应当用物质导数 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ 代替：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\rho\dd{V}=0\label{eq:ConservationOfMassWithDDt}
+\DDt{}\int_{V}\rho\dd{V}=0\label{eq:质量守恒::物质导数}
 \end{equation}
 
 \end_inset
@@ -1326,9 +1393,20 @@ When applied to a control volume, the law can be written as
 动量守恒
 \end_layout
 
-\begin_layout Standard
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[动量守恒]
+\end_layout
+
+\end_inset
+
+
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 conservation!~ of momentum
@@ -1336,50 +1414,77 @@ conservation!~ of momentum
 
 \end_inset
 
+」物质体 
+\begin_inset Formula $V^{m}$
+\end_inset
 
+ 内所含总动量 
+\begin_inset Formula $\int_{V^{m}}\vec{u}\rho\dd{V}$
+\end_inset
+
+ 的时间变化率，等于作用在 
+\begin_inset Formula $V^{m}$
+\end_inset
+
+ 及其边界 
+\begin_inset Formula $\partial V^{m}$
+\end_inset
+
+ 上的所有「外力 (external force)」之和，即
 \end_layout
 
-\begin_layout Standard
-When applied to a control volume, the law can be written as
-\end_layout
-
-\begin_layout Standard
+\begin_layout Axiom
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\sigma}\dd{S}
+\dv{t}\int_{V^{m}}\vec{u}\rho\dd{V}=\int_{V^{m}}\vec{b}\dd{V}+\oint_{\partial V^{m}}\vec{n}\vdot\Tensor{\sigma}\dd{S}
 \]
 
 \end_inset
 
-in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\vec{b}$"
-description "body force per unit volume"
-literal "true"
+其中
+\end_layout
 
+\begin_deeper
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\vec{u}\rho$
 \end_inset
 
+ 为「动量密度 (density of moment)」，表示单位体积流体的动量。
+\end_layout
 
+\begin_layout Itemize
+向量 
 \begin_inset Formula $\vec{b}$
 \end_inset
 
- is the vector of external body force per unit volume, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\Tensor{\\sigma}$"
-description "stress tensor"
-literal "true"
-
+ 为「体积力密度 (density of body force)」，表示作用在 
+\begin_inset Formula $V^{m}$
 \end_inset
 
+ 中单位体积流体上的外力（例如「重力 (gravity)」）。
+\end_layout
 
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\partial V^{m}$
+\end_inset
+
+ 的单位外法向量。
+\end_layout
+
+\begin_layout Itemize
+二阶张量 
 \begin_inset Formula $\Tensor{\sigma}$
 \end_inset
 
- is the stress tensor
+ 为「应力张量 (stress tensor)
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 tensor!stress ~
@@ -1387,34 +1492,64 @@ tensor!stress ~
 
 \end_inset
 
-, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\vec{n}$"
-description "unit outward normal vector"
-literal "true"
-
-\end_inset
-
-
+」，它与 
 \begin_inset Formula $\vec{n}$
 \end_inset
 
- is the unit outward normal vector, 
+ 的点积 
 \begin_inset Formula $\vec{n}\vdot\Tensor{\sigma}$
 \end_inset
 
- is thus the vector of external surface force per unit area.
+ 是一个向量，表示作用在 
+\begin_inset Formula $\partial V^{m}$
+\end_inset
+
+ 上的外力的面密度。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The stress tensor 
+对于更一般的控制体 
+\begin_inset Formula $V$
+\end_inset
+
+，时间全导数 
+\begin_inset Formula $\dv{t}$
+\end_inset
+
+ 应当用物质导数 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ 代替：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\sigma}\dd{S}\label{eq:动量守恒::物质导数::sigma}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在流体力学中，应力张量 
 \begin_inset Formula $\Tensor{\sigma}$
 \end_inset
 
- can always be separately into an isotropic tensor of pressure
+ 总是被分解为「静水压力张量 (hydrostatic pressure tensor)
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 tensor!isotropic ~!~ of pressure
@@ -1426,7 +1561,7 @@ tensor!isotropic ~!~ of pressure
 \begin_inset Formula $-p\Tensor{1}$
 \end_inset
 
- plus a shear stress tensor
+」与「剪应力张量 (shear stress tensor)
 \begin_inset Index idx
 status open
 
@@ -1437,35 +1572,27 @@ tensor!stress ~!shear ~
 \end_inset
 
  
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\Tensor{\\tau}$"
-description "shear stress tensor"
-literal "true"
-
-\end_inset
-
-
 \begin_inset Formula $\Tensor{\tau}$
 \end_inset
 
-.
- Here, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\Tensor{1}$"
-description "unit isotropic tensor"
-literal "true"
+」：
+\end_layout
 
+\begin_layout Enumerate
+\begin_inset Formula $p$
 \end_inset
 
-
+ 由
+\emph on
+热力学状态
+\emph default
+决定。二阶张量 
 \begin_inset Formula $\Tensor{1}$
 \end_inset
 
- is the unit isotropic tensor
+ 为「单位各向同性张量 (unit isotropic tensor)
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 tensor!isotropic ~!unit
@@ -1473,59 +1600,130 @@ tensor!isotropic ~!unit
 
 \end_inset
 
- satisfying
+」，它满足
 \begin_inset Formula 
 \[
-\Tensor{1}\vdot\vec{v}=\vec{v}=\vec{v}\vdot\Tensor{1}\qquad\forall\vec{v}
+\Tensor{1}\vdot\vec{v}=\vec{v}=\vec{v}\vdot\Tensor{1}\qquad\forall\,\vec{v}
 \]
-
-\end_inset
-
-The formula for the law then becomes
-\begin_inset Formula 
-\begin{equation}
-\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\tau}\dd{S}\label{eq:ConservationOfMomentumWithDDt}
-\end{equation}
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-The shear stress tensor 
+\begin_layout Enumerate
 \begin_inset Formula $\Tensor{\tau}$
 \end_inset
 
- is related with the strain rate tensor 
+ 由
+\emph on
+流体微团的相对运动
+\emph default
+决定的，后者正是由 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:速度梯度"
+
+\end_inset
+
+ 节中定义的应变率张量 
 \begin_inset Formula $\Tensor{E}$
 \end_inset
 
- by the constitutive equation.
- For Newtonian fluids, this relation is linear:
-\begin_inset Formula 
-\[
-\tau_{ik}=D_{ikrs}E_{rs}
-\]
+ 刻画的，它们之间的关系被称为「本构方程 (constitutive relation)」。
+\end_layout
 
-\end_inset
-
-For isotropic Newtonian fluids, there is only two independent parameters:
+\begin_deeper
+\begin_layout Itemize
+如果本构方程是线性的，即
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\tau_{ik} & =\mu\left(\pdv{u_{i}}{x_{k}}+\pdv{u_{k}}{x_{i}}-\frac{2}{3}\delta_{ik}\pdv{u_{j}}{x_{j}}\right)+\zeta\delta_{ik}\pdv{u_{j}}{x_{j}}\\
- & =2\mu E_{ik}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{ik}\pdv{u_{j}}{x_{j}}
-\end{aligned}
-\label{eq:NewtonianFluid}
+\tau_{ik}=D_{ikrs}E_{rs}\qquad i,k,r,s=1,2,3\label{eq:牛顿流体}
 \end{equation}
 
 \end_inset
 
-or equivalently
+其中 
+\begin_inset Formula $D_{ikrs}$
+\end_inset
+
+ 是一个「四阶张量 (tensor of rank four)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!~ of rank four
+\end_layout
+
+\end_inset
+
+」，则称这种流体（模型）为「牛顿流体 (Newtonian fluids)」。
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $D_{ikrs}$
+\end_inset
+
+ 是「各向同性的 (isotropic)」，即它的分量不随坐标轴平移或旋转而变化，则可以证明： 
+\begin_inset Formula $D_{ikrs}$
+\end_inset
+
+ 可以由两个独立参数确定。在流体力学中，这两个独立参数习惯上取作「黏性系数 (coefficient of viscosity) 
+\begin_inset Formula $\mu$
+\end_inset
+
+」和 「第二黏性系数 (second coefficient of viscosity) 
+\begin_inset Formula $\zeta$
+\end_inset
+
+」，并将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:牛顿流体"
+
+\end_inset
+
+ 式写作
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\tau_{ik} & =\mu\cdot\left(\pdv{u_{i}}{x_{k}}+\pdv{u_{k}}{x_{i}}-\frac{2}{3}\pdv{u_{j}}{x_{j}}\delta_{ik}\right)+\zeta\pdv{u_{j}}{x_{j}}\delta_{ik}\\
+ & =2\mu E_{ik}+\left(\zeta-\frac{2}{3}\mu\right)\pdv{u_{j}}{x_{j}}\delta_{ik}
+\end{aligned}
+\label{eq:牛顿流体::各向同性}
+\end{equation}
+
+\end_inset
+
+或等价的与坐标系无关的形式：
 \begin_inset Formula 
 \[
 \Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\div{\vec{u}}\right)\Tensor{1}
 \]
+
+\end_inset
+
+可见 
+\begin_inset Formula $\Tensor{\tau}$
+\end_inset
+
+ 中依然含有「正应力 (normal stress)」成分，因此称它为「剪应力」并不十分确切。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+于是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:动量守恒::物质导数::sigma"
+
+\end_inset
+
+式可以改写为
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\tau}\dd{S}\label{eq:动量守恒::物质导数::tau}
+\end{equation}
 
 \end_inset
 
@@ -1536,9 +1734,20 @@ or equivalently
 角动量守恒
 \end_layout
 
-\begin_layout Standard
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[角动量守恒]
+\end_layout
+
+\end_inset
+
+
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 conservation!~ of angular momentum
@@ -1546,38 +1755,77 @@ conservation!~ of angular momentum
 
 \end_inset
 
+物质体 
+\begin_inset Formula $V^{m}$
+\end_inset
+
+ 内所含总角动量 
+\begin_inset Formula $\int_{V^{m}}\vec{x}\cross\vec{u}\rho\dd{V}$
+\end_inset
+
+ 的时间变化率，等于作用在 
+\begin_inset Formula $V^{m}$
+\end_inset
+
+ 及其边界 
+\begin_inset Formula $\partial V^{m}$
+\end_inset
+
+ 上的所有「外力矩 (external torque)」之和。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
+在（不考虑分布式力偶的）流体力学中，它等价于应力张量或剪应力张量的对称性：
 \begin_inset Formula 
 \[
-\sigma_{\alpha\gamma}=\sigma_{\gamma\alpha}\qquad\forall\alpha,\gamma=1,2,3
+\sigma_{ik}=\sigma_{ki}\iff\tau_{ik}=\tau_{ki}\qquad\forall\,i,k=1,2,3
 \]
 
 \end_inset
 
-or equivalently
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\tau_{\alpha\gamma}=\tau_{\gamma\alpha}\qquad\forall\alpha,\gamma=1,2,3
-\]
+对于
+\emph on
+各向同性
+\emph default
+流体，这一条件已自动满足。因此
+\emph on
+角动量守恒
+\emph default
+通常不在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:守恒律方程组"
 
 \end_inset
 
-
+中单独列出，但它是独立于所谓「三大守恒律」的第四个守恒律。
 \end_layout
 
 \begin_layout Subsection
 能量守恒
 \end_layout
 
-\begin_layout Standard
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[能量守恒]
+\end_layout
+
+\end_inset
+
+
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 conservation!~ of energy
@@ -1585,56 +1833,114 @@ conservation!~ of energy
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-The conservation law of energy is the alias of the 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:Law1ofThermodynamics"
-
+物质体 
+\begin_inset Formula $V^{m}$
 \end_inset
 
-.
- When applied to a control volume, it can be written as
+ 内所含总能量 
+\begin_inset Formula $\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}$
+\end_inset
+
+ 的时间变化率，等于「热源 (heat source)」、「传热 (heat conduction)」、「做功 (work)」之和：
 \begin_inset Formula 
 \[
-\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V}j\dd{V}-\oint_{\partial V}\vec{n}\vdot\vec{q}\dd{S}\\
- & +\int_{V}\vec{b}\vdot\vec{u}\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}\right)\dd{S}
+\begin{aligned}\dv{t}\int_{V^{m}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V^{m}}j\dd{V}-\oint_{\partial V^{m}}\vec{n}\vdot\vec{q}\dd{S}\\
+ & +\int_{V^{m}}\vec{b}\vdot\vec{u}\dd{V}+\oint_{\partial V^{m}}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}\right)\dd{S}
 \end{aligned}
 \]
 
 \end_inset
 
-in which, 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$j$"
-description "rate of heat generation per unit volume"
-literal "true"
+其中
+\end_layout
 
-\end_inset
-
-
+\begin_deeper
+\begin_layout Itemize
+标量 
 \begin_inset Formula $j$
 \end_inset
 
- is the rate of heat generation per unit volume.
+ 为「热源密度 (density of heat source)」，表示
+\emph on
+单位时间
+\emph default
+内
+\emph on
+单位体积
+\emph default
+热源的「热生成量 (heat generation)」。
+\end_layout
+
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+ 为「热通量密度 (density of heat flux)」，表示
+\emph on
+单位时间
+\emph default
+内穿过
+\emph on
+单位面积
+\emph default
+的「热流量 (heat flow)」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Again, if we take 
+对于更一般的控制体 
+\begin_inset Formula $V$
+\end_inset
+
+，时间全导数 
+\begin_inset Formula $\dv{t}$
+\end_inset
+
+ 应当用物质导数 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+ 代替：
+\begin_inset Formula 
+\[
+\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}-\vec{q}\right)\dd{S}
+\]
+
+\end_inset
+
+考虑到 
 \begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
 \end_inset
 
- into account, the formula for the law then becomes
+，并仿照
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:动量守恒::物质导数::tau"
+
+\end_inset
+
+式将含有压力 
+\begin_inset Formula $p$
+\end_inset
+
+ 的项移到等号左边，上式可以改写为
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned} & \DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}\dd{S}\\
-= & \int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\tau}\vdot\vec{u}-\vec{q}\right)\dd{S}
+\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & +\oint_{\partial V}\vec{n}\vdot\vec{u}p\dd{S}\\
+=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V} & +\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\tau}\vdot\vec{u}-\vec{q}\right)\dd{S}
 \end{aligned}
-\label{eq:ConservationOfEnergyWithDDt}
+\label{eq:能量守恒::物质导数}
 \end{equation}
 
 \end_inset
@@ -1643,7 +1949,14 @@ Again, if we take
 \end_layout
 
 \begin_layout Section
-小结
+守恒律方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:守恒律方程组"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1667,21 +1980,21 @@ conservation!~ law!~ in integral form
 Write the three conservation laws (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:ConservationOfMassWithDDt"
+reference "eq:质量守恒::物质导数"
 
 \end_inset
 
 , 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:ConservationOfMomentumWithDDt"
+reference "eq:动量守恒::物质导数::tau"
 
 \end_inset
 
 , 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:ConservationOfEnergyWithDDt"
+reference "eq:能量守恒::物质导数"
 
 \end_inset
 
@@ -2601,7 +2914,7 @@ Burgers 方程
 Assume the fluid is Newtonian 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:NewtonianFluid"
+reference "eq:牛顿流体::各向同性"
 plural "false"
 caps "false"
 noprefix "false"
