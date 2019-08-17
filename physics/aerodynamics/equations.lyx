@@ -950,7 +950,7 @@ derivative!material ~!~ of an integral
 \boxed{\begin{aligned}\DDt{}\int_{V^{c}}\phi\dd{V} & =\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{c}}\vec{n}\vdot\vec{u}\phi\dd{S}\\
  & =\dv{t}\int_{V^{c}}\phi\dd{V}+\oint_{\partial V^{c}}\vec{n}\vdot\left(\vec{u}-\vec{u}^{c}\right)\phi\dd{S}
 \end{aligned}
-}\label{eq:控制体上的物质导数}
+}\label{eq:物质导数::控制体}
 \end{equation}
 
 \end_inset
@@ -1025,7 +1025,7 @@ reference "eq:对物质体上的积分应用-Reynolds-输运定理"
  式右端，即得 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1039,7 +1039,7 @@ noprefix "false"
 为了得到 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1080,7 +1080,7 @@ reference "eq:Reynolds-输运定理"
 ，则可以对 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1216,9 +1216,9 @@ noprefix "false"
 
 如果将右端括号中的运算形式化地记作
 \begin_inset Formula 
-\[
-\boxed{\DDt{\phi}=\pdv{\phi}{t}+\vec{u}\vdot\grad{\phi}}
-\]
+\begin{equation}
+\boxed{\DDt{\phi}=\pdv{\phi}{t}+\vec{u}\vdot\grad{\phi}}\label{eq:物质导数::任意一点处}
+\end{equation}
 
 \end_inset
 
@@ -1240,8 +1240,8 @@ noprefix "false"
  的性质：
 \begin_inset Formula 
 \[
-\begin{aligned}\DDt{}(\phi+\psi) & =\DDt{\phi}+\DDt{\psi} & \vec{u}\vdot\grad(\phi+\psi) & =\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
-\DDt{}(\phi\psi) & =\phi\DDt{\psi}+\psi\DDt{\phi} & \vec{u}\vdot\grad(\phi\psi) & =\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
+\begin{aligned} & \DDt{}(\phi+\psi)=\DDt{\phi}+\DDt{\psi} &  & \vec{u}\vdot\grad(\phi+\psi)=\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
+ & \DDt{}(\phi\psi)=\phi\DDt{\psi}+\psi\DDt{\phi} &  & \vec{u}\vdot\grad(\phi\psi)=\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
 \end{aligned}
 \]
 
@@ -1801,7 +1801,7 @@ conservation!~ of angular momentum
 通常不在
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:守恒律方程组"
+reference "sec:守恒律::方程组"
 
 \end_inset
 
@@ -1952,24 +1952,82 @@ reference "eq:动量守恒::物质导数::tau"
 守恒律方程组
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:守恒律方程组"
+name "sec:守恒律::方程组"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+为方便查阅，这里将上一节得出的「三大守恒律」，即 (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:质量守恒::物质导数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:动量守恒::物质导数::tau"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:能量守恒::物质导数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) 式，整理成常用的方程组形式，包括
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:守恒律::积分方程组"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:守恒律::微分方程组::守恒型"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:守恒律::微分方程组::非守恒型"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsection
-积分方程
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-conservation!~ law!~ in integral form
-\end_layout
+积分方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:守恒律::积分方程组"
 
 \end_inset
 
@@ -1977,7 +2035,7 @@ conservation!~ law!~ in integral form
 \end_layout
 
 \begin_layout Standard
-Write the three conservation laws (
+将 (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:质量守恒::物质导数"
@@ -1998,64 +2056,67 @@ reference "eq:能量守恒::物质导数"
 
 \end_inset
 
-) in matrix form:
+) 式写成矩阵形式就得到「积分型守恒律方程组
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+conservation!system of ~ laws!~ in integral form
+\end_layout
+
+\end_inset
+
+」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithDDt}
+\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::物质导数}
 \end{equation}
 
 \end_inset
 
-in which
+其中 
+\begin_inset Formula $\ket{\cdots}$
+\end_inset
+
+ 表示「列矩阵 (column matrix)」：
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U} & =\begin{bmatrix}\rho\\
-\vec{u}\rho\\
-E\rho
-\end{bmatrix} & \ket*{\vec{P}} & =\begin{bmatrix}\vec{0}\\
+\ket{U}=\begin{bmatrix}\rho\\
+\rho\vec{u}\\
+\rho E
+\end{bmatrix}\qquad\ket*{\vec{P}}=\begin{bmatrix}\vec{0}\\
 p\Tensor{1}\\
 p\vec{u}
-\end{bmatrix}\\
-\ket*{\vec{G}} & =\begin{bmatrix}\vec{0}\\
+\end{bmatrix}\qquad\ket*{\vec{G}}=\begin{bmatrix}\vec{0}\\
 \Tensor{\tau}\\
 \Tensor{\tau}\vdot\vec{u}-\vec{q}
-\end{bmatrix} & \ket{H} & =\begin{bmatrix}0\\
+\end{bmatrix}\qquad\ket{H}=\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\vdot\vec{u}+j
 \end{bmatrix}
-\end{aligned}
 \]
 
 \end_inset
 
-Apply the first line of 
+其中 
+\begin_inset Formula $E:=e+\abs{\vec{u}}^{2}/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+借助于 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- to 
-\begin_inset Formula $\DDt{}\int_{V}\cdots\dd{V}$
-\end_inset
-
- and denote 
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$E:=e+\\frac{1}{2}\\abs{\\vec{u}}^{2}$"
-description "total (internal + kinetic) energy per unit mass"
-literal "true"
-
-\end_inset
-
-
-\begin_inset Formula $E:=e+\abs{\vec{u}}^{2}/2$
-\end_inset
-
- and
+ 式的第一行，并引入列矩阵
 \begin_inset Formula 
 \[
 \ket*{\vec{F}}=\vec{u}\ket{U}+\ket*{\vec{P}}=\vec{u}\begin{bmatrix}\rho\\
@@ -2069,44 +2130,39 @@ p\vec{u}
 
 \end_inset
 
-
+可以将 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsWithDDt"
+reference "eq:守恒律::积分方程组::物质导数"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- becomes
+ 式化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsWithoutDDt}
+\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::时间偏导数}
 \end{equation}
 
 \end_inset
 
-This is the most general form of the governing equations of (continuum)
- fluid dynamics.
+
 \end_layout
 
-\begin_layout Standard
-Alternatively, if we apply the second line of 
+\begin_layout Itemize
+借助于 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- to 
-\begin_inset Formula $\DDt{}\int_{V}\cdots\dd{V}$
-\end_inset
-
- and denote
+ 式的第二行，并引入列矩阵
 \begin_inset Formula 
 \[
 \ket*{\vec{F}^{c}}=\ket*{\vec{F}}-\vec{u}^{c}\ket{U}=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
@@ -2120,65 +2176,100 @@ p\vec{u}
 
 \end_inset
 
+其中 
+\begin_inset Formula $\vec{u}^{c}$
+\end_inset
 
+ 为控制面 
+\begin_inset Formula $\partial V$
+\end_inset
+
+ 的移动速度，可以将 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsWithDDt"
+reference "eq:守恒律::积分方程组::物质导数"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- will then become
+ 式化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:ConservationLawsForMovingControlVolume}
+\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::时间全导数}
 \end{equation}
+
+\end_inset
+
+若 
+\begin_inset Formula $\vec{u}^{c}=\vec{0}$
+\end_inset
+
+ 则 
+\begin_inset Formula $\ket*{\vec{F}^{c}}=\ket*{\vec{F}}$
+\end_inset
+
+，从而有 
+\begin_inset Formula $\dv{t}\int_{V}\ket{U}\dd{V}=\int_{V}\pdv{\ket{U}}{t}\dd{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsection
+守恒型微分方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:守恒律::微分方程组::守恒型"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsection
-守恒型微分方程
-\end_layout
-
 \begin_layout Standard
+如果 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:守恒律::积分方程组::时间偏导数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式中的被积项充分光滑，则可以对
+\emph on
+面积分
+\emph default
+应用 Gauss 散度定理：
+\begin_inset Formula 
+\[
+\int_{V}\pdv{\ket{U}}{t}\dd{V}+\int_{V}\div\ket*{\vec{F}}\dd{V}=\int_{V}\div\ket*{\vec{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
+\]
+
+\end_inset
+
+考虑到控制体的任意性，实际上等价于如下的「守恒型微分方程组
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-conservation!~ law!~ in differential form
+conservation!system of ~ laws!~ in differential form
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-If the integrands in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationLawsWithoutDDt"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- are sufficiently smooth, then Gauss's divergence theorem can be applied
- to them, which leads to
+」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\div{\ket*{\vec{F}}}=\div{\ket*{\vec{G}}}+\ket{H}}\label{eq:ConservationLawsDifferentialForm}
+\boxed{\pdv{\ket{U}}{t}+\div{\ket*{\vec{F}}}=\div{\ket*{\vec{G}}}+\ket{H}}\label{eq:守恒律::微分方程组::守恒型}
 \end{equation}
 
 \end_inset
 
-or equivalently
+即
 \begin_inset Formula 
 \[
 \begin{aligned}\pdv{\rho}{t}+\div{\left(\vec{u}\rho\right)} & =0\\
@@ -2189,7 +2280,7 @@ or equivalently
 
 \end_inset
 
-Using the Cartesian tensor index notation, they are
+在流体力学中，它被称为「Navier–Stokes 方程」。在三维直角坐标系中，它的展开形式为
 \begin_inset Formula 
 \begin{equation}
 \pdv{t}\begin{bmatrix}\rho\\
@@ -2211,21 +2302,28 @@ u_{\alpha}E\rho+pu_{\alpha}
 b_{1}\\
 b_{2}\\
 b_{3}\\
-b_{\alpha}u_{\alpha}+j
-\end{bmatrix}\label{eq:NavierStokes3dConservative}
+b_{\gamma}u_{\gamma}+j
+\end{bmatrix}\label{eq:NS-方程::守恒型::直角坐标}
 \end{equation}
 
 \end_inset
 
-where 
+其中 
 \begin_inset Formula $E=e+\frac{1}{2}u_{\alpha}u_{\alpha}$
 \end_inset
 
-.
+，重复的下标表示求和。
 \end_layout
 
 \begin_layout Subsection
-非守恒型微分方程
+非守恒型微分方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:守恒律::微分方程组::非守恒型"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -2275,7 +2373,7 @@ Suppose
 Apply the first line of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:控制体上的物质导数"
+reference "eq:物质导数::控制体"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2295,7 +2393,7 @@ noprefix "false"
 Apply 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:DDtAtAPoint"
+reference "eq:物质导数::任意一点处"
 
 \end_inset
 
@@ -2353,7 +2451,7 @@ Note that
  So, this lemma can be applied to 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawsWithDDt"
+reference "eq:守恒律::积分方程组::物质导数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2819,7 +2917,7 @@ a scalar or the 1st component of a vector varies only along
 In this frame, 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:NavierStokes3dConservative"
+reference "eq:NS-方程::守恒型::直角坐标"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3144,7 +3242,7 @@ Ignoring
  (body force) in 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:NavierStokes3dConservative"
+reference "eq:NS-方程::守恒型::直角坐标"
 
 \end_inset
 
