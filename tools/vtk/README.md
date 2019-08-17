@@ -2,7 +2,7 @@
 
 在不同的语境下，[VTK](https://www.vtk.org) 可能表示：
 - 一款跨平台的「数据显示 (Data Visualization)」开源程序库。
-- VTK 程序所使用的默认[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)。[*VTK User's Guide*](https://www.kitware.com/products/books/VTKUsersGuide.pdf) 的 *19.3 VTK File Formats* 一节详细定义了这两种格式。
+- VTK 程序所使用的默认[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)。《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《19.3 VTK File Formats》一节详细定义了这两种格式。
 - [传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)文件的默认扩展名。
 
 # [传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)
