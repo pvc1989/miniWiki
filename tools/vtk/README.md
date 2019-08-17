@@ -19,11 +19,11 @@
 | `vtp` | `vtkPolyData`         |
 
 ## API 示例
-[`ugrid_demo.py`](./ugrid_demo.py) 演示了如何用 `vtk` 模块提供的 API 输出非结构网格及数据。
+[`ugrid_reader_demo.py`](./ugrid_reader_demo.py) 和 [`ugrid_writer_demo.py`](./ugrid_writer_demo.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
 ⚠️ 要运行该示例，必须先在本地[构建 VTK 程序库及 Python 模块](https://vtk.org/Wiki/VTK/Configure_and_Build)。
 如果构建成功，则运行以下命令
 ```shell
-python3 ugrid_demo.py 
+python3 ugrid_writer_demo.py 
 ```
 会在当前目录下生成四个文件：
 ```shell
