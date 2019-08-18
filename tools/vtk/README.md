@@ -62,16 +62,48 @@ otherObject->SetExample(obj);                        // 使用
 ```
 
 ### Python 示例
-[`ugrid_reader_demo.py`](./ugrid_reader_demo.py) 和 [`ugrid_writer_demo.py`](./ugrid_writer_demo.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
+[`read.py`](./read.py) 和 [`write.py`](./write.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
 ⚠️ 要运行该示例，必须先在本地[构建 VTK 程序库及 Python 模块](https://vtk.org/Wiki/VTK/Configure_and_Build)。
 如果构建成功，则运行以下命令
 ```shell
-python3 ugrid_writer_demo.py 
+mkdir build  # 在 write.py 所属目录下，创建 build 目录
+cd build
+python3 ../write.py 
 ```
-会在当前目录下生成四个文件：
+会在 `build` 目录下生成四个文件：
 ```shell
 ugrid_demo_ascii.vtk
 ugrid_demo_ascii.vtu
 ugrid_demo_binary.vtk
 ugrid_demo_binary.vtu
+```
+读取其中的两个文件：
+```
+python3 ../read.py 
+```
+
+### C++ 示例
+源代码仓库的 `Examples` 目录下有各个 VTK 模块的示例。
+
+这里将 `Examples/IO/Cxx⁩/DumpXMLFile.cxx` 简化为 [`read.cpp`](./read.cpp)。
+- 手动构建较为繁琐，且依赖于本地 VTK 的安装位置（假设：头文件位于 `/usr/local/include/vtk-8.2`，库文件位于 `/usr/local/lib`）及版本号：
+```shell
+mkdir build  # 在 read.cpp 所属目录下，创建 build 目录
+cd build
+c++ -c ../read.cpp -I/usr/local/include/vtk-8.2 -std=c++17
+c++ -o read read.o -L/usr/local/lib -lvtkCommonDataModel-8.2 \
+  -lvtkCommonCore-8.2 \
+  -lvtkIOLegacy-8.2 \
+  -lvtkIOXML-8.2 \
+  -lvtkIOGeometry-8.2 \
+  -lvtkIOImport-8.2 \
+  -lvtksys-8.2
+```
+- 推荐使用 CMake 构建，构建选项以跨平台的方式写在 [`CMakeLists.txt`](./CMakeLists.txt) 中，CMake 会自动查找头文件及库文件位置：
+```shell
+mkdir build  # 在 read.cpp 所属目录下，创建 build 目录
+cd build
+cmake -S .. -B .
+cmake --build .
+./read *.vtk *.vtu  # 读取在《Python 示例》中生成的文件
 ```
