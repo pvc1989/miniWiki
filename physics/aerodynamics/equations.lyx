@@ -130,7 +130,7 @@ status open
 \end_layout
 
 \begin_layout Chapter
-基本方程
+流动方程
 \end_layout
 
 \begin_layout Section
@@ -154,7 +154,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-Lagrangian Description
+Lagrangian 描述
 \begin_inset Index idx
 status open
 
@@ -172,7 +172,7 @@ Lagrange!~ian description
 \end_layout
 
 \begin_layout Standard
-Eulerian Description
+Eulerian 描述
 \begin_inset Index idx
 status open
 
@@ -193,7 +193,7 @@ Euler!~ian description
 速度梯度
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:速度梯度"
+name "sec:速度梯度"
 
 \end_inset
 
@@ -232,7 +232,7 @@ gradient!~ of a scalar
 \end_inset
 
 类似地，在「张量分析 (tensor analysis)」中，
-\begin_inset Formula $\grad{\vec{u}}$
+\begin_inset Formula $\grad\vec{u}$
 \end_inset
 
  表示「向量 
@@ -266,7 +266,7 @@ tensor!~ of rank two
 」：
 \begin_inset Formula 
 \[
-\dd{\vec{u}}=\dd{\vec{x}}\vdot\grad{\vec{u}}
+\dd{\vec{u}}=\dd{\vec{x}}\vdot\grad\vec{u}
 \]
 
 \end_inset
@@ -284,13 +284,13 @@ tensor!~ of rank two
 \end_inset
 
  是常量，因此可以提到微分号外，于是 
-\begin_inset Formula $\grad{\vec{u}}$
+\begin_inset Formula $\grad\vec{u}$
 \end_inset
 
- 可以写成以下形式（求和约定：重复的下标表示求和）：
+ 可以写成以下形式（重复的下标表示求和）：
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}=\vec{e}_{i}\vec{e}_{k}\partial_{i}u_{k}
+\grad\vec{u}=\left(\vec{e}_{i}\pdv{x_{i}}\right)\otimes\left(\vec{e}_{k}u_{k}\right)=\left(\vec{e}_{i}\otimes\vec{e}_{k}\right)\pdv{u_{k}}{x_{i}}=\vec{e}_{i}\vec{e}_{k}\partial_{i}u_{k}
 \]
 
 \end_inset
@@ -300,10 +300,10 @@ tensor!~ of rank two
 \end_inset
 
  表示速度，则 
-\begin_inset Formula $\grad{\vec{u}}$
+\begin_inset Formula $\grad\vec{u}$
 \end_inset
 
- 就是「速度梯度张量 (velocity gradient tensor)
+ 为「速度梯度张量 (velocity gradient tensor)
 \begin_inset Index idx
 status open
 
@@ -355,7 +355,7 @@ tensor!angular velocity ~
 」：
 \begin_inset Formula 
 \[
-\Tensor{E}:=\vec{e}_{i}\vec{e}_{k}E_{ik},\qquad E_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}+\partial_{k}u_{i}\right)
+\Tensor{E}:=\vec{e}_{i}\vec{e}_{k}E_{ik}\qquad E_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}+\partial_{k}u_{i}\right)
 \]
 
 \end_inset
@@ -373,15 +373,15 @@ tensor!strain rate ~
 」：
 \begin_inset Formula 
 \[
-\Tensor{\varOmega}:=\vec{e}_{i}\vec{e}_{k}\varOmega_{ik},\qquad\varOmega_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}-\partial_{k}u_{i}\right)
+\Tensor{\varOmega}:=\vec{e}_{i}\vec{e}_{k}\varOmega_{ik}\qquad\varOmega_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}-\partial_{k}u_{i}\right)
 \]
 
 \end_inset
 
-可以验证：
+容易验证：
 \begin_inset Formula 
 \[
-\grad{\vec{u}}=\Tensor{E}+\Tensor{\varOmega},\qquad\partial_{i}u_{k}=E_{ik}+\varOmega_{ik},\qquad\partial_{k}u_{i}=E_{ik}-\varOmega_{ik}
+\grad\vec{u}=\Tensor{E}+\Tensor{\varOmega}\qquad\partial_{i}u_{k}=E_{ik}+\varOmega_{ik}\qquad\partial_{k}u_{i}=E_{ik}-\varOmega_{ik}
 \]
 
 \end_inset
@@ -406,7 +406,7 @@ tensor!strain rate ~
 \emph on
 二阶张量
 \emph default
-是很自然的。
+
 \begin_inset Foot
 status open
 
@@ -416,7 +416,7 @@ status open
 
 \end_inset
 
-
+是很自然的。
 \end_layout
 
 \begin_layout Subsection
@@ -428,7 +428,7 @@ status open
 \begin_inset Formula $\Tensor{\varOmega}$
 \end_inset
 
- 只有三个独立「分量 (component)」。这是其反对称性 (
+ 只有三个独立「分量 (component)」，这是其反对称性 (
 \begin_inset Formula $\varOmega_{ik}=-\varOmega_{ki}$
 \end_inset
 
@@ -446,7 +446,7 @@ status open
 
 \end_inset
 
-如果在形式上用这三个（张量的）分量构造一个
+如果用这三个（张量）分量在形式上构造一个
 \emph on
 向量
 \emph default
@@ -454,7 +454,17 @@ status open
 \begin_inset Formula $\vec{\varOmega}:=\sum_{i=1}^{3}\vec{e}_{i}\varOmega_{i}$
 \end_inset
 
-，其中
+，称作流体微团的「角速度向量 (angular velocity vector)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+vector!angular velocity ~
+\end_layout
+
+\end_inset
+
+」，其中
 \begin_inset Formula 
 \[
 \begin{bmatrix}\varOmega_{1}\\
@@ -463,7 +473,7 @@ status open
 \end{bmatrix}=\begin{bmatrix}\varOmega_{23}\\
 \varOmega_{31}\\
 \varOmega_{12}
-\end{bmatrix}\iff\varOmega_{jk}=\varOmega_{i}\epsilon_{ijk},\epsilon_{ijk}=\begin{cases}
+\end{bmatrix}\iff\varOmega_{jk}=\varOmega_{i}\epsilon_{ijk}\qquad\epsilon_{ijk}=\begin{cases}
 +1 & ijk=123,231,312\\
 -1 & ijk=321,132,213\\
 0 & \text{else}
@@ -472,7 +482,7 @@ status open
 
 \end_inset
 
-则 
+则可以验证：
 \begin_inset Formula $\vec{\varOmega}$
 \end_inset
 
@@ -486,17 +496,7 @@ vector!pseudo-~
 
 \end_inset
 
-」。它被称为流体微团的「角速度向量 (angular velocity vector)
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-vector!angular velocity ~
-\end_layout
-
-\end_inset
-
-」，二者之间存在以下微分等式：
+」，并且满足以下微分等式：
 \begin_inset Formula 
 \[
 \dd{\vec{x}}\vdot\Tensor{\varOmega}=\vec{\varOmega}\cross\dd{\vec{x}}
@@ -509,6 +509,10 @@ vector!angular velocity ~
 
 \begin_layout Proof
 利用 
+\begin_inset Formula $\vec{e}_{i}\vdot\vec{e}_{j}=\delta_{ij}$
+\end_inset
+
+ 及 
 \begin_inset Formula $\vec{e}_{i}\cross\vec{e}_{j}=\epsilon_{ijk}\vec{e}_{k}$
 \end_inset
 
@@ -616,7 +620,7 @@ surface!control ~
 \end_inset
 
 ，上标 
-\begin_inset Formula $C$
+\begin_inset Formula $c$
 \end_inset
 
  代表 control，用来与流体微团的速度 
@@ -627,11 +631,7 @@ surface!control ~
 \begin_inset Formula $\vec{u}^{c}$
 \end_inset
 
- 与 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- 的关系，控制体可以被分为三类：
+ 的特点，控制体可以被分为三类：
 \end_layout
 
 \begin_layout Itemize
@@ -718,7 +718,7 @@ status open
  可导，则有如下等式成立：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}}\label{eq:Reynolds-输运定理}
+\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}}\label{eq:Reynolds}
 \end{equation}
 
 \end_inset
@@ -750,15 +750,15 @@ status open
 
 \end_inset
 
-其中 
-\begin_inset Formula $i=1,2$
+下标 
+\begin_inset Formula $1,2$
 \end_inset
 
  用于区分两个时刻。将 
 \begin_inset Formula $0=\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}$
 \end_inset
 
- 加到右侧的分母上，则等式右端可以拆成两项：
+ 加到右侧的分母上，则分式可以拆成两项：
 \begin_inset Formula 
 \[
 \dv{t}\int_{V_{1}}\phi_{1}\dd{V}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}}+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}
@@ -766,7 +766,14 @@ status open
 
 \end_inset
 
-这两个极限分别对应于定理右端的两项：
+这两个极限分别对应于 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Reynolds"
+
+\end_inset
+
+ 式右端的两项：
 \end_layout
 
 \begin_deeper
@@ -790,19 +797,15 @@ status open
 ：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}}=\int_{V_{1}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}\dd{V}=\int_{V_{1}}\left(\pdv{\phi}{t}\right)_{t_{1}}\dd{V}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{1}\dd{V}}{t_{2}-t_{1}}=\int_{V_{1}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}\dd{V}=\int_{V_{1}}\left(\pdv{\phi}{t}\right)_{1}\dd{V}
 \]
 
 \end_inset
 
-忽略 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- 的下标，就得到 
+忽略下标，就得到 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Reynolds-输运定理"
+LatexCommand ref
+reference "eq:Reynolds"
 plural "false"
 caps "false"
 noprefix "false"
@@ -836,7 +839,7 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\vdot\bcancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}\dd{S}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}\right)_{t_{1}}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V}-\int_{V_{1}}\phi_{2}\dd{V}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\vdot\bcancel{(t_{2}-t_{1})}\vec{u}_{1}^{c}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}\dd{S}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}^{c}\phi\dd{S}\right)_{1}
 \]
 
 \end_inset
@@ -853,14 +856,14 @@ noprefix "false"
 \begin_inset Formula $t_{1}$
 \end_inset
 
- 时刻的单位外法向量（场）。忽略 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- 的下标，就得到 
+ 时刻的
+\emph on
+单位外法向量
+\emph default
+。忽略下标，就得到 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Reynolds-输运定理"
+LatexCommand ref
+reference "eq:Reynolds"
 plural "false"
 caps "false"
 noprefix "false"
@@ -883,7 +886,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-物理定律一般针对物质体（系统）给出。本节用 
+物理定律一般在物质体（系统）上描述。本节用 
 \begin_inset Formula $V^{m}$
 \end_inset
 
@@ -891,11 +894,11 @@ noprefix "false"
 \begin_inset Formula $m$
 \end_inset
 
- 代表 material，用来与一般控制体 
+ 代表 material，以便与一般控制体 
 \begin_inset Formula $V^{c}$
 \end_inset
 
- 作区分。
+ 区分。
 \end_layout
 
 \begin_layout Definition
@@ -917,23 +920,23 @@ derivative!material ~!~ of an integral
 \begin_inset Formula $V^{m}$
 \end_inset
 
- 上的体积分的时间全导数，即
+ 上的时间全导数，即
 \begin_inset Formula 
-\[
-\boxed{\DDt{}\int_{V^{c}}\phi\dd{V}:=\dv{t}\int_{V^{m}}\phi\dd{V}}
-\]
+\begin{equation}
+\boxed{\DDt{}\int_{V^{c}}\phi\dd{V}:=\dv{t}\int_{V^{m}}\phi\dd{V}}\label{eq:物质导数::定义}
+\end{equation}
 
 \end_inset
 
-其中函数 
+其中 
 \begin_inset Formula $\phi(t,\vec{x})$
 \end_inset
 
- 对 
+ 可以是任意对 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 可积。
+ 可积的函数。
 \end_layout
 
 \begin_layout Standard
@@ -944,13 +947,13 @@ derivative!material ~!~ of an integral
 \end_layout
 
 \begin_layout Corollary
-对任何控制体都有：
+物质导数任何控制体都有：
 \begin_inset Formula 
 \begin{equation}
 \boxed{\begin{aligned}\DDt{}\int_{V^{c}}\phi\dd{V} & =\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{c}}\vec{n}\vdot\vec{u}\phi\dd{S}\\
  & =\dv{t}\int_{V^{c}}\phi\dd{V}+\oint_{\partial V^{c}}\vec{n}\vdot\left(\vec{u}-\vec{u}^{c}\right)\phi\dd{S}
 \end{aligned}
-}\label{eq:物质导数::控制体}
+}\label{eq:物质导数::积分展开}
 \end{equation}
 
 \end_inset
@@ -970,18 +973,18 @@ derivative!material ~!~ of an integral
 \begin_inset Formula $\dv{t}\int_{V^{m}}\phi\dd{V}$
 \end_inset
 
- 应用 
+ 应用 Reynolds 输运定理（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Reynolds-输运定理"
+LatexCommand ref
+reference "eq:Reynolds"
 
 \end_inset
 
- 式（Reynolds 输运定理）即得
+ 式）即得
 \begin_inset Formula 
-\begin{equation}
-\dv{t}\int_{V^{m}}\phi\dd{V}=\int_{V^{m}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{m}}\vec{n}\vdot\vec{u}^{m}\phi\dd{S}\label{eq:对物质体上的积分应用-Reynolds-输运定理}
-\end{equation}
+\[
+\dv{t}\int_{V^{m}}\phi\dd{V}=\int_{V^{m}}\pdv{\phi}{t}\dd{V}+\oint_{\partial V^{m}}\vec{n}\vdot\vec{u}^{m}\phi\dd{S}
+\]
 
 \end_inset
 
@@ -1015,17 +1018,10 @@ reference "eq:Reynolds-输运定理"
 
 \end_inset
 
-将它们代入 
+将它们相加就得到 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:对物质体上的积分应用-Reynolds-输运定理"
-
-\end_inset
-
- 式右端，即得 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
+LatexCommand ref
+reference "eq:物质导数::积分展开"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1036,17 +1032,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-为了得到 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 式的第二行，只需将第一行中的 
+为了得到第二行，只需将第一行中的 
 \begin_inset Formula $\int_{V^{c}}\pdv{\phi}{t}\dd{V}$
 \end_inset
 
@@ -1058,14 +1044,14 @@ noprefix "false"
 
 \end_inset
 
-代替，它可以由 
+代替，它可以由 Reynolds 输运定理（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Reynolds-输运定理"
+LatexCommand ref
+reference "eq:Reynolds"
 
 \end_inset
 
- 式移项得到。
+ 式）移项得到。
 \end_layout
 
 \begin_layout Subsection
@@ -1074,23 +1060,31 @@ reference "eq:Reynolds-输运定理"
 
 \begin_layout Standard
 若 
-\begin_inset Formula $\vec{u}\phi\in C^{1}(V)$
+\begin_inset Formula $\vec{u}\phi$
 \end_inset
 
-，则可以对 
+ 对 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 可导，则可以对 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
+LatexCommand ref
+reference "eq:物质导数::积分展开"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式的第一行的面积分应用 Gauss 散度定理，从而有
+ 式的第一行中的
+\emph on
+面积分
+\emph default
+应用 Gauss 散度定理，从而有
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\phi\dd{V}=\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\int_{V^{c}}\div(\vec{u}\phi)\dd{V}=\int_{V}\left(\pdv{\phi}{t}+\div(\vec{u}\phi)\right)\dd{V}
+\DDt{}\int_{V}\phi\dd{V}=\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\int_{V^{c}}\divergence(\vec{u}\phi)\dd{V}=\int_{V}\left(\pdv{\phi}{t}+\divergence(\vec{u}\phi)\right)\dd{V}
 \]
 
 \end_inset
@@ -1101,7 +1095,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\DDt{\left(\ev{\phi}\abs{V}\right)}=\ev{\pdv{\phi}{t}+\div(\vec{u}\phi)}\abs{V}
+\DDt{\left(\ev{\phi}\abs{V}\right)}=\ev{\pdv{\phi}{t}+\divergence(\vec{u}\phi)}\abs{V}
 \]
 
 \end_inset
@@ -1113,7 +1107,7 @@ noprefix "false"
 ，则有
 \begin_inset Formula 
 \[
-\DDt{\abs{V}}=\ev{\div{\vec{u}}}\abs{V}
+\DDt{\abs{V}}=\ev{\divergence\vec{u}}\abs{V}
 \]
 
 \end_inset
@@ -1126,10 +1120,10 @@ noprefix "false"
 \begin_inset Formula $\ev{\cdots}$
 \end_inset
 
- 分别表示「平均值 (mean value)」和「体积 (volume)」： 
+ 分别表示「体积 (volume)」和「平均值 (mean value)」： 
 \begin_inset Formula 
 \[
-\abs{V}:=\int_{V}1\dd{V},\qquad\ev{\cdots}:=\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
+\abs{V}:=\int_{V}1\dd{V}\qquad\ev{\cdots}:=\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
 \]
 
 \end_inset
@@ -1173,7 +1167,7 @@ noprefix "false"
 等于各自的平均值，于是上述平均值等式及其特例可以化为
 \begin_inset Formula 
 \[
-\DDt{\left(\phi\abs{V}\right)}\doteq\left(\pdv{\phi}{t}+\div(\vec{u}\phi)\right)\abs{V},\qquad\DDt{\abs{V}}\doteq\left(\div{\vec{u}}\right)\abs{V}
+\DDt{\left(\phi\abs{V}\right)}\doteq\left(\pdv{\phi}{t}+\divergence(\vec{u}\phi)\right)\abs{V}\qquad\DDt{\abs{V}}\doteq\left(\divergence\vec{u}\right)\abs{V}
 \]
 
 \end_inset
@@ -1182,18 +1176,22 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-另一方面，若有 
-\begin_inset Formula $\phi\in C^{1}(V)$
+另一方面，若 
+\begin_inset Formula $\phi$
 \end_inset
 
  及 
-\begin_inset Formula $\vec{u}\in C^{1}(V)$
+\begin_inset Formula $\vec{u}$
 \end_inset
 
-，则有微分恒等式
+ 分别对 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 可导，则有微分恒等式
 \begin_inset Formula 
 \[
-\div(\vec{u}\phi)=\phi\div\vec{u}+\vec{u}\vdot\grad{\phi}
+\divergence(\vec{u}\phi)=\phi\divergence\vec{u}+\vec{u}\vdot\grad{\phi}
 \]
 
 \end_inset
@@ -1217,7 +1215,7 @@ noprefix "false"
 如果将右端括号中的运算形式化地记作
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{\phi}=\pdv{\phi}{t}+\vec{u}\vdot\grad{\phi}}\label{eq:物质导数::任意一点处}
+\boxed{\DDt{\phi}=\pdv{\phi}{t}+\vec{u}\vdot\grad{\phi}}\label{eq:物质导数::微分展开}
 \end{equation}
 
 \end_inset
@@ -1239,11 +1237,12 @@ noprefix "false"
 
  的性质：
 \begin_inset Formula 
-\[
-\begin{aligned} & \DDt{}(\phi+\psi)=\DDt{\phi}+\DDt{\psi} &  & \vec{u}\vdot\grad(\phi+\psi)=\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
- & \DDt{}(\phi\psi)=\phi\DDt{\psi}+\psi\DDt{\phi} &  & \vec{u}\vdot\grad(\phi\psi)=\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
+\begin{equation}
+\begin{aligned}\DDt{}(\phi+\psi)=\DDt{\phi}+\DDt{\psi} & \qquad & \vec{u}\vdot\grad(\phi+\psi)=\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
+\DDt{}(\phi\psi)=\phi\DDt{\psi}+\psi\DDt{\phi} & \qquad & \vec{u}\vdot\grad(\phi\psi)=\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
 \end{aligned}
-\]
+\label{eq:物质导数::性质}
+\end{equation}
 
 \end_inset
 
@@ -1286,11 +1285,11 @@ derivative!convective ~
 
 \end_inset
 
-」，
-\begin_inset Formula $\pdv*{t}$
+」，而将 
+\begin_inset Formula $\pdv{t}$
 \end_inset
 
- 被称为「局部导数 (local derivative)
+ 称为「局部导数 (local derivative)
 \begin_inset Index idx
 status open
 
@@ -1384,6 +1383,242 @@ conservation!~ of mass
 \DDt{}\int_{V}\rho\dd{V}=0\label{eq:质量守恒::物质导数}
 \end{equation}
 
+\end_inset
+
+利用物质导数的积分展开（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::积分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）可以得到两种等价的
+\emph on
+积分型
+\emph default
+质量守恒方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{V}\pdv{\rho}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}\rho\dd{V} & =0\\
+\dv{t}\int_{V^{c}}\rho\dd{V}+\oint_{\partial V^{c}}\vec{n}\vdot\left(\vec{u}-\vec{u}^{c}\right)\rho\dd{S} & =0
+\end{aligned}
+\]
+
+\end_inset
+
+对第一行中的面积分应用 Gauss 散度定理（假设被积函数充分光滑）并考虑到控制体的任意性，可以得到
+\emph on
+微分型
+\emph default
+质量守恒方程：
+\begin_inset Formula 
+\begin{equation}
+\pdv{\rho}{t}+\divergence(\vec{u}\rho)=0\label{eq:质量守恒::微分型::守恒型}
+\end{equation}
+
+\end_inset
+
+其中散度项 
+\begin_inset Formula $\divergence(\vec{u}\rho)$
+\end_inset
+
+ 可以分解为 
+\begin_inset Formula $\vec{u}\vdot\grad\rho+\rho\divergence\vec{u}$
+\end_inset
+
+，利用物质导数的微分展开（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::微分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式），又可以得到另一种形式的
+\emph on
+微分型
+\emph default
+质量守恒方程：
+\begin_inset Formula 
+\begin{equation}
+\DDt{\rho}+\rho\divergence\vec{u}=0\label{eq:质量守恒::微分型::非守恒型}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:质量守恒::微分型::守恒型"
+
+\end_inset
+
+ 式可以得出以下重要推论：
+\end_layout
+
+\begin_layout Corollary*
+设 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 为质量密度， 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 为任意充分光滑的函数，则作用在 
+\begin_inset Formula $\int_{V}\psi\rho\dd{V}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $\DDt{}$
+\end_inset
+
+可按如下规则移入 
+\begin_inset Formula $\int_{V}\cdots\dd{V}$
+\end_inset
+
+ 内：
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\DDt{\psi}\rho\dd{V}\label{eq:物质导数::移入积分号内}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+先考虑左端项：利用物质导数的积分展开（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::积分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）及 Gauss 散度定理可得
+\begin_inset Formula 
+\[
+\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\pdv{(\psi\rho)}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot(\vec{u}\psi\rho)\dd{S}=\int_{V}\left[\pdv{(\psi\rho)}{t}+\divergence(\vec{u}\psi\rho)\right]\dd{V}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula $\psi\rho$
+\end_inset
+
+ 相当于 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::积分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+再考虑右端项：利用物质导数的微分展开（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::微分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）可得
+\begin_inset Formula 
+\[
+\int_{V}\DDt{\psi}\rho\dd{V}=\int_{V}\left(\pdv{\psi}{t}+\vec{u}\vdot\grad{\psi}\right)\rho\dd{V}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 相当于 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::微分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $\phi$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+比较这两个结果，它们相等（从而得出 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::移入积分号内"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）的充要条件为
+\begin_inset Formula 
+\[
+\int_{V}\left[\pdv{\rho}{t}+\divergence(\vec{u}\rho)\right]\psi\dd{V}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\left[\cdots\right]$
+\end_inset
+
+ 中恰好是 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:质量守恒::微分型::守恒型"
+
+\end_inset
+
+ 式的左端项，因此始终为零。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1561,12 +1796,12 @@ tensor!isotropic ~!~ of pressure
 \begin_inset Formula $-p\Tensor{1}$
 \end_inset
 
-」与「剪应力张量 (shear stress tensor)
+」与「黏性应力张量 (viscous stress tensor)
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-tensor!stress ~!shear ~
+tensor!stress ~!viscous ~
 \end_layout
 
 \end_inset
@@ -1575,10 +1810,25 @@ tensor!stress ~!shear ~
 \begin_inset Formula $\Tensor{\tau}$
 \end_inset
 
-」：
+」之和，于是
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:动量守恒::物质导数::sigma"
+
+\end_inset
+
+式可以改写为
+\begin_inset Formula 
+\begin{equation}
+\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\tau}\dd{S}\label{eq:动量守恒::物质导数::tau}
+\end{equation}
+
+\end_inset
+
+其中
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Itemize
 \begin_inset Formula $p$
 \end_inset
 
@@ -1611,7 +1861,7 @@ tensor!isotropic ~!unit
 
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Itemize
 \begin_inset Formula $\Tensor{\tau}$
 \end_inset
 
@@ -1622,7 +1872,7 @@ tensor!isotropic ~!unit
 决定的，后者正是由 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:速度梯度"
+reference "sec:速度梯度"
 
 \end_inset
 
@@ -1638,7 +1888,7 @@ reference "subsec:速度梯度"
 如果本构方程是线性的，即
 \begin_inset Formula 
 \begin{equation}
-\tau_{ik}=D_{ikrs}E_{rs}\qquad i,k,r,s=1,2,3\label{eq:牛顿流体}
+\tau_{ik}=D_{ikrs}E_{rs}\qquad i,k,r,s=1,2,3\label{eq:本构关系::线性}
 \end{equation}
 
 \end_inset
@@ -1657,7 +1907,27 @@ tensor!~ of rank four
 
 \end_inset
 
-」，则称这种流体（模型）为「牛顿流体 (Newtonian fluids)」。
+」，则称这种流体（模型）为「牛顿流体 (Newtonian fluid)」。一般情况下，
+\begin_inset Formula $D_{ikrs}$
+\end_inset
+
+ 可以有 
+\begin_inset Formula $3^{4}=81$
+\end_inset
+
+ 个独立参数；考虑到 
+\begin_inset Formula $\tau_{ik}$
+\end_inset
+
+ 及 
+\begin_inset Formula $E_{ik}$
+\end_inset
+
+ 的对称性，独立参数的个数可以降到 
+\begin_inset Formula $\sum_{i=1}^{6}i=21$
+\end_inset
+
+ 个。
 \end_layout
 
 \begin_layout Itemize
@@ -1665,11 +1935,19 @@ tensor!~ of rank four
 \begin_inset Formula $D_{ikrs}$
 \end_inset
 
- 是「各向同性的 (isotropic)」，即它的分量不随坐标轴平移或旋转而变化，则可以证明： 
+ 是「各向同性的 (isotropic)」，即它的分量不随坐标轴
+\emph on
+平移
+\emph default
+或
+\emph on
+旋转
+\emph default
+而变化，则可以证明： 
 \begin_inset Formula $D_{ikrs}$
 \end_inset
 
- 可以由两个独立参数确定。在流体力学中，这两个独立参数习惯上取作「黏性系数 (coefficient of viscosity) 
+ 只含两个独立参数。在流体力学中，这两个独立参数习惯上取作「黏性系数 (coefficient of viscosity) 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -1679,8 +1957,8 @@ tensor!~ of rank four
 
 」，并将 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:牛顿流体"
+LatexCommand ref
+reference "eq:本构关系::线性"
 
 \end_inset
 
@@ -1690,15 +1968,15 @@ reference "eq:牛顿流体"
 \begin{aligned}\tau_{ik} & =\mu\cdot\left(\pdv{u_{i}}{x_{k}}+\pdv{u_{k}}{x_{i}}-\frac{2}{3}\pdv{u_{j}}{x_{j}}\delta_{ik}\right)+\zeta\pdv{u_{j}}{x_{j}}\delta_{ik}\\
  & =2\mu E_{ik}+\left(\zeta-\frac{2}{3}\mu\right)\pdv{u_{j}}{x_{j}}\delta_{ik}
 \end{aligned}
-\label{eq:牛顿流体::各向同性}
+\label{eq:本构关系::线性::各向同性}
 \end{equation}
 
 \end_inset
 
-或等价的与坐标系无关的形式：
+或等价的
 \begin_inset Formula 
 \[
-\Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\div{\vec{u}}\right)\Tensor{1}
+\Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\divergence\vec{u}\right)\Tensor{1}
 \]
 
 \end_inset
@@ -1707,24 +1985,32 @@ reference "eq:牛顿流体"
 \begin_inset Formula $\Tensor{\tau}$
 \end_inset
 
- 中依然含有「正应力 (normal stress)」成分，因此称它为「剪应力」并不十分确切。
+ 中依然含有「正应力 (normal stress)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!stress ~!normal ~
+\end_layout
+
+\end_inset
+
+」成分，因此不能将它误认为固体力学中的「剪应力 (shear stress)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+tensor!stress ~!shear ~
+\end_layout
+
+\end_inset
+
+」。
 \end_layout
 
 \end_deeper
 \begin_layout Standard
-于是
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:动量守恒::物质导数::sigma"
-
-\end_inset
-
-式可以改写为
-\begin_inset Formula 
-\begin{equation}
-\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd{S}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Tensor{\tau}\dd{S}\label{eq:动量守恒::物质导数::tau}
-\end{equation}
-
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1782,7 +2068,7 @@ conservation!~ of angular momentum
 \end_layout
 
 \begin_layout Standard
-在（不考虑分布式力偶的）流体力学中，它等价于应力张量或剪应力张量的对称性：
+在（不考虑分布式力偶的）流体力学中，它等价于应力张量或黏性应力张量的对称性：
 \begin_inset Formula 
 \[
 \sigma_{ik}=\sigma_{ki}\iff\tau_{ik}=\tau_{ki}\qquad\forall\,i,k=1,2,3
@@ -1798,14 +2084,14 @@ conservation!~ of angular momentum
 \emph on
 角动量守恒
 \emph default
-通常不在
+通常不在 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:守恒律::方程组"
+reference "sec:NavierStokes"
 
 \end_inset
 
-中单独列出，但它是独立于所谓「三大守恒律」的第四个守恒律。
+ 中单独列出，但它是独立于所谓「三大守恒律」的第四个守恒律。
 \end_layout
 
 \begin_layout Subsection
@@ -1838,13 +2124,13 @@ conservation!~ of energy
 \end_inset
 
  内所含总能量 
-\begin_inset Formula $\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}$
+\begin_inset Formula $\int_{V}\left(e+\frac{1}{2}\abs{\vec{u}}^{2}\right)\rho\dd{V}$
 \end_inset
 
  的时间变化率，等于「热源 (heat source)」、「传热 (heat conduction)」、「做功 (work)」之和：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{t}\int_{V^{m}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & =\int_{V^{m}}j\dd{V}-\oint_{\partial V^{m}}\vec{n}\vdot\vec{q}\dd{S}\\
+\begin{aligned}\dv{t}\int_{V^{m}}\left(e+\frac{1}{2}\abs{\vec{u}}^{2}\right)\rho\dd{V} & =\int_{V^{m}}j\dd{V}-\oint_{\partial V^{m}}\vec{n}\vdot\vec{q}\dd{S}\\
  & +\int_{V^{m}}\vec{b}\vdot\vec{u}\dd{V}+\oint_{\partial V^{m}}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}\right)\dd{S}
 \end{aligned}
 \]
@@ -1910,9 +2196,9 @@ conservation!~ of energy
 
  代替：
 \begin_inset Formula 
-\[
-\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}-\vec{q}\right)\dd{S}
-\]
+\begin{equation}
+\DDt{}\int_{V}\left(e+\frac{1}{2}\abs{\vec{u}}^{2}\right)\rho\dd{V}=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\sigma}\vdot\vec{u}-\vec{q}\right)\dd{S}\label{eq:能量守恒::物质导数::sigma}
+\end{equation}
 
 \end_inset
 
@@ -1920,14 +2206,14 @@ conservation!~ of energy
 \begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
 \end_inset
 
-，并仿照
+，并仿照 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:动量守恒::物质导数::tau"
 
 \end_inset
 
-式将含有压力 
+ 式将含有压力 
 \begin_inset Formula $p$
 \end_inset
 
@@ -1940,7 +2226,7 @@ reference "eq:动量守恒::物质导数::tau"
 \begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & +\oint_{\partial V}\vec{n}\vdot\vec{u}p\dd{S}\\
 =\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V} & +\oint_{\partial V}\vec{n}\vdot\left(\Tensor{\tau}\vdot\vec{u}-\vec{q}\right)\dd{S}
 \end{aligned}
-\label{eq:能量守恒::物质导数}
+\label{eq:能量守恒::物质导数::tau}
 \end{equation}
 
 \end_inset
@@ -1949,10 +2235,10 @@ reference "eq:动量守恒::物质导数::tau"
 \end_layout
 
 \begin_layout Section
-守恒律方程组
+Navier–Stokes 方程组
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:守恒律::方程组"
+name "sec:NavierStokes"
 
 \end_inset
 
@@ -1960,7 +2246,7 @@ name "sec:守恒律::方程组"
 \end_layout
 
 \begin_layout Standard
-为方便查阅，这里将上一节得出的「三大守恒律」，即 (
+将上一节得出的「三大守恒律」（
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:质量守恒::物质导数"
@@ -1983,85 +2269,41 @@ noprefix "false"
 , 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:能量守恒::物质导数"
+reference "eq:能量守恒::物质导数::tau"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-) 式，整理成常用的方程组形式，包括
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:守恒律::积分方程组"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-、
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:守恒律::微分方程组::守恒型"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-、
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:守恒律::微分方程组::非守恒型"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Subsection
-积分方程组
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:守恒律::积分方程组"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-将 (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:质量守恒::物质导数"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:动量守恒::物质导数::tau"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:能量守恒::物质导数"
-
-\end_inset
-
-) 式写成矩阵形式就得到「积分型守恒律方程组
-\begin_inset Index idx
+ 式）整理成方程组形式，就得到了描述流体运动规律的「Navier–Stokes (NS) 方程组
+\begin_inset Foot
 status open
 
 \begin_layout Plain Layout
-conservation!system of ~ laws!~ in integral form
+狭义的「NS 方程」特指
+\emph on
+动量方程
+\emph default
+。
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Subsection
+守恒型积分方程组
+\end_layout
+
+\begin_layout Standard
+将「三大守恒律」写成矩阵形式就得到「积分型 NS 方程组 (NS equations in integral form)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!system of ~ laws!Navier–Stokes equations in integral form
 \end_layout
 
 \end_inset
@@ -2069,7 +2311,7 @@ conservation!system of ~ laws!~ in integral form
 」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::物质导数}
+\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:NS::积分型::物质导数}
 \end{equation}
 
 \end_inset
@@ -2098,28 +2340,48 @@ p\vec{u}
 
 \end_inset
 
-其中 
-\begin_inset Formula $E:=e+\abs{\vec{u}}^{2}/2$
+
+\begin_inset Formula $\ket{U}$
 \end_inset
 
-。
+ 中的 
+\begin_inset Formula $E:=e+\frac{1}{2}\abs{\vec{u}}^{2}$
+\end_inset
+
+ 为「比总能 (specific total energy)」，表示
+\emph on
+单位质量
+\emph default
+流体的
+\emph on
+内能
+\emph default
+与
+\emph on
+动能
+\emph default
+之和。
 \end_layout
 
 \begin_layout Itemize
-借助于 
+借助于物质导数在
+\emph on
+一般控制体
+\emph default
+上的积分展开（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
+LatexCommand ref
+reference "eq:物质导数::积分展开"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式的第一行，并引入列矩阵
+ 式的第一行）并引入「通量 (flux) 列矩阵」
 \begin_inset Formula 
 \[
-\ket*{\vec{F}}=\vec{u}\ket{U}+\ket*{\vec{P}}=\vec{u}\begin{bmatrix}\rho\\
+\ket*{\vec{F}}:=\ket*{\vec{u}U+\vec{P}}\equiv\vec{u}\ket{U}+\ket*{\vec{P}}=\vec{u}\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
 \end{bmatrix}+\begin{bmatrix}\vec{0}\\
@@ -2132,8 +2394,8 @@ p\vec{u}
 
 可以将 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:守恒律::积分方程组::物质导数"
+LatexCommand ref
+reference "eq:NS::积分型::物质导数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2143,51 +2405,38 @@ noprefix "false"
  式化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{V}\pdv{\ket{U}}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::时间偏导数}
+\boxed{\int_{V}\partial_{t}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:NS::积分型::守恒型}
 \end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-借助于 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 式的第二行，并引入列矩阵
-\begin_inset Formula 
-\[
-\ket*{\vec{F}^{c}}=\ket*{\vec{F}}-\vec{u}^{c}\ket{U}=\left(\vec{u}-\vec{u}^{c}\right)\begin{bmatrix}\rho\\
-\vec{u}\rho\\
-E\rho
-\end{bmatrix}+\begin{bmatrix}\vec{0}\\
-p\Tensor{1}\\
-p\vec{u}
-\end{bmatrix}
-\]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\vec{u}^{c}$
+\begin_inset Formula $\partial_{t}:=\pdv{t}$
 \end_inset
 
- 为控制面 
-\begin_inset Formula $\partial V$
-\end_inset
+，四个列矩阵依次被称为「守恒 (conservation) 项」、「对流 (convection) 项」、「扩散 (diffusion) 项」、「源
+ (source) 项」。
+\end_layout
 
- 的移动速度，可以将 
+\begin_layout Itemize
+借助于物质导数在
+\emph on
+移动控制体
+\emph default
+上的积分展开（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:守恒律::积分方程组::物质导数"
+LatexCommand ref
+reference "eq:物质导数::积分展开"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的第二行），又可以将 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::物质导数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2197,66 +2446,74 @@ noprefix "false"
  式化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}^{c}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:守恒律::积分方程组::时间全导数}
+\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{F}-\vec{u}^{c}U}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}}\label{eq:NS::积分型::移动控制体}
 \end{equation}
 
 \end_inset
 
-若 
-\begin_inset Formula $\vec{u}^{c}=\vec{0}$
+它是
+\emph on
+有限体积法
+\emph default
+的基础，其中 
+\begin_inset Formula $\ket*{\vec{F}-\vec{u}^{c}U}\equiv\ket*{\vec{F}}-\vec{u}^{c}\ket*{U}$
 \end_inset
 
- 则 
-\begin_inset Formula $\ket*{\vec{F}^{c}}=\ket*{\vec{F}}$
-\end_inset
+。特别地：
+\begin_inset Formula 
+\[
+\vec{u}^{c}=\vec{0}\implies\dv{t}\int_{V}\ket{U}\dd{V}=\int_{V}\partial_{t}\ket{U}\dd{V}
+\]
 
-，从而有 
-\begin_inset Formula $\dv{t}\int_{V}\ket{U}\dd{V}=\int_{V}\pdv{\ket{U}}{t}\dd{V}$
 \end_inset
 
 。
 \end_layout
 
-\begin_layout Subsection
-守恒型微分方程组
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:守恒律::微分方程组::守恒型"
-
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
+\begin_layout Subsection
+守恒型微分方程组
+\end_layout
+
 \begin_layout Standard
-如果 
+对积分型 NS 方程组（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:守恒律::积分方程组::时间偏导数"
+LatexCommand ref
+reference "eq:NS::积分型::守恒型"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式中的被积项充分光滑，则可以对
+ 式）中的
 \emph on
 面积分
 \emph default
-应用 Gauss 散度定理：
+应用 Gauss 散度定理（假设被积函数充分光滑）即得
 \begin_inset Formula 
 \[
-\int_{V}\pdv{\ket{U}}{t}\dd{V}+\int_{V}\div\ket*{\vec{F}}\dd{V}=\int_{V}\div\ket*{\vec{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
+\int_{V}\partial_{t}\ket{U}\dd{V}+\int_{V}\divergence\ket*{\vec{F}}\dd{V}=\int_{V}\divergence\ket*{\vec{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
 \]
 
 \end_inset
 
-考虑到控制体的任意性，实际上等价于如下的「守恒型微分方程组
+考虑到 
+\begin_inset Formula $V$
+\end_inset
+
+ 的任意性，该式等价于如下的「微分型 NS 方程组 (Navier–Stokes equations in differential form)
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-conservation!system of ~ laws!~ in differential form
+conservation!system of ~ laws!Navier–Stokes equations in differential form
 \end_layout
 
 \end_inset
@@ -2264,237 +2521,257 @@ conservation!system of ~ laws!~ in differential form
 」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{\ket{U}}{t}+\div{\ket*{\vec{F}}}=\div{\ket*{\vec{G}}}+\ket{H}}\label{eq:守恒律::微分方程组::守恒型}
+\boxed{\partial_{t}\ket{U}+\divergence\ket*{\vec{F}}=\divergence\ket*{\vec{G}}+\ket{H}}\label{eq:NS::微分型::守恒型}
 \end{equation}
 
 \end_inset
 
 即
 \begin_inset Formula 
-\[
-\begin{aligned}\pdv{\rho}{t}+\div{\left(\vec{u}\rho\right)} & =0\\
-\pdv{\vec{u}\rho}{t}+\div{\left(\vec{u}\vec{u}\rho+p\Tensor{1}\right)} & =\div{\Tensor{\tau}}+\vec{b}\\
-\pdv{E\rho}{t}+\div{\left(\vec{u}E\rho+p\vec{u}\right)} & =\div{\left(\Tensor{\tau}\vdot\vec{u}-\vec{q}\right)}+\vec{b}\vdot\vec{u}+j
-\end{aligned}
-\]
-
-\end_inset
-
-在流体力学中，它被称为「Navier–Stokes 方程」。在三维直角坐标系中，它的展开形式为
-\begin_inset Formula 
 \begin{equation}
-\pdv{t}\begin{bmatrix}\rho\\
-u_{1}\rho\\
-u_{2}\rho\\
-u_{3}\rho\\
+\partial_{t}\begin{bmatrix}\rho\\
+\vec{u}\rho\\
 E\rho
-\end{bmatrix}+\pdv{x_{\alpha}}\begin{bmatrix}u_{\alpha}\rho\\
-u_{\alpha}u_{1}\rho+p\delta_{\alpha1}\\
-u_{\alpha}u_{2}\rho+p\delta_{\alpha2}\\
-u_{\alpha}u_{3}\rho+p\delta_{\alpha3}\\
-u_{\alpha}E\rho+pu_{\alpha}
-\end{bmatrix}=\pdv{x_{\alpha}}\begin{bmatrix}0\\
-\tau_{\alpha1}\\
-\tau_{\alpha2}\\
-\tau_{\alpha3}\\
-\tau_{\alpha\gamma}u_{\gamma}-q_{\alpha}
+\end{bmatrix}+\divergence\begin{bmatrix}\vec{u}\rho\\
+\vec{u}\vec{u}\rho+p\Tensor{1}\\
+\vec{u}E\rho+p\vec{u}
+\end{bmatrix}=\divergence\begin{bmatrix}\vec{0}\\
+\Tensor{\tau}\\
+\Tensor{\tau}\vdot\vec{u}-\vec{q}
 \end{bmatrix}+\begin{bmatrix}0\\
-b_{1}\\
-b_{2}\\
-b_{3}\\
-b_{\gamma}u_{\gamma}+j
-\end{bmatrix}\label{eq:NS-方程::守恒型::直角坐标}
+\vec{b}\\
+\vec{b}\vdot\vec{u}+j
+\end{bmatrix}\label{eq:NS::守恒型::向量形式}
 \end{equation}
 
 \end_inset
 
-其中 
-\begin_inset Formula $E=e+\frac{1}{2}u_{\alpha}u_{\alpha}$
+它在三维直角坐标系中的分量形式为
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\begin{bmatrix}\rho\\
+\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\rho\\
+E\rho
+\end{bmatrix}+\partial_{\alpha}\begin{bmatrix}u_{\alpha}\rho\\
+u_{\alpha}\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\rho+\begin{pmatrix}\delta_{\alpha1}\\
+\delta_{\alpha2}\\
+\delta_{\alpha3}
+\end{pmatrix}p\\
+u_{\alpha}E\rho+pu_{\alpha}
+\end{bmatrix}=\partial_{\alpha}\begin{bmatrix}0\\
+\begin{pmatrix}\tau_{\alpha1}\\
+\tau_{\alpha2}\\
+\tau_{\alpha3}
+\end{pmatrix}\\
+\tau_{\alpha\beta}u_{\beta}-q_{\alpha}
+\end{bmatrix}+\begin{bmatrix}0\\
+\begin{pmatrix}b_{1}\\
+b_{2}\\
+b_{3}
+\end{pmatrix}\\
+b_{\alpha}u_{\alpha}+j
+\end{bmatrix}\label{eq:NS::守恒型::直角坐标}
+\end{equation}
+
 \end_inset
 
-，重复的下标表示求和。
+其中
+\begin_inset Formula 
+\[
+E=e+\frac{1}{2}u_{\alpha}u_{\alpha}\qquad\partial_{t}:=\pdv{t}\qquad\partial_{\alpha}:=\pdv{x_{\alpha}}
+\]
+
+\end_inset
+
+并且约定：重复的下标 
+\begin_inset Formula $\alpha,\beta$
+\end_inset
+
+ 表示求和。
+\end_layout
+
+\begin_layout Subsection
+非守恒型积分方程组
+\end_layout
+
+\begin_layout Standard
+注意到守恒项 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 中的 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 可以被提出：
+\begin_inset Formula $\ket{U}=\rho\ket{W}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\bra{W}=\begin{bmatrix}1 & \vec{u} & E\end{bmatrix}$
+\end_inset
+
+，因此 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::物质导数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式中的物质导数可以借助于 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::移入积分号内"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式移入积分号内，从而得到与 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::守恒型"
+
+\end_inset
+
+ 式等价的
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\rho\DDt{\ket{W}}\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}\label{eq:NS::积分型::非守恒型}
+\end{equation}
+
+\end_inset
+
+为方便区分，通常将 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::守恒型"
+
+\end_inset
+
+ 式称为
+\emph on
+积分型 NS 方程组
+\emph default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!system of ~ laws!Navier–Stokes equations in integral form
+\end_layout
+
+\end_inset
+
+的「守恒形式 (conservative form)」，而将这里的 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::非守恒型"
+
+\end_inset
+
+ 式称为与之对应的「非守恒形式 (non-conservative form)」。
 \end_layout
 
 \begin_layout Subsection
 非守恒型微分方程组
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:守恒律::微分方程组::非守恒型"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-Suppose 
-\begin_inset Formula $\phi$
-\end_inset
-
- is 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth for both 
-\begin_inset Formula $t$
-\end_inset
-
- and 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
-, and 
-\begin_inset Formula $\rho$
-\end_inset
-
- is the density of mass, then 
-\begin_inset Formula $\DDt{}$
-\end_inset
-
- operating on an integral can be put inside according to the following rule:
-\begin_inset Formula 
-\begin{equation}
-\DDt{}\int_{V}\phi\rho\dd{V}=\int_{V}\DDt{\phi}\rho\dd{V}\label{eq:DDtInsideIntegral}
-\end{equation}
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
+对 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::积分型::非守恒型"
+
 \end_inset
 
+ 式中的
+\emph on
+面积分
+\emph default
+应用 Gauss 散度定理（假设被积函数充分光滑），并考虑控制体的任意性，可以得到
+\emph on
+微分型 NS 方程组
+\emph default
 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!system of ~ laws!Navier–Stokes equations in differential form
 \end_layout
 
-\begin_layout Proof
-Apply the first line of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::控制体"
-plural "false"
-caps "false"
-noprefix "false"
+\end_inset
+
+的「非守恒形式」：
+\begin_inset Formula 
+\[
+\rho\DDt{\ket{W}}+\divergence\ket*{\vec{P}}=+\divergence\ket*{\vec{G}}+\ket{H}
+\]
 
 \end_inset
 
- and Gauss's divergence theorem to the LHS:
+由于 
+\begin_inset Formula $\ket{W}$
+\end_inset
+
+ 的第一项是常数，对其求导恒等于零，因此通常用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:质量守恒::微分型::非守恒型"
+
+\end_inset
+
+ 式代替，得到
 \begin_inset Formula 
-\[
-\begin{aligned}\DDt{}\int_{V}\phi\rho\dd{V} & =\int_{V}\pdv{\phi\rho}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}\phi\rho\dd{S}\\
- & =\int_{V}\left(\pdv{\phi\rho}{t}+\div{\left(\vec{u}\phi\rho\right)}\right)\dd{V}
+\begin{equation}
+\begin{aligned}\DDt{\rho}+\rho\divergence\vec{u} & =0\\
+\rho\DDt{\vec{u}}+\divergence(p\Tensor{1}) & =\divergence\Tensor{\tau}+\vec{b}\\
+\rho\DDt{E}+\divergence(p\vec{u}) & =\divergence(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \end{aligned}
-\]
-
-\end_inset
-
-Apply 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:物质导数::任意一点处"
-
-\end_inset
-
- to the RHS of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:DDtInsideIntegral"
-
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\int_{V}\DDt{\phi}\rho\dd{V}=\int_{V}\left(\pdv{\phi}{t}\rho+\vec{u}\rho\vdot\grad{\phi}\right)\dd{V}
-\]
-
-\end_inset
-
-Compare these two integrals, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:DDtInsideIntegral"
-
-\end_inset
-
- is true iff
-\begin_inset Formula 
-\[
-\int_{V}\left(\pdv{\rho}{t}+\div{\left(\vec{u}\rho\right)}\right)\phi\dd{V}=0
-\]
-
-\end_inset
-
-The integrand is always zero, since the parenthesized term is the LHS of
- the equation for mass conservation.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Note that 
-\begin_inset Formula $\ket{U}=\ket{W}\rho$
-\end_inset
-
- where 
-\begin_inset Formula $\ket{W}=\begin{bmatrix}1 & \vec{u} & E\end{bmatrix}^{\dagger}$
-\end_inset
-
-.
- So, this lemma can be applied to 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:守恒律::积分方程组::物质导数"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, which becomes
-\begin_inset Formula 
-\[
-\int_{V}\DDt{\ket{W}}\rho\dd{V}+\oint_{\partial V}\vec{n}\vdot\ket*{\vec{P}}\dd{S}=\oint_{\partial V}\vec{n}\vdot\ket*{\vec{G}}\dd{S}+\int_{V}\ket{H}\dd{V}
-\]
-
-\end_inset
-
-Again, if the integrands are sufficiently smooth, then Gauss's divergence
- theorem can be applied to them, which leads to
-\begin_inset Formula 
-\[
-\rho\DDt{\ket{W}}+\div{\ket*{\vec{P}}}=\div{\ket*{\vec{G}}}+\ket{H}
-\]
-
-\end_inset
-
-or equivalently
-\begin_inset Formula 
-\begin{equation}
-\DDt{\rho}=-\rho\div{\vec{u}}\label{eq:ConservationOfMassInNonConservativeForm}
+\label{eq:NS::非守恒型::向量形式}
 \end{equation}
 
 \end_inset
 
-
+它在三维直角坐标系中的分量形式为
 \begin_inset Formula 
 \begin{equation}
-\rho\DDt{\vec{u}}=\div{\Tensor{\sigma}}+\vec{b}\label{eq:ConservationOfMomentumInNonConservativeForm}
-\end{equation}
-
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\rho\DDt{E}=\div{\left(\Tensor{\sigma}\vdot\vec{u}-\vec{q}\right)}+\vec{b}\vdot\vec{u}+j\label{eq:ConservationOfEnergyInNonConservativeForm}
+\DDt{}\begin{bmatrix}\rho\\
+\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\\
+E
+\end{bmatrix}+\begin{bmatrix}\rho\partial_{\alpha}u_{\alpha}\\
+\rho^{-1}\begin{pmatrix}\partial_{1}\\
+\partial_{2}\\
+\partial_{3}
+\end{pmatrix}p\\
+\rho^{-1}\partial_{\alpha}(pu_{\alpha})
+\end{bmatrix}=\rho^{-1}\partial_{\alpha}\begin{bmatrix}0\\
+\begin{pmatrix}\tau_{\alpha1}\\
+\tau_{\alpha2}\\
+\tau_{\alpha3}
+\end{pmatrix}\\
+\tau_{\alpha\beta}u_{\beta}-q_{\alpha}
+\end{bmatrix}+\rho^{-1}\begin{bmatrix}0\\
+\begin{pmatrix}b_{1}\\
+b_{2}\\
+b_{3}
+\end{pmatrix}\\
+b_{\alpha}u_{\alpha}+j
+\end{bmatrix}\label{eq:NS::非守恒型::直角坐标}
 \end{equation}
 
 \end_inset
@@ -2511,116 +2788,175 @@ or equivalently
 \end_layout
 
 \begin_layout Standard
-Take inner product of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationOfMomentumInNonConservativeForm"
-
-\end_inset
-
- with 
+以 
 \begin_inset Formula $\vec{u}$
 \end_inset
 
-:
+ 点乘
+\emph on
+非守恒型
+\emph default
+动量方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::非守恒型::向量形式"
+
+\end_inset
+
+ 式第二行，暂不代入 
+\begin_inset Formula $\Tensor{\sigma}=\Tensor{\tau}-p\Tensor{1}$
+\end_inset
+
+）：
 \begin_inset Formula 
 \[
-\vec{u}\vdot\rho\DDt{\vec{u}}=\vec{u}\vdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)
+\vec{u}\vdot\rho\DDt{\vec{u}}=\vec{u}\vdot\left(\divergence\Tensor{\sigma}+\vec{b}\right)
 \]
 
 \end_inset
 
-Recall that 
+并代入物质导数 
 \begin_inset Formula $\DDt{}$
 \end_inset
 
- is a linear operator, the LHS then becomes
+ 的性质（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::性质"
+
+\end_inset
+
+ 式）：
 \begin_inset Formula 
 \[
-\vec{u}\vdot\rho\DDt{\vec{u}}=\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}
+\vec{u}\vdot\rho\DDt{\vec{u}}=\rho\DDt{}\frac{\vec{u}\vdot\vec{u}}{2}=\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}
 \]
 
 \end_inset
 
-The resulting equation
+得到的就是「动能方程」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\rho\DDt{\abs{\vec{u}}^{2}/2}=\vec{u}\vdot\left(\div{\Tensor{\sigma}}+\vec{b}\right)}\label{eq:EquationForKineticEnergy}
+\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}=\vec{u}\vdot\left(\divergence\Tensor{\sigma}+\vec{b}\right)\label{eq:动能方程}
 \end{equation}
 
 \end_inset
 
-is the formula for the material derivative of kinetic energy per unit mass.
+它表示「比动能 (specific kinetic energy)」 
+\begin_inset Formula $\frac{1}{2}\abs{\vec{u}}^{2}$
+\end_inset
+
+ 的变化率。
 \end_layout
 
 \begin_layout Subsection
 内能方程
 \end_layout
 
-\begin_layout Lemma
-Define the inner product of two tensors as 
-\begin_inset Formula $\Tensor{A}:\Tensor{B}=A_{ik}B_{ik}$
-\end_inset
-
- and the gradient of velocity as 
-\begin_inset Formula $\grad{\vec{u}}:=\vec{e}_{i}\vec{e}_{k}\pdv*{u_{k}}{x_{i}}$
-\end_inset
-
-, there is
-\begin_inset Formula 
-\[
-\div{\left(\Tensor{\sigma}\vdot\vec{u}\right)}=\vec{u}\vdot\left(\div{\Tensor{\sigma}}\right)+\Tensor{\sigma}:\left(\grad{\vec{u}}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
+根据 
+\begin_inset Formula $\DDt{}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Subtract 
+ 的线性性质（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EquationForKineticEnergy"
+LatexCommand ref
+reference "eq:物质导数::性质"
 
 \end_inset
 
- from 
+ 式）及 
+\begin_inset Formula $E=e+\frac{1}{2}\abs{\vec{u}}^{2}$
+\end_inset
+
+ ，只需从
+\emph on
+非守恒型
+\emph default
+能量方程（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationOfEnergyInNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
+LatexCommand ref
+reference "eq:NS::非守恒型::向量形式"
 
 \end_inset
 
- and recall 
-\begin_inset Formula $E=e+\abs{\vec{u}}^{2}/2$
+ 式第三行）中减去动能方程（ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:动能方程"
+
 \end_inset
 
-, we have
+ 式），就可以得到关于「比内能 (specific internal energy)」 
+\begin_inset Formula $e$
+\end_inset
+
+ 的方程：
 \begin_inset Formula 
 \[
-\rho\DDt{e}=\Tensor{\sigma}:\left(\grad{\vec{u}}\right)-\div{\vec{q}}+j
+\begin{aligned}\rho\DDt{e} & =\rho\DDt{E}-\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}\\
+ & =\divergence(\Tensor{\sigma}\vdot\vec{u})-\vec{u}\vdot\left(\divergence\Tensor{\sigma}\right)-\divergence\vec{q}+j
+\end{aligned}
 \]
 
+\end_inset
+
+第二行的前两项还可以写成更紧凑的形式，这需要借助于以下定义：
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[张量内积]
+\end_layout
+
+\end_inset
+
+任意两个二阶张量 
+\begin_inset Formula $\Tensor{A}=A_{ik}\vec{e}_{i}\vec{e}_{k}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Tensor{B}=B_{ik}\vec{e}_{i}\vec{e}_{k}$
+\end_inset
+
+ 的内积定义为
+\begin_inset Formula 
+\[
+\Tensor{A}\boldsymbol{:}\Tensor{B}=A_{ik}B_{ik}
+\]
+
+\end_inset
+
+这里约定：重复的下标表示求和。 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
+\begin_layout Standard
+与「力（向量）与速度（向量）的内积表示功率」类似，「应力（张量）与应变率（张量）的内积」也具有功率的量纲。在流体力学中，主要考虑 
+\begin_inset Formula $\Tensor{\sigma},\Tensor{\tau}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\grad\vec{u},\Tensor{E}$
+\end_inset
+
+ 的内积：
+\end_layout
+
 \begin_layout Lemma
 \begin_inset Formula 
 \[
-\Tensor{\sigma}:\left(\grad{\vec{u}}\right)=\Tensor{\sigma}:\Tensor{E}
+\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)=\divergence{\left(\Tensor{\sigma}\vdot\vec{u}\right)}-\vec{u}\vdot\left(\divergence\Tensor{\sigma}\right)
 \]
 
 \end_inset
@@ -2638,7 +2974,9 @@ noprefix "false"
 \begin_layout Lemma
 \begin_inset Formula 
 \[
-\Tensor{1}:\Tensor{E}=\div{\vec{u}}
+\begin{aligned}\Tensor{1}\boldsymbol{:}\Tensor{E} & =\divergence\vec{u}\\
+\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right) & =\Tensor{\sigma}\boldsymbol{:}\Tensor{E}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divergence\vec{u}
+\end{aligned}
 \]
 
 \end_inset
@@ -2654,27 +2992,18 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Apply them together with 
-\begin_inset Formula $\Tensor{\sigma}=-p\Tensor{1}+\Tensor{\tau}$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\Tensor{\sigma}:\left(\grad{\vec{u}}\right)=\Tensor{\tau}:\Tensor{E}-p\div{\vec{u}}
-\]
-
-\end_inset
-
-The equation for internal energy then becomes
+于是内能方程可以写成
 \begin_inset Formula 
 \begin{equation}
-\boxed{\rho\DDt{e}=\Tensor{\tau}:\Tensor{E}-p\div{\vec{u}}-\div{\vec{q}}+j}\label{eq:EquationForInternalEnergy}
+\begin{aligned}\rho\DDt{e} & =\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)-\divergence\vec{q}+j\\
+ & =\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divergence\vec{u}-\divergence\vec{q}+j
+\end{aligned}
+\label{eq:内能方程}
 \end{equation}
 
 \end_inset
 
-
+可见：黏性力做功会使控制体内的内能（温度）增加。
 \end_layout
 
 \begin_layout Subsection
@@ -2682,54 +3011,61 @@ The equation for internal energy then becomes
 \end_layout
 
 \begin_layout Standard
-Recall 
+将「比体积 (specific volume)」 
+\begin_inset Formula $v=\rho^{-1}$
+\end_inset
+
+ 代入
+\emph on
+非守恒型
+\emph default
+质量方程（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationOfMassInNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
+LatexCommand ref
+reference "eq:NS::非守恒型::向量形式"
 
 \end_inset
 
- and 
-\begin_inset Formula $v=1/\rho$
-\end_inset
-
-, there is
+ 式第一行）可得
 \begin_inset Formula 
 \[
-\div{\vec{u}}=\rho\DDt{v}
+\divergence\vec{u}=-\rho^{-1}\DDt{\rho}=-v\DDt{v^{-1}}=v^{-1}\DDt{v}=\rho\DDt{v}
 \]
 
 \end_inset
 
-Move it to the LHS of 
+将其代入内能方程（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EquationForInternalEnergy"
+LatexCommand ref
+reference "eq:内能方程"
 
 \end_inset
 
- and recall the 1st law of thermodynamics 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Law1ofThermodynamics"
-plural "false"
-caps "false"
-noprefix "false"
+ 式第二行），并利用
+\emph on
+热力学第一定律
+\emph default
+：
+\begin_inset Formula 
+\[
+\dd{e}=T\dd{s}-p\dd{v}
+\]
 
 \end_inset
 
-, we have
+可以得到「熵方程」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\rho T\DDt{s}=\Tensor{\tau}:\Tensor{E}-\div{\vec{q}}+j}\label{eq:EquationForEntropy}
+\rho T\DDt{s}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-\divergence\vec{q}+j\label{eq:熵方程}
 \end{equation}
 
 \end_inset
 
-which is the equation for entropy.
+它描述「比熵 (specific entropy)」 
+\begin_inset Formula $s$
+\end_inset
+
+ 的变化率。可见：黏性力做功会使控制体内的熵增加，因此相应的物理过程是「不可逆的 (irreversible)」。
 \end_layout
 
 \begin_layout Subsection
@@ -2737,70 +3073,107 @@ Bernoulli 方程
 \end_layout
 
 \begin_layout Standard
-The surface force term in the energy equation, i.e.
- 
+能量方程（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationOfEnergyInNonConservativeForm"
+LatexCommand ref
+reference "eq:NS::非守恒型::向量形式"
+
+\end_inset
+
+ 式第三行）中含压力 
+\begin_inset Formula $p$
+\end_inset
+
+ 的项可以作如下拆分
+\begin_inset Formula 
+\[
+\divergence(p\vec{u})=\vec{u}\vdot\grad{p}+p\divergence\vec{u}
+\]
+
+\end_inset
+
+利用物质导数的微分展开（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:物质导数::微分展开"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-, is
+ 式）及质量方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::非守恒型::向量形式"
+
+\end_inset
+
+ 式第一行），又可以将其转化为
 \begin_inset Formula 
 \[
-\begin{aligned}\div{\left(\Tensor{\sigma}\vdot\vec{u}\right)} & =\div{\left(\Tensor{\tau}\vdot\vec{u}\right)}-\div{\left(p\vec{u}\right)}\\
- & =\div{\left(\Tensor{\tau}\vdot\vec{u}\right)}-\vec{u}\vdot\grad{p}-p\div{\vec{u}}
-\end{aligned}
+\divergence(p\vec{u})=\left(\DDt{p}-\pdv{p}{t}\right)-\frac{p}{\rho}\DDt{\rho}=\rho\DDt{}\left(\frac{p}{\rho}\right)-\pdv{p}{t}
 \]
 
 \end_inset
 
-in which,
+代回能量方程即得
 \begin_inset Formula 
 \[
-\begin{aligned}\vec{u}\vdot\grad{p} & =\DDt{p}-\pdv{p}{t}\\
-p\div{\vec{u}} & =\frac{p}{\rho}\DDt{\rho}=p\rho\DDt{}\frac{1}{\rho}
-\end{aligned}
+\rho\DDt{}\left(h+\frac{\abs{\vec{u}}^{2}}{2}\right)=\pdv{p}{t}+\divergence(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \]
 
 \end_inset
 
-Substituting them back into the energy equation and collecting all the 
-\begin_inset Formula $\DDt{}$
+其中 
+\begin_inset Formula $h:=e+p/\rho$
 \end_inset
 
- terms leads to
+ 为「比焓 (specific enthalpy)」，即
+\emph on
+单位质量
+\emph default
+流体的焓。
+\end_layout
+
+\begin_layout Standard
+假设体积力有势，且与质量成正比，即存在标量 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\vec{b}=\rho\grad{\phi}$
+\end_inset
+
+，此时有
 \begin_inset Formula 
 \[
-\rho\DDt{}\left(e+\frac{\abs{\vec{u}}^{2}}{2}+\frac{p}{\rho}\right)=\pdv{p}{t}+\div{\left(\Tensor{\tau}\vdot\vec{u}-\vec{q}\right)}+\vec{b}\vdot\vec{u}+j
+\vec{u}\vdot\vec{b}=\rho\vec{u}\vdot\grad\phi=\rho\DDt{\phi}-\rho\pdv{\phi}{t}
 \]
 
 \end_inset
 
-Suppose 
-\begin_inset Formula $\vec{b}=\grad{\phi}$
-\end_inset
+进一步假设流动是「定常 (steady)」和「等熵的 (isentropic)」，则时间偏导数项以及黏性项、传热项、热源项均可忽略，于是得到「微分型
+ Bernoulli 方程」：
+\end_layout
 
-, the flow is steady and ignore heat source and heat conduction, it becomes
+\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\left(h+\phi+\abs{\vec{u}}^{2}/2\right)=0}\label{eq:BernoulliEquationDifferentialForm}
+\DDt{}\left(h+\frac{\abs{\vec{u}}^{2}}{2}+\phi\right)=0\label{eq:Bernoulli::微分型}
 \end{equation}
 
 \end_inset
 
-This is the differential form of Bernoulli's equation.
-\end_layout
-
-\begin_layout Standard
-If the flow is 
+利用
 \emph on
-isentropic
+热力学第一定律
 \emph default
-, there is
+及
+\emph on
+等熵条件
+\emph default
+
 \begin_inset Formula 
 \[
 T\dd{s}=\dd{h}-v\dd{p}=0
@@ -2808,14 +3181,14 @@ T\dd{s}=\dd{h}-v\dd{p}=0
 
 \end_inset
 
-
+可以将 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:BernoulliEquationDifferentialForm"
+LatexCommand ref
+reference "eq:Bernoulli::微分型"
 
 \end_inset
 
- can be integrated along any 
+ 式沿
 \family roman
 \series medium
 \shape up
@@ -2828,8 +3201,11 @@ reference "eq:BernoulliEquationDifferentialForm"
 \uwave off
 \noun off
 \color none
-trajectory line, e.g.
- 
+任意「迹线 (trajectory line) 
+\begin_inset Formula $L$
+\end_inset
+
+」积分
 \family default
 \series default
 \shape default
@@ -2842,26 +3218,22 @@ trajectory line, e.g.
 \uwave default
 \noun default
 \color inherit
-
-\begin_inset Formula $C$
-\end_inset
-
-, which gives
+，从而得到「积分–代数型 Bernoulli 方程」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{p_{1}}^{p_{2}}v\dd{p}+\phi+\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}\in C}\label{eq:BernoulliEquationAlgebraicForm}
+\int_{p_{1}}^{p_{2}}v\dd{p}+\frac{\abs{\vec{u}}^{2}}{2}+\phi=\text{const}\qquad\forall\,\vec{x}\in L\label{eq:Bernoulli::积分代数型}
 \end{equation}
 
 \end_inset
 
-If the flow is also 
-\emph on
-incompressible
-\emph default
-, it will become
+作为特例，如果流动是「不可压的 (incompressible)」，则上式积分中的 
+\begin_inset Formula $v=\rho^{-1}$
+\end_inset
+
+ 可以提到积分号外，从而得到「代数型 Bernoulli 方程」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{p+\rho\phi+\rho\abs{\vec{u}}^{2}/2=\text{const}\qquad\forall\vec{x}}\label{eq:BernoulliEquationIncompressible}
+\frac{p}{\rho}+\frac{\abs{\vec{u}}^{2}}{2}+\phi=\text{const}\qquad\forall\,\vec{x}\label{eq:Bernoulli::代数型::不可压}
 \end{equation}
 
 \end_inset
@@ -2870,7 +3242,44 @@ incompressible
 \end_layout
 
 \begin_layout Section
-简化情形
+流动方程的简化
+\end_layout
+
+\begin_layout Standard
+Navier–Stokes 方程是非线性偏微分方程组，目前尚无通用的求解方法，甚至连解的「存在唯一性 (existence and uniqueness)」都没
+有公认可靠的结论。然而针对一些特殊问题，往往可以（而且应当）根据流动的特点，对 Navier–Stokes 方程作适当的简化。例如：
+\end_layout
+
+\begin_layout Itemize
+对于航空工程所关注的「空气动力学 (aerodynamics)」问题，体积力 
+\begin_inset Formula $\vec{b}$
+\end_inset
+
+ 的影响很小，通常可以忽略。
+\end_layout
+
+\begin_layout Itemize
+对于不存在
+\emph on
+化学反应
+\emph default
+和
+\emph on
+电加热
+\emph default
+的问题，不需要考虑内部热源 
+\begin_inset Formula $j$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+基于这两点，可以忽略 Navier–Stokes 方程中的源项 
+\begin_inset Formula $\ket{H}$
+\end_inset
+
+。本节将默认这一假设是合理的。
 \end_layout
 
 \begin_layout Subsection
@@ -2878,125 +3287,68 @@ incompressible
 \end_layout
 
 \begin_layout Standard
-For plane waves, there is a special reference frame, in which
-\end_layout
-
-\begin_layout Itemize
-a vector has only one non-zero component, e.g.
- 
-\begin_inset Formula $u_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $b_{1}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-a scalar or the 1st component of a vector varies only along 
+如果研究对象是平面波，则只需要考虑各向量（张量）沿 
 \begin_inset Formula $x_{1}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-一维 Navier–Stokes 方程
-\end_layout
-
-\begin_layout Standard
-In this frame, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:NS-方程::守恒型::直角坐标"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- becomes
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{equation}
-\begin{bmatrix}\rho\\
-u\rho\\
-E\rho
-\end{bmatrix}_{t}+\begin{bmatrix}u\rho\\
-uu\rho+p\\
-uE\rho+pu
-\end{bmatrix}_{x}=\begin{bmatrix}0\\
-\tau\\
-\tau u-q
-\end{bmatrix}_{x}+\begin{bmatrix}0\\
-b\\
-bu+j
-\end{bmatrix}\label{eq:NavierStokes1dConservative}
-\end{equation}
-
-\end_inset
-
-where
+ 轴（波的传播方向）的分量，即
 \begin_inset Formula 
 \[
-\begin{bmatrix}\cdots\end{bmatrix}_{t}:=\pdv{t}\begin{bmatrix}\cdots\end{bmatrix}\qquad\begin{bmatrix}\cdots\end{bmatrix}_{x}:=\pdv{x}\begin{bmatrix}\cdots\end{bmatrix}\qquad E=e+\frac{u^{2}}{2}\qquad\tau=\tau_{11}
+u:=u_{1}\qquad b:=b_{1}\qquad\tau:=\tau_{11}\qquad E:=e+\frac{u^{2}}{2}
 \]
 
 \end_inset
 
+从而可以将三维 Navier–Stokes 方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::守恒型::直角坐标"
 
+\end_inset
+
+ 或 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::非守恒型::直角坐标"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）简化为
 \end_layout
 
 \begin_layout Standard
-Similarly, (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:ConservationOfMassInNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:ConservationOfMomentumInNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationOfEnergyInNonConservativeForm"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) become
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\DDt{\rho} & =-\rho\pdv{u}{x}\\
-\rho\DDt{u} & =\pdv{\left(\tau-p\right)}{x}+b\\
-\rho\DDt{E} & =\pdv{\left(\tau u-q\right)}{x}+bu+j
-\end{aligned}
-\label{eq:NavierStokes1dNonConservative}
+\partial_{t}\begin{bmatrix}\rho\\
+u\rho\\
+E\rho
+\end{bmatrix}+\partial_{x}\begin{bmatrix}u\rho\\
+uu\rho+p\\
+uE\rho+pu
+\end{bmatrix}=\partial_{x}\begin{bmatrix}0\\
+\tau\\
+\tau u-q
+\end{bmatrix}\label{eq:NS::一维::守恒型}
+\end{equation}
+
+\end_inset
+
+或
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+u\partial_{x}\right)\begin{bmatrix}\rho\\
+u\\
+E
+\end{bmatrix}+\frac{1}{\rho}\begin{bmatrix}\rho^{2}\partial_{x}u\\
+\partial_{x}p\\
+\partial_{x}(pu)
+\end{bmatrix}=\frac{1}{\rho}\partial_{x}\begin{bmatrix}0\\
+\tau\\
+\tau u-q
+\end{bmatrix}\label{eq:NS::一维::非守恒型}
 \end{equation}
 
 \end_inset
@@ -3004,105 +3356,84 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Standard
+如果进一步假设流体具有
+\emph on
+线性、各向同性
+\emph default
+的本构关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:本构关系::线性::各向同性"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式），并假设黏性系数 
+\begin_inset Formula $\mu,\zeta$
+\end_inset
+
+ 是常量，则有
+\begin_inset Formula 
+\[
+\tau=\tau_{11}=2\mu\pdv{u_{1}}{x_{1}}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{11}\pdv{u_{j}}{x_{j}}=\overbrace{\left(\zeta+\frac{4}{3}\mu\right)}^{\eta}\pdv{u}{x}
+\]
+
+\end_inset
+
+将其代入以上两式的右端，会得到含有二阶导数的项：
+\begin_inset Formula 
+\[
+\pdv{\tau}{x}=\pdv{x}\left(\eta\pdv{u}{x}\right)=\eta\pdv[2]{u}{x}\qquad\pdv{(\tau u)}{x}=\left[\left(\pdv{u}{x}\right)^{2}+u\pdv[2]{u}{x}\right]\eta
+\]
+
+\end_inset
+
+这意味着：虽然一维流动中不存在「剪切 (shear)」，但是黏性依然会起「扩散 (diffusion)」作用，导致相应的物理过程是「不可逆的 (irrevers
+ible)」。这与熵方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:熵方程"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）的结论是一致的。
+\end_layout
+
+\begin_layout Subsection
 Burgers 方程
 \end_layout
 
 \begin_layout Standard
-Assume the fluid is Newtonian 
+将线性、各向同性本构关系代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:牛顿流体::各向同性"
-plural "false"
-caps "false"
-noprefix "false"
+LatexCommand ref
+reference "eq:NS::一维::非守恒型"
 
 \end_inset
 
-.
- Here we only care about 
-\begin_inset Formula $\tau_{11}$
+ 式的第二行，并记 
+\begin_inset Formula $\nu=\frac{1}{\rho}\left(\zeta+\frac{4}{3}\mu\right)$
 \end_inset
 
-, which is
+：
 \begin_inset Formula 
 \[
-\tau_{11}=2\mu E_{11}+\left(\zeta-\frac{2}{3}\mu\right)\delta_{11}\pdv{u_{j}}{x_{j}}\qquad E_{11}=\pdv{u_{1}}{x_{1}}
+\pdv{u}{t}+u\pdv{u}{x}+\frac{1}{\rho}\pdv{p}{x}=\nu\pdv[2]{u}{x}
 \]
 
 \end_inset
 
-Recall that for plane waves, only 
-\begin_inset Formula $u_{1}$
+如果压力变化可忽略，即 
+\begin_inset Formula $\pdv*{p}{x}\to0$
 \end_inset
 
- is non-zero and only 
-\begin_inset Formula $\pdv*{u_{\alpha}}{x_{1}}$
-\end_inset
-
- has non-zero values, it becomes
-\begin_inset Formula 
-\[
-\tau_{11}=\left(\zeta+\frac{4}{3}\mu\right)\pdv{u_{1}}{x_{1}}\qor\tau=\left(\zeta+\frac{4}{3}\mu\right)\pdv{u}{x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Ignore 
-\begin_inset Formula $q$
-\end_inset
-
- (heat conduction), 
-\begin_inset Formula $j$
-\end_inset
-
- (heat source), 
-\begin_inset Formula $b$
-\end_inset
-
- (body force) and the variation of 
-\begin_inset Formula $p$
-\end_inset
-
- in the 2nd line of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:NavierStokes1dNonConservative"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, and suppose 
-\begin_inset Formula $\mu,\zeta$
-\end_inset
-
- are constants, the momentum equation becomes
-\begin_inset Formula 
-\[
-\DDt{u}=\nu\pdv[2]{u}{x}\qquad\nu=\frac{1}{\rho}\left(\zeta+\frac{4}{3}\mu\right)>0
-\]
-
-\end_inset
-
-or equivalently
-\begin_inset Formula 
-\begin{equation}
-\boxed{\pdv{u}{t}+u\pdv{u}{x}=\nu\pdv[2]{u}{x}}\qquad\nu=\frac{1}{\rho}\left(\zeta+\frac{4}{3}\mu\right)>0\label{eq:BurgersEquationViscous}
-\end{equation}
-
-\end_inset
-
-which is known as the 
-\noun on
-Burgers equation
-\noun default
-
+，则得到「黏性 Burgers 方程
 \begin_inset Index idx
 status collapsed
 
@@ -3112,16 +3443,19 @@ PDE!Burgers equation!viscous ~
 
 \end_inset
 
-.
- When 
-\begin_inset Formula $\nu=0$
+」：
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+u\pdv{u}{x}=\nu\pdv[2]{u}\qquad\nu>0\label{eq:Burgers::有黏}
+\end{equation}
+
 \end_inset
 
-, it becomes its 
-\emph on
-inviscid
-\emph default
+如果黏性效应可忽略，即 
+\begin_inset Formula $\nu\to0$
+\end_inset
 
+，则得到「无黏 Burgers 方程
 \begin_inset Index idx
 status collapsed
 
@@ -3131,91 +3465,108 @@ PDE!Burgers equation!inviscid ~
 
 \end_inset
 
- version
+」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{u}{t}+u\pdv{u}{x}=0}\label{eq:BurgersEquationInviscid}
+\pdv{u}{t}+u\pdv{u}{x}=0\label{eq:Burgers::无黏}
 \end{equation}
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsubsection
-线性波动方程
 \end_layout
 
 \begin_layout Standard
-If the variation of 
+以上两式其中 
 \begin_inset Formula $u$
 \end_inset
 
- is so small that 
-\begin_inset Formula $\forall x_{0}$
+ 具有速度的量纲，在流体力学中，这是必然的结果。然而 Burgers 方程也可以从其他物理背景
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+例如：在
+\emph on
+队列行进问题
+\emph default
+中，
+\begin_inset Formula $u$
 \end_inset
 
- there is 
-\begin_inset Formula $\abs{u_{x}(x_{0})}\ll1$
+ 表示身高，速度 
+\begin_inset Formula $ku$
 \end_inset
 
-, then
-\begin_inset Formula 
-\[
-u(x)\approx u(x_{0})+u_{x}(x_{0})\cdot\left(x-x_{0}\right)\qand u(x)u_{x}(x)\approx u(x_{0})u_{x}(x)
-\]
-
-\end_inset
-
-Denote 
-\begin_inset Formula $c=u(x_{0})$
-\end_inset
-
-, Burgers equations 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:BurgersEquationViscous"
-plural "false"
-caps "false"
-noprefix "false"
+ 正比于身高。
+\end_layout
 
 \end_inset
 
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:BurgersEquationInviscid"
-plural "false"
-caps "false"
-noprefix "false"
-
+导出，在那里 
+\begin_inset Formula $u$
 \end_inset
 
- become the equations for linear waves
+ 未必是速度。更一般的情况是「非线性平面波方程 (nonlinear plane wave equation)」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{u}{t}+c\pdv{u}{x}=\nu\pdv[2]{u}{x}}\qquad\nu>0\label{eq:LinearConvectionDiffusionEquation}
+\pdv{u}{t}+a(u)\pdv{u}{x}=\nu\pdv[2]{u}\label{eq:PDE::平面波::非线性}
 \end{equation}
 
 \end_inset
 
-known as the 
-\noun on
-linear convection–diffusion equation
-\noun default
-, and
+只要 
+\begin_inset Formula $a(u)$
+\end_inset
+
+ 表示某种速度，各项的量纲就能够保持一致。如果 
+\begin_inset Formula $a(u)$
+\end_inset
+
+ 的取值范围很小，则可以假定「波速」为常值，此时 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PDE::平面波::非线性"
+
+\end_inset
+
+ 式退化为「线性对流扩散方程 (linear convection–diffusion equation)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+PDE!linear ~!convection–diffusion
+\end_layout
+
+\end_inset
+
+」
 \begin_inset Formula 
 \begin{equation}
-\boxed{\pdv{u}{t}+c\pdv{u}{x}=0}\label{eq:LinearAdvectionEquation}
+\pdv{u}{t}+c\pdv{u}{x}=\nu\pdv[2]{u}{x}\qquad\nu>0\label{eq:PDE::线性::对流扩散}
 \end{equation}
 
 \end_inset
 
-known as the 
-\noun on
-linear advection equation
-\noun default
-.
+如果忽略扩散效应，则得到「线性平流方程 (linear advection equation)」
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+PDE!linear ~!advection
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\pdv{u}{t}+c\pdv{u}{x}=0\label{eq:PDE::线性::平流}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -3223,174 +3574,179 @@ Euler 方程
 \end_layout
 
 \begin_layout Standard
-Ignoring 
-\begin_inset Formula $\tau_{ik}$
-\end_inset
-
- (shear stress), 
-\begin_inset Formula $q$
-\end_inset
-
- (heat conduction), 
+如果在忽略热源项 
 \begin_inset Formula $j$
 \end_inset
 
- (heat source) and 
-\begin_inset Formula $b$
+、体积力项 
+\begin_inset Formula $\vec{b}$
 \end_inset
 
- (body force) in 
+ 的基础上，进一步忽略黏性项 
+\begin_inset Formula $\Tensor{\tau}$
+\end_inset
+
+、传热项 
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+，则「守恒型三维 Navier–Stokes 方程」（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:NS-方程::守恒型::直角坐标"
+LatexCommand ref
+reference "eq:NS::守恒型::直角坐标"
 
 \end_inset
 
- leads to the
-\noun on
- Euler equations
-\noun default
-:
-\end_layout
-
-\begin_layout Standard
+ 式）简化为「守恒型三维 Euler 方程」：
 \begin_inset Formula 
 \begin{equation}
-\begin{bmatrix}\rho\\
-u_{1}\rho\\
-u_{2}\rho\\
-u_{3}\rho\\
+\partial_{t}\begin{bmatrix}\rho\\
+\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\rho\\
 E\rho
-\end{bmatrix}_{t}+\begin{bmatrix}u_{\alpha}\rho\\
-u_{\alpha}u_{1}\rho+p\delta_{\alpha1}\\
-u_{\alpha}u_{2}\rho+p\delta_{\alpha2}\\
-u_{\alpha}u_{3}\rho+p\delta_{\alpha3}\\
-u_{\alpha}E\rho+pu_{\alpha}
-\end{bmatrix}_{x_{\alpha}}=\begin{bmatrix}0\\
-0\\
-0\\
+\end{bmatrix}+\partial_{\alpha}\begin{bmatrix}\rho u_{\alpha}\\
+\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\rho u_{\alpha}+\begin{pmatrix}\delta_{\alpha1}\\
+\delta_{\alpha2}\\
+\delta_{\alpha3}
+\end{pmatrix}p\\
+(E\rho+p)u_{\alpha}
+\end{bmatrix}=\begin{bmatrix}0\\
+\begin{pmatrix}0\\
 0\\
 0
-\end{bmatrix}\label{eq:EulerEquations3d}
+\end{pmatrix}\\
+0
+\end{bmatrix}\label{eq:Euler::3d::守恒型}
 \end{equation}
 
 \end_inset
 
-where 
-\begin_inset Formula $E=e+u_{\alpha}u_{\alpha}/2$
+如果进一步忽略三维效应，则得到「守恒型一维 Euler 方程」：
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\begin{bmatrix}\rho\\
+u\rho\\
+E\rho
+\end{bmatrix}+\partial_{x}\begin{bmatrix}u\rho\\
+uu\rho+p\\
+uE\rho+pu
+\end{bmatrix}=\begin{bmatrix}0\\
+0\\
+0
+\end{bmatrix}\label{eq:Euler::1d::守恒型}
+\end{equation}
+
 \end_inset
 
-.
-\end_layout
 
-\begin_layout Subsubsection
-一维守恒型
 \end_layout
 
 \begin_layout Standard
-If the flow is also a plane wave, then 
+在忽略热源项 
+\begin_inset Formula $j$
+\end_inset
+
+、黏性项 
+\begin_inset Formula $\Tensor{\tau}$
+\end_inset
+
+、传热项 
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+ 的前提下，熵方程（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EulerEquations3d"
+LatexCommand ref
+reference "eq:熵方程"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- can be simplified into its 1D version:
-\end_layout
+ 式）简化为 
+\begin_inset Formula $\rho T\DDt{s}=0$
+\end_inset
 
-\begin_layout Standard
+。如果用它来替换能量方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::非守恒型::直角坐标"
+
+\end_inset
+
+ 式最后一行），则「非守恒型三维 Navier–Stokes 方程」（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:NS::非守恒型::直角坐标"
+
+\end_inset
+
+ 式）简化为「非守恒型三维 Euler 方程」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\begin{bmatrix}\rho\\
-u\rho\\
-E\rho
-\end{bmatrix}_{t}+\begin{bmatrix}u\rho\\
-uu\rho+p\\
-uE\rho+pu
-\end{bmatrix}_{x}=\begin{bmatrix}0\\
+\DDt{}\begin{bmatrix}\rho\\
+\begin{pmatrix}u_{1}\\
+u_{2}\\
+u_{3}
+\end{pmatrix}\\
+s
+\end{bmatrix}+\begin{bmatrix}\rho\partial_{\alpha}u_{\alpha}\\
+\rho^{-1}\begin{pmatrix}\partial_{1}\\
+\partial_{2}\\
+\partial_{3}
+\end{pmatrix}p\\
+0
+\end{bmatrix}=\begin{bmatrix}0\\
+\begin{pmatrix}0\\
 0\\
 0
-\end{bmatrix}}\label{eq:EulerEquations1d}
+\end{pmatrix}\\
+0
+\end{bmatrix}\label{eq:Euler::3d::非守恒型::直角坐标}
 \end{equation}
 
 \end_inset
 
-where 
-\begin_inset Formula $E=e+uu/2$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsubsection
-一维非守恒型
-\end_layout
-
-\begin_layout Standard
-Equivalently, at least in smooth regions, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EulerEquations1d"
-
-\end_inset
-
- can be written in a non-conservative form
+如果进一步忽略三维效应，则得到「非守恒型一维 Euler 方程」：
 \begin_inset Formula 
-\[
-\begin{bmatrix}\rho\\
-u\\
-s
-\end{bmatrix}_{t}+\begin{bmatrix}\begin{array}{ccc}
+\begin{equation}
+\left(\partial_{t}+\begin{bmatrix}\begin{array}{ccc}
 u & \rho\\
- & u\\
+\rho^{-1}a^{2} & u\\
  &  & u
-\end{array}\end{bmatrix}\begin{bmatrix}\rho\\
+\end{array}\end{bmatrix}\partial_{x}\right)\begin{bmatrix}\rho\\
 u\\
 s
-\end{bmatrix}_{x}=\begin{bmatrix}0\\
--p_{x}/\rho\\
-0
-\end{bmatrix}
-\]
-
-\end_inset
-
-or
-\begin_inset Formula 
-\[
-\begin{bmatrix}\rho\\
-u\\
-s
-\end{bmatrix}_{t}+\begin{bmatrix}\begin{array}{ccc}
-u & \rho\\
-a^{2}/\rho & u\\
- &  & u
-\end{array}\end{bmatrix}\begin{bmatrix}\rho\\
-u\\
-s
-\end{bmatrix}_{x}=\begin{bmatrix}0\\
+\end{bmatrix}=\begin{bmatrix}0\\
 0\\
 0
-\end{bmatrix}
-\]
+\end{bmatrix}\label{eq:Euler::1d::非守恒型}
+\end{equation}
 
 \end_inset
 
-by using
+这里用等熵关系
 \begin_inset Formula 
 \[
 \frac{1}{\rho}\pdv{p}{x}=\frac{a^{2}}{\rho}\pdv{\rho}{x}\impliedby\begin{cases}
 a^{2}=\gamma p/\rho & \text{calorically perfect gas}\\
-p/\rho^{\gamma}=\text{const} & \text{isentropic flow}
+p/\rho^{\gamma}=\texttt{const} & \text{isentropic flow}
 \end{cases}
 \]
 
 \end_inset
 
+消去了 
+\begin_inset Formula $\pdv*{p}{x}$
+\end_inset
 
+ 项。
 \end_layout
 
 \end_body
