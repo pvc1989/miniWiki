@@ -1,0 +1,1377 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+曲线与曲面
+\end_layout
+
+\begin_layout Section
+向量乘法
+\end_layout
+
+\begin_layout Subsection
+标量积（点乘）
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Formula $\mathbb{R}^{3}$
+\end_inset
+
+, the 
+\noun on
+dot product of two vectors
+\noun default
+
+\begin_inset Formula 
+\[
+\vec{A}=\sum_{i=1}^{3}\vec{e}_{i}A_{i}\qquad\vec{B}=\sum_{i=1}^{3}\vec{e}_{i}B_{i}
+\]
+
+\end_inset
+
+is defined to be a scalar:
+\begin_inset Formula 
+\[
+\vec{A}\cdot\vec{B}=\sum_{i=1}^{3}A_{i}B_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Based on the definition of dot product, we can define another few geometrical
+ quantities, such as the follows.
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+length of a vector
+\noun default
+ 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ is defined to be a non-negative scalar:
+\begin_inset Formula 
+\[
+\norm{\vec{a}}:=\sqrt{\vec{a}\cdot\vec{a}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+distance between two points 
+\begin_inset Formula $A$
+\end_inset
+
+
+\noun default
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ is defined to be the length of the vector connecting them:
+\begin_inset Formula 
+\[
+d(A,B):=\norm{\vv{AB}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+angle between two vectors
+\noun default
+ 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{c}$
+\end_inset
+
+ is defined to be a real number 
+\begin_inset Formula $\theta:=\angle\left(\vec{a},\vec{c}\right)$
+\end_inset
+
+, which satisfies:
+\begin_inset Formula 
+\[
+\vec{a}\cdot\vec{c}=\norm{\vec{a}}\norm{\vec{c}}\cos\theta\qquad\theta\in[0,2\pi)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Suppose 
+\begin_inset Formula $\vec{r}(t)$
+\end_inset
+
+ is a vector function with 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smoothness, 
+\begin_inset Formula $\vec{r}_{t}:=\dv{\vec{r}}{t}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\vec{r}_{t}\cdot\vec{r}\equiv0$
+\end_inset
+
+ iff the length of 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ is constant.
+\end_layout
+
+\begin_layout Subsection
+向量积（叉乘）
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+cross product
+\noun default
+ of two vectors
+\begin_inset Formula 
+\[
+\vec{A}=\sum_{i=1}^{3}\vec{e}_{i}A_{i}\qquad\vec{B}=\sum_{i=1}^{3}\vec{e}_{i}B_{i}
+\]
+
+\end_inset
+
+is defined to be a vector
+\begin_inset Formula 
+\[
+\vec{A}\times\vec{B}=\begin{vmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\\
+A_{1} & A_{2} & A_{3}\\
+B_{1} & B_{2} & B_{3}
+\end{vmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\vec{A}\times(\vec{B}\times\vec{C})=\vec{B}(\vec{A}\cdot\vec{C})-\vec{C}(\vec{A}\cdot\vec{B})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\vec{A}\times(\vec{B}\times\vec{C})+\vec{B}\times(\vec{C}\times\vec{A})+\vec{C}\times(\vec{A}\times\vec{B})=\vec{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Based on the definition of cross product, we can define another few geometrical
+ quantities, such as the follows.
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+area of a triangle
+\noun default
+ is defined to be a non-negative scalar
+\begin_inset Formula 
+\[
+S_{\triangle ABC}:=\frac{1}{2}\norm{\vv{AB}\times\vv{AC}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\vec{a}\times\vec{c}=\norm{\vec{a}}\norm{\vec{c}}\sin\angle\left(\vec{a},\vec{c}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\norm{\vec{a}\times\vec{c}}^{2}+\left(\vec{a}\cdot\vec{c}\right)^{2}=\norm{\vec{a}}^{2}\norm{\vec{c}}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Suppose 
+\begin_inset Formula $\vec{r}(t)$
+\end_inset
+
+ is a vector function with 
+\begin_inset Formula $C^{1}$
+\end_inset
+
+ smoothness, 
+\begin_inset Formula $\vec{r}_{t}:=\dv{\vec{r}}{t}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\vec{r}_{t}\times\vec{r}\equiv\vec{0}$
+\end_inset
+
+ iff the direction of 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ is constant.
+\end_layout
+
+\begin_layout Subsection
+三重积
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Formula $\mathbb{R}^{3}$
+\end_inset
+
+, the 
+\noun on
+triple product of three vectors
+\noun default
+
+\begin_inset Formula 
+\[
+\vec{A}=\sum_{i=1}^{3}\vec{e}_{i}A_{i}\qquad\vec{b}=\sum_{i=1}^{3}\vec{e}_{i}B_{i}\qquad\vec{C}=\sum_{i=1}^{3}\vec{e}_{i}C_{i}
+\]
+
+\end_inset
+
+is defined to be a scalar:
+\begin_inset Formula 
+\[
+\left(\vec{A},\vec{B},\vec{C}\right):=\vec{A}\cdot\left(\vec{B}\times\vec{C}\right)=\begin{vmatrix}A_{1} & A_{2} & A_{3}\\
+B_{1} & B_{2} & B_{3}\\
+C_{1} & C_{2} & C_{3}
+\end{vmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Suppose 
+\begin_inset Formula $\vec{r}(t)$
+\end_inset
+
+ is a vector function with 
+\begin_inset Formula $C^{2}$
+\end_inset
+
+ smoothness, 
+\begin_inset Formula $\vec{r}_{t}:=\dv{\vec{r}}{t}$
+\end_inset
+
+, 
+\begin_inset Formula $\vec{r}_{tt}:=\dv[2]{\vec{r}}{t}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\left(\vec{r},\vec{r}_{t},\vec{r}_{tt}\right)\equiv0$
+\end_inset
+
+ iff there is a constant vector 
+\begin_inset Formula $\vec{c}$
+\end_inset
+
+ which satisfies 
+\begin_inset Formula $\vec{r}\cdot\vec{c}\equiv0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+三维曲线
+\end_layout
+
+\begin_layout Subsection
+光滑曲线
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Suppose
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $(a,b)\subset\mathbb{R}$
+\end_inset
+
+ is an open interval.
+ A map
+\begin_inset Formula 
+\[
+\begin{aligned}\vec{r}:(a,b) & \to\mathbb{R}^{3}\\
+t & \mapsto\left(x,y,z\right)
+\end{aligned}
+\]
+
+\end_inset
+
+which satisfies
+\begin_inset Formula 
+\[
+x(t),y(t),z(t)\in C^{k}(a,b)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\norm{\dv{\vec{r}}{t}}\neq0\qquad\forall t\in(a,b)
+\]
+
+\end_inset
+
+is called a 
+\noun on
+regular curve with 
+\begin_inset Formula $C^{k}$
+\end_inset
+
+ smoothness
+\noun default
+; a regular curve with 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+ smoothness is simply called a 
+\noun on
+smooth curve
+\noun default
+.
+\end_layout
+
+\begin_layout Subsection
+曲线的长度
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+length of a curve segment
+\noun default
+ is defined as
+\begin_inset Formula 
+\[
+s(t_{2};t_{1})=\int_{t_{1}}^{t_{2}}\norm{\dv{\vec{r}}{t}}\dd{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the definition of curves, the choice of the parameter 
+\begin_inset Formula $t$
+\end_inset
+
+ is arbitrary.
+ However, among all the parameters, the 
+\noun on
+curve-length parameter
+\noun default
+ is the most natural one:
+\begin_inset Formula 
+\[
+\dd{s}=\norm{\dv{\vec{r}}{t}}\dd{t}=\norm{\dd\vec{r}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dd{s}^{2}:=\dd\vec{r}\cdot\dd\vec{r}=\dd{x}^{2}+\dd{y}^{2}+\dd{z}^{2}
+\]
+
+\end_inset
+
+When talking about length, 
+\begin_inset Formula $\dd{s}^{2}$
+\end_inset
+
+ always means 
+\begin_inset Formula $(\dd{s})^{2}$
+\end_inset
+
+ rather than 
+\begin_inset Formula $\dd(s^{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To distinguish a general parameter from the curve-length parameter, we apply
+ the following notation convention:
+\end_layout
+
+\begin_layout Itemize
+For a general parameter 
+\begin_inset Formula $t$
+\end_inset
+
+, derivatives are written as
+\begin_inset Formula 
+\[
+\vec{r}_{t}:=\dv{\vec{r}}{t}\qquad\vec{r}_{tt}:=\dv[2]{\vec{r}}{t}\qquad\vec{r}_{ttt}:=\dv[3]{\vec{r}}{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For the curve-length parameter 
+\begin_inset Formula $s$
+\end_inset
+
+, derivatives are written as
+\begin_inset Formula 
+\[
+\vec{r}_{s}:=\dv{\vec{r}}{s}\qquad\vec{r}_{ss}:=\dv[2]{\vec{r}}{s}\qquad\vec{r}_{sss}:=\dv[3]{\vec{r}}{s}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Suppose 
+\begin_inset Formula $\vec{r}(t)$
+\end_inset
+
+ is a smooth curve.
+ Then 
+\begin_inset Formula $\norm{\vec{r}_{t}}\equiv1$
+\end_inset
+
+ iff 
+\begin_inset Formula $t$
+\end_inset
+
+ is the curve-length parameter.
+\end_layout
+
+\begin_layout Subsection
+Frenet 标架
+\end_layout
+
+\begin_layout Standard
+At any point 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+, using the following unit vectors (which is called the 
+\noun on
+unit tangent vector
+\noun default
+, the 
+\noun on
+unit principal normal vector
+\noun default
+, the 
+\noun on
+unit binormal vector
+\noun default
+, respectively)
+\begin_inset Formula 
+\[
+\begin{aligned}\vec{t} & :=\vec{r}_{s}\\
+\vec{n} & :=\frac{\vec{t}_{s}}{\norm{\vec{t}_{s}}}=\frac{\vec{r}_{ss}}{\norm{\vec{r}_{ss}}}\\
+\vec{b} & :=\vec{t}\times\vec{n}
+\end{aligned}
+\]
+
+\end_inset
+
+as the basis, we can define an orthogonal right-handed frame, which is called
+ the 
+\noun on
+Frenet frame
+\noun default
+.
+\end_layout
+
+\begin_layout Standard
+For general parameters, they can be found as
+\begin_inset Formula 
+\[
+\vec{t}=\frac{\vec{r}_{t}}{\norm{\vec{r}_{t}}}\qquad\vec{b}=\frac{\vec{r}_{t}\times\vec{r}_{tt}}{\norm{\vec{r}_{t}\times\vec{r}_{tt}}}\qquad\vec{n}=\vec{b}\times\vec{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+曲线的曲率与扭率
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+curvature
+\noun default
+ of a regular curve measures how fast it 
+\emph on
+bends
+\emph default
+
+\begin_inset Formula 
+\[
+\kappa(s):=\norm{\vec{t}_{s}}=\norm{\vec{r}_{ss}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By definition, curvature is always non-negative.
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+torsion
+\noun default
+ of a regular curve measures how fast it 
+\emph on
+twists
+\begin_inset Formula 
+\[
+\tau=\pm\norm{\vec{b}_{s}}
+\]
+
+\end_inset
+
+
+\emph default
+in which, the sign is determined as follows.
+ Since
+\begin_inset Formula 
+\[
+\vec{b}_{s}=\vec{t}_{s}\times\vec{n}+\vec{t}\times\vec{n}_{s}=\vec{t}\times\vec{n}_{s}
+\]
+
+\end_inset
+
+ we can prove that
+\begin_inset Formula 
+\[
+\vec{n}\times\vec{b}_{s}=\vec{0}\iff\vec{n}\parallel\vec{b}_{s}
+\]
+
+\end_inset
+
+so we can always choose the sign to ensure
+\begin_inset Formula 
+\[
+\vec{b}_{s}=-\tau\vec{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By definition, torsion can be negative.
+\end_layout
+
+\begin_layout Subsection
+Frenet 公式
+\end_layout
+
+\begin_layout Standard
+From
+\begin_inset Formula 
+\[
+\vec{t}_{s}=\kappa\vec{n}\qquad\vec{b}_{s}=-\tau\vec{n}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vec{t}=\vec{n}\times\vec{b}\qquad\vec{n}=\vec{b}\times\vec{t}\qquad\vec{b}=\vec{t}\times\vec{n}
+\]
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\vec{n}_{s}=-\tau\vec{n}\times\vec{t}+\vec{b}\times\kappa\vec{n}=\tau\vec{b}-\kappa\vec{t}
+\]
+
+\end_inset
+
+Write in matrix form, we have
+\begin_inset Formula 
+\[
+\dv{s}\begin{bmatrix}\vec{t}\\
+\vec{n}\\
+\vec{b}
+\end{bmatrix}=\begin{bmatrix} & \kappa\\
+-\kappa &  & \tau\\
+ & -\tau
+\end{bmatrix}\begin{bmatrix}\vec{t}\\
+\vec{n}\\
+\vec{b}
+\end{bmatrix}
+\]
+
+\end_inset
+
+This is the most important formula in the theory of curves.
+ 
+\end_layout
+
+\begin_layout Standard
+One application of the Frenet formula is the calculation of curvature and
+ torsion in general parameters:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\kappa(t)=\frac{\norm{\vec{r}_{t}\times\vec{r}_{tt}}}{\norm{\vec{r}_{t}}^{3}}\qquad\tau(t)=\frac{\left(\vec{r}_{t},\vec{r}_{tt},\vec{r}_{ttt}\right)}{\norm{\vec{r}_{t}\times\vec{r}_{tt}}^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+近似曲线
+\end_layout
+
+\begin_layout Standard
+From
+\begin_inset Formula 
+\[
+\vec{r}(s)=\vec{r}(0)+s\vec{r}_{s}(0)+\frac{s^{2}}{2!}\vec{r}_{ss}(0)+\frac{s^{3}}{3!}\vec{r}_{sss}(0)+\cdots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vec{r}_{s}=\vec{t}\qquad\vec{r}_{ss}=\kappa\vec{n}\qquad\vec{r}_{sss}=\kappa_{s}\vec{n}+\kappa\vec{n}_{s}=\kappa_{s}\vec{n}+\kappa\left(\tau\vec{b}-\kappa\vec{t}\right)
+\]
+
+\end_inset
+
+we can construct an 
+\noun on
+approximate curve
+\noun default
+
+\begin_inset Formula 
+\[
+\vec{r}^{*}(s)=s\vec{t}(0)+\frac{s^{2}}{2}\kappa(0)\vec{n}(0)+\frac{s^{3}}{6}\kappa(0)\tau(0)\vec{b}(0)
+\]
+
+\end_inset
+
+whose curvature and torsion are identical with the original curve 
+\begin_inset Formula $\vec{r}(s)$
+\end_inset
+
+ at 
+\begin_inset Formula $s=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+基本定理
+\end_layout
+
+\begin_layout Theorem
+Given a right-handed orthogonal frame 
+\begin_inset Formula $\left\{ \vec{t}_{0},\vec{n}_{0},\vec{b}_{0}\right\} $
+\end_inset
+
+ at point 
+\begin_inset Formula $\vec{r}_{0}$
+\end_inset
+
+ and two functions 
+\begin_inset Formula $\kappa(s),\tau(s)\in C^{0}(a,b),\kappa(s)\ge0$
+\end_inset
+
+, a unique curve can be determined.
+\end_layout
+
+\begin_layout Section
+三维曲面
+\end_layout
+
+\begin_layout Subsection
+光滑曲面
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Suppose
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 
+\begin_inset Formula $D\subset\mathbb{R}^{2}$
+\end_inset
+
+ is a simply connected open set.
+ A map
+\begin_inset Formula 
+\[
+\begin{aligned}\vec{r}:D & \to\mathbb{R}^{3}\\
+(u,v) & \mapsto\left(x,y,z\right)
+\end{aligned}
+\]
+
+\end_inset
+
+which satisfies
+\begin_inset Formula 
+\[
+x(u,v),y(u,v),z(u,v)\in C^{k}(D)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\norm{\pdv{\vec{r}}{u}\times\pdv{\vec{r}}{v}}\neq0\qquad\forall(u,v)\in D
+\]
+
+\end_inset
+
+is called a 
+\noun on
+regular surface with 
+\begin_inset Formula $C^{k}$
+\end_inset
+
+ smoothness
+\noun default
+; a regular surface with 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+ smoothness is simply called a 
+\noun on
+smooth surface
+\noun default
+.
+\end_layout
+
+\begin_layout Subsection
+第一基本型
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+first fundamental form of a surface
+\noun default
+ is defined as
+\begin_inset Formula 
+\[
+\boxed{{\Phi_{1}(\dd{u},\dd{v}):=\dd\vec{r}\cdot\dd\vec{r}=E\dd{u}\dd{u}+2F\dd{u}\dd{v}+G\dd{v}\dd{v}}}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\boxed{E:=\vec{r}_{u}\cdot\vec{r}_{u}\qquad F:=\vec{r}_{u}\cdot\vec{r}_{v}\qquad G:=\vec{r}_{v}\cdot\vec{r}_{v}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first fundamental form depicts the metric induced on a surface.
+\end_layout
+
+\begin_layout Subsection
+第二基本型
+\end_layout
+
+\begin_layout Standard
+Given a smooth surface in 
+\begin_inset Formula $\mathbb{R}^{3}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+S=\Bqty{\vec{r}(u,v)\in\mathbb{R}^{3}:(u,v)\in D\subset\mathbb{R}^{2}}
+\]
+
+\end_inset
+
+To study the distorsion of 
+\begin_inset Formula $S$
+\end_inset
+
+ at an arbitrary point
+\begin_inset Formula 
+\[
+p:=(u_{0},v_{0})\in D
+\]
+
+\end_inset
+
+we try to evaluate the distance of a nearby point to the tangent plane 
+\begin_inset Formula $T_{p}S$
+\end_inset
+
+.
+ To do so, we first find the unit normal vector of 
+\begin_inset Formula $T_{p}S$
+\end_inset
+
+ from
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\vec{m}:=\frac{\vec{r}_{u}\times\vec{r}_{v}}{\norm{\vec{r}_{u}\times\vec{r}_{v}}}}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\vec{r}_{u}$
+\end_inset
+
+ and 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\vec{r}_{v}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ are evaluated at 
+\begin_inset Formula $(u_{0},v_{0})$
+\end_inset
+
+.
+ Then, suppose
+\begin_inset Formula 
+\[
+C=\Bqty{\left(u(t),v(t)\right)\in D:t\in(a,b)\subset\mathbb{R}}
+\]
+
+\end_inset
+
+is a smooth curve on 
+\begin_inset Formula $S$
+\end_inset
+
+ passing through 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ The distance of a nearby point
+\begin_inset Formula 
+\[
+\vec{r}(t_{0}+\epsilon)=\vec{r}(t_{0})+\epsilon\vec{r}_{t}(t_{0})+\frac{\epsilon^{2}}{2}\vec{r}_{tt}(t_{0})+o(\epsilon^{2})
+\]
+
+\end_inset
+
+to 
+\begin_inset Formula $T_{p}S$
+\end_inset
+
+ is then
+\begin_inset Formula 
+\[
+\begin{aligned}d(\epsilon=\dd{t}) & =\vec{m}\cdot\left(\vec{r}_{t}\dd{t}+\vec{r}_{tt}\frac{(\dd{t})^{2}}{2}+\cdots\right)\\
+ & =\vec{m}\cdot\left(\dd{\vec{r}}+\frac{\dd[2]{\vec{r}}}{2}+\cdots\right)
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\dd\vec{{r}}=\vec{r}_{t}\dd{t} & =\vec{r}_{u}\dd{u}+\vec{r}_{v}\dd{v}\\
+\dd[2]{\vec{r}}=\vec{r}_{tt}\dd{t}\dd{t} & =\vec{r}_{u}\dd[2]{u}+\vec{r}_{v}\dd[2]{v}\\
+ & +\vec{r}_{uu}\dd{u}\dd{u}+2\vec{r}_{uv}\dd{u}\dd{v}+\vec{r}_{vv}\dd{v}\dd{v}
+\end{aligned}
+\]
+
+\end_inset
+
+Since
+\begin_inset Formula 
+\[
+\vec{m}\cdot\vec{r}_{t}=0\qquad\vec{m}\cdot\vec{r}_{u}=\vec{m}\cdot\vec{r}_{v}=0
+\]
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+2d(\dd{t})=\vec{m}\cdot\dd[2]{\vec{r}}=\vec{m}\cdot\vec{r}_{uu}\dd{u}\dd{u}+2\vec{m}\cdot\vec{r}_{uv}\dd{u}\dd{v}+\vec{m}\cdot\vec{r}_{vv}\dd{u}\dd{v}
+\]
+
+\end_inset
+
+This is a quadratic form of 
+\begin_inset Formula $(\dd{u},\dd{v})$
+\end_inset
+
+, which is called the 
+\noun on
+second fundamental form of a surface
+\noun default
+, i.e.
+\begin_inset Formula 
+\[
+\boxed{\Phi_{2}(\dd{u},\dd{v}):=\vec{m}\cdot\dd[2]{\vec{r}}=L\dd{u}\dd{u}+2M\dd{u}\dd{v}+N\dd{v}\dd{v}}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+\boxed{{L:=\vec{m}\cdot\vec{r}_{uu}\qquad M:=\vec{m}\cdot\vec{r}_{uv}\qquad N:=\vec{m}\cdot\vec{r}_{vv}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second fundamental form depicts the distortion of a surface.
+\end_layout
+
+\begin_layout Subsection
+曲面的曲率
+\end_layout
+
+\begin_layout Subsubsection
+Normal Curvatures
+\end_layout
+
+\begin_layout Standard
+The 
+\noun on
+normal curvature of a curve on a surface
+\noun default
+ is defined as
+\begin_inset Formula 
+\[
+\kappa_{n}:=\kappa\vec{n}\cdot\vec{m}
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{m}$
+\end_inset
+
+ are the unit normal vectors of the curve and the surface, respectively.
+ To calculate it, we use the following facts
+\begin_inset Formula 
+\[
+\vec{r}_{ss}=\kappa\vec{n}\qquad \Phi_{2}=\vec{m}\cdot\dd[2]{\vec{r}}=\vec{m}\cdot\vec{r}_{ss}\dd{s}^{2}\qquad \Phi_{1}=\dd{s}^{2}
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\[
+\boxed{\kappa_{n}=\kappa\vec{n}\cdot\vec{m}=\frac{\Phi_{2}}{\Phi_{1}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Principal Curvatures
+\end_layout
+
+\begin_layout Standard
+From the first and second fundamental forms, we can define a general eigenvalue
+ problem
+\begin_inset Formula 
+\[
+\Matrix{B}\begin{bmatrix}\dd{u}\\
+\dd{v}
+\end{bmatrix}=\kappa\Matrix{G}\begin{bmatrix}\dd{u}\\
+\dd{v}
+\end{bmatrix}\qquad\Matrix{B}=\begin{bmatrix}L & M\\
+M & N
+\end{bmatrix}\qquad\Matrix{G}=\begin{bmatrix}E & F\\
+F & G
+\end{bmatrix}
+\]
+
+\end_inset
+
+which has two real eigenvalues 
+\begin_inset Formula $\kappa_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa_{2}$
+\end_inset
+
+, which are called the 
+\noun on
+principal curvatures
+\noun default
+.
+ The corresponding eigenvectors are called the 
+\noun on
+principal directions
+\noun default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Gaussian Curvature
+\end_layout
+
+\begin_layout Standard
+The product of the two principal curvatures is defined as the 
+\noun on
+Guassian curvature
+\noun default
+
+\begin_inset Formula 
+\[
+\boxed{K=\kappa_{1}\kappa_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By definition, 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is found from the characteristic equation
+\begin_inset Formula 
+\[
+\det(\Matrix{B}\Matrix{G}^{-1}-\kappa\Matrix{E})=0
+\]
+
+\end_inset
+
+so Gaussian curvature is the ratio of the determinants of the two fundamental
+ forms
+\begin_inset Formula 
+\[
+K=\frac{\det\Matrix{B}}{\det\Matrix{G}}=\frac{LN-M^{2}}{EG-F^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Mean Curvature
+\end_layout
+
+\begin_layout Standard
+The arithmetic average of the two principal curvatures is defined as the
+ 
+\noun on
+mean curvature
+\noun default
+
+\begin_inset Formula 
+\[
+H=\frac{\kappa_{1}+\kappa_{2}}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $H=\ev{\kappa_{n}}$
+\end_inset
+
+, in which 
+\begin_inset Formula $\ev{\kappa_{n}}:=\frac{1}{2\pi}\int_{0}^{2\pi}\kappa_{n}\dd{\theta}$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document
