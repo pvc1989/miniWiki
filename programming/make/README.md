@@ -369,4 +369,4 @@ demo
 创建三个 `CMakeLists.txt` 文件：
 - [`demo/CMakeLists.txt`](./demo/CMakeLists.txt) 用于管理整个项目。
 - [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `libmath`。
-- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `test_math`。
+- [`demo/test/CMakeLists.txt`](./demo/test/CMakeLists.txt) 用于构建 `test_math`。
