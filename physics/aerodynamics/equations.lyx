@@ -9,6 +9,7 @@
 \usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
+\master README.lyx
 \begin_modules
 theorems-ams
 theorems-ams-extended
@@ -356,7 +357,7 @@ tensor!strain rate ~
 」：
 \begin_inset Formula 
 \[
-\Tensor{\varOmega}:=\vec{e}_{i}\vec{e}_{k}\varOmega_{ik}\qquad\varOmega_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}-\partial_{k}u_{i}\right)
+\Tensor{\Omega}:=\vec{e}_{i}\vec{e}_{k}\Omega_{ik}\qquad\Omega_{ik}:=\frac{1}{2}\left(\partial_{i}u_{k}-\partial_{k}u_{i}\right)
 \]
 
 \end_inset
@@ -364,7 +365,7 @@ tensor!strain rate ~
 容易验证：
 \begin_inset Formula 
 \[
-\grad\vec{u}=\Tensor{E}+\Tensor{\varOmega}\qquad\partial_{i}u_{k}=E_{ik}+\varOmega_{ik}\qquad\partial_{k}u_{i}=E_{ik}-\varOmega_{ik}
+\grad\vec{u}=\Tensor{E}+\Tensor{\Omega}\qquad\partial_{i}u_{k}=E_{ik}+\Omega_{ik}\qquad\partial_{k}u_{i}=E_{ik}-\Omega_{ik}
 \]
 
 \end_inset
@@ -408,19 +409,19 @@ status open
 
 \begin_layout Standard
 在三维空间中，角速度张量 
-\begin_inset Formula $\Tensor{\varOmega}$
+\begin_inset Formula $\Tensor{\Omega}$
 \end_inset
 
  只有三个独立「分量 (component)」，这是其反对称性 (
-\begin_inset Formula $\varOmega_{ik}=-\varOmega_{ki}$
+\begin_inset Formula $\Omega_{ik}=-\Omega_{ki}$
 \end_inset
 
 ) 的直接推论：
 \begin_inset Formula 
 \[
-\Tensor{\varOmega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \varOmega_{12} & -\varOmega_{31}\\
--\varOmega_{12} & 0 & \varOmega_{23}\\
-\varOmega_{31} & -\varOmega_{23} & 0
+\Tensor{\Omega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
+-\Omega_{12} & 0 & \Omega_{23}\\
+\Omega_{31} & -\Omega_{23} & 0
 \end{bmatrix}\begin{bmatrix}\vec{e}_{1}\\
 \vec{e}_{2}\\
 \vec{e}_{3}
@@ -434,7 +435,7 @@ status open
 向量
 \emph default
  
-\begin_inset Formula $\vec{\varOmega}:=\sum_{i=1}^{3}\vec{e}_{i}\varOmega_{i}$
+\begin_inset Formula $\vec{\Omega}:=\sum_{i=1}^{3}\vec{e}_{i}\Omega_{i}$
 \end_inset
 
 ，称作流体微团的「角速度向量 (angular velocity vector)
@@ -450,13 +451,13 @@ vector!angular velocity ~
 」，其中
 \begin_inset Formula 
 \[
-\begin{bmatrix}\varOmega_{1}\\
-\varOmega_{2}\\
-\varOmega_{3}
-\end{bmatrix}=\begin{bmatrix}\varOmega_{23}\\
-\varOmega_{31}\\
-\varOmega_{12}
-\end{bmatrix}\iff\varOmega_{jk}=\varOmega_{i}\epsilon_{ijk}\qquad\epsilon_{ijk}=\begin{cases}
+\begin{bmatrix}\Omega_{1}\\
+\Omega_{2}\\
+\Omega_{3}
+\end{bmatrix}=\begin{bmatrix}\Omega_{23}\\
+\Omega_{31}\\
+\Omega_{12}
+\end{bmatrix}\iff\Omega_{jk}=\Omega_{i}\epsilon_{ijk}\qquad\epsilon_{ijk}=\begin{cases}
 +1 & ijk=123,231,312\\
 -1 & ijk=321,132,213\\
 0 & \text{else}
@@ -466,7 +467,7 @@ vector!angular velocity ~
 \end_inset
 
 则可以验证：
-\begin_inset Formula $\vec{\varOmega}$
+\begin_inset Formula $\vec{\Omega}$
 \end_inset
 
  是一个「伪向量 (pseudo-vector)
@@ -482,7 +483,7 @@ vector!pseudo-~
 」，并且满足以下微分等式：
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\vdot\Tensor{\varOmega}=\vec{\varOmega}\cross\dd{\vec{x}}
+\dd{\vec{x}}\vdot\Tensor{\Omega}=\vec{\Omega}\cross\dd{\vec{x}}
 \]
 
 \end_inset
@@ -502,7 +503,7 @@ vector!pseudo-~
  即得
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\vdot\Tensor{\varOmega}=\dd{x_{j}}\varOmega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\varOmega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\varOmega_{i}\dd{x_{j}}=\vec{\varOmega}\cross\dd{\vec{x}}
+\dd{\vec{x}}\vdot\Tensor{\Omega}=\dd{x_{j}}\Omega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\cross\dd{\vec{x}}
 \]
 
 \end_inset
@@ -534,11 +535,11 @@ u_{1} & u_{2} & u_{3}
 \end_inset
 
 可以验证：它恰好是角速度 
-\begin_inset Formula $\vec{\varOmega}$
+\begin_inset Formula $\vec{\Omega}$
 \end_inset
 
  的二倍，即 
-\begin_inset Formula $\vec{\omega}=2\vec{\varOmega}$
+\begin_inset Formula $\vec{\omega}=2\vec{\Omega}$
 \end_inset
 
 。
@@ -1067,7 +1068,7 @@ noprefix "false"
 应用 Gauss 散度定理，从而有
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\phi\dd{V}=\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\int_{V^{c}}\divergence(\vec{u}\phi)\dd{V}=\int_{V}\left(\pdv{\phi}{t}+\divergence(\vec{u}\phi)\right)\dd{V}
+\DDt{}\int_{V}\phi\dd{V}=\int_{V^{c}}\pdv{\phi}{t}\dd{V}+\int_{V^{c}}\divg(\vec{u}\phi)\dd{V}=\int_{V}\left(\pdv{\phi}{t}+\divg(\vec{u}\phi)\right)\dd{V}
 \]
 
 \end_inset
@@ -1078,7 +1079,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\DDt{\left(\ev{\phi}\abs{V}\right)}=\ev{\pdv{\phi}{t}+\divergence(\vec{u}\phi)}\abs{V}
+\DDt{\left(\ev{\phi}\abs{V}\right)}=\ev{\pdv{\phi}{t}+\divg(\vec{u}\phi)}\abs{V}
 \]
 
 \end_inset
@@ -1090,7 +1091,7 @@ noprefix "false"
 ，则有
 \begin_inset Formula 
 \[
-\DDt{\abs{V}}=\ev{\divergence\vec{u}}\abs{V}
+\DDt{\abs{V}}=\ev{\divg\vec{u}}\abs{V}
 \]
 
 \end_inset
@@ -1150,7 +1151,7 @@ noprefix "false"
 等于各自的平均值，于是上述平均值等式及其特例可以化为
 \begin_inset Formula 
 \[
-\DDt{\left(\phi\abs{V}\right)}\doteq\left(\pdv{\phi}{t}+\divergence(\vec{u}\phi)\right)\abs{V}\qquad\DDt{\abs{V}}\doteq\left(\divergence\vec{u}\right)\abs{V}
+\DDt{\left(\phi\abs{V}\right)}\doteq\left(\pdv{\phi}{t}+\divg(\vec{u}\phi)\right)\abs{V}\qquad\DDt{\abs{V}}\doteq\left(\divg\vec{u}\right)\abs{V}
 \]
 
 \end_inset
@@ -1174,7 +1175,7 @@ noprefix "false"
  可导，则有微分恒等式
 \begin_inset Formula 
 \[
-\divergence(\vec{u}\phi)=\phi\divergence\vec{u}+\vec{u}\vdot\grad{\phi}
+\divg(\vec{u}\phi)=\phi\divg\vec{u}+\vec{u}\vdot\grad{\phi}
 \]
 
 \end_inset
@@ -1399,17 +1400,17 @@ noprefix "false"
 质量守恒方程：
 \begin_inset Formula 
 \begin{equation}
-\pdv{\rho}{t}+\divergence(\vec{u}\rho)=0\label{eq:质量守恒::微分型::守恒型}
+\pdv{\rho}{t}+\divg(\vec{u}\rho)=0\label{eq:质量守恒::微分型::守恒型}
 \end{equation}
 
 \end_inset
 
 其中散度项 
-\begin_inset Formula $\divergence(\vec{u}\rho)$
+\begin_inset Formula $\divg(\vec{u}\rho)$
 \end_inset
 
  可以分解为 
-\begin_inset Formula $\vec{u}\vdot\grad\rho+\rho\divergence\vec{u}$
+\begin_inset Formula $\vec{u}\vdot\grad\rho+\rho\divg\vec{u}$
 \end_inset
 
 ，利用物质导数的微分展开（
@@ -1429,7 +1430,7 @@ noprefix "false"
 质量守恒方程：
 \begin_inset Formula 
 \begin{equation}
-\DDt{\rho}+\rho\divergence\vec{u}=0\label{eq:质量守恒::微分型::非守恒型}
+\DDt{\rho}+\rho\divg\vec{u}=0\label{eq:质量守恒::微分型::非守恒型}
 \end{equation}
 
 \end_inset
@@ -1501,7 +1502,7 @@ noprefix "false"
  式）及 Gauss 散度定理可得
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\pdv{(\psi\rho)}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot(\vec{u}\psi\rho)\dd{S}=\int_{V}\left[\pdv{(\psi\rho)}{t}+\divergence(\vec{u}\psi\rho)\right]\dd{V}
+\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\pdv{(\psi\rho)}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot(\vec{u}\psi\rho)\dd{S}=\int_{V}\left[\pdv{(\psi\rho)}{t}+\divg(\vec{u}\psi\rho)\right]\dd{V}
 \]
 
 \end_inset
@@ -1581,7 +1582,7 @@ noprefix "false"
  式）的充要条件为
 \begin_inset Formula 
 \[
-\int_{V}\left[\pdv{\rho}{t}+\divergence(\vec{u}\rho)\right]\psi\dd{V}=0
+\int_{V}\left[\pdv{\rho}{t}+\divg(\vec{u}\rho)\right]\psi\dd{V}=0
 \]
 
 \end_inset
@@ -1959,7 +1960,7 @@ reference "eq:本构关系::线性"
 或等价的
 \begin_inset Formula 
 \[
-\Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\divergence\vec{u}\right)\Tensor{1}
+\Tensor{\tau}=2\mu\Tensor{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\divg\vec{u}\right)\Tensor{1}
 \]
 
 \end_inset
@@ -2482,7 +2483,7 @@ noprefix "false"
 应用 Gauss 散度定理（假设被积函数充分光滑）即得
 \begin_inset Formula 
 \[
-\int_{V}\partial_{t}\ket{U}\dd{V}+\int_{V}\divergence\ket*{\vec{F}}\dd{V}=\int_{V}\divergence\ket*{\vec{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
+\int_{V}\partial_{t}\ket{U}\dd{V}+\int_{V}\divg\ket*{\vec{F}}\dd{V}=\int_{V}\divg\ket*{\vec{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
 \]
 
 \end_inset
@@ -2504,7 +2505,7 @@ conservation!system of ~ laws!Navier–Stokes equations in differential form
 」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\partial_{t}\ket{U}+\divergence\ket*{\vec{F}}=\divergence\ket*{\vec{G}}+\ket{H}}\label{eq:NS::微分型::守恒型}
+\boxed{\partial_{t}\ket{U}+\divg\ket*{\vec{F}}=\divg\ket*{\vec{G}}+\ket{H}}\label{eq:NS::微分型::守恒型}
 \end{equation}
 
 \end_inset
@@ -2515,10 +2516,10 @@ conservation!system of ~ laws!Navier–Stokes equations in differential form
 \partial_{t}\begin{bmatrix}\rho\\
 \vec{u}\rho\\
 E\rho
-\end{bmatrix}+\divergence\begin{bmatrix}\vec{u}\rho\\
+\end{bmatrix}+\divg\begin{bmatrix}\vec{u}\rho\\
 \vec{u}\vec{u}\rho+p\Tensor{1}\\
 \vec{u}E\rho+p\vec{u}
-\end{bmatrix}=\divergence\begin{bmatrix}\vec{0}\\
+\end{bmatrix}=\divg\begin{bmatrix}\vec{0}\\
 \Tensor{\tau}\\
 \Tensor{\tau}\vdot\vec{u}-\vec{q}
 \end{bmatrix}+\begin{bmatrix}0\\
@@ -2699,7 +2700,7 @@ conservation!system of ~ laws!Navier–Stokes equations in differential form
 的「非守恒形式」：
 \begin_inset Formula 
 \[
-\rho\DDt{\ket{W}}+\divergence\ket*{\vec{P}}=+\divergence\ket*{\vec{G}}+\ket{H}
+\rho\DDt{\ket{W}}+\divg\ket*{\vec{P}}=+\divg\ket*{\vec{G}}+\ket{H}
 \]
 
 \end_inset
@@ -2718,9 +2719,9 @@ reference "eq:质量守恒::微分型::非守恒型"
  式代替，得到
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\DDt{\rho}+\rho\divergence\vec{u} & =0\\
-\rho\DDt{\vec{u}}+\divergence(p\Tensor{1}) & =\divergence\Tensor{\tau}+\vec{b}\\
-\rho\DDt{E}+\divergence(p\vec{u}) & =\divergence(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
+\begin{aligned}\DDt{\rho}+\rho\divg\vec{u} & =0\\
+\rho\DDt{\vec{u}}+\divg(p\Tensor{1}) & =\divg\Tensor{\tau}+\vec{b}\\
+\rho\DDt{E}+\divg(p\vec{u}) & =\divg(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \end{aligned}
 \label{eq:NS::非守恒型::向量形式}
 \end{equation}
@@ -2793,7 +2794,7 @@ reference "eq:NS::非守恒型::向量形式"
 ）：
 \begin_inset Formula 
 \[
-\vec{u}\vdot\rho\DDt{\vec{u}}=\vec{u}\vdot\left(\divergence\Tensor{\sigma}+\vec{b}\right)
+\vec{u}\vdot\rho\DDt{\vec{u}}=\vec{u}\vdot\left(\divg\Tensor{\sigma}+\vec{b}\right)
 \]
 
 \end_inset
@@ -2820,7 +2821,7 @@ reference "eq:物质导数::性质"
 得到的就是「动能方程」：
 \begin_inset Formula 
 \begin{equation}
-\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}=\vec{u}\vdot\left(\divergence\Tensor{\sigma}+\vec{b}\right)\label{eq:动能方程}
+\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}=\vec{u}\vdot\left(\divg\Tensor{\sigma}+\vec{b}\right)\label{eq:动能方程}
 \end{equation}
 
 \end_inset
@@ -2878,7 +2879,7 @@ reference "eq:动能方程"
 \begin_inset Formula 
 \[
 \begin{aligned}\rho\DDt{e} & =\rho\DDt{E}-\rho\DDt{}\frac{\abs{\vec{u}}^{2}}{2}\\
- & =\divergence(\Tensor{\sigma}\vdot\vec{u})-\vec{u}\vdot\left(\divergence\Tensor{\sigma}\right)-\divergence\vec{q}+j
+ & =\divg(\Tensor{\sigma}\vdot\vec{u})-\vec{u}\vdot\left(\divg\Tensor{\sigma}\right)-\divg\vec{q}+j
 \end{aligned}
 \]
 
@@ -2939,7 +2940,7 @@ status open
 \begin_layout Lemma
 \begin_inset Formula 
 \[
-\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)=\divergence{\left(\Tensor{\sigma}\vdot\vec{u}\right)}-\vec{u}\vdot\left(\divergence\Tensor{\sigma}\right)
+\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)=\divg{\left(\Tensor{\sigma}\vdot\vec{u}\right)}-\vec{u}\vdot\left(\divg\Tensor{\sigma}\right)
 \]
 
 \end_inset
@@ -2957,8 +2958,8 @@ status open
 \begin_layout Lemma
 \begin_inset Formula 
 \[
-\begin{aligned}\Tensor{1}\boldsymbol{:}\Tensor{E} & =\divergence\vec{u}\\
-\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right) & =\Tensor{\sigma}\boldsymbol{:}\Tensor{E}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divergence\vec{u}
+\begin{aligned}\Tensor{1}\boldsymbol{:}\Tensor{E} & =\divg\vec{u}\\
+\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right) & =\Tensor{\sigma}\boldsymbol{:}\Tensor{E}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divg\vec{u}
 \end{aligned}
 \]
 
@@ -2978,8 +2979,8 @@ status open
 于是内能方程可以写成
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\rho\DDt{e} & =\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)-\divergence\vec{q}+j\\
- & =\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divergence\vec{u}-\divergence\vec{q}+j
+\begin{aligned}\rho\DDt{e} & =\Tensor{\sigma}\boldsymbol{:}\left(\grad\vec{u}\right)-\divg\vec{q}+j\\
+ & =\Tensor{\tau}\boldsymbol{:}\Tensor{E}-p\divg\vec{u}-\divg\vec{q}+j
 \end{aligned}
 \label{eq:内能方程}
 \end{equation}
@@ -3012,7 +3013,7 @@ reference "eq:NS::非守恒型::向量形式"
  式第一行）可得
 \begin_inset Formula 
 \[
-\divergence\vec{u}=-\rho^{-1}\DDt{\rho}=-v\DDt{v^{-1}}=v^{-1}\DDt{v}=\rho\DDt{v}
+\divg\vec{u}=-\rho^{-1}\DDt{\rho}=-v\DDt{v^{-1}}=v^{-1}\DDt{v}=\rho\DDt{v}
 \]
 
 \end_inset
@@ -3039,7 +3040,7 @@ reference "eq:内能方程"
 可以得到「熵方程」：
 \begin_inset Formula 
 \begin{equation}
-\rho T\DDt{s}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-\divergence\vec{q}+j\label{eq:熵方程}
+\rho T\DDt{s}=\Tensor{\tau}\boldsymbol{:}\Tensor{E}-\divg\vec{q}+j\label{eq:熵方程}
 \end{equation}
 
 \end_inset
@@ -3070,7 +3071,7 @@ reference "eq:NS::非守恒型::向量形式"
  的项可以作如下拆分
 \begin_inset Formula 
 \[
-\divergence(p\vec{u})=\vec{u}\vdot\grad{p}+p\divergence\vec{u}
+\divg(p\vec{u})=\vec{u}\vdot\grad{p}+p\divg\vec{u}
 \]
 
 \end_inset
@@ -3095,7 +3096,7 @@ reference "eq:NS::非守恒型::向量形式"
  式第一行），又可以将其转化为
 \begin_inset Formula 
 \[
-\divergence(p\vec{u})=\left(\DDt{p}-\pdv{p}{t}\right)-\frac{p}{\rho}\DDt{\rho}=\rho\DDt{}\left(\frac{p}{\rho}\right)-\pdv{p}{t}
+\divg(p\vec{u})=\left(\DDt{p}-\pdv{p}{t}\right)-\frac{p}{\rho}\DDt{\rho}=\rho\DDt{}\left(\frac{p}{\rho}\right)-\pdv{p}{t}
 \]
 
 \end_inset
@@ -3103,7 +3104,7 @@ reference "eq:NS::非守恒型::向量形式"
 代回能量方程即得
 \begin_inset Formula 
 \[
-\rho\DDt{}\left(h+\frac{\abs{\vec{u}}^{2}}{2}\right)=\pdv{p}{t}+\divergence(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
+\rho\DDt{}\left(h+\frac{\abs{\vec{u}}^{2}}{2}\right)=\pdv{p}{t}+\divg(\Tensor{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \]
 
 \end_inset
