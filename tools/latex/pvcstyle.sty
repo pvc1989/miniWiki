@@ -1,0 +1,103 @@
+\ProvidesPackage{pvcstyle}
+
+\newif\if@bold\@boldfalse\DeclareOption{bold}{\@boldtrue}
+\newif\if@euler\@eulerfalse\DeclareOption{euler}{\@eulertrue}
+%\ExecuteOptions{bold}
+\ProcessOptions\relax  % terminates the option processing
+
+% graphics
+\RequirePackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{arrows.meta}
+
+% fonts
+%% STIX Math: https://github.com/stipub/stixfonts
+%% STIXIntegralsUpD: % https://support.apple.com/en-us/HT208968
+%% Neo Euler: % https://github.com/khaledhosny/euler-otf
+%% math fonts
+\if@euler  % almost every symbol is upright
+  \RequirePackage{unicode-math}
+  \setmathfont{STIX Two Math}
+  \unimathsetup{math-style = upright}
+  \unimathsetup{bold-style = upright}
+  \setmathfont{Neo Euler}[
+    range = {\partial,
+               up/{latin, Latin, greek, Greek},
+             bfup/{latin, Latin, greek, Greek},
+    }
+  ]
+  \setmathfont{STIXIntegralsUpD}[
+    range = { \int,  \iint,  \iiint, \iiiint, \upint, \lowint,
+             \oint, \oiint, \oiiint, \fint, \scpolint, \npolint,
+             \pointint, \ointctrclockwise,
+    }
+  ]
+  \if@bold
+    \renewcommand{\symbfit}[1]{\symbf{#1}}
+  \fi
+\else  % almost every symbol is italic
+  \RequirePackage[nabla = italic]{unicode-math}
+  \setmathfont{STIX Two Math}
+  \unimathsetup{math-style = ISO}
+  \unimathsetup{bold-style = ISO}
+\fi
+%% bold option
+\if@bold
+  \renewcommand{\mathbf}[1]{\symbf{#1}}
+  \renewcommand{\boldsymbol}[1]{\symbf{#1}}
+\else  % turn off bold commands
+  \renewcommand{\symbf}[1]{#1}
+  \renewcommand{\symbfit}[1]{#1}
+  \renewcommand{\mathbf}[1]{#1}
+  \renewcommand{\boldsymbol}[1]{#1}
+\fi
+%% english fonts
+\setmainfont{STIX Two Text}
+%% chinese fonts
+\RequirePackage[heading]{ctex}
+\ctexset{
+  part/name  =  {第,卷},
+  part/format +=  \sffamily,
+  chapter/format +=  \sffamily,
+  section/format +=  \sffamily,
+  subsection/format +=  \sffamily,
+  subsubsection/format +=  \sffamily,
+  paragraph/format +=  \sffamily,
+  subparagraph/format +=  \sffamily,
+}
+%% bold symbols
+\if@bold
+\else  % turn off bold commands
+  \renewcommand{\symbf}[1]{#1}
+  \renewcommand{\mathbf}[1]{#1}
+  \renewcommand{\boldsymbol}[1]{#1}
+\fi
+% scientific symbols
+\RequirePackage[arrowdel]{physics}
+\RequirePackage{siunitx}
+%% constants
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\ii}{\mathtt{i}}
+\newcommand{\ee}{\mathtt{e}}
+\newcommand{\Conj}[1]{\overline{#1}}
+%% algebra
+\let\oldvec\vec
+\renewcommand{\vec}[1]{\oldvec{\symbfit{#1}}}
+\newcommand{\Tensor}[1]{\oldvec{\oldvec{\symbfit{#1}}}}
+\newcommand{\Operator}[1]{\mathop{\hat{\symbfit{#1}}}\nolimits}
+\newcommand{\Matrix}[1]{\mathop{\underline{\symbfit{#1}}}\nolimits}
+%% calculus
+\let\divg\divergence  % unicode-math will overwrite \div
+\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % continuum mechanics
+\newcommand{\Dt}{\mathop{\mathrm{D}t}}  % abbr. for \DDt
+%% special functions
+\newcommand\Bessel[1]{\operatorname{J}_{#1}}
+\newcommand\ChebyshevI[1]{\operatorname{T}_{#1}}
+\newcommand\ConHypGeo{\sideset{_{1}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
+\newcommand\Hermite[1]{\operatorname{H}_{#1}}
+\newcommand\HypGeo{\sideset{_{2}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
+\newcommand\Laguerre[1]{\operatorname{L}_{#1}}
+\newcommand\Legendre[1]{\operatorname{P}_{#1}}
+\newcommand\Neumann[1]{\operatorname{N}_{#1}}
+
+\endinput

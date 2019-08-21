@@ -2,6 +2,9 @@
 
 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》部分的内容含有大量数学公式，因此整理为 [LyX](./tools/latex/README.md#LyX) 文档。
 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节；[合订本](#README.lyx)大致按逻辑顺序重新编排了章节，删去了重复的内容。
+编译这些 [LyX](./tools/latex/README.md#LyX) 文档需要
+1. 安装 [STIX Math](https://github.com/stipub/stixfonts) 字体。如果启用了 `euler` 选项，则还需安装 [Neo Euler](https://github.com/khaledhosny/euler-otf) 和  [STIXIntegralsUpD](https://support.apple.com/en-us/HT208968) 字体。
+2. 如果是 macOS + TeX Live，则在 `~/Library/texmf/tex/latex` 下创建 [`pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」。
 
 《[编程](#编程)》《[工具](#工具)》部分的内容含有大量演示代码，因此整理为 [Markdown](./tools/markdown.md) 文档。
 
