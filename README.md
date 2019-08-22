@@ -1,14 +1,30 @@
 # 学习笔记
 
+## 说明
+
 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》部分的内容含有大量数学公式，因此整理为 [LyX](./tools/latex/README.md#LyX) 文档。
-本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节；[合订本](#README.lyx)大致按逻辑顺序重新编排了章节，删去了重复的内容。
-编译这些 [LyX](./tools/latex/README.md#LyX) 文档需要
-1. 安装 [STIX Math](https://github.com/stipub/stixfonts) 字体。如果启用了 `euler` 选项，则还需安装 [Neo Euler](https://github.com/khaledhosny/euler-otf) 和  [STIXIntegralsUpD](https://support.apple.com/en-us/HT208968) 字体。
-2. 如果是 macOS + TeX Live，则在 `~/Library/texmf/tex/latex` 下创建 [`pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」。
+本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节；根目录下的[合订本](#README.lyx)大致按逻辑顺序重新编排了章节，删去了重复的内容。
 
 《[编程](#编程)》《[工具](#工具)》部分的内容含有大量演示代码，因此整理为 [Markdown](./tools/markdown.md) 文档。
 
-## 数学
+### 编译 LyX 文档
+
+编译 LyX 文档（生成 PDF 或网页）需要：
+
+0. 安装 [TeX Live](./tools/latex/README.md#TeX-Live) 和 [LyX](./tools/latex/README.md#LyX)，并完成相应配置，以支持 *中文* 及 *代码高亮*。
+1. 安装 [STIX Math](https://github.com/stipub/stixfonts) 字体。如果想启用 `euler` 选项，则还需安装 [Neo Euler](https://github.com/khaledhosny/euler-otf) 和  [STIXIntegralsUpD](https://support.apple.com/en-us/HT208968) 字体。
+2. 在任意路径下创建本[仓库](./programming/git.md)的副本。
+3. 在本地 `$TEXMFHOME/tex/latex` 下创建 [`./tools/latex/pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」：
+
+|  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
+| :--------: | :------------------: | :------------------: |
+|   macOS    |  `~/Library/texmf`   | `ln -s TARGET LINK`  |
+| Windows 10 |      `~/texmf`       | `mklink LINK TARGET` |
+
+## 目录
+
+### 数学
+
 - [实分析 (Real Analysis)](./mathematics/real_analysis/README.lyx)
 - [复分析 (Complex Analysis)](./mathematics/complex_analysis/README.lyx)
 - [泛函分析 (Functional Analysis)](./mathematics/functional_analysis/README.lyx)
@@ -16,17 +32,17 @@
 - [特殊函数 (Special Functions)](./mathematics/special_functions/README.lyx)
 - [微分几何 (Differential Geometry)](./mathematics/differential_geometry/README.lyx)
 
-## 物理
+### 物理
 - [热力学 (Thermodynamics)](./physics/thermodynamics/README.lyx)
 - [空气动力学 (Aerodynamics)](./physics/aerodynamics/README.lyx)
 
-## 算法
+### 算法
 - [数值分析 (Numerical Analysis)](./algorithms/numerical_analysis/README.lyx)
 - [优化方法 (Optimization)](./algorithms/optimization/README.lyx)
 - [有限单元法 (Finite Element Methods)](./algorithms/finite_element/README.lyx)
 - [计算流体动力学 (Computational Fluid Dynamics)](./algorithms/cfd/README.lyx)
 
-## 编程
+### 编程
 - 设计思想
   - [设计原则 (Design Principles)](./programming/principles/README.md)
   - [设计模式 (Design Patterns)](./programming/patterns/README.md)
@@ -39,7 +55,7 @@
   - [Git（分布式版本控制系统）](./programming/git.md)
   - [Make（批量构建工具）](./programming/make/README.md)
 
-## 工具
+### 工具
 - [Gmsh（简易 CAD 系统 + 非结构网格生成器）](./tools/gmsh/README.md)
 - [LaTeX（结构化文档排版系统）](./tools/latex/README.md)
 - [Linux（开源操作系统）](./tools/linux/README.md)
