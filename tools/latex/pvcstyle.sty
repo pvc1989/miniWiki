@@ -17,11 +17,9 @@
 %% STIXIntegralsUpD: % https://support.apple.com/en-us/HT208968
 %% Neo Euler: % https://github.com/khaledhosny/euler-otf
 %% math fonts
+\RequirePackage{unicode-math}
 \if@euler  % almost every symbol is upright
-  \RequirePackage{unicode-math}
-  \setmathfont{STIX Two Math}
-  \unimathsetup{math-style = upright}
-  \unimathsetup{bold-style = upright}
+  \setmathfont{STIX Two Math}[math-style = upright, bold-style = upright]
   \setmathfont{Neo Euler}[
     range = {\partial,
                up/{latin, Latin, greek, Greek},
@@ -38,10 +36,11 @@
     \renewcommand{\symbfit}[1]{\symbf{#1}}
   \fi
 \else  % almost every symbol is italic
-  \RequirePackage[nabla = italic]{unicode-math}
-  \setmathfont{STIX Two Math}
-  \unimathsetup{math-style = ISO}
-  \unimathsetup{bold-style = ISO}
+  \setmathfont{STIX Two Math}[
+    math-style = ISO,
+    bold-style = ISO,
+    nabla = italic
+  ]
 \fi
 %% bold option
 \if@bold
@@ -85,9 +84,9 @@
 \newcommand{\Conj}[1]{\overline{#1}}
 %% algebra
 \let\oldvec\vec
-\renewcommand{\vec}[1]{\oldvec{\symbfit{#1}}}
-\newcommand{\Tensor}[1]{\oldvec{\oldvec{\symbfit{#1}}}}
-\newcommand{\Operator}[1]{\mathop{\hat{\symbfit{#1}}}\nolimits}
+\renewcommand{\vec}[1]{\oldvec{\symbf{#1}}}
+\newcommand{\Tensor}[1]{\oldvec{\oldvec{\symbf{#1}}}}
+\newcommand{\Operator}[1]{\mathop{\hat{\symbf{#1}}}\nolimits}
 \newcommand{\Matrix}[1]{\mathop{\underline{\symbfit{#1}}}\nolimits}
 %% calculus
 \let\divg\divergence  % unicode-math will overwrite \div
