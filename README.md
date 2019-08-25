@@ -54,12 +54,13 @@
 - 构建工具
   - [Git（分布式版本控制系统）](./programming/git.md)
   - [Make（批量构建工具）](./programming/make/README.md)
+- 排版工具
+  - [Markdown](./programming/markdown.md)
 
 ### 工具
 - [Gmsh（简易 CAD 系统 + 非结构网格生成器）](./tools/gmsh/README.md)
 - [LaTeX（结构化文档排版系统）](./tools/latex/README.md)
 - [Linux（开源操作系统）](./tools/linux/README.md)
-- [Markdown（轻量级标记语言）](./tools/markdown.md)
 - [SSH (Secure SHell)](./tools/ssh.md)
 - [Vim（命令行界面的文本编辑器）](./tools/vim.md)
 - [VTK（数据显示程序库）](./tools/vtk/README.md)
