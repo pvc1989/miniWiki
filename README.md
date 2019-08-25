@@ -50,18 +50,18 @@
   - [C++](./programming/cpp/README.md)
   - [Octave/MATLAB](./programming/octave.md)
   - [Python](./programming/python.md)
-  - [UML（统一建模语言）](./programming/uml/README.md)
+  - [UML](./programming/uml/README.md)
 - 构建工具
-  - [Git（分布式版本控制系统）](./programming/git.md)
-  - [Make（批量构建工具）](./programming/make/README.md)
+  - [Git](./programming/git.md)
+  - [GNU Make](./programming/make/README.md#GNU-Make) + [CMake](./programming/make/README.md#CMake)
 - 排版工具
   - [Markdown](./programming/markdown.md)
   - [LaTeX](./programming/latex/README.md)
 
 ### 工具
-- [Gmsh（简易 CAD 系统 + 非结构网格生成器）](./tools/gmsh/README.md)
-- [Linux（开源操作系统）](./tools/linux/README.md)
-- [SSH (Secure SHell)](./tools/ssh.md)
-- [Vim（命令行界面的文本编辑器）](./tools/vim.md)
-- [VTK（数据显示程序库）](./tools/vtk/README.md)
+- [Gmsh](./tools/gmsh/README.md)
+- [Linux](./tools/linux/README.md)
+- [SSH](./tools/ssh.md)
+- [Vim](./tools/vim.md)
+- [VTK](./tools/vtk/README.md)
 - [书签编辑工具](./tools/bookmark.md)
