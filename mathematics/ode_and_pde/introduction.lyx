@@ -104,13 +104,39 @@ theorems-chap
 微分方程概述
 \end_layout
 
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+DE!Differential Equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 问题来源
 \end_layout
 
 \begin_layout Standard
 \begin_inset Index idx
-status collapsed
+status open
+
+\begin_layout Plain Layout
+ODE!Ordinary Differential Equation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status open
 
 \begin_layout Plain Layout
 PDE!Partial Differential Equation
@@ -122,7 +148,254 @@ PDE!Partial Differential Equation
 \end_layout
 
 \begin_layout Section
+定解条件
+\end_layout
+
+\begin_layout Standard
+求解
+\emph on
+微分
+\emph default
+方程可以看作是一种
+\emph on
+积分
+\emph default
+过程：求解 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶 ODE 相当于作 
+\begin_inset Formula $m$
+\end_inset
+
+ 次「积分」，从而会产生 
+\begin_inset Formula $m$
+\end_inset
+
+ 个「待定常数」；求解 PDE 也会产生类似于「待定常数」的「待定函数」。这些待定常数（或待定函数）必须由
+\emph on
+微分方程
+\emph default
+以外的信息来确定，这些信息被称为「定解条件」，它与相应的微分方程放在一起构成「定解问题」。
+\end_layout
+
+\begin_layout Subsection
+ODE 定解条件
+\end_layout
+
+\begin_layout Standard
+对于一般的 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶 ODE
+\begin_inset Formula 
+\begin{equation}
+\dv[m]{u}{x}=f\left(x,u,\dv{u}{x},...,\dv[m-1]{u}{x}\right)\qquad x\in(a,b)\label{eq:ODE::General::MthOrder}
+\end{equation}
+
+\end_inset
+
+它的解含有 
+\begin_inset Formula $m$
+\end_inset
+
+ 个待定常数，需要通过 
+\begin_inset Formula $m$
+\end_inset
+
+ 个（独立的）代数方程来确定。这 
+\begin_inset Formula $m$
+\end_inset
+
+ 个代数方程通常由闭区间 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 内任意 
+\begin_inset Formula $m$
+\end_inset
+
+ 个点上的函数值或直到 
+\begin_inset Formula $(m-1)$
+\end_inset
+
+ 阶的导数值给出。最常见的是以下两种情形：
+\end_layout
+
+\begin_layout Itemize
+如果这样的点取在区间的两端，则称相应的定解条件为「边界条件 (boundary condition, BC)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BC!Boundary Condition
+\end_layout
+
+\end_inset
+
+」，例如
+\begin_inset Formula 
+\[
+u(a)=c_{0}\qquad\eval{\dv[k]{u}{x}}_{x=b}=c_{k},k=1,...,m-1
+\]
+
+\end_inset
+
+它与相应的 ODE 放在一起构成「边值问题 (boundary-value problem, BVP)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+BVP!Boundary-Value Problem
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Itemize
+如果这样的点取在区间的一端，则称相应的定解条件为「初始条件 (initial condition, IC)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+IC!Initial Condition
+\end_layout
+
+\end_inset
+
+」，例如
+\begin_inset Formula 
+\[
+\eval{\dv[k]{u}{x}}_{x=a}=c_{k}\qquad k=0,...,m-1
+\]
+
+\end_inset
+
+它与相应的 ODE 放在一起构成「初值问题 (initial-value problem, IVP)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+IVP!Initial Value Problem
+\end_layout
+
+\end_inset
+
+」。在这类问题中，自变量通常具有「时间 (time)」的含义，一般用 
+\begin_inset Formula $t$
+\end_inset
+
+ 来表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+虽然可以将 IC 视作 BC 的特例，但 BVP 与 IVP 的求解方法和解的性质有很大差别，因此通常将它们分开处理。
+\end_layout
+
+\begin_layout Subsection
+PDE 定解条件
+\end_layout
+
+\begin_layout Standard
+对于 PDE，定解条件不能随意给定，不同类型的方程（见《
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:方程分类"
+
+\end_inset
+
+》）所需定解条件的
+\emph on
+种类
+\emph default
+及
+\emph on
+个数
+\emph default
+相差很大。
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 问题]
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶 PDE 的解在超曲面 
+\begin_inset Formula $S$
+\end_inset
+
+ 上所应满足的条件（函数值或小于 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶的各阶导数值，或能够确定这些值的代数方程），称为「Cauchy 数据」。
+\end_layout
+
+\begin_layout Definition
+「Cauchy 问题」：求方程的满足 Cauchy 数据的解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[适定性]
+\end_layout
+
+\end_inset
+
+如果 PDE 的解存在、唯一、连续依赖于 Cauchy 数据，则称该 PDE 是「适定的 (well-posed)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+相容性
+\end_layout
+
+\begin_layout Section
 方程分类
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:方程分类"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -130,7 +403,7 @@ PDE!Partial Differential Equation
 \end_layout
 
 \begin_layout Standard
-广义函数论的创立者 Laurent Schwartz 发明了一套「多重指标 (multi-index) 记号」，可用于简化多维空间的高阶偏导数符号。
+广义函数论的创立者 Laurent Schwartz 发明了一套「多重指标 (multi-index) 记号」，可用于简化高阶偏导数符号。
 \end_layout
 
 \begin_layout Notation
@@ -229,14 +502,10 @@ status open
 
 \end_inset
 
-两个 
-\begin_inset Formula $n$
-\end_inset
-
- 重指标一般不能比较大小，但是可以定义一种「偏序 (partial order)」关系：
+特别地，记
 \begin_inset Formula 
 \[
-\vec{\alpha}\le\vec{\beta}\iff\alpha_{i}\le\beta_{i}\qquad\forall\,i=1,...,n
+\vec{0}:=(0,...,0)\qquad\vec{1}:=(1,...,1)
 \]
 
 \end_inset
@@ -245,10 +514,14 @@ status open
 \end_layout
 
 \begin_layout Notation
-特别地，记
+两个 
+\begin_inset Formula $n$
+\end_inset
+
+ 重指标一般不能比较大小，但是可以定义一种「偏序 (partial order)」关系：
 \begin_inset Formula 
 \[
-\vec{0}:=(0,...,0)\qquad\vec{1}:=(1,...,1)
+\vec{\alpha}\le\vec{\beta}\iff\alpha_{i}\le\beta_{i},\;\forall\,i=1,...,n
 \]
 
 \end_inset
@@ -312,7 +585,19 @@ status open
 -th degree polynomial)」可以表示为
 \begin_inset Formula 
 \[
-P(\vec{x})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alpha}}\equiv\sum_{\abs{\sum_{i=1}^{n}\alpha_{i}}\le m}C_{\alpha_{1}\cdots\alpha_{n}}x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}
+P(\vec{x})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alpha}}\equiv\sum_{\sum_{i=1}^{n}\alpha_{i}\le m}C_{\alpha_{1}\cdots\alpha_{n}}x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}
+\]
+
+\end_inset
+
+如果指数是带
+\emph on
+二元关系符
+\emph default
+的字母或数字，则理解为集合：
+\begin_inset Formula 
+\[
+\vec{x}^{=m}:=\left\{ \vec{x}^{\vec{\alpha}}:\abs{\vec{\alpha}}=m\right\} \qquad\vec{x}^{<m}:=\left\{ \vec{x}^{\vec{\alpha}}:\abs{\vec{\alpha}}<m\right\} 
 \]
 
 \end_inset
@@ -327,7 +612,26 @@ P(\vec{x})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alpha}}\
 
 \end_layout
 
-\begin_layout Example*
+\begin_layout Remark*
+最后一个约定是为了避免混淆与「张量积 (tensor product)」混淆：
+\begin_inset Formula 
+\[
+\vec{x}^{=2}:=\left\{ \vec{x}^{\vec{\alpha}}:\abs{\vec{\alpha}}=2\right\} \qquad\vec{x}^{2}:=\vec{x}\vec{x}\equiv\vec{x}\otimes\vec{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -338,23 +642,178 @@ status open
 
 \end_inset
 
-多元函数 
-\begin_inset Formula $f\in C^{\infty}$
+对于实数 
+\begin_inset Formula $x,y\in\mathbb{R}$
 \end_inset
 
- 在点 
-\begin_inset Formula $\vec{x}_{0}$
+ 及整数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+可以推广到实数指标，只不过二项式系数需要用 Gamma 函数重新定义。
+\end_layout
+
 \end_inset
 
- 处的 Taylor 展开式为
+指标 
+\begin_inset Formula $\alpha\in\mathbb{N}$
+\end_inset
+
+，有以下「二项式展开」公式：
 \begin_inset Formula 
 \begin{equation}
-(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}\in K(\vec{\alpha})}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\qquad K(\vec{\alpha}):=\left\{ \vec{\kappa}:\abs{\vec{\kappa}}\le\abs{\vec{\alpha}};\kappa_{i}\le\alpha_{i},\forall\,i\right\} \label{eq:MultiIndex::Binom}
+(x+y)^{m}=\sum_{\kappa\in K(\alpha)}\binom{\alpha}{\kappa}x^{\kappa}y^{\alpha-\kappa}\qquad\binom{\alpha}{\kappa}:=\frac{\kappa!}{\kappa!(\alpha-\kappa)!}\qquad K(\alpha):=\left\{ \kappa\in\mathbb{N}:\kappa\le\alpha\right\} \label{eq:Binomial::Scalar}
 \end{equation}
 
 \end_inset
 
-形式上与实数的二项式展开几乎完全相同。
+对于数组 
+\begin_inset Formula $\vec{x},\vec{y}\in\mathbb{R}^{n}$
+\end_inset
+
+ 及多重指标 
+\begin_inset Formula $\vec{\alpha}\in\mathbb{N}^{n}$
+\end_inset
+
+，有形式上几乎完全相同的结论：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\begin{equation}
+(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}\in K(\vec{\alpha})}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\qquad K(\vec{\alpha}):=\left\{ \vec{\kappa}\in\mathbb{N}^{n}:\vec{\kappa}\le\vec{\alpha}\right\} \label{eq:Binomial::Vector}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Binomial::Scalar"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式可以推广到多项式展开：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[多项式展开]
+\end_layout
+
+\end_inset
+
+对于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个实数 
+\begin_inset Formula $x_{1},...,x_{n}\in\mathbb{R}$
+\end_inset
+
+ 及整数指标 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+，有以下「多项式展开」公式：
+\begin_inset Formula 
+\begin{equation}
+(x_{1}+\cdots+x_{n})^{m}=\sum_{\sum_{i=1}^{n}\alpha_{i}=m}\frac{m!}{(\alpha_{1}!)\cdots(\alpha_{n}!)}x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}\iff\vec{x}^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{x}^{\vec{\alpha}}\label{eq:Multinomial}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+对于向量 
+\begin_inset Formula $\vec{x},\vec{y}\in\mathbb{R}^{n}$
+\end_inset
+
+ 及整数指标 
+\begin_inset Formula $m\in\mathbb{N}$
+\end_inset
+
+，有
+\begin_inset Formula 
+\begin{equation}
+(\vec{x}\cdot\vec{y})^{m}:=(x_{1}y_{1}+\cdots+x_{n}y_{n})^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{x}^{\vec{\alpha}}\vec{y}^{\vec{\alpha}}\label{eq:Multinomial::OnInnerProduct}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+在形式上构造一个新的「向量」 
+\begin_inset Formula $\vec{z}:=(x_{1}y_{1},...,x_{n}y_{n})$
+\end_inset
+
+，则 
+\begin_inset Formula $\forall\,\vec{\alpha}\in\mathbb{N}^{n}$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+\vec{z}^{\vec{\alpha}}=(x_{1}y_{1})^{\alpha_{1}}\cdots(x_{n}y_{n})^{\alpha_{n}}=\left(x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}\right)\left(y_{1}^{\alpha_{1}}\cdots y_{n}^{\alpha_{n}}\right)=\vec{x}^{\vec{\alpha}}\vec{y}^{\vec{\alpha}}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Multinomial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式即得
+\begin_inset Formula 
+\[
+(\vec{x}\cdot\vec{y})^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{z}^{\vec{\alpha}}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{x}^{\vec{\alpha}}\vec{y}^{\vec{\alpha}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -394,7 +853,7 @@ status open
  按下标顺序排列而成的「算子数组」 就是已经熟知的「梯度 (gradient) 算子」：
 \begin_inset Formula 
 \[
-\vec{\partial}:=(\partial_{1},...,\partial_{n})\equiv\begin{pmatrix}\pdv{x_{1}} & \cdots & \pdv{x_{n}}\end{pmatrix}\equiv\grad
+\vec{\partial}:=(\partial_{1},...,\partial_{n})\equiv\grad
 \]
 
 \end_inset
@@ -406,7 +865,7 @@ status open
 偏导数算子是线性算子，并且其「乘法」运算是「可交换的 (commutative)」，因此可以像实数一样为其定义「单项式」
 \begin_inset Formula 
 \[
-\vec{\partial}^{\vec{\alpha}}:=\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}}\equiv\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}\equiv\frac{\partial^{\abs{\vec{\alpha}}}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}
+\vec{\partial}^{\vec{\alpha}}:=\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}}\equiv\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}\equiv\frac{\partial^{\alpha_{1}+\cdots+\alpha_{n}}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}
 \]
 
 \end_inset
@@ -414,7 +873,7 @@ status open
 以及「多项式」
 \begin_inset Formula 
 \[
-P(\vec{\partial})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{\partial}^{\vec{\alpha}}\equiv\sum_{\abs{\sum_{i=1}^{n}\alpha_{i}}\le m}C_{\alpha_{1}\cdots\alpha_{n}}\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}
+P(\vec{\partial})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{\partial}^{\vec{\alpha}}\equiv\sum_{\sum_{i=1}^{n}\alpha_{i}\le m}C_{\alpha_{1}\cdots\alpha_{n}}\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}
 \]
 
 \end_inset
@@ -422,7 +881,118 @@ P(\vec{\partial})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{\partial}^{
 
 \end_layout
 
-\begin_layout Example*
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[方向导数]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $\vec{\nu}\in\mathbb{N}^{n}$
+\end_inset
+
+ 为给定的向量。多元函数 
+\begin_inset Formula $u:\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 的沿 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 的整数阶「方向导数 (directional derivative)」定义为
+\begin_inset Formula 
+\[
+\partial_{\nu}^{m}u(\vec{x}):=\dv[m]{t}u(\vec{x}+t\vec{\nu})\qquad\forall\,m\in\mathbb{N}
+\]
+
+\end_inset
+
+可以证明：
+\begin_inset Formula 
+\begin{equation}
+\partial_{\nu}=\vec{\nu}\cdot\vec{\partial}\qquad\partial_{\nu}^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\vec{\partial}^{\vec{\alpha}}\label{eq:高阶方向导数展开}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+前者代入定义即可验证。对于后者，可以用数学归纳法证明；或者考虑到 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 是预先选定的向量，它的导数 
+\begin_inset Formula $\partial_{i}\nu_{k}$
+\end_inset
+
+ 显然为零，因此可以对 
+\begin_inset Formula $\vec{\nu}\cdot\vec{\partial}$
+\end_inset
+
+ 应用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Multinomial::OnInnerProduct"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+在不致引起混淆的情况下，可以省略下标、箭头、加粗：
+\begin_inset Formula 
+\[
+\begin{gathered}\alpha:=(\alpha_{1},...,\alpha_{n})\qquad\abs{\alpha}:=\alpha_{1}+\cdots+\alpha_{n}\qquad\alpha!:=(\alpha_{1}!)\cdots(\alpha_{n}!)\\
+x:=(x_{1},...,x_{n})\qquad x^{\alpha}:=x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}\qquad p(x):=\sum_{\abs{\alpha}\le m}c_{\alpha}x^{\alpha}\\
+\partial:=(\partial_{1},...,\partial_{n})\qquad\partial^{\alpha}:=\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}}\qquad p(\partial):=\sum_{\abs{\alpha}\le m}c_{\alpha}\partial^{\alpha}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -433,23 +1003,39 @@ status open
 
 \end_inset
 
-多元函数 
-\begin_inset Formula $f\in C^{\infty}$
+一元函数 
+\begin_inset Formula $u:\mathbb{R}\to\mathbb{R}$
 \end_inset
 
- 在点 
-\begin_inset Formula $\vec{x}_{0}$
+ 的在 
+\begin_inset Formula $a\in\mathbb{R}$
 \end_inset
 
- 处的 Taylor 展开式为
+ 处的 Taylor 展开式（假设各阶导数都存在）为
 \begin_inset Formula 
 \[
-f(\vec{x})=\sum_{\abs{\vec{\alpha}}=0}^{\infty}\frac{\vec{\partial}^{\vec{\alpha}}f(\vec{x}_{0})}{\vec{\alpha}!}(\vec{x}-\vec{x}_{0})^{\vec{\alpha}}
+u(x)=\sum_{\kappa=0}^{\infty}\frac{\dd^{\kappa}u(a)}{\kappa!}(x-a)^{\kappa}\qquad\dd^{\kappa}u(a):=\eval{\dv[\kappa]{u}{x}}_{x=a}
 \]
 
 \end_inset
 
-形式上与一元函数的 Taylor 展开式几乎完全相同。
+多元函数 
+\begin_inset Formula $u:\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 在点 
+\begin_inset Formula $a\in\mathbb{R}^{n}$
+\end_inset
+
+ 处的 Taylor 展开式具有几乎完全相同的形式：
+\begin_inset Formula 
+\[
+u(x)=\sum_{\kappa=0}^{\infty}\frac{\partial^{\kappa}u(a)}{\kappa!}(x-a)^{\kappa}\qquad\partial^{\kappa}u(a):=\eval{\frac{\partial^{\kappa_{1}+\cdots+\kappa_{n}}u}{\partial x_{1}^{\kappa_{1}}\cdots\partial x_{n}^{\kappa_{n}}}}_{x=a}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -459,31 +1045,57 @@ f(\vec{x})=\sum_{\abs{\vec{\alpha}}=0}^{\infty}\frac{\vec{\partial}^{\vec{\alpha
 
 \end_layout
 
-\begin_layout Standard
-在不致引起混淆的情况下，可以省略下标、箭头、加粗：
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Leibnitz 法则]
+\end_layout
+
+\end_inset
+
+ 对两个一元函数 
+\begin_inset Formula $u,v:\mathbb{R}\to\mathbb{R}$
+\end_inset
+
+ 的乘积求 
+\begin_inset Formula $\alpha\in\mathbb{N}$
+\end_inset
+
+ 阶导数，有如下法则：
 \begin_inset Formula 
 \[
-\begin{aligned}\alpha & :=(\alpha_{1},...,\alpha_{n}) & \abs{\alpha} & :=\alpha_{1}+\cdots+\alpha_{n} & \alpha! & :=(\alpha_{1}!)\cdots(\alpha_{n}!)\\
-x & :=(x_{1},...,x_{n}) & x^{\alpha} & :=x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}} & p(x) & :=\sum_{\abs{\alpha}\le m}c_{\alpha}x^{\alpha}\\
-\partial & :=(\partial_{1},...,\partial_{n}) & \partial^{\alpha} & :=\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}} & p(\partial) & :=\sum_{\abs{\alpha}\le m}c_{\alpha}\partial^{\alpha}
-\end{aligned}
+\dd^{\alpha}(uv)=\sum_{\kappa=0}^{\alpha}\binom{\alpha}{\kappa}(\dd^{\kappa}u)(\dd^{\alpha-\kappa}v)
 \]
 
 \end_inset
 
-如果指数是罗马字母 
-\begin_inset Formula $m$
+对两个多元函数 
+\begin_inset Formula $u,v:\mathbb{R}^{n}\to\mathbb{R}$
 \end_inset
 
-，则理解为：任意满足 
-\begin_inset Formula $\abs{\alpha}=m$
+ 的乘积求 
+\begin_inset Formula $\alpha\in\mathbb{N}^{n}$
 \end_inset
 
- 的多重指标 
-\begin_inset Formula $\alpha$
+ 阶偏导数，有几乎完全相同的法则：
+\begin_inset Formula 
+\[
+\partial^{\alpha}(uv)=\sum_{\kappa=0}^{\alpha}\binom{\alpha}{\kappa}(\partial^{\kappa}u)(\partial^{\alpha-\kappa}v)
+\]
+
 \end_inset
 
-。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -505,7 +1117,7 @@ x & :=(x_{1},...,x_{n}) & x^{\alpha} & :=x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_
 \begin_inset Formula $\dd$
 \end_inset
 
-，
+、将 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -528,7 +1140,7 @@ x & :=(x_{1},...,x_{n}) & x^{\alpha} & :=x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_
  阶 PDE 可以表示为
 \begin_inset Formula 
 \begin{equation}
-F(x,u,\partial u,...,\partial^{m}u)=0\label{eq:PDE::General::Nonlinear}
+F(x,u,\partial^{\le m}u)=0\label{eq:PDE::General::Nonlinear}
 \end{equation}
 
 \end_inset
@@ -545,7 +1157,7 @@ reference "eq:PDE::General::Nonlinear"
 \end_inset
 
  式中含有 
-\begin_inset Formula $u,\partial u,...,\partial^{m}u$
+\begin_inset Formula $u,\partial^{\le m}u$
 \end_inset
 
  中任意两项（可以是相同的两项）的乘积，则称方程是「非线性的 (non-linear)」。
@@ -562,7 +1174,7 @@ reference "eq:PDE::General::Nonlinear"
  式可以化为
 \begin_inset Formula 
 \begin{equation}
-\sum_{\abs{\alpha}=m}A_{\alpha}(x,u,\partial u,...,\partial^{m-1}u)\partial^{\alpha}u+B(x,u,\partial u,...,\partial^{m-1}u)=0\label{eq:PDE::General::Quasi-linear}
+\sum_{\abs{\alpha}=m}A_{\alpha}(x,u,\partial^{<m}u)\partial^{\alpha}u+B(x,u,\partial^{<m}u)=0\label{eq:PDE::General::Quasi-linear}
 \end{equation}
 
 \end_inset
@@ -581,7 +1193,7 @@ reference "eq:PDE::General::Quasi-linear"
  式可以化为
 \begin_inset Formula 
 \begin{equation}
-\sum_{\abs{\alpha}=m}A_{\alpha}(x)\partial^{\alpha}u+B(x,u,\partial u,...,\partial^{m-1}u)=0\label{eq:PDE::General::Semi-linear}
+\sum_{\abs{\alpha}=m}A_{\alpha}(x)\partial^{\alpha}u+B(x,u,\partial^{<m}u)=0\label{eq:PDE::General::Semi-linear}
 \end{equation}
 
 \end_inset
@@ -628,7 +1240,11 @@ reference "eq:PDE::General::Semi-linear"
 \begin_inset Formula $u$
 \end_inset
 
- 改为大写并理解为 
+ 改写为 
+\begin_inset Formula $U$
+\end_inset
+
+ 并理解为 
 \begin_inset Formula $N\times1$
 \end_inset
 
@@ -730,7 +1346,7 @@ reference "eq:PDEs::General::Quasi-linear"
 \end_inset
 
  式）；对其进一步作变量替换（将 
-\begin_inset Formula $\partial^{2}u,...,\partial^{m+1}u$
+\begin_inset Formula $\partial^{>1}u$
 \end_inset
 
  视为彼此无关的未知函数，并补充适当的协调关系），都能得到
@@ -753,7 +1369,7 @@ reference "eq:PDEs::General::Quasi-linear"
 \end_layout
 
 \begin_layout Standard
-为了强调几何概念，本节暂时恢复使用向量记号。
+为了强调几何概念，本节恢复使用向量记号。
 \end_layout
 
 \begin_layout Definition
@@ -782,7 +1398,7 @@ status open
  维「流形 (manifold)」：
 \begin_inset Formula 
 \begin{equation}
-S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\grad\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
+S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\vec{\partial}\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
 \end{equation}
 
 \end_inset
@@ -790,7 +1406,7 @@ S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\grad\phi(\vec
 它在任意一点的「单位法向量 (unit normal vector)」为
 \begin_inset Formula 
 \begin{equation}
-\vec{\nu}:=\frac{\grad\phi}{\norm{\grad\phi}}\qquad\forall\,\vec{x}\in S\label{eq:HyperSurface::UnitNormal}
+\vec{\nu}:=\frac{\vec{\partial}\phi}{\norm{\vec{\partial}\phi}}\qquad\forall\,\vec{x}\in S\label{eq:HyperSurface::UnitNormal}
 \end{equation}
 
 \end_inset
@@ -811,7 +1427,7 @@ S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\grad\phi(\vec
 \end_inset
 
  可以将梯度算子 
-\begin_inset Formula $\vec{\partial}\equiv\grad$
+\begin_inset Formula $\vec{\partial}$
 \end_inset
 
  拆分为「法向分量 
@@ -828,7 +1444,7 @@ S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\grad\phi(\vec
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\vec{\partial}=\vec{\partial}_{\nu}+\vec{\partial}_{\tau}\qquad\vec{\partial}_{\nu}:=\vec{\nu}\partial_{\nu}\qquad\partial_{\nu}:=\vec{\nu}\cdot\vec{\partial}=\sum_{i=1}^{n}\nu_{i}\partial_{i}\qquad\vec{\partial}_{\tau}:=\vec{\partial}-\vec{\partial}_{\nu}=\vec{\tau}\partial_{\tau}
+\vec{\partial}=\vec{\partial}_{\nu}+\vec{\partial}_{\tau}\qquad\vec{\partial}_{\nu}:=\vec{\nu}\partial_{\nu}\qquad\partial_{\nu}:=\vec{\nu}\cdot\vec{\partial}=\sum_{i=1}^{n}\nu_{i}\partial_{i}
 \]
 
 \end_inset
@@ -840,20 +1456,20 @@ S:=\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\phi\in C^{m},\grad\phi(\vec
  作二项式展开（
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:MultiIndex::Binom"
+reference "eq:Binomial::Vector"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）：
+ 式），并将：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\vec{\partial}^{\vec{\alpha}}=\left(\vec{\partial}_{\nu}+\vec{\partial}_{\tau}\right)^{\vec{\alpha}}=\sum_{\vec{\kappa}\in K(\vec{\alpha})}\binom{\vec{\alpha}}{\vec{\kappa}}\vec{\partial}_{\nu}^{\vec{\kappa}}\vec{\partial}_{\tau}^{\vec{\alpha}-\vec{\kappa}}=\left(\vec{\nu}\partial_{\nu}\right)^{\vec{\alpha}}+\sum_{\vec{\kappa}\in K(\vec{\alpha})\setminus\left\{ \vec{\alpha}\right\} }\binom{\vec{\alpha}}{\vec{\kappa}}\left(\vec{\nu}\partial_{\nu}\right)^{\vec{\kappa}}\left(\vec{\tau}\partial_{\tau}\right)^{\vec{\alpha}-\vec{\kappa}}=\vec{\nu}^{\vec{\alpha}}\partial_{\nu}^{m}+\cdots\label{eq:Gradient::Alpha-thOrder}
+\vec{\partial}^{\vec{\alpha}}=\left(\vec{\partial}_{\nu}+\vec{\partial}_{\tau}\right)^{\vec{\alpha}}=\sum_{\vec{\kappa}\in K(\vec{\alpha})}\binom{\vec{\alpha}}{\vec{\kappa}}\vec{\partial}_{\nu}^{\vec{\kappa}}\vec{\partial}_{\tau}^{\vec{\alpha}-\vec{\kappa}}=\vec{\nu}^{\vec{\alpha}}\partial_{\nu}^{m}+\cdots\label{eq:Gradient::Alpha-thOrder}
 \end{equation}
 
 \end_inset
@@ -861,7 +1477,7 @@ noprefix "false"
 其中
 \begin_inset Formula 
 \[
-\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\qquad K(\vec{\alpha}):=\left\{ \vec{\kappa}:\abs{\vec{\kappa}}\le\abs{\vec{\alpha}};\kappa_{i}\le\alpha_{i},\forall\,i\right\} 
+\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\qquad K(\vec{\alpha}):=\left\{ \vec{\kappa}\in\mathbb{N}^{n}:\vec{\kappa}\le\vec{\alpha}\right\} 
 \]
 
 \end_inset
@@ -869,7 +1485,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
 如果 
 \begin_inset Formula $m$
 \end_inset
@@ -998,7 +1614,7 @@ reference "eq:PDEs::1st-order::Quasi-linear"
  处的「特征矩阵 (characteristic matrix)」，它的「行列式 (determinant)」
 \begin_inset Formula 
 \[
-Q(\vec{\sigma};\vec{x}):=\det\Matrix{\Lambda(\vec{\sigma};\vec{x})}\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\vec{\sigma}^{\vec{\alpha}})
+Q(\vec{\sigma};\vec{x}):=\det\Matrix{\Lambda(\vec{\sigma};\vec{x})}=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\vec{\sigma}^{\vec{\alpha}})
 \]
 
 \end_inset
@@ -1230,7 +1846,7 @@ status open
 积分因子
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
 设 
 \begin_inset Formula $u,v$
 \end_inset
@@ -1262,7 +1878,7 @@ u\dd{x}+v\dd{y}=\dd{\phi}
  是「精确的 (exact)」。
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
 如果 
 \begin_inset Formula $u\dd{x}+v\dd{y}$
 \end_inset
@@ -1295,130 +1911,6 @@ u\dd{x}+v\dd{y}=\dd{\phi}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-定解条件
-\end_layout
-
-\begin_layout Subsection
-Cauchy 问题
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Cauchy 问题]
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $m$
-\end_inset
-
- 阶 PDE 的解在超曲面 
-\begin_inset Formula $S$
-\end_inset
-
- 上所应满足的条件（函数值或小于 
-\begin_inset Formula $m$
-\end_inset
-
- 阶的各阶导数值，或能够确定这些值的代数方程），称为「Cauchy 数据」。
-\end_layout
-
-\begin_layout Definition
-「Cauchy 问题」：求方程的满足 Cauchy 数据的解。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[适定性]
-\end_layout
-
-\end_inset
-
-如果 PDE 的解存在、唯一、连续依赖于 Cauchy 数据，则称该 PDE 是「适定的 (well-posed)」。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-边界条件
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-BC!Boundary Condition
-\end_layout
-
-\end_inset
-
-
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-BVP!Boundary Value Problem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-初始条件
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-IC!Initial Condition
-\end_layout
-
-\end_inset
-
-
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-IVP!Initial Value Problem
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-相容性
 \end_layout
 
 \end_body
