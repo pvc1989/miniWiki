@@ -25,16 +25,16 @@
 
 ### 数学
 
-- [实分析 (Real Analysis)](./mathematics/real_analysis/README.lyx)
-- [复分析 (Complex Analysis)](./mathematics/complex_analysis/README.lyx)
-- [泛函分析 (Functional Analysis)](./mathematics/functional_analysis/README.lyx)
-- [微分方程 (Differential Equations)](./mathematics/ode_and_pde/README.lyx)
-- [特殊函数 (Special Functions)](./mathematics/special_functions/README.lyx)
-- [微分几何 (Differential Geometry)](./mathematics/differential_geometry/README.lyx)
+- [实分析 (Real Analysis)](./mathematics/analysis/README.lyx)
+- [复分析 (Complex Analysis)](./mathematics/complex/README.lyx)
+- [泛函分析 (Functional Analysis)](./mathematics/functional/README.lyx)
+- [常微分方程 (Ordinary Differential Equations, ODE)](./mathematics/ode/README.lyx)
+- [偏微分方程 (Partial Differential Equations, PDE)](./mathematics/pde/README.lyx)
+- [微分几何 (Differential Geometry)](./mathematics/geometry/README.lyx)
 
 ### 物理
-- [热力学 (Thermodynamics)](./physics/thermodynamics/README.lyx)
-- [空气动力学 (Aerodynamics)](./physics/aerodynamics/README.lyx)
+- [热力学 (Thermodynamics)](./physics/heat/README.lyx)
+- [流体力学 (Fluid Mechanics)](./physics/fluid/README.lyx)
 
 ### 算法
 - [数值分析 (Numerical Analysis)](./algorithms/numerical_analysis/README.lyx)
