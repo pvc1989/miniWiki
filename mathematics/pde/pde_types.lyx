@@ -589,7 +589,7 @@ status collapsed
 \begin_layout Theorem
 \begin_inset Formula 
 \begin{equation}
-(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}=\vec{0}}^{\vec{\alpha}}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\label{eq:Binomial::Vector}
+(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}=\vec{0}}^{\vec{\alpha}}\binom{\vec{\alpha}}{\vec{\kappa}}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}:=\frac{\vec{\alpha}!}{\vec{\kappa}!(\vec{\alpha}-\vec{\kappa})!}\label{eq:Binomial::Vector}
 \end{equation}
 
 \end_inset
@@ -1220,7 +1220,7 @@ reference "eq:PDE::General::Semi-linear"
 
 \begin_layout Standard
 实际上，对任意 
-\begin_inset Formula $m$
+\begin_inset Formula $(m-1)$
 \end_inset
 
  阶
@@ -1235,7 +1235,7 @@ reference "eq:PDE::General::Nonlinear"
 \end_inset
 
  式）作一阶微分，都能得到至多 
-\begin_inset Formula $(m+1)$
+\begin_inset Formula $m$
 \end_inset
 
  阶的
@@ -1251,7 +1251,7 @@ reference "eq:PDE::General::Nonlinear"
 \end_inset
 
 对其进一步作变量替换（将 
-\begin_inset Formula $\partial^{>1}u$
+\begin_inset Formula $\partial^{>1}U$
 \end_inset
 
  视为彼此无关的未知函数，并补充适当的协调关系），都能得到
@@ -1261,7 +1261,7 @@ reference "eq:PDE::General::Nonlinear"
 ：
 \begin_inset Formula 
 \begin{equation}
-\Operator{A}\ket{U}=\ket{B}\qquad\Operator{A}:=\sum_{\abs{\alpha}=1}\Matrix{A_{\alpha}}\partial^{\alpha}\equiv\sum_{i=1}^{n}\Matrix{A_{i}}\pdv{x_{i}}\label{eq:PDEs::1st-order::Quasi-linear}
+\Operator{A}\ket{U}=\ket{B(\vec{x},\partial^{<m}U)}\qquad\Operator{A}:=\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x},\partial^{<m}U)}\partial_{i}\label{eq:PDEs::1st-order::Quasi-linear}
 \end{equation}
 
 \end_inset
@@ -1304,14 +1304,34 @@ reference "sec:PDE::CauchyProblem"
 \begin_inset Formula $m$
 \end_inset
 
- 阶拟线性 PDE 系统（
+ 阶拟线性微分算子 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 及相应的方程（
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 式），为其引入如下一组概念。
+ 式），为其引入如下一组概念。如无特别说明，本节中的 
+\begin_inset Formula $\left\{ \Matrix{A_{\vec{\alpha}}(\vec{x})}\right\} _{\abs{\vec{\alpha}}=m}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\Matrix{A_{i}(\vec{x})}_{i=1}^{n}$
+\end_inset
+
+ 都表示系数矩阵在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处的取值，实际计算时可能还需要代入 
+\begin_inset Formula $\partial^{<m}U$
+\end_inset
+
+ 在该点的值。
 \end_layout
 
 \begin_layout Definition
@@ -1328,7 +1348,7 @@ status open
 方阵
 \begin_inset Formula 
 \[
-\Matrix{\Lambda(\vec{\sigma};\vec{x})}:=\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\left(\vec{x},\partial^{<m}U(\vec{x})\right)}\vec{\sigma}^{\vec{\alpha}}
+\Matrix{\Lambda(\vec{\sigma};\vec{x})}:=\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\vec{\sigma}^{\vec{\alpha}}
 \]
 
 \end_inset
@@ -1341,7 +1361,7 @@ status open
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处的「特征矩阵 (characteristic matrix)」。
+ 处的「特征矩阵 (characteristic matrix)」
 \end_layout
 
 \begin_layout Standard
@@ -1369,7 +1389,7 @@ status open
  的「行列式 (determinant)」
 \begin_inset Formula 
 \[
-Q(\vec{\sigma};\vec{x}):=\det\Matrix{\Lambda(\vec{\sigma};\vec{x})}
+Q(\vec{\sigma};\vec{x}):=\det\Matrix{\Lambda(\vec{\sigma};\vec{x})}\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\vec{\sigma}^{\vec{\alpha}})
 \]
 
 \end_inset
@@ -1430,7 +1450,7 @@ status open
  处满足
 \begin_inset Formula 
 \[
-Q\left(\vec{\partial}\phi(\vec{x});\vec{x}\right)=0
+Q\left(\vec{\partial}\phi(\vec{x});\vec{x}\right)\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\left(\vec{\partial}\phi(\vec{x})\right)^{\vec{\alpha}})=0
 \]
 
 \end_inset
@@ -1443,18 +1463,11 @@ Q\left(\vec{\partial}\phi(\vec{x});\vec{x}\right)=0
 \begin_inset Formula $\Operator{A}$
 \end_inset
 
- 及相应的方程（
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:PDEs::1st-order::Quasi-linear"
-
-\end_inset
-
- 式）是「特征的 (characteristic)」，相应的 
+ 及相应的方程是「特征的 (characteristic)」，相应的 
 \begin_inset Formula $\vec{\partial}\phi(\vec{x})$
 \end_inset
 
- 称为「特征法向 (characteristic normal direction)」。 如果 
+ 称为「特征方向 (characteristic direction)」。 如果 
 \begin_inset Formula $S$
 \end_inset
 
@@ -1479,40 +1492,38 @@ reference "eq:PDEs::1st-order::Quasi-linear"
 
 \end_layout
 
-\begin_layout Example*
-考虑只依赖于 
-\begin_inset Formula $\vec{x}$
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[椭圆型]
+\end_layout
+
 \end_inset
 
- 的一阶线性微分算子 
+如果算子 
 \begin_inset Formula $\Operator{A}$
 \end_inset
 
-，它的特征矩阵与特征型分别为
+ 在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处没有非零的特征方向，即
 \begin_inset Formula 
 \[
-\Matrix{\Lambda(\vec{\sigma};\vec{x})}=\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\sigma_{i}\qquad Q(\vec{\sigma};\vec{x})=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\sigma_{i})
+Q(\vec{\sigma};\vec{x})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}\vec{\sigma}^{\vec{\alpha}})\ne0\qquad\forall\,\vec{\sigma}\ne\vec{0}
 \]
 
 \end_inset
 
-因此它的特征流形是以下关于 
-\begin_inset Formula $\phi(\vec{x})$
+则称该算子及相应的方程在点 
+\begin_inset Formula $\vec{x}$
 \end_inset
 
- 的一阶 PDE 的解
-\begin_inset Formula 
-\begin{equation}
-Q\left(\grad\phi(\vec{x});\vec{x}\right)=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\pdv{\phi(\vec{x})}{x_{i}})=0\label{eq:PDE::Char::1stOrderSystem}
-\end{equation}
-
-\end_inset
-
-它完全由算子 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 确定。
+ 处是「椭圆的 (elliptic)」。
 \end_layout
 
 \begin_layout Standard
@@ -1528,19 +1539,128 @@ status open
 
 \begin_layout Plain Layout
 
-[椭圆型]
+[双曲型]
 \end_layout
 
 \end_inset
 
-如果 
+如果关于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的代数方程
+\begin_inset Formula 
+\[
+Q(\lambda\vec{\tau}+\vec{\sigma};\vec{x})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}(\vec{x})}(\lambda\vec{\tau}+\vec{\sigma})^{\vec{\alpha}})=0\qquad\forall\,\vec{\sigma}\nparallel\vec{\tau}
+\]
+
+\end_inset
+
+有 
+\begin_inset Formula $mN$
+\end_inset
+
+ 个（
 \begin_inset Formula $m$
 \end_inset
 
- 阶拟线性微分算子
+ 阶导数、
+\begin_inset Formula $N$
+\end_inset
+
+ 个未知函数）互异实根，其中 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ 为给定的方向，则称该算子及相应的方程在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处是「沿 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ 方向严格双曲的 (hyperbolic)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一阶方程组]
+\end_layout
+
+\end_inset
+
+一阶拟线性方程组（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PDEs::1st-order::Quasi-linear"
+
+\end_inset
+
+ 式）的特征矩阵与特征型分别为
+\begin_inset Formula 
+\begin{equation}
+\Matrix{\Lambda(\vec{\sigma};\vec{x})}=\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\sigma_{i}\qquad Q(\vec{\sigma};\vec{x})=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\sigma_{i})\label{eq:PDE-System-1stOrder-CharForm}
+\end{equation}
+
+\end_inset
+
+它的特征流形是以下关于 
+\begin_inset Formula $\phi(\vec{x})$
+\end_inset
+
+ 的一阶 PDE 的解
+\begin_inset Formula 
+\begin{equation}
+Q\left(\vec{\partial}\phi(\vec{x});\vec{x}\right)=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\pdv{\phi(\vec{x})}{x_{i}})=0\label{eq:PDE-System-1stOrder-CharManifold}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+如果在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处有
 \begin_inset Formula 
 \[
-\Operator{A}=\sum_{\abs{\vec{\alpha}}\le m}\Matrix{A_{\vec{\alpha}}}\vec{\partial}^{\vec{\alpha}}
+Q(\vec{\sigma};\vec{x})=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}\sigma_{i})\ne0\qquad\forall\,\vec{\sigma}\ne\vec{0}
+\]
+
+\end_inset
+
+则方程在该点是
+\emph on
+椭圆的
+\emph default
+。
+\end_layout
+
+\begin_layout Itemize
+如果关于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的代数方程
+\begin_inset Formula 
+\[
+Q(\lambda\vec{\tau}+\vec{\sigma};\vec{x})=\det(\sum_{i=1}^{n}\Matrix{A_{i}(\vec{x})}(\lambda\tau_{i}+\sigma_{i}))=0\qquad\forall\,\vec{\sigma}\nparallel\vec{\tau}
 \]
 
 \end_inset
@@ -1549,21 +1669,136 @@ status open
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处没有非零的特征法向，即
+ 处有 
+\begin_inset Formula $N$
+\end_inset
+
+ 个互异实根，其中 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ 为给定的方向，则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PDEs::1st-order::Quasi-linear"
+
+\end_inset
+
+ 在该点是
+\emph on
+沿 
+\begin_inset Formula $\vec{\tau}$
+\end_inset
+
+ 严格双曲的
+\emph default
+。
+\end_layout
+
+\begin_layout Itemize
+特别地，对于只含有两个自变量 
+\begin_inset Formula $\vec{x}:=(t,x)$
+\end_inset
+
+ 的方程组
 \begin_inset Formula 
 \[
-\left\{ \vec{\sigma}\in\mathbb{R}^{n}:Q(\vec{\sigma};\vec{x})=0\right\} =\left\{ \vec{0}\right\} 
+\partial_{t}\ket{U(t,x)}+\Matrix{A(t,x)}\partial_{x}\ket{U(t,x)}=\ket{0}
 \]
 
 \end_inset
 
-则称该算子及相应的方程在点 
-\begin_inset Formula $\vec{x}$
+如果 
+\begin_inset Formula $N\times N$
 \end_inset
 
- 处是「椭圆的 (elliptic)」。
+ 矩阵 
+\begin_inset Formula $\Matrix{A(t,x)}$
+\end_inset
+
+ 在点 
+\begin_inset Formula $(t,x)$
+\end_inset
+
+ 处有 
+\begin_inset Formula $N$
+\end_inset
+
+ 个互异「特征值 (eigenvalue)」，则方程在该点是
+\emph on
+沿 
+\begin_inset Formula $t$
+\end_inset
+
+ 轴方向严格双曲的
+\emph default
+。
 \end_layout
 
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二阶方程]
+\end_layout
+
+\end_inset
+
+在 
+\begin_inset Formula $n$
+\end_inset
+
+ 维空间中：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Laplace 方程 
+\begin_inset Formula $\laplacian u=0$
+\end_inset
+
+ 是椭圆的：
+\begin_inset Formula 
+\[
+\Operator{A}=\sum_{i=1}^{n}\pdv[2]{x_{i}}\implies Q(\vec{\sigma};\vec{x})=\sum_{i=1}^{n}\sigma_{i}^{2}\ne0\qquad\forall\,\vec{\sigma}\ne\vec{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+波动方程 
+\begin_inset Formula $\partial_{t}^{2}u=c^{2}\laplacian u$
+\end_inset
+
+ 沿时间轴 
+\begin_inset Formula $\vec{\tau}=(1,0,...,0)$
+\end_inset
+
+ 是严格双曲的：
+\begin_inset Formula 
+\[
+\Operator{A}=\pdv[2]{x_{0}}-\sum_{i=1}^{n}\pdv[2]{x_{i}}\implies\lambda=\pm\sqrt{\sum_{i=1}^{n}\sigma_{i}^{2}}-\sigma_{0}\qquad\forall\,\vec{\sigma}\nparallel\vec{\tau}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
