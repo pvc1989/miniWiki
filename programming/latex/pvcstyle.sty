@@ -14,22 +14,19 @@
 
 % fonts
 %% STIX Math: https://github.com/stipub/stixfonts
-%% STIXIntegralsUpD: % https://support.apple.com/en-us/HT208968
 %% Neo Euler: % https://github.com/khaledhosny/euler-otf
 %% math fonts
 \RequirePackage{unicode-math}
 \if@euler  % almost every symbol is upright
-  \setmathfont{STIX Two Math}[math-style = upright, bold-style = upright]
+  \setmathfont{STIX Two Math}[
+    math-style = upright,
+    bold-style = upright,
+    StylisticSet={08},
+  ]
   \setmathfont{Neo Euler}[
     range = {\partial,
                up/{latin, Latin, greek, Greek},
              bfup/{latin, Latin, greek, Greek},
-    }
-  ]
-  \setmathfont{STIXIntegralsUpD}[
-    range = { \int,  \iint,  \iiint, \iiiint, \upint, \lowint,
-             \oint, \oiint, \oiiint, \fint, \scpolint, \npolint,
-             \pointint, \ointctrclockwise,
     }
   ]
   \if@bold
