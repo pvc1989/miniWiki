@@ -1,11 +1,11 @@
 # 泛型编程
 
-## 模板函数
+## 函数模板
 
 ### 提升 (Lifting)
-`提升 (lifting)` 是指从一个或多个`具体的 (concrete)` 普通函数出发, 提取出一个`抽象的 (abstract)` 模板函数的过程, 是一种特殊的`泛化 (generalization)`.
+`提升 (lifting)` 是指从一个或多个`具体的 (concrete)` 普通函数出发, 提取出一个`抽象的 (abstract)` 函数模板的过程, 是一种特殊的`泛化 (generalization)`.
 
-[标准库算法](./algorithm.md)是`提升`和`模板函数`的典型示例.
+[标准库算法](./algorithm.md)是`提升`和`函数模板`的典型示例.
 
 ### 语法
 `T` 的实际类型将根据 `compare` 的`静态`调用方式在`编译期`决定:
@@ -52,8 +52,8 @@ long lng = 1;
 auto val3 = sum<long long>(i, lng);  // long long sum(int, long)
 ```
 
-### 模板函数的地址
-使用模板函数的地址时, 必须确保所有模板形参可以被唯一地确定:
+### 函数模板的地址
+使用函数模板的地址时, 必须确保所有模板形参可以被唯一地确定:
 ```cpp
 template <typename T> int compare(const T&, const T&);
 
@@ -67,7 +67,7 @@ func(compare<int>);  // 正确: T 被唯一地确定为 int
 func(compare);       // 错误: T 无法被唯一地确定
 ```
 
-## 模板类
+## 类模板
 
 ```cpp
 template <typename T> class Blob {
@@ -91,11 +91,11 @@ template <typename T> class Blob {
 ```
 
 ### 定义成员函数
-模板类的成员函数可以在类的内部或外部定义.
+类模板的成员函数可以在类的内部或外部定义.
 在内部定义的成员函数是隐式内联的.
 
 #### 在外部定义成员函数
-在模板类外部定义的成员函数以 `template` 关键词 + 模板类的形参列表 开始, 例如:
+在类模板外部定义的成员函数以 `template` 关键词 + 类模板的形参列表 开始, 例如:
 ```cpp
 template <typename T>
 void Blob<T>::check(size_type i, const std::string& msg) const {
@@ -142,16 +142,16 @@ template <typename T> class Foo {
   static std::size_t ctr;
 };
 ```
-而每个`静态数据成员`应当有且仅有一个`定义`. 因此, 模板类的`静态数据成员`应当像`成员函数`一样, 在类的外部给出唯一的定义:
+而每个`静态数据成员`应当有且仅有一个`定义`. 因此, 类模板的`静态数据成员`应当像`成员函数`一样, 在类的外部给出唯一的定义:
 ```cpp
 template <typename T>
 size_t Foo<T>::ctr = 0;  // 定义并初始化 ctr
 ```
 
-### 使用模板类名
+### 使用类模板名
 
 #### 在内部使用类名
-`模板类名 (name of a class template)`  (不带模板实参) 不是一种`类型名 (name of a type)`, 但在模板类自己的作用域内, 可以不受此限制:
+`类模板名 (name of a class template)`  (不带模板实参) 不是一种`类型名 (name of a type)`, 但在类模板自己的作用域内, 可以不受此限制:
 
 ```cpp
 template <typename T> class BlobPtr {
@@ -173,7 +173,7 @@ template <typename T> class BlobPtr {
   std::size_t curr;  // current position within the array
 };
 ```
-在这里, 自增自减运算符的返回值类型可以写为 `BlobPtr&` 而不是 `BlobPtr<T>&`. 这是因为在模板类作用域内, 编译器将`模板类名`视为带有模板实参的`类型名`:
+在这里, 自增自减运算符的返回值类型可以写为 `BlobPtr&` 而不是 `BlobPtr<T>&`. 这是因为在类模板作用域内, 编译器将`类模板名`视为带有模板实参的`类型名`:
 ```cpp
 // 相当于
 BlobPtr<T>& operator++();
@@ -181,7 +181,7 @@ BlobPtr<T>& operator--();
 ```
 
 #### 在外部引用类名
-在模板类外部定义成员时, 模板类的作用域起始于 (带模板实参的) 类名. 因此在 `::` 之前需要显式写出模板实参, 而在其之后则不用:
+在类模板外部定义成员时, 类模板的作用域起始于 (带模板实参的) 类名. 因此在 `::` 之前需要显式写出模板实参, 而在其之后则不用:
 ```cpp
 template <typename T>
 BlobPtr<T> BlobPtr<T>::operator++(int) {
@@ -191,17 +191,17 @@ BlobPtr<T> BlobPtr<T>::operator++(int) {
 }
 ```
 
-#### (C++11) 模板类型别名
-`实例化的 (instantiated)` 模板类是一种具体类型, 可以用 `typedef` 为其定义别名, 而对模板名称则不可以:
+#### (C++11) 类模板别名
+`实例化的 (instantiated)` 类模板是一种具体类型, 可以用 `typedef` 为其定义别名, 而对模板名称则不可以:
 
 ```cpp
 typedef Blob<string> StrBlob;  // OK
 typedef std::map TreeMap;      // error
 ```
 
-C++11 允许用 `using` 为模板类定义别名:
+C++11 允许用 `using` 为类模板定义别名:
 ```cpp
-// twin 仍是模板类:
+// twin 仍是类模板:
 template<typename T> using twin = pair<T, T>;
 // authors 的类型是 pair<string, string>
 twin<string> authors;
@@ -218,7 +218,7 @@ partNo<string> books;
 
 `友元 (friend)` 机制破坏了类的封装, 因此要尽量少用.
 
-如果模板类的友元不是模板, 那么它对该模板的`所有实例化`都是友元.
+如果类模板的友元不是模板, 那么它对该模板的`所有实例化`都是友元.
 
 如果 (模板或非模板) 类的友元本身就是一个模板 (函数或类), 那么友元关系有以下几种可能.
 
@@ -238,18 +238,18 @@ template <typename T> class Blob {
 ```
 
 #### 一般与特定的模板友元
-一个 (模板或非模板) 类可以指定一个模板类的`所有`或`特定`的实例化作为其友元:
+一个 (模板或非模板) 类可以指定一个类模板的`所有`或`特定`的实例化作为其友元:
 ```cpp
 // 前置声明:
 template <typename T> class Pal;
-// 指定 非模板类 的友元:
+// 指定 普通类 的友元:
 class C {
   // Pal<C> 是 C 的友元:
   friend class Pal<C>;
   // Pal2<T> 是 C 的友元, 不需要前置声明 Pal2:
   template <typename T> friend class Pal2;
 };
-// 指定 模板类 的友元:
+// 指定 类模板 的友元:
 template <typename T> class C2 {
   // Pal<T> 是 C2<T> 的友元, 需要前置声明 Pal:
   friend class Pal<T>;
@@ -267,11 +267,11 @@ template <typename Type> class Bar {
 };
 ```
 
-## 模板成员
+## 成员模板
 
-### 非模板类的模板成员
+### 普通类的成员模板
 
-为`非模板类`定义`模板函数成员`:
+为`普通类`定义`函数成员模板`:
 
 ```cpp
 class DebugDelete {
@@ -295,16 +295,16 @@ double* dp = new double;
 std::unique_ptr<int, DebugDelete> dp(new int, del);
 ```
 
-### 模板类的模板成员
+### 类模板的成员模板
 
-为`模板类`声明`模板函数`成员, 二者拥有各自独立的模板形参:
+为`类模板`声明`函数模板`成员, 二者拥有各自独立的模板形参:
 
 ```cpp
 template <typename T> class Blob {
   template <typename Iter> Blob(Iter b, Iter e);
 };
 ```
-如果在模板类的外部定义模板函数成员, 应当
+如果在类模板的外部定义函数成员模板, 应当
 - 先给出类的模板形参列表
 - 再给出成员的模板形参列表
 ```cpp
@@ -412,8 +412,8 @@ Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
 如果模板在定义后被使用, 则编译器将对其进行`实例化 (instantiation)`:
 
 1. 根据上下文确定模板实参:
-  - 对于`模板函数`, 编译器 (通常) 会利用`函数实参`来推断`模板实参`. 如果所有的模板实参都可以被推断出来, 则不必显式地指定.
-  - 对于`模板类`, 必须显式地指定模板实参.
+  - 对于`函数模板`, 编译器 (通常) 会利用`函数实参`来推断`模板实参`. 如果所有的模板实参都可以被推断出来, 则不必显式地指定.
+  - 对于`类模板`, 必须显式地指定模板实参.
 2. 用模板实参替换模板实参, 定义出具体的类或函数.
 3. 将其编译为目标码:
   - 编译器 (通常) 会为源文件中的每一种模板实参 (组合) 生成一个独立的`实例 (instance)`, 对应于目标文件中的一段目标码.
@@ -434,7 +434,7 @@ extern template declaration;  // 实例化声明
 每一条`实例化声明`都必须有一条位于其他某个源文件中的`实例化定义`与之对应:
 - 对于含有`实例化声明`的`源文件`, 与之对应的`目标文件`不含该实例的目标码.
 - 对于含有`实例化定义`的`源文件`, 与之对应的`目标文件`含有该实例的目标码.
-  - 模板类的`实例化定义`将导致该模板类的所有成员函数 (含内联成员函数) 全部被实例化.
+  - 类模板的`实例化定义`将导致该类模板的所有成员函数 (含内联成员函数) 全部被实例化.
 - 这种对应关系将在`链接期 (link-time)` 进行检查.
 
 在以下两个源文件所对应的目标文件中,
@@ -457,7 +457,7 @@ template int compare(const int&, const int&);  // 实例化定义
 
 ## 特化 (Specialization)
 
-### 模板函数的特化
+### 函数模板的特化
 假设有以下两个版本的同名函数:
 ```cpp
 // 版本一, 用于比较两个 任意类型的对象:
@@ -489,10 +489,10 @@ int compare(const char* const& p1, const char* const& p2) {
 
 模板及其特化应当在同一个头文件中进行声明, 并且应当先给出所有同名`模板`, 再紧随其后给出所有`特化`.
 
-### 模板类的特化
+### 类模板的特化
 
 #### (C++11) `std::hash` 的特化
-`std::hash` 是一个模板类, 定义在头文件 `<functional>` 中:
+`std::hash` 是一个类模板, 定义在头文件 `<functional>` 中:
 ```cpp
 template <class Key>
 struct hash;
@@ -527,7 +527,7 @@ struct hash<Key> {
 
 #### 偏特化 (Partial Specialization)
 `偏特化` (又称`部分特化`) 只指定`一部分模板实参`或`模板形参的一部分属性`.
-只有模板类可以进行偏特化. 偏特化的模板类依然是模板类.
+只有类模板可以进行偏特化. 偏特化的类模板依然是类模板.
 
 `std::remove_reference` 就是通过一系列偏特化 (只指定`模板形参的一部分属性`) 来完成工作的:
 ```cpp

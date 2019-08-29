@@ -11,10 +11,10 @@
 ⚠️过度使用元编程会使得代码可读性差、编译时间长、测试和维护难度大。
 
 ## 类型函数
-类型函数不是[普通函数](./function.md)，而是借助于[模板类](./generic.md)实现的（以 *类型* 或 *编译期常量* 为运算对象的）编译期运算机制。
+类型函数不是[普通函数](./function.md)，而是借助于[类模板](./generic.md)实现的（以 *类型* 或 *编译期常量* 为运算对象的）编译期运算机制。
 
 ### `std::remove_reference`
-定义在 `<type_traits>` 中的模板类 `std::remove_reference` 用于「移除 (remove)」类型实参的「引用 (reference)」：
+定义在 `<type_traits>` 中的类模板 `std::remove_reference` 用于「移除 (remove)」类型实参的「引用 (reference)」：
 ```cpp
 namespace std{
 template <class T> struct remove_reference      { typedef T type; };
@@ -23,7 +23,7 @@ template <class T> struct remove_reference<T&&> { typedef T type; };
 }
 ```
 使用时，它以 *类型实参* 为输入，以 *类型成员* 为输出。
-在 C++14 以前，*模板类的类型成员* 必须通过 `typename` 来访问，这使得代码变得冗长：
+在 C++14 以前，*类模板的类型成员* 必须通过 `typename` 来访问，这使得代码变得冗长：
 ```cpp
 #include <type_traits>
 int main() {
@@ -65,7 +65,7 @@ remove_reference_t<T>&& move(T&& t) {
 ```
 
 ### `std::forward<T>()` 的实现
-定义在 `<utility>` 中的模板函数 `std::forward<T>()` 用于 *完美转发实参*，即 *保留函数实参的所有类型信息（含引用属性）*。
+定义在 `<utility>` 中的函数模板 `std::forward<T>()` 用于 *完美转发实参*，即 *保留函数实参的所有类型信息（含引用属性）*。
 借助于 [`std::remove_reference`](#`std::remove_reference`) 和[引用折叠](./type_deduction.md#`ParaType-=-T-&&`)机制可以给出它的一种实现：
 ```cpp
 #include <type_traits>  // std::remove_reference_t
@@ -80,7 +80,7 @@ T&& forward(remove_reference_t<T>&& t) { return static_cast<T&&>(t); }
 ```
 
 ### 编译期谓词
-定义在 [`<type_traits>`](https://en.cppreference.com/w/cpp/header/type_traits) 中的「编译期谓词 (compile-time predicate)」都是形如 `std::is_*<T>` 的模板类。
+定义在 [`<type_traits>`](https://en.cppreference.com/w/cpp/header/type_traits) 中的「编译期谓词 (compile-time predicate)」都是形如 `std::is_*<T>` 的类模板。
 它们都含有一个 `bool` 型静态数据成员 `value`，可以用于对 *类型实参* 作 *编译期判断*。
 自 C++17 起，标准库为它们的 `value` 成员提供了以 `_v` 为后缀的「别名 (alias)」，可以用于简化代码。
 
@@ -128,7 +128,7 @@ int main() {
 *编译期* 表达式 `c ? v1 : v2` 根据 `c` 的值（`true` 或 `false`），从 `v1` 与 `v2` 中选取一个，作为该表达式的值。
 
 ### 从两个类型中选取一个
-定义在 `<type_traits>` 中的模板类 [`std::conditional`](https://en.cppreference.com/w/cpp/types/conditional) 根据 *第一个（`bool` 型）模板实参的值*，从 *后两个（类型）模板实参* 中选取一个：
+定义在 `<type_traits>` 中的类模板 [`std::conditional`](https://en.cppreference.com/w/cpp/types/conditional) 根据 *第一个（`bool` 型）模板实参的值*，从 *后两个（类型）模板实参* 中选取一个：
 ```cpp
 #include <iostream>
 #include <type_traits>
@@ -168,7 +168,7 @@ int main() {
 }
 ```
 在这里，`std::select` 以 *第一个模板实参* 为序号，从后面的模板实参列表中选出对应的类型。
-它的实现需要用到模板类的[特化](./generic.md#模板类的特化)和[递归](#模板类的递归)以及[变参模板](#变参模板)等机制：
+它的实现需要用到类模板的[特化](./generic.md#类模板的特化)和[递归](#类模板的递归)以及[变参模板](#变参模板)等机制：
 ```cpp
 namespace std{
 // 通用版本，禁止实例化
@@ -206,7 +206,7 @@ int main() {
 }
 ```
 
-### 模板函数的递归
+### 函数模板的递归
 ```cpp
 // 通用版本：
 template <int I>
@@ -223,7 +223,7 @@ int main() {
 }
 ```
 
-### 模板类的递归
+### 类模板的递归
 ```cpp
 // 通用版本：
 template <int I>
@@ -292,7 +292,7 @@ void g(Args... args) {
 该表达式是 `constexpr，`因此不会对实参求值。
 
 ### 递归的变参模板
-*变参模板函数* 通常是「递归的 (recursive)」。
+*变参函数模板* 通常是「递归的 (recursive)」。
 作为 *递归基* 的 *非变参* 版本必须在 *变参* 版本之前给出「声明 (declaration)」：
 
 ```cpp

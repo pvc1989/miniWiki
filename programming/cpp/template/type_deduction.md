@@ -2,7 +2,7 @@
 
 ## 形参类型 v. 实参类型
 
-考虑如下 *模板函数* 和*调用语句*：
+考虑如下 *函数模板* 和*调用语句*：
 ```cpp
 template <typename T> void func(ParaType parameter) { /* ... */ }
 ArguType argument;  // argument 的类型为 ArguType
@@ -180,7 +180,7 @@ f(g, g);  // 推断结果为 void f(int(*)(double), int(&)(double))
 
 # 其他类型推断
 ## `auto` 类型推断
-### 一般情况：同模板类型推断
+### 一般情况：与[模板类型推断](#模板类型推断)相同
 自 C++11 起，可以将 `auto` 用作 *变量类型*。如果使用得当，可以大大简化代码。
 在绝大多数情况下，[`auto` 类型推断](#`auto`-类型推断)与[模板类型推断](#模板类型推断)具有相同的规则。
 在这些场合，`auto` 实际上就是模板类型形参 `T`，而其他元素有如下对应关系：
@@ -224,10 +224,10 @@ auto d{ 4 };
 ```cpp
 #include <initializer_list>  // 不可省略
 auto x = { 1, 2, 3 };  // x 为含有 3 个元素的 std::initializer_list<int>
-// 「等价的」模板函数定义：
+// 「等价的」函数模板定义：
 template <typename T>
 int f(T parameter) { return sizeof(parameter); }
-// 「正确的」模板函数定义：
+// 「正确的」函数模板定义：
 template <typename T>
 int g(std::initializer_list<T> parameter) { return sizeof(parameter); }
 // 测试：
