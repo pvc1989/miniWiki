@@ -1,4 +1,5 @@
 import vtk
+import numpy as np
 
 # 创建「非结构网格 (vtkUnstructuredGrid)」
 # vtkDataSet <- vtkPointSet <- vtkUnstructuredGridBase <- vtkUnstructuredGrid
@@ -13,47 +14,64 @@ grid = vtk.vtkUnstructuredGrid()
 # |   /   |  (2)  |
 # | / (1) |       |
 # 0 ----- 1 ----- 4
-xyz =((0, 0, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0),
-      (2, 0, 0), (2, 1, 0), (2, 2, 0), (0, 2, 0))
+xyz = np.array([
+  [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+  [2, 0, 0], [2, 1, 0], [2, 2, 0], [0, 2, 0]], dtype=float)
+n_points = len(xyz)
+connectivity = ((0, 2, 3), (2, 1, 0), (1, 4, 5, 2), (5, 6, 7, 3))
+n_cells = len(connectivity)
 
 # 创建「点集 (vtkPoints)」
-points = vtk.vtkPoints()
-points.SetNumberOfPoints(len(xyz))
+vtk_points = vtk.vtkPoints()
+vtk_points.SetNumberOfPoints(n_points)
 # 创建「数组 (vtkFloatArray)」
 vector_on_points = vtk.vtkFloatArray()
-# virtual void vtkAbstractArray::SetName(const char*)	
 vector_on_points.SetName("Position")
 vector_on_points.SetNumberOfComponents(3)
-vector_on_points.SetNumberOfTuples(len(xyz))
-for i in range(len(xyz)):
-  points.InsertPoint(i, xyz[i])
+vector_on_points.SetNumberOfTuples(n_points)
+for i in range(n_points):
+  vtk_points.InsertPoint(i, xyz[i])
   vector_on_points.InsertTuple(i, xyz[i])
-# virtual void vtkPointSet::SetPoints(vtkPoints*)
-grid.SetPoints(points)
+# vtkPointSet::SetPoints(vtkPoints*)
+grid.SetPoints(vtk_points)
 # vtkPointData* vtkDataSet::GetPointData()
-data_on_points = grid.GetPointData()
-# int vtkDataSetAttributes::SetVectors(vtkDataArray*)
-data_on_points.SetVectors(vector_on_points)
+# vtkDataSetAttributes <- vtkPointData
+# vtkDataSetAttributes::SetVectors(vtkDataArray*)
+grid.GetPointData().SetVectors(vector_on_points)
 
+# 创建四个「单元 (vtkCell)」
 # void vtkUnstructuredGrid::Allocate(vtkIdType numCells=1000)
-grid.Allocate(4)
-# vtkIdList* vtkCell::GetPointIds()
-# vtkIdList::SetId(const vtkIdType i_local, const vtkIdType i_global)
-# vtkUnstructuredGridBase::InsertNextCell(int type, vtkIdList* id_list)
-# 添加两个「三角形单元 (vtkTriangle)」
-for global_id_list in ((0, 2, 3), (2, 1, 0)):
-  cell = vtk.vtkTriangle()
-  id_list = cell.GetPointIds()
-  for i in range(3):
-    id_list.SetId(i, global_id_list[i])
-  grid.InsertNextCell(cell.GetCellType(), id_list)
-# 添加两个「四边形单元 (vtkQuad)」
-for global_id_list in ((1, 4, 5, 2), (5, 6, 7, 3)):
-  cell = vtk.vtkQuad()
-  id_list = cell.GetPointIds()
-  for i in range(4):
-    id_list.SetId(i, global_id_list[i])
-  grid.InsertNextCell(cell.GetCellType(), id_list)
+grid.Allocate(n_cells)
+vector_on_cells = vtk.vtkFloatArray()
+vector_on_cells.SetName("Average Position")
+vector_on_cells.SetNumberOfComponents(3)
+vector_on_cells.SetNumberOfTuples(n_cells)
+for i_cell in range(n_cells):
+  global_id_list = connectivity[i_cell]
+  n_nodes = len(global_id_list)
+  if n_nodes == 3:
+    vtk_cell = vtk.vtkTriangle()  # vtkCell <- vtkTriangle
+  elif n_nodes == 4:
+    vtk_cell = vtk.vtkQuad()      # vtkCell <- vtkQuad
+  else:
+    assert(False)
+  # vtkIdList* vtkCell::GetPointIds()
+  vtk_id_list = vtk_cell.GetPointIds()
+  xyz_average = np.zeros(3)
+  for i in range(n_nodes):
+    i_node = global_id_list[i]
+    xyz_average += xyz[i_node]
+    # vtkIdList::SetId(const vtkIdType i_local, const vtkIdType i_global)
+    vtk_id_list.SetId(i, i_node)
+  # vtkUnstructuredGridBase::InsertNextCell(int type, vtkIdList* vtk_id_list)
+  grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
+  # 以结点坐标的平均值为「单元数据 (cell data)」
+  xyz_average /= n_nodes
+  vector_on_cells.InsertTuple(i_cell, xyz_average)
+# vtkCellData* vtkDataSet::GetCellData()
+# vtkDataSetAttributes <- vtkCellData
+# vtkDataSetAttributes::SetVectors(vtkDataArray*)
+grid.GetCellData().SetVectors(vector_on_cells)
 
 # 按 传统 VTK 格式 输出
 writer = vtk.vtkDataSetWriter()
