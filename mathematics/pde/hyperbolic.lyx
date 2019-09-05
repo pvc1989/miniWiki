@@ -105,25 +105,25 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-单个双曲型方程
+单波方程
 \end_layout
 
 \begin_layout Subsection
-线性平流方程
+线性单波方程
 \end_layout
 
 \begin_layout Problem
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:LinearWaveEquationWithSmoothIC"
+name "prob:single_wave_linear_smooth_initial"
 
 \end_inset
 
-Find a smooth function 
-\begin_inset Formula $u(x,t)$
+寻找一阶可微的函数 
+\begin_inset Formula $u:\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
 \end_inset
 
- satisfying the linear advection equation
+，使其满足常系数线性「平流 (linear advection) 方程
 \begin_inset Index idx
 status collapsed
 
@@ -133,69 +133,94 @@ PDE!linear advection equation
 
 \end_inset
 
-
+」：
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:LinearWaveEquation}
+\pdv{u(x,t)}{t}+\lambda\pdv{u(x,t)}{x}=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:single_wave_linear}
 \end{equation}
 
 \end_inset
 
-and the IC
-\begin_inset Foot
-status collapsed
+及一阶可微的初始条件：
+\begin_inset Formula 
+\begin{equation}
+u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:single_wave_initial}
+\end{equation}
 
-\begin_layout Plain Layout
-We use 
-\begin_inset Formula $x_{0}$
 \end_inset
 
- for the spatial variable at 
-\begin_inset Formula $0$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- to distinguish it from the one at 
-\begin_inset Formula $t$
-\end_inset
 
-, which is 
+\end_layout
+
+\begin_layout Remark*
+如果 
 \begin_inset Formula $x$
 \end_inset
 
-.
+ 表示空间坐标，
+\begin_inset Formula $t$
+\end_inset
+
+ 表示时间，则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+
+\end_inset
+
+ 描述了单个线性波的运动规律，有时也被称作线性「单波 (single wave) 方程」。常系数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 具有「速率 (speed)」的量纲，下面将会看到，它是「波包 (wave packet)」的移动速度，因此将其称作「波速 (wave speed)」是合适的。
 \end_layout
 
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:SmoothInitialWaveProfile}
-\end{equation}
+\begin_layout Remark*
+在初始条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_initial"
 
 \end_inset
 
-in which, 
-\begin_inset Formula $a$
-\end_inset
-
- is constant, 
-\begin_inset Formula $u_{0}$
-\end_inset
-
- is a 
-\begin_inset Formula $C^{1}$
-\end_inset
-
- smooth function for 
+ 中，用 
 \begin_inset Formula $x_{0}$
 \end_inset
 
-.
-\end_layout
+ 表示 
+\begin_inset Formula $t_{0}$
+\end_inset
 
-\begin_layout Problem
-Prove the solution is unique.
+ 时刻的空间坐标，有助于与 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻的空间坐标 
+\begin_inset Formula $x$
+\end_inset
+
+ 相区分。这种区分在研究初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+
+\end_inset
+
+ 的解与初始条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_initial"
+
+\end_inset
+
+ 的依赖关系时是至关重要的。
 \end_layout
 
 \begin_layout Standard
@@ -206,7 +231,17 @@ Prove the solution is unique.
 \end_layout
 
 \begin_layout Lemma
-The characteristic curves
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的「特征线 (characteristic curves)
 \begin_inset Index idx
 status collapsed
 
@@ -216,89 +251,350 @@ characteristic!~ curve
 
 \end_inset
 
- of 
+」（即「
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LinearWaveEquation"
+LatexCommand nameref
+reference "def:特征流形"
+
+\end_inset
+
+ (characteristic manifold)」的特例）在直线 
+\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+\end_inset
+
+ 以上的部分，是一族由 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的平行直线。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+根据
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:特征流形"
+
+\end_inset
+
+的定义，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- emanating from 
-\begin_inset Formula $t=t_{0}$
+ 过点 
+\begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
- form a one-parameter family of parallel straight lines.
-\end_layout
-
-\begin_layout Proof
-The characteristic curve emanating from 
-\begin_inset Formula $x_{0}$
+ 的特征线在直线 
+\begin_inset Formula $L_{t_{0}}$
 \end_inset
 
-, denoted as 
+ 以上的部分
+\begin_inset Formula 
+\[
+C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\} 
+\]
+
+\end_inset
+
+由以下 PDE 初值问题的解确定：
+\begin_inset Formula 
+\[
+\begin{cases}
+(\partial_{t}+\lambda\partial_{x})\phi(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\\
+\phi(x_{0},t_{0})=0
+\end{cases}
+\]
+
+\end_inset
+
+不失一般性，可以将隐函数 
+\begin_inset Formula $\phi(x,t)=0$
+\end_inset
+
+ 改写为显函数 
 \begin_inset Formula $x=x(t)$
 \end_inset
 
-, is the solution of the following IVP:
+，其中等号左端的 
+\begin_inset Formula $x$
+\end_inset
+
+ 表示「变量 (variable)」，等号右端的 
+\begin_inset Formula $x$
+\end_inset
+
+ 表示「函数 (function)」。于是，上述关于 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 的 PDE 初值问题转化为关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{x}{t} & =a\qquad t\in(t_{0},\infty)\\
-x(0) & =x_{0}
-\end{aligned}
+\begin{cases}
+\dv*{x(t)}{t}=\lambda\qquad t\in(t_{0},\infty)\\
+x(t=0)=x_{0}
+\end{cases}
 \]
 
 \end_inset
 
-which is
+直接积分可得
 \begin_inset Formula 
-\[
-\frac{x-x_{0}}{t-t_{0}}=a\qquad t\in[t_{0},\infty)
-\]
+\begin{equation}
+x(t)-x_{0}=\lambda\cdot(t-t_{0})\qquad t\in[t_{0},\infty)\label{eq:single_wave_linear_char_curve}
+\end{equation}
 
 \end_inset
 
-If we treat 
+它是一条由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的直线。如果将 
 \begin_inset Formula $x_{0}$
 \end_inset
 
- as a varying parameter, then all of these characteristic curves together
- form a one-parameter family of parallel straight lines in the 
-\begin_inset Formula $(x,t)$
+ 视为可变参数，则这些特征线的集合 
+\begin_inset Formula $\left\{ C_{x_{0}}:x_{0}\in(-\infty,\infty)\right\} $
 \end_inset
 
- plane.
+ 就构成了一族由直线 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的平行直线。
 \end_layout
 
-\begin_layout Lemma
-The value of 
-\begin_inset Formula $u$
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- along any characteristic curve of 
+
+\end_layout
+
+\begin_layout Remark*
+在下文中，
+\begin_inset Formula $\lambda(t)$
+\end_inset
+
+ 可能表示「关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 在 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻的值」。为了避免混淆，
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LinearWaveEquation"
+LatexCommand ref
+reference "eq:single_wave_linear_char_curve"
+
+\end_inset
+
+ 式中的乘号不应省略。
+\end_layout
+
+\begin_layout Remark*
+如果将方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- is constant.
+ 中的常系数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 放宽为「关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的连续函数」，则由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出发出的特征线 
+\begin_inset Formula $C_{x_{0}}$
+\end_inset
+
+ 由直线 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear_char_curve"
+
+\end_inset
+
+ 变为分段光滑的曲线
+\begin_inset Formula 
+\[
+x(t)-x_{0}=\int_{t_{0}}^{t}\lambda(\tau)\dd{\tau}\qquad t\in[t_{0},\infty)
+\]
+
+\end_inset
+
+由任意两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 依然是平行的，因此不会相交：
+\begin_inset Formula 
+\[
+p(t)-q(t)=p_{0}-q_{0}\qquad t\in[t_{0},\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+如果将 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 进一步放宽为「关于 
+\begin_inset Formula $x,t$
+\end_inset
+
+ 的连续函数」，则关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题
+\begin_inset Formula 
+\[
+\begin{cases}
+\dv*{x(t)}{t}=\lambda(x(t),t)\qquad t\in(t_{0},\infty)\\
+x(t=0)=x_{0}
+\end{cases}
+\]
+
+\end_inset
+
+不能由直接积分解出，但依然可以获得定性的结论：由任意两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 一般不再平行，但永远不会相交。
+\end_layout
+
+\begin_layout Remark*
+经过以上推广，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 依然是线性的，它的特征线完全由方程的系数决定，而与方程的解无关。在寻找特征线的过程中，已经出现了「特征线法」的影子：将关于 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 的 PDE 初值问题转化为关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题。对于含两个自变量的双曲型 PDE 初值问题，总是可以利用特征线将其转化为「沿特征线的 ODE 初值问题」，后者的求解往往更加简单。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解在任意一条特征线上的值为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
-Along any characteristic curve, the change rate of 
-\begin_inset Formula $u$
-\end_inset
-
- is
 \begin_inset Formula 
 \[
-\dv{u}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a\pdv{u}{x}=0
+\dv{u(x(t),t)}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+\lambda\pdv{u}{x}=0
 \]
 
 \end_inset
@@ -314,20 +610,77 @@ Along any characteristic curve, the change rate of
 \end_layout
 
 \begin_layout Theorem
-The solution of IVP 
+初值问题 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "prob:LinearWaveEquationWithSmoothIC"
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- is
+ 的解为
+\begin_inset Formula 
+\begin{equation}
+\boxed{u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_linear_solution_smooth}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+这个解的物理含义为：「波包 (wave packet)」以恒定的速率 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 沿 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴移动，并且保持「波形 (wave shape)」不变。这种运动被称为「平流 (advection)」。
+\end_layout
+
+\begin_layout Remark*
+如果方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的右端补充一个关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的可积函数 
+\begin_inset Formula $f(t)$
+\end_inset
+
+，则以上特征线法依然适用：
 \begin_inset Formula 
 \[
-\boxed{u=u_{0}(x-(t-t_{0})a)}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+\dv{u(x(t),t)}{t}=\pdv{u}{t}+\lambda\pdv{u}{x}=f(t)
+\]
+
+\end_inset
+
+只不过沿特征线积分得到的解不再是常量：
+\begin_inset Formula 
+\[
+u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})+\int_{t_{0}}^{t}f(\tau)\dd{\tau}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
@@ -342,52 +695,46 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Subsection
+拟线性单波方程
+\end_layout
+
 \begin_layout Standard
-This solution has a clear physical interpretation: a wave packet moving
- with a constant speed, whose shape keeps unchanged.
- Physically, the constant coefficient 
-\begin_inset Formula $a$
+如果波速 
+\begin_inset Formula $\lambda$
 \end_inset
 
- has a dimension of speed.
-\end_layout
-
-\begin_layout Subsection
-拟线性波动方程
-\end_layout
-
-\begin_layout Standard
-If the wave speed is a non-constant function of 
+ 不再是常量，而是依赖于 
 \begin_inset Formula $u$
 \end_inset
 
-, then IVP 
+ 的函数，则初值问题 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "prob:LinearWaveEquationWithSmoothIC"
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- becomes:
+ 变为
 \end_layout
 
 \begin_layout Problem
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:QuasilinearWaveEquationWithSmoothIC"
+name "prob:single_wave_quasilinear_smooth_initial"
 
 \end_inset
 
-Find a smooth function 
-\begin_inset Formula $u(x,t)$
+寻找一阶可微的函数 
+\begin_inset Formula $u:\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
 \end_inset
 
- satisfying the PDE
+，使其满足「拟线性 (quasi-linear) 单波方程
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 PDE!quasilinear wave equation
@@ -395,25 +742,25 @@ PDE!quasilinear wave equation
 
 \end_inset
 
-
+」
 \begin_inset Formula 
 \begin{equation}
-\pdv{u}{t}+a(u)\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:QuasilinearWaveEquation}
+\pdv{u}{t}+\lambda(u)\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_quasilinear}
 \end{equation}
 
 \end_inset
 
-and the IC 
+及一阶可微的初始条件（
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:SmoothInitialWaveProfile"
+LatexCommand ref
+reference "eq:single_wave_initial"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-.
+ 式）。
 \end_layout
 
 \begin_layout Standard
@@ -423,60 +770,31 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-The simplest case is 
-\begin_inset Formula $a(u)=ku$
+\begin_layout Remark*
+最简单的情形为 
+\begin_inset Formula $\lambda(u)=ku$
 \end_inset
 
-:
-\end_layout
-
-\begin_layout Problem
-\begin_inset CommandInset label
-LatexCommand label
-name "prob:InviscidBurgersEquationWithSmoothIC"
-
+，其中 
+\begin_inset Formula $k\in\mathbb{R}$
 \end_inset
 
-Find a smooth function 
-\begin_inset Formula $u(x,t)$
-\end_inset
-
- satisfying the PDE
-\begin_inset Formula 
-\[
-\pdv{u}{t}+ku\pdv{u}{x}=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $k$
-\end_inset
-
- is constant, and the IC 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:SmoothInitialWaveProfile"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Problem
-When 
+ 为常量。特别地，若 
 \begin_inset Formula $k=1$
 \end_inset
 
-, the PDE is called 
-\noun on
-inviscid Burgers equation
-\noun default
+ 即 
+\begin_inset Formula $\lambda(u)=1\cdot u$
+\end_inset
 
+，则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
+
+\end_inset
+
+ 被称为「无黏 Burgers 方程
 \begin_inset Index idx
 status collapsed
 
@@ -486,62 +804,27 @@ PDE!Burgers equation!inviscid ~
 
 \end_inset
 
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
+」。未知函数 
 \begin_inset Formula $u$
 \end_inset
 
- could be any physical quantity, while the wave speed 
+ 不一定代表
+\emph on
+速率
+\emph default
+，而 
 \begin_inset Formula $ku$
 \end_inset
 
- must has a dimension of speed.
- It is better to keep writing the coefficient 
-\begin_inset Formula $k$
-\end_inset
-
-, unless 
+ 必须具有
+\emph on
+速率
+\emph default
+的量纲，因此即使 
 \begin_inset Formula $k=1$
 \end_inset
 
- and 
-\begin_inset Formula $u$
-\end_inset
-
- has the dimension of speed.
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-The value of 
-\begin_inset Formula $u$
-\end_inset
-
- along any characteristic curve
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-characteristic!~ curve
-\end_layout
-
-\end_inset
-
- of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:QuasilinearWaveEquation"
-
-\end_inset
-
- is constant.
+ 也应当将其写出。
 \end_layout
 
 \begin_layout Standard
@@ -552,130 +835,129 @@ reference "eq:QuasilinearWaveEquation"
 \end_layout
 
 \begin_layout Lemma
-At least in a finite time period 
+至少在一个充分小的时段 
 \begin_inset Formula $[t_{0},t_{*})$
 \end_inset
 
-, the characteristic curves
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-characteristic!~ curve
-\end_layout
-
-\end_inset
-
- of 
+ 内，方程 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:QuasilinearWaveEquation"
-
-\end_inset
-
- emanating from 
-\begin_inset Formula $t=t_{0}$
-\end_inset
-
- form a one-parameter family of straight lines.
-\end_layout
-
-\begin_layout Proof
-Assume the characteristic curves do not intersect with each other in 
-\begin_inset Formula $[t_{0},t_{*})$
-\end_inset
-
-, which will be proved in the section of 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "subsec:SmoothSolutionBreaking"
-
-\end_inset
-
-.
- The constancy of 
-\begin_inset Formula $u$
-\end_inset
-
- immediately implies 
-\begin_inset Formula $a(u)$
-\end_inset
-
- is also constant along any characteristic curve.
- The characteristic curve emanating from 
-\begin_inset Formula $(x_{0},t_{0})$
-\end_inset
-
- is then easily solved to be
-\begin_inset Formula 
-\begin{equation}
-\frac{x-x_{0}}{t-t_{0}}=a_{0}\label{eq:CharCurveOfQuasilinearWaveEquation-1}
-\end{equation}
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-a_{0}=a\circ u(x,t)=a\circ u_{0}\circ x_{0}(x,t)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-However, characteristic curves emanated from different initial points are
- 
-\emph on
-no longer parallel
-\emph default
- to each other in general.
-\end_layout
-
-\begin_layout Theorem
-The smooth solution of IVP 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "prob:QuasilinearWaveEquationWithSmoothIC"
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- is
+ 的特征线在直线 
+\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+\end_inset
+
+ 以上的部分，是一族由 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda(u_{0})$
+\end_inset
+
+ 的直线：
+\end_layout
+
+\begin_layout Lemma
 \begin_inset Formula 
 \begin{equation}
-\boxed{u=u_{0}(x-(t-t_{0})a(u))}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:SolutionOfQuasilinearWaveEquation}
+x(t)-x_{0}=\lambda(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})\label{eq:single_wave_quasilinear_char_curve}
 \end{equation}
 
 \end_inset
 
-from which, the value of 
-\begin_inset Formula $u$
+由任意两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
- can be solved at 
-\begin_inset Formula $(x,t)$
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- in principle.
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 一般不再平行，但在 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内不会相交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
+
+\end_inset
+
+ 的解在任意一条特征线上的值为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_quasilinear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解在上述充分小的时段 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内可以表示为隐函数
+\begin_inset Formula 
+\begin{equation}
+\boxed{u(x,t)=u_{0}(\underbrace{x-\lambda(u(x,t))\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:single_wave_quasilinear_solution_smooth}
+\end{equation}
+
+\end_inset
+
+它是一阶可微的函数，因此被称为「光滑 (smooth) 解」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 光滑解的破裂
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:SmoothSolutionBreaking"
+name "sec:smooth_solution_breaking"
 
 \end_inset
 
@@ -683,176 +965,162 @@ name "subsec:SmoothSolutionBreaking"
 \end_layout
 
 \begin_layout Standard
-The smooth solution obtained in the previous section is based upon the assumptio
-n that characteristic curves 
-\emph on
-do not intersect
-\emph default
- with each other.
- Its validness depends on the positiveness of
-\begin_inset Formula 
-\[
-\dv{a}{x_{0}}:=\dv{a}{u_{0}}\dv{u_{0}}{x_{0}}
-\]
+光滑解 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear_solution_smooth"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Suppose 
-\begin_inset Formula $\Omega\subset\mathbb{(-\infty,\infty)}$
+ 成立的前提为：由任意两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
- is an open interval, 
-\begin_inset Formula $p_{0}<q_{0}$
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- are two points inside it, 
-\begin_inset Formula $x=p(t)$
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
 \end_inset
 
- and 
-\begin_inset Formula $x=q(t)$
+ 与 
+\begin_inset Formula $C_{q_{0}}$
 \end_inset
 
- are the equations of the characteristic curves emanating from them, respectivel
-y.
-\end_layout
-
-\begin_layout Theorem
-If 
-\begin_inset Formula $\forall x_{0}\in\Omega$
+ 在充分小的时段 
+\begin_inset Formula $[t_{0},t_{*})$
 \end_inset
 
- there is 
-\begin_inset Formula $\dv*{a}{x_{0}}>0$
-\end_inset
-
-, then 
-\begin_inset Formula $\forall t\in[t_{0},\infty)$
-\end_inset
-
- there is 
-\begin_inset Formula $p(t)<q(t)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-From 
-\begin_inset Formula $\dv*{x}{t}=a$
-\end_inset
-
- and 
-\begin_inset Formula $a\circ u(x,t)=a\circ u_{0}\left(x_{0}\right)$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\dv{x}{t}=a\circ u_{0}(x_{0})
-\]
-
-\end_inset
-
-so
-\begin_inset Formula 
-\[
-\dv{(q(t)-p(t))}{t}=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})
-\]
-
-\end_inset
-
-Since 
-\begin_inset Formula $\dv*{a}{x_{0}}>0$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\begin{aligned}p_{0}<q_{0} & \implies a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})>0\\
- & \implies\dv{(q(t)-p(t))}{t}>0
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-If 
-\begin_inset Formula $\forall x_{0}\in\Omega$
-\end_inset
-
- there is 
-\begin_inset Formula $\dv*{a}{x_{0}}<0$
-\end_inset
-
-, then 
-\begin_inset Formula $\exists t_{*}>0$
-\end_inset
-
- such that 
-\begin_inset Formula $p(t_{*})=q(t_{*})$
-\end_inset
-
-, and 
-\begin_inset Formula $\forall t\in[t_{0},t_{*})$
-\end_inset
-
- there is 
-\begin_inset Formula $p(t)<q(t)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-The proof is almost the same as the previous theorem, except for the direction
- of inequality:
-\begin_inset Formula 
-\[
-\dv{(q(t)-p(t))}{t}=a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})<0
-\]
-
-\end_inset
-
-The 
-\noun on
-intersecting moment
-\noun default
- 
+ 内不会相交。本节将讨论「充分小」的确切含义，亦即 
 \begin_inset Formula $t_{*}$
 \end_inset
 
- of two characteristic curves emanated from 
-\begin_inset Formula $\left(p_{0},t_{0}\right)$
+ 的取法。不失一般性，假设 
+\begin_inset Formula $p_{0}<q_{0}$
 \end_inset
 
- and 
-\begin_inset Formula $\left(q_{0},t_{0}\right)$
+，则 
+\begin_inset Formula $C_{p_{0}}$
 \end_inset
 
- can be solved from 
-\begin_inset Formula $p(t_{*})=q(t_{*})$
+ 与 
+\begin_inset Formula $C_{q_{0}}$
 \end_inset
 
-:
+ 是否相交只可能有以下三种情况：
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda(u_{0}(p_{0}))>\lambda(u_{0}(q_{0}))$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 比 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 更贴近 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+，二者相交于 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 上方。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda(u_{0}(p_{0}))<\lambda(u_{0}(q_{0}))$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 比 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 更偏离 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+，二者相交于 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 下方。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda(u_{0}(p_{0}))=\lambda(u_{0}(q_{0}))$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 平行，二者永远不会相交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+利用
+\emph on
+链式求导法则
+\emph default
+
+\begin_inset Formula 
+\begin{equation}
+\dv{\lambda(u_{0}(x_{0}))}{x_{0}}:=\dv{\lambda(u_{0})}{u_{0}}\dv{u_{0}(x_{0})}{x_{0}}\label{eq:chain_rule}
+\end{equation}
+
+\end_inset
+
+可以将上述推广到区间 
+\begin_inset Formula $\Omega\subset(-\infty,\infty)$
+\end_inset
+
+ 上：
+\end_layout
+
+\begin_layout Theorem
+设 
+\begin_inset Formula $p_{0},q_{0}\in\Omega$
+\end_inset
+
+ 且 
+\begin_inset Formula $p_{0}<q_{0}$
+\end_inset
+
+，则
 \begin_inset Formula 
 \[
-p_{0}+(t_{*}-t_{0})a\circ u_{0}(p_{0})=q_{0}+(t_{*}-t_{0})a\circ u_{0}(q_{0})
-\]
-
-\end_inset
-
-which is
-\begin_inset Formula 
-\[
-t_{*}-t_{0}=-\frac{q_{0}-p_{0}}{a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})}>0
+\begin{cases}
+\forall\,x_{0}\in\Omega:\dv*{\lambda}{x_{0}}\ge0\implies\forall\,t\in[t_{0},\infty):p(t)<q(t)\\
+\forall\,x_{0}\in\Omega:\dv*{\lambda}{x_{0}}<0\implies\exists\,t_{*}>t_{0}:\begin{cases}
+p(t_{*})=q(t_{*})\\
+\forall\,t\in[t_{0},t_{*}):p(t)<q(t)
+\end{cases}
+\end{cases}
 \]
 
 \end_inset
@@ -867,88 +1135,100 @@ t_{*}-t_{0}=-\frac{q_{0}-p_{0}}{a\circ u_{0}(q_{0})-a\circ u_{0}(p_{0})}>0
 
 \end_layout
 
-\begin_layout Standard
-When two characteristic curves intersect, 
-\begin_inset Formula $u$
+\begin_layout Proof
+由 
+\begin_inset Formula $\dv*{x}{t}=\lambda(u)$
 \end_inset
 
- will have two values
+ 及 
+\begin_inset Formula $u(x,t)=u_{0}(x_{0})$
+\end_inset
+
+ 可得
 \begin_inset Formula 
 \[
-u=u_{0}\left(p_{0}\right)\qand u=u_{0}\left(q_{0}\right)
+\dv{(q(t)-p(t))}{t}=\dv{q(t)}{t}-\dv{p(t)}{t}=\lambda(u_{0}(q_{0}))-\lambda(u_{0}(p_{0}))
 \]
 
 \end_inset
 
-which are generally inconsistent.
- Such inconsistency will leads to 
-\begin_inset Formula $\pdv*{u}{x}\to\infty$
+等式右端是定值，它的正负号决定了特征线 
+\begin_inset Formula $C_{p_{0}}$
 \end_inset
 
-.
- On the other hand, 
-\begin_inset Formula $\pdv*{u}{x}$
+ 与 
+\begin_inset Formula $C_{q_{0}}$
 \end_inset
 
- can be solved from
+ 是否会相交：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $\dv*{\lambda}{x_{0}}\ge0$
+\end_inset
+
+ 则
 \begin_inset Formula 
 \[
-\begin{aligned}u & =u_{0}(x-(t-t_{0})a(u))\\
-\pdv{u}{x} & =\dv{u_{0}}{x_{0}}\left(1-(t-t_{0})\dv{a}{u}\pdv{u}{x}\right)
-\end{aligned}
+p_{0}<q_{0}\implies\lambda(u_{0}(q_{0}))-\lambda(u_{0}(p_{0}))\ge0\implies\dv{(q(t)-p(t))}{t}\ge0
 \]
 
 \end_inset
 
-as
+其几何意义为：特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 平行或发散，二者在 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ 时刻之后永远不会相交。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\dv*{\lambda}{x_{0}}<0$
+\end_inset
+
+ 则
 \begin_inset Formula 
 \[
-\pdv{u}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{a}{x_{0}}}
+p_{0}<q_{0}\implies\lambda(u_{0}(q_{0}))-\lambda(u_{0}(p_{0}))<0\implies\dv{(q(t)-p(t))}{t}<0
 \]
 
 \end_inset
 
-Since 
-\begin_inset Formula $u_{0}\in C^{1}(-\infty,\infty)$
+其几何意义为：特征线 
+\begin_inset Formula $C_{p_{0}}$
 \end_inset
 
-, the condition for 
-\begin_inset Formula $\pdv*{u}{x}\to\infty$
+ 与 
+\begin_inset Formula $C_{q_{0}}$
 \end_inset
 
- is
+ 以恒定的速率汇聚，二者相交的时刻 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 可以由以下代数方程
 \begin_inset Formula 
 \[
-1+(t_{*}-t_{0})\dv{a}{x_{0}}=0
+p(t_{*})=q(t_{*})\iff p_{0}+\lambda(u_{0}(p_{0}))\cdot(t_{*}-t_{0})=q_{0}+\lambda(u_{0}(q_{0}))\cdot(t_{*}-t_{0})
 \]
 
 \end_inset
 
-which leads to the intersecting moment when the characteristic curve emanated
- from a 
-\emph on
-specific
-\emph default
- 
-\begin_inset Formula $x_{0}$
-\end_inset
-
- intersects with some other characteristic curve:
+解得：
 \begin_inset Formula 
 \[
-t_{*}-t_{0}=\frac{-1}{\dv*{a}{x_{0}}}
-\]
-
-\end_inset
-
-The 
-\noun on
-breaking moment
-\noun default
- of the smooth solution is the minimum of all these intersecting moments:
-\begin_inset Formula 
-\[
-\boxed{t_{b}-t_{0}=\min_{x_{0}\in\Omega}\left\{ \frac{-1}{\dv*{a}{x_{0}}}\right\} }
+t_{*}=t_{0}-\frac{q_{0}-p_{0}}{\lambda(u_{0}(q_{0}))-\lambda(u_{0}(p_{0}))}>t_{0}
 \]
 
 \end_inset
@@ -956,38 +1236,189 @@ breaking moment
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
-If we think of 
-\begin_inset Formula $u\left(x_{b},t_{b}\right)$
+\begin_inset Separator plain
 \end_inset
 
- as the IC of a new IVP, it will become a 
-\noun on
-generalized Riemann problem
-\noun default
 
-\begin_inset Index idx
-status collapsed
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
 
 \begin_layout Plain Layout
-Riemann!~ problem!generalized ~
+
+[破裂时刻]
 \end_layout
 
 \end_inset
 
-.
- The special case, in which the left and right states are constants, will
- be discussed in the section of 
+在 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 的交点 
+\begin_inset Formula $(x_{*},t_{*})$
+\end_inset
+
+ 处，
+\begin_inset Formula $u(x_{*},t_{*})$
+\end_inset
+
+ 的值有两种可能：
+\begin_inset Formula 
+\[
+u(x_{*},t_{*})=u_{0}(p_{0})\qquad u(x_{*},t_{*})=u_{0}(q_{0})
+\]
+
+\end_inset
+
+任给的初始条件 
+\begin_inset Formula $u_{0}(x_{0})$
+\end_inset
+
+ 通常不能确保它们相等，从而导致
+\emph on
+函数值出现第一类间断
+\emph default
+，因此光滑解（
 \begin_inset CommandInset ref
-LatexCommand nameref
-reference "subsec:RiemannProblems"
+LatexCommand ref
+reference "eq:single_wave_quasilinear_solution_smooth"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-.
+ 式）至晚在 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 时刻失效。任取一对 
+\begin_inset Formula $p_{0},q_{0}$
+\end_inset
+
+ 都能得到一个这样的 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 时刻，它们的下确界就是（由 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 发出的）光滑解的「破裂时刻 (breaking moment)」：
+\begin_inset Formula 
+\[
+t_{b}(\Omega):=\inf\left\{ t_{*}(p_{0},q_{0}):p_{0},q_{0}\in\Omega,\,p_{0}<q_{0}\right\} \qquad\forall\,x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+直接套用上述定义通常难以算出 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ 的值。考虑到光滑解破裂的实质是「函数值出现第一类间断」，这意味着 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+，于是寻找 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ 的问题就转化为寻找 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+ 的条件。为此，利用
+\emph on
+隐函数求导法则
+\emph default
+计算光滑解的偏导数：
+\begin_inset Formula 
+\[
+\pdv{u(x,t)}{x}=\left(1-\dv{\lambda(u)}{u}\pdv{u(x,t)}{x}(t-t_{0})\right)\dv{u_{0}}{x_{0}}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $u(x,t)=u_{0}(x_{0})$
+\end_inset
+
+ 及链式求导法则 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:chain_rule"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\pdv{u(x,t)}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{\lambda}{x_{0}}}
+\]
+
+\end_inset
+
+若等式右端的分母为零，则有 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+，此即光滑解破裂的充分条件：
+\begin_inset Formula 
+\[
+t_{b}(x_{0})=t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}
+\]
+
+\end_inset
+
+这是由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{x_{0}}$
+\end_inset
+
+ 与其他特征线相交的时刻。它的下确界就是（由 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 发出的）光滑解的破裂时刻
+\begin_inset Formula 
+\[
+\boxed{t_{b}(\Omega)=\inf_{x_{0}\in\Omega}\left\{ t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}\right\} }\qquad\forall\,x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
