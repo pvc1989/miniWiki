@@ -82,8 +82,19 @@
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
 %% calculus
 \let\divg\divergence  % unicode-math will overwrite \div
-\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % continuum mechanics
-\newcommand{\Dt}{\mathop{\mathrm{D}t}}  % abbr. for \DDt
+\DeclareDocumentCommand\diffD{}{\mathrm{D}}
+\DeclareDocumentCommand\Dt{ o g d() }{ % D_{t}
+	% o: optional n for nth differential
+	% g: optional argument for readability and to control spacing
+	% d: long-form as in d(cos x)
+	\IfNoValueTF{#2}{
+		\IfNoValueTF{#3}
+			{\diffD_{t}\IfNoValueTF{#1}{}{^{#1}}}
+			{\mathinner{\diffD_{t}\IfNoValueTF{#1}{}{^{#1}}\argopen(#3\argclose)}}
+		}
+		{\mathinner{\diffD_{t}\IfNoValueTF{#1}{}{^{#1}}#2} \IfNoValueTF{#3}{}{(#3)}}
+  }
+\newcommand{\DDt}[1]{\frac{\diffD #1}{\diffD t}}
 %% special functions
 \newcommand\Bessel[1]{\operatorname{J}_{#1}}
 \newcommand\ChebyshevI[1]{\operatorname{T}_{#1}}
