@@ -1142,10 +1142,6 @@ Riemann!~ problem
 
 \end_layout
 
-\begin_layout Subsection
-概述
-\end_layout
-
 \begin_layout Standard
 Without loss of generality, we shall only discuss Riemann problems in 1D
  space and shift the initial discontinuity to 
@@ -1611,8 +1607,8 @@ the value of
  them:
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(x,t)} & =\sum_{i=1}^{k}\ket{R_{i}}\ip{L_{i}}{U_{+}}+\sum_{i=k+1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}}\\
- & =\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}}+\left(\sum_{i=k+1}^{m}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}}
+\begin{aligned}\ket{U(x,t)} & =\sum_{i=1}^{k}\ip{L_{i}}{U_{+}}\ket{R_{i}}+\sum_{i=k+1}^{m}\ip{L_{i}}{U_{-}}\ket{R_{i}}\\
+\ket{F(x,t)} & =\sum_{i=1}^{k}\ip{L_{i}}{U_{+}}\lambda_{i}\ket{R_{i}}+\sum_{i=k+1}^{m}\ip{L_{i}}{U_{-}}\lambda_{i}\ket{R_{i}}
 \end{aligned}
 \]
 
@@ -1802,11 +1798,8 @@ Our task is to determine
 .
 \end_layout
 
-\begin_layout Subsubsection*
-激波
-\end_layout
-
-\begin_layout Standard
+\begin_layout Description
+激波 
 \begin_inset Index idx
 status collapsed
 
@@ -1833,14 +1826,10 @@ If
 \end_inset
 
 , we will have 
-\begin_inset Formula 
-\[
-\lambda_{-}>\lambda_{+}
-\]
-
+\begin_inset Formula $\lambda_{-}>\lambda_{+}$
 \end_inset
 
-which means the characteristic curves emanating from one half of the 
+, which means the characteristic curves emanating from one half of the 
 \begin_inset Formula $x$
 \end_inset
 
@@ -1863,18 +1852,11 @@ shock wave
 \end_inset
 
 .
- The speed of the shock wave is determined by the jump condition
+ The speed of the shock wave is determined by the jump condition and the
+ entropy condition
 \begin_inset Formula 
 \[
-u^{\Gamma}=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}
-\]
-
-\end_inset
-
-and the entropy condition
-\begin_inset Formula 
-\[
-\lambda_{-}>u^{\Gamma}>\lambda_{+}
+u^{\Gamma}=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}>u^{\Gamma}>\lambda_{+}
 \]
 
 \end_inset
@@ -1895,12 +1877,8 @@ U_{+} & x/t>u^{\Gamma}
 
 \end_layout
 
-\begin_layout Subsubsection*
-膨胀波
-\end_layout
-
-\begin_layout Standard
-If 
+\begin_layout Description
+膨胀波 If 
 \begin_inset Formula $\dv*{\lambda}{U}>0$
 \end_inset
 
@@ -1917,14 +1895,10 @@ If
 \end_inset
 
 , we will have 
-\begin_inset Formula 
-\[
-\lambda_{-}<\lambda_{+}
-\]
-
+\begin_inset Formula $\lambda_{-}<\lambda_{+}$
 \end_inset
 
-which means the two families of characteristic curves will 
+, which means the two families of characteristic curves will 
 \emph on
 diverge
 \emph default
@@ -1993,11 +1967,8 @@ U_{+} & x/t>\lambda_{+}
 
 \end_layout
 
-\begin_layout Subsubsection*
-接触间断
-\end_layout
-
-\begin_layout Standard
+\begin_layout Description
+接触间断 
 \begin_inset Index idx
 status collapsed
 
@@ -2007,24 +1978,17 @@ discontinuity!contact ~
 
 \end_inset
 
-There might be such a case that
-\begin_inset Formula 
-\[
-\lambda_{-}=\lambda_{+}
-\]
-
+There might be such a case that 
+\begin_inset Formula $\lambda_{-}=\lambda_{+}$
 \end_inset
 
-even though
-\begin_inset Formula 
-\[
-U_{-}\ne U_{+}
-\]
-
+, even though 
+\begin_inset Formula $U_{-}\ne U_{+}$
 \end_inset
 
-In this case, there will be no mass/momentum/energy flowing across the discontin
-uity, thus it is called a 
+.
+ In this case, there will be no mass/momentum/energy flowing across the
+ discontinuity, thus it is called a 
 \noun on
 contact discontinuity
 \noun default
@@ -2050,10 +2014,6 @@ U_{+} & x/t>u^{\Gamma}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Remark*
 接触间断兼具激波与膨胀波的特性：
 \end_layout
 
@@ -2270,7 +2230,7 @@ For contact discontinuities, there are there
 \end_layout
 
 \begin_layout Lemma
-激波或膨胀波一定对应于真正非线性的特征场，接触间断一定对应与线性退化的特征场。
+激波或膨胀波一定属于真正非线性的特征场，接触间断一定属于线性退化的特征场。
 \end_layout
 
 \begin_layout Standard
@@ -2280,11 +2240,8 @@ For contact discontinuities, there are there
 
 \end_layout
 
-\begin_layout Subsubsection*
-激波
-\end_layout
-
-\begin_layout Standard
+\begin_layout Description
+激波 
 \begin_inset Index idx
 status collapsed
 
@@ -2318,10 +2275,7 @@ into
 th elementary wave is a shock wave.
  Physically, there are mass/momentum/energy flowing across the wave with
  entropy increasing.
-\end_layout
-
-\begin_layout Standard
-The change of 
+ The change of 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
@@ -2348,10 +2302,7 @@ in which
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The entropy condition is satisfied with strict unequal signs:
+ The entropy condition is satisfied with strict unequal signs:
 \begin_inset Formula 
 \[
 \lambda_{k}(\alpha_{k-})>u^{\Gamma_{k}}>\lambda_{k}(\alpha_{k+})
@@ -2362,12 +2313,8 @@ The entropy condition is satisfied with strict unequal signs:
 
 \end_layout
 
-\begin_layout Subsubsection*
-膨胀波
-\end_layout
-
-\begin_layout Standard
-If the 
+\begin_layout Description
+膨胀波 If the 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2411,10 +2358,7 @@ in which
 \end_inset
 
 are the speed of the wave head and the wave tail, respectively.
-\end_layout
-
-\begin_layout Standard
-A centered expansion wave is a smooth region, in which 
+ A centered expansion wave is a smooth region, in which 
 \begin_inset Formula $\alpha:=x/t$
 \end_inset
 
@@ -2438,7 +2382,7 @@ A centered expansion wave is a smooth region, in which
 -Riemann invariants are constants across wave:
 \begin_inset Formula 
 \[
-\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip*{\grad{\phi}}{R_{k}}=0
+\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
@@ -2454,11 +2398,8 @@ which can be used to determine state inside the wave:
 
 \end_layout
 
-\begin_layout Subsubsection*
-接触间断
-\end_layout
-
-\begin_layout Standard
+\begin_layout Description
+接触间断 
 \begin_inset Index idx
 status collapsed
 
@@ -2497,17 +2438,11 @@ parallel
 \end_inset
 
 th elementary wave is a contact discontinuity.
-\end_layout
-
-\begin_layout Standard
-Physically, there is no mass/momentum/energy flowing across a contact discontinu
-ity, thus no entropy increasing.
+ Physically, there is no mass/momentum/energy flowing across a contact discontin
+uity, thus no entropy increasing.
  The jump condition and the entropy condition are satisfied automatically.
-\end_layout
-
-\begin_layout Standard
-A contact discontinuity can also be seen as a limit case of a centered expansion
- wave, when the angle of the fan-shaped region tends to be 
+ A contact discontinuity can also be seen as a limit case of a centered
+ expansion wave, when the angle of the fan-shaped region tends to be 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2523,7 +2458,7 @@ A contact discontinuity can also be seen as a limit case of a centered expansion
 -Riemann invariants are constants across the wave:
 \begin_inset Formula 
 \[
-\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip*{\grad{\phi}}{R_{k}}=0
+\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
 \]
 
 \end_inset
@@ -2534,6 +2469,13 @@ which can be used to connect states on both sides of the wave:
 \phi(\alpha_{k-})=\phi(\alpha_{k+})
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
