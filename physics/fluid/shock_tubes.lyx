@@ -130,6 +130,10 @@ Riemann!~ problem!~ for 1D Euler equations
 
 \end_layout
 
+\begin_layout Subsection
+问题定义
+\end_layout
+
 \begin_layout Problem
 \begin_inset ERT
 status open
@@ -2364,14 +2368,14 @@ reference "thm:变量替换不改变Riemann不变量"
 
 \end_inset
 
-：变量替换不改变方程的双曲性、特征值、广义 Riemann 不变量；特征向量按定理 
+：（非退化的）变量替换不改变方程的双曲性、特征值、广义 Riemann 不变量；特征向量按定理 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:特征向量变换法则"
 
 \end_inset
 
- 给出的法则变换。下面将会看到：用「非守恒型」方程作特征场分析，远比用「守恒型」方程来得简单；但在分析激波速度时，必须用「守恒型」方程。
+ 给出的法则作变换。下面将会看到：用「非守恒型」方程作特征场分析，远比用「守恒型」方程来得简单；但在分析激波速度时，必须用「守恒型」方程。
 \end_layout
 
 \begin_layout Standard
@@ -2696,7 +2700,7 @@ H+ua
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{-a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -2720,7 +2724,7 @@ H+ua
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{+a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -2752,7 +2756,7 @@ H+ua
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u+\frac{2a}{\gamma-1}$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1}\right\} $
 \end_inset
 
 
@@ -2764,7 +2768,7 @@ H+ua
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $u,p$
+\begin_inset Formula $\left\{ u,p\right\} $
 \end_inset
 
 
@@ -2776,7 +2780,7 @@ H+ua
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u-\frac{2a}{\gamma-1}$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1}\right\} $
 \end_inset
 
 
@@ -3079,7 +3083,7 @@ u^{2}/2
 \begin_inset Formula $\lambda_{2}=u$
 \end_inset
 
-）的两个独立的广义 Rieamann 不变量。
+）的两个独立的广义 Riemann 不变量。
 \end_layout
 
 \begin_layout Standard
@@ -3093,7 +3097,7 @@ u^{2}/2
 由
 \begin_inset Formula 
 \[
-\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u}=\frac{\dd{(E\rho)}}{u^{2}/2}
+\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u}=\frac{\dd{(\rho E)}}{u^{2}/2}
 \]
 
 \end_inset
@@ -3101,8 +3105,8 @@ u^{2}/2
 可得两个独立的首次积分：
 \begin_inset Formula 
 \[
-\begin{aligned}\dd{u}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u}\\
-\dd{p}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(E\rho)}}{u^{2}/2}\qc\dd{u}=0
+\begin{aligned}\dd{u}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u}\\
+\dd{p}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho E)}}{u^{2}/2}\qc\dd{u}=0
 \end{aligned}
 \]
 
@@ -3126,11 +3130,25 @@ u^{2}/2
 \begin_inset Formula $u+\frac{2a}{\gamma-1}$
 \end_inset
 
- 是第一特征场（
-\begin_inset Formula $\lambda_{1}=u-a$
+ 是第一特征场的两个独立的广义 Riemann 不变量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
-）的两个独立的广义 Rieamann 不变量。
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $u-\frac{2a}{\gamma-1}$
+\end_inset
+
+ 是第三特征场的两个独立的广义 Riemann 不变量。
 \end_layout
 
 \begin_layout Standard
@@ -3141,10 +3159,10 @@ u^{2}/2
 \end_layout
 
 \begin_layout Proof
-由
+这里只给出第一特征场的证明。由
 \begin_inset Formula 
 \[
-\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u-a}=\frac{\dd{(E\rho)}}{H-ua}
+\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u-a}=\frac{\dd{(\rho E)}}{H-ua}
 \]
 
 \end_inset
@@ -3152,11 +3170,10 @@ u^{2}/2
 可得
 \begin_inset Formula 
 \[
-\begin{aligned}\rho\dd{u}+a\dd{\rho}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(u\rho)}}{u-a}\\
+\begin{aligned}\rho\dd{u}+a\dd{\rho}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u-a}\\
 \frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}=0 & \impliedby\begin{cases}
-\frac{\dd{\rho}}{1}=\frac{\dd{(E\rho)}}{H-ua}\\
-H=E+p/\rho\\
-E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\\
+(H-ua)\dd{\rho}=\dd{(\rho E)}\\
+\rho E=p/(\gamma-1)+\rho u^{2}/2=\rho H-p\\
 \rho\dd{u}+a\dd{\rho}=0
 \end{cases}
 \end{aligned}
@@ -3177,8 +3194,7 @@ E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\\
 \begin_inset Formula 
 \[
 \begin{aligned}\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}\right) & =\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{\dd{p}}{1-\gamma}+\frac{\gamma p}{\gamma-1}\frac{\dd{\rho}}{\rho}\right)\\
- & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma-1}\dd{\rho}\\
- & =\dd{\left(p\rho^{-\gamma}\right)}
+ & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma-1}\dd{\rho}=\dd(p\rho^{-\gamma})
 \end{aligned}
 \]
 
@@ -3196,8 +3212,7 @@ E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\\
 \begin_inset Formula 
 \[
 \begin{aligned}\dd{a} & =\dd{\sqrt{\gamma p\rho^{-1}}}=\dd{\sqrt{\rho^{\gamma-1}\underbrace{\gamma p\rho^{-\gamma}}_{\text{constant}}}}=\sqrt{\gamma p\rho^{-\gamma}}\dd{\rho^{\frac{\gamma-1}{2}}}\\
- & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma-1}{2}\rho^{\frac{\gamma-1}{2}-1}\dd{\rho}=\frac{\gamma-1}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}\\
- & =\frac{\gamma-1}{2}\frac{a\dd{\rho}}{\rho}
+ & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma-1}{2}\rho^{\frac{\gamma-1}{2}-1}\dd{\rho}=\frac{\gamma-1}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}=\frac{\gamma-1}{2}\frac{a\dd{\rho}}{\rho}
 \end{aligned}
 \]
 
@@ -3234,30 +3249,8 @@ E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\\
 
 \end_layout
 
-\begin_layout Lemma
-\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
-\end_inset
-
- 与 
-\begin_inset Formula $u-\frac{2a}{\gamma-1}$
-\end_inset
-
- 是第三特征场（
-\begin_inset Formula $\lambda_{3}=u+a$
-\end_inset
-
-）的两个独立的广义 Riemann 不变量。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-基本波
+\begin_layout Subsubsection
+解的自相似结构
 \end_layout
 
 \begin_layout Standard
@@ -3307,11 +3300,11 @@ lementary)：
 \begin{equation}
 \ket{U(x,t)}=\begin{cases}
 \ket{U_{-}} & x/t\in C_{1}=(-\infty,v_{1-})\\
-\ket{U_{1*}} & x/t\in E_{1}=[v_{1-},v_{1+}]\\
+\ket{U_{1*}(x/t)} & x/t\in E_{1}=[v_{1-},v_{1+}]\\
 \ket{U_{2-}} & x/t\in C_{2}=(v_{1+},v_{2-})\\
-\ket{U_{2*}} & x/t\in E_{2}=[v_{2-},v_{2+}]\\
+\ket{U_{2*}(x/t)} & x/t\in E_{2}=[v_{2-},v_{2+}]\\
 \ket{U_{2+}} & x/t\in C_{3}=(v_{2+},v_{3-})\\
-\ket{U_{3*}} & x/t\in E_{3}=[v_{3-},v_{3+}]\\
+\ket{U_{3*}(x/t)} & x/t\in E_{3}=[v_{3-},v_{3+}]\\
 \ket{U_{+}} & x/t\in C_{4}=(v_{3+},\infty)
 \end{cases}\label{eq:riemann_euler_1d_solution_structure}
 \end{equation}
@@ -3322,21 +3315,25 @@ lementary)：
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\ket{U_{\pm}}$
+\begin_inset Formula $\ket{U_{-}},\ket{U_{+}}$
 \end_inset
 
  是已知的初始条件。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\left\{ \ket{U_{k*}}\right\} _{k=1}^{3}$
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
 \end_inset
 
  是 
-\begin_inset Formula $\ket{U}$
+\begin_inset Formula $\ket{U(x/t)}$
 \end_inset
 
- 在基本波内部的值：
+ 在第 
+\begin_inset Formula $k$
+\end_inset
+
+ 基本波内部的值：
 \end_layout
 
 \begin_deeper
@@ -3370,10 +3367,10 @@ discontinuity!contact ~
 \end_inset
 
 ），因此 
-\begin_inset Formula $\ket{U_{k*}}$
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
 \end_inset
 
- 的值是无法确定的。在画图时，可以取作两侧的平均值：
+ 在其「内部」的值是无法定义的。在画图时，可以取作两侧的平均值：
 \begin_inset Formula $\ket{U_{k*}}=\nicefrac{1}{2}\ket{U(v_{k-})}+\nicefrac{1}{2}\ket{U(v_{k+})}$
 \end_inset
 
@@ -3390,10 +3387,10 @@ discontinuity!contact ~
 \end_inset
 
 ），
-\begin_inset Formula $\ket{U_{k*}}$
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
 \end_inset
 
- 的取值可以唯一确定。
+ 的值可以唯一确定。
 \end_layout
 
 \end_deeper
@@ -3418,15 +3415,7 @@ discontinuity!contact ~
 
 \begin_deeper
 \begin_layout Itemize
-由第二特征场的两个广义 Riemann 不变量 
-\begin_inset Formula $u$
-\end_inset
-
- 及 
-\begin_inset Formula $p$
-\end_inset
-
- 可得 
+由第二特征场的两个广义 Riemann 不变量可得 
 \begin_inset Formula $u_{2-}=u_{2+}$
 \end_inset
 
@@ -3434,7 +3423,7 @@ discontinuity!contact ~
 \begin_inset Formula $p_{2-}=p_{2+}$
 \end_inset
 
-，因此可以省略它们的 
+，因此可以省略它们下标中的 
 \begin_inset Formula $\pm$
 \end_inset
 
@@ -3457,8 +3446,64 @@ discontinuity!contact ~
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 速度差
+\end_layout
+
+\begin_layout Subsubsection
+激波两侧的速度差
+\end_layout
+
+\begin_layout Standard
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:riemann_problems"
+
+\end_inset
+
+》一节给出的跳跃关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:JumpConditions"
+
+\end_inset
+
+ 式）并没有明确指出激波的方向，即：下标中的 
+\begin_inset Formula $\pm$
+\end_inset
+
+ 只用来区分激波的两侧，但没有指定 
+\begin_inset Formula $-$
+\end_inset
+
+ 为波前（扰动未达区域）或波后（扰动已过区域）。在本节中，明确区分波前与波后对问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:riemann_euler_1d"
+
+\end_inset
+
+ 的求解是至关重要的，因此需引入如下记号：
+\end_layout
+
+\begin_layout Notation
+下标 
+\begin_inset Formula $A$
+\end_inset
+
+ 表示波后 (After) 的物理量，下标 
+\begin_inset Formula $B$
+\end_inset
+
+ 表示波前 (Before) 的物理量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -3482,7 +3527,7 @@ condition!jump ~
 
 \begin_inset Formula 
 \[
-\eval{\ket{U}}_{-}^{+}u_{\Gamma}=\eval{\ket{F}}_{-}^{+}
+\eval{\ket{U}}_{A}^{B}u_{\Gamma}=\eval{\ket{F}}_{A}^{B}
 \]
 
 \end_inset
@@ -3490,9 +3535,9 @@ condition!jump ~
 等价于
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}(u_{1}-u_{\Gamma})\rho_{1} & =(u_{2}-u_{\Gamma})\rho_{2}\\
-(u_{1}-u_{\Gamma})\rho_{1}u_{1}+p_{1} & =(u_{2}-u_{\Gamma})\rho_{2}u_{2}+p_{2}\\
-(u_{1}-u_{\Gamma})\rho_{1}E_{1}+p_{1}u_{1} & =(u_{2}-u_{\Gamma})\rho_{2}E_{2}+p_{2}u_{2}
+\begin{aligned}(u_{A}-u_{\Gamma})\rho_{A} & =(u_{B}-u_{\Gamma})\rho_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}u_{A}+p_{A} & =(u_{B}-u_{\Gamma})\rho_{B}u_{B}+p_{B}\\
+(u_{A}-u_{\Gamma})\underbrace{\left(\frac{p_{A}}{\gamma-1}+\frac{\rho_{A}u_{A}^{2}}{2}\right)}_{\rho_{A}E_{A}}+p_{A}u_{A} & =(u_{B}-u_{\Gamma})\underbrace{\left(\frac{p_{B}}{\gamma-1}+\frac{\rho_{B}u_{B}^{2}}{2}\right)}_{\rho_{B}E_{B}}+p_{B}u_{B}
 \end{aligned}
 \label{eq:euler_1d_jump}
 \end{equation}
@@ -3503,7 +3548,11 @@ condition!jump ~
 \begin_inset Formula $u_{\Gamma}$
 \end_inset
 
- 为间断面移动速度。如果定义「相对速度」 
+ 为间断面 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 的移动速度。定义「相对速度」 
 \begin_inset Formula $v_{i}=u_{i}-u_{\Gamma}$
 \end_inset
 
@@ -3517,9 +3566,9 @@ reference "eq:euler_1d_jump"
  式可化为
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\rho_{1}v_{1} & =\rho_{2}v_{2}\\
-\rho_{1}v_{1}^{2}+p_{1} & =\rho_{2}v_{2}^{2}+p_{2}\\
-h_{1}+v_{1}^{2}/2 & =h_{2}+v_{2}^{2}/2
+\begin{aligned}(\rho v)_{A} & =(\rho v)_{B}\\
+(\rho vv+p)_{A} & =(\rho vv+p)_{B}\\
+(h+vv/2)_{A} & =(h+vv/2)_{B}
 \end{aligned}
 \label{eq:euler_1d_jump_in_relative_speed}
 \end{equation}
@@ -3544,20 +3593,20 @@ h_{1}+v_{1}^{2}/2 & =h_{2}+v_{2}^{2}/2
 激波前后的速度差为
 \begin_inset Formula 
 \begin{equation}
-u_{2}-u_{1}=v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
+u_{A}-u_{B}=v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-\sqrt{\rho_{B}P}}\cdot\begin{cases}
 +1 & m>0\\
 -1 & m<0
-\end{cases}\label{eq:AbsoluteSpeedChangeVsPressureChangeForShock}
+\end{cases}\label{eq:速度差_激波}
 \end{equation}
 
 \end_inset
 
 其中，
-\begin_inset Formula $m:=\rho_{1}v_{1}=\rho_{2}v_{2}$
+\begin_inset Formula $m:=(\rho v)_{A}=(\rho v)_{B}$
 \end_inset
 
- 为质量流率，
-\begin_inset Formula $P:=\frac{\gamma+1}{2}p_{2}+\frac{\gamma-1}{2}p_{1}$
+ 为「质量流率 (mass flow rate)」，
+\begin_inset Formula $P:=\left[(p_{A}+p_{B})\gamma+(p_{A}-p_{B})\right]/2$
 \end_inset
 
 。
@@ -3571,17 +3620,17 @@ u_{2}-u_{1}=v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
 \end_layout
 
 \begin_layout Proof
-Treat 
-\begin_inset Formula $\rho_{1},u_{1},p_{1}$
+将 
+\begin_inset Formula $\rho_{B},u_{B},p_{B}$
 \end_inset
 
- and 
-\begin_inset Formula $p_{2}$
+ 及 
+\begin_inset Formula $p_{A}$
 \end_inset
 
- as known variables, 
+ 视为已知量，则 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump"
 plural "false"
 caps "false"
@@ -3589,39 +3638,30 @@ noprefix "false"
 
 \end_inset
 
- becomes a system of 3 independent algebraic equations for 3 unknowns 
-\begin_inset Formula $\rho_{2},u_{2}$
+ 式变为关于 
+\begin_inset Formula $\rho_{A},u_{A},u_{\Gamma}$
 \end_inset
 
- and 
-\begin_inset Formula $v$
-\end_inset
-
-.
- Represent 
-\begin_inset Formula $\rho_{2}$
-\end_inset
-
- and 
-\begin_inset Formula $v$
-\end_inset
-
- in terms of 
-\begin_inset Formula $u_{2}$
-\end_inset
-
- (and the knowns), we will obtain an equation for 
-\begin_inset Formula $u_{2}$
-\end_inset
-
-:
+ 的代数方程组。
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Multiply the 1st line of 
+首先将 
+\begin_inset Formula $\rho_{A},u_{\Gamma}$
+\end_inset
+
+ 表示为 
+\begin_inset Formula $u_{A}$
+\end_inset
+
+ 及已知量的函数。用 
+\begin_inset Formula $u_{A}$
+\end_inset
+
+ 乘 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump"
 plural "false"
 caps "false"
@@ -3629,29 +3669,29 @@ noprefix "false"
 
 \end_inset
 
- with 
-\begin_inset Formula $u_{2}$
-\end_inset
-
- and subtract it from the 2nd line, we have
+ 式的第一行，并将所得结果从第二行中减去，可得
 \begin_inset Formula 
 \[
-(u_{1}-v)(u_{1}-u_{2})\rho_{1}=p_{2}-p_{1}
+(u_{B}-u_{\Gamma})(u_{B}-u_{A})\rho_{B}=p_{A}-p_{B}
 \]
 
 \end_inset
 
-from which
+于是可以解出 
+\begin_inset Formula $u_{\Gamma}$
+\end_inset
+
+
 \begin_inset Formula 
 \[
-v=u_{1}+\frac{p_{2}-p_{1}}{u_{2}-u_{1}}\frac{1}{\rho_{1}}
+u_{\Gamma}=u_{B}+\frac{p_{A}-p_{B}}{u_{A}-u_{B}}\frac{1}{\rho_{B}}
 \]
 
 \end_inset
 
-Substitute it back into the 1st line of 
+将其代回 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump"
 plural "false"
 caps "false"
@@ -3659,14 +3699,14 @@ noprefix "false"
 
 \end_inset
 
- and solve for 
-\begin_inset Formula $\rho_{2}$
+ 式的第一行，可以解出 
+\begin_inset Formula $\rho_{A}$
 \end_inset
 
-:
+：
 \begin_inset Formula 
 \[
-\rho_{2}=\frac{u_{1}-v}{u_{2}-v}\rho_{1}=\frac{p_{2}-p_{1}}{p_{2}-p_{1}-(u_{2}-u_{1})^{2}\rho_{1}}\rho_{1}
+\rho_{A}=\frac{u_{B}-u_{\Gamma}}{u_{A}-u_{\Gamma}}\rho_{B}=\frac{p_{A}-p_{B}}{p_{A}-p_{B}-(u_{A}-u_{B})^{2}\rho_{B}}\rho_{B}
 \]
 
 \end_inset
@@ -3675,17 +3715,9 @@ noprefix "false"
 \end_layout
 
 \begin_layout Itemize
-Substitute these expressions for 
-\begin_inset Formula $v$
-\end_inset
-
- and 
-\begin_inset Formula $\rho_{2}$
-\end_inset
-
- into the 3rd line of 
+将以上结果代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump"
 plural "false"
 caps "false"
@@ -3693,61 +3725,65 @@ noprefix "false"
 
 \end_inset
 
-, we obtain a quadratic equation for 
-\begin_inset Formula $u_{2}$
+ 式的第三行，就得到关于 
+\begin_inset Formula $u_{A}$
 \end_inset
 
-:
+ 的一元二次方程：
 \begin_inset Formula 
 \[
-Au_{2}^{2}+Bu_{2}+C=0
+Au_{A}^{2}+Bu_{A}+C=0
 \]
 
 \end_inset
 
-where
+其中
 \begin_inset Formula 
 \[
-A=-2\rho_{1}P\qquad B=4Pu_{1}\rho_{1}\qquad C=2(p_{2}-p_{1})^{2}-2Pu_{1}^{2}\rho_{1}
+A=-2\rho_{B}P\qquad B=4\rho_{B}u_{B}P\qquad C=2(p_{A}-p_{B})^{2}-2\rho_{B}u_{B}^{2}P
 \]
 
 \end_inset
 
-and
+判别式
 \begin_inset Formula 
 \[
-B^{2}-4AC=16(p_{2}-p_{1})^{2}\rho_{1}P
+B^{2}-4AC=16(p_{A}-p_{B})^{2}\rho_{B}P
 \]
 
 \end_inset
 
-from which 
-\begin_inset Formula $u_{2}$
+由此可以解出 
+\begin_inset Formula $u_{A},v_{A}$
 \end_inset
 
- can be solved to be
-\begin_inset Formula 
-\[
-u_{2}=\frac{-B\pm\sqrt{B^{2}-4AC}}{2A}=u_{1}\mp\frac{\abs{p_{2}-p_{1}}}{\sqrt{\rho_{1}P}}
-\]
-
-\end_inset
-
-An immediate corollary is
+：
 \begin_inset Formula 
 \begin{equation}
-v_{2}-v_{1}=\mp\frac{\abs{p_{2}-p_{1}}}{\sqrt{\rho_{1}P}}\label{eq:RelativeSpeedChangeVsPressureChangeForShock}
+u_{A}=u_{B}\mp\frac{\abs{p_{B}-p_{A}}}{\sqrt{\rho_{A}P}}\qquad v_{A}=v_{B}+\frac{\abs{p_{A}-p_{B}}}{\mp\sqrt{\rho_{B}P}}\label{eq:RelativeSpeedChangeVsPressureChangeForShock}
 \end{equation}
 
 \end_inset
 
+这里利用了
+\begin_inset Formula 
+\[
+P=\frac{\gamma+1}{2}p_{A}+\frac{\gamma-1}{2}p_{B}>0\impliedby\begin{cases}
+p_{A}>0\\
+p_{B}>0\\
+\gamma>1
+\end{cases}
+\]
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Itemize
-The the 2nd line of 
+由 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump_in_relative_speed"
 plural "false"
 caps "false"
@@ -3755,29 +3791,29 @@ noprefix "false"
 
 \end_inset
 
- indicates
+ 式第二行及质量流率 
+\begin_inset Formula $m$
+\end_inset
+
+ 的定义可得
 \begin_inset Formula 
 \[
-v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-m}
+v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-m}\implies-m=\mp\sqrt{\rho_{B}P}
 \]
 
 \end_inset
 
-Compare it with 
+由此可以定出 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:RelativeSpeedChangeVsPressureChangeForShock"
 
 \end_inset
 
- and consider each possibility for the sign of 
-\begin_inset Formula $m$
-\end_inset
-
-, we can determine the sign of the RHS:
+ 式分母中的正负号，从而有
 \begin_inset Formula 
 \[
-v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
+v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-\sqrt{\rho_{B}P}}\cdot\begin{cases}
 +1 & m>0\\
 -1 & m<0
 \end{cases}
@@ -3796,94 +3832,6 @@ v_{2}-v_{1}=\frac{p_{2}-p_{1}}{-\sqrt{\rho_{1}P}}\cdot\begin{cases}
 
 \end_layout
 
-\begin_layout Standard
-In jump conditions
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-condition!jump ~
-\end_layout
-
-\end_inset
-
- (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:euler_1d_jump"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:euler_1d_jump_in_relative_speed"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) and shock relations (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:AbsoluteSpeedChangeVsPressureChangeForShock"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:RelativeSpeedChangeVsPressureChangeForShock"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), we have not specified the 
-\noun on
-direction
-\noun default
- of the shock, i.e.
- from which side fluid particles run across the shock to the other side.
- In this section, we shall use a relative reference frame fixed on that
- shock, and use subscript 
-\begin_inset Formula $_{-}$
-\end_inset
-
- for the undisturbed region and 
-\begin_inset Formula $_{+}$
-\end_inset
-
- for the disturbed region.
-\end_layout
-
-\begin_layout Lemma
-相对速度 
-\begin_inset Formula $v_{\pm}$
-\end_inset
-
- 与质量流率 
-\begin_inset Formula $m$
-\end_inset
-
- 同号。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
@@ -3894,15 +3842,15 @@ name "thm:euler_1d_mach_relation"
 流体微团穿过激波是熵增的减速压缩过程：
 \begin_inset Formula 
 \[
-s_{-}<s_{+}\qquad p_{-}<p_{+}\qquad\rho_{-}<\rho_{+}\qquad T_{-}<T_{+}\qquad0<a_{-}<a_{+}
+s_{B}<s_{A}\qquad p_{B}<p_{A}\qquad\rho_{B}<\rho_{A}\qquad T_{B}<T_{A}\qquad0<a_{B}<a_{A}
 \]
 
 \end_inset
 
-并且速度由超声速减至亚声速：
+速度由超声速减至亚声速：
 \begin_inset Formula 
 \[
-\abs{v_{-}}>\abs{v_{+}}\qquad M_{-}>1>M_{+}
+\abs{v_{B}}>\abs{v_{A}}\qquad M_{B}>1>M_{A}
 \]
 
 \end_inset
@@ -3932,78 +3880,23 @@ number!Mach ~!relative ~
 \end_layout
 
 \begin_layout Corollary
-左行激波（即 
-\begin_inset Formula $v_{\pm}>0$
+左侧为波前（即 
+\begin_inset Formula $L=B,R=A$
 \end_inset
 
-）的左侧为未扰动区域，它只可能是第一特征场（
+）的激波称为「左行激波」，它只可能是第一特征场（
 \begin_inset Formula $\lambda_{1}=u-a$
 \end_inset
 
 ）的基本波。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Theorem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:euler_1d_mach_relation"
-
-\end_inset
-
- together with the positiveness of 
-\begin_inset Formula $v_{\pm}$
-\end_inset
-
- indicates that
-\begin_inset Formula 
-\[
-\frac{v_{-}}{a_{-}}=\frac{u_{-}-u_{\Gamma}}{a_{-}}>1>\frac{u_{+}-u_{\Gamma}}{a_{+}}=\frac{v_{+}}{a_{+}}
-\]
-
-\end_inset
-
-which then leads to Lax's entropy condition
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-condition!entropy ~!Lax's ~
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-u_{-}-a_{-}>u_{\Gamma}>u_{+}-a_{-}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Corollary
-右行激波（即 
-\begin_inset Formula $v_{\pm}<0$
+右侧为波前（即 
+\begin_inset Formula $R=B,L=A$
 \end_inset
 
-）的右侧为未扰动区域，它只可能是第三特征场（
+）的激波称为「右行激波」，它只可能是第三特征场（
 \begin_inset Formula $\lambda_{3}=u+a$
 \end_inset
 
@@ -4018,28 +3911,36 @@ u_{-}-a_{-}>u_{\Gamma}>u_{+}-a_{-}
 \end_layout
 
 \begin_layout Proof
-Theorem 
+对于左行激波，流体微团向右穿过间断面，因此 
+\begin_inset Formula $m=\rho_{A}v_{A}=\rho_{B}v_{B}>0$
+\end_inset
+
+。由 
+\begin_inset Formula $\rho_{A},\rho_{B}$
+\end_inset
+
+ 的非负性及定理 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:euler_1d_mach_relation"
 
 \end_inset
 
- together with the negativeness of 
-\begin_inset Formula $v_{\pm}$
-\end_inset
-
- indicates that
+ 可得
 \begin_inset Formula 
 \[
-\frac{\abs{v_{-}}}{a_{-}}=\frac{-(u_{-}-u_{\Gamma})}{a_{-}}>1>\frac{-(u_{+}-u_{\Gamma})}{a_{+}}=\frac{\abs{v_{-}}}{a_{-}}
+\frac{u_{L}-u_{\Gamma}}{a_{L}}=\frac{u_{B}-u_{\Gamma}}{a_{B}}=\frac{v_{B}}{a_{B}}=M_{B}>1>M_{A}=\frac{v_{A}}{a_{A}}=\frac{u_{A}-u_{\Gamma}}{a_{A}}=\frac{u_{R}-u_{\Gamma}}{a_{R}}
 \]
 
 \end_inset
 
-which then leads to Lax's entropy condition
+由 
+\begin_inset Formula $a_{A},a_{B}$
+\end_inset
+
+ 的非负性可以导出第一基本波为激波的熵条件
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 condition!entropy ~!Lax's ~
@@ -4047,10 +3948,10 @@ condition!entropy ~!Lax's ~
 
 \end_inset
 
-
+：
 \begin_inset Formula 
 \[
-u_{+}+a_{+}>u_{\Gamma}>u_{-}+a_{-}
+u_{L}-a_{L}=\lambda_{1L}>u_{\Gamma}>\lambda_{1R}=u_{R}-a_{R}
 \]
 
 \end_inset
@@ -4058,21 +3959,48 @@ u_{+}+a_{+}>u_{\Gamma}>u_{-}+a_{-}
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Proof
+对于右行激波，流体微团向左穿过间断面，因此 
+\begin_inset Formula $m=\rho_{A}v_{A}=\rho_{B}v_{B}<0$
 \end_inset
 
+。由 
+\begin_inset Formula $\rho_{A},\rho_{B}$
+\end_inset
 
-\end_layout
+ 的非负性及定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:euler_1d_mach_relation"
 
-\begin_layout Theorem
-膨胀波前后的速度差为
+\end_inset
+
+ 可得
 \begin_inset Formula 
 \[
-u_{2}-u_{1}=\frac{2a_{1}}{\gamma-1}\left[\left(\frac{p_{2}}{p_{1}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]\cdot\begin{cases}
--1 & \lambda_{1}\\
-+1 & \lambda_{3}
-\end{cases}
+\frac{u_{\Gamma}-u_{R}}{a_{R}}=\frac{u_{\Gamma}-u_{B}}{a_{B}}=\frac{-v_{B}}{a_{B}}=M_{B}>1>M_{A}=\frac{-v_{A}}{a_{A}}=\frac{u_{\Gamma}-u_{A}}{a_{A}}=\frac{u_{\Gamma}-u_{L}}{a_{L}}
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $a_{A},a_{B}$
+\end_inset
+
+ 的非负性可以导出第三基本波为激波的熵条件
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+condition!entropy ~!Lax's ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+u_{L}+a_{L}=\lambda_{3L}>u_{\Gamma}>\lambda_{3R}=u_{R}-a_{R}
 \]
 
 \end_inset
@@ -4088,38 +4016,93 @@ u_{2}-u_{1}=\frac{2a_{1}}{\gamma-1}\left[\left(\frac{p_{2}}{p_{1}}\right)^{\frac
 \end_layout
 
 \begin_layout Subsubsection
-压力函数
+膨胀波两侧的速度差
+\end_layout
+
+\begin_layout Theorem
+膨胀波前后的速度差为
+\begin_inset Formula 
+\begin{equation}
+u_{A}-u_{B}=\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]\cdot\begin{cases}
+-1 & \lambda_{1}\\
++1 & \lambda_{3}
+\end{cases}\label{eq:速度差_膨胀波}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+两种速度差 (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:速度差_激波"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:速度差_膨胀波"
+
+\end_inset
+
+) 关于 
+\begin_inset Formula $A,B$
+\end_inset
+
+ 是对称的，即：下标中的 
+\begin_inset Formula $A,B$
+\end_inset
+
+ 可以对调。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+光滑且单调的压力函数
 \end_layout
 
 \begin_layout Lemma
 关于 
-\begin_inset Formula $p_{2}\ge0$
+\begin_inset Formula $p_{A}\ge0$
 \end_inset
 
  的一元函数
 \begin_inset Formula 
 \begin{equation}
-f(p_{2};p_{1},\rho_{1})=\begin{cases}
-(p_{2}-p_{1})/\sqrt{\rho_{1}P} & p_{2}>p_{1}\\
-0 & p_{2}=p_{1}\\
-\frac{2a_{1}}{\gamma-1}\left[\left(\frac{p_{2}}{p_{1}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right] & p_{2}<p_{1}
-\end{cases}\label{eq:PressureFunctionForSingleWave}
+f(p_{A};p_{B},\rho_{B})=\begin{cases}
+(p_{A}-p_{B})/\sqrt{\rho_{B}P} & p_{A}>p_{B}\\
+0 & p_{A}=p_{B}\\
+\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right] & p_{A}<p_{B}
+\end{cases}\label{eq:压力函数_单波}
 \end{equation}
 
 \end_inset
 
 对于任何给定的 
-\begin_inset Formula $p_{1}$
-\end_inset
-
- 及 
-\begin_inset Formula $\rho_{1}$
+\begin_inset Formula $\rho_{B},p_{B}$
 \end_inset
 
  是连续可微且单调递增的，其中
 \begin_inset Formula 
 \[
-P=\frac{\gamma+1}{2}p_{2}+\frac{\gamma-1}{2}p_{1}\qquad a_{1}=\sqrt{\frac{\gamma p_{1}}{\rho_{1}}}
+P=\frac{\gamma+1}{2}p_{A}+\frac{\gamma-1}{2}p_{B}\qquad a_{B}=\sqrt{\frac{\gamma p_{B}}{\rho_{B}}}
 \]
 
 \end_inset
@@ -4138,7 +4121,7 @@ P=\frac{\gamma+1}{2}p_{2}+\frac{\gamma-1}{2}p_{1}\qquad a_{1}=\sqrt{\frac{\gamma
 记
 \begin_inset Formula 
 \[
-f_{1}(p_{2})=\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}P}}\qquad f_{2}(p_{2})=\frac{2a_{1}}{\gamma-1}\left[\left(p_{2}/p_{1}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]
+f_{1}(p_{A})=\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}P}},p_{A}>p_{B}\qquad f_{2}(p_{A})=\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right],p_{A}<p_{B}
 \]
 
 \end_inset
@@ -4146,48 +4129,48 @@ f_{1}(p_{2})=\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}P}}\qquad f_{2}(p_{2})=\frac{2a_{1
 函数 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:PressureFunctionForSingleWave"
+reference "eq:压力函数_单波"
 
 \end_inset
 
- 的连续性由 
-\begin_inset Formula $f_{1}(p_{1})=0=f_{2}(p_{1})$
+ 的连续性可以由 
+\begin_inset Formula $f_{1}(p_{A}=p_{B})=0=f_{2}(p_{A}=p_{B})$
 \end_inset
 
- 直接得到，下面证明它的可微性与单调性：
+ 直接得到。下面证明它的可微性与单调性：
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-The differentiability of 
-\begin_inset Formula $f$
+容易验证：
+\begin_inset Formula $f_{1},f_{2}$
 \end_inset
 
- comes from the fact that
+ 分别在其定义域内可导。下面只需验证
 \begin_inset Formula 
 \[
-\lim_{\epsilon\to0^{-}}f_{1}'(p_{1}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{1}+\epsilon)
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon)
 \]
 
 \end_inset
 
-which is justified from
+代入导数定义即得
 \begin_inset Formula 
 \[
-\begin{alignedat}{1}\dv{f_{1}}{p_{2}} & =\frac{1}{\sqrt{\rho_{1}P}}+\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}}}\dv{P^{-1/2}}{p_{2}}==\frac{1}{\sqrt{\rho_{1}P}}+\frac{p_{2}-p_{1}}{\sqrt{\rho_{1}}}\left(\frac{P^{-3/2}}{-2}\right)\dv{P}{p_{2}}\\
- & =\frac{1}{\sqrt{\rho_{1}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}\right)\\
-\lim_{\epsilon\to0^{-}}f_{1}'(p_{1}+\epsilon) & =\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}
-\end{alignedat}
+\begin{aligned}\dv{f_{1}}{p_{A}} & =\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\dv{P^{-1/2}}{p_{A}}=\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\left(\frac{P^{-3/2}}{-2}\right)\dv{P}{p_{A}}\\
+ & =\frac{1}{\sqrt{\rho_{B}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}\right)\\
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}\\
+\dv{f_{2}}{p_{A}} & =\frac{2a_{B}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{B}}=\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}\left(\frac{p_{A}}{p_{B}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
+\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}
+\end{aligned}
 \]
 
 \end_inset
 
-and
+从而有
 \begin_inset Formula 
 \[
-\begin{alignedat}{1}\dv{f_{2}}{p_{2}} & =\frac{2a_{1}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{2}}{p_{1}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{1}}=\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}\left(\frac{p_{2}}{p_{1}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
-\lim_{\epsilon\to0^{+}}f_{2}'(p_{1}+\epsilon) & =\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}
-\end{alignedat}
+f'(p_{A}=p_{B})=\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon)
 \]
 
 \end_inset
@@ -4196,39 +4179,29 @@ and
 \end_layout
 
 \begin_layout Itemize
-The monotonicity of 
 \begin_inset Formula $f$
 \end_inset
 
- comes from 
-\begin_inset Formula $f'(p_{2})>0$
+ 的单调递增性质可以由 
+\begin_inset Formula $f'(p_{A})>0,\forall p_{A}>0$
 \end_inset
 
- for any 
-\begin_inset Formula $p_{2}>0$
-\end_inset
-
- where
+ 获得，只需分段验证即可：
 \begin_inset Formula 
 \[
-f'(p_{2})=\begin{cases}
-\frac{1}{\sqrt{\rho_{1}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}\right) & p_{2}>p_{1}\\
-\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}} & p_{2}=p_{1}\\
-\frac{1}{\sqrt{\rho_{1}\gamma p_{1}}}\left(\frac{p_{2}}{p_{1}}\right)^{-\frac{\gamma+1}{2\gamma}} & p_{2}<p_{1}
+f'(p_{A})=\begin{cases}
+f_{1}'(p_{A}) & p_{A}>p_{B}\\
+1/\sqrt{\rho_{B}\gamma p_{B}} & p_{A}=p_{B}\\
+f_{2}'(p_{A}) & p_{A}<p_{B}
 \end{cases}
 \]
 
 \end_inset
 
-The 2nd and 3rd cases are trivial, while the 1st one is positive since when
- 
-\begin_inset Formula $p_{2}>p_{1}$
-\end_inset
-
-, there is
+第二、三行的非负性是显然的；第一行的非负性也容易验证：
 \begin_inset Formula 
 \[
-1-\frac{\gamma+1}{4}\frac{p_{2}-p_{1}}{P}=1-\frac{1}{2}\frac{p_{2}-p_{1}}{p_{2}+\frac{\gamma-1}{\gamma+1}p_{1}}>1-\frac{1}{2}>0
+p_{A}>p_{B},\gamma>1\implies1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}=1-\frac{1}{2}\frac{p_{A}-p_{B}}{p_{A}+\frac{\gamma-1}{\gamma+1}p_{B}}>1-\frac{1}{2}>0
 \]
 
 \end_inset
@@ -4252,7 +4225,7 @@ The 2nd and 3rd cases are trivial, while the 1st one is positive since when
  的一元函数
 \begin_inset Formula 
 \begin{equation}
-F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\label{eq:PressureFunctionForDoubleWave}
+F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\label{eq:压力函数_双波}
 \end{equation}
 
 \end_inset
@@ -4261,15 +4234,26 @@ F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\labe
 \begin_inset Formula $p_{\pm},\rho_{\pm}$
 \end_inset
 
- 是连续可微且单调递增的，并且有
+ 都是连续可微且单调递增的，并且有
 \begin_inset Formula 
 \[
-\lim_{p_{2}\to0^{+}}F(p_{2};p_{\pm},\rho_{\pm})=-\frac{2(a_{-}+a_{+})}{\gamma-1}
+\lim_{p_{2}\to0^{+}}F(p_{2};p_{\pm},\rho_{\pm})=\frac{-2(a_{-}+a_{+})}{\gamma-1}
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $f$
+\end_inset
 
+ 由 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_单波"
+
+\end_inset
+
+ 式定义。
 \end_layout
 
 \begin_layout Standard
@@ -4279,94 +4263,79 @@ F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\labe
 
 \end_layout
 
-\begin_layout Subsubsection
-中心区域
+\begin_layout Subsection
+第二基本波（接触间断）
 \end_layout
 
 \begin_layout Standard
-Recall the solution structure 
+由解的结构（
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:riemann_euler_1d_solution_structure"
 
 \end_inset
 
- discussed above, we've already known that the 2nd elementary wave 
-\begin_inset Formula $E_{2}$
-\end_inset
-
- is always a contact, across which the two generalized Riemann invariants,
- i.e.
- 
-\begin_inset Formula $u$
-\end_inset
-
- and 
-\begin_inset Formula $p$
-\end_inset
-
-, are constant, which we shall denote as 
-\begin_inset Formula $u_{2}$
-\end_inset
-
- and 
+ 式）可知：（第一、三基本波之间的）中心区域的压力 
 \begin_inset Formula $p_{2}$
 \end_inset
 
-.
- Such constancy holds in 
-\begin_inset Formula $C_{2}$
-\end_inset
-
- and 
-\begin_inset Formula $C_{3}$
-\end_inset
-
-, so 
+ 及速度 
 \begin_inset Formula $u_{2}$
 \end_inset
 
- and 
-\begin_inset Formula $p_{2}$
+ 为常值；而密度 
+\begin_inset Formula $\rho_{2\pm}$
 \end_inset
 
- are constant across 
-\begin_inset Formula $C_{2}\cup E_{2}\cup C_{3}$
+ 为分段常值。由定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:euler_1d_mach_relation"
+
 \end_inset
 
-, which are the right values of 
-\begin_inset Formula $u$
+ 可知：激波的波后压力总是大于波前压力，即 
+\begin_inset Formula $p_{B}<p_{A}$
 \end_inset
 
- and 
-\begin_inset Formula $p$
-\end_inset
-
- for 
-\begin_inset Formula $E_{1}$
-\end_inset
-
- and the left values for 
-\begin_inset Formula $E_{3}$
-\end_inset
-
-.
+。
 \end_layout
 
 \begin_layout Lemma
-\begin_inset Formula $E_{1}$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[第一基本波]
+\end_layout
+
 \end_inset
 
- is a left running shock if 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:第一基本波"
+
+\end_inset
+
+若 
 \begin_inset Formula $p_{2}>p_{-}$
 \end_inset
 
-, or a rarefaction if 
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 是左行激波；若 
 \begin_inset Formula $p_{2}<p_{-}$
 \end_inset
 
-.
- In either case, there is
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 是左行膨胀波。无论是何种情况，都有
 \begin_inset Formula 
 \[
 u_{2}-u_{-}=-f(p_{2};p_{-},\rho_{-})
@@ -4374,18 +4343,7 @@ u_{2}-u_{-}=-f(p_{2};p_{-},\rho_{-})
 
 \end_inset
 
-where 
-\begin_inset Formula $f$
-\end_inset
 
- is defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:PressureFunctionForSingleWave"
-
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -4396,19 +4354,40 @@ reference "eq:PressureFunctionForSingleWave"
 \end_layout
 
 \begin_layout Lemma
-\begin_inset Formula $E_{3}$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[第三基本波]
+\end_layout
+
 \end_inset
 
- is a right running shock if 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:第三基本波"
+
+\end_inset
+
+若 
 \begin_inset Formula $p_{2}>p_{+}$
 \end_inset
 
-, or a rarefaction if 
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 是右行激波；若 
 \begin_inset Formula $p_{2}<p_{+}$
 \end_inset
 
-.
- In either case, there is
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 是右行膨胀波。无论是何种情况，都有
 \begin_inset Formula 
 \[
 u_{2}-u_{+}=+f(p_{2};p_{+},\rho_{+})
@@ -4416,18 +4395,34 @@ u_{2}-u_{+}=+f(p_{2};p_{+},\rho_{+})
 
 \end_inset
 
-where 
-\begin_inset Formula $f$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- is defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:PressureFunctionForSingleWave"
 
+\end_layout
+
+\begin_layout Remark*
+若 
+\begin_inset Formula $p_{2}=p_{-}$
 \end_inset
 
-.
+ 或 
+\begin_inset Formula $p_{2}=p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 退化为光滑区域，既可以视作厚度为零的膨胀波，又可以视作强度为零的激波。
 \end_layout
 
 \begin_layout Standard
@@ -4438,39 +4433,88 @@ reference "eq:PressureFunctionForSingleWave"
 \end_layout
 
 \begin_layout Theorem
-For any fixed positive values of 
-\begin_inset Formula $p_{\pm},\rho_{\pm}$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[中心压力]
+\end_layout
+
 \end_inset
 
-, if 
-\begin_inset Formula $u_{-}-u_{+}>F(0;p_{\pm},\rho_{\pm})$
+如果给定的初始条件 
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
 \end_inset
 
- or equivalently
+ 满足
 \begin_inset Formula 
 \[
-u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
+u_{-}-u_{+}>F(0;p_{\pm},\rho_{\pm})\iff u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
 \]
 
 \end_inset
 
-then the following equation for 
+则关于 
 \begin_inset Formula $p_{2}>0$
 \end_inset
 
-
+ 的方程
 \begin_inset Formula 
 \begin{equation}
-u_{-}-u_{+}=F(p_{2};p_{\pm},\rho_{\pm})\label{eq:EquationForP2}
+u_{-}-u_{+}=F(p_{2};p_{\pm},\rho_{\pm})\label{eq:压力函数_确定中心压力}
 \end{equation}
 
 \end_inset
 
-will have a unique solution, in which case 
+有唯一解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+这是一个隐式非线性代数方程，只能迭代求解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[中心速度]
+\end_layout
+
+\end_inset
+
+如果中心压力 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ 可以由方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_确定中心压力"
+
+\end_inset
+
+ 唯一地确定，则中心速度 
 \begin_inset Formula $u_{2}$
 \end_inset
 
- is
+ 也可以被唯一地确定：
 \begin_inset Formula 
 \[
 u_{2}=\frac{u_{-}+u_{+}+f(p_{2};p_{+},\rho_{+})-f(p_{2};p_{-},\rho_{-})}{2}
@@ -4488,60 +4532,55 @@ u_{2}=\frac{u_{-}+u_{+}+f(p_{2};p_{+},\rho_{+})-f(p_{2};p_{-},\rho_{-})}{2}
 
 \end_layout
 
-\begin_layout Standard
-If 
-\begin_inset Formula $u_{-}-u_{+}\le F(0;p_{\pm},\rho_{\pm})$
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[真空条件]
+\end_layout
+
 \end_inset
 
- or equivalently
+如果给定的初始条件 
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
+\end_inset
+
+ 满足
 \begin_inset Formula 
 \begin{equation}
-u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:VacuumCondition}
+u_{-}-u_{+}\le F(0;p_{\pm},\rho_{\pm})\iff u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:真空条件}
 \end{equation}
 
 \end_inset
 
-then Equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EquationForP2"
-
-\end_inset
-
- for 
+则关于 
 \begin_inset Formula $p_{2}>0$
 \end_inset
 
- will have no solution, which indicates something is wrong in the derivation
- of Equation 
+ 的方程 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:EquationForP2"
+LatexCommand ref
+reference "eq:压力函数_确定中心压力"
 
 \end_inset
 
-.
- Physically, pressure is a measure of the intensity of gas molecules' thermal
- motion, so 
-\begin_inset Formula $p=0$
-\end_inset
-
- can only appears in a region of vacuum.
- Equation 
+ 无解。这意味着两端的速度相差过大，以至于中心区域被「撕裂」开，因此 
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:VacuumCondition"
+LatexCommand ref
+reference "eq:真空条件"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- is then called the 
+ 式被称为
 \noun on
-vacuum condition
+「真空条件
 \noun default
-
+ (vacuum condition)
 \begin_inset Index idx
 status collapsed
 
@@ -4551,280 +4590,154 @@ condition!vacuum ~
 
 \end_inset
 
-, which means if the initial velocity gap 
-\begin_inset Formula $(u_{-}-u_{+})$
-\end_inset
-
- is sufficiently large, the flow field will be torn into two independent
- regions, i.e.
- 
-\begin_inset Formula $C_{1}\cup E_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $E_{3}\cup C_{4}$
-\end_inset
-
-, being connected by a vacuumed region, i.e.
- 
+」。在此情形下，
 \begin_inset Formula $C_{2}\cup E_{2}\cup C_{3}$
 \end_inset
 
-.
- It is reasonable to set 
-\begin_inset Formula $\rho_{2}=0$
+ 为真空区域，因此 
+\begin_inset Formula $p_{2}=0,\rho_{2}=0$
 \end_inset
 
- and 
-\begin_inset Formula $T_{2}=0$
+；而 
+\begin_inset Formula $E_{1},E_{3}$
 \end_inset
 
- (
-\begin_inset Formula $a_{2}=0$
-\end_inset
-
-) inside the vacuumed region.
- However, 
-\begin_inset Formula $u_{2}$
-\end_inset
-
- does not have to be 
-\begin_inset Formula $0$
-\end_inset
-
-.
+ 一定是膨胀波，其内部的状态可以由广义 Riemann 不变量获得。
 \end_layout
 
 \begin_layout Standard
-Since 
-\begin_inset Formula $p_{\pm}>p_{2}=0$
-\end_inset
-
-, 
-\begin_inset Formula $E_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $E_{3}$
-\end_inset
-
- will both be rarefactions, inside which, states can be determined from
- the two Riemann invariants.
- For 
-\begin_inset Formula $E_{1}$
-\end_inset
-
-, they are
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{-}}{\rho_{-}^{\gamma}}\qquad\phi_{2}=u+\frac{2a}{\gamma-1}=u_{-}+\frac{2a_{-}}{\gamma-1}
-\]
-
-\end_inset
-
-The speed of 
-\begin_inset Formula $E_{1}$
-\end_inset
-
-'s head is simply
-\begin_inset Formula 
-\[
-v_{1-}=u_{-}-a_{-}
-\]
-
-\end_inset
-
-To find the speed of its tail, we shall use 
-\begin_inset Formula $\phi_{2}$
-\end_inset
-
-, which leads to
-\begin_inset Formula 
-\[
-v_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
-v_{1+}=u_{1+}-a_{1+}\\
-u_{-}+\frac{2a_{-}}{\gamma-1}=u_{1+}+\frac{2a_{1+}}{\gamma-1}\\
-a_{1+}=a_{2}=0
-\end{cases}
-\]
-
-\end_inset
-
-Similarly, the speed of 
-\begin_inset Formula $E_{3}$
-\end_inset
-
-'s head and tail are
-\begin_inset Formula 
-\[
-v_{3+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}
-\]
-
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-Recall the vacuum condition 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:VacuumCondition"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset Formula $\gamma>1$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-v_{1-}<v_{1+}<v_{3-}<v_{3+}
-\]
-
-\end_inset
-
-which justify the choice of subscripts.
+\begin_layout Subsection
+第一基本波（激波或膨胀波）
 \end_layout
 
 \begin_layout Standard
-The corresponding constant solutions in central regions for problems listed
- in Table 
+根据引理 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:euler_1d_riemann_problems"
+reference "lem:第一基本波"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- are given in Table 
+ 及真空条件 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "tab:euler_1d_riemann_problems"
-plural "false"
-caps "false"
-noprefix "false"
+reference "eq:真空条件"
 
 \end_inset
 
-.
+，可以定出第一基本波的类型，并求出剩余未知量：
 \end_layout
 
-\begin_layout Subsubsection
-其他状态量
-\end_layout
-
-\begin_layout Standard
-If 
+\begin_layout Itemize
+若 
 \begin_inset Formula $p_{2}>p_{-}$
 \end_inset
 
- then 
+，则 
 \begin_inset Formula $E_{1}$
 \end_inset
 
- is a shock.
- Its head and tail, which coincide with each other, can be determined from
- the jump relation 
+ 为激波。它的波头、波尾重叠，速度由跳跃关系 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:euler_1d_jump"
 
 \end_inset
 
- as
+ 第二行解出：
 \begin_inset Formula 
 \[
-v_{1}\pm=v=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
+v_{1\pm}=u_{\Gamma}=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
 \]
 
 \end_inset
 
-The density on the other side of the shock is then
+将其代入跳跃关系 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 第一行则得到
 \begin_inset Formula 
 \[
-\rho_{2-}=\frac{u_{-}-v}{u_{2}-v}\rho_{-}
+\rho_{2-}=\frac{u_{-}-u_{\Gamma}}{u_{2}-u_{\Gamma}}\rho_{-}
 \]
 
 \end_inset
 
-If 
-\begin_inset Formula $p_{2}>p_{+}$
-\end_inset
 
- then 
-\begin_inset Formula $E_{3}$
-\end_inset
-
- is a shock.
- The analysis is almost the same, except for the subscripts where 
-\begin_inset Formula $_{-}$
-\end_inset
-
- should be replaced with 
-\begin_inset Formula $_{+}$
-\end_inset
-
-.
 \end_layout
 
-\begin_layout Standard
-If 
+\begin_layout Itemize
+若 
 \begin_inset Formula $p_{2}=p_{-}$
 \end_inset
 
- or 
-\begin_inset Formula $p_{2}=p_{+}$
-\end_inset
-
-, the corresponding wave will be a infinitesimal weak shock, across which
- 
-\begin_inset Formula $p,u,\rho$
-\end_inset
-
- do not change.
-\end_layout
-
-\begin_layout Standard
-If 
-\begin_inset Formula $p_{2}<p_{-}$
-\end_inset
-
- then 
+，则 
 \begin_inset Formula $E_{1}$
 \end_inset
 
- is a rarefaction.
- There are two generalized Riemann invariants
+ 为退化的激波：
 \begin_inset Formula 
 \[
-\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{-}}{\rho_{-}^{\gamma}}\qquad\phi_{2}=u+\frac{2a}{\gamma-1}=u_{-}+\frac{2a_{-}}{\gamma-1}
+v_{1\pm}=u_{\Gamma}=u_{-}\qquad\rho_{2-}=\rho_{-}
 \]
 
 \end_inset
 
-from which, we have
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{2}<p_{-}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 为膨胀波。它有两个广义 Riemann 不变量：
 \begin_inset Formula 
 \[
-a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{\left(a_{2-}\right)^{2}}
+\phi_{2}=\frac{p_{-}}{\rho_{-}^{\gamma}}=\frac{p(x,t)}{\rho^{\gamma}(x,t)}\qquad\phi_{2}=u_{-}+\frac{2a_{-}}{\gamma-1}=u(x,t)+\frac{2a(x,t)}{\gamma-1}
 \]
 
 \end_inset
 
-The head and tail of the wave can be determined from the eigenvalue 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若中心区域非真空（即 
+\begin_inset Formula $p_{2}\ne0$
+\end_inset
+
+），则
+\begin_inset Formula 
+\[
+a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{(a_{2-})^{2}}
+\]
+
+\end_inset
+
+代入 
 \begin_inset Formula $\lambda_{1}=u-a$
 \end_inset
 
- as
+ 即得波头、波尾速度：
 \begin_inset Formula 
 \[
 v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_{2-}
@@ -4832,28 +4745,21 @@ v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_
 
 \end_inset
 
-For a point inside it, i.e.
- 
-\begin_inset Formula $x/t\in[v_{1-},v_{1+}]$
+
+\end_layout
+
+\begin_layout Itemize
+若中心区域真空（即 
+\begin_inset Formula $p_{2}=0$
 \end_inset
 
-, there are
+），则波头、波尾速度分别为
 \begin_inset Formula 
 \[
-a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad u=\frac{x}{t}+a\impliedby\begin{cases}
-u-a=x/t\\
-u+\frac{2a}{\gamma-1}=\phi_{2}
-\end{cases}
-\]
-
-\end_inset
-
-and
-\begin_inset Formula 
-\[
-\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
-\gamma p/\rho=a^{2}\\
-p/\rho^{\gamma}=\phi_{1}
+v_{1-}=u_{-}-a_{-}\qquad v_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
+v_{1+}=u_{1+}-a_{1+}\\
+u_{-}+2a_{-}/(\gamma-1)=u_{1+}+2a_{1+}/(\gamma-1)\\
+a_{1+}=a_{2}=0
 \end{cases}
 \]
 
@@ -4862,37 +4768,136 @@ p/\rho^{\gamma}=\phi_{1}
 
 \end_layout
 
-\begin_layout Standard
-If 
-\begin_inset Formula $p_{2}<p_{+}$
+\begin_layout Itemize
+如果还需膨胀波内部（即斜率为 
+\begin_inset Formula $x/t\in[v_{1-},v_{1+}]$
 \end_inset
 
- then 
+ 的特征线上）的状态，则再次利用 Riemann 不变量：
+\begin_inset Formula 
+\[
+a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad u=\frac{x}{t}+a\qquad p=\frac{a^{2}\rho}{\gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+至此，接触间断左侧的状态已完全确定。
+\end_layout
+
+\begin_layout Subsection
+第三基本波（激波或膨胀波）
+\end_layout
+
+\begin_layout Standard
+第三基本波的求解过程与第一基本波几乎完全相同，但要注意个别表达式的正负号：
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{2}>p_{+}$
+\end_inset
+
+，则 
 \begin_inset Formula $E_{3}$
 \end_inset
 
- is a rarefaction.
- There are two generalized Riemann invariants
+ 为激波。它的波头、波尾重叠，速度由跳跃关系 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 第二行解出：
 \begin_inset Formula 
 \[
-\phi_{1}=\frac{p}{\rho^{\gamma}}=\frac{p_{+}}{\rho_{+}^{\gamma}}\qquad\phi_{2}=u-\frac{2a}{\gamma-1}=u_{+}-\frac{2a_{+}}{\gamma-1}
+v_{3\pm}=u_{\Gamma}=u_{+}+\frac{p_{2}-p_{+}}{u_{2}-u_{+}}\frac{1}{\rho_{+}}
 \]
 
 \end_inset
 
-from which, we have
+将其代入跳跃关系 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 第一行则得到
 \begin_inset Formula 
 \[
-a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{\left(a_{2+}\right)^{2}}
+\rho_{2+}=\frac{u_{+}-u_{\Gamma}}{u_{2}-u_{\Gamma}}\rho_{+}
 \]
 
 \end_inset
 
-The head and tail of the wave can be determined from the eigenvalue 
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{2}=p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 为退化的激波：
+\begin_inset Formula 
+\[
+v_{3\pm}=u_{\Gamma}=u_{+}\qquad\rho_{2+}=\rho_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{2}<p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 为膨胀波。它有两个广义 Riemann 不变量：
+\begin_inset Formula 
+\[
+\phi_{2}=\frac{p_{+}}{\rho_{+}^{\gamma}}=\frac{p(x,t)}{\rho^{\gamma}(x,t)}\qquad\phi_{2}=u_{+}-\frac{2a_{+}}{\gamma-1}=u(x,t)-\frac{2a(x,t)}{\gamma-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若中心区域非真空（即 
+\begin_inset Formula $p_{2}\ne0$
+\end_inset
+
+），则
+\begin_inset Formula 
+\[
+a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{(a_{2+})^{2}}
+\]
+
+\end_inset
+
+代入 
 \begin_inset Formula $\lambda_{3}=u+a$
 \end_inset
 
- as
+ 即得波头、波尾速度：
 \begin_inset Formula 
 \[
 v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a_{+}
@@ -4900,34 +4905,48 @@ v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a
 
 \end_inset
 
-For a point inside it, i.e.
- 
+
+\end_layout
+
+\begin_layout Itemize
+若中心区域真空（即 
+\begin_inset Formula $p_{2}=0$
+\end_inset
+
+），则波头、波尾速度分别为
+\begin_inset Formula 
+\[
+v_{3+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}\impliedby\begin{cases}
+v_{3-}=u_{3-}+a_{3-}\\
+u_{+}-2a_{+}/(\gamma-1)=u_{3-}-2a_{3-}/(\gamma-1)\\
+a_{3-}=a_{2}=0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+如果还需膨胀波内部（即斜率为 
 \begin_inset Formula $x/t\in[v_{3-},v_{3+}]$
 \end_inset
 
-, there are
+ 的特征线上）的状态，则再次利用广义 Riemann 不变量：
 \begin_inset Formula 
 \[
-a=\frac{\gamma-1}{\gamma+1}\left(\frac{x}{t}-\phi_{2}\right)\qquad u=\frac{x}{t}-a\impliedby\begin{cases}
-u+a=x/t\\
-u-\frac{2a}{\gamma-1}=\phi_{2}
-\end{cases}
-\]
-
-\end_inset
-
-and
-\begin_inset Formula 
-\[
-\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad p=\frac{a^{2}\rho}{\gamma}\impliedby\begin{cases}
-\gamma p/\rho=a^{2}\\
-p/\rho^{\gamma}=\phi_{1}
-\end{cases}
+a=\frac{\gamma-1}{\gamma+1}\left(\frac{x}{t}-\phi_{2}\right)\qquad\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad u=\frac{x}{t}-a\qquad p=\frac{a^{2}\rho}{\gamma}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+至此，接触间断右侧的状态已完全确定。
 \end_layout
 
 \begin_layout Subsection
@@ -5384,7 +5403,7 @@ No.
 
 \begin_layout Plain Layout
 特征向量 
-\begin_inset Formula $\ket{R_{i}}$
+\begin_inset Formula $\ket{R'_{i}}$
 \end_inset
 
 
@@ -5464,7 +5483,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ip{\grad\lambda_{i}}{R_{i}}$
+\begin_inset Formula $\ip{\grad\lambda_{i}}{R'_{i}}$
 \end_inset
 
 
@@ -5485,7 +5504,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{-a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -5518,7 +5537,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{+a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -5550,7 +5569,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u+\frac{2a}{\gamma-1},v$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v\right\} $
 \end_inset
 
 
@@ -5562,7 +5581,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $u,p$
+\begin_inset Formula $\left\{ u,p\right\} $
 \end_inset
 
 
@@ -5583,7 +5602,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u-\frac{2a}{\gamma-1},v$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v\right\} $
 \end_inset
 
 
@@ -5800,7 +5819,7 @@ No.
 
 \begin_layout Plain Layout
 特征向量 
-\begin_inset Formula $\ket{R_{i}}$
+\begin_inset Formula $\ket{R'_{i}}$
 \end_inset
 
 
@@ -5892,7 +5911,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ip{\grad\lambda_{i}}{R_{i}}$
+\begin_inset Formula $\ip{\grad\lambda_{i}}{R'_{i}}$
 \end_inset
 
 
@@ -5913,7 +5932,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{-a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -5955,7 +5974,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{+a}{2\rho}(\gamma+1)$
+\begin_inset Formula $\ne0$
 \end_inset
 
 
@@ -5987,7 +6006,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u+\frac{2a}{\gamma-1},v,w$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v,w\right\} $
 \end_inset
 
 
@@ -5999,7 +6018,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $u,p$
+\begin_inset Formula $\left\{ u,p\right\} $
 \end_inset
 
 
@@ -6029,7 +6048,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{p}{\rho^{\gamma}},u-\frac{2a}{\gamma-1},v,w$
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v,w\right\} $
 \end_inset
 
 
@@ -6083,7 +6102,106 @@ reference "tab:euler_char_field_3d_x_split"
 
 \end_inset
 
- 可知：切向速度是法向膨胀波所属特征场的广义 Riemann 不变量。因此，命题归结为：切向速度穿过法向激波保持不变。
+ 可知：切向速度是法向膨胀波所属特征场的广义 Riemann 不变量。因此，命题归结为：切向速度穿过法向激波保持不变。以二维 Euler 方程的
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂形式为例，其跳跃关系为：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}_{A}-u_{\Gamma}\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}_{A}=\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}_{B}-u_{\Gamma}\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}_{B}
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}(u_{A}-u_{\Gamma})\rho_{A} & =(u_{B}-u_{\Gamma})\rho_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}u_{A}+p_{A} & =(u_{B}-u_{\Gamma})\rho_{B}u_{B}+p_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}v_{A} & =(u_{B}-u_{\Gamma})\rho_{B}v_{B}\\
+(u_{A}-u_{\Gamma})\underbrace{\left(\frac{p_{A}}{\gamma-1}+\rho_{A}\frac{u_{A}^{2}+v_{A}^{2}}{2}\right)}_{\rho_{A}E_{A}}+p_{A}u_{A} & =(u_{B}-u_{\Gamma})\underbrace{\left(\frac{p_{B}}{\gamma-1}+\rho_{B}\frac{u_{B}^{2}+v_{B}^{2}}{2}\right)}_{\rho_{B}E_{B}}+p_{B}u_{B}
+\end{aligned}
+\label{eq:euler_2d_x_split_jump}
+\end{equation}
+
+\end_inset
+
+用第一行除第三行即得 
+\begin_inset Formula $v_{A}=v_{B}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+将 
+\begin_inset Formula $v_{A}=v_{B}$
+\end_inset
+
+ 及 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_2d_x_split_jump"
+
+\end_inset
+
+ 式的第一行代入第四行，可以消去含 
+\begin_inset Formula $v_{A},v_{B}$
+\end_inset
+
+ 的项，所得结果与一维 Euler 方程跳跃关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）的第三行完全相同；而 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_2d_x_split_jump"
+
+\end_inset
+
+ 式的前两行也与 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的前两行完全相同，因此可以直接调用一维 Euler 方程的 Riemann 求解器。
 \end_layout
 
 \begin_layout Standard
