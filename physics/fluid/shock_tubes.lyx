@@ -3254,6 +3254,266 @@ u^{2}/2
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+Euler 方程 Riemann 问题自相似解的结构
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5,0)node[below]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5)node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% 1-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (132:5)node[left ]{$
+\backslash
+alpha_{1-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (128:5)node[above]{$
+\backslash
+alpha_{1+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% 2-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (80:4.5)node[above]{$
+\backslash
+alpha_{2
+\backslash
+pm}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% 3-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (48:5)node[right]{$
+\backslash
+alpha_{3+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (52:5)node[above]{$
+\backslash
+alpha_{3-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% undisturbed region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (0:3.5) arc [start angle=0, end angle=48, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+mqty{
+\backslash
+rho_{+}&u_{+}&p_{+}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (132:3.5) arc [start angle=132, end angle=180, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+mqty{
+\backslash
+rho_{-}&u_{-}&p_{-}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% star region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (52:3.5) arc [start angle=52, end angle=128, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near end, above, sloped]{$
+\backslash
+mqty{u_{2}&p_{2}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (52:2.5) arc [start angle=52, end angle=80, radius=2.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+rho_{2+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (80:2.5) arc [start angle=80, end angle=128, radius=2.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+rho_{2-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% tangential components
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (0:1.5) arc [start angle=0, end angle=80, radius=1.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near start, above, sloped]{$
+\backslash
+mqty{v_{+}&w_{+}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dashed] (80:1.5) arc [start angle=80, end angle=180, radius=1.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near end, above, sloped]{$
+\backslash
+mqty{v_{-}&w_{-}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Riemann 问题 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3299,13 +3559,13 @@ lementary)：
 \begin_inset Formula 
 \begin{equation}
 \ket{U(x,t)}=\begin{cases}
-\ket{U_{-}} & x/t\in C_{1}=(-\infty,v_{1-})\\
-\ket{U_{1*}(x/t)} & x/t\in E_{1}=[v_{1-},v_{1+}]\\
-\ket{U_{2-}} & x/t\in C_{2}=(v_{1+},v_{2-})\\
-\ket{U_{2*}(x/t)} & x/t\in E_{2}=[v_{2-},v_{2+}]\\
-\ket{U_{2+}} & x/t\in C_{3}=(v_{2+},v_{3-})\\
-\ket{U_{3*}(x/t)} & x/t\in E_{3}=[v_{3-},v_{3+}]\\
-\ket{U_{+}} & x/t\in C_{4}=(v_{3+},\infty)
+\ket{U_{-}} & x/t\in C_{1}=(-\infty,\alpha_{1-})\\
+\ket{U_{1*}(x/t)} & x/t\in E_{1}=[\alpha_{1-},\alpha_{1+}]\\
+\ket{U_{2-}} & x/t\in C_{2}=(\alpha_{1+},\alpha_{2-})\\
+\ket{U_{2*}(x/t)} & x/t\in E_{2}=[\alpha_{2-},\alpha_{2+}]\\
+\ket{U_{2+}} & x/t\in C_{3}=(\alpha_{2+},\alpha_{3-})\\
+\ket{U_{3*}(x/t)} & x/t\in E_{3}=[\alpha_{3-},\alpha_{3+}]\\
+\ket{U_{+}} & x/t\in C_{4}=(\alpha_{3+},\infty)
 \end{cases}\label{eq:riemann_euler_1d_solution_structure}
 \end{equation}
 
@@ -3363,7 +3623,7 @@ discontinuity!contact ~
 \end_inset
 
  是厚度为无穷小的薄层（即 
-\begin_inset Formula $v_{k-}=v_{k+}$
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
 \end_inset
 
 ），因此 
@@ -3371,7 +3631,7 @@ discontinuity!contact ~
 \end_inset
 
  在其「内部」的值是无法定义的。在画图时，可以取作两侧的平均值：
-\begin_inset Formula $\ket{U_{k*}}=\nicefrac{1}{2}\ket{U(v_{k-})}+\nicefrac{1}{2}\ket{U(v_{k+})}$
+\begin_inset Formula $\ket{U_{k*}}=\nicefrac{1}{2}\ket{U(\alpha_{k-})}+\nicefrac{1}{2}\ket{U(\alpha_{k+})}$
 \end_inset
 
 。
@@ -3383,7 +3643,7 @@ discontinuity!contact ~
 \end_inset
 
  是扇形区域（即 
-\begin_inset Formula $v_{k-}<v_{k+}$
+\begin_inset Formula $\alpha_{k-}<\alpha_{k+}$
 \end_inset
 
 ），
@@ -3439,6 +3699,21 @@ discontinuity!contact ~
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+ 画出了这种自相似结构（暂时忽略其中的 
+\begin_inset Formula $v_{\pm},w_{\pm}$
+\end_inset
+
+）。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -4656,7 +4931,7 @@ reference "eq:euler_1d_jump"
  第二行解出：
 \begin_inset Formula 
 \[
-v_{1\pm}=u_{\Gamma}=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
+\alpha_{1\pm}=u_{\Gamma}=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
 \]
 
 \end_inset
@@ -4691,7 +4966,7 @@ reference "eq:euler_1d_jump"
  为退化的激波：
 \begin_inset Formula 
 \[
-v_{1\pm}=u_{\Gamma}=u_{-}\qquad\rho_{2-}=\rho_{-}
+\alpha_{1\pm}=u_{\Gamma}=u_{-}\qquad\rho_{2-}=\rho_{-}
 \]
 
 \end_inset
@@ -4740,7 +5015,7 @@ a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{
  即得波头、波尾速度：
 \begin_inset Formula 
 \[
-v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_{2-}
+\alpha_{1-}=\lambda_{1}(\alpha_{1-})=u_{-}-a_{-}\qquad\alpha_{1+}=\lambda_{1}(\alpha_{1+})=u_{2}-a_{2-}
 \]
 
 \end_inset
@@ -4756,8 +5031,8 @@ v_{1-}=\lambda_{1}(v_{1-})=u_{-}-a_{-}\qquad v_{1+}=\lambda_{1}(v_{1+})=u_{2}-a_
 ），则波头、波尾速度分别为
 \begin_inset Formula 
 \[
-v_{1-}=u_{-}-a_{-}\qquad v_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
-v_{1+}=u_{1+}-a_{1+}\\
+\alpha_{1-}=u_{-}-a_{-}\qquad\alpha_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
+\alpha_{1+}=u_{1+}-a_{1+}\\
 u_{-}+2a_{-}/(\gamma-1)=u_{1+}+2a_{1+}/(\gamma-1)\\
 a_{1+}=a_{2}=0
 \end{cases}
@@ -4770,7 +5045,7 @@ a_{1+}=a_{2}=0
 
 \begin_layout Itemize
 如果还需膨胀波内部（即斜率为 
-\begin_inset Formula $x/t\in[v_{1-},v_{1+}]$
+\begin_inset Formula $x/t\in[\alpha_{1-},\alpha_{1+}]$
 \end_inset
 
  的特征线上）的状态，则再次利用 Riemann 不变量：
@@ -4816,7 +5091,7 @@ reference "eq:euler_1d_jump"
  第二行解出：
 \begin_inset Formula 
 \[
-v_{3\pm}=u_{\Gamma}=u_{+}+\frac{p_{2}-p_{+}}{u_{2}-u_{+}}\frac{1}{\rho_{+}}
+\alpha_{3\pm}=u_{\Gamma}=u_{+}+\frac{p_{2}-p_{+}}{u_{2}-u_{+}}\frac{1}{\rho_{+}}
 \]
 
 \end_inset
@@ -4851,7 +5126,7 @@ reference "eq:euler_1d_jump"
  为退化的激波：
 \begin_inset Formula 
 \[
-v_{3\pm}=u_{\Gamma}=u_{+}\qquad\rho_{2+}=\rho_{+}
+\alpha_{3\pm}=u_{\Gamma}=u_{+}\qquad\rho_{2+}=\rho_{+}
 \]
 
 \end_inset
@@ -4900,7 +5175,7 @@ a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{
  即得波头、波尾速度：
 \begin_inset Formula 
 \[
-v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a_{+}
+\alpha_{3-}=\lambda_{3}(\alpha_{3-})=u_{2}+a_{2+}\qquad\alpha_{3+}=\lambda_{3}(\alpha_{3+})=u_{+}+a_{+}
 \]
 
 \end_inset
@@ -4916,8 +5191,8 @@ v_{3-}=\lambda_{3}(v_{3-})=u_{2}+a_{2+}\qquad v_{3+}=\lambda_{3}(v_{3+})=u_{+}+a
 ），则波头、波尾速度分别为
 \begin_inset Formula 
 \[
-v_{3+}=u_{+}+a_{+}\qquad v_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}\impliedby\begin{cases}
-v_{3-}=u_{3-}+a_{3-}\\
+\alpha_{3+}=u_{+}+a_{+}\qquad\alpha_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}\impliedby\begin{cases}
+\alpha_{3-}=u_{3-}+a_{3-}\\
 u_{+}-2a_{+}/(\gamma-1)=u_{3-}-2a_{3-}/(\gamma-1)\\
 a_{3-}=a_{2}=0
 \end{cases}
@@ -4930,7 +5205,7 @@ a_{3-}=a_{2}=0
 
 \begin_layout Itemize
 如果还需膨胀波内部（即斜率为 
-\begin_inset Formula $x/t\in[v_{3-},v_{3+}]$
+\begin_inset Formula $x/t\in[\alpha_{3-},\alpha_{3+}]$
 \end_inset
 
  的特征线上）的状态，则再次利用广义 Riemann 不变量：
@@ -6201,7 +6476,14 @@ noprefix "false"
 
 \end_inset
 
- 式的前两行完全相同，因此可以直接调用一维 Euler 方程的 Riemann 求解器。
+ 式的前两行完全相同，因此可以直接调用一维 Euler 方程的 Riemann 求解器。图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+ 画出了这种自相似结构。
 \end_layout
 
 \begin_layout Standard
