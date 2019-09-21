@@ -3565,7 +3565,7 @@ lementary)：
 \ket{U_{2*}(x/t)} & x/t\in E_{2}=[\alpha_{2-},\alpha_{2+}]\\
 \ket{U_{2+}} & x/t\in C_{3}=(\alpha_{2+},\alpha_{3-})\\
 \ket{U_{3*}(x/t)} & x/t\in E_{3}=[\alpha_{3-},\alpha_{3+}]\\
-\ket{U_{+}} & x/t\in C_{4}=(\alpha_{3+},\infty)
+\ket{U_{+}} & x/t\in C_{4}=(\alpha_{3+},+\infty)
 \end{cases}\label{eq:riemann_euler_1d_solution_structure}
 \end{equation}
 
@@ -3698,6 +3698,14 @@ discontinuity!contact ~
 。
 \end_layout
 
+\begin_layout Itemize
+第二基本波两侧的区域又被称为「星号区域 (the star region)」，其中的基本变量记作 
+\begin_inset Formula $\rho_{*\pm},u_{*},p_{*}$
+\end_inset
+
+。
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 图 
@@ -3749,7 +3757,7 @@ reference "eq:JumpConditions"
 \end_inset
 
  只用来区分激波的两侧，但没有指定 
-\begin_inset Formula $-$
+\begin_inset Formula $+$
 \end_inset
 
  为波前（扰动未达区域）或波后（扰动已过区域）。在本节中，明确区分波前与波后对问题 
@@ -4433,10 +4441,10 @@ reference "eq:压力函数_单波"
 \begin_inset Formula 
 \[
 \begin{aligned}\dv{f_{1}}{p_{A}} & =\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\dv{P^{-1/2}}{p_{A}}=\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\left(\frac{P^{-3/2}}{-2}\right)\dv{P}{p_{A}}\\
- & =\frac{1}{\sqrt{\rho_{B}P}}\left(1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}\right)\\
-\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}\\
-\dv{f_{2}}{p_{A}} & =\frac{2a_{B}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{B}}=\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}\left(\frac{p_{A}}{p_{B}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
-\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}
+ & =\frac{1}{\sqrt{\rho_{B}P}}\left(1+\frac{\gamma+1}{4}\frac{p_{B}-p_{A}}{P}\right)\\
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}=\frac{1}{\rho_{B}a_{B}}\\
+\dv{f_{2}}{p_{A}} & =\frac{2a_{B}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{B}}=\frac{1}{\rho_{B}a_{B}}\left(\frac{p_{A}}{p_{B}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
+\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}=\frac{1}{\rho_{B}a_{B}}
 \end{aligned}
 \]
 
@@ -4466,7 +4474,7 @@ f'(p_{A}=p_{B})=\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon)=\lim_{\epsilon\to0
 \[
 f'(p_{A})=\begin{cases}
 f_{1}'(p_{A}) & p_{A}>p_{B}\\
-1/\sqrt{\rho_{B}\gamma p_{B}} & p_{A}=p_{B}\\
+1/(\rho_{B}a_{B}) & p_{A}=p_{B}\\
 f_{2}'(p_{A}) & p_{A}<p_{B}
 \end{cases}
 \]
@@ -4476,7 +4484,10 @@ f_{2}'(p_{A}) & p_{A}<p_{B}
 第二、三行的非负性是显然的；第一行的非负性也容易验证：
 \begin_inset Formula 
 \[
-p_{A}>p_{B},\gamma>1\implies1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}=1-\frac{1}{2}\frac{p_{A}-p_{B}}{p_{A}+\frac{\gamma-1}{\gamma+1}p_{B}}>1-\frac{1}{2}>0
+1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}=1-\frac{1}{2}\frac{p_{A}-p_{B}}{p_{A}+\frac{\gamma-1}{\gamma+1}p_{B}}>1-\frac{1}{2}>0\impliedby\begin{cases}
+p_{A}>p_{B}\\
+\gamma>1
+\end{cases}
 \]
 
 \end_inset
@@ -4494,25 +4505,25 @@ p_{A}>p_{B},\gamma>1\implies1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}=1-\frac{1}
 
 \begin_layout Theorem
 关于 
-\begin_inset Formula $p_{2}\ge0$
+\begin_inset Formula $p_{*}\ge0$
 \end_inset
 
  的一元函数
 \begin_inset Formula 
 \begin{equation}
-F(p_{2};p_{\pm},\rho_{\pm})=f(p_{2};p_{-},\rho_{-})+f(p_{2};p_{+},\rho_{+})\label{eq:压力函数_双波}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=f(p_{*};p_{+},\rho_{+})+f(p_{*};p_{-},\rho_{-})+u_{+}-u_{-}\label{eq:压力函数_双波}
 \end{equation}
 
 \end_inset
 
 对于任何给定的 
-\begin_inset Formula $p_{\pm},\rho_{\pm}$
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
 \end_inset
 
  都是连续可微且单调递增的，并且有
 \begin_inset Formula 
 \[
-\lim_{p_{2}\to0^{+}}F(p_{2};p_{\pm},\rho_{\pm})=\frac{-2(a_{-}+a_{+})}{\gamma-1}
+\lim_{p_{*}\to0^{+}}F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=\left(u_{+}-\frac{2a_{+}}{\gamma-1}\right)-\left(u_{-}+\frac{2a_{-}}{\gamma-1}\right)
 \]
 
 \end_inset
@@ -4551,15 +4562,15 @@ reference "eq:riemann_euler_1d_solution_structure"
 \end_inset
 
  式）可知：（第一、三基本波之间的）中心区域的压力 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{*}$
 \end_inset
 
  及速度 
-\begin_inset Formula $u_{2}$
+\begin_inset Formula $u_{*}$
 \end_inset
 
  为常值；而密度 
-\begin_inset Formula $\rho_{2\pm}$
+\begin_inset Formula $\rho_{*\pm}$
 \end_inset
 
  为分段常值。由定理 
@@ -4573,7 +4584,7 @@ reference "thm:euler_1d_mach_relation"
 \begin_inset Formula $p_{B}<p_{A}$
 \end_inset
 
-。
+。显然：星号区域相对于第一、三基本波均为波后（扰动已过区域），而（充分远的）两端为波前（扰动未达区域）。
 \end_layout
 
 \begin_layout Lemma
@@ -4595,7 +4606,7 @@ name "lem:第一基本波"
 \end_inset
 
 若 
-\begin_inset Formula $p_{2}>p_{-}$
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{-}$
 \end_inset
 
 ，则 
@@ -4603,7 +4614,7 @@ name "lem:第一基本波"
 \end_inset
 
  是左行激波；若 
-\begin_inset Formula $p_{2}<p_{-}$
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{-}$
 \end_inset
 
 ，则 
@@ -4613,7 +4624,7 @@ name "lem:第一基本波"
  是左行膨胀波。无论是何种情况，都有
 \begin_inset Formula 
 \[
-u_{2}-u_{-}=-f(p_{2};p_{-},\rho_{-})
+u_{*}-u_{-}=-f(p_{*};p_{-},\rho_{-})
 \]
 
 \end_inset
@@ -4647,7 +4658,7 @@ name "lem:第三基本波"
 \end_inset
 
 若 
-\begin_inset Formula $p_{2}>p_{+}$
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
@@ -4655,7 +4666,7 @@ name "lem:第三基本波"
 \end_inset
 
  是右行激波；若 
-\begin_inset Formula $p_{2}<p_{+}$
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
@@ -4665,7 +4676,7 @@ name "lem:第三基本波"
  是右行膨胀波。无论是何种情况，都有
 \begin_inset Formula 
 \[
-u_{2}-u_{+}=+f(p_{2};p_{+},\rho_{+})
+u_{*}-u_{+}=+f(p_{*};p_{+},\rho_{+})
 \]
 
 \end_inset
@@ -4682,11 +4693,11 @@ u_{2}-u_{+}=+f(p_{2};p_{+},\rho_{+})
 
 \begin_layout Remark*
 若 
-\begin_inset Formula $p_{2}=p_{-}$
+\begin_inset Formula $p_{*}=p_{-}$
 \end_inset
 
  或 
-\begin_inset Formula $p_{2}=p_{+}$
+\begin_inset Formula $p_{*}=p_{+}$
 \end_inset
 
 ，则 
@@ -4725,19 +4736,19 @@ status open
  满足
 \begin_inset Formula 
 \[
-u_{-}-u_{+}>F(0;p_{\pm},\rho_{\pm})\iff u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})<0\iff u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
 \]
 
 \end_inset
 
 则关于 
-\begin_inset Formula $p_{2}>0$
+\begin_inset Formula $p_{*}>0$
 \end_inset
 
  的方程
 \begin_inset Formula 
 \begin{equation}
-u_{-}-u_{+}=F(p_{2};p_{\pm},\rho_{\pm})\label{eq:压力函数_确定中心压力}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=0\label{eq:压力函数_确定中心压力}
 \end{equation}
 
 \end_inset
@@ -4775,7 +4786,7 @@ status open
 \end_inset
 
 如果中心压力 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{*}$
 \end_inset
 
  可以由方程 
@@ -4786,13 +4797,13 @@ reference "eq:压力函数_确定中心压力"
 \end_inset
 
  唯一地确定，则中心速度 
-\begin_inset Formula $u_{2}$
+\begin_inset Formula $u_{*}$
 \end_inset
 
  也可以被唯一地确定：
 \begin_inset Formula 
 \[
-u_{2}=\frac{u_{-}+u_{+}+f(p_{2};p_{+},\rho_{+})-f(p_{2};p_{-},\rho_{-})}{2}
+u_{*}=\frac{u_{-}+u_{+}+f(p_{*};p_{+},\rho_{+})-f(p_{*};p_{-},\rho_{-})}{2}
 \]
 
 \end_inset
@@ -4825,13 +4836,13 @@ status open
  满足
 \begin_inset Formula 
 \begin{equation}
-u_{-}-u_{+}\le F(0;p_{\pm},\rho_{\pm})\iff u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:真空条件}
+F(0;\rho_{\pm},u_{\pm},p_{\pm})\ge0\iff u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:真空条件}
 \end{equation}
 
 \end_inset
 
 则关于 
-\begin_inset Formula $p_{2}>0$
+\begin_inset Formula $p_{*}>0$
 \end_inset
 
  的方程 
@@ -4870,7 +4881,7 @@ condition!vacuum ~
 \end_inset
 
  为真空区域，因此 
-\begin_inset Formula $p_{2}=0,\rho_{2}=0$
+\begin_inset Formula $p_{*}=0,\rho_{*}=0$
 \end_inset
 
 ；而 
@@ -4914,7 +4925,7 @@ reference "eq:真空条件"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $p_{2}>p_{-}$
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
@@ -4931,7 +4942,7 @@ reference "eq:euler_1d_jump"
  第二行解出：
 \begin_inset Formula 
 \[
-\alpha_{1\pm}=u_{\Gamma}=u_{-}+\frac{p_{2}-p_{-}}{u_{2}-u_{-}}\frac{1}{\rho_{-}}
+\alpha_{1\pm}=u_{\Gamma}=u_{B}+\frac{p_{A}-p_{B}}{u_{A}-u_{B}}\frac{1}{\rho_{B}}
 \]
 
 \end_inset
@@ -4946,7 +4957,7 @@ reference "eq:euler_1d_jump"
  第一行则得到
 \begin_inset Formula 
 \[
-\rho_{2-}=\frac{u_{-}-u_{\Gamma}}{u_{2}-u_{\Gamma}}\rho_{-}
+\rho_{*-}\equiv\rho_{A}=\frac{u_{B}-u_{\Gamma}}{u_{A}-u_{\Gamma}}\rho_{B}
 \]
 
 \end_inset
@@ -4956,7 +4967,7 @@ reference "eq:euler_1d_jump"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $p_{2}=p_{-}$
+\begin_inset Formula $p_{*}\equiv p_{A}=p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
@@ -4966,7 +4977,7 @@ reference "eq:euler_1d_jump"
  为退化的激波：
 \begin_inset Formula 
 \[
-\alpha_{1\pm}=u_{\Gamma}=u_{-}\qquad\rho_{2-}=\rho_{-}
+\alpha_{1\pm}=u_{\Gamma}=u_{B}\qquad\rho_{*-}\equiv\rho_{A}=\rho_{B}
 \]
 
 \end_inset
@@ -4976,7 +4987,7 @@ reference "eq:euler_1d_jump"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $p_{2}<p_{-}$
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
@@ -4986,7 +4997,7 @@ reference "eq:euler_1d_jump"
  为膨胀波。它有两个广义 Riemann 不变量：
 \begin_inset Formula 
 \[
-\phi_{2}=\frac{p_{-}}{\rho_{-}^{\gamma}}=\frac{p(x,t)}{\rho^{\gamma}(x,t)}\qquad\phi_{2}=u_{-}+\frac{2a_{-}}{\gamma-1}=u(x,t)+\frac{2a(x,t)}{\gamma-1}
+\phi_{1}=\frac{p_{B}}{\rho_{B}^{\gamma}}\qquad\phi_{2}=u_{B}+\frac{2a_{B}}{\gamma-1}
 \]
 
 \end_inset
@@ -4997,13 +5008,13 @@ reference "eq:euler_1d_jump"
 \begin_deeper
 \begin_layout Itemize
 若中心区域非真空（即 
-\begin_inset Formula $p_{2}\ne0$
+\begin_inset Formula $p_{*}\ne0$
 \end_inset
 
 ），则
 \begin_inset Formula 
 \[
-a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{(a_{2-})^{2}}
+a_{*-}\equiv a_{A}=\frac{\gamma-1}{2}(u_{B}-u_{A})+a_{B}\qquad\rho_{*-}\equiv\rho_{A}=\frac{\gamma p_{A}}{a_{A}^{2}}
 \]
 
 \end_inset
@@ -5015,7 +5026,7 @@ a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{
  即得波头、波尾速度：
 \begin_inset Formula 
 \[
-\alpha_{1-}=\lambda_{1}(\alpha_{1-})=u_{-}-a_{-}\qquad\alpha_{1+}=\lambda_{1}(\alpha_{1+})=u_{2}-a_{2-}
+\alpha_{1-}\equiv\alpha_{B}=\lambda_{1}(\alpha_{B})=u_{B}-a_{B}\qquad\alpha_{1+}\equiv\alpha_{A}=\lambda_{1}(\alpha_{A})=u_{A}-a_{A}
 \]
 
 \end_inset
@@ -5025,16 +5036,16 @@ a_{2-}=\frac{\gamma-1}{2}(u_{-}-u_{2})+a_{-}\qquad\rho_{2-}=\frac{\gamma p_{2}}{
 
 \begin_layout Itemize
 若中心区域真空（即 
-\begin_inset Formula $p_{2}=0$
+\begin_inset Formula $p_{*}=0$
 \end_inset
 
 ），则波头、波尾速度分别为
 \begin_inset Formula 
 \[
-\alpha_{1-}=u_{-}-a_{-}\qquad\alpha_{1+}=u_{-}+\frac{2a_{-}}{\gamma-1}\impliedby\begin{cases}
-\alpha_{1+}=u_{1+}-a_{1+}\\
-u_{-}+2a_{-}/(\gamma-1)=u_{1+}+2a_{1+}/(\gamma-1)\\
-a_{1+}=a_{2}=0
+\alpha_{1-}\equiv\alpha_{B}=u_{B}-a_{B}\qquad\alpha_{1+}\equiv\alpha_{A}=\phi_{2}\impliedby\begin{cases}
+\alpha_{A}=u_{A}-a_{A}\\
+\phi_{2}=u_{A}+2a_{A}/(\gamma-1)\\
+a_{A}=0
 \end{cases}
 \]
 
@@ -5069,159 +5080,629 @@ a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad\rho=\left(\fr
 \end_layout
 
 \begin_layout Standard
-第三基本波的求解过程与第一基本波几乎完全相同，但要注意个别表达式的正负号：
+第三基本波的求解过程与第一基本波几乎完全相同：
 \end_layout
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $p_{2}>p_{+}$
+\begin_inset Formula $p_{*}\equiv p_{A}\ge p_{B}\equiv p_{+}$
 \end_inset
 
 ，则 
 \begin_inset Formula $E_{3}$
 \end_inset
 
- 为激波。它的波头、波尾重叠，速度由跳跃关系 
+ 为激波（含退化情形），求解过程与第一基本波对应部分完全相同。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 为膨胀波，求解过程与第一基本波对应部分只相差个别正负号。这里将求解过程中可能用到的各个量列于表 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:euler_1d_jump"
+reference "tab:膨胀波求解过程"
 
 \end_inset
 
- 第二行解出：
-\begin_inset Formula 
-\[
-\alpha_{3\pm}=u_{\Gamma}=u_{+}+\frac{p_{2}-p_{+}}{u_{2}-u_{+}}\frac{1}{\rho_{+}}
-\]
+，以便对照。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:膨胀波求解过程"
 
 \end_inset
 
-将其代入跳跃关系 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:euler_1d_jump"
-
-\end_inset
-
- 第一行则得到
-\begin_inset Formula 
-\[
-\rho_{2+}=\frac{u_{+}-u_{\Gamma}}{u_{2}-u_{\Gamma}}\rho_{+}
-\]
+膨胀波求解过程
+\end_layout
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-若 
-\begin_inset Formula $p_{2}=p_{+}$
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第一膨胀波
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第三膨胀波
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Riemann 不变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi_{1}$
 \end_inset
 
-，则 
-\begin_inset Formula $E_{3}$
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{B}/\rho_{B}^{\gamma}$
 \end_inset
 
- 为退化的激波：
-\begin_inset Formula 
-\[
-\alpha_{3\pm}=u_{\Gamma}=u_{+}\qquad\rho_{2+}=\rho_{+}
-\]
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{B}+2a_{B}/(\gamma-1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{B}-2a_{B}/(\gamma-1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+非真空
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{B}+(u_{B}-u_{A})(\gamma-1)/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{B}-(u_{B}-u_{A})(\gamma-1)/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rho_{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\gamma p_{A}/a_{A}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+范围
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{B}-a_{B},u_{A}-a_{A}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{A}+a_{A},u_{B}+a_{B}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+真空
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+范围
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{B}-a_{B},\phi_{2}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\phi_{2},u_{B}+a_{B}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x/t=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0-\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt[\gamma-1]{a_{0}^{2}/(\gamma\phi_{1})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}^{2}\rho/\gamma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-若 
-\begin_inset Formula $p_{2}<p_{+}$
-\end_inset
+\begin_layout Plain Layout
 
-，则 
-\begin_inset Formula $E_{3}$
-\end_inset
-
- 为膨胀波。它有两个广义 Riemann 不变量：
-\begin_inset Formula 
-\[
-\phi_{2}=\frac{p_{+}}{\rho_{+}^{\gamma}}=\frac{p(x,t)}{\rho^{\gamma}(x,t)}\qquad\phi_{2}=u_{+}-\frac{2a_{+}}{\gamma-1}=u(x,t)-\frac{2a(x,t)}{\gamma-1}
-\]
+\end_layout
 
 \end_inset
 
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-若中心区域非真空（即 
-\begin_inset Formula $p_{2}\ne0$
-\end_inset
-
-），则
-\begin_inset Formula 
-\[
-a_{2+}=\frac{\gamma-1}{2}(u_{2}-u_{+})+a_{+}\qquad\rho_{2+}=\frac{\gamma p_{2}}{(a_{2+})^{2}}
-\]
-
-\end_inset
-
-代入 
-\begin_inset Formula $\lambda_{3}=u+a$
-\end_inset
-
- 即得波头、波尾速度：
-\begin_inset Formula 
-\[
-\alpha_{3-}=\lambda_{3}(\alpha_{3-})=u_{2}+a_{2+}\qquad\alpha_{3+}=\lambda_{3}(\alpha_{3+})=u_{+}+a_{+}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-若中心区域真空（即 
-\begin_inset Formula $p_{2}=0$
-\end_inset
-
-），则波头、波尾速度分别为
-\begin_inset Formula 
-\[
-\alpha_{3+}=u_{+}+a_{+}\qquad\alpha_{3-}=u_{+}-\frac{2a_{+}}{\gamma-1}\impliedby\begin{cases}
-\alpha_{3-}=u_{3-}+a_{3-}\\
-u_{+}-2a_{+}/(\gamma-1)=u_{3-}-2a_{3-}/(\gamma-1)\\
-a_{3-}=a_{2}=0
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-如果还需膨胀波内部（即斜率为 
-\begin_inset Formula $x/t\in[\alpha_{3-},\alpha_{3+}]$
-\end_inset
-
- 的特征线上）的状态，则再次利用广义 Riemann 不变量：
-\begin_inset Formula 
-\[
-a=\frac{\gamma-1}{\gamma+1}\left(\frac{x}{t}-\phi_{2}\right)\qquad\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad u=\frac{x}{t}-a\qquad p=\frac{a^{2}\rho}{\gamma}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
-至此，接触间断右侧的状态已完全确定。
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+至此，接触间断两侧的状态都已完全确定。
 \end_layout
 
 \begin_layout Subsection
