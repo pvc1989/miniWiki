@@ -14,7 +14,7 @@
 0. 安装 [TeX Live](./tools/latex/README.md#TeX-Live) 和 [LyX](./tools/latex/README.md#LyX)，并完成相应配置，以支持 *中文* 及 *代码高亮*。
 1. 安装 [STIX](https://github.com/stipub/stixfonts) 字体。如果想启用 `euler` 选项，则还需安装 [Neo Euler](https://github.com/khaledhosny/euler-otf) 字体。
 2. 在任意路径下创建本[仓库](./programming/git.md)的副本。
-3. 在本地 `$TEXMFHOME/tex/latex` 下创建 [`./tools/latex/pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」：
+3. 在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`./tools/latex/pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」：
 
 |  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
 | :--------: | :------------------: | :------------------: |
@@ -52,7 +52,7 @@
   - [Python](./programming/python.md)
   - [UML](./programming/uml/README.md)
 - 构建工具
-  - [Git](./programming/git.md)
+  - [Git](./programming/git.md#Git) + [GitHub](./programming/git.md#GitHub)
   - [GNU Make](./programming/make/README.md#GNU-Make) + [CMake](./programming/make/README.md#CMake)
 - 排版工具
   - [Markdown](./programming/markdown.md)
