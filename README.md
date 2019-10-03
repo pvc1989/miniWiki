@@ -63,5 +63,5 @@
 - [Linux](./tools/linux/README.md)
 - [SSH](./tools/ssh.md)
 - [Vim](./tools/vim.md)
-- [VTK](./tools/vtk/README.md)
+- [VTK](./tools/vtk/README.md) + [ParaView](./tools/vtk/README.md#ParaView)
 - [书签编辑工具](./tools/bookmark.md)

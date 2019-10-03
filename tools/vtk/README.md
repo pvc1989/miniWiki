@@ -26,18 +26,6 @@
 它完全用 Python & Cython 实现，因此不依赖于 VTK 程序库。
 安装后即可在本地 Python 程序中 `import` 该模块，具体用法可以参照 `src/examples` 目录下的示例。
 
-## ParaView
-[ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
-
-启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门。
-
-使用 ParaView 主要分三个基本步骤：
-1. 从数据文件中「读取 (read)」原始数据。
-2. 对原始数据进行「过滤 (filter)」，提取出感兴趣的信息。
-3. 将提取得到的信息在图形界面上进行「渲染 (render)」。
-
-对于同一个数据文件，第 1 步只需执行 1 次，而第 2、3 步可以执行多次。
-
 ## API
 [在线文档](https://vtk.org/doc/nightly/html)只给出了 C++ 版的 API。
 其他「解释型 (interpreted)」语言的语法机制没有 C++ 丰 (fan) 富 (suo)，获 (cai) 得 (ce) 相应的 API 需要对 C++ 版作适当的 *压缩*。
@@ -107,3 +95,46 @@ cmake -S .. -B .
 cmake --build .
 ./read *.vtk *.vtu  # 读取在《Python 示例》中生成的文件
 ```
+
+## ParaView
+
+[ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
+
+启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门。
+
+### 简单数据显示
+
+使用 ParaView 主要分三个基本步骤：
+
+1. 从数据文件中「读取 (read)」原始数据。
+2. 对原始数据进行「过滤 (filter)」，提取出感兴趣的信息。
+3. 将提取得到的信息在图形界面上进行「渲染 (render)」。
+
+对于同一个数据文件，第 1 步只需执行 1 次，而第 2、3 步可以执行多次。
+
+### 动态数据显示
+
+最简单（最通用）的动态数据显示方式，是将每一时间步的数据写入一个对应于该时刻的文件，这样的一个文件对应于动画中的一帧。ParaView 在加载按以下任意一种风格命名的一「组 (group)」文件时，会自动将它们识别为一个「文件序列 (file series)」：
+
+```txt
+fooN.vtk
+Nfoo.vtk
+foo.vtk.N
+foo_N.vtk
+foo.N.vtk
+N.foo.vtk
+foo.vtksN
+```
+其中 `foo` 可以是任意非空字符串，`N` 为整数编号，扩展名 `.vtk` 可以替换为任意[ VTK 文件格式](#文件格式)所对应的扩展名。
+
+### 远程数据显式
+- 在远程及本地主机上：
+  - 安装（版本号接近的）ParaView 软件。
+  - 不建议用「包管理工具」安装，建议[到官网下载预编译版本](https://www.paraview.org/download/)。
+- 在远程主机上：
+  - 生成 VTK 数据文件。
+  - 启动 `pvserver`。
+- 在本地主机上：
+  - 启动 `paraview`。
+  - 连接到远程主机（首次连接需要 `Add Server`），如果 `Pipeline Browser` 中的 `builtin` 被替换为远程主机的标识符，则表明连接成功。
+  - 像操作本地数据一样，加载并显示远程数据。
