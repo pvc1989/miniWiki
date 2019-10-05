@@ -112,51 +112,78 @@ name "chap:FiniteVolume"
 \end_layout
 
 \begin_layout Section
-有限体积离散
+空间离散
 \end_layout
 
 \begin_layout Subsection
-对网格的要求
+网格概述
 \end_layout
 
-\begin_layout Standard
-在最一般的意义下，凡是能够将几何区域 
+\begin_layout Description
+几何 凡是能够将几何区域 
 \begin_inset Formula $\Omega$
 \end_inset
 
- 用有限个
-\emph on
-子区域
-\emph default
-（subdomain）的并集来覆盖的
-\emph on
-图
-\emph default
-（graph）都可以被称为
-\emph on
-网格
-\emph default
-（mesh/grid）。通常只用到具有简单几何外形（例如：圆、多边形）的子区域，它们又被称为
-\emph on
-单元
-\emph default
-（element/cell）。定义单元所用到的点（例如：顶点、内点）被称为
-\emph on
-结点
-\emph default
-（node/vertex）。一个结点可以由多个单元共享（例如：三角形单元的顶点），也可以被某一个单元独占（例如：三角形单元的内点）。为方便叙述，引入如下记号：
+ 用有限个「子区域 (subdomain)」的并集来覆盖的「图 (graph)」都可以被称为「网格 (mesh/grid)」。子区域又被称为「单元
+ (element/cell)」，它们通常具有简单的几何外形（例如：三角形、长方形）。定义单元所用到的点被称为「结点 (node)」。一个结点可以由多个单元共享
+（顶点），也可以被某一个单元独占（内点）。为方便叙述，表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:有限体积网格术语"
+
+\end_inset
+
+ 列出了本章用到的网格术语。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:有限体积网格术语"
+
+\end_inset
+
+有限体积网格术语
 \end_layout
 
-\begin_layout Standard
-\align center
+\end_inset
+
+
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="3">
+<lyxtabular version="3" rows="12" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+类名
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+别名
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -165,7 +192,7 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -174,7 +201,7 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -185,7 +212,151 @@ name "chap:FiniteVolume"
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Index
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Tag
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $I(X)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $I_{X}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+容器 
+\begin_inset Formula $X$
+\end_inset
+
+ 中所有成员的编号
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Number
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Size
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N(X)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{X}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+容器 
+\begin_inset Formula $X$
+\end_inset
+
+ 中所有成员的总数
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Mesh
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Grid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -197,7 +368,7 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -209,7 +380,7 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -217,18 +388,42 @@ name "chap:FiniteVolume"
 \begin_inset Formula $\Omega$
 \end_inset
 
- 的网格
+ 的 
+\family typewriter
+Grid
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\Omega_{e}$
+
+\family typewriter
+Cell
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Element
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $E(G,i)$
 \end_inset
 
 
@@ -236,35 +431,11 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-第 
-\begin_inset Formula $e$
-\end_inset
-
- 号单元
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $X_{i}$
+\begin_inset Formula $E_{i}$
 \end_inset
 
 
@@ -272,31 +443,45 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $G$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-第 
+ 的第 
 \begin_inset Formula $i$
 \end_inset
 
- 号结点
+ 号 
+\family typewriter
+Element
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -308,7 +493,7 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -320,26 +505,49 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-网格 
 \begin_inset Formula $G$
 \end_inset
 
- 中所有单元（编号）的集合
+ 的所有 
+\family typewriter
+Element
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $V(G)$
+
+\family typewriter
+Wall
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Surface
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S(G,i)$
 \end_inset
 
 
@@ -347,11 +555,11 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $V$
+\begin_inset Formula $S_{i}$
 \end_inset
 
 
@@ -359,26 +567,49 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-网格 
 \begin_inset Formula $G$
 \end_inset
 
- 中所有结点（编号）的集合
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号 
+\family typewriter
+Surface
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $V(\Omega_{e})$
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S(G)$
 \end_inset
 
 
@@ -386,11 +617,11 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $V_{e}$
+\begin_inset Formula $S$
 \end_inset
 
 
@@ -398,15 +629,256 @@ name "chap:FiniteVolume"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-单元 
-\begin_inset Formula $\Omega_{e}$
+\begin_inset Formula $G$
 \end_inset
 
- 中所有结点（编号）的集合
+ 的所有 
+\family typewriter
+Surface
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S(E_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{E_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的所有 
+\family typewriter
+Surface
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Node
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Point
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P(G,i)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G$
+\end_inset
+
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号 
+\family typewriter
+Point
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P(G)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G$
+\end_inset
+
+ 的所有 
+\family typewriter
+Point
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P(E_{i})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P_{E_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的所有 
+\family typewriter
+Point
 \end_layout
 
 \end_inset
@@ -419,125 +891,243 @@ name "chap:FiniteVolume"
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+物理 在流体力学中，「控制体 (control volume, CV)」与「控制面 (control surface, CS)」具有重要的物理意义。在
+ FVM 中，最自然的方案是：以 
+\family typewriter
+Element
+\family default
+ 为 CV，以 
+\family typewriter
+Surface
+\family default
+ 为 CS。因此通常要求：
+\family typewriter
+Grid
+\family default
+ 恰好填满整个区域（即 
+\begin_inset Formula $\Omega=\bigcup_{i\in I(E)}E_{i}$
+\end_inset
+
+），且相邻 
+\family typewriter
+Element
+\family default
+ 之间没有同一维度的重叠（即 
+\begin_inset Formula $i\ne k\implies\abs{E_{i}\cap E_{k}}=0$
+\end_inset
+
+）。在此条件下，相邻 
+\family typewriter
+Element
+\family default
+ 之间可以有公共 
+\family typewriter
+Surface
+\family default
+，它们在「Godunov 型格式」中具有特别重要的意义。除此之外，FVM 对网格没有更多的要求，因此特别适合于「非结构 (unstructured)
+ 网格」，从而特别适合于具有复杂几何边界的问题。这种网格的灵活性正是 FVM 相对于 FDM 的优势之一。
+\end_layout
+
+\begin_layout Description
+算法 从数据类型的角度看，
+\family typewriter
+Grid
+\family default
+ 是 
+\family typewriter
+Element
+\family default
+、
+\family typewriter
+Surface
+\family default
+、
+\family typewriter
+Point
+\family default
+ 的容器，因此 
+\family typewriter
+Grid
+\family default
+ 应当支持对这些成员的 
+\begin_inset Formula $\order{N\lg N}$
+\end_inset
+
+ 遍历。除此之外，Godunov 型格式需要在每个 
+\family typewriter
+Surface
+\family default
+ 上求解 Riemann 问题，因此 
+\family typewriter
+Surface
+\family default
+ 应当支持对其两侧 
+\family typewriter
+Element
+\family default
+ 的 
+\begin_inset Formula $\order{\lg N}$
+\end_inset
+
+ 查找。
+\end_layout
+
 \begin_layout Standard
-以上是从几何的角度来定义网格、单元、结点等概念的。在 FVM 中，控制体（及其边界控制面）具有重要的物理意义，它既可以与单元一一对应，也可以基于结点定义。相应地
-，物理量既可以按控制体存储，也可以按结点存储。最自然的方案是「以单元为控制体，将物理量按单元存储」，因此通常要求：网格恰好填满整个区域，且相邻单元之间没有（实质
-性的）重叠，即
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于一维问题，最简单的网格方案是：用 
+\begin_inset Formula $(n+1)$
+\end_inset
+
+ 个 
+\family typewriter
+Point
+\family default
+ 将一维区间分割为首尾相连的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个 
+\family typewriter
+Element
+\family default
+：
 \begin_inset Formula 
 \[
-\Omega=\bigcup_{e\in E}\Omega_{e}\quad\land\quad\forall\,i,k\in E:\int_{\Omega_{i}\cap\Omega_{k}}\dd{\Omega}=0
+\Omega:=[a,b]\qquad P(G)=\left\{ P_{i}:=x_{i}\right\} _{i=0}^{n}\qquad E(G)=\left\{ E_{i}:=(x_{i-1},x_{i})\right\} _{i=1}^{n}
 \]
 
 \end_inset
 
-这里并没有要求 
-\begin_inset Formula $\Omega_{i}\cap\Omega_{k}=\varnothing$
+并且以 
+\begin_inset Formula $E_{i}$
 \end_inset
 
-（实际上，相邻单元（即 
-\begin_inset Formula $\Omega_{i}\cap\Omega_{k}\ne\varnothing$
+ 为第 
+\begin_inset Formula $i$
 \end_inset
 
- 的情形）的公共边界在基于 Riemann 解的 FVM 中具有特别重要的意义）。除此之外，FVM 对网格没有更多的要求。这种网格的灵活性正是
- FVM 相对于 FDM 的优势之一。
-\end_layout
-
-\begin_layout Standard
-对于一维问题，非重叠网格的变化方式十分有限：通常用 
-\begin_inset Formula $N+1$
+ 个 CV，以相邻 
+\family typewriter
+Element
+\family default
+ 的公共端点为 CS，因此 
+\begin_inset Formula $P_{i}\equiv S_{i}$
 \end_inset
 
- 个结点 
-\begin_inset Formula $\left\{ x_{i}\right\} _{i=0}^{N}$
+。对于静态网格（在计算过程中保持不变的网格），最简单的数据结构（数组）即可实现上述方案，并且很容易满足性能需求。在更一般的（一维非结构）网格中，结点编号顺序可能
+相当随意，即：不要求 
+\begin_inset Formula $i<j\iff x_{i}<x_{j}$
 \end_inset
 
- 将一维区间 
-\begin_inset Formula $\Omega:=[a,b]$
+ 并且 
+\begin_inset Formula $E_{i}:=(x_{i-1},x_{i})$
 \end_inset
 
- 分割为首尾相连的 
-\begin_inset Formula $N$
+ 需放宽为 
+\begin_inset Formula $E_{i}:=(x_{i-\half},x_{i+\half})$
 \end_inset
 
- 个单元 
-\begin_inset Formula $\left\{ \Omega_{e}\right\} _{e=1}^{N}$
+，其中 
+\begin_inset Formula $x_{i\mp\half}$
 \end_inset
 
-。结点编号顺序可以相当随意，不要求 
-\begin_inset Formula $\forall\,i,j\in V:x_{i}<x_{j}$
+ 表示「
+\begin_inset Formula $E_{i}$
 \end_inset
 
-，因此不能简单地认为 
-\begin_inset Formula $\forall\,e\in E:\Omega_{e}=[x_{e-1},x_{e}]$
-\end_inset
-
-。这里的 
-\begin_inset Formula $N+1$
-\end_inset
-
- 个结点都是单元的边界点，除此之外，可以在每个单元内部分布一些结点（用于构造高阶格式）。为方便叙述，引入记号 
-\begin_inset Formula $x_{e\pm\nicefrac{1}{2}}$
-\end_inset
-
-，它应当理解为「第 
-\begin_inset Formula $e$
-\end_inset
-
- 号单元的右（左）侧边界结点的 
+ 左右两侧端点的 
 \begin_inset Formula $x$
 \end_inset
 
- 值」
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-而不是「
-\begin_inset Formula $x_{e}$
+ 值」。按此记法，
+\begin_inset Formula $E_{i}$
 \end_inset
 
-（第 
-\begin_inset Formula $e$
-\end_inset
-
- 号结点的 
-\begin_inset Formula $x$
-\end_inset
-
- 值）与 
-\begin_inset Formula $x_{e\pm1}$
-\end_inset
-
-（第 
-\begin_inset Formula $e\pm1$
-\end_inset
-
- 号结点的 
-\begin_inset Formula $x$
-\end_inset
-
- 值）的平均值」
-\end_layout
-
-\end_inset
-
-，因此显然有 
-\begin_inset Formula $\forall\,e\in E:x_{e-\nicefrac{1}{2}}<x_{e+\nicefrac{1}{2}}$
-\end_inset
-
-。按此记法，第 
-\begin_inset Formula $e$
-\end_inset
-
- 号单元的长度（一维体积）可以记为
+ 的长度（一维体积）可以记为
 \begin_inset Formula 
 \[
-h_{e}:=\int_{\Omega_{e}}\dd{\Omega}\equiv\eval{x}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}},\quad\forall\,e\in E
+h_{i}:=\abs{E_{i}}:=\int_{E_{i}}\dd{\Omega}\equiv x_{i+\half}-x_{i-\half}\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+对于高维问题，网格的生成是一项重要且相对独立的技术，需要借助专业的软件（例如：
+\begin_inset CommandInset href
+LatexCommand href
+name "Gmsh"
+target "http://gmsh.info/"
+literal "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset href
+LatexCommand href
+name "CGAL"
+target "https://www.cgal.org/"
+literal "false"
+
+\end_inset
+
+）来完成。为节省存储空间，这些软件输出的网格文件（例如：
+\begin_inset CommandInset href
+LatexCommand href
+name "MSH"
+target "http://gmsh.info/doc/texinfo/gmsh.html#File-formats"
+literal "false"
+
+\end_inset
+
+、
+\begin_inset CommandInset href
+LatexCommand href
+name "VTK"
+target "https://www.vtk.org/wp-content/uploads/2015/04/file-formats.pdf"
+literal "false"
+
+\end_inset
+
+）通常只含有 
+\family typewriter
+Node
+\family default
+ 与 
+\family typewriter
+Element
+\family default
+ 的信息，而不会（显式）记录 
+\family typewriter
+Surface
+\family default
+。在导入这类网格文件时，求解器需要以 
+\begin_inset Formula $\order{N\lg N}$
+\end_inset
+
+ 复杂度构造所有 
+\family typewriter
+Surface
+\family default
+，并且创建对它们相邻 
+\family typewriter
+Element
+\family default
+ 的引用。
 \end_layout
 
 \begin_layout Subsection
