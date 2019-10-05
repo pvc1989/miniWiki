@@ -1005,7 +1005,7 @@ Element
 ：
 \begin_inset Formula 
 \[
-\Omega:=[a,b]\qquad P(G)=\left\{ P_{i}:=x_{i}\right\} _{i=0}^{n}\qquad E(G)=\left\{ E_{i}:=(x_{i-1},x_{i})\right\} _{i=1}^{n}
+\Omega:=[a,b]\qquad P(G)=\left\{ P_{i}:=x_{i}\right\} _{i=0}^{n}\qquad E(G)=\left\{ E_{i}:=[x_{i-1},x_{i}]\right\} _{i=1}^{n}
 \]
 
 \end_inset
@@ -1131,14 +1131,14 @@ Element
 \end_layout
 
 \begin_layout Subsection
-守恒型格式
+半离散格式
 \end_layout
 
 \begin_layout Standard
 尽管（标量）守恒律通常表示为偏微分方程形式
 \begin_inset Formula 
 \[
-\pdv{U}{t}+\divergence\vec{F}=0,\quad\forall\,\vec{x}\in\Omega
+\partial_{t}U+\divg\vec{F}=0
 \]
 
 \end_inset
@@ -1146,7 +1146,7 @@ Element
 但它实际上是对微分积分方程
 \begin_inset Formula 
 \[
-\int_{\Omega_{e}}\pdv{U}{t}\dd{\Omega}+\oint_{\partial\Omega_{e}}\vec{n}\vdot\vec{F}\dd{\Gamma}=0,\quad\forall\,\Omega_{e}\subset\Omega
+\int_{\Omega}\pdv{U}{t}\dd{\Omega}+\oint_{\partial\Omega}\vec{n}\vdot\vec{F}\dd{\Gamma}=0
 \]
 
 \end_inset
@@ -1155,42 +1155,177 @@ Element
 \begin_inset Formula $\vec{F}$
 \end_inset
 
- 的光滑性要求低于前者，因而具有更广的适用性。如果所选控制体保持静止，则可以将 
-\begin_inset Formula $\pdv{t}$
+ 的光滑性要求低于前者，因而具有更广的适用范围。如果所选控制体保持静止，则可以将 
+\begin_inset Formula $\partial_{t}$
 \end_inset
 
  提到 
 \begin_inset Formula $\int\dd{\Omega}$
 \end_inset
 
- 外，从而得到第二种形式的微分积分方程
+ 外，从而得到另一种形式的微分积分方程
 \begin_inset Formula 
 \[
-\dv{t}\int_{\Omega_{e}}U\dd{\Omega}+\oint_{\partial\Omega_{e}}\vec{n}\vdot\vec{F}\dd{\Gamma}=0,\quad\forall\,\text{定常}\,\Omega_{e}\subset\Omega
+\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{n}\vdot\vec{F}\dd{\Gamma}=0
 \]
 
 \end_inset
 
-它是所有守恒型格式的基础。
+取控制体 
+\begin_inset Formula $\Omega=E_{i}$
+\end_inset
+
+ 及相应的控制面 
+\begin_inset Formula $\partial\Omega=S(E_{i})$
+\end_inset
+
+，并引入近似 
+\begin_inset Formula $U(\vec{x},t)\approx U^{h}(\vec{x},t)$
+\end_inset
+
+ 及相应的 
+\begin_inset Formula $\vec{F}(U)\approx\vec{F}^{h}(U^{h})$
+\end_inset
+
+，就得到「半离散格式」：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\dv{t}\int_{E_{i}}U^{h}\dd{\Omega}+\oint_{S(E_{i})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E)}\label{eq:FVM_守恒型格式}
+\end{equation}
+
+\end_inset
+
+其中「半」表示时间离散独立于空间离散。各种有限体积格式的区别，只体现在 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\vec{F}^{h}$
+\end_inset
+
+ 的构造上。
 \end_layout
 
 \begin_layout Standard
-对于一维问题，以上公式可以简化为
+对于一维问题，
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ 退化为 
+\begin_inset Formula $F$
+\end_inset
+
+，控制面 
+\begin_inset Formula $S(E_{i})$
+\end_inset
+
+ 退化为 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的两个端点 
+\begin_inset Formula $x_{i\pm\half}$
+\end_inset
+
+，面积分退化为 
+\begin_inset Formula $F^{h}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x_{i\pm\half}$
+\end_inset
+
+ 处取值之差：
 \begin_inset Formula 
-\[
-\begin{aligned}\pdv{U}{t} & +\pdv{F}{x}=0,\quad\forall\,x\in(a,b)\\
-\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\pdv{U}{t}\dd{x} & +\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}})\subset(a,b)\\
-\dv{t}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}U\dd{x} & +\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,\text{定常的}\,(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}})\subset(a,b)
-\end{aligned}
-\]
+\begin{equation}
+\dv{t}\int_{x_{i-\half}}^{x_{i+\half}}U^{h}\dd{\Omega}+F_{i+\half}^{h}-F_{i-\half}^{h}=0\qquad\forall i\in I(E)\label{eq:FVM_守恒型格式_一维}
+\end{equation}
 
 \end_inset
 
 
 \end_layout
 
+\begin_layout Subsection
+守恒型格式
+\end_layout
+
+\begin_layout Standard
+对任意两个 
+\family typewriter
+Element
+\family default
+ 应用格式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FVM_守恒型格式"
+
+\end_inset
+
+，并将所得等式叠加，就得到
+\begin_inset Formula 
+\[
+\dv{t}\int_{E_{i}\cup E_{k}}U^{h}\dd{\Omega}+\oint_{S(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E),\forall k\in I(E)
+\]
+
+\end_inset
+
+如果 
+\begin_inset Formula $S_{ik}:=E_{i}\cap E_{k}\ne\varnothing$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{i},E_{k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $S_{ik}$
+\end_inset
+
+ 上有相反的 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+；如果 
+\begin_inset Formula $E_{i},E_{k}$
+\end_inset
+
+ 给出的 
+\begin_inset Formula $\vec{F}^{h}$
+\end_inset
+
+ 在 
+\begin_inset Formula $S_{ik}$
+\end_inset
+
+ 上有唯一的取值，则 
+\begin_inset Formula $\vec{n}\vdot\vec{F}^{h}$
+\end_inset
+
+ 在 
+\begin_inset Formula $S_{ik}$
+\end_inset
+
+ 两侧的积分相互抵消，从而有
+\begin_inset Formula 
+\[
+\oint_{S(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=\oint_{\partial(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}
+\]
+
+\end_inset
+
+因此，半离散格式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FVM_守恒型格式"
+
+\end_inset
+
+ 是天然的「守恒型格式」。
+\end_layout
+
 \begin_layout Section
-Godunov 型格式
+Godunov 格式
 \end_layout
 
 \begin_layout Subsection
@@ -1202,77 +1337,122 @@ Godunov 假设：在
 \begin_inset Formula $t_{n}$
 \end_inset
 
- 时刻，物理量 
+ 时刻，守恒变量 
 \begin_inset Formula $U$
 \end_inset
 
  在每个控制体（单元）内按常数分布
 \begin_inset Formula 
 \[
-U(t_{n},x)=\overline{U}_{e}^{n},\quad\forall\,x\in(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}}),\quad\forall\,e\in E
+U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}:=(x_{i-\half},x_{i+\half})\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
-这种分布相当于在每个控制体边界上分别定义了一个（以 
-\begin_inset Formula $\xi:=x-x_{e\pm\nicefrac{1}{2}}$
+这种分布相当于在每个控制面上分别定义了一个（以 
+\begin_inset Formula $\xi:=x-x_{i+\half}$
 \end_inset
 
  和 
 \begin_inset Formula $\tau:=t-t_{n}$
 \end_inset
 
- 为局部变量的）局部 Riemann 问题。求解这些局部 Riemann 问题是所有 Godunov 型格式的首要步骤。按照《
+ 为局部变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
+\begin_inset Formula 
+\[
+\tilde{U}_{i+\half}^{n}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近\,}(0,0)\qquad\forall i\in I(E)
+\]
+
+\end_inset
+
+这里的「充分接近」是指「任意两个局部 Riemann 问题的解不发生「干涉 (interference)」，或者说「任意两个基本波不发生碰撞」，这对应于有限差分
+格式中的「稳定性条件」。将这些局部 Riemann 问题的解拼接起来，就得到在充分短的时段 
+\begin_inset Formula $[t_{n},t_{n+1}]$
+\end_inset
+
+ 内的全局精确解，记为 
+\begin_inset Formula $\tilde{U}^{n}(x,t)$
+\end_inset
+
+。除了极简单的情况，通常 
+\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
+\end_inset
+
+ 在各个控制体内已不再是常数。
+\end_layout
+
+\begin_layout Standard
+求解这些局部 Riemann 问题是 Godunov 格式的关键步骤，也是最值得深度优化的计算模块：
+\end_layout
+
+\begin_layout Itemize
+对于标量或线性守恒律，按《
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "subsec:RiemannProblems"
 
 \end_inset
 
-》中介绍的方法，可以获得正确的（从而也是精确的）解。但是在实际计算中，求精确解的计算量往往过大，因此需要寻求 
+》中的步骤，可以在 
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ 时间内获得局部 Riemann 问题的精确解。
+\end_layout
+
+\begin_layout Itemize
+对于 Euler 方程，有两种可选方案：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+按《
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:Riemann-问题的近似解"
+reference "sec:shock-tube"
 
 \end_inset
 
-。
+》中的步骤，可以在 
+\begin_inset Formula $\order{\lg\abs{\varepsilon_{0}/\varepsilon_{*}}}$
+\end_inset
+
+ 时间内获得精确解，其中 
+\begin_inset Formula $\varepsilon_{0}$
+\end_inset
+
+ 为迭代初值与收敛值之差，
+\begin_inset Formula $\varepsilon_{*}$
+\end_inset
+
+ 为收敛阈值。
+\end_layout
+
+\begin_layout Itemize
+按《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:近似-Riemann-解"
+
+\end_inset
+
+》中的步骤，可以在 
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ 时间内获得局部 Riemann 问题的近似解。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-Godunov 的格式
-\end_layout
-
-\begin_layout Standard
-Riemann 问题的精确解（关于局部变量）具有自相似性，因此可以将它们记为
-\begin_inset Formula 
-\[
-\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}\left(\frac{x-x_{e\pm\nicefrac{1}{2}}}{t-t_{n}}\right),\quad\forall\,(x,t)\,\text{充分接近\,}(x_{e\pm\nicefrac{1}{2}},t_{n}),\quad\forall\,e\in E
-\]
-
-\end_inset
-
-这里的「充分接近」是指「任意两个局部 Riemann 问题的解不发生
-\emph on
-干涉
-\emph default
-（interference）」，或者说「任意两个波不发生碰撞」。将这些局部 Riemann 问题的解拼接起来，就得到在充分短的时段 
-\begin_inset Formula $[t_{n},t_{n+1}]$
-\end_inset
-
- 内的全局精确解，记为 
-\begin_inset Formula $\widetilde{U}^{n}(x,t)$
-\end_inset
-
-。除了极简单的情况，一般而言，
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
-\end_inset
-
- 在各个控制体内已经不再是常数。
-\end_layout
-
-\begin_layout Subsubsection*
-第一个版本
+原始版本
 \end_layout
 
 \begin_layout Standard
@@ -1284,48 +1464,52 @@ Riemann 问题的精确解（关于局部变量）具有自相似性，因此可
 \begin_inset Formula $U$
 \end_inset
 
-，Godunov 采取的第一个方案是对精确解 
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+，Godunov 引入的第一个方案是对精确解 
+\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
 \end_inset
 
  作空间平均，即引入定义（并直接计算）
 \begin_inset Formula 
 \[
-\overline{U}_{e}^{n+1}:=\frac{1}{h_{e}}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x},\quad\forall\,e\in E
+\bar{U}_{i}^{n+1}:=\frac{1}{x_{i+\half}-x_{i-\half}}\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t_{n+1})\dd{x}\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
-以此作为下一个时刻的初始条件。
-\end_layout
-
-\begin_layout Standard
-这种做法的一个显著缺点是：求平均值的积分需要根据 
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+以此作为下一个时段 
+\begin_inset Formula $[t_{n+1},t_{n+2}]$
 \end_inset
 
- 的形式分为几段来计算。
-\end_layout
-
-\begin_layout Subsubsection*
-第二个版本
+ 的初始条件。
 \end_layout
 
 \begin_layout Standard
-作为改进，Godunov 采取的第二个方案是将积分形式的守恒律
+这种做法的显著缺点是：积分的计算需根据 
+\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
+\end_inset
+
+ 的形式拆成几段来实施。
+\end_layout
+
+\begin_layout Subsection
+改进版本
+\end_layout
+
+\begin_layout Standard
+作为改进，Godunov 引入的第二个方案是将积分形式的守恒律
 \begin_inset Formula 
 \[
-\dv{t}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}U\dd{x}+\eval{F}_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,e\in E
+\dv{t}\int_{x_{i-\half}}^{x_{i+\half}}U\dd{x}+F_{i+\half}-F_{i-\half}=0\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
 中的 
-\begin_inset Formula $U(x,t)$
+\begin_inset Formula $U$
 \end_inset
 
  用 
-\begin_inset Formula $\widetilde{U}^{n}(x,t)$
+\begin_inset Formula $\tilde{U}^{n}$
 \end_inset
 
  替换，并在时段 
@@ -1334,60 +1518,59 @@ Riemann 问题的精确解（关于局部变量）具有自相似性，因此可
 
  上积分，从而得到离散形式的守恒律
 \begin_inset Formula 
-\[
-\eval[\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x,t)\dd{t}|_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=0,\quad\forall\,e\in E
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\circ$
-\end_inset
-
- 表示函数的复合，即 
-\begin_inset Formula $F\circ U(x,t)\equiv F(U(x,t))$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-注意到这些 Riemann 问题的初始条件是分段常数分布
-\begin_inset Formula 
-\[
-\widetilde{U}^{n}(x,t_{n})\equiv\overline{U}_{e}^{n},\quad\forall\,x\in(x_{e-\nicefrac{1}{2}},x_{e+\nicefrac{1}{2}}),\quad\forall\,e\in E
-\]
-
-\end_inset
-
-并（仿照版本一）引入定义（但不直接计算）
-\begin_inset Formula 
-\[
-\overline{U}_{e}^{n+1}:=\frac{1}{h_{e}}\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x},\quad\forall\,e\in E
-\]
-
-\end_inset
-
-则第一个积分可以化简为
-\begin_inset Formula 
-\[
-\eval[\int_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}\widetilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\overline{U}_{e}^{n+1}-\overline{U}_{e}^{n}\right)h_{e},\quad\forall\,e\in E
-\]
+\begin{equation}
+\eval[\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=0\qquad\forall i\in I(E)\label{eq:Godunov_discretization}
+\end{equation}
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-为了化简第二个积分，引入
-\emph on
-数值通量
-\emph default
-（numerical flux）函数
+\begin_layout Itemize
+注意到 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ 时刻的初始条件是分段常数分布
 \begin_inset Formula 
 \[
-\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}:=\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x_{e\pm\nicefrac{1}{2}},t)\dd{t},\quad\forall\,e\in E
+\tilde{U}^{n}(x,t_{n})\equiv\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\qquad\forall i\in I(E)
+\]
+
+\end_inset
+
+并（仿照原始版本）定义（但不直接计算）
+\begin_inset Formula 
+\[
+\bar{U}_{i}^{n+1}:=\frac{1}{x_{i+\half}-x_{i-\half}}\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t_{n+1})\dd{x}\qquad\forall i\in I(E)
+\]
+
+\end_inset
+
+则 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Godunov_discretization"
+
+\end_inset
+
+ 式的第一个积分可以化简为
+\begin_inset Formula 
+\[
+\eval[\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)\abs{E_{i}}\qquad\forall i\in I(E)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+为了化简第二个积分，引入「数值通量（numerical flux）」函数
+\begin_inset Formula 
+\[
+\hat{F}_{i+\half}^{n}:=\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x_{i+\half},t)\right)\dd{t}\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1397,29 +1580,28 @@ Riemann 问题的精确解（关于局部变量）具有自相似性，因此可
 \end_inset
 
  内，被积函数中的 
-\begin_inset Formula $\widetilde{U}^{n}(x_{e\pm\nicefrac{1}{2}},t)=\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0)$
+\begin_inset Formula $\tilde{U}^{n}(x_{i+\half},t)\equiv\tilde{U}_{i+\half}^{n}(0)$
 \end_inset
 
- 为常量，因此这里的积分并不需要真正去计算，而是可以直接得到
+ 为常量，因此这里的积分可以直接得到：
 \begin_inset Formula 
 \[
-\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}=F\circ\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0),\quad\forall\,e\in E
+\hat{F}_{i+\half}^{n}=F\left(\tilde{U}_{i+\half}^{n}(0)\right)\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
-于是第二个积分可以化简为
-\begin_inset Formula 
-\[
-\eval[\int_{t_{n}}^{t_{n+1}}F\circ\widetilde{U}^{n}(x,t)\dd{t}|_{e-\nicefrac{1}{2}}^{e+\nicefrac{1}{2}}=\left(\widehat{F}_{e+\nicefrac{1}{2}}^{n}-\widehat{F}_{e-\nicefrac{1}{2}}^{n}\right)(t_{n+1}-t_{n}),\quad\forall\,e\in E
-\]
+于是 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Godunov_discretization"
 
 \end_inset
 
-从而得到了显式迭代格式
+ 式的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\boxed{\overline{U}_{e}^{n+1}=\overline{U}_{e}^{n}-\frac{t_{n+1}-t_{n}}{h_{e}}\left(\widehat{F}_{e+\nicefrac{1}{2}}^{n}-\widehat{F}_{e-\nicefrac{1}{2}}^{n}\right),\quad\widehat{F}_{e\pm\nicefrac{1}{2}}^{n}=F\circ\widetilde{U}_{e\pm\nicefrac{1}{2}}^{n}(0),\quad\forall\,e\in E}
+\eval[\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=\left(\hat{F}_{i+\half}^{n}-\hat{F}_{i-\half}^{n}\right)(t_{n+1}-t_{n})\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1427,15 +1609,138 @@ Riemann 问题的精确解（关于局部变量）具有自相似性，因此可
 
 \end_layout
 
-\begin_layout Subsection
-通量差分分裂
+\begin_layout Itemize
+将以上两个结果代回 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Godunov_discretization"
+
+\end_inset
+
+ 式，就得到了显式迭代格式
+\begin_inset Formula 
+\begin{equation}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+\half}-x_{i-\half}}\left(\hat{F}_{i+\half}^{n}-\hat{F}_{i-\half}^{n}\right)\qquad\hat{F}_{i\pm\half}^{n}=F\left(\tilde{U}_{i\pm\half}^{n}(0)\right)\qquad\forall i\in I(E)}\label{eq:Godunov_scheme}
+\end{equation}
+
+\end_inset
+
+这便是著名的 Godunov 格式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+改进的 Godunov 格式是一种
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+有限体积格式 在 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:FVM_守恒型格式_一维"
+
+\end_inset
+
+ 式中，对守恒变量取零阶近似 
+\begin_inset Formula $U^{h}:=\bar{U}$
+\end_inset
+
+，并用局部 Riemann 问题的
+\emph on
+精确解
+\emph default
+计算近似通量 
+\begin_inset Formula $F_{i+\half}^{h}:=F\left(\tilde{U}_{i+\half}^{n}(0)\right)$
+\end_inset
+
+，即得 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Godunov_scheme"
+
+\end_inset
+
+ 式。
+\end_layout
+
+\begin_layout Description
+迎风格式 风向的确定隐含在局部 Riemannn 问题的求解过程中。
+\end_layout
+
+\begin_layout Description
+TVD
+\begin_inset space ~
+\end_inset
+
+格式 空间离散精度只有一阶，并且局部 Riemannn 问题的解具有 TVD 性质。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+对 Godunov 格式的进一步改进有两个方向：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+提高单元内守恒变量的（插值）精度，沿这一方向可以很自然地导出《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:DGM"
+
+\end_inset
+
+》。
+\end_layout
+
+\begin_layout Itemize
+提高局部 Riemannn 问题的求解效率，即《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:近似-Riemann-解"
+
+\end_inset
+
+》一节的内容。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-Riemann 问题的近似解
+间断 Galerkin 方法
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:Riemann-问题的近似解"
+name "sec:DGM"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+近似 Riemann 解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:近似-Riemann-解"
 
 \end_inset
 
@@ -1447,35 +1752,11 @@ Roe
 \end_layout
 
 \begin_layout Subsection
-HLL
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "HLL"
-description "Harten, Lax, van Leer"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 HLLC
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "HLLC"
-description "HLL Contact"
-literal "false"
-
-\end_inset
-
-
+\begin_layout Subsection
+AUSM
 \end_layout
 
 \end_body
