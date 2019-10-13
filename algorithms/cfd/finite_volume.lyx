@@ -911,15 +911,15 @@ Surface
 Grid
 \family default
  恰好填满整个区域（即 
-\begin_inset Formula $\Omega=\bigcup_{i\in I(E)}E_{i}$
+\begin_inset Formula $\Omega=\bigcup_{i\in I(E)}\overline{E}_{i}$
 \end_inset
 
 ），且相邻 
 \family typewriter
 Element
 \family default
- 之间没有同一维度的重叠（即 
-\begin_inset Formula $i\ne k\implies\abs{E_{i}\cap E_{k}}=0$
+ 的「闭包 (closure)」之间没有同一维度的重叠（即 
+\begin_inset Formula $i\ne k\implies\abs{\overline{E}_{i}\cap\overline{E}_{k}}=0$
 \end_inset
 
 ）。在此条件下，相邻 
@@ -987,7 +987,7 @@ Element
 
 \begin_layout Standard
 对于一维问题，最简单的网格方案是：用 
-\begin_inset Formula $(n+1)$
+\begin_inset Formula $N_{P}+1$
 \end_inset
 
  个 
@@ -995,7 +995,7 @@ Element
 Point
 \family default
  将一维区间分割为首尾相连的 
-\begin_inset Formula $n$
+\begin_inset Formula $N_{E}=N_{P}-1$
 \end_inset
 
  个 
@@ -1005,7 +1005,7 @@ Element
 ：
 \begin_inset Formula 
 \[
-\Omega:=[a,b]\qquad P(G)=\left\{ P_{i}:=x_{i}\right\} _{i=0}^{n}\qquad E(G)=\left\{ E_{i}:=[x_{i-1},x_{i}]\right\} _{i=1}^{n}
+\Omega:=[a,b]\qquad P(G)=\left\{ P_{i}:=x_{i}\right\} _{i=0}^{N_{P}}\qquad E(G)=\left\{ E_{i}:=(x_{i-1},x_{i})\right\} _{i=1}^{N_{P}-1}
 \]
 
 \end_inset
@@ -1134,6 +1134,25 @@ Element
 半离散格式
 \end_layout
 
+\begin_layout Notation*
+为避免与表示时间步的 
+\begin_inset Formula $n$
+\end_inset
+
+ 混淆，本章以希腊字母 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 表示法向量、法向分量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 尽管（标量）守恒律通常表示为偏微分方程形式
 \begin_inset Formula 
@@ -1146,7 +1165,7 @@ Element
 但它实际上是对微分积分方程
 \begin_inset Formula 
 \[
-\int_{\Omega}\pdv{U}{t}\dd{\Omega}+\oint_{\partial\Omega}\vec{n}\vdot\vec{F}\dd{\Gamma}=0
+\int_{\Omega}\pdv{U}{t}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd{\Gamma}=0
 \]
 
 \end_inset
@@ -1166,7 +1185,7 @@ Element
  外，从而得到另一种形式的微分积分方程
 \begin_inset Formula 
 \[
-\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{n}\vdot\vec{F}\dd{\Gamma}=0
+\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd{\Gamma}=0
 \]
 
 \end_inset
@@ -1190,7 +1209,7 @@ Element
 ，就得到「半离散格式」：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{E_{i}}U^{h}\dd{\Omega}+\oint_{S(E_{i})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E)}\label{eq:FVM_守恒型格式}
+\boxed{\dv{t}\int_{E_{i}}U^{h}\dd{\Omega}+\oint_{S(E_{i})}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E)}\label{eq:FVM_守恒型格式}
 \end{equation}
 
 \end_inset
@@ -1207,11 +1226,11 @@ Element
 \end_layout
 
 \begin_layout Standard
-对于一维问题，
+对于一维问题，向量 
 \begin_inset Formula $\vec{F}$
 \end_inset
 
- 退化为 
+ 退化为标量 
 \begin_inset Formula $F$
 \end_inset
 
@@ -1265,7 +1284,7 @@ reference "eq:FVM_守恒型格式"
 ，并将所得等式叠加，就得到
 \begin_inset Formula 
 \[
-\dv{t}\int_{E_{i}\cup E_{k}}U^{h}\dd{\Omega}+\oint_{S(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E),\forall k\in I(E)
+\dv{t}\int_{E_{i}\cup E_{k}}U^{h}\dd{\Omega}+\oint_{S(E_{i}\cup E_{k})}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}=0\qquad\forall i\in I(E),\forall k\in I(E)
 \]
 
 \end_inset
@@ -1283,7 +1302,7 @@ reference "eq:FVM_守恒型格式"
 \end_inset
 
  上有相反的 
-\begin_inset Formula $\vec{n}$
+\begin_inset Formula $\vec{\nu}$
 \end_inset
 
 ；如果 
@@ -1299,7 +1318,7 @@ reference "eq:FVM_守恒型格式"
 \end_inset
 
  上有唯一的取值，则 
-\begin_inset Formula $\vec{n}\vdot\vec{F}^{h}$
+\begin_inset Formula $\vec{\nu}\vdot\vec{F}^{h}$
 \end_inset
 
  在 
@@ -1309,7 +1328,7 @@ reference "eq:FVM_守恒型格式"
  两侧的积分相互抵消，从而有
 \begin_inset Formula 
 \[
-\oint_{S(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}=\oint_{\partial(E_{i}\cup E_{k})}\vec{n}\vdot\vec{F}^{h}\dd{\Gamma}
+\oint_{S(E_{i}\cup E_{k})}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}=\oint_{\partial(E_{i}\cup E_{k})}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}
 \]
 
 \end_inset
@@ -1326,6 +1345,31 @@ reference "eq:FVM_守恒型格式"
 
 \begin_layout Section
 Godunov 格式
+\end_layout
+
+\begin_layout Standard
+Godunov 格式是由 Sergei K.
+ Godunov 于 1959 年提出的一种守恒型（差分）格式，其核心思想是：
+\end_layout
+
+\begin_layout Itemize
+用分段常值函数逼近守恒律方程（组）的解。
+\end_layout
+
+\begin_layout Itemize
+在相邻常值区域的界面处解 Riemann 问题。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+经过半个多世纪的发展，该格式被扩充为一类基于「通量差分分裂 (flux difference splitting, FDS)」的有限体积格式，它们被统称为「Go
+dunov 型格式」。本节主要讨论 Godunov 格式的一维版本，最后一小节简要叙述其高维版本。
 \end_layout
 
 \begin_layout Subsection
@@ -1357,7 +1401,7 @@ U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}:=(x_{i-\half},x_{i+\half})\qq
 \begin_inset Formula $\tau:=t-t_{n}$
 \end_inset
 
- 为局部变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
+ 为自变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
 \begin_inset Formula 
 \[
 \tilde{U}_{i+\half}^{n}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近\,}(0,0)\qquad\forall i\in I(E)
@@ -1558,7 +1602,7 @@ reference "eq:Godunov_discretization"
  式的第一个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)\abs{E_{i}}\qquad\forall i\in I(E)
+\eval[\int_{x_{i-\half}}^{x_{i+\half}}\tilde{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+\half}-x_{i-\half})\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1570,7 +1614,7 @@ reference "eq:Godunov_discretization"
 为了化简第二个积分，引入「数值通量（numerical flux）」函数
 \begin_inset Formula 
 \[
-\hat{F}_{i+\half}^{n}:=\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x_{i+\half},t)\right)\dd{t}\qquad\forall i\in I(E)
+\tilde{F}_{i+\half}^{n}:=\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x_{i+\half},t)\right)\dd{t}\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1586,7 +1630,7 @@ reference "eq:Godunov_discretization"
  为常量，因此这里的积分可以直接得到：
 \begin_inset Formula 
 \[
-\hat{F}_{i+\half}^{n}=F\left(\tilde{U}_{i+\half}^{n}(0)\right)\qquad\forall i\in I(E)
+\tilde{F}_{i+\half}^{n}=F\left(\tilde{U}_{i+\half}^{n}(0)\right)\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1601,7 +1645,7 @@ reference "eq:Godunov_discretization"
  式的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=\left(\hat{F}_{i+\half}^{n}-\hat{F}_{i-\half}^{n}\right)(t_{n+1}-t_{n})\qquad\forall i\in I(E)
+\eval[\int_{t_{n}}^{t_{n+1}}F\left(\tilde{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=\left(\tilde{F}_{i+\half}^{n}-\tilde{F}_{i-\half}^{n}\right)(t_{n+1}-t_{n})\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1620,7 +1664,7 @@ reference "eq:Godunov_discretization"
  式，就得到了显式迭代格式
 \begin_inset Formula 
 \begin{equation}
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+\half}-x_{i-\half}}\left(\hat{F}_{i+\half}^{n}-\hat{F}_{i-\half}^{n}\right)\qquad\hat{F}_{i\pm\half}^{n}=F\left(\tilde{U}_{i\pm\half}^{n}(0)\right)\qquad\forall i\in I(E)}\label{eq:Godunov_scheme}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+\half}-x_{i-\half}}\left(\tilde{F}_{i+\half}^{n}-\tilde{F}_{i-\half}^{n}\right)\qquad\tilde{F}_{i\pm\half}^{n}=F\left(\tilde{U}_{i\pm\half}^{n}(0)\right)\qquad\forall i\in I(E)}\label{eq:Godunov_scheme}
 \end{equation}
 
 \end_inset
@@ -1636,7 +1680,7 @@ reference "eq:Godunov_discretization"
 \end_layout
 
 \begin_layout Remark
-改进的 Godunov 格式是一种
+改进的 Godunov 格式是一种____
 \end_layout
 
 \begin_deeper
@@ -1657,7 +1701,7 @@ reference "eq:FVM_守恒型格式_一维"
 精确解
 \emph default
 计算近似通量 
-\begin_inset Formula $F_{i+\half}^{h}:=F\left(\tilde{U}_{i+\half}^{n}(0)\right)$
+\begin_inset Formula $F_{i\pm\half}^{h}:=F\left(\tilde{U}_{i\pm\half}^{n}(0)\right)$
 \end_inset
 
 ，即得 
@@ -1696,17 +1740,6 @@ TVD
 
 \begin_deeper
 \begin_layout Itemize
-提高单元内守恒变量的（插值）精度，沿这一方向可以很自然地导出《
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:DGM"
-
-\end_inset
-
-》。
-\end_layout
-
-\begin_layout Itemize
 提高局部 Riemannn 问题的求解效率，即《
 \begin_inset CommandInset ref
 LatexCommand nameref
@@ -1717,6 +1750,17 @@ reference "sec:近似-Riemann-解"
 》一节的内容。
 \end_layout
 
+\begin_layout Itemize
+提高单元内守恒变量的（插值）精度，沿这一方向可以很自然地导出《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:DGM"
+
+\end_inset
+
+》。
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1725,12 +1769,165 @@ reference "sec:近似-Riemann-解"
 
 \end_layout
 
-\begin_layout Section
-间断 Galerkin 方法
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:DGM"
+\begin_layout Subsection
+高维版本
+\end_layout
 
+\begin_layout Standard
+考虑最一般的守恒律方程（组）
+\begin_inset Formula 
+\[
+\partial_{t}U+\divg\vec{F}=0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $U$
+\end_inset
+
+ 可以是标量、向量、标量与向量的组合。仿照一维情形，假设：在 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ 时刻，守恒变量 
+\begin_inset Formula $U$
+\end_inset
+
+ 在每个控制体（单元）内按常数分布
+\begin_inset Formula 
+\[
+U(\vec{x},t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\qquad\forall i\in I(E)
+\]
+
+\end_inset
+
+于是，适用于一维问题的 Godunov 格式（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Godunov_scheme"
+
+\end_inset
+
+ 式）可以很自然地推广到高维问题：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\abs{E_{i}}}\oint_{S(E_{i})}\tilde{F}_{\nu}^{n}\dd{\Gamma}\qquad\forall i\in I(E)}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tilde{F}_{\nu}^{n}$
+\end_inset
+
+ 由局部 Riemann 问题的精确解给出：
+\end_layout
+
+\begin_layout Enumerate
+在控制面 
+\begin_inset Formula $S_{k}$
+\end_inset
+
+ 上任取一点 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+，以其两侧（第 
+\begin_inset Formula $n$
+\end_inset
+
+ 时间步）的状态为初始值，定义局部 Riemann 问题。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+该问题以 
+\begin_inset Formula $\xi:=(\vec{x}-\vec{s})\vdot\vec{\nu}(\vec{s})$
+\end_inset
+
+ 及 
+\begin_inset Formula $\tau:=t-t_{n}$
+\end_inset
+
+ 为自变量，以 
+\begin_inset Formula $\partial_{\tau}U+\partial_{\xi}F_{\nu}=0$
+\end_inset
+
+ 为其守恒律方程（组），其中 
+\begin_inset Formula $F_{\nu}:=\vec{\nu}\vdot\vec{F}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $U,F_{\nu}$
+\end_inset
+
+ 中含有向量在「全局坐标系下的分量」，则应将它们变换为（同一个向量）在「法向坐标系下的分量」。
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+利用上述 Riemann 问题的精确解 
+\begin_inset Formula $\tilde{U}_{\vec{s}}^{n}(\xi/\tau)$
+\end_inset
+
+ 计算法向通量 
+\begin_inset Formula $F_{\nu}\left(\tilde{U}_{\vec{s}}^{n}(0)\right)$
+\end_inset
+
+。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $S_{k}$
+\end_inset
+
+ 两侧的状态分别沿 
+\begin_inset Formula $S_{k}$
+\end_inset
+
+ 为常值，因此下标中的 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ 可以用 
+\begin_inset Formula $S_{k}$
+\end_inset
+
+ 代替，并以 
+\begin_inset Formula $F_{\nu}\left(\tilde{U}_{S_{k}}^{n}(0)\right)$
+\end_inset
+
+ 作为 
+\begin_inset Formula $\tilde{F}_{\nu}^{n}$
+\end_inset
+
+ 在 
+\begin_inset Formula $S_{k}$
+\end_inset
+
+ 上的取值。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\tilde{F}_{\nu}^{n}$
+\end_inset
+
+ 中含有向量在「法向坐标系下的分量」，则应将它们变换为（同一个向量）在「全局坐标系下的分量」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1757,6 +1954,142 @@ HLLC
 
 \begin_layout Subsection
 AUSM
+\end_layout
+
+\begin_layout Section
+间断 Galerkin 方法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DGM"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+插值基函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U^{h}(\vec{x},t)\approx\sum_{i=1}^{K}\hat{U}_{i}(t)\phi_{i}(\vec{x})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+对称弱形式
+\end_layout
+
+\begin_layout Standard
+微分方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{t}U+\divg\vec{F}=0\implies\int_{\Omega}\left(\partial_{t}U^{h}+\divg\vec{F}^{h}\right)V^{h}\dd{\Omega}=0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{\Omega}V^{h}\divg\vec{F}^{h}\dd{\Omega}=\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}^{h}V^{h}\dd{\Gamma}-\int_{\Omega}\vec{F}^{h}\vdot\grad V^{h}\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{\Omega}V^{h}\partial_{t}U^{h}\dd{\Omega} & =\sum_{k}\hat{V}_{k}\sum_{i}\left(\int_{\Omega}\psi_{k}\phi_{i}\dd{\Omega}\right)\dv{\hat{U}_{i}}{t}\\
+\int_{\Omega}\vec{F}^{h}\vdot\grad V^{h}\dd{\Omega} & =\sum_{k}\hat{V}_{k}\int_{\Omega}\left(\grad\psi_{k}\right)\vdot\vec{F}\left(U^{h}\right)\dd{\Omega}\\
+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}^{h}V^{h}\dd{\Gamma} & =\sum_{k}\hat{V}_{k}\oint_{\partial\Omega}\psi_{k}\tilde{F}_{\nu}\left(U_{-}^{h},U_{+}^{h}\right)\dd{\Gamma}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ip{\phi}{\psi}:=\int_{\Omega}\phi(\vec{x})\psi(\vec{x})\dd{\Omega}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}\ip{\psi_{1}}{\phi_{1}} & \cdots & \ip{\psi_{1}}{\phi_{K}}\\
+\vdots & \ddots & \vdots\\
+\ip{\psi_{K}}{\phi_{K}} & \cdots & \ip{\psi_{K}}{\phi_{K}}
+\end{bmatrix}}_{\Matrix{A}}\dv{t}\underbrace{\begin{bmatrix}\hat{U}_{1}\\
+\vdots\\
+\hat{U}_{K}
+\end{bmatrix}}_{\Matrix{U}}=\underbrace{\int_{\Omega}\begin{bmatrix}\grad\psi_{1}\\
+\vdots\\
+\grad\psi_{K}
+\end{bmatrix}\vdot\vec{F}\left(U^{h}\right)\dd{\Omega}-\oint_{\partial\Omega}\begin{bmatrix}\psi_{1}\\
+\vdots\\
+\psi_{K}
+\end{bmatrix}\tilde{F}_{\nu}\left(U_{-}^{h},U_{+}^{h}\right)\dd{\Gamma}}_{\Matrix{B(U)}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{t}\Matrix{U}=\Matrix{L(U)}\qquad\Matrix{L(U)}:=\Matrix{A}^{-1}\Matrix{B(U)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+时间推进
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{t}\Matrix{U}=\Matrix{L(U)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+三阶显式 Runge–Kutta：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\Matrix{U^{(1)}} & =\Matrix{U^{n}}+\Matrix{L^{n}}\Delta t\\
+\Matrix{U^{(2)}} & =\frac{3}{4}\Matrix{U^{n}}+\frac{1}{4}\left(\Matrix{U^{(1)}}+\Matrix{L^{(1)}}\Delta t\right)\\
+\Matrix{U^{n+1}} & =\frac{1}{3}\Matrix{U^{n}}+\frac{2}{3}\left(\Matrix{U^{(2)}}+\Matrix{L^{(2)}}\Delta t\right)
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
