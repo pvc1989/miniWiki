@@ -1431,110 +1431,357 @@ van Leer
 van Albada
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\frac{r^{2}+r}{1+r^{2}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-minmod
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\min\mod(r,1)=\begin{cases}
-\min(r,1) & r\ge0\\
-0 & r<0
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-superbee
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\max(0,\min(2r,1),\min(r,2))
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-MUSCL
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\max\left(0,\min\left(2r,\frac{r+1}{2},2\right)\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-alpha
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)
-\]
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Section
-MUSCL
+WENO 重构
 \end_layout
 
 \begin_layout Standard
-Monotone Upstream-centered Schemes for Conservation Laws
+「加权基本无振荡 (weighted essentially non-oscillatory, WENO)」技术包括两个关键步骤：
 \end_layout
 
-\begin_layout Section
-WENO
+\begin_layout Description
+间断识别 对于常见问题，解的间断面通常只穿过一小片单元，因而只有少量「坏单元 (troubled cell)」上的近似解需要被「限制 (limiting)」。
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+早期版本的 WENO 格式多采用简单的「min mod 指示器」来识别间断。这种指示器的计算效率很高，但容易将光滑极值点所在单元误报为坏单元。
+\end_layout
+
+\begin_layout Itemize
+近期出现的「KXRCF 指示器」降低了误报率，但要付出更多的计算量，好在这种计算量的增长只是常数意义下的。
+\end_layout
+
+\end_deeper
+\begin_layout Description
+高阶重构 利用（前一步识别出的）坏单元及其周边单元的信息，「重新构造 (reconstruct)」坏单元上的近似解。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+首先将这些单元分为若干组，在每一组上分别给出待选的高阶近似解。这一过程的实质是将好单元上的高阶近似解「外插 (extrapolate)」到坏单元上。
+\end_layout
+
+\begin_layout Itemize
+在坏单元上，对待选的高阶近似解按光滑度作加权平均，以得到基本无振荡的「较高阶」近似解。这一过程应当维持守恒性，即：确保各单元上的零阶近似值不变。
+\end_layout
+
+\begin_layout Itemize
+对于被误报的坏单元，上述重构过程依然能够给出较高阶的近似解，这是 WENO 技术对传统 TVD 限制器的一大改进。
+\end_layout
+
+\end_deeper
 \begin_layout Standard
-Weighted Essentially Non-Oscillatory
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-ENO
+间断识别
 \end_layout
 
 \begin_layout Standard
-Essentially Non-Oscillatory
+「光滑度指示器 (smoothness indicator)」
 \end_layout
 
 \begin_layout Subsection
-WENO
+一维重构
 \end_layout
 
 \begin_layout Standard
-Weighted ENO
+为求解一维标量守恒律
+\begin_inset Formula 
+\[
+\pdv{U}{t}+\pdv{F(U)}{x}=0\qc A(U):=\pdv{F}{U}
+\]
+
+\end_inset
+
+（在等距网格上）引入守恒型差分格式
+\begin_inset Formula 
+\[
+\left(\partial_{x}F\right)_{i}:=\eval{\pdv{F}{x}}_{i}\approx\frac{\hat{F}_{i+\half}-\hat{F}_{i-\half}}{h}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\hat{F}_{i\pm\half}$
+\end_inset
+
+ 为待构造的「数值通量」。不失一般性，下面只考虑 
+\begin_inset Formula $A(U_{i})>0$
+\end_inset
+
+ 的情形
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+对于 
+\begin_inset Formula $A(U_{i})<0$
+\end_inset
+
+ 的情形，只需将下标中紧跟在 
+\begin_inset Formula $i$
+\end_inset
+
+ 后面的加减号互换，例如 
+\begin_inset Formula $F_{i+1}$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $F_{i-1}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Subsubsection
+Jiang–Shu 五阶 WENO 格式
+\end_layout
+
+\begin_layout Standard
+在构造 
+\begin_inset Formula $\hat{F}_{i+\half}$
+\end_inset
+
+ 时，含有两个上游点、两个下游点的（五点）大模板
+\begin_inset Formula 
+\[
+S_{i}=(i-2,i-1,i,i+1,i+2)
+\]
+
+\end_inset
+
+被分解为三个（三点）小模板：
+\begin_inset Formula 
+\[
+S_{i}^{(1)}=(i-2,i-1,i)\qc S_{i}^{(2)}=(i-1,i,i+1)\qc S_{i}^{(3)}=(i,i+1,i+2)
+\]
+
+\end_inset
+
+它们可以构造出三种 
+\begin_inset Formula $\left(\partial_{x}F\right)_{i}$
+\end_inset
+
+ 的三阶近似，相应的数值通量依次为
+\begin_inset Formula 
+\[
+\hat{F}_{i+\half}^{(1)}=\frac{2F_{i-2}-7F_{i-1}+11F_{i}}{6}\qc\hat{F}_{i+\half}^{(2)}=\frac{-F_{i-1}+5F_{i}+2F_{i+1}}{6}\qc\hat{F}_{i+\half}^{(3)}=\frac{2F_{i}+5F_{i+1}-1F_{i+2}}{6}
+\]
+
+\end_inset
+
+它们的加权平均值可以用作（五点）大模板上的数值通量：
+\begin_inset Formula 
+\[
+\hat{F}_{i+\half}=w_{i}^{(1)}F_{i+\half}^{(1)}+w_{i}^{(2)}F_{i+\half}^{(2)}+w_{i}^{(3)}F_{i+\half}^{(3)}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $w_{i}^{(1)},w_{i}^{(2)},w_{i}^{(3)}$
+\end_inset
+
+ 是根据 
+\begin_inset Formula $F$
+\end_inset
+
+ 的光滑程度构造的非线性权重：
+\end_layout
+
+\begin_layout Itemize
+在充分光滑的区域，上述 
+\begin_inset Formula $\hat{F}_{i+\half}$
+\end_inset
+
+ 应当逼近（五点）大模板上的理想（五阶）格式：
+\begin_inset Formula 
+\[
+\hat{F}_{i+\half}=\frac{2F_{i-2}-13F_{i-1}+47F_{i}+27F_{i+1}-3F_{i+2}}{60}
+\]
+
+\end_inset
+
+这可以通过取理想权重来实现：
+\begin_inset Formula 
+\[
+\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}=\begin{bmatrix}w_{*}^{(1)} & w_{*}^{(2)} & w_{*}^{(3)}\end{bmatrix}:=\begin{bmatrix}\dfrac{1}{10} & \dfrac{6}{10} & \dfrac{3}{10}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在非光滑区域，被间断面穿过的小模板（不妨称其为「坏模板 (troubled stencil)」）上的权重应当接近零，但所有小模板的权重之和依然为一。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jiang–Shu 给出了一种具有上述性质的非线性权重构造方案：
+\end_layout
+
+\begin_layout Enumerate
+在小模板上构造以 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 为中心的二次 Taylor 展开式
+\begin_inset Formula 
+\[
+Q_{i}^{(k)}(x)=F_{i}+\eval{\pdv{F}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{F}{x}}_{i}^{(k)}\frac{(x-x_{i})^{2}}{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left(\partial_{x}F\right)_{i}^{(k)},\left(\partial_{x}^{2}F\right)_{i}^{(k)}$
+\end_inset
+
+ 分别表示由小模板 
+\begin_inset Formula $S_{i}^{(k)}$
+\end_inset
+
+ 给出的 
+\begin_inset Formula $\partial_{x}F,\partial_{x}^{2}F$
+\end_inset
+
+ 在 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 处的估计值。
+\end_layout
+
+\begin_layout Enumerate
+计算各个小模板的「光滑度量因子 (smoothness indicator)」
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}:=\int_{x_{i-\half}}^{x_{i}+\half}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{(k)}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{F}{x}}_{i}^{(k)}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{F}{x}}_{i}^{(k)}h^{2}\right)^{2}
+\]
+
+\end_inset
+
+具体的到 
+\begin_inset Formula $S_{i}^{(1)},S_{i}^{(2)},S_{i}^{(3)}$
+\end_inset
+
+ 上，分别有
+\begin_inset Formula 
+\[
+\begin{bmatrix}\beta_{i}^{(1)}\\
+\beta_{i}^{(2)}\\
+\beta_{i}^{(3)}
+\end{bmatrix}=\frac{1}{4}\begin{bmatrix}(F_{i-2}-4F_{i-1}+3F_{i})^{2}\\
+(F_{i-1}-F_{i+1})^{2}\\
+(3F_{i}-4F_{i+1}+F_{i+2})^{2}
+\end{bmatrix}+\frac{13}{12}\begin{bmatrix}(F_{i-2}-2F_{i-1}+F_{i})^{2}\\
+(F_{i-1}-2F_{i}+F_{i+1})^{2}\\
+(F_{i}-2F_{i+1}+F_{i+2})^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在光滑区域，它们都趋于同一个二阶小量（记作 
+\begin_inset Formula $\beta_{i}^{*}$
+\end_inset
+
+），并且相互之间的差为六阶小量：
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}=\underbrace{\left(\eval{\pdv{F}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{F}{x}}_{i}h^{2}\right)^{2}}_{\beta_{i}^{*}=\order{h^{2}}}+\order{h^{6}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在非光滑区域，坏模板给出的 
+\begin_inset Formula $Q_{i}^{(k)}$
+\end_inset
+
+ 偏离真实 Taylor 展开式较多，因此相应的 
+\begin_inset Formula $\beta_{i}^{(k)}=\order{1}\gg\order{h^{2}}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+构造非线性权重
+\begin_inset Formula 
+\[
+w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}^{(3)}}\qc\alpha_{i}^{(k)}=\frac{w_{*}^{(k)}}{\left(\beta_{i}^{(k)}+\varepsilon\right)^{2}}\qc\varepsilon=10^{-6}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在光滑区域，非线性权重接近理想权重，大模板上的 
+\begin_inset Formula $\hat{F}_{i+\half}$
+\end_inset
+
+ 具有五阶精度：
+\begin_inset Formula 
+\[
+w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\beta_{i}^{*})^{2}+\order{h^{8}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在非光滑区域，坏模板的实际权重（与其他小模板的权重相比）接近零，但大模板上的 
+\begin_inset Formula $\hat{F}_{i+\half}$
+\end_inset
+
+ 依然具有三阶精度。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+高维重构
 \end_layout
 
 \begin_layout Section
