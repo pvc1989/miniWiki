@@ -55,8 +55,8 @@
   - [Git](./programming/git.md#Git) + [GitHub](./programming/git.md#GitHub)
   - [GNU Make](./programming/make/README.md#GNU-Make) + [CMake](./programming/make/README.md#CMake)
 - 排版工具
-  - [Markdown](./programming/markdown.md)
-  - [LaTeX](./programming/latex/README.md)
+  - [Markdown](./programming/markdown.md) + [Typora](./programming/markdown.md#Typora)
+  - [LaTeX](./programming/latex/README.md) + [LyX](./programming/latex/README.md#LyX)
 
 ### 工具
 - [Gmsh](./tools/gmsh/README.md)
