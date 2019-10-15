@@ -119,15 +119,241 @@ name "chap:TensorAnalysis"
 \end_layout
 
 \begin_layout Standard
-线性变换的实质是利用旧的基向量 
-\begin_inset Formula $\left\{ \vec{a}_{i}\right\} _{i=1}^{n}$
+线性变换的实质是将旧的基向量 
+\begin_inset Formula $\left\{ \vec{b}_{i}\right\} _{i=1}^{n}$
 \end_inset
 
  重新组合为一组新的基向量 
-\begin_inset Formula $\left\{ \vec{\alpha}_{k}\right\} _{k=1}^{n}$
+\begin_inset Formula $\left\{ \vec{\beta}_{k}\right\} _{k=1}^{n}$
 \end_inset
 
-。
+：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\vec{\beta}_{1} & \cdots & \vec{\beta}_{n}\end{bmatrix}=\begin{bmatrix}\vec{b}_{1} & \cdots & \vec{b}_{n}\end{bmatrix}\begin{bmatrix}C_{1}^{1} & \cdots & C_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+C_{1}^{n} & \cdots & C_{n}^{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中「上标 (superscript)」与「下标 (subscript)」分别表示「行指标 (row index)」与「列指标 ( column
+ index)」，例如：
+\begin_inset Formula $C_{k}^{i}$
+\end_inset
+
+ 表示矩阵 
+\begin_inset Formula $\Matrix{C}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 行、第 
+\begin_inset Formula $k$
+\end_inset
+
+ 列。若 
+\begin_inset Formula $\Matrix{C}$
+\end_inset
+
+ 可逆，则存在相应的「逆变换」：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\vec{b}_{1} & \cdots & \vec{b}_{n}\end{bmatrix}=\begin{bmatrix}\vec{\beta}_{1} & \cdots & \vec{\beta}_{n}\end{bmatrix}\begin{bmatrix}(C^{-1})_{1}^{1} & \cdots & (C^{-1})_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+(C^{-1})_{1}^{n} & \cdots & (C^{-1})_{n}^{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+以下若未作特别说明，则默认上述逆变换存在。
+\end_layout
+
+\begin_layout Standard
+任意给定的向量 
+\begin_inset Formula $\vec{A}$
+\end_inset
+
+，既可以在 
+\begin_inset Formula $\left\{ \vec{b}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 上展开，又可以在 
+\begin_inset Formula $\left\{ \vec{\beta}_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 上展开：
+\begin_inset Formula 
+\[
+\vec{A}=\begin{bmatrix}\vec{b}_{1} & \cdots & \vec{b}_{n}\end{bmatrix}\begin{bmatrix}a^{1}\\
+\vdots\\
+a^{n}
+\end{bmatrix}=\begin{bmatrix}\vec{\beta}_{1} & \cdots & \vec{\beta}_{n}\end{bmatrix}\begin{bmatrix}\alpha^{1}\\
+\vdots\\
+\alpha^{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left\{ a^{i}\right\} _{i=1}^{n},\left\{ \alpha^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 分别称作向量 
+\begin_inset Formula $\vec{A}$
+\end_inset
+
+ 的在 
+\begin_inset Formula $\left\{ \vec{b}_{i}\right\} _{i=1}^{n},\left\{ \vec{\beta}_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 上的「分量 (component)」。将「基向量变换」代入上式：
+\begin_inset Formula 
+\[
+\vec{A}=\underbrace{\begin{bmatrix}\vec{b}_{1} & \cdots & \vec{b}_{n}\end{bmatrix}\begin{bmatrix}C_{1}^{1} & \cdots & C_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+C_{1}^{n} & \cdots & C_{n}^{n}
+\end{bmatrix}}_{\begin{bmatrix}\vec{\beta}_{1} & \cdots & \vec{\beta}_{n}\end{bmatrix}}\begin{bmatrix}\alpha^{1}\\
+\vdots\\
+\alpha^{n}
+\end{bmatrix}=\begin{bmatrix}\vec{b}_{1} & \cdots & \vec{b}_{n}\end{bmatrix}\underbrace{\begin{bmatrix}C_{1}^{1} & \cdots & C_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+C_{1}^{n} & \cdots & C_{n}^{n}
+\end{bmatrix}\begin{bmatrix}\alpha^{1}\\
+\vdots\\
+\alpha^{n}
+\end{bmatrix}}_{\begin{bmatrix}a^{1} & \cdots & a^{n}\end{bmatrix}^{\dagger}}
+\]
+
+\end_inset
+
+即得「向量分量变换」：
+\begin_inset Formula 
+\[
+\begin{bmatrix}a^{1}\\
+\vdots\\
+a^{n}
+\end{bmatrix}=\begin{bmatrix}C_{1}^{1} & \cdots & C_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+C_{1}^{n} & \cdots & C_{n}^{n}
+\end{bmatrix}\begin{bmatrix}\alpha^{1}\\
+\vdots\\
+\alpha^{n}
+\end{bmatrix}\qor\begin{bmatrix}\alpha^{1}\\
+\vdots\\
+\alpha^{n}
+\end{bmatrix}=\begin{bmatrix}(C^{-1})_{1}^{1} & \cdots & (C^{-1})_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+(C^{-1})_{1}^{n} & \cdots & (C^{-1})_{n}^{n}
+\end{bmatrix}\begin{bmatrix}a^{1}\\
+\vdots\\
+C^{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+可见：「向量分量变换」恰好与「基向量变换」具有相反的变换矩阵。由此引出定义：
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[协变、逆变]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:协变与逆变"
+
+\end_inset
+
+与基向量具有
+\emph on
+相同
+\emph default
+变换法则的对象称为「协变的 (covariant)」；与基向量具有
+\emph on
+相反
+\emph default
+变换法则的对象称为「逆变的 (contravariant)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+按照求和约定，「基向量变换」与「向量分量变换」可以由「矩阵形式」改写为「张量形式」：
+\begin_inset Formula 
+\[
+\vec{\beta}_{i}=C_{i}^{k}\vec{b}_{k}\qor\vec{b}_{i}=(C^{-1})_{i}^{k}\vec{\beta}_{k}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b^{i}=C_{k}^{i}\beta^{k}\qor\beta^{i}=(C^{-1})_{k}^{i}b^{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+按照上述定义 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:协变与逆变"
+
+\end_inset
+
+ 及求和约定：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+张量表达式中的「下标」与「上标」分别是「协变的」与「逆变的」，因此分别被称为「协变指标」与「逆变指标」。
+\end_layout
+
+\begin_layout Itemize
+到目前为止，所有的「基向量」都是「协变的」；后面将会对其作「升标」运算，得到「逆变基向量」。
+\end_layout
+
+\begin_layout Itemize
+任意向量在「协变基」上的分量都是「逆变的」，因此称这种分量为「逆变分量」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -147,11 +373,202 @@ name "chap:TensorAnalysis"
 \end_layout
 
 \begin_layout Subsection
-度量张量
+特殊张量
 \end_layout
 
-\begin_layout Subsection
-特殊符号
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Permutation Symbol]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\epsilon^{i_{1}\cdots i_{n}}=\epsilon_{i_{1}\cdots i_{n}}:=\begin{cases}
++1 & \texttt{\text{even permutation}}\\
+-1 & \texttt{\text{odd permutation}}\\
+0 & \texttt{else}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Determinant]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\det\begin{bmatrix}A_{1}^{1} & \cdots & A_{n}^{1}\\
+\vdots & \ddots & \vdots\\
+A_{1}^{n} & \cdots & A_{n}^{n}
+\end{bmatrix}:=\epsilon^{i_{1}\cdots i_{n}}A_{i_{1}}^{1}\cdots A_{i_{n}}^{n}\equiv\epsilon_{i_{1}\cdots i_{n}}A_{1}^{i_{1}}\cdots A_{n}^{i_{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cross Product in $
+\backslash
+mathbb{R}^3$]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vec{u}\times\vec{v}:=\epsilon_{ijk}\vec{e}_{i}u_{j}v_{k}\equiv\begin{vmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\\
+u_{1} & u_{2} & u_{3}\\
+v_{1} & v_{2} & v_{3}
+\end{vmatrix}\impliedby\begin{cases}
+\vec{e}_{j}\times\vec{e}_{k}:=\epsilon_{ijk}\vec{e}_{i}\\
+\vec{u}=u_{j}\vec{e}_{j}\\
+\vec{v}=v_{k}\vec{e}_{k}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Kronecker delta]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\delta_{k_{1}\cdots k_{n}}^{i_{1}\cdots i_{n}}:=\det\begin{bmatrix}\delta_{k_{1}}^{i_{1}} & \cdots & \delta_{k_{n}}^{i_{1}}\\
+\cdots & \cdots & \cdots\\
+\delta_{k_{1}}^{i_{n}} & \cdots & \delta_{k_{n}}^{i_{n}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+epsilon$--$
+\backslash
+delta$ Identity]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\epsilon^{i_{1}\cdots i_{n}}\epsilon_{k_{1}\cdots k_{n}}=\delta_{k_{1}\cdots k_{n}}^{i_{1}\cdots i_{n}}
+\]
+
+\end_inset
+
+特别地，若 
+\begin_inset Formula $n=3$
+\end_inset
+
+，且
+\begin_inset Formula 
+\[
+i_{1}=i,i_{2}=j,i_{3}=k\qc k_{1}=i,k_{2}=m,k_{3}=n
+\]
+
+\end_inset
+
+则有（其中 
+\begin_inset Formula $i$
+\end_inset
+
+ 不是求和指标）
+\begin_inset Formula 
+\[
+\epsilon^{ijk}\epsilon_{imn}=\delta_{imn}^{ijk}=\begin{vmatrix}\delta_{i}^{i} & 0 & 0\\
+0 & \delta_{m}^{j} & \delta_{n}^{j}\\
+0 & \delta_{m}^{k} & \delta_{n}^{k}
+\end{vmatrix}=\delta_{m}^{j}\delta_{n}^{k}-\delta_{m}^{k}\delta_{n}^{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -159,11 +576,1066 @@ name "chap:TensorAnalysis"
 \end_layout
 
 \begin_layout Subsection
+曲线坐标系
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[流形上的度量]
+\end_layout
+
+\end_inset
+
+在 
+\begin_inset Formula $m$
+\end_inset
+
+ 维内积空间 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 上任取一点 
+\begin_inset Formula $P=P(\vec{r})$
+\end_inset
+
+，在其邻域内定义一个曲线坐标系 
+\begin_inset Formula $\left\{ \theta^{i}\right\} _{i=1}^{n}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\vec{b}_{i}:=\pdv{\vec{r}}{\theta^{i}}\qc i=1,\dots,n
+\]
+
+\end_inset
+
+为过该点的切平面 
+\begin_inset Formula $T_{P}M$
+\end_inset
+
+ 的一组「协变基向量」，与之相应的 
+\begin_inset Formula $\left\{ \theta^{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 称作「逆变坐标」。利用 
+\begin_inset Formula $V$
+\end_inset
+
+ 的内积可以诱导出「流形上的度量」：
+\begin_inset Formula 
+\[
+g_{ik}:=\vec{b}_{i}\vdot\vec{b}_{k}\qc i,k=1,\dots,n
+\]
+
+\end_inset
+
+一般而言，
+\begin_inset Formula $\left\{ \vec{b}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\left\{ g_{ik}\right\} _{i,k=1}^{n}$
+\end_inset
+
+ 都是 
+\begin_inset Formula $\left\{ \theta^{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 的函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[流形上的几何]
+\end_layout
+
+\end_inset
+
+流形上的度量可以用来定义「长度」
+\begin_inset Formula 
+\[
+\abs{\dd\vec{r}}^{2}:=\dd{\vec{r}}\vdot\dd{\vec{r}}=\left(\pdv{\vec{r}}{\theta^{i}}\dd\theta^{i}\right)\vdot\left(\pdv{\vec{r}}{\theta^{k}}\dd\theta^{k}\right)=g_{ik}\dd{\theta^{i}}\dd{\theta^{k}}
+\]
+
+\end_inset
+
+及「夹角」
+\begin_inset Formula 
+\[
+\cos\angle(\dd{\vec{p}},\dd{\vec{q}}):=\frac{\dd{\vec{p}}\vdot\dd{\vec{q}}}{\abs{\dd{\vec{p}}}\cdot\abs{\dd{\vec{q}}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Euclidean]
+\end_layout
+
+\end_inset
+
+如果内积空间的一组（协变）基向量满足
+\begin_inset Formula 
+\[
+\vec{e}_{i}\vdot\vec{e}_{k}=\delta_{ik}\qc i,k=1,\dots,n
+\]
+
+\end_inset
+
+则称该空间为「Euclidean 空间」，与之相应的（位置向量的）协变分量 
+\begin_inset Formula $\left\{ x^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 称作「Cartesian 坐标」。
+\end_layout
+
+\begin_layout Definition
+如果存在从曲线坐标 
+\begin_inset Formula $\left\{ \theta^{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 到 Cartesian 坐标 
+\begin_inset Formula $\left\{ x^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 的光滑可逆变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}x^{1}\\
+\vdots\\
+x^{n}
+\end{bmatrix}=\begin{bmatrix}x^{1}(\theta^{1},\dots,\theta^{n})\\
+\vdots\\
+x^{n}(\theta^{1},\dots,\theta^{n})
+\end{bmatrix}\qc\Matrix{J_{\theta\to x}}:=\begin{bmatrix}\pdv*{x^{1}}{\theta^{1}} & \cdots & \pdv*{x^{1}}{\theta^{n}}\\
+\vdots & \ddots & \vdots\\
+\pdv*{x^{n}}{\theta^{1}} & \cdots & \pdv*{x^{n}}{\theta^{n}}
+\end{bmatrix}\qc\det\Matrix{J_{\theta\to x}}\ne0
+\]
+
+\end_inset
+
+则称度量
+\begin_inset Formula 
+\[
+g_{ik}\equiv\pdv{\vec{r}}{\theta^{i}}\vdot\pdv{\vec{r}}{\theta^{k}}=\sum_{j=1}^{n}\pdv{x^{j}}{\theta^{i}}\pdv{x^{j}}{\theta^{k}}\qc i,k=1,\dots,n
+\]
+
+\end_inset
+
+为一种「Euclidean 度量」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特殊张量]
+\end_layout
+
+\end_inset
+
+Euclidean 度量张量的协变、逆变、混合分量可以视作 Kronecker delta 在曲线坐标系上的推广：
+\begin_inset Formula 
+\[
+g_{ij}:=\pdv{x^{m}}{\theta^{i}}\pdv{x^{n}}{\theta^{j}}\delta_{mn}\qc g^{ij}:=\delta^{mn}\pdv{\theta^{i}}{x^{m}}\pdv{\theta^{j}}{x^{n}}\qc g_{j}^{i}:=\pdv{\theta^{i}}{x^{m}}\delta_{n}^{m}\pdv{x^{n}}{\theta^{j}}\equiv\delta_{j}^{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+相应的，置换符号 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 也可以推广到曲线坐标系：
+\begin_inset Formula 
+\[
+\varepsilon_{ijk}:=\epsilon_{lmn}\pdv{x^{l}}{\theta^{i}}\pdv{x^{m}}{\theta^{j}}\pdv{x^{n}}{\theta^{k}}\equiv\epsilon_{lmn}J_{\theta\to x}\qc\varepsilon^{ijk}:=\epsilon^{lmn}\pdv{\theta^{i}}{x^{l}}\pdv{\theta^{j}}{x^{m}}\pdv{\theta^{k}}{x^{n}}=\frac{\epsilon^{ijk}}{J_{\theta\to x}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[升标降标]
+\end_layout
+
+\end_inset
+
+可以验证：
+\begin_inset Formula $\Matrix{g_{ik}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{g^{ik}}$
+\end_inset
+
+ 互为逆矩阵，即
+\begin_inset Formula 
+\[
+g_{ij}g^{jk}=\delta_{i}^{k}\equiv\delta_{ik}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $g_{ik}$
+\end_inset
+
+ 与 
+\begin_inset Formula $g^{ik}$
+\end_inset
+
+ 可以分别用作「升标」与「降标」，例如：
+\begin_inset Formula 
+\[
+\vec{u}=u_{i}\vec{b}^{i}=u_{i}\underbrace{g^{ik}\vec{b}_{k}}_{\vec{b}^{i}}=\underbrace{u_{i}g^{ik}}_{u^{k}}\vec{b}_{k}=u^{k}\vec{b}_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[三维叉乘]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vec{b}_{i}\times\vec{b}_{j}=\varepsilon_{ijk}\vec{b}^{k}\qc\vec{b}^{i}\times\vec{b}^{j}=\varepsilon^{ijk}\vec{b}_{k}\qc i,j,k=1,2,3
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[物理分量]
+\end_layout
+
+\end_inset
+
+一般而言，协变基向量 
+\begin_inset Formula $\left\{ \vec{b}_{r}\right\} _{i=1}^{n}$
+\end_inset
+
+ 与逆变基向量 
+\begin_inset Formula $\left\{ \vec{b}^{r}\right\} _{i=1}^{n}$
+\end_inset
+
+ 不是单位向量，但是很容易构造出与之通向的单位基向量：
+\begin_inset Formula 
+\[
+\vec{e}_{r}=\frac{\vec{b}_{r}}{\abs{\vec{b}_{r}}}=\frac{\vec{b}_{r}}{\sqrt{g_{rr}}}\qc\vec{e}^{r}=\frac{\vec{b}^{r}}{\abs{\vec{b}^{r}}}=\frac{\vec{b}^{r}}{\sqrt{g^{rr}}}\qc r=1,\dots,n
+\]
+
+\end_inset
+
+于是，任意向量 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+既可以在协变基向量 
+\begin_inset Formula $\left\{ \vec{b}_{r}\right\} _{i=1}^{n}$
+\end_inset
+
+ 或逆变基向量 
+\begin_inset Formula $\left\{ \vec{b}^{r}\right\} _{i=1}^{n}$
+\end_inset
+
+ 上展开，相应的（逆变或协变）分量称作「张量分量」：
+\begin_inset Formula 
+\[
+\vec{u}=u^{r}\vec{b}_{r}=u_{r}\vec{b}^{r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+又可以在单位基向量 
+\begin_inset Formula $\left\{ \vec{e}_{r}\right\} _{i=1}^{n}$
+\end_inset
+
+或 
+\begin_inset Formula $\left\{ \vec{e}^{r}\right\} _{i=1}^{n}$
+\end_inset
+
+ 上展开：相应的分量称作「物理分量」：
+\begin_inset Formula 
+\[
+\vec{u}=\sum_{r=1}^{n}u^{r}\sqrt{g_{rr}}\vec{e}_{r}=\sum_{r=1}^{n}u_{r}\sqrt{g^{rr}}\vec{e}^{r}
+\]
+
+\end_inset
+
+一般而言，物理分量不再是协变或逆变的。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Pseudo-Euclidean]
+\end_layout
+
+\end_inset
+
+如果内积空间的一组（协变）基向量满足
+\begin_inset Formula 
+\[
+\vec{e}_{i}\vdot\vec{e}_{k}=\begin{cases}
++1 & i=k\in[1,p]\\
+-1 & i=k\in(p,n]\\
+0 & i\ne k
+\end{cases}
+\]
+
+\end_inset
+
+则称该空间为「伪 Euclidean 空间」，与之相应的（位置向量的）协变分量 
+\begin_inset Formula $\left\{ x^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 称作「伪 Cartesian 坐标」。
+\end_layout
+
+\begin_layout Definition
+如果存在从曲线坐标 
+\begin_inset Formula $\left\{ \theta^{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 到伪 Cartesian 坐标 
+\begin_inset Formula $\left\{ x^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 的光滑可逆变换，则称度量
+\begin_inset Formula 
+\[
+g_{ij}\equiv\pdv{\vec{r}}{\theta^{i}}\vdot\pdv{\vec{r}}{\theta^{j}}=\sum_{k=1}^{p}\pdv{x^{k}}{\theta^{i}}\pdv{x^{k}}{\theta^{j}}-\sum_{k=p+1}^{n}\pdv{x^{k}}{\theta^{i}}\pdv{x^{k}}{\theta^{j}}
+\]
+
+\end_inset
+
+为一种「伪 Euclidean 度量」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 协变导数
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[第二类 Christoffel 符号]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pdv{\vec{b}_{i}}{\theta^{j}}=\Gamma_{ij}^{k}\vec{b}_{k}\qc\pdv{\vec{b}^{i}}{\theta^{j}}=-\Gamma_{jk}^{i}\vec{b}^{k}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Gamma_{jk}^{i}:=\frac{g^{i\sigma}}{2}\left(\pdv{g_{\sigma k}}{\theta^{j}}+\pdv{g_{j\sigma}}{\theta^{k}}-\pdv{g_{jk}}{\theta^{\sigma}}\right)
+\]
+
+\end_inset
+
+称为「第二类 Christoffel 符号」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[向量的协变导数]
+\end_layout
+
+\end_inset
+
+向量 
+\begin_inset Formula $\vec{u}=u^{j}\vec{b}_{j}=u_{j}\vec{b}^{j}$
+\end_inset
+
+ 的协变导数定义为
+\begin_inset Formula 
+\[
+\nabla_{i}u^{j}=\partial_{i}u^{j}+\Gamma_{ik}^{j}u^{k}\qc\nabla_{i}u_{j}=\partial_{i}u_{j}-\Gamma_{ij}^{k}u_{k}
+\]
+
+\end_inset
+
+二者分别表示 
+\begin_inset Formula $\partial_{i}\vec{u}$
+\end_inset
+
+ 在协变基 
+\begin_inset Formula $\vec{b}_{j}$
+\end_inset
+
+ 与逆变基 
+\begin_inset Formula $\vec{b}^{j}$
+\end_inset
+
+ 上的逆变分量与协变分量：
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{i}\vec{u}\equiv\pdv{\vec{u}}{\theta^{i}} & =\pdv{\theta^{i}}\left(u^{j}\vec{b}_{j}\right)=\pdv{u^{j}}{\theta^{i}}\vec{b}_{j}+u^{j}\pdv{\vec{b}_{j}}{\theta^{i}}=\left(\pdv{u^{j}}{\theta^{i}}+u^{k}\Gamma_{ik}^{j}\right)\vec{b}_{j}=\left(\nabla_{i}u^{j}\right)\vec{b}_{j}\\
+ & =\pdv{\theta^{i}}\left(u_{j}\vec{b}^{j}\right)=\pdv{u_{j}}{\theta^{i}}\vec{b}^{j}+u_{j}\pdv{\vec{b}^{j}}{\theta^{i}}=\left(\pdv{u_{j}}{\theta^{i}}+u_{k}\Gamma_{ij}^{k}\right)\vec{b}^{j}=\left(\nabla_{i}u_{j}\right)\vec{b}^{j}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[张量的协变导数]
+\end_layout
+
+\end_inset
+
+张量分量 
+\begin_inset Formula $T_{k_{1}\cdots k_{q}}^{i_{1}\cdots i_{p}}$
+\end_inset
+
+ 的协变导数定义为
+\begin_inset Formula 
+\[
+\begin{aligned}\nabla_{j}T_{k_{1}\cdots k_{q}}^{i_{1}\cdots i_{p}}:=\partial_{j}T_{k_{1}\cdots k_{q}}^{i_{1}\cdots i_{p}} & +\left(\Gamma_{j\sigma}^{i_{1}}T_{k_{1}\cdots k_{q}}^{\sigma i_{2}\cdots i_{p}}+\cdots+\Gamma_{j\sigma}^{i_{p}}T_{k_{1}\cdots k_{q}}^{i_{1}\cdots i_{p-1}\sigma}\right)\\
+ & -\left(\Gamma_{jk_{1}}^{\sigma}T_{\sigma k_{2}\cdots k_{q}}^{i_{1}\cdots i_{p}}+\cdots+\Gamma_{\sigma k_{q}}^{k}T_{k_{1}\cdots k_{q-1}\sigma}^{i_{1}\cdots i_{p}}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 微分算符
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\[
+\nabla_{i}\vec{b}_{j}=\vec{0}\qc\nabla_{i}\vec{b}^{j}=\vec{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[梯度算符]
+\end_layout
+
+\end_inset
+
+一般曲线坐标系 
+\begin_inset Formula $\left\{ \theta^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 中的「梯度算符 (gradient operator)」定义为
+\begin_inset Formula 
+\[
+\grad=\vec{b}^{k}\pdv{\theta^{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lame 系数]
+\end_layout
+
+\end_inset
+
+如果 
+\begin_inset Formula $\left\{ \theta^{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 是（非退化的）正交曲线坐标系，即 
+\begin_inset Formula $i\ne k\implies g_{ik}=0$
+\end_inset
+
+，则可引入 Lame 系数（其中 
+\begin_inset Formula $i$
+\end_inset
+
+ 不是求和指标）：
+\begin_inset Formula 
+\[
+h_{i}:=\sqrt{g_{ii}}\equiv\sqrt{\pdv{\vec{r}}{\theta^{i}}\vdot\pdv{\vec{r}}{\theta^{i}}}\qc i=1,\dots,n
+\]
+
+\end_inset
+
+并将协变基归一化（其中 
+\begin_inset Formula $i$
+\end_inset
+
+ 不是求和指标）：
+\begin_inset Formula 
+\[
+\vec{e}_{i}:=\frac{\vec{b}_{i}}{\abs{\vec{b}_{i}}}\equiv\frac{\vec{b}_{i}}{\sqrt{g_{ii}}}\equiv\frac{\vec{b}_{i}}{h_{i}}\qc i=1,\dots,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[标量的散度]
+\end_layout
+
+\end_inset
+
+标量 
+\begin_inset Formula $u$
+\end_inset
+
+ 的「梯度 (gradient)」
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在一般曲线坐标系中写作
+\begin_inset Formula 
+\[
+\grad{u}=\vec{b}^{k}\pdv{u}{\theta^{k}}\equiv\vec{b}_{i}g^{ik}\pdv{u}{\theta^{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在正交曲线坐标系中写作
+\begin_inset Formula 
+\[
+\grad{u}=\vec{b}_{i}g^{ik}\pdv{u}{\theta^{k}}\equiv\sum_{k}\frac{\vec{e}_{k}}{h_{k}}\pdv{u}{\theta^{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[向量的散度]
+\end_layout
+
+\end_inset
+
+向量 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 的「散度 (divergence)」在一般曲线坐标系中写作
+\begin_inset Formula 
+\[
+\divg\vec{u}=\left(\vec{b}^{i}\partial_{i}\right)\vdot\left(\vec{b}_{j}u^{j}\right)=\nabla_{k}u^{k}=\frac{1}{\sqrt{g}}\pdv{\left(\sqrt{g}u^{k}\right)}{\theta^{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+代入协变导数的定义，即得
+\begin_inset Formula 
+\[
+\nabla_{k}u^{k}=\sum_{k}\left(\pdv{u^{k}}{\theta^{k}}+\sum_{i}\Gamma_{ki}^{k}u^{i}\right)=\sum_{k}\left[\left(\pdv{\theta^{k}}+\sum_{i}\Gamma_{ik}^{i}\right)u^{k}\right]
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\sum_{i}\Gamma_{ik}^{i}=\sum_{i,\sigma}\frac{g^{i\sigma}}{2}\left(\pdv{g_{\sigma k}}{\theta^{i}}+\pdv{g_{i\sigma}}{\theta^{k}}-\pdv{g_{ik}}{\theta^{\sigma}}\right)=\sum_{i,\sigma}\frac{g^{i\sigma}}{2}\pdv{g_{i\sigma}}{\theta^{k}}=\frac{1}{2g}\sum_{i,\sigma}g^{i\sigma}g\pdv{g_{i\sigma}}{\theta^{k}}
+\]
+
+\end_inset
+
+为获得 
+\begin_inset Formula $g^{i\sigma}g$
+\end_inset
+
+，将 
+\begin_inset Formula $g\equiv\det\Matrix{g_{ik}}$
+\end_inset
+
+ 按第 
+\begin_inset Formula $i$
+\end_inset
+
+ 行展开，即 
+\begin_inset Formula $\det\Matrix{g_{ik}}=\sum_{k}g_{ik}G_{ik}$
+\end_inset
+
+，其中 
+\begin_inset Formula $G_{ik}$
+\end_inset
+
+ 是 
+\begin_inset Formula $g_{ik}$
+\end_inset
+
+ 的「代数余子式 (cofactor)」。由 
+\begin_inset Formula $\Matrix{g_{ik}}$
+\end_inset
+
+ 的「逆矩阵」与「伴随矩阵」的关系
+\begin_inset Formula 
+\[
+\Matrix{g^{ik}}=\Matrix{g_{ik}}^{-1}=\left(\det\Matrix{g_{ik}}\right)^{-1}\Matrix{G_{ik}}^{\dagger}=g^{-1}\Matrix{G_{ki}}=g^{-1}\Matrix{G_{ik}}
+\]
+
+\end_inset
+
+可以证得
+\begin_inset Formula 
+\[
+G_{ik}=g^{ik}g\implies\sum_{i}\Gamma_{ik}^{i}=\frac{1}{2g}\pdv{g}{\theta^{k}}=\frac{1}{\sqrt{g}}\pdv{\sqrt{g}}{\theta^{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Laplacian 算符]
+\end_layout
+
+\end_inset
+
+「Laplacian 算符」是梯度算符与散度算符的复合：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在一般曲线坐标系中写作
+\begin_inset Formula 
+\[
+\laplacian{u}=\divg\grad{u}=\frac{1}{\sqrt{g}}\pdv{\theta^{i}}\left(\sqrt{g}g^{ij}\pdv{u}{\theta^{j}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在正交曲线坐标系中写作
+\begin_inset Formula 
+\[
+\laplacian{u}=\sum_{i}\frac{1}{\sqrt{g}}\pdv{\theta^{i}}\left(\frac{\sqrt{g}}{g_{ii}}\pdv{u}{\theta^{i}}\right)=\sum_{i}\frac{1}{h_{1}\cdots h_{n}}\pdv{\theta^{i}}\left(\frac{h_{1}\cdots h_{n}}{h_{i}^{2}}\pdv{u}{\theta^{i}}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Laplacian 算符
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在三维「柱 (cylindrical) 坐标系」
+\begin_inset Formula 
+\[
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}=\begin{bmatrix}r\cos\theta\\
+r\sin\theta\\
+z
+\end{bmatrix}\implies\begin{bmatrix}h_{r}\\
+h_{\theta}\\
+h_{z}
+\end{bmatrix}=\begin{bmatrix}1\\
+r\\
+1
+\end{bmatrix}\implies\sqrt{g}=r
+\]
+
+\end_inset
+
+下写作
+\begin_inset Formula 
+\[
+\begin{aligned}\laplacian u & =\frac{1}{r}\pdv{r}\left(\frac{r}{1}\pdv{u}{r}\right)+\frac{1}{r}\pdv{\theta}\left(\frac{r}{r^{2}}\pdv{u}{\theta}\right)+\frac{1}{r}\pdv{z}\left(\frac{r}{1}\pdv{u}{z}\right)\\
+ & =\pdv{^{2}u}{r^{2}}+\frac{1}{r}\pdv{u}{r}+\frac{1}{r^{2}}\pdv{^{2}u}{\theta^{2}}+\pdv{^{2}u}{z^{2}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在三维「球 (spherical) 坐标系」
+\begin_inset Formula 
+\[
+\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}=\begin{bmatrix}r\sin\theta\cos\phi\\
+r\sin\theta\sin\phi\\
+r\cos\theta
+\end{bmatrix}\implies\begin{bmatrix}h_{r}\\
+h_{\theta}\\
+h_{\phi}
+\end{bmatrix}=\begin{bmatrix}1\\
+r\\
+r\sin\theta
+\end{bmatrix}\implies\sqrt{g}=r^{2}\sin\theta
+\]
+
+\end_inset
+
+下写作
+\begin_inset Formula 
+\[
+\begin{aligned}\laplacian u & =\frac{1}{r^{2}}\pdv{r}\left(r^{2}\pdv{u}{r}\right)+\frac{1}{r^{2}\sin\theta}\pdv{\theta}\left(\sin\theta\pdv{u}{\theta}\right)+\frac{1}{r^{2}\sin^{2}\theta}\pdv{^{2}u}{\phi^{2}}\\
+ & =\pdv{^{2}u}{r^{2}}+\frac{2}{r}\pdv{u}{r}+\frac{1}{r^{2}}\pdv{^{2}u}{\theta^{2}}+\frac{\cot\theta}{r^{2}}\pdv{u}{\theta}+\frac{1}{r^{2}\sin^{2}\theta}\pdv{^{2}u}{\phi^{2}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[三维向量的旋度]
+\end_layout
+
+\end_inset
+
+三维向量 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 的「旋度 (curl)」
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在一般曲线坐标系中，用张量分量 
+\begin_inset Formula $\vec{u}=\vec{b}^{k}u_{k}$
+\end_inset
+
+ 写作
+\begin_inset Formula 
+\[
+\curl\vec{u}=\left(\vec{b}^{j}\partial_{j}\right)\times\left(\vec{b}^{k}u_{k}\right)=\frac{\epsilon^{ijk}}{\pm\sqrt{g}}\vec{b}_{i}\nabla_{j}u_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在正交曲线坐标系中，用物理分量 
+\begin_inset Formula $\vec{u}=\vec{e}^{k}u_{k}$
+\end_inset
+
+ 写作
+\begin_inset Formula 
+\[
+\curl\vec{u}=\frac{\pm}{h_{1}h_{2}h_{3}}\begin{vmatrix}h_{1}\vec{e}^{1} & h_{2}\vec{e}^{2} & h_{3}\vec{e}^{3}\\
+\pdv*{\theta^{1}} & \pdv*{\theta^{2}} & \pdv*{\theta^{3}}\\
+h_{1}u_{1} & h_{2}u_{2} & h_{3}u_{3}
+\end{vmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+其中 
+\begin_inset Formula $\pm$
+\end_inset
+
+ 表示（局部）坐标系的「取向 (orientation)」：右手坐标系取 
+\begin_inset Formula $+$
+\end_inset
+
+，左手坐标系取 
+\begin_inset Formula $-$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
