@@ -12,6 +12,7 @@
 \usetikzlibrary{intersections}
 \usetikzlibrary{arrows.meta}
 
+\RequirePackage{accents}  % more accents
 % fonts
 %% STIX Math: https://github.com/stipub/stixfonts
 %% Neo Euler: % https://github.com/khaledhosny/euler-otf
@@ -37,6 +38,7 @@
   \setmathfont{STIX Two Math}[
     math-style = ISO,
     bold-style = ISO,
+    sans-style = italic,
     nabla = italic,
     StylisticSet={3},
   ]
@@ -81,8 +83,10 @@
 %% algebra
 \let\oldvec\vec
 \renewcommand{\vec}[1]{\oldvec{\symbf{#1}}}
+\renewcommand{\vdot}{\vysmblkcircle}
 \newcommand{\Tensor}[1]{\oldvec{\oldvec{\symbf{#1}}}}
-\newcommand{\Operator}[1]{\hat{\symbf{#1}}}
+\renewcommand{\Tensor}[1]{\undertilde{\symbf{#1}}}
+\newcommand{\Operator}[1]{\hat{\symbfsf{#1}}}
 \newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
 %% calculus
 \let\divg\divergence  % unicode-math will overwrite \div
