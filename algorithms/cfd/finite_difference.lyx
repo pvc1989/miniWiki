@@ -128,7 +128,7 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-From Taylor Expansion
+基于 Taylor 展开
 \end_layout
 
 \begin_layout Subsubsection*
@@ -137,7 +137,7 @@ Choose A Stencil
 
 \begin_layout Standard
 Given nodal values of function 
-\begin_inset Formula $u(x)$
+\begin_inset Formula $U(x)$
 \end_inset
 
  on 
@@ -149,12 +149,12 @@ uniformly
 \end_inset
 
 , denoted as 
-\begin_inset Formula $u_{i}:=u(x_{i})$
+\begin_inset Formula $U_{i}:=U(x_{i})$
 \end_inset
 
 .
  Using a linear scheme, 
-\begin_inset Formula $\dv*[p]{u}{x}$
+\begin_inset Formula $\dv*[p]{U}{x}$
 \end_inset
 
  at 
@@ -165,7 +165,7 @@ uniformly
  nodes:
 \begin_inset Formula 
 \begin{equation}
-\eval{\dv[p]{u}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}u_{k}=\sum_{s\in S_{i}}a_{i+s}^{(p)}u_{i+s}\label{eq:GeneralLinearScheme}
+\eval{\dv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}=\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:GeneralLinearScheme}
 \end{equation}
 
 \end_inset
@@ -192,11 +192,11 @@ support
 
 \begin_layout Example*
 Suppose nodal values 
-\begin_inset Formula $u_{i-1},u_{i},u_{i+1}$
+\begin_inset Formula $U_{i-1},U_{i},U_{i+1}$
 \end_inset
 
  are chosen to approximate 
-\begin_inset Formula $\eval{\dv{u}{x}}_{i}$
+\begin_inset Formula $\eval{\dv{U}{x}}_{i}$
 \end_inset
 
 , then 
@@ -220,13 +220,13 @@ Perform Taylor expansion centered at
 \end_inset
 
  for 
-\begin_inset Formula $\left\{ u_{i+s}\right\} _{s\in S_{i}}$
+\begin_inset Formula $\left\{ U_{i+s}\right\} _{s\in S_{i}}$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-u_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}
+U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}
 \]
 
 \end_inset
@@ -245,7 +245,7 @@ reference "eq:GeneralLinearScheme"
 :
 \begin_inset Formula 
 \[
-\eval{\pdv[p]{u}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{u}{x}}_{i}\frac{\Delta x^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{\Delta x^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
 \]
 
 \end_inset
@@ -259,7 +259,7 @@ Solve Linear Equations
 
 \begin_layout Standard
 By balancing coefficients of 
-\begin_inset Formula $\eval{\pdv[r]{u}{x}}_{i}$
+\begin_inset Formula $\eval{\pdv[r]{U}{x}}_{i}$
 \end_inset
 
  for each 
@@ -378,9 +378,9 @@ noprefix "false"
  is then
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i} & =u_{i}\\
-\eval{\dv{u}{x}}_{i} & \approx\frac{u_{i+1}-u_{i-1}}{2\Delta x}\\
-\eval{\dv[2]{u}{x}}_{i} & \approx\frac{u_{i}-2u_{i+1}+u_{i+2}}{\Delta x^{2}}
+\begin{aligned}U_{i} & =U_{i}\\
+\eval{\dv{U}{x}}_{i} & \approx\frac{U_{i+1}-U_{i-1}}{2\Delta x}\\
+\eval{\dv[2]{U}{x}}_{i} & \approx\frac{U_{i}-2U_{i+1}+U_{i+2}}{\Delta x^{2}}
 \end{aligned}
 \]
 
@@ -401,7 +401,7 @@ lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={
 \end_layout
 
 \begin_layout Subsection
-From Lagrange Interpolation
+基于 Lagrange 插值
 \end_layout
 
 \begin_layout Subsubsection*
@@ -424,7 +424,7 @@ Perform Lagrange Interpolation
 
 \begin_layout Standard
 Perform Lagrange interpolation for 
-\begin_inset Formula $u(x)$
+\begin_inset Formula $U(x)$
 \end_inset
 
  in the neighborhood of 
@@ -434,7 +434,7 @@ Perform Lagrange interpolation for
 :
 \begin_inset Formula 
 \[
-u(x)\approx\sum_{k\in I_{i}}u_{k}L_{k}(x)
+U(x)\approx\sum_{k\in I_{i}}U_{k}L_{k}(x)
 \]
 
 \end_inset
@@ -464,7 +464,7 @@ Approximate Derivatives
 
 \begin_layout Standard
 The derivatives of 
-\begin_inset Formula $u(x)$
+\begin_inset Formula $U(x)$
 \end_inset
 
  can be obtained easily from the derivatives of 
@@ -474,8 +474,8 @@ The derivatives of
 :
 \begin_inset Formula 
 \[
-\begin{aligned}\dv[p]{u(x)}{x} & \approx\sum_{k\in I_{i}}u_{k}\dv[p]{L_{i}(x)}{x}\\
-\eval{\dv[p]{u}{x}}_{i} & \approx\sum_{k\in I_{i}}u_{k}\dv[p]{L_{k}(x_{i})}{x}
+\begin{aligned}\dv[p]{U(x)}{x} & \approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{i}(x)}{x}\\
+\eval{\dv[p]{U}{x}}_{i} & \approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{k}(x_{i})}{x}
 \end{aligned}
 \]
 
@@ -485,7 +485,7 @@ The derivatives of
 \end_layout
 
 \begin_layout Subsection
-Conservative Schemes
+守恒型格式
 \end_layout
 
 \begin_layout Section
@@ -493,13 +493,12 @@ Conservative Schemes
 \end_layout
 
 \begin_layout Subsection
-Explicit v.
- Implicit
+显式 & 隐式
 \end_layout
 
 \begin_layout Standard
 Given 
-\begin_inset Formula $\left\{ u_{i}^{n}\right\} _{i\in I}$
+\begin_inset Formula $\left\{ U_{i}^{n}\right\} _{i\in I}$
 \end_inset
 
  (and those on previous time steps if necessary).
@@ -508,7 +507,7 @@ Given
 explicit
 \emph default
 , if 
-\begin_inset Formula $\left\{ u_{i}^{n+1}\right\} _{i\in I}$
+\begin_inset Formula $\left\{ U_{i}^{n+1}\right\} _{i\in I}$
 \end_inset
 
  can be calculated directly without solving algebraic equations; otherwise,
@@ -518,7 +517,7 @@ implicit.
 \end_layout
 
 \begin_layout Subsection
-Semi-Discretization
+半离散格式
 \end_layout
 
 \begin_layout Standard
@@ -541,7 +540,7 @@ in which,
 \end_inset
 
  is the column (or row) matrix of 
-\begin_inset Formula $u(t,x_{i})$
+\begin_inset Formula $U(t,x_{i})$
 \end_inset
 
 , then choose a time marching scheme for it.
@@ -579,7 +578,7 @@ which is implicit.
 \end_layout
 
 \begin_layout Subsubsection*
-Runge--Kutta
+Runge–Kutta
 \end_layout
 
 \begin_layout Standard
@@ -602,69 +601,140 @@ U^{n+1} & =\frac{1}{3}U^{n}+\frac{2}{3}\left(U^{(2)}+F^{(2)}\Delta t\right)
 
 \end_layout
 
+\begin_layout Section
+时空耦合格式
+\end_layout
+
+\begin_layout Standard
+一般而言，由 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶空间格式与 
+\begin_inset Formula $q$
+\end_inset
+
+ 阶时间格式组合所得的「时空耦合格式」具有 
+\begin_inset Formula $\min(p,q)$
+\end_inset
+
+ 阶精度（如 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:LaxFriedrichs"
+
+\end_inset
+
+）。但在一些特殊情况下，即使时间格式仅有一阶精度，也有可能构造出时空二阶格式（如 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:WarmingBeam"
+
+\end_inset
+
+、
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:WarmingBeam"
+
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+不失一般性，本节假设线性单波方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0
+\]
+
+\end_inset
+
+中的系数 
+\begin_inset Formula $A>0$
+\end_inset
+
+，并引入记号 
+\begin_inset Formula $\sigma:=A\Delta t/\Delta x$
+\end_inset
+
+。
+\end_layout
+
 \begin_layout Subsection
-Coupled Schemes
+Godunov–Riemann
 \end_layout
 
 \begin_layout Standard
-
-\emph on
-Coupled
-\emph default
- means spatial and temporal schemes are chosen together.
- With some carefully selected spatial schemes, some coupled schemes may
- have 2nd order accuracy, even though the temporal scheme is only 1st order
- accurate.
-\end_layout
-
-\begin_layout Standard
-Assume 
-\begin_inset Formula $c>0$
-\end_inset
-
- and denote 
-\begin_inset Formula $\sigma:=c\Delta t/\Delta x$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsubsection*
-1st Order Upwind
-\end_layout
-
-\begin_layout Standard
-1st order 
-\emph on
-forward
-\emph default
- difference for 
+对于「线性单波方程」，分别用「一阶向前差分」与「一阶迎风差分」近似 
 \begin_inset Formula $\pdv*{t}$
 \end_inset
 
-, 1st order 
-\emph on
-upwind
-\emph default
- scheme for 
+ 与 
 \begin_inset Formula $\pdv*{x}$
 \end_inset
 
-:
+，即得「Godunov–Riemann 格式」，又称「一阶迎风格式」：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}=0
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i}^{n}-U_{i-1}^{n}}{\Delta x}=0
 \]
 
 \end_inset
 
-or equivalently in time marching form:
+通常将其改写为显式递推及守恒形式：
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}
+\begin{aligned}U_{i}^{n+1} & =(1-\sigma)U_{i}^{n}+\sigma U_{i-1}^{n}\\
+ & =U_{i}^{n}+\frac{\Delta t}{\Delta x}\left(F_{i-\nicefrac{1}{2}}^{\text{GR}}-F_{i+\nicefrac{1}{2}}^{\text{GR}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{GR}}:=AU_{i}^{n}
+\end{aligned}
+\]
+
+\end_inset
+
+对于更一般的「标量守恒律」，只需将数值通量推广为
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{\text{GR}}:=\tilde{F}_{i+\nicefrac{1}{2}}^{n}(0)\equiv F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0))
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0)$
+\end_inset
+
+ 表示局部 Riemann 问题
+\begin_inset Formula 
+\[
+\pdv{U}{t}+\pdv{F(U)}{x}=0\qc U(x,t=0)=\begin{cases}
+U_{i}^{n} & x<0\\
+U_{i+1}^{n} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $x/t=\pm0$
+\end_inset
+
+ 上的精确解。这里的 
+\begin_inset Formula $\pm$
+\end_inset
+
+ 是为了将 
+\begin_inset Formula $x/t=0$
+\end_inset
+
+ 恰好为间断面特殊情形纳入其中，可以证明：
+\begin_inset Formula 
+\[
+\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0)\ne\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0)\implies\tilde{F}_{i+\nicefrac{1}{2}}^{n}(-0)=\tilde{F}_{i+\nicefrac{1}{2}}^{n}(+0)
 \]
 
 \end_inset
@@ -672,101 +742,169 @@ u_{i}^{n+1}=(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}
 
 \end_layout
 
-\begin_layout Subsubsection*
-Lax--Wendroff
+\begin_layout Subsection
+Lax–Friedrichs
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:LaxFriedrichs"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-1st order 
-\emph on
-forward
-\emph default
- difference for 
+对于「线性单波方程」，分别用「一阶向前差分」与「二阶中心差分」近似 
 \begin_inset Formula $\pdv*{t}$
 \end_inset
 
-, 2nd order 
-\emph on
-centered
-\emph default
- difference for 
+ 与 
 \begin_inset Formula $\pdv*{x}$
 \end_inset
 
-, 2nd order 
-\emph on
-centered
-\emph default
- difference for 
-\begin_inset Formula $\pdv*[2]{x}$
+，再用 
+\begin_inset Formula $\nicefrac{1}{2}\qty(U_{i-1}^{n}+U_{i+1}^{n})$
 \end_inset
 
- in the artificial viscosity term:
+ 替换 
+\begin_inset Formula $U_{i}^{n}$
+\end_inset
+
+，即得「Lax–Friedrichs 格式」：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}}
+\frac{U_{i}^{n+1}-\nicefrac{1}{2}\qty(U_{i-1}^{n}+U_{i+1}^{n})}{\Delta t}+\frac{F_{i+1}^{n}-F_{i-1}^{n}}{2\Delta x}=0
 \]
 
 \end_inset
 
-or equivalently in time marching form:
-\begin_inset Formula 
-\[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2}+\sigma^{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-Beam–Warming
+通常将其改写为显式递推及守恒形式：
 \end_layout
 
 \begin_layout Standard
-1st order 
-\emph on
-forward
-\emph default
- difference for 
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i}^{n+1} & =\frac{1+\sigma}{2}U_{i-1}^{n}+\frac{1-\sigma}{2}U_{i+1}^{n}\\
+ & =U_{i}^{n}+\frac{\Delta t}{\Delta x}\left(F_{i-\nicefrac{1}{2}}^{\text{LF}}-F_{i+\nicefrac{1}{2}}^{\text{LF}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{LF}}:=\frac{\sigma+1}{2\sigma}F_{i}^{n}+\frac{\sigma-1}{2\sigma}F_{i+1}^{n}
+\end{aligned}
+\]
+
+\end_inset
+
+对于更一般的「标量守恒律」，只需将数值通量推广为
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{\text{LF}}:=\frac{F_{i}^{n}+F_{i+1}^{n}}{2}+\frac{\Delta x}{\Delta t}\frac{U_{i}^{n}-U_{i+1}^{n}}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Lax–Wendroff
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:LaxWendroff"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于「线性单波方程」，分别用「一阶向前差分」与「二阶中心差分」近似 
 \begin_inset Formula $\pdv*{t}$
 \end_inset
 
-, 2nd order 
-\emph on
-upwind
-\emph default
- scheme for 
+ 与 
 \begin_inset Formula $\pdv*{x}$
 \end_inset
 
-, 2nd order 
-\emph on
-upwind
-\emph default
- scheme for 
-\begin_inset Formula $\pdv*[2]{x}$
-\end_inset
-
- in the artificial viscosity term:
+，再补充由「二阶中心差分」近似的「人工黏性」项，即得「Lax–Wendroff 格式」：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i-2}^{n}-2u_{i-1}^{n}+u_{i}^{n}}{\Delta x^{2}}
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i+1}^{n}-U_{i-1}^{n}}{2\Delta x}=\frac{A^{2}\Delta t}{2}\frac{U_{i+1}^{n}-2U_{i}^{n}+U_{i-1}^{n}}{\Delta x^{2}}
 \]
 
 \end_inset
 
-or equivalently in time marching form:
+通常将其改写为显式递推及守恒形式：
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2}+\sigma^{2}\frac{u_{i-2}^{n}-2u_{i-1}^{n}+u_{i}^{n}}{2}
+\begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}+\sigma}{2}U_{i-1}^{n}+(1-\sigma^{2})U_{i}^{n}+\frac{\sigma^{2}-\sigma}{2}U_{i+1}^{n}\\
+ & =U_{i}^{n}+\frac{\Delta t}{\Delta x}\left(F_{i-\nicefrac{1}{2}}^{\text{LW}}-F_{i+\nicefrac{1}{2}}^{\text{LW}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{LW}}:=\dfrac{1+\sigma}{2}F_{i}^{n}+\dfrac{1-\sigma}{2}F_{i+1}^{n}
+\end{aligned}
+\]
+
+\end_inset
+
+对于更一般的「标量守恒律」，只需将数值通量推广为
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{\text{LW}}:=F\qty(U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}})\qc U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}}=\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{\Delta t}{\Delta x}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Warming–Beam
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:WarmingBeam"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于「线性单波方程」，分别用「一阶向前差分」与「二阶迎风差分」近似 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+，再补充由「二阶迎风差分」近似的「人工黏性」项，即得「Warming–Beam 格式」：
+\begin_inset Formula 
+\[
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i-2}^{n}-4U_{i-1}^{n}+3U_{i}^{n}}{2\Delta x}=\frac{A^{2}\Delta t}{2}\frac{U_{i-2}^{n}-2U_{i-1}^{n}+U_{i}^{n}}{\Delta x^{2}}
+\]
+
+\end_inset
+
+通常将其改写为显式递推及守恒形式：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}-\sigma}{2}U_{i-2}^{n}+(2\sigma-\sigma^{2})U_{i-1}^{n}+\frac{\sigma^{2}-3\sigma+2}{2}U_{i}^{n}\\
+ & =U_{i}^{n}+\frac{\Delta t}{\Delta x}\left(F_{i-\nicefrac{1}{2}}^{\text{WB}}-F_{i+\nicefrac{1}{2}}^{\text{WB}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{WB}}:=\frac{\sigma-1}{2}F_{i-1}^{n}+\frac{3-\sigma}{2}F_{i}^{n}
+\end{aligned}
+\]
+
+\end_inset
+
+对于更一般的「标量守恒律」，只需将数值通量推广为
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{\text{WB}}:=F\qty(U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}})\qc U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}}=\dfrac{U_{i-1}^{n}-U_{i}^{n}}{2}+\dfrac{\Delta t}{\Delta x}\dfrac{3F_{i-1}^{n}-F_{i}^{n}}{2}
 \]
 
 \end_inset
@@ -775,344 +913,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2}+\sigma
 \end_layout
 
 \begin_layout Section
-修正方程
-\end_layout
-
-\begin_layout Subsection
-Linear Advection Equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset CommandInset label
-LatexCommand label
-name "prob:LinearAdvectionEquation"
-
-\end_inset
-
-Solve the linear advection equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{u}{t}+c\pdv{u}{x}=0\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-The exact solution is
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}k(x-ct)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-By defining 
-\begin_inset Formula $\omega=kc$
-\end_inset
-
-, it can be written as
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Convection–Diffusion Equation
-\begin_inset CommandInset label
-LatexCommand label
-name "sect:ConvectionDiffusionEquation"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Problem
-Solve the linear convection–diffusion equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{u}{t}+c\pdv{u}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n]{u}{x}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-Since this equation degenerates to the linear advection equation when 
-\begin_inset Formula $\alpha_{n}\to0$
-\end_inset
-
- for all 
-\begin_inset Formula $n$
-\end_inset
-
-, it is intuitive to suppose the solution here has a similar form:
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $\omega$
-\end_inset
-
- depends on 
-\begin_inset Formula $c$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
- Derivatives in the PDE becomes
-\begin_inset Formula 
-\[
-\begin{aligned}\pdv{u}{t} & =-\sqrt{-1}\omega u\\
-\pdv{u}{x} & =\sqrt{-1}ku\\
-\pdv[2n]{u}{x} & =\left(\sqrt{-1}k\right)^{2n}u=\left(-k^{2}\right)^{n}u
-\end{aligned}
-\]
-
-\end_inset
-
-Substituting them into the PDE leads to
-\begin_inset Formula 
-\[
-\omega=kc-\frac{\gamma_{k}}{\sqrt{-1}}\qc\gamma_{k}:=\sum_{n=1}^{\infty}\alpha_{n}\left(-k^{2}\right)^{n}
-\]
-
-\end_inset
-
-So, the exact solution is
-\begin_inset Formula 
-\[
-u(t,x)=e^{\gamma_{k}t}e^{\sqrt{-1}k(x-ct)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-The factor 
-\begin_inset Formula $e^{\gamma_{k}t}$
-\end_inset
-
- indicates that the amplitude changes as 
-\begin_inset Formula $t$
-\end_inset
-
- grows.
- Whether the amplitude grows or attenuates depends on the sign of 
-\begin_inset Formula $\gamma_{k}$
-\end_inset
-
-, which then depends on 
-\begin_inset Formula $k$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-Convection–Dispersion Equation
-\begin_inset CommandInset label
-LatexCommand label
-name "sect:ConvectionDispersionEquation"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Problem
-Solve the linear convection–dispersion equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{u}{t}+c\pdv{u}{x}=-\sum_{n=1}^{\infty}\beta_{n}\pdv[2n+1]{u}{x}\qc x\in\text{\ensuremath{\mathbb{R}}}
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\text{\ensuremath{\mathbb{R}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-Suppose the exact solution still has the form
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}(kx-\omega t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $\omega$
-\end_inset
-
- depends on 
-\begin_inset Formula $c$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
- Derivatives in the PDE becomes
-\begin_inset Formula 
-\[
-\begin{aligned}\pdv{u}{t} & =-\sqrt{-1}\omega u\\
-\pdv{u}{x} & =\sqrt{-1}ku\\
-\pdv[2n+1]{u}{x} & =\left(\sqrt{-1}k\right)^{2n+1}u=\sqrt{-1}k\left(-k^{2}\right)^{n}u
-\end{aligned}
-\]
-
-\end_inset
-
-Substituting them into the PDE leads to
-\begin_inset Formula 
-\[
-\omega=kc_{k}\qc c_{k}:=c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}
-\]
-
-\end_inset
-
-So, the exact solution is
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}k(x-c_{k}t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-The propagation speed of the wave is no longer 
-\begin_inset Formula $c$
-\end_inset
-
- but
-\begin_inset Formula 
-\[
-\frac{\omega}{k}=c_{k}=c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}
-\]
-
-\end_inset
-
-which is called the 
-\noun on
-phase speed
-\noun default
-.
- If the initial wave profile contains more than one components, they will
- generally propagate with different speed.
- This phenomenon is known as 
-\noun on
-dispersion
-\noun default
-.
- However, information or energy propagates with another speed called the
- 
-\noun on
-group velocity
-\noun default
-:
-\begin_inset Formula 
-\[
-\dv{\omega}{k}=c+k\dv{c_{k}}{k}=c+\sum_{n=1}^{\infty}(2n+1)\beta_{n}\left(-k^{2}\right)^{n}
-\]
-
-\end_inset
-
-For details, see 
-\begin_inset CommandInset href
-LatexCommand href
-name "The Feynman Lectures on Physics, Volume I, Chapter 48"
-target "http://www.feynmanlectures.caltech.edu/I_48.html"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Section
-误差与精度
+误差 & 精度
 \end_layout
 
 \begin_layout Subsection
@@ -1124,7 +925,7 @@ literal "false"
 
 \begin_layout Standard
 Suppose 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  is the exact solution of Problem 
@@ -1135,7 +936,7 @@ reference "prob:LinearAdvectionEquation"
 \end_inset
 
  and 
-\begin_inset Formula $u^{h}$
+\begin_inset Formula $U^{h}$
 \end_inset
 
  is approximated one, both come from the same function space 
@@ -1144,7 +945,7 @@ reference "prob:LinearAdvectionEquation"
 
 .
  The error of 
-\begin_inset Formula $u^{h}$
+\begin_inset Formula $U^{h}$
 \end_inset
 
  is defined as the 
@@ -1152,11 +953,11 @@ reference "prob:LinearAdvectionEquation"
 distance
 \noun default
  between 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  and 
-\begin_inset Formula $u^{h}$
+\begin_inset Formula $U^{h}$
 \end_inset
 
 , if we have introduced a 
@@ -1169,7 +970,7 @@ metric
 \end_inset
 
 ; or as the norm of 
-\begin_inset Formula $\left(u^{h}-u\right)$
+\begin_inset Formula $\left(U^{h}-U\right)$
 \end_inset
 
 , if we have defined a 
@@ -1185,7 +986,7 @@ norm
  same topology, we can abstractly write the definition of error as
 \begin_inset Formula 
 \[
-\epsilon:=\norm{u^{h}-u}
+\epsilon:=\norm{U^{h}-U}
 \]
 
 \end_inset
@@ -1217,13 +1018,13 @@ For
 \end_inset
 
 -norm of 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  is defined as
 \begin_inset Formula 
 \[
-\norm{u}_{p}:=\left(\int_{\Omega}\abs{u(x_{1},\dots,x_{m})}^{p}\dd{\Omega}\right)^{1/p}
+\norm{U}_{p}:=\left(\int_{\Omega}\abs{U(x_{1},\dots,x_{m})}^{p}\dd{\Omega}\right)^{1/p}
 \]
 
 \end_inset
@@ -1241,33 +1042,33 @@ For
 \end_inset
 
 -norm of 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  is defined as
 \begin_inset Formula 
 \[
-\norm{u}_{\infty}:=\inf\left\{ C\ge0\colon\abs{u(x_{1},\dots,x_{m})}\le C\text{ for almost every }x\right\} 
+\norm{U}_{\infty}:=\inf_{C}\left\{ C\ge0\colon\abs{U(x_{1},\dots,x_{m})}\le C\text{ for almost every }x\right\} 
 \]
 
 \end_inset
 
 If 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  is bounded, the infimum of 
-\begin_inset Formula $\abs{u}$
+\begin_inset Formula $\abs{U}$
 \end_inset
 
 's upper bounds becomes the supremum of 
-\begin_inset Formula $\abs{u}$
+\begin_inset Formula $\abs{U}$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-\norm{u}_{\infty}:=\sup_{x\in\Omega}\abs{u(x_{1},\dots,x_{m})}
+\norm{U}_{\infty}:=\sup_{x\in\Omega}\abs{U(x_{1},\dots,x_{m})}
 \]
 
 \end_inset
@@ -1282,7 +1083,7 @@ which is the limit of the
 
 .
  If 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
  is continuous, then 
@@ -1305,16 +1106,13 @@ which is the limit of the
 
 \begin_layout Example
 In 1D space, if 
-\begin_inset Formula $u:[a,b]\to\mathbb{R}$
+\begin_inset Formula $U\colon[a,b]\to\mathbb{R}$
 \end_inset
 
  is bounded, the following three are commonly used:
 \begin_inset Formula 
 \[
-\begin{aligned}\norm{u}_{1} & :=\int_{a}^{b}\abs{u(x)}\dd{x}\\
-\norm{u}_{2} & :=\sqrt{\int_{a}^{b}\abs{u(x)}^{2}\dd{x}}\\
-\norm{u}_{\infty} & :=\sup_{x\in[a,b]}\abs{u(x)}
-\end{aligned}
+\norm{U}_{1}:=\int_{a}^{b}\abs{U(x)}\dd{x}\qc\norm{U}_{2}:=\sqrt{\int_{a}^{b}\abs{U(x)}^{2}\dd{x}}\qc\norm{U}_{\infty}:=\sup_{x\in[a,b]}\abs{U(x)}
 \]
 
 \end_inset
@@ -1327,7 +1125,7 @@ In numerical computation, however, functions are usually given as column
  matrices filled with nodal values, e.g.
 \begin_inset Formula 
 \[
-\left\{ u_{i}\right\} _{i=1}^{n}\qc u_{i}:=u(x_{i})\qc x_{i}:=a+ih\qc h:=\frac{b-a}{n}\qc i=0,1,\dots,n
+\left\{ U_{i}\right\} _{i=1}^{n}\qc U_{i}:=U(x_{i})\qc x_{i}:=a+ih\qc h:=\frac{b-a}{n}\qc i=0,1,\dots,n
 \]
 
 \end_inset
@@ -1335,11 +1133,11 @@ In numerical computation, however, functions are usually given as column
 The error is then approximated by any one of the following formulae:
 \begin_inset Formula 
 \[
-\begin{aligned}\norm{u^{h}-u}_{1} & \approx\sum_{i=0}^{n-1}\abs{u_{i}^{h}-u_{i}}h\approx\sum_{i=1}^{n}\abs{u_{i}^{h}-u_{i}}h\\
- & \approx\abs{u_{0}^{h}-u_{0}}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{u_{i}^{h}-u_{i}}h+\abs{u_{n}^{h}-u_{n}}\frac{h}{2}\\
-\norm{u^{h}-u}_{2} & \approx\sqrt{\sum_{i=0}^{n-1}\abs{u_{i}^{h}-u_{i}}^{2}h}\approx\sqrt{\sum_{i=1}^{n}\abs{u_{i}^{h}-u_{i}}^{2}h}\\
- & \approx\sqrt{\abs{u_{0}^{h}-u_{0}}^{2}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{u_{i}^{h}-u_{i}}^{2}h+\abs{u_{n}^{h}-u_{n}}^{2}\frac{h}{2}}\\
-\norm{u^{h}-u}_{\infty} & :=\max_{i=0}^{n}\abs{u_{i}^{h}-u_{i}}
+\begin{aligned}\norm{U^{h}-U}_{1} & \approx\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}h\approx\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}h\\
+ & \approx\abs{U_{0}^{h}-U_{0}}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{U_{i}^{h}-U_{i}}h+\abs{U_{n}^{h}-U_{n}}\frac{h}{2}\\
+\norm{U^{h}-U}_{2} & \approx\sqrt{\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}^{2}h}\approx\sqrt{\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}^{2}h}\\
+ & \approx\sqrt{\abs{U_{0}^{h}-U_{0}}^{2}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{U_{i}^{h}-U_{i}}^{2}h+\abs{U_{n}^{h}-U_{n}}^{2}\frac{h}{2}}\\
+\norm{U^{h}-U}_{\infty} & :=\max_{i=0}^{n}\abs{U_{i}^{h}-U_{i}}
 \end{aligned}
 \]
 
@@ -1360,7 +1158,7 @@ A scheme is said to be
 th order accurate, if
 \begin_inset Formula 
 \[
-\norm{u^{h}-u}=\order{h^{p}}=Ch^{p}+\order{h^{p+1}}
+\norm{U^{h}-U}=\order{h^{p}}=Ch^{p}+\order{h^{p+1}}
 \]
 
 \end_inset
@@ -1392,7 +1190,7 @@ For a linear scheme, the accuracy order can be derived easily from Taylor
  expansion.
  However, for a non-linear scheme, the derivation might be too complicated.
  In both cases, we can measure the accuracy order by fitting a 
-\begin_inset Formula $\ln\norm{u^{h}-u}$
+\begin_inset Formula $\ln\norm{U^{h}-U}$
 \end_inset
 
 -
@@ -1402,7 +1200,7 @@ For a linear scheme, the accuracy order can be derived easily from Taylor
  curve, which should look like a straight line:
 \begin_inset Formula 
 \[
-\ln\norm{u^{h}-u}=\ln C+p\ln h
+\ln\norm{U^{h}-U}=\ln C+p\ln h
 \]
 
 \end_inset
@@ -1433,6 +1231,817 @@ lstparams "language=Python"
 \end_layout
 
 \begin_layout Section
+修正方程 & 截断误差
+\end_layout
+
+\begin_layout Subsection
+线性单波
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:LinearAdvectionEquation"
+
+\end_inset
+
+Solve the linear advection equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+with the initial condition
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+The exact solution is
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\omega=kA$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性耗散
+\begin_inset CommandInset label
+LatexCommand label
+name "sect:LinearDiffusion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+Solve the linear convection–diffusion equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{U}{x}\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+with the initial condition
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+Since this equation degenerates to the linear advection equation when 
+\begin_inset Formula $\alpha_{n}\to0$
+\end_inset
+
+ for all 
+\begin_inset Formula $n$
+\end_inset
+
+, it is intuitive to suppose the solution here has a similar form:
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ depends on 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
+ Derivatives in the PDE becomes
+\begin_inset Formula 
+\[
+\pdv{U}{t}=-\sqrt{-1}\omega U\qc\pdv{U}{x}=\sqrt{-1}ku\qc\pdv[2n]{U}{x}=\left(\sqrt{-1}k\right)^{2n}U=\left(-k^{2}\right)^{n}U
+\]
+
+\end_inset
+
+Substituting them into the PDE leads to
+\begin_inset Formula 
+\[
+\omega=kA-\frac{B_{k}}{\sqrt{-1}}\qc B_{k}:=\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}
+\]
+
+\end_inset
+
+So, the exact solution is
+\begin_inset Formula 
+\[
+U(x,t)=\exp(B_{k}t)\exp(\sqrt{-1}(kx-kAt))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[耗散]
+\end_layout
+
+\end_inset
+
+The factor 
+\begin_inset Formula $\exp(B_{k}t)$
+\end_inset
+
+ indicates that the amplitude changes as 
+\begin_inset Formula $t$
+\end_inset
+
+ grows.
+ Whether the amplitude grows or attenuates depends on the sign of 
+\begin_inset Formula $B_{k}$
+\end_inset
+
+, which then depends on 
+\begin_inset Formula $k$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性色散
+\begin_inset CommandInset label
+LatexCommand label
+name "sect:LinearDispersion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+Solve the linear convection–dispersion equation
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=-\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n+1]{U}{x}\qc x\in\text{\ensuremath{\mathbb{R}}}
+\]
+
+\end_inset
+
+with the initial condition
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in\text{\ensuremath{\mathbb{R}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+Suppose the exact solution still has the form
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+in which, 
+\begin_inset Formula $\omega$
+\end_inset
+
+ depends on 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+.
+ Derivatives in the PDE becomes
+\begin_inset Formula 
+\[
+\pdv{U}{t}=-\sqrt{-1}\omega U\qc\pdv{U}{x}=\sqrt{-1}ku\qc\pdv[2n+1]{U}{x}=\left(\sqrt{-1}k\right)^{2n+1}U
+\]
+
+\end_inset
+
+Substituting them into the PDE leads to
+\begin_inset Formula 
+\[
+\omega=kA_{k}\qc A_{k}:=A+\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
+\]
+
+\end_inset
+
+So, the exact solution is
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\sqrt{-1}(kx-kA_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[色散]
+\end_layout
+
+\end_inset
+
+The propagation speed of the wave is no longer 
+\begin_inset Formula $A$
+\end_inset
+
+ but
+\begin_inset Formula 
+\[
+\frac{\omega}{k}=A_{k}=A+\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
+\]
+
+\end_inset
+
+which is called the 「相速度 (phase speed)」.
+ If the initial wave profile contains more than one components, they will
+ generally propagate with different speed.
+ This phenomenon is known as「色散 (dispersion)」.
+ However, information or energy propagates with another speed called the
+ 「群速度 (group velocity)」:
+\begin_inset Formula 
+\[
+\dv{\omega}{k}=A+k\dv{A_{k}}{k}=A+\sum_{n=1}^{\infty}(2n+1)\left(-k^{2}\right)^{n}\alpha_{n}
+\]
+
+\end_inset
+
+For details, see 
+\begin_inset CommandInset href
+LatexCommand href
+name "The Feynman Lectures on Physics, Volume I, Chapter 48"
+target "http://www.feynmanlectures.caltech.edu/I_48.html"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+修正方程
+\end_layout
+
+\begin_layout Standard
+考虑无界空间上的线性单波方程：
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+不失一般性，以一阶迎风格式
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i}^{n}-U_{i-1}^{n}}{h}\qc A>0
+\]
+
+\end_inset
+
+对其进行求解。由 Taylor 展开可得
+\begin_inset Formula 
+\[
+U_{i-1}^{n}=U_{i}^{n}+\eval{\pdv{U}{x}}_{i}h+\sum_{n=1}^{\infty}\eval{\pdv[2n]{U}{x}}_{i}\frac{h^{2n}}{(2n)!}+\sum_{n=1}^{\infty}\eval{\pdv[2n+1]{U}{x}}_{i}\frac{h^{2n+1}}{(2n+1)!}
+\]
+
+\end_inset
+
+由此导出「修正方程」
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=-\sum_{n=1}^{\infty}\left(\alpha_{n}\pdv[2n+1]{U}{x}+\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{U}{x}\right)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\alpha_{n}:=\frac{A}{h}\frac{h^{2n+1}}{(2n+1)!}>0\qc\beta_{n}:=\frac{A}{h}\frac{h^{2n}}{(2n)!}>0\qc\forall n\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+不失一般性，以「波数 (wave number)」为 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+ 的简谐波为上述修正方程的初始条件：
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+易得（见 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:LinearDiffusion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:LinearDispersion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 节）其精确解为
+\begin_inset Formula 
+\[
+U(x,t)=\exp(B_{k}t)\exp(\sqrt{-1}k\cdot(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in\mathbb{R}_{+}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{aligned}A_{k}-A & =\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}=A\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(kh\right)^{2n}}{(2n+1)!}\\
+B_{k} & =\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}=\frac{A}{h}\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(kh\right)^{2n}}{(2n)!}
+\end{aligned}
+\]
+
+\end_inset
+
+它们的符号分别由次数最低的项决定：
+\begin_inset Formula 
+\[
+-\alpha_{1}k^{2}=-\frac{Ah^{2}}{6}k^{2}<0\qc-\beta_{1}k^{2}=-\frac{Ah}{2}k^{2}<0
+\]
+
+\end_inset
+
+这两种误差分别称为：
+\end_layout
+
+\begin_layout Description
+色散误差 数值波速 
+\begin_inset Formula $A_{k}$
+\end_inset
+
+ 小于精确波速 
+\begin_inset Formula $A$
+\end_inset
+
+，并且波数 
+\begin_inset Formula $k$
+\end_inset
+
+ 越大，数值波速越慢。
+\end_layout
+
+\begin_layout Description
+耗散误差 振幅 
+\begin_inset Formula $\exp(B_{k}t)$
+\end_inset
+
+ 随时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 增长而衰减，并且波数 
+\begin_inset Formula $k$
+\end_inset
+
+ 越大，振幅衰减越快。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+修正波数
+\end_layout
+
+\begin_layout Standard
+有界空间上的线性单波方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(0,2L)
+\]
+
+\end_inset
+
+在周期边界条件
+\begin_inset Formula 
+\[
+U(x=0,t)=U(x=2L,t)\qc\forall t\in\mathbb{R}_{+}
+\]
+
+\end_inset
+
+和初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\sqrt{-1}k\pi\frac{x}{L})\qc k\in\mathbb{Z},\forall x\in[0,2L]
+\]
+
+\end_inset
+
+is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\sqrt{-1}k\pi\frac{x-At}{L})=A(t)\exp(\sqrt{-1}Kx)
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+K:=\frac{k\pi}{L}\qc A(t):=\exp(-\sqrt{-1}KAt)
+\]
+
+\end_inset
+
+So, the exact spatial derivative is
+\begin_inset Formula 
+\[
+\pdv{U}{x}=\sqrt{-1}KU
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Divide 
+\begin_inset Formula $[0,2L]$
+\end_inset
+
+ into 
+\begin_inset Formula $N$
+\end_inset
+
+ equal-length pieces:
+\begin_inset Formula 
+\[
+x_{i}:=i\Delta x\qc h:=\frac{2L}{N}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+The periodic condition then becomes
+\begin_inset Formula 
+\[
+U_{0}(t)=U_{N}(t)\qc\forall t\in\mathbb{R}_{+}
+\]
+
+\end_inset
+
+In general, a linear spatial scheme can be written as
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\frac{1}{h}\sum_{s}b_{s}U_{i+s}
+\]
+
+\end_inset
+
+Suppose
+\begin_inset Formula 
+\[
+U_{i}(t)=\exp(\sqrt{-1}Kx_{i})\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\[
+U_{i+s}(t)=U_{i}(t)\exp(\sqrt{-1}sKh)
+\]
+
+\end_inset
+
+So, the approximated spatial derivative is the product of 
+\begin_inset Formula $U_{i}$
+\end_inset
+
+ and a complex number 
+\begin_inset Formula $K'$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx K'U_{i}\qc K':=\frac{1}{h}\sum_{s}b_{s}\exp(\sqrt{-1}sKh)
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $K'$
+\end_inset
+
+ has the same dimension as 
+\begin_inset Formula $K$
+\end_inset
+
+, it is justified to call it the 
+\noun on
+modified wave number
+\noun default
+ of the spatial scheme.
+ For later use, we shall denote
+\begin_inset Formula 
+\[
+K_{\Re}':=\Re(K')=\frac{1}{h}\sum_{s}b_{s}\cos(sKh)\qc K_{\Im}':=\Im(K')=\frac{1}{h}\sum_{s}b_{s}\sin(sKh)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose the IC is calculated exactly on each 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+U_{i}(t=0)=\exp(\sqrt{-1}Kx_{i})\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+The semi-discrete scheme becomes
+\begin_inset Formula 
+\[
+\dv{U_{i}(t)}{t}+AK'U_{i}(t)=0
+\]
+
+\end_inset
+
+whose solution is
+\begin_inset Formula 
+\[
+U_{i}(t)=\exp(-K'At)\underbrace{\exp(\sqrt{-1}Kx_{i})}_{U_{i}(t=0)}
+\]
+
+\end_inset
+
+The approximated solution of the original PDE is then
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i}(t) & =\underbrace{\exp(-K_{\Re}'At)\exp(-\sqrt{-1}K_{\Im}'At)}_{\exp(-K'At)}\exp(\sqrt{-1}Kx_{i})\\
+ & =\exp(-K_{\Re}'At)\exp(\sqrt{-1}(Kx_{i}-K_{\Im}'At))\\
+ & =\exp(B_{K}t)\exp(\sqrt{-1}K\cdot(x_{i}-A_{K}t))
+\end{aligned}
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+A_{K}:=A\frac{\Im(K')}{K}=\frac{A}{Kh}\sum_{s}b_{s}\sin(sKh)\qc B_{K}:=-A\Re(K')=-\frac{A}{h}\sum_{s}b_{s}\cos(sKh)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一阶迎风]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i}-U_{i-1}}{h}\qc A>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{0}=1\qc b_{-1}=-1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+K'h=1-\cos(Kh)+\sqrt{-1}\sin(Kh)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二阶迎风]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\frac{3U_{i}-4U_{i-1}+U_{i-2}}{2h}\qc A>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+K'h=\frac{3-4\cos(Kh)+\cos(2Kh)}{2}+\sqrt{-1}\frac{0+4\sin(Kh)-\sin(2Kh)}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 稳定性
 \end_layout
 
@@ -1455,6 +2064,13 @@ As
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The concrete expression of the stability condition depends on both the original
  PDE and the scheme.
  The approach adopted in the following examples is given by von Neumann,
@@ -1462,14 +2078,18 @@ The concrete expression of the stability condition depends on both the original
 \end_layout
 
 \begin_layout Subsection
-First Order Upwind
+ODE 稳定性
+\end_layout
+
+\begin_layout Subsection
+PDE 稳定性
 \end_layout
 
 \begin_layout Theorem
 When apply the 1st order upwind scheme
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+c\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}=0
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i}^{n}-U_{i-1}^{n}}{\Delta x}=0
 \]
 
 \end_inset
@@ -1487,7 +2107,7 @@ noprefix "false"
 , the stability condition is
 \begin_inset Formula 
 \[
-0<\frac{c\Delta t}{\Delta x}<1
+0<\frac{A\Delta t}{\Delta x}<1
 \]
 
 \end_inset
@@ -1535,8 +2155,8 @@ Denote the error measured at
  Apply Discrete Fourier Transform (DFT) on it:
 \begin_inset Formula 
 \[
-\begin{aligned}E_{i}^{n} & =\sum_{k=-\lceil\frac{N-1}{2}\rceil}^{\lfloor\frac{N-1}{2}\rfloor}\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}\qc i=0,1,\dots,N\\
-\hat{E}_{k}^{n} & =\frac{1}{N}\sum_{i=1}^{N}E_{i}^{n}e^{-\sqrt{-1}kx_{i}}\qc k=-\lceil\frac{N-1}{2}\rceil,\dots,-1,0,1,\dots,\lfloor\frac{N-1}{2}\rfloor
+\begin{aligned}E_{i}^{n} & =\sum_{k=-\left\lceil \frac{N-1}{2}\right\rceil }^{\left\lfloor \frac{N-1}{2}\right\rfloor }\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}\qc i=0,1,\dots,N\\
+\hat{E}_{k}^{n} & =\frac{1}{N}\sum_{i=1}^{N}E_{i}^{n}e^{-\sqrt{-1}kx_{i}}\qc k=-\left\lceil \frac{N-1}{2}\right\rceil ,\dots,-1,0,1,\dots,\left\lfloor \frac{N-1}{2}\right\rfloor 
 \end{aligned}
 \]
 
@@ -1584,7 +2204,7 @@ th component
  into the scheme, we have
 \begin_inset Formula 
 \[
-\frac{\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}}{\Delta t}+c\frac{\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i-1}}}{\Delta x}=0
+\frac{\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}}{\Delta t}+A\frac{\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i-1}}}{\Delta x}=0
 \]
 
 \end_inset
@@ -1604,7 +2224,7 @@ the growing factor for the
 th component is then
 \begin_inset Formula 
 \[
-G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}k\Delta x}\qc\sigma:=\frac{c\Delta t}{\Delta x}
+G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}k\Delta x}\qc\sigma:=\frac{A\Delta t}{\Delta x}
 \]
 
 \end_inset
@@ -1643,12 +2263,8 @@ which can be simplified to
 
 \end_layout
 
-\begin_layout Subsection
-Lax–Wendroff
-\end_layout
-
 \begin_layout Section
-相容性与收敛性
+相容性 & 收敛性
 \end_layout
 
 \begin_layout Subsection
@@ -1695,7 +2311,7 @@ status open
 The Lax–Wendroff scheme
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}}
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+a\frac{U_{i+1}^{n}-U_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{U_{i+1}^{n}-2U_{i}^{n}+U_{i-1}^{n}}{\Delta x^{2}}
 \]
 
 \end_inset
@@ -1716,14 +2332,14 @@ Perform Taylor expansion at
 \end_inset
 
  for each nodal value of 
-\begin_inset Formula $u$
+\begin_inset Formula $U$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =u_{i}^{n}+\eval{\pdv{u}{t}}_{i}\Delta t+\eval{\pdv[2]{u}{t}}_{i}\frac{\Delta t^{2}}{2!}+\eval{\pdv[3]{u}{t}}_{i}\frac{\Delta t^{3}}{3!}+\order{\Delta t^{4}}\\
-u_{i\pm1}^{n} & =u_{i}^{n}\pm\eval{\pdv{u}{x}}_{i}\Delta x+\eval{\pdv[2]{u}{x}}_{i}\frac{\Delta x^{2}}{2!}\pm\eval{\pdv[3]{u}{x}}_{i}\frac{\Delta x^{3}}{3!}+\eval{\pdv[4]{u}{x}}_{i}\frac{\Delta x^{4}}{4!}\pm\order{\Delta x^{5}}
+\begin{aligned}U_{i}^{n+1} & =U_{i}^{n}+\eval{\pdv{U}{t}}_{i}\Delta t+\eval{\pdv[2]{U}{t}}_{i}\frac{\Delta t^{2}}{2!}+\eval{\pdv[3]{U}{t}}_{i}\frac{\Delta t^{3}}{3!}+\order{\Delta t^{4}}\\
+U_{i\pm1}^{n} & =U_{i}^{n}\pm\eval{\pdv{U}{x}}_{i}\Delta x+\eval{\pdv[2]{U}{x}}_{i}\frac{\Delta x^{2}}{2!}\pm\eval{\pdv[3]{U}{x}}_{i}\frac{\Delta x^{3}}{3!}+\eval{\pdv[4]{U}{x}}_{i}\frac{\Delta x^{4}}{4!}\pm\order{\Delta x^{5}}
 \end{aligned}
 \]
 
@@ -1732,9 +2348,9 @@ u_{i\pm1}^{n} & =u_{i}^{n}\pm\eval{\pdv{u}{x}}_{i}\Delta x+\eval{\pdv[2]{u}{x}}_
 Substitute them into the scheme:
 \begin_inset Formula 
 \[
-\begin{aligned}\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t} & =\eval{\pdv{u}{t}}_{i}+\eval{\pdv[2]{u}{t}}_{i}\frac{\Delta t}{2}+\eval{\pdv[3]{u}{t}}_{i}\frac{\Delta t^{2}}{6}+\order{\Delta t^{3}}\\
-\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x} & =\eval{\pdv{u}{x}}_{i}+\eval{\pdv[3]{u}{x}}_{i}\frac{\Delta x^{2}}{6}+\order{\Delta x^{3}}\\
-\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}} & =\eval{\pdv[2]{u}{x}}_{i}+\eval{\pdv[4]{u}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}
+\begin{aligned}\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t} & =\eval{\pdv{U}{t}}_{i}+\eval{\pdv[2]{U}{t}}_{i}\frac{\Delta t}{2}+\eval{\pdv[3]{U}{t}}_{i}\frac{\Delta t^{2}}{6}+\order{\Delta t^{3}}\\
+\frac{U_{i+1}^{n}-U_{i-1}^{n}}{2\Delta x} & =\eval{\pdv{U}{x}}_{i}+\eval{\pdv[3]{U}{x}}_{i}\frac{\Delta x^{2}}{6}+\order{\Delta x^{3}}\\
+\frac{U_{i+1}^{n}-2U_{i}^{n}+U_{i-1}^{n}}{\Delta x^{2}} & =\eval{\pdv[2]{U}{x}}_{i}+\eval{\pdv[4]{U}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}
 \end{aligned}
 \]
 
@@ -1743,9 +2359,9 @@ Substitute them into the scheme:
 The modified PDE is then
 \begin_inset Formula 
 \[
-\begin{aligned}\eval{\pdv{u}{t}}_{i}+a\eval{\pdv{u}{x}}_{i} & =\frac{a^{2}\Delta t}{2}\left(\cancel{\eval{\pdv[2]{u}{x}}_{i}}+\eval{\pdv[4]{u}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}\right)\\
- & -a\left(\eval{\pdv[3]{u}{x}}_{i}\frac{\Delta x^{2}}{6}+\order{\Delta x^{3}}\right)\\
- & -\left(\cancel{\eval{\pdv[2]{u}{t}}_{i}\frac{\Delta t}{2}}+\eval{\pdv[3]{u}{t}}_{i}\frac{\Delta t^{2}}{6}+\order{\Delta t^{3}}\right)
+\begin{aligned}\eval{\pdv{U}{t}}_{i}+a\eval{\pdv{U}{x}}_{i} & =\frac{a^{2}\Delta t}{2}\left(\cancel{\eval{\pdv[2]{U}{x}}_{i}}+\eval{\pdv[4]{U}{x}}_{i}\frac{\Delta x^{2}}{12}+\order{\Delta x^{3}}\right)\\
+ & -a\left(\eval{\pdv[3]{U}{x}}_{i}\frac{\Delta x^{2}}{6}+\order{\Delta x^{3}}\right)\\
+ & -\left(\cancel{\eval{\pdv[2]{U}{t}}_{i}\frac{\Delta t}{2}}+\eval{\pdv[3]{U}{t}}_{i}\frac{\Delta t^{2}}{6}+\order{\Delta t^{3}}\right)
 \end{aligned}
 \]
 
@@ -1754,7 +2370,7 @@ The modified PDE is then
 in which, we have used the fact
 \begin_inset Formula 
 \[
-\frac{a^{2}\Delta t}{2}\eval{\pdv[2]{u}{x}}_{i}-\eval{\pdv[2]{u}{t}}_{i}\frac{\Delta t}{2}=\frac{\Delta t}{2}\left(a^{2}\pdv[2]{u}{x}-\pdv[2]{u}{t}\right)_{i}=0
+\frac{a^{2}\Delta t}{2}\eval{\pdv[2]{U}{x}}_{i}-\eval{\pdv[2]{U}{t}}_{i}\frac{\Delta t}{2}=\frac{\Delta t}{2}\left(a^{2}\pdv[2]{U}{x}-\pdv[2]{U}{t}\right)_{i}=0
 \]
 
 \end_inset
@@ -1792,7 +2408,7 @@ name "thm:pthOrderAccuracyCondition"
 A linear scheme
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=\sum_{k\in K}b_{k}u_{i+k}^{n}
+U_{i}^{n+1}=\sum_{k\in K}b_{k}U_{i+k}^{n}
 \]
 
 \end_inset
@@ -1810,7 +2426,7 @@ th order accurate in space and time, iff
 \end_inset
 
 in which 
-\begin_inset Formula $\sigma:=c\Delta t/\Delta x$
+\begin_inset Formula $\sigma:=A\Delta t/\Delta x$
 \end_inset
 
 .
@@ -1833,7 +2449,7 @@ The key idea of the proof is to find the scheme's modified PDE, and set
  To find the modified PDE, insert the Taylor expansions into the scheme:
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(\Delta t)^{r}}{r!}\pdv[r]{u}{t}=\sum_{k\in K}b_{k}\left(u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(k\Delta x)^{r}}{r!}\pdv[r]{u}{x}\right)\label{eq:TaylorExpansionForLinearScheme}
+U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(\Delta t)^{r}}{r!}\pdv[r]{U}{t}=\sum_{k\in K}b_{k}\left(U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(k\Delta x)^{r}}{r!}\pdv[r]{U}{x}\right)\label{eq:TaylorExpansionForLinearScheme}
 \end{equation}
 
 \end_inset
@@ -1841,7 +2457,7 @@ u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(\Delta t)^{r}}{r!}\pdv[r]{u}{t}=\sum_{k\in K
 which should finally be written as
 \begin_inset Formula 
 \[
-\pdv{u}{t}+c\pdv{u}{x}=\order{\Delta t^{p},\Delta x^{p}}
+\pdv{U}{t}+A\pdv{U}{x}=\order{\Delta t^{p},\Delta x^{p}}
 \]
 
 \end_inset
@@ -1859,7 +2475,7 @@ reference "eq:pthOrderAccuracyCondition"
 
  are actually the consistency conditions of the scheme: (i) The coefficients
  of 
-\begin_inset Formula $u_{i}^{n}$
+\begin_inset Formula $U_{i}^{n}$
 \end_inset
 
  on both sides should be balanced, i.e.
@@ -1871,17 +2487,17 @@ reference "eq:pthOrderAccuracyCondition"
 \end_inset
 
 (ii) The coefficients of 
-\begin_inset Formula $\pdv*{u}{t}$
+\begin_inset Formula $\pdv*{U}{t}$
 \end_inset
 
  and 
-\begin_inset Formula $\pdv*{u}{x}$
+\begin_inset Formula $\pdv*{U}{x}$
 \end_inset
 
  should have the same ratio as those in the original PDE, which leads to
 \begin_inset Formula 
 \[
-\sum_{k\in K}b_{k}k=-\frac{c\Delta t}{\Delta x}=-\sigma
+\sum_{k\in K}b_{k}k=-\frac{A\Delta t}{\Delta x}=-\sigma
 \]
 
 \end_inset
@@ -1900,7 +2516,7 @@ reference "eq:TaylorExpansionForLinearScheme"
  becomes a modified PDE with time derivatives on the RHS:
 \begin_inset Formula 
 \[
-\pdv{u}{t}+c\pdv{u}{x}=\frac{1}{\Delta t}\sum_{r=2}^{\infty}\frac{1}{r!}\left(\sum_{k\in K}b_{k}\left(k\Delta x\pdv{x}\right)^{r}-\left(\Delta t\pdv{t}\right)^{r}\right)
+\pdv{U}{t}+A\pdv{U}{x}=\frac{1}{\Delta t}\sum_{r=2}^{\infty}\frac{1}{r!}\left(\sum_{k\in K}b_{k}\left(k\Delta x\pdv{x}\right)^{r}-\left(\Delta t\pdv{t}\right)^{r}\right)
 \]
 
 \end_inset
@@ -1916,7 +2532,7 @@ To clarify the derivation, we shall introduce three differential operators:
 with which, the modified PDE can be written in a compact form:
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}u+\sigma\partial_{x}u=\partial_{T}u\label{eq:ModifiedPdeWithTimeDerivatives}
+\partial_{t}U+\sigma\partial_{x}U=\partial_{T}U\label{eq:ModifiedPdeWithTimeDerivatives}
 \end{equation}
 
 \end_inset
@@ -2009,10 +2625,10 @@ Put this representation of
 , we have
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\partial_{t}u+\sigma\partial_{x}u & =\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}u-\partial_{t}^{r}u}{r!}\\
- & =\sum_{r=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{r}-\left(-\sigma\right)^{r}}{r!}\partial_{x}^{r}u\\
- & -\sum_{r=2}^{\infty}\frac{\left(-\sigma\right)^{r-1}}{\left(r-1\right)!}\sum_{m=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{m}-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}u\\
- & +\order{\partial_{T}^{2}u}
+\begin{aligned}\partial_{t}U+\sigma\partial_{x}U & =\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}U-\partial_{t}^{r}U}{r!}\\
+ & =\sum_{r=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{r}-\left(-\sigma\right)^{r}}{r!}\partial_{x}^{r}U\\
+ & -\sum_{r=2}^{\infty}\frac{\left(-\sigma\right)^{r-1}}{\left(r-1\right)!}\sum_{m=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{m}-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}U\\
+ & +\order{\partial_{T}^{2}U}
 \end{aligned}
 \label{eq:ModifiedPdeWithoutTimeDerivatives}
 \end{equation}
@@ -2108,413 +2724,6 @@ stability
  convergency
 \noun default
 .
-\end_layout
-
-\begin_layout Section
-耗散与色散
-\end_layout
-
-\begin_layout Subsection
-数值实验
-\end_layout
-
-\begin_layout Subsection
-截断误差的影响
-\end_layout
-
-\begin_layout Standard
-To study the effect of the truncation error of a spatial scheme, we shall
- adopt 
-\emph on
-semi-discrete
-\emph default
- analysis, which assumes temporal derivatives are calculated exactly.
-\end_layout
-
-\begin_layout Standard
-Take the 1st order upwind scheme
-\begin_inset Formula 
-\[
-\eval{\pdv{u}{x}}_{i}\approx\frac{u_{i}^{n}-u_{i-1}^{n}}{\Delta x}\qc c>0
-\]
-
-\end_inset
-
-as an example.
- Inserting Taylor expansion
-\begin_inset Formula 
-\[
-u_{i-1}^{n}=u_{i}^{n}+\eval{\pdv{u}{x}}_{i}\Delta x+\sum_{n=1}^{\infty}\eval{\pdv[2n]{u}{x}}_{i}\frac{(-\Delta x)^{2n}}{(2n)!}+\sum_{n=1}^{\infty}\eval{\pdv[2n+1]{u}{x}}_{i}\frac{(-\Delta x)^{2n+1}}{(2n+1)!}
-\]
-
-\end_inset
-
-into the scheme leads to the modified PDE
-\begin_inset Formula 
-\[
-\pdv{u}{t}+c\pdv{u}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n]{u}{x}-\sum_{n=1}^{\infty}\beta_{n}\pdv[2n+1]{u}{x}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-\alpha_{n}:=\frac{c\Delta x^{2n-1}}{(2n)!}>0\qc\beta_{n}:=\frac{c\Delta x^{2n}}{(2n+1)!}>0
-\]
-
-\end_inset
-
-For a given initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}kx}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-we known the exact solution (see Section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sect:ConvectionDiffusionEquation"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sect:ConvectionDispersionEquation"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) is
-\begin_inset Formula 
-\[
-u(t,x)=e^{\gamma_{k}t}e^{\sqrt{-1}k(x-c_{k}t)}\qc t\in\mathbb{R}_{+}\qc x\in\mathbb{R}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-\begin{aligned}\gamma_{k} & =\sum_{n=1}^{\infty}\alpha_{n}\left(-k^{2}\right)^{n}=\frac{c}{\Delta x}\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(k\Delta x\right)^{2n}}{(2n)!}\\
-c_{k} & =c+\sum_{n=1}^{\infty}\beta_{n}\left(-k^{2}\right)^{n}=c+c\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(k\Delta x\right)^{2n}}{(2n+1)!}
-\end{aligned}
-\]
-
-\end_inset
-
-When 
-\begin_inset Formula $k\Delta x$
-\end_inset
-
- is sufficiently small, we have
-\begin_inset Formula 
-\[
-\gamma_{k}\approx-\alpha_{1}k^{2}<0\qc c_{k}\approx c-\beta_{1}k^{2}<c
-\]
-
-\end_inset
-
-which means:
-\end_layout
-
-\begin_layout Itemize
-the amplitude 
-\emph on
-attenuates
-\emph default
- as 
-\begin_inset Formula $t$
-\end_inset
-
- grows, and wave components with higher 
-\begin_inset Formula $k$
-\end_inset
-
- attenuate 
-\emph on
-faster
-\emph default
-.
-\end_layout
-
-\begin_layout Itemize
-the wave propagates 
-\emph on
-slower
-\emph default
- than the exact one, and wave components with higher 
-\begin_inset Formula $k$
-\end_inset
-
- propagates 
-\emph on
-slower
-\emph default
-.
-\end_layout
-
-\begin_layout Subsection
-修正波数
-\end_layout
-
-\begin_layout Standard
-The errors introduced by a spatial scheme can be analyzed from another aspect,
- which focus on the output of the scheme rather than the truncation error.
-\end_layout
-
-\begin_layout Standard
-The exact solution of the linear advection equation
-\begin_inset Formula 
-\[
-\pdv{u}{t}+c\pdv{u}{x}=0\qc x\in(0,2l)
-\]
-
-\end_inset
-
-with the periodic condition
-\begin_inset Formula 
-\[
-u(t,x=0)=u(t,x=2l)\qc\forall t\in\mathbb{R}_{+}
-\]
-
-\end_inset
-
-and the initial condition
-\begin_inset Formula 
-\[
-u(t=0,x)=e^{\sqrt{-1}k\pi x/l}\qc k\in\mathbb{Z}\qc x\in[0,2l]
-\]
-
-\end_inset
-
-is
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-u(t,x)=e^{\sqrt{-1}K(x-ct)}=A(t)e^{\sqrt{-1}Kx}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-K:=\frac{k\pi}{l}\qc A(t):=e^{-\sqrt{-1}Kct}
-\]
-
-\end_inset
-
-So, the exact spatial derivative is
-\begin_inset Formula 
-\[
-\pdv{u}{x}=\sqrt{-1}Ku
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Divide 
-\begin_inset Formula $[0,2l]$
-\end_inset
-
- into 
-\begin_inset Formula $N$
-\end_inset
-
- equal-length pieces:
-\begin_inset Formula 
-\[
-x_{i}:=i\Delta x\qc\Delta x:=\frac{2l}{N}\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-The periodic condition then becomes
-\begin_inset Formula 
-\[
-u_{0}(t)=u_{N}(t)
-\]
-
-\end_inset
-
-In general, a linear spatial scheme can be written as
-\begin_inset Formula 
-\[
-\eval{\pdv{u}{x}}_{i}\approx\frac{\sum_{s}b_{s}u_{i+s}}{\Delta x}
-\]
-
-\end_inset
-
-Suppose
-\begin_inset Formula 
-\[
-u_{i}(t)=A(t)e^{\sqrt{-1}Kx_{i}}\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-then
-\begin_inset Formula 
-\[
-u_{i+s}(t)=A(t)e^{\sqrt{-1}K\left(x_{i}+s\Delta x\right)}=e^{\sqrt{-1}sK\Delta x}u_{i}(t)
-\]
-
-\end_inset
-
-So, the approximated spatial derivative is the product of 
-\begin_inset Formula $u_{i}$
-\end_inset
-
- and a complex number 
-\begin_inset Formula $\tilde{K}$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\eval{\pdv{u}{x}}_{i}\approx\tilde{K}u_{i}\qc\tilde{K}:=\frac{1}{\Delta x}\sum_{s}b_{s}e^{\sqrt{-1}sK\Delta x}
-\]
-
-\end_inset
-
-Since 
-\begin_inset Formula $\tilde{K}$
-\end_inset
-
- has the same dimension as 
-\begin_inset Formula $K$
-\end_inset
-
-, it is justified to call it the 
-\noun on
-modified wave number
-\noun default
- of the spatial scheme.
- For later use, we shall denote
-\begin_inset Formula 
-\[
-\begin{aligned}\tilde{K}_{r} & :=\Re\tilde{K}=\frac{\sum_{s}b_{s}\cos(sK\Delta x)}{\Delta x}\\
-\tilde{K}_{i} & :=\Im\tilde{K}=\frac{\sum_{s}b_{s}\sin(sK\Delta x)}{\Delta x}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Suppose the IC is calculated exactly on each 
-\begin_inset Formula $x_{i}$
-\end_inset
-
-, i.e.
-\begin_inset Formula 
-\[
-u_{i}(0)=e^{\sqrt{-1}Kx_{i}}\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-The semi-discrete scheme becomes
-\begin_inset Formula 
-\[
-\dv{A(t)}{t}+\tilde{K}cA(t)=0
-\]
-
-\end_inset
-
-whose solution is
-\begin_inset Formula 
-\[
-A(t)=e^{-\tilde{K}ct}
-\]
-
-\end_inset
-
-The approximated solution of the original PDE is then
-\begin_inset Formula 
-\[
-u_{i}(t)=e^{-\tilde{K}ct}e^{\sqrt{-1}Kx_{i}}=e^{\left(\sqrt{-1}K-\tilde{K}\right)ct}e^{\sqrt{-1}K(x_{i}-ct)}
-\]
-
-\end_inset
-
-The first factor is the error introduced by the spatial scheme.
- The dissipative and dispersive effect can be seen more clearly if we rewrite
- it as:
-\begin_inset Formula 
-\[
-u_{i}(t)=e^{\gamma_{K}t}e^{\sqrt{-1}K(x_{i}-c_{K}t)}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-\begin{aligned}\gamma_{K} & :=-c\tilde{K}_{r}\Delta x=-c\sum_{s}b_{s}\cos(sK\Delta x)\\
-c_{K} & :=c\frac{\tilde{K}_{i}}{K}=c\frac{\sum_{s}b_{s}\sin(sK\Delta x)}{K\Delta x}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example*
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[2nd Order Upwind Scheme]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\eval{\pdv{u}{x}}_{i}\approx\frac{3u_{i}-4u_{i-1}+u_{i-2}}{2\Delta x}\qc c>0
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
-\]
-
-\end_inset
-
-so
-\begin_inset Formula 
-\[
-\begin{aligned}\tilde{K}_{r}\Delta x & =\frac{3-4\cos(K\Delta x)+\cos(2K\Delta x)}{2}\\
-\tilde{K}_{i}\Delta x & =\frac{0+4\sin(K\Delta x)-\sin(2K\Delta x)}{2}
-\end{aligned}
-\]
-
-\end_inset
-
-
 \end_layout
 
 \end_body
