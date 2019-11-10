@@ -14,7 +14,7 @@
 - [动态内存管理](./memory/README.md)：[原始指针](./memory/raw_pointers.md)，[智能指针](./memory/smart_pointers.md)
 
 ## 面向对象
-- [`class`](https://en.cppreference.com/w/cpp/language/classes)：[创建类型](./class/class.md)，[运算符重载](./class/operator.md)，[拷贝控制](./class/copy_control.md)，[继承与动态](./class/inheritance.md)
+- [`class`](https://en.cppreference.com/w/cpp/language/classes)：[创建类型](./class/class.md)，[运算符重载](./class/operator.md)，[拷贝控制](./class/copy_control.md)，[继承与多态](./class/inheritance.md)
 - [`template`](https://en.cppreference.com/w/cpp/language/templates)：[泛型编程](./template/generic.md)，[类型推断](./template/type_deduction.md)，[元编程](./template/metaprogramming.md)
 
 ## 开发工具
