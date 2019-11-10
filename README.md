@@ -2,7 +2,7 @@
 
 ## 说明
 
-《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》部分的内容含有大量数学公式，因此整理为 [LyX](./tools/latex/README.md#LyX) 文档。
+《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》部分的内容含有大量数学公式，因此整理为 [LyX](./programming/latex/README.md#LyX) 文档。
 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节；根目录下的[合订本](#README.lyx)大致按逻辑顺序重新编排了章节，删去了重复的内容。
 
 《[编程](#编程)》《[工具](#工具)》部分的内容含有大量演示代码，因此整理为 [Markdown](./tools/markdown.md) 文档。
@@ -11,10 +11,10 @@
 
 编译 LyX 文档（生成 PDF 或网页）需要：
 
-0. 安装 [TeX Live](./tools/latex/README.md#TeX-Live) 和 [LyX](./tools/latex/README.md#LyX)，并完成相应配置，以支持 *中文* 及 *代码高亮*。
+0. 安装 [TeX Live](./programming/latex/README.md#TeX-Live) 和 [LyX](./programming/latex/README.md#LyX)，并完成相应配置，以支持 *中文* 及 *代码高亮*。
 1. 安装 [STIX](https://github.com/stipub/stixfonts) 字体。如果想启用 `euler` 选项，则还需安装 [Neo Euler](https://github.com/khaledhosny/euler-otf) 字体。
 2. 在任意路径下创建本[仓库](./programming/git.md)的副本。
-3. 在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`./tools/latex/pvcstyle.sty`](./tools/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」：
+3. 在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`./programming/latex/pvcstyle.sty`](./programming/latex/pvcstyle.sty) 的「符号链接 (symbolic link)」：
 
 |  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
 | :--------: | :------------------: | :------------------: |
