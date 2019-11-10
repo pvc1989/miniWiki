@@ -124,6 +124,810 @@ literal "false"
 \end_layout
 
 \begin_layout Section
+线性单波方程
+\end_layout
+
+\begin_layout Subsection
+线性平流 (Linear Advection)
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性平流]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:线性平流"
+
+\end_inset
+
+给定常数 
+\begin_inset Formula $A\in\mathbb{R}$
+\end_inset
+
+ 及（几乎处处连续的）一元函数 
+\begin_inset Formula $U_{0}(x)$
+\end_inset
+
+，寻找（几乎处处连续的）二元函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+，使其满足以下偏微分方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty),t\in(0,+\infty)
+\]
+
+\end_inset
+
+及初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+先考虑特殊的初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\ii kx)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+ 称为「波数 (wave number)」，表示长度为 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 的区间内所含完整波形的个数。由特征线法易得其精确解为
+\begin_inset Formula 
+\begin{equation}
+U(x,t)=\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性平流:解析解}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+再考虑更一般的初始条件，若 
+\begin_inset Formula $U_{0}(x)$
+\end_inset
+
+ 为
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的平方可积函数，则先将其展开为 Fourier 级数：
+\begin_inset Formula 
+\[
+U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii kx)\qc\hat{U}_{0}(k)=\int_{-\pi}^{+\pi}\frac{\dd{x}}{2\pi}U_{0}(x)\exp(-\ii kx)
+\]
+
+\end_inset
+
+再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
+\begin_inset Formula 
+\[
+U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+以 
+\begin_inset Formula $2L$
+\end_inset
+
+ 为周期的平方可积函数，则先将其展开为 Fourier 级数（其中 
+\begin_inset Formula $K=k\pi/L$
+\end_inset
+
+）：
+\begin_inset Formula 
+\[
+U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii Kx)\qc\hat{U}_{0}(k)=\int_{-L}^{+L}\frac{\dd{x}}{2L}U_{0}(x)\exp(-\ii Kx)
+\]
+
+\end_inset
+
+再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
+\begin_inset Formula 
+\[
+U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii K\cdot(x-At))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+非周期（相当于 
+\begin_inset Formula $L\to\infty$
+\end_inset
+
+）平方可积函数，则先将其展开为 Fourier 积分：
+\begin_inset Formula 
+\[
+U_{0}(x)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii kx)\dd{k}\qc\hat{U}_{0}(k)=\int_{-\infty}^{+\infty}\frac{\dd{x}}{2\pi}U_{0}(x)\exp(-\ii kx)
+\]
+
+\end_inset
+
+再对各个单波解作线性叠加，得到原问题的 Fourier 积分解：
+\begin_inset Formula 
+\[
+U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))\dd{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+不失一般性，本章剩余部分将以简谐波 
+\begin_inset Formula $\exp(\ii kx)$
+\end_inset
+
+ 或 
+\begin_inset Formula $\exp(\ii Kx)$
+\end_inset
+
+ 为初始条件。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性扩散 (Linear Diffusion)
+\begin_inset CommandInset label
+LatexCommand label
+name "sect:LinearDiffusion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性扩散]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:线性扩散"
+
+\end_inset
+
+给定常数 
+\begin_inset Formula $A\in\mathbb{R},\left\{ \beta_{n}\in\mathbb{R}\right\} _{n=1}^{\infty},k\in\mathbb{R}$
+\end_inset
+
+ 及（几乎处处连续的）一元函数 
+\begin_inset Formula $U_{0}(x)$
+\end_inset
+
+，寻找二元函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+，使其满足以下偏微分方程
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{U}{x}\qc x\in(-\infty,+\infty),t\in(0,+\infty)
+\]
+
+\end_inset
+
+及初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+不失一般性，以简谐波 
+\begin_inset Formula $\exp(\ii kx)$
+\end_inset
+
+ 为初始条件。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+先考虑特殊情形：若 
+\begin_inset Formula $\forall n\colon\beta_{n}\to0$
+\end_inset
+
+，则问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性扩散"
+
+\end_inset
+
+ 退化为问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性平流"
+
+\end_inset
+
+，由前一节可知它的解为
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\omega=kA$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+再考虑一般情形：即 
+\begin_inset Formula $\exists n\colon\beta_{n}\ne0$
+\end_inset
+
+，则问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性扩散"
+
+\end_inset
+
+ 可看作问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性平流"
+
+\end_inset
+
+ 的推广。假设问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性扩散"
+
+\end_inset
+
+ 的解也具有以上形式，只是这里的 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 还依赖于 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+。对这种形式的 
+\begin_inset Formula $U$
+\end_inset
+
+ 求偏导数可得
+\begin_inset Formula 
+\[
+\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii ku\qc\pdv[2n]{U}{x}=\left(\ii k\right)^{2n}U\equiv\left(-k^{2}\right)^{n}U
+\]
+
+\end_inset
+
+将它们代入 PDE 并消去公共因子，即得 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 与 
+\begin_inset Formula $A$
+\end_inset
+
+ 及 
+\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 的依赖关系：
+\begin_inset Formula 
+\[
+\omega=kA+\underbrace{\left(\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}\right)}_{B_{k}}\ii
+\]
+
+\end_inset
+
+由此可得问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性扩散"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解：
+\begin_inset Formula 
+\begin{equation}
+U(x,t)=\exp(B_{k}t)\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性扩散:解析解}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+这个解的物理含义为：波形的传播速度 
+\begin_inset Formula $A$
+\end_inset
+
+ 仍为常值，但振幅 
+\begin_inset Formula $\exp(B_{k}t)$
+\end_inset
+
+ 随时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 变化。真实的物理过程通常能够确保 
+\begin_inset Formula $B_{k}\le0$
+\end_inset
+
+，即振幅随时间衰减：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $U$
+\end_inset
+
+ 表示某种位移或速度，则振幅衰减表示能量逐渐损失，这种现象被称为「耗散 (dissipation)」。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $U$
+\end_inset
+
+ 表示某种密度或浓度，则振幅衰减表示分布趋于均匀，这种现象被称为「扩散 (diffusion)」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[高斯核]
+\end_layout
+
+\end_inset
+
+求解一维无界空间的线性扩散方程（其中 
+\begin_inset Formula $\beta>0$
+\end_inset
+
+ 为常数）
+\begin_inset Formula 
+\[
+\pdv{U}{t}=\beta\pdv[2]{U}{x}\qc x\in(-\infty,+\infty),t\in(0,+\infty)
+\]
+
+\end_inset
+
+的基本解，即满足点源初值
+\begin_inset Formula 
+\[
+U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{\infty}\frac{\exp(\ii kx)}{2\pi}\dd{k}\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+的解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+该初值问题是问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性扩散"
+
+\end_inset
+
+ 的特殊情形，因此只需在 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:线性扩散:解析解"
+
+\end_inset
+
+ 式中取 
+\begin_inset Formula $A=0$
+\end_inset
+
+ 及 
+\begin_inset Formula $B_{k}=-\beta k^{2}$
+\end_inset
+
+，即得对应于初值 
+\begin_inset Formula $U(x,t=0)=\exp(\ii kx)$
+\end_inset
+
+ 的单波解：
+\begin_inset Formula 
+\[
+\hat{U}_{k}(x,t)=\exp(-\beta k^{2}t)\exp(\ii kx)\equiv\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
+\]
+
+\end_inset
+
+将其代入卷积解
+\begin_inset Formula 
+\[
+U(x,t)=\int_{\mathbb{R}}\frac{\hat{U}_{k}(x,t)}{2\pi}\dd{k}
+\]
+
+\end_inset
+
+并利用积分恒等式
+\begin_inset Formula 
+\[
+\int_{\ii\alpha-\infty}^{\ii\alpha+\infty}\exp(-(x+\ii y)^{2})\dd{x}=\sqrt{\pi}
+\]
+
+\end_inset
+
+即得
+\begin_inset Formula 
+\[
+U(x,t)=\frac{1}{\sqrt{4\pi\beta t}}\exp(-\frac{x^{2}}{4\beta t})
+\]
+
+\end_inset
+
+这一结果被称为「高斯核 (Gaussian kernel)」，它是线性扩散方程的 Green's 函数：它与任意（几乎处处连续的）初值 
+\begin_inset Formula $U(x,t=0)=U_{0}(x)$
+\end_inset
+
+ 的卷积
+\begin_inset Formula 
+\[
+U(x,t)=\int_{\mathbb{R}}\frac{U_{0}(x_{0})}{\sqrt{4\pi\beta t}}\exp(-\frac{(x-x_{0})^{2}}{4\beta t})\dd{x_{0}}
+\]
+
+\end_inset
+
+就是相应初值问题的解，这个解是充分光滑的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性色散 (Linear Dispersion)
+\begin_inset CommandInset label
+LatexCommand label
+name "sect:LinearDispersion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性色散]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:线性色散"
+
+\end_inset
+
+给定常数 
+\begin_inset Formula $A\in\mathbb{R},\left\{ \alpha_{n}\in\mathbb{R}\right\} _{n=1}^{\infty},k\in\mathbb{R}$
+\end_inset
+
+ 及（几乎处处连续的）一元函数 
+\begin_inset Formula $U_{0}(x)$
+\end_inset
+
+，寻找（几乎处处连续的）二元函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+，使其满足以下偏微分方程
+\end_layout
+
+\begin_layout Problem
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n+1]{U}{x}\qc x\in(-\infty,+\infty),t\in(0,+\infty)
+\]
+
+\end_inset
+
+及初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+不失一般性，以简谐波 
+\begin_inset Formula $\exp(\ii kx)$
+\end_inset
+
+ 为初始条件。与前一节类似，假设该初值问题的解具有以下形式
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 依赖于 
+\begin_inset Formula $A,\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 及 
+\begin_inset Formula $k$
+\end_inset
+
+。对这种形式的 
+\begin_inset Formula $U$
+\end_inset
+
+ 求偏导数可得
+\begin_inset Formula 
+\[
+\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii ku\qc\pdv[2n+1]{U}{x}=\left(-k^{2}\right)^{n}\ii kU
+\]
+
+\end_inset
+
+将它们代入 PDE 并消去公共因子，即得 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 与 
+\begin_inset Formula $A,\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 及 
+\begin_inset Formula $k$
+\end_inset
+
+ 的依赖关系：
+\begin_inset Formula 
+\[
+\omega=kA_{k}\qc A_{k}:=A-\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
+\]
+
+\end_inset
+
+由此可得问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性色散"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解：
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\ii k\cdot(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+这个解的物理含义为：波速不再是常数 
+\begin_inset Formula $A$
+\end_inset
+
+，而是依赖于波数 
+\begin_inset Formula $k$
+\end_inset
+
+ 的 
+\begin_inset Formula $A_{k}$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Itemize
+对于单个简谐波，它的「相速度 (phase speed)」定义为 
+\begin_inset Formula $\omega/k$
+\end_inset
+
+，它是波峰（或波节）的移动速度。如果初始波形中含有不同频率的简谐波，则它们的波峰（或波节）将以不同的相速度移动，这种现象被称为「色散 (dispersion)」
+。
+\end_layout
+
+\begin_layout Itemize
+单个简谐波的波形在全空间都是均匀的，因此无法传递能量（或信息）；能够传递能量（或信息）的波形，一定具有非均匀的空间分布（例如：高矮不均、疏密不均），这种波形被称
+为「波包 (wave packet)」，它必定含有多个频率成分。
+\end_layout
+
+\begin_layout Itemize
+对于含有无穷多个频率成分的波包，它的「群速度 (group velocity)」定义为 
+\begin_inset Formula $\dv{\omega}{k}$
+\end_inset
+
+，它是波包所携带能量（或信息）的传递速度。
+\end_layout
+
+\begin_layout Itemize
+在本节中，相速度 与 群速度 分别为
+\begin_inset Formula 
+\[
+\frac{\omega}{k}=A_{k}=A-\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}\qc\dv{\omega}{k}=A+k\dv{A_{k}}{k}=A-\sum_{n=1}^{\infty}(2n+1)\left(-k^{2}\right)^{n}\alpha_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+关于波包的更多细节，可参见《
+\begin_inset CommandInset href
+LatexCommand href
+name "The Feynman Lectures on Physics, Volume I, Chapter 48"
+target "http://www.feynmanlectures.caltech.edu/I_48.html"
+literal "false"
+
+\end_inset
+
+》。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 空间离散格式
 \end_layout
 
@@ -904,7 +1708,7 @@ name "sec:WarmingBeam"
 对于更一般的「标量守恒律」，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{\text{WB}}:=F\qty(U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}})\qc U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}}=\dfrac{U_{i-1}^{n}-U_{i}^{n}}{2}+\dfrac{\Delta t}{\Delta x}\dfrac{3F_{i-1}^{n}-F_{i}^{n}}{2}
+F_{i+\nicefrac{1}{2}}^{\text{WB}}:=F_{i}^{n}+\frac{F\qty(U_{i}^{\overline{n+1}})-F_{i-1}^{n}}{2}\qc U_{i}^{\overline{n+1}}=U_{i}^{n}-\dfrac{\Delta t}{\Delta x}\left(F_{i}^{n}-F_{i-1}^{n}\right)
 \]
 
 \end_inset
@@ -931,7 +1735,7 @@ Suppose
  is the exact solution of Problem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:LinearAdvectionEquation"
+reference "prob:线性平流"
 
 \end_inset
 
@@ -1232,368 +2036,6 @@ lstparams "language=Python"
 
 \begin_layout Section
 修正方程 & 截断误差
-\end_layout
-
-\begin_layout Subsection
-线性单波
-\end_layout
-
-\begin_layout Problem
-\begin_inset CommandInset label
-LatexCommand label
-name "prob:LinearAdvectionEquation"
-
-\end_inset
-
-Solve the linear advection equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-The exact solution is
-\begin_inset Formula 
-\[
-U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\omega=kA$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-线性耗散
-\begin_inset CommandInset label
-LatexCommand label
-name "sect:LinearDiffusion"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Problem
-Solve the linear convection–diffusion equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{U}{x}\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-Since this equation degenerates to the linear advection equation when 
-\begin_inset Formula $\alpha_{n}\to0$
-\end_inset
-
- for all 
-\begin_inset Formula $n$
-\end_inset
-
-, it is intuitive to suppose the solution here has a similar form:
-\begin_inset Formula 
-\[
-U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $\omega$
-\end_inset
-
- depends on 
-\begin_inset Formula $A$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
- Derivatives in the PDE becomes
-\begin_inset Formula 
-\[
-\pdv{U}{t}=-\sqrt{-1}\omega U\qc\pdv{U}{x}=\sqrt{-1}ku\qc\pdv[2n]{U}{x}=\left(\sqrt{-1}k\right)^{2n}U=\left(-k^{2}\right)^{n}U
-\]
-
-\end_inset
-
-Substituting them into the PDE leads to
-\begin_inset Formula 
-\[
-\omega=kA-\frac{B_{k}}{\sqrt{-1}}\qc B_{k}:=\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}
-\]
-
-\end_inset
-
-So, the exact solution is
-\begin_inset Formula 
-\[
-U(x,t)=\exp(B_{k}t)\exp(\sqrt{-1}(kx-kAt))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[耗散]
-\end_layout
-
-\end_inset
-
-The factor 
-\begin_inset Formula $\exp(B_{k}t)$
-\end_inset
-
- indicates that the amplitude changes as 
-\begin_inset Formula $t$
-\end_inset
-
- grows.
- Whether the amplitude grows or attenuates depends on the sign of 
-\begin_inset Formula $B_{k}$
-\end_inset
-
-, which then depends on 
-\begin_inset Formula $k$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-线性色散
-\begin_inset CommandInset label
-LatexCommand label
-name "sect:LinearDispersion"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Problem
-Solve the linear convection–dispersion equation
-\end_layout
-
-\begin_layout Problem
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=-\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n+1]{U}{x}\qc x\in\text{\ensuremath{\mathbb{R}}}
-\]
-
-\end_inset
-
-with the initial condition
-\begin_inset Formula 
-\[
-U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in\text{\ensuremath{\mathbb{R}}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-Suppose the exact solution still has the form
-\begin_inset Formula 
-\[
-U(x,t)=\exp(\sqrt{-1}(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $\omega$
-\end_inset
-
- depends on 
-\begin_inset Formula $A$
-\end_inset
-
- and 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
-\end_inset
-
-.
- Derivatives in the PDE becomes
-\begin_inset Formula 
-\[
-\pdv{U}{t}=-\sqrt{-1}\omega U\qc\pdv{U}{x}=\sqrt{-1}ku\qc\pdv[2n+1]{U}{x}=\left(\sqrt{-1}k\right)^{2n+1}U
-\]
-
-\end_inset
-
-Substituting them into the PDE leads to
-\begin_inset Formula 
-\[
-\omega=kA_{k}\qc A_{k}:=A+\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
-\]
-
-\end_inset
-
-So, the exact solution is
-\begin_inset Formula 
-\[
-U(x,t)=\exp(\sqrt{-1}(kx-kA_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[色散]
-\end_layout
-
-\end_inset
-
-The propagation speed of the wave is no longer 
-\begin_inset Formula $A$
-\end_inset
-
- but
-\begin_inset Formula 
-\[
-\frac{\omega}{k}=A_{k}=A+\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
-\]
-
-\end_inset
-
-which is called the 「相速度 (phase speed)」.
- If the initial wave profile contains more than one components, they will
- generally propagate with different speed.
- This phenomenon is known as「色散 (dispersion)」.
- However, information or energy propagates with another speed called the
- 「群速度 (group velocity)」:
-\begin_inset Formula 
-\[
-\dv{\omega}{k}=A+k\dv{A_{k}}{k}=A+\sum_{n=1}^{\infty}(2n+1)\left(-k^{2}\right)^{n}\alpha_{n}
-\]
-
-\end_inset
-
-For details, see 
-\begin_inset CommandInset href
-LatexCommand href
-name "The Feynman Lectures on Physics, Volume I, Chapter 48"
-target "http://www.feynmanlectures.caltech.edu/I_48.html"
-literal "false"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -2097,7 +2539,7 @@ When apply the 1st order upwind scheme
 for Problem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:LinearAdvectionEquation"
+reference "prob:线性平流"
 plural "false"
 caps "false"
 noprefix "false"
