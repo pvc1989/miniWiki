@@ -481,7 +481,7 @@ reference "prob:线性扩散"
  求偏导数可得
 \begin_inset Formula 
 \[
-\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii ku\qc\pdv[2n]{U}{x}=\left(\ii k\right)^{2n}U\equiv\left(-k^{2}\right)^{n}U
+\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii kU\qc\pdv[2n]{U}{x}=\left(\ii k\right)^{2n}U\equiv\left(-k^{2}\right)^{n}U
 \]
 
 \end_inset
@@ -793,7 +793,7 @@ U(x,t)=\frac{\exp(\ii\cdot(kx-\omega t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),
  求偏导数可得
 \begin_inset Formula 
 \[
-\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii ku\qc\pdv[2n+1]{U}{x}=\left(-k^{2}\right)^{n}\ii kU
+\pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii kU\qc\pdv[2n+1]{U}{x}=\left(-k^{2}\right)^{n}\ii kU
 \]
 
 \end_inset
@@ -924,38 +924,32 @@ literal "false"
 基于 Taylor 展开
 \end_layout
 
-\begin_layout Subsubsection*
-Choose A Stencil
+\begin_layout Standard
+这种方法适用于等距网格 
+\begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
+\end_inset
+
+：
 \end_layout
 
-\begin_layout Standard
-Given nodal values of function 
+\begin_layout Enumerate
+选择基架：给定（充分光滑的）函数 
 \begin_inset Formula $U(x)$
 \end_inset
 
- on 
-\emph on
-uniformly
-\emph default
- distributed nodes 
-\begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
+ 在网格结点上的值 
+\begin_inset Formula $\left\{ U_{i}\equiv U(x_{i})\right\} _{i\in I}$
 \end_inset
 
-, denoted as 
-\begin_inset Formula $U_{i}:=U(x_{i})$
-\end_inset
-
-.
- Using a linear scheme, 
+。在线性格式中，导函数 
 \begin_inset Formula $\dv*[p]{U}{x}$
 \end_inset
 
- at 
+ 在结点 
 \begin_inset Formula $x_{i}$
 \end_inset
 
- is approximated as a linear combination of nodal values on neighboring
- nodes:
+ 处的近似值由相邻结点上的函数值线性组合而得：
 \begin_inset Formula 
 \begin{equation}
 \eval{\dv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}=\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:GeneralLinearScheme}
@@ -963,82 +957,53 @@ uniformly
 
 \end_inset
 
-in which, 
-\begin_inset Formula $I_{i}\subset I$
-\end_inset
-
- is an index set, while 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- is an index-shift set.
- Such set of neighboring nodes is called the 
-\noun on
-stencil
-\noun default
- (or 
-\noun on
-support
-\noun default
-) of the scheme.
-\end_layout
-
-\begin_layout Example*
-Suppose nodal values 
-\begin_inset Formula $U_{i-1},U_{i},U_{i+1}$
-\end_inset
-
- are chosen to approximate 
-\begin_inset Formula $\eval{\dv{U}{x}}_{i}$
-\end_inset
-
-, then 
-\begin_inset Formula $I_{i}=\left\{ i-1,i,i+1\right\} $
-\end_inset
-
- while 
-\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsubsection*
-Perform Taylor Expansion
-\end_layout
-
-\begin_layout Standard
-Perform Taylor expansion centered at 
+这些相邻结点的集合被称为格式在 
 \begin_inset Formula $x_{i}$
 \end_inset
 
- for 
+ 处的「基架 (stencil)」或「支撑 (support)」，用「指标 (Index) 集 
+\begin_inset Formula $I_{i}\subset I$
+\end_inset
+
+」或「指标偏移 (index-Shift) 集 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+」表示。
+\end_layout
+
+\begin_layout Enumerate
+作 Taylor 展开：以 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 为中心，对 
 \begin_inset Formula $\left\{ U_{i+s}\right\} _{s\in S_{i}}$
 \end_inset
 
-:
+ 作 Taylor 展开：
 \begin_inset Formula 
 \[
-U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}
+U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}
 \]
 
 \end_inset
 
-Substitute all the 
+这样的展开式有 
 \begin_inset Formula $\abs{S_{i}}$
 \end_inset
 
- expansions into 
+ 个，将它们代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:GeneralLinearScheme"
 
 \end_inset
 
-:
+ 式即得
 \begin_inset Formula 
 \[
-\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(s\Delta x)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{\Delta x^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
 \]
 
 \end_inset
@@ -1046,137 +1011,32 @@ reference "eq:GeneralLinearScheme"
 
 \end_layout
 
-\begin_layout Subsubsection*
-Solve Linear Equations
-\end_layout
-
-\begin_layout Standard
-By balancing coefficients of 
-\begin_inset Formula $\eval{\pdv[r]{U}{x}}_{i}$
+\begin_layout Enumerate
+解线性方程组：比较 
+\begin_inset Formula $\left(\pdv*[r]{U}{x}\right)_{i}$
 \end_inset
 
- for each 
-\begin_inset Formula $r$
+ 的系数，可得关于 
+\begin_inset Formula $\left\{ a_{i+s}^{(p)}\right\} _{s\in S_{i}}$
 \end_inset
 
-, we obtain a system of linear equations about 
-\begin_inset Formula $a_{i+s}^{(p)}$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\frac{\Delta x^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1
-\]
-
-\end_inset
-
-or equivalently
+ 的线性方程组
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{\Delta x^{r}}\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1\label{eq:SchemeFromTaylor}
+\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1\label{eq:SchemeFromTaylor}
 \end{equation}
 
 \end_inset
 
-The same procedure applies for each 
-\begin_inset Formula $p$
+这样的方程组对任意 
+\begin_inset Formula $p\in\left\{ 0,1,\dots,\abs{S_{i}}-1\right\} $
 \end_inset
 
-, and thus the coefficient matrix is the same for each 
-\begin_inset Formula $p$
-\end_inset
-
-.
+ 有相同的系数矩阵，并且有唯一的非零解。
 \end_layout
 
-\begin_layout Example*
-Suppose 
-\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
-\end_inset
-
-.
- Equation 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:SchemeFromTaylor"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- becomes
-\begin_inset Formula 
-\[
-\begin{bmatrix}(-1)^{0} & 0^{0} & 1^{0}\\
-(-1)^{1} & 0^{1} & 1^{1}\\
-(-1)^{2} & 0^{2} & 1^{2}
-\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
-a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
-a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
-\end{bmatrix}=\begin{bmatrix}0!/\Delta x^{0}\\
- & 1!/\Delta x^{1}\\
- &  & 2!/\Delta x^{2}
-\end{bmatrix}
-\]
-
-\end_inset
-
-or equivalently
-\begin_inset Formula 
-\[
-\begin{bmatrix}1 & 1 & 1\\
--1 & 0 & 1\\
-1 & 0 & 1
-\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
-a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
-a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
-\end{bmatrix}=\begin{bmatrix}1\\
- & 1/\Delta x\\
- &  & 2/\Delta x^{2}
-\end{bmatrix}
-\]
-
-\end_inset
-
-from which 
-\begin_inset Formula $a_{i+s}^{(p)}$
-\end_inset
-
- can be solved as
-\begin_inset Formula 
-\[
-\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
-a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
-a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
-\end{bmatrix}=\begin{bmatrix}0 & -1/2\Delta x & 1/\Delta x^{2}\\
-1 & 0/2\Delta x & -2/\Delta x^{2}\\
-0 & 1/2\Delta x & 1/\Delta x^{2}
-\end{bmatrix}
-\]
-
-\end_inset
-
-Scheme 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:GeneralLinearScheme"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- is then
-\begin_inset Formula 
-\[
-\begin{aligned}U_{i} & =U_{i}\\
-\eval{\dv{U}{x}}_{i} & \approx\frac{U_{i+1}-U_{i-1}}{2\Delta x}\\
-\eval{\dv[2]{U}{x}}_{i} & \approx\frac{U_{i}-2U_{i+1}+U_{i+2}}{\Delta x^{2}}
-\end{aligned}
-\]
-
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1193,83 +1053,117 @@ lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={
 
 \end_layout
 
+\begin_layout Example*
+取基架 
+\begin_inset Formula $I_{i}=\left\{ i-1,i,i+1\right\} $
+\end_inset
+
+ 即 
+\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
+\end_inset
+
+。方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SchemeFromTaylor"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以写成以下矩阵形式：
+\begin_inset Formula 
+\[
+\begin{bmatrix}(-1)^{0} & 0^{0} & 1^{0}\\
+(-1)^{1} & 0^{1} & 1^{1}\\
+(-1)^{2} & 0^{2} & 1^{2}
+\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
+a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
+a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}=\begin{bmatrix}0!/h^{0}\\
+ & 1!/h^{1}\\
+ &  & 2!/h^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+解之得
+\begin_inset Formula 
+\[
+\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
+a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
+a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}=\begin{bmatrix}0 & -1/2h & 1/h^{2}\\
+1 & 0/2h & -2/h^{2}\\
+0 & 1/2h & 1/h^{2}
+\end{bmatrix}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:GeneralLinearScheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式即得
+\begin_inset Formula 
+\[
+U_{i}=U_{i}\qc\eval{\dv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\eval{\dv[2]{U}{x}}_{i}\approx\frac{U_{i}-2U_{i+1}+U_{i+2}}{h^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 基于 Lagrange 插值
 \end_layout
 
-\begin_layout Subsubsection*
-Choose A Stencil
-\end_layout
-
 \begin_layout Standard
-This step is almost the same as previous.
- However, the distribution of nodes is no longer required to be 
-\emph on
-uniform
-\emph default
-, and the following steps can be generalized for higher dimensional cases
- without difficulty.
-\end_layout
-
-\begin_layout Subsubsection*
-Perform Lagrange Interpolation
-\end_layout
-
-\begin_layout Standard
-Perform Lagrange interpolation for 
-\begin_inset Formula $U(x)$
+这种方法适用于非等距网格 
+\begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
 \end_inset
 
- in the neighborhood of 
-\begin_inset Formula $x_{i}$
-\end_inset
+：
+\end_layout
 
-:
+\begin_layout Enumerate
+选择基架：与前一节完全相同。
+\end_layout
+
+\begin_layout Enumerate
+作 Lagrange 插值：
 \begin_inset Formula 
 \[
-U(x)\approx\sum_{k\in I_{i}}U_{k}L_{k}(x)
+U(x)\approx\sum_{k\in I_{i}}U_{k}L_{k}(x)\qc L_{k}(x)=\prod_{r\in I_{i}\setminus\left\{ k\right\} }\frac{x-x_{k}}{x_{r}-x_{k}}\qc k\in I_{i}
 \]
 
 \end_inset
 
-in which
-\begin_inset Formula 
-\[
-L_{k}(x)=\prod_{r\in I_{i}\setminus\left\{ k\right\} }\frac{x-x_{k}}{x_{r}-x_{k}}\qc k\in I_{i}
-\]
-
-\end_inset
-
-are Lagrange polynomials satisfying the following conditions:
-\begin_inset Formula 
-\[
-L_{k}(x_{j})=\delta_{jk}\qand\sum_{k\in I_{i}}L_{k}(x)\equiv1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
-Approximate Derivatives
-\end_layout
-
-\begin_layout Standard
-The derivatives of 
-\begin_inset Formula $U(x)$
-\end_inset
-
- can be obtained easily from the derivatives of 
+其中 
 \begin_inset Formula $\left\{ L_{k}\right\} _{k\in I_{i}}$
 \end_inset
 
-:
+ 为具有以下性质的 Lagrange 多项式：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv[p]{U(x)}{x} & \approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{i}(x)}{x}\\
-\eval{\dv[p]{U}{x}}_{i} & \approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{k}(x_{i})}{x}
-\end{aligned}
+\sum_{k\in I_{i}}L_{k}(x)\equiv1;\quad L_{k}(x_{j})=\delta_{jk},(\forall j,\forall k)\in I_{i}
 \]
 
 \end_inset
@@ -1277,8 +1171,31 @@ The derivatives of
 
 \end_layout
 
-\begin_layout Subsection
-守恒型格式
+\begin_layout Enumerate
+求导函数：导函数 
+\begin_inset Formula $\dv[p]{U}{x}$
+\end_inset
+
+ 可以由 
+\begin_inset Formula $\left\{ L_{k}\right\} _{k\in I_{i}}$
+\end_inset
+
+ 的导函数获得：
+\begin_inset Formula 
+\[
+\eval{\dv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{k}(x_{i})}{x}\qc p=0,1,\dots,\abs{I_{i}}-1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
