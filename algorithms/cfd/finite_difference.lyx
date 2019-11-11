@@ -111,18 +111,6 @@ name "chap:FiniteDifference"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "FDM"
-description "Finite Difference Method"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 线性单波方程
 \end_layout
@@ -191,7 +179,7 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 先考虑特殊的初始条件
 \begin_inset Formula 
 \[
-U(x,t=0)=\exp(\ii kx)\qc x\in(-\infty,+\infty)
+U(x,t=0)=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty)
 \]
 
 \end_inset
@@ -207,7 +195,7 @@ U(x,t=0)=\exp(\ii kx)\qc x\in(-\infty,+\infty)
  的区间内所含完整波形的个数。由特征线法易得其精确解为
 \begin_inset Formula 
 \begin{equation}
-U(x,t)=\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性平流:解析解}
+U(x,t)=\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性平流:解析解}
 \end{equation}
 
 \end_inset
@@ -232,7 +220,7 @@ U(x,t)=\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:
  为周期的平方可积函数，则先将其展开为 Fourier 级数：
 \begin_inset Formula 
 \[
-U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii kx)\qc\hat{U}_{0}(k)=\int_{-\pi}^{+\pi}\frac{\dd{x}}{2\pi}U_{0}(x)\exp(-\ii kx)
+U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qc\hat{U}_{0}(k)=\int_{-\pi}^{+\pi}U_{0}(x)\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\dd{x}
 \]
 
 \end_inset
@@ -240,7 +228,7 @@ U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii kx)\qc\hat{U}_{0}(k)=\i
 再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
 \begin_inset Formula 
 \[
-U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))
+U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}
 \]
 
 \end_inset
@@ -260,7 +248,7 @@ U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))
 ）：
 \begin_inset Formula 
 \[
-U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii Kx)\qc\hat{U}_{0}(k)=\int_{-L}^{+L}\frac{\dd{x}}{2L}U_{0}(x)\exp(-\ii Kx)
+U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\frac{\exp(\ii Kx)}{\sqrt{2L}}\qc\hat{U}_{0}(k)=\int_{-L}^{+L}U_{0}(x)\frac{\exp(-\ii Kx)}{\sqrt{2L}}\dd{x}
 \]
 
 \end_inset
@@ -268,7 +256,7 @@ U_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{U}_{0}(k)\exp(\ii Kx)\qc\hat{U}_{0}(k)=\i
 再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
 \begin_inset Formula 
 \[
-U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii K\cdot(x-At))
+U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\frac{\exp(\ii K\cdot(x-At))}{\sqrt{2L}}
 \]
 
 \end_inset
@@ -284,7 +272,7 @@ U(x,t)=\sum_{k\in\mathbb{Z}}\hat{U}_{0}(k)\exp(\ii K\cdot(x-At))
 ）平方可积函数，则先将其展开为 Fourier 积分：
 \begin_inset Formula 
 \[
-U_{0}(x)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii kx)\dd{k}\qc\hat{U}_{0}(k)=\int_{-\infty}^{+\infty}\frac{\dd{x}}{2\pi}U_{0}(x)\exp(-\ii kx)
+U_{0}(x)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\pi}}\dd{k}\qc\hat{U}_{0}(k)=\int_{-\infty}^{+\infty}U_{0}(x)\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\dd{x}
 \]
 
 \end_inset
@@ -292,7 +280,7 @@ U_{0}(x)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii kx)\dd{k}\qc\hat{U}_{0}(
 再对各个单波解作线性叠加，得到原问题的 Fourier 积分解：
 \begin_inset Formula 
 \[
-U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))\dd{k}
+U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}\dd{k}
 \]
 
 \end_inset
@@ -310,14 +298,22 @@ U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\exp(\ii k\cdot(x-At))\dd{k}
 
 \begin_layout Remark
 不失一般性，本章剩余部分将以简谐波 
+\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\end_inset
+
+（或 
+\begin_inset Formula $\exp(\ii Kx)/\sqrt{2L}$
+\end_inset
+
+）为初始条件。之所以选用简谐波 
+\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\end_inset
+
+ 而不是更简单的 
 \begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
- 或 
-\begin_inset Formula $\exp(\ii Kx)$
-\end_inset
-
- 为初始条件。
+，是为了让 Fourier 级数与 Fourier 系数（或 Fourier 积分与 Fourier 变换）具有对称性。
 \end_layout
 
 \begin_layout Standard
@@ -399,7 +395,7 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 
 \begin_layout Solution*
 不失一般性，以简谐波 
-\begin_inset Formula $\exp(\ii kx)$
+\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
 \end_inset
 
  为初始条件。
@@ -428,7 +424,7 @@ reference "prob:线性平流"
 ，由前一节可知它的解为
 \begin_inset Formula 
 \[
-U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\frac{\exp(\ii\cdot(kx-\omega t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -470,7 +466,11 @@ reference "prob:线性扩散"
 \begin_inset Formula $\omega$
 \end_inset
 
- 还依赖于 
+ 除了依赖于 
+\begin_inset Formula $k,A$
+\end_inset
+
+，还依赖于 
 \begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
 \end_inset
 
@@ -491,7 +491,7 @@ reference "prob:线性扩散"
 \end_inset
 
  与 
-\begin_inset Formula $A$
+\begin_inset Formula $k,A$
 \end_inset
 
  及 
@@ -519,7 +519,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \begin{equation}
-U(x,t)=\exp(B_{k}t)\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性扩散:解析解}
+U(x,t)=\exp(B_{k}t)\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性扩散:解析解}
 \end{equation}
 
 \end_inset
@@ -591,7 +591,7 @@ status open
 
 \end_inset
 
-求解一维无界空间的线性扩散方程（其中 
+考虑一维无界空间的线性扩散方程（其中 
 \begin_inset Formula $\beta>0$
 \end_inset
 
@@ -603,33 +603,22 @@ status open
 
 \end_inset
 
-的基本解，即满足点源初值
+它的「基本解 (fundamental solution)」是指满足点源初值
 \begin_inset Formula 
 \[
-U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{\infty}\frac{\exp(\ii kx)}{2\pi}\dd{k}\qc x\in(-\infty,+\infty)
+U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\frac{\dd{k}}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty)
 \]
 
 \end_inset
 
-的解。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Solution*
-该初值问题是问题 
+的解。不难验证：该初值问题是问题 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prob:线性扩散"
 
 \end_inset
 
- 的特殊情形，因此只需在 
+ 的特殊情形。因此，只需在 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:线性扩散:解析解"
@@ -644,22 +633,22 @@ reference "eq:线性扩散:解析解"
 \begin_inset Formula $B_{k}=-\beta k^{2}$
 \end_inset
 
-，即得对应于初值 
-\begin_inset Formula $U(x,t=0)=\exp(\ii kx)$
+，即得对应于简谐初值 
+\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
 \end_inset
 
  的单波解：
 \begin_inset Formula 
 \[
-\hat{U}_{k}(x,t)=\exp(-\beta k^{2}t)\exp(\ii kx)\equiv\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
+\hat{U}_{k}(x,t)=\exp(-\beta k^{2}t)\frac{\exp(\ii kx)}{\sqrt{2\pi}}\equiv\frac{1}{\sqrt{2\pi}}\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
 \]
 
 \end_inset
 
-将其代入卷积解
+将其代入
 \begin_inset Formula 
 \[
-U(x,t)=\int_{\mathbb{R}}\frac{\hat{U}_{k}(x,t)}{2\pi}\dd{k}
+U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{k}(x,t)\frac{\dd{k}}{\sqrt{2\pi}}
 \]
 
 \end_inset
@@ -667,7 +656,7 @@ U(x,t)=\int_{\mathbb{R}}\frac{\hat{U}_{k}(x,t)}{2\pi}\dd{k}
 并利用积分恒等式
 \begin_inset Formula 
 \[
-\int_{\ii\alpha-\infty}^{\ii\alpha+\infty}\exp(-(x+\ii y)^{2})\dd{x}=\sqrt{\pi}
+\int_{\ii\alpha-\infty}^{\ii\alpha+\infty}\exp(-(x+\ii y)^{2})\dd{x}=\sqrt{\pi}\qc x,y\in\mathbb{R};\forall\alpha\in\mathbb{R}
 \]
 
 \end_inset
@@ -675,7 +664,7 @@ U(x,t)=\int_{\mathbb{R}}\frac{\hat{U}_{k}(x,t)}{2\pi}\dd{k}
 即得
 \begin_inset Formula 
 \[
-U(x,t)=\frac{1}{\sqrt{4\pi\beta t}}\exp(-\frac{x^{2}}{4\beta t})
+U(x,t)=\frac{1}{\sqrt{4\pi\beta t}}\exp(-\frac{x^{2}}{4\beta t})\qc x\in(-\infty,+\infty),t\in(0,+\infty)
 \]
 
 \end_inset
@@ -687,7 +676,7 @@ U(x,t)=\frac{1}{\sqrt{4\pi\beta t}}\exp(-\frac{x^{2}}{4\beta t})
  的卷积
 \begin_inset Formula 
 \[
-U(x,t)=\int_{\mathbb{R}}\frac{U_{0}(x_{0})}{\sqrt{4\pi\beta t}}\exp(-\frac{(x-x_{0})^{2}}{4\beta t})\dd{x_{0}}
+U(x,t)=\int_{-\infty}^{+\infty}\frac{U_{0}(x_{0})}{\sqrt{4\pi\beta t}}\exp(-\frac{(x-x_{0})^{2}}{4\beta t})\dd{x_{0}}\qc x\in(-\infty,+\infty),t\in(0,+\infty)
 \]
 
 \end_inset
@@ -774,13 +763,13 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 
 \begin_layout Solution*
 不失一般性，以简谐波 
-\begin_inset Formula $\exp(\ii kx)$
+\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
 \end_inset
 
  为初始条件。与前一节类似，假设该初值问题的解具有以下形式
 \begin_inset Formula 
 \[
-U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\frac{\exp(\ii\cdot(kx-\omega t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -790,11 +779,11 @@ U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \end_inset
 
  依赖于 
-\begin_inset Formula $A,\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $k,A$
 \end_inset
 
  及 
-\begin_inset Formula $k$
+\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
 \end_inset
 
 。对这种形式的 
@@ -814,11 +803,11 @@ U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \end_inset
 
  与 
-\begin_inset Formula $A,\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $k,A$
 \end_inset
 
  及 
-\begin_inset Formula $k$
+\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
 \end_inset
 
  的依赖关系：
@@ -842,7 +831,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \[
-U(x,t)=\exp(\ii k\cdot(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\frac{\exp(\ii k\cdot\qty(x-A_{k}t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -889,7 +878,7 @@ U(x,t)=\exp(\ii k\cdot(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 
 \begin_layout Itemize
 对于含有无穷多个频率成分的波包，它的「群速度 (group velocity)」定义为 
-\begin_inset Formula $\dv{\omega}{k}$
+\begin_inset Formula $\dv*{\omega}{k}$
 \end_inset
 
 ，它是波包所携带能量（或信息）的传递速度。
