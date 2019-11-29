@@ -112,7 +112,7 @@ name "chap:FiniteDifference"
 \end_layout
 
 \begin_layout Section
-线性单波方程
+线性单波问题
 \end_layout
 
 \begin_layout Subsection
@@ -302,22 +302,22 @@ U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{0}(k)\frac{\exp(\ii k\cdot(x-At))}{\sqrt
 
 \begin_layout Remark
 不失一般性，本章剩余部分将以简谐波 
-\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\begin_inset Formula $\exp(\ii Kx)$
 \end_inset
 
-（或 
+ 或归一化的 
 \begin_inset Formula $\exp(\ii Kx)/\sqrt{2L}$
 \end_inset
 
-）为初始条件。之所以选用简谐波 
-\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
-\end_inset
-
- 而不是更简单的 
-\begin_inset Formula $\exp(\ii kx)$
-\end_inset
-
-，是为了让 Fourier 级数与 Fourier 系数（或 Fourier 积分与 Fourier 变换）具有对称性。
+ 为初始条件，后者可以让 
+\bar under
+Fourier 级数
+\bar default
+ 与 
+\bar under
+Fourier 系数
+\bar default
+ 在形式上具有对称性。
 \end_layout
 
 \begin_layout Standard
@@ -399,7 +399,7 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 
 \begin_layout Solution*
 不失一般性，以简谐波 
-\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  为初始条件。
@@ -428,7 +428,7 @@ reference "prob:线性平流"
 ，由前一节可知它的解为
 \begin_inset Formula 
 \[
-U(x,t)=\frac{\exp(\ii\cdot(kx-\omega t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -482,7 +482,7 @@ reference "prob:线性扩散"
 \begin_inset Formula $U$
 \end_inset
 
- 求偏导数可得
+ 求偏导可得
 \begin_inset Formula 
 \[
 \pdv{U}{t}=-\ii\omega U\qc\pdv{U}{x}=\ii kU\qc\pdv[2n]{U}{x}=\left(\ii k\right)^{2n}U\equiv\left(-k^{2}\right)^{n}U
@@ -505,7 +505,7 @@ reference "prob:线性扩散"
  的依赖关系：
 \begin_inset Formula 
 \[
-\omega=kA+\underbrace{\left(\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}\right)}_{B_{k}}\ii
+\omega=kA+\sqrt{-1}\underbrace{\left(\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}\right)}_{B_{k}}
 \]
 
 \end_inset
@@ -523,7 +523,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \begin{equation}
-U(x,t)=\exp(B_{k}t)\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性扩散:解析解}
+U(x,t)=\exp(B_{k}t)\exp(\ii k\cdot(x-At))\qc x\in(-\infty,+\infty),t\in[0,+\infty)\label{eq:线性扩散:解析解}
 \end{equation}
 
 \end_inset
@@ -552,8 +552,8 @@ U(x,t)=\exp(B_{k}t)\frac{\exp(\ii k\cdot(x-At))}{\sqrt{2\pi}}\qc x\in(-\infty,+\
 \begin_inset Formula $t$
 \end_inset
 
- 变化。真实的物理过程通常能够确保 
-\begin_inset Formula $B_{k}\le0$
+ 变化。真实（熵增）的物理过程通常能够确保 
+\begin_inset Formula $B_{k}<0$
 \end_inset
 
 ，即振幅随时间衰减：
@@ -622,7 +622,7 @@ status open
 ，即满足点源初值
 \begin_inset Formula 
 \[
-U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\frac{\dd{k}}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty)
+U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{+\infty}\exp(\ii kx)\frac{\dd{k}}{2\pi}\qc x\in(-\infty,+\infty)
 \]
 
 \end_inset
@@ -661,13 +661,13 @@ reference "eq:线性扩散:解析解"
 \end_inset
 
 ，即得对应于简谐初值 
-\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  的单波解：
 \begin_inset Formula 
 \[
-\hat{U}_{k}(x,t)=\exp(-\beta k^{2}t)\frac{\exp(\ii kx)}{\sqrt{2\pi}}\equiv\frac{1}{\sqrt{2\pi}}\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
+\hat{U}_{k}(x,t)=\exp(-\beta k^{2}t)\exp(\ii kx)\equiv\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
 \]
 
 \end_inset
@@ -675,7 +675,7 @@ reference "eq:线性扩散:解析解"
 将其代入
 \begin_inset Formula 
 \[
-U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{k}(x,t)\frac{\dd{k}}{\sqrt{2\pi}}
+U(x,t)=\int_{-\infty}^{+\infty}\hat{U}_{k}(x,t)\frac{\dd{k}}{2\pi}
 \]
 
 \end_inset
@@ -794,13 +794,13 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 
 \begin_layout Solution*
 不失一般性，以简谐波 
-\begin_inset Formula $\exp(\ii kx)/\sqrt{2\pi}$
+\begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  为初始条件。与前一节类似，假设该初值问题的解具有以下形式
 \begin_inset Formula 
 \[
-U(x,t)=\frac{\exp(\ii\cdot(kx-\omega t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -862,7 +862,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \[
-U(x,t)=\frac{\exp(\ii k\cdot\qty(x-A_{k}t))}{\sqrt{2\pi}}\qc x\in(-\infty,+\infty),t\in[0,+\infty)
+U(x,t)=\exp(\ii k\cdot\qty(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 \]
 
 \end_inset
@@ -993,6 +993,763 @@ literal "false"
 \end_layout
 
 \begin_layout Section
+误差分析
+\end_layout
+
+\begin_layout Subsection
+模型问题
+\end_layout
+
+\begin_layout Standard
+为评价格式的质量，通常以如下问题
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+即问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性平流"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的简化版本。
+\end_layout
+
+\end_inset
+
+作为误差分析的基准：
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无界线性单波]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+微分方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty),t\in(0,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\ii kx)\qc x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+精确解
+\begin_inset Formula 
+\[
+U(x,t)=\exp(\ii k\cdot(x-At))\equiv\exp(-\ii kAt)\underbrace{\exp(\ii kx)}_{U(x,t=0)}\qc x\in(-\infty,+\infty),t\in[0,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+实际计算时，总是将 
+\begin_inset Formula $x$
+\end_inset
+
+ 的变化范围限制在有界区间内，因此上述问题的有界版本更有实用价值：
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界线性单波]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+微分方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-L,+L),t\in(0,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+周期条件
+\begin_inset Formula 
+\[
+U(x,t)=U(x+2L,t)\qc\forall x\in(-\infty,+\infty),\forall t\in[0,\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+初始条件
+\begin_inset Formula 
+\[
+U(x,t=0)=\exp(\ii Kx)\qc x\in[-L,+L];\quad K=\frac{k\pi}{L}\qc k\in\mathbb{Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+精确解
+\begin_inset Formula 
+\begin{equation}
+U(x,t)=\exp(\ii K\cdot(x-At))\equiv\exp(-\ii KAt)\underbrace{\exp(\ii Kx)}_{U(x,t=0)}\qc x\in[-L,+L],t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+误差分类
+\end_layout
+
+\begin_layout Subsection
+误差测度：
+\begin_inset Formula $L^{p}$
+\end_inset
+
+ 距离
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$L^p$-norm]
+\end_layout
+
+\end_inset
+
+对于函数空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 内的任意（函数）向量 
+\begin_inset Formula $U\colon\Omega\to\mathbb{C}$
+\end_inset
+
+，它的 
+\bar under
+
+\begin_inset Formula $L^{p}$
+\end_inset
+
+ 范数 (
+\begin_inset Formula $L^{p}$
+\end_inset
+
+-norm)
+\bar default
+ 记作 
+\begin_inset Formula $\norm{U}_{p}$
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $1\le p<\infty$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\norm{U}_{p}:=\left(\int_{\Omega}\abs{U(\vec{x})}^{p}\dd{\Omega}\right)^{1/p}
+\]
+
+\end_inset
+
+其中右端的积分为 
+\bar under
+定义在
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的 Lebesgue 积分
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p=\infty$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\norm{U}_{\infty}:=\inf_{C}\left\{ C\ge0\colon\abs{U(\vec{x})}\le C\text{ for almost every }\vec{x}\in\Omega\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$L^{
+\backslash
+infty}$-norm]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $U$
+\end_inset
+
+ 有界，则它的 
+\bar under
+
+\begin_inset Formula $L^{\infty}$
+\end_inset
+
+ 范数
+\bar default
+ 可以等价地定义为
+\begin_inset Formula 
+\[
+\norm{U}_{\infty}:=\sup_{\vec{x}\in\Omega}\abs{U(\vec{x})}\equiv\lim_{p\to\infty}\norm{U}_{p}
+\]
+
+\end_inset
+
+若进一步有 
+\begin_inset Formula $U$
+\end_inset
+
+ 连续，则
+\begin_inset Formula 
+\[
+\norm{U}_{\infty}=\sup_{\vec{x}\in\Omega}\abs{U(\vec{x})}\equiv\max_{\vec{x}\in\Omega}\abs{U(\vec{x})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$L^p$-distance]
+\end_layout
+
+\end_inset
+
+函数空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的任意两个成员 
+\begin_inset Formula $U,V$
+\end_inset
+
+ 之差依然是 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的向量，它的 
+\begin_inset Formula $L^{p}$
+\end_inset
+
+ 范数可以定义为 
+\begin_inset Formula $U,V$
+\end_inset
+
+ 之间的 
+\bar under
+
+\begin_inset Formula $L^{p}$
+\end_inset
+
+ 距离 (
+\begin_inset Formula $L^{p}$
+\end_inset
+
+-distance)
+\bar default
+：
+\begin_inset Formula 
+\[
+d(U,V):=\norm{U-V}_{p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$L^p$-error]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $U$
+\end_inset
+
+ 是精确解， 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 是其近似解（上标 
+\begin_inset Formula $h$
+\end_inset
+
+ 表示网格尺寸），它们都取自同一函数空间 
+\begin_inset Formula $X$
+\end_inset
+
+，则 
+\bar under
+近似解
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 的
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $L^{p}$
+\end_inset
+
+ 误差 (error)
+\bar default
+ 定义为 
+\bar under
+它到精确解
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $U$
+\end_inset
+
+ 的
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $\ensuremath{L^{p}}$
+\end_inset
+
+ 距离
+\bar default
+：
+\begin_inset Formula 
+\[
+\epsilon:=\norm{U^{h}-U}_{p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+对于含有时间变量的问题（如 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性平流"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性色散"
+
+\end_inset
+
+），通常会考察 
+\bar under
+近似解
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 在给定时刻
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Formula $t$
+\end_inset
+
+ 的误差
+\bar default
+，只需在计算距离时只对空间变量积分（或求和）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维等距网格上的误差]
+\end_layout
+
+\end_inset
+
+对于一维问题，设 
+\begin_inset Formula $U\colon[a,b]\to\mathbb{R}$
+\end_inset
+
+ 有界，常用的范数有以下三种
+\begin_inset Formula 
+\[
+\norm{U}_{1}:=\int_{a}^{b}\abs{U(x)}\dd{x}\qc\norm{U}_{2}:=\sqrt{\int_{a}^{b}\abs{U(x)}^{2}\dd{x}}\qc\norm{U}_{\infty}:=\sup_{x\in[a,b]}\abs{U(x)}
+\]
+
+\end_inset
+
+在数值计算中，函数通常表示为离散形式，例如：等距网格上的 
+\bar under
+结点数据 (node data)
+\bar default
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+在有限体积法中，通常用 
+\bar under
+单元数据 (cell data)
+\bar default
+ 作为函数的离散表示。
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\{ U_{i}\right\} _{i=1}^{n}\qc U_{i}:=U(x_{i})\qc x_{i}:=a+ih\qc h:=\frac{b-a}{n}\qc i=0,1,\dots,n
+\]
+
+\end_inset
+
+则以上三种误差可以近似为
+\begin_inset Formula 
+\[
+\begin{aligned}\norm{U^{h}-U}_{1} & \approx\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}h\approx\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}h\\
+\norm{U^{h}-U}_{2} & \approx\sqrt{\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}^{2}h}\approx\sqrt{\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}^{2}h}\\
+\norm{U^{h}-U}_{\infty} & \approx\max_{i=0}^{n}\abs{U_{i}^{h}-U_{i}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+误差变化率：精度
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[精度]
+\end_layout
+
+\end_inset
+
+若近似值 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 的误差满足
+\begin_inset Formula 
+\[
+\norm{U^{h}-U}\equiv\epsilon(h)=\order{h^{p}}\equiv Ch^{p}+\order{h^{p+1}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $h=\Delta x$
+\end_inset
+
+ 或 
+\begin_inset Formula $h=\Delta t$
+\end_inset
+
+，则称 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 具有 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶空间或时间 
+\bar under
+精度 (accuracy)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[精度测量]
+\end_layout
+
+\end_inset
+
+对于线性格式，其精度可以由 Taylor 展开推导而得；对于非线性格式，用 Taylor 展开推导可能过于复杂，更具可行性的方案为如下 
+\bar under
+后验 (a posteriori) 精度测量
+\bar default
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+取网格尺寸 
+\begin_inset Formula $h=h_{0},2^{-1}h_{0},2^{-2}h_{0}\dots$
+\end_inset
+
+，其中 
+\begin_inset Formula $h_{0}$
+\end_inset
+
+ 的值不宜过大（否则 
+\begin_inset Formula $h$
+\end_inset
+
+ 不再是小量）或过小（否则浮点误差影响显著）。
+\end_layout
+
+\begin_layout Enumerate
+分别计算相应的误差 
+\begin_inset Formula $\epsilon(h)$
+\end_inset
+
+，画出 
+\begin_inset Formula $y=\ln\epsilon$
+\end_inset
+
+ 随 
+\begin_inset Formula $x=\ln h$
+\end_inset
+
+ 变化的曲线。
+\end_layout
+
+\begin_layout Enumerate
+对该曲线其作线性拟合 
+\begin_inset Formula $y=ax+b$
+\end_inset
+
+，取斜率 
+\begin_inset Formula $a$
+\end_inset
+
+ 为 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 的精度 
+\begin_inset Formula $p$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Remark
+代码 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "code:有限差分:精度测量"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 给出了上述方案的一种实现。
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "code/accuracy_measurer.py"
+lstparams "language=Python,caption={差分格式的后验精度测量},label={code:有限差分:精度测量}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 空间离散格式
 \end_layout
 
@@ -1009,31 +1766,23 @@ literal "false"
 \end_layout
 
 \begin_layout Enumerate
-选择基架：给定（充分光滑的）函数 
-\begin_inset Formula $U(x)$
+给定（充分光滑的）函数 
+\begin_inset Formula $U(x,t)$
 \end_inset
 
  在网格结点上的值 
-\begin_inset Formula $\left\{ U_{i}\equiv U(x_{i})\right\} _{i\in I}$
+\begin_inset Formula $\left\{ U_{i}(t)\equiv U(x_{i},t)\right\} _{i\in I}$
 \end_inset
 
-。在线性格式中，导函数 
-\begin_inset Formula $\dv*[p]{U}{x}$
-\end_inset
+。
+\end_layout
 
- 在结点 
+\begin_layout Enumerate
+在 
 \begin_inset Formula $x_{i}$
 \end_inset
 
- 处的近似值由相邻结点上的函数值线性组合而得：
-\begin_inset Formula 
-\begin{equation}
-\eval{\dv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}=\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:GeneralLinearScheme}
-\end{equation}
-
-\end_inset
-
-这些相邻结点的集合被称为格式在 
+ 处选定一组相邻结点，称作点 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -1041,31 +1790,55 @@ literal "false"
 \bar under
 基架 (stencil)
 \bar default
-  或 
+ 或 
 \bar under
 支撑 (support)
 \bar default
 ，用 
 \bar under
 指标 (Index) 集
-\bar default
-  
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $I_{i}\subset I$
 \end_inset
 
+
+\bar default
  或 
 \bar under
 指标偏移 (index-Shift) 集
-\bar default
-  
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $S_{i}$
 \end_inset
 
- 表示。
+
+\bar default
+ 表示。在线性格式中，导函数 
+\begin_inset Formula $\pdv*[p]{U}{x}$
+\end_inset
+
+ 在结点 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 处的近似值由相应基架上的函数值线性组合而得：
+\begin_inset Formula 
+\begin{equation}
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}\equiv\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:GeneralLinearScheme}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
-作 Taylor 展开：以 
+以 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -1076,7 +1849,7 @@ literal "false"
  作 Taylor 展开：
 \begin_inset Formula 
 \[
-U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}
+U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}\equiv\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}
 \]
 
 \end_inset
@@ -1095,7 +1868,7 @@ reference "eq:GeneralLinearScheme"
  式即得
 \begin_inset Formula 
 \[
-\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\left(\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}\right)=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\underbrace{\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}}_{U_{i+s}}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
 \]
 
 \end_inset
@@ -1104,7 +1877,7 @@ reference "eq:GeneralLinearScheme"
 \end_layout
 
 \begin_layout Enumerate
-解线性方程组：比较 
+比较 
 \begin_inset Formula $\left(\pdv*[r]{U}{x}\right)_{i}$
 \end_inset
 
@@ -1128,13 +1901,17 @@ reference "eq:GeneralLinearScheme"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
+代码 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "code:SchemesFromTaylor"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
+ 给出了上述方案的一种实现。
 \begin_inset CommandInset include
 LatexCommand inputminted
 filename "code/scheme_from_taylor.py"
@@ -1145,7 +1922,14 @@ lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={
 
 \end_layout
 
-\begin_layout Example*
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 取基架 
 \begin_inset Formula $I_{i}=\left\{ i-1,i,i+1\right\} $
 \end_inset
@@ -1208,7 +1992,7 @@ noprefix "false"
  式即得
 \begin_inset Formula 
 \[
-U_{i}=U_{i}\qc\eval{\dv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\eval{\dv[2]{U}{x}}_{i}\approx\frac{U_{i}-2U_{i+1}+U_{i+2}}{h^{2}}
+U_{i}\equiv U_{i}\qc\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\eval{\pdv[2]{U}{x}}_{i}\approx\frac{U_{i}-2U_{i+1}+U_{i+2}}{h^{2}}
 \]
 
 \end_inset
@@ -1236,26 +2020,26 @@ U_{i}=U_{i}\qc\eval{\dv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\eval{\dv[
 \end_layout
 
 \begin_layout Enumerate
-选择基架：与前一节完全相同。
+给定结点值、选择基架：与前一节完全相同。
 \end_layout
 
 \begin_layout Enumerate
 作 Lagrange 插值：
 \begin_inset Formula 
 \[
-U(x)\approx U^{h}(x)=\sum_{k\in I_{i}}U_{k}L_{k}(x)\qc L_{k}(x)=\prod_{r\in I_{i}\setminus\left\{ k\right\} }\frac{x-x_{k}}{x_{r}-x_{k}}\qc k\in I_{i}
+U(x,t)\approx U^{h}(x,t)=\sum_{s\in S_{i}}U_{i+s}(t)L_{i+s}(x)\qc L_{i+s}(x)=\prod_{r\in S_{i}\setminus\left\{ s\right\} }\frac{x-x_{i+s}}{x_{i+r}-x_{i+s}}\qc s\in S_{i}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left\{ L_{k}\right\} _{k\in I_{i}}$
+\begin_inset Formula $\left\{ L_{i+s}\right\} _{s\in S_{i}}$
 \end_inset
 
  为具有以下性质的 Lagrange 多项式：
 \begin_inset Formula 
 \[
-\sum_{k\in I_{i}}L_{k}(x)\equiv1;\quad L_{k}(x_{j})=\delta_{jk},(\forall j,\forall k)\in I_{i}
+\sum_{s\in S_{i}}L_{i+s}(x)\equiv1\qc\forall x;\quad L_{i+r}(x_{i+s})=\delta_{rs}\qc(\forall r,\forall s)\in S_{i}
 \]
 
 \end_inset
@@ -1268,14 +2052,803 @@ U(x)\approx U^{h}(x)=\sum_{k\in I_{i}}U_{k}L_{k}(x)\qc L_{k}(x)=\prod_{r\in I_{i
 \begin_inset Formula $U^{h}$
 \end_inset
 
- 的导函数可以由 
-\begin_inset Formula $\left\{ L_{k}\right\} _{k\in I_{i}}$
+ 的空间偏导数可以由 
+\begin_inset Formula $\left\{ L_{i+s}\right\} _{s\in S_{i}}$
 \end_inset
 
- 的导函数获得：
+ 的导数获得：
 \begin_inset Formula 
 \[
-\eval{\dv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}U_{k}\dv[p]{L_{k}(x_{i})}{x}\qc p=0,1,\dots,\abs{I_{i}}-1
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{s\in S_{i}}U_{i+s}(t)\dv[p]{L_{i+s}(x_{i})}{x}\qc p=0,1,\dots,\abs{S_{i}}-1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+截断误差
+\end_layout
+
+\begin_layout Standard
+不失一般性，在等距网格 
+\begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
+\end_inset
+
+ 上，考虑线性格式
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+这里将 
+\begin_inset Formula $1/h$
+\end_inset
+
+ 提到求和号外，是为了让系数 
+\begin_inset Formula $b_{s}$
+\end_inset
+
+ 不依赖于 
+\begin_inset Formula $h$
+\end_inset
+
+；类似地，在分析二阶导数的线性格式时，应当提取出 
+\begin_inset Formula $1/h^{2}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\eval{\pdv{U}{x}}_{i}\approx\frac{1}{h}\sum_{s\in S_{i}}b_{i+s}U_{i+s}\label{eq:有限差分：空间格式：一般线性}
+\end{equation}
+
+\end_inset
+
+将 Taylor 展开式
+\begin_inset Formula 
+\[
+U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}\qc s\in S_{i}
+\]
+
+\end_inset
+
+代入格式右端，并合并 
+\begin_inset Formula $h$
+\end_inset
+
+ 的各次同类项，原则上可以得到
+\begin_inset Formula 
+\[
+\frac{1}{h}\sum_{s\in S_{i}}b_{i+s}U_{i+s}-\eval{\pdv{U}{x}}_{i}=\underbrace{\sum_{r=p}^{\infty}a_{r}h^{r}}_{\epsilon_{T}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\epsilon_{T}$
+\end_inset
+
+ 称为该格式的 
+\bar under
+截断误差 (truncation error)
+\bar default
+，它的最低次项为 
+\begin_inset Formula $h^{p}$
+\end_inset
+
+，因此称该格式具有 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶精度。
+\end_layout
+
+\begin_layout Example
+考虑模型格式
+\begin_inset Formula 
+\begin{equation}
+\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i}-U_{i-1}}{h}\label{eq:有限差分：空间格式：一阶迎风}
+\end{equation}
+
+\end_inset
+
+由 Taylor 展开式
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i-1} & =U_{i}+\eval{\pdv{U}{x}}_{i}(-h)+\sum_{r=1}^{\infty}\eval{\pdv[2r]{U}{x}}_{i}\frac{(-h)^{2r}}{(2r)!}+\sum_{r=1}^{\infty}\eval{\pdv[2r+1]{U}{x}}_{i}\frac{(-h)^{2r+1}}{(2r+1)!}\\
+ & =U_{i}-\eval{\pdv{U}{x}}_{i}h+\eval{\pdv[2]{U}{x}}_{i}\frac{h^{2}}{2}-\eval{\pdv[3]{U}{x}}_{i}\frac{h^{3}}{6}+\order{h^{4}}
+\end{aligned}
+\]
+
+\end_inset
+
+可得其截断误差为
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{U_{i}-U_{i-1}}{h}-\eval{\pdv{U}{x}}_{i} & =-\sum_{r=1}^{\infty}\eval{\pdv[2r]{U}{x}}_{i}\frac{h^{2r-1}}{(2r)!}+\sum_{r=1}^{\infty}\eval{\pdv[2r+1]{U}{x}}_{i}\frac{h^{2r}}{(2r+1)!}\\
+ & =-\eval{\pdv[2]{U}{x}}_{i}\frac{h}{2}+\eval{\pdv[3]{U}{x}}_{i}\frac{h^{2}}{6}+\order{h^{3}}
+\end{aligned}
+\]
+
+\end_inset
+
+显然，该格式具有 
+\begin_inset Formula $1$
+\end_inset
+
+ 阶精度。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+修正方程
+\end_layout
+
+\begin_layout Standard
+将微分方程中的空间导数用差商代替，并将截断误差移到等式另一端，即得该格式的 
+\bar under
+修正方程 (modified equation)
+\bar default
+。修正方程的解刻画了 
+\begin_inset Formula $h$
+\end_inset
+
+ 为有限值时，（忽略浮点误差的）数值解 
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 的行为。具体地，将线性格式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：一般线性"
+
+\end_inset
+
+ 代入模型问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+ 中的微分方程，即得该格式的修正方程
+\begin_inset Formula 
+\begin{equation}
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{r=1}^{\infty}\beta_{r}\pdv[2r]{U}{x}+\sum_{r=1}^{\infty}\alpha_{r}\pdv[2r+1]{U}{x}\label{eq:有限差分：空间格式：修正方程}
+\end{equation}
+
+\end_inset
+
+采用模型问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+ 中的 
+\bar under
+周期条件
+\bar default
+ 及 
+\bar under
+初始条件
+\bar default
+，易得其精确解
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+求解过程见 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:LinearDiffusion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sect:LinearDispersion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 节，只需将那里的 
+\begin_inset Formula $k$
+\end_inset
+
+ 替换为这里的 
+\begin_inset Formula $K=k\pi/L$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+为
+\begin_inset Formula 
+\begin{equation}
+U^{h}(x,t)=\exp(B_{K}t)\exp(\ii K\cdot\qty(x-A_{K}t))\qc x\in[-L,+L],t\in[0,+\infty)\label{eq:有限差分：空间格式：修正方程：精确解}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+A_{K}=A-\sum_{r=1}^{\infty}\left(-K^{2}\right)^{r}\alpha_{r}\qc B_{K}=\sum_{r=1}^{\infty}\left(-K^{2}\right)^{r}\beta_{r}
+\]
+
+\end_inset
+
+与原问题的精确解 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：误差分析：模型方程：精确解"
+
+\end_inset
+
+ 相比，
+\begin_inset Formula $U^{h}$
+\end_inset
+
+ 存在两种误差：
+\end_layout
+
+\begin_layout Description
+幅值误差 即 
+\begin_inset Formula $B_{K}\ne0$
+\end_inset
+
+ 所导致的误差，由修正方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：修正方程"
+
+\end_inset
+
+ 中的偶数阶系数 
+\begin_inset Formula $\left\{ \beta_{r}\right\} _{r=1}^{\infty}$
+\end_inset
+
+ 决定。
+\end_layout
+
+\begin_layout Description
+相位误差 即 
+\begin_inset Formula $A_{K}\ne A$
+\end_inset
+
+ 所导致的误差，由修正方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：修正方程"
+
+\end_inset
+
+ 中的奇数阶系数 
+\begin_inset Formula $\left\{ \alpha_{r}\right\} _{r=1}^{\infty}$
+\end_inset
+
+ 决定。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+仿照 
+\bar under
+模型方程
+\bar default
+ 的精确解 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：误差分析：模型方程：精确解"
+
+\end_inset
+
+，可以将 
+\bar under
+修正方程
+\bar default
+ 的精确解 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：修正方程：精确解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 改写为分离变量的形式：
+\begin_inset Formula 
+\[
+U^{h}(x,t)=\exp(B_{K}t)\exp(\ii K\cdot\qty(x-A_{K}t))\equiv\exp(B_{K}t-\ii KA_{K}t)\underbrace{\exp(\ii Kx)}_{U(x,t=0)}
+\]
+
+\end_inset
+
+引入 
+\bar under
+修正波数 (modified wave number)
+\bar default
+
+\begin_inset Formula 
+\[
+\tilde{K}:=\frac{KA_{K}}{A}+\ii\frac{B_{K}}{A}
+\]
+
+\end_inset
+
+可以让二者的 
+\bar under
+时变项
+\bar default
+ 更加相似：
+\begin_inset Formula 
+\[
+U(x,t)=\frac{\exp(\ii Kx)}{\exp(\ii KAt)}\qc U^{h}(x,t)=\frac{\exp(\ii Kx)}{\exp(\ii\tilde{K}At)}
+\]
+
+\end_inset
+
+格式的质量完全体现在 
+\bar under
+修正波数
+\bar default
+ 与 
+\bar under
+理想波数
+\bar default
+ 的比值 
+\begin_inset Formula 
+\[
+\boxed{\frac{\tilde{K}}{K}\equiv\frac{\tilde{K}h}{Kh}=\frac{A_{K}}{A}+\ii\frac{B_{K}}{KA}}
+\]
+
+\end_inset
+
+与 
+\begin_inset Formula $1$
+\end_inset
+
+ 的接近程度上：虚部表征幅值误差，实部表征相位误差。根据 
+\bar under
+Shannon 采样定理
+\bar default
+，间距为 
+\begin_inset Formula $h$
+\end_inset
+
+ 的网格所能分辨的最短波长为 
+\begin_inset Formula $\lambda_{\min}=2h$
+\end_inset
+
+，相应的最大波数为
+\begin_inset Formula 
+\[
+K_{\max}=\frac{2\pi}{\lambda_{\min}}=\frac{\pi}{h}
+\]
+
+\end_inset
+
+因此只需考虑 
+\begin_inset Formula $\abs{Kh}\le\pi$
+\end_inset
+
+ 的情形。
+\end_layout
+
+\begin_layout Example
+模型格式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：一阶迎风"
+
+\end_inset
+
+ 的修正方程为
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{r=1}^{\infty}\underbrace{\frac{h^{2r}}{(2r)!}\frac{A}{h}}_{\beta_{r}}\pdv[2r]{U}{x}+\sum_{r=1}^{\infty}\underbrace{\frac{-h^{2r+1}}{(2r+1)!}\frac{A}{h}}_{\alpha_{r}}\pdv[2r+1]{U}{x}
+\]
+
+\end_inset
+
+采用模型问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+ 中的 
+\bar under
+周期条件
+\bar default
+ 及 
+\bar under
+初始条件
+\bar default
+，其精确解为 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：修正方程：精确解"
+
+\end_inset
+
+ 式，其中
+\begin_inset Formula 
+\[
+A_{K}=A\frac{\sin(Kh)}{Kh}\qc B_{K}=KA\frac{\cos(Kh)-1}{Kh}
+\]
+
+\end_inset
+
+从而有修正波数与理想波数的比值
+\begin_inset Formula 
+\[
+\frac{\tilde{K}}{K}\equiv\frac{\tilde{K}h}{Kh}=\frac{\sin(Kh)}{Kh}+\ii\frac{\cos(Kh)-1}{Kh}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+修正波数
+\end_layout
+
+\begin_layout Standard
+前一节已经由 
+\bar under
+修正方程
+\bar default
+ 导出了 
+\bar under
+修正波数
+\bar default
+，并提供了一种基于 Taylor 系数的推导方案，原则上应用到任意线性格式。本节将从 
+\bar under
+离散信号
+\bar default
+ 的观点出发，重新导出这一关键概念，并提供一种更加简洁的计算方法。
+\end_layout
+
+\begin_layout Standard
+不失一般性，考虑如下等距网格
+\begin_inset Formula 
+\[
+x_{i}:=ih\qc h:=\frac{2L}{N}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+则模型问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+ 中的周期条件退化为
+\begin_inset Formula 
+\[
+U_{i}(t)=U_{i\mod N}(t)\qc\forall t\qc\forall i\in\mathbb{Z}
+\]
+
+\end_inset
+
+因此离散系统 
+\begin_inset Formula $\left\{ U_{i}(t)\right\} _{i=0}^{N}$
+\end_inset
+
+ 实际上只有 
+\begin_inset Formula $N$
+\end_inset
+
+ 个自由度。该系统在任意时刻都有如下 
+\bar under
+离散 Fourier 变换 (Discrete Fourier Transform, DFT)
+\bar default
+ 对：
+\begin_inset Formula 
+\[
+\left\{ \hat{U}_{k}(t)=\sum_{i=0}^{N-1}U_{i}(t)w^{-ik}\right\} _{k=0}^{N-1}\qc\left\{ U_{i}(t)=\frac{1}{N}\sum_{k=0}^{N-1}\hat{U}_{k}(t)w^{ik}\right\} _{i=0}^{N-1}\qc w=\exp(\sqrt{-1}\frac{2\pi}{N})
+\]
+
+\end_inset
+
+DFT 有多种等价的定义形式，这里选用的是 
+\begin_inset CommandInset href
+LatexCommand href
+name "\\texttt{scipy.fftpack}"
+target "file:///Users/master/Documents/Bibliography/Files/scipy-html-1.3.3/tutorial/fftpack.html#one-dimensional-discrete-fourier-transforms"
+literal "true"
+
+\end_inset
+
+ 中的版本。考虑到 
+\begin_inset Formula $w^{N}=1$
+\end_inset
+
+，上述变换中 
+\begin_inset Formula $k>\lceil(N-1)/2\rceil$
+\end_inset
+
+ 的部分可以向左平移 
+\begin_inset Formula $N$
+\end_inset
+
+ 项：
+\begin_inset Formula 
+\[
+\left\{ \hat{U}_{k}(t)=\sum_{i=0}^{N-1}U_{i}(t)w^{-ik}\right\} _{k=-\left\lfloor \frac{N-1}{2}\right\rfloor }^{\left\lceil \frac{N-1}{2}\right\rceil }\qc\left\{ U_{i}(t)=\frac{1}{N}\sum_{k=-\left\lfloor \frac{N-1}{2}\right\rfloor }^{\left\lceil \frac{N-1}{2}\right\rceil }\hat{U}_{k}(t)w^{ik}\right\} _{i=0}^{N-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+若 
+\begin_inset Formula $N$
+\end_inset
+
+ 为正偶数，则上式中 
+\begin_inset Formula $k$
+\end_inset
+
+ 的正项会比负项多出一个。这种非对称性是无关紧要的，因为多出的正项 
+\begin_inset Formula $k=\lceil(N-1)/2\rceil$
+\end_inset
+
+ 总是可以向左平移 
+\begin_inset Formula $N$
+\end_inset
+
+ 项，成为多出的负项 
+\begin_inset Formula $k=\lfloor(N+1)/2\rfloor$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+-\left\lfloor \frac{N-1}{2}\right\rfloor -1=-\left\lfloor \frac{N+1}{2}\right\rfloor =\left\lceil \frac{N-1}{2}\right\rceil -N\qc\forall N\in\mathbb{N_{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑到 
+\begin_inset Formula $\left\{ x_{i}\right\} _{i=0}^{N}$
+\end_inset
+
+ 取自于 
+\begin_inset Formula $[0,2L]$
+\end_inset
+
+，上述变换中的 
+\begin_inset Formula $k,w$
+\end_inset
+
+ 可以替换为
+\begin_inset Formula 
+\[
+K=\frac{k\pi}{L}\qc W=\exp(\sqrt{-1}\frac{2L}{N})
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\left\{ \hat{U}_{K}(t)=\sum_{i=0}^{N-1}U_{i}(t)W^{-iK}\right\} _{k=-\left\lfloor \frac{N-1}{2}\right\rfloor }^{\left\lceil \frac{N-1}{2}\right\rceil }\qc\left\{ U_{i}(t)=\frac{1}{N}\sum_{k=-\left\lfloor \frac{N-1}{2}\right\rfloor }^{\left\lceil \frac{N-1}{2}\right\rceil }\hat{U}_{K}(t)W^{iK}\right\} _{i=0}^{N-1}
+\]
+
+\end_inset
+
+后者在形式上与 
+\bar under
+截断的 Fourier 级数
+\bar default
+ 类似：
+\begin_inset Formula 
+\[
+\boxed{U(x,t)=\frac{1}{N}\sum_{k=-\left\lfloor \frac{N-1}{2}\right\rfloor }^{\left\lceil \frac{N-1}{2}\right\rceil }\hat{U}_{K}(t)\exp(\sqrt{-1}Kx)}
+\]
+
+\end_inset
+
+实际上，称之为 
+\bar under
+压缩的 Fourier 级数
+\bar default
+ 更合适，因为：波数与 
+\begin_inset Formula $K$
+\end_inset
+
+ 相差整数个 
+\begin_inset Formula $N\pi/L$
+\end_inset
+
+ 的频率成分无法与 
+\begin_inset Formula $\exp(\sqrt{-1}Kx)$
+\end_inset
+
+ 相区分，它们在 DFT 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+中都被
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+识别成了 
+\begin_inset Formula $\exp(\sqrt{-1}Kx)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+不失一般性，下面只考虑波数为 
+\begin_inset Formula $K$
+\end_inset
+
+ 的简谐波
+\begin_inset Formula 
+\[
+U(x,t)=\hat{U}_{K}(t)\exp(\sqrt{-1}Kx)
+\]
+
+\end_inset
+
+其离散形式为
+\begin_inset Formula 
+\[
+U_{i+s}(t)=\hat{U}_{K}(t)\exp(\sqrt{-1}K\cdot(x_{i}+sh))=\underbrace{\hat{U}_{K}(t)\exp(\sqrt{-1}Kx_{i})}_{U_{i}(t)}\exp(\sqrt{-1}Ksh)
+\]
+
+\end_inset
+
+其空间导数的精确值为
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}=\sqrt{-1}KU_{i}\impliedby\pdv{U}{x}=\sqrt{-1}KU
+\]
+
+\end_inset
+
+其近似值可以由线性格式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：空间格式：一般线性"
+
+\end_inset
+
+ 得到：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\sqrt{-1}\tilde{K}U_{i}\qc\tilde{K}:=\frac{1}{h}\sum_{s}b_{s}\exp(\sqrt{-1}Ksh)
+\]
+
+\end_inset
+
+由此可得
+\begin_inset Formula 
+\[
+\boxed{\frac{\tilde{K}h}{Kh}=\frac{\sum_{s}b_{s}\cos(sKh)}{Kh}+\sqrt{-1}\frac{\sum_{s}b_{s}\sin(sKh)}{Kh}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二阶迎风]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\eval{\pdv{U}{x}}_{i}\approx\frac{3U_{i}-4U_{i-1}+U_{i-2}}{2h}\qc A>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\tilde{K}h}{Kh}=\frac{3-4\cos(-Kh)+\cos(-2Kh)}{2Kh}+\sqrt{-1}\frac{-4\sin(-Kh)+\sin(-2Kh)}{2Kh}
 \]
 
 \end_inset
@@ -1295,7 +2868,7 @@ U(x)\approx U^{h}(x)=\sum_{k\in I_{i}}U_{k}L_{k}(x)\qc L_{k}(x)=\prod_{r\in I_{i
 \end_layout
 
 \begin_layout Subsection
-时间格式分类
+格式分类
 \end_layout
 
 \begin_layout Standard
@@ -1310,7 +2883,7 @@ U(x)\approx U^{h}(x)=\sum_{k\in I_{i}}U_{k}L_{k}(x)\qc L_{k}(x)=\prod_{r\in I_{i
   格式，详见 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:有限差分:半离散格式"
+reference "sec:有限差分：时间格式：显示推进"
 
 \end_inset
 
@@ -1329,7 +2902,7 @@ reference "sec:有限差分:半离散格式"
   格式，详见 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:有限差分:时空耦合格式"
+reference "sec:有限差分：时空耦合"
 
 \end_inset
 
@@ -1399,10 +2972,10 @@ reference "sec:有限差分:时空耦合格式"
 \end_layout
 
 \begin_layout Subsection
-半离散格式
+显式推进
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:有限差分:半离散格式"
+name "sec:有限差分：时间格式：显示推进"
 
 \end_inset
 
@@ -1423,7 +2996,7 @@ name "sec:有限差分:半离散格式"
 \end_inset
 
  是由 
-\begin_inset Formula $U(t,x_{i})$
+\begin_inset Formula $U_{i}(t)$
 \end_inset
 
  构成的列（或行）矩阵。
@@ -1499,14 +3072,26 @@ U^{n+1} & =\nicefrac{1}{3}U^{n}+\nicefrac{2}{3}\left(U^{n+1''}+F\qty(U^{n+1''})\
 \end_layout
 
 \begin_layout Subsection
+隐式推进
+\end_layout
+
+\begin_layout Subsection
+稳定性
+\end_layout
+
+\begin_layout Section
 时空耦合格式
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:有限差分:时空耦合格式"
+name "sec:有限差分：时空耦合"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+经典格式
 \end_layout
 
 \begin_layout Standard
@@ -1536,7 +3121,10 @@ reference "sec:LaxFriedrichs"
 ）。但在一些特殊情况下，即使时间格式仅有一阶精度，也有可能构造出时空二阶格式（如 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:WarmingBeam"
+reference "sec:LaxWendroff"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -1578,19 +3166,27 @@ CFL (Courant–Friedrichs–Lewy) 数
 最后一个分式表明：它可以看作 
 \bar under
 物理速度 (physical speed)
-\bar default
- 
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $A$
 \end_inset
 
+
+\bar default
  与 
 \bar under
 网格速度 (grid speed)
-\bar default
- 
+\begin_inset space ~
+\end_inset
+
+
 \begin_inset Formula $\Delta x/\Delta t$
 \end_inset
 
+
+\bar default
  的比值。后面将会看到，该比值决定了格式的
 \begin_inset CommandInset ref
 LatexCommand nameref
@@ -1603,6 +3199,13 @@ reference "sec:有限差分:稳定性"
 
 \begin_layout Subsubsection
 Godunov
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Godunov"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1909,9 +3512,9 @@ name "sec:WarmingBeam"
 \bar default
  近似的 
 \bar under
-人工黏性
+人工黏性项
 \bar default
- 项，即得 
+，即得 
 \bar under
 Warming–Beam 格式
 \bar default
@@ -1997,1016 +3600,8 @@ reference "sec:LaxWendroff"
 。
 \end_layout
 
-\begin_layout Section
-多项式精度
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Formula $L^{p}$
-\end_inset
-
- 距离
-\end_layout
-
-\begin_layout Standard
-Suppose 
-\begin_inset Formula $U$
-\end_inset
-
- is the exact solution of Problem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:线性平流"
-
-\end_inset
-
- and 
-\begin_inset Formula $U^{h}$
-\end_inset
-
- is approximated one, both come from the same function space 
-\begin_inset Formula $X$
-\end_inset
-
-.
- The error of 
-\begin_inset Formula $U^{h}$
-\end_inset
-
- is defined as the 
-\noun on
-distance
-\noun default
- between 
-\begin_inset Formula $U$
-\end_inset
-
- and 
-\begin_inset Formula $U^{h}$
-\end_inset
-
-, if we have introduced a 
-\noun on
-metric
-\noun default
- (i.e.
- a distance function) in 
-\begin_inset Formula $X$
-\end_inset
-
-; or as the norm of 
-\begin_inset Formula $\left(U^{h}-U\right)$
-\end_inset
-
-, if we have defined a 
-\noun on
-norm
-\noun default
- in 
-\begin_inset Formula $X$
-\end_inset
-
-.
- Since a norm can always induce a metric, and equivalent norms induce the
- same topology, we can abstractly write the definition of error as
-\begin_inset Formula 
-\[
-\epsilon:=\norm{U^{h}-U}
-\]
-
-\end_inset
-
-The concrete expression of 
-\begin_inset Formula $\norm{\cdot}$
-\end_inset
-
-, however, is not unique.
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$L^p$-norm]
-\end_layout
-
-\end_inset
-
-For 
-\begin_inset Formula $1\le p<\infty$
-\end_inset
-
-, the 
-\begin_inset Formula $L^{p}$
-\end_inset
-
--norm of 
-\begin_inset Formula $U$
-\end_inset
-
- is defined as
-\begin_inset Formula 
-\[
-\norm{U}_{p}:=\left(\int_{\Omega}\abs{U(x_{1},\dots,x_{m})}^{p}\dd{\Omega}\right)^{1/p}
-\]
-
-\end_inset
-
-if the RHS is Lebesgue integrable.
-\end_layout
-
-\begin_layout Definition
-For 
-\begin_inset Formula $p=\infty$
-\end_inset
-
-, the 
-\begin_inset Formula $L^{\infty}$
-\end_inset
-
--norm of 
-\begin_inset Formula $U$
-\end_inset
-
- is defined as
-\begin_inset Formula 
-\[
-\norm{U}_{\infty}:=\inf_{C}\left\{ C\ge0\colon\abs{U(x_{1},\dots,x_{m})}\le C\text{ for almost every }x\right\} 
-\]
-
-\end_inset
-
-If 
-\begin_inset Formula $U$
-\end_inset
-
- is bounded, the infimum of 
-\begin_inset Formula $\abs{U}$
-\end_inset
-
-'s upper bounds becomes the supremum of 
-\begin_inset Formula $\abs{U}$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\norm{U}_{\infty}:=\sup_{x\in\Omega}\abs{U(x_{1},\dots,x_{m})}
-\]
-
-\end_inset
-
-which is the limit of the 
-\begin_inset Formula $L^{p}$
-\end_inset
-
--norm when 
-\begin_inset Formula $p\to\infty$
-\end_inset
-
-.
- If 
-\begin_inset Formula $U$
-\end_inset
-
- is continuous, then 
-\begin_inset Formula $\sup_{x\in\Omega}$
-\end_inset
-
- becomes 
-\begin_inset Formula $\max_{x\in\Omega}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-In 1D space, if 
-\begin_inset Formula $U\colon[a,b]\to\mathbb{R}$
-\end_inset
-
- is bounded, the following three are commonly used:
-\begin_inset Formula 
-\[
-\norm{U}_{1}:=\int_{a}^{b}\abs{U(x)}\dd{x}\qc\norm{U}_{2}:=\sqrt{\int_{a}^{b}\abs{U(x)}^{2}\dd{x}}\qc\norm{U}_{\infty}:=\sup_{x\in[a,b]}\abs{U(x)}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-In numerical computation, however, functions are usually given as column
- matrices filled with nodal values, e.g.
-\begin_inset Formula 
-\[
-\left\{ U_{i}\right\} _{i=1}^{n}\qc U_{i}:=U(x_{i})\qc x_{i}:=a+ih\qc h:=\frac{b-a}{n}\qc i=0,1,\dots,n
-\]
-
-\end_inset
-
-The error is then approximated by any one of the following formulae:
-\begin_inset Formula 
-\[
-\begin{aligned}\norm{U^{h}-U}_{1} & \approx\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}h\approx\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}h\\
- & \approx\abs{U_{0}^{h}-U_{0}}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{U_{i}^{h}-U_{i}}h+\abs{U_{n}^{h}-U_{n}}\frac{h}{2}\\
-\norm{U^{h}-U}_{2} & \approx\sqrt{\sum_{i=0}^{n-1}\abs{U_{i}^{h}-U_{i}}^{2}h}\approx\sqrt{\sum_{i=1}^{n}\abs{U_{i}^{h}-U_{i}}^{2}h}\\
- & \approx\sqrt{\abs{U_{0}^{h}-U_{0}}^{2}\frac{h}{2}+\sum_{i=1}^{n-1}\abs{U_{i}^{h}-U_{i}}^{2}h+\abs{U_{n}^{h}-U_{n}}^{2}\frac{h}{2}}\\
-\norm{U^{h}-U}_{\infty} & :=\max_{i=0}^{n}\abs{U_{i}^{h}-U_{i}}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-格式的精度
-\end_layout
-
-\begin_layout Definition
-A scheme is said to be 
-\begin_inset Formula $p$
-\end_inset
-
-th order accurate, if
-\begin_inset Formula 
-\[
-\norm{U^{h}-U}=\order{h^{p}}=Ch^{p}+\order{h^{p+1}}
-\]
-
-\end_inset
-
-in which, 
-\begin_inset Formula $C\ge0$
-\end_inset
-
- is a constant, 
-\begin_inset Formula $h=\Delta x$
-\end_inset
-
- or 
-\begin_inset Formula $\Delta t$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For a linear scheme, the accuracy order can be derived easily from Taylor
- expansion.
- However, for a non-linear scheme, the derivation might be too complicated.
- In both cases, we can measure the accuracy order by fitting a 
-\begin_inset Formula $\ln\norm{U^{h}-U}$
-\end_inset
-
--
-\begin_inset Formula $\ln h$
-\end_inset
-
- curve, which should look like a straight line:
-\begin_inset Formula 
-\[
-\ln\norm{U^{h}-U}=\ln C+p\ln h
-\]
-
-\end_inset
-
-Its slope is the accuracy order.
- Here, 
-\begin_inset Formula $h$
-\end_inset
-
- should be moderate: if too large, the data points would hardly distribute
- along a straight line; if too small, the error would be dominated by floating
- point arithmetic errors.
-\end_layout
-
-\begin_layout Subsubsection*
-Python Implementation
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand inputminted
-filename "Code/accuracy_measurer.py"
-lstparams "language=Python"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-截断误差
-\end_layout
-
 \begin_layout Subsection
 修正方程
-\end_layout
-
-\begin_layout Standard
-考虑无界空间上的线性单波方程：
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-不失一般性，以一阶迎风格式
-\begin_inset Formula 
-\[
-\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i}^{n}-U_{i-1}^{n}}{h}\qc A>0
-\]
-
-\end_inset
-
-对其进行求解。由 Taylor 展开可得
-\begin_inset Formula 
-\[
-U_{i-1}^{n}=U_{i}^{n}+\eval{\pdv{U}{x}}_{i}h+\sum_{n=1}^{\infty}\eval{\pdv[2n]{U}{x}}_{i}\frac{h^{2n}}{(2n)!}+\sum_{n=1}^{\infty}\eval{\pdv[2n+1]{U}{x}}_{i}\frac{h^{2n+1}}{(2n+1)!}
-\]
-
-\end_inset
-
-由此导出 
-\bar under
-修正方程 (modified equation)
-\bar default
-
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=-\sum_{n=1}^{\infty}\left(\alpha_{n}\pdv[2n+1]{U}{x}+\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{U}{x}\right)\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\alpha_{n}:=\frac{A}{h}\frac{h^{2n+1}}{(2n+1)!}>0\qc\beta_{n}:=\frac{A}{h}\frac{h^{2n}}{(2n)!}>0\qc\forall n\in\mathbb{N}_{+}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-不失一般性，以 
-\bar under
-波数 (wave number)
-\bar default
- 为 
-\begin_inset Formula $k\in\mathbb{R}$
-\end_inset
-
- 的简谐波为上述修正方程的初始条件：
-\begin_inset Formula 
-\[
-U(x,t=0)=\exp(\sqrt{-1}kx)\qc x\in(-\infty,+\infty)
-\]
-
-\end_inset
-
-易得（见 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sect:LinearDiffusion"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-–
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sect:LinearDispersion"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 节）其精确解为
-\begin_inset Formula 
-\[
-U(x,t)=\exp(B_{k}t)\exp(\sqrt{-1}k\cdot(x-A_{k}t))\qc x\in(-\infty,+\infty),t\in\mathbb{R}_{+}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\begin{aligned}A_{k}-A & =\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}=A\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(kh\right)^{2n}}{(2n+1)!}\\
-B_{k} & =\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}=\frac{A}{h}\sum_{n=1}^{\infty}\frac{\left(-1\right)^{n}\left(kh\right)^{2n}}{(2n)!}
-\end{aligned}
-\]
-
-\end_inset
-
-它们的符号分别由次数最低的项决定：
-\begin_inset Formula 
-\[
--\alpha_{1}k^{2}=-\frac{Ah^{2}}{6}k^{2}<0\qc-\beta_{1}k^{2}=-\frac{Ah}{2}k^{2}<0
-\]
-
-\end_inset
-
-这两种误差分别称为：
-\end_layout
-
-\begin_layout Description
-色散误差 数值波速 
-\begin_inset Formula $A_{k}$
-\end_inset
-
- 小于精确波速 
-\begin_inset Formula $A$
-\end_inset
-
-，并且波数 
-\begin_inset Formula $k$
-\end_inset
-
- 越大，数值波速越慢。
-\end_layout
-
-\begin_layout Description
-耗散误差 振幅 
-\begin_inset Formula $\exp(B_{k}t)$
-\end_inset
-
- 随时间 
-\begin_inset Formula $t$
-\end_inset
-
- 增长而衰减，并且波数 
-\begin_inset Formula $k$
-\end_inset
-
- 越大，振幅衰减越快。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-修正波数
-\end_layout
-
-\begin_layout Standard
-有界空间上的线性单波方程
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=0\qc x\in(0,2L)
-\]
-
-\end_inset
-
-在周期边界条件
-\begin_inset Formula 
-\[
-U(x=0,t)=U(x=2L,t)\qc\forall t\in\mathbb{R}_{+}
-\]
-
-\end_inset
-
-和初始条件
-\begin_inset Formula 
-\[
-U(x,t=0)=\exp(\sqrt{-1}k\pi\frac{x}{L})\qc k\in\mathbb{Z},\forall x\in[0,2L]
-\]
-
-\end_inset
-
-is
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-U(x,t)=\exp(\sqrt{-1}k\pi\frac{x-At}{L})=A(t)\exp(\sqrt{-1}Kx)
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-K:=\frac{k\pi}{L}\qc A(t):=\exp(-\sqrt{-1}KAt)
-\]
-
-\end_inset
-
-So, the exact spatial derivative is
-\begin_inset Formula 
-\[
-\pdv{U}{x}=\sqrt{-1}KU
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Divide 
-\begin_inset Formula $[0,2L]$
-\end_inset
-
- into 
-\begin_inset Formula $N$
-\end_inset
-
- equal-length pieces:
-\begin_inset Formula 
-\[
-x_{i}:=i\Delta x\qc h:=\frac{2L}{N}\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-The periodic condition then becomes
-\begin_inset Formula 
-\[
-U_{0}(t)=U_{N}(t)\qc\forall t\in\mathbb{R}_{+}
-\]
-
-\end_inset
-
-In general, a linear spatial scheme can be written as
-\begin_inset Formula 
-\[
-\eval{\pdv{U}{x}}_{i}\approx\frac{1}{h}\sum_{s}b_{s}U_{i+s}
-\]
-
-\end_inset
-
-Suppose
-\begin_inset Formula 
-\[
-U_{i}(t)=\exp(\sqrt{-1}Kx_{i})\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-then
-\begin_inset Formula 
-\[
-U_{i+s}(t)=U_{i}(t)\exp(\sqrt{-1}sKh)
-\]
-
-\end_inset
-
-So, the approximated spatial derivative is the product of 
-\begin_inset Formula $U_{i}$
-\end_inset
-
- and a complex number 
-\begin_inset Formula $K'$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\eval{\pdv{U}{x}}_{i}\approx K'U_{i}\qc K':=\frac{1}{h}\sum_{s}b_{s}\exp(\sqrt{-1}sKh)
-\]
-
-\end_inset
-
-Since 
-\begin_inset Formula $K'$
-\end_inset
-
- has the same dimension as 
-\begin_inset Formula $K$
-\end_inset
-
-, it is justified to call it the 
-\noun on
-modified wave number
-\noun default
- of the spatial scheme.
- For later use, we shall denote
-\begin_inset Formula 
-\[
-K_{\Re}':=\Re(K')=\frac{1}{h}\sum_{s}b_{s}\cos(sKh)\qc K_{\Im}':=\Im(K')=\frac{1}{h}\sum_{s}b_{s}\sin(sKh)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Suppose the IC is calculated exactly on each 
-\begin_inset Formula $x_{i}$
-\end_inset
-
-, i.e.
-\begin_inset Formula 
-\[
-U_{i}(t=0)=\exp(\sqrt{-1}Kx_{i})\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-The semi-discrete scheme becomes
-\begin_inset Formula 
-\[
-\dv{U_{i}(t)}{t}+AK'U_{i}(t)=0
-\]
-
-\end_inset
-
-whose solution is
-\begin_inset Formula 
-\[
-U_{i}(t)=\exp(-K'At)\underbrace{\exp(\sqrt{-1}Kx_{i})}_{U_{i}(t=0)}
-\]
-
-\end_inset
-
-The approximated solution of the original PDE is then
-\begin_inset Formula 
-\[
-\begin{aligned}U_{i}(t) & =\underbrace{\exp(-K_{\Re}'At)\exp(-\sqrt{-1}K_{\Im}'At)}_{\exp(-K'At)}\exp(\sqrt{-1}Kx_{i})\\
- & =\exp(-K_{\Re}'At)\exp(\sqrt{-1}(Kx_{i}-K_{\Im}'At))\\
- & =\exp(B_{K}t)\exp(\sqrt{-1}K\cdot(x_{i}-A_{K}t))
-\end{aligned}
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-A_{K}:=A\frac{\Im(K')}{K}=\frac{A}{Kh}\sum_{s}b_{s}\sin(sKh)\qc B_{K}:=-A\Re(K')=-\frac{A}{h}\sum_{s}b_{s}\cos(sKh)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[一阶迎风]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset Formula 
-\[
-\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i}-U_{i-1}}{h}\qc A>0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{0}=1\qc b_{-1}=-1
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-K'h=1-\cos(Kh)+\sqrt{-1}\sin(Kh)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[二阶迎风]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\eval{\pdv{U}{x}}_{i}\approx\frac{3U_{i}-4U_{i-1}+U_{i-2}}{2h}\qc A>0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-K'h=\frac{3-4\cos(Kh)+\cos(2Kh)}{2}+\sqrt{-1}\frac{0+4\sin(Kh)-\sin(2Kh)}{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-稳定性
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:有限差分:稳定性"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Stability]
-\end_layout
-
-\end_inset
-
-As 
-\begin_inset Formula $t$
-\end_inset
-
- grows, the error is bounded.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The concrete expression of the stability condition depends on both the original
- PDE and the scheme.
- The approach adopted in the following examples is given by von Neumann,
- which is applicable for any linear PDEs with linear schemes.
-\end_layout
-
-\begin_layout Subsection
-ODE 稳定性
-\end_layout
-
-\begin_layout Subsection
-PDE 稳定性
-\end_layout
-
-\begin_layout Theorem
-When apply the 1st order upwind scheme
-\begin_inset Formula 
-\[
-\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i}^{n}-U_{i-1}^{n}}{\Delta x}=0
-\]
-
-\end_inset
-
-for Problem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:线性平流"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, the stability condition is
-\begin_inset Formula 
-\[
-0<\frac{A\Delta t}{\Delta x}<1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Suppose 
-\begin_inset Formula $[0,2\pi]$
-\end_inset
-
- is divided into 
-\begin_inset Formula $N$
-\end_inset
-
- equal-length pieces:
-\begin_inset Formula 
-\[
-x_{i}:=i\Delta x\qc\Delta x:=\frac{2\pi}{N}\qc i=0,1,\dots,N
-\]
-
-\end_inset
-
-Denote the error measured at 
-\begin_inset Formula $t_{n}$
-\end_inset
-
- on 
-\begin_inset Formula $x_{i}$
-\end_inset
-
- as 
-\begin_inset Formula $E_{i}^{n}$
-\end_inset
-
-.
- Apply Discrete Fourier Transform (DFT) on it:
-\begin_inset Formula 
-\[
-\begin{aligned}E_{i}^{n} & =\sum_{k=-\left\lceil \frac{N-1}{2}\right\rceil }^{\left\lfloor \frac{N-1}{2}\right\rfloor }\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}\qc i=0,1,\dots,N\\
-\hat{E}_{k}^{n} & =\frac{1}{N}\sum_{i=1}^{N}E_{i}^{n}e^{-\sqrt{-1}kx_{i}}\qc k=-\left\lceil \frac{N-1}{2}\right\rceil ,\dots,-1,0,1,\dots,\left\lfloor \frac{N-1}{2}\right\rfloor 
-\end{aligned}
-\]
-
-\end_inset
-
-in which, we have used the periodic condition
-\begin_inset Formula 
-\[
-E_{0}^{n}=E_{N}^{n}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Without loss of generality, let us consider the 
-\begin_inset Formula $k$
-\end_inset
-
-th component 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- alone.
- Since both the PDE and the scheme are linear, the wave number is unchanged,
- which means 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- will evolve into 
-\begin_inset Formula $\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
-.
- To find the expression for 
-\begin_inset Formula $\hat{E}_{k}^{n+1}$
-\end_inset
-
-, insert 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- into the scheme, we have
-\begin_inset Formula 
-\[
-\frac{\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}}{\Delta t}+A\frac{\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i-1}}}{\Delta x}=0
-\]
-
-\end_inset
-
-Note that
-\begin_inset Formula 
-\[
-e^{\sqrt{-1}kx_{i-1}}=e^{\sqrt{-1}k\left(x_{i}-\Delta x\right)}=e^{\sqrt{-1}kx_{i}}e^{-\sqrt{-1}k\Delta x}
-\]
-
-\end_inset
-
-the growing factor for the 
-\begin_inset Formula $k$
-\end_inset
-
-th component is then
-\begin_inset Formula 
-\[
-G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}k\Delta x}\qc\sigma:=\frac{A\Delta t}{\Delta x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The stability condition for each 
-\begin_inset Formula $k$
-\end_inset
-
- is
-\begin_inset Formula 
-\[
-\abs{G_{k}}^{2}=1+4\sigma(\sigma-1)\sin^{2}\frac{k\Delta x}{2}<1
-\]
-
-\end_inset
-
-which can be simplified to
-\begin_inset Formula 
-\[
-0<\sigma<1
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-相容性 & 收敛性
-\end_layout
-
-\begin_layout Subsection
-Modified PDE
 \end_layout
 
 \begin_layout Standard
@@ -3030,9 +3625,12 @@ modified
 \begin_inset Formula $\Delta x$
 \end_inset
 
- always change together (which is required by stability), it is a common
- practice to represent temporal derivatives by spatial derivatives in modified
- PDEs.
+ always change together (which is required by stability),
+\end_layout
+
+\begin_layout Standard
+it is a common practice to represent temporal derivatives by spatial derivatives
+ in modified PDEs.
 \end_layout
 
 \begin_layout Theorem
@@ -3117,7 +3715,7 @@ in which, we have used the fact
 \end_layout
 
 \begin_layout Subsection
-Consistency
+相容性
 \end_layout
 
 \begin_layout Standard
@@ -3394,7 +3992,228 @@ th order accuracy is then obvious.
 \end_layout
 
 \begin_layout Subsection
-Convergency
+稳定性
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:有限差分:稳定性"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Stability]
+\end_layout
+
+\end_inset
+
+As 
+\begin_inset Formula $t$
+\end_inset
+
+ grows, the error is bounded.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The concrete expression of the stability condition depends on both the original
+ PDE and the scheme.
+ The approach adopted in the following examples is given by von Neumann,
+ which is applicable for any linear PDEs with linear schemes.
+\end_layout
+
+\begin_layout Theorem
+When apply the 1st order upwind scheme
+\begin_inset Formula 
+\[
+\frac{U_{i}^{n+1}-U_{i}^{n}}{\Delta t}+A\frac{U_{i}^{n}-U_{i-1}^{n}}{\Delta x}=0
+\]
+
+\end_inset
+
+for Problem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:线性平流"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the stability condition is
+\begin_inset Formula 
+\[
+0<\frac{A\Delta t}{\Delta x}<1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Suppose 
+\begin_inset Formula $[0,2\pi]$
+\end_inset
+
+ is divided into 
+\begin_inset Formula $N$
+\end_inset
+
+ equal-length pieces:
+\begin_inset Formula 
+\[
+x_{i}:=i\Delta x\qc\Delta x:=\frac{2\pi}{N}\qc i=0,1,\dots,N
+\]
+
+\end_inset
+
+Denote the error measured at 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ on 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ as 
+\begin_inset Formula $E_{i}^{n}$
+\end_inset
+
+.
+ Apply Discrete Fourier Transform (DFT) on it:
+\begin_inset Formula 
+\[
+\begin{aligned}E_{i}^{n} & =\sum_{k=-\left\lceil \frac{N-1}{2}\right\rceil }^{\left\lfloor \frac{N-1}{2}\right\rfloor }\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}\qc i=0,1,\dots,N\\
+\hat{E}_{k}^{n} & =\frac{1}{N}\sum_{i=1}^{N}E_{i}^{n}e^{-\sqrt{-1}kx_{i}}\qc k=-\left\lceil \frac{N-1}{2}\right\rceil ,\dots,-1,0,1,\dots,\left\lfloor \frac{N-1}{2}\right\rfloor 
+\end{aligned}
+\]
+
+\end_inset
+
+in which, we have used the periodic condition
+\begin_inset Formula 
+\[
+E_{0}^{n}=E_{N}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Without loss of generality, let us consider the 
+\begin_inset Formula $k$
+\end_inset
+
+th component 
+\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
+\end_inset
+
+ alone.
+ Since both the PDE and the scheme are linear, the wave number is unchanged,
+ which means 
+\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
+\end_inset
+
+ will evolve into 
+\begin_inset Formula $\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}$
+\end_inset
+
+.
+ To find the expression for 
+\begin_inset Formula $\hat{E}_{k}^{n+1}$
+\end_inset
+
+, insert 
+\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
+\end_inset
+
+ into the scheme, we have
+\begin_inset Formula 
+\[
+\frac{\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}}{\Delta t}+A\frac{\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i-1}}}{\Delta x}=0
+\]
+
+\end_inset
+
+Note that
+\begin_inset Formula 
+\[
+e^{\sqrt{-1}kx_{i-1}}=e^{\sqrt{-1}k\left(x_{i}-\Delta x\right)}=e^{\sqrt{-1}kx_{i}}e^{-\sqrt{-1}k\Delta x}
+\]
+
+\end_inset
+
+the growing factor for the 
+\begin_inset Formula $k$
+\end_inset
+
+th component is then
+\begin_inset Formula 
+\[
+G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}k\Delta x}\qc\sigma:=\frac{A\Delta t}{\Delta x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The stability condition for each 
+\begin_inset Formula $k$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\abs{G_{k}}^{2}=1+4\sigma(\sigma-1)\sin^{2}\frac{k\Delta x}{2}<1
+\]
+
+\end_inset
+
+which can be simplified to
+\begin_inset Formula 
+\[
+0<\sigma<1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+收敛性
 \end_layout
 
 \begin_layout Definition
@@ -3432,7 +4251,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Lax Equivalence Theorem]
+[Lax]
 \end_layout
 
 \end_inset
