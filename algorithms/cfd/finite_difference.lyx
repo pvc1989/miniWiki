@@ -413,14 +413,14 @@ U(x,t=0)=U_{0}(x)\qc x\in(-\infty,+\infty)
 
 ，则问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性扩散"
 
 \end_inset
 
  退化为问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性平流"
 
 \end_inset
@@ -447,21 +447,21 @@ U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 
 ，则问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性扩散"
 
 \end_inset
 
  可看作问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性平流"
 
 \end_inset
 
  的推广。假设问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性扩散"
 
 \end_inset
@@ -512,7 +512,7 @@ reference "prob:线性扩散"
 
 由此可得问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性扩散"
 plural "false"
 caps "false"
@@ -640,14 +640,14 @@ U(x,t=0)=\delta(x)\equiv\int_{-\infty}^{+\infty}\exp(\ii kx)\frac{\dd{k}}{2\pi}\
 \begin_layout Solution*
 不难验证：该初值问题是问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性扩散"
 
 \end_inset
 
  的特殊情形。因此，只需在 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:线性扩散:解析解"
 
 \end_inset
@@ -851,7 +851,7 @@ U(x,t)=\exp(\ii\cdot(kx-\omega t))\qc x\in(-\infty,+\infty),t\in[0,+\infty)
 
 由此可得问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性色散"
 plural "false"
 caps "false"
@@ -993,7 +993,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-误差分析
+误差分析概述
 \end_layout
 
 \begin_layout Subsection
@@ -1018,7 +1018,7 @@ status open
 \begin_layout Plain Layout
 即问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性平流"
 plural "false"
 caps "false"
@@ -1063,7 +1063,7 @@ U(x,t=0)=\exp(\ii kx)\qc x\in(-\infty,+\infty)
 精确解
 \begin_inset Formula 
 \[
-U(x,t)=\exp(\ii k\cdot(x-At))\equiv\exp(-\ii kAt)\underbrace{\exp(\ii kx)}_{U(x,t=0)}\qc x\in(-\infty,+\infty),t\in[0,\infty)
+U(x,t)=\exp(-\ii kAt)\underbrace{\exp(\ii kx)}_{U(x,t=0)}\qc x\in(-\infty,+\infty),t\in[0,\infty)
 \]
 
 \end_inset
@@ -1145,7 +1145,7 @@ U(x,t=0)=\exp(\ii Kx)\qc x\in[-L,+L];\quad K=\frac{k\pi}{L}\qc k\in\mathbb{Z}
 精确解
 \begin_inset Formula 
 \begin{equation}
-U(x,t)=\exp(\ii K\cdot(x-At))\equiv\exp(-\ii KAt)\underbrace{\exp(\ii Kx)}_{U(x,t=0)}\qc x\in[-L,+L],t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
+U(x,t)=\exp(-\ii KAt)\underbrace{\exp(\ii Kx)}_{U(x,t=0)}\qc x\in[-L,+L],t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
 \end{equation}
 
 \end_inset
@@ -1468,14 +1468,14 @@ status open
 \begin_layout Remark
 对于含有时间变量的问题（如 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性平流"
 
 \end_inset
 
 –
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:线性色散"
 
 \end_inset
@@ -1522,13 +1522,13 @@ status open
 \end_inset
 
 对于一维问题，设 
-\begin_inset Formula $U\colon[a,b]\to\mathbb{R}$
+\begin_inset Formula $U\colon\Omega\equiv[a,b]\to\mathbb{R}$
 \end_inset
 
  有界，常用的范数有以下三种
 \begin_inset Formula 
 \[
-\norm{U}_{1}:=\int_{a}^{b}\abs{U(x)}\dd{x}\qc\norm{U}_{2}:=\sqrt{\int_{a}^{b}\abs{U(x)}^{2}\dd{x}}\qc\norm{U}_{\infty}:=\sup_{x\in[a,b]}\abs{U(x)}
+\norm{U}_{1}:=\int_{\Omega}\abs{U(x)}\dd{x}\qc\norm{U}_{2}:=\sqrt{\int_{\Omega}\abs{U(x)}^{2}\dd{x}}\qc\norm{U}_{\infty}:=\sup_{x\in\Omega}\abs{U(x)}
 \]
 
 \end_inset
@@ -1637,7 +1637,11 @@ status open
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
+对于线性格式，其精度可以由 Taylor 展开推导而得；对于非线性格式，用 Taylor 展开推导可能过于复杂，更具可行性的方案如下
+\end_layout
+
+\begin_layout Algorithm
 \begin_inset ERT
 status open
 
@@ -1648,11 +1652,11 @@ status open
 
 \end_inset
 
-对于线性格式，其精度可以由 Taylor 展开推导而得；对于非线性格式，用 Taylor 展开推导可能过于复杂，更具可行性的方案为如下 
+这是一种 
 \bar under
-后验 (a posteriori) 精度测量
+后验的 (a posteriori)
 \bar default
-：
+ 测量：
 \end_layout
 
 \begin_deeper
@@ -1709,11 +1713,18 @@ status open
 \end_layout
 
 \end_deeper
-\begin_layout Remark
+\begin_layout Algorithm
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 代码 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "code:有限差分:精度测量"
+LatexCommand eqref
+reference "code:有限差分：精度测量"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1727,15 +1738,8 @@ noprefix "false"
 \begin_inset CommandInset include
 LatexCommand inputminted
 filename "code/accuracy_measurer.py"
-lstparams "language=Python,caption={差分格式的后验精度测量},label={code:有限差分:精度测量}"
+lstparams "language=Python,caption={差分格式的后验精度测量},label={code:有限差分：精度测量}"
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
@@ -1746,10 +1750,20 @@ lstparams "language=Python,caption={差分格式的后验精度测量},label={co
 \end_layout
 
 \begin_layout Subsection
-基于 Taylor 展开
+格式构造
 \end_layout
 
-\begin_layout Standard
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基于 Taylor 展开]
+\end_layout
+
+\end_inset
+
 这种方法适用于等距网格 
 \begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
 \end_inset
@@ -1757,6 +1771,7 @@ lstparams "language=Python,caption={差分格式的后验精度测量},label={co
 ：
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 给定（充分光滑的）函数 
 \begin_inset Formula $U(x,t)$
@@ -1789,27 +1804,19 @@ lstparams "language=Python,caption={差分格式的后验精度测量},label={co
 ，用 
 \bar under
 指标 (Index) 集
-\begin_inset space ~
-\end_inset
-
-
+\bar default
+ 
 \begin_inset Formula $I_{i}\subset I$
 \end_inset
 
-
-\bar default
  或 
 \bar under
 指标偏移 (index-Shift) 集
-\begin_inset space ~
-\end_inset
-
-
+\bar default
+ 
 \begin_inset Formula $S_{i}$
 \end_inset
 
-
-\bar default
  表示。在线性格式中，导函数 
 \begin_inset Formula $\pdv*[p]{U}{x}$
 \end_inset
@@ -1821,7 +1828,7 @@ lstparams "language=Python,caption={差分格式的后验精度测量},label={co
  处的近似值由相应基架上的函数值线性组合而得：
 \begin_inset Formula 
 \begin{equation}
-\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}\equiv\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:GeneralLinearScheme}
+\eval{\pdv[p]{U}{x}}_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}U_{k}\equiv\sum_{s\in S_{i}}a_{i+s}^{(p)}U_{i+s}\label{eq:有限差分：空间格式：一般线性：p 阶导数}
 \end{equation}
 
 \end_inset
@@ -1852,8 +1859,8 @@ U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!
 
  个，将它们代入 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:GeneralLinearScheme"
+LatexCommand eqref
+reference "eq:有限差分：空间格式：一般线性：p 阶导数"
 
 \end_inset
 
@@ -1880,7 +1887,7 @@ reference "eq:GeneralLinearScheme"
  的线性方程组
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1\label{eq:SchemeFromTaylor}
+\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r}\qc r=0,1,\dots,\abs{S_{i}}-1\label{eq:有限差分：空间格式：Taylor}
 \end{equation}
 
 \end_inset
@@ -1892,22 +1899,30 @@ reference "eq:GeneralLinearScheme"
  有相同的系数矩阵，并且有唯一的非零解。
 \end_layout
 
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 代码 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "code:SchemesFromTaylor"
+LatexCommand eqref
+reference "code:有限差分：空间格式：Taylor"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 给出了上述方案的一种实现。
+ 给出了上述算法的一种实现。
 \begin_inset CommandInset include
 LatexCommand inputminted
 filename "code/scheme_from_taylor.py"
-lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={code:SchemesFromTaylor}"
+lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={code:有限差分：空间格式：Taylor}"
 
 \end_inset
 
@@ -1932,8 +1947,8 @@ lstparams "language=Python,caption={由 Taylor 展开生成差分格式},label={
 
 。方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:SchemeFromTaylor"
+LatexCommand eqref
+reference "eq:有限差分：空间格式：Taylor"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1973,8 +1988,8 @@ a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
 
 代入 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:GeneralLinearScheme"
+LatexCommand eqref
+reference "eq:有限差分：空间格式：一般线性：p 阶导数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1999,11 +2014,17 @@ U_{i}\equiv U_{i}\qc\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\ev
 
 \end_layout
 
-\begin_layout Subsection
-基于 Lagrange 插值
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基于 Lagrange 插值]
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
 这种方法适用于非等距网格 
 \begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
 \end_inset
@@ -2011,6 +2032,7 @@ U_{i}\equiv U_{i}\qc\eval{\pdv{U}{x}}_{i}\approx\frac{U_{i+1}-U_{i-1}}{2h}\qc\ev
 ：
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
 给定结点值、选择基架：与前一节完全相同。
 \end_layout
@@ -2059,6 +2081,7 @@ U(x,t)\approx U^{h}(x,t)=\sum_{s\in S_{i}}U_{i+s}(t)L_{i+s}(x)\qc L_{i+s}(x)=\pr
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2210,14 +2233,14 @@ U_{i+s}=\sum_{r=0}^{\infty}\eval{\pdv[r]{U}{x}}_{i}\frac{(sh)^{r}}{r!}\qc s\in S
 
  的行为。具体地，将线性格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：一般线性"
 
 \end_inset
 
  代入模型问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:有限差分：误差分析：有界单波"
 
 \end_inset
@@ -2232,7 +2255,7 @@ reference "prob:有限差分：误差分析：有界单波"
 
 采用模型问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:有限差分：误差分析：有界单波"
 
 \end_inset
@@ -2252,7 +2275,7 @@ status open
 \begin_layout Plain Layout
 求解过程见 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "sect:LinearDiffusion"
 plural "false"
 caps "false"
@@ -2260,9 +2283,9 @@ noprefix "false"
 
 \end_inset
 
-–
+ 及 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "sect:LinearDispersion"
 plural "false"
 caps "false"
@@ -2301,7 +2324,7 @@ A_{K}=A-\sum_{r=1}^{\infty}\left(-K^{2}\right)^{r}\alpha_{r}\qc B_{K}=\sum_{r=1}
 
 与原问题的精确解 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：误差分析：模型方程：精确解"
 
 \end_inset
@@ -2320,7 +2343,7 @@ reference "eq:有限差分：误差分析：模型方程：精确解"
 
  所导致的误差，由修正方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：修正方程"
 
 \end_inset
@@ -2339,7 +2362,7 @@ reference "eq:有限差分：空间格式：修正方程"
 
  所导致的误差，由修正方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：修正方程"
 
 \end_inset
@@ -2365,7 +2388,7 @@ reference "eq:有限差分：空间格式：修正方程"
 \bar default
  的精确解 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：误差分析：模型方程：精确解"
 
 \end_inset
@@ -2376,7 +2399,7 @@ reference "eq:有限差分：误差分析：模型方程：精确解"
 \bar default
  的精确解 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：修正方程：精确解"
 plural "false"
 caps "false"
@@ -2436,37 +2459,72 @@ U(x,t)=\frac{\exp(\ii Kx)}{\exp(\ii KAt)}\qc U^{h}(x,t)=\frac{\exp(\ii Kx)}{\exp
 \begin_inset Formula $1$
 \end_inset
 
- 的接近程度上：虚部表征幅值误差，实部表征相位误差。根据 
-\bar under
-Shannon 采样定理
-\bar default
-，间距为 
-\begin_inset Formula $h$
-\end_inset
-
- 的网格所能分辨的最短波长为 
-\begin_inset Formula $\lambda_{\min}=2h$
-\end_inset
-
-，相应的最大波数为
-\begin_inset Formula 
-\[
-K_{\max}=\frac{2\pi}{\lambda_{\min}}=\frac{\pi}{h}
-\]
+ 的接近程度上：虚部表征幅值误差，实部表征相位误差。根据定理 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:有限差分：Shannon"
 
 \end_inset
 
-因此只需考虑 
+，这里只需考虑 
 \begin_inset Formula $\abs{Kh}\le\pi$
 \end_inset
 
  的情形。
 \end_layout
 
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Shannon]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:有限差分：Shannon"
+
+\end_inset
+
+间距为 
+\begin_inset Formula $h$
+\end_inset
+
+ 的均匀网格所能分辨的 
+\bar under
+最短波长
+\bar default
+ 及 
+\bar under
+最大波数
+\bar default
+ 分别为
+\begin_inset Formula 
+\[
+\lambda_{\min}=2h\implies K_{\max}=\frac{2\pi}{\lambda_{\min}}=\frac{\pi}{h}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
 模型格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：一阶迎风"
 
 \end_inset
@@ -2481,7 +2539,7 @@ reference "eq:有限差分：空间格式：一阶迎风"
 
 采用模型问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:有限差分：误差分析：有界单波"
 
 \end_inset
@@ -2496,7 +2554,7 @@ reference "prob:有限差分：误差分析：有界单波"
 \bar default
 ，其精确解为 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：修正方程：精确解"
 
 \end_inset
@@ -2517,7 +2575,62 @@ A_{K}=A\frac{\sin(Kh)}{Kh}\qc B_{K}=KA\frac{\cos(Kh)-1}{Kh}
 
 \end_inset
 
+分析 
+\begin_inset Formula $B_{K}$
+\end_inset
 
+ 的符号可知：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $A>0$
+\end_inset
+
+，则在时间格式足够精确的情况下，格式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：空间格式：一阶迎风"
+
+\end_inset
+
+ 给出的近似解是衰减的。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $A<0$
+\end_inset
+
+，则无论时间格式有多精确，格式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：空间格式：一阶迎风"
+
+\end_inset
+
+ 给出的近似解都是指数发散的。
+\end_layout
+
+\end_deeper
+\begin_layout Example
+因此格式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：空间格式：一阶迎风"
+
+\end_inset
+
+ 是一种 
+\bar under
+迎风 (upwind)
+\bar default
+ 格式：只适用于 
+\begin_inset Formula $A>0$
+\end_inset
+
+ 的情形。
 \end_layout
 
 \begin_layout Standard
@@ -2558,7 +2671,7 @@ x_{i}:=ih\qc h:=\frac{2L}{N}\qc i=0,1,\dots,N
 
 则模型问题 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "prob:有限差分：误差分析：有界单波"
 
 \end_inset
@@ -2783,7 +2896,7 @@ U_{i+s}(t)=\hat{U}_{K}(t)\exp(\sqrt{-1}K\cdot(x_{i}+sh))=\underbrace{\hat{U}_{K}
 
 其近似值可以由线性格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：空间格式：一般线性"
 
 \end_inset
@@ -2874,7 +2987,7 @@ b_{0}=\frac{3}{2}\qc b_{-1}=\frac{-4}{2}\qc b_{-2}=\frac{1}{2}
 \bar default
   格式，详见 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "sec:有限差分：时间格式：显示推进"
 
 \end_inset
@@ -2893,7 +3006,7 @@ reference "sec:有限差分：时间格式：显示推进"
 \bar default
   格式，详见 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "sec:有限差分：时空耦合"
 
 \end_inset
@@ -3136,15 +3249,21 @@ name "sec:有限差分：时空耦合"
 不失一般性，本节在对称模板
 \begin_inset Formula 
 \[
-I_{i}=\left\{ i-k,i-k+1,\dots,i,\dots,i+k-1,i+k\right\} 
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-S_{i}=\left\{ -k,-k+1,\dots,0,\dots,k-1,k\right\} 
+I_{i}=\begin{Bmatrix}i-k\\
+i-k+1\\
+\vdots\\
+i\\
+\vdots\\
+i+k-1\\
+i+k
+\end{Bmatrix}\equiv i+S_{i}=i+\begin{Bmatrix}-k\\
+-k+1\\
+\vdots\\
+0\\
+\vdots\\
++k-1\\
++k
+\end{Bmatrix}
 \]
 
 \end_inset
@@ -3160,8 +3279,8 @@ S_{i}=\left\{ -k,-k+1,\dots,0,\dots,k-1,k\right\}
 即
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}U_{i}^{n+1} & =U_{i}^{n}-\frac{h_{t}}{h_{x}}\underbrace{F_{i+\nicefrac{1}{2}}\qty(\cancel{U_{i-k}^{n}},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},U_{i+k}^{n})}_{F_{i+\nicefrac{1}{2}}^{n}}\\
- & \phantom{=U_{i}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{F_{i+\nicefrac{1}{2}}\qty(U_{i-k}^{n},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},\cancel{U_{i+k}^{n}})}_{F_{i-\nicefrac{1}{2}}^{n}}\\
+\begin{aligned}U_{i}^{n+1} & =U_{i}^{n}-\frac{h_{t}}{h_{x}}\underbrace{F_{\nicefrac{1}{2}}\qty(\cancel{U_{i-k}^{n}},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},U_{i+k}^{n})}_{F_{i+\nicefrac{1}{2}}^{n}}\\
+ & \phantom{=U_{i}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{F_{\nicefrac{1}{2}}\qty(U_{i-k}^{n},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},\cancel{U_{i+k}^{n}})}_{F_{i-\nicefrac{1}{2}}^{n}}\\
  & =H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})\equiv H_{i}^{n}
 \end{aligned}
 \label{eq:有限差分：时空耦合：单步显式}
@@ -3234,7 +3353,7 @@ CFL (Courant–Friedrichs–Lewy) 数
 后面将会看到，该比值决定了格式的
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:有限差分:稳定性"
+reference "sec:有限差分：时空耦合：稳定性"
 
 \end_inset
 
@@ -3251,7 +3370,7 @@ reference "sec:有限差分:稳定性"
 \begin_layout Remark
 单步时间格式仅有一阶精度，这通常会导致时空耦合格式也仅有一阶精度（如 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand nameref
 reference "alg:有限差分：时空耦合：Godunov"
 plural "false"
 caps "false"
@@ -3313,7 +3432,7 @@ name "alg:有限差分：时空耦合：Godunov"
 
 对于线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 
 \end_inset
@@ -3357,7 +3476,7 @@ Godunov 格式
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =(1-\sigma)U_{i}^{n}+\sigma U_{i-1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{\text{G}}-F_{i+\nicefrac{1}{2}}^{\text{G}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{G}}:=AU_{i}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}:=F_{i}^{n}
 \end{aligned}
 \]
 
@@ -3365,7 +3484,7 @@ Godunov 格式
 
 对于更一般的标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 
 \end_inset
@@ -3373,7 +3492,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{\text{G}}:=\tilde{F}_{i+\nicefrac{1}{2}}^{n}(0)\equiv F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0))
+F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{G}}\qty(U_{i}^{n},U_{i+1}^{n})=F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0))
 \]
 
 \end_inset
@@ -3397,11 +3516,7 @@ U_{i+1}^{n} & x>0
 \begin_inset Formula $x/t=\pm0$
 \end_inset
 
- 上的精确解，
-\begin_inset Formula $\tilde{F}_{i+\nicefrac{1}{2}}^{n}(0)$
-\end_inset
-
- 表示相应的通量。这里的 
+ 上的精确解。这里的 
 \begin_inset Formula $\pm$
 \end_inset
 
@@ -3412,7 +3527,7 @@ U_{i+1}^{n} & x>0
  恰好为间断面特殊情形纳入其中：
 \begin_inset Formula 
 \[
-\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0)\ne\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0)\implies\tilde{F}_{i+\nicefrac{1}{2}}^{n}(-0)=\tilde{F}_{i+\nicefrac{1}{2}}^{n}(+0)
+\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0)\ne\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0)\implies F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0))=F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0))
 \]
 
 \end_inset
@@ -3447,7 +3562,7 @@ name "alg:有限差分：时空耦合：LaxFriedrichs"
 
 对于线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 
 \end_inset
@@ -3498,7 +3613,7 @@ Lax–Friedrichs 格式
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{1+\sigma}{2}U_{i-1}^{n}+\frac{1-\sigma}{2}U_{i+1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{\text{LF}}-F_{i+\nicefrac{1}{2}}^{\text{LF}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{LF}}:=\frac{\sigma+1}{2\sigma}F_{i}^{n}+\frac{\sigma-1}{2\sigma}F_{i+1}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}:=\frac{\sigma+1}{2\sigma}F_{i}^{n}+\frac{\sigma-1}{2\sigma}F_{i+1}^{n}
 \end{aligned}
 \]
 
@@ -3506,7 +3621,7 @@ Lax–Friedrichs 格式
 
 对于更一般的标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 
 \end_inset
@@ -3514,7 +3629,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{\text{LF}}:=\frac{F_{i}^{n}+F_{i+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{U_{i}^{n}-U_{i+1}^{n}}{2}
+F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LF}}\qty(U_{i}^{n},U_{i+1}^{n}):=\frac{F_{i}^{n}+F_{i+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{U_{i}^{n}-U_{i+1}^{n}}{2}
 \]
 
 \end_inset
@@ -3549,7 +3664,7 @@ name "alg:有限差分：时空耦合：LaxWendroff"
 
 对于线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 
 \end_inset
@@ -3600,7 +3715,7 @@ Lax–Wendroff 格式
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}+\sigma}{2}U_{i-1}^{n}+(1-\sigma^{2})U_{i}^{n}+\frac{\sigma^{2}-\sigma}{2}U_{i+1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{\text{LW}}-F_{i+\nicefrac{1}{2}}^{\text{LW}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{LW}}:=\dfrac{1+\sigma}{2}F_{i}^{n}+\dfrac{1-\sigma}{2}F_{i+1}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}:=\dfrac{1+\sigma}{2}F_{i}^{n}+\dfrac{1-\sigma}{2}F_{i+1}^{n}
 \end{aligned}
 \]
 
@@ -3608,7 +3723,7 @@ Lax–Wendroff 格式
 
 对于更一般的标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 
 \end_inset
@@ -3616,7 +3731,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{\text{LW}}:=F\qty(U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}})\qc U_{i+\nicefrac{1}{2}}^{n+\nicefrac{1}{2}}=\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2}
+F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LW}}\qty(U_{i}^{n},U_{i+1}^{n}):=F\qty(\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2})
 \]
 
 \end_inset
@@ -3651,7 +3766,7 @@ name "alg:有限差分：时空耦合：WarmingBeam"
 
 对于线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 
 \end_inset
@@ -3699,7 +3814,7 @@ Warming–Beam 格式
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}-\sigma}{2}U_{i-2}^{n}+(2\sigma-\sigma^{2})U_{i-1}^{n}+\frac{\sigma^{2}-3\sigma+2}{2}U_{i}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{\text{WB}}-F_{i+\nicefrac{1}{2}}^{\text{WB}}\right)\qc F_{i+\nicefrac{1}{2}}^{\text{WB}}:=\frac{\sigma-1}{2}F_{i-1}^{n}+\frac{3-\sigma}{2}F_{i}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}:=\frac{\sigma-1}{2}F_{i-1}^{n}+\frac{3-\sigma}{2}F_{i}^{n}
 \end{aligned}
 \]
 
@@ -3707,7 +3822,7 @@ Warming–Beam 格式
 
 对于更一般的标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 
 \end_inset
@@ -3715,7 +3830,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{\text{WB}}:=F_{i}^{n}+\frac{F\qty(U_{i}^{n+1'})-F_{i-1}^{n}}{2}\qc U_{i}^{n+1'}=U_{i}^{n}-\frac{h_{t}}{h_{x}}\left(F_{i}^{n}-F_{i-1}^{n}\right)
+F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LB}}\qty(U_{i-1}^{n},U_{i}^{n}):=F_{i}^{n}+\frac{F\qty(U_{i}^{n+1_{*}})-F_{i-1}^{n}}{2}\qc U_{i}^{n+1_{*}}=U_{i}^{n}-\frac{h_{t}}{h_{x}}\left(F_{i}^{n}-F_{i-1}^{n}\right)
 \]
 
 \end_inset
@@ -3781,7 +3896,7 @@ reference "alg:有限差分：时空耦合：LaxWendroff"
 
  格式，不难将它们改写为单步显式形式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
@@ -3798,6 +3913,13 @@ reference "eq:有限差分：时空耦合：单步显式"
 
 \begin_layout Subsection
 修正方程
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:有限差分：时空耦合：修正方程"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Notation
@@ -3807,7 +3929,7 @@ reference "eq:有限差分：时空耦合：单步显式"
 
  为格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
@@ -3819,7 +3941,7 @@ reference "eq:有限差分：时空耦合：单步显式"
  元函数
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}})
+F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}})
 \]
 
 \end_inset
@@ -3831,7 +3953,7 @@ F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k
  个自变量。为方便叙述，引入偏导数记号
 \begin_inset Formula 
 \[
-\partial_{s}F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{F_{i+\nicefrac{1}{2}}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}}\qc s\in S_{i}\setminus\left\{ k\right\} 
+\partial_{s}F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{F_{\nicefrac{1}{2}}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}}\qc s\in S_{i}\setminus\left\{ k\right\} 
 \]
 
 \end_inset
@@ -3839,7 +3961,7 @@ F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k
 并补充定义
 \begin_inset Formula 
 \[
-\partial_{k}F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv0
+\partial_{k}F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv0
 \]
 
 \end_inset
@@ -3855,6 +3977,19 @@ F_{i+\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k
 \end_layout
 
 \begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:有限差分：时空耦合：数值通量性质"
@@ -3862,7 +3997,7 @@ name "lem:有限差分：时空耦合：数值通量性质"
 \end_inset
 
 函数 
-\begin_inset Formula $F_{i+\nicefrac{1}{2}}$
+\begin_inset Formula $F_{\nicefrac{1}{2}}$
 \end_inset
 
  具有以下 
@@ -3871,17 +4006,30 @@ name "lem:有限差分：时空耦合：数值通量性质"
 \bar default
 ：
 \begin_inset Formula 
-\[
-F_{i+\nicefrac{1}{2}}(U,\dots,U)=F(U)
-\]
+\begin{equation}
+F_{\nicefrac{1}{2}}(U,\dots,U)=F(U)
+\end{equation}
 
 \end_inset
 
 由一阶微分可以导出
 \begin_inset Formula 
-\[
-\sum_{s\in S_{i}}\partial_{s}F_{i+\nicefrac{1}{2}}(U,\dots,U)=A(U)
-\]
+\begin{equation}
+\sum_{s\in S_{i}}\partial_{s}F_{\nicefrac{1}{2}}(U,\dots,U)=A(U)
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
@@ -3902,7 +4050,7 @@ F_{i+\nicefrac{1}{2}}(U,\dots,U)=F(U)
 
  为格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
@@ -3942,6 +4090,19 @@ H\qty(\phi_{-k},\dots,\phi_{k})
 \end_layout
 
 \begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:有限差分：时空耦合：迭代函数性质"
@@ -3954,29 +4115,42 @@ name "lem:有限差分：时空耦合：迭代函数性质"
 
  具有以下性质
 \begin_inset Formula 
-\[
+\begin{equation}
 H(U,\dots,U)=U
-\]
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
-\begin{aligned}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=\delta_{s}^{0}- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{i+\nicefrac{1}{2}}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
-+ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{i+\nicefrac{1}{2}}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
+\begin{equation}
+\begin{aligned}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=\delta_{s}^{0}- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
++ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
 \end{aligned}
-\]
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
-\begin{aligned}\partial_{r}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{i+\nicefrac{1}{2}}}{\phi_{r-1}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
-+ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{i+\nicefrac{1}{2}}}{\phi_{r}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
+\begin{equation}
+\begin{aligned}\partial_{r}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{r-1}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
++ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{r}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
 \end{aligned}
-\]
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
@@ -3991,6 +4165,19 @@ H(U,\dots,U)=U
 \end_layout
 
 \begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "cor:有限差分：时空耦合：迭代函数性质"
@@ -3999,25 +4186,38 @@ name "cor:有限差分：时空耦合：迭代函数性质"
 
 由以上两个引理可得
 \begin_inset Formula 
-\[
+\begin{equation}
 \sum_{s\in S_{i}}\partial_{s}H\qty(U,\dots,U)=\sum_{s\in S_{i}}\delta_{s}^{0}\equiv1
-\]
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 \sum_{s\in S_{i}}s\partial_{s}H\qty(U,\dots,U)=-\frac{h_{t}}{h_{x}}A(U)\equiv-\sigma(U)
-\]
+\end{equation}
 
 \end_inset
 
 
 \begin_inset Formula 
-\[
+\begin{equation}
 \sum_{r\in S_{i}}\sum_{s\in S_{i}}(r-s)^{2}\partial_{r}\partial_{s}H\qty(U,\dots,U)=\frac{h_{t}}{h_{x}}\sum_{r\in S_{i}}\sum_{s\in S_{i}}(r-s)^{2}\left(\partial_{r}\partial_{s}H-\partial_{r-1}\partial_{s-1}H\right)\equiv0
-\]
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
@@ -4034,7 +4234,7 @@ name "cor:有限差分：时空耦合：迭代函数性质"
 \begin_layout Lemma
 对标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 
 \end_inset
@@ -4080,14 +4280,14 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 \begin_layout Theorem
 用单步显式格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
 
  求解标量守恒律 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：标量守恒律"
 plural "false"
 caps "false"
@@ -4119,7 +4319,7 @@ noprefix "false"
 \begin_layout Proof
 先考虑格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
@@ -4158,9 +4358,9 @@ U_{i+s}^{n}=U_{i}^{n}+\left(\partial_{x}U\right)_{i}^{n}h_{x}+\frac{1}{2!}\left(
 
 \end_inset
 
-并利用引理 
+并利用 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "lem:有限差分：时空耦合：数值通量性质"
 
 \end_inset
@@ -4179,9 +4379,9 @@ reference "lem:有限差分：时空耦合：数值通量性质"
 \begin_inset Formula $h_{x}$
 \end_inset
 
- 的一次项、二次项可以分别利用推论 
+ 的一次项、二次项可以分别利用 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "cor:有限差分：时空耦合：迭代函数性质"
 
 \end_inset
@@ -4206,7 +4406,7 @@ reference "cor:有限差分：时空耦合：迭代函数性质"
 
 再考虑格式 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：单步显式"
 
 \end_inset
@@ -4247,7 +4447,7 @@ U_{i}^{n+1}-H_{i}^{n}=-\left(\pdv{x}\left[\beta\qty(U;\frac{h_{t}}{h_{x}})\pdv{U
 
 及修正方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：修正方程"
 
 \end_inset
@@ -4285,7 +4485,7 @@ noprefix "false"
 
  格式解线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 plural "false"
 caps "false"
@@ -4311,7 +4511,7 @@ noprefix "false"
 
 因此修正方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：修正方程"
 
 \end_inset
@@ -4357,7 +4557,7 @@ noprefix "false"
 
  格式解线性平流方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：线性平流"
 plural "false"
 caps "false"
@@ -4383,7 +4583,7 @@ noprefix "false"
 
 因此修正方程 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "eq:有限差分：时空耦合：修正方程"
 
 \end_inset
@@ -4408,286 +4608,9 @@ reference "eq:有限差分：时空耦合：修正方程"
 
 \begin_layout Subsection
 相容性
-\end_layout
-
-\begin_layout Standard
-A necessary condition is that the modified PDE should be 
-\emph on
-consistent
-\emph default
- with the original one, which means when 
-\begin_inset Formula $h_{t},h_{x}\to0$
-\end_inset
-
-, the modified PDE 
-\begin_inset Formula $\to$
-\end_inset
-
- the original one.
-\end_layout
-
-\begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:pthOrderAccuracyCondition"
-
-\end_inset
-
-A linear scheme
-\begin_inset Formula 
-\[
-U_{i}^{n+1}=\sum_{k\in K}b_{k}U_{i+k}^{n}
-\]
-
-\end_inset
-
- for the linear advection equation is 
-\begin_inset Formula $p$
-\end_inset
-
-th order accurate in space and time, iff
-\begin_inset Formula 
-\begin{equation}
-\sum_{k\in K}b_{k}k^{r}=(-\sigma)^{r}\qc\forall0\le r\le p\label{eq:pthOrderAccuracyCondition}
-\end{equation}
-
-\end_inset
-
-in which 
-\begin_inset Formula $\sigma:=Ah_{t}/h_{x}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The key idea of the proof is to find the scheme's modified PDE, and set
- coefficients of low order terms in the truncation error to be 
-\begin_inset Formula $0$
-\end_inset
-
-.
- To find the modified PDE, insert the Taylor expansions into the scheme:
-\begin_inset Formula 
-\begin{equation}
-U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(h_{t})^{r}}{r!}\pdv[r]{U}{t}=\sum_{k\in K}b_{k}\left(U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(kh_{x})^{r}}{r!}\pdv[r]{U}{x}\right)\label{eq:TaylorExpansionForLinearScheme}
-\end{equation}
-
-\end_inset
-
-which should finally be written as
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=\order{h_{t}^{p},h_{x}^{p}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The first two conditions in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pthOrderAccuracyCondition"
-
-\end_inset
-
- are actually the consistency conditions of the scheme: (i) The coefficients
- of 
-\begin_inset Formula $U_{i}^{n}$
-\end_inset
-
- on both sides should be balanced, i.e.
-\begin_inset Formula 
-\[
-\sum_{k\in K}b_{k}=1
-\]
-
-\end_inset
-
-(ii) The coefficients of 
-\begin_inset Formula $\pdv*{U}{t}$
-\end_inset
-
- and 
-\begin_inset Formula $\pdv*{U}{x}$
-\end_inset
-
- should have the same ratio as those in the original PDE, which leads to
-\begin_inset Formula 
-\[
-\sum_{k\in K}b_{k}k=-\frac{Ah_{t}}{h_{x}}=-\sigma
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-With these two conditions, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:TaylorExpansionForLinearScheme"
-
-\end_inset
-
- becomes a modified PDE with time derivatives on the RHS:
-\begin_inset Formula 
-\[
-\pdv{U}{t}+A\pdv{U}{x}=\frac{1}{h_{t}}\sum_{r=2}^{\infty}\frac{1}{r!}\left(\sum_{k\in K}b_{k}\left(kh_{x}\pdv{x}\right)^{r}-\left(h_{t}\pdv{t}\right)^{r}\right)
-\]
-
-\end_inset
-
-To clarify the derivation, we shall introduce three differential operators:
-\begin_inset Formula 
-\[
-\partial_{t}:=h_{t}\pdv{t}\qc\partial_{x}:=h_{x}\pdv{x}\qc\partial_{T}:=\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}-\partial_{t}^{r}}{r!}
-\]
-
-\end_inset
-
-with which, the modified PDE can be written in a compact form:
-\begin_inset Formula 
-\begin{equation}
-\partial_{t}U+\sigma\partial_{x}U=\partial_{T}U\label{eq:ModifiedPdeWithTimeDerivatives}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We can now represent 
-\begin_inset Formula $\partial_{t}$
-\end_inset
-
- as a linear combination of 
-\begin_inset Formula $\partial_{t}$
-\end_inset
-
- and 
-\begin_inset Formula $\partial_{T}$
-\end_inset
-
-.
- Raise it to the power of 
-\begin_inset Formula $r$
-\end_inset
-
- and ignore the HOTs
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "HOT"
-description "High Order Term"
-literal "false"
-
-\end_inset
-
- of 
-\begin_inset Formula $\partial_{T}$
-\end_inset
-
- (which are essentially the HOTs of 
-\begin_inset Formula $h_{x}$
-\end_inset
-
- and 
-\begin_inset Formula $h_{t}$
-\end_inset
-
-):
-\begin_inset Formula 
-\[
-\begin{aligned}\partial_{t}^{r} & =\left(-\sigma\partial_{x}+\partial_{T}\right)^{r}=\left(-\sigma\partial_{x}\right)^{r}+\binom{r}{1}\left(-\sigma\partial_{x}\right)^{r-1}\partial_{T}+\order{\partial_{T}^{2}}\\
- & \approx\left(-\sigma\partial_{x}\right)^{r}+r\left(-\sigma\partial_{x}\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)\partial_{x}^{m}-\partial_{t}^{m}}{m!}\\
- & =\left(-\sigma\right)^{r}\partial_{x}^{r}+r\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)\partial_{x}^{m+r-1}-\partial_{x}^{r-1}\partial_{t}^{m}}{m!}
-\end{aligned}
-\]
-
-\end_inset
-
-The time derivative 
-\begin_inset Formula $\partial_{t}^{m}$
-\end_inset
-
- can be further approximated by
-\begin_inset Formula 
-\[
-\partial_{t}^{m}=\left(-\sigma\right)^{m}\partial_{x}^{m}+\order{\partial_{T}}\approx\left(-\sigma\right)^{m}\partial_{x}^{m}
-\]
-
-\end_inset
-
-which leads to
-\begin_inset Formula 
-\[
-\partial_{t}^{r}\approx\left(-\sigma\right)^{r}\partial_{x}^{r}+r\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{m}\right)-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Put this representation of 
-\begin_inset Formula $\partial_{t}^{r}$
-\end_inset
-
- back into the definition of 
-\begin_inset Formula $\partial_{T}$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{equation}
-\begin{aligned}\partial_{t}U+\sigma\partial_{x}U & =\sum_{r=2}^{\infty}\frac{\left(\sum_{k\in K}b_{k}k^{r}\right)\partial_{x}^{r}U-\partial_{t}^{r}U}{r!}\\
- & =\sum_{r=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{r}-\left(-\sigma\right)^{r}}{r!}\partial_{x}^{r}U\\
- & -\sum_{r=2}^{\infty}\frac{\left(-\sigma\right)^{r-1}}{\left(r-1\right)!}\sum_{m=2}^{\infty}\frac{\sum_{k\in K}b_{k}k^{m}-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}U\\
- & +\order{\partial_{T}^{2}U}
-\end{aligned}
-\label{eq:ModifiedPdeWithoutTimeDerivatives}
-\end{equation}
-
-\end_inset
-
-This is another modified PDE, in which only space derivatives appear on
- the RHS.
- Recall the definition of 
-\begin_inset Formula $\partial_{t},\partial_{x},\partial_{T}$
-\end_inset
-
-, the equivalence between 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:pthOrderAccuracyCondition"
-
-\end_inset
-
- and the 
-\begin_inset Formula $p$
-\end_inset
-
-th order accuracy is then obvious.
-\end_layout
-
-\begin_layout Subsection
-稳定性
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:有限差分:稳定性"
+name "sec:有限差分：时空耦合：相容性"
 
 \end_inset
 
@@ -4700,16 +4623,23 @@ status open
 
 \begin_layout Plain Layout
 
-[Stability]
+[相容性]
 \end_layout
 
 \end_inset
 
-As 
-\begin_inset Formula $t$
+
+\begin_inset Formula 
+\[
+\lim_{\substack{h_{t}\to0\\
+h_{x}\to0
+}
+}\text{修正方程}=\text{微分方程}
+\]
+
 \end_inset
 
- grows, the error is bounded.
+
 \end_layout
 
 \begin_layout Standard
@@ -4720,36 +4650,100 @@ As
 \end_layout
 
 \begin_layout Standard
-The concrete expression of the stability condition depends on both the original
- PDE and the scheme.
- The approach adopted in the following examples is given by von Neumann,
- which is applicable for any linear PDEs with linear schemes.
-\end_layout
-
-\begin_layout Theorem
-When apply the 1st order upwind scheme
-\begin_inset Formula 
-\[
-\frac{U_{i}^{n+1}-U_{i}^{n}}{h_{t}}+A\frac{U_{i}^{n}-U_{i-1}^{n}}{h_{x}}=0
-\]
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:有限差分：时空耦合：修正方程"
 
 \end_inset
 
-for Problem 
+》中的 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:线性平流"
+LatexCommand eqref
+reference "lem:有限差分：时空耦合：数值通量性质"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-, the stability condition is
+–
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "cor:有限差分：时空耦合：迭代函数性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 都可以看作是相容性条件。对于线性问题，有如下更一般的相容性条件：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:有限差分：相容性：时空 p 阶"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:有限差分：相容性：时空 p 阶"
+
+\end_inset
+
+线性显式格式
 \begin_inset Formula 
-\[
-0<\frac{Ah_{t}}{h_{x}}<1
-\]
+\begin{equation}
+U_{i}^{n+1}=\sum_{s\in S_{i}}b_{s}U_{i+s}^{n}\equiv H\qty(U_{i-k},\dots,U_{i+k})
+\end{equation}
+
+\end_inset
+
+解线性平流方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：时空耦合：线性平流"
+
+\end_inset
+
+ 具有时空 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶精度，当且仅当
+\begin_inset Formula 
+\begin{equation}
+\sum_{s}b_{s}s^{r}=(-\sigma)^{r}\qc\forall r\in\mathbb{N}\cap[0,p]
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
@@ -4764,49 +4758,390 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-Suppose 
-\begin_inset Formula $[0,2\pi]$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
 \end_inset
 
- is divided into 
-\begin_inset Formula $N$
+将 Taylor 展开式代入格式
+\begin_inset Formula 
+\begin{equation}
+\underbrace{U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(h_{t})^{r}}{r!}\pdv[r]{U}{t}}_{U_{i}^{n+1}}=\sum_{s\in S}b_{s}\cdot\underbrace{\left(U_{i}^{n}+\sum_{r=1}^{\infty}\frac{(sh_{x})^{r}}{r!}\pdv[r]{U}{x}\right)}_{U_{i+s}^{n}}\label{eq:有限差分：相容性：Taylor}
+\end{equation}
+
 \end_inset
 
- equal-length pieces:
+并将 
+\begin_inset Formula $h_{t},h_{x}$
+\end_inset
+
+ 视为同阶量，可得修正方程
 \begin_inset Formula 
 \[
-x_{i}:=ih_{x}\qc h_{x}:=\frac{2\pi}{N}\qc i=0,1,\dots,N
+\pdv{U}{t}+A\pdv{U}{x}=\sum_{r=0}^{p-1}C_{r}h_{x}^{r}+\order{h_{x}^{p}}
 \]
 
 \end_inset
 
-Denote the error measured at 
-\begin_inset Formula $t_{n}$
+若格式具有 
+\begin_inset Formula $p$
 \end_inset
 
- on 
-\begin_inset Formula $x_{i}$
+ 阶精度，则 
+\begin_inset Formula $\left\{ C_{r}\right\} _{r=0}^{p-1}$
 \end_inset
 
- as 
-\begin_inset Formula $E_{i}^{n}$
+ 都应当为 
+\begin_inset Formula $0$
 \end_inset
 
-.
- Apply Discrete Fourier Transform (DFT) on it:
+，从而有 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:有限差分：相容性：时空 p 阶"
+
+\end_inset
+
+，其中前两个结果已在《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:有限差分：时空耦合：修正方程"
+
+\end_inset
+
+》中出现过：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+由 
+\begin_inset Formula $C_{0}=0$
+\end_inset
+
+ 可得
 \begin_inset Formula 
 \[
-\begin{aligned}E_{i}^{n} & =\sum_{k=-\left\lceil \frac{N-1}{2}\right\rceil }^{\left\lfloor \frac{N-1}{2}\right\rfloor }\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}\qc i=0,1,\dots,N\\
-\hat{E}_{k}^{n} & =\frac{1}{N}\sum_{i=1}^{N}E_{i}^{n}e^{-\sqrt{-1}kx_{i}}\qc k=-\left\lceil \frac{N-1}{2}\right\rceil ,\dots,-1,0,1,\dots,\left\lfloor \frac{N-1}{2}\right\rfloor 
+\sum_{s\in S}b_{s}=1\iff H(U,\dots,U)=U
+\]
+
+\end_inset
+
+这正是 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "lem:有限差分：时空耦合：迭代函数性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的第一式。
+\end_layout
+
+\begin_layout Itemize
+由 
+\begin_inset Formula $C_{1}=0$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\sum_{s\in S}b_{s}s=-\frac{A}{h_{x}/h_{t}}\equiv-\sigma
+\]
+
+\end_inset
+
+这正是 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "cor:有限差分：时空耦合：迭代函数性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的第二式。
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+利用这两个条件，可以将修正方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：相容性：Taylor"
+
+\end_inset
+
+ 化为
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=\frac{1}{h_{t}}\sum_{r=2}^{\infty}\frac{1}{r!}\left(\sum_{s\in S}b_{s}\cdot\left(sh_{x}\pdv{x}\right)^{r}-\left(h_{t}\pdv{t}\right)^{r}\right)
+\]
+
+\end_inset
+
+为方便叙述，定义是那个微分算符：
+\begin_inset Formula 
+\[
+\partial_{t}:=h_{t}\pdv{t}\qc\partial_{x}:=h_{x}\pdv{x}\qc\partial_{T}:=\sum_{r=2}^{\infty}\frac{\left(\sum_{s\in S}b_{s}s^{r}\right)\partial_{x}^{r}-\partial_{t}^{r}}{r!}
+\]
+
+\end_inset
+
+其中下标 
+\begin_inset Formula $T$
+\end_inset
+
+ 代表 
+\bar under
+截断 (Truncation)
+\bar default
+。于是 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ 可以表示为 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\partial_{T}$
+\end_inset
+
+ 的线性组合：
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}=-\sigma\partial_{x}+\partial_{T}\label{eq:有限差分：相容性：时间导数}
+\end{equation}
+
+\end_inset
+
+它的 
+\begin_inset Formula $r$
+\end_inset
+
+ 次单项式为
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{t}^{r} & =\left(-\sigma\partial_{x}+\partial_{T}\right)^{r}=\left(-\sigma\partial_{x}\right)^{r}+\binom{r}{1}\left(-\sigma\partial_{x}\right)^{r-1}\partial_{T}+\order{\partial_{T}^{2}}\\
+ & \approx\left(-\sigma\partial_{x}\right)^{r}+r\cdot\left(-\sigma\partial_{x}\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{s\in S}b_{s}s^{m}\right)\partial_{x}^{m}-\partial_{t}^{m}}{m!}\\
+ & =\left(-\sigma\right)^{r}\partial_{x}^{r}+r\cdot\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{s\in S}b_{s}s^{m}\right)\partial_{x}^{m+r-1}-\partial_{x}^{r-1}\partial_{t}^{m}}{m!}
 \end{aligned}
 \]
 
 \end_inset
 
-in which, we have used the periodic condition
+这里忽略了 
+\begin_inset Formula $\order{\partial_{T}^{2}}$
+\end_inset
+
+，因为它是 
+\begin_inset Formula $\order{h_{x}^{2}}$
+\end_inset
+
+；同理，可以将分母上的 
+\begin_inset Formula $\partial_{t}^{m}$
+\end_inset
+
+ 近似为
 \begin_inset Formula 
 \[
-E_{0}^{n}=E_{N}^{n}
+\partial_{t}^{m}=\left(-\sigma\right)^{m}\partial_{x}^{m}+\order{\partial_{T}}\approx\left(-\sigma\right)^{m}\partial_{x}^{m}
+\]
+
+\end_inset
+
+这里忽略了 
+\begin_inset Formula $\order{\partial_{T}}$
+\end_inset
+
+，因为它是 
+\begin_inset Formula $\order{h_{x}}$
+\end_inset
+
+，其系数 
+\begin_inset Formula $\partial_{x}^{r-1}$
+\end_inset
+
+ 也是 
+\begin_inset Formula $\order{h_{x}}$
+\end_inset
+
+。最终得到
+\begin_inset Formula 
+\[
+\partial_{t}^{r}\approx\left(-\sigma\right)^{r}\partial_{x}^{r}+r\cdot\left(-\sigma\right)^{r-1}\sum_{m=2}^{\infty}\frac{\left(\sum_{s\in S}b_{s}s^{m}\right)-\left(-\sigma\right)^{m}}{m!}\partial_{x}^{m+r-1}
+\]
+
+\end_inset
+
+将该式代回 
+\begin_inset Formula $\partial_{T}$
+\end_inset
+
+，可得只含 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\partial_{x}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 的修正方程
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\partial_{t}U+\sigma\partial_{x}U=\partial_{T}U & \equiv\sum_{r=2}^{\infty}\frac{\left(\sum_{s\in S}b_{s}s^{r}\right)\partial_{x}^{r}U-\partial_{t}^{r}U}{r!}\\
+ & =\sum_{r=2}^{\infty}\left[B_{r}\partial_{x}^{r}U-\frac{\left(-\sigma\right)^{r-1}}{\left(r-1\right)!}\sum_{m=2}^{\infty}B_{m}\partial_{x}^{m+r-1}U\right]+\order{\partial_{T}^{2}U}
+\end{aligned}
+\label{eq:有限差分：相容性：修正方程}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+B_{r}:=\frac{\sum_{s\in S}b_{s}s^{r}-\left(-\sigma\right)^{r}}{r!}
+\]
+
+\end_inset
+
+由此不难导出格式具有时空 
+\begin_inset Formula $p$
+\end_inset
+
+ 阶精度的充要条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：相容性：时空 p 阶"
+
+\end_inset
+
+。
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+稳定性
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:有限差分：时空耦合：稳定性"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[稳定性]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[John von Neumann]
+\end_layout
+
+\end_inset
+
+该方法可用来获取用 
+\bar under
+线性格式
+\bar default
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：时空耦合：单步显式"
+
+\end_inset
+
+ 解 
+\bar under
+线性问题
+\bar default
+ 的稳定性条件：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+设 
+\begin_inset Formula $t_{n}$
+\end_inset
+
+ 时刻的误差为等距网格上的简谐波
+\begin_inset Formula 
+\[
+\epsilon(x_{i},t_{n})\equiv E_{i}^{n}=\exp(\sqrt{-1}Kx_{i})\qc i=0,\dots,N
 \]
 
 \end_inset
@@ -4814,58 +5149,11 @@ E_{0}^{n}=E_{N}^{n}
 
 \end_layout
 
-\begin_layout Proof
-Without loss of generality, let us consider the 
-\begin_inset Formula $k$
-\end_inset
-
-th component 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- alone.
- Since both the PDE and the scheme are linear, the wave number is unchanged,
- which means 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- will evolve into 
-\begin_inset Formula $\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
-.
- To find the expression for 
-\begin_inset Formula $\hat{E}_{k}^{n+1}$
-\end_inset
-
-, insert 
-\begin_inset Formula $\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}$
-\end_inset
-
- into the scheme, we have
+\begin_layout Enumerate
+忽略截断误差以外的误差来源，则下一时刻的误差完全由格式决定：
 \begin_inset Formula 
 \[
-\frac{\hat{E}_{k}^{n+1}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}}{h_{t}}+A\frac{\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i}}-\hat{E}_{k}^{n}e^{\sqrt{-1}kx_{i-1}}}{h_{x}}=0
-\]
-
-\end_inset
-
-Note that
-\begin_inset Formula 
-\[
-e^{\sqrt{-1}kx_{i-1}}=e^{\sqrt{-1}k\left(x_{i}-h_{x}\right)}=e^{\sqrt{-1}kx_{i}}e^{-\sqrt{-1}kh_{x}}
-\]
-
-\end_inset
-
-the growing factor for the 
-\begin_inset Formula $k$
-\end_inset
-
-th component is then
-\begin_inset Formula 
-\[
-G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}kh_{x}}\qc\sigma:=\frac{Ah_{t}}{h_{x}}
+E_{i}^{n+1}=H\qty(E_{i-k}^{n},\dots,E_{i+k}^{n})
 \]
 
 \end_inset
@@ -4873,24 +5161,124 @@ G_{k}=\frac{\hat{E}_{k}^{n+1}}{\hat{E}_{k}^{n}}=1-\sigma+\sigma e^{-\sqrt{-1}kh_
 
 \end_layout
 
-\begin_layout Proof
-The stability condition for each 
-\begin_inset Formula $k$
+\begin_layout Enumerate
+利用格式及方程的线性性质，可知 
+\begin_inset Formula $E_{i}^{n+1}$
 \end_inset
 
- is
+ 依然是波数为 
+\begin_inset Formula $K$
+\end_inset
+
+ 的简谐波：
 \begin_inset Formula 
 \[
-\abs{G_{k}}^{2}=1+4\sigma(\sigma-1)\sin^{2}\frac{kh_{x}}{2}<1
+E_{i}^{n+1}=G(\sigma;K)\cdot\exp(\sqrt{-1}Kx_{i})
 \]
 
 \end_inset
 
-which can be simplified to
+
+\end_layout
+
+\begin_layout Enumerate
+系数 
+\begin_inset Formula $G(\sigma;K)$
+\end_inset
+
+ 称作 
+\bar under
+误差增长因子 (error growing factor)
+\bar default
+，令其满足
 \begin_inset Formula 
 \[
-0<\sigma<1
+\abs{G(\sigma;K)}^{2}<1\qc Kh\in[-\pi,+\pi]
 \]
+
+\end_inset
+
+解出 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ 的（不依赖于 
+\begin_inset Formula $K$
+\end_inset
+
+ 的）取值范围，此即格式的稳定性条件。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一阶迎风]
+\end_layout
+
+\end_inset
+
+用 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "alg:有限差分：时空耦合：Godunov"
+
+\end_inset
+
+ 格式解
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:有限差分：误差分析：有界单波"
+
+\end_inset
+
+问题，则
+\begin_inset Formula 
+\[
+E_{i}^{n+1}=(1-\sigma)E_{i}^{n}+\sigma E_{i-1}^{n}=(1-\sigma)\exp(\sqrt{-1}Kx_{i})+\sigma\exp(\sqrt{-1}Kx_{i-1})
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\exp(\sqrt{-1}Kx_{i-1})=\exp(\sqrt{-1}K\cdot(x_{i}-h))=\frac{\exp(\sqrt{-1}Kx_{i})}{\exp(\sqrt{-1}Kh)}
+\]
+
+\end_inset
+
+于是有
+\begin_inset Formula 
+\[
+G(\sigma;K)=(1-\sigma)+\frac{\sigma}{\exp(\sqrt{-1}Kh)}
+\]
+
+\end_inset
+
+解不等式
+\begin_inset Formula 
+\[
+\abs{G_{K}}^{2}=1+4\sigma\cdot(\sigma-1)\sin^{2}\frac{Kh}{2}<1\qc Kh\in[-\pi,+\pi]
+\]
+
+\end_inset
+
+得稳定性条件：
+\begin_inset Formula 
+\begin{equation}
+0<\sigma<1\label{eq:有限差分：时空耦合：稳定性条件}
+\end{equation}
 
 \end_inset
 
@@ -4906,6 +5294,13 @@ which can be simplified to
 
 \begin_layout Subsection
 收敛性
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:有限差分：时空耦合：收敛性"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Definition
@@ -4914,7 +5309,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Convergency]
+[收敛性]
 \end_layout
 
 \end_inset
@@ -4922,7 +5317,10 @@ status open
 
 \begin_inset Formula 
 \[
-\lim_{h_{t},h_{x}\to0}\text{Difference Eqn's Solution}=\text{Differential Eqn's Solution}
+\lim_{\substack{h_{t}\to0\\
+h_{x}\to0
+}
+}U^{h}=U
 \]
 
 \end_inset
@@ -4948,31 +5346,35 @@ status open
 
 \end_inset
 
-For 
-\emph on
-linear
-\emph default
- problems, if the differential equation is 
-\emph on
-well posed
-\emph default
- and the difference equation is 
-\emph on
-consistent
-\emph default
- with the differential equation, then 
-\noun on
-stability
-\noun default
- 
-\begin_inset Formula $\iff$
+对于线性问题，若定解问题具有适定性，且差分格式具有
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:有限差分：时空耦合：相容性"
+
+\end_inset
+
+，则格式的
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:有限差分：时空耦合：稳定性"
+
+\end_inset
+
+等价于
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:有限差分：时空耦合：收敛性"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
-\noun on
- convergency
-\noun default
-.
 \end_layout
 
 \end_body
