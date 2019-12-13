@@ -328,6 +328,7 @@ set(ENV{<variable>} [<value>])
 完整的 CMake 变量列表参见 [`cmake-variables(7)`](https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html)。
 
 ### 创建目标
+
 添加构建可执行文件的目标：
 ```cmake
 add_executable(<name> [WIN32] [MACOSX_BUNDLE]
@@ -340,6 +341,13 @@ add_executable(<name> [WIN32] [MACOSX_BUNDLE]
 add_library(<name> [STATIC | SHARED | MODULE]
             [EXCLUDE_FROM_ALL]
             [source1] [source2 ...])
+```
+
+以上命令的第一个参数 `<name>` 表示被创建目标的「逻辑名」，必须全局唯一；实际被构建的文件名为「物理名」或「输出名」，不必全局唯一。默认情况下，*输出名* 等于 *逻辑名*，但可以通过设置 `OUTPUT_NAME` 来改变：
+
+```cmake
+add_executable(test_algebra_matrix matrix.cpp)
+set_target_properties(test_algebra_matrix PROPERTIES OUTPUT_NAME matrix)
 ```
 
 ### 链接
