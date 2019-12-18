@@ -1,16 +1,19 @@
-# VTK: Visualization Toolkit
+# VTK
 
-在不同的语境下，[VTK](https://www.vtk.org) 可能表示：
-- 一款跨平台的「数据显示 (Data Visualization)」开源程序库。
-- VTK 程序所使用的默认[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)。《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《19.3 VTK File Formats》一节详细定义了这两种格式。
+在不同的语境下，[VTK (Visualization ToolKit)](https://www.vtk.org) 可能表示：
+- 用于「数据显示 (Data Visualization)」的 C++ 程序库。
+- 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)。
 - [传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)文件的默认扩展名。
 
 ## 文件格式
+
+详细定义见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《19.3 VTK File Formats》一节。
+
 ### 传统 VTK 格式
-这种格式的[定义](./legacy_vtk_format.md#传统-VTK-格式)较为简单，对于简单的应用，实现一套 IO 接口（本地不需要部署 VTK 程序库）并不复杂。
+这种格式的[定义](./legacy_vtk_format.md#传统-VTK-格式)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
 
 ### 现代 XML 格式
-这是一种支持「随机访问 (random access)」和「并行读写 (parallel IO)」的文件格式，以 `.vt?` 为默认扩展名，其中 `?` 可以是 `[irsup]` 之一：
+这是一种支持「随机访问 (random access)」和「并行读写 (parallel IO)」的文件格式，以 `.vt?` 为默认扩展名，其中 `?` 可以是 `[irsupm]` 之一：
 
 | 扩展名 | 数据集类型              |
 | ----- | --------------------- |
@@ -19,8 +22,9 @@
 | `vts` | `vtkStructuredGrid`   |
 | `vtu` | `vtkUnstructuredGrid` |
 | `vtp` | `vtkPolyData`         |
+| `vtm` | `vtkMultiBlockDataSet` |
 
-这种格式的定义比[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)复杂，一般不建议自己手写 IO 接口，而是应该调用 VTK 程序库提供的 [API](#API)。
+这种格式的定义比[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)复杂，建议直接调用 VTK 程序库提供的 [API](#API)。
 
 如果在本地部署 VTK 程序库有困难（无网络、无权限），可以考虑使用 [PyEVTK](https://bitbucket.org/pauloh/pyevtk)。
 它完全用 Python & Cython 实现，因此不依赖于 VTK 程序库。
@@ -100,7 +104,7 @@ cmake --build .
 
 [ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
 
-启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门。
+启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《ParaView Guide》适合于系统学习。
 
 ### 简单数据显示
 
