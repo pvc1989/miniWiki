@@ -1,24 +1,24 @@
-# UML --- Unified Modeling Language
+# Unified Modeling Language
 
-## 语法简介
-### 时序图 (Sequence Diagram)
+## Diagrams
+### Sequence Diagram
 
-### 类图 (Class Diagram)
+### Class Diagram
 
-## 绘图工具 --- PlantUML
+## PlantUML
 [PlantUML](http://plantuml.com/) 是一个开源的 Java 组件，支持快速绘制 UML 图，并导出为 PNG、SVG 等格式的图片。
 
-### 使用在线服务
+### Web Service
 如果有互联网连接，则无需进行安装，通过浏览器即可直接使用[在线服务](http://www.plantuml.com/plantuml)。
 
-### 本地安装及运行
+### Installation
 如果要在本地运行 PlantUML，则必须先安装 [Java](https://www.java.com/) 和 [Graphviz](http://graphviz.org/)。
 接下来，下载 [`plantuml.jar`](http://sourceforge.net/projects/plantuml/files/plantuml.jar/download) 文件，存放到合适的本地目录。
 
-#### 以 GUI 模式运行
+### GUI
 双击 `plantuml.jar` 文件以启动 GUI，PlantUML 会扫描工作目录，并自动生成或更新 PNG 格式的 UML 图。
 
-#### 以 CLI 模式运行
+### CLI
 创建一个纯文本文件 [`Inheritance.txt`](./UML/Inheritance.txt)，内容为一条简单的类继承关系：
 ```txt
 @startuml
@@ -43,7 +43,3 @@ java -jar ${PLANTUML_PATH}/plantuml.jar -tsvg Inheritance.txt
 | PNG | SVG |
 | :-: | :-: |
 | ![](./Inheritance.png) | ![](./Inheritance.svg)|
-
-### 用 PlantUML 画 Sequence Diagram
-
-### 用 PlantUML 画 Class Diagram
