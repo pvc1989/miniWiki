@@ -50,7 +50,7 @@
   - [C++](./programming/cpp/README.md)
   - [Octave/MATLAB](./programming/octave.md)
   - [Python](./programming/python.md)
-  - [UML](./programming/uml/README.md)
+  - [UML](./programming/uml/README.md) + [PlantUML](./programming/uml/README.md#PlantUML)
 - 构建工具
   - [Git](./programming/git.md#Git) + [GitHub](./programming/git.md#GitHub)
   - [GNU Make](./programming/make/README.md#GNU-Make) + [CMake](./programming/make/README.md#CMake)
