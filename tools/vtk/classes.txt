@@ -1,0 +1,32 @@
+@startuml
+interface Object
+interface DataObject
+interface DataSet
+interface CompositeDataSet
+interface DataObjectTree
+interface PartitionedDataSet
+
+Object <|-- DataObject
+
+DataSet -|> DataObject
+DataObject <|- CompositeDataSet
+
+DataSet <|-- ImageData
+interface PointSet
+DataSet <|-- PointSet
+DataSet <|-- RectlinearGrid
+
+PointSet <|-- StructuredGrid
+interface UnstructuredGridBase
+PointSet <|-- UnstructuredGridBase
+UnstructuredGridBase <|-- UnstructuredGrid
+PointSet <|-- PolyData
+
+CompositeDataSet <|-- DataObjectTree
+DataObjectTree <|-- PartitionedDataSet
+PartitionedDataSet <|-- MultiPieceDataSet
+DataObjectTree <|-- MultiBlockDataSet
+
+hide empty fields
+hide empty methods
+@enduml

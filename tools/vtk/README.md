@@ -7,9 +7,16 @@
 
 ## 文件格式
 
-详细定义见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《19.3 VTK File Formats》一节。
+详细定义见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《VTK File Formats》一节。
+
+### 数据类型
+
+VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中省去了该字段（即 `DataSet` 应理解为 `vtkDataSet`）。
+
+[![](./classes.svg)](./classes.txt)
 
 ### 传统 VTK 格式
+
 这种格式的[定义](./legacy_vtk_format.md#传统-VTK-格式)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
 
 ### 现代 XML 格式
@@ -47,6 +54,7 @@ obj->Delete();                                // 销毁
 `New()` 方法返回指向动态数据的「原始指针 (raw pointer)」。
 如果（在离开创建它的作用域前）忘记调用 `Delete()`，则会造成「内存泄漏 (memory leak)」。
 VTK 提供了一种基于「引用计数 (reference count)」的「智能指针 (smart pointer)」来管理动态对象：
+
 ```cpp
 auto obj = vtkSmartPointer<vtkExampleClass>::New();  // 创建
 otherObject->SetExample(obj);                        // 使用
@@ -104,7 +112,7 @@ cmake --build .
 
 [ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
 
-启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《ParaView Guide》适合于系统学习。
+启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》适合于系统学习。
 
 ### 简单数据显示
 
