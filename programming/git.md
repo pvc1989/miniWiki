@@ -1,8 +1,9 @@
 # Git
 
 ## 参考资料
-- [Pro Git](https://git-scm.com/book/en/v2) 系统讲解 Git 原理及基本操作的参考书。
-- [GitHub Guides](https://guides.github.com) 介绍依托 [GitHub](https://github.com/) 网站进行项目开发的流程和技巧。
+- 《[GitHub Guides](https://guides.github.com)》简明扼要地介绍了依托 [GitHub](https://github.com/) 进行项目开发的流程和技巧，其中《[Understanding the GitHub flow](https://guides.github.com/introduction/flow/)》、《[Hello World](https://guides.github.com/activities/hello-world/)》、《[Mastering Markdown](https://guides.github.com/features/mastering-markdown/)》 是新手必读的简易入门教程。
+- 《[Pro Git](https://git-scm.com/book/en/v2)》系统深入地介绍了 Git 的原理及操作。
+- 《[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/)》的 6.5 节介绍了 Git 的概念及操作，注册后可以[在线观看](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/e007fce98a8c437b9ce97909117ceba2/35663f6870b24a639231fe00a119b18c/)。
 
 ## 基本概念
 「版本控制系统 (version control system, VCS)」是一种用来追踪文件修改历史的软件，是软件开发过程中管理源代码的必备工具。目前最流行的 VCS 是诞生于 2005 年的开源软件 [Git](https://git-scm.com/)。它是由 [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 为了管理 Linux 内核而创建，并与其他代码贡献者一同开发的。
@@ -12,8 +13,6 @@
 Git 的一大特色是支持多「分支 (branch)」平行开发。一个仓库至少有一个分支，代表开发主线，因此习惯上命名为 `master`，其最新状态一般代表项目当前的「稳定版」。以 `master` 作为根结点，可以分出一系列相互独立的子分支。这些子分支又可以作为新的根节点，分出新的子分支。全部分支及相互间的主从关系在逻辑上构成一棵「树」。如果要将分支 A 上的提交合并到分支 B 中，需要先「签出 (checkout)」到 B，再将 A 上的提交「合并 (merge)」到 B 中。
 
 Git 是一种分布式的 VCS，每个代码贡献者及用户都可以在本地获得代码仓库的一份副本。结合分支机制及 [GitHub](#GitHub) 等代码仓库托管网站，可以很容易地实现多人远程合作。
-
-[学堂在线](http://www.xuetangx.com/)上的《[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/)》有一节专门介绍了 Git，注册后可以[在线观看](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/e007fce98a8c437b9ce97909117ceba2/35663f6870b24a639231fe00a119b18c/)。
 
 ## 常用命令
 尽管我们可以通过 [GitHub Desktop](https://desktop.github.com) 等 GUI 来完成绝大多数常用 Git 操作，但有一些高级功能只能通过 CLI 来完成。Git 新手应当以 CLI 为学习重点，在对常用命令比较熟悉之后，再根据需要选用 GUI。
@@ -184,9 +183,6 @@ git push [remote] [branch]
 默认情况下，Git 会尝试跟踪一个仓库的各级目录下的所有文件。在软件开发过程中，经常会生成一些临时文件。如果想要让 Git 忽略这些文件，那么需要在仓库根目录下的 `.gitignore` 文件里列举出这些文件名（可以使用通配符，以使忽略规则作用到同一类文件）。[GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的 `.gitignore` 范例。
 
 # GitHub
-
-## 参考资料
-- [GitHub Guides](https://guides.github.com) 简要介绍依托 [GitHub](https://github.com/) 网站进行项目开发的流程和技巧。
 
 ## GitHub Flow
 [GitHub Flow](https://guides.github.com/introduction/flow/) 是一种基于 Git 分支机制及 GitHub 代码仓库托管网站进行软件开发的流程，主要包括以下几个步骤。
