@@ -1,0 +1,4572 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\master README.lyx
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+双曲型方程的光滑解
+\end_layout
+
+\begin_layout Section
+单波方程
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:single_wave"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性一维单波方程
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:single_wave_linear_smooth_initial"
+
+\end_inset
+
+寻找一阶可微的函数 
+\begin_inset Formula $u\colon\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
+\end_inset
+
+，使其满足常系数「线性平流 (linear advection) 方程
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!linear advection equation
+\end_layout
+
+\end_inset
+
+」：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\lambda\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:single_wave_linear}
+\end{equation}
+
+\end_inset
+
+及一阶可微的初始条件：
+\begin_inset Formula 
+\begin{equation}
+u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:single_wave_initial}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若 
+\begin_inset Formula $x$
+\end_inset
+
+ 表示空间坐标，
+\begin_inset Formula $t$
+\end_inset
+
+ 表示时间，则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+
+\end_inset
+
+ 描述了单个微扰波的运动规律，有时也被称作线性「单波 (single wave) 方程」。常系数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 具有「速率 (speed)」的量纲，下面将会看到，它是「波包 (wave packet)」的移动速度，因此将其称作「波速 (wave speed)」是合适的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+在初始条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_initial"
+
+\end_inset
+
+ 中，用 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ 时刻的空间变量，有助于与 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻的空间变量 
+\begin_inset Formula $x$
+\end_inset
+
+ 相区分。这种区分在研究初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+
+\end_inset
+
+ 的解与初始条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_initial"
+
+\end_inset
+
+ 的依赖关系时是至关重要的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的「特征线 (characteristic curves)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ curve
+\end_layout
+
+\end_inset
+
+」（即「
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:特征流形"
+
+\end_inset
+
+ (characteristic manifold)」的特例）在直线 
+\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+\end_inset
+
+ 以上的部分，是一族由 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的平行直线。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+根据
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:特征流形"
+
+\end_inset
+
+的定义，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 过点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 的特征线在直线 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 以上的部分
+\begin_inset Formula 
+\[
+C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\} 
+\]
+
+\end_inset
+
+由以下 PDE 初值问题的解确定：
+\begin_inset Formula 
+\[
+\begin{cases}
+\left(\partial_{t}+\lambda\partial_{x}\right)\phi(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\\
+\phi(x_{0},t_{0})=0
+\end{cases}
+\]
+
+\end_inset
+
+不失一般性，可以将隐函数 
+\begin_inset Formula $\phi(x,t)=0$
+\end_inset
+
+ 改写为显函数 
+\begin_inset Formula $x=x(t)$
+\end_inset
+
+，其中等号左端的 
+\begin_inset Formula $x$
+\end_inset
+
+ 表示「变量 (variable)」，等号右端的 
+\begin_inset Formula $x$
+\end_inset
+
+ 表示「函数 (function)」。于是，上述关于 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 的 PDE 初值问题转化为关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题：
+\begin_inset Formula 
+\[
+\begin{cases}
+\dv*{x(t)}{t}=\lambda\qquad t\in(t_{0},\infty)\\
+x(t=0)=x_{0}
+\end{cases}
+\]
+
+\end_inset
+
+直接积分可得
+\begin_inset Formula 
+\begin{equation}
+x(t)-x_{0}=\lambda\cdot(t-t_{0})\qquad t\in[t_{0},\infty)\label{eq:single_wave_linear_char_curve}
+\end{equation}
+
+\end_inset
+
+它是一条由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的直线。若将 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 视为可变参数，则这些特征线的集合 
+\begin_inset Formula $\left\{ C_{x_{0}}:x_{0}\in(-\infty,\infty)\right\} $
+\end_inset
+
+ 就构成了一族由直线 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的平行直线。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+在下文中，
+\begin_inset Formula $\lambda(t)$
+\end_inset
+
+ 可能表示「关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 在 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻的值」。为了避免混淆，
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear_char_curve"
+
+\end_inset
+
+ 式中的乘号不应省略。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若将方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的常系数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 放宽为「关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的连续函数」，则由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出发出的特征线 
+\begin_inset Formula $C_{x_{0}}$
+\end_inset
+
+ 由直线 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear_char_curve"
+
+\end_inset
+
+ 变为分段光滑的曲线
+\begin_inset Formula 
+\[
+x(t)-x_{0}=\int_{t_{0}}^{t}\lambda(\tau)\dd{\tau}\qquad t\in[t_{0},\infty)
+\]
+
+\end_inset
+
+由任何两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 依然是平行的，因此不会相交：
+\begin_inset Formula 
+\[
+p(t)-q(t)=p_{0}-q_{0}\qquad t\in[t_{0},\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若将 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 进一步放宽为「关于 
+\begin_inset Formula $x,t$
+\end_inset
+
+ 的连续函数」，则关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题
+\begin_inset Formula 
+\[
+\begin{cases}
+\dv*{x(t)}{t}=\lambda\big(x(t),t\big)\qquad t\in(t_{0},\infty)\\
+x(t=0)=x_{0}
+\end{cases}
+\]
+
+\end_inset
+
+不能由直接积分解出，但依然可以获得定性的结论：由任何两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 一般不再平行，但永远不会相交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+经过以上推广，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 依然是线性的，它的特征线完全由方程的系数决定，而与方程的解无关。在寻找特征线的过程中，已经出现了「特征线法」的影子：将关于 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 的 PDE 初值问题转化为关于 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 的 ODE 初值问题。对于含两个自变量的双曲型 PDE 初值问题，总是可以利用特征线将其转化为「沿特征线的 ODE 初值问题」，后者的求解往往更加简单。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解在任何一条特征线上的值为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\dv{u\big(x(t),t\big)}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+\lambda\pdv{u}{x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解为
+\begin_inset Formula 
+\begin{equation}
+\boxed{u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_linear_solution_smooth}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+这个解的物理含义为：「波包 (wave packet)」以恒定的速率 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 沿 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴移动，并且保持「波形 (wave shape)」不变。这种运动被称为「平流 (advection)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的右端补充一个关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的可积函数 
+\begin_inset Formula $f(t)$
+\end_inset
+
+，则以上特征线法依然适用：
+\begin_inset Formula 
+\[
+\dv{u\big(x(t),t\big)}{t}=\pdv{u}{t}+\lambda\pdv{u}{x}=f(t)
+\]
+
+\end_inset
+
+只不过沿特征线积分得到的解不再是常量：
+\begin_inset Formula 
+\[
+u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})+\int_{t_{0}}^{t}f(\tau)\dd{\tau}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+拟线性一维单波方程
+\end_layout
+
+\begin_layout Standard
+若波速 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 不再是常量，而是依赖于 
+\begin_inset Formula $u$
+\end_inset
+
+ 的函数，则初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 变为
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:single_wave_quasilinear_smooth_initial"
+
+\end_inset
+
+寻找一阶可微的函数 
+\begin_inset Formula $u\colon\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
+\end_inset
+
+，使其满足「拟线性 (quasi-linear) 单波方程
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+PDE!quasilinear wave equation
+\end_layout
+
+\end_inset
+
+」
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\lambda(u)\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_quasilinear}
+\end{equation}
+
+\end_inset
+
+及一阶可微的初始条件（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+最简单的情形为 
+\begin_inset Formula $\lambda(u)=ku$
+\end_inset
+
+，其中 
+\begin_inset Formula $k\in\mathbb{R}$
+\end_inset
+
+ 为常量。特别地，若 
+\begin_inset Formula $k=1$
+\end_inset
+
+ 即 
+\begin_inset Formula $\lambda(u)=1\cdot u$
+\end_inset
+
+，则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
+
+\end_inset
+
+ 被称为「无黏 Burgers 方程
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!Burgers equation!inviscid ~
+\end_layout
+
+\end_inset
+
+」。未知函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 不一定代表
+\emph on
+速率
+\emph default
+，而 
+\begin_inset Formula $ku$
+\end_inset
+
+ 必须具有
+\emph on
+速率
+\emph default
+的量纲，因此即使 
+\begin_inset Formula $k=1$
+\end_inset
+
+ 也应当将其写出。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+至少在一个充分小的时段 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的特征线在直线 
+\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+\end_inset
+
+ 以上的部分，是一族由 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 发出、斜率为 
+\begin_inset Formula $\lambda(u_{0})$
+\end_inset
+
+ 的直线：
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula 
+\begin{equation}
+x(t)-x_{0}=\lambda(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})\label{eq:single_wave_quasilinear_char_curve}
+\end{equation}
+
+\end_inset
+
+由任何两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 一般不再平行，但在 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内不会相交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear"
+
+\end_inset
+
+ 的解在任何一条特征线上的值为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:single_wave_quasilinear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解在上述充分小的时段 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内可以表示为隐函数
+\begin_inset Formula 
+\begin{equation}
+\boxed{u(x,t)=u_{0}\big(\underbrace{x-\lambda\big(u(x,t)\big)\cdot(t-t_{0})}_{x_{0}}\big)}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:single_wave_quasilinear_solution_smooth}
+\end{equation}
+
+\end_inset
+
+它是一阶可微的函数，因此被称为「光滑 (smooth) 解」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+光滑解的破裂
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:smooth_solution_breaking"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+光滑解 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear_solution_smooth"
+
+\end_inset
+
+ 成立的前提为：由任何两个不同起点 
+\begin_inset Formula $(p_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(q_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 在充分小的时段 
+\begin_inset Formula $[t_{0},t_{*})$
+\end_inset
+
+ 内不会相交。本节将讨论「充分小」的确切含义，亦即 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 的取法。不失一般性，假设 
+\begin_inset Formula $p_{0}<q_{0}$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 是否相交只可能有以下三种情况：
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)>\lambda\big(u_{0}(q_{0})\big)$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 比 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 更贴近 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+，二者相交于 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 上方。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)<\lambda\big(u_{0}(q_{0})\big)$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 比 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 更偏离 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+，二者相交于 
+\begin_inset Formula $L_{t_{0}}$
+\end_inset
+
+ 下方。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)=\lambda\big(u_{0}(q_{0})\big)$
+\end_inset
+
+，则 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 平行，二者永远不会相交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+利用
+\emph on
+链式求导法则
+\emph default
+
+\begin_inset Formula 
+\begin{equation}
+\dv{\lambda\big(u_{0}(x_{0})\big)}{x_{0}}:=\dv{\lambda(u_{0})}{u_{0}}\dv{u_{0}(x_{0})}{x_{0}}\label{eq:chain_rule}
+\end{equation}
+
+\end_inset
+
+可以将上述推广到区间 
+\begin_inset Formula $\Omega\subset(-\infty,\infty)$
+\end_inset
+
+ 上：
+\end_layout
+
+\begin_layout Theorem
+设 
+\begin_inset Formula $p_{0},q_{0}\in\Omega$
+\end_inset
+
+ 且 
+\begin_inset Formula $p_{0}<q_{0}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\begin{cases}
+\forall x_{0}\in\Omega:\dv*{\lambda}{x_{0}}\ge0\implies\forall t\in[t_{0},\infty):p(t)<q(t)\\
+\forall x_{0}\in\Omega:\dv*{\lambda}{x_{0}}<0\implies\exists t_{*}>t_{0}:\begin{cases}
+p(t_{*})=q(t_{*})\\
+\forall t\in[t_{0},t_{*}):p(t)<q(t)
+\end{cases}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由 
+\begin_inset Formula $\dv*{x}{t}=\lambda(u)$
+\end_inset
+
+ 及 
+\begin_inset Formula $u(x,t)=u_{0}(x_{0})$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\dv{\big(q(t)-p(t)\big)}{t}=\dv{q(t)}{t}-\dv{p(t)}{t}=\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)
+\]
+
+\end_inset
+
+等式右端是定值，它的正负号决定了特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 是否会相交：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $\dv*{\lambda}{x_{0}}\ge0$
+\end_inset
+
+ 则
+\begin_inset Formula 
+\[
+p_{0}<q_{0}\implies\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)\ge0\implies\dv{\big(q(t)-p(t)\big)}{t}\ge0
+\]
+
+\end_inset
+
+其几何意义为：特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 平行或发散，二者在 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ 时刻之后永远不会相交。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\dv*{\lambda}{x_{0}}<0$
+\end_inset
+
+ 则
+\begin_inset Formula 
+\[
+p_{0}<q_{0}\implies\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)<0\implies\dv{\big(q(t)-p(t)\big)}{t}<0
+\]
+
+\end_inset
+
+其几何意义为：特征线 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 以恒定的速率汇聚，二者相交的时刻 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 可以由以下代数方程
+\begin_inset Formula 
+\[
+p(t_{*})=q(t_{*})\iff p_{0}+\lambda\big(u_{0}(p_{0})\big)\cdot(t_{*}-t_{0})=q_{0}+\lambda\big(u_{0}(q_{0})\big)\cdot(t_{*}-t_{0})
+\]
+
+\end_inset
+
+解得：
+\begin_inset Formula 
+\[
+t_{*}=t_{0}-\frac{q_{0}-p_{0}}{\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)}>t_{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[破裂时刻]
+\end_layout
+
+\end_inset
+
+在 
+\begin_inset Formula $C_{p_{0}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $C_{q_{0}}$
+\end_inset
+
+ 的交点 
+\begin_inset Formula $(x_{*},t_{*})$
+\end_inset
+
+ 处，
+\begin_inset Formula $u(x_{*},t_{*})$
+\end_inset
+
+ 的值有两种可能：
+\begin_inset Formula 
+\[
+u(x_{*},t_{*})=u_{0}(p_{0})\qquad u(x_{*},t_{*})=u_{0}(q_{0})
+\]
+
+\end_inset
+
+任给的初始条件 
+\begin_inset Formula $u_{0}(x_{0})$
+\end_inset
+
+ 通常不能确保它们相等，从而导致
+\emph on
+函数值出现第一类间断
+\emph default
+，因此光滑解（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_quasilinear_solution_smooth"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）至晚在 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 时刻失效。任取一对 
+\begin_inset Formula $p_{0},q_{0}$
+\end_inset
+
+ 都能得到一个这样的 
+\begin_inset Formula $t_{*}$
+\end_inset
+
+ 时刻，它们的下确界就是（由 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 发出的）光滑解的「破裂时刻 (breaking moment)」：
+\begin_inset Formula 
+\[
+t_{b}(\Omega):=\inf\left\{ t_{*}(p_{0},q_{0}):p_{0},q_{0}\in\Omega,\,p_{0}<q_{0}\right\} \qquad\forall x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+直接套用上述定义通常难以算出 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ 的值。考虑到光滑解破裂的实质是「函数值出现第一类间断」，这意味着 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+，于是寻找 
+\begin_inset Formula $t_{b}$
+\end_inset
+
+ 的问题就转化为寻找 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+ 的条件。为此，利用
+\emph on
+隐函数求导法则
+\emph default
+计算光滑解的偏导数：
+\begin_inset Formula 
+\[
+\pdv{u(x,t)}{x}=\left(1-\dv{\lambda(u)}{u}\pdv{u(x,t)}{x}(t-t_{0})\right)\dv{u_{0}}{x_{0}}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $u(x,t)=u_{0}(x_{0})$
+\end_inset
+
+ 及链式求导法则 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:chain_rule"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\pdv{u(x,t)}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{\lambda}{x_{0}}}
+\]
+
+\end_inset
+
+若等式右端的分母为零，则有 
+\begin_inset Formula $\pdv*{u}{x}\to\infty$
+\end_inset
+
+，此即光滑解破裂的充分条件：
+\begin_inset Formula 
+\[
+t_{b}(x_{0})=t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}
+\]
+
+\end_inset
+
+这是由点 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 发出的特征线 
+\begin_inset Formula $C_{x_{0}}$
+\end_inset
+
+ 与其他特征线相交的时刻。它的下确界就是（由 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 发出的）光滑解的破裂时刻
+\begin_inset Formula 
+\[
+\boxed{t_{b}(\Omega)=\inf_{x_{0}\in\Omega}\left\{ t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}\right\} }\qquad\forall x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+线性多波方程（组）
+\end_layout
+
+\begin_layout Subsection
+线性高阶方程
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无限长弹性弦]
+\end_layout
+
+\end_inset
+
+一维无限长均匀弹性弦的横向微幅振动是由「二阶线性波动方程」描述的：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}^{2}-\lambda^{2}\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)\label{eq:double_wave_linear}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lambda^{2}$
+\end_inset
+
+ 是弦的张力 
+\begin_inset Formula $T$
+\end_inset
+
+ 与质量线密度 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 的比值。相应的初始条件由「初始位移」和「初始速度」共同构成：
+\begin_inset Formula 
+\begin{equation}
+u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)\label{eq:double_wave_initial}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:double_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的二阶微分算符可以分解为两个一阶微分算符的「乘积」：
+\begin_inset Formula 
+\[
+\partial_{t}^{2}-\lambda^{2}\partial_{x}=\left(\partial_{t}-\lambda\partial_{x}\right)\left(\partial_{t}+\lambda\partial_{x}\right)
+\]
+
+\end_inset
+
+引入坐标变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}\xi\\
+\eta
+\end{bmatrix}=\begin{bmatrix}x+\lambda t\\
+x-\lambda t
+\end{bmatrix}\implies\begin{bmatrix}\partial_{t}\\
+\partial_{x}
+\end{bmatrix}=\begin{bmatrix}\partial_{t}\xi & \partial_{t}\eta\\
+\partial_{x}\xi & \partial_{x}\eta
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}=\begin{bmatrix}\lambda & -\lambda\\
+1 & 1
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}
+\]
+
+\end_inset
+
+只要该变换是非退化的，即 
+\begin_inset Formula $\lambda\ne0$
+\end_inset
+
+，就有
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{t}-\lambda\partial_{x}\\
+\partial_{x}+\lambda\partial_{x}
+\end{bmatrix}=\begin{bmatrix}1 & -\lambda\\
+1 & +\lambda
+\end{bmatrix}\begin{bmatrix}\partial_{t}\\
+\partial_{x}
+\end{bmatrix}=\begin{bmatrix} & -2\lambda\\
+2\lambda
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}
+\]
+
+\end_inset
+
+于是可以将方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:double_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 化为「标准 (canonical) 形式」：
+\begin_inset Formula 
+\[
+\partial_{\xi}\partial_{\eta}u=0
+\]
+
+\end_inset
+
+它的通解为：
+\begin_inset Formula 
+\[
+u(x,t)=f(\xi)+g(\eta)=f(x+\lambda t)+g(x-\lambda t)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f,g$
+\end_inset
+
+ 可以是任何一阶可微的一元函数。代入初始条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:double_wave_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以定出 
+\begin_inset Formula $f,g$
+\end_inset
+
+，从而得到原初值问题的解：
+\begin_inset Formula 
+\[
+u(x,t)=\frac{\phi(x+\lambda t)+\phi(x-\lambda t)}{2}+\frac{1}{2\lambda}\int_{x-\lambda t}^{x+\lambda t}\psi(\zeta)\dd{\zeta}
+\]
+
+\end_inset
+
+它表示两个（线性）波分别以速度 
+\begin_inset Formula $\pm\lambda$
+\end_inset
+
+ 沿 
+\begin_inset Formula $x$
+\end_inset
+
+ 方向运动。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若将一阶导数 
+\begin_inset Formula $\partial_{t}u,\partial_{x}u$
+\end_inset
+
+ 视作独立于 
+\begin_inset Formula $u$
+\end_inset
+
+ 的未知函数 
+\begin_inset Formula $U_{1},U_{2}$
+\end_inset
+
+，并将二阶交叉导数的协调关系 
+\begin_inset Formula $\partial_{t}\partial_{x}u=\partial_{x}\partial_{t}u$
+\end_inset
+
+ 视为独立于原始方程的另一个（关于 
+\begin_inset Formula $U_{1},U_{2}$
+\end_inset
+
+ 的二阶）方程，则二阶偏微分方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:double_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）可以化为一阶偏微分方程组：
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\begin{bmatrix} & -\lambda^{2}\\
+-1
+\end{bmatrix}\partial_{x}\right)\begin{bmatrix}v(x,t)\\
+w(x,t)
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}\qquad\begin{bmatrix}v(x,t=0)\\
+w(x,t=0)
+\end{bmatrix}=\begin{bmatrix}\psi(x)\\
+\dv*{\phi(x)}{x}
+\end{bmatrix}
+\]
+
+\end_inset
+
+本章剩余内容将围绕这种（关于 
+\begin_inset Formula $\forall n\in\mathbb{N}$
+\end_inset
+
+ 个未知函数的）方程组展开详细讨论。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+矩阵记法
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $n$
+\end_inset
+
+ 个波的运动，通常由关于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个未知函数 
+\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\end_inset
+
+ 的一阶偏微分方程组来描写：
+\end_layout
+
+\begin_layout Itemize
+最简单的情形是由 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的（形如 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+）线性单波方程构成的线性方程组：
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\lambda_{i}\partial_{x}\right)u_{i}(x,t)=0\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+各未知函数可以独立地解出，具体方法已在《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:single_wave"
+
+\end_inset
+
+》一节给出。
+\end_layout
+
+\begin_layout Itemize
+更一般的情形是允许未知函数对 
+\begin_inset Formula $x$
+\end_inset
+
+ 的导数按线性组合：
+\begin_inset Formula 
+\[
+\partial_{t}u_{i}(x,t)+\sum_{k=1}^{n}a_{ik}\partial_{x}u_{k}(x,t)=0\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+各未知函数不能独立地解出，但在某些情况下，可以将其转化为第一种情形，具体条件及方法将在《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:multi_wave_system_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+》一节给出。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+与线性代数方程组类似，偏微分方程组也可以写成更紧凑的矩阵形式。在数学和物理文献中，矩阵记法有多种不同风格。本文采用由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dirac"
+target "https://doi.org/10.1017/S0305004100021162"
+literal "false"
+
+\end_inset
+
+ 发明、经 
+\begin_inset CommandInset href
+LatexCommand href
+name "Hassani"
+target "https://doi.org/10.1007/978-3-319-01195-0"
+literal "false"
+
+\end_inset
+
+ 改进的 bra-ket 记号。表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:matrix_notation"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 列出了本文用到的主要符号，其中 
+\begin_inset Formula $*,\dagger$
+\end_inset
+
+ 分别表示复数的共轭与复数矩阵的共轭转置。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+矩阵记法
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:matrix_notation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+对象
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+示例
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\SpecialChar LaTeX
+ 命令
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+部分命令由
+\family typewriter
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "physics"
+target "https://www.ctan.org/pkg/physics"
+literal "false"
+
+\end_inset
+
+
+\family default
+ 提供。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+含义
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+column matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ket{U}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}u_{1}\\
+\vdots\\
+u_{n}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+column basis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ket{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ket{k}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行为 
+\begin_inset Formula $1$
+\end_inset
+
+ 其余各行为 
+\begin_inset Formula $0$
+\end_inset
+
+ 的列阵
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+row matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bra{U}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+bra{U}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}u_{1}^{*} & \cdots & u_{n}^{*}\end{bmatrix}\equiv\ket{U}^{\dagger}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+row basis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\bra{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+bra{i}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第 
+\begin_inset Formula $i$
+\end_inset
+
+ 列为 
+\begin_inset Formula $1$
+\end_inset
+
+ 其余各行为 
+\begin_inset Formula $0$
+\end_inset
+
+ 的行阵
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+square matrix
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+underline{A}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}a_{11} & \cdots & a_{1n}\\
+\vdots &  & \vdots\\
+a_{n1} & \cdots & a_{nn}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+inner product
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{U}{V}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{U}{V}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sum_{i=1}^{n}u_{i}^{*}v_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+-th row
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{i}{U}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{i}{U}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{e_{i}}{U}\equiv u_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $k$
+\end_inset
+
+-th column
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{U}{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+ip{U}{k}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{U}{e_{k}}\equiv u_{k}^{*}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+matrix element
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mel{i}{A}{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+mel{i}{A}{k}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mel{e_{i}}{A}{e_{k}}\equiv a_{ik}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bilinear form
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mel{U}{A}{V}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+
+\backslash
+mel{U}{A}{V}
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sum_{i=1}^{n}\sum_{k=1}^{n}u_{i}^{*}a_{ik}v_{k}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[矩阵特征值]
+\end_layout
+
+\end_inset
+
+对于给定的方阵 
+\begin_inset Formula $\Matrix{A}\in\mathbb{C}^{n\times n}$
+\end_inset
+
+，若存在复数 
+\begin_inset Formula $\lambda\in\mathbb{C}$
+\end_inset
+
+ 及非零行阵 
+\begin_inset Formula $\bra{L}\in\mathbb{C}^{1\times n}$
+\end_inset
+
+ 与非零列阵 
+\begin_inset Formula $\ket{R}\in\mathbb{C}^{n\times1}$
+\end_inset
+
+，使得
+\begin_inset Formula 
+\[
+\bra{L}\Matrix{A}=\bra{L}\lambda\qquad\Matrix{A}\ket{R}=\lambda\ket{R}
+\]
+
+\end_inset
+
+则称
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 的「特征值 (eigenvalue)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~value
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\bra{L}$
+\end_inset
+
+ 为从属于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的「左特征向量 (left eigenvector)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~vector!left ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ket{R}$
+\end_inset
+
+ 为从属于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的「右特征向量 (right eigenvector)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+eigen!~vector!right ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:orthogonal_eigenvectors"
+
+\end_inset
+
+方阵 
+\begin_inset Formula $\Matrix{A}\in\mathbb{C}^{n\times n}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个复特征值。每个特征值都至少有一个非零的左、右特征向量。从属于不同特征值的左、右特征向量是相互正交的：
+\begin_inset Formula 
+\[
+\ip{L_{i}}{R_{k}}=0\impliedby\begin{cases}
+\bra{L_{i}}\Matrix{A}=\bra{L_{i}}\lambda_{i}\\
+\Matrix{A}\ket{R_{k}}=\lambda_{k}\ket{R_{k}}\\
+\lambda_{i}\ne\lambda_{k}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性一阶方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:multi_wave_system_linear"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:multi_wave_system_linear_smooth_initial"
+
+\end_inset
+
+寻找 
+\begin_inset Formula $n$
+\end_inset
+
+ 个一阶可微的函数 
+\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\end_inset
+
+，使其满足
+\emph on
+常系数
+\emph default
+线性偏微分方程组：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U(x,t)}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:multi_wave_system_linear}
+\end{equation}
+
+\end_inset
+
+及一阶可微的初始条件：
+\begin_inset Formula 
+\begin{equation}
+\ket{U(x_{0},t_{0})}=\ket{U_{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:multi_wave_system_initial}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Matrix{A}=\begin{bmatrix}a_{11} & \cdots & a_{1n}\\
+\vdots &  & \vdots\\
+a_{n1} & \cdots & a_{nn}
+\end{bmatrix}\in\mathbb{R}^{n\times n}\qquad\ket{U(x,t)}=\begin{bmatrix}u_{1}(x,t)\\
+\vdots\\
+u_{n}(x,t)
+\end{bmatrix}\qquad\ket{U_{0}(x_{0})}=\begin{bmatrix}u_{1}^{0}(x_{0})\\
+\vdots\\
+u_{n}^{0}(x_{0})
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[双曲型]
+\end_layout
+
+\end_inset
+
+方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_system_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的类型由它的系数矩阵 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 确定：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个互异的实特征值 
+\begin_inset Formula $\lambda_{1}<\cdots<\lambda_{n}$
+\end_inset
+
+，则称该方程组为「（沿 
+\begin_inset Formula $t$
+\end_inset
+
+ 轴方向）严格双曲的 (strictly hyperbolic)」。
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个实特征值 
+\begin_inset Formula $\lambda_{1}\le\cdots\le\lambda_{n}$
+\end_inset
+
+，且有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个线性无关的特征向量，则称该方程组为「（沿 
+\begin_inset Formula $t$
+\end_inset
+
+ 轴方向）若双曲的 (weakly hyperbolic)」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+该定义不过是将更一般的
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:pde_hyperbolic"
+
+\end_inset
+
+定义在一阶方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_system_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 上重新叙述了一遍，详见例 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:1st_order_pde_system_types"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若方程组 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:multi_wave_system_linear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 是严格双曲的，则可以被分解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的单波方程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+方阵 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个互异的实特征值，因此有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的左、右特征向量。利用这些特征值、特征向量可以构造出三个方阵：
+\begin_inset Formula 
+\[
+\Matrix{\Lambda}:=\begin{bmatrix}\lambda_{1}\\
+ & \ddots\\
+ &  & \lambda_{n}
+\end{bmatrix}\qquad\Matrix{L}:=\begin{bmatrix}\bra{L_{1}}\\
+\vdots\\
+\bra{L_{n}}
+\end{bmatrix}\qquad\Matrix{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}
+\]
+
+\end_inset
+
+它们满足
+\begin_inset Formula 
+\[
+\Matrix{L}\Matrix{A}=\Matrix{\Lambda}\Matrix{L}\qquad\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}
+\]
+
+\end_inset
+
+根据引理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:orthogonal_eigenvectors"
+
+\end_inset
+
+，
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{R}$
+\end_inset
+
+ 都是可逆的，并且 
+\begin_inset Formula $\Matrix{R}^{-1}$
+\end_inset
+
+ 可以被用作 
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\implies\Matrix{R}^{-1}\Matrix{A}=\Matrix{\Lambda}\Matrix{R}^{-1}\implies\Matrix{L}:=\Matrix{R}^{-1}\implies\Matrix{A}=\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}
+\]
+
+\end_inset
+
+借助这个 
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+，可以定义 
+\begin_inset Formula $n$
+\end_inset
+
+ 个「特征变量 (characteristic variables)」：
+\begin_inset Formula 
+\[
+\ket{V(x,t)}=\begin{bmatrix}v_{1}(x,t)\\
+\vdots\\
+v_{n}(x,t)
+\end{bmatrix}:=\begin{bmatrix}\ip{L_{1}}{U(x,t)}\\
+\vdots\\
+\ip{L_{n}}{U(x,t)}
+\end{bmatrix}=\Matrix{L}\ket{U(x,t)}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{L}^{-1}$
+\end_inset
+
+ 都是常数矩阵，因此可以与偏导数算符 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\partial_{x}$
+\end_inset
+
+ 交换顺序。于是，关于 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_system_linear"
+
+\end_inset
+
+ 可以化为关于 
+\begin_inset Formula $\ket{V}$
+\end_inset
+
+ 的方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U(x,t)} & =\big(\partial_{t}\underbrace{\Matrix{L}^{-1}\Matrix{L}}_{\Matrix{1}}+\underbrace{\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}}_{\Matrix{A}}\partial_{x}\big)\ket{U(x,t)}\\
+ & =\Matrix{L}^{-1}\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\underbrace{\Matrix{L}\ket{U(x,t)}}_{\ket{V(x,t)}}=\ket{0}
+\end{aligned}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\ket{V(x,t)}=\Matrix{L}\ket{0}=\ket{0}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Matrix{\Lambda}$
+\end_inset
+
+ 是对角阵，因此这是 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的单波方程，称为「
+\begin_inset Formula $n$
+\end_inset
+
+ 重单波方程」：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\lambda_{i}\partial_{x}\right)v_{i}(x,t)=0\qquad i=1,\dots,n\label{eq:multi_wave_decomposed}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:multi_wave_system_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解为
+\begin_inset Formula 
+\[
+\boxed{\ket{U(x,t)}=\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的初值 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_system_initial"
+
+\end_inset
+
+ 可以化为 
+\begin_inset Formula $\ket{V}$
+\end_inset
+
+ 的初值：
+\begin_inset Formula 
+\[
+\ket{V(x_{0},t_{0})}=\begin{bmatrix}v_{1}(x_{0},t_{0})\\
+\vdots\\
+v_{n}(x_{0},t_{0})
+\end{bmatrix}=\begin{bmatrix}\ip{L_{1}}{U(x_{0},t_{0})}\\
+\vdots\\
+\ip{L_{n}}{U(x_{0},t_{0})}
+\end{bmatrix}=\Matrix{L}\ket{U_{0}(x_{0})}
+\]
+
+\end_inset
+
+它们与 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_decomposed"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式构成了 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的单波初值问题。代入 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:single_wave_linear_solution_smooth"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式即得这 
+\begin_inset Formula $n$
+\end_inset
+
+ 个单波的解：
+\begin_inset Formula 
+\[
+v_{i}(x,t)=\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+原初值问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:multi_wave_system_linear_smooth_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的解是这些单波的线性组合：
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{U(x,t)} & =\Matrix{L}^{-1}\ket{V(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}v_{1}(x,t)\\
+\vdots\\
+v_{n}(x,t)
+\end{bmatrix}\\
+ & =\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[变系数线性一阶方程组]
+\end_layout
+
+\end_inset
+
+在获得解耦的 
+\begin_inset Formula $n$
+\end_inset
+
+ 重单波方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_decomposed"
+
+\end_inset
+
+ 式）的过程中，用到了「
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\Matrix{L}^{-1}$
+\end_inset
+
+ 都是常数矩阵」的事实，它是「
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 为常数矩阵」的推论。若将 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 放宽为「显式依赖于 
+\begin_inset Formula $x,t$
+\end_inset
+
+ 的方阵」：
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\Matrix{A(x,t)}\partial_{x}\right)\ket{U(x,t)}=\ket{0}
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula $\Matrix{A(x,t)}$
+\end_inset
+
+ 的特征值 
+\begin_inset Formula $\Matrix{\Lambda(x,t)}$
+\end_inset
+
+ 需要逐点计算，方程的双曲性也要逐点分析。即使方程是处处双曲的，
+\begin_inset Formula $\Matrix{L(x,t)}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\Matrix{L(x,t)}^{-1}$
+\end_inset
+
+ 也不再是常数矩阵，将它们与偏导数算符 
+\begin_inset Formula $\partial_{t}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\partial_{x}$
+\end_inset
+
+ 交换顺序会产生（不含 
+\begin_inset Formula $\partial_{t}\ket{U}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\partial_{x}\ket{U}$
+\end_inset
+
+ 的）附加项：
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\Matrix{\Lambda(x,t)}\partial_{x}\right)\ket{V(x,t)}=\Matrix{L(x,t)}\Matrix{D(x,t)}\Matrix{R(x,t)}\ket{V(x,t)}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Matrix{D(x,t)}:=\left(\partial_{t}+\Matrix{\Lambda(x,t)}\partial_{x}\right)\Matrix{L(x,t)}
+\]
+
+\end_inset
+
+因此：变系数线性一阶方程组至多可以对一阶导数解耦。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+拟线性多波方程组
+\end_layout
+
+\begin_layout Subsection
+拟线性一阶方程组
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:multi_wave_quasilinear_system"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:multi_wave_quasilinear_system_smooth_initial"
+
+\end_inset
+
+寻找 
+\begin_inset Formula $n$
+\end_inset
+
+ 个一阶可微的函数 
+\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\end_inset
+
+，使其满足「拟线性 (quasilinear)」偏微分方程组：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\label{eq:multi_wave_quasilinear_system}
+\end{equation}
+
+\end_inset
+
+及一阶可微的初始条件（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_system_initial"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+与变系数线性方程组类似，拟线性方程组的系数矩阵 
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+ 的特征值 
+\begin_inset Formula $\Matrix{\Lambda(U)}$
+\end_inset
+
+ 需要逐点计算，方程的双曲性也要逐点分析。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征相容关系]
+\end_layout
+
+\end_inset
+
+设方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 在区域 
+\begin_inset Formula $\Omega\in\mathbb{R}_{u}^{n}$
+\end_inset
+
+ 中是严格双曲的，则有
+\begin_inset Formula 
+\[
+\Matrix{A(U)}=\Matrix{L(U)}^{-1}\Matrix{\Lambda(U)}\Matrix{L(U)}
+\]
+
+\end_inset
+
+将其代入方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\left(\Matrix{L(U)}\partial_{t}+\Matrix{\Lambda(U)}\Matrix{L(U)}\partial_{x}\right)\ket{U}=\ket{0}
+\]
+
+\end_inset
+
+它的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 行被称为第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个「特征相容关系 (characteristic compatibility condition)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+characteristic!~ compatibility condition
+\end_layout
+
+\end_inset
+
+」：
+\begin_inset Formula 
+\begin{equation}
+\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=0\label{eq:char_compatibility}
+\end{equation}
+
+\end_inset
+
+它是沿第 
+\begin_inset Formula $i$
+\end_inset
+
+ 条特征线 
+\begin_inset Formula $\dv*{x}{t}=\lambda_{i}$
+\end_inset
+
+ 的常微分方程，其中
+\begin_inset Formula 
+\[
+\left(\dv{t}\right)_{i}:=\pdv{t}+\lambda_{i}(U)\pdv{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+双曲型拟线性方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 在每一点都有 
+\begin_inset Formula $n$
+\end_inset
+
+ 条特征线，它们在点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 的斜率 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 不仅依赖于 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+，还依赖于方程的解在该点的取值 
+\begin_inset Formula $\ket{U(x,t)}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征场]
+\end_layout
+
+\end_inset
+
+特征值 
+\begin_inset Formula $\lambda_{i}(u_{1},\dots,u_{n})$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}_{u}^{n}$
+\end_inset
+
+ 中定义了一个「标量场 (scalar field)」，
+\noun on
+称作
+\noun default
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 的「第 
+\begin_inset Formula $i$
+\end_inset
+
+ 特征场 (the 
+\begin_inset Formula $i$
+\end_inset
+
+-th characteristic field)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field
+\end_layout
+
+\end_inset
+
+」。特征场可以按其梯度与右特征向量是否正交来分类：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若有
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{i}}{R_{i}}\ne0\qquad\forall(u_{1},\dots,u_{n})\in\Omega\subset\mathbb{R}_{u}^{n}
+\]
+
+\end_inset
+
+则称该特征场在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 内是「真正非线性的 (genuinely nonlinear)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!genuinely nonlinear ~
+\end_layout
+
+\end_inset
+
+」。 
+\end_layout
+
+\begin_layout Itemize
+若有
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{i}}{R_{i}}=0\qquad\forall(u_{1},\dots,u_{n})\in\Omega\subset\mathbb{R}_{u}^{n}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\bra{\grad\lambda_{i}}:=\begin{bmatrix}\pdv{\lambda_{i}}{u_{1}} & \cdots & \pdv{\lambda_{i}}{u_{n}}\end{bmatrix}
+\]
+
+\end_inset
+
+则称该特征场在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 内是「线性退化的 (linearly degenerate)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!linearly degenerate ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Riemann 不变量
+\end_layout
+
+\begin_layout Standard
+单个特征相容关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:char_compatibility"
+
+\end_inset
+
+ 式）通常不能独立求解，而是要与其他 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 个特征相容关系联立为 ODE 系统。若能够找到这些 ODE 的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个（独立的）首次积分，则可以将其转化为代数方程组，从而降低求解难度。这一方法是由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Riemann"
+target "https://en.wikipedia.org/wiki/Bernhard_Riemann"
+literal "false"
+
+\end_inset
+
+ 提出的，其实质是：为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个 ODE 寻找积分因子，使之成为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个（独立的）全微分。
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[广义 Riemann 不变量]
+\end_layout
+
+\end_inset
+
+若标量函数 
+\begin_inset Formula $\phi(U)$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+\ip{\grad{\phi(U)}}{R_{i}(U)}=0\qquad\forall\ket{U}\in\Omega\subset\mathbb{R}_{u}^{n}
+\]
+
+\end_inset
+
+则称它为方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 的一个「广义 
+\begin_inset Formula $i$
+\end_inset
+
+-Riemann 不变量 (
+\begin_inset Formula $i$
+\end_inset
+
+-generalized Riemann invariant, 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!generalized ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[狭义 Riemann 不变量]
+\end_layout
+
+\end_inset
+
+若标量函数 
+\begin_inset Formula $\psi(U)$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+\forall\ket{U}\in\Omega\subset\mathbb{R}_{u}^{n},\exists c\in\mathbb{R}:\bra{\grad{\psi(U)}}=c\bra{L_{i}(U)}
+\]
+
+\end_inset
+
+则称它为方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 的一个「狭义 
+\begin_inset Formula $k$
+\end_inset
+
+-Riemann 不变量 (
+\begin_inset Formula $i$
+\end_inset
+
+-specialized Riemann invariant, 
+\begin_inset Formula $i$
+\end_inset
+
+-SRI)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ invariant!specialized ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+每个 
+\begin_inset Formula $i$
+\end_inset
+
+-SRI 都是一个 
+\begin_inset Formula $k$
+\end_inset
+
+-GRI，其中 
+\begin_inset Formula $i\ne k$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $i$
+\end_inset
+
+-GRI 沿 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+ 的「迹线 (trajectory curve)」为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+在 
+\begin_inset Formula $\mathbb{R}_{u}^{n}$
+\end_inset
+
+ 中，
+\begin_inset Formula $\ip{\grad{\phi}}{R_{i}}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 沿 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+ 的方向导数。因此，在无穷小微段 
+\begin_inset Formula $\ket{\dd U}=\ket{R_{i}}\dd{\xi}$
+\end_inset
+
+ 上有
+\begin_inset Formula 
+\[
+\dd{\phi}=\ip{\grad{\phi}}{\dd{U}}=\ip{\grad{\phi}}{R_{i}}\dd{\xi}=0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 是 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+ 迹线的参数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+常微分方程组
+\begin_inset Formula 
+\[
+\ket{\dd U}\parallel\ket{R_{i}}\implies\frac{\ip{1}{\dd U}}{\ip{1}{R_{i}}}=\dots=\frac{\ip{n}{\dd U}}{\ip{n}{R_{i}}}
+\]
+
+\end_inset
+
+的任何一个首次积分，都是一个 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+独立的 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI 至多有 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 个。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $i$
+\end_inset
+
+-GRI 沿 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+ 迹线的常值性质相当于在 
+\begin_inset Formula $\mathbb{R}_{u}^{n}$
+\end_inset
+
+ 中定义了一个 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 维的「超曲面 (hypersurface)」：
+\begin_inset Formula 
+\[
+S:=\left\{ \ket{U}\in\mathbb{R}_{u}^{n}:\phi(U)=0\right\} 
+\]
+
+\end_inset
+
+若独立的 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI 有 
+\begin_inset Formula $m$
+\end_inset
+
+ 个，则相应的超曲面 
+\begin_inset Formula $S$
+\end_inset
+
+ 也有 
+\begin_inset Formula $m$
+\end_inset
+
+ 个。这些超曲面的交集是一个 
+\begin_inset Formula $(n-m)$
+\end_inset
+
+ 维「流形 (manifold)」，并且以 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+ 的迹线为子集，因此 
+\begin_inset Formula $n-m\ge1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 有重复的特征值 
+\begin_inset Formula $\lambda_{i}=\lambda_{i+1}=\cdots$
+\end_inset
+
+，则独立的 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI 可能不足 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 个。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+双变量双方程系统
+\end_layout
+
+\begin_layout Lemma
+双曲型 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ 系统有两个特征场，每个特征场各有一个独立的 GRI 与 SRI。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于双曲型 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ 系统，每个特征场分别只有一个 GRI。由左、右特征向量的正交性
+\begin_inset Formula 
+\[
+\ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0
+\]
+
+\end_inset
+
+及 GRI 的定义
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula 
+\[
+\ip{\grad{\phi}_{1}}{R_{1}}=\ip{\grad{\phi}_{2}}{R_{2}}=0
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+可以导出以下平行关系：
+\begin_inset Formula 
+\[
+\exists c_{1}\in\mathbb{R}:\bra{\grad{\phi}_{2}}=c_{1}\bra{L_{1}}\qquad,\exists c_{2}\in\mathbb{R}:\bra{\grad{\phi}_{1}}=c_{2}\bra{L_{2}}
+\]
+
+\end_inset
+
+这正是 SRI 的定义所需要的形式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+双曲型 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ 系统的 
+\begin_inset Formula $i$
+\end_inset
+
+-SRI 沿任何一条 
+\begin_inset Formula $i$
+\end_inset
+
+-特征线为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 SRI 的定义代入特征相容关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:char_compatibility"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）即得
+\begin_inset Formula 
+\[
+\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=\mel**{\grad{\psi}_{i}}{\left(\dv{t}\right)_{i}}{u}=\left(\dv{t}\right)_{i}\psi_{i}=0\qquad i=1,2
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若双曲型 
+\begin_inset Formula $2\times2$
+\end_inset
+
+ 系统（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）的解 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 是一阶可微的，则 
+\begin_inset Formula $\ket{U(x,t)}$
+\end_inset
+
+ 的值可以由以下代数方程解出：
+\begin_inset Formula 
+\[
+\psi_{1}\big(U(x,t)\big)=\psi_{1}\big(U(x_{0},t_{0})\big)\qquad\psi_{2}\big(U(x,t)\big)=\psi_{2}\big(U(x_{0},t_{0})\big)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\psi_{i}$
+\end_inset
+
+ 是该系统的 
+\begin_inset Formula $i$
+\end_inset
+
+-SRI，并且 
+\begin_inset Formula $(x_{0},t_{0})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 都在同一条 
+\begin_inset Formula $i$
+\end_inset
+
+-特征线上。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维等熵流动]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\partial_{t}\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}+\partial_{x}\begin{bmatrix}\rho u\\
+\rho uu+p
+\end{bmatrix}=\begin{bmatrix}0\\
+0
+\end{bmatrix}\qquad p=C\rho^{\gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+将其改写为拟线性一阶方程组（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）形式：
+\begin_inset Formula 
+\[
+\ket{U}=\begin{bmatrix}\rho\\
+\rho u
+\end{bmatrix}\qquad\Matrix{A(U)}=\begin{bmatrix}0 & 1\\
+a^{2}-u^{2} & 2u
+\end{bmatrix}\qquad a=\sqrt{C\gamma\rho^{\gamma-1}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+ 的特征值、特征向量分别为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\lambda_{1}\\
+\lambda_{2}
+\end{bmatrix}=\begin{bmatrix}u-a\\
+u+a
+\end{bmatrix}\qquad\begin{bmatrix}\ket{R_{1}} & \ket{R_{2}}\end{bmatrix}=\begin{bmatrix}1 & 1\\
+u-a & u+a
+\end{bmatrix}
+\]
+
+\end_inset
+
+由常微分方程
+\begin_inset Formula 
+\[
+\ket{\dd U}\parallel\ket{R_{i}}\implies\frac{\dd{\rho}}{1}=\frac{\dd(\rho u)}{u\mp a}
+\]
+
+\end_inset
+
+可得相应的 GRI：
+\begin_inset Formula 
+\[
+\phi_{1}=u+\int\frac{a}{\rho}\dd{\rho}=u+\frac{2a}{\gamma-1}\qquad\phi_{2}=u-\int\frac{a}{\rho}\dd{\rho}=u-\frac{2a}{\gamma-1}
+\]
+
+\end_inset
+
+它们分别为另一个特征场的 SRI：
+\begin_inset Formula 
+\[
+\psi_{1}=\phi_{2}=u-\frac{2a}{\gamma-1}\qquad\psi_{2}=\phi_{1}=u+\frac{2a}{\gamma-1}
+\]
+
+\end_inset
+
+沿特征线回溯到初值，就得到一对代数方程：
+\begin_inset Formula 
+\[
+u-\frac{2a}{\gamma-1}=\left(u_{0}-\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{1}}\qquad u+\frac{2a}{\gamma-1}=\left(u_{0}+\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{2}}
+\]
+
+\end_inset
+
+由此可以解得 
+\begin_inset Formula $u$
+\end_inset
+
+ 与 
+\begin_inset Formula $a$
+\end_inset
+
+（从而解得 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 与 
+\begin_inset Formula $p$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+变量替换的影响
+\end_layout
+
+\begin_layout Standard
+若用一组新的变量 
+\begin_inset Formula $(u'_{1},\dots,u'_{n})$
+\end_inset
+
+ 替换双曲型方程组 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 中的原始变量 
+\begin_inset Formula $(u_{1},\dots,u_{n})$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{\alpha}u_{1}\\
+\vdots\\
+\partial_{\alpha}u_{n}
+\end{bmatrix}=\underbrace{\begin{bmatrix}\pdv*{u_{1}}{u'_{1}} & \cdots & \pdv*{u_{1}}{u'_{n}}\\
+\vdots & \ddots & \vdots\\
+\pdv*{u_{n}}{u'_{1}} & \cdots & \pdv*{u_{n}}{u'_{n}}
+\end{bmatrix}}_{\Matrix{J_{U\to U'}}}\begin{bmatrix}\partial_{\alpha}u'_{1}\\
+\vdots\\
+\partial_{\alpha}u'_{n}
+\end{bmatrix}\qquad\partial_{\alpha}\ket{U}=\Matrix{J_{U\to U'}}\partial_{\alpha}\ket{U'}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\partial_{\alpha}=\partial_{t}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\partial_{x}$
+\end_inset
+
+。假定该替换是非退化的（即 
+\begin_inset Formula $\det(\Matrix{J_{U\to U'}})\ne0$
+\end_inset
+
+），则关于 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 可以改写为关于 
+\begin_inset Formula $\ket{U'}$
+\end_inset
+
+ 的方程组：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\label{eq:multi_wave_changing_variables}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Matrix{A'(U')}:=\Matrix{J_{U\to U'}^{-1}}\Matrix{A\big(U(U')\big)}\Matrix{J_{U\to U'}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:变量替换不改变特征值"
+
+\end_inset
+
+变量替换不改变特征值：
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{A'(U')}$
+\end_inset
+
+ 拥有相同的特征值，即
+\begin_inset Formula 
+\[
+\det(\Matrix{A(U)}-\lambda(U)\Matrix{1})=0\implies\det(\Matrix{A'(U')}-\lambda\big(U(U')\big)\Matrix{1})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:特征向量变换法则"
+
+\end_inset
+
+若 
+\begin_inset Formula $\bra{L_{i}(U)},\ket{R_{i}(U)}$
+\end_inset
+
+ 分别是 
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+ 的从属于特征值 
+\begin_inset Formula $\lambda_{i}(U)$
+\end_inset
+
+ 的左、右特征向量，即
+\begin_inset Formula 
+\[
+\bra{L_{i}(U)}\Matrix{A(U)}=\lambda_{i}(U)\bra{L_{i}(U)}\qquad\Matrix{A(U)}\ket{R_{i}(U)}=\ket{R_{i}(U)}\lambda_{i}(U)
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\bra{L'_{i}(U')}:=\bra{L_{i}(U)}\Matrix{J_{U\to U'}}\qquad\ket{R'_{i}(U')}:=\Matrix{J_{U\to U'}^{-1}}\ket{R_{i}(U)}
+\]
+
+\end_inset
+
+分别是 
+\begin_inset Formula $\Matrix{A'(U')}$
+\end_inset
+
+ 的从属于特征值 
+\begin_inset Formula $\lambda_{i}\big(U(U')\big)$
+\end_inset
+
+ 的左、右特征向量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+变量替换不改变双曲性：若关于 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 式）是双曲的，则关于 
+\begin_inset Formula $\ket{U'}$
+\end_inset
+
+ 的方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_changing_variables"
+
+\end_inset
+
+ 式）也是双曲的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:变量替换不改变Riemann不变量"
+
+\end_inset
+
+变量替换不改变广义 Riemann 不变量：若 
+\begin_inset Formula $\phi(U)$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_quasilinear_system"
+
+\end_inset
+
+ 式）的 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI，则 
+\begin_inset Formula $\phi'(U'):=\phi\big(U(U')\big)$
+\end_inset
+
+ 也是关于 
+\begin_inset Formula $\ket{U'}$
+\end_inset
+
+ 的方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:multi_wave_changing_variables"
+
+\end_inset
+
+ 式）的 
+\begin_inset Formula $i$
+\end_inset
+
+-GRI。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由引理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:特征向量变换法则"
+
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\ket{R_{i}(U)}=\Matrix{J_{U\to U'}}\ket{R'_{i}(U')}=\begin{bmatrix}\pdv*{u_{1}}{u'_{1}} & \cdots & \pdv*{u_{1}}{u'_{n}}\\
+\vdots & \ddots & \vdots\\
+\pdv*{u_{n}}{u'_{1}} & \cdots & \pdv*{u_{n}}{u'_{n}}
+\end{bmatrix}\ket{R'_{i}(U')}
+\]
+
+\end_inset
+
+将其代入 GRI 的定义，并利用链式求导法则，即得
+\begin_inset Formula 
+\[
+0=\ip{\grad_{U}\phi}{R_{i}(U)}=\overbrace{\underbrace{\begin{bmatrix}\pdv{\phi}{u_{1}} & \cdots & \pdv{\phi}{u_{n}}\end{bmatrix}}_{\bra{\grad_{U}\phi}}\Matrix{J_{U\to U'}}}^{\bra{\grad_{U'}\phi'}}\ket{R'_{i}(U')}=\ip{\grad_{U'}\phi'}{R'_{i}(U)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

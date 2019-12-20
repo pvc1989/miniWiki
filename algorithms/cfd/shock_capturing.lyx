@@ -4,22 +4,9 @@
 \begin_header
 \save_transient_properties false
 \origin unavailable
-\textclass ctex-report
+\textclass book
 \begin_preamble
-\usepackage[g]{esvect}
-\usepackage{physics}
-\usepackage{siunitx}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
-\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
-\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
-\newcommand{\Conj}[1]{\overline{#1}}
-\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
-\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
-\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
-\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
-\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
-\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \master README.lyx
@@ -33,12 +20,12 @@ theorems-chap
 \language_package default
 \inputencoding utf8-plain
 \fontencoding global
-\font_roman "palatino" "Palatino Linotype"
+\font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
-\font_math "eulervm" "auto"
+\font_math "auto" "auto"
 \font_default_family default
-\use_non_tex_fonts true
+\use_non_tex_fonts false
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -90,7 +77,7 @@ theorems-chap
 \color #008000
 \end_index
 \leftmargin 0.5cm
-\topmargin 0.5cm
+\topmargin 1.5cm
 \rightmargin 0.5cm
 \bottommargin 0.5cm
 \secnumdepth 2
@@ -103,7 +90,7 @@ theorems-chap
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
-\paperpagestyle plain
+\paperpagestyle fancy
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -114,46 +101,90 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-激波捕捉
+激波捕捉 (Shock Capturing)
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:ShockCapturing"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-TVD（总变差衰减）
+数值振荡
+\end_layout
+
+\begin_layout Standard
+线性平流方程
+\begin_inset Formula 
+\begin{equation}
+\pdv{U}{t}+A\pdv{U}{x}=0\qc A=\text{const}\label{eq:激波捕捉：线性平流}
+\end{equation}
+
+\end_inset
+
+或更一般的标量守恒律
+\begin_inset Formula 
+\begin{equation}
+\pdv{U}{t}+\pdv{F(U)}{x}=0\qc A(U):=\pdv{F}{U}\label{eq:激波捕捉：标量守恒律}
+\end{equation}
+
+\end_inset
+
+的弱解可能含有强间断，物理上称为激波。
 \end_layout
 
 \begin_layout Subsection
-Monotonicity
+Gibbs 现象
 \end_layout
 
-\begin_layout Lemma
-If two initial data 
-\begin_inset Formula $u_{0}(x),v_{0}(x)$
+\begin_layout Subsection
+数值色散
+\end_layout
+
+\begin_layout Subsection
+单调性
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[物理单调性]
+\end_layout
+
 \end_inset
 
- for
+若标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+
+\end_inset
+
+ 的两组初值 
+\begin_inset Formula $U(x,t=0),V(x,t=0)$
+\end_inset
+
+ 满足
 \begin_inset Formula 
 \[
-\pdv{u}{t}+\pdv{f(u)}{x}=0
+U(x,t=0)\ge V(x,t=0)\qc\forall x
 \]
 
 \end_inset
 
-satisfy
-\begin_inset Formula 
-\[
-u_{0}(x)\ge v_{0}(x)\qc\forall x
-\]
-
+则相应初值问题的解 
+\begin_inset Formula $U(x,t),V(x,t)$
 \end_inset
 
-then their corresponding solution 
-\begin_inset Formula $u(t,x),v(t,x)$
-\end_inset
-
- will satisfy
+ 满足
 \begin_inset Formula 
 \[
-u(t,x)\ge v(t,x)\qc\forall x,t>t_{0}
+U(x,t)\ge V(x,t)\qc\forall t>0,\forall x
 \]
 
 \end_inset
@@ -174,7 +205,7 @@ status open
 
 \begin_layout Plain Layout
 
-[General Monotone Scheme]
+[格式单调性]
 \end_layout
 
 \end_inset
@@ -195,22 +226,38 @@ begin{subequations}
 
 \begin_inset CommandInset label
 LatexCommand label
-name "eq:GeneralMonotoneScheme"
+name "eq:激波捕捉：单调格式"
 
 \end_inset
 
-A general explicit scheme
+若格式
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=H\left(u_{i+K}^{n}\right)=H\left(u_{i+k_{\min}}^{n},\dots,u_{i+k_{\max}}^{n}\right)
+U_{i}^{n+1}=H\qty(\dots,U_{i-1}^{n},U_{i}^{n},U_{i+1}^{n},\dots)
 \end{equation}
 
 \end_inset
 
-is said to be 
-\emph on
-monotone
-\emph default
+的右端项 
+\begin_inset Formula $H$
+\end_inset
+
+ 对其每一个参数的偏导数都是非负的，即
+\begin_inset Formula 
+\begin{equation}
+\pdv{H}{U_{i}^{n}}\ge0\qc\forall U_{i}^{n}\qc\forall i
+\end{equation}
+
+\end_inset
+
+则称该格式具有 
+\bar under
+单调性 (monotonicity)
+\bar default
+，或称之为 
+\bar under
+单调 (monetone) 格式
+\bar default
 
 \begin_inset Index idx
 status open
@@ -221,15 +268,7 @@ scheme!monotone ~
 
 \end_inset
 
-, if
-\begin_inset Formula 
-\begin{equation}
-\pdv{H}{u_{i+k}^{n}}\ge0\qc\forall k\in K
-\end{equation}
-
-\end_inset
-
-
+。
 \begin_inset ERT
 status open
 
@@ -242,11 +281,7 @@ end{subequations}
 
 \end_inset
 
-Here 
-\begin_inset Formula $K=\left(k_{\min},\dots,k_{\max}\right)$
-\end_inset
 
- is a set of integers representing the stencil of the scheme.
 \end_layout
 
 \begin_layout Standard
@@ -257,112 +292,124 @@ Here
 \end_layout
 
 \begin_layout Lemma
-If a monotone scheme is applied to two data sets 
-\begin_inset Formula $\left\{ u_{i}^{n}\right\} ,\left\{ v_{i}^{n}\right\} $
-\end_inset
-
- satisfying 
-\begin_inset Formula 
-\[
-u_{i}^{n}\ge v_{i}^{n}\qc\forall i
-\]
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:激波捕捉：单调格式"
 
 \end_inset
 
-then
-\begin_inset Formula 
-\[
-u_{i}^{n+1}\ge v_{i}^{n+1}\qc\forall i
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-A monotone scheme does not create new extrema, i.e.
-\begin_inset Formula 
-\[
-\left[\min_{i}u_{i}^{n+1},\max_{i}u_{i}^{n+1}\right]\subseteq\left[\min_{i}u_{i}^{n},\max_{i}u_{i}^{n}\right]\qc\forall n
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Choose a uniform data set
-\begin_inset Formula 
-\[
-v_{i}^{n}=\min_{k}u_{k}^{n}\qc\forall i
-\]
-
-\end_inset
-
-The definition of minimum gives
-\begin_inset Formula 
-\[
-v_{i}^{n}=\min_{k}u_{k}^{n}\le u_{i}^{n}\qc\forall i
-\]
-
-\end_inset
-
-The previous lemma gaurantees
-\begin_inset Formula 
-\[
-v_{i}^{n+1}\le u_{i}^{n+1}\qc\forall i
-\]
-
-\end_inset
-
-The LHS is actually a constant, which comes from the consistency condition
- of Scheme 
+若标量守恒律 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:GeneralMonotoneScheme"
+reference "eq:激波捕捉：标量守恒律"
 
 \end_inset
 
-:
+ 的两组离散初值 
+\begin_inset Formula $\left\{ U_{i}^{0}\right\} ,\left\{ V_{i}^{0}\right\} $
+\end_inset
+
+ 满足 
 \begin_inset Formula 
 \[
-v_{i}^{n+1}=H\left(\min_{k}u_{k}^{n},\dots,\min_{k}u_{k}^{n}\right)=\min_{k}u_{k}^{n}\qc\forall i
+U_{i}^{0}\ge V_{i}^{0}\qc\forall i
 \]
 
 \end_inset
 
-So
+则由单调格式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：单调格式"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 得到的数值解 
+\begin_inset Formula $\left\{ U_{i}^{n}\right\} ,\left\{ V_{i}^{n}\right\} $
+\end_inset
+
+ 满足
 \begin_inset Formula 
 \[
-\min_{k}u_{k}^{n}=v_{i}^{n+1}\le\min_{i}u_{i}^{n+1}
+U_{i}^{n}\ge V_{i}^{n}\qc\forall n,\forall i
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+用单调格式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：单调格式"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 求解标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+
+\end_inset
+
+ 不会产生新的 
+\bar under
+极值 (extrema)
+\bar default
+，即：
+\begin_inset Formula 
+\[
+\left[\min_{i}\left\{ U_{i}^{n+1}\right\} ,\max_{i}\left\{ U_{i}^{n+1}\right\} \right]\subseteq\left[\min_{i}\left\{ U_{i}^{n}\right\} ,\max_{i}\left\{ U_{i}^{n}\right\} \right]\qc\forall n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Proof
-The same procedure can be applied to the maxima, which gives
+不失一般性，只证第 
+\begin_inset Formula $n$
+\end_inset
+
+ 步的 
+\bar under
+极小值不减
+\bar default
+。将初值 
+\begin_inset Formula $\left\{ U_{k}^{n}\right\} $
+\end_inset
+
+ 的最小值 
+\begin_inset Formula $m:=\min_{k}\left\{ U_{k}^{n}\right\} $
+\end_inset
+
+ 取作第二组初值：
 \begin_inset Formula 
 \[
-\max_{i}u_{i}^{n+1}\le\max_{k}u_{k}^{n}
+V_{i}^{n}:=m\le U_{i}^{n}\qc\forall i
 \]
 
 \end_inset
@@ -370,17 +417,24 @@ The same procedure can be applied to the maxima, which gives
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_deeper
+\begin_layout Itemize
+显然：
+\begin_inset Formula $\left\{ V_{i}^{n}\right\} $
 \end_inset
 
+ 是常量。由格式的 
+\bar under
+相容性 (consistency)
+\bar default
+ 可知：
+\begin_inset Formula $\left\{ V_{i}^{n+1}\right\} $
+\end_inset
 
-\end_layout
-
-\begin_layout Corollary
+ 亦是常量，即
 \begin_inset Formula 
 \[
-\left[\min_{i}u_{i}^{n},\max_{i}u_{i}^{n}\right]\subseteq\cdots\subseteq\left[\min_{i}u_{i}^{0},\max_{i}u_{i}^{0}\right]
+V_{i}^{n+1}=H\qty(m,\dots,m)\equiv m\qc\forall i
 \]
 
 \end_inset
@@ -388,42 +442,42 @@ The same procedure can be applied to the maxima, which gives
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Monotonicity Condition for Numerical Flux]
-\end_layout
+\begin_layout Itemize
+由引理 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "lem:激波捕捉：单调格式"
 
 \end_inset
 
-If a 3-point conservative scheme for the scalar conservation law
+ 得
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =u_{i}^{n}+\frac{\Delta t}{\Delta x}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right)\\
- & =u_{i}^{n}+\frac{\Delta t}{\Delta x}\left(\hat{f}\left(u_{i-1}^{n},u_{i}^{n}\right)-\hat{f}\left(u_{i}^{n},u_{i+1}^{n}\right)\right)
-\end{aligned}
+m\equiv V_{i}^{n+1}\le U_{i}^{n+1}\qc\forall i
 \]
 
 \end_inset
 
-is monotone, then the numerical flux 
-\begin_inset Formula $\hat{f}$
+因此 
+\begin_inset Formula $m$
 \end_inset
 
- is a non–decreasing function of its 1st argument and a non–increasing function
- of its 2nd argument.
+ 也是 
+\begin_inset Formula $\left\{ U_{k}^{n+1}\right\} $
+\end_inset
+
+ 的下界：
+\begin_inset Formula 
+\[
+\min_{k}\left\{ U_{k}^{n}\right\} \equiv m\le\min_{k}\left\{ U_{k}^{n+1}\right\} 
+\]
+
+\end_inset
+
+
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -431,18 +485,20 @@ is monotone, then the numerical flux
 
 \end_layout
 
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Monotonicity Condition for Linear Scheme]
-\end_layout
+\begin_layout Example
+用于求解标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
 
 \end_inset
 
+ 的常用单调格式包括：
+\end_layout
 
+\begin_deeper
+\begin_layout Description
+三点守恒型格式 
 \begin_inset ERT
 status open
 
@@ -458,25 +514,22 @@ begin{subequations}
 
 \begin_inset CommandInset label
 LatexCommand label
-name "eq:LinearMonotoneScheme"
+name "eq:激波捕捉：单调格式：三点"
 
 \end_inset
 
-An explicit linear scheme
-\end_layout
 
-\begin_layout Theorem
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=\sum_{k\in K}b_{k}u_{i+k}^{n}
+U_{i}^{n+1}=U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{\nicefrac{1}{2}}\qty(U_{i-1}^{n},U_{i}^{n})-F_{\nicefrac{1}{2}}\qty(U_{i}^{n},U_{i+1}^{n})\right)
 \end{equation}
 
 \end_inset
 
-for the linear advection equation is monotone, iff
+是单调的，当且仅当
 \begin_inset Formula 
 \begin{equation}
-b_{k}\ge0\qc\forall k\in K
+\pdv{F_{\nicefrac{1}{2}}(U_{L},U_{R})}{U_{L}}\ge0\qand\pdv{F_{\nicefrac{1}{2}}(U_{L},U_{R})}{U_{R}}\le0\qc\forall U_{L},\forall U_{R}
 \end{equation}
 
 \end_inset
@@ -497,48 +550,118 @@ end{subequations}
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
+\begin_layout Description
+线性格式 
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[Monotonicity Condition for Semi-Discretized Linear Scheme]
+
+\backslash
+begin{subequations}
 \end_layout
 
 \end_inset
 
-An semi-discretized explicit linear scheme
-\end_layout
 
-\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:激波捕捉：单调格式：线性"
+
+\end_inset
+
+
 \begin_inset Formula 
-\[
-\dv{u_{i}}{t}=\sum_{k\in K}\beta_{k}u_{i+k}^{n}=\sum_{k\ne0}\beta_{k}\left(u_{i+k}^{n}-u_{i}^{n}\right)
-\]
+\begin{equation}
+U_{i}^{n+1}=\sum_{s}b_{s}U_{i+s}^{n}\qc\forall i
+\end{equation}
 
 \end_inset
 
-is monotone, if
+是单调的，当且仅当
 \begin_inset Formula 
-\[
-\beta_{k}\ge0\qc\forall k\ne0
-\]
+\begin{equation}
+b_{s}\ge0\qc\forall s
+\end{equation}
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsection
-Godunov's Theorem
+\begin_layout Description
+线性半离散格式 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:激波捕捉：单调格式：半离散"
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\dv{U_{i}}{t}=\sum_{s}\beta_{s}U_{i+s}=\sum_{s\ne0}\beta_{s}\cdot\left(U_{i+s}-U_{i}\right)
+\end{equation}
+
+\end_inset
+
+是单调的，当且仅当
+\begin_inset Formula 
+\begin{equation}
+\beta_{s}\ge0\qc\forall s\ne0
+\end{equation}
+
+\end_inset
+
+且时间格式也是单调的。
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Description
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem
@@ -552,97 +675,24 @@ status open
 
 \end_inset
 
-Linear monotone schemes for the linear advection equation are at most 1st
- order accurate.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Theorem 
+用于求解线性平流方程 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "thm:pthOrderAccuracyCondition"
+reference "eq:激波捕捉：线性平流"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- says for a 2nd (or higher) order accurate scheme, there must be
-\begin_inset Formula 
-\[
-\sum_{k\in K}b_{k}k^{0}=(-\sigma)^{0}\qc\sum_{k\in K}b_{k}k^{1}=(-\sigma)^{1}\qc\sum_{k\in K}b_{k}k^{2}=(-\sigma)^{2}
-\]
-
-\end_inset
-
-Substitute 
-\begin_inset Formula $k^{2}\equiv(k+\sigma)^{2}-2k\sigma-\sigma^{2}$
-\end_inset
-
- into the last identity and use the first two, we have a identity
-\begin_inset Formula 
-\[
-\sigma^{2}=\sum_{k\in K}b_{k}\left(k+\sigma\right)^{2}-2\sigma\cdot\left(-\sigma\right)-\sigma^{2}\cdot1
-\]
-
-\end_inset
-
-which leads to
-\begin_inset Formula 
-\[
-\sum_{k\in K}b_{k}\left(k+\sigma\right)^{2}=0
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Monotonicity condition 
+ 的单调线性格式 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LinearMonotoneScheme"
+reference "eq:激波捕捉：单调格式：线性"
 
 \end_inset
 
- then requires 
-\begin_inset Formula $b_{k}\left(k+\sigma\right)=0$
-\end_inset
-
- for each 
-\begin_inset Formula $k$
-\end_inset
-
-: (i) If 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is not an integer, then monotonicity requires 
-\begin_inset Formula $b_{k}=0$
-\end_inset
-
- for each 
-\begin_inset Formula $k$
-\end_inset
-
-; (ii) If 
-\begin_inset Formula $\sigma$
-\end_inset
-
- is an integer, only 
-\begin_inset Formula $b_{-\sigma}$
-\end_inset
-
- could be non-zero.
- Either leads to a trivial scheme.
+ 至多具有一阶精度。
 \end_layout
 
 \begin_layout Standard
@@ -652,8 +702,116 @@ reference "eq:LinearMonotoneScheme"
 
 \end_layout
 
-\begin_layout Corollary
-Higher order monotone schemes must be nonlinear.
+\begin_layout Proof
+定理 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：相容性：时空 p 阶"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 指出：对于精度不低于二阶的线性格式，有如下等式
+\begin_inset Formula 
+\[
+\sigma:=\frac{ch_{t}}{h_{x}}\qc\sum_{k}b_{k}k^{0}=(-\sigma)^{0}\qc\sum_{k}b_{k}k^{1}=(-\sigma)^{1}\qc\sum_{k}b_{k}k^{2}=(-\sigma)^{2}
+\]
+
+\end_inset
+
+将 
+\begin_inset Formula $k^{2}\equiv(k+\sigma)^{2}-2k\sigma-\sigma^{2}$
+\end_inset
+
+ 代入最后一个等式，并利用前两个等式消去 
+\begin_inset Formula $k$
+\end_inset
+
+ 的低次项，可得
+\begin_inset Formula 
+\[
+\sigma^{2}=\sum_{k}b_{k}\cdot(k+\sigma)^{2}-2\sigma\cdot(-\sigma)-\sigma^{2}\cdot1\implies\sum_{k}b_{k}\cdot(k+\sigma)^{2}=0
+\]
+
+\end_inset
+
+由单调性条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：单调格式：线性"
+
+\end_inset
+
+ 可知
+\begin_inset Formula 
+\[
+b_{k}\ge0,\forall k\implies(k+\sigma)^{2}b_{k}=0,\forall k
+\]
+
+\end_inset
+
+一般而言 
+\begin_inset Formula $\sigma\notin\mathbb{Z}$
+\end_inset
+
+，因此 
+\begin_inset Formula $\forall k\colon b_{k}=0$
+\end_inset
+
+，这种退化的格式没有实际意义。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[保单调格式]
+\end_layout
+
+\end_inset
+
+如果数值格式
+\begin_inset Formula 
+\[
+U_{i}^{n+1}=H\qty(\dots,U_{i-1}^{n},U_{i}^{n},U_{i+1}^{n},\dots)
+\]
+
+\end_inset
+
+能够将 
+\begin_inset Formula $\left\{ U_{i}^{n}\right\} $
+\end_inset
+
+ 的单调性保持到 
+\begin_inset Formula $\left\{ U_{i}^{n+1}\right\} $
+\end_inset
+
+，则称其为 
+\bar under
+保单调 (Monotonicity Preserving, MP) 格式
+\bar default
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scheme!monotonicity preserving ~
+\end_layout
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
@@ -664,18 +822,32 @@ Higher order monotone schemes must be nonlinear.
 \end_layout
 
 \begin_layout Subsection
-TV and TVD
+TVD
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "TV"
-description "Total Variation"
-literal "false"
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[TV]
+\end_layout
 
 \end_inset
 
+二元函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 关于自变量 
+\begin_inset Formula $x$
+\end_inset
+
+ 的 
+\bar under
+总变差 (Total Variation, TV)
+\bar default
 
 \begin_inset Index idx
 status open
@@ -686,73 +858,14 @@ TV!Total Variation
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Definition
-The total variation of a univariate function 
-\begin_inset Formula $u(x)$
-\end_inset
-
- is defined as
-\begin_inset Formula 
-\[
-TV(u):=\lim_{\delta\to0}\sup\frac{1}{\delta}\int_{-\infty}^{\infty}\abs{u(x+\delta)-u(x)}\dd{x}
-\]
-
-\end_inset
-
-If 
-\begin_inset Formula $u(x)\in C^{1}(-\infty,\infty)$
-\end_inset
-
-, then it is equivalent to
-\begin_inset Formula 
-\[
-TV(u):=\int_{-\infty}^{\infty}\abs{u'(x)}\dd{x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-The total variation of a bivariate function 
-\begin_inset Formula $u(t,x)$
-\end_inset
-
- at time 
+ 是一个以 
 \begin_inset Formula $t$
 \end_inset
 
- is defined as
+ 为自变量的一元函数：
 \begin_inset Formula 
 \[
-TV(u(t)):=\int_{-\infty}^{\infty}\abs{\pdv{u}{x}}\dd{x}
-\]
-
-\end_inset
-
-If 
-\begin_inset Formula $u(t,x)$
-\end_inset
-
- is a mesh function, then total variation at time 
-\begin_inset Formula $t^{n}$
-\end_inset
-
- is defined as
-\begin_inset Formula 
-\[
-TV(u^{n}):=\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}
+\eval{TV(U)}_{t}:=\lim_{\delta\to0}\sup\frac{1}{\delta}\int_{-\infty}^{\infty}\abs{U(x+\delta,t)-U(x,t)}\dd{x}
 \]
 
 \end_inset
@@ -760,26 +873,20 @@ TV(u^{n}):=\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_deeper
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\partial_{x}U$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Theorem
-The TV of exact solution of a IVP for the scalar conservation law
-\begin_inset Formula 
-\[
-\pdv{u}{t}+\pdv{f(u)}{x}=0
-\]
-
+ 连续，或者将 
+\begin_inset Formula $\partial_{x}U$
 \end_inset
 
-is a non-increasing function of time, i.e.
+ 导数理解为广义函数意义下的导数，则上述定义等价于
 \begin_inset Formula 
 \[
-TV(u(t_{2}))\le TV(u(t_{1}))\qc\forall t_{2}\ge t_{1}
+\eval{TV(U)}_{t}:=\int_{-\infty}^{\infty}\abs{\pdv{U(x,t)}{x}}\dd{x}
 \]
 
 \end_inset
@@ -787,6 +894,35 @@ TV(u(t_{2}))\le TV(u(t_{1}))\qc\forall t_{2}\ge t_{1}
 
 \end_layout
 
+\begin_layout Itemize
+如果 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 是 
+\bar under
+网格 (mesh) 函数
+\bar default
+，即 
+\begin_inset Formula 
+\[
+U(x,t)=U_{i}^{n}\qc\forall x\in(x_{i-\nicefrac{1}{2}},x_{i+\nicefrac{1}{2}}),\forall t\in[t_{n},t_{n+1})
+\]
+
+\end_inset
+
+则上述定义等价于
+\begin_inset Formula 
+\[
+TV\qty(U^{n}):=\eval{TV(U)}_{t_{n}}:=\sum_{i}\abs{U_{i+1}^{n}-U_{i}^{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -800,30 +936,56 @@ status open
 
 \begin_layout Plain Layout
 
-[Monotonicity Preserving Scheme]
+[TVD]
 \end_layout
 
 \end_inset
 
-A scheme is said to be monotonicity preserving
+若二元函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 关于自变量 
+\begin_inset Formula $x$
+\end_inset
+
+ 的总变差关于自变量 
+\begin_inset Formula $t$
+\end_inset
+
+ 是（弱）单调递减的：
+\begin_inset Formula 
+\[
+\eval{TV(U)}_{t_{2}}\le\eval{TV(U)}_{t_{1}}\impliedby t_{2}\ge t_{1}
+\]
+
+\end_inset
+
+则称之为 
+\bar under
+总变差递减 (TV Diminishing, TVD) 函数
+\bar default
+
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-scheme!monotonicity preserving ~
+TV!TVD!TV Diminishing
 \end_layout
 
 \end_inset
 
-, if the monotonicity of data 
-\begin_inset Formula $\left\{ u_{i}^{n}\right\} _{i=\infty}^{\infty}$
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+TV!TVD!TVD function
+\end_layout
+
 \end_inset
 
- is preserved 
-\begin_inset Formula $\forall n$
-\end_inset
-
-.
+。
 \end_layout
 
 \begin_layout Standard
@@ -839,7 +1001,7 @@ status open
 
 \begin_layout Plain Layout
 
-[TVD Scheme]
+[TVD 格式]
 \end_layout
 
 \end_inset
@@ -860,30 +1022,33 @@ begin{subequations}
 
 \begin_inset CommandInset label
 LatexCommand label
-name "eq:GeneralTvdScheme"
+name "eq:激波捕捉：TVD：格式"
 
 \end_inset
 
-A general explicit scheme
+若格式
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=H\left(u_{i+K}^{n}\right)=H\left(u_{i+k_{\min}}^{n},\dots,u_{i+k_{\max}}^{n}\right)
+U_{i}^{n+1}=H\qty(\dots,U_{i-1}^{n},U_{i}^{n},U_{i+1}^{n},\dots)
 \end{equation}
 
 \end_inset
 
-is said to be TV diminishing
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "TVD"
-description "Total Variation Diminishing"
-literal "false"
+满足
+\begin_inset Formula 
+\begin{equation}
+TV\qty(U^{n+1})\le TV\qty(U^{n})\qc\forall n
+\end{equation}
 
 \end_inset
 
+则称之为 
+\bar under
+总变差递减 (TV Diminishing, TVD) 格式
+\bar default
 
 \begin_inset Index idx
-status collapsed
+status open
 
 \begin_layout Plain Layout
 TV!TVD!TV Diminishing
@@ -901,20 +1066,231 @@ scheme!TVD ~
 
 \end_inset
 
-
-\begin_inset Index idx
+。
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-TV!TVD!~ scheme
+
+
+\backslash
+end{subequations}
 \end_layout
 
 \end_inset
 
-, if
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+用于求解标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+
+\end_inset
+
+ 的格式有如下包含关系
+\begin_inset Formula 
+\[
+\left\{ \text{Monotone}\right\} \subset\left\{ \text{TVD}\right\} \subset\left\{ \text{MP}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+
+\end_inset
+
+ 的物理解是 TVD 函数，由 TVD 格式得到的数值解正确地 
+\bar under
+模仿 (mimic)
+\bar default
+ 了这一性质，因此不会引入数值振荡。正因如此，TVD 格式（曾经）是求解守恒律（系统）的主要途径；与此同时，以 WENO 为代表的 
+\bar under
+总变差有界 (TV Bounded, TVB) 格式
+\bar default
+ 也得到了发展，它们可以看做是 TVD 格式的弱化和推广。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+间断识别器
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:激波捕捉：间断识别器"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于常见问题，解的间断面通常只穿过一小片单元，因而只有少量 
+\bar under
+坏单元 (troubled cell)
+\bar default
+ 上的数值解需要被 
+\bar under
+限制 (limiting)
+\bar default
+。用于识别坏单元的函数称为 
+\bar under
+光滑度指示器 (smoothness indicator)
+\bar default
+ 或 
+\bar under
+间断识别器 (discontinuity identifier)
+\bar default
+。
+\end_layout
+
+\begin_layout Subsection
+minmod
+\end_layout
+
+\begin_layout Standard
+这种指示器的计算效率很高，但容易将（光滑的）极值点所在单元误报为坏单元。
+\end_layout
+
+\begin_layout Subsection
+TVB
+\end_layout
+
+\begin_layout Standard
+这种指示器的计算效率与 minmod 接近，但识别效果依赖于可调参数。
+\end_layout
+
+\begin_layout Subsection
+KXRCF
+\end_layout
+
+\begin_layout Standard
+这种指示器降低了误报率，但要付出更多的计算量，好在这种计算量的增长只是常数意义下的。
+\end_layout
+
+\begin_layout Section
+通量限制器
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:激波捕捉：通量限制器"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Harten 引理
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Harten (1983)"
+target "https://doi.org/10.1016/0021-9991(83)90136-5"
+literal "false"
+
+\end_inset
+
+ 提出了一种构造 TVD 格式的方案，其核心是以下引理。
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Harten]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:激波捕捉:Harten"
+
+\end_inset
+
+用于求解标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的五点格式
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:激波捕捉:HartenScheme"
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
-TV(u^{n+1})\le\qc TV(u^{n})\qc\forall n
+U_{i}^{n+1}=U_{i}^{n}-\left(U_{i}^{n}-U_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}+\left(U_{i+1}^{n}-U_{i}^{n}\right)C_{i+\nicefrac{1}{2}}^{+}\qc\forall i
+\end{equation}
+
+\end_inset
+
+是一种 TVD 格式，如果它的（可变）系数满足
+\begin_inset Formula 
+\begin{equation}
+\left(C_{i-\nicefrac{1}{2}}^{-}\ge0\right)\land\left(C_{i+\nicefrac{1}{2}}^{+}\ge0\right)\land\left(1-C_{i-\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\ge0\right)\qc\forall i\label{eq:激波捕捉:HartenCondition}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\begin{equation}
+C_{i-\nicefrac{1}{2}}^{-}=C_{i-\nicefrac{1}{2}}^{-}\left(U_{i-2}^{n},U_{i-1}^{n},U_{i}^{n},U_{i+1}^{n}\right)\qc C_{i+\nicefrac{1}{2}}^{+}=C_{i+\nicefrac{1}{2}}^{+}\left(U_{i-1}^{n},U_{i}^{n},U_{i+1}^{n},U_{i+2}^{n}\right)
 \end{equation}
 
 \end_inset
@@ -942,8 +1318,78 @@ end{subequations}
 
 \end_layout
 
-\begin_layout Lemma
-A monotone scheme is TVD.
+\begin_layout Proof
+对相邻两点应用该格式：
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i+0}^{n+1} & =U_{i+0}^{n}-\left(U_{i+0}^{n}-U_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}+\left(U_{i+1}^{n}-U_{i+0}^{n}\right)C_{i+\nicefrac{1}{2}}^{+}\\
+U_{i+1}^{n+1} & =U_{i+1}^{n}-\left(U_{i+1}^{n}-U_{i+0}^{n}\right)C_{i+\nicefrac{1}{2}}^{-}+\left(U_{i+2}^{n}-U_{i+1}^{n}\right)C_{i+\nicefrac{3}{2}}^{+}
+\end{aligned}
+\]
+
+\end_inset
+
+从第二行中减去第一行：
+\begin_inset Formula 
+\[
+\begin{aligned}U_{i+1}^{n+1}-U_{i+0}^{n+1} & =\left(U_{i+1}^{n}-U_{i+0}^{n}\right)\left(1-C_{i+\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\right)\\
+ & +\left(U_{i+0}^{n}-U_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}\\
+ & +\left(U_{i+2}^{n}-U_{i+1}^{n}\right)C_{i+\nicefrac{3}{2}}^{+}
+\end{aligned}
+\]
+
+\end_inset
+
+对两侧取绝对值，并利用 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉:HartenCondition"
+
+\end_inset
+
+ 式及 
+\begin_inset Formula $\abs{a+b}\le\abs{a}+\abs{b}$
+\end_inset
+
+，可得不等式：
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{U_{i+1}^{n+1}-U_{i+0}^{n+1}} & \le\abs{U_{i+1}^{n}-U_{i+0}^{n}}\left(1-C_{i+\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\right)\\
+ & +\abs{U_{i+0}^{n}-U_{i-1}^{n}}C_{i-\nicefrac{1}{2}}^{-}\\
+ & +\abs{U_{i+2}^{n}-U_{i+1}^{n}}C_{i+\nicefrac{3}{2}}^{+}
+\end{aligned}
+\]
+
+\end_inset
+
+对 
+\begin_inset Formula $i$
+\end_inset
+
+ 求和，即得
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{i}\abs{U_{i+1}^{n+1}-U_{i+0}^{n+1}} & \le\sum_{i}\abs{U_{i+1}^{n}-U_{i+0}^{n}}\\
+ & +\sum_{i}\abs{U_{i+0}^{n}-U_{i-1}^{n}}C_{i-\nicefrac{1}{2}}^{-}-\sum_{i}\abs{U_{i+1}^{n}-U_{i+0}^{n}}C_{i+\nicefrac{1}{2}}^{-}\\
+ & +\sum_{i}\abs{U_{i+2}^{n}-U_{i+1}^{n}}C_{i+\nicefrac{3}{2}}^{+}-\sum_{i}\abs{U_{i+1}^{n}-U_{i+0}^{n}}C_{i+\nicefrac{1}{2}}^{+}
+\end{aligned}
+\]
+
+\end_inset
+
+由于求和指标 
+\begin_inset Formula $i$
+\end_inset
+
+ 取遍整数集，第二、三行的正、负项都可以错位相消，因此求和结果为零；剩下的第一行正是 
+\begin_inset Formula $TV\qty(U^{n+1})$
+\end_inset
+
+ 与 
+\begin_inset Formula $TV\qty(U^{n})$
+\end_inset
+
+ 的比较。
 \end_layout
 
 \begin_layout Standard
@@ -953,59 +1399,177 @@ A monotone scheme is TVD.
 
 \end_layout
 
-\begin_layout Lemma
-A TVD scheme is monotonicity preserving.
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:激波捕捉:Harten"
+
 \end_inset
 
+ 定理提供了一种构造五点 TVD 格式的范式。考虑用于求解标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
 
-\end_layout
+\end_inset
 
-\begin_layout Theorem
+ 的守恒型格式
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[Harten]
+
+\backslash
+begin{subequations}
 \end_layout
 
 \end_inset
 
-For any scheme of the following form
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:激波捕捉:Limiter:Flux"
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=u_{i}^{n}-C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\label{eq:HartenTvdScheme}
+U_{i}^{n+1}=U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{\text{TVD}}-F_{i+\nicefrac{1}{2}}^{\text{TVD}}\right)\qc\forall i
 \end{equation}
 
 \end_inset
 
-in which
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}^{\text{TVD}}$
+\end_inset
+
+ 表示高阶 TVD 通量，它可以看作是由一阶 TVD 通量 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}^{\text{Low}}$
+\end_inset
+
+ 与高阶非 TVD 通量 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}^{\text{High}}$
+\end_inset
+
+ 组合而得：
+\begin_inset Formula 
+\begin{equation}
+F_{i+\nicefrac{1}{2}}^{\text{TVD}}=F_{i+\nicefrac{1}{2}}^{\text{Low}}+\left(F_{i+\nicefrac{1}{2}}^{\text{High}}-F_{i+\nicefrac{1}{2}}^{\text{Low}}\right)\phi_{i+\nicefrac{1}{2}}\qc\forall i
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}^{\text{Low}}$
+\end_inset
+
+ 可以取自（基于精确 Riemann 解的）Godunov 格式或 Lax–Friedrichs 格式：
 \begin_inset Formula 
 \[
-\begin{aligned}C_{i-1/2}^{-} & =C_{i-1/2}^{-}\left(u_{i-2}^{n},u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n}\right)\\
-C_{i+1/2}^{+} & =C_{i+1/2}^{+}\left(u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},u_{i+2}^{n}\right)
+F_{i+\nicefrac{1}{2}}^{\text{Low}}=\begin{cases}
+F_{i+\nicefrac{1}{2}}^{\text{G}}=\tilde{F}_{i+\nicefrac{1}{2}}^{n}(x/t=0)\\
+F_{i+\nicefrac{1}{2}}^{\text{LF}}=\dfrac{F_{i}^{n}+F_{i+1}^{n}}{2}+\dfrac{h_{x}}{h_{t}}\dfrac{U_{i}^{n}-U_{i+1}^{n}}{2}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}^{\text{High}}$
+\end_inset
+
+ 可以取自具有时空二阶精度的 Lax–Wendroff 格式或 Warming–Beam 格式：
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{\text{High}}=\begin{cases}
+F_{i+\nicefrac{1}{2}}^{\text{LW}}=F\qty(\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2})\\
+F_{i+\nicefrac{1}{2}}^{\text{WB}}=
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于线性平流方程
+\begin_inset Formula 
+\[
+\pdv{U}{t}+A\pdv{U}{x}=0\qc\sigma:=A\dfrac{h_{t}}{h_{x}}\in\mathbb{R}_{+}
+\]
+
+\end_inset
+
+这些格式退化为线性的：
+\begin_inset Formula 
+\[
+\begin{aligned}F_{i+\nicefrac{1}{2}}^{\text{Low}} & =A\times\begin{cases}
+U_{i}^{n} & \text{Godunov}\\
+\phantom{\dfrac{\sigma-1}{2}U_{i-1}^{n}+}\dfrac{1+\sigma}{2\sigma}U_{i}^{n}+\dfrac{1-\sigma}{2\sigma}U_{i+1}^{n} & \text{Lax\text{–}Friedrichs}
+\end{cases}\\
+F_{i+\nicefrac{1}{2}}^{\text{High}} & =A\times\begin{cases}
+\phantom{\dfrac{\sigma-1}{2}U_{i-1}^{n}+}\dfrac{1+\sigma}{2}U_{i}^{n}+\dfrac{1-\sigma}{2}U_{i+1}^{n} & \text{Lax–Wendroff}\\
+\dfrac{\sigma-1}{2}U_{i-1}^{n}+\dfrac{3-\sigma}{2}U_{i}^{n}\phantom{+\dfrac{\sigma-1}{2}U_{i-1}^{n}} & \text{Warming–Beam}
+\end{cases}
 \end{aligned}
 \]
 
 \end_inset
 
-it is TVD, if 
-\begin_inset Formula $\forall i$
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+依赖于 
+\begin_inset Formula $\left\{ U_{k}^{n}\right\} _{k=i-2}^{i+2}$
 \end_inset
 
-:
+ 光滑程度的系数 
+\begin_inset Formula $\phi_{i+\nicefrac{1}{2}}$
+\end_inset
+
+ 用于调节高阶通量的占比，因此被称为 
+\bar under
+通量限制器 (flux limiter)
+\bar default
+。最简单的 
+\bar under
+光滑程度指示器 (smoothness indicator)
+\bar default
+ 是变量在相邻网格节点上的变化量的比值
 \begin_inset Formula 
 \begin{equation}
-C_{i-1/2}^{-}\ge0\qand C_{i+1/2}^{+}\ge0\qand C_{i-1/2}^{-}+C_{i+1/2}^{+}\le1\label{eq:HartenTvdCondition}
+r_{i}^{+}:=\frac{U_{i+1}-U_{i}}{U_{i}-U_{i-1}}\qor r_{i}^{-}:=\frac{U_{i}-U_{i-1}}{U_{i+1}-U_{i}}
 \end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+将该格式写成 Harten 定理 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:激波捕捉:Harten"
+
+\end_inset
+
+ 的形式，可以得到 TVD 条件。
 \end_layout
 
 \begin_layout Standard
@@ -1015,90 +1579,25 @@ C_{i-1/2}^{-}\ge0\qand C_{i+1/2}^{+}\ge0\qand C_{i-1/2}^{-}+C_{i+1/2}^{+}\le1\la
 
 \end_layout
 
-\begin_layout Proof
-Apply the scheme at two consecutive points:
-\begin_inset Formula 
-\[
-\begin{alignedat}{2}u_{i}^{n+1} & =u_{i}^{n} & -C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right) & +C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\\
-u_{i+1}^{n+1} & =u_{i+1}^{n} & -C_{i+1/2}^{-}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right) & +C_{i+3/2}^{+}\cdot\left(u_{i+2}^{n}-u_{i+1}^{n}\right)
-\end{alignedat}
-\]
+\begin_layout Standard
+\begin_inset ERT
+status open
 
-\end_inset
+\begin_layout Plain Layout
 
-Subtract the first from the second:
-\begin_inset Formula 
-\[
-\begin{aligned}u_{i+1}^{n+1}-u_{i}^{n+1} & =\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)\\
- & +C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+3/2}^{+}\cdot\left(u_{i+2}^{n}-u_{i+1}^{n}\right)
-\end{aligned}
-\]
 
-\end_inset
-
-Taking absolute values on both sides leads to an inequality:
-\begin_inset Formula 
-\[
-\begin{aligned}\abs{u_{i+1}^{n+1}-u_{i}^{n+1}} & \le\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\abs{u_{i+1}^{n}-u_{i}^{n}}\\
- & +C_{i-1/2}^{-}\abs{u_{i}^{n}-u_{i-1}^{n}}+C_{i+3/2}^{+}\abs{u_{i+2}^{n}-u_{i+1}^{n}}
-\end{aligned}
-\]
-
-\end_inset
-
-in which we have used the non-negativeness of coefficients.
- Then sum over 
-\begin_inset Formula $i$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\begin{aligned}\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n+1}-u_{i}^{n+1}} & \le\sum_{i=-\infty}^{\infty}\abs{u_{i+1}^{n}-u_{i}^{n}}\\
- & -\sum_{i=-\infty}^{\infty}C_{i+1/2}^{-}\abs{u_{i+1}^{n}-u_{i}^{n}}+\sum_{i=-\infty}^{\infty}C_{i-1/2}^{-}\abs{u_{i}^{n}-u_{i-1}^{n}}\\
- & -\sum_{i=-\infty}^{\infty}C_{i+1/2}^{+}\abs{u_{i+1}^{n}-u_{i}^{n}}+\sum_{i=-\infty}^{\infty}C_{i+3/2}^{+}\abs{u_{i+2}^{n}-u_{i+1}^{n}}
-\end{aligned}
-\]
-
-\end_inset
-
-By shifting indices, each of the last two lines cancels.
- The first line is the comparison between two TVs.
+\backslash
+end{subequations}
 \end_layout
 
-\begin_layout Subsection
-Constructing TVD Schemes
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Harten's theorem can be used as a guideline for constructing 5-point TVD
- schemes.
- Given a 5-point high order linear scheme, it can be seen as a correction
- of the 1st order upwind (which is monotone and TVD) scheme.
- To reconstruct it into a TVD scheme, just multiply the correction term
- by a limiter (function), which depends on 
-\begin_inset Formula $u^{n}$
-\end_inset
-
- and thus introduces nonlinearity, and then rewrite the new scheme in the
- form of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:HartenTvdScheme"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- and derive the condition on the limiter.
-\end_layout
-
-\begin_layout Standard
-The limiter is actually a switcher between the 1st order upwind scheme and
- the original high order one.
- It works according to the smoothness of 
-\begin_inset Formula $u^{n}$
+It works according to the smoothness of 
+\begin_inset Formula $U^{n}$
 \end_inset
 
 , so we need to find a smoothness indicator first.
@@ -1106,13 +1605,6 @@ The limiter is actually a switcher between the 1st order upwind scheme and
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-r_{i}^{+}:=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}\qor r_{i}^{-}:=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
-\]
-
-\end_inset
-
 The limiter is then naturally defined as a function of 
 \begin_inset Formula $r^{+}$
 \end_inset
@@ -1133,7 +1625,7 @@ The limiter is then naturally defined as a function of
 :
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $\phi(1)\equiv1$
 \end_inset
 
@@ -1145,7 +1637,7 @@ The limiter is then naturally defined as a function of
 .
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $\phi(r<0)=0$
 \end_inset
 
@@ -1157,7 +1649,7 @@ The limiter is then naturally defined as a function of
  
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $\phi(r>0)>0$
 \end_inset
 
@@ -1168,7 +1660,7 @@ The limiter is then naturally defined as a function of
  where it is negative.
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Standard
 \begin_inset Formula $\phi(r)/r\equiv\phi(1/r)$
 \end_inset
 
@@ -1187,14 +1679,7 @@ The limiter is then naturally defined as a function of
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection*
+\begin_layout Subsection
 From 2nd Order Upwind Scheme
 \end_layout
 
@@ -1202,7 +1687,7 @@ From 2nd Order Upwind Scheme
 Write the 2nd order upwind scheme
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{3u_{i}-4u_{i-1}+u_{i-2}}{2\Delta x}=0\qc a>0
+\frac{U_{i}^{n+1}-U_{i}^{n}}{h_{t}}+a\frac{3U_{i}-4U_{i-1}+U_{i-2}}{2h_{x}}=0\qc a>0
 \]
 
 \end_inset
@@ -1210,7 +1695,7 @@ Write the 2nd order upwind scheme
 into its conservative form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sigma=\frac{a\Delta t}{\Delta x}\in(0,1)
+U_{i}^{n+1}=U_{i}^{n}-\sigma\cdot\left(U_{i+\nicefrac{1}{2}}^{n}-U_{i-\nicefrac{1}{2}}^{n}\right)\qc\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
 \]
 
 \end_inset
@@ -1218,7 +1703,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sig
 in which
 \begin_inset Formula 
 \[
-u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}
+U_{i+\nicefrac{1}{2}}=U_{i}+\frac{U_{i}-U_{i-1}}{2}
 \]
 
 \end_inset
@@ -1230,7 +1715,7 @@ Multiply the correction term by a limiter
 :
 \begin_inset Formula 
 \[
-u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}\phi(r_{i})\qc r_{i}=r_{i}^{+}=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}
+U_{i+\nicefrac{1}{2}}=U_{i}+\frac{U_{i}-U_{i-1}}{2}\phi(r_{i})\qc r_{i}=r_{i}^{+}=\frac{U_{i+1}-U_{i}}{U_{i}-U_{i-1}}
 \]
 
 \end_inset
@@ -1238,7 +1723,7 @@ u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}\phi(r_{i})\qc r_{i}=r_{i}^{+}=\frac{u_{i
 and rewrite the scheme into Harten's form 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:HartenTvdScheme"
+reference "eq:激波捕捉:HartenScheme"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1248,11 +1733,11 @@ noprefix "false"
 :
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1}=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}+\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\phi_{i}^{n}\right)\\
- & +\sigma\cdot\left(u_{i-1}^{n}+\frac{u_{i-1}^{n}-u_{i-2}^{n}}{2}\phi_{i-1}^{n}\right)\\
-=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)\\
- & -\sigma\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\\
-=u_{i}^{n} & -C_{i-1/2}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+1/2}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)
+\begin{aligned}U_{i}^{n+1}=U_{i}^{n} & -\sigma\cdot\left(U_{i}^{n}+\frac{U_{i}^{n}-U_{i-1}^{n}}{2}\phi_{i}^{n}\right)\\
+ & +\sigma\cdot\left(U_{i-1}^{n}+\frac{U_{i-1}^{n}-U_{i-2}^{n}}{2}\phi_{i-1}^{n}\right)\\
+=U_{i}^{n} & -\sigma\cdot\left(U_{i}^{n}-U_{i-1}^{n}\right)\\
+ & -\sigma\frac{U_{i}^{n}-U_{i-1}^{n}}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\\
+=U_{i}^{n} & -C_{i-\nicefrac{1}{2}}^{-}\cdot\left(U_{i}^{n}-U_{i-1}^{n}\right)+C_{i+\nicefrac{1}{2}}^{+}\cdot\left(U_{i+1}^{n}-U_{i}^{n}\right)
 \end{aligned}
 \]
 
@@ -1261,7 +1746,7 @@ noprefix "false"
 in which
 \begin_inset Formula 
 \[
-C_{i-1/2}^{-}=\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\qc C_{i+1/2}^{+}=0
+C_{i-\nicefrac{1}{2}}^{-}=\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\qc C_{i+\nicefrac{1}{2}}^{+}=0
 \]
 
 \end_inset
@@ -1269,7 +1754,7 @@ C_{i-1/2}^{-}=\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^
 Condition 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:HartenTvdCondition"
+reference "eq:激波捕捉:HartenCondition"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1311,15 +1796,15 @@ sufficient
 
 \end_layout
 
-\begin_layout Subsubsection*
-From Lax–Wendroff Scheme
+\begin_layout Subsection
+Sweby 条件
 \end_layout
 
 \begin_layout Standard
 Write the Lax–Wendroff Scheme
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{\Delta t}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2\Delta x}=\frac{a^{2}\Delta t}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{\Delta x^{2}}\qc a>0
+\frac{U_{i}^{n+1}-U_{i}^{n}}{h_{t}}+a\frac{U_{i+1}^{n}-U_{i-1}^{n}}{2h_{x}}=\frac{a^{2}h_{t}}{2}\frac{U_{i+1}^{n}-2U_{i}^{n}+U_{i-1}^{n}}{h_{x}^{2}}\qc a>0
 \]
 
 \end_inset
@@ -1327,7 +1812,7 @@ Write the Lax–Wendroff Scheme
 into its conservative form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sigma=\frac{a\Delta t}{\Delta x}\in(0,1)
+U_{i}^{n+1}=U_{i}^{n}-\sigma\cdot\left(U_{i+\nicefrac{1}{2}}^{n}-U_{i-\nicefrac{1}{2}}^{n}\right)\qc\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
 \]
 
 \end_inset
@@ -1335,7 +1820,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\qc\sig
 in which
 \begin_inset Formula 
 \[
-u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)
+U_{i+\nicefrac{1}{2}}=U_{i}+\frac{1-\sigma}{2}\left(U_{i+1}-U_{i}\right)
 \]
 
 \end_inset
@@ -1347,7 +1832,7 @@ Multiply the correction term by a limiter
 :
 \begin_inset Formula 
 \[
-u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)\phi(r_{i})\qc r_{i}=r_{i}^{-}=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
+U_{i+\nicefrac{1}{2}}=U_{i}+\frac{1-\sigma}{2}\left(U_{i+1}-U_{i}\right)\phi(r_{i})\qc r_{i}=r_{i}^{-}=\frac{U_{i}-U_{i-1}}{U_{i+1}-U_{i}}
 \]
 
 \end_inset
@@ -1355,7 +1840,7 @@ u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)\phi(r_{i})\qc r_{i}
 and rewrite the scheme into Harten's form 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:HartenTvdScheme"
+reference "eq:激波捕捉:HartenScheme"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1365,7 +1850,7 @@ noprefix "false"
 , in which
 \begin_inset Formula 
 \[
-C_{i-1/2}^{-}=\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\qc C_{i+1/2}^{+}=0
+C_{i-\nicefrac{1}{2}}^{-}=\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\qc C_{i+\nicefrac{1}{2}}^{+}=0
 \]
 
 \end_inset
@@ -1373,7 +1858,7 @@ C_{i-1/2}^{-}=\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n
 Condition 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:HartenTvdCondition"
+reference "eq:激波捕捉:HartenCondition"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1411,95 +1896,469 @@ sufficient
 \end_layout
 
 \begin_layout Subsection
-Famous Limiters
+常用通量限制器
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:常用通量限制器"
+
+\end_inset
+
+常用通量限制器
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+名称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi(r)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 van Leer
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\frac{r+\abs{r}}{1+r}
-\]
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
+\begin_inset Formula $(r+\abs{r})/(1+r)$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection*
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 van Albada
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\frac{r^{2}+r}{1+r^{2}}
-\]
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
+\begin_inset Formula $(r+r^{2})/(1+r^{2})$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection*
-minmod
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+min-mod
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\min\mod(r,1)=\begin{cases}
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\min\mod(r,1)\equiv\begin{cases}
 \min(r,1) & r\ge0\\
 0 & r<0
-\end{cases}
-\]
-
+\end{cases}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection*
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 superbee
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\max(0,\min(2r,1),\min(r,2))
-\]
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
+\begin_inset Formula $\max(0,\min(2r,1),\min(r,2))$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection*
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 MUSCL
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\phi(r)=\max\left(0,\min\left(2r,\frac{r+1}{2},2\right)\right)
-\]
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
+\begin_inset Formula $\max\left(0,\min\left(2r,(r+1)/2,2\right)\right)$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection*
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 alpha
 \end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+斜率限制器
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:激波捕捉：斜率限制器"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+MUSCL 高阶重构
+\end_layout
+
 \begin_layout Standard
+Monotone Upstream-centered Schemes for Conservation Laws
+\end_layout
+
+\begin_layout Subsection
+TVD 斜率
+\end_layout
+
+\begin_layout Subsection
+与通量限制器的关系
+\end_layout
+
+\begin_layout Section
+WENO 限制器
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:激波捕捉：WENO 限制器"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+加权基本无振荡 (Weighted Essentially Non-Oscillatory, WENO)
+\bar default
+ 重构是指：利用坏单元（或模板）及与之相邻（或重叠）的好单元（或模板）上的信息，在坏单元（或模板）上 
+\bar under
+重新构造 (reconstruct)
+\bar default
+ 近似解。大致流程包括：
+\end_layout
+
+\begin_layout Itemize
+将相邻单元（或重叠模板）分为若干组，在每一组上分别给出 
+\bar under
+待选的 (candidate)
+\bar default
+ 高阶近似解。
+\end_layout
+
+\begin_layout Itemize
+在坏单元上，对这些待选解按光滑度作 
+\bar under
+加权 (W)
+\bar default
+ 平均，以得到 
+\bar under
+基本无振荡 (ENO)
+\bar default
+ 且具有较高精度的近似解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+简单的
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:激波捕捉：间断识别器"
+
+\end_inset
+
+通常会将 
+\bar under
+极值点
+\bar default
+ 误报为 
+\bar under
+坏单元
+\bar default
+。在这些地方：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+基于
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:激波捕捉：通量限制器"
+
+\end_inset
+
+的二阶格式会出现精度降阶（只有一阶精度），从而导致数值解被过度磨光。
+\end_layout
+
+\begin_layout Itemize
+基于 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:激波捕捉：WENO 限制器"
+
+\end_inset
+
+的五阶格式依然能够保持三阶精度，这正是发展 WENO 技术的一大动力。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+基于重叠模板
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:WENO：基于重叠模板"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为求解一维标量守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:激波捕捉：标量守恒律"
+
+\end_inset
+
+，在等距网格上引入守恒型空间差分格式
 \begin_inset Formula 
 \[
-\phi(r)=\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)
+\left(\partial_{x}F\right)_{i}\equiv\eval{\pdv{F}{x}}_{i}\approx\frac{F_{i+\nicefrac{1}{2}}-F_{i-\nicefrac{1}{2}}}{h}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $F_{i\pm\nicefrac{1}{2}}$
+\end_inset
+
+ 为待构造的数值通量。不失一般性，下面只考虑 
+\begin_inset Formula $A(U_{i})>0$
+\end_inset
+
+ 的情形
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+对于 
+\begin_inset Formula $A(U_{i})<0$
+\end_inset
+
+ 的情形，只需将下标中紧跟在 
+\begin_inset Formula $i$
+\end_inset
+
+ 后面的加减号互换，例如 
+\begin_inset Formula $F_{i+1}$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $F_{i-1}$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+。在构造 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}$
+\end_inset
+
+ 时，含有五个点的大模板（用指标偏移量表示）
+\begin_inset Formula 
+\[
+S=(-2,-1,0,+1,+2)
+\]
+
+\end_inset
+
+被分解为三个（三点）小模板：
+\begin_inset Formula 
+\[
+S^{(1)}=(-2,-1,0)\qc S^{(2)}=(-1,0,+1)\qc S^{(3)}=(0,+1,+2)
+\]
+
+\end_inset
+
+它们可以构造出三种 
+\begin_inset Formula $\left(\partial_{x}F\right)_{i}$
+\end_inset
+
+ 的三阶近似，相应的数值通量依次为
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}^{(1)}=\frac{2F_{i-2}-7F_{i-1}+11F_{i}}{6}\qc F_{i+\nicefrac{1}{2}}^{(2)}=\frac{-F_{i-1}+5F_{i}+2F_{i+1}}{6}\qc F_{i+\nicefrac{1}{2}}^{(3)}=\frac{2F_{i}+5F_{i+1}-1F_{i+2}}{6}
+\]
+
+\end_inset
+
+它们的加权平均值可以用作大模板上的数值通量：
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}=w_{i}^{(1)}F_{i+\nicefrac{1}{2}}^{(1)}+w_{i}^{(2)}F_{i+\nicefrac{1}{2}}^{(2)}+w_{i}^{(3)}F_{i+\nicefrac{1}{2}}^{(3)}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $w_{i}^{(1)},w_{i}^{(2)},w_{i}^{(3)}$
+\end_inset
+
+ 是根据 
+\begin_inset Formula $\left\{ F_{i+s}\right\} _{s\in S}$
+\end_inset
+
+ 的光滑程度构造的非线性权重：
+\end_layout
+
+\begin_layout Itemize
+在充分光滑的区域，上述 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}$
+\end_inset
+
+ 应当逼近（五点）大模板上的理想（五阶）格式：
+\begin_inset Formula 
+\[
+F_{i+\nicefrac{1}{2}}=\frac{2F_{i-2}-13F_{i-1}+47F_{i}+27F_{i+1}-3F_{i+2}}{60}
+\]
+
+\end_inset
+
+这可以通过取理想权重来实现：
+\begin_inset Formula 
+\[
+\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}=\begin{bmatrix}w_{*}^{(1)} & w_{*}^{(2)} & w_{*}^{(3)}\end{bmatrix}:=\begin{bmatrix}\dfrac{1}{10} & \dfrac{6}{10} & \dfrac{3}{10}\end{bmatrix}
 \]
 
 \end_inset
@@ -1507,52 +2366,175 @@ alpha
 
 \end_layout
 
-\begin_layout Section
-MUSCL（用于守恒律的单调迎风格式）
+\begin_layout Itemize
+在非光滑区域，被间断面穿过的小模板即 
+\bar under
+坏模板 (troubled stencil)
+\bar default
+ 上的权重应当接近零，但所有小模板的权重之和依然为 
+\begin_inset Formula $1$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "MUSCL"
-description "Monotone Upstream-centered Schemes for Conservation Laws"
+\begin_inset CommandInset href
+LatexCommand href
+name "Jiang & Shu (1996)"
+target "https://doi.org/10.1006/jcph.1996.0130"
 literal "false"
+
+\end_inset
+
+ 给出了一种满足上述性质的权重方案：
+\end_layout
+
+\begin_layout Enumerate
+在小模板上构造以 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 为中心的二次 Taylor 展开式
+\begin_inset Formula 
+\[
+Q_{i}^{(k)}(x)=F_{i}+\eval{\pdv{F}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{F}{x}}_{i}^{(k)}\frac{(x-x_{i})^{2}}{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left(\partial_{x}F\right)_{i}^{(k)},\left(\partial_{x}^{2}F\right)_{i}^{(k)}$
+\end_inset
+
+ 分别表示由第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个小模板 
+\begin_inset Formula $S^{(k)}$
+\end_inset
+
+ 给出的 
+\begin_inset Formula $\partial_{x}F,\partial_{x}^{2}F$
+\end_inset
+
+ 在 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 处的估计值。
+\end_layout
+
+\begin_layout Enumerate
+计算各个小模板的 
+\bar under
+光滑度量因子 (smoothness indicator)
+\bar default
+ 
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}:=\int_{x_{i-\nicefrac{1}{2}}}^{x_{i}+\nicefrac{1}{2}}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{(k)}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{F}{x}}_{i}^{(k)}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{F}{x}}_{i}^{(k)}h^{2}\right)^{2}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\begin{bmatrix}\beta_{i}^{(1)}\\
+\beta_{i}^{(2)}\\
+\beta_{i}^{(3)}
+\end{bmatrix}=\frac{1}{4}\begin{bmatrix}(F_{i-2}-4F_{i-1}+3F_{i})^{2}\\
+(F_{i-1}-F_{i+1})^{2}\\
+(3F_{i}-4F_{i+1}+F_{i+2})^{2}
+\end{bmatrix}+\frac{13}{12}\begin{bmatrix}(F_{i-2}-2F_{i-1}+F_{i})^{2}\\
+(F_{i-1}-2F_{i}+F_{i+1})^{2}\\
+(F_{i}-2F_{i+1}+F_{i+2})^{2}
+\end{bmatrix}
+\]
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-WENO（加权基本无振荡）
+\begin_deeper
+\begin_layout Itemize
+在光滑区域，它们都趋于同一个二阶小量，并且相互之间的差为六阶小量：
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}=\underbrace{\left(\eval{\pdv{F}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{F}{x}}_{i}h^{2}\right)^{2}}_{\beta_{i}^{*}=\order{h^{2}}}+\order{h^{6}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在非光滑区域，坏模板给出的 
+\begin_inset Formula $Q_{i}^{(k)}$
+\end_inset
+
+ 偏离真实 Taylor 展开式较多，因此相应的 
+\begin_inset Formula $\beta_{i}^{(k)}=\order{1}\gg\order{h^{2}}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+构造非线性权重
+\begin_inset Formula 
+\[
+w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}^{(3)}}\qc\alpha_{i}^{(k)}=\frac{w_{*}^{(k)}}{\left(\beta_{i}^{(k)}+\varepsilon\right)^{2}}\qc\varepsilon=10^{-6}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在光滑区域，非线性权重接近理想权重，大模板上的 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}$
+\end_inset
+
+ 具有五阶精度：
+\begin_inset Formula 
+\[
+w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\beta_{i}^{*})^{2}+\order{h^{8}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在非光滑区域，坏模板的实际权重（与其他小模板的权重相比）接近零，但大模板上的 
+\begin_inset Formula $F_{i+\nicefrac{1}{2}}$
+\end_inset
+
+ 依然具有三阶精度。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-ENO — Essentially Non-Oscillatory
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "ENO"
-description "Essentially Non-Oscillatory"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-WENO — Weighted ENO
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "WENO"
-description "Weighted ENO"
-literal "false"
+基于相邻单元
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:WENO：基于相邻单元"
 
 \end_inset
 
@@ -1560,23 +2542,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-GVC（群速度控制）
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "GVC"
-description "Group Velocity Control"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-人工黏性
+群速度控制
 \end_layout
 
 \end_body

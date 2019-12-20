@@ -1,0 +1,2405 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\master README.lyx
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+常微分算符的特征值问题
+\end_layout
+
+\begin_layout Section
+自伴随算符
+\end_layout
+
+\begin_layout Subsection
+抽象的自伴随算符
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[伴随算符]
+\end_layout
+
+\end_inset
+
+对于内积空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\Operator{B}$
+\end_inset
+
+，如果它们满足
+\begin_inset Formula 
+\[
+\ip*{u}{\Operator{A}v}=\ip*{\Operator{B}u}{v}\quad\forall\ket{u},\ket{v}\in V
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\[
+\mel{u}{\Operator{A}}{v}=\Conj{\mel{v}{\Operator{B}}{u}}\quad\forall\ket{u},\ket{v}\in V
+\]
+
+\end_inset
+
+则称它们互为
+\emph on
+伴随
+\emph default
+ (adjoint) 算符，记作 
+\begin_inset Formula $\Operator{A}^{\dagger}=\Operator{B}$
+\end_inset
+
+，
+\begin_inset Formula $\Operator{B}^{\dagger}=\Operator{A}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于任意算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+，显然有 
+\begin_inset Formula $(\Operator{A}^{\dagger})^{\dagger}\equiv\Operator{A}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[自伴随算符]
+\end_layout
+
+\end_inset
+
+如果算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的伴随算符就是它自身，即 
+\begin_inset Formula $\Operator{A}^{\dagger}=\Operator{A}$
+\end_inset
+
+，则称它为
+\emph on
+自伴随
+\emph default
+ (self-adjoint) 算符。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+伴随和自伴随的概念总是与一定的内积定义绑定在一起的。改变内积的定义，可能使（在原有内积定义下）自伴随的算符变为（在新的内积定义下）非自伴随的，反之亦然。
+\end_layout
+
+\begin_layout Subsection
+抽象的特征值问题
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征值问题]
+\end_layout
+
+\end_inset
+
+给定（定义在 
+\begin_inset Formula $\mathbb{C}$
+\end_inset
+
+ 上的）向量空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+，如果有
+\begin_inset Formula 
+\[
+\Operator{A}\ket{g}=\lambda\ket{g}\qquad\lambda\in\mathbb{C}\qquad\ket{g}\in\mathcal{V}
+\]
+
+\end_inset
+
+则称：
+\end_layout
+
+\begin_layout Definition
+(1) 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的一个
+\emph on
+特征值
+\emph default
+ (eigenvalue)。
+\end_layout
+
+\begin_layout Definition
+(2) 
+\begin_inset Formula $\ket{g}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的对应于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的
+\emph on
+特征向量
+\emph default
+ (eigenvector)。
+\end_layout
+
+\begin_layout Definition
+(3) 「寻找 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的所有特征值及与之对应的特征向量」为
+\emph on
+特征值问题
+\emph default
+ (eigenvalue problem)。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:自伴随算符的特征值问题"
+
+\end_inset
+
+关于（完备的）内积空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的自伴随算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征值问题，有以下结论成立：
+\end_layout
+
+\begin_layout Theorem
+(1) 算符 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的所有特征值构成一个可数集，并且每一个 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 都是实数。
+\end_layout
+
+\begin_layout Theorem
+(2) 每一个特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 都至少有一个特征向量 
+\begin_inset Formula $\ket{g_{i}}$
+\end_inset
+
+ 与之对应。
+\end_layout
+
+\begin_layout Theorem
+(3) 对应于不同特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+、
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ 的任意两个特征向量 
+\begin_inset Formula $\ket{g_{i}}$
+\end_inset
+
+、 
+\begin_inset Formula $\ket{g_{k}}$
+\end_inset
+
+ 线性无关，并且关于 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的内积正交。
+\end_layout
+
+\begin_layout Theorem
+(4) 如果特征值两两互异，则它们所对应的特征向量的全体构成 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一个完备正交基。
+\end_layout
+
+\begin_layout Subsection
+线性微分算符的自伴随条件
+\end_layout
+
+\begin_layout Theorem
+在区间 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上定义二阶线性微分算符
+\begin_inset Formula 
+\begin{equation}
+\Operator{L}=\dv{x}\left(p_{0}(x)\dv{x}\right)+p_{2}(x)\label{eq:自伴随的二阶线性微分算符}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+、
+\begin_inset Formula $p_{0}'$
+\end_inset
+
+ 和 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ 都是定义在 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的连续实函数。如果有
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}\right]_{a}^{b}=0\qquad\forall u,v
+\]
+
+\end_inset
+
+则算符 
+\begin_inset Formula $\Operator{L}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}
+\]
+
+\end_inset
+
+是自伴随的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将算符 
+\begin_inset Formula $\Operator{L}$
+\end_inset
+
+ 代入自伴随条件
+\begin_inset Formula 
+\[
+\ip{u}{\Operator{L}v}=\ip{\Operator{L}u}{v}
+\]
+
+\end_inset
+
+对左端项分部积分两次，即得（必须为零的）边界项和右端项
+\begin_inset Formula 
+\[
+\begin{aligned}\ip{u}{\Operator{L}v}= & \int_{a}^{b}\Conj{u}\left[(p_{0}v')'+p_{2}v\right]\dd{x}\\
+= & \left(\Conj{u}p_{0}v'\right)_{a}^{b}-\int_{a}^{b}\Conj{u}'p_{0}v'\dd{x}+\int_{a}^{b}\Conj{u}p_{2}v\dd{x}\\
+= & \left(\Conj{u}p_{0}v'\right)_{a}^{b}-\left(\Conj{u}'p_{0}v\right)_{a}^{b}+\int_{a}^{b}\left[\left(\Conj{u}'p_{0}\right)'v+\Conj{u}p_{2}v\right]\dd{x}\\
+= & \left(\Conj{u}p_{0}v'-\Conj{u}'p_{0}v\right)_{a}^{b}+\int_{a}^{b}\Conj{\left[(p_{0}u')'+p_{2}u\right]}v\dd{x}\\
+= & \left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}\right]_{a}^{b}+\ip{\Operator{L}u}{v}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于更一般的二阶线性微分算符
+\begin_inset Formula 
+\begin{equation}
+\Operator{L}=p_{0}(x)\dv[2]{x}+p_{1}(x)\dv{x}+p_{2}(x)\label{eq:一般的二阶线性微分算符}
+\end{equation}
+
+\end_inset
+
+假设 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 的零点只可能是区间端点（如果 
+\begin_inset Formula $p$
+\end_inset
+
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 内有孤立零点，总可以在这些零点所分割出的子区间上逐个进行分析），即
+\begin_inset Formula 
+\[
+p_{0}(x)\ne0\qquad\forall x\in(a,b)
+\]
+
+\end_inset
+
+可以引入 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的正值函数 
+\begin_inset Formula 
+\[
+w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
+\]
+
+\end_inset
+
+它能够使算符 
+\begin_inset Formula $w\Operator{L}$
+\end_inset
+
+ 具有定理中所要求的形式
+\begin_inset Formula 
+\[
+\begin{aligned}w\Operator{L}= & P_{0}(x)\dv[2]{x}+P_{1}(x)\dv{x}+P_{2}(x)\\
+= & \dv{x}\left(P_{0}(x)\dv{x}\right)+P_{2}(x)
+\end{aligned}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{aligned}P_{0}(x)= & w(x)p_{0}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{0}(x)}{\abs{p_{0}(x)}}\\
+P_{1}(x)= & w(x)p_{1}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{1}(x)}{\abs{p_{0}(x)}}=P_{0}'(x)\\
+P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{2}(x)}{\abs{p_{0}(x)}}
+\end{aligned}
+\]
+
+\end_inset
+
+于是，该定理可以重新叙述为如下更一般的形式：
+\end_layout
+
+\begin_layout Theorem
+在区间 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上定义二阶线性微分算符
+\begin_inset Formula 
+\[
+\Operator{L}=p_{0}(x)\dv[2]{x}+p_{1}(x)\dv{x}+p_{2}(x)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+、
+\begin_inset Formula $p_{1}$
+\end_inset
+
+、
+\begin_inset Formula $p_{2}$
+\end_inset
+
+ 都是定义在 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的连续实函数，并且 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 的零点只可能是区间端点。如果有
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}w\right]_{a}^{b}=0\qquad\forall u,v
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $w$
+\end_inset
+
+ 是定义 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的正值函数
+\begin_inset Formula 
+\[
+w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
+\]
+
+\end_inset
+
+则算符 
+\begin_inset Formula $w\Operator{L}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}
+\]
+
+\end_inset
+
+是自伴随的，而算符 
+\begin_inset Formula $\Operator{L}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\ip{u}{v}_{w}:=\int_{a}^{b}\Conj{u(x)}v(x)w(x)\dd{x}
+\]
+
+\end_inset
+
+是自伴随的。
+\end_layout
+
+\begin_layout Section
+Sturm–Liouville 型方程
+\end_layout
+
+\begin_layout Subsection
+视作特征值问题
+\end_layout
+
+\begin_layout Definition
+Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方程
+\begin_inset Formula 
+\begin{equation}
+\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad x\in(a,b)\label{eq:Sturm–LiouvilleODE}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 是待定常数，
+\begin_inset Formula $p$
+\end_inset
+
+、
+\begin_inset Formula $p'$
+\end_inset
+
+、
+\begin_inset Formula $q$
+\end_inset
+
+、
+\begin_inset Formula $\rho$
+\end_inset
+
+ 都是定义在 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的连续实函数，并且 
+\begin_inset Formula $p$
+\end_inset
+
+ 的零点只能位于端点，
+\begin_inset Formula $p$
+\end_inset
+
+、
+\begin_inset Formula $\rho$
+\end_inset
+
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 内恒为正。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如果 
+\begin_inset Formula $\rho(x)\equiv1$
+\end_inset
+
+，则方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+直接具有特征值问题的形式：
+\begin_inset Formula 
+\[
+\Operator{L}\ket{u}=\lambda\ket{u}\qquad\Operator{L}=\dv{x}\left(-p\dv{x}\right)+q
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula $-p$
+\end_inset
+
+ 和 
+\begin_inset Formula $q$
+\end_inset
+
+ 分别相当于算符
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:自伴随的二阶线性微分算符"
+
+\end_inset
+
+中的 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 和 
+\begin_inset Formula $p_{2}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+如果 
+\begin_inset Formula $\rho$
+\end_inset
+
+ 是更一般的正值函数（包括 
+\begin_inset Formula $\rho(x)\equiv1$
+\end_inset
+
+ 的情形），则用它除方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，仍然可以得到特征值问题：
+\begin_inset Formula 
+\[
+\Operator{L}\ket{u}=\lambda\ket{u}\qquad\Operator{L}=\frac{-p}{\rho}\dv[2]{x}+\frac{-p'}{\rho}\dv{x}+\frac{q}{\rho}
+\]
+
+\end_inset
+
+这里的 
+\begin_inset Formula $\frac{-p}{\rho}$
+\end_inset
+
+、
+\begin_inset Formula $\frac{-p'}{\rho}$
+\end_inset
+
+、
+\begin_inset Formula $\frac{q}{\rho}$
+\end_inset
+
+ 分别相当于算符
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:一般的二阶线性微分算符"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+、
+\begin_inset Formula $p_{1}$
+\end_inset
+
+、
+\begin_inset Formula $p_{2}$
+\end_inset
+
+。反之，任何二阶线性微分算符
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:一般的二阶线性微分算符"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的本征值问题也都可以化为 Sturm–Liouville 型方程，只要取
+\begin_inset Formula 
+\[
+p(x)=\exp(\int\frac{p_{1}(x)}{p_{0}(x)}\dd{x})\qquad\rho(x)=\frac{p(x)}{-p_{0}(x)}\qquad q(x)=p_{2}(x)\rho(x)
+\]
+
+\end_inset
+
+不失一般性，这里假定了 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上恒为负（反之，总可以在本征值问题两边同时取负号，再将负号吸收进 
+\begin_inset Formula $\lambda$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Subsection
+自伴随条件
+\end_layout
+
+\begin_layout Theorem
+带有（第一、二、三类齐次或周期、有界）边界条件的 Sturm--Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可以被视为特征值问题：
+\begin_inset Formula 
+\[
+\Operator{L}\ket{u}=\lambda\ket{u}\qquad\Operator{L}=\frac{-p}{\rho}\dv[2]{x}+\frac{-p'}{\rho}\dv{x}+\frac{q}{\rho}
+\]
+
+\end_inset
+
+将该问题对应于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的所有可能值的解所张成的函数空间记为 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Theorem
+如果有
+\begin_inset Formula 
+\[
+\left[\left(\Conj{u}v'-\Conj{u}'v\right)p\right]_{a}^{b}=0\qquad\forall u,v\in\mathcal{V}
+\]
+
+\end_inset
+
+则算符 
+\begin_inset Formula $\Operator{L}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\ip{u}{v}_{\rho}:=\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\]
+
+\end_inset
+
+是自伴随的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+可以验证
+\begin_inset Formula 
+\[
+w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})=\frac{\rho(x)}{p(x)}\exp(\int^{x}\frac{p'(\xi)}{p(\xi)}\dd{\xi})=\rho(x)
+\]
+
+\end_inset
+
+则算符 
+\begin_inset Formula $\Operator{L}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\ip{u}{v}_{w}\equiv\ip{u}{v}_{\rho}:=\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\]
+
+\end_inset
+
+的自伴随条件为
+\begin_inset Formula 
+\[
+\left[\left(\Conj{u}v'-\Conj{u}'v\right)(p_{0}w)\right]_{a}^{b}=\left[\left(\Conj{u}v'-\Conj{u}'v\right)(-p)\right]_{a}^{b}=0\qquad\forall u,v
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+在上述定理的条件得到满足的情况下，有以下结论成立：
+\end_layout
+
+\begin_layout Corollary
+(1) 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的所有可能值构成一个可数集 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{\infty}$
+\end_inset
+
+，每一个 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 都是实数，因而可以按大小排序，称排序后的 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 为原问题的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个
+\emph on
+特征值
+\emph default
+ (eigenvalue)。
+\end_layout
+
+\begin_layout Corollary
+(2) 对应于每一个特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+，都至少存在一个满足边界条件和方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+，称为与 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 对应的
+\emph on
+特征函数
+\emph default
+ (eigenfunction)。
+\end_layout
+
+\begin_layout Corollary
+(3) 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 是一个以
+\begin_inset Formula 
+\[
+\ip{u}{v}_{\rho}:=\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\]
+
+\end_inset
+
+为内积的 Hilbert 空间。
+\end_layout
+
+\begin_layout Corollary
+(4) 对应于不同特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+、
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ 的任意两个特征函数 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+、
+\begin_inset Formula $g_{k}$
+\end_inset
+
+ 线性无关，并且关于上述内积正交。
+\end_layout
+
+\begin_layout Corollary
+(5) 如果特征值两两互异，则所有特征函数的全体 
+\begin_inset Formula $\left\{ g_{i}\right\} _{i=1}^{\infty}$
+\end_inset
+
+ 构成 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一个完备正交基。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+该推论其实是定理
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:自伴随算符的特征值问题"
+
+\end_inset
+
+的特殊版本。
+\end_layout
+
+\begin_layout Section
+常见的正交函数族
+\end_layout
+
+\begin_layout Subsection
+计算程序库
+\end_layout
+
+\begin_layout Description
+Python 
+\begin_inset CommandInset href
+LatexCommand href
+name "\\texttt{scipy.special}"
+target "https://docs.scipy.org/doc/scipy/reference/special.html"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+C++ 
+\begin_inset CommandInset href
+LatexCommand href
+name "\\texttt{<cmath>}"
+target "http://en.cppreference.com/w/cpp/numeric/special_math"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+简谐函数
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=1\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(0,2L)
+\]
+
+\end_inset
+
+得到简谐方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u''+\lambda u=0\qquad x\in(0,2L)
+\]
+
+\end_inset
+
+它的通解为
+\begin_inset Formula 
+\[
+u(x)=\begin{cases}
+C_{1}\cosh\sqrt{-\lambda}x+C_{2}\sinh\sqrt{-\lambda}x & \lambda<0\\
+C_{1}+C_{2}x & \lambda=0\\
+C_{1}\cos\sqrt{\lambda}x+C_{2}\sin\sqrt{\lambda}x & \lambda>0
+\end{cases}
+\]
+
+\end_inset
+
+（第一、二、三类齐次或周期、有界）边界条件使得 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取正实数。
+\end_layout
+
+\begin_layout Subsection
+Legendre 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=1-x^{2}\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(-1,1)
+\]
+
+\end_inset
+
+得到 Legendre 方程
+\begin_inset Formula 
+\[
+(1-x^{2})u''-2xu'+\lambda u=0\qquad x\in(-1,1)
+\]
+
+\end_inset
+
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Legendre方程的幂级数解"
+
+\end_inset
+
+节中，已经由 Frobenius 方法求得了它的两个线性无关解
+\begin_inset Formula 
+\[
+u_{s=1}(x)=\sum_{k=0}^{\infty}f_{2k}x^{2k+1}\qquad u_{s=0}(x)=\sum_{k=0}^{\infty}g_{2k}x^{2k}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{gathered}f_{0}=g_{0}=1\\
+\begin{aligned}f_{2k+2} & =\frac{(2k+1)(2k+2)-\lambda}{(2k+3)(2k+2)}f_{2k}\\
+g_{2k+2} & =\frac{(2k)(2k+1)-\lambda}{(2k+2)(2k+1)}g_{2k}
+\end{aligned}
+\qquad k=0,1,2,\dots
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特征值只能取相邻整数的乘积
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\sum_{k=0}^{\infty}f_{2k}x^{2k+1}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sum_{k=0}^{\infty}g_{2k}x^{2k}$
+\end_inset
+
+ 的收敛半径可以由以下极限得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\lim_{k\to\infty}\abs{\frac{f_{2k+2}}{f_{2k}}}=\lim_{k\to\infty}\abs{\frac{g_{2k+2}}{g_{2k}}}=1
+\]
+
+\end_inset
+
+为了使方程的解在 
+\begin_inset Formula $x=\pm1$
+\end_inset
+
+ 处有界，
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 只能取相邻整数的乘积 
+\begin_inset Formula $n(n+1)$
+\end_inset
+
+，以使这两个级数之一截断为多项式，相应的系数递推关系分别为
+\begin_inset Formula 
+\[
+\begin{aligned}f_{2k+2} & =\frac{(2k+1)(2k+2)-n(n+1)}{(2k+3)(2k+2)}f_{2k}=\frac{(2k+1-n)(2k+2+n)}{(2k+3)(2k+2)}f_{2k}\\
+g_{2k+2} & =\frac{(2k)(2k+1)-n(n+1)}{(2k+2)(2k+1)}g_{2k}=\frac{(2k-n)(2k+1+n)}{(2k+2)(2k+1)}g_{2k}
+\end{aligned}
+\]
+
+\end_inset
+
+二者分别在 
+\begin_inset Formula $n=2k+1$
+\end_inset
+
+ 和 
+\begin_inset Formula $n=2k$
+\end_inset
+
+ 时截断。
+\end_layout
+
+\begin_layout Subsubsection
+统一的系数递推关系
+\end_layout
+
+\begin_layout Standard
+如果将截断后的 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式统一地记为
+\begin_inset Formula 
+\[
+\sum_{k=0}^{\lfloor n/2\rfloor}C_{n-2k}x^{n-2k}=C_{n}x^{n}+C_{n-2}x^{n-1}+\cdots+C_{n-2\lfloor n/2\rfloor}x^{n-2\lfloor n/2\rfloor}
+\]
+
+\end_inset
+
+则以上两个系数递推关系可以统一地写为
+\begin_inset Formula 
+\[
+C_{k-2}=\frac{(k-1)(k)}{(k-2-n)(k-1+n)}C_{k}\qquad k=n,n-2,\dots,n-2\lfloor n/2\rfloor
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}C_{n-2k} & =\frac{(n-2k+1)(n-2k+2)}{(-2k)(2n-2k+1)}C_{n-2k+2}\\
+ & =\frac{n!/(n-2k)!}{\prod_{l=1}^{k}(-2l)(2n-2l+1)}C_{n}\\
+ & =\frac{n!}{(n-2k)!}\cdot\frac{1}{(-2)^{k}k!}\cdot\frac{(2n-2k-1)!!}{(2n-1)!!}C_{n}
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个分式中的
+\emph on
+跳阶乘
+\emph default
+可以用恒等式
+\begin_inset Formula 
+\[
+(2n)!!=2^{n}n!\qquad(2n-1)!!=\frac{(2n)!}{(2n)!!}
+\]
+
+\end_inset
+
+化为
+\begin_inset Formula 
+\[
+\frac{(2n-2k-1)!!}{(2n-1)!!}=\frac{(2n)!!}{(2n)!}\cdot\frac{(2n-2k)!}{(2n-2k)!!}=\frac{2^{n}n!}{(2n)!}\cdot\frac{(2n-2k)!}{2^{n-k}(n-k)!}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+C_{n-2k}=\frac{(-1)^{k}(2n-2k)!}{k!(n-k)!(n-2k)!}\cdot\frac{(n!)^{2}}{(2n)!}C_{n}\qquad k=0,1,\dots,\lfloor n/2\rfloor
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+小结
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ 上有界」导致 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是相邻整数的乘积 
+\begin_inset Formula $n(n+1)$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。如果最高次项系数取为 
+\begin_inset Formula $\frac{(2n)!}{2^{n}(n!)^{2}}$
+\end_inset
+
+，则得到 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶 Legendre 多项式
+\begin_inset Formula 
+\[
+\Legendre{n}(x)=\frac{1}{2^{n}}\sum_{k=0}^{\lfloor n/2\rfloor}\frac{(-1)^{k}(2n-2k)!}{k!(n-k)!(n-2k)!}x^{n-2k}=\frac{1}{2^{n}n!}\dv[n]{x}\left(x^{2}-1\right)^{n}
+\]
+
+\end_inset
+
+前几阶 Legendre 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Legendre{0}(x) & =1 & \Legendre{1}(x) & =x\\
+\Legendre{2}(x) & =\frac{3x^{2}-1}{2} & \Legendre{3}(x) & =\frac{5x^{3}-3x}{2}\\
+\Legendre{4}(x) & =\frac{35x^{4}-30x^{2}+3}{8} & \Legendre{5}(x) & =\frac{63x^{5}-70x^{3}+15x}{8}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Chebyshev 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=\sqrt{1-x^{2}}\qquad q(x)=0\qquad\rho(x)=\frac{1}{\sqrt{1-x^{2}}}\qquad(a,b)=(-1,1)
+\]
+
+\end_inset
+
+得到 Chebyshev 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(1-x^{2})u''-xu'+\lambda u=0\qquad x\in(-1,1)\label{eq:Chebyshev方程}
+\end{equation}
+
+\end_inset
+
+利用变量替换 
+\begin_inset Formula $x=\cos\theta$
+\end_inset
+
+ 可以将此方程化为简谐方程
+\begin_inset Formula 
+\begin{equation}
+\dv[2]{u}{\theta}+\lambda u=0\qquad\theta\in(0,\pi)\label{eq:与Chebyshev方程等价的简谐方程}
+\end{equation}
+
+\end_inset
+
+它的通解是熟知的简谐函数
+\begin_inset Formula 
+\[
+u(\theta)=C_{1}\cos\sqrt{\lambda}\theta+C_{2}\sin\sqrt{\lambda}\theta\qquad\theta\in[0,\pi]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特征值只能取完全平方数
+\end_layout
+
+\begin_layout Standard
+在变量替换 
+\begin_inset Formula $x=\cos\theta$
+\end_inset
+
+ 作用下，Chebyshev 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Chebyshev方程"
+
+\end_inset
+
+的（第一、二、三类齐次或周期、有界）边界条件可以导出简谐方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:与Chebyshev方程等价的简谐方程"
+
+\end_inset
+
+的第二类齐次边界条件
+\begin_inset Formula 
+\[
+\eval{\dv{u}{\theta}}_{\theta=0,\pi}=\eval{-\sqrt{1-x^{2}}\dv{u}{x}}_{x=1,-1}=0
+\]
+
+\end_inset
+
+由此可得 
+\begin_inset Formula $C_{2}=0$
+\end_inset
+
+ 且 
+\begin_inset Formula $\sqrt{\lambda}=n\in\mathbb{N}$
+\end_inset
+
+ 即 
+\begin_inset Formula $\lambda=n^{2}$
+\end_inset
+
+ 只能是完全平方数。不失一般性，可以取 
+\begin_inset Formula $C_{1}=1$
+\end_inset
+
+， 于是得到 Chebyshev 方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Chebyshev方程"
+
+\end_inset
+
+的解
+\begin_inset Formula 
+\[
+\ChebyshevI{n}(x)=\cos n\theta=\cos(n\arccos x)\qquad x\in[-1,1]
+\]
+
+\end_inset
+
+（可以证明）它是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的多项式，因此被称为第一类 Chebyshev 多项式。
+\end_layout
+
+\begin_layout Proof
+由 Euler 公式和二项式定理有
+\begin_inset Formula 
+\[
+\begin{aligned}\cos n\theta+\sqrt{-1}\sin n\theta & =\exp(\sqrt{-1}n\theta)\\
+ & =\left(\cos\theta+\sqrt{-1}\sin\theta\right)^{n}\\
+ & =\sum_{k=0}^{n}\binom{n}{k}\left(\cos\theta\right)^{n-k}\left(\sqrt{-1}\sin\theta\right)^{k}
+\end{aligned}
+\]
+
+\end_inset
+
+只考虑实部（即 
+\begin_inset Formula $k=0,2,4,\dots$
+\end_inset
+
+ 的项）可得
+\begin_inset Formula 
+\[
+\begin{aligned}\cos n\theta & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}\left(\cos\theta\right)^{n-2l}\left(\sqrt{-1}\sin\theta\right)^{2l}\\
+ & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}\left(\cos\theta\right)^{n-2l}\left(\cos^{2}\theta-1\right)^{l}\\
+ & =\sum_{l=0}^{\lfloor n/2\rfloor}\binom{n}{2l}x^{n-2l}\left(x^{2}-1\right)^{l}
+\end{aligned}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\ChebyshevI{n}(x)$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的多项式。
+\end_layout
+
+\begin_layout Subsection
+Bessel 函数
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=x\qquad q(x)=\frac{\nu^{2}}{x}\qquad\rho(x)=x\qquad(a,b)=(0,\infty)
+\]
+
+\end_inset
+
+得到 Bessel 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x^{2}u''+xu'+(\lambda x^{2}-\nu^{2})u=0
+\]
+
+\end_inset
+
+它的解被称为 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 阶 Bessel 函数:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\Bessel{\nu}(x)=\sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(\nu+n+1)}\left(\frac{x}{2}\right)^{2n+\nu}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+整数阶 Bessel 函数
+\end_layout
+
+\begin_layout Standard
+不失一般性，假设 
+\begin_inset Formula $m\in\mathbb{N}_{+}$
+\end_inset
+
+。由于 Gamma 函数在 
+\begin_inset Formula $0,-1,-2,\dots$
+\end_inset
+
+ 上的取值为 
+\begin_inset Formula $\infty$
+\end_inset
+
+，因此 
+\begin_inset Formula $\Bessel{-m}$
+\end_inset
+
+ 的前 
+\begin_inset Formula $m$
+\end_inset
+
+ 项的系数都是 
+\begin_inset Formula $0$
+\end_inset
+
+。重新选择求和指标 
+\begin_inset Formula $n=k+m$
+\end_inset
+
+，得到
+\begin_inset Formula 
+\[
+\begin{aligned}\Bessel{-m}(x)= & \sum_{n=0}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(-m+n+1)}\left(\frac{x}{2}\right)^{2n-m}=\sum_{n=m}^{\infty}\frac{(-1)^{n}/n!}{\Gamma(-m+n+1)}\left(\frac{x}{2}\right)^{2n-m}\\
+= & \sum_{k=0}^{\infty}\frac{(-1)^{k+m}/(k+m)!}{\Gamma(k+1)}\left(\frac{x}{2}\right)^{2k+m}=(-1)^{m}\sum_{k=0}^{\infty}\frac{(-1)^{k}/k!}{\Gamma(k+m+1)}\left(\frac{x}{2}\right)^{2k+m}\\
+= & (-1)^{m}\Bessel{m}(x)
+\end{aligned}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\Bessel{m}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Bessel{-m}$
+\end_inset
+
+ 线性相关。
+\end_layout
+
+\begin_layout Subsubsection
+Neumann 函数
+\end_layout
+
+\begin_layout Standard
+基于 
+\begin_inset Formula $\pm\nu$
+\end_inset
+
+ 阶 Bessel 函数，可以定义 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 阶 Neumann 函数（或第二类 Bessel 函数）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\Neumann{\nu}(x)=\frac{\cos\nu\pi\Bessel{\nu}(x)-\Bessel{-\nu}(x)}{\sin\nu\pi}\qquad\forall x>0}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\nu=n\in\mathbb{Z}$
+\end_inset
+
+，则上式应当理解为 
+\begin_inset Formula $\nu\to n$
+\end_inset
+
+ 时的极限。无论 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 是否是整数，它都与 
+\begin_inset Formula $\Bessel{\nu}$
+\end_inset
+
+ 线性无关。
+\end_layout
+
+\begin_layout Subsubsection
+半整数阶 Bessel 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Bessel{1/2}(x)=\sqrt{\frac{2}{\pi x}}\sin x\qquad\Bessel{-1/2}(x)=\sqrt{\frac{2}{\pi x}}\cos x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+递推关系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\Bessel{\nu+1}(x)= & \frac{2\nu}{x}\Bessel{\nu}(x)-\Bessel{\nu-1}(x)\\
+\Bessel{\nu}'(x)= & \Bessel{\nu-1}(x)-\frac{\nu}{x}\Bessel{\nu}(x)\\
+= & \frac{\nu}{x}\Bessel{\nu}(x)-\Bessel{\nu+1}(x)
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Laguerre 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=x\exp(-x)\qquad q(x)=0\qquad\rho(x)=\exp(-x)\qquad(a,b)=(0,\infty)
+\]
+
+\end_inset
+
+得到 Laguerre 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+xu''+(1-x)u'+\lambda u=0\qquad x\in(0,\infty)
+\]
+
+\end_inset
+
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Laguerre方程的幂级数解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+节中，已经由 Frobenius 方法求得了它的一个解
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{k=0}^{\infty}a_{k}x^{k}=\sum_{k=0}^{\infty}\binom{k-1-\lambda}{k}\frac{x^{k}}{k!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特征值只能取非负整数
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda\notin\mathbb{N}$
+\end_inset
+
+，则 
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{k+1}=\frac{k-\lambda}{(k+1)^{2}}a_{k}\approx\frac{k+1}{(k+1)^{2}}a_{k}=\frac{a_{k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp x=\sum_{k=0}^{\infty}\frac{x^{k}}{k!}=\sum_{k=0}^{\infty}b_{k}x^{k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{k+1}=\frac{1}{(k+1)!}=\frac{b_{k}}{k+1}
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=0}(x)=\sum_{k=0}^{\infty}a_{k}x^{k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to+\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $\exp x$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{0}^{+\infty}u^{*}(x)u(x)\exp(-x)\dd{x}\approx\int_{0}^{+\infty}\exp x\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=0}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}\qquad\lambda=n\in\mathbb{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+小结
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $(0,+\infty)$
+\end_inset
+
+ 上平方可积」导致 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是非负整数 
+\begin_inset Formula $n$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。如果最低次项系数取为 
+\begin_inset Formula $1$
+\end_inset
+
+，则得到 
+\begin_inset Formula $n$
+\end_inset
+
+ 阶 Laguerre 多项式：
+\begin_inset Formula 
+\[
+\Laguerre{n}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}=\frac{\exp x}{n!}\dv[n]{x}\left[x^{n}\exp(-x)\right]
+\]
+
+\end_inset
+
+前几阶 Laguerre 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Laguerre{0}(x) & =1\\
+\Laguerre{1}(x) & =1-x\\
+2!\Laguerre{2}(x) & =2!-4x+x^{2}\\
+3!\Laguerre{3}(x) & =3!-18x+9x^{2}-x^{3}\\
+4!\Laguerre{4}(x) & =4!-96x+72x^{2}-16x^{3}+x^{4}\\
+5!\Laguerre{5}(x) & =5!-600x+600x^{2}-200x^{3}+25x^{4}-x^{5}\\
+6!\Laguerre{6}(x) & =6!-4320x+5400x^{2}-2400x^{3}+450x^{4}-36x^{5}+x^{6}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hermite 多项式
+\end_layout
+
+\begin_layout Standard
+在 Sturm–Liouville 型方程
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Sturm–LiouvilleODE"
+
+\end_inset
+
+中取
+\begin_inset Formula 
+\[
+p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,+\infty)
+\]
+
+\end_inset
+
+得到 Hermite 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u''-2xu'+\lambda u=0\qquad x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+在第
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Hermite方程的幂级数解"
+
+\end_inset
+
+节中，已经由 Frobenius 方法求得了它的两个线性无关解
+\begin_inset Formula 
+\[
+\begin{aligned}u_{s=1}(x) & =\sum_{k=0}^{\infty}\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k+1}}{(2k+1)!}\\
+u_{s=0}(x) & =\sum_{k=0}^{\infty}\binom{k-1-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k}}{(2k)!}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 的平方可积条件
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda\notin\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，则 
+\begin_inset Formula $u_{s=1}$
+\end_inset
+
+ 的所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k+1)-\lambda}{(2k+3)(2k+2)}a_{2k}\approx\frac{2(2k+3)}{(2k+3)(2k+2)}a_{2k}=\frac{a_{2k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp(x^{2})=\sum_{k=0}^{\infty}\frac{(x^{2})^{k}}{k!}=\sum_{k=0}^{\infty}\frac{x^{2k}}{k!}=\sum_{k=0}^{\infty}b_{2k}x^{2k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=1}(x)=x\cdot\sum_{n=0}^{\infty}a_{2k}x^{2k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to\pm\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $x\exp(x^{2})$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}x^{2}\exp(x^{2})\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\left\{ 2(2k+1)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=1}(x)=x\cdot\left(a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\right)\qquad\lambda=2(2k+1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的平方可积条件
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 不属于 
+\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，则 
+\begin_inset Formula $u_{s=0}$
+\end_inset
+
+ 的所有系数都不可能为零，并且对于充分大的 
+\begin_inset Formula $k$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+a_{2k+2}=\frac{2(2k)-\lambda}{(2k+2)(2k+1)}a_{2k}\approx\frac{2(2k+1)}{(2k+2)(2k+1)}a_{2k}=\frac{a_{2k}}{k+1}
+\]
+
+\end_inset
+
+这与
+\begin_inset Formula 
+\[
+\exp(x^{2})=\sum_{k=0}^{\infty}\frac{(x^{2})^{k}}{k!}=\sum_{k=0}^{\infty}\frac{x^{2k}}{k!}=\sum_{k=0}^{\infty}b_{2k}x^{2k}
+\]
+
+\end_inset
+
+中的系数
+\begin_inset Formula 
+\[
+b_{2k+2}=\frac{1}{(k+1)!}=\frac{b_{2k}}{k+1}
+\]
+
+\end_inset
+
+一致，因此级数解 
+\begin_inset Formula $u_{s=0}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x\to\pm\infty$
+\end_inset
+
+ 时的行为与 
+\begin_inset Formula $\exp(x^{2})$
+\end_inset
+
+ 一致。这样的解不满足平方可积条件
+\begin_inset Formula 
+\[
+\ip{u}{u}=\int_{-\infty}^{+\infty}u^{*}(x)u(x)\exp(-x^{2})\dd{x}\approx\int_{-\infty}^{+\infty}\exp(x^{2})\dd{x}\to+\infty
+\]
+
+\end_inset
+
+因此特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须取自 
+\begin_inset Formula $\left\{ 2(2k)\right\} _{k=0}^{\infty}$
+\end_inset
+
+，以使无穷多项的级数截断为有限项的多项式
+\begin_inset Formula 
+\[
+u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+小结
+\end_layout
+
+\begin_layout Standard
+综上，「方程的解在 
+\begin_inset Formula $(-\infty,+\infty)$
+\end_inset
+
+ 上平方可积」导致 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 必须是偶数 
+\begin_inset Formula $2m$
+\end_inset
+
+，相应的解为 
+\begin_inset Formula $m$
+\end_inset
+
+ 次多项式。如果最高次项系数取为 
+\begin_inset Formula $2^{m}$
+\end_inset
+
+，则得到 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶 Hermite 多项式：
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\lambda=2(2n)$
+\end_inset
+
+，则相应的 
+\begin_inset Formula $2n$
+\end_inset
+
+ 阶 Hermite 多项式为
+\begin_inset Formula 
+\[
+\begin{aligned}\Hermite{2n}(x) & =C_{0}+C_{2}x^{2}+\cdots+C_{2n}x^{2n} & n & =0,1,2,\dots\\
+C_{2n} & =2^{\lambda/2} & \lambda & =2(2n)\\
+C_{k-2} & =\frac{(k)(k-1)}{2(k-2)-\lambda}C_{k} & k & =2n,2n-2,\dots,4,2
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+如果 
+\begin_inset Formula $\lambda=2(2n+1)$
+\end_inset
+
+，则相应的 
+\begin_inset Formula $2n+1$
+\end_inset
+
+ 阶 Hermite 多项式为
+\begin_inset Formula 
+\[
+\begin{aligned}\Hermite{2n+1}(x) & =C_{1}x+C_{3}x^{3}+\cdots+C_{2n+1}x^{2n+1} & n & =0,1,2,\dots\\
+C_{2n+1} & =2^{\lambda/2} & \lambda & =2(2n+1)\\
+C_{k-2} & =\frac{(k+1)(k)}{2(k-1)-\lambda}C_{k} & k & =2n+1,2n-1,\dots,5,3
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+前几阶 Hermite 多项式分别为
+\begin_inset Formula 
+\[
+\begin{aligned}\Hermite{0}(x) & =1\\
+\Hermite{1}(x) & =2x\\
+\Hermite{2}(x) & =4x^{2}-2\\
+\Hermite{3}(x) & =8x^{3}-12x\\
+\Hermite{4}(x) & =16x^{4}-48x^{2}+12\\
+\Hermite{5}(x) & =32x^{5}-160x^{3}+120x\\
+\Hermite{6}(x) & =64x^{5}-480x^{4}+720x^{2}-120
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+超几何函数
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+超几何
+\emph default
+ (hypergeometric) 函数是超几何方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x(x-1)u''+[(1+a+b)x-c]u'+abu=0\qquad\forall x\in[0,1]
+\]
+
+\end_inset
+
+的解，通常只能通过幂级数来表示，级数中各项的系数可以通过 Gamma 函数来表示：
+\begin_inset Formula 
+\[
+\HypGeo(x;a,b;c)=\frac{\Gamma(c)}{\Gamma(a)\Gamma(b)}\sum_{n=0}^{\infty}\frac{\Gamma(a+n)\Gamma(b+n)}{\Gamma(c+n)}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}b^{(n)}}{c^{(n)}}\frac{x^{n}}{n!}
+\]
+
+\end_inset
+
+这里为了方便记忆，引入了记号
+\begin_inset Formula 
+\[
+\alpha^{(n)}=\frac{\Gamma(\alpha+n)}{\Gamma(\alpha)}\qquad\forall\alpha\ne0,-1,-2,\dots
+\]
+
+\end_inset
+
+显然，此函数关于参数 
+\begin_inset Formula $a$
+\end_inset
+
+ 和 
+\begin_inset Formula $b$
+\end_inset
+
+ 是对称的，而参数 
+\begin_inset Formula $c$
+\end_inset
+
+ 是独立的，因此在函数名下标和参数列表中将它们区分为两组。
+\end_layout
+
+\begin_layout Subsubsection
+积分表示
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\HypGeo(x;a,b;c)= & \frac{\Gamma(c)}{\Gamma(b)\Gamma(c-b)}\int_{0}^{1}(1-t)^{c-b-1}t^{b-1}(1-tx)^{-a}\dd{t}\\
+= & \frac{\Gamma(c)}{\Gamma(a)\Gamma(c-a)}\int_{0}^{1}(1-t)^{c-a-1}t^{a-1}(1-tx)^{-b}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+用于表示其他函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\ln(1+x)= & \HypGeo(-x;1,1;2)\cdot x\\
+(1+x)^{\alpha}= & \HypGeo(-x;-\alpha,b;b)\\
+\operatorname{K}(k)= & \HypGeo\left(k^{2};\frac{1}{2},\frac{1}{2};1\right)\cdot\frac{\pi}{2}\\
+\operatorname{E}(k)= & \HypGeo\left(k^{2};\frac{1}{2},-\frac{1}{2};1\right)\cdot\frac{\pi}{2}
+\end{aligned}
+\]
+
+\end_inset
+
+最后两个等式可以通过以下代码来验证：
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "ellip_vs_hyp2f1.py"
+lstparams "language=Python"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+合流超几何函数
+\end_layout
+
+\begin_layout Standard
+将 
+\begin_inset Formula $x=x/b$
+\end_inset
+
+ 代入超几何方程，同时令 
+\begin_inset Formula $b\to\infty$
+\end_inset
+
+，即得到
+\emph on
+合流
+\emph default
+ (confluent) 超几何方程
+\begin_inset Formula 
+\[
+xu''+(c-x)u'-au=0
+\]
+
+\end_inset
+
+该方程的解被称为合流超几何函数，可以视作是超几何函数的极限情形：
+\begin_inset Formula 
+\[
+\ConHypGeo(x;a;c)=\lim\limits _{b\to\infty}\HypGeo(x/b;a,b;c)=\frac{\Gamma(c)}{\Gamma(a)}\sum_{n=0}^{\infty}\frac{\Gamma(a+n)}{\Gamma(c+n)}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}}{c^{(n)}}\frac{x^{n}}{n!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+用于表示其他函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\exp(x)=\sum_{n=0}^{\infty}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}}{a^{(n)}}\frac{x^{n}}{n!}=\ConHypGeo(x;a;a)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -18,7 +18,7 @@ class Derived : public Base { };  // ❌ 用作基类的 Base 还没有被定义
 
 ```cpp
 class Derived : public Base;  // ❌ 派生列表 只出现在 定义 中
-class Derived;                // ✔️ 派生列表 不出现在 声明 中
+class Derived;                // ✅ 派生列表 不出现在 声明 中
 ```
 
 ### 构造函数
@@ -71,7 +71,7 @@ class Derived : public Base {
   friend void visit(Base& b);
   int private_;  // 派生类的 private 成员
 };
-// ✔️ 可以通过「派生类对象」访问「基类的 protected 成员」:
+// ✅ 可以通过「派生类对象」访问「基类的 protected 成员」:
 void visit(Derived &d) { d.private_ = d.protected_ = 0; }
 // ❌ 不能通过「基类对象」访问「基类的 protected 成员」:
 visit(Base &b) { b.protected_ = 0; }
@@ -145,6 +145,7 @@ vec.push_back(pd);  // std::shared_ptr<Derived> 自动转换为 std::shared_ptr<
 ### 基类到派生类的转换
 一个基类指针或引用，可能指向一个 *基类对象*，也可能指向一个 *派生类对象*，
 因此，不存在基类到派生类的自动转换：
+
 ```cpp
 Base b;
 Derived* pd = &b;  // ❌
@@ -153,13 +154,13 @@ Derived& rd = b;   // ❌
 即使一个 *基类指针或引用* 的确指向一个 *派生类对象*，这种自动转换也不存在：
 ```cpp
 Derived d;
-Base* pb = &d;     // ✔️ 可以从 Derived* 转换到 Base*
+Base* pb = &d;     // ✅ 可以从 Derived* 转换到 Base*
 Derived* pd = pb;  // ❌ 无法从 Base* 转换到 Derived*
 ```
 
 尽管不存在 *自动* 转换，但还是可以 *手动* 实现从基类到派生类的转换：
-- 一般情况下，可以用 `std::static_cast` 来执行「静态类型转换 (static cast)」，该转换将在 *编译期* 发生。
-- 如果基类定义了[虚函数](#虚函数)，则可以用 `std::dynamic_cast` 来执行 *基类指针或引用* 到 *派生类指针或引用* 的「动态类型转换 (dynamic cast)」，该转换将在 *运行期* 发生。
+- 一般情况下，可以用 `static_cast<Derived>()` 来执行「静态类型转换 (static cast)」，该转换将在 *编译期* 发生。
+- 如果基类定义了[虚函数](#虚函数)，则可以用 `dynamic_cast<Derived>()` 来执行 *基类指针或引用* 到 *派生类指针或引用* 的「动态类型转换 (dynamic cast)」，该转换将在 *运行期* 发生。
 - ⚠️ 尽管存在以上语言支持，但其目的是为了兼容 C-style API。在 Modern C++ 中使用这些机制往往意味着设计存在缺陷。
 
 ## 虚函数

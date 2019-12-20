@@ -1,0 +1,6985 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\master README.lyx
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+上级文件：主文件，数学/PDE，物理/流体力学，算法/CFD
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+激波管
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:shock-tube"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!~ for 1D Euler equations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+问题定义
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维 Euler 方程的 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:riemann_euler_1d"
+
+\end_inset
+
+寻找分段光滑的函数 
+\begin_inset Formula $\rho,u,p$
+\end_inset
+
+，使其（在广义导数意义下）满足一维 Euler 方程
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!Euler equations!1D ~
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)\\
+\ket{U}=\begin{bmatrix}\rho\\
+\rho u\\
+\rho E
+\end{bmatrix}\qquad\ket{F}=\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho Hu
+\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\qquad H=E+\frac{p}{\rho}
+\end{gathered}
+\label{eq:euler_1d_conservative}
+\end{equation}
+
+\end_inset
+
+及间断的初始条件
+\begin_inset Formula 
+\[
+\ket{U(x,0)}=\begin{cases}
+\ket{U_{-}} & x<0\\
+\ket{U_{+}} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 被称作「守恒变量 (conservative variables)」，用它写出的方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_conservative"
+
+\end_inset
+
+ 被称作「守恒型」一维 Euler 方程；而初始条件通常由可以被直接测量的物理量 
+\begin_inset Formula $\rho,u,p$
+\end_inset
+
+ 给出，它们被称作「原始变量 (primitive variables)」。表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_1d_riemann_problems"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 给出了六组典型的初始条件及相应的解，图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:shock_tube_sod"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:shock_tube_vacuumed"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 画出了这些解在 
+\begin_inset Formula $t_{\text{plot}}$
+\end_inset
+
+ 时刻的波形。
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:euler_1d_riemann_problems"
+
+\end_inset
+
+一维 Euler 方程 Riemann 问题
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No.
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\rho_{-}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{5.99924}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\rho_{+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.125}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{5.99242}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{-}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{19.5975}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{-2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{-4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{-6.19633}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{+2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{+4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $p_{-}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{460.894}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1000}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.01}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $p_{+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{46.0950}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.01}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{100}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.4}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{\text{plot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.25}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.035}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.012}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.035}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.15}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{.1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $p_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.303130}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{1691.647}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{460.8938}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{46.09504}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.001894}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.927453}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{8.689774}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{19.59745}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{-6.196328}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\rho_{2-}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.426319}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{14.28235}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.575062}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{5.992417}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.021852}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+\begin_inset Formula $\rho_{2+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.265574}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{31.04260}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{5.999241}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.575113}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0.021852}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+num{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/sod.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_sod"
+
+\end_inset
+
+Sod problem
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/shock_collision.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_shock_collision"
+
+\end_inset
+
+Shock Collision
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/blast_from_left.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_blast_from_left"
+
+\end_inset
+
+Blast from Left
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/blast_from_right.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_blast_from_right"
+
+\end_inset
+
+Blast from Right
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/almost_vacuumed.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_blast_almost_vacuumed"
+
+\end_inset
+
+Almost Vacuumed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "b"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename shock_tubes/vacuum.pdf
+	width 100col%
+	scaleBeforeRotation
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:shock_tube_vacuumed"
+
+\end_inset
+
+Vacuumed
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_conservative"
+
+\end_inset
+
+ 可以改写为「非守恒型」：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\qquad\ket{U'}=\begin{bmatrix}\rho\\
+u\\
+p
+\end{bmatrix}\qquad\Matrix{A'(U')}=\begin{bmatrix}\begin{array}{ccc}
+u & \rho\\
+ & u & \rho^{-1}\\
+ & \gamma p & u
+\end{array}\end{bmatrix}\label{eq:euler_1d_non_conservative}
+\end{equation}
+
+\end_inset
+
+根据定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:变量替换不改变特征值"
+
+\end_inset
+
+–
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:变量替换不改变Riemann不变量"
+
+\end_inset
+
+：（非退化的）变量替换不改变方程的双曲性、特征值、广义 Riemann 不变量；特征向量按定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:特征向量变换法则"
+
+\end_inset
+
+ 给出的法则作变换。下面将会看到：用「非守恒型」方程作特征场分析，远比用「守恒型」方程来得简单；但在分析激波速度时，必须用「守恒型」方程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+特征场
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:euler_char_field_1d"
+
+\end_inset
+
+一维 Euler 方程的特征场
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No.
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u-a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u+a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+特征向量 
+\begin_inset Formula $\ket{R_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+非守恒型
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\rho\\
+-a\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}1\\
+0\\
+0
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\rho\\
+a\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+守恒型
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}1\\
+u-a\\
+H-ua
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}1\\
+u\\
+u^{2}/2
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}1\\
+u+a\\
+H+ua
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{\grad\lambda_{i}}{R_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+广义 Riemann 不变量
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ u,p\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_char_field_1d"
+
+\end_inset
+
+ 列出了一维 Euler 方程的特征场，其中 
+\begin_inset Formula $a,H$
+\end_inset
+
+ 分别表示声速与总焓：
+\begin_inset Formula 
+\[
+a^{2}=\gamma RT=\frac{\gamma p}{\rho}\qquad H=E+\frac{p}{\rho}=\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}
+\]
+
+\end_inset
+
+下面给出由守恒型方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_conservative"
+
+\end_inset
+
+ 导出表中各项的具体过程（较为繁琐）。
+\end_layout
+
+\begin_layout Subsubsection
+Jacobian 矩阵
+\end_layout
+
+\begin_layout Standard
+原始变量 
+\begin_inset Formula $\rho,u,p$
+\end_inset
+
+ 及通量 
+\begin_inset Formula $\ket{F}$
+\end_inset
+
+ 的分量可以表示为守恒变量 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的函数：
+\begin_inset Formula 
+\[
+\begin{gathered}\rho=U_{1}\qquad u=\frac{U_{2}}{U_{1}}\qquad p=(\gamma-1)U_{3}-\frac{\gamma-1}{2}\frac{U_{2}^{2}}{U_{1}}\\
+F_{1}=U_{2}\qquad F_{2}=(\gamma-1)U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}}\qquad F_{3}=\left(\gamma U_{3}-\frac{\gamma-1}{2}\frac{U_{2}^{2}}{U_{1}}\right)\frac{U_{2}}{U_{1}}
+\end{gathered}
+\]
+
+\end_inset
+
+于是，可以将守恒型一维 Euler 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\Matrix{A(U)} & =\begin{bmatrix}\pdv*{F_{1}}{U_{1}} & \pdv*{F_{1}}{U_{2}} & \pdv*{F_{1}}{U_{3}}\\
+\pdv*{F_{2}}{U_{1}} & \pdv*{F_{2}}{U_{2}} & \pdv*{F_{2}}{U_{3}}\\
+\pdv*{F_{3}}{U_{1}} & \pdv*{F_{3}}{U_{2}} & \pdv*{F_{3}}{U_{3}}
+\end{bmatrix}\\
+ & =\begin{bmatrix}0 & 1 & 0\\
+\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}^{2}} & (3-\gamma)\frac{U_{2}^{2}}{U_{1}^{2}} & \gamma-1\\
+\left((\gamma-1)\frac{U_{2}^{2}}{U_{1}^{2}}\frac{U_{2}}{U_{1}}-\gamma\frac{U_{3}}{U_{1}}\frac{U_{2}}{U_{1}}\right) & \left(\gamma\frac{U_{3}}{U_{1}}-\frac{\gamma-1}{2}\frac{3U_{2}^{2}}{U_{1}^{2}}\right) & \gamma\frac{U_{2}}{U_{1}}
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $\frac{U_{2}}{U_{1}}=u$
+\end_inset
+
+ 及 
+\begin_inset Formula $\gamma\frac{U_{3}}{U_{1}}=\gamma E$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\Matrix{A(U)}=\begin{bmatrix}0 & 1 & 0\\
+0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma-1\\
+\left((\gamma-1)u^{3}-\gamma Eu\right) & \big(\gamma E-1.5(\gamma-1)u^{2}\big) & \gamma u
+\end{bmatrix}
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $\gamma E=\frac{a^{2}}{\gamma-1}+\gamma\frac{u^{2}}{2}$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\Matrix{A(U)}=\begin{bmatrix}0 & 1 & 0\\
+0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma-1\\
+\left((0.5\gamma-1)u^{3}-\frac{a^{2}}{\gamma-1}u\right) & \left((1.5-\gamma)u^{2}-\frac{a^{2}}{\gamma-1}\right) & \gamma u
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特征值、特征向量
+\end_layout
+
+\begin_layout Standard
+特征值问题 
+\begin_inset Formula $\Matrix{A}\ket{R}=\lambda\ket{R}$
+\end_inset
+
+ 有三组解：
+\begin_inset Formula 
+\[
+\begin{cases}
+\lambda_{1}=u-a\\
+\ket{R_{1}}=\begin{bmatrix}1\\
+u-a\\
+H-ua
+\end{bmatrix}
+\end{cases}\qquad\begin{cases}
+\lambda_{2}=u\\
+\ket{R_{2}}=\begin{bmatrix}1\\
+u\\
+u^{2}/2
+\end{bmatrix}
+\end{cases}\qquad\begin{cases}
+\lambda_{3}=u+a\\
+\ket{R_{3}}=\begin{bmatrix}1\\
+u+a\\
+H+ua
+\end{bmatrix}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+一维 Euler 方程的第一、三特征场是真正非线性的
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!genuinely nonlinear ~
+\end_layout
+
+\end_inset
+
+，第二特征场是线性退化的
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!linearly degenerate ~
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+关键步骤是计算 
+\begin_inset Formula $\bra{\grad{\lambda}}$
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+第二特征场的特征值为 
+\begin_inset Formula $\lambda_{2}(U)=U_{2}/U_{1}$
+\end_inset
+
+，它的梯度为
+\begin_inset Formula 
+\[
+\bra{\grad{\lambda_{2}}}=\frac{1}{U_{1}}\begin{bmatrix}-\frac{U_{2}}{U_{1}} & 1 & 0\end{bmatrix}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}
+\]
+
+\end_inset
+
+相应的特征场是线性退化的：
+\begin_inset Formula 
+\[
+\ip{\grad{\lambda_{2}}}{R_{2}}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}\begin{bmatrix}1\\
+u\\
+u^{2}/2
+\end{bmatrix}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+第一、三特征场的特征值含有声速 
+\begin_inset Formula $a$
+\end_inset
+
+，因此需先计算 
+\begin_inset Formula $\bra{\grad{a}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\bra{\grad{a}} & =\bra{\frac{\grad(a^{2})}{2a}}=\frac{\gamma^{2}-\gamma}{2a}\bra{\grad(\frac{U_{3}}{U_{1}}-\frac{1}{2}\left(\frac{U_{2}}{U_{1}}\right)^{2})}\\
+ & =\frac{\gamma^{2}-\gamma}{2a}\frac{1}{U_{1}}\begin{bmatrix}\left(\left(\frac{U_{2}}{U_{1}}\right)^{2}-\frac{U_{3}}{U_{1}}\right) & -\frac{U_{2}}{U_{1}} & 1\end{bmatrix}\\
+ & =\frac{\gamma^{2}-\gamma}{2a\rho}\begin{bmatrix}\left(\frac{u^{2}}{2}-\frac{a^{2}}{\gamma^{2}-\gamma}\right) & -u & 1\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+相应的特征场是真正非线性的：
+\begin_inset Formula 
+\[
+\begin{aligned}\bra{\grad{\lambda_{1}}}=\bra{\grad{u}}-\bra{\grad{a}} & \implies\ip{\grad{\lambda_{1}}}{R_{1}}=-\frac{1+\gamma}{2}\frac{a}{\rho}\ne0\\
+\bra{\grad{\lambda_{3}}}=\bra{\grad{u}}+\bra{\grad{a}} & \implies\ip{\grad{\lambda_{3}}}{R_{3}}=+\frac{1+\gamma}{2}\frac{a}{\rho}\ne0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+第一、三基本波可能是激波、膨胀波，或作为二者退化情形的接触间断；第二基本波只可能是接触间断。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+广义 Riemann 不变量
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $u$
+\end_inset
+
+ 与 
+\begin_inset Formula $p$
+\end_inset
+
+ 是第二特征场（
+\begin_inset Formula $\lambda_{2}=u$
+\end_inset
+
+）的两个独立的广义 Riemann 不变量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由
+\begin_inset Formula 
+\[
+\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u}=\frac{\dd{(\rho E)}}{u^{2}/2}
+\]
+
+\end_inset
+
+可得两个独立的首次积分：
+\begin_inset Formula 
+\[
+\begin{aligned}\dd{u}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u}\\
+\dd{p}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho E)}}{u^{2}/2}\qc\dd{u}=0
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\end_inset
+
+ 是第一特征场的两个独立的广义 Riemann 不变量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $u-\frac{2a}{\gamma-1}$
+\end_inset
+
+ 是第三特征场的两个独立的广义 Riemann 不变量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+这里只给出第一特征场的证明。由
+\begin_inset Formula 
+\[
+\ket{\dd U}\parallel\ket{R_{2}}\implies\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u-a}=\frac{\dd{(\rho E)}}{H-ua}
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\begin{aligned}\rho\dd{u}+a\dd{\rho}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u-a}\\
+\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}=0 & \impliedby\begin{cases}
+(H-ua)\dd{\rho}=\dd{(\rho E)}\\
+\rho E=p/(\gamma-1)+\rho u^{2}/2=\rho H-p\\
+\rho\dd{u}+a\dd{\rho}=0
+\end{cases}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+第二行左端可以利用积分因子 
+\begin_inset Formula $\frac{1-\gamma}{\rho^{\gamma}}$
+\end_inset
+
+ 化为全微分：
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}\right) & =\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{\dd{p}}{1-\gamma}+\frac{\gamma p}{\gamma-1}\frac{\dd{\rho}}{\rho}\right)\\
+ & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma-1}\dd{\rho}=\dd(p\rho^{-\gamma})
+\end{aligned}
+\]
+
+\end_inset
+
+因此，
+\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\end_inset
+
+ 是第一特征场的一个广义 Riemann 不变量，相应的物理过程是等熵的。
+\end_layout
+
+\begin_layout Itemize
+由等熵条件可得
+\begin_inset Formula 
+\[
+\begin{aligned}\dd{a} & =\dd{\sqrt{\gamma p\rho^{-1}}}=\dd{\sqrt{\rho^{\gamma-1}\underbrace{\gamma p\rho^{-\gamma}}_{\text{constant}}}}=\sqrt{\gamma p\rho^{-\gamma}}\dd{\rho^{\frac{\gamma-1}{2}}}\\
+ & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma-1}{2}\rho^{\frac{\gamma-1}{2}-1}\dd{\rho}=\frac{\gamma-1}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}=\frac{\gamma-1}{2}\frac{a\dd{\rho}}{\rho}
+\end{aligned}
+\]
+
+\end_inset
+
+利用这一结果及积分因子 
+\begin_inset Formula $\frac{1}{\rho}$
+\end_inset
+
+，可以将 
+\begin_inset Formula $\rho\dd{u}+a\dd{\rho}=0$
+\end_inset
+
+ 左端化为全微分：
+\begin_inset Formula 
+\[
+\frac{1}{\rho}\left(\rho\dd{u}+a\dd{\rho}\right)=\dd{u}+\frac{2}{\gamma-1}\dd{a}=\dd(u+\frac{2a}{\gamma-1})
+\]
+
+\end_inset
+
+因此，
+\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\end_inset
+
+ 是第一特征场的一个广义 Riemann 不变量。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+解的自相似结构
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+Euler 方程 Riemann 问题自相似解的结构
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-4.5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (4.5,0)node[below]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5)node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% 1-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (120+4:4.5)node[left ]{$
+\backslash
+alpha_{1-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (120-4:4.5)node[above]{$
+\backslash
+alpha_{1+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% 2-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (80:4.5)node[above]{$
+\backslash
+alpha_{2
+\backslash
+pm}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% 3-wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (55-4:4.5)node[right]{$
+\backslash
+alpha_{3+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (O) -- (55+4:4.5)node[above]{$
+\backslash
+alpha_{3-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% undisturbed region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (0:3.5) arc [start angle=0, end angle=55-4, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+mqty{
+\backslash
+rho_{+}&u_{+}&p_{+}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (120+4:3.5) arc [start angle=120+4, end angle=180, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+mqty{
+\backslash
+rho_{-}&u_{-}&p_{-}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% star region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (55+4:3.5) arc [start angle=55+4, end angle=120-4, radius=3.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near end, above, sloped]{$
+\backslash
+mqty{u_{2}&p_{2}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (55+4:2.5) arc [start angle=55+4, end angle=80, radius=2.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+rho_{2+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (80:2.5) arc [start angle=80, end angle=120-4, radius=2.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[midway, above, sloped]{$
+\backslash
+rho_{2-}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% tangential components
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (0:1.5) arc [start angle=0, end angle=80, radius=1.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near start, above, sloped]{$
+\backslash
+mqty{v_{+}&w_{+}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[<->, dotted] (80:1.5) arc [start angle=80, end angle=180, radius=1.5]
+\end_layout
+
+\begin_layout Plain Layout
+
+  node[near end, above, sloped]{$
+\backslash
+mqty{v_{-}&w_{-}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Riemann 问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:riemann_euler_1d"
+
+\end_inset
+
+ 的解是自相似的
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+solution!self-similar ~
+\end_layout
+
+\end_inset
+
+：包括四个扇形常值区域 
+\begin_inset Formula $\left\{ C_{i}\right\} _{i=1}^{4}$
+\end_inset
+
+ (
+\begin_inset Formula $C$
+\end_inset
+
+ 表示 
+\bar under
+c
+\bar default
+onstant)，以及三个基本波 
+\begin_inset Formula $\left\{ E_{k}\right\} _{k=1}^{3}$
+\end_inset
+
+ (
+\begin_inset Formula $E$
+\end_inset
+
+ 表示 
+\bar under
+e
+\bar default
+lementary)：
+\begin_inset Formula 
+\begin{equation}
+\ket{U(x,t)}=\begin{cases}
+\ket{U_{-}} & x/t\in C_{1}=(-\infty,\alpha_{1-})\\
+\ket{U_{1*}(x/t)} & x/t\in E_{1}=[\alpha_{1-},\alpha_{1+}]\\
+\ket{U_{2-}} & x/t\in C_{2}=(\alpha_{1+},\alpha_{2-})\\
+\ket{U_{2*}(x/t)} & x/t\in E_{2}=[\alpha_{2-},\alpha_{2+}]\\
+\ket{U_{2+}} & x/t\in C_{3}=(\alpha_{2+},\alpha_{3-})\\
+\ket{U_{3*}(x/t)} & x/t\in E_{3}=[\alpha_{3-},\alpha_{3+}]\\
+\ket{U_{+}} & x/t\in C_{4}=(\alpha_{3+},+\infty)
+\end{cases}\label{eq:riemann_euler_1d_solution_structure}
+\end{equation}
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ket{U_{-}},\ket{U_{+}}$
+\end_inset
+
+ 是已知的初始条件。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\ket{U(x/t)}$
+\end_inset
+
+ 在第 
+\begin_inset Formula $k$
+\end_inset
+
+ 基本波内部的值：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+对于激波
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+discontinuity!shock wave
+\end_layout
+
+\end_inset
+
+或接触间断
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+，
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ 是厚度为无穷小的薄层（即 
+\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+\end_inset
+
+），因此 
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
+\end_inset
+
+ 在其「内部」的值是无法定义的。在画图时，可以取作两侧的平均值：
+\begin_inset Formula $\ket{U_{k*}}=\nicefrac{1}{2}\ket{U(\alpha_{k-})}+\nicefrac{1}{2}\ket{U(\alpha_{k+})}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+对膨胀波，
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ 是扇形区域（即 
+\begin_inset Formula $\alpha_{k-}<\alpha_{k+}$
+\end_inset
+
+），
+\begin_inset Formula $\ket{U_{k*}(x/t)}$
+\end_inset
+
+ 的值可以唯一确定。
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\ket{U_{2-}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\ket{U_{2+}}$
+\end_inset
+
+ 分别为 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 在第二基本波 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+ 的左侧和右侧的值：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+由第二特征场的两个广义 Riemann 不变量可得 
+\begin_inset Formula $u_{2-}=u_{2+}$
+\end_inset
+
+ 及 
+\begin_inset Formula $p_{2-}=p_{2+}$
+\end_inset
+
+，因此可以省略它们下标中的 
+\begin_inset Formula $\pm$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+一般情况下，
+\begin_inset Formula $\rho_{2-}\ne\rho_{2+}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+第二基本波两侧的区域又被称为「星号区域 (the star region)」，其中的基本变量记作 
+\begin_inset Formula $\rho_{*\pm},u_{*},p_{*}$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+ 画出了这种自相似结构（暂时忽略其中的 
+\begin_inset Formula $v_{\pm},w_{\pm}$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+速度差
+\end_layout
+
+\begin_layout Subsubsection
+激波两侧的速度差
+\end_layout
+
+\begin_layout Standard
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:riemann_problems"
+
+\end_inset
+
+》一节给出的跳跃关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:JumpConditions"
+
+\end_inset
+
+ 式）并没有明确指出激波的方向，即：下标中的 
+\begin_inset Formula $\pm$
+\end_inset
+
+ 只用来区分激波的两侧，但没有指定 
+\begin_inset Formula $+$
+\end_inset
+
+ 为波前（扰动未达区域）或波后（扰动已过区域）。在本节中，明确区分波前与波后对问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:riemann_euler_1d"
+
+\end_inset
+
+ 的求解是至关重要的，因此需引入如下记号：
+\end_layout
+
+\begin_layout Notation
+下标 
+\begin_inset Formula $A$
+\end_inset
+
+ 表示波后 (After) 的物理量，下标 
+\begin_inset Formula $B$
+\end_inset
+
+ 表示波前 (Before) 的物理量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+对于一维 Euler 方程（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_conservative"
+
+\end_inset
+
+ 式），激波跳跃关系
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+condition!jump ~
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\eval{\ket{U}}_{A}^{B}u_{\Gamma}=\eval{\ket{F}}_{A}^{B}
+\]
+
+\end_inset
+
+等价于
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}(u_{A}-u_{\Gamma})\rho_{A} & =(u_{B}-u_{\Gamma})\rho_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}u_{A}+p_{A} & =(u_{B}-u_{\Gamma})\rho_{B}u_{B}+p_{B}\\
+(u_{A}-u_{\Gamma})\underbrace{\left(\frac{p_{A}}{\gamma-1}+\frac{\rho_{A}u_{A}^{2}}{2}\right)}_{\rho_{A}E_{A}}+p_{A}u_{A} & =(u_{B}-u_{\Gamma})\underbrace{\left(\frac{p_{B}}{\gamma-1}+\frac{\rho_{B}u_{B}^{2}}{2}\right)}_{\rho_{B}E_{B}}+p_{B}u_{B}
+\end{aligned}
+\label{eq:euler_1d_jump}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{\Gamma}$
+\end_inset
+
+ 为间断面 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 的移动速度。定义「相对速度」 
+\begin_inset Formula $v_{i}=u_{i}-u_{\Gamma}$
+\end_inset
+
+，则 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 式可化为
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}(\rho v)_{A} & =(\rho v)_{B}\\
+(\rho vv+p)_{A} & =(\rho vv+p)_{B}\\
+(h+vv/2)_{A} & =(h+vv/2)_{B}
+\end{aligned}
+\label{eq:euler_1d_jump_in_relative_speed}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $h=e+p/\rho$
+\end_inset
+
+ 为「比焓 (specific enthalpy)」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+激波前后的速度差为
+\begin_inset Formula 
+\begin{equation}
+u_{A}-u_{B}=v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-\sqrt{\rho_{B}P}}\cdot\begin{cases}
++1 & m>0\\
+-1 & m<0
+\end{cases}\label{eq:速度差_激波}
+\end{equation}
+
+\end_inset
+
+其中，
+\begin_inset Formula $m:=(\rho v)_{A}=(\rho v)_{B}$
+\end_inset
+
+ 为「质量流率 (mass flow rate)」，
+\begin_inset Formula $P:=\left[(p_{A}+p_{B})\gamma+(p_{A}-p_{B})\right]/2$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 
+\begin_inset Formula $\rho_{B},u_{B},p_{B}$
+\end_inset
+
+ 及 
+\begin_inset Formula $p_{A}$
+\end_inset
+
+ 视为已知量，则 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式变为关于 
+\begin_inset Formula $\rho_{A},u_{A},u_{\Gamma}$
+\end_inset
+
+ 的代数方程组。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+首先将 
+\begin_inset Formula $\rho_{A},u_{\Gamma}$
+\end_inset
+
+ 表示为 
+\begin_inset Formula $u_{A}$
+\end_inset
+
+ 及已知量的函数。用 
+\begin_inset Formula $u_{A}$
+\end_inset
+
+ 乘 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的第一行，并将所得结果从第二行中减去，可得
+\begin_inset Formula 
+\[
+(u_{B}-u_{\Gamma})(u_{B}-u_{A})\rho_{B}=p_{A}-p_{B}
+\]
+
+\end_inset
+
+于是可以解出 
+\begin_inset Formula $u_{\Gamma}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{\Gamma}=u_{B}+\frac{p_{A}-p_{B}}{u_{A}-u_{B}}\frac{1}{\rho_{B}}
+\]
+
+\end_inset
+
+将其代回 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的第一行，可以解出 
+\begin_inset Formula $\rho_{A}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\rho_{A}=\frac{u_{B}-u_{\Gamma}}{u_{A}-u_{\Gamma}}\rho_{B}=\frac{p_{A}-p_{B}}{p_{A}-p_{B}-(u_{A}-u_{B})^{2}\rho_{B}}\rho_{B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+将以上结果代入 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的第三行，就得到关于 
+\begin_inset Formula $u_{A}$
+\end_inset
+
+ 的一元二次方程：
+\begin_inset Formula 
+\[
+Au_{A}^{2}+Bu_{A}+C=0
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+A=-2\rho_{B}P\qquad B=4\rho_{B}u_{B}P\qquad C=2(p_{A}-p_{B})^{2}-2\rho_{B}u_{B}^{2}P
+\]
+
+\end_inset
+
+判别式
+\begin_inset Formula 
+\[
+B^{2}-4AC=16(p_{A}-p_{B})^{2}\rho_{B}P
+\]
+
+\end_inset
+
+由此可以解出 
+\begin_inset Formula $u_{A},v_{A}$
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+u_{A}=u_{B}\mp\frac{\abs{p_{B}-p_{A}}}{\sqrt{\rho_{A}P}}\qquad v_{A}=v_{B}+\frac{\abs{p_{A}-p_{B}}}{\mp\sqrt{\rho_{B}P}}\label{eq:RelativeSpeedChangeVsPressureChangeForShock}
+\end{equation}
+
+\end_inset
+
+这里利用了
+\begin_inset Formula 
+\[
+P=\frac{\gamma+1}{2}p_{A}+\frac{\gamma-1}{2}p_{B}>0\impliedby\begin{cases}
+p_{A}>0\\
+p_{B}>0\\
+\gamma>1
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+由 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump_in_relative_speed"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式第二行及质量流率 
+\begin_inset Formula $m$
+\end_inset
+
+ 的定义可得
+\begin_inset Formula 
+\[
+v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-m}\implies-m=\mp\sqrt{\rho_{B}P}
+\]
+
+\end_inset
+
+由此可以定出 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:RelativeSpeedChangeVsPressureChangeForShock"
+
+\end_inset
+
+ 式分母中的正负号，从而有
+\begin_inset Formula 
+\[
+v_{A}-v_{B}=\frac{p_{A}-p_{B}}{-\sqrt{\rho_{B}P}}\cdot\begin{cases}
++1 & m>0\\
+-1 & m<0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:euler_1d_mach_relation"
+
+\end_inset
+
+流体微团穿过激波是熵增的减速压缩过程：
+\begin_inset Formula 
+\[
+s_{B}<s_{A}\qquad p_{B}<p_{A}\qquad\rho_{B}<\rho_{A}\qquad T_{B}<T_{A}\qquad0<a_{B}<a_{A}
+\]
+
+\end_inset
+
+速度由超声速减至亚声速：
+\begin_inset Formula 
+\[
+\abs{v_{B}}>\abs{v_{A}}\qquad M_{B}>1>M_{A}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $M=\abs{v}/a$
+\end_inset
+
+ 为「相对马赫数 (relative Mach number)
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+number!Mach ~!relative ~
+\end_layout
+
+\end_inset
+
+」。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+左侧为波前（即 
+\begin_inset Formula $L=B,R=A$
+\end_inset
+
+）的激波称为「左行激波」，它只可能是第一特征场（
+\begin_inset Formula $\lambda_{1}=u-a$
+\end_inset
+
+）的基本波。
+\end_layout
+
+\begin_layout Corollary
+右侧为波前（即 
+\begin_inset Formula $R=B,L=A$
+\end_inset
+
+）的激波称为「右行激波」，它只可能是第三特征场（
+\begin_inset Formula $\lambda_{3}=u+a$
+\end_inset
+
+）的基本波。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于左行激波，流体微团向右穿过间断面，因此 
+\begin_inset Formula $m=\rho_{A}v_{A}=\rho_{B}v_{B}>0$
+\end_inset
+
+。由 
+\begin_inset Formula $\rho_{A},\rho_{B}$
+\end_inset
+
+ 的非负性及定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:euler_1d_mach_relation"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\frac{u_{L}-u_{\Gamma}}{a_{L}}=\frac{u_{B}-u_{\Gamma}}{a_{B}}=\frac{v_{B}}{a_{B}}=M_{B}>1>M_{A}=\frac{v_{A}}{a_{A}}=\frac{u_{A}-u_{\Gamma}}{a_{A}}=\frac{u_{R}-u_{\Gamma}}{a_{R}}
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $a_{A},a_{B}$
+\end_inset
+
+ 的非负性可以导出第一基本波为激波的熵条件
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+condition!entropy ~!Lax's ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+u_{L}-a_{L}=\lambda_{1L}>u_{\Gamma}>\lambda_{1R}=u_{R}-a_{R}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于右行激波，流体微团向左穿过间断面，因此 
+\begin_inset Formula $m=\rho_{A}v_{A}=\rho_{B}v_{B}<0$
+\end_inset
+
+。由 
+\begin_inset Formula $\rho_{A},\rho_{B}$
+\end_inset
+
+ 的非负性及定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:euler_1d_mach_relation"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\frac{u_{\Gamma}-u_{R}}{a_{R}}=\frac{u_{\Gamma}-u_{B}}{a_{B}}=\frac{-v_{B}}{a_{B}}=M_{B}>1>M_{A}=\frac{-v_{A}}{a_{A}}=\frac{u_{\Gamma}-u_{A}}{a_{A}}=\frac{u_{\Gamma}-u_{L}}{a_{L}}
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $a_{A},a_{B}$
+\end_inset
+
+ 的非负性可以导出第三基本波为激波的熵条件
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+condition!entropy ~!Lax's ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+u_{L}+a_{L}=\lambda_{3L}>u_{\Gamma}>\lambda_{3R}=u_{R}-a_{R}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+膨胀波两侧的速度差
+\end_layout
+
+\begin_layout Theorem
+膨胀波前后的速度差为
+\begin_inset Formula 
+\begin{equation}
+u_{A}-u_{B}=\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]\cdot\begin{cases}
+-1 & \lambda_{1}\\
++1 & \lambda_{3}
+\end{cases}\label{eq:速度差_膨胀波}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+两种速度差 (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:速度差_激波"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:速度差_膨胀波"
+
+\end_inset
+
+) 关于 
+\begin_inset Formula $A,B$
+\end_inset
+
+ 是对称的，即：下标中的 
+\begin_inset Formula $A,B$
+\end_inset
+
+ 可以对调。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+光滑且单调的压力函数
+\end_layout
+
+\begin_layout Lemma
+关于 
+\begin_inset Formula $p_{A}\ge0$
+\end_inset
+
+ 的一元函数
+\begin_inset Formula 
+\begin{equation}
+f(p_{A};p_{B},\rho_{B})=\begin{cases}
+(p_{A}-p_{B})/\sqrt{\rho_{B}P} & p_{A}>p_{B}\\
+0 & p_{A}=p_{B}\\
+\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right] & p_{A}<p_{B}
+\end{cases}\label{eq:压力函数_单波}
+\end{equation}
+
+\end_inset
+
+对于任何给定的 
+\begin_inset Formula $\rho_{B},p_{B}$
+\end_inset
+
+ 是连续可微且单调递增的，其中
+\begin_inset Formula 
+\[
+P=\frac{\gamma+1}{2}p_{A}+\frac{\gamma-1}{2}p_{B}\qquad a_{B}=\sqrt{\frac{\gamma p_{B}}{\rho_{B}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+记
+\begin_inset Formula 
+\[
+f_{1}(p_{A})=\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}P}},p_{A}>p_{B}\qquad f_{2}(p_{A})=\frac{2a_{B}}{\gamma-1}\left[\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right],p_{A}<p_{B}
+\]
+
+\end_inset
+
+函数 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_单波"
+
+\end_inset
+
+ 的连续性可以由 
+\begin_inset Formula $f_{1}(p_{A}=p_{B})=0=f_{2}(p_{A}=p_{B})$
+\end_inset
+
+ 直接得到。下面证明它的可微性与单调性：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+容易验证：
+\begin_inset Formula $f_{1},f_{2}$
+\end_inset
+
+ 分别在其定义域内可导。下面只需验证
+\begin_inset Formula 
+\[
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon)
+\]
+
+\end_inset
+
+代入导数定义即得
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{f_{1}}{p_{A}} & =\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\dv{P^{-1/2}}{p_{A}}=\frac{1}{\sqrt{\rho_{B}P}}+\frac{p_{A}-p_{B}}{\sqrt{\rho_{B}}}\left(\frac{P^{-3/2}}{-2}\right)\dv{P}{p_{A}}\\
+ & =\frac{1}{\sqrt{\rho_{B}P}}\left(1+\frac{\gamma+1}{4}\frac{p_{B}-p_{A}}{P}\right)\\
+\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}=\frac{1}{\rho_{B}a_{B}}\\
+\dv{f_{2}}{p_{A}} & =\frac{2a_{B}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{A}}{p_{B}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{B}}=\frac{1}{\rho_{B}a_{B}}\left(\frac{p_{A}}{p_{B}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
+\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon) & =\frac{1}{\sqrt{\rho_{B}\gamma p_{B}}}=\frac{1}{\rho_{B}a_{B}}
+\end{aligned}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+f'(p_{A}=p_{B})=\lim_{\epsilon\to0^{-}}f_{1}'(p_{B}+\epsilon)=\lim_{\epsilon\to0^{+}}f_{2}'(p_{B}+\epsilon)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $f$
+\end_inset
+
+ 的单调递增性质可以由 
+\begin_inset Formula $f'(p_{A})>0,\forall p_{A}>0$
+\end_inset
+
+ 获得，只需分段验证即可：
+\begin_inset Formula 
+\[
+f'(p_{A})=\begin{cases}
+f_{1}'(p_{A}) & p_{A}>p_{B}\\
+1/(\rho_{B}a_{B}) & p_{A}=p_{B}\\
+f_{2}'(p_{A}) & p_{A}<p_{B}
+\end{cases}
+\]
+
+\end_inset
+
+第二、三行的非负性是显然的；第一行的非负性也容易验证：
+\begin_inset Formula 
+\[
+1-\frac{\gamma+1}{4}\frac{p_{A}-p_{B}}{P}=1-\frac{1}{2}\frac{p_{A}-p_{B}}{p_{A}+\frac{\gamma-1}{\gamma+1}p_{B}}>1-\frac{1}{2}>0\impliedby\begin{cases}
+p_{A}>p_{B}\\
+\gamma>1
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+关于 
+\begin_inset Formula $p_{*}\ge0$
+\end_inset
+
+ 的一元函数
+\begin_inset Formula 
+\begin{equation}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=f(p_{*};p_{+},\rho_{+})+f(p_{*};p_{-},\rho_{-})+u_{+}-u_{-}\label{eq:压力函数_双波}
+\end{equation}
+
+\end_inset
+
+对于任何给定的 
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
+\end_inset
+
+ 都是连续可微且单调递增的，并且有
+\begin_inset Formula 
+\[
+\lim_{p_{*}\to0^{+}}F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=\left(u_{+}-\frac{2a_{+}}{\gamma-1}\right)-\left(u_{-}+\frac{2a_{-}}{\gamma-1}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f$
+\end_inset
+
+ 由 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_单波"
+
+\end_inset
+
+ 式定义。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+第二基本波（接触间断）
+\end_layout
+
+\begin_layout Standard
+由解的结构（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:riemann_euler_1d_solution_structure"
+
+\end_inset
+
+ 式）可知：（第一、三基本波之间的）中心区域的压力 
+\begin_inset Formula $p_{*}$
+\end_inset
+
+ 及速度 
+\begin_inset Formula $u_{*}$
+\end_inset
+
+ 为常值；而密度 
+\begin_inset Formula $\rho_{*\pm}$
+\end_inset
+
+ 为分段常值。由定理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:euler_1d_mach_relation"
+
+\end_inset
+
+ 可知：激波的波后压力总是大于波前压力，即 
+\begin_inset Formula $p_{B}<p_{A}$
+\end_inset
+
+。显然：星号区域相对于第一、三基本波均为波后（扰动已过区域），而（充分远的）两端为波前（扰动未达区域）。
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[第一基本波]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:第一基本波"
+
+\end_inset
+
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{-}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 是左行激波；若 
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{-}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 是左行膨胀波。无论是何种情况，都有
+\begin_inset Formula 
+\[
+u_{*}-u_{-}=-f(p_{*};p_{-},\rho_{-})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[第三基本波]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:第三基本波"
+
+\end_inset
+
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 是右行激波；若 
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 是右行膨胀波。无论是何种情况，都有
+\begin_inset Formula 
+\[
+u_{*}-u_{+}=+f(p_{*};p_{+},\rho_{+})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若 
+\begin_inset Formula $p_{*}=p_{-}$
+\end_inset
+
+ 或 
+\begin_inset Formula $p_{*}=p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 或 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 退化为光滑区域，既可以视作厚度为零的膨胀波，又可以视作强度为零的激波。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[中心压力]
+\end_layout
+
+\end_inset
+
+如果给定的初始条件 
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})<0\iff u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
+\]
+
+\end_inset
+
+则关于 
+\begin_inset Formula $p_{*}>0$
+\end_inset
+
+ 的方程
+\begin_inset Formula 
+\begin{equation}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=0\label{eq:压力函数_确定中心压力}
+\end{equation}
+
+\end_inset
+
+有唯一解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+这是一个隐式非线性代数方程，只能迭代求解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[中心速度]
+\end_layout
+
+\end_inset
+
+如果中心压力 
+\begin_inset Formula $p_{*}$
+\end_inset
+
+ 可以由方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_确定中心压力"
+
+\end_inset
+
+ 唯一地确定，则中心速度 
+\begin_inset Formula $u_{*}$
+\end_inset
+
+ 也可以被唯一地确定：
+\begin_inset Formula 
+\[
+u_{*}=\frac{u_{-}+u_{+}+f(p_{*};p_{+},\rho_{+})-f(p_{*};p_{-},\rho_{-})}{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[真空条件]
+\end_layout
+
+\end_inset
+
+如果给定的初始条件 
+\begin_inset Formula $\rho_{\pm},u_{\pm},p_{\pm}$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\begin{equation}
+F(0;\rho_{\pm},u_{\pm},p_{\pm})\ge0\iff u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:真空条件}
+\end{equation}
+
+\end_inset
+
+则关于 
+\begin_inset Formula $p_{*}>0$
+\end_inset
+
+ 的方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:压力函数_确定中心压力"
+
+\end_inset
+
+ 无解。这意味着两端的速度相差过大，以至于中心区域被「撕裂」开，因此 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:真空条件"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式被称为
+\noun on
+「真空条件
+\noun default
+ (vacuum condition)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+condition!vacuum ~
+\end_layout
+
+\end_inset
+
+」。在此情形下，
+\begin_inset Formula $C_{2}\cup E_{2}\cup C_{3}$
+\end_inset
+
+ 为真空区域，因此 
+\begin_inset Formula $p_{*}=0,\rho_{*}=0$
+\end_inset
+
+；而 
+\begin_inset Formula $E_{1},E_{3}$
+\end_inset
+
+ 一定是膨胀波，其内部的状态可以由广义 Riemann 不变量获得。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+第一基本波（激波或膨胀波）
+\end_layout
+
+\begin_layout Standard
+根据引理 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:第一基本波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及真空条件 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:真空条件"
+
+\end_inset
+
+，可以定出第一基本波的类型，并求出剩余未知量：
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}>p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 为激波。它的波头、波尾重叠，速度由跳跃关系 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 第二行解出：
+\begin_inset Formula 
+\[
+\alpha_{1\pm}=u_{\Gamma}=u_{B}+\frac{p_{A}-p_{B}}{u_{A}-u_{B}}\frac{1}{\rho_{B}}
+\]
+
+\end_inset
+
+将其代入跳跃关系 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+
+\end_inset
+
+ 第一行则得到
+\begin_inset Formula 
+\[
+\rho_{*-}\equiv\rho_{A}=\frac{u_{B}-u_{\Gamma}}{u_{A}-u_{\Gamma}}\rho_{B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}=p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 为退化的激波：
+\begin_inset Formula 
+\[
+\alpha_{1\pm}=u_{\Gamma}=u_{B}\qquad\rho_{*-}\equiv\rho_{A}=\rho_{B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 为膨胀波。它有两个广义 Riemann 不变量：
+\begin_inset Formula 
+\[
+\phi_{1}=\frac{p_{B}}{\rho_{B}^{\gamma}}\qquad\phi_{2}=u_{B}+\frac{2a_{B}}{\gamma-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若中心区域非真空（即 
+\begin_inset Formula $p_{*}\ne0$
+\end_inset
+
+），则
+\begin_inset Formula 
+\[
+a_{*-}\equiv a_{A}=\frac{\gamma-1}{2}(u_{B}-u_{A})+a_{B}\qquad\rho_{*-}\equiv\rho_{A}=\frac{\gamma p_{A}}{a_{A}^{2}}
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $\lambda_{1}=u-a$
+\end_inset
+
+ 即得波头、波尾速度：
+\begin_inset Formula 
+\[
+\alpha_{1-}\equiv\alpha_{B}=\lambda_{1}(\alpha_{B})=u_{B}-a_{B}\qquad\alpha_{1+}\equiv\alpha_{A}=\lambda_{1}(\alpha_{A})=u_{A}-a_{A}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若中心区域真空（即 
+\begin_inset Formula $p_{*}=0$
+\end_inset
+
+），则波头、波尾速度分别为
+\begin_inset Formula 
+\[
+\alpha_{1-}\equiv\alpha_{B}=u_{B}-a_{B}\qquad\alpha_{1+}\equiv\alpha_{A}=\phi_{2}\impliedby\begin{cases}
+\alpha_{A}=u_{A}-a_{A}\\
+\phi_{2}=u_{A}+2a_{A}/(\gamma-1)\\
+a_{A}=0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+如果还需膨胀波内部（即斜率为 
+\begin_inset Formula $x/t\in[\alpha_{1-},\alpha_{1+}]$
+\end_inset
+
+ 的特征线上）的状态，则再次利用 Riemann 不变量：
+\begin_inset Formula 
+\[
+a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad u=\frac{x}{t}+a\qquad p=\frac{a^{2}\rho}{\gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+至此，接触间断左侧的状态已完全确定。
+\end_layout
+
+\begin_layout Subsection
+第三基本波（激波或膨胀波）
+\end_layout
+
+\begin_layout Standard
+第三基本波的求解过程与第一基本波几乎完全相同：
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}\ge p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 为激波（含退化情形），求解过程与第一基本波对应部分完全相同。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $p_{*}\equiv p_{A}<p_{B}\equiv p_{+}$
+\end_inset
+
+，则 
+\begin_inset Formula $E_{3}$
+\end_inset
+
+ 为膨胀波，求解过程与第一基本波对应部分只相差个别正负号。这里将求解过程中可能用到的各个量列于表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:膨胀波求解过程"
+
+\end_inset
+
+，以便对照。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:膨胀波求解过程"
+
+\end_inset
+
+膨胀波求解过程
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="12" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第一膨胀波
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+第三膨胀波
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Riemann 不变量
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{B}/\rho_{B}^{\gamma}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{B}+2a_{B}/(\gamma-1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u_{B}-2a_{B}/(\gamma-1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+非真空
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{B}+(u_{B}-u_{A})(\gamma-1)/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{B}-(u_{B}-u_{A})(\gamma-1)/2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rho_{A}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\gamma p_{A}/a_{A}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+范围
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{B}-a_{B},u_{A}-a_{A}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{A}+a_{A},u_{B}+a_{B}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+真空
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+范围
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[u_{B}-a_{B},\phi_{2}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\phi_{2},u_{B}+a_{B}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x/t=0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0-\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rho$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt[\gamma-1]{a_{0}^{2}/(\gamma\phi_{1})}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a_{0}^{2}\rho/\gamma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+至此，接触间断两侧的状态都已完全确定。
+\end_layout
+
+\begin_layout Subsection
+高维版本
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二维 Euler 方程的 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:riemann_euler_2d"
+
+\end_inset
+
+寻找分段光滑的函数 
+\begin_inset Formula $\rho,u,v,p$
+\end_inset
+
+，使其（在广义导数意义下）满足二维 Euler 方程
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!Euler equations!2D ~
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\partial_{t}\ket{U}+\partial_{x}\ket{F_{x}}+\partial_{y}\ket{F_{y}}=\ket{0}\qquad(x,y,t)\in(-\infty,\infty)^{2}\times(0,\infty)\\
+\ket{U}=\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}\qquad\ket{F_{x}}=\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}\qquad\ket{F_{y}}=\begin{bmatrix}\rho v\\
+\rho uv\\
+\rho vv+p\\
+\rho Hv
+\end{bmatrix}\\
+E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
+\end{gathered}
+\label{eq:pde_euler_2d}
+\end{equation}
+
+\end_inset
+
+及间断的初始条件
+\begin_inset Formula 
+\[
+\ket{U(x,y,0)}=\begin{cases}
+\ket{U_{-}} & x<0\\
+\ket{U_{+}} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分裂形式]
+\end_layout
+
+\end_inset
+
+问题 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:riemann_euler_2d"
+
+\end_inset
+
+ 中的初始条件与 
+\begin_inset Formula $y$
+\end_inset
+
+ 无关，因此它的解也与 
+\begin_inset Formula $y$
+\end_inset
+
+ 无关，于是方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pde_euler_2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中含 
+\begin_inset Formula $\partial_{y}$
+\end_inset
+
+ 的项可以忽略：
+\begin_inset Formula 
+\[
+\begin{gathered}\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\qquad(x,y,t)\in(-\infty,\infty)^{2}\times(0,\infty)\\
+\ket{U}=\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}\qquad\ket{F}=\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
+\end{gathered}
+\]
+
+\end_inset
+
+它被称为二维 Euler 方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pde_euler_2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的「
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂 (
+\begin_inset Formula $x$
+\end_inset
+
+-split) 形式」。与一维 Euler 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:euler_1d_conservative"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 类似，它也可以改写为「非守恒型」：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\qquad(x,y,t)\in(-\infty,\infty)^{2}\times(0,\infty)\\
+\ket{U'}=\begin{bmatrix}\rho\\
+u\\
+v\\
+p
+\end{bmatrix}\qquad\Matrix{A'(U')}=\begin{bmatrix}u & \rho\\
+ & u &  & \rho^{-1}\\
+ &  & u\\
+ & \gamma p &  & u
+\end{bmatrix}
+\end{gathered}
+\label{eq:pde_euler_2d_x_split_non_conservative}
+\end{equation}
+
+\end_inset
+
+类似的，三维 Euler 方程也有「
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂 (split) 形式」：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\qquad(x,y,z,t)\in(-\infty,\infty)^{3}\times(0,\infty)\\
+\ket{U'}=\begin{bmatrix}\rho\\
+u\\
+v\\
+w\\
+p
+\end{bmatrix}\qquad\Matrix{A'(U')}=\begin{bmatrix}u & \rho\\
+ & u &  &  & \rho^{-1}\\
+ &  & u\\
+ &  &  & u\\
+ & \gamma p &  &  & u
+\end{bmatrix}
+\end{gathered}
+\label{eq:pde_euler_3d_x_split_non_conservative}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分裂形式的特征场]
+\end_layout
+
+\end_inset
+
+对 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pde_euler_2d_x_split_non_conservative"
+
+\end_inset
+
+ 及 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pde_euler_3d_x_split_non_conservative"
+
+\end_inset
+
+ 作特征值分析，很容易
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+如果直接由守恒型方程导出 
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+，再对其作特征值分析，则过程较为繁琐。
+\end_layout
+
+\end_inset
+
+得到它们的特征值、特征向量、广义 Riemann 不变量，结果分别列于表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_char_field_2d_x_split"
+
+\end_inset
+
+ 及表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_char_field_3d_x_split"
+
+\end_inset
+
+。
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:euler_char_field_2d_x_split"
+
+\end_inset
+
+二维 Euler 方程 
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂形式的特征场
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No.
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,3
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u-a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u+a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+特征向量 
+\begin_inset Formula $\ket{R'_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\text{\ensuremath{\rho}}\\
+-a\\
+0\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}c_{1}\\
+0\\
+c_{3}\\
+0
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\rho\\
+a\\
+0\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{\grad\lambda_{i}}{R'_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+广义 Riemann 不变量
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ u,p\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:euler_char_field_3d_x_split"
+
+\end_inset
+
+三维 Euler 方程 
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂形式的特征场
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+No.
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2,3,4
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u-a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u+a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+特征向量 
+\begin_inset Formula $\ket{R'_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\text{\ensuremath{\rho}}\\
+-a\\
+0\\
+0\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}c_{1}\\
+0\\
+c_{3}\\
+c_{4}\\
+0
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{bmatrix}\rho\\
+a\\
+0\\
+0\\
+\rho a^{2}
+\end{bmatrix}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ip{\grad\lambda_{i}}{R'_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ne0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+广义 Riemann 不变量
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v,w\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ u,p\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v,w\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+对于高维 Euler 方程的法向 Riemann 问题，切向速度穿过法向非线性波（激波或膨胀波）保持不变。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_char_field_2d_x_split"
+
+\end_inset
+
+ 及表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:euler_char_field_3d_x_split"
+
+\end_inset
+
+ 可知：切向速度是法向膨胀波所属特征场的广义 Riemann 不变量。因此，命题归结为：切向速度穿过法向激波保持不变。以二维 Euler 方程的
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ 分裂形式为例，其跳跃关系为：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}_{A}-u_{\Gamma}\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}_{A}=\begin{bmatrix}\rho u\\
+\rho uu+p\\
+\rho vu\\
+\rho Hu
+\end{bmatrix}_{B}-u_{\Gamma}\begin{bmatrix}\rho\\
+\rho u\\
+\rho v\\
+\rho E
+\end{bmatrix}_{B}
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}(u_{A}-u_{\Gamma})\rho_{A} & =(u_{B}-u_{\Gamma})\rho_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}u_{A}+p_{A} & =(u_{B}-u_{\Gamma})\rho_{B}u_{B}+p_{B}\\
+(u_{A}-u_{\Gamma})\rho_{A}v_{A} & =(u_{B}-u_{\Gamma})\rho_{B}v_{B}\\
+(u_{A}-u_{\Gamma})\underbrace{\left(\frac{p_{A}}{\gamma-1}+\rho_{A}\frac{u_{A}^{2}+v_{A}^{2}}{2}\right)}_{\rho_{A}E_{A}}+p_{A}u_{A} & =(u_{B}-u_{\Gamma})\underbrace{\left(\frac{p_{B}}{\gamma-1}+\rho_{B}\frac{u_{B}^{2}+v_{B}^{2}}{2}\right)}_{\rho_{B}E_{B}}+p_{B}u_{B}
+\end{aligned}
+\label{eq:euler_2d_x_split_jump}
+\end{equation}
+
+\end_inset
+
+用第一行除第三行即得 
+\begin_inset Formula $v_{A}=v_{B}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+将 
+\begin_inset Formula $v_{A}=v_{B}$
+\end_inset
+
+ 及 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_2d_x_split_jump"
+
+\end_inset
+
+ 式的第一行代入第四行，可以消去含 
+\begin_inset Formula $v_{A},v_{B}$
+\end_inset
+
+ 的项，所得结果与一维 Euler 方程跳跃关系（
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式）的第三行完全相同；而 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_2d_x_split_jump"
+
+\end_inset
+
+ 式的前两行也与 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:euler_1d_jump"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的前两行完全相同，因此可以直接调用一维 Euler 方程的 Riemann 求解器。图 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Euler-方程-Riemann-问题-自相似解"
+
+\end_inset
+
+ 画出了这种自相似结构。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

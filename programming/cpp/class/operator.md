@@ -160,19 +160,19 @@ const double& Point::operator[](int i) const {
 ```
 
 ### 函数调用运算符
-「函数调用 (function call) 运算符」可以在同一个类种重载多次，相互之间以形参的类型或数量来区分。
+「函数调用 (function call) 运算符」可以在同一个类中重载多次，相互之间以形参的类型或数量来区分。
 支持 `operator()` 的对象被称为[函数对象](./function.md#函数对象)，其行为可以通过设置其内部「状态 (state)」的方式来「订制 (customize)」。
 
 ```cpp
 // point.h
 class PointBuilder {
  public:
-  PointBuilder(double x, double y) : _basepoint_(x, y) { }
-  Point operator(double x, double y) {
-    return Point(x + _basepoint_.x(), y + _basepoint_.y());
+  PointBuilder(double x, double y) : base_point_(x, y) { }
+  Point operato()(double x, double y) {
+    return Point(x + base_point_.x(), y + base_point_.y());
   }
  private:
-  Point _basepoint_;
+  Point base_point_;
 }
 ```
 ```cpp

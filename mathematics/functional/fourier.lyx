@@ -1,0 +1,3768 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\master README.lyx
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Fourier 分析
+\end_layout
+
+\begin_layout Section
+Fourier 级数
+\end_layout
+
+\begin_layout Subsection
+Fourier 级数的来源
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Stone–Weierstrass]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Stone--Weierstrass"
+
+\end_inset
+
+如果定义在 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ 上的函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 在 
+\begin_inset Formula $n$
+\end_inset
+
+ 维闭区间
+\begin_inset Formula 
+\[
+D=\left\{ (x_{1},...,x_{n}):a_{i}\le x_{i}\le b_{i},i=1,...,n\right\} 
+\]
+
+\end_inset
+
+上连续，则有唯一的多项式展开：
+\begin_inset Formula 
+\[
+u(x_{1},...,x_{n})=\sum_{k_{1},...,k_{n}=0}^{\infty}A_{k_{1},...,k_{n}}x_{1}^{k_{1}}\cdots x_{n}^{k_{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑 
+\begin_inset Formula $n=2$
+\end_inset
+
+ 的情形：此时可以引入极坐标 
+\begin_inset Formula $x_{1}=x=\rho\cos\theta$
+\end_inset
+
+，
+\begin_inset Formula $x_{2}=y=\rho\sin\theta$
+\end_inset
+
+。如果将问题的研究范围限制在单位圆周（
+\begin_inset Formula $\rho=1$
+\end_inset
+
+）上，则上述结论可以表示为
+\begin_inset Formula 
+\[
+\begin{aligned}u(\theta) & =\sum_{k,l=0}^{\infty}A_{k,l}\cos[k](\theta)\sin[l](\theta)=\sum_{k,l=0}^{\infty}A_{k,l}\cdot\left(\frac{\ee^{\ii\theta}+\ee^{-\ii\theta}}{2}\right)^{k}\left(\frac{\ee^{\ii\theta}-\ee^{-\ii\theta}}{2\ii}\right)^{l}\\
+ & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\ii n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos n\theta+\ii\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin n\theta
+\end{aligned}
+\]
+
+\end_inset
+
+第二行的结果被称为「Fourier 级数」。
+\end_layout
+
+\begin_layout Subsection
+用 Fourier 级数表示周期函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Stone--Weierstrass"
+
+\end_inset
+
+ 定理保证了：
+\end_layout
+
+\begin_layout Corollary*
+每一个以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的连续函数都可以唯一地展开为形如 
+\begin_inset Formula $\sum_{n\in\mathbb{Z}}c_{n}\exp(\ii n\theta)$
+\end_inset
+
+ 的 Fourier 级数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了获得 
+\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+，只需将展开式 
+\begin_inset Formula $u(\theta)=\sum_{k}c_{k}\exp(\ii k\theta)$
+\end_inset
+
+ 代入积分 
+\begin_inset Formula $\int_{0}^{2\pi}\exp(-\ii l\theta)u(\theta)\dd{\theta}$
+\end_inset
+
+，并利用
+\begin_inset Formula 
+\[
+\int_{0}^{2\pi}\exp(\ii k\theta-\ii l\theta)\dd{\theta}=\begin{cases}
+\int_{0}^{2\pi}1\dd{\theta}=2\pi & k=l\\
+\eval{\frac{\exp(\ii k\theta-\ii l\theta)}{k-l}}_{0}^{2\pi}=0 & k\ne l
+\end{cases}\qquad\forall k,l\in\mathbb{Z}
+\]
+
+\end_inset
+
+即得函数 
+\begin_inset Formula $u(\theta)$
+\end_inset
+
+ 的「Fourier 系数」：
+\begin_inset Formula 
+\[
+c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\ii n\theta)u(\theta)\dd{\theta}\qquad\forall n\in\mathbb{Z}
+\]
+
+\end_inset
+
+它是关于「离散指标（Discrete Index）」
+\begin_inset Formula $n$
+\end_inset
+
+ 的函数，完全由函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 确定，因此不妨记作 
+\begin_inset Formula $u_{n}\equiv c_{n}$
+\end_inset
+
+。值得注意的是：这里的积分并不要求 
+\begin_inset Formula $u(\theta)$
+\end_inset
+
+ 连续。
+\end_layout
+
+\begin_layout Standard
+另一方面，由任何一组系数 
+\begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 所构造的 Fourier 级数 
+\begin_inset Formula $\sum_{n}u_{n}\exp(\ii n\theta)$
+\end_inset
+
+，只要它处处收敛，那么它就是一个以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的连续函数，即使导出 
+\begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 的那个函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 本身并不连续。
+\end_layout
+
+\begin_layout Example*
+将以下含有间断的函数展开为 Fourier 级数：
+\end_layout
+
+\begin_layout Example*
+\begin_inset Formula 
+\[
+S(\theta)=\begin{cases}
+S(\theta+2n\pi) & n\in\mathbb{Z}\\
+1 & \theta\in[0,\pi)\\
+0 & \theta\in[\pi,2\pi)
+\end{cases}\qquad T(\theta)=\begin{cases}
+T(\theta+2n\pi) & n\in\mathbb{Z}\\
+\theta & \theta\in[0,2\pi)
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+也就是说：某些含有间断的函数也可以展开为 Fourier 级数，但是所得的级数未必与原函数等价。由此可以引出几个问题：
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:Fourier-级数"
+
+\end_inset
+
+什么样的函数可以展开为 Fourier 级数？如果可以展开，那么所得的级数与原函数之间是什么关系？
+\end_layout
+
+\begin_layout Problem
+什么样的系数可以构造出处处收敛的 Fourier 级数？
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了回答这些问题，需要引用一些泛函分析的概念：
+\end_layout
+
+\begin_layout Itemize
+首先引入「函数空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+」：它是由定义在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 上的「几乎处处连续」的函数的全体所构成的（复）向量空间。这里的「几乎处处连续」是指：函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 至多含「可列（Enumerable）」个间断点，这样它的所有间断点至多构成一个零「测度（Measure）」集。如果要强调函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 的向量属性，则将其记作 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上可以引入「内积（Inner Product）」以及由它所导出的「范数（Norm）」:
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{a}^{b}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\norm{\ket{u}}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\ket{u},\ket{v}\in\mathcal{V}
+\]
+
+\end_inset
+
+这里的积分应当理解为 Lebesgue 积分。若无特殊说明，下面只考虑由满足 
+\begin_inset Formula $\norm{u}<\infty$
+\end_inset
+
+ 的 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 所构成的子空间 
+\begin_inset Formula $\mathcal{L}^{2}(a,b)\subset\mathcal{V}$
+\end_inset
+
+，它是「完备的（Complete）」：在 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 中，任何一个 Cauchy 序列的极限点均属于 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+。作为赋范空间，它是一个 Banach 空间；作为内积空间，它是一个 Hilbert 空间。
+\end_layout
+
+\begin_layout Itemize
+有了内积，就可以找到 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 的一组「正交（Orthogonal）基」
+\begin_inset Formula $\left\{ \ket{g_{n}}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 及相应的「单位正交（Orthonormal）基」
+\begin_inset Formula $\left\{ \ket{e_{n}}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\delta_{kl}\cdot\norm{g_{l}}\qquad\ip{k}{l}\equiv\ip{e_{k}}{e_{l}}=\delta_{kl}\qquad\forall k,l\in\mathbb{N}
+\]
+
+\end_inset
+
+于是有「正交分解（Orthogonal Decomposition）」：
+\begin_inset Formula 
+\[
+\ket{u}=\sum_{n}\ket{n}\overbrace{\ip{n}{u}}^{u_{n}}=\overbrace{\sum_{n}\dyad{n}}^{\Operator{1}}\ket{u}\qquad\forall\ket{u}\in\mathcal{L}^{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{n}=\ip{n}{u}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\ket{n}$
+\end_inset
+
+ 上的「投影（Projection）」，
+\begin_inset Formula $\Operator{1}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 上的「单位算符（Identity Operator）」，等式 
+\begin_inset Formula $\Operator{1}=\sum_{n}\dyad{n}$
+\end_inset
+
+ 被称为「完备性关系（Completeness Relation）」。
+\end_layout
+
+\begin_layout Itemize
+有了范数就可以定义「零函数」：它是在定义域内「几乎处处为零（至多在一个零测度集上取有限的非零值）」的函数，因此其范数一定为零。如果两个函数的差是一个零函数，则称
+它们「几乎处处相等（至多在一个零测度集上不相等）」，用 
+\begin_inset Formula $\doteq$
+\end_inset
+
+ 表示。这种二元关系具有自反性、对称性、传递性，因而可以被视为是一种「等价关系（Equivalence Relation）」：
+\begin_inset Formula 
+\[
+\ket{u}\doteq\ket{v}\iff\norm{u-v}=0
+\]
+
+\end_inset
+
+由此可以定义「等价类（Equivalence Class）」：
+\begin_inset Formula 
+\[
+\left\llbracket \ket{u}\right\rrbracket \equiv\left\llbracket u\right\rrbracket :=\left\{ \ket{v}:\ket{u}\doteq\ket{v}\right\} \qquad\forall\ket{u}\in\mathcal{L}^{2}
+\]
+
+\end_inset
+
+及「商空间（Quotient Space）」：
+\begin_inset Formula 
+\[
+(\mathcal{L}^{2}/\doteq):=\left\{ \left\llbracket u\right\rrbracket :\ket{u}\in\mathcal{L}^{2}\right\} 
+\]
+
+\end_inset
+
+商空间上的内积（也就是两个等价类的内积）定义为「代表元」的内积：
+\begin_inset Formula 
+\[
+\ip{\left\llbracket u\right\rrbracket }{\left\llbracket v\right\rrbracket }\equiv\ip{u}{v}_{\mathcal{L}^{2}/\doteq}:=\ip{u}{v}_{\mathcal{L}^{2}}\qquad\forall\ket{u}\in\left\llbracket u\right\rrbracket ,\forall\ket{v}\in\left\llbracket v\right\rrbracket ,\forall\left\llbracket u\right\rrbracket ,\left\llbracket v\right\rrbracket \in\mathcal{L}^{2}/\doteq
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+用 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 表示所有满足 
+\begin_inset Formula $\sum_{n}\abs{u_{n}}^{2}<\infty$
+\end_inset
+
+ 的 
+\begin_inset Formula $\aleph_{0}$
+\end_inset
+
+ 维数组 
+\begin_inset Formula $[u]:=(...,u_{-1},u_{0},u_{1},...)$
+\end_inset
+
+ 所构成的（复）向量空间，它在如下内积及其所导出的范数定义下也是完备的：
+\begin_inset Formula 
+\[
+\ip{u}{v}_{\ell^{2}}:=\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{[u]}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall[u],[v]\in\ell^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中的每一个成员 
+\begin_inset Formula $[u]$
+\end_inset
+
+ 都确定了 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 中的一个向量 
+\begin_inset Formula $\ket{u}=\sum_{n}u_{n}\ket{n}$
+\end_inset
+
+，这是因为
+\begin_inset Formula 
+\[
+\norm{u}^{2}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}u_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}u_{n}\overbrace{\ip{k}{n}_{\mathcal{L}^{2}}}^{\delta_{kn}}=\sum_{n}\abs{u_{n}}^{2}<\infty
+\]
+
+\end_inset
+
+这样就建立了 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 到 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 的「单射（Injection）」，以及 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 到 
+\begin_inset Formula $\mathcal{L}^{2}/\doteq$
+\end_inset
+
+ 的「双射（Bijection）」。
+\end_layout
+
+\begin_layout Itemize
+这种映射是保内积的：
+\begin_inset Formula 
+\[
+\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\ip{u}{v}_{\mathcal{L}^{2}}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}v_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{k}{n}_{\mathcal{L}^{2}}}_{\delta_{kn}}=\ip{u}{v}_{\ell^{2}}
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\mathcal{L}^{2}/\doteq$
+\end_inset
+
+ 同构：
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 既可以表示 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 中的一个向量（函数 
+\begin_inset Formula $u$
+\end_inset
+
+），又可以表示 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中与之对应的向量（数组 
+\begin_inset Formula $[u]$
+\end_inset
+
+）；
+\begin_inset Formula $\ip{u}{v}$
+\end_inset
+
+ 既可以表示 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 中的内积，又可以表示 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中的内积。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有了这些概念，不难发现：Fourier 级数不过是 
+\begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
+\end_inset
+
+ 上的特例，这里的内积和单位正交基分别是：
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{0}^{2\pi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+现在可以回答前面提出的问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:Fourier-级数"
+
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
+\end_inset
+
+ 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等：
+\begin_inset Formula 
+\[
+\sum_{n}u_{n}\exp(\ii n\theta)=\lim_{\varepsilon\to0}\frac{u(\theta-\varepsilon)+u(\theta+\varepsilon)}{2}\doteq u(\theta)\qquad\forall\theta\in(0,2\pi)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中的任意一个数组都可以构造出处处收敛的 Fourier 级数，从而定义了一个以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的连续函数，这个函数自然属于 
+\begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若函数 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 以 
+\begin_inset Formula $2a$
+\end_inset
+
+ 为周期，则只需作变量替换 
+\begin_inset Formula $x/a=\theta/\pi$
+\end_inset
+
+，即可将它转化为以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的函数。此时，函数空间为 
+\begin_inset Formula $\mathcal{L}^{2}(0,2a)$
+\end_inset
+
+，内积和单位基向量分别为：
+\begin_inset Formula 
+\[
+\ip{u}{v}:=\int_{0}^{2a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}:=\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+Fourier 级数为：
+\begin_inset Formula 
+\[
+u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2a}\frac{\exp(-\ii n\pi x'/a)}{\sqrt{2a}}u(x')\dd{x'}}_{\ip{n}{u}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Fourier 变换
+\end_layout
+
+\begin_layout Subsection
+用 Fourier 积分表示非周期函数
+\end_layout
+
+\begin_layout Standard
+考虑 
+\begin_inset Formula $a\to\infty$
+\end_inset
+
+ 的情形，可以将以上结果推广到非周期函数。定义 
+\begin_inset Formula $k:=n\pi/a$
+\end_inset
+
+，它的物理意义是：周期函数 
+\begin_inset Formula $\exp(\ii kx)$
+\end_inset
+
+ 在长为 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 的区间内所含完整波形的个数，因此被称为「波数（Wave Number）」。
+\end_layout
+
+\begin_layout Itemize
+当 
+\begin_inset Formula $a<\infty$
+\end_inset
+
+ 时，
+\begin_inset Formula $k$
+\end_inset
+
+ 是关于 
+\begin_inset Formula $n$
+\end_inset
+
+ 的离散函数，不妨记作 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+，并定义 
+\begin_inset Formula $\Delta k:=k_{n+1}-k_{n}=\pi/a$
+\end_inset
+
+。于是 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的 Fourier 级数展开可以写为
+\begin_inset Formula 
+\[
+u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\left[\int_{-a}^{+a}\frac{\exp(-\ii k_{n}x')}{\sqrt{2\pi}}u(x')\dd{x'}\right]}_{u_{n}}\Delta k=\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}u_{n}\Delta k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+当 
+\begin_inset Formula $a\to\infty$
+\end_inset
+
+ 时，
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 趋向于取遍 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 上的所有值。如果将 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 视为连续变量 
+\begin_inset Formula $k$
+\end_inset
+
+ 在第 
+\begin_inset Formula $n$
+\end_inset
+
+ 个区间内任意一点的取值，并将 
+\begin_inset Formula $u_{n}$
+\end_inset
+
+ 视为（以 
+\begin_inset Formula $k$
+\end_inset
+
+ 为自变量的）函数 
+\begin_inset Formula $\tilde{u}$
+\end_inset
+
+ 在 
+\begin_inset Formula $k_{n}$
+\end_inset
+
+ 处的取值，记作 
+\begin_inset Formula $u_{n}\equiv\tilde{u}(k_{n})$
+\end_inset
+
+，则上式右端成为 Riemann 和。如果它的极限存在，则一定等于以下 Riemann 积分：
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\tilde{u}(k_{n})\Delta k
+\]
+
+\end_inset
+
+它被称为非周期函数 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的「Fourier 积分」，其中：
+\begin_inset Formula 
+\[
+\tilde{u}(k):=\lim_{a\to\infty}\tilde{u}(k_{n})=\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}
+\]
+
+\end_inset
+
+依然可以被称为函数 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的「Fourier 系数」，只不过这里是关于「连续指标」
+\begin_inset Formula $k$
+\end_inset
+
+ 的函数。
+\end_layout
+
+\begin_layout Itemize
+尽管以上讨论过程用到了 Riemann 积分，但所得结果可以用 Lebesgue 积分重新加以解释，从而将适用范围推广到 
+\begin_inset Formula $\mathcal{L}^{2}(-\infty,+\infty)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+与 Fourier 级数的情况类似，
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}(k)$
+\end_inset
+
+ 不过是同一个向量的两种等价的表示：
+\end_layout
+
+\begin_layout Itemize
+在 Fourier 级数的分析中，单位基向量表示为：
+\begin_inset Formula 
+\[
+e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\qquad n\in\mathbb{Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在 Fourier 积分的分析中，可以引入类似「单位基向量」：
+\begin_inset Formula 
+\[
+e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qquad k\in\mathbb{R}_{k}
+\]
+
+\end_inset
+
+这里不过是用连续指标 
+\begin_inset Formula $k$
+\end_inset
+
+ 替代了离散指标 
+\begin_inset Formula $n$
+\end_inset
+
+。此时的「单位正交性」应当理解为：
+\begin_inset Formula 
+\[
+\ip{e_{\sigma}}{e_{\tau}}\equiv\ip{\sigma}{\tau}=\delta(\sigma-\tau)\qquad\forall\sigma,\tau\in\mathbb{R}_{k}
+\]
+
+\end_inset
+
+由此可以导出 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 上的完备性关系：
+\begin_inset Formula $\Operator{1}_{k}\equiv\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}$
+\end_inset
+
+。
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+由 
+\begin_inset Formula $\ip{k}=\delta(0)=\infty$
+\end_inset
+
+ 可知 
+\begin_inset Formula $\ket{k}\notin\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+，因此它不是 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 的单位基向量，而是一个比 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 更大的（广义）函数空间的单位基向量。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x})$
+\end_inset
+
+ 的 
+\begin_inset Formula $x$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{x}{u}\equiv u(x)$
+\end_inset
+
+，向量 
+\begin_inset Formula $\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ 的 
+\begin_inset Formula $k$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{k}{\tilde{u}}\equiv\tilde{u}(k)$
+\end_inset
+
+，二者「几乎」是同一个向量：
+\begin_inset Formula 
+\[
+\ip{x}{u}\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\underbrace{\frac{\exp(\ii kx)}{\sqrt{2\pi}}}_{\ip{x}{k}}\underbrace{\tilde{u}(k)}_{\ip{k}{\tilde{u}}}\dd{k}=\bra{x}\underbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}_{\Operator{1}_{k}}\ket{\tilde{u}}=\ip{x}{\tilde{u}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+一维 Fourier 变换
+\end_layout
+
+\begin_layout Standard
+将非周期函数 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 表示为 Fourier 积分，需要先计算它的 Fourier 系数 
+\begin_inset Formula $\tilde{u}(k)$
+\end_inset
+
+，这一过程被称为「Fourier 变换」；而将所得的 
+\begin_inset Formula $\tilde{u}(k)$
+\end_inset
+
+ 代入 Fourier 积分以获得 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的过程，则称为 Fourier 变换的「反演」：
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Fourier 变换]
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:积分变换的一般形式"
+
+\end_inset
+
+中取 
+\begin_inset Formula $(a,b)=(-\infty,+\infty)$
+\end_inset
+
+ 为积分区间、
+\begin_inset Formula $K(k,x)=\exp(-\ii kx)/\sqrt{2\pi}$
+\end_inset
+
+ 为积分变换的核
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+在一些文献中，
+\begin_inset Formula $K(k,x)$
+\end_inset
+
+ 不含 
+\begin_inset Formula $1/\sqrt{2\pi}$
+\end_inset
+
+ 因子，或者指数中不含负号，这些差别都不会对 Fourier 分析的一般结论产生实质性的影响。
+\end_layout
+
+\end_inset
+
+，就得到「Fourier 变换」及其「反演」：
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\begin{equation}
+\boxed{\mathscr{F}[u](k)\equiv\tilde{u}(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}\qquad\mathscr{F}^{-1}[\tilde{u}](x)\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}}\label{eq:FourierTransform}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+常用 Fourier 变换对
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+象函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\pi}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Fourier 积分发散，但仍有意义。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-a\abs{x})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2a}{a^{2}+k^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $a>0$
+\end_inset
+
+。二者在形式上恰好对称。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2a}{a^{2}+x^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-a\abs{k})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-ax^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $a>0$
+\end_inset
+
+。下一行是 
+\begin_inset Formula $a=\nicefrac{1}{2}$
+\end_inset
+
+ 的特例。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-x^{2}/2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(-k^{2}/2)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原函数与象函数恰好对称。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-\alpha r}/r$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2}{\alpha^{2}+k^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $r:=\sqrt{x^{2}+y^{2}+z^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $k:=\sqrt{k_{x}^{2}+k_{y}^{2}+k_{z}^{2}}$
+\end_inset
+
+，
+\begin_inset Formula $\alpha>0$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/r$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2}{k^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+无法直接计算，应当视作上一行 
+\begin_inset Formula $\alpha\to0$
+\end_inset
+
+ 的特例。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+验证
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})\qquad\forall a>0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+代入 Fourier 变换的定义，得到
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\frac{\ii k}{2a}\right)^{2}-\left(\frac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
+ & =\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $z=x+\ii\frac{k}{2a}$
+\end_inset
+
+。被积函数 
+\begin_inset Formula $\exp(-az^{2})$
+\end_inset
+
+ 是
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:整函数"
+
+\end_inset
+
+（没有有限远的奇点），因此由
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:留数定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可知：
+\begin_inset Formula 
+\[
+\int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\sqrt{\frac{\pi}{a}}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+多维 Fourier 变换
+\end_layout
+
+\begin_layout Standard
+定义在二维空间上的函数 
+\begin_inset Formula $u(x,y)$
+\end_inset
+
+ 可以依次在 
+\begin_inset Formula $x$
+\end_inset
+
+-方向、
+\begin_inset Formula $y$
+\end_inset
+
+-方向上作 Fourier 变换：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{F}_{x}[u](k;y) & =\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x,y)\dd{x}\\
+\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{y}\\
+ & =\int_{\mathbb{R}_{y}}\left[\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\right]\dd{y}
+\end{aligned}
+\]
+
+\end_inset
+
+以及用 Fourier 积分表示：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{F}_{x}[u](k;y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\\
+u(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{k}\\
+ & \doteq\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\right]\dd{k}
+\end{aligned}
+\]
+
+\end_inset
+
+这种「二重 Fourier 变换（及其反演）」也可以依次在 
+\begin_inset Formula $y$
+\end_inset
+
+-、
+\begin_inset Formula $x$
+\end_inset
+
+-方向上实施，所得结果与之相同，因此可以将它们统一地定义为「二维空间的 Fourier 变换（及其反演）」：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{F}[u](k,l)\equiv\tilde{u}(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\dd{y}\\
+\mathscr{F}^{-1}[\tilde{u}](x,y)\equiv u(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\tilde{u}(k,l)\dd{k}\dd{l}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上讨论可以推广到更一般的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维空间。如果引入记号：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathbb{R}_{x}^{n} & =\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\quad & \vec{x} & =(x_{1},...,x_{n})\in\mathbb{R}_{x}^{n}\quad & \dd[n]{x} & =\dd{x_{1}}\cdots\dd{x_{n}}\\
+\mathbb{R}_{k}^{n} & =\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\quad & \vec{k} & =(k_{1},...,k_{n})\in\mathbb{R}_{k}^{n}\quad & \dd[n]{k} & =\dd{k_{1}}\cdots\dd{k_{n}}
+\end{aligned}
+\]
+
+\end_inset
+
+并且在形式上定义「内积
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+向量 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ 分别属于不同的向量空间，因此这里的「内积」不是一般意义下属于某个向量空间的内积。
+\end_layout
+
+\end_inset
+
+」：
+\begin_inset Formula 
+\[
+\vec{k}\vdot\vec{x}=k_{1}x_{1}+\cdots+k_{n}x_{n}
+\]
+
+\end_inset
+
+则「
+\begin_inset Formula $n$
+\end_inset
+
+ 维空间的 Fourier 变换（及其反演）」可以写为更紧凑的形式：
+\begin_inset Formula 
+\[
+\boxed{\tilde{u}(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}u(\vec{x})\dd[n]{x}\qquad u(\vec{x})\doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\ee^{+\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\tilde{u}(\vec{k})\dd[n]{k}}
+\]
+
+\end_inset
+
+在不致引起混淆的情况下，积分号 
+\begin_inset Formula $\dotsint$
+\end_inset
+
+ 可以进一步简化为 
+\begin_inset Formula $\int$
+\end_inset
+
+ 并忽略积分区域。
+\end_layout
+
+\begin_layout Standard
+与一维的情况类似，
+\begin_inset Formula $u(\vec{x})$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}(\vec{k})$
+\end_inset
+
+ 不过是同一个向量的两种等价的表示：
+\end_layout
+
+\begin_layout Itemize
+首先定义 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 上的「单位正交基」：
+\begin_inset Formula 
+\[
+e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}:=\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\qquad\forall\vec{k}\in\mathbb{R}_{k}^{n}
+\]
+
+\end_inset
+
+此时的「单位正交性」应当理解为：
+\begin_inset Formula 
+\[
+\ip{e_{\vec{\sigma}}}{e_{\vec{\tau}}}\equiv\ip*{\vec{\sigma}}{\vec{\tau}}=\int\frac{\ee^{\ii(\vec{\tau}-\vec{\sigma})\vdot\vec{x}}}{(2\pi)^{n}}\dd[n]{x}=\delta(\vec{\sigma}-\vec{\tau})\qquad\forall\vec{\sigma},\vec{\tau}\in\mathbb{R}_{k}^{n}
+\]
+
+\end_inset
+
+由此可以导出 
+\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 上的完备性关系：
+\begin_inset Formula $\Operator{1}_{k}\equiv\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+向量 
+\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x}^{n})$
+\end_inset
+
+ 的 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip{\vec{x}}{u}\equiv u(\vec{x})$
+\end_inset
+
+，向量 
+\begin_inset Formula $\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
+\end_inset
+
+ 的 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+-分量为 
+\begin_inset Formula $\ip*{\vec{k}}{\tilde{u}}\equiv\tilde{u}(\vec{k})$
+\end_inset
+
+，二者「几乎」是同一个向量：
+\begin_inset Formula 
+\[
+\ip*{\vec{x}}{u}\equiv u(\vec{x})\doteq\int_{\mathbb{R}_{k}^{n}}\underbrace{\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}}_{\ip*{\vec{x}}{\vec{k}}}\underbrace{\tilde{u}(\vec{k})}_{\ip*{\vec{k}}{F}}\dd[n]{k}=\bra{\vec{x}}\underbrace{\left(\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}\right)}_{\Operator{1}_{k}}\ket{F}=\ip*{\vec{x}}{\tilde{u}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+求 Coulomb 势函数 
+\begin_inset Formula $V_{c}(r):=1/r$
+\end_inset
+
+ 和 Yukawa 势函数 
+\begin_inset Formula $V_{\alpha}(r):=\ee^{-\alpha r}/r$
+\end_inset
+
+（其中 
+\begin_inset Formula $\alpha>0$
+\end_inset
+
+）的 Fourier 变换，其中 
+\begin_inset Formula $r:=\norm{\vec{x}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 
+\begin_inset Formula $V_{c}$
+\end_inset
+
+ 代入三维 Fourier 变换的定义，会遇到积分不收敛的问题。注意到 
+\begin_inset Formula $V_{c}(r)=\lim_{\alpha\to0}V_{\alpha}(r)$
+\end_inset
+
+，可以先求出 
+\begin_inset Formula $V_{\alpha}$
+\end_inset
+
+ 的 Fourier 变换，再对所得结果取极限，从而得到 
+\begin_inset Formula $V_{c}$
+\end_inset
+
+ 的 Fourier 变换：
+\begin_inset Formula 
+\[
+\tilde{V}_{\alpha}(\vec{k})=\iiint_{\mathbb{R}_{x}^{3}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{3/2}}\frac{\ee^{-\alpha r}}{r}\dd[3]{x}\qquad\tilde{V}_{c}(\vec{k})=\lim_{\alpha\to0}\tilde{V}_{\alpha}(\vec{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $V_{\alpha}(r)$
+\end_inset
+
+ 关于 
+\begin_inset Formula $\mathbb{R}_{x}^{3}$
+\end_inset
+
+ 的原点对称，因此在球坐标中计算最方便。原则上，
+\begin_inset Formula $\vec{e}_{z}$
+\end_inset
+
+ 的方向可以任取，最简单的方案是：令其「平行
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+向量 
+\begin_inset Formula $\vec{e}_{z}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ 分别属于不同的向量空间，因此这里的「平行」应当理解为：
+\begin_inset Formula $\vec{k}\vdot\vec{e}_{z}=\norm*{\vec{k}}\cdot1\cdot\cos0$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+」于 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\tilde{V}_{\alpha}(\vec{k}) & =\int_{0}^{\infty}\dd{r}\int_{0}^{\pi}\dd{\theta}\int_{0}^{2\pi}\dd{\phi}\frac{\ee^{-\ii kr\cos\theta}}{(2\pi)^{3/2}}\frac{\ee^{-\alpha r}}{r}r^{2}\sin\theta\\
+ & =\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\underbrace{\left(\int_{0}^{\pi}\ee^{-\ii kr\cos\theta}\sin\theta\dd{\theta}\right)}_{u:=\cos\theta}\ee^{-\alpha r}r\dd{r}\\
+ & =\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\frac{\ee^{\ii kr}-\ee^{-\ii kr}}{\ii kr}\ee^{-\alpha r}r\dd{r}\\
+ & =\frac{1}{\sqrt{2\pi}}\frac{1}{\ii k}\left[\frac{-1}{-\alpha+\ii k}-\frac{-1}{-\alpha-\ii k}\right]=\frac{1}{\sqrt{2\pi}}\frac{2}{\alpha^{2}+k^{2}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Fourier 变换的性质
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fourier-变换的性质"
+
+\end_inset
+
+Fourier 变换的性质
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+性质
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+象函数
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+线性变换
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha u(x)+\beta v(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha\tilde{u}(k)+\beta\tilde{v}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（原函数的）导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\dv*{x})^{n}u(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\ii k)^{n}\tilde{u}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\grad{u}(\vec{x})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\ii\vec{k})\tilde{u}(\vec{k})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\div\grad{u}(\vec{x})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(-\vec{k}\vdot\vec{k})\tilde{u}(\vec{k})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（像函数的）导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $xu(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\ii\dv*{k})\tilde{u}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x^{n}u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\ii\dv*{x})^{n}\tilde{u}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+积分定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{x_{0}}^{x}u(y)\dd{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(\ii k)^{-1}\tilde{u}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+位移定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(\ii k_{0}x)u(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}(k-k_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u(x-x_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-\ii kx_{0}}\tilde{u}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+卷积定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}(k)\tilde{v}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+验证 Fourier 变换的卷积定理。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将卷积代入 Fourier 变换的定义：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{F}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right](k) & =\int_{-\infty}^{+\infty}\ee^{-\ii kx}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right]\dd{x}\\
+ & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\ee^{-\ii kx}u(y)v(x-y)\dd{x}\dd{y}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\square_{x,y}(h):=\left\{ (x,y):\abs{x}<h,\abs{y}<h\right\} $
+\end_inset
+
+ 是 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 平面上的四边形积分区域。引入坐标变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}x\\
+y
+\end{bmatrix}=\begin{bmatrix}1 & 1\\
+1 & 0
+\end{bmatrix}\begin{bmatrix}\sigma\\
+\tau
+\end{bmatrix}\implies\det(\pdv{(x,y)}{(\sigma,\tau)})=1\implies\dd{x}\dd{y}=\dd{\sigma}\dd{\tau}
+\]
+
+\end_inset
+
+于是 
+\begin_inset Formula $\square_{x,y}(h)$
+\end_inset
+
+ 变换为 
+\begin_inset Formula $\square_{\sigma,\tau}(h):=\left\{ (\sigma,\tau):\abs{\sigma+\tau}<h,\abs{\sigma}<h\right\} $
+\end_inset
+
+，取极限就得到 
+\begin_inset Formula 
+\[
+\lim_{h\to\infty}\square_{\sigma,\tau}(h)=\left\{ (\sigma,\tau):\abs{\sigma+\tau}<\infty,\abs{\sigma}<\infty\right\} \equiv\mathbb{R}_{\sigma}\times\mathbb{R}_{\tau}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{F}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right](k) & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\ee^{-\ii kx}u(y)v(x-y)\dd{x}\dd{y}\\
+x=\sigma+\tau,y=\sigma\implies & =\lim_{h\to\infty}\iint_{\square_{\sigma,\tau}(h)}\ee^{-\ii k\sigma}\ee^{-\ii k\tau}u(\sigma)v(\tau)\dd{\sigma}\dd{\tau}\\
+ & =\underbrace{\left[\int_{\mathbb{R}_{\sigma}}\ee^{-\ii k\sigma}u(\sigma)\dd{\sigma}\right]}_{\tilde{u}(k)}\cdot\underbrace{\left[\int_{\mathbb{R}_{\tau}}\ee^{-\ii k\tau}v(\tau)\dd{\tau}\right]}_{\tilde{v}(k)}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Laplace 变换
+\end_layout
+
+\begin_layout Subsection
+对 Fourier 变换的改进
+\end_layout
+
+\begin_layout Standard
+Fourier 变换
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:FourierTransform"
+
+\end_inset
+
+要求原函数属于 
+\begin_inset Formula $\mathcal{L}^{2}(-\infty,+\infty)$
+\end_inset
+
+，这就排除了许多常见的函数（常值函数、线性函数、三角函数等）。为了扩大 Fourier 变换的适用范围，需要对它的核 
+\begin_inset Formula $\ee^{-\ii\omega t}/\sqrt{2\pi}$
+\end_inset
+
+ 作适当的改造，其中一种方案是：乘上一个指数衰减因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+，并且将积分区间限制在 
+\begin_inset Formula $[0^{-},\infty)$
+\end_inset
+
+ 上（相当于再乘上一个单位阶跃函数 
+\begin_inset Formula $\eta(t)$
+\end_inset
+
+），这样就得到了「Laplace 变换」：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\mathscr{L}[u](p)\equiv\tilde{u}(p):=\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a}\label{eq:LaplaceTransform}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $p=\sigma+\ii\omega$
+\end_inset
+
+ 是复变量；
+\begin_inset Formula $a$
+\end_inset
+
+ 被称为「收敛横标」，它是由 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 在 
+\begin_inset Formula $t\to\infty$
+\end_inset
+
+ 时的渐进行为决定的实常数，其意义体现在以下「Laplace 变换存在的充分条件」中：
+\end_layout
+
+\begin_layout Theorem*
+如果 
+\begin_inset Formula $\exists\,M>0$
+\end_inset
+
+ 以及 
+\begin_inset Formula $a\in\mathbb{R}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\abs{u(t)}<M\ee^{at}$
+\end_inset
+
+ 几乎处处成立，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LaplaceTransform"
+
+\end_inset
+
+式中的积分在区域 
+\begin_inset Formula $\left\{ p\in\mathbb{C}:\Re p>a\right\} $
+\end_inset
+
+ 上绝对收敛，并且由这个积分所定义的函数 
+\begin_inset Formula $\tilde{u}(p)$
+\end_inset
+
+ 在该区域内解析。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:常用-Laplace-变换对"
+
+\end_inset
+
+常用 Laplace 变换对
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+象函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+收敛横标
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+备注
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta(t-t_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-pt_{0}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-\infty$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t_{0}\in\mathbb{R}_{+}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p^{n+1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+ 中 
+\begin_inset Formula $n=1$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $t^{n}$
+\end_inset
+
+ 中 
+\begin_inset Formula $n=0$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/(p-p_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\Re p_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p_{0}\in\mathbb{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cos(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p/(p^{2}+\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+ 中 
+\begin_inset Formula $p_{0}=\pm\ii\omega$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sin(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega/(p^{2}+\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $\omega\in\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cosh(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p/(p^{2}-\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\abs{\omega}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)$
+\end_inset
+
+ 中 
+\begin_inset Formula $p_{0}=\pm\omega$
+\end_inset
+
+ 的特例
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sinh(\omega t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\omega/(p^{2}-\omega^{2})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+其中 
+\begin_inset Formula $\omega\in\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt{1/t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sqrt{\pi/p}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+例
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "exa:倒数平方根的 Laplace 变换"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:倒数平方根的 Laplace 变换"
+
+\end_inset
+
+验证
+\begin_inset Formula 
+\[
+\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}=\sqrt{\frac{\pi}{p}}\qquad\forall p\ne0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+利用 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 函数的定义及特殊值 
+\begin_inset Formula $\Gamma(\nicefrac{1}{2})=\sqrt{\pi}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\Gamma(x):=\int_{0}^{\infty}\ee^{-t}t^{x-1}\dd{t}\implies\Gamma(\nicefrac{1}{2}) & =\int_{0}^{\infty}\frac{\ee^{-t}}{\sqrt{t}}\dd{t}=\int_{-\infty}^{+\infty}\ee^{-x^{2}}\dd{x}=\sqrt{\pi}\\
+pt\to t\implies & =\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{pt}}\dd(pt)=\sqrt{p}\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Laplace 变换的性质
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Laplace-变换的性质"
+
+\end_inset
+
+Laplace 变换的性质
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+性质
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+原函数
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+象函数
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+线性变换
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha u(t)+\beta v(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\alpha\tilde{u}(p)+\beta\tilde{v}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（原函数的）导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u'(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\tilde{u}(p)-u(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u''(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p^{2}\tilde{u}(p)-pu(0)-u'(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $u^{(n)}(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p^{n}\tilde{u}(p)-\sum_{k=1}^{n}p^{n-k}u^{(k-1)}(0)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+（像函数的）导数定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $-tu(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}'(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(-t)^{n}u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}^{(n)}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+积分定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{0}^{t}u(\tau)\dd{\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}(p)/p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+位移定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\exp(p_{0}t)u(t)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}(p-p_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\eta(t-t_{0})u(t-t_{0})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\ee^{-pt_{0}}\tilde{u}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+卷积定理
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{u}(p)\tilde{v}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+验证 Laplace 变换的卷积定理。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将卷积代入 Laplace 变换的定义：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\int_{0}^{\infty}\ee^{-pt}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right]\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\triangle_{\tau,t}(h):=\left\{ (\tau,t):\tau\in[0,t],t\in[0,h]\right\} $
+\end_inset
+
+ 是 
+\begin_inset Formula $(\tau,t)$
+\end_inset
+
+ 平面上的三角形积分区域。引入坐标变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}\tau\\
+t
+\end{bmatrix}=\begin{bmatrix}1 & 0\\
+1 & 1
+\end{bmatrix}\begin{bmatrix}x\\
+y
+\end{bmatrix}\implies\det(\pdv{(\tau,t)}{(x,y)})=1\implies\dd{\tau}\dd{t}=\dd{x}\dd{y}
+\]
+
+\end_inset
+
+于是 
+\begin_inset Formula $\triangle_{\tau,t}(h)$
+\end_inset
+
+ 变换为 
+\begin_inset Formula $\triangle_{x,y}(h):=\left\{ (x,y):x\in[0,h],y\in[0,h],x+y\in[0,h]\right\} $
+\end_inset
+
+，取极限就得到 
+\begin_inset Formula 
+\[
+\lim_{h\to\infty}\triangle_{x,y}(h)=\left\{ (x,y):x\in[0,\infty),y\in[0,\infty)\right\} \equiv\mathbb{R}_{x}^{+}\times\mathbb{R}_{y}^{+}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{x,y}(h)}\ee^{-px}\ee^{-py}u(x)v(y)\dd{x}\dd{y}\\
+ & =\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-px}u(x)\dd{x}\right]}_{\tilde{u}(p)}\cdot\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-py}v(y)\dd{y}\right]}_{\tilde{v}(p)}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Laplace 变换的反演
+\end_layout
+
+\begin_layout Standard
+在实际应用中，灵活运用
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "tab:常用-Laplace-变换对"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+和 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "tab:Laplace-变换的性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，已经能够对一些具有特殊形式的象函数作反演。本节讨论获取任意象函数反演的一般方法。
+\end_layout
+
+\begin_layout Standard
+在构造 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LaplaceTransform"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式的过程中，衰减因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+ 和单位阶跃函数 
+\begin_inset Formula $\eta(t)$
+\end_inset
+
+ 是乘在 Fourier 变换的核 
+\begin_inset Formula $\ee^{-\ii\omega t}/\sqrt{2\pi}$
+\end_inset
+
+ 上的。从另一个角度看，也可以将它们看作是乘在原函数 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 上的因子，因此「对 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 作 Laplace 变换」相当于「对 
+\begin_inset Formula $u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+ 作 Fourier 变换」：
+\begin_inset Formula 
+\[
+\tilde{u}(p)\equiv\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\equiv\int_{-\infty}^{+\infty}\frac{\ee^{-\ii\omega t}}{\sqrt{2\pi}}\underbrace{\left[u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\right]}_{v(t)}\dd{t}\equiv\tilde{v}(\omega)
+\]
+
+\end_inset
+
+后者的反演是已知的：
+\begin_inset Formula 
+\[
+u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\infty}\frac{\ee^{+\ii\omega t}}{\sqrt{2\pi}}\tilde{v}(\omega)\dd{\omega}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $p=\sigma+\ii\omega$
+\end_inset
+
+ 并从被积函数中提出因子 
+\begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
+\end_inset
+
+，就得到
+\begin_inset Formula 
+\[
+u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\tilde{v}(\omega)\dd{\omega}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}
+\]
+
+\end_inset
+
+约去等式两端的公因子，并且只关注 
+\begin_inset Formula $t>0$
+\end_inset
+
+ 的部分（有 
+\begin_inset Formula $\eta(t)=1$
+\end_inset
+
+），所得结果就是「Laplace 变换的反演」：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\mathscr{L}^{-1}[\tilde{u}](t)\equiv u(t)\doteq\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}\qquad t>0}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\sigma=\Re p$
+\end_inset
+
+ 是位于收敛横标右侧的任意实数。
+\end_layout
+
+\end_body
+\end_document

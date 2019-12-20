@@ -4,53 +4,9 @@
 \begin_header
 \save_transient_properties false
 \origin unavailable
-\textclass ctex-report
+\textclass book
 \begin_preamble
-% more mathematical symbols
-%% symbols for physics
-\usepackage{physics}
-\usepackage{siunitx}
-\newcommand{\VecInKet}[1]{\ket*{\vec{#1}}}  % \ket in physics
-\newcommand{\Operator}[1]{\mathop{\widehat{#1}}\nolimits}
-\newcommand{\Matrix}[1]{\mathop{\underline{#1}}\nolimits}
-\newcommand{\DDt}[1]{\frac{\mathrm{D}#1}{\mathrm{D}t}}  % material derivative
-%% arrow-based vector and tensor
-\usepackage[g]{esvect}
-\renewcommand\vec[1]{\vv{#1}}  % \vv in esvect
-\newcommand\Tensor[1]{\vv{\vv{#1}}}  % \vv in esvect
-%% constants
-\newcommand\ii{\mathtt{i}}
-\newcommand\ee{\mathtt{e}}
-%% special functions
-\newcommand{\Bessel}[1]{\operatorname{J}_{#1}}
-\newcommand{\ChebyshevI}[1]{\operatorname{T}_{#1}}
-\newcommand{\ConHypGeo}{\sideset{_{1}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
-\newcommand{\Hermite}[1]{\operatorname{H}_{#1}}
-\newcommand{\HypGeo}{\sideset{_{2}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
-\newcommand{\Laguerre}[1]{\operatorname{L}_{#1}}
-\newcommand{\Legendre}[1]{\operatorname{P}_{#1}}
-\newcommand{\Neumann}[1]{\operatorname{N}_{#1}}
-% pictures
-\usepackage{tikz}
-\usetikzlibrary{intersections}
-\usetikzlibrary{arrows.meta}
-% fonts
-\ctexset{
-  part/name = {第,卷},
-  part/format += \sffamily,
-  chapter/format += \sffamily,
-  section/format += \sffamily,
-  subsection/format += \sffamily,
-  subsubsection/format += \sffamily,
-  paragraph/format += \sffamily,
-  subparagraph/format += \sffamily,
-}
-\usepackage[euler-hat-accent, OT1]{eulervm}
-\renewcommand\vec[1]{\vv{\mathbold{#1}}}  % \vv in esvect, \mathbold in eulervm
-\renewcommand\Tensor[1]{\vv{\vv{\mathbold{#1}}}}  % \vv in esvect, \mathbold in eulervm
-\renewcommand\Operator[1]{\mathop{\hat{\mathbold{#1}}}\nolimits}  % \mathbold in eulervm
-%% deprecated
-\newcommand{\Conj}[1]{\overline{#1}}
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -63,12 +19,12 @@ theorems-chap
 \language_package default
 \inputencoding utf8-plain
 \fontencoding global
-\font_roman "palatino" "Palatino Linotype"
+\font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
-\font_math "eulervm" "auto"
+\font_math "auto" "auto"
 \font_default_family default
-\use_non_tex_fonts true
+\use_non_tex_fonts false
 \font_sc true
 \font_osf false
 \font_sf_scale 100 100
@@ -120,7 +76,7 @@ theorems-chap
 \color #008000
 \end_index
 \leftmargin 0.5cm
-\topmargin 0.5cm
+\topmargin 1.5cm
 \rightmargin 0.5cm
 \bottommargin 0.5cm
 \secnumdepth 2
@@ -133,7 +89,7 @@ theorems-chap
 \dynamic_quotes 0
 \papercolumns 1
 \papersides 1
-\paperpagestyle plain
+\paperpagestyle fancy
 \listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
@@ -186,17 +142,6 @@ LatexCommand lstlistoflistings
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset index_print
-LatexCommand printindex
-type "idx"
-name "Index"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Part
 实分析
 \end_layout
@@ -204,7 +149,7 @@ name "Index"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/real_analysis/README.lyx"
+filename "mathematics/analysis/README.lyx"
 
 \end_inset
 
@@ -218,7 +163,7 @@ filename "mathematics/real_analysis/README.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/complex_analysis/README.lyx"
+filename "mathematics/complex/README.lyx"
 
 \end_inset
 
@@ -232,7 +177,7 @@ filename "mathematics/complex_analysis/README.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/functional_analysis/README.lyx"
+filename "mathematics/functional/README.lyx"
 
 \end_inset
 
@@ -240,13 +185,13 @@ filename "mathematics/functional_analysis/README.lyx"
 \end_layout
 
 \begin_layout Part
-微分方程
+常微分方程
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/ode_and_pde/introduction.lyx"
+filename "mathematics/ode/frobenius.lyx"
 
 \end_inset
 
@@ -256,7 +201,7 @@ filename "mathematics/ode_and_pde/introduction.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/ode_and_pde/frobenius_method.lyx"
+filename "mathematics/ode/eigenvalue.lyx"
 
 \end_inset
 
@@ -266,57 +211,7 @@ filename "mathematics/ode_and_pde/frobenius_method.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/ode_and_pde/sturm_liouville.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "mathematics/ode_and_pde/variable_seperation.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "mathematics/ode_and_pde/integral_transforms.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "mathematics/ode_and_pde/greens_functions.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "mathematics/ode_and_pde/characteristic_curves.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand include
-filename "mathematics/ode_and_pde/conservation_laws.lyx"
+filename "mathematics/ode/transforms.lyx"
 
 \end_inset
 
@@ -324,13 +219,63 @@ filename "mathematics/ode_and_pde/conservation_laws.lyx"
 \end_layout
 
 \begin_layout Part
-特殊函数
+偏微分方程
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/special_functions/README.lyx"
+filename "mathematics/pde/pde_outline.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/pde/seperation.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/pde/transforms.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/pde/point_sources.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/pde/hyperbolic_pdes.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/pde/riemann_problems.lyx"
 
 \end_inset
 
@@ -344,7 +289,14 @@ filename "mathematics/special_functions/README.lyx"
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "mathematics/differential_geometry/README.lyx"
+filename "mathematics/geometry/surface.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand include
+filename "mathematics/geometry/tensor.lyx"
 
 \end_inset
 
@@ -355,44 +307,28 @@ filename "mathematics/differential_geometry/README.lyx"
 热力学
 \end_layout
 
-\begin_layout Chapter
-分子动理论
-\end_layout
-
-\begin_layout Chapter
-宏观理论
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand input
-filename "physics/thermodynamics/macroscopic.lyx"
+LatexCommand include
+filename "physics/heat/thermodynamics.lyx"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Chapter
-统计理论
-\end_layout
-
 \begin_layout Part
-空气动力学
+流体力学
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand include
-filename "physics/aerodynamics/equations.lyx"
+filename "physics/fluid/flow_equations.lyx"
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-无黏不可压流动
 \end_layout
 
 \begin_layout Chapter
@@ -403,22 +339,14 @@ filename "physics/aerodynamics/equations.lyx"
 喷管
 \end_layout
 
-\begin_layout Section
-激波管
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset include
-LatexCommand input
-filename "physics/aerodynamics/shock_tubes/README.lyx"
+LatexCommand include
+filename "physics/fluid/shock_tubes.lyx"
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-黏性流动
 \end_layout
 
 \begin_layout Part
@@ -472,7 +400,7 @@ filename "algorithms/finite_element/poisson.lyx"
 \end_layout
 
 \begin_layout Part
-计算流体动力学
+计算流体力学
 \end_layout
 
 \begin_layout Standard
@@ -499,6 +427,18 @@ filename "algorithms/cfd/finite_volume.lyx"
 \begin_inset CommandInset include
 LatexCommand include
 filename "algorithms/cfd/shock_capturing.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\start_of_appendix
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "Index"
 
 \end_inset
 

@@ -1,0 +1,626 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\master README.lyx
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+积分变换法
+\end_layout
+
+\begin_layout Section
+积分变换的一般形式
+\end_layout
+
+\begin_layout Standard
+「积分变换（Integral Transform）」是指通过积分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\tilde{u}(t)=\int_{a}^{b}K(t,\tau)u(\tau)\dd{\tau}\label{eq:积分变换的一般形式}
+\end{equation}
+
+\end_inset
+
+将「以 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 为自变量的原函数 
+\begin_inset Formula $u$
+\end_inset
+
+」变换为「以 
+\begin_inset Formula $t$
+\end_inset
+
+ 为自变量的象函数 
+\begin_inset Formula $\tilde{u}$
+\end_inset
+
+」的过程，其中 
+\begin_inset Formula $K(t,\tau)$
+\end_inset
+
+ 称为该积分变换的「核（Kernel）」。
+\end_layout
+
+\begin_layout Section
+Laplace 变换法
+\end_layout
+
+\begin_layout Standard
+利用 Laplace 变换，可以将线性常系数常微分方程（组）转化为代数方程（组），后者通常更易求解，对所得代数方程（组）的解作反演，就得到原微分方程（组）的解。
+\end_layout
+
+\begin_layout Subsection
+线性系统的受迫振动
+\end_layout
+
+\begin_layout Question
+求解初值问题
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\left(M\dv[2]{t}+C\dv{t}+K\right)u(t)=F(t)\qquad t>0\\
+u(0)=u_{0}\qquad\dv{u(0)}{t}=\dot{u}_{0}
+\end{gathered}
+\label{eq:MCKF系统的初值问题}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $M,K>0,C\ge0$
+\end_inset
+
+ 为已知常数，
+\begin_inset Formula $F(t)$
+\end_inset
+
+ 为已知函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+对方程两端同时作 Laplace 变换：
+\begin_inset Formula 
+\[
+M\cdot\left[p^{2}\tilde{u}(p)-pu_{0}-\dot{u}_{0}\right]+C\cdot\left[p\tilde{u}(p)-u_{0}\right]+K\cdot\tilde{u}(p)=\tilde{F}(p)
+\]
+
+\end_inset
+
+解出 
+\begin_inset Formula $\tilde{u}(p)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\tilde{u}(p)=\frac{(Mp+C)u_{0}+M\dot{u}_{0}+\tilde{F}(p)}{Mp^{2}+Cp+K}\equiv\frac{\left(p+\frac{C}{M}\right)u_{0}+\dot{u}_{0}+\frac{1}{M}\tilde{F}(p)}{p^{2}+\frac{C}{M}p+\frac{K}{M}}
+\]
+
+\end_inset
+
+为方便叙述，定义以下参数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+这些名称的含义将体现在最终的结果中。
+\end_layout
+
+\end_inset
+
+：「自然频率（Natural Frequency）」
+\begin_inset Formula $\omega_{0}:=\sqrt{K/M}$
+\end_inset
+
+；「阻尼比（Damping Ratio）」
+\begin_inset Formula $\zeta:=\nicefrac{1}{2}\sqrt{C/M}/\omega_{0}\equiv\nicefrac{1}{2}\sqrt{C/K}$
+\end_inset
+
+；「衰减速率（Decay Rate）」
+\begin_inset Formula $\sigma:=\zeta\omega_{0}$
+\end_inset
+
+；「阻尼频率（Damped Frequency）」
+\begin_inset Formula $\omega_{d}:=\sqrt{1-\zeta^{2}}\omega_{0}$
+\end_inset
+
+。于是有
+\begin_inset Formula 
+\[
+\tilde{u}(p)=\frac{p+\sigma}{(p+\sigma)^{2}+\omega_{d}^{2}}u_{0}+\frac{\sigma u_{0}+\dot{u}_{0}}{(p+\sigma)^{2}+\omega_{d}^{2}}+\frac{1}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\tilde{F}(p)}{M}
+\]
+
+\end_inset
+
+下面只需要求出它的反演。
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+欠阻尼（
+\begin_inset Formula $0<\zeta<1$
+\end_inset
+
+） 此时有
+\begin_inset Formula 
+\[
+\tilde{u}(p)=\frac{p+\sigma}{(p+\sigma)^{2}+\omega_{d}^{2}}u_{0}+\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\sigma u_{0}+\dot{u}_{0}}{\omega_{d}}+\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\tilde{F}(p)}{M\omega_{d}}
+\]
+
+\end_inset
+
+利用表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:常用-Laplace-变换对"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Laplace-变换的性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，容易得到
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}^{-1}\left[\frac{p+\sigma}{(p+\sigma)^{2}+\omega_{d}^{2}}\right](t) & =\ee^{-\sigma t}\cos(\omega_{d}t)\\
+\mathscr{L}^{-1}\left[\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\right](t) & =\ee^{-\sigma t}\sin(\omega_{d}t)\\
+\mathscr{L}^{-1}\left[\frac{\omega_{d}}{(p+\sigma)^{2}+\omega_{d}^{2}}\frac{\tilde{F}(p)}{M\omega_{d}}\right](t) & =\int_{0}^{t}\ee^{-\sigma\tau}\sin(\omega_{d}\tau)\frac{F(t-\tau)}{M\omega_{d}}\dd{\tau}
+\end{aligned}
+\]
+
+\end_inset
+
+初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MCKF系统的初值问题"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解为：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}u(t) & =\ee^{-\zeta\omega_{0}t}\left[u_{0}\cos(\sqrt{1-\zeta^{2}}\omega_{0}t)+\frac{\zeta u_{0}+\dot{u}_{0}/\omega_{0}}{\sqrt{1-\zeta^{2}}}\sin(\sqrt{1-\zeta^{2}}\omega_{0}t)\right]\\
+ & +\int_{0}^{t}\frac{\ee^{-\zeta\omega_{0}\tau}\sin(\sqrt{1-\zeta^{2}}\omega_{0}\tau)}{\sqrt{1-\zeta^{2}}\omega_{0}M}F(t-\tau)\dd{\tau}
+\end{aligned}
+\label{eq:MCKF系统初值问题的欠阻尼解}
+\end{equation}
+
+\end_inset
+
+显然：初始条件 
+\begin_inset Formula $u_{0}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\dot{u}_{0}$
+\end_inset
+
+ 的只影响其中的第一项（称为「瞬态响应」）；方程的非齐次项 
+\begin_inset Formula $F(t)$
+\end_inset
+
+ 只影响第二项（称为「稳态响应」）。
+\end_layout
+
+\begin_layout Description
+临界阻尼（
+\begin_inset Formula $\zeta=1$
+\end_inset
+
+） 此时有 
+\begin_inset Formula $\omega_{d}=\sqrt{1-\zeta^{2}}\omega_{0}=0$
+\end_inset
+
+ 以及 
+\begin_inset Formula $\sigma=\zeta\omega_{0}=\omega_{0}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\tilde{u}(p)=\frac{u_{0}}{p+\omega_{0}}+\frac{\omega_{0}u_{0}+\dot{u}_{0}}{(p+\omega_{0})^{2}}+\frac{1}{(p+\omega_{0})^{2}}\frac{\tilde{F}(p)}{M}
+\]
+
+\end_inset
+
+利用表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:常用-Laplace-变换对"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、表
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Laplace-变换的性质"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，容易得到
+\begin_inset Formula 
+\[
+\begin{aligned}\mathscr{L}^{-1}\left[\frac{1}{p+\omega_{0}}\right](t) & =\ee^{-\omega_{0}t}\\
+\mathscr{L}^{-1}\left[\frac{1}{(p+\omega_{0})^{2}}\right](t) & =t\ee^{-\omega_{0}t}\\
+\mathscr{L}^{-1}\left[\frac{1}{(p+\omega_{0})^{2}}\frac{\tilde{F}(p)}{M}\right](t) & =\int_{0}^{t}\tau\ee^{-\omega_{0}\tau}\frac{F(t-\tau)}{M}\dd{\tau}
+\end{aligned}
+\]
+
+\end_inset
+
+初值问题
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MCKF系统的初值问题"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的解为：
+\begin_inset Formula 
+\[
+u(t)=\ee^{-\omega_{0}t}\left[u_{0}+(\omega_{0}u_{0}+\dot{u}_{0})t\right]+\int_{0}^{t}\tau\ee^{-\omega_{0}\tau}\frac{F(t-\tau)}{M}\dd{\tau}
+\]
+
+\end_inset
+
+下面考察这个解在 
+\begin_inset Formula $t\to\infty$
+\end_inset
+
+ 时的渐进行为：第一项随时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 的增长呈指数衰减（尽管含有线性因子），因此依然是「瞬态响应」；只要 
+\begin_inset Formula $F(t)$
+\end_inset
+
+ 有界，第二项也趋向于定值，因此也是「瞬态的」。
+\end_layout
+
+\begin_layout Description
+过阻尼（
+\begin_inset Formula $\zeta>1$
+\end_inset
+
+） 此时有 
+\begin_inset Formula $\omega_{d}=\sqrt{1-\zeta^{2}}\omega_{0}=\ii\sqrt{\zeta^{2}-1}\omega_{0}$
+\end_inset
+
+。如果将欠阻尼解
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MCKF系统初值问题的欠阻尼解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中的实变函数「延拓」为复变函数，则立即可以得到过阻尼解。利用恒等式
+\begin_inset Formula 
+\[
+\cos(\ii z)\equiv\cosh(z)\qquad\sin(\ii z)\equiv\ii\sinh(z)
+\]
+
+\end_inset
+
+可以将其中的复变函数化为实变函数：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}u(t) & =\ee^{-\zeta\omega_{0}t}\left[u_{0}\cosh(\sqrt{\zeta^{2}-1}\omega_{0}t)+\frac{\zeta u_{0}+\dot{u}_{0}/\omega_{0}}{\sqrt{\zeta^{2}-1}}\sinh(\sqrt{\zeta^{2}-1}\omega_{0}t)\right]\\
+ & +\int_{0}^{t}\frac{\ee^{-\zeta\omega_{0}\tau}\sinh(\sqrt{\zeta^{2}-1}\omega_{0}\tau)}{\sqrt{\zeta^{2}-1}\omega_{0}M}F(t-\tau)\dd{\tau}
+\end{aligned}
+\label{eq:MCKF系统初值问题的过阻尼解}
+\end{equation}
+
+\end_inset
+
+下面考察这个解在 
+\begin_inset Formula $t\to\infty$
+\end_inset
+
+ 时的渐进行为：此时 
+\begin_inset Formula $\cosh(\sqrt{\zeta^{2}-1}\omega_{0}t)$
+\end_inset
+
+ 和 
+\begin_inset Formula $\sinh(\sqrt{\zeta^{2}-1}\omega_{0}t)$
+\end_inset
+
+ 均趋向于 
+\begin_inset Formula $\frac{1}{2}\exp(\sqrt{\zeta^{2}-1}\omega_{0}t)$
+\end_inset
+
+，于是有
+\begin_inset Formula 
+\[
+\lim_{t\to\infty}\ee^{-\zeta\omega_{0}t}\sinh(\sqrt{\zeta^{2}-1}\omega_{0}t)=\frac{1}{2}\lim_{t\to\infty}\left(\ee^{\sqrt{\zeta^{2}-1}-\zeta}\right)^{\omega_{0}t}=0
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $t\to0$
+\end_inset
+
+ 时，「瞬态响应」趋于 
+\begin_inset Formula $0$
+\end_inset
+
+，因此的确是「瞬态的」；只要 
+\begin_inset Formula $F(t)$
+\end_inset
+
+ 有界，「稳态响应」也趋向于定值，因此也是「瞬态的」。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[共振]
+\end_layout
+
+\end_inset
+
+考虑 
+\begin_inset Formula $\zeta=0$
+\end_inset
+
+（即 
+\begin_inset Formula $C=0$
+\end_inset
+
+）的情形。此时 
+\begin_inset Formula $\omega_{d}=\sqrt{1-\zeta^{2}}\omega_{0}=\omega_{0}$
+\end_inset
+
+，
+\begin_inset Formula $\sigma=\zeta\omega_{0}=0$
+\end_inset
+
+，于是
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MCKF系统初值问题的欠阻尼解"
+
+\end_inset
+
+式可以简化为
+\begin_inset Formula 
+\begin{equation}
+u(t)=\left[u_{0}\cos(\omega_{0}t)+\frac{\dot{u}_{0}}{\omega_{0}}\sin(\omega_{0}t)\right]+\int_{0}^{t}\frac{\sin(\omega_{0}\tau)}{\omega_{0}M}F(t-\tau)\dd{\tau}\label{eq:MKF系统初值问题的解}
+\end{equation}
+
+\end_inset
+
+可见「瞬态响应」并没有衰减，因此并不是「瞬态的」。不失一般性
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+对于更一般的 
+\begin_inset Formula $F(t)$
+\end_inset
+
+，可以先将其表示成 Fourier 级数或 Fourier 积分，再对各个分量逐一进行讨论。
+\end_layout
+
+\end_inset
+
+，考虑形如 
+\begin_inset Formula $F(t)=\tilde{F}\exp(\ii\omega t)$
+\end_inset
+
+ 的非齐次项，其中 
+\begin_inset Formula $\tilde{F}\in\mathbb{C}$
+\end_inset
+
+ 为复振幅（不妨取作 
+\begin_inset Formula $2\ii\omega_{0}M$
+\end_inset
+
+ 以消除被积函数的复常数因子），暂且假定 
+\begin_inset Formula $\omega\ne\pm\omega_{0}$
+\end_inset
+
+，则
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:MKF系统初值问题的解"
+
+\end_inset
+
+式中的积分可以显示地算出：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{0}^{t}\frac{\sin(\omega_{0}\tau)}{\omega_{0}M}F(t-\tau)\dd{\tau} & =\int_{0}^{t}\left(\ee^{\ii\omega_{0}\tau}-\ee^{-\ii\omega_{0}\tau}\right)\ee^{\ii\omega t}\ee^{-\ii\omega\tau}\dd{\tau}\\
+ & =\ee^{\ii\omega t}\left[\frac{\ee^{\ii(\omega_{0}-\omega)\tau}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{\ii(-\omega_{0}-\omega)\tau}}{\ii(-\omega_{0}-\omega)}\right]_{0}^{t}\\
+ & =\frac{\ee^{\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{-\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(-\omega_{0}-\omega)}
+\end{aligned}
+\]
+
+\end_inset
+
+可见在稳态响应中，既含有外部载荷的频率 
+\begin_inset Formula $\omega$
+\end_inset
+
+，又含有系统的固有频率 
+\begin_inset Formula $\omega_{0}$
+\end_inset
+
+。当 
+\begin_inset Formula $\omega\to\omega_{0}$
+\end_inset
+
+ 时，第一项可以化为导数，第二项可以化为正弦函数：
+\begin_inset Formula 
+\[
+\lim_{\omega\to\omega_{0}}\left[\frac{\ee^{\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(\omega_{0}-\omega)}-\frac{\ee^{-\ii\omega_{0}t}-\ee^{\ii\omega t}}{\ii(-\omega_{0}-\omega)}\right]=t\exp(\ii\omega_{0}t)-\frac{\sin(\omega_{0}t)}{\omega_{0}}
+\]
+
+\end_inset
+
+其中第一项的振幅随时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 线性增长，表示能量的聚集，这种现象被称为「共振（Resonance）」。当 
+\begin_inset Formula $\omega\to-\omega_{0}$
+\end_inset
+
+ 时，也有类似的现象。
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
