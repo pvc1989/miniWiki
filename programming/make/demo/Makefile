@@ -1,38 +1,35 @@
-# Points to the root of this project, relative to where this file is.
-# Remember to tweak this if you move this file.
-PROJECT_DIR = .
+# Remember to tweak these values after moving this `Makefile`.
+SOURCE_DIR ?= $(PWD)
+BUILD_DIR ?= $(PWD)/build
 
-# Points to the location of libraries
-LIB_DIR = .
-
-TESTS = test_math_o.exe test_math_so.exe test_math_a.exe
+OBJS = test_math.o lib_math.o
 LIBS = libmath.so libmath.a
-OBJS = test_math.o math.o
+EXES = test_math_o test_math_so test_math_a
 
 .PHONY: all clean
 	
-all: $(LIBS) $(TESTS)
+all: $(OBJS) $(LIBS) $(EXES)
 	
 clean:
-	rm -f $(OBJS) $(LIBS) $(TESTS)
+	cd $(BUILD_DIR); rm -f $(OBJS) $(LIBS) $(EXES)
 
-test_math_o.exe: test_math.o math.o
-	$(CC) -o $@ $^
+test_math_o: test_math.o lib_math.o
+	cd $(BUILD_DIR); $(CC) -o $@ $^
 
-test_math_so.exe: test_math.o libmath.so
-	$(CC) -o $@ -dynamic $< -L$(LIB_DIR) -lmath
+test_math_so: test_math.o libmath.so
+	cd $(BUILD_DIR); $(CC) -o $@ $< -Wl,-rpath,. -L. -lmath
 
-test_math_a.exe: test_math.o libmath.a
-	$(CC) -o $@ -static $< -L$(LIB_DIR) -lmath
+test_math_a: test_math.o libmath.a
+	cd $(BUILD_DIR); $(CC) -o $@ -static $< -L. -lmath
 
-test_math.o: $(PROJECT_DIR)/test/test_math.c
-	$(CC) -c $(CFLAGS) $^ 
+test_math.o:
+	cd $(BUILD_DIR); $(CC) -o $@ -c $(CFLAGS) $(SOURCE_DIR)/test/math.c
 
-math.o: $(PROJECT_DIR)/src/math.c
-	$(CC) -c $(CFLAGS) $^
+lib_math.o:
+	cd $(BUILD_DIR); $(CC) -o $@ -c $(CFLAGS) $(SOURCE_DIR)/src/math.c
 
-libmath.so: math.o
-	$(CC) -shared -fpic -o $@ $^
+libmath.so: lib_math.o
+	cd $(BUILD_DIR); $(CC) -o $@ -shared -fpic $^
 
-libmath.a: math.o
-	$(AR) $(ARFLAGS) $@ $^
+libmath.a: lib_math.o
+	cd $(BUILD_DIR); $(AR) $(ARFLAGS) $@ $^
