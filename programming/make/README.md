@@ -19,51 +19,54 @@ demo
 ├── src
 │   └── math.c
 └── test
-    └── test_math.c
+    └── math.c
 ```
 各文件大致内容如下：
 - [`include/math.h`](./demo/include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
 - [`src/math.c`](./demo/src/math.c) 实现 `factorial` 的功能。
-- [`test/test_math.c`](./demo/test/test_math.c) 在 `main` 中调用 `factorial` 对其进行测试。
+- [`test/math.c`](./demo/test/math.c) 测试 `factorial` 的功能。
 
-为叙述方便，下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径。
-为避免污染源文件目录，应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建。
+为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `demo` 的完整路径。
+为避免污染 `SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
 
 ### 编译 (Compile)
-采用默认的编译选项：
+
 ```shell
-# 编译 src/math.c, 得到二进制的目标文件 math.o
-cc -c ${PROJECT_PATH}/src/math.c
-# 编译 test/test_math.c, 得到二进制的目标文件 test_math.o
-cc -c ${PROJECT_PATH}/test/test_math.c
+cd ${BUILD_DIR}
+# 将 源文件 src/math.c 编译为 目标文件 lib_math.o
+cc -o lib_math.o -c ${SOURCE_DIR}/src/math.c
+# 将 源文件 test/math.c 编译为 目标文件 test_math.o
+cc -o test_math.o -c ${SOURCE_DIR}/test/math.c
 ```
 
 ### 打包 (Package)
-两种打包方式：
+
 ```shell
-# 将 math.o 打包为静态库 libmath.a
-ar -rcs libmath.a math.o
-# 将 math.o 打包为动态库 libmath.so
-cc -shared -fpic -o libmath.so math.o 
+cd ${BUILD_DIR}
+# 将 目标文件 lib_math.o 打包为 静态库 libmath.a
+ar -rcs libmath.a lib_math.o
+# 将 目标文件 lib_math.o 打包为 动态库 libmath.so
+cc -shared -fpic -o libmath.so lib_math.o
 ```
 
 ### 链接 (Link)
-三种链接方式：
 ```shell
-# 将 test_math.o 和目标文件 math.o 链接进 test_math_o
-cc -o test_math_o.exe test_math.o math.o
-# 将 test_math.o 和动态库 libmath.so 链接进 test_math_so
-cc -dynamic -o test_math_so.exe test_math.o -L. -lmath
-# 将 test_math.o 和静态库 libmath.a 链接进 test_math_a
-cc -static -o test_math_a.exe test_math.o -L. -lmath
+cd ${BUILD_DIR}
+# 将 目标文件 test_math.o 及 lib_math.o 链接进可执行文件 test_math_o
+cc -o test_math_o test_math.o lib_math.o
+# 将 目标文件 test_math.o 及 动态库 libmath.so 链接进 test_math_so
+cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
+# 将 目标文件 math.o 及静态库 libmath.a 链接进 test_math_a
+cc -static -o test_math_a test_math.o -L${BUILD_DIR} -lmath
 ```
 ⚠️ [在 macOS 下，无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html)，因此无法实现第三种方式。
 
 ### 运行 (Run)
 ```shell
-./test_math_o.exe
-./test_math_so.exe
-./test_math_a.exe
+cd ${BUILD_DIR}
+./test_math_o
+./test_math_so
+./test_math_a
 ```
 运行结果均为：
 ```shell
@@ -78,7 +81,8 @@ factorial(13) / factorial(12) == 4
 
 ### 清理 (Clean)
 ```shell
-rm *.exe *.a *.so *.o
+cd ${BUILD_DIR}
+rm -rf *
 ```
 
 ## 使用构建工具的动机
@@ -203,9 +207,7 @@ library.o : library.c
 ```
 
 ### 示例
-以[手动构建](#手动构建)中的项目为例，其构建过程可以写进 [`Makefile`](./demo/Makefile)。
-
-⚠️ 其中的 `PROJECT_DIR` 必须是「项目根 (root) 目录」相对于该 `Makefile` 的「相对路径 (relative path)」，或 *项目根目录* 的「绝对路径 (absolute path)」。推荐使用后者。
+以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./demo/Makefile)。
 
 # CMake
 ## 参考资料
@@ -227,8 +229,8 @@ library.o : library.c
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
 ## 术语
-- 「源文件目录 (source directory)」或「源文件树 (source tree)」：项目根目录，必须含有一个 `CMakeLists.txt` 文件。
-- 「构建目录 (build directory)」或「构建树 (build tree)」或「二进制树 (binary tree)」：存放构建产物（目标文件、库文件、可执行文件）的目录。
+- 「源文件目录 (source dir)」或「源文件树 (source tree)」：项目根目录，必须含有一个 `CMakeLists.txt` 文件。
+- 「构建目录 (build dir)」或「构建树 (build tree)」或「二进制树 (binary tree)」：存放构建产物（目标文件、库文件、可执行文件）的目录。
 - 「内部构建 (in-source build)」：在源文件目录下构建（⚠️ 会污染源文件目录）。
 - 「外部构建 (out-of-source build)」：在源文件目录外构建 👍。
 - 「构建配置 (build configuration)」：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
@@ -364,17 +366,8 @@ target_link_libraries(<target> ... <item>... ...)
   - 链接选项
 
 ### 示例
-依然以[手动构建](#手动构建)中的项目为例，源文件目录结构如下：
-```
-demo
-├── include
-│   └── math.h
-├── src
-│   └── math.c
-└── test
-    └── test_math.c
-```
+依然以《[手动构建](#手动构建)》中的项目为例。
 创建三个 `CMakeLists.txt` 文件：
 - [`demo/CMakeLists.txt`](./demo/CMakeLists.txt) 用于管理整个项目。
-- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `libmath`。
+- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `lib_math`。
 - [`demo/test/CMakeLists.txt`](./demo/test/CMakeLists.txt) 用于构建 `test_math`。
