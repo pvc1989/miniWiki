@@ -52,10 +52,10 @@ cc -shared -fpic -o libmath.so math.o
 ```shell
 # 将 test_math.o 和目标文件 math.o 链接进 test_math_o
 cc -o test_math_o.exe test_math.o math.o
-# 将 test_math.o 和动态库 libmath.so 链接进 test_math_so
-cc -dynamic -o test_math_so.exe test_math.o -L. -lmath
 # 将 test_math.o 和静态库 libmath.a 链接进 test_math_a
 cc -static -o test_math_a.exe test_math.o -L. -lmath
+# 将 目标文件 test_math.o 及 动态库 libmath.so 链接进 test_math_so
+cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
 ```
 ⚠️ [在 macOS 下，无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html)，因此无法实现第三种方式。
 
