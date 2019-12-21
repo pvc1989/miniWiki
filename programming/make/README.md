@@ -19,12 +19,12 @@ demo
 ├── src
 │   └── math.c
 └── test
-    └── test_math.c
+    └── math.c
 ```
 各文件大致内容如下：
 - [`include/math.h`](./demo/include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
 - [`src/math.c`](./demo/src/math.c) 实现 `factorial` 的功能。
-- [`test/test_math.c`](./demo/test/test_math.c) 在 `main` 中调用 `factorial` 对其进行测试。
+- [`test/math.c`](./demo/test/math.c) 测试 `factorial` 的功能。
 
 为叙述方便，下面用环境变量 `PROJECT_PATH` 表示 `demo` 的完整路径。
 为避免污染源文件目录，应当在一个独立于 `PROJECT_PATH` 的空目录里进行构建。
