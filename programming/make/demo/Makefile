@@ -29,7 +29,7 @@ lib_math.o:
 	cd $(BUILD_DIR); $(CC) -o $@ -c $(CFLAGS) $(SOURCE_DIR)/src/math.c
 
 libmath.so: lib_math.o
-	cd $(BUILD_DIR); $(CC) -o $@ -shared -fpic $^
+	cd $(BUILD_DIR); $(CC) -o $@ -shared -fpic $(SOURCE_DIR)/src/math.c
 
 libmath.a: lib_math.o
 	cd $(BUILD_DIR); $(AR) $(ARFLAGS) $@ $^

@@ -45,8 +45,8 @@ cc -o test_math.o -c ${SOURCE_DIR}/test/math.c
 cd ${BUILD_DIR}
 # 将 目标文件 lib_math.o 打包为 静态库 libmath.a
 ar -rcs libmath.a lib_math.o
-# 将 目标文件 lib_math.o 打包为 动态库 libmath.so
-cc -shared -fpic -o libmath.so lib_math.o
+# 将 源文件 src/math.c 编译并打包为 动态库 libmath.so
+cc -shared -fpic -o libmath.so ${SOURCE_DIR}/src/math.c
 ```
 
 ### 链接 (Link)
