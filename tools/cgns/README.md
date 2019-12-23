@@ -29,7 +29,7 @@ CGNS 文件（数据库）
 
 ### 单区 结构网格
 
-`write_grid_str.c` 与 `read_grid_str.c` 展示了用 MLL 创建、读取 *单区 (single zone) 结构网格* 的方法，用到的 API 如下：
+`write_grid_str.c` 与 `read_grid_str.c` 展示了利用 MLL 创建、读取 *单区 (single zone) 结构网格* 的方法，用到的 API 如下：
 
 ```c
 /* API in `write_grid_str.c` and `read_grid_str.c` */
@@ -37,7 +37,8 @@ CGNS 文件（数据库）
 // Open a CGNS file:
 ier = cg_open(
     char *file_name,
-    int mode/* CG_MODE_WRITE */,
+    int mode/* CG_MODE_WRITE | CG_MODE_READ |
+               CG_MODE_MODIFY */,
     int *file_id);
 // Close a CGNS file:
 ier = cg_close(int file_id);
@@ -63,7 +64,7 @@ ier = cg_zone_write(
     int *zone_id);
 // Read zone information:
 ier = cg_zone_read(
-    int file_id, int base_id, int zone_id
+    int file_id, int base_id, int zone_id,
     char *zone_name, cgsize_t *zone_size);
 
 // Write grid coordinates:
@@ -89,9 +90,11 @@ ier = cg_coord_read(
   - 各方向的 单元数 总是比 结点数 少一个。
   - 边界点 没有意义，因此最后一行全部为零。
 - 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即 `CoordinateX`、`CoordinateY`、`CoordinateZ`。
-- `range_min`、`range_max` 表示 编号范围。
+- `data_type` 应当与 `coord_array` 的类型匹配：
+  - `CGNS_ENUMV(RealSingle)` 对应 `float`。
+  - `CGNS_ENUMV(RealDouble)` 对应 `double`。
 
-运行示例：
+运行结果：
 ```shell
 > ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_grid_str
 
@@ -108,6 +111,62 @@ Program successful... ending now
 ```
 
 ### 单区 结构网格 + 流场
+
+⚠️ 本节示例依赖于前一节输出的 `grid_c.cgns`。
+
+#### Vertex-Based Flow Solution
+`write_flowvert_str.c` 与 `read_flowvert_str.c` 展示了 *基于结点的 (vertex-based)* 流场表示方法，新增的 API 如下：
+
+```c
+/* API in `write_flowvert_str.c` and `read_flowvert_str.c` */
+
+// Create and/or write to a `FlowSolution_t` node:
+ier = cg_sol_write(
+    int file_id, int base_id, int zone_id,
+    char *sol_name,
+    GridLocation_t location/* CGNS_ENUMV(Vertex) */,
+    int *sol_id);
+// Get info about a `FlowSolution_t` node:
+ier = cg_sol_info(
+    int file_id, int base_id, int zone_id,
+    int sol_id, char *sol_name,
+    GridLocation_t *location);
+
+// Write flow solution:
+ier = cg_field_write(
+    int file_id, int base_id, int zone_id, int sol_id,
+    DataType_t datatype, char *field_name, void *sol_array,
+    int *field_id);
+// Read flow solution:
+ier = cg_field_read(
+    int file_id, int base_id, int zone_id, int sol_id,
+    char *field_name, DataType_t data_type,
+    cgsize_t *range_min, cgsize_t *range_max,
+    void *sol_array);
+```
+
+其中
+- 物理量名称 `field_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
+
+运行结果：
+```shell
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_flowvert_str 
+
+Program write_flowvert_str
+
+created simple 3-D rho and p flow solution
+
+Successfully added Vertex flow solution data to file grid_c.cgns
+
+Note:  if the original CGNS file already had a FlowSolution_t node,
+          it has been overwritten
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/read_flowvert_str 
+
+Successfully read flow solution from file grid_c.cgns
+  For example, r,p[8][16][20]= 20.000000, 16.000000
+
+Program successful... ending now
+```
 
 ### 单区 结构网格 + 边界条件
 
