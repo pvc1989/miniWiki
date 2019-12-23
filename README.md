@@ -64,4 +64,5 @@
 - [SSH](./tools/ssh.md)
 - [Vim](./tools/vim.md)
 - [VTK](./tools/vtk/README.md) + [ParaView](./tools/vtk/README.md#ParaView)
+- [CGNS](./tools/cgns/README.md)
 - [书签编辑工具](./tools/bookmark.md)
