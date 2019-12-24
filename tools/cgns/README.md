@@ -114,8 +114,9 @@ Program successful... ending now
 
 ⚠️ 本节示例依赖于前一节输出的 `grid_c.cgns`。
 
-#### Vertex-Based Flow Solution
-`write_flowvert_str.c` 与 `read_flowvert_str.c` 展示了 *基于结点的 (vertex-based)* 流场表示方法，新增的 API 如下：
+#### Flow Solution at Vertices
+
+`write_flowvert_str.c` 与 `read_flowvert_str.c` 展示了这种流场表示方法，新增的 API 如下：
 
 ```c
 /* API in `write_flowvert_str.c` and `read_flowvert_str.c` */
@@ -146,6 +147,10 @@ ier = cg_field_read(
 ```
 
 其中
+- `cg_sol_write()` 用于在 `Zone_t` 对象下创建一个 表示流场的 `FlowSolution_t` 对象。
+  - 同一个  `Zone_t` 对象下的 `FlowSolution_t` 对象可以有多个。
+  - 所有 `FlowSolution_t` 对象都平行于 表示网格的 `GridCoordinates_t` 对象。
+- `cg_field_write()` 用于在 `FlowSolution_t` 对象下创建一个 表示单个物理量的 `DataArray_t` 对象。
 - 物理量名称 `field_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
 
 运行结果：
@@ -164,6 +169,97 @@ Note:  if the original CGNS file already had a FlowSolution_t node,
 
 Successfully read flow solution from file grid_c.cgns
   For example, r,p[8][16][20]= 20.000000, 16.000000
+
+Program successful... ending now
+```
+
+#### Flow Solution at Cell Centers
+
+`write_flowcent_str.c` 与 `read_flowcent_str.c` 展示了这种流场表示方法，所用 API 与前一小节几乎完全相同，只需注意：
+
+- 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
+- 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
+
+运行结果：
+```shell
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_flowcent_str 
+
+Program write_flowcent_str
+
+created simple 3-D rho and p flow solution
+
+Successfully added CellCenter flow solution data to file grid_c.cgns
+
+Note:  if the original CGNS file already had a FlowSolution_t node,
+          it has been overwritten
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/read_flowcent_str 
+
+Successfully read flow solution from file grid_c.cgns
+  For example, r,p[7][15][19]= 19.000000, 15.000000
+
+Program successful... ending now
+```
+
+#### Flow Solution at Cell Centers With Additional Rind Data
+
+*外皮 (rind) 数据* 是指存储在网格表面的一层或多层 *影子 (ghost) 单元* 上的数据 ：
+
+```
+┌---╔═══╦═══╦═══╗---┬---┐      ═══ 网格单元
+╎ o ║ o ║ o ║ o ║ o ╎ o ╎
+└---╚═══╩═══╩═══╝---┴---┘      --- 影子单元
+```
+`write_flowcentrind_str.c` 与 `read_flowcentrind_str.c` 展示了这种表示方法，新增的 API 如下：
+
+```c
+/* API in `write_flowcentrind_str.c` and `read_flowcentrind_str.c` */
+
+// Access a node via [label|name]-index pairs:
+ier = cg_goto(int file_id, int base_id, ..., "end");
+// e.g.
+ier = cg_goto(
+    file_id, base_id,
+    "Zone_t", zone_id,
+    "FlowSolution_t", sol_id,
+    "end");
+
+// Number of rind layers for each direction (structured grid):
+int rind_data[6] = {
+  1/* i_low */,
+  1/* i_high */,
+  1/* j_low */,
+  1/* j_high */,
+  0/* k_low */,
+  0/* k_high */
+};
+// Write number of rind layers:
+ier = cg_rind_write(int *rind_data);
+// Read number of rind layers:
+ier = cg_rind_read(int *rind_data);
+```
+
+其中
+- `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
+- 外皮数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
+
+运行结果：
+```shell
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_flowcentrind_str 
+
+Program write_flowcentrind_str
+
+created simple 3-D rho and p flow solution with rind data
+
+Successfully added flow solution data to file grid_c.cgns
+
+Note:  if the original CGNS file already had a FlowSolution_t node,
+          it has been overwritten
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/read_flowcentrind_str 
+
+Successfully read flow solution from file grid_c.cgns
+  For example, r,p[7][16][20]= 19.000000, 15.000000
+         rind: r,p[7][16][0]= 1055.000000, 1056.000000
+         rind: r,p[7][16][21]= -1055.000000, -1056.000000
 
 Program successful... ending now
 ```
