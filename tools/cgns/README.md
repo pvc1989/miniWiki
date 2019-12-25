@@ -39,6 +39,7 @@ ier = cg_open(
     char *file_name,
     int mode/* CG_MODE_WRITE | CG_MODE_READ |
                CG_MODE_MODIFY */,
+    // output:
     int *file_id);
 // Close a CGNS file:
 ier = cg_close(int file_id);
@@ -50,21 +51,25 @@ void cg_error_exit();
 ier = cg_base_write(
     int file_id, char *base_name,
     int cell_dim, int phys_dim,
+    // output:
     int *base_id);
 // Read CGNS base information:
 ier = cg_base_read(
-    int file_id, int base_id, char *basename,
-    int *cell_dim, int *phys_dim);
+    int file_id, int base_id,
+    // output:
+    char *base_name, int *cell_dim, int *phys_dim);
 
 // Create and/or write to a zone node:
 ier = cg_zone_write(
     int file_id, int base_id,
     char *zone_name, cgsize_t *zone_size,
     ZoneType_t zone_type/* CGNS_ENUMV(Structured) */,
+    // output:
     int *zone_id);
 // Read zone information:
 ier = cg_zone_read(
     int file_id, int base_id, int zone_id,
+    // output:
     char *zone_name, cgsize_t *zone_size);
 
 // Write grid coordinates:
@@ -73,12 +78,14 @@ ier = cg_coord_write(
     DataType_t data_type/* CGNS_ENUMV(RealDouble) */,
     char *coord_name/* "CoordinateX" */,
     void *coord_array,
+    // output:
     int *coord_id);
 // Read grid coordinates:
 ier = cg_coord_read(
     int file_id, int base_id, int zone_id,
-    char *coord_name, DataType_t datatype,
+    char *coord_name, DataType_t data_type,
     cgsize_t *range_min, cgsize_t *range_max,
+    // output:
     void *coord_array);
 ```
 其中
@@ -126,23 +133,26 @@ ier = cg_sol_write(
     int file_id, int base_id, int zone_id,
     char *sol_name,
     GridLocation_t location/* CGNS_ENUMV(Vertex) */,
+    // output:
     int *sol_id);
 // Get info about a `FlowSolution_t` node:
 ier = cg_sol_info(
-    int file_id, int base_id, int zone_id,
-    int sol_id, char *sol_name,
-    GridLocation_t *location);
+    int file_id, int base_id, int zone_id, int sol_id,
+    // output:
+    char *sol_name, GridLocation_t *location);
 
 // Write flow solution:
 ier = cg_field_write(
     int file_id, int base_id, int zone_id, int sol_id,
     DataType_t datatype, char *field_name, void *sol_array,
+    // output:
     int *field_id);
 // Read flow solution:
 ier = cg_field_read(
     int file_id, int base_id, int zone_id, int sol_id,
     char *field_name, DataType_t data_type,
     cgsize_t *range_min, cgsize_t *range_max,
+    // output:
     void *sol_array);
 ```
 
@@ -219,25 +229,27 @@ ier = cg_rind_read(int *rind_data);
 // Write boundary condition type and data:
 ier = cg_boco_write(
     int file_id, int base_id, int zone_id,
-    char *bc_name,
+    char *boco_name,
     BCType_t bc_type/* CGNS_ENUMV(BCType_t) */,
-    PointSetType_t pt_set_type/* CGNS_ENUMV(PointRange)
-                                 CGNS_ENUMV(PointList) */,
-    cgsize_t n_points,
-    cgsize_t *points,
-    int *bc_id);
+    PointSetType_t ptset_type/* CGNS_ENUMV(PointRange) or
+                                CGNS_ENUMV(PointList) */,
+    cgsize_t n_points, cgsize_t *points,
+    // output:
+    int *boco_id);
 
 // Get number of boundary condition in zone:
 ier = cg_nbocos(
     int file_id, int base_id, int zone_id,
-    int *n_bcs);
+    // output:
+    int *n_boco);
 
 // Get boundary condition info:
 ier = cg_boco_info(
-    int file_id, int base_id, int zone_id, int bc_id,
-    char *bc_name,
+    int file_id, int base_id, int zone_id, int boco_id,
+    // output:
+    char *boco_name,
     BCType_t *bc_type,
-    PointSetType_t *pt_set_type,
+    PointSetType_t *ptset_type,
     cgsize_t *n_points,
     int *normal_id,
     cgsize_t *normal_list_size,
@@ -246,9 +258,9 @@ ier = cg_boco_info(
 
 // Read boundary condition data and normals:
 ier = cg_boco_read(
-    int file_id, int base_id, int zone_id, int bc_id,
-    cgsize_t *points,
-    void *normal_list);
+    int file_id, int base_id, int zone_id, int boco_id,
+    // output:
+    cgsize_t *points, void *normal_list);
 ```
 
 其中
