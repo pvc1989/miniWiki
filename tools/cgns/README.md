@@ -37,8 +37,7 @@ CGNS 文件（数据库）
 // Open a CGNS file:
 ier = cg_open(
     char *file_name,
-    int mode/* CG_MODE_WRITE | CG_MODE_READ |
-               CG_MODE_MODIFY */,
+    int mode/* CG_MODE_WRITE | CG_MODE_READ | CG_MODE_MODIFY */,
     // output:
     int *file_id);
 // Close a CGNS file:
@@ -49,8 +48,7 @@ void cg_error_exit();
 
 // Create and/or write to a CGNS base node:
 ier = cg_base_write(
-    int file_id, char *base_name,
-    int cell_dim, int phys_dim,
+    int file_id, char *base_name, int cell_dim, int phys_dim,
     // output:
     int *base_id);
 // Read CGNS base information:
@@ -61,8 +59,7 @@ ier = cg_base_read(
 
 // Create and/or write to a zone node:
 ier = cg_zone_write(
-    int file_id, int base_id,
-    char *zone_name, cgsize_t *zone_size,
+    int file_id, int base_id, char *zone_name, cgsize_t *zone_size,
     ZoneType_t zone_type/* CGNS_ENUMV(Structured) */,
     // output:
     int *zone_id);
@@ -130,8 +127,7 @@ Program successful... ending now
 
 // Create and/or write to a `FlowSolution_t` node:
 ier = cg_sol_write(
-    int file_id, int base_id, int zone_id,
-    char *sol_name,
+    int file_id, int base_id, int zone_id, char *sol_name,
     GridLocation_t location/* CGNS_ENUMV(Vertex) */,
     // output:
     int *sol_id);
@@ -217,10 +213,8 @@ ier = cg_rind_read(int *rind_data);
 `BCType_t` 是一个枚举对象，所有具体的 BC 都是它的成员，完整列表参见 [*Boundary Condition Type Structure Definition*](http://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 
 两种 BC 表示方法：
-- `PointRange` 通过 设置结点编号范围 来确定边界，因此只适用于 *结构网格的长方形* 边界。
-  - `write_bc_str.c` 与 `read_bc_str.c` 展示了这种方法。
-- `PointList` 通过 指定结点编号 来确定边界，因此只适用于 *所有* 边界。
-  - `write_bcpnts_str.c` 与 `read_bcpnts_str.c` 展示了这种方法。
+- `PointRange` 通过 *指定结点编号范围* 来确定边界，因此只适用于 *结构网格的长方形* 边界。`write_bc_str.c` 与 `read_bc_str.c` 展示了这种方法。
+- `PointList` 通过 *指定结点编号列表* 来确定边界，因此适用于 *所有* 边界。`write_bcpnts_str.c` 与 `read_bcpnts_str.c` 展示了这种方法。
 
 ```c
 /* API in `write_bc_str.c`    and `read_bc_str.c`
@@ -228,12 +222,11 @@ ier = cg_rind_read(int *rind_data);
 
 // Write boundary condition type and data:
 ier = cg_boco_write(
-    int file_id, int base_id, int zone_id,
-    char *boco_name,
-    BCType_t bc_type/* CGNS_ENUMV(BCType_t) */,
-    PointSetType_t ptset_type/* CGNS_ENUMV(PointRange) or
-                                CGNS_ENUMV(PointList) */,
-    cgsize_t n_points, cgsize_t *points,
+    int file_id, int base_id, int zone_id, char *boco_name,
+    BCType_t boco_type/* CGNS_ENUMV(BCType_t) */,
+    PointSetType_t point_set_type/* CGNS_ENUMV(PointRange) |
+                                    CGNS_ENUMV(PointList) */,
+    cgsize_t n_point, cgsize_t *point_set,
     // output:
     int *boco_id);
 
@@ -247,10 +240,8 @@ ier = cg_nbocos(
 ier = cg_boco_info(
     int file_id, int base_id, int zone_id, int boco_id,
     // output:
-    char *boco_name,
-    BCType_t *bc_type,
-    PointSetType_t *ptset_type,
-    cgsize_t *n_points,
+    char *boco_name, BCType_t *boco_type,
+    PointSetType_t *point_set_type, cgsize_t *n_point,
     int *normal_id,
     cgsize_t *normal_list_size,
     DataType_t *normal_data_type,
@@ -260,7 +251,7 @@ ier = cg_boco_info(
 ier = cg_boco_read(
     int file_id, int base_id, int zone_id, int boco_id,
     // output:
-    cgsize_t *points, void *normal_list);
+    cgsize_t *point_set, void *normal_list);
 ```
 
 其中
@@ -268,13 +259,11 @@ ier = cg_boco_read(
   - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
   - 所有 `BC_t` 都是同一个 `ZoneBC_t` 的 child(ren)。
   - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
-- 若 `point_set_type == CGNS_ENUMV(PointRange)`，则
-  - `points` 是二维数组，每行存储一个方向的结点编号范围。
-  - `n_points == 2`，即 `points` 的列宽。
-- 若 `point_set_type == CGNS_ENUMV(PointList)`，则
-  - `points` 是一维数组，存储边界上的结点编号。
-  - `n_points == points.size()`。
-
+- 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
+  - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
+    - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下届、上界。
+    - 为 此边界的结点总数，若 `point_set_type` 为 `CGNS_ENUMV(PointList)`。
+  - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point` 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
 
 ### 多区 结构网格
 
