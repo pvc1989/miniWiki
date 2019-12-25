@@ -23,17 +23,24 @@ CGNS 文件（数据库）
 
 ## MLL 入门
 
-[*A User's Guide to CGNS*](http://cgns.github.io/CGNS_docs_current/user/index.html) 是一份 CGNS/MLL 的入门指南。下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可以在 CMake 中勾选 `CGNS_BUILD_TESTING`，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+本节主要内容来自于 CGNS/MLL 的入门指南 [*A User's Guide to CGNS*](http://cgns.github.io/CGNS_docs_current/user/index.html)：
+- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
+- 原文采用了 先具体介绍 *结构 (structured) 网格*、再简要介绍 *非结构 (unstructured) 网格* 的展开方式，这里则将二者同步展开，以便读者比较二者的异同。
 
-原始文档主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 C 的行 对应于 Fortran 的列。
+下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可以在 CMake 中勾选 `CGNS_BUILD_TESTING`，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
-### 单区 结构网格
+### 单区网格
 
-`write_grid_str.c` 与 `read_grid_str.c` 展示了利用 MLL 创建、读取 *单区 (single zone) 结构网格* 的方法，用到的 API 如下：
+*单区 (single-zone) 网格* 是最简单的网格，也是任意复杂网格的基本组成单位。
+
+|        | 结构网格 | 非结构网格 |
+| :----: | :--------------------: | :------------------------: |
+|  写出  |   `write_grid_str.c`   |    `write_grid_unst.c`     |
+| 读入 |   `read_grid_str.c`    |     `read_grid_unst.c`     |
+
+#### 通用操作
 
 ```c
-/* API in `write_grid_str.c` and `read_grid_str.c` */
-
 // Open a CGNS file:
 ier = cg_open(
     char *file_name,
@@ -60,7 +67,8 @@ ier = cg_base_read(
 // Create and/or write to a zone node:
 ier = cg_zone_write(
     int file_id, int base_id, char *zone_name, cgsize_t *zone_size,
-    ZoneType_t zone_type/* CGNS_ENUMV(Structured) */,
+    ZoneType_t zone_type/* CGNS_ENUMV(Structured) |
+                           CGNS_ENUMV(Unstructured) */,
     // output:
     int *zone_id);
 // Read zone information:
@@ -68,7 +76,23 @@ ier = cg_zone_read(
     int file_id, int base_id, int zone_id,
     // output:
     char *zone_name, cgsize_t *zone_size);
+```
+其中
+- 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
+- `cell_dim`、`phys_dim` 分别表示 单元（流形）维数、物理（空间）维数。
+- `zone_size` 是一个二维数组（的头地址），
+  - 其行数为三，各行分别表示 结点、单元、边界点 数量。
+  - 对于 结构网格：
+    - 列数 至少为 空间维数，各列分别对应于三个（逻辑）方向的数量。
+    - 各方向的 单元数 总是比 结点数 少一个。
+    - 边界点 没有意义，因此最后一行全部为零。
+  - 对于 非结构网格：
+    - 列数 至少为 一。
+    - 若单元编号没有排序，则边界点数量为零。
 
+#### 读写坐标
+
+```c
 // Write grid coordinates:
 ier = cg_coord_write(
     int file_id, int base_id, int zone_id,
@@ -84,21 +108,58 @@ ier = cg_coord_read(
     cgsize_t *range_min, cgsize_t *range_max,
     // output:
     void *coord_array);
+// Get info for an element section:
 ```
 其中
-- 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 将被后续代码用来访问该对象。
-- 对于含有 `X*Y*Z` 个结点的三维结构网格，函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `X*Y*Z` 个元素。
-- `cell_dim` 表示 单元（流形）维数，`phys_dim` 表示 物理（空间）维数。
-- `zone_size` 是一个二维数组的头地址，各行分别表示 结点、单元、边界点的数量。对于三维结构网格：
-  - 每行至少需要三列，各列分别对应于三个（逻辑）方向的数量。
-  - 各方向的 单元数 总是比 结点数 少一个。
-  - 边界点 没有意义，因此最后一行全部为零。
+- 设结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
+  - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的结点数外，其余维度的长度 *必须等于* 相应方向的结点数。
+  - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
 - 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即 `CoordinateX`、`CoordinateY`、`CoordinateZ`。
 - `data_type` 应当与 `coord_array` 的类型匹配：
   - `CGNS_ENUMV(RealSingle)` 对应 `float`。
   - `CGNS_ENUMV(RealDouble)` 对应 `double`。
 
-运行结果：
+#### 读写单元
+
+结构网格的 *结点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
+```c
+// Write fixed size element data:
+ier = cg_section_write(
+    int file_id, int base_id, int zone_id,
+    char *section_name, ElementType_t element_type,
+    cgsize_t first, cgsize_t last, int n_boundary, cgsize_t *elements,
+    // output:
+    int *section_id);
+// Get number of element sections:
+ier = cg_nsections(
+    int file_id, int base_id, int zone_id,
+    // output:
+    int *n_section);
+// Get info for an element section:
+ier = cg_section_read(
+    int file_id, int base_id, int zone_id, int section_id,
+    // output:
+    char *section_name, ElementType_t *element_type,
+    cgsize_t *first, cgsize_t *last, int *n_boundary,
+    int *parent_flag);
+// Read fixed size element data:
+ier = cg_elements_read(
+    int file_id, int base_id, int zone_id, int section_id,
+    // output:
+    cgsize_t *elements, cgsize_t *parent_data);
+```
+其中
+- `cg_section_write()` 在给定的 `Zone_t` 对象下新建一个 `Elements_t` 对象，即 *单元片段 (element section)*。
+- 一个 `Zone_t` 下可以有多个 `Elements_t`：
+  - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
+  - 同一个 `Elements_t` 下的所有单元必须是同一种类型，即 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，例如 `NODE`、`BAR_2`、`TRI_3`、`QUAD_4`、`TETRA_4`、`PYRA_5`、`PENTA_6`、`HEXA_8`。
+- `first`、`last` 为当前 `Elements_t` 内首、末单元的编号。
+- `n_boundary` 为当前 `Elements_t` 的最后一个边界点的编号。如果单元编号没有排序，则设为 `0`。
+- `parent_flag` 用于判断 parent data 是否存在。
+
+#### 运行示例
+
+结构网格：
 ```shell
 > ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_grid_str
 
@@ -114,9 +175,52 @@ Successfully read grid from file grid_c.cgns
 Program successful... ending now
 ```
 
-⚠️ 本节生成的 `grid_c.cgns` 将在后续示例中反复使用，因此必确正确运行 `write_grid_str` 并获得以上输出。
+非结构网格：
+```shell
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_grid_unst
 
-### 单区 结构网格 + 流场
+Program write_grid_unst
+
+created simple 3-D grid points
+
+Successfully wrote unstructured grid to file grid_c.cgns
+> ${BUILD_DIR}/src/Test_UserGuideCode/C_code/read_grid_unst
+
+number of sections=4
+
+Reading section data...
+   section name=Elem
+   section type=HEXA_8
+   istart,iend=1, 2560
+   reading element data for this element
+
+Reading section data...
+   section name=InflowElem
+   section type=QUAD_4
+   istart,iend=2561, 2688
+   not reading element data for this element
+
+Reading section data...
+   section name=OutflowElem
+   section type=QUAD_4
+   istart,iend=2689, 2816
+   not reading element data for this element
+
+Reading section data...
+   section name=SidewallElem
+   section type=QUAD_4
+   istart,iend=2817, 3776
+   not reading element data for this element
+
+Successfully read unstructured grid from file grid_c.cgns
+   for example, element 1 is made up of nodes: 1, 2, 23, 22, 358, 359, 380, 379
+   x,y,z of node 357 are: 0.000000, 0.000000, 1.000000
+   x,y,z of node 1357 are: 13.000000, 13.000000, 3.000000
+```
+
+⚠️ 本节生成的 `grid_c.cgns` 将在后续示例中反复使用，因此必确正确运行 `write_grid_str` 或 `write_grid_unst`，以获得以上输出。
+
+### 流场数据
 
 #### 结点数据
 
@@ -208,7 +312,7 @@ ier = cg_rind_read(int *rind_data);
 - `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
 - 外层数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
-### 单区 结构网格 + 边界条件
+### 边界条件
 
 `BCType_t` 是一个枚举对象，所有具体的 BC 都是它的成员，完整列表参见 [*Boundary Condition Type Structure Definition*](http://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 
@@ -261,16 +365,12 @@ ier = cg_boco_read(
   - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
 - 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
   - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
-    - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下届、上界。
+    - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下界、上界。
     - 为 此边界的结点总数，若 `point_set_type` 为 `CGNS_ENUMV(PointList)`。
   - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point`
     - 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
 
-### 多区 结构网格
+### 多区网格
 
-### 单区 非结构网格
-
-### 单区 非结构网格 + 流场
-
-### 单区 非结构网格 + 边界条件
+### 
 
