@@ -263,7 +263,8 @@ ier = cg_boco_read(
   - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
     - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下届、上界。
     - 为 此边界的结点总数，若 `point_set_type` 为 `CGNS_ENUMV(PointList)`。
-  - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point` 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
+  - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point`
+    - 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
 
 ### 多区 结构网格
 
