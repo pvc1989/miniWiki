@@ -224,11 +224,14 @@ Successfully read unstructured grid from file grid_c.cgns
 
 #### 结点数据
 
-`write_flowvert_str.c` 与 `read_flowvert_str.c` 展示了这种流场表示方法，新增的 API 如下：
+|      |       结构网格       |      非结构网格       |
+| :--: | :------------------: | :-------------------: |
+| 写出 | `write_flowvert_str` | `write_flowvert_unst` |
+| 读入 | `read_flowvert_str`  | `read_flowvert_unst`  |
+
+新增的 API 如下：
 
 ```c
-/* API in `write_flowvert_str.c` and `read_flowvert_str.c` */
-
 // Create and/or write to a `FlowSolution_t` node:
 ier = cg_sol_write(
     int file_id, int base_id, int zone_id, char *sol_name,
@@ -257,11 +260,12 @@ ier = cg_field_read(
 ```
 
 其中
-- `cg_sol_write()` 用于在 `Zone_t` 对象下创建一个 表示流场的 `FlowSolution_t` 对象。
-  - 同一个  `Zone_t` 对象下的 `FlowSolution_t` 对象可以有多个。
-  - 所有 `FlowSolution_t` 对象都平行于 表示网格的 `GridCoordinates_t` 对象。
-- `cg_field_write()` 用于在 `FlowSolution_t` 对象下创建一个 表示单个物理量的对象，例如  `DataArray_t`、`Rind_t`。
-- 物理量名称 `field_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
+- `cg_sol_write()` 用于在 `Zone_t` 对象下创建一个表示 *一组物理量* 的 `FlowSolution_t` 对象。
+  - 同一个  `Zone_t` 下的 `FlowSolution_t` 可以有多个。
+  - 所有 `FlowSolution_t` 都平行于 表示网格的 `GridCoordinates_t`。
+- `cg_field_write()` 用于在 `FlowSolution_t` 对象下创建一个表示 *单个物理量* 的对象，例如  `DataArray_t`、`Rind_t`。
+  - `sol_array` 尺寸应当与结点数量匹配：对于结构网格，通常声明为多维数组；对于非结构网格，通常声明为一位数组。
+  - `field_name` 应当取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
 
 #### 单元数据
 
@@ -275,9 +279,9 @@ ier = cg_field_read(
 *外层 (rind) 数据* 是指存储在网格表面的一层或多层 *影子 (ghost) 单元* 上的数据 ：
 
 ```
-┌---╔═══╦═══╦═══╗---┬---┐      ═══ 网格单元
-╎ o ║ o ║ o ║ o ║ o ╎ o ╎
-└---╚═══╩═══╩═══╝---┴---┘      --- 影子单元
+┌───╔═══╦═══╦═══╗───┬───┐      ═══ 网格单元
+│ o ║ o ║ o ║ o ║ o │ o │
+└───╚═══╩═══╩═══╝───┴───┘      ─── 影子单元
 ```
 `write_flowcentrind_str.c` 与 `read_flowcentrind_str.c` 展示了这种表示方法，新增的 API 如下：
 
@@ -307,7 +311,6 @@ ier = cg_rind_write(int *rind_data);
 // Read number of rind layers:
 ier = cg_rind_read(int *rind_data);
 ```
-
 其中
 - `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
 - 外层数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
@@ -357,7 +360,6 @@ ier = cg_boco_read(
     // output:
     cgsize_t *point_set, void *normal_list);
 ```
-
 其中
 - `cg_boco_write()` 用于创建一个表示具体边界条件的 `BC_t` 对象。
   - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
