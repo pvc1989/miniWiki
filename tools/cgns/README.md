@@ -317,11 +317,14 @@ ier = cg_rind_read(int *rind_data);
 
 ### 边界条件
 
-`BCType_t` 是一个枚举对象，所有具体的 BC 都是它的成员，完整列表参见 [*Boundary Condition Type Structure Definition*](http://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
+#### 结构网格
 
 两种 BC 表示方法：
+
 - `PointRange` 通过 *指定结点编号范围* 来确定边界，因此只适用于 *结构网格的长方形* 边界。`write_bc_str.c` 与 `read_bc_str.c` 展示了这种方法。
 - `PointList` 通过 *指定结点编号列表* 来确定边界，因此适用于 *所有* 边界。`write_bcpnts_str.c` 与 `read_bcpnts_str.c` 展示了这种方法。
+
+尽管本节标题为  *结构网格*，但上述方法也可以用于 *非结构网格*，只是后者有更简单的方法（见下一节）。
 
 ```c
 /* API in `write_bc_str.c`    and `read_bc_str.c`
@@ -365,12 +368,42 @@ ier = cg_boco_read(
   - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
   - 所有 `BC_t` 都是同一个 `ZoneBC_t` 的 child(ren)。
   - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
+- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [*Boundary Condition Type Structure Definition*](http://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 - 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
   - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
     - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下界、上界。
     - 为 此边界的结点总数，若 `point_set_type` 为 `CGNS_ENUMV(PointList)`。
   - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point`
     - 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
+
+#### 非结构网格
+
+尽管 *非结构网格* 可以像 *结构网格* 那样，通过指定边界上的 *结点* 来施加边界条件，但利用 [*读写单元*](#读写单元) 时创建的 `Element_t` 对象来指定边界上的 *单元* 通常会更加方便。`write_bcpnts_unst.c` 与 `read_bcpnts_unst.c` 展示了这种方法，主要的 API 如下：
+
+```c
+/* API `write_bcpnt_unst.c` and `read_bcpnt_unst.c` */
+
+// Write boundary condition type and data:
+ier = cg_boco_write(
+    int file_id, int base_id, int zone_id, char *boco_name,
+    BCType_t boco_type/* CGNS_ENUMV(BCType_t) */,
+    PointSetType_t point_set_type/* CGNS_ENUMV(PointRange) |
+                                    CGNS_ENUMV(PointList) */,
+    cgsize_t n_cell, cgsize_t *cell_set,
+    // output:
+    int *boco_id);
+
+// Write grid location:
+ier = cg_gridlocation_write(GridLocation_t grid_location/*
+    CGNS_ENUMV(CellCenter) | CGNS_ENUMV(FaceCenter) |
+    CGNS_ENUMV(EdgeCenter) | CGNS_ENUMV(Vertex) */);
+// Read grid location:
+ier = cg_gridlocation_read(GridLocation_t *grid_location);
+```
+其中
+- 这里的 `cg_boco_write()` 在形式上与 *结构网格* 版本一样，只是将 `n_point`、`point_set` 替换成了 `n_cell`、`cell_set`。
+- `grid_location == CGNS_ENUMV(FaceCenter)` 表当前 BC 作用在 *面单元* 上，即 `cell_set` 是存储面单元编号的数组。
+- 调用 `cg_gridlocation_write()` 之前必须先用 `cg_goto()` 定位到所需的 `BC_t` 对象。
 
 ### 多区网格
 
