@@ -1,30 +1,53 @@
 # CGNS
 
-## 术语表
+| 术语 |                             含义                             |
+| :--: | :----------------------------------------------------------: |
+| ADF  | [**A**dvanced **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/adf) |
+| API  |        **A**pplication **P**rogramming **I**nterface         |
+| CGNS | [**C**FD **G**eneral **N**otation **S**ystem](https://cgns.github.io/) |
+| CPEX |           **C**GNS **P**roposal for **EX**tension            |
+| FMM  |               **F**ile **M**apping **M**anual                |
+| HDF  | [**H**ierarchical **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/hdf5) |
+| MLL  | [**M**id-**L**evel **L**ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
+| SIDS | [**S**tandard **I**nterface **D**ata **S**tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
 
-|      术语      |                             含义                             |
-| :------------: | :----------------------------------------------------------: |
-|      CGNS      |    [CFD General Notation System](http://cgns.github.io/)     |
-|      SIDS      | [Standard Interface Data Structures](http://cgns.github.io/CGNS_docs_current/sids/) |
-| SIDS-compliant |             符合 SIDS 定义的 CGNS 文件（数据库）             |
-|      MLL       | [Mid-Level Library](http://cgns.github.io/CGNS_docs_current/midlevel/) |
-|      API       |              Application Programming Interface               |
+## SIDS
 
+本节主要内容来自于 CGNS/SIDS 的入门指南 [*Overview of the SIDS*](https://cgns.github.io/CGNS_docs_current/user/sids.html)。
 
-## 引言
-
-### 数据结构
+### 文件结构
 
 CGNS 文件（数据库）
 - 在物理上是按二进制存储的，因此无法用普通的文本编辑器（安全地）读写。
-- 在逻辑上是一棵由若干 `Node`(s) 相互链接而组成的 `Tree`，每个 `Node` 都含有 `Name`、`Label`、`Data` 三个基本部分，可以用 [`cgnsview`](http://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/index.html) 安全地读写。
+- 在逻辑上是一棵由若干 node(s) 相互链接而组成的 tree，可以用 [`cgnsview`](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 安全地读写，其操作类似于在操作系统中访问文件（目录）树。
 
+每个 node 都含有以下信息：
+- `Name` 表示其身份，通常是由用户自定义的字符串，但有时需取作预定义的名称。
+- `Label` 表示其类型，通常是以 `_t` 为后缀的预定义类型。
+- `Data` 是实际数据，可以为空（用 `MT` 表示）。
+- 指向其 parent、child(ren) 的链接。
 
+最顶层（没有 parent）的那个 node 称为 root，它以如下 node(s) 作为其 child(ren)：
+- 一个 `CGNSLibraryVersion_t`，以 `CGNSLibraryVersion` 作为其 `Name`，以 CGNS 的版本号作为其 `Data`。
+- 一个或多个 `CGNSBase_t`，代表一个或多个 *算例 (case)*，以 *单元（流形）维数* 与 *物理（空间）维数* 作为其 `Data`。多数 CGNS 文件只有一个 `CGNSBase_t`。
 
-## MLL 入门
+每个 `CGNSBase_t` 下可以挂载多个 `Zone_t`，分别表示网格中的一个区域，它有以下 child(ren)：
+- `ZoneType_t` 用于表示此区域的（网格）类型：
+  - 它以 `ZoneType` 作为其 `Name`，以 `Structured` 或 `Unstructured` 作为其 `Data`。
+  - 每个 `Zone_t` 下只可以有一个 `ZoneType_t`。
+- 以 `GridCoordinates_t` 为 root 的 subtree，用于表示网格结点的坐标：
+  - 各（物理）方向的结点坐标分别存储为一个 `DataArray_t`，它们都是 `GridCoordinates_t` 的 children，其 `Name` 必须是 `CoordinateX`、`CoordinateY、`CoordinateZ`。
+  - 每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示变化的网格。最初的那个通常以 `GridCoordinates` 作为其 `Name`。
+- 以 `FlowSolution_t` 为 root 的 subtree，用于表示物理量在结点或单元上的值：
+  - 各物理量分别存储为一个 `DataArray_t`，它们都是 `FlowSolution_t` 的 children。
+  - 每个 `Zone_t` 下可以有多个 `FlowSolution_t`。
+- 以 `ZoneBC_t` 为 root 的 subtree，用于表示边界条件。
+- 以 `ZoneGridConnectivity_t` 为 root 的 subtree，用于表示多块网格的拼接方式。
 
-本节主要内容来自于 CGNS/MLL 的入门指南 [*A User's Guide to CGNS*](http://cgns.github.io/CGNS_docs_current/user/index.html)：
-- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
+## MLL
+
+本节主要内容来自于 CGNS/MLL 的入门指南 [*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)：
+- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
 - 原文采用了 先具体介绍 *结构 (structured) 网格*、再简要介绍 *非结构 (unstructured) 网格* 的展开方式，这里则将二者同步展开，以便读者比较二者的异同。
 
 下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可以在 CMake 中勾选 `CGNS_BUILD_TESTING`，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
@@ -114,7 +137,7 @@ ier = cg_coord_read(
 - 设结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
   - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的结点数外，其余维度的长度 *必须等于* 相应方向的结点数。
   - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
-- 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即 `CoordinateX`、`CoordinateY`、`CoordinateZ`。
+- 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即 `CoordinateX`、`CoordinateY`、`CoordinateZ`。
 - `data_type` 应当与 `coord_array` 的类型匹配：
   - `CGNS_ENUMV(RealSingle)` 对应 `float`。
   - `CGNS_ENUMV(RealDouble)` 对应 `double`。
@@ -265,7 +288,7 @@ ier = cg_field_read(
   - 所有 `FlowSolution_t` 都平行于 表示网格的 `GridCoordinates_t`。
 - `cg_field_write()` 用于在 `FlowSolution_t` 对象下创建一个表示 *单个物理量* 的对象，例如  `DataArray_t`、`Rind_t`。
   - `sol_array` 尺寸应当与结点数量匹配：对于结构网格，通常声明为多维数组；对于非结构网格，通常声明为一位数组。
-  - `field_name` 应当取自 [*SIDS-standard names*](http://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
+  - `field_name` 应当取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
 
 #### 单元数据
 
@@ -368,7 +391,7 @@ ier = cg_boco_read(
   - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
   - 所有 `BC_t` 都是同一个 `ZoneBC_t` 的 child(ren)。
   - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
-- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [*Boundary Condition Type Structure Definition*](http://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
+- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [*Boundary Condition Type Structure Definition*](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 - 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
   - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
     - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下界、上界。
