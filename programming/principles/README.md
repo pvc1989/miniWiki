@@ -1,18 +1,32 @@
 # 设计原则
 
-**面向对象设计 (Object Oriented Design, OOD)** 的五个基本原则（首字母串接起来构成 `SOLID`）：
+|    缩写     |              全称               |    中译名    |
+| :---------: | :-----------------------------: | :----------: |
+| [SRP](#SRP) | Single Resposibility Principle  | 单一责任原则 |
+| [OCP](#OCP) |     Open--Closed Principle      | 开放封闭原则 |
+| [LSP](#LSP) |  Liskov Substitution Principle  | 里氏替换原则 |
+| [ISP](#ISP) | Interface Segregation Principle | 接口分离原则 |
+| [DIP](#DIP) | Dependency Inversion Principle  | 依赖倒置原则 |
 
-|    缩写     |              全称               |     中译名      |
-| :---------: | :-----------------------------: | :-------------: |
-| [SRP](#SRP) | Single Resposibility Principle  |  单一责任原则   |
-| [OCP](#OCP) |     Open--Closed Principle      |  开放封闭原则   |
-| [LSP](#LSP) |  Liskov Substitution Principle  | Liskov 替换原则 |
-| [ISP](#ISP) | Interface Segregation Principle |  接口分离原则   |
-| [DIP](#DIP) | Dependency Inversion Principle  |  依赖倒置原则   |
+这五条原则在英文对话中常被称为 *the SOLID principles*，因为它们的首字母恰好构成英文单词 *SOLID*。在 *面向对象设计 (Object Oriented Design, OOD)* 中，它们是指导 *类 (class)* 的设计的基本原则。如果将 *类* 的含义推广为 *一组耦合的函数及数据*，则这些原则可以被用在更一般的  *模块 (module)* 设计上。
 
 ## SRP
 
-> A class should have only one reason to change.
+SRP 的原始定义为：
+
+> A class should have one, and only one, reason to change.
+
+其中 *reason to change* 是指被称作 *actor* 的 *a group of people who require a change*，因此 SRP 可以重新表述为：
+
+> A module should be responsible to one, and only one, actor.
+
+违反 SRP 的类通常会有以下问题：
+- 某个 actor 的修改影响其他 actor 的行为。
+- 不同 actor 的修改在合并时发生冲突。
+
+解决方案通常为：
+- 将数据与函数分离，将函数按 actor 拆分为若干相互独立的小类。
+- 如果上述拆分造成类的数量过多，可以用 [Facade 模式](../patterns/facade/README.md) 创建一个接口。
 
 ## OCP
 
@@ -91,6 +105,7 @@ int main() {
 ### 基于 RTTI 的设计 ⚠️
 如果不使用[虚函数](#基于虚函数的设计)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
 一种实现方式：在基类中定义一个枚举成员 `type`，在派生类的构造函数中对其进行初始化，用于表示当前几何对象的类型。
+
 ```cpp
 struct Shape {
   enum class Type { Shape, Point, LineSegment, Circle };
