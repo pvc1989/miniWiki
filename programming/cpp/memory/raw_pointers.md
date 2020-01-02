@@ -87,3 +87,13 @@ delete p;     // 释放
 p = nullptr;  // p 不再指向该地址
               // q 仍然指向该地址, 对其进行 解引用 或 二次释放 都有可能造成破坏
 ```
+## C-style API
+```cpp
+#include <cstdlib>
+// 分配 total_size 个字节的内存，不做初始化：
+void* malloc(std::size_t total_size);
+// 分配 num * each 个字节的内存，并将所有字节初始化为 0：
+void* calloc(std::size_t num, std::size_t each);
+// 释放由 malloc | calloc 分配的内存：
+void free(void* p);
+```
