@@ -26,7 +26,7 @@ p->mem;  // 等价于 (*p).mem
 ```
 
 ### 异常安全
-即使在 *离开作用域* 或 *重置* 前抛出了 ***异常 (exception)***，*智能指针* 也会确保资源被正确释放：
+即使在 *离开作用域* 或 *重置* 前抛出了 [***异常 (exception)***](../exception.md)，*智能指针* 也会确保资源被正确释放：
 ```cpp
 void f() {
   auto sptr = std::make_shared<int>(42);
