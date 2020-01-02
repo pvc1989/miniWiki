@@ -113,7 +113,7 @@ pointer release() noexcept {
 ```
 
 ### 只能移动
-典型用例：在函数（工厂方法）中构造一个 `std::unique_ptr<T>` 并将其返回：
+典型用例：在函数中构造一个 `std::unique_ptr<T>` 并将其返回：
 
 ```cpp
 template <class... Args>
@@ -124,8 +124,7 @@ unique_ptr<T> Create(Args&&... args) {
 }
 ```
 
-以 `std::unique_ptr<T>` 作为 *工厂方法* 的返回类型有如下好处：
-
+这种函数被称为 [***工厂方法***](../../patterns/factory_method/README.md)。以 `std::unique_ptr<T>` 作为 *工厂方法* 的返回类型有如下好处：
 - `std::unique_ptr<T>` 可以很容易地转为 `std::shared_ptr<T>`。
 - 将原始指针赋值给 `std::unique_ptr<T>` 的错误在 *编译期* 就能被发现。
 
@@ -538,4 +537,3 @@ Algorithm& Algorithm::operator=(const Algorithm& rhs) {
 Algorithm::Algorithm(const Algorithm& rhs)
     : pImpl_(std::make_unique<Implementor>(*rhs.pImpl_)) { }
 ```
-
