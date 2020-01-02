@@ -8,8 +8,8 @@
 ### [Builder](./Builder/README.md)
 ![](./Builder/Class.svg)
 
-### [Factory Method](./FactoryMethod/README.md)
-![](./FactoryMethod/Class.svg)
+### [Factory Method](./factory_method/README.md)
+![](./factory_method/class.svg)
 
 ### [Prototype](./Prototype/README.md)
 ![](./Prototype/Class.svg)
@@ -60,8 +60,8 @@
 ### [Memento](./Memento/README.md)
 ![](./Memento/Class.svg)
 
-### [Observer](./Observer/README.md)
-![](./Observer/Class.svg)
+### [Observer](./observer/README.md)
+![](./observer/class.svg)
 
 ### [State](./State/README.md)
 ![](./State/Class.svg)
