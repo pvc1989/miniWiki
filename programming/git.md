@@ -1,9 +1,9 @@
 # Git
 
 ## 参考资料
-- [***GitHub Guides***](https://guides.github.com) 简明扼要地介绍了依托 [GitHub](https://github.com/) 进行项目开发的流程和技巧，其中[***Understanding the GitHub flow***](https://guides.github.com/introduction/flow/)、[***Hello World***](https://guides.github.com/activities/hello-world/)、[***Mastering Markdown***](https://guides.github.com/features/mastering-markdown/)、[***Forking Projects***](https://guides.github.com/activities/forking/) 是新手必读的简易入门教程。
+- [***GitHub Guides***](https://guides.github.com) 简明扼要地介绍了依托 [GitHub](https://github.com/) 进行项目开发的流程和技巧，其中 [***Understanding the GitHub flow***](https://guides.github.com/introduction/flow/)、[***Hello World***](https://guides.github.com/activities/hello-world/)、[***Mastering Markdown***](https://guides.github.com/features/mastering-markdown/)、[***Forking Projects***](https://guides.github.com/activities/forking/) 是新手必读的简易入门教程。
 - [***Pro Git***](https://git-scm.com/book/en/v2) 系统深入地介绍了 Git 的原理及操作。
-- [***软件工程***](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/) 的 6.5 节介绍了 Git 的概念及操作，注册后可以[在线观看](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/e007fce98a8c437b9ce97909117ceba2/35663f6870b24a639231fe00a119b18c/)。
+- [***软件工程***](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/) 的 6.5 节介绍了 Git 的概念及操作，注册后可以在线观看。
 
 ## 基本概念
 ***版本控制系统 (version control system, VCS)*** 是一种用来追踪文件修改历史的软件，是软件开发过程中管理源代码的必备工具。目前最流行的 VCS 是诞生于 2005 年的开源软件 [Git](https://git-scm.com/)。它是由 [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 为了管理 Linux 内核而创建，并与其他代码贡献者一同开发的。
