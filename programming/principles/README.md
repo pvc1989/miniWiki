@@ -8,7 +8,7 @@
 | [ISP](#ISP) | Interface Segregation Principle | 接口分离原则 |
 | [DIP](#DIP) | Dependency Inversion Principle  | 依赖倒置原则 |
 
-这五条原则在英文对话中常被称为 *the SOLID principles*，因为它们的首字母恰好构成英文单词 *SOLID*。在 *面向对象设计 (Object Oriented Design, OOD)* 中，它们是指导 *类 (class)* 的设计的基本原则。如果将 *类* 的含义推广为 *一组耦合的函数及数据*，则这些原则可以被用在更一般的  *模块 (module)* 设计上。
+这五条原则在英文对话中常被称为 *the SOLID principles*，因为它们的首字母恰好构成英文单词 *SOLID*。在 ***面向对象设计 (Object Oriented Design, OOD)*** 中，它们是指导 ***类 (class)*** 的设计的基本原则。如果将 *类* 的含义推广为 *一组耦合的函数及数据*，则这些原则可以被用在更一般的 ***模块 (module)*** 设计上。
 
 ## SRP
 
@@ -16,7 +16,7 @@ SRP 的原始定义为：
 
 > A class should have one, and only one, reason to change.
 
-其中 *reason to change* 是指被称作 *actor* 的 *a group of people who require a change*，因此 SRP 可以重新表述为：
+其中 *reason to change* 是指被称作 ***actor*** 的 *a group of people who require a change*，因此 SRP 可以重新表述为：
 
 > A module should be responsible to one, and only one, actor.
 
@@ -26,24 +26,29 @@ SRP 的原始定义为：
 
 解决方案通常为：
 - 将数据与函数分离，将函数按 actor 拆分为若干相互独立的小类。
-- 如果上述拆分造成类的数量过多，可以用 [Facade 模式](../patterns/facade/README.md) 创建一个接口。
+- 如果上述拆分造成类的数量过多，可以用 [***Facade 模式***](../patterns/facade/README.md) 创建一个接口。
 
 ## OCP
 
-> Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification.
+该原则是 Bertrand Meyer (1988) 提出的：
+> A software artifact should be open for extension, but closed for modification.
+
+这里的 *software artifact* 可以是 ***类 (class)***、***模块 (module)***、***组件 (component)***。
+
+遵循 OCP 的架构设计，通常会将 *系统* 按 *引起变化原因* 划分为若干 *组件*，并使组件之间的 *依赖* 符合 [DIP](#DIP)，从而实现 *高层业务逻辑* 不受 *低层实现细节* 变化的影响。
 
 ## LSP
 
 > Subtypes must be substitutable for their base types.
 
-该原则源自于 Barbara Liskov [1988] 对 **子类 (subtype)** 所作的定义：
+该原则源自于 Barbara Liskov [1988] 对 ***子类 (subtype)*** 所作的定义：
 
 > If for each object `o1` of type `S` there is an object `o2` of type `T` such that for all programs `P` defined in terms of `T`, the behavior of `P` is unchanged when `o1` is substituted for `o2` then `S` is a *subtype* of `T`.
 
-这里的 *object* 在 C++ 中应当理解为 **指针 (pointer)** 或 **引用 (reference)**。
+这里的 *object* 在 C++ 中应当理解为 ***指针 (pointer)*** 或 ***引用 (reference)***。
 
 ### 语言实现机制
-在 C++、Java、Python 等主流面向对象语言中，LSP 主要是通过虚函数机制来实现的。
+在 C++、Java、Python 等主流面向对象语言中，LSP 主要是通过 ***虚函数 (virtual function)*** 机制来实现的。
 
 假设需要这样一个几何库：
 - 所有几何类型都是 `Shape` 的派生类。
@@ -60,7 +65,7 @@ inline double GetArea(const Shape& shape) { return shape.GetArea(); }
 - [基于虚函数设计](#基于虚函数的设计)
 
 ### 原始设计 ⚠️
-不了解[虚函数](#基于虚函数的设计)的新手可能会给出如下设计：
+不了解虚函数的新手可能会给出如下设计：
 ```cpp
 struct Shape {
   double GetArea() const { return -1; }
@@ -103,7 +108,7 @@ int main() {
 ```
 
 ### 基于 RTTI 的设计 ⚠️
-如果不使用[虚函数](#基于虚函数的设计)机制，往往会引入 **运行期类型识别 (Run-Time Type Identification, RTTI)** 或其他类似的机制。
+如果不使用[虚函数](#基于虚函数的设计)机制，往往会引入 ***运行期类型识别 (Run-Time Type Identification, RTTI)*** 或其他类似的机制。
 一种实现方式：在基类中定义一个枚举成员 `type`，在派生类的构造函数中对其进行初始化，用于表示当前几何对象的类型。
 
 ```cpp
@@ -158,7 +163,7 @@ inline double GetArea(const Shape& shape) {
 - 违反 [DIP](#DIP)：非成员接口函数依赖于所有具体的派生类。
 
 ### 基于虚函数的设计
-如果将 *基类的 `GetArea()` 成员* 声明为虚函数，那么非成员接口函数中的 `shape.GetArea()` 将会在 **运行期 (run-time)** 自动转发到相应 *派生类的 `GetArea()` 成员*，从而有效地解决上述问题：
+如果将 *基类的 `GetArea()` 成员* 声明为虚函数，那么非成员接口函数中的 `shape.GetArea()` 将会在 ***运行期 (run-time)*** 自动转发到相应 *派生类的 `GetArea()` 成员*，从而有效地解决上述问题：
 ```cpp
 struct Shape {
   virtual ~Shape() = default;
@@ -253,7 +258,7 @@ int main() {
 > Abstractions should not depend on details. Details should depend on abstractions.
 
 ### 倒置的含义
-*依赖倒置* 首先是指源代码 *依赖关系*（通常表现为 `#include` 或 `import` 语句）与程序 *控制流* 的倒置。
+*依赖倒置* 首先是指 *源代码依赖关系*（通常表现为 `#include` 或 `import` 语句）与 *程序控制流* 的倒置。
 
 *依赖关系* 的倒置通常也意味着 *接口所有权* 的倒置：
 接口代表一种服务，其所有权应当归属于服务的 *使用者（高层策略模块）* 而非 *提供者（底层实现模块）*。
@@ -267,6 +272,7 @@ int main() {
 - 在底层模块 `DataStructure` 中，`DynamicArray` 借助于更底层的（通常由操作系统提供的）动态内存管理服务，实现了 `Vector` 接口的 `resize()` 服务。
 
 ### 语言实现机制
+
 接口可以显式地出现在源代码中，例如：
 - 在 Java 中，接口通常表现为 `interface` 或 `abstract class`。
 - 在 C++ 中，接口可以表现为含有 *纯虚函数* 的 `class`。
@@ -280,5 +286,6 @@ int main() {
 ### 面向对象设计 v. 面向对象语言
 使用面向对象语言 (C++/Java/Python) 进行编程 *不等于* 面向对象编程。
 一段程序是否是面向对象的，取决于程序中的依赖关系是否是倒置的，而与所使用的编程语言无关。
-这种依赖关系的倒置是通过 **多态 (polymorphism)** 来实现的，多态既可以是 *静态的（编译期绑定）*，也可以是 *动态的（运行期绑定）*。
+这种依赖关系的倒置是通过 ***多态 (polymorphism)*** 来实现的，多态既可以是 *静态的（编译期绑定）*，也可以是 *动态的（运行期绑定）*。
 面向对象语言通过一定的语法机制，让多态变得更容易、更简洁、更安全。
+
