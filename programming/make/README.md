@@ -219,7 +219,7 @@ library.o : library.c
   - [cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html) --- 系统配置
 
 ### 入门教程
-- [CMake Tutorial](https://cmake.org/cmake-tutorial/) --- A step-by-step tutorial covering common build system use cases that CMake helps to address.
+- [***CMake Tutorial***](https://cmake.org/cmake/help/latest/guide/tutorial) provides a step-by-step tutorial covering common build system use cases that CMake helps to address.
 - [Programming in C++](https://www.ece.uvic.ca/~frodo/cppbook/) by Michael Adams from University of Victoria
   - Lecture Slides [(Version 2019-02-04)](https://www.ece.uvic.ca/~frodo/cppbook/downloads/lecture_slides_for_programming_in_c++-2019-02-04.pdf)
   - Video Presentations (YouTube)
