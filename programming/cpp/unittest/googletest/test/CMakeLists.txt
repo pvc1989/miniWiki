@@ -1,3 +1,4 @@
-add_executable(test_math test_math.cpp)
-target_link_libraries(test_math math gtest_main)
-add_test(NAME GoogleTestMath COMMAND test_math)
+add_executable(test_math math.cpp)
+set_target_properties(test_math PROPERTIES OUTPUT_NAME math)
+target_link_libraries(test_math lib_math gtest_main)
+add_test(NAME TestMath COMMAND test_math)

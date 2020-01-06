@@ -37,3 +37,5 @@ endif()
 include_directories ("${PROJECT_SOURCE_DIR}/include")
 add_subdirectory(src ${CMAKE_CURRENT_BINARY_DIR}/lib)
 add_subdirectory(test)
+
+enable_testing()
