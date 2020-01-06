@@ -307,8 +307,8 @@ cmake --build .
 
 利用 [CMake](../../make/README.md#CMake) 函数可以在 `CMakeLists.txt` 中添加 CTest 测试：
 
-1. 先在 *顶层* `CMakelists.txt` 中调用 [`enable_testing()`](https://cmake.org/cmake/help/latest/command/enable_testing.html) 以开启测试。
-2. 再在其他 `CMakelists.txt` 中按需调用 [`add_test()`](https://cmake.org/cmake/help/latest/command/add_test.html) 以添加测试：
+1. 在 *顶层* `CMakelists.txt` 中调用 [`enable_testing()`](https://cmake.org/cmake/help/latest/command/enable_testing.html) 以开启测试。该函数调用必须位于 `add_test()` 及可能间接调用 `add_test()` 的 `add_subdirectory()` 之前。
+2. 在其他 `CMakelists.txt` 中按需调用 [`add_test()`](https://cmake.org/cmake/help/latest/command/add_test.html) 以添加测试：
 
 ```cmake
 add_test(NAME <name> COMMAND <command> [<arg>...]

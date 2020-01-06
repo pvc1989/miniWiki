@@ -33,9 +33,10 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
   include_directories("${gtest_SOURCE_DIR}/include")
 endif()
 
-# Now simply link against gtest or gtest_main as needed.
-include_directories ("${PROJECT_SOURCE_DIR}/include")
+# Add include directories to the build:
+include_directories("${PROJECT_SOURCE_DIR}/include")
+# Enable testing for current directory and below:
+enable_testing()
+# Add subdirectory to the build:
 add_subdirectory(src ${CMAKE_CURRENT_BINARY_DIR}/lib)
 add_subdirectory(test)
-
-enable_testing()
