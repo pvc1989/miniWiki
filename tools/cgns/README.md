@@ -1,9 +1,12 @@
 # CGNS
 
+CGNS 是一种通用（跨平台、易扩展、被广泛采用）的 CFD 文件（数据库）系统。[SIDS](#SIDS) 给出了这种文件格式的抽象定义。Fortran/C 程序库 [MLL](#MLL) 是对 SIDS 的一种具体实现，它提供了读写（以 ADF 或 HDF5 作为底层数据格式的）CGNS 文件的中层 API。
+
 | 术语 |                             含义                             |
 | :--: | :----------------------------------------------------------: |
 | ADF  | [**A**dvanced **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/adf) |
 | API  |        **A**pplication **P**rogramming **I**nterface         |
+| CFD  |           **C**omputational **F**luid **D**ynamics           |
 | CGNS | [**C**FD **G**eneral **N**otation **S**ystem](https://cgns.github.io/) |
 | CPEX |           **C**GNS **P**roposal for **EX**tension            |
 | FMM  |               **F**ile **M**apping **M**anual                |
@@ -13,53 +16,100 @@
 
 ## SIDS
 
-本节主要内容来自于 CGNS/SIDS 的入门指南 [*Overview of the SIDS*](https://cgns.github.io/CGNS_docs_current/user/sids.html)。
+### 示例文件
+
+- [Example CGNS Files](http://cgns.github.io/CGNSFiles.html)
+- [AIAA High Lift Workshop (HiLiftPW)](https://hiliftpw.larc.nasa.gov)
+  - [NASA High Lift Common Research Model (HL-CRM) Grids](https://hiliftpw-ftp.larc.nasa.gov/HiLiftPW3/HL-CRM_Grids/)
+  - [JAXA Standard Model (JSM) Grids](https://hiliftpw-ftp.larc.nasa.gov/HiLiftPW3/JSM_Grids/)
+- [AIAA Drag Prediction Workshop (DPW)](https://aiaa-dpw.larc.nasa.gov) 
+  - [Download Grids](https://dpw.larc.nasa.gov/DPW6/)
+
+符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [***CGNSview***](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件（目录）树*。
 
 ### 文件结构
 
-CGNS 文件（数据库）
-- 在物理上是按二进制存储的，因此无法用普通的文本编辑器（安全地）读写。
-- 在逻辑上是一棵由若干 node(s) 相互链接而组成的 tree，可以用 [`cgnsview`](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 安全地读写，其操作类似于在操作系统中访问文件（目录）树。
+本节内容来自于 SIDS 的入门指南 [***Overview of the SIDS***](https://cgns.github.io/CGNS_docs_current/user/sids.html)。
 
-每个 node 都含有以下信息：
-- `Name` 表示其身份，通常是由用户自定义的字符串，但有时需取作预定义的名称。
-- `Label` 表示其类型，通常是以 `_t` 为后缀的预定义类型。
-- `Data` 是实际数据，可以为空（用 `MT` 表示）。
+#### Node
+
+每个 CGNS 文件（数据库）在逻辑上是一棵由若干 ***结点 (node)*** 相互链接而成的 ***树 (tree)***。每个 node 都含有以下数据：
+
+- ***`Label`*** 表示其类型，通常是以 `_t` 为后缀的预定义类型。
+- ***`Name`*** 表示其身份，通常是由用户自定义的字符串，但有时需取作预定义的名称。
+- ***`Data`*** 是实际数据，可以为空（用 `MT` 表示）。
 - 指向其 parent、child(ren) 的链接。
 
-最顶层（没有 parent）的那个 node 称为 root，它以如下 node(s) 作为其 child(ren)：
-- 一个 `CGNSLibraryVersion_t`，以 `CGNSLibraryVersion` 作为其 `Name`，以 CGNS 的版本号作为其 `Data`。
-- 一个或多个 `CGNSBase_t`，代表一个或多个 *算例 (case)*，以 *单元（流形）维数* 与 *物理（空间）维数* 作为其 `Data`。多数 CGNS 文件只有一个 `CGNSBase_t`。
+#### Root
 
-每个 `CGNSBase_t` 下可以挂载多个 `Zone_t`，分别表示网格中的一个区域，它有以下 child(ren)：
-- `ZoneType_t` 用于表示此区域的（网格）类型：
-  - 它以 `ZoneType` 作为其 `Name`，以 `Structured` 或 `Unstructured` 作为其 `Data`。
-  - 每个 `Zone_t` 下只可以有一个 `ZoneType_t`。
-- 以 `GridCoordinates_t` 为 root 的 subtree，用于表示网格结点的坐标：
-  - 各（物理）方向的结点坐标分别存储为一个 `DataArray_t`，它们都是 `GridCoordinates_t` 的 children，其 `Name` 必须是 `CoordinateX`、`CoordinateY、`CoordinateZ`。
-  - 每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示变化的网格。最初的那个通常以 `GridCoordinates` 作为其 `Name`。
-- 以 `FlowSolution_t` 为 root 的 subtree，用于表示物理量在结点或单元上的值：
-  - 各物理量分别存储为一个 `DataArray_t`，它们都是 `FlowSolution_t` 的 children。
-  - 每个 `Zone_t` 下可以有多个 `FlowSolution_t`。
-- 以 `ZoneBC_t` 为 root 的 subtree，用于表示边界条件。
-- 以 `ZoneGridConnectivity_t` 为 root 的 subtree，用于表示多块网格的拼接方式。
+最顶层（没有 parent）的那个 node 称为 ***根 (root)***，它以如下 node(s) 作为其 child(ren)：
+
+- 一个 ***`CGNSLibraryVersion_t`*** 结点：
+  - `Name` 为 `CGNSLibraryVersion`。
+  - `Data` 为 CGNS 的版本号。
+- 若干 [***`CGNSBase_t`***](#`CGNSBase_t`)(s)，分别表示一个 ***算例 (case)***：
+  - 多数 CGNS 文件只有一个 `CGNSBase_t`。
+  - 如果含有多个，则不同 `CGNSBase_t` 之间不共享数据。
+
+#### `CGNSBase_t` 
+
+一个 `CGNSBase_t` 含有以下信息：
+
+- `Name` 可以任取，例如取作文件名。
+- `Data` 为两个整数：***单元维数 (cell dim)*** 与 ***物理维数 (physics dim)***，分别表示 *顶级单元* 与 *所处空间* 的维数。
+- 若干 [***`Zone_t`***](#`Zone_t`)，分别表示网格中的一块区域。
+
+#### `Zone_t`
+
+一个 `Zone_t` 含有以下信息：
+
+- 一个 ***`ZoneType_t`***，用于表示此区域的（网格）类型：
+  - `Name` 为 `ZoneType`。 
+  - `Data` 取自 `Structured`、`Unstructured`、`UserDefined`、`Null`。
+- 若干 [***`GridCoordinates_t`***](#`GridCoordinates_t`)，用于表示 *结点坐标*。
+- 若干 [***`Element_t`***](#`Element_t`)，用于表示 *非结构网格的单元结点列表*。
+- 若干 [***`FlowSolution_t`***](#`FlowSolution_t`)，用于表示 *物理量在结点或单元上的值*。
+- 若干 [***`ZoneBC_t`***](#`ZoneBC_t`)，用于表示 *边界条件*。
+- 若干 [***`ZoneGridConnectivity_t`***](#`ZoneGridConnectivity_t`)，用于表示 *多块网格的连接方式*。
+
+#### `GridCoordinates_t`
+
+每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示变化的网格。最初的那个通常以 `GridCoordinates` 为其 `Name`。
+
+各 *结点坐标分量* 分别存储为一个 ***`DataArray_t`***：
+
+- `Name` 应取自 `CoordinateX`、`CoordinateY`、`CoordinateZ`、`CoordinateR`、`CoordinateTheta`、`CoordinatePhi`、`CoordinateNormal`。
+- 数组 *个数* 必须等于其所属 `CGNSBase_t` 中的 *物理维数*。
+- 数组 *长度* 必须等于其所属 `Zone_t` 中（相应方向）的 *结点个数* 与 *外皮层数* 之和。
+
+#### `Element_t`
+
+#### `FlowSolution_t`
+
+- 各物理量分别存储为一个 `DataArray_t`，它们都是 `FlowSolution_t` 的 children。
+- 每个 `Zone_t` 下可以有多个 `FlowSolution_t`。
+
+#### `ZoneBC_t`
+
+#### `ZoneGridConnectivity_t`
 
 ## MLL
 
-本节主要内容来自于 CGNS/MLL 的入门指南 [*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)：
-- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
+本节主要内容来自于 MLL 的入门指南 [***A User's Guide to CGNS***](https://cgns.github.io/CGNS_docs_current/user/)：
+
+- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [***Mid-Level Library***](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
 - 原文采用了 先具体介绍 *结构 (structured) 网格*、再简要介绍 *非结构 (unstructured) 网格* 的展开方式，这里则将二者同步展开，以便读者比较二者的异同。
 
 下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可以在 CMake 中勾选 `CGNS_BUILD_TESTING`，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 ### 单区网格
 
-*单区 (single-zone) 网格* 是最简单的网格，也是任意复杂网格的基本组成单位。
+***单区 (single-zone) 网格*** 是最简单的网格，也是任意复杂网格的基本组成单位。
 
-|        | 结构网格 | 非结构网格 |
-| :----: | :--------------------: | :------------------------: |
-|  写出  |   `write_grid_str.c`   |    `write_grid_unst.c`     |
-| 读入 |   `read_grid_str.c`    |     `read_grid_unst.c`     |
+|      |      结构网格      |     非结构网格      |
+| :--: | :----------------: | :-----------------: |
+| 写出 | `write_grid_str.c` | `write_grid_unst.c` |
+| 读入 | `read_grid_str.c`  | `read_grid_unst.c`  |
 
 #### 通用操作
 
@@ -100,7 +150,9 @@ ier = cg_zone_read(
     // output:
     char *zone_name, cgsize_t *zone_size);
 ```
+
 其中
+
 - 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
 - `cell_dim`、`phys_dim` 分别表示 单元（流形）维数、物理（空间）维数。
 - `zone_size` 是一个二维数组（的头地址），
@@ -133,7 +185,9 @@ ier = cg_coord_read(
     void *coord_array);
 // Get info for an element section:
 ```
+
 其中
+
 - 设结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
   - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的结点数外，其余维度的长度 *必须等于* 相应方向的结点数。
   - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
@@ -145,6 +199,7 @@ ier = cg_coord_read(
 #### 读写单元
 
 结构网格的 *结点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
+
 ```c
 // Write fixed size element data:
 ier = cg_section_write(
@@ -171,7 +226,9 @@ ier = cg_elements_read(
     // output:
     cgsize_t *elements, cgsize_t *parent_data);
 ```
+
 其中
+
 - `cg_section_write()` 在给定的 `Zone_t` 对象下新建一个 `Elements_t` 对象，即 *单元片段 (element section)*。
 - 一个 `Zone_t` 下可以有多个 `Elements_t`：
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
@@ -183,6 +240,7 @@ ier = cg_elements_read(
 #### 运行示例
 
 结构网格：
+
 ```shell
 > ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_grid_str
 
@@ -199,6 +257,7 @@ Program successful... ending now
 ```
 
 非结构网格：
+
 ```shell
 > ${BUILD_DIR}/src/Test_UserGuideCode/C_code/write_grid_unst
 
@@ -283,6 +342,7 @@ ier = cg_field_read(
 ```
 
 其中
+
 - `cg_sol_write()` 用于在 `Zone_t` 对象下创建一个表示 *一组物理量* 的 `FlowSolution_t` 对象。
   - 同一个  `Zone_t` 下的 `FlowSolution_t` 可以有多个。
   - 所有 `FlowSolution_t` 都平行于 表示网格的 `GridCoordinates_t`。
@@ -297,15 +357,16 @@ ier = cg_field_read(
 - 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
 - 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
 
-#### 外层数据
+#### 外皮数据
 
-*外层 (rind) 数据* 是指存储在网格表面的一层或多层 *影子 (ghost) 单元* 上的数据 ：
+***外皮 (rind) 数据*** 是指存储在网格表面的一层或多层 *影子 (ghost) 单元* 上的数据 ：
 
 ```
 ┌───╔═══╦═══╦═══╗───┬───┐      ═══ 网格单元
 │ o ║ o ║ o ║ o ║ o │ o │
 └───╚═══╩═══╩═══╝───┴───┘      ─── 影子单元
 ```
+
 `write_flowcentrind_str.c` 与 `read_flowcentrind_str.c` 展示了这种表示方法，新增的 API 如下：
 
 ```c
@@ -334,9 +395,11 @@ ier = cg_rind_write(int *rind_data);
 // Read number of rind layers:
 ier = cg_rind_read(int *rind_data);
 ```
+
 其中
+
 - `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
-- 外层数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
+- 外皮数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
 ### 边界条件
 
@@ -386,12 +449,14 @@ ier = cg_boco_read(
     // output:
     cgsize_t *point_set, void *normal_list);
 ```
+
 其中
+
 - `cg_boco_write()` 用于创建一个表示具体边界条件的 `BC_t` 对象。
   - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
   - 所有 `BC_t` 都是同一个 `ZoneBC_t` 的 child(ren)。
   - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
-- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [*Boundary Condition Type Structure Definition*](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
+- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [***Boundary Condition Type Structure Definition***](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 - 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
   - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
     - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下界、上界。
@@ -423,12 +488,12 @@ ier = cg_gridlocation_write(GridLocation_t grid_location/*
 // Read grid location:
 ier = cg_gridlocation_read(GridLocation_t *grid_location);
 ```
+
 其中
+
 - 这里的 `cg_boco_write()` 在形式上与 *结构网格* 版本一样，只是将 `n_point`、`point_set` 替换成了 `n_cell`、`cell_set`。
 - `grid_location == CGNS_ENUMV(FaceCenter)` 表当前 BC 作用在 *面单元* 上，即 `cell_set` 是存储面单元编号的数组。
 - 调用 `cg_gridlocation_write()` 之前必须先用 `cg_goto()` 定位到所需的 `BC_t` 对象。
 
 ### 多区网格
-
-### 
 
