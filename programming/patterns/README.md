@@ -37,8 +37,13 @@
 ### Bridge
 > Decouple an abstraction from its implementation so that the two can vary independently.
 
-### [Composite](./Composite/README.md)
-![](./Composite/Class.svg)
+[![](./bridge/class.svg)](./bridge/README.md)
+
+### Composite
+> Compose objects into tree structures to represent part-whole hierarchies.
+> Composite lets clients treat individual objects and compositions of objects uniformly.
+
+[![](./composite/class.svg)](./composite/README.md)
 
 ### [Decorator](./Decorator/README.md)
 ![](./Decorator/Class.svg)

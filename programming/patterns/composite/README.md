@@ -10,8 +10,8 @@ Composite lets clients treat individual objects and compositions of objects unif
 - 表示由对象构成的部分-整体层次结构。
 - 允许用户忽略单个对象与对象组合之间的区别。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **结点** (`Node`)
