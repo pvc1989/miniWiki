@@ -12,8 +12,8 @@ Decouple an abstraction from its implementation so that the two can vary indepen
 - （通过指向实现的指针）将实现细节完全隐藏。
 - 在多个对象之间共享同一个实现，并且对用户隐藏该细节。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象类** (`Abstraction`)

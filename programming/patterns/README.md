@@ -34,8 +34,8 @@
 
 [![](./adapter/class.svg)](./adapter/README.md)
 
-### [Bridge](./Bridge/README.md)
-![](./Bridge/Class.svg)
+### Bridge
+> Decouple an abstraction from its implementation so that the two can vary independently.
 
 ### [Composite](./Composite/README.md)
 ![](./Composite/Class.svg)
