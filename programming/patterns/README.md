@@ -77,8 +77,10 @@
 ### [Memento](./Memento/README.md)
 ![](./Memento/Class.svg)
 
-### [Observer](./observer/README.md)
-![](./observer/class.svg)
+### Observer
+> Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+
+[![](./observer/class.svg)](./observer/README.md)
 
 ### [State](./State/README.md)
 ![](./State/Class.svg)
