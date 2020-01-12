@@ -413,6 +413,8 @@ auto sptrv = std::make_shared<std::vector<int>>(init_list);
 
 ## `pImpl` 模式
 
+该模式又被称为 [***Bridge 模式***](../../patterns/bridge/README.md)，它完全符合 [***依赖倒置原则***](../../principles/README.md#DIP)，甚至用 C 语言也可以实现。
+
 ### 隔离依赖关系
 假设在原始设计中，`Algorithm` 是一个含有 `Implementor` 类型数据成员的类：
 ```cpp
@@ -434,8 +436,6 @@ class Algorithm {
 所谓 `pImpl` 就是用 ***指向实现的指针 (Pointer to IMPLementation)*** 代替 *数据成员*：
 - 将 `Algorithm` 对 `Implementor` 的依赖从 `algorithm.h` 移入 `algorithm.cpp`，从而将 `user.cpp` 与 `implementor.h` 隔离。
 - `implementor.h` 更新后，只需重新编译 `algorithm.cpp`，而不必重新编译 `user.cpp`，但可能需要重新链接。
-
-基于这一技术所设计的架构，完全符合 [***依赖倒置原则***](../../principles/README.md#DIP)，甚至用 C 语言也可以做到 ***面向对象编程 (Object Oriented Programming, OOP)***。
 
 ### 用 原始指针 实现
 ```cpp
