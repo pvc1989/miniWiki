@@ -11,8 +11,8 @@ Specify the kinds of objects to create using a prototypical instance, and create
 - 避免工厂类数量的膨胀（例如：定义一个平行于产品家族的工厂家族）。
 - 通过安装原型来实现不同状态的组合。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象原型** (`Prototype`)

@@ -9,8 +9,8 @@ Ensure a class only has one instance, and provide a global point of access to it
 - 某个类只应有一个实例，该实例可以通过给定的接口被用户从任意位置访问。
 - 可以通过继承来扩展，用户不需要修改已有代码就能使用扩展了的实例。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **单例** (`NonDerivableSingleton`, `BaseSingleton`, `DerivedSingleton`)

@@ -9,8 +9,8 @@ Define an interface for creating an object, but let subclasses decide which clas
 - 一个类无法预知待创建产品的具体类型。
 - 一个类希望由其子类来决定待创建产品的具体类型。
 
-## [类图](./class.txt)
-![](./class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象产品** (`AbstractProduct`)

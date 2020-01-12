@@ -11,8 +11,8 @@ Provide an interface for creating families of related or dependent objects witho
 - 对一族相关产品的创建和使用施加约束。
 - 只提供产品的抽象接口，隐藏其具体实现。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象工厂** (`Factory`)
@@ -28,4 +28,4 @@ Provide an interface for creating families of related or dependent objects witho
 
 ## [Java 示例](./Demo.java)
 
-## [C++ 示例](./Demo.cpp)
+## [C++ 示例](./demo.cpp)

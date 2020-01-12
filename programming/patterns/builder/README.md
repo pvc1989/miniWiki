@@ -9,8 +9,8 @@ Separate the construction of a complex object from its representation so that th
 - 让复杂对象的构造算法独立于部件的构造和组装。
 - 让同一构造过程适用于不同表示。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象构造者** (`Builder`)
@@ -24,5 +24,5 @@ Separate the construction of a complex object from its representation so that th
 - **产品** (`Product`)
   - 声明需要构造的复杂对象的接口。
 
-## [时序图](./Sequence.txt)
-![](./Sequence.svg)
+## 时序图
+[![](./sequence.svg)](./sequence.txt)
