@@ -10,8 +10,8 @@ Convert the interface of a class into another interface clients expect.
 - 为不相关的或不可预见的类提供一个抽象接口，使其可以通过该抽象接口与用户互动（用户不依赖于第三方类，只依赖于抽象接口）。
 - 对象适配器可以在无法同时继承多个现有子类的情况下，通过对象组合来适配父类的接口。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **目标** (`Target`)

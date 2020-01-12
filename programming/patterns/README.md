@@ -29,8 +29,10 @@
 
 ## Structural Patterns
 
-### [Adapter](./Adapter/README.md)
-![](./Adapter/Class.svg)
+### Adapter
+> Convert the interface of a class into another interface clients expect.
+
+[![](./adapter/class.svg)](./adapter/README.md)
 
 ### [Bridge](./Bridge/README.md)
 ![](./Bridge/Class.svg)
