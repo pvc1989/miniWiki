@@ -11,8 +11,8 @@ Facade defines a higher-level interface that makes the subsystem easier to use.
 - 将子系统与用户或其他子系统解耦。
 - 为子系统的每一层各提供一个入口，简化各层之间的依赖关系。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **门面** (`Facade`)

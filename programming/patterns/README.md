@@ -51,8 +51,11 @@
 
 [![](./decorator/class.svg)](./decorator/README.md)
 
-### [Facade](./Facade/README.md)
-![](./Facade/Class.svg)
+### Facade
+> Provide a unified interface to a set of interfaces in a subsystem.
+> Facade defines a higher-level interface that makes the subsystem easier to use.
+
+[![](./facade/class.svg)](./facade/README.md)
 
 ### [Flyweight](./Flyweight/README.md)
 ![](./Flyweight/Class.svg)
