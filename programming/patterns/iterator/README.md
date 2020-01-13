@@ -10,8 +10,8 @@ Provide a way to access the elements of an aggregate object sequentially without
 - 用于支持多种遍历方式（例如：先序、中序、后序）。
 - 提供一种通用接口 (`for each`)，用于遍历不同容器。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **迭代器** (`Iterator`)

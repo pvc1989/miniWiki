@@ -85,8 +85,10 @@
 
 [![](./interpreter/class.svg)](./interpreter/README.md)
 
-### [Iterator](./Iterator/README.md)
-![](./Iterator/Class.svg)
+### Iterator
+> Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
+
+[![](./iterator/class.svg)](./iterator/README.md)
 
 ### [Mediator](./Mediator/README.md)
 ![](./Mediator/Class.svg)
