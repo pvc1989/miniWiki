@@ -11,8 +11,8 @@ Provide a surrogate or placeholder for another object to control access to it.
 - **保护代理 (Protection Proxy)** 限制对原始（脆弱）对象的访问。
 - **智能引用 (Smart Reference)** 对裸指针进行封装，以便支持引用计数、动态资源管理等功能。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **代理** (`Proxy`)

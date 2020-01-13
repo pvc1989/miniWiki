@@ -62,8 +62,10 @@
 
 [![](./flyweight/class.svg)](./flyweight/README.md)
 
-### [Proxy](./Proxy/README.md)
-![](./Proxy/Class.svg)
+### Proxy
+> Provide a surrogate or placeholder for another object to control access to it.
+
+[![](./proxy/class.svg)](./proxy/README.md)
 
 ## Behavioral Patterns
 
