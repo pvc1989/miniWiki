@@ -13,8 +13,8 @@ Use sharing to support large numbers of fine-grained objects efficiently.
 - 许多对象可以被只含有 **内在状态 (Intrinsic State)** 的共享对象替换。
 - 应用程序不依赖于这些对象的身份（地址）。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **享元/轻量级对象** (`Flyweight`)

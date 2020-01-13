@@ -57,8 +57,10 @@
 
 [![](./facade/class.svg)](./facade/README.md)
 
-### [Flyweight](./Flyweight/README.md)
-![](./Flyweight/Class.svg)
+### Flyweight
+> Use sharing to support large numbers of fine-grained objects efficiently.
+
+[![](./flyweight/class.svg)](./flyweight/README.md)
 
 ### [Proxy](./Proxy/README.md)
 ![](./Proxy/Class.svg)
