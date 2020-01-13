@@ -80,8 +80,10 @@
 
 [![](./command/class.svg)](./command/README.md)
 
-### [Interpreter](./Interpreter/README.md)
-![](./Interpreter/Class.svg)
+### Interpreter
+> Given a language, define a represention for its grammar along with an interpreter that uses the representation to interpret sentences in the language.
+
+[![](./interpreter/class.svg)](./interpreter/README.md)
 
 ### [Iterator](./Iterator/README.md)
 ![](./Iterator/Class.svg)
