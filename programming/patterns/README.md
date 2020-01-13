@@ -75,8 +75,10 @@
 
 [![](./chain_of_responsibility/class.svg)](./chain_of_responsibility/README.md)
 
-### [Command](./Command/README.md)
-![](./Command/Class.svg)
+### Command
+> Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+
+[![](./command/class.svg)](./command/README.md)
 
 ### [Interpreter](./Interpreter/README.md)
 ![](./Interpreter/Class.svg)
