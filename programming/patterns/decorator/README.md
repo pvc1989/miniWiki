@@ -12,8 +12,8 @@ Decorators provide a flexible alternative to subclassing for extending functiona
 - 支持撤回操作。
 - 用于继承不可行的场景。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **部件** (`Component`)

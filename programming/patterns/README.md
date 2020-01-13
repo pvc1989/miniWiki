@@ -45,8 +45,11 @@
 
 [![](./composite/class.svg)](./composite/README.md)
 
-### [Decorator](./Decorator/README.md)
-![](./Decorator/Class.svg)
+### Decorator
+> Attach additional responsibilities to an object dynamically.
+> Decorators provide a flexible alternative to subclassing for extending functionality.
+
+[![](./decorator/class.svg)](./decorator/README.md)
 
 ### [Facade](./Facade/README.md)
 ![](./Facade/Class.svg)
