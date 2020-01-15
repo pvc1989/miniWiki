@@ -122,8 +122,13 @@
 > Define the skeleton of an algorithm in an operation, deferring some steps to subclasses.
 > Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
 
-### [Visitor](./Visitor/README.md)
-![](./Visitor/Class.svg)
+[![](./template_method/class.svg)](./template_method/README.md)
+
+### Visitor
+> Represent an operation to be performed on the elements of an object structure.
+> Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+
+[![](./visitor/class.svg)](./visitor/README.md)
 
 ## Language Support
 
