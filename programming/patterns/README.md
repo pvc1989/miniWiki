@@ -96,8 +96,10 @@
 
 [![](./mediator/class.svg)](./mediator/README.md)
 
-### [Memento](./Memento/README.md)
-![](./Memento/Class.svg)
+### Memento
+> Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
+
+[![](./memento/class.svg)](./memento/README.md)
 
 ### Observer
 > Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
