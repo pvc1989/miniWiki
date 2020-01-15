@@ -12,8 +12,8 @@ Template Method lets subclasses redefine certain steps of an algorithm without c
 - 从子类中抽取公共部分，以减少代码重复。
 - 通过定义一些被称为 **钩子 (hook)** 的模板方法，限制子类的扩展。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **抽象类** (`AbstractClass`)
