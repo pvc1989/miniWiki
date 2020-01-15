@@ -90,8 +90,11 @@
 
 [![](./iterator/class.svg)](./iterator/README.md)
 
-### [Mediator](./Mediator/README.md)
-![](./Mediator/Class.svg)
+### Mediator
+> Define an object that encapsulates how a set of objects interact.
+> Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.
+
+[![](./mediator/class.svg)](./mediator/README.md)
 
 ### [Memento](./Memento/README.md)
 ![](./Memento/Class.svg)
