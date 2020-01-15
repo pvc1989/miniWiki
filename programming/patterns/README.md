@@ -106,8 +106,11 @@
 
 [![](./observer/class.svg)](./observer/README.md)
 
-### [State](./State/README.md)
-![](./State/Class.svg)
+### State
+> Allow an object to alter its behavior when its internal state changes.
+> The object will appear to change its class.
+
+[![](./state/class.svg)](./state/README.md)
 
 ### [Strategy](./Strategy/README.md)
 ![](./Strategy/Class.svg)
