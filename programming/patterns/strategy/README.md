@@ -13,8 +13,8 @@ Strategy lets the algorithm vary independently from clients that use it.
 - 隔离使用者与算法所使用的数据结构。
 - 避免冗长的条件分支。
 
-## [类图](./Class.txt)
-![](./Class.svg)
+## 类图
+[![](./class.svg)](./class.txt)
 
 ## 参与者
 - **策略** (`Strategy`)
