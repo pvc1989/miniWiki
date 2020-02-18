@@ -25,7 +25,7 @@
 
 ### 数学
 
-- [实分析 (Real Analysis)](./mathematics/analysis/README.lyx)
+- [实分析 (Real Analysis)](./mathematics/analysis/real/README.lyx)
 - [复分析 (Complex Analysis)](./mathematics/complex/README.lyx)
 - [泛函分析 (Functional Analysis)](./mathematics/functional/README.lyx)
 - [常微分方程 (Ordinary Differential Equations, ODE)](./mathematics/ode/README.lyx)
