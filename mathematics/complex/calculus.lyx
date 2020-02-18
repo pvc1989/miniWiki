@@ -1,0 +1,2363 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children false
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+微积分
+\end_layout
+
+\begin_layout Section
+微分学
+\end_layout
+
+\begin_layout Subsection
+可导性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[导数]
+\end_layout
+
+\end_inset
+
+设复变函数 
+\begin_inset Formula $w(z)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内单值。若在区域内的某一点 
+\begin_inset Formula $z\in D$
+\end_inset
+
+ 处存在极限
+\begin_inset Formula 
+\[
+\lim_{\Delta z\to0}\frac{w(z+\Delta z)-w(z)}{\Delta z}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在点 
+\begin_inset Formula $z$
+\end_inset
+
+ 处 
+\bar under
+可导 (derivable)
+\bar default
+，并称此极限为 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在点 
+\begin_inset Formula $z$
+\end_inset
+
+ 处的 
+\bar under
+导数 (derivative)
+\bar default
+，记作 
+\begin_inset Formula $w'(z)$
+\end_inset
+
+ 或 
+\begin_inset Formula $\dv*{w}{z}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上定义要求极限值与 
+\begin_inset Formula $\Delta z\to0$
+\end_inset
+
+ 的方向无关，特别是：沿实轴和虚轴所得的极限值应相等
+\begin_inset Formula 
+\[
+\lim\limits _{\Delta x\to0}\frac{w(x+\Delta x,y)-w(x,y)}{\Delta x}=\lim\limits _{\iu\Delta y\to0}\frac{w(x,y+\Delta y)-w(x,y+\Delta y)}{\iu\Delta y}
+\]
+
+\end_inset
+
+比较实部和虚部，得到复变函数可导的必要条件：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy--Riemann]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Cauchy--Riemann"
+
+\end_inset
+
+设复变函数 
+\begin_inset Formula $w(z)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内单值。若 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在点 
+\begin_inset Formula $z_{0}\in D$
+\end_inset
+
+ 处可导，则在该点的邻域内有
+\begin_inset Formula 
+\[
+\pdv{u}{x}=\pdv{v}{y}\qquad\pdv{u}{y}=-\pdv{v}{x}
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\[
+\pdv{w(z,z^{*})}{z^{*}}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可导性]
+\end_layout
+
+\end_inset
+
+设复变函数 
+\begin_inset Formula $w(z)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内单值。若 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 的实部和虚部在点 
+\begin_inset Formula $z_{0}\in D$
+\end_inset
+
+ 的邻域内有连续的偏导数，并且满足 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy--Riemann"
+
+\end_inset
+
+ 条件，则 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在该点可导。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+解析性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[解析、全纯]
+\end_layout
+
+\end_inset
+
+若复变函数 
+\begin_inset Formula $w(z)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内处处可导，则称 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $D$
+\end_inset
+
+ 上 
+\bar under
+解析 (analytic)
+\bar default
+ 或 
+\bar under
+全纯 (holomorphic)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy--Riemann"
+
+\end_inset
+
+ 条件易得：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[等值线正交]
+\end_layout
+
+\end_inset
+
+解析函数 
+\begin_inset Formula $w(z)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 的实部 
+\begin_inset Formula $u(x,y)$
+\end_inset
+
+ 和虚部 
+\begin_inset Formula $v(x,y)$
+\end_inset
+
+ 在解析区域内满足 Laplace 方程
+\begin_inset Formula 
+\[
+\pdv[2]{u}{x}+\pdv[2]{u}{y}=0\qquad\pdv[2]{v}{x}+\pdv[2]{v}{y}=0
+\]
+
+\end_inset
+
+并且 
+\begin_inset Formula $u(x,y)$
+\end_inset
+
+ 和 
+\begin_inset Formula $v(x,y)$
+\end_inset
+
+ 的等值线处处正交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Laplace 方程又被称为 
+\bar under
+调和 (harmonic) 方程
+\bar default
+，因此它的解（某个解析函数的实部和虚部）也被称为 
+\bar under
+调和 (harmonic) 函数
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+保角变换
+\end_layout
+
+\begin_layout Standard
+复变函数 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 可以被视为从 
+\begin_inset Formula $z$
+\end_inset
+
+ 平面到 
+\begin_inset Formula $w$
+\end_inset
+
+ 平面的坐标变换。设 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，则微分关系
+\begin_inset Formula 
+\[
+\dd{w}=w'(a)\dd{z}\qquad\forall a\in D
+\]
+
+\end_inset
+
+表示将 
+\begin_inset Formula $z$
+\end_inset
+
+ 平面内从点 
+\begin_inset Formula $a$
+\end_inset
+
+ 出发的线段微元 
+\begin_inset Formula $\dd{z}$
+\end_inset
+
+ 映射为 
+\begin_inset Formula $w$
+\end_inset
+
+ 平面内由点 
+\begin_inset Formula $w(a)$
+\end_inset
+
+ 出发的线段微元 
+\begin_inset Formula $\dd{w}$
+\end_inset
+
+。 
+\begin_inset Formula $\dd{w}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\dd{z}$
+\end_inset
+
+ 相比，长度放大了 
+\begin_inset Formula $\abs{w'(a)}$
+\end_inset
+
+ 倍，辐角增加了 
+\begin_inset Formula $\arg w'(a)$
+\end_inset
+
+ 。由导数的方向无关性可知：
+\begin_inset Formula $w'(a)$
+\end_inset
+
+ 只与点 
+\begin_inset Formula $a$
+\end_inset
+
+ 的选取有关，与 
+\begin_inset Formula $\dd{z}$
+\end_inset
+
+ 的方向无关。因此，解析函数所表示的坐标变换（在解析区域内的所有满足 
+\begin_inset Formula $w'(z)\ne0$
+\end_inset
+
+ 的点上）是 
+\bar under
+保角的
+\bar default
+ 或 
+\bar under
+共形的 (conformal)
+\bar default
+。这里的「保角」指的是：从同一点出发的任意两条线段微元的夹角保持不变。
+\end_layout
+
+\begin_layout Standard
+巧妙地利用 
+\begin_inset Formula $w'(z)=0$
+\end_inset
+
+ 的点，可以把复杂区域化为简单区域。
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Joukowski]
+\end_layout
+
+\end_inset
+
+复变函数
+\begin_inset Formula 
+\[
+w(z)=\frac{1}{2}\left(z+\frac{c^{2}}{z}\right)\qquad c\in(0,\infty)
+\]
+
+\end_inset
+
+在区域 
+\begin_inset Formula $\mathbb{C}\setminus\left\{ 0\right\} $
+\end_inset
+
+ 内解析，它将 
+\begin_inset Formula $z$
+\end_inset
+
+ 平面上的圆
+\begin_inset Formula 
+\[
+\left\{ z\in\mathbb{C}:\abs{z-a}=r,\ \frac{a}{c}=-\gamma+\iu(\gamma+1)\tan\beta\ \frac{r}{c}=\frac{\gamma+1}{\cos\beta}\right\} 
+\]
+
+\end_inset
+
+变换为 
+\begin_inset Formula $w$
+\end_inset
+
+ 平面上的 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "fig:Joukowski-翼型"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+（由代码
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "code:joukowski_airfoil"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+生成）。其中：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $2c$
+\end_inset
+
+ 为 
+\begin_inset Formula $z$
+\end_inset
+
+-平面上的圆与实轴的两个交点 
+\begin_inset Formula $p_{L}$
+\end_inset
+
+ 与 
+\begin_inset Formula $p_{R}$
+\end_inset
+
+ 之间的距离（即弦长）。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\gamma\ll1$
+\end_inset
+
+ 为控制翼型厚度（
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 越大，翼型越厚）的无量纲参数。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\beta$
+\end_inset
+
+ 为圆心到 
+\begin_inset Formula $p_{R}$
+\end_inset
+
+ 的连线与实轴所夹的锐角。
+\end_layout
+
+\end_deeper
+\begin_layout Example
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "joukowski_airfoil.py"
+lstparams "language=Python,caption={生成 Joukowski 翼型},label={code:joukowski_airfoil}"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Joukowski-翼型"
+
+\end_inset
+
+Joukowski 翼型
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename joukowski_airfoil.pdf
+	width 100text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+积分学
+\end_layout
+
+\begin_layout Subsection
+路径积分
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分割]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $C$
+\end_inset
+
+ 是复平面（或 Riemann 面）上的（分段）光滑曲线。在曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 上任取 
+\begin_inset Formula $n+1$
+\end_inset
+
+ 个点 
+\begin_inset Formula $\left\{ z_{k}\right\} _{k=0}^{n}$
+\end_inset
+
+（含曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 的端点 
+\begin_inset Formula $a=z_{0}$
+\end_inset
+
+ 及 
+\begin_inset Formula $b=z_{n}$
+\end_inset
+
+），使得曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 被分为首尾相连的 
+\begin_inset Formula $n$
+\end_inset
+
+ 段
+\begin_inset Formula 
+\[
+\begin{aligned}C & =C_{1}\cup C_{2}\cup\cdots\cup C_{n}\\
+\left\{ z_{k}\right\}  & =C_{k}\cap C_{k+1}\qquad k=1,2,\dots,n-1
+\end{aligned}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $\left\{ z_{k}\right\} _{k=0}^{n}$
+\end_inset
+
+ 给出了曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 的一种 
+\bar under
+分割 (partition)
+\bar default
+，并称
+\begin_inset Formula 
+\[
+\sigma\coloneqq\max_{k=1}^{n}\abs{\Delta z_{k}}=\max_{k=1}^{n}\abs{z_{k}-z_{k-1}}
+\]
+
+\end_inset
+
+为该分割的 
+\bar under
+直径 (diameter)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[路径积分]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $C$
+\end_inset
+
+ 是复平面（或 Riemann 面）上的（分段）光滑曲线，函数 
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 在曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 上（分段）连续。如果存在极限
+\begin_inset Formula 
+\[
+\lim_{\sigma\to0}\sum_{k=1}^{n}w(\zeta_{k})\Delta z_{k}=A\in\mathbb{C}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\zeta_{k}$
+\end_inset
+
+ 为 
+\begin_inset Formula $C_{k}$
+\end_inset
+
+ 上任意一点，
+\begin_inset Formula $A$
+\end_inset
+
+ 的值不依赖于 
+\begin_inset Formula $C_{k}$
+\end_inset
+
+ 和 
+\begin_inset Formula $\zeta_{k}$
+\end_inset
+
+ 的取法，
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+则称函数 
+\family default
+\series default
+\shape default
+\size default
+\bar default
+ 
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
+\begin_inset Formula $w(z)$
+\end_inset
+
+ 沿曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 
+\bar under
+可积
+\family roman
+\series medium
+\shape up
+\size normal
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ (integrable)，并将 
+\begin_inset Formula $A$
+\end_inset
+
+ 称为该
+\family default
+\series default
+\shape default
+\size default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+路径积分
+\family roman
+\series medium
+\shape up
+\size normal
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ (path integral) 的值，记作
+\end_layout
+
+\begin_layout Definition
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\int_{C}w(z)\dd{z}=A
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+复变函数 
+\begin_inset Formula $w(x+\iu y)=u(x,y)+\iu v(x,y)$
+\end_inset
+
+ 沿曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 的积分，等价于两个实变函数沿曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 的积分的线性组合，即
+\begin_inset Formula 
+\[
+\int_{C}w(z)\dd{z}\coloneqq\int_{C}(u+\iu v)(\dd{x}+\iu\dd{y})=\int_{C}(u\dd{x}-v\dd{y})+\iu\int_{C}(u\dd{y}+v\dd{x})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭合路径的方向]
+\end_layout
+
+\end_inset
+
+若不加说明，沿闭合路径 
+\begin_inset Formula $C$
+\end_inset
+
+ 的积分 
+\begin_inset Formula $\oint_{C}f(z)\dd{z}$
+\end_inset
+
+ 表示「沿闭合曲线 
+\begin_inset Formula $C$
+\end_inset
+
+ 所围区域的边界的正向行走」，并且「边界的正向」总是使区域位于前进方向左侧。
+\end_layout
+
+\begin_layout Notation
+如果区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 是单连通的，则「边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 的正向」为逆时针方向，因此
+\begin_inset Formula 
+\[
+\oint_{\partial D}f(z)\dd{z}\equiv\ointctrclockwise_{\partial D}f(z)\dd{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+如果区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 是复连通的，则「外部边界 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ 的正向」为逆时针方向，而「内部边界 
+\begin_inset Formula $\left\{ C_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 的正向」为顺时针方向，因此
+\begin_inset Formula 
+\[
+\begin{aligned}\oint_{\partial D}f(z)\dd{z} & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}+\sum_{k=1}^{n}\varointclockwise_{C_{k}}f(z)\dd{z}\\
+ & \equiv\ointctrclockwise_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\ointctrclockwise_{C_{k}}f(z)\dd{z}\\
+ & \equiv\oint_{C_{0}}f(z)\dd{z}-\sum_{k=1}^{n}\oint_{C_{k}}f(z)\dd{z}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+整数次幂函数在单位圆上的积分具有特殊意义：
+\begin_inset Formula 
+\begin{equation}
+\oint_{\abs{z-a}=1}(z-a)^{n}\dd{z}=\int_{0}^{2\pi}\e^{\iu n\theta}\cdot\e^{\iu\theta}\iu\dd{\theta}=\begin{cases}
+\eval{\frac{\left(\e^{\iu\theta}\right)^{n+1}}{n+1}}_{0}^{2\pi}=0 & n\ne-1\\
+2\pi\iu & n=-1
+\end{cases}\label{eq:整数次幂函数在闭合回路上的积分}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+常用引理
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[小圆弧]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:小圆弧"
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在以 
+\begin_inset Formula $z=a\in\mathbb{C}$
+\end_inset
+
+ 为圆心、
+\begin_inset Formula $r\ll1$
+\end_inset
+
+ 为半径的小圆弧（族）
+\begin_inset Formula 
+\[
+C_{r}\coloneqq\left\{ z=a+r\e^{\iu\theta}:\theta_{1}<\theta<\theta_{2}\right\} 
+\]
+
+\end_inset
+
+上满足「当 
+\begin_inset Formula $r\to0$
+\end_inset
+
+ 时 
+\begin_inset Formula $(z-a)f(z)\rightrightarrows K$
+\end_inset
+
+」，则有
+\begin_inset Formula 
+\[
+\lim_{r\to0}\int_{C_{r}}f(z)\dd{z}=(\theta_{2}-\theta_{1})K\iu
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+在圆弧 
+\begin_inset Formula $C_{r}$
+\end_inset
+
+ 上，有
+\begin_inset Formula 
+\[
+\dd{z}=\dd(a+r\e^{\iu\theta})=r\e^{\iu\theta}\cdot\iu\dd{\theta}=(z-a)\iu\dd{\theta}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\int_{C_{r}}f(z)\dd{z}=\iu\int_{\theta_{1}}^{\theta_{2}}f(z(\theta))\cdot(z(\theta)-a)\dd{\theta}
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $r\to0$
+\end_inset
+
+ 时，右端的被积函数一致趋近于 
+\begin_inset Formula $k$
+\end_inset
+
+，即 
+\begin_inset Formula $\forall\varepsilon>0$
+\end_inset
+
+，存在不依赖于 
+\begin_inset Formula $\theta$
+\end_inset
+
+ 的正实数 
+\begin_inset Formula $\delta$
+\end_inset
+
+，使得在任意 
+\begin_inset Formula $r<\delta$
+\end_inset
+
+ 的圆弧 
+\begin_inset Formula $C_{r}$
+\end_inset
+
+ 上都有
+\begin_inset Formula 
+\[
+\abs{f(z(\theta))\cdot(z(\theta)-a)-K}<\varepsilon\qquad\forall\theta\in(\theta_{1},\theta_{2})
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{\int_{C_{r}}f(z)\dd{z}-(\theta_{2}-\theta_{1})K\iu} & =\abs{\iu\int_{\theta_{1}}^{\theta_{2}}\left[f(z(\theta))\cdot(z(\theta)-a)-K\right]\dd{\theta}}\\
+ & \le\int_{\theta_{1}}^{\theta_{2}}\abs{f(z(\theta))\cdot(z(\theta)-a)-K}\dd{\theta}<(\theta_{2}-\theta_{1})\varepsilon
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+类似地，可以证明：
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[大圆弧]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:大圆弧"
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在以 
+\begin_inset Formula $z=0$
+\end_inset
+
+ 为圆心、
+\begin_inset Formula $R\gg1$
+\end_inset
+
+ 为半径的大圆弧（族）
+\begin_inset Formula 
+\[
+C_{R}\coloneqq\left\{ z=R\e^{\iu\theta}:\theta_{1}<\theta<\theta_{2}\right\} 
+\]
+
+\end_inset
+
+上满足「当 
+\begin_inset Formula $R\to\infty$
+\end_inset
+
+ 时 
+\begin_inset Formula $zf(z)\rightrightarrows K$
+\end_inset
+
+」，则有
+\begin_inset Formula 
+\[
+\lim_{R\to\infty}\int_{C_{R}}f(z)\dd{z}=(\theta_{2}-\theta_{1})K\iu
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Jordan]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Jordan"
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $\Im z>-a$
+\end_inset
+
+ 的区域（其中 
+\begin_inset Formula $a\ge0$
+\end_inset
+
+）中满足「当 
+\begin_inset Formula $\abs{z}\to\infty$
+\end_inset
+
+ 时 
+\begin_inset Formula $f(z)\rightrightarrows0$
+\end_inset
+
+」，则有
+\begin_inset Formula 
+\[
+\lim_{R\to\infty}\int_{C_{R}}f(z)\e^{\iu kz}\dd{z}=0\qquad\forall k>0
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{R}$
+\end_inset
+
+ 是以 
+\begin_inset Formula $z=0$
+\end_inset
+
+ 为圆心、
+\begin_inset Formula $R\gg1$
+\end_inset
+
+ 为半径的大圆弧（族）
+\begin_inset Formula 
+\[
+C_{R}\coloneqq\left\{ z=R\e^{\iu\theta}:\Im z>-a\right\} =\left\{ z=R\e^{\iu\theta}:-\alpha<\theta<\pi+\alpha\qquad\alpha=\arcsin\frac{a}{R}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+大圆弧 
+\begin_inset Formula $C_{R}$
+\end_inset
+
+ 上的积分可以分解为四段
+\begin_inset Formula 
+\[
+\int_{C_{R}}f(z)\e^{\iu kx}\dd{z}=\left(\int_{-\alpha}^{0}+\int_{0}^{\pi/2}+\int_{\pi/2}^{\pi}+\int_{\pi}^{\pi+\alpha}\right)f(z)\e^{\iu kz}\iu z\dd{\theta}
+\]
+
+\end_inset
+
+其中第一段与第四段对称、第二段与第三段对称。为方便叙述，记
+\begin_inset Formula 
+\[
+M_{R}\coloneqq\max_{z\in C_{R}}\abs{f(z)}
+\]
+
+\end_inset
+
+显然 
+\begin_inset Formula $\lim_{R\to\infty}M_{R}=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+第一段积分上的积分可以作如下估计
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{\int_{-\alpha}^{0}f(z)\e^{\iu kz}\iu z\dd{\theta}} & \le\int_{-\alpha}^{0}\abs{f(z)\e^{\iu kz}\iu z}\dd{\theta}\\
+\abs{f(z)}\le M_{R}\implies & \le\int_{-\alpha}^{0}M_{R}\abs{\e^{\iu kz}}R\dd{\theta}\\
+z=R\e^{\sqrt{-1}\theta}\implies & =M_{R}R\int_{-\alpha}^{0}\e^{-kR\sin\theta}\dd{\theta}\\
+\sin\theta>\sin\alpha\implies & <M_{R}R\int_{-\alpha}^{0}\e^{-kR\sin\alpha}\dd{\theta}\\
+a=R\sin\alpha\implies & =M_{R}\e^{ka}R\alpha\\
+R\alpha\to a\implies & \to M_{R}\e^{ka}a\\
+M_{R}\to0\implies & \to0
+\end{aligned}
+\]
+
+\end_inset
+
+类似地，第四段上的积分也趋于零。
+\end_layout
+
+\begin_layout Proof
+第二段积分上的积分可以作如下估计
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{\int_{0}^{\pi/2}f(z)\e^{\iu kz}\iu z\dd{\theta}} & \le\int_{0}^{\pi/2}\abs{f(z)\e^{\iu kz}\iu z}\dd{\theta}\\
+\abs{f(z)}\le M_{R}\implies & \le\int_{0}^{\pi/2}M_{R}\abs{\e^{\iu kz}}R\dd{\theta}\\
+z=R\e^{\sqrt{-1}\theta}\implies & =M_{R}R\int_{0}^{\pi/2}\e^{-kR\sin\theta}\dd{\theta}\\
+\sin\theta>\frac{\theta}{\pi/2}\implies & <M_{R}R\int_{0}^{\pi/2}\exp(-kR\frac{\theta}{\pi/2})\dd{\theta}=M_{R}\frac{\pi/2}{-k}\left(\e^{-kR}-1\right)\\
+k>0\implies & \to M_{R}\frac{\pi/2}{-k}(0-1)\\
+M_{R}\to0\implies & \to0
+\end{aligned}
+\]
+
+\end_inset
+
+类似地，第三段上的积分也趋于零。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cauchy 定理
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 定理]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Cauchy-定理"
+
+\end_inset
+
+如果函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，并且在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 的边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上可积，则有
+\begin_inset Formula 
+\[
+\oint_{\partial D}f(z)\dd{z}=0
+\]
+
+\end_inset
+
+对于以 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ 为外部边界、以 
+\begin_inset Formula $\left\{ C_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 为内部边界的复连通区域，上式也可以写为
+\begin_inset Formula 
+\[
+\oint_{C_{0}}f(z)\dd{z}=\sum_{k=1}^{n}\oint_{C_{k}}f(z)\dd{z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+这里只给出（较弱的）证明思路。
+\end_layout
+
+\begin_layout Proof
+单连通区域：先将复变函数的积分化为实变函数的曲线积分，利用 Green 公式（Stokes 定理的特例）将其转化为实变函数的面积分，再对面积分中的被积函数利用
+ 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy--Riemann"
+
+\end_inset
+
+ 条件。
+\end_layout
+
+\begin_layout Proof
+复连通区域：在解析区域内作辅助线（沿辅助线两侧的积分两两抵消），将复连通区域转化为单连通区域。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+解析函数在（解析区域内的）开路径上的积分只与路径的端点有关。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+因此，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:整数次幂函数在闭合回路上的积分"
+
+\end_inset
+
+式的结果可以推广到任意围绕但不经过原点的闭合路径。
+\end_layout
+
+\begin_layout Subsection
+Cauchy 积分公式
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 积分公式]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Cauchy-积分公式"
+
+\end_inset
+
+如果函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在有界区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，那么它在 
+\begin_inset Formula $D$
+\end_inset
+
+ 内任何一点的值完全由它在 
+\begin_inset Formula $D$
+\end_inset
+
+ 的边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的值确定，并且可以表示为 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的积分
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+f(a)=\frac{1}{2\pi\iu}\oint_{\partial D}\frac{f(z)}{z-a}\dd{z}\qquad\forall a\in D
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以上结论也可以推广到无界区域：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无界区域的 Cauchy 积分公式]
+\end_layout
+
+\end_inset
+
+如果函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在无界区域 
+\begin_inset Formula $D$
+\end_inset
+
+ （含无穷远点）内解析，并且当 
+\begin_inset Formula $z\to\infty$
+\end_inset
+
+ 时 
+\begin_inset Formula $f(z)\rightrightarrows f(\infty)$
+\end_inset
+
+，那么它在 
+\begin_inset Formula $D$
+\end_inset
+
+ 内（除无穷远点以外的）任何一点的值完全由它在 
+\begin_inset Formula $D$
+\end_inset
+
+ 的边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的值确定，并且可以表示为 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的积分
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+f(a)=\frac{1}{2\pi\iu}\oint_{\partial D}\frac{f(z)}{z-a}\dd{z}+f(\infty)\qquad\forall a\in D\land a\neq\infty
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 导数公式]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Cauchy-导数公式"
+
+\end_inset
+
+如果复变函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，那么它的任意阶导数都存在且解析，并且完全由 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在 
+\begin_inset Formula $D$
+\end_inset
+
+ 的边界 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的值确定，它们可以表示为 
+\begin_inset Formula $\partial D$
+\end_inset
+
+ 上的积分：
+\begin_inset Formula 
+\[
+f^{(n)}(a)\equiv\eval{\dv[n]{f}{z}}_{z=a}=\frac{n!}{2\pi\iu}\oint_{\partial D}\frac{f(z)}{(z-a)^{n+1}}\dd{z}\qquad\forall n\in\mathbb{N}\qquad\forall a\in D
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy-积分公式"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入导数定义，即得
+\begin_inset Formula 
+\[
+\begin{aligned}f'(a) & =\lim_{h\to0}\frac{f(a+h)-f(a)}{h}=\frac{1}{2\pi\iu}\lim_{h\to0}\oint_{\partial D}\frac{1}{h}\left[\frac{f(z)}{z-(a+h)}-\frac{f(z)}{z-a}\right]\dd{z}\\
+ & =\frac{1}{2\pi\iu}\oint_{\partial D}\lim_{h\to0}\frac{f(z)}{\left[z-(a+h)\right](z-a)}\dd{z}=\frac{1}{2\pi\iu}\oint_{\partial D}\frac{f(z)}{(z-a)^{2}}\dd{z}\qquad\forall n\in\mathbb{N}\qquad\forall a\in D
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cauchy 型积分
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 型积分]
+\end_layout
+
+\end_inset
+
+如果函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内连续，路径 
+\begin_inset Formula $C\subset D$
+\end_inset
+
+ 为有限长的分段光滑曲线，则由以下积分（被称为 Cauchy 型积分）所定义的函数
+\begin_inset Formula 
+\[
+F(z)=\frac{1}{2\pi\iu}\int_{C}\frac{f(\zeta)}{\zeta-z}\dd{\zeta}\qquad\forall z\in D\setminus C
+\]
+
+\end_inset
+
+在区域 
+\begin_inset Formula $D\setminus C$
+\end_inset
+
+ 内解析，它的任意阶导数都存在并且可以表示成
+\begin_inset Formula 
+\[
+F^{(n)}(z)=\frac{n!}{2\pi\iu}\int_{C}\frac{f(\zeta)}{(\zeta-z)^{n+1}}\dd{\zeta}\qquad\forall n\in\mathbb{N}\qquad\forall a\in D
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+证明方法与 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy-导数公式"
+
+\end_inset
+
+类似。
+\end_layout
+
+\begin_layout Subsection
+原函数与不定积分
+\end_layout
+
+\begin_layout Theorem
+设函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在单连通
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+对于复连通区域，某些解析函数的积分可能会导出多值函数（例如 
+\begin_inset Formula $\ln z=\int z^{-1}\dd{z}$
+\end_inset
+
+），因此这里的「单连通」条件不能省略。
+\end_layout
+
+\end_inset
+
+区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，
+\begin_inset Formula $a\in D$
+\end_inset
+
+ 是任意定点，
+\begin_inset Formula $z\in D$
+\end_inset
+
+ 是任意动点，
+\begin_inset Formula $C(z;a)\subset D$
+\end_inset
+
+ 是由 
+\begin_inset Formula $a$
+\end_inset
+
+ 到 
+\begin_inset Formula $z$
+\end_inset
+
+ 的任意分段光滑曲线，则由以下积分
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:Cauchy-定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+确保这里的路径积分只依赖于路径的端点，因此可以写成定积分。
+\end_layout
+
+\end_inset
+
+所定义的函数
+\begin_inset Formula 
+\[
+F(z)=\int_{C(z;a)}f(\zeta)\dd{\zeta}=\int_{a}^{z}f(\zeta)\dd{\zeta}\qquad\forall\:z\in D
+\]
+
+\end_inset
+
+在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析，并且有 
+\begin_inset Formula $F'(z)=f(z)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+在 
+\begin_inset Formula $z$
+\end_inset
+
+ 的充分小邻域内，记 
+\begin_inset Formula $f(\zeta)=f(z)+\varepsilon(\zeta)$
+\end_inset
+
+，代入导数定义即得
+\begin_inset Formula 
+\[
+F'(z)=\lim_{h\to0}\frac{F(z+h)-F(z)}{h}=\lim_{h\to0}\left(\int_{a}^{z+h}-\int_{a}^{z}\right)\frac{f(\zeta)}{h}\dd{\zeta}=\lim_{h\to0}\int_{z}^{z+h}\frac{f(z)+\varepsilon(\zeta)}{h}\dd{\zeta}
+\]
+
+\end_inset
+
+在由 
+\begin_inset Formula $z$
+\end_inset
+
+ 到 
+\begin_inset Formula $z+h$
+\end_inset
+
+ 的路径上，显然有
+\begin_inset Formula 
+\[
+\lim_{h\to0}\varepsilon(\zeta)=0\qquad\lim_{h\to0}\sup_{\zeta}\abs{\varepsilon(\zeta)}=0
+\]
+
+\end_inset
+
+因此有如下估计
+\begin_inset Formula 
+\[
+\abs{\int_{z}^{z+h}\frac{\varepsilon(\zeta)}{h}\dd{\zeta}}\le\int_{z}^{z+h}\abs{\frac{\varepsilon(\zeta)}{h}}\dd{\zeta}\le\abs{\frac{\sup_{\zeta}{\varepsilon(\zeta)}}{h}}\int_{z}^{z+h}\dd{\zeta}=\abs{\sup_{\zeta}{\varepsilon(\zeta)}}\to0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+这样的函数 
+\begin_inset Formula $F(z)$
+\end_inset
+
+ 称为 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的一个原函数。显然，
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 的原函数不唯一，但两两之间至多只相差一个常数，因此可以写成不定积分 
+\begin_inset Formula $\int f(z)\dd{z}=F(z)+C$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+上述定理的一个重要推论是以下 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Cauchy-定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的逆定理：
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Morera]
+\end_layout
+
+\end_inset
+
+如果函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在单连通区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内的任意闭合路径 
+\begin_inset Formula $C$
+\end_inset
+
+ 上连续且 
+\begin_inset Formula $\oint_{C}f(z)\dd{z}=0$
+\end_inset
+
+，则函数 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ 在区域 
+\begin_inset Formula $D$
+\end_inset
+
+ 内解析。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+由积分定义的函数
+\end_layout
+
+\begin_layout Subsection
+误差函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\erf(x)=\frac{1}{\sqrt{\pi}}\int_{-x}^{x}\exp(-t^{2})\dd{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特殊点上的值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\erf(0)=0\qquad\erf(+\infty)=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Gamma 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\Gamma(x)=\int_{0}^{\infty}t^{x-1}\exp(-t)\dd{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+特殊点上的值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma(1)=1\qquad\Gamma(0.5)=\sqrt{\pi}\qquad\lim_{x\to0}\Gamma(x)\to\infty
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+阶乘函数
+\end_layout
+
+\begin_layout Standard
+可以证明
+\begin_inset Formula 
+\[
+\Gamma(x+1)=x\Gamma(x)\qquad\forall x\ne0,-1,-2,\dots
+\]
+
+\end_inset
+
+将其应用于非负整数可以得到 Gamma 函数与整数阶乘的关系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Gamma(n+1)=n!\qquad\forall n=0,1,2,\dots
+\]
+
+\end_inset
+
+在形式上，可以将 
+\bar under
+阶乘 (factorial) 函数
+\bar default
+ 的定义域推广到 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{x!=\Gamma(x+1)\qquad\forall x\ne-1,-2,\dots}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+二项式系数
+\end_layout
+
+\begin_layout Standard
+该函数得名于（整数阶）二项式展开：
+\begin_inset Formula 
+\[
+(a+b)^{n}=\sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^{k}\qquad\forall n\in\mathbb{N};a,b\in[0,+\infty)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\binom{n}{k}$
+\end_inset
+
+ 表示从 
+\begin_inset Formula $n$
+\end_inset
+
+ 个（同类）对象中选择 
+\begin_inset Formula $k$
+\end_inset
+
+ 个的方案个数：
+\begin_inset Formula 
+\[
+\binom{n}{k}=\frac{n!}{(n-k)!k!}=\frac{n(n-1)\cdots(n-k+1)}{k!}\qquad\forall n,k\in\mathbb{N}\ \text{且}\ k\le n
+\]
+
+\end_inset
+
+将这两个式子中的整型指数 
+\begin_inset Formula $n$
+\end_inset
+
+ 放宽为实数 
+\begin_inset Formula $\alpha$
+\end_inset
+
+，可以定义
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\binom{\alpha}{k}=\frac{\alpha(\alpha-1)\cdots(\alpha-k+1)}{k!}\qquad\forall\alpha\in\mathbb{R},k\in\mathbb{N}}
+\]
+
+\end_inset
+
+可以证明
+\begin_inset Formula 
+\[
+(x+y)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{\alpha-k}y^{k}\qquad\forall\alpha\in\mathbb{R}\setminus\mathbb{Z};x,y\in[0,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+尽管 
+\begin_inset Formula $\binom{\alpha}{k}$
+\end_inset
+
+ 可以仿照 
+\begin_inset Formula $\binom{n}{k}$
+\end_inset
+
+ 写为
+\begin_inset Formula 
+\[
+\binom{\alpha}{k}=\frac{\alpha!}{(\alpha-k)!k!}=\frac{\Gamma(\alpha+1)}{k!\Gamma(\alpha-k+1)}
+\]
+
+\end_inset
+
+但这里的 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 要避开 
+\begin_inset Formula $-1,-2,\dots$
+\end_inset
+
+，因此不如上面给出的形式通用。
+\end_layout
+
+\begin_layout Subsection
+Beta 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\operatorname{B}(x,y)=\int_{0}^{1}t^{x-1}{(1-t)}^{y-1}\dd{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+与 Gamma 函数的关系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\operatorname{B}(x,y)=\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+椭圆函数
+\end_layout
+
+\begin_layout Subsubsection
+椭圆积分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\operatorname{F}(\phi,k)=\int_{0}^{\phi}\frac{\dd{t}}{\sqrt{1-k^{2}\sin^{2}t}}\qquad\operatorname{E}(\phi,k)=\int_{0}^{\phi}\sqrt{1-k^{2}\sin^{2}t}\dd{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+完全椭圆积分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\operatorname{K}(k)= & \operatorname{F}(\pi/2,k)=\int_{0}^{\pi/2}\frac{\dd{t}}{\sqrt{1-k^{2}\sin^{2}t}}\\
+\operatorname{E}(k)= & \operatorname{E}(\pi/2,k)=\int_{0}^{\pi/2}\sqrt{1-k^{2}\sin^{2}t}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
