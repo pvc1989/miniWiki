@@ -326,7 +326,7 @@ measure!axiom of ~
 Lebesgue 测度 (Lebesgue measure)
 \bar default
 ，当且仅当它具有以下性质（其中 
-\begin_inset Formula $M(V)\coloneqq\left\{ A\subset V\mid\exists m(A)\right\} $
+\begin_inset Formula $\mathcal{M}_{V}\coloneqq\left\{ A\subset V\mid\exists m(A)\right\} $
 \end_inset
 
  是由 
@@ -363,7 +363,7 @@ m(C)=1
 \end_inset
 
 (Positivity) 
-\begin_inset Formula $\forall A\in M(V)$
+\begin_inset Formula $\forall A\in\mathcal{M}_{V}$
 \end_inset
 
 ：
@@ -383,13 +383,13 @@ m(A)\in[0,\infty]
 \end_inset
 
 (Complementarity) 
-\begin_inset Formula $\forall A\in M(V)$
+\begin_inset Formula $\forall A\in\mathcal{M}_{V}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-(V\setminus A)\in M
+(V\setminus A)\in\mathcal{M}_{V}
 \]
 
 \end_inset
@@ -407,13 +407,13 @@ m(A)\in[0,\infty]
 \end_inset
 
 Invariance) 
-\begin_inset Formula $\forall A\in M(V)\text{，}\forall x\in V$
+\begin_inset Formula $\forall A\in\mathcal{M}_{V}\text{，}\forall x\in V$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies\left((x+A)\in M(V)\right)\land\left(m(x+A)=m(A)\right)
+x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies\left((x+A)\in\mathcal{M}_{V}\right)\land\left(m(x+A)=m(A)\right)
 \]
 
 \end_inset
@@ -440,7 +440,7 @@ Property) 开集可测。
 \end_deeper
 \begin_layout Axiom
 以及如下性质（其中 
-\begin_inset Formula $\forall k\in K\colon A_{k}\in M(V)$
+\begin_inset Formula $\forall k\in K\colon A_{k}\in\mathcal{M}_{V}$
 \end_inset
 
 ，
@@ -467,10 +467,10 @@ Property) 开集可测。
 \begin_inset space ~
 \end_inset
 
-Property)
+Property) 
 \begin_inset Formula 
 \[
-\bigcup_{k\in K}A_{k}\in M(V)\qquad\bigcap_{k\in K}A_{k}\in M(V)
+\bigcup_{k\in K}A_{k}\in\mathcal{M}_{V}\qquad\bigcap_{k\in K}A_{k}\in\mathcal{M}_{V}
 \]
 
 \end_inset
@@ -479,7 +479,7 @@ Property)
 \end_layout
 
 \begin_layout Description
-可数次可加性
+可数亚可加性
 \begin_inset space \space{}
 \end_inset
 
@@ -487,7 +487,7 @@ Property)
 \begin_inset space ~
 \end_inset
 
-Sub-Additivity)
+Sub-Additivity) 
 \begin_inset Formula 
 \[
 m\left(\bigcup_{k\in K}A_{k}\right)\le\sum_{k\in K}m(A_{k})
@@ -541,7 +541,7 @@ Boolean 代数性质 (Boolean algebra property)
 \bar default
 、
 \bar under
-有限次可加性 (finite sub-additivity)
+有限亚可加性 (finite sub-additivity)
 \bar default
 、
 \bar under
@@ -789,7 +789,7 @@ m(A)\le m\left(\bigcup_{k\in K}B_{k}\right)\le\sum_{k\in K}m(B_{k})=\sum_{k\in K
 \begin_inset Formula $\le$
 \end_inset
 
- 为“次可加性”。右端的 
+ 为“亚可加性”。右端的 
 \begin_inset Formula $\sum_{k\in K}v(B_{k})$
 \end_inset
 
@@ -860,13 +860,13 @@ name "def:积分：测度：外"
  是指
 \begin_inset Formula 
 \[
-m^{*}(A)\coloneqq\inf_{\left\{ B_{k}\right\} _{k\in K}}\left\{ \sum_{k\in K}v(B_{k})\Biggm|A\subset\bigcup_{k\in K}B_{k}\right\} 
+m^{*}(A)\coloneqq\inf_{\beta}\left\{ \sum_{k\in K}v(B_{k})\Biggm|A\subset\bigcup_{k\in K}B_{k}\right\} 
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left\{ B_{k}\right\} _{k\in K}$
+\begin_inset Formula $\beta\coloneqq\left\{ B_{k}\right\} _{k\in K}$
 \end_inset
 
  为 
@@ -890,27 +890,146 @@ reference "def:积分：测度：开覆盖"
 
 \end_layout
 
-\begin_layout Theorem
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:积分：测度：外"
-plural "false"
-caps "false"
-noprefix "false"
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有归一性
+\end_layout
 
 \end_inset
 
-满足公理 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "axm:积分：测度：勒贝格"
-plural "false"
-caps "false"
-noprefix "false"
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有非负性
+\end_layout
 
 \end_inset
 
- 中除“可数可加性”（及其退化情形“有限可加性”）以外的所有性质。
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有互补性
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有平移不变性
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有 Borel 性质
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有 $
+\backslash
+sigma$-代数性质
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+外测度具有可数亚可加性
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -958,7 +1077,12 @@ m^{*}\left(\bigcup_{k\in K}A_{k}\right)\ne\sum_{k\in K}m^{*}(A_{k})
 \end_layout
 
 \begin_layout Proof
-两个实数相差一个有理数是一种等价关系：
+假设外测度具有“可数可加性”，下面将构造出一个反例。
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+划分等价类 两个实数相差一个有理数是一种等价关系：
 \begin_inset Formula 
 \[
 x\equiv y\iff(x-y)\in\mathbb{Q}
@@ -1001,16 +1125,13 @@ x+\mathbb{Q}\coloneqq\left\{ x+q\mid q\in\mathbb{Q}\right\}
 。
 \end_layout
 
-\begin_layout Proof
-\begin_inset Formula $\forall x\in\mathbb{R}$
-\end_inset
-
-：由“
+\begin_layout Description
+选取代表元 由“
 \begin_inset Formula $\mathbb{Q}$
 \end_inset
 
  的稠密性”可知 
-\begin_inset Formula $\mathbb{Q}\cap[-x,1-x]\ne\varnothing$
+\begin_inset Formula $\forall x\in\mathbb{R}\colon\mathbb{Q}\cap[-x,1-x]\ne\varnothing$
 \end_inset
 
 ，从中任取一个 
@@ -1021,11 +1142,7 @@ x+\mathbb{Q}\coloneqq\left\{ x+q\mid q\in\mathbb{Q}\right\}
 \begin_inset Formula $(x+q)\in(x+\mathbb{Q})\cap[0,1]$
 \end_inset
 
-，从而有 
-\begin_inset Formula $(x+\mathbb{Q})\cap[0,1]$
-\end_inset
-
- 非空。这就证明了
+，因此右侧的集合非空，这就证明了
 \begin_inset Formula 
 \[
 E_{A}\coloneqq A\cap[0,1]\ne\varnothing\qquad\forall A\in\mathbb{R}/\mathbb{Q}
@@ -1086,7 +1203,8 @@ E\subset[0,1]
 
 \end_layout
 
-\begin_layout Proof
+\begin_layout Description
+有理数陪集 上述集合 
 \begin_inset Formula $E$
 \end_inset
 
@@ -1098,7 +1216,7 @@ q_{1}\ne q_{2}\implies(q_{1}+E)\cap(q_{2}+E)=\varnothing\qquad\forall(q_{1},q_{2
 
 \end_inset
 
-否则，将会 
+否则将 
 \begin_inset Formula $\exists(e_{1},e_{2})\in E^{2}$
 \end_inset
 
@@ -1121,8 +1239,8 @@ e_{1}\ne e_{2}\qquad(e_{1}-e_{2})=(q_{2}-q_{1})\in\mathbb{Q}
  只取一个元素）矛盾。
 \end_layout
 
-\begin_layout Proof
-取互斥陪集的并：
+\begin_layout Description
+构造可列并 取互斥陪集的并：
 \begin_inset Formula 
 \[
 X\coloneqq\bigcup_{q\in\mathbb{Q}\cap[-1,1]}(q+E)
@@ -1154,11 +1272,11 @@ e\in E\subset[0,1]
 \end_inset
 
 。如果取 
-\begin_inset Formula $A=y+\mathbb{Q}$
+\begin_inset Formula $Y=y+\mathbb{Q}$
 \end_inset
 
 ，则它的代表元 
-\begin_inset Formula $e_{A}$
+\begin_inset Formula $e_{Y}$
 \end_inset
 
  与 
@@ -1166,15 +1284,15 @@ e\in E\subset[0,1]
 \end_inset
 
  同属一个等价类， 因此有 
-\begin_inset Formula $(y-e_{A})\in\mathbb{Q}$
+\begin_inset Formula $(y-e_{Y})\in\mathbb{Q}$
 \end_inset
 
 。又因为
 \begin_inset Formula 
 \[
-(y-e_{A})\in[-1,1]\impliedby\begin{cases}
+(y-e_{Y})\in[-1,1]\impliedby\begin{cases}
 y\in[0,1]\\
-e_{A}\in E_{A}\subset[0,1]
+e_{Y}\in E_{Y}\subset[0,1]
 \end{cases}
 \]
 
@@ -1187,7 +1305,7 @@ e_{A}\in E_{A}\subset[0,1]
  分解成两部分：
 \begin_inset Formula 
 \[
-y=\underbrace{(y-e_{A})}_{\in\mathbb{Q}\cap[-1,1]}+\underbrace{e_{A}}_{\in E}\implies y\in X
+y=\underbrace{(y-e_{Y})}_{\in\mathbb{Q}\cap[-1,1]}+\underbrace{e_{Y}}_{\in E}\implies y\in X
 \]
 
 \end_inset
@@ -1195,8 +1313,8 @@ y=\underbrace{(y-e_{A})}_{\in\mathbb{Q}\cap[-1,1]}+\underbrace{e_{A}}_{\in E}\im
 
 \end_layout
 
-\begin_layout Proof
-下面来看 
+\begin_layout Description
+比较外测度 下面来看 
 \begin_inset Formula $E$
 \end_inset
 
@@ -1208,7 +1326,7 @@ y=\underbrace{(y-e_{A})}_{\in\mathbb{Q}\cap[-1,1]}+\underbrace{e_{A}}_{\in E}\im
 \begin_inset Formula $m^{*}$
 \end_inset
 
- 的“非负性”及“次可加性”可得
+ 的“非负性”及“亚可加性”可得
 \begin_inset Formula 
 \[
 \begin{aligned}E\subset[0,1] & \implies m^{*}(E)\in[0,1]\\{}
@@ -1249,6 +1367,7 @@ m^{*}(X)=\sum_{q\in\mathbb{Q}\cap[-1,1]}m^{*}(q+E)=\sum_{q\in\mathbb{Q}\cap[-1,1
  中。
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1620,7 +1739,7 @@ A\cap F_{\infty}=A\cap\left(\bigcup_{k=1}^{\infty}E_{k}\right)=\bigcup_{k=1}^{\i
 \begin_inset Formula $m^{*}$
 \end_inset
 
- 的“可数次可加性”即得
+ 的“可数亚可加性”即得
 \begin_inset Formula 
 \[
 m^{*}(A\cap F_{\infty})=m^{*}\left(\bigcup_{k=1}^{\infty}(A\cap E_{k})\right)\le\sum_{k=1}^{\infty}m^{*}(A\cap E_{k})=\sup_{l\in\mathbb{N}}\sum_{k=1}^{l}m^{*}(A\cap E_{k})
@@ -1648,7 +1767,7 @@ m^{*}(A\cap F_{\infty})=m^{*}\left(\bigcup_{k=1}^{\infty}(A\cap E_{k})\right)\le
 \begin_inset Formula $m^{*}$
 \end_inset
 
- 的“有限次可加性”，又可以得到另一个方向的不等式
+ 的“有限亚可加性”，又可以得到另一个方向的不等式
 \begin_inset Formula 
 \[
 m^{*}(A)\le m^{*}(A\cap F_{\infty})+m^{*}(A\setminus F_{\infty})
@@ -1672,7 +1791,7 @@ m^{*}(A)\le m^{*}(A\cap F_{\infty})+m^{*}(A\setminus F_{\infty})
 \begin_inset Formula $F_{\infty}=\bigcup_{k=1}^{\infty}E_{k}$
 \end_inset
 
- 应用“可数次可加性”：
+ 应用“可数亚可加性”：
 \begin_inset Formula 
 \[
 m(F_{\infty})=m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\le\sum_{k=1}^{\infty}m(E_{k})
@@ -1737,7 +1856,54 @@ m(F_{\infty})=m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\le\sum_{k=1}^{\infty}m(E
 \end_layout
 
 \begin_layout Theorem
-Cantor's 三分集的测度为零。
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:集合：不可数：Cantor's 三分集"
+
+\end_inset
+
+的测度为零。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+几乎处处
+\end_layout
+
+\end_inset
+
+某种性质“几乎处处 (almost everywhere) 成立”是指这种性质“至多在一个零测度集上不成立”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+对于二元关系符，原符号上方加点或 a.e.
+ 表示几乎处处成立：
+\begin_inset Formula 
+\[
+f\doteq g\qquad f\stackrel{\text{a.e.}}{=}g\qquad f\stackrel{\text{a.e.}}{>}g\qquad f\stackrel{\text{a.e.}}{\to}g
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1749,6 +1915,610 @@ Cantor's 三分集的测度为零。
 
 \begin_layout Section
 可测函数
+\end_layout
+
+\begin_layout Subsection
+一元实函数
+\end_layout
+
+\begin_layout Claim*
+本节中所有“函数”均为“一元实变实值函数”，所有“可测集”均为 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 的子集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lebesgue 可测函数]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $f$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的函数。若 
+\begin_inset Formula $\forall a\in\mathbb{R}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\} 
+\]
+
+\end_inset
+
+都是 
+\begin_inset Formula $E$
+\end_inset
+
+ 的可测子集，则称 
+\begin_inset Formula $f$
+\end_inset
+
+ 是 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的“Lebesgue 
+\bar under
+可测函数 (measurable function)
+\bar default
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+上述定义中的“
+\begin_inset Formula $\forall a\in\mathbb{R}$
+\end_inset
+
+”可以放宽为“
+\begin_inset Formula $\forall a\in A\subset\mathbb{R}$
+\end_inset
+
+ 且 
+\begin_inset Formula $A$
+\end_inset
+
+ 是稠密的”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在可测集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上有界且可测，则 
+\begin_inset Formula $\forall a\in\mathbb{R}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}E(f\ge a) & \coloneqq\left\{ x\in E\mid f(x)\ge a\right\}  & E(f<a) & \coloneqq\left\{ x\in E\mid f(x)<a\right\} \\
+E(f\le a) & \coloneqq\left\{ x\in E\mid f(x)\le a\right\}  & E(f=a) & \coloneqq\left\{ x\in E\mid f(x)=a\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+都是 
+\begin_inset Formula $E$
+\end_inset
+
+ 的可测子集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+连续函数可测
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+简单函数可测
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $E_{1},E_{2},\dots,E_{n}$
+\end_inset
+
+ 为两两互斥的可测集。若函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 为定义在 
+\begin_inset Formula $E=\bigcup_{i=1}^{n}E_{i}$
+\end_inset
+
+ 上的 
+\bar under
+简单 (simple) 函数
+\bar default
+，即 
+\begin_inset Formula $f$
+\end_inset
+
+ 在各个 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的分别取常值 
+\begin_inset Formula $c_{i}\in\mathbb{R}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+f(x)=c_{i}\impliedby x\in E_{i}\qquad\forall i=1,2,\dots,n
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上可测。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+零函数可测
+\end_layout
+
+\end_inset
+
+几乎处处为零的函数（简称“零函数”）可测。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+连续函数、简单函数、零函数的连续性逐渐退化：分别含有零个、（至多）有限个、（至多）可数个间断点。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+设函数在可测集 
+\begin_inset Formula $E_{1},E_{2}$
+\end_inset
+
+ 上有定义，则“
+\begin_inset Formula $f$
+\end_inset
+
+在 
+\begin_inset Formula $E=E_{1}\cup E_{2}$
+\end_inset
+
+ 上可测”等价于“
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{1},E_{2}$
+\end_inset
+
+ 上都可测”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+设函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 在可测集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上有定义，则“
+\begin_inset Formula $f$
+\end_inset
+
+在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上可测”等价于“
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E\setminus E_{0}$
+\end_inset
+
+ 上可测，其中 
+\begin_inset Formula $E_{0}$
+\end_inset
+
+ 是 
+\begin_inset Formula $E$
+\end_inset
+
+ 的任意零测度子集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[代数封闭性]
+\end_layout
+
+\end_inset
+
+设函数 
+\begin_inset Formula $f,g$
+\end_inset
+
+ 在可测集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上可测，则它们的和、差、积、商都是可测函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+函数列收敛
+\end_layout
+
+\begin_layout Claim*
+本节中的函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 及函数列 
+\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 中的每个函数都是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}$
+\end_inset
+
+ 上的一元实函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[处处收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上 
+\bar under
+处处 (everywhere) 收敛
+\bar default
+ 到 
+\begin_inset Formula $f$
+\end_inset
+
+，记作 
+\begin_inset Formula $(f_{n}\to f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 或更简洁的 
+\begin_inset Formula $f_{n}\to f$
+\end_inset
+
+，是指
+\begin_inset Formula 
+\[
+\forall\epsilon>0\text{，}\forall x\in E\text{，}\exists N\in\mathbb{R}\text{，}\forall n>N\text{：}\abs{f(x)-f_{n}(x)}<\epsilon
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一致收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上 
+\bar under
+一致 (uniformly) 收敛
+\bar default
+ 到 
+\begin_inset Formula $f$
+\end_inset
+
+，记作 
+\begin_inset Formula $(f_{n}\rightrightarrows f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 或更简洁的 
+\begin_inset Formula $f_{n}\rightrightarrows f$
+\end_inset
+
+，是指
+\begin_inset Formula 
+\[
+\forall\epsilon>0\text{，}\exists N\in\mathbb{R}\text{，}\forall n>N\text{：}\abs{f(x)-f_{n}(x)}<\epsilon
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[几乎处处收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上 
+\bar under
+几乎处处 (almost everywhere) 收敛
+\bar default
+ 到 
+\begin_inset Formula $f$
+\end_inset
+
+，记作 
+\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 或更简洁的 
+\begin_inset Formula $f_{n}\stackrel{\text{a.e.}}{\to}f$
+\end_inset
+
+，是指
+\begin_inset Formula 
+\[
+\exists E_{0}\subset E\text{，}m(E_{0})=0\text{：}(f_{n}\to f)_{x\in E\setminus E_{0}}^{n\to\infty}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[依测度收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上 
+\bar under
+依测度 (in measure) 收敛
+\bar default
+ 到 
+\begin_inset Formula $f$
+\end_inset
+
+，记作 
+\begin_inset Formula $(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 或更简洁的 
+\begin_inset Formula $f_{n}\stackrel{\text{i.m.}}{\to}f$
+\end_inset
+
+，是指 
+\begin_inset Formula $f$
+\end_inset
+
+ 及 
+\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\end_inset
+
+ 中的每个函数均几乎处处有限，且
+\begin_inset Formula 
+\[
+\forall\epsilon>0\colon\lim_{n\to\infty}m\qty(\left\{ x\in E\mid\epsilon\le\abs{f_{n}(x)-f(x)}\right\} )=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
