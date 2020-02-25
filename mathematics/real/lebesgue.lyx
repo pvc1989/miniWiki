@@ -1082,10 +1082,10 @@ m^{*}\left(\bigcup_{k\in K}A_{k}\right)\ne\sum_{k\in K}m^{*}(A_{k})
 
 \begin_deeper
 \begin_layout Description
-划分等价类 两个实数相差一个有理数是一种等价关系：
+划分等价类 “两个实数相差一个有理数”是一种等价关系：
 \begin_inset Formula 
 \[
-x\equiv y\iff(x-y)\in\mathbb{Q}
+x\stackrel{\mathbb{Q}}{=}y\iff(x-y)\in\mathbb{Q}
 \]
 
 \end_inset
@@ -1142,7 +1142,11 @@ x+\mathbb{Q}\coloneqq\left\{ x+q\mid q\in\mathbb{Q}\right\}
 \begin_inset Formula $(x+q)\in(x+\mathbb{Q})\cap[0,1]$
 \end_inset
 
-，因此右侧的集合非空，这就证明了
+，因此 
+\begin_inset Formula $\in$
+\end_inset
+
+ 右侧的集合非空，这就证明了
 \begin_inset Formula 
 \[
 E_{A}\coloneqq A\cap[0,1]\ne\varnothing\qquad\forall A\in\mathbb{R}/\mathbb{Q}
@@ -1150,10 +1154,14 @@ E_{A}\coloneqq A\cap[0,1]\ne\varnothing\qquad\forall A\in\mathbb{R}/\mathbb{Q}
 
 \end_inset
 
-又因为
+又因为 
+\begin_inset Formula $\forall(A,B)\in(\mathbb{R}/\mathbb{Q})^{2}$
+\end_inset
+
+：
 \begin_inset Formula 
 \[
-A\ne B\implies E_{A}\cap E_{B}=\varnothing\qquad\forall(A,B)\in(\mathbb{R}/\mathbb{Q})^{2}
+A\ne B\implies A\cap B=\varnothing\implies E_{A}\cap E_{B}=\varnothing
 \]
 
 \end_inset
@@ -1223,7 +1231,7 @@ q_{1}\ne q_{2}\implies(q_{1}+E)\cap(q_{2}+E)=\varnothing\qquad\forall(q_{1},q_{2
 ：
 \begin_inset Formula 
 \[
-e_{1}\ne e_{2}\qquad(e_{1}-e_{2})=(q_{2}-q_{1})\in\mathbb{Q}
+(e_{1}\ne e_{2})\land((e_{1}-e_{2})=(q_{2}-q_{1})\in\mathbb{Q})
 \]
 
 \end_inset
@@ -2074,14 +2082,21 @@ status open
 
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Definition
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-简单函数可测
+简单函数
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:积分：可测：简单函数"
 
 \end_inset
 
@@ -2090,18 +2105,6 @@ status open
 \end_inset
 
  为两两互斥的可测集。若函数 
-\begin_inset Formula $f$
-\end_inset
-
- 为定义在 
-\begin_inset Formula $E=\bigcup_{i=1}^{n}E_{i}$
-\end_inset
-
- 上的 
-\bar under
-简单 (simple) 函数
-\bar default
-，即 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2121,15 +2124,40 @@ f(x)=c_{i}\impliedby x\in E_{i}\qquad\forall i=1,2,\dots,n
 
 \end_inset
 
-则 
+则称 
 \begin_inset Formula $f$
 \end_inset
 
- 在 
-\begin_inset Formula $E$
+ 是定义在 
+\begin_inset Formula $E=\bigcup_{i=1}^{n}E_{i}$
 \end_inset
 
- 上可测。
+ 上的 
+\bar under
+简单 (simple) 函数
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+简单函数可测
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2284,7 +2312,7 @@ status open
 \end_inset
 
  及函数列 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
 \end_inset
 
  中的每个函数都是定义在可测集 
@@ -2313,7 +2341,7 @@ status open
 \end_inset
 
 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
 \end_inset
 
  在 
@@ -2500,10 +2528,10 @@ status open
 \end_inset
 
  及 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
 \end_inset
 
- 中的每个函数均几乎处处有限，且
+ 中的每个函数均几乎处处有界，且
 \begin_inset Formula 
 \[
 \forall\epsilon>0\colon\lim_{n\to\infty}m\qty(\left\{ x\in E\mid\epsilon\le\abs{f_{n}(x)-f(x)}\right\} )=0
@@ -2512,6 +2540,247 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Egoroff]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $f$
+\end_inset
+
+ 及所有 
+\begin_inset Formula $f_{n}$
+\end_inset
+
+ 在测度有限的 
+\begin_inset Formula $E$
+\end_inset
+
+ 上均可测且几乎处处有界，则 
+\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 等价于
+\begin_inset Formula 
+\[
+\forall\delta>0\text{，}\exists E_{\delta}\subset E\text{：}m(E_{\delta})<\delta\text{，}(f_{n}\rightrightarrows f)_{x\in E\setminus E_{\delta}}^{n\to\infty}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lebesgue]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $f$
+\end_inset
+
+ 及所有 
+\begin_inset Formula $f_{n}$
+\end_inset
+
+ 在测度有限的 
+\begin_inset Formula $E$
+\end_inset
+
+ 上均可测且几乎处处有界，则
+\begin_inset Formula 
+\[
+(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}\implies(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riesz]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+，则存在 
+\begin_inset Formula $\left\{ n_{k}\right\} _{k\in\mathbb{N}}\subset\mathbb{N}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $(f_{n_{k}}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{k\to\infty}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
+
+ 且所有 
+\begin_inset Formula $f_{n}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上均可测，则 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上亦可测。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上可测，则存在（可测的）
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:积分：可测：简单函数"
+
+\end_inset
+
+列 
+\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+，使得
+\begin_inset Formula 
+\[
+\left\{ \abs{f_{n}}\le\abs{f}\right\} _{x\in E}^{n\in\mathbb{N}}\land(f_{n}\to f)_{x\in E}^{n\to\infty}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $f$
+\end_inset
+
+ 有界，则上述收敛是一致的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lusin]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $f$
+\end_inset
+
+ 在测度有限的 
+\begin_inset Formula $E$
+\end_inset
+
+ 上可测且几乎处处有界，则 
+\begin_inset Formula $\forall\delta>0$
+\end_inset
+
+：存在闭集 
+\begin_inset Formula $F_{\delta}\subset E$
+\end_inset
+
+，使得 
+\begin_inset Formula $m(E\setminus F_{\delta})<0$
+\end_inset
+
+ 且 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $F_{\delta}$
+\end_inset
+
+ 上连续。
 \end_layout
 
 \begin_layout Standard
