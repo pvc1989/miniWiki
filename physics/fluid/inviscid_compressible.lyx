@@ -164,7 +164,7 @@ theorems-chap
 得
 \begin_inset Formula 
 \begin{equation}
-0=\rho\increment a+a\increment\rho\label{eq:流体：音速：质量守恒}
+0=\rho\increment a+a\increment\rho\label{eq:流体：声波：质量守恒}
 \end{equation}
 
 \end_inset
@@ -192,7 +192,7 @@ p+\rho a^{2}=(p+\increment p)+(\rho+\increment\rho)(a+\increment a)^{2}
 利用 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：音速：质量守恒"
+reference "eq:流体：声波：质量守恒"
 
 \end_inset
 
@@ -223,7 +223,7 @@ p=\rho RT=C\rho^{\gamma}
 最终得到音速的表达式：
 \begin_inset Formula 
 \begin{equation}
-a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声速}
+a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声波：音速}
 \end{equation}
 
 \end_inset
@@ -255,12 +255,40 @@ a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声速}
 \end_layout
 
 \begin_layout Subsection
+马赫数
+\end_layout
+
+\begin_layout Standard
+物体相对于介质的运动速度 
+\begin_inset Formula $u$
+\end_inset
+
+ 与当地音速 
+\begin_inset Formula $a$
+\end_inset
+
+ 的比值的绝对值称为 
+\bar under
+马赫数 (Mach number)
+\bar default
+，记作
+\begin_inset Formula 
+\[
+M\coloneqq\abs{\frac{u}{a}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 马赫锥
 \end_layout
 
 \begin_layout Standard
 在静止的空气中以超音速（即 
-\begin_inset Formula $M\coloneqq\nicefrac{u}{a}>1$
+\begin_inset Formula $M>1$
 \end_inset
 
 ）匀速运动的物体，其扰动所能达到的区域是一个顶角为 
@@ -272,6 +300,918 @@ a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声速}
 \[
 \mu=\arcsin\frac{a}{u}=\arcsin\frac{1}{M}
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+正激波
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:流体：正激波"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\bar under
+激波 (shock wave)
+\bar default
+ 是介质中的“函数值（强）间断面”，可按“移动速度是否垂直于间断面”归为的 
+\bar under
+正 (normal) 激波
+\bar default
+ 或 
+\bar under
+斜 (oblique) 激波
+\bar default
+。本节只考虑正激波，并且只关注紧邻激波两侧的状态，因此可假设间断面为平面，并将控制体 
+\begin_inset Formula $V$
+\end_inset
+
+ 取为如下柱体：包围间断面 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 上任意一点、壁面垂直于 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+、顶面平行于 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+、厚度充分小。
+\end_layout
+
+\begin_layout Subsection
+守恒律方程组
+\end_layout
+
+\begin_layout Standard
+由描述（激波外）无黏、无体积力、绝热、一维流动的守恒律方程组，即一维 Euler 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Euler::1d::守恒型"
+
+\end_inset
+
+，可得如下跳跃关系：
+\begin_inset Formula 
+\[
+u_{\Gamma}\cdot\begin{bmatrix}\rho\\
+\rho u\\
+\rho\cdot(e+u^{2}/2)
+\end{bmatrix}_{1}^{2}=\begin{bmatrix}\rho u\\
+\rho u^{2}+p\\
+\rho u\cdot(h+u^{2}/2)
+\end{bmatrix}_{1}^{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{\Gamma}$
+\end_inset
+
+ 是间断面的移动速度。若取相对于间断面静止的参考系，则上述方程组可简化为
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\rho u\\
+\rho u^{2}+p\\
+\rho u\cdot(h+u^{2}/2)
+\end{bmatrix}_{1}=\begin{bmatrix}\rho u\\
+\rho u^{2}+p\\
+\rho u\cdot(h+u^{2}/2)
+\end{bmatrix}_{2}\label{eq:流体：正激波：方程}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $u$
+\end_inset
+
+ 应当理解为“相对于间断面的速度”。对于量热完全气体，将
+\begin_inset Formula 
+\[
+h=c_{p}T\qquad a^{2}=\gamma RT
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：方程"
+
+\end_inset
+
+ 的第三式可得
+\begin_inset Formula 
+\[
+\begin{aligned}\left(h+\frac{u^{2}}{2}\right)_{1}=\left(h+\frac{u^{2}}{2}\right)_{2} & \implies\left(c_{p}T+\frac{u^{2}}{2}\right)_{1}=\left(c_{p}T+\frac{u^{2}}{2}\right)_{2}\\
+ & \implies\left(\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}\right)_{1}=\left(\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}\right)_{2}
+\end{aligned}
+\]
+
+\end_inset
+
+它们都表示“能量守恒”。
+\end_layout
+
+\begin_layout Subsection
+参考状态
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[滞止状态]
+\end_layout
+
+\end_inset
+
+当前流动“等熵地”减速到“速度为零”所得的状态称为 
+\bar under
+滞止 (stagnant) 状态
+\bar default
+。此状态下的各物理量均以“滞止”或“
+\bar under
+总 (total)
+\bar default
+”为前缀，在下标中用 
+\begin_inset Formula $0$
+\end_inset
+
+ 表示：
+\begin_inset Formula 
+\begin{equation}
+\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}=\frac{(a_{0})^{2}}{\gamma-1}\implies\boxed{\left(\frac{a_{0}}{a}\right)^{2}=\frac{T_{0}}{T}=1+\frac{\gamma-1}{2}M^{2}}\label{eq:流体：正激波：滞止温度}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+正激波前后的“滞止音速”和“滞止温度”保持不变：
+\begin_inset Formula 
+\[
+(a_{0})_{1}=(a_{0})_{2}\qquad(T_{0})_{1}=(T_{0})_{2}
+\]
+
+\end_inset
+
+因此可以忽略下标中的 
+\begin_inset Formula $1$
+\end_inset
+
+ 或 
+\begin_inset Formula $2$
+\end_inset
+
+。实际上，
+\begin_inset Formula $a$
+\end_inset
+
+ 或 
+\begin_inset Formula $T$
+\end_inset
+
+ 都是内能的度量，
+\begin_inset Formula $u$
+\end_inset
+
+ 是（宏观）动能的度量，
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 或 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ 都是能量（内能与动能之和）的度量。因此“
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 守恒”或“ 
+\begin_inset Formula $T_{0}$
+\end_inset
+
+ 守恒”都可以看作是“能量守恒”的另一种表达形式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+由状态方程 
+\begin_inset Formula $p=\rho RT$
+\end_inset
+
+ 及等熵关系式 
+\begin_inset Formula $p=C\rho^{\gamma}$
+\end_inset
+
+ 易得
+\begin_inset Formula 
+\begin{equation}
+\frac{p_{0}}{p}=\left(1+\frac{\gamma-1}{2}M^{2}\right)^{\gamma/(\gamma-1)}\qquad\frac{\rho_{0}}{\rho}=\left(1+\frac{\gamma-1}{2}M^{2}\right)^{1/(\gamma-1)}\label{eq:流体：正激波：滞止压力、密度}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征状态]
+\end_layout
+
+\end_inset
+
+当前流动“等熵地”过渡到“速度为音速”所得的状态称为 
+\bar under
+音速 (sonic) 状态
+\bar default
+ 或 
+\bar under
+特征 (characteristic) 状态
+\bar default
+。此状态下的各物理量均以“特征”为前缀，在下标中用 
+\begin_inset Formula $*$
+\end_inset
+
+ 表示：
+\begin_inset Formula 
+\begin{equation}
+\frac{(a_{0})^{2}}{\gamma-1}=\frac{(a_{*})^{2}}{\gamma-1}+\frac{(a_{*})^{2}}{2}\implies\boxed{\left(\frac{a_{*}}{a_{0}}\right)^{2}=\frac{T_{*}}{T_{0}}=\frac{2}{\gamma+1}}\label{eq:流体：正激波：特征温度}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征马赫数]
+\end_layout
+
+\end_inset
+
+根据上述定义，“特征速度 
+\begin_inset Formula $u_{*}$
+\end_inset
+
+”始终等于“特征音速 
+\begin_inset Formula $a_{*}$
+\end_inset
+
+”。为使“特征马赫数”有意义，特别地将其定义为“当前流速 
+\begin_inset Formula $u$
+\end_inset
+
+”与“特征音速 
+\begin_inset Formula $a_{*}$
+\end_inset
+
+”的比值：
+\begin_inset Formula 
+\[
+(M_{*})^{2}\coloneqq\left(\frac{u}{a_{*}}\right)^{2}=\left(\frac{u}{a}\right)^{2}\frac{a^{2}}{(a_{*})^{2}}=M^{2}\frac{T}{T_{*}}=M^{2}\frac{T}{T_{0}}\frac{T_{0}}{T_{*}}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：滞止温度"
+
+\end_inset
+
+ 及
+\emph on
+ 
+\emph default
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：特征温度"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\begin{equation}
+\boxed{(M_{*})^{2}=\left(\frac{\gamma+1}{2}M^{2}\right)/\left(1+\frac{\gamma-1}{2}M^{2}\right)}\label{eq:流体：正激波：特征马赫数}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+跨激波比值
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Prandtl]
+\end_layout
+
+\end_inset
+
+正激波前后的 
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 保持不变，而 
+\begin_inset Formula $a_{*}/a_{0}$
+\end_inset
+
+ 是常量，因此 
+\begin_inset Formula $a_{*}$
+\end_inset
+
+ 也是一个不变量（可以忽略下标中的 
+\begin_inset Formula $1$
+\end_inset
+
+ 或 
+\begin_inset Formula $2$
+\end_inset
+
+），并且与激波前后的速度有如下简单的关系：
+\begin_inset Formula 
+\[
+(a_{*})^{2}=u_{1}u_{2}\implies(M_{*})_{1}\cdot(M_{*})_{2}=1
+\]
+
+\end_inset
+
+由此可得
+\begin_inset Formula 
+\begin{equation}
+\boxed{(M_{2})^{2}=\frac{1+(M_{1})^{2}(\gamma-1)/2}{(M_{1})^{2}\gamma-(\gamma-1)/2}}\label{eq:流体：正激波：Prandtl}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+记 
+\begin_inset Formula $[\phi]\coloneqq\phi_{2}-\phi_{1}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 为任意物理量。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+由“质量守恒”可知 
+\begin_inset Formula $\rho u$
+\end_inset
+
+ 是不变量，可以当做常数处理，将其代入“动量守恒”可得
+\begin_inset Formula 
+\[
+[p]=-[\rho u^{2}]=\rho u\cdot[-u]\implies\left[\frac{p}{\rho u}\right]=[-u]
+\]
+
+\end_inset
+
+代入状态方程 
+\begin_inset Formula $p=\rho RT$
+\end_inset
+
+ 和当地音速 
+\begin_inset Formula $a^{2}=\gamma RT$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+[-u]=\left[\frac{p}{\rho u}\right]=\left[\frac{a^{2}}{\gamma u}\right]=\frac{1}{\gamma}\left[\frac{a^{2}}{u}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+由“能量守恒”可得
+\begin_inset Formula 
+\[
+\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}=\frac{(a)_{0}^{2}}{\gamma-1}=\frac{(a_{*})^{2}}{\gamma-1}\frac{\gamma+1}{2}
+\]
+
+\end_inset
+
+同乘 
+\begin_inset Formula $(\gamma-1)/u$
+\end_inset
+
+ 并移项即得
+\begin_inset Formula 
+\[
+\frac{a^{2}}{u}=\frac{\gamma+1}{2}\frac{(a_{*})^{2}}{u}-\frac{\gamma-1}{2}u
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+比较前两步的结果即得
+\begin_inset Formula 
+\[
+[-u]=\frac{1}{\gamma}\left[\frac{a^{2}}{u}\right]=\left[\frac{\gamma+1}{2\gamma}\frac{(a_{*})^{2}}{u}-\frac{\gamma-1}{2\gamma}u\right]
+\]
+
+\end_inset
+
+合并同类项、约去公因子即得
+\begin_inset Formula 
+\[
+[-u]=\left[\frac{(a_{*})^{2}}{u}\right]=(a_{*})^{2}\left[\frac{1}{u}\right]\implies(a_{*})^{2}=\frac{u_{1}-u_{2}}{\nicefrac{1}{u_{2}}-\nicefrac{1}{u_{1}}}=u_{1}u_{2}
+\]
+
+\end_inset
+
+代入“特征马赫数”与“当地马赫数”的关系 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：特征马赫数"
+
+\end_inset
+
+ 即得 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：Prandtl"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[物理量的比值]
+\end_layout
+
+\end_inset
+
+可以由上式及各自与其滞止值的比值得到：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\frac{u_{1}}{u_{2}}=\frac{\rho_{2}}{\rho_{1}}=\frac{(M_{1})^{2}(\gamma+1)/2}{1+(M_{1})^{2}(\gamma-1)/2}\\
+\frac{p_{2}}{p_{1}}=\frac{(M_{1})^{2}\gamma-(\gamma-1)/2}{(\gamma+1)/2}\qquad\frac{h_{2}}{h_{1}}=\frac{T_{2}}{T_{1}}=\frac{p_{2}/p_{1}}{\rho_{2}/\rho_{1}}
+\end{gathered}
+\label{eq:流体：正激波：物理量比值}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[比值的极限]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\lim_{M_{1}\to\infty}M_{2}=\sqrt{\frac{\gamma-1}{2\gamma}}\qquad\lim_{M_{1}\to\infty}\begin{bmatrix}\rho_{2}/\rho_{1}\\
+p_{2}/p_{1}\\
+T_{2}/T_{1}
+\end{bmatrix}=\begin{bmatrix}(\gamma+1)/(\gamma-1)\\
+\infty\\
+\infty
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+熵条件
+\end_layout
+
+\begin_layout Standard
+由状态方程及热力学第一定律
+\begin_inset Formula 
+\[
+p=\rho RT\qquad T\dd{s}=c_{p}\dd{T}-\frac{\dd{p}}{\rho}
+\]
+
+\end_inset
+
+可得正激波两侧熵的差值
+\begin_inset Formula 
+\[
+s_{2}-s_{1}=c_{p}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{p_{2}}{p_{1}}=\frac{\gamma R}{\gamma-1}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{p_{2}}{p_{1}}
+\]
+
+\end_inset
+
+由热力学第二定律可知：在流体微团由波前（未扰动区域，用 
+\begin_inset Formula $1$
+\end_inset
+
+ 表示）流向波后（受扰动区域，用 
+\begin_inset Formula $2$
+\end_inset
+
+ 表示） 的过程中，熵的变化量必须非负，即
+\begin_inset Formula 
+\[
+s_{2}-s_{1}=\frac{R}{\gamma-1}\left(\ln\frac{p_{2}}{p_{1}}-\gamma\ln\frac{\rho_{2}}{\rho_{1}}\right)\ge0\implies\left(\frac{p_{2}}{p_{1}}\right)\ge\left(\frac{\rho_{2}}{\rho_{1}}\right)^{\gamma}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：物理量比值"
+
+\end_inset
+
+ 即得
+\begin_inset Formula 
+\[
+\frac{(M_{1})^{2}\gamma-(\gamma-1)/2}{(\gamma+1)/2}\ge\left(\frac{(M_{1})^{2}(\gamma+1)/2}{1+(M_{1})^{2}(\gamma-1)/2}\right)^{\gamma}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+令
+\begin_inset Formula 
+\[
+F(x)=\frac{x\cdot\gamma-(\gamma-1)/2}{(\gamma+1)/2}\qquad G(x)=\left(\frac{x\cdot(\gamma+1)/2}{1+x\cdot(\gamma-1)/2}\right)^{\gamma}\qquad\forall x\ge0
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\gamma>1\implies F(x)-G(x)\begin{cases}
+<0 & x<1\\
+=0 & x=1\\
+>0 & x>1
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[熵条件]
+\end_layout
+
+\end_inset
+
+在流体微团穿过正激波的过程中，必然由 
+\bar under
+超音速 (supersonic) 状态
+\bar default
+ 减速为 
+\bar under
+亚音速 (subsonic) 状态
+\bar default
+，且激波内部一定有熵增的物理过程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+在流体微团穿过正激波的过程中，总压会有损失：
+\begin_inset Formula 
+\[
+\frac{(p_{0})_{2}}{(p_{0})_{1}}=\exp(-\frac{s_{2}-s_{1}}{R})<1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Pitot 管测速
+\end_layout
+
+\begin_layout Standard
+设来流与管轴平行，记主孔气压为 
+\begin_inset Formula $p_{\text{main}}$
+\end_inset
+
+，侧孔气压为 
+\begin_inset Formula $p_{\text{side}}$
+\end_inset
+
+，则来流马赫数可以由二者的比值唯一地确定：
+\end_layout
+
+\begin_layout Itemize
+若来流为亚音速，则主孔气压为来流的滞止压力 
+\begin_inset Formula $p_{\text{main}}=(p_{0})_{\infty}$
+\end_inset
+
+，侧孔气压为来流的静压 
+\begin_inset Formula $p_{\text{side}}=p_{\infty}$
+\end_inset
+
+，由 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：滞止压力、密度"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\frac{p_{\text{main}}}{p_{\text{side}}}=\frac{(p_{0})_{\infty}}{p_{\infty}}=\left(1+\frac{\gamma-1}{2}(M_{\infty})^{2}\right)^{\gamma/(\gamma-1)}
+\]
+
+\end_inset
+
+从中可以解出
+\begin_inset Formula 
+\[
+(M_{\infty})^{2}=\frac{2}{\gamma-1}\left(\left(\frac{p_{\text{main}}}{p_{\text{side}}}\right)^{(\gamma-1)/\gamma}-1\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若来流为超音速，则主孔前会形成一道正激波，主孔气压是波后滞止压力 
+\begin_inset Formula $p_{\text{main}}=(p_{0})_{2}$
+\end_inset
+
+，而波前静压及侧孔气压均为来流静压 
+\begin_inset Formula $p_{1}=p_{\text{side}}=p_{\infty}$
+\end_inset
+
+，由 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：滞止压力、密度"
+
+\end_inset
+
+ 及 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：物理量比值"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\frac{p_{\text{main}}}{p_{\text{side}}}=\frac{p_{2}}{p_{1}}\frac{(p_{0})_{2}}{p_{2}}=\frac{(M_{1})^{2}\gamma-(\gamma-1)/2}{(\gamma+1)/2}\left(1+\frac{\gamma-1}{2}(M_{2})^{2}\right)^{\gamma/(\gamma-1)}
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ 的关系式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：Prandtl"
+
+\end_inset
+
+ 及 
+\begin_inset Formula $M_{1}=M_{\infty}$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\left(\frac{p_{\text{main}}}{p_{\text{side}}}\right)^{\gamma-1}=\left(\frac{\gamma+1}{2}\right)^{\gamma+1}\frac{(M_{\infty})^{2\gamma}}{(M_{\infty})^{2}\cdot\gamma-(\gamma-1)/2}
+\]
+
+\end_inset
+
+从中可以解出 
+\begin_inset Formula $M_{\infty}$
+\end_inset
+
+ 与 
+\begin_inset Formula $p_{\text{main}}/p_{\text{side}}$
+\end_inset
+
+ 的关系（对于一般的 
+\begin_inset Formula $\gamma$
+\end_inset
+
+，需数值求解）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+当 
+\begin_inset Formula $M_{\infty}\to1$
+\end_inset
+
+ 时，两种情形趋于一致：
+\begin_inset Formula 
+\[
+\begin{aligned}\left(1+\frac{\gamma-1}{2}(M_{\infty})^{2}\right)^{\gamma}=\left(\frac{p_{\text{main}}}{p_{\text{side}}}\right)^{\gamma-1} & \to\left(\frac{\gamma+1}{2}\right)^{\gamma}\\
+\left(\frac{\gamma+1}{2}\right)^{\gamma+1}\frac{(M_{\infty})^{2\gamma}}{(M_{\infty})^{2}\cdot\gamma-(\gamma-1)/2}=\left(\frac{p_{\text{main}}}{p_{\text{side}}}\right)^{\gamma-1} & \to\left(\frac{\gamma+1}{2}\right)^{\gamma}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+斜激波
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:流体：斜激波"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+膨胀波
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:流体：膨胀波"
 
 \end_inset
 
