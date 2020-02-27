@@ -101,7 +101,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-无黏可压流动
+无黏可压流
 \end_layout
 
 \begin_layout Section
@@ -384,10 +384,10 @@ u_{\Gamma}\cdot\begin{bmatrix}\rho\\
 \begin{equation}
 \begin{bmatrix}\rho u\\
 \rho u^{2}+p\\
-\rho u\cdot(h+u^{2}/2)
+h+u^{2}/2
 \end{bmatrix}_{1}=\begin{bmatrix}\rho u\\
 \rho u^{2}+p\\
-\rho u\cdot(h+u^{2}/2)
+h+u^{2}/2
 \end{bmatrix}_{2}\label{eq:流体：正激波：方程}
 \end{equation}
 
@@ -1304,6 +1304,589 @@ name "sec:流体：斜激波"
 
 \end_layout
 
+\begin_layout Subsection
+二维示意图
+\end_layout
+
+\begin_layout Standard
+设流场边界向流场内偏折 
+\begin_inset Formula $\theta$
+\end_inset
+
+， 波前、波后气流均平行于边界，则边界偏折处会引出一道与来流夹角为 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 的斜激波，如
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[thick,>=Stealth]{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % shock
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (A) at (-0.8,-0.6);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (B) at (4.8,3.6);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[double distance=3pt] (A) --node[above, sloped, very near end]{Shock}
+ (B);  
+\end_layout
+
+\begin_layout Plain Layout
+
+  % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (C) at (6,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[dashed] (O) -- (C);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (C)--(O)--(B) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+beta$", draw, ->, angle radius=5cm, angle eccentricity=1.1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=C--O--B};
+\end_layout
+
+\begin_layout Plain Layout
+
+  % after shock
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (D) at (4.4,0.8);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (O) --node[above, sloped]{$u_2$} (D);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (C)--(O)--(D) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+theta$", draw, ->, angle radius=3cm, angle eccentricity=1.1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=C--O--D};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (E) at (3.2,2.4);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (E) --node[above, sloped]{$
+\backslash
+qty(u_n)_2$} (D);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (O) --node[above, sloped]{$
+\backslash
+qty(u_t)_2 = 
+\backslash
+qty(u_t)_1$} (E);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % before shock
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (F) at (-5,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (F) --node[above, sloped]{$u_1$} (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (G) at (-1.8,2.4);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (F) --node[above, sloped]{$
+\backslash
+qty(u_t)_1$} (G);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (G) --node[above, sloped]{$
+\backslash
+qty(u_n)_1$} (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维斜激波示意图
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:流体：斜激波：示意图"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:流体：斜激波：示意图"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示。
+\end_layout
+
+\begin_layout Subsection
+守恒律方程组
+\end_layout
+
+\begin_layout Standard
+在间断面上任取一面元 
+\begin_inset Formula $A$
+\end_inset
+
+，令其平行于 
+\begin_inset Formula $\vec{u}_{1}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\vec{u}_{2}$
+\end_inset
+
+ 分别运动一小段距离，以其扫过区域为控制体 
+\begin_inset Formula $V$
+\end_inset
+
+。流体微团只能通过 
+\begin_inset Formula $A$
+\end_inset
+
+ 的两个平行面元进出控制体，因此可将三个守恒律简化为
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\rho u_{n}\\
+\rho u_{n}^{2}+p\\
+h+u_{n}^{2}/2
+\end{bmatrix}_{1}=\begin{bmatrix}\rho u_{n}\\
+\rho u_{n}^{2}+p\\
+h+u_{n}^{2}/2
+\end{bmatrix}_{2}\label{eq:流体：斜激波：方程}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+跨激波比值
+\end_layout
+
+\begin_layout Standard
+若将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：斜激波：方程"
+
+\end_inset
+
+ 中的 
+\begin_inset Formula $u_{n}$
+\end_inset
+
+ 用 
+\begin_inset Formula $u$
+\end_inset
+
+ 替换，则该方程组在形式上退化为正激波方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：方程"
+
+\end_inset
+
+。因此，只需要将 (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:流体：正激波：Prandtl"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:流体：正激波：物理量比值"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) 中的 
+\begin_inset Formula $M$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $M_{n}$
+\end_inset
+
+，即得各物理量跨斜激波的比值：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}(M_{n})_{1}=M_{1}\sin\beta\qquad(M_{n})_{2}^{2}=\frac{1+(M_{n})_{1}^{2}\gamma^{-}/2}{(M_{n})_{1}^{2}\gamma-\gamma^{-}/2}\qquad M_{2}=\frac{(M_{n})_{2}\cdot\gamma}{\sin(\beta-\theta)}\\
+\frac{\rho_{2}}{\rho_{1}}=\frac{(M_{n})_{1}^{2}\gamma^{+}/2}{1+(M_{n})_{1}^{2}\gamma^{-}/2}\qquad\frac{p_{2}}{p_{1}}=\frac{(M_{n})_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}\qquad\frac{h_{2}}{h_{1}}=\frac{T_{2}}{T_{1}}=\frac{p_{2}/p_{1}}{\rho_{2}/\rho_{1}}
+\end{gathered}
+\label{eq:流体：斜激波：物理量比值}
+\end{equation}
+
+\end_inset
+
+其中壁面偏转角 
+\begin_inset Formula $\theta$
+\end_inset
+
+ 是已知的，而激波偏转角 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 留待下一节确定。
+\end_layout
+
+\begin_layout Subsection
+激波偏转角
+\end_layout
+
+\begin_layout Standard
+由图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:流体：斜激波：示意图"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及质量守恒可得
+\begin_inset Formula 
+\[
+\frac{\tan(\beta-\theta)}{\tan\beta}=\frac{(u_{n})_{2}}{(u_{n})_{1}}=\frac{\rho_{1}}{\rho_{2}}\impliedby\begin{cases}
+(u_{n}/u_{t})_{1}=\tan\beta\\
+(u_{n}/u_{t})_{2}=\tan(\beta-\theta)\\
+\rho_{1}\cdot(u_{n})_{1}=\rho_{2}\cdot(u_{n})_{2}
+\end{cases}
+\]
+
+\end_inset
+
+利用三角关系及 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：斜激波：物理量比值"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\tan\theta=2\cot\beta\frac{\sin^{2}\beta-M_{1}^{-2}}{\gamma+\cos2\beta+2M_{1}^{-2}}
+\]
+
+\end_inset
+
+给定 
+\begin_inset Formula $\theta$
+\end_inset
+
+ 和 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+，可以（数值地）解出 
+\begin_inset Formula $\beta$
+\end_inset
+
+，结果见
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename inviscid_compressible/beta_theta_mach.pdf
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维斜激波偏转角关系
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:流体：斜激波：偏转角"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:流体：斜激波：偏转角"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，其中每一条实线对应于一个 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ 数值，而唯一的虚线是 
+\begin_inset Formula $M_{2}=1$
+\end_inset
+
+ 的分界线。从图中可知 
+\begin_inset Formula $\forall M_{1}\colon\exists\theta_{\max}$
+\end_inset
+
+ 且 
+\begin_inset Formula $\theta_{\max}$
+\end_inset
+
+ 随 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ 增大而增大。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\theta>\theta_{\max}$
+\end_inset
+
+，则不会产生贴体的斜激波，而会产生脱体的弓形激波。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\theta<\theta_{\max}$
+\end_inset
+
+，则 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 有两个解：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+强激波 压缩较强，相应的 
+\begin_inset Formula $\beta\text{、}(M_{n})_{2}\text{、}(p_{2}/p_{1})$
+\end_inset
+
+ 均较大，且总有 
+\begin_inset Formula $M_{2}<1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Description
+弱激波 压缩较弱，相应的 
+\begin_inset Formula $\beta\text{、}(M_{n})_{2}\text{、}(p_{2}/p_{1})$
+\end_inset
+
+ 均较小，且只有 
+\begin_inset Formula $\theta\approx\theta_{\max}$
+\end_inset
+
+ 时才有 
+\begin_inset Formula $M_{2}<1$
+\end_inset
+
+，其他情况下
+\begin_inset Formula $M_{2}>1$
+\end_inset
+
+，即波后气流仍为超音速（实际观察到的斜激波几乎总是这种情况）。 
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\theta=0$
+\end_inset
+
+ 时的两个解分别对应于
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+正激波 即 
+\begin_inset Formula $\beta=90\deg$
+\end_inset
+
+ 的情形。
+\end_layout
+
+\begin_layout Description
+马赫波 即 
+\begin_inset Formula $\beta=\mu=\arcsin(1/M_{1})$
+\end_inset
+
+ 的情形。
+\end_layout
+
+\end_deeper
 \begin_layout Section
 膨胀波
 \begin_inset CommandInset label
