@@ -295,15 +295,23 @@ M\coloneqq\abs{\frac{u}{a}}
 \begin_inset Formula $2\mu$
 \end_inset
 
- 的圆锥，其中
+ 的圆锥，称为 
+\bar under
+马赫锥 (Mach cone)
+\bar default
+，其中
 \begin_inset Formula 
-\[
-\mu=\arcsin\frac{a}{u}=\arcsin\frac{1}{M}
-\]
+\begin{equation}
+\mu=\arcsin\frac{a}{u}=\arcsin\frac{1}{M}\label{eq:流体：声波：马赫锥}
+\end{equation}
 
 \end_inset
 
-
+马赫锥的锥面称为 
+\bar under
+马赫波 (Mach wave)
+\bar default
+，它是由声波的前缘堆积而形成的。
 \end_layout
 
 \begin_layout Section
@@ -762,7 +770,7 @@ reference "eq:流体：正激波：特征温度"
 \end_layout
 
 \begin_layout Subsection
-跨激波比值
+物理量比值
 \end_layout
 
 \begin_layout Lemma
@@ -1313,7 +1321,7 @@ name "sec:流体：斜激波"
 \begin_inset Formula $\theta$
 \end_inset
 
-， 波前、波后气流均平行于边界，则边界偏折处会引出一道与来流夹角为 
+， 波前、波后气流均平行于边界，则边界偏折处（可能）会引出一道与来流夹角为 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -1339,7 +1347,7 @@ tikz[thick,>=Stealth]{
 
   
 \backslash
-coordinate (O) at (0,0);
+coordinate (O) at (0, 0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1351,21 +1359,21 @@ coordinate (O) at (0,0);
 
   
 \backslash
-coordinate (A) at (-0.8,-0.6);
+coordinate (A) at (-1.6, -1.2);
 \end_layout
 
 \begin_layout Plain Layout
 
   
 \backslash
-coordinate (B) at (4.8,3.6);
+coordinate (B) at (4.8, 3.6);
 \end_layout
 
 \begin_layout Plain Layout
 
   
 \backslash
-draw[double distance=3pt] (A) --node[above, sloped, very near end]{Shock}
+draw[red, line width=4pt] (A) --node[above, sloped, very near end]{Shock}
  (B);  
 \end_layout
 
@@ -1378,7 +1386,7 @@ draw[double distance=3pt] (A) --node[above, sloped, very near end]{Shock}
 
   
 \backslash
-coordinate (C) at (6,0);
+coordinate (C) at (6, 0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1416,7 +1424,7 @@ beta$", draw, ->, angle radius=5cm, angle eccentricity=1.1]
 
   
 \backslash
-coordinate (D) at (4.4,0.8);
+coordinate (D) at (4.4, 0.8);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1449,7 +1457,7 @@ theta$", draw, ->, angle radius=3cm, angle eccentricity=1.1]
 
   
 \backslash
-coordinate (E) at (3.2,2.4);
+coordinate (E) at (3.2, 2.4);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1481,7 +1489,7 @@ qty(u_t)_1$} (E);
 
   
 \backslash
-coordinate (F) at (-5,0);
+coordinate (F) at (-5, 0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1495,7 +1503,7 @@ draw[->] (F) --node[above, sloped]{$u_1$} (O);
 
   
 \backslash
-coordinate (G) at (-1.8,2.4);
+coordinate (G) at (-1.8, 2.4);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1514,6 +1522,33 @@ qty(u_t)_1$} (G);
 draw[->] (G) --node[above, sloped]{$
 \backslash
 qty(u_n)_1$} (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % wall
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (G) at (-5, -1.2);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (H) at (4.8, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[line width=4pt] (G) -- (A) --node[below, sloped, very near end]{Wall}
+ (H);
 \end_layout
 
 \begin_layout Plain Layout
@@ -1607,7 +1642,7 @@ h+u_{n}^{2}/2
 \end_layout
 
 \begin_layout Subsection
-跨激波比值
+物理量比值
 \end_layout
 
 \begin_layout Standard
@@ -1737,11 +1772,11 @@ reference "eq:流体：斜激波：物理量比值"
 \begin_inset Formula $\beta$
 \end_inset
 
-，结果见
+，
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1775,7 +1810,7 @@ name "fig:流体：斜激波：偏转角"
 
 \end_inset
 
-图 
+如图 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:流体：斜激波：偏转角"
@@ -1785,7 +1820,7 @@ noprefix "false"
 
 \end_inset
 
-，其中每一条实线对应于一个 
+ 所示，其中每一条实线对应于一个 
 \begin_inset Formula $M_{1}$
 \end_inset
 
@@ -1896,6 +1931,577 @@ name "sec:流体：膨胀波"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+二维示意图
+\end_layout
+
+\begin_layout Standard
+设流场边界向流场外偏折 
+\begin_inset Formula $\theta$
+\end_inset
+
+，波前、波后气流均平行于边界，则边界偏折处（可能）会引出一族马赫波，前缘与来流夹角为 
+\begin_inset Formula $\mu_{1}=\arcsin(1/M_{1})$
+\end_inset
+
+，后缘与边界夹角为 
+\begin_inset Formula $\mu_{2}=\arcsin(1/M_{2})$
+\end_inset
+
+，
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[thick,>=Stealth]{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (A) at (4,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (B) at (4.5,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (C) at (4,2);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (D) at (1,3);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (E) at (-4,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[line width=4pt] (A) -- (O) --node[below, sloped, very near end]{Wall}
+ (E);  % wall
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[dashed] (O) -- (B);  % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (O) -- (C);  % tail
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw (O) -- (D);  % head
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (A)--(O)--(B) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+theta$", draw, <-, angle radius=2cm, angle eccentricity=1.1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=A--O--B};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (A)--(O)--(C) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+mu_2$", draw, ->, angle radius=2.5cm, angle eccentricity=1.1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=A--O--C};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (B)--(O)--(D) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+mu_1$", draw, ->, angle radius=1.5cm, angle eccentricity=1.2] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=B--O--D};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->, thick] (-3,1.5) -- node[above]{$M_1 > 1$} (-1,1.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->, thick] (4,0.5) -- node[above,sloped]{$M_2$} (6,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维膨胀波示意图
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:流体：膨胀波：示意图"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+如图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:流体：膨胀波：示意图"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示。气流经过每个马赫波的过程都是等熵的，因而经过整个膨胀波的过程也是等熵的。
+\end_layout
+
+\begin_layout Subsection
+Prandtl–Meyer 函数
+\end_layout
+
+\begin_layout Standard
+先考虑单个马赫波。设垂直于波面的微小速度增量 
+\begin_inset Formula $\dd{u}$
+\end_inset
+
+ 引起微小偏折 
+\begin_inset Formula $\dd{\theta}$
+\end_inset
+
+，
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikz[thick,>=Stealth]{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (A) at (4,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (Z) at (-4,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[name path=u, ->] (Z) -- node[above]{$u$} (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[name path=u, ->] (O) -- node[above]{$u$} (A);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (B) at (5,-1);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (O) -- node[below, sloped]{$u + 
+\backslash
+dd{u}$} (B);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[->] (A) -- node[above, sloped]{$
+\backslash
+dd{u}$} (B);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (C) at (3,3);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[red] (O) -- node[above, sloped, near end]{Mach Wave} (C);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[dashed] (A) -- ($(O)!(A)!(C)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (A)--(O)--(C) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+mu$", draw, ->, angle radius=1cm, angle eccentricity=1.2] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=A--O--C};
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path (B)--(O)--(A) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    pic ["$
+\backslash
+dd{
+\backslash
+theta}$", draw, <-, angle radius=3cm, angle eccentricity=1.1] 
+\end_layout
+
+\begin_layout Plain Layout
+
+        {angle=B--O--A};
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+二维马赫波示意图
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:流体：膨胀波：马赫波"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+如图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:流体：膨胀波：马赫波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 所示。由正弦定理得
+\begin_inset Formula 
+\[
+\frac{u+\dd{u}}{\sin(\pi/2+\mu)}=\frac{u}{\sin(\pi/2-\mu-\dd{\theta})}\implies1+\frac{\dd{u}}{u}=\frac{\cos\mu}{\cos(\mu+\dd{\theta})}
+\]
+
+\end_inset
+
+利用三角关系并略去二阶及以上小量可得
+\begin_inset Formula 
+\[
+1+\frac{\dd{u}}{u}\approx\frac{1}{1-(\tan\mu)\dd{\theta}}\approx1+(\tan\mu)\dd{\theta}
+\]
+
+\end_inset
+
+再利用 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 与 
+\begin_inset Formula $M$
+\end_inset
+
+ 的关系式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：声波：马赫锥"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\frac{\dd{u}}{u}\approx\frac{\dd{\theta}}{\sqrt{M^{2}-1}}
+\]
+
+\end_inset
+
+而 
+\begin_inset Formula $\dd{u}/u$
+\end_inset
+
+ 又可以化为 
+\begin_inset Formula $M$
+\end_inset
+
+ 及 
+\begin_inset Formula $a$
+\end_inset
+
+ 的表达式：
+\begin_inset Formula 
+\[
+\frac{\dd{u}}{u}=\frac{\dd{M}}{M}+\frac{\dd{a}}{a}\impliedby M=\frac{u}{a}
+\]
+
+\end_inset
+
+代入滞止音速 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：滞止温度"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及能量守恒（
+\begin_inset Formula $a_{0}$
+\end_inset
+
+ 不变）可得：
+\begin_inset Formula 
+\[
+\frac{\dd{a}}{a}=-\frac{M^{2}\gamma^{-}/2}{1+M^{2}\gamma^{-}/2}\frac{\dd{M}}{M}\impliedby\frac{a_{0}^{2}}{a^{2}}=\frac{T_{0}}{T}=1+M^{2}\gamma^{-}/2
+\]
+
+\end_inset
+
+从而可以将
+\begin_inset Formula $\dd{\theta}$
+\end_inset
+
+ 化为只含 
+\begin_inset Formula $M$
+\end_inset
+
+ 的表达式：
+\begin_inset Formula 
+\[
+\dd{\theta}=\sqrt{M^{2}-1}\underbrace{\left(\frac{\dd{M}}{M}+\frac{\dd{a}}{a}\right)}_{\dd{u}/u}=\frac{\sqrt{M^{2}-1}}{1+M^{2}\gamma^{-}/2}\frac{\dd{M}}{M}
+\]
+
+\end_inset
+
+积分后即得偏折角：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\theta & =\int_{M_{1}}^{M_{2}}\frac{\sqrt{M^{2}-1}}{1+M^{2}\gamma^{-}/2}\frac{\dd{M}}{M}=\nu(M_{2})-\nu(M_{1})\\
+\nu(M) & =\sqrt{\gamma^{+}/\gamma^{-}}\arctan\sqrt{(\gamma^{+}/\gamma^{-})(M^{2}-1)}-\arctan\sqrt{M^{2}-1}
+\end{aligned}
+\label{eq:流体：膨胀波：偏折角}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\nu(M)$
+\end_inset
+
+ 称为 Prandtl–Meyer 函数。
+\end_layout
+
+\begin_layout Subsection
+物理量比值
+\end_layout
+
+\begin_layout Standard
+给定来流马赫数 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ 及偏折角 
+\begin_inset Formula $\theta$
+\end_inset
+
+，波后马赫数 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ 可以由 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：膨胀波：偏折角"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式（数值地）解出。流体微团穿过膨胀波是等熵过程，因此温度和压力得变化可以由等熵关系获得：
+\begin_inset Formula 
+\[
+\frac{T_{2}}{T_{1}}=\frac{T_{2}/(T_{0})_{2}}{T_{1}/(T_{0})_{1}}=\frac{1+M_{1}^{2}\gamma^{-}/2}{1+M_{2}^{2}\gamma^{-}/2}\qquad\frac{p_{2}}{p_{1}}=\frac{p_{2}/(p_{0})_{2}}{p_{1}/(p_{0})_{1}}=\left(\frac{T_{2}}{T_{1}}\right)^{\gamma/\gamma^{-}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+等熵压缩波
 \end_layout
 
 \end_body
