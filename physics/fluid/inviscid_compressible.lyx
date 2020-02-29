@@ -2698,5 +2698,738 @@ noprefix "false"
 等熵压缩波
 \end_layout
 
+\begin_layout Section
+准一维管
+\end_layout
+
+\begin_layout Subsection
+守恒律方程组
+\end_layout
+
+\begin_layout Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+准一维管
+\end_layout
+
+\end_inset
+
+管道的截面积 
+\begin_inset Formula $A(x)$
+\end_inset
+
+ 随轴向坐标 
+\begin_inset Formula $x$
+\end_inset
+
+ 的变化足够平缓，以至于可以
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+忽略物理量的横向变化，即假设物理量只随 
+\begin_inset Formula $x$
+\end_inset
+
+ 变化。
+\end_layout
+
+\begin_layout Itemize
+忽略向量的横向分量，即假设横向分量与 
+\begin_inset Formula $x$
+\end_inset
+
+-分量相比为小量。
+\end_layout
+
+\end_deeper
+\begin_layout Assumption
+这样的管道称为 
+\bar under
+准一维的 (quasi-one-dimensional)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+准一维 Euler 方程
+\end_layout
+
+\end_inset
+
+无黏可压理想气体在准一维管中的流动满足以下 
+\bar under
+准一维 Euler 方程
+\bar default
+：
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\begin{bmatrix}A\rho\\
+A\rho u\\
+A\rho E
+\end{bmatrix}+\partial_{x}\begin{bmatrix}A\rho u\\
+A\rho u^{2}+Ap\\
+A\rho Hu
+\end{bmatrix}=\begin{bmatrix}0\\
+p\partial_{x}A\\
+0
+\end{bmatrix}\qquad\begin{cases}
+E\coloneqq e+u^{2}/2\\
+h\coloneqq e+p/\rho\\
+H\coloneqq h+u^{2}/2
+\end{cases}\label{eq:流体：准一维：Euler}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+以梯形微段 
+\begin_inset Formula $[x,x+\increment x]\times[A(x),A(x+\increment x)]$
+\end_inset
+
+ 为控制体 
+\begin_inset Formula $V$
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+体积分 函数 
+\begin_inset Formula $\rho A$
+\end_inset
+
+ 在区间 
+\begin_inset Formula $[x,x+\increment x]$
+\end_inset
+
+ 内连续，故可用中值定理将 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的气体质量表示为
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\rho\dd{V}=(A\rho)_{x=\xi}\increment x\qquad\xi\in(x,x+\increment x)\label{eq:流体：准一维：体积分：质量}
+\end{equation}
+
+\end_inset
+
+类似地，可以将 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的动量（
+\begin_inset Formula $x$
+\end_inset
+
+-分量）、能量分别表示为
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\rho u_{x}\dd{V}=(A\rho u_{x})_{x=\eta}\increment x\qquad\eta\in(x,x+\increment x)\label{eq:流体：准一维：体积分：动量}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\int_{V}\rho E\dd{V}=(A\rho E)_{x=\zeta}\increment x\qquad\zeta\in(x,x+\increment x)\label{eq:流体：准一维：体积分：能量}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+质量守恒 气体只能通过控制体两端（
+\begin_inset Formula $\vec{u}\vdot\vec{n}=\pm u_{x}$
+\end_inset
+
+）进出，故净流出质量为
+\begin_inset Formula 
+\[
+\oint_{\partial V}\rho\vec{u}\vdot\vec{n}\dd{S}=[A\rho u_{x}]_{x}^{x+\increment x}
+\]
+
+\end_inset
+
+将该式及质量体积分 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：体积分：质量"
+
+\end_inset
+
+ 代入积分型质量守恒方程
+\begin_inset Formula 
+\[
+\int_{V}\rho\dd{V}+\oint_{\partial V}\rho\vec{u}\vdot\vec{n}\dd{S}=0
+\]
+
+\end_inset
+
+除以 
+\begin_inset Formula $\increment x$
+\end_inset
+
+ 再取极限 
+\begin_inset Formula $\increment x\to0$
+\end_inset
+
+，即得准一维质量守恒方程
+\begin_inset Formula 
+\[
+\partial_{t}(A\rho)+\partial_{x}(A\rho u_{x})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+动量守恒 动量（
+\begin_inset Formula $x$
+\end_inset
+
+-分量）净流出量为
+\begin_inset Formula 
+\[
+\oint_{\partial V}\rho u_{x}\vec{u}\vdot\vec{n}\dd{S}=[A\rho u_{x}^{2}]_{x}^{x+\increment x}
+\]
+
+\end_inset
+
+而压力积分可以分为控制体两端（
+\begin_inset Formula $n_{x}=\pm1$
+\end_inset
+
+）与壁面（
+\begin_inset Formula $n_{x}\dd{S}=-\dd{A}$
+\end_inset
+
+）两部分：
+\begin_inset Formula 
+\[
+\oint_{\partial V}pn_{x}\dd{S}=[Ap]_{x}^{x+\increment x}-\int_{x}^{x+\increment x}p\dd{A}
+\]
+
+\end_inset
+
+将以上结果及动量体积分 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：体积分：动量"
+
+\end_inset
+
+ 代入积分型动量守恒方程
+\begin_inset Formula 
+\[
+\partial_{t}\int_{V}\rho u_{x}\dd{V}+\oint_{\partial V}\rho u_{x}\vec{u}\vdot\vec{n}\dd{S}=-\oint_{\partial V}pn_{x}\dd{S}
+\]
+
+\end_inset
+
+除以 
+\begin_inset Formula $\increment x$
+\end_inset
+
+ 再取极限 
+\begin_inset Formula $\increment x\to0$
+\end_inset
+
+，即得准一维动量守恒方程
+\begin_inset Formula 
+\[
+\partial_{t}(A\rho u_{x})+\partial_{x}(A\rho u_{x}^{2}+Ap)=p\partial_{x}A
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+能量守恒 积分型能量守恒方程
+\begin_inset Formula 
+\[
+\partial_{t}\int_{V}\rho E\dd{V}+\oint_{\partial V}\rho E\vec{u}\vdot\vec{n}\dd{S}=\oint_{\partial V}-p\vec{u}\vdot\vec{n}\dd{S}
+\]
+
+\end_inset
+
+中的两个面积分可以用 
+\begin_inset Formula $\rho H=\rho E+p$
+\end_inset
+
+ 合并为一项：
+\begin_inset Formula 
+\[
+\begin{aligned}\oint_{\partial V}\rho E\vec{u}\vdot\vec{n}\dd{S}+\oint_{\partial V}p\vec{u}\vdot\vec{n}\dd{S} & =\oint_{\partial V}\rho H\vec{u}\vdot\vec{n}\dd{S}\\
+ & =[A\rho Hu_{x}]_{x}^{x+\increment x}
+\end{aligned}
+\]
+
+\end_inset
+
+将该式及能量体积分 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：体积分：能量"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 代入积分型能量守恒方程，除以 
+\begin_inset Formula $\increment x$
+\end_inset
+
+ 再取极限 
+\begin_inset Formula $\increment x\to0$
+\end_inset
+
+，即得准一维能量守恒方程
+\begin_inset Formula 
+\[
+\partial_{t}(A\rho E)+\partial_{x}(A\rho Hu_{x})=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+对于等截面管，即 
+\begin_inset Formula $A(x)$
+\end_inset
+
+ 为常值函数的情形，可以将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：Euler"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $A$
+\end_inset
+
+ 省略，从而得到一维 Euler 方程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[定常]
+\end_layout
+
+\end_inset
+
+若流动为定常，则 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：Euler"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $\pdv*{t}$
+\end_inset
+
+ 都为零，且 
+\begin_inset Formula $\pdv*{x}$
+\end_inset
+
+ 都退化为 
+\begin_inset Formula $\dv*{x}$
+\end_inset
+
+，因此可以用 
+\begin_inset Formula $\text{’}$
+\end_inset
+
+ 代替：
+\begin_inset Formula 
+\[
+(A\rho u)'=0\qquad(A\rho u^{2}+Ap)'=pA'\qquad(A\rho Hu)'=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+用 
+\begin_inset Formula $A\rho u$
+\end_inset
+
+ 除第一式，得
+\begin_inset Formula 
+\begin{equation}
+\frac{(A\rho u)'}{A\rho u}=\frac{A'}{A}+\frac{\rho'}{\rho}+\frac{u'}{u}=0\label{eq:流体：准一维：质量守恒}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+从第二式中减去 
+\begin_inset Formula $u$
+\end_inset
+
+ 与第一式的乘积，再约去 
+\begin_inset Formula $A$
+\end_inset
+
+，得
+\begin_inset Formula 
+\begin{equation}
+\rho uu'+p'=0\label{eq:流体：准一维：动量守恒}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+将第一式代入第三式，得
+\begin_inset Formula 
+\begin{equation}
+H'=(h+u^{2}/2)'=(c_{p}T+u^{2}/2)'=0\label{eq:流体：准一维：能量守恒}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+横截面积的影响
+\end_layout
+
+\begin_layout Theorem
+除可能出现的激波外，速度 
+\begin_inset Formula $u$
+\end_inset
+
+ 与横截面积 
+\begin_inset Formula $A$
+\end_inset
+
+ 有如下关系
+\begin_inset Formula 
+\begin{equation}
+\frac{A'}{A}=(M^{2}-1)\frac{u'}{u}\label{eq:流体：准一维：速度与面积}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+除激波外，管内流动均为等熵过程，故可将等熵条件 
+\begin_inset Formula $p=C\rho^{\gamma}$
+\end_inset
+
+ 及音速公式 
+\begin_inset Formula $a^{2}=\dv*{p}{\rho}$
+\end_inset
+
+ 代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：动量守恒"
+
+\end_inset
+
+ 式，得到
+\begin_inset Formula 
+\[
+\rho uu'+p'=0\implies-uu'=\frac{p'}{\rho}=\dv{p}{\rho}\frac{\rho'}{\rho}=a^{2}\frac{\rho'}{\rho}
+\]
+
+\end_inset
+
+两端同除以 
+\begin_inset Formula $a^{2}$
+\end_inset
+
+ 得到
+\begin_inset Formula 
+\[
+\frac{\rho'}{\rho}=-\frac{u^{2}}{a^{2}}\frac{u'}{u}=-M^{2}\frac{u'}{u}
+\]
+
+\end_inset
+
+再由 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：质量守恒"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+-M^{2}\frac{u'}{u}=-\frac{\rho'}{\rho}=\frac{u'}{u}+\frac{A'}{A}
+\]
+
+\end_inset
+
+移项便得到 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：速度与面积"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+若 
+\begin_inset Formula $M\ne1$
+\end_inset
+
+，则 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：速度与面积"
+
+\end_inset
+
+ 中的 
+\begin_inset Formula $A'$
+\end_inset
+
+ 与 
+\begin_inset Formula $u'$
+\end_inset
+
+ 反号，其物理意义为：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+亚音速流 在扩张处（
+\begin_inset Formula $A'>0$
+\end_inset
+
+）减速（
+\begin_inset Formula $u'<0$
+\end_inset
+
+），在收缩处加速。
+\end_layout
+
+\begin_layout Description
+超音速流 在扩张处（
+\begin_inset Formula $A'>0$
+\end_inset
+
+）加速（
+\begin_inset Formula $u'>0$
+\end_inset
+
+），在收缩处减速。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+喷管
+\end_layout
+
+\begin_layout Definition
+先收缩、后扩张的准一维管称为 
+\bar under
+喷管 (nozzle)
+\bar default
+，其最窄处（收缩段的出口、扩张段的入口）称为 
+\bar under
+喉部 (throat)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+在实际应用中，喷管通常用来将气体从亚音速状态加速到超音速状态：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+由准一维能量守恒方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：能量守恒"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可知：这种加速的实质将气体的内能转化为动能。
+\end_layout
+
+\begin_layout Itemize
+由速度与面积的关系 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：准一维：速度与面积"
+
+\end_inset
+
+ 可知：音速状态只可能出现在喷管的 
+\bar under
+喉部 (throat)
+\bar default
+，与其相关的参数将用下标 t 来表示。
+\end_layout
+
+\begin_layout Itemize
+喷管（收缩段）的入口与燃烧室相连，因此燃烧室出口是喷管的 
+\bar under
+内侧 (internal) 边界
+\bar default
+，与其相关的参数将用下标 i 来表示。
+\end_layout
+
+\begin_layout Itemize
+喷管（扩张段）的出口一般通向外部环境，因此外部环境是喷管的 
+\bar under
+外侧 (external) 边界
+\bar default
+，与其相关的参数将用下标 e 来表示。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[入口状态]
+\end_layout
+
+\end_inset
+
+喷管入口直径远大于喉部直径，且入口处的气体几乎没有速度，故可取如下近似
+\begin_inset Formula 
+\[
+A_{\text{i}}/A_{\text{t}}\approx\infty\qquad\begin{bmatrix}u_{\text{i}} & M_{\text{i}}\end{bmatrix}\approx\begin{bmatrix}0 & 0\end{bmatrix}\qquad\begin{bmatrix}p_{\text{i}} & \rho_{\text{i}} & T_{\text{i}} & a_{\text{i}}\end{bmatrix}\approx\begin{bmatrix}p_{0} & \rho_{0} & T_{0} & a_{0}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
