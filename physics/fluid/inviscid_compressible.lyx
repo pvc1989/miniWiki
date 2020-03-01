@@ -105,31 +105,210 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-声波
+微扰波
 \end_layout
 
 \begin_layout Subsection
-音速
+声波
 \end_layout
 
 \begin_layout Standard
-为了得到 
+声音在介质中的传播是通过介质微团的微幅振动来实现的。
+\end_layout
+
+\begin_layout Assumption
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[微扰]
+\end_layout
+
+\end_inset
+
+这种振动的幅度小到可以认为
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+它所涉及的物理过程是 
+\bar under
+等熵的 (isentropic)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+所有物理量的变化都足够平缓，即所有物理量的导数都是无穷小量。
+\end_layout
+
+\begin_layout Itemize
+若未扰动介质保持静止，则受扰动介质微团的运动速度 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 也是无穷小量。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[声波]
+\end_layout
+
+\end_inset
+
+在上述假设下，Euler 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Euler::3d::非守恒型::直角坐标"
+
+\end_inset
+
+ 可以简化为 
+\bar under
+声波 (sound wave) 方程
+\bar default
+
+\begin_inset Formula 
+\[
+\partial_{t}^{2}\rho=a^{2}\laplacian{\rho}
+\]
+
+\end_inset
+
+其中，具有速度量纲的 
+\begin_inset Formula $a$
+\end_inset
+
+ 称为 
 \bar under
 音速 (sound speed)
 \bar default
-，可以考虑最简单的情况：在介质中匀速运动的平面波。设想观察者跟随 
-\bar under
-声波 (sound wave)
-\bar default
- 一起运动：
+，它完全由热力学状态决定：
+\begin_inset Formula 
+\begin{equation}
+a^{2}=\qty(\pdv{p}{\rho})_{s}=\frac{\gamma p}{\rho}=\gamma RT\label{eq:流体：声波：音速}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+根据微扰假设，对流导数 
+\begin_inset Formula $\vec{u}\vdot\grad{\phi}$
+\end_inset
+
+ 是两个无穷小量的乘积，因此是一个二阶无穷小量，可以将其从 Euler 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Euler::3d::非守恒型::直角坐标"
+
+\end_inset
+
+ 中忽略：
+\begin_inset Formula 
+\[
+\partial_{t}\rho+\cancel{\vec{u}\vdot\grad{\rho}}+\rho\divg{\vec{u}}=0\qquad\partial_{t}\vec{u}+\cancel{\vec{u}\vdot\grad{\vec{u}}}+(1/\rho)\grad{p}=\vec{0}
+\]
+
+\end_inset
+
+对第一式求时间偏导，略去二阶小量，可得
+\begin_inset Formula 
+\[
+\partial_{t}^{2}\rho+\underbrace{\cancel{(\partial_{t}\rho)\divg{\vec{u}}}+\rho\divg(\partial_{t}\vec{u})}_{\partial_{t}(\rho\divg{\vec{u}})}=0
+\]
+
+\end_inset
+
+由等熵关系 
+\begin_inset Formula $p=C\rho^{\gamma}$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\dd{p}=(\gamma p/\rho^{2})\dd{\rho}\implies(1/\rho)\grad{p}=(\gamma p/\rho^{2})\grad{\rho}
+\]
+
+\end_inset
+
+用它替换 
+\begin_inset Formula $\partial_{t}\vec{u}$
+\end_inset
+
+，略去二阶小量，可得
+\begin_inset Formula 
+\[
+\partial_{t}^{2}\rho+\rho\cdot\underbrace{\left(\cancel{\grad(-\gamma p/\rho^{2})\vdot\grad{\rho}}+(-\gamma p/\rho^{2})\divg{\grad{\rho}}\right)}_{\divg(\partial_{t}\vec{u})=(-\gamma p/\rho^{2})\grad{\rho}}=0
+\]
+
+\end_inset
+
+移项即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+音速表达式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：声波：音速"
+
+\end_inset
+
+ 也可以通过另一种方式推导：
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[平面波参考系]
+\end_layout
+
+\end_inset
+
+考虑最简单的情况：在介质中匀速运动的平面波（更复杂的情况总可以局部近似为平面波）。设想观察者跟随这道波一起运动：
+\end_layout
+
+\begin_deeper
 \begin_layout Itemize
 波前的热力学状态为 
 \begin_inset Formula $p\text{、}T\text{、}\rho$
 \end_inset
 
-，流体微团以恒定的速度 
+，流体微团以“恒定”的速度 
 \begin_inset Formula $a$
 \end_inset
 
@@ -145,11 +324,11 @@ theorems-chap
 \begin_inset Formula $a+\increment a$
 \end_inset
 
- 远离波面。 
+ 远离波面。
 \end_layout
 
 \begin_layout Standard
-利用守恒关系并略去二阶及更高阶小量（声波是微小扰动）：
+利用守恒关系及微扰假设（忽略二阶小量）：
 \end_layout
 
 \begin_layout Itemize
@@ -212,41 +391,47 @@ reference "eq:流体：声波：质量守恒"
 \end_layout
 
 \begin_layout Standard
-若介质为理想气体，则可以代入状态方程及等熵关系（声波的微小扰动是等熵过程）：
-\begin_inset Formula 
-\[
-p=\rho RT=C\rho^{\gamma}
-\]
+代入等熵条件及状态方程，即得所需结果。
+\end_layout
 
-\end_inset
-
-最终得到理想气体中的音速表达式：
-\begin_inset Formula 
-\begin{equation}
-a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声波：音速}
-\end{equation}
-
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Remark*
+关于气体的速度，已经有了三种定义：
+\end_layout
 
-\bar under
-动理学理论 (kinetic theory)
-\bar default
- 给出的 
+\begin_deeper
+\begin_layout Description
+单个分子 无规则热运动的平均速率 
 \begin_inset Formula $\sqrt{(8/\pi)RT}$
 \end_inset
 
- 是单个分子运动速度的平均值，而这里的 
+ 是一个标量（取平均时忽略方向）。
+\end_layout
+
+\begin_layout Description
+气体微团 微幅振动的速度 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 是微团内分子速度的均值（取平均时保留方向）。
+\end_layout
+
+\begin_layout Description
+扰动信号 在气体中的传播速度 
 \begin_inset Formula $\sqrt{\gamma RT}$
 \end_inset
 
- 是对（由大量分子构成的）介质的微小扰动在介质中的传播速度。
+ 也是一个标量，且与热运动速率同阶。
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -255,12 +440,22 @@ a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声波：音速}
 \end_layout
 
 \begin_layout Subsection
-马赫数
+马赫波
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[马赫数]
+\end_layout
+
+\end_inset
+
 物体相对于介质的运动速度 
-\begin_inset Formula $u$
+\begin_inset Formula $\vec{u}$
 \end_inset
 
  与当地音速 
@@ -270,7 +465,7 @@ a^{2}=\qty(\pdv{p}{\rho})_{s}=\gamma RT\label{eq:流体：声波：音速}
  的绝对比值
 \begin_inset Formula 
 \[
-M\coloneqq\abs{\frac{u}{a}}
+M\coloneqq\abs{\vec{u}/a}
 \]
 
 \end_inset
@@ -280,10 +475,47 @@ M\coloneqq\abs{\frac{u}{a}}
 马赫数 (Mach number)
 \bar default
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[马赫锥]
+\end_layout
+
+\end_inset
+
+在静止的气体中以超音速（即 
+\begin_inset Formula $M>1$
+\end_inset
+
+）匀速运动的物体，其扰动所能达到的区域是一个顶角为二倍
+\begin_inset Formula 
+\begin{equation}
+\mu=\arcsin\frac{a}{u}=\arcsin\frac{1}{M}\label{eq:流体：声波：马赫锥}
+\end{equation}
+
+\end_inset
+
+的圆锥，称为 
+\bar under
+马赫锥 (Mach cone)
+\bar default
+，
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -387,7 +619,7 @@ status open
 
 
 \backslash
-tikz[thick]{
+tikz[thick,>=Stealth]{
 \end_layout
 
 \begin_layout Plain Layout
@@ -425,7 +657,42 @@ draw (6.2,0) circle [radius=3.1];
 
   
 \backslash
-draw[red] (+30:8) -- (0,0) -- (-30:8);
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (A) at (-30:8);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+coordinate (B) at (+30:8);
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+draw[red] (A) -- (O) -- (B);
+\end_layout
+
+\begin_layout Plain Layout
+
+  % angle
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+path[dashed] (A)--(O)--(B) pic ["$2
+\backslash
+mu$", draw, <->, angle radius=7cm, angle eccentricity=1.1] {angle=A--O--B};
 \end_layout
 
 \begin_layout Plain Layout
@@ -463,39 +730,7 @@ name "fig:流体：声波：亚音速与超音速"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Subsection
-马赫锥
-\end_layout
-
-\begin_layout Standard
-在静止的空气中以超音速（即 
-\begin_inset Formula $M>1$
-\end_inset
-
-）匀速运动的物体，其扰动所能达到的区域是一个顶角为 
-\begin_inset Formula $2\mu$
-\end_inset
-
- 的圆锥，称为 
-\bar under
-马赫锥 (Mach cone)
-\bar default
-，其中
-\begin_inset Formula 
-\begin{equation}
-\mu=\arcsin\frac{a}{u}=\arcsin\frac{1}{M}\label{eq:流体：声波：马赫锥}
-\end{equation}
-
-\end_inset
-
-马赫锥的锥面称为 
-\bar under
-马赫波 (Mach wave)
-\bar default
-，它是由声波的前缘堆积而形成的，见图 
+见图 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "fig:流体：声波：亚音速与超音速"
@@ -506,6 +741,304 @@ noprefix "false"
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[马赫波]
+\end_layout
+
+\end_inset
+
+马赫锥的锥面称为 
+\bar under
+马赫波 (Mach wave)
+\bar default
+，它是由声波的前缘堆积而形成的，因此其两侧状态只有微小差别，且气体微团穿过马赫波是等熵过程。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+参考状态
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+gamma^{
+\backslash
+pm}$]
+\end_layout
+
+\end_inset
+
+本章剩余部分将反复用到 
+\begin_inset Formula $\gamma\pm1$
+\end_inset
+
+，故引入简化记法
+\begin_inset Formula 
+\[
+\gamma^{+}\coloneqq\gamma+1\qquad\gamma^{-}\coloneqq\gamma-1
+\]
+
+\end_inset
+
+可以验证：
+\begin_inset Formula 
+\[
+(\gamma^{-}/2)^{2}+\gamma=(\gamma^{+}/2)^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[滞止状态]
+\end_layout
+
+\end_inset
+
+假设当前时刻、当前位置的流动状态等熵地、准静态地过渡到速度为零，所得的状态称为 
+\bar under
+滞止 (stagnation) 状态
+\bar default
+。此状态下的各物理量均以“滞止”或“
+\bar under
+总 (total)
+\bar default
+”为前缀，在下标中用 
+\begin_inset Formula $0$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[能量守恒]
+\end_layout
+
+\end_inset
+
+在准静态过程中，能量守恒
+\begin_inset Formula 
+\[
+\partial_{t}(\rho E)+\divg(\rho H\vec{u})=0
+\]
+
+\end_inset
+
+可以化为
+\begin_inset Formula 
+\[
+\dd(h+\frac{\vec{u}^{2}}{2})=\dd(\frac{1+M^{2}\gamma^{-}/2}{\gamma^{-}}a^{2})=0\impliedby\begin{cases}
+h=c_{p}T=(\gamma/\gamma^{-})RT\\
+a^{2}=\gamma RT\\
+M^{2}=\vec{u}^{2}/a^{2}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+各热力学量的“滞止值”与“当前值”之比为
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{T_{0}}{T}=\frac{a_{0}^{2}}{a^{2}}=1+M^{2}\gamma^{-}/2}\qquad\frac{p_{0}}{p}=\left(1+M^{2}\gamma^{-}/2\right)^{\gamma/\gamma^{-}}\qquad\frac{\rho_{0}}{\rho}=\left(1+M^{2}\gamma^{-}/2\right)^{1/\gamma^{-}}\label{eq:流体：等熵：滞止状态}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征状态]
+\end_layout
+
+\end_inset
+
+假设当前时刻、当前位置的流动状态等熵地、准静态地过渡到速度为音速，所得的状态称为 
+\bar under
+音速 (sonic) 状态
+\bar default
+ 或 
+\bar under
+特征 (characteristic) 状态
+\bar default
+。此状态下的各物理量均以“特征”为前缀，在下标中用 
+\begin_inset Formula $*$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+各热力学量的“特征（状态）值”与“滞止值”之比为
+\begin_inset Formula 
+\begin{equation}
+\boxed{\frac{T_{*}}{T_{0}}=\frac{a_{*}^{2}}{a_{0}^{2}}=\frac{2}{\gamma^{+}}}\qquad\frac{p_{*}}{p_{0}}=\frac{1}{(\gamma^{+}/2)^{\gamma/\gamma^{-}}}\qquad\frac{\rho_{*}}{\rho_{0}}=\frac{1}{(\gamma^{+}/2)^{1/\gamma^{-}}}\label{eq:流体：等熵：音速状态}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征马赫数]
+\end_layout
+
+\end_inset
+
+根据上述定义，“特征速度 
+\begin_inset Formula $u_{*}$
+\end_inset
+
+”始终等于“特征音速 
+\begin_inset Formula $a_{*}$
+\end_inset
+
+”。为使“特征马赫数 
+\begin_inset Formula $M_{*}$
+\end_inset
+
+”有意义，将其定义为“当前速度 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+”与“特征音速 
+\begin_inset Formula $a_{*}$
+\end_inset
+
+”的绝对比值：
+\begin_inset Formula 
+\[
+M_{*}\coloneqq\abs{\frac{\vec{u}}{a_{*}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+“特征马赫数”与“当前马赫数”的关系为
+\begin_inset Formula 
+\begin{equation}
+\boxed{M_{*}^{2}=\frac{M^{2}\gamma^{+}/2}{1+M^{2}\gamma^{-}/2}}\label{eq:流体：等熵：特征马赫数}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -623,361 +1156,11 @@ status open
 
 \end_layout
 
-\begin_layout Notation
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[跳跃]
-\end_layout
-
-\end_inset
-
-记 
-\begin_inset Formula $[\phi]_{1}^{2}\coloneqq\phi_{2}-\phi_{1}$
-\end_inset
-
-，其中 
-\begin_inset Formula $\phi$
-\end_inset
-
- 为任意物理量。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-对于量热完全气体，将
-\begin_inset Formula 
-\[
-h=c_{p}T\qquad a^{2}=\gamma RT
-\]
-
-\end_inset
-
-代入 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:流体：正激波：方程"
-
-\end_inset
-
- 的第三式可得
-\begin_inset Formula 
-\[
-\left[h+\frac{u^{2}}{2}\right]_{1}^{2}=\left[c_{p}T+\frac{u^{2}}{2}\right]_{1}^{2}=\left[\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}\right]_{1}^{2}=0
-\]
-
-\end_inset
-
-它们都表示“能量守恒”。
-\end_layout
-
-\begin_layout Notation
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-gamma^{
-\backslash
-pm}$]
-\end_layout
-
-\end_inset
-
-在下面的叙述中，将反复出现 
-\begin_inset Formula $\gamma\pm1$
-\end_inset
-
-。为简化书写，引入
-\begin_inset Formula 
-\[
-\gamma^{+}\coloneqq\gamma+1\qquad\gamma^{-}\coloneqq\gamma-1
-\]
-
-\end_inset
-
-显然有
-\begin_inset Formula 
-\[
-\gamma^{+}+\gamma^{-}=2\gamma\qquad\gamma^{+}-\gamma^{-}=2
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-参考状态
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[滞止状态]
-\end_layout
-
-\end_inset
-
-当前流动“等熵地”减速到“速度为零”所得的状态称为 
-\bar under
-滞止 (stagnant) 状态
-\bar default
-。此状态下的各物理量均以“滞止”或“
-\bar under
-总 (total)
-\bar default
-”为前缀，在下标中用 
-\begin_inset Formula $0$
-\end_inset
-
- 表示：
-\begin_inset Formula 
-\begin{equation}
-\frac{a^{2}}{\gamma^{-}}+\frac{u^{2}}{2}=\frac{a_{0}^{2}}{\gamma^{-}}\implies\boxed{\left(\frac{a_{0}}{a}\right)^{2}=\frac{T_{0}}{T}=1+M^{2}\gamma^{-}/2}\label{eq:流体：正激波：滞止温度}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark*
-正激波前后的“滞止音速”和“滞止温度”保持不变：
-\begin_inset Formula 
-\[
-(a_{0})_{1}=(a_{0})_{2}\qquad(T_{0})_{1}=(T_{0})_{2}
-\]
-
-\end_inset
-
-因此可以忽略下标中的 
-\begin_inset Formula $1$
-\end_inset
-
- 或 
-\begin_inset Formula $2$
-\end_inset
-
-。实际上，
-\begin_inset Formula $a$
-\end_inset
-
- 或 
-\begin_inset Formula $T$
-\end_inset
-
- 都是内能的度量，
-\begin_inset Formula $u$
-\end_inset
-
- 是（宏观）动能的度量，
-\begin_inset Formula $a_{0}$
-\end_inset
-
- 或 
-\begin_inset Formula $T_{0}$
-\end_inset
-
- 都是能量（内能与动能之和）的度量。因此“
-\begin_inset Formula $a_{0}$
-\end_inset
-
- 守恒”或“ 
-\begin_inset Formula $T_{0}$
-\end_inset
-
- 守恒”都可以看作是“能量守恒”的另一种表达形式。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark*
-由状态方程 
-\begin_inset Formula $p=\rho RT$
-\end_inset
-
- 及等熵关系式 
-\begin_inset Formula $p=C\rho^{\gamma}$
-\end_inset
-
- 易得
-\begin_inset Formula 
-\begin{equation}
-\frac{p_{0}}{p}=\left(1+M^{2}\gamma^{-}/2\right)^{\gamma/\gamma^{-}}\qquad\frac{\rho_{0}}{\rho}=\left(1+M^{2}\gamma^{-}/2\right)^{1/\gamma^{-}}\label{eq:流体：正激波：滞止压力、密度}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[特征状态]
-\end_layout
-
-\end_inset
-
-当前流动“等熵地”过渡到“速度为音速”所得的状态称为 
-\bar under
-音速 (sonic) 状态
-\bar default
- 或 
-\bar under
-特征 (characteristic) 状态
-\bar default
-。此状态下的各物理量均以“特征”为前缀，在下标中用 
-\begin_inset Formula $*$
-\end_inset
-
- 表示：
-\begin_inset Formula 
-\begin{equation}
-\frac{a_{0}^{2}}{\gamma^{-}}=\frac{a_{*}^{2}}{\gamma^{-}}+\frac{a_{*}^{2}}{2}\implies\boxed{\left(\frac{a_{*}}{a_{0}}\right)^{2}=\frac{T_{*}}{T_{0}}=\frac{2}{\gamma^{+}}}\label{eq:流体：正激波：特征温度}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[特征马赫数]
-\end_layout
-
-\end_inset
-
-根据上述定义，“特征速度 
-\begin_inset Formula $u_{*}$
-\end_inset
-
-”始终等于“特征音速 
-\begin_inset Formula $a_{*}$
-\end_inset
-
-”。为使“特征马赫数”有意义，特别地将其定义为“当前流速 
-\begin_inset Formula $u$
-\end_inset
-
-”与“特征音速 
-\begin_inset Formula $a_{*}$
-\end_inset
-
-”的比值：
-\begin_inset Formula 
-\[
-M_{*}^{2}\coloneqq\left(\frac{u}{a_{*}}\right)^{2}=\left(\frac{u}{a}\frac{a}{a_{0}}\frac{a_{0}}{a_{*}}\right)^{2}=M^{2}\frac{T}{T_{0}}\frac{T_{0}}{T_{*}}
-\]
-
-\end_inset
-
-代入 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:流体：正激波：滞止温度"
-
-\end_inset
-
- 及
-\emph on
- 
-\emph default
-
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:流体：正激波：特征温度"
-
-\end_inset
-
- 可得
-\begin_inset Formula 
-\begin{equation}
-\boxed{M_{*}^{2}=\frac{M^{2}\gamma^{+}/2}{1+M^{2}\gamma^{-}/2}}\label{eq:流体：正激波：特征马赫数}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 物理量比值
 \end_layout
 
 \begin_layout Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Prandtl]
-\end_layout
-
-\end_inset
-
 正激波前后的 
 \begin_inset Formula $a_{0}$
 \end_inset
@@ -1000,16 +1183,8 @@ status open
 
 ），并且与激波前后的速度有如下简单的关系：
 \begin_inset Formula 
-\[
-a_{*}^{2}=u_{1}u_{2}\implies(M_{*})_{1}\cdot(M_{*})_{2}=1
-\]
-
-\end_inset
-
-由此可得
-\begin_inset Formula 
 \begin{equation}
-\boxed{M_{2}^{2}=\frac{1+M_{1}^{2}\gamma^{-}/2}{M_{1}^{2}\gamma-\gamma^{-}/2}}\label{eq:流体：正激波：Prandtl}
+a_{*}^{2}=u_{1}u_{2}\iff(M_{*})_{1}\cdot(M_{*})_{2}=1\label{eq:流体：正激波：特征音速}
 \end{equation}
 
 \end_inset
@@ -1110,17 +1285,17 @@ a_{*}^{2}=u_{1}u_{2}\implies(M_{*})_{1}\cdot(M_{*})_{2}=1
 
 \end_inset
 
-代入“特征马赫数”与“当地马赫数”的关系 
+代入“特征马赫数” 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：特征马赫数"
+reference "eq:流体：等熵：特征马赫数"
 
 \end_inset
 
  即得 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：Prandtl"
+reference "eq:流体：正激波：波后马赫数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1144,19 +1319,138 @@ status open
 
 \begin_layout Plain Layout
 
-[物理量的比值]
+[Prandtl]
 \end_layout
 
 \end_inset
 
-可以由上式及各自与其滞止值的比值得到：
+由上述引理及 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：特征马赫数"
+
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+(M_{*})_{1}\cdot(M_{*})_{2}=\left(\frac{M_{1}^{2}\gamma^{+}/2}{1+M_{1}^{2}\gamma^{-}/2}\right)\cdot\left(\frac{M_{2}^{2}\gamma^{+}/2}{1+M_{2}^{2}\gamma^{-}/2}\right)=1
+\]
+
+\end_inset
+
+由此解得
 \begin_inset Formula 
 \begin{equation}
-\begin{gathered}\frac{u_{1}}{u_{2}}=\frac{\rho_{2}}{\rho_{1}}=\frac{M_{1}^{2}\gamma^{+}/2}{1+M_{1}^{2}\gamma^{-}/2}\\
-\frac{p_{2}}{p_{1}}=\frac{M_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}\qquad\frac{h_{2}}{h_{1}}=\frac{T_{2}}{T_{1}}=\frac{p_{2}/p_{1}}{\rho_{2}/\rho_{1}}
-\end{gathered}
-\label{eq:流体：正激波：物理量比值}
+\boxed{M_{2}^{2}=\frac{1+M_{1}^{2}\gamma^{-}/2}{M_{1}^{2}\gamma-\gamma^{-}/2}}\label{eq:流体：正激波：波后马赫数}
 \end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[物理量比值]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{T_{2}}{T_{1}}=\frac{1+M_{1}^{2}\gamma^{-}/2}{M_{1}^{2}\gamma^{+}/2}\cdot\frac{M_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}\qquad\frac{\rho_{2}}{\rho_{1}}=\frac{M_{1}^{2}\gamma^{+}/2}{1+M_{1}^{2}\gamma^{-}/2}\qquad\frac{p_{2}}{p_{1}}=\frac{M_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}\label{eq:流体：正激波：物理量比值}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+温度比值由能量守恒 
+\begin_inset Formula $(T_{0})_{1}=(T_{0})_{2}$
+\end_inset
+
+、滞止温度 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：滞止状态"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、波后马赫数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：波后马赫数"
+
+\end_inset
+
+ 获得：
+\begin_inset Formula 
+\[
+\frac{T_{2}}{T_{1}}=\frac{T_{2}/(T_{0})_{2}}{T_{1}/(T_{0})_{1}}=\frac{1+M_{1}^{2}\gamma^{-}/2}{1+M_{2}^{2}\gamma^{-}/2}=\frac{1+M_{1}^{2}\gamma^{-}/2}{M_{1}^{2}\gamma^{+}/2}\cdot\frac{M_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}
+\]
+
+\end_inset
+
+密度比值由质量守恒 
+\begin_inset Formula $[\rho u]_{1}^{2}=0$
+\end_inset
+
+、特征音速 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：正激波：特征音速"
+
+\end_inset
+
+、特征马赫数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：特征马赫数"
+
+\end_inset
+
+ 获得：
+\begin_inset Formula 
+\[
+\frac{\rho_{2}}{\rho_{1}}=\frac{u_{1}}{u_{2}}=\frac{(M_{*})_{1}}{(M_{*})_{2}}=(M_{*})_{1}^{2}=\frac{M_{1}^{2}\gamma^{+}/2}{1+M_{1}^{2}\gamma^{-}/2}
+\]
+
+\end_inset
+
+压力比值由以上结果及状态方程 
+\begin_inset Formula $p=\rho RT$
+\end_inset
+
+ 获得：
+\begin_inset Formula 
+\[
+\frac{p_{2}}{p_{1}}=\frac{\rho_{2}}{\rho_{1}}\frac{T_{2}}{T_{1}}=\frac{M_{1}^{2}\gamma-\gamma^{-}/2}{\gamma^{+}/2}
+\]
 
 \end_inset
 
@@ -1367,7 +1661,10 @@ Pitot 管测速
 ，由 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：滞止压力、密度"
+reference "eq:流体：等熵：滞止状态"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -1402,7 +1699,10 @@ M_{\infty}^{2}=\frac{2}{\gamma^{-}}\left(\left(\frac{p_{\text{main}}}{p_{\text{s
 ，由 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：滞止压力、密度"
+reference "eq:流体：等熵：滞止状态"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -1432,7 +1732,7 @@ reference "eq:流体：正激波：物理量比值"
  的关系式 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：Prandtl"
+reference "eq:流体：正激波：波后马赫数"
 
 \end_inset
 
@@ -1865,7 +2165,7 @@ reference "eq:流体：正激波：方程"
 。因此，只需要将 (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:流体：正激波：Prandtl"
+reference "eq:流体：正激波：波后马赫数"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2603,7 +2903,7 @@ reference "eq:流体：声波：马赫锥"
 代入滞止音速 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:流体：正激波：滞止温度"
+reference "eq:流体：等熵：滞止状态"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3290,15 +3590,15 @@ reference "eq:流体：准一维：速度与面积"
 
 \begin_deeper
 \begin_layout Description
-亚音速流 在扩张处（
-\begin_inset Formula $A'>0$
+亚音速流 在收缩处（
+\begin_inset Formula $A'<0$
 \end_inset
 
-）减速（
-\begin_inset Formula $u'<0$
+）加速（
+\begin_inset Formula $u'>0$
 \end_inset
 
-），在收缩处加速。
+），在扩张处减速。
 \end_layout
 
 \begin_layout Description
@@ -3321,11 +3621,105 @@ reference "eq:流体：准一维：速度与面积"
 
 \end_layout
 
+\begin_layout Theorem
+若音速状态发生在横截面积为 
+\begin_inset Formula $A_{*}$
+\end_inset
+
+ 处，则与之等熵的、横截面积为 
+\begin_inset Formula $A$
+\end_inset
+
+ 处的马赫数 
+\begin_inset Formula $M$
+\end_inset
+
+ 是方程
+\begin_inset Formula 
+\begin{equation}
+\left(\frac{A}{A_{*}}\right)^{2}=\frac{1}{M^{2}}\left(\frac{1+M^{2}\gamma^{-}/2}{\gamma^{+}/2}\right)^{\gamma^{+}/\gamma^{-}}\label{eq:流体：准一维：马赫数与面积}
+\end{equation}
+
+\end_inset
+
+的两个解之一。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由质量守恒得 
+\begin_inset Formula $\rho_{*}u_{*}A_{*}=\rho uA$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\frac{A}{A_{*}}=\frac{u_{*}}{u}\frac{\rho_{*}}{\rho}=\frac{1}{M_{*}}\frac{\rho_{*}}{\rho_{0}}\frac{\rho_{0}}{\rho}
+\]
+
+\end_inset
+
+代入特征马赫数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：特征马赫数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、滞止状态值 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：滞止状态"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+、特征状态值 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：音速状态"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-喷管
+超音速喷管
 \end_layout
 
 \begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[喷管、喉部]
+\end_layout
+
+\end_inset
+
 先收缩、后扩张的准一维管称为 
 \bar under
 喷管 (nozzle)
@@ -3402,7 +3796,7 @@ reference "eq:流体：准一维：速度与面积"
 
 \end_layout
 
-\begin_layout Remark*
+\begin_layout Remark
 \begin_inset ERT
 status open
 
@@ -3424,6 +3818,130 @@ A_{\text{i}}/A_{\text{t}}\approx\infty\qquad\begin{bmatrix}u_{\text{i}} & M_{\te
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[质量流率]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dv{m}{t}\coloneqq A\rho u\leq\frac{p_{0}A_{\text{t}}}{\sqrt{T_{0}}}\sqrt{\frac{\gamma/R}{(\gamma^{+}/2)^{\gamma^{+}/\gamma^{-}}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+质量流率最大发生在喉部处于音速状态（
+\begin_inset Formula $A_{\text{t}}=A_{*}$
+\end_inset
+
+）时，代入特征音速及密度 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:流体：等熵：音速状态"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 并凑出 
+\begin_inset Formula $p_{0}=\rho_{0}RT_{0}$
+\end_inset
+
+ 即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[出口状态]
+\end_layout
+
+\end_inset
+
+理想情况下，气体经过喷管后所能达到的出口压力 
+\begin_inset Formula $p_{\text{e}}$
+\end_inset
+
+ 完全由入口状态 
+\begin_inset Formula $p_{\text{i}}$
+\end_inset
+
+ 决定；但外界环境的 
+\bar under
+背景 (background) 压力
+\bar default
+ 
+\begin_inset Formula $p_{\text{b}}$
+\end_inset
+
+ 未必等于 
+\begin_inset Formula $p_{\text{e}}$
+\end_inset
+
+，具体地可分为中的六种情况：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+出口压力至少应满足 
+\begin_inset Formula $p_{\text{b}}<p_{\text{i}}\approx p_{0}$
+\end_inset
+
+，否则流动将反向。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p_{\text{b}}$
+\end_inset
+
+ 略小于 
+\begin_inset Formula $p_{\text{i}}$
+\end_inset
+
+：全程亚音速，速度最大值位于喉部。
+\end_layout
+
+\begin_layout Itemize
+。。。
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
