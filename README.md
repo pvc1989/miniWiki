@@ -40,7 +40,6 @@
 - [数值分析 (Numerical Analysis)](./algorithms/numerical_analysis/README.lyx)
 - [优化方法 (Optimization)](./algorithms/optimization/README.lyx)
 - [有限单元法 (Finite Element Methods)](./algorithms/finite_element/README.lyx)
-- [计算流体动力学 (Computational Fluid Dynamics)](./algorithms/cfd/README.lyx)
 
 ### 编程
 - 设计思想
@@ -59,6 +58,7 @@
   - [LaTeX](./programming/latex/README.md) + [LyX](./programming/latex/README.md#LyX)
 
 ### 工具
+
 - [Gmsh](./tools/gmsh/README.md) (a 3D finite element mesh generator with built-in CAD engine and post-processor)
 - [Linux](./tools/linux/README.md) (a family of open source Unix-like operating systems)
 - [SSH](./tools/ssh.md) (**S**ecure **SH**ell)
