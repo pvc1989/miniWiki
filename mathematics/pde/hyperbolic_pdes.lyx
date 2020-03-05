@@ -9,13 +9,12 @@
 \usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
-\master README.lyx
 \begin_modules
 theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -71,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -91,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -101,14 +101,14 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-双曲型方程的光滑解
+双曲型方程
 \end_layout
 
 \begin_layout Section
 单波方程
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:single_wave"
+name "sec:微分方程：双曲型：单波"
 
 \end_inset
 
@@ -120,9 +120,20 @@ name "sec:single_wave"
 \end_layout
 
 \begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+线性单波
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:single_wave_linear_smooth_initial"
+name "prob:微分方程：双曲型：单波：线性"
 
 \end_inset
 
@@ -130,7 +141,7 @@ name "prob:single_wave_linear_smooth_initial"
 \begin_inset Formula $u\colon\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
 \end_inset
 
-，使其满足常系数「线性平流 (linear advection) 方程
+，使其满足常系数“线性平流 (linear advection) 方程
 \begin_inset Index idx
 status collapsed
 
@@ -140,10 +151,10 @@ PDE!linear advection equation
 
 \end_inset
 
-」：
+”：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\lambda\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:single_wave_linear}
+\left(\partial_{t}+a\partial_{x}\right)u=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:微分方程：双曲型：单波：线性}
 \end{equation}
 
 \end_inset
@@ -151,7 +162,7 @@ PDE!linear advection equation
 及一阶可微的初始条件：
 \begin_inset Formula 
 \begin{equation}
-u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:single_wave_initial}
+u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:微分方程：双曲型：单波：初值}
 \end{equation}
 
 \end_inset
@@ -177,16 +188,16 @@ u(x_{0},t_{0})=u_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)\label{eq:single_wave_
 
  表示时间，则方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 
 \end_inset
 
- 描述了单个微扰波的运动规律，有时也被称作线性「单波 (single wave) 方程」。常系数 
-\begin_inset Formula $\lambda$
+ 描述了单个微扰波的运动规律，有时也被称作线性“单波 (single wave) 方程”。常系数 
+\begin_inset Formula $a$
 \end_inset
 
- 具有「速率 (speed)」的量纲，下面将会看到，它是「波包 (wave packet)」的移动速度，因此将其称作「波速 (wave speed)」是合适的。
+ 具有“速率 (speed)”的量纲，下面将会看到，它是“波包 (wave packet)”的移动速度，因此将其称作“波速 (wave speed)”是合适的。
 \end_layout
 
 \begin_layout Standard
@@ -199,8 +210,8 @@ reference "eq:single_wave_linear"
 \begin_layout Remark*
 在初始条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：初值"
 
 \end_inset
 
@@ -222,15 +233,15 @@ reference "eq:single_wave_initial"
 
  相区分。这种区分在研究初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:single_wave_linear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：单波：线性"
 
 \end_inset
 
  的解与初始条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：初值"
 
 \end_inset
 
@@ -247,15 +258,15 @@ reference "eq:single_wave_initial"
 \begin_layout Lemma
 方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 的「特征线 (characteristic curves)
+ 的“特征线 (characteristic curves)
 \begin_inset Index idx
 status collapsed
 
@@ -265,26 +276,19 @@ characteristic!~ curve
 
 \end_inset
 
-」（即「
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:特征流形"
-
+”（在直线 
+\begin_inset Formula $L(t_{0})\coloneqq\left\{ (x,t):t=t_{0}\right\} $
 \end_inset
 
- (characteristic manifold)」的特例）在直线 
-\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+ 以上的部分）是一族始于直线 
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
- 以上的部分，是一族由 
-\begin_inset Formula $L_{t_{0}}$
+、斜率为 
+\begin_inset Formula $a$
 \end_inset
 
- 发出、斜率为 
-\begin_inset Formula $\lambda$
-\end_inset
-
- 的平行直线。
+ 的平行射线。
 \end_layout
 
 \begin_layout Standard
@@ -304,8 +308,8 @@ reference "def:特征流形"
 
 的定义，方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -317,13 +321,13 @@ noprefix "false"
 \end_inset
 
  的特征线在直线 
-\begin_inset Formula $L_{t_{0}}$
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
  以上的部分
 \begin_inset Formula 
 \[
-C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\} 
+C(x_{0})\coloneqq\left\{ (x,t):\phi(x,t)=0,\ t\ge t_{0};\ \phi(x_{0},t_{0})=0\right\} 
 \]
 
 \end_inset
@@ -332,7 +336,7 @@ C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\}
 \begin_inset Formula 
 \[
 \begin{cases}
-\left(\partial_{t}+\lambda\partial_{x}\right)\phi(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\\
+\left(\partial_{t}+a\partial_{x}\right)\phi=0\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\\
 \phi(x_{0},t_{0})=0
 \end{cases}
 \]
@@ -351,11 +355,11 @@ C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\}
 \begin_inset Formula $x$
 \end_inset
 
- 表示「变量 (variable)」，等号右端的 
+ 表示“变量”，等号右端的 
 \begin_inset Formula $x$
 \end_inset
 
- 表示「函数 (function)」。于是，上述关于 
+ 表示“函数”。于是，上述关于 
 \begin_inset Formula $\phi(x,t)$
 \end_inset
 
@@ -367,7 +371,7 @@ C_{x_{0}}:=\left\{ (x,t):\phi(x,t)=0,\,t\ge t_{0};\,\phi(x_{0},t_{0})=0\right\}
 \begin_inset Formula 
 \[
 \begin{cases}
-\dv*{x(t)}{t}=\lambda\qquad t\in(t_{0},\infty)\\
+\dv*{x(t)}{t}=a\qquad t\in(t_{0},\infty)\\
 x(t=0)=x_{0}
 \end{cases}
 \]
@@ -377,36 +381,36 @@ x(t=0)=x_{0}
 直接积分可得
 \begin_inset Formula 
 \begin{equation}
-x(t)-x_{0}=\lambda\cdot(t-t_{0})\qquad t\in[t_{0},\infty)\label{eq:single_wave_linear_char_curve}
+x(t)-x_{0}=a\cdot(t-t_{0})\qquad t\in[t_{0},\infty)\label{eq:微分方程：双曲型：单波：线性：特征线}
 \end{equation}
 
 \end_inset
 
-它是一条由点 
+它是一条始于 
 \begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
- 发出、斜率为 
-\begin_inset Formula $\lambda$
+、斜率为 
+\begin_inset Formula $a$
 \end_inset
 
- 的直线。若将 
+ 的射线。若将 
 \begin_inset Formula $x_{0}$
 \end_inset
 
  视为可变参数，则这些特征线的集合 
-\begin_inset Formula $\left\{ C_{x_{0}}:x_{0}\in(-\infty,\infty)\right\} $
+\begin_inset Formula $\left\{ C(x_{0}):x_{0}\in(-\infty,\infty)\right\} $
 \end_inset
 
- 就构成了一族由直线 
-\begin_inset Formula $L_{t_{0}}$
+ 就构成了一族始于直线 
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
- 发出、斜率为 
-\begin_inset Formula $\lambda$
+、斜率为 
+\begin_inset Formula $a$
 \end_inset
 
- 的平行直线。
+ 的平行射线。
 \end_layout
 
 \begin_layout Standard
@@ -417,30 +421,45 @@ x(t)-x_{0}=\lambda\cdot(t-t_{0})\qquad t\in[t_{0},\infty)\label{eq:single_wave_l
 \end_layout
 
 \begin_layout Remark*
-在下文中，
-\begin_inset Formula $\lambda(t)$
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性：特征线"
+
 \end_inset
 
- 可能表示「关于 
-\begin_inset Formula $t$
+ 中的 
+\begin_inset Formula $a\cdot(t-t_{0})$
 \end_inset
 
- 的函数 
-\begin_inset Formula $\lambda$
+ 表示 
+\begin_inset Formula $a$
+\end_inset
+
+ 与 
+\begin_inset Formula $(t-t_{0})$
+\end_inset
+
+ 的乘积，为避免与“函数 
+\begin_inset Formula $a$
 \end_inset
 
  在 
 \begin_inset Formula $t$
 \end_inset
 
- 时刻的值」。为了避免混淆，
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear_char_curve"
-
+ 时刻的值 
+\begin_inset Formula $a(t)$
 \end_inset
 
- 式中的乘号不应省略。
+”混淆，这里不应省略 
+\begin_inset Formula $a$
+\end_inset
+
+ 与 
+\begin_inset Formula $(t-t_{0})$
+\end_inset
+
+ 之间的乘号。
 \end_layout
 
 \begin_layout Standard
@@ -453,8 +472,8 @@ reference "eq:single_wave_linear_char_curve"
 \begin_layout Remark*
 若将方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -462,37 +481,37 @@ noprefix "false"
 \end_inset
 
  中的常系数 
-\begin_inset Formula $\lambda$
+\begin_inset Formula $a$
 \end_inset
 
- 放宽为「关于 
+ 放宽为“关于 
 \begin_inset Formula $t$
 \end_inset
 
- 的连续函数」，则由点 
+ 的连续函数”，则由点 
 \begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
  发出发出的特征线 
-\begin_inset Formula $C_{x_{0}}$
+\begin_inset Formula $C(x_{0})$
 \end_inset
 
- 由直线 
+ 由射线 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear_char_curve"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性：特征线"
 
 \end_inset
 
  变为分段光滑的曲线
 \begin_inset Formula 
 \[
-x(t)-x_{0}=\int_{t_{0}}^{t}\lambda(\tau)\dd{\tau}\qquad t\in[t_{0},\infty)
+x(t)-x_{0}=\int_{t_{0}}^{t}a(\tau)\dd{\tau}\qquad t\in[t_{0},\infty)
 \]
 
 \end_inset
 
-由任何两个不同起点 
+始于任何两个不同起点 
 \begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
@@ -500,12 +519,12 @@ x(t)-x_{0}=\int_{t_{0}}^{t}\lambda(\tau)\dd{\tau}\qquad t\in[t_{0},\infty)
 \begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- 发出的特征线 
-\begin_inset Formula $C_{p_{0}}$
+ 的特征线 
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  依然是平行的，因此不会相交：
@@ -528,14 +547,14 @@ p(t)-q(t)=p_{0}-q_{0}\qquad t\in[t_{0},\infty)
 
 \begin_layout Remark*
 若将 
-\begin_inset Formula $\lambda$
+\begin_inset Formula $a$
 \end_inset
 
- 进一步放宽为「关于 
+ 进一步放宽为“关于 
 \begin_inset Formula $x,t$
 \end_inset
 
- 的连续函数」，则关于 
+ 的连续函数”，则关于 
 \begin_inset Formula $x(t)$
 \end_inset
 
@@ -543,14 +562,14 @@ p(t)-q(t)=p_{0}-q_{0}\qquad t\in[t_{0},\infty)
 \begin_inset Formula 
 \[
 \begin{cases}
-\dv*{x(t)}{t}=\lambda\big(x(t),t\big)\qquad t\in(t_{0},\infty)\\
+\dv*{x(t)}{t}=a(x(t),t)\qquad t\in(t_{0},\infty)\\
 x(t=0)=x_{0}
 \end{cases}
 \]
 
 \end_inset
 
-不能由直接积分解出，但依然可以获得定性的结论：由任何两个不同起点 
+不能由直接积分解出，但依然有定性的结论：始于任何两个不同起点 
 \begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
@@ -558,12 +577,12 @@ x(t=0)=x_{0}
 \begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- 发出的特征线 
-\begin_inset Formula $C_{p_{0}}$
+ 的特征线 
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  一般不再平行，但永远不会相交。
@@ -579,15 +598,15 @@ x(t=0)=x_{0}
 \begin_layout Remark*
 经过以上推广，方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 依然是线性的，它的特征线完全由方程的系数决定，而与方程的解无关。在寻找特征线的过程中，已经出现了「特征线法」的影子：将关于 
+ 依然是线性的，它的特征线完全由方程的系数决定，而与方程的解无关。在寻找特征线的过程中，已经出现了“特征线法”的影子：将关于 
 \begin_inset Formula $\phi(x,t)$
 \end_inset
 
@@ -595,7 +614,7 @@ noprefix "false"
 \begin_inset Formula $x(t)$
 \end_inset
 
- 的 ODE 初值问题。对于含两个自变量的双曲型 PDE 初值问题，总是可以利用特征线将其转化为「沿特征线的 ODE 初值问题」，后者的求解往往更加简单。
+ 的 ODE 初值问题。对于含两个自变量的双曲型 PDE 初值问题，总是可以利用特征线将其转化为“沿特征线的 ODE 初值问题”，后者的求解往往更加简单。
 \end_layout
 
 \begin_layout Standard
@@ -608,8 +627,8 @@ noprefix "false"
 \begin_layout Lemma
 初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:single_wave_linear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -629,7 +648,7 @@ noprefix "false"
 \begin_layout Proof
 \begin_inset Formula 
 \[
-\dv{u\big(x(t),t\big)}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+\lambda\pdv{u}{x}=0
+\dv{u(x(t),t)}{t}=\pdv{u}{t}+\dv{x}{t}\pdv{u}{x}=\pdv{u}{t}+a\pdv{u}{x}=0
 \]
 
 \end_inset
@@ -647,8 +666,8 @@ noprefix "false"
 \begin_layout Theorem
 初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:single_wave_linear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -658,7 +677,7 @@ noprefix "false"
  的解为
 \begin_inset Formula 
 \begin{equation}
-\boxed{u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_linear_solution_smooth}
+\boxed{u(x,t)=u_{0}(\underbrace{x-a\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:微分方程：双曲型：单波：线性：光滑解}
 \end{equation}
 
 \end_inset
@@ -674,15 +693,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Remark*
-这个解的物理含义为：「波包 (wave packet)」以恒定的速率 
-\begin_inset Formula $\lambda$
+这个解的物理含义为：“波包 (wave packet)”以恒定的速率 
+\begin_inset Formula $a$
 \end_inset
 
  沿 
 \begin_inset Formula $x$
 \end_inset
 
- 轴移动，并且保持「波形 (wave shape)」不变。这种运动被称为「平流 (advection)」。
+ 轴移动，并且保持“波形 (wave shape)”不变。这种运动被称为“平流 (advection)”。
 \end_layout
 
 \begin_layout Standard
@@ -695,8 +714,8 @@ noprefix "false"
 \begin_layout Remark*
 若方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -714,7 +733,7 @@ noprefix "false"
 ，则以上特征线法依然适用：
 \begin_inset Formula 
 \[
-\dv{u\big(x(t),t\big)}{t}=\pdv{u}{t}+\lambda\pdv{u}{x}=f(t)
+\dv{u(x(t),t)}{t}=\pdv{u}{t}+a\pdv{u}{x}=f(t)
 \]
 
 \end_inset
@@ -722,7 +741,7 @@ noprefix "false"
 只不过沿特征线积分得到的解不再是常量：
 \begin_inset Formula 
 \[
-u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})+\int_{t_{0}}^{t}f(\tau)\dd{\tau}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+u(x,t)=u_{0}(\underbrace{x-a\cdot(t-t_{0})}_{x_{0}})+\int_{t_{0}}^{t}f(\tau)\dd{\tau}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
@@ -741,32 +760,21 @@ u(x,t)=u_{0}(\underbrace{x-\lambda\cdot(t-t_{0})}_{x_{0}})+\int_{t_{0}}^{t}f(\ta
 拟线性一维单波方程
 \end_layout
 
-\begin_layout Standard
-若波速 
-\begin_inset Formula $\lambda$
-\end_inset
+\begin_layout Problem
+\begin_inset ERT
+status open
 
- 不再是常量，而是依赖于 
-\begin_inset Formula $u$
-\end_inset
+\begin_layout Plain Layout
 
- 的函数，则初值问题 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:single_wave_linear_smooth_initial"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 变为
+拟线性单波
 \end_layout
 
-\begin_layout Problem
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:single_wave_quasilinear_smooth_initial"
+name "prob:微分方程：双曲型：单波：拟线性"
 
 \end_inset
 
@@ -774,7 +782,7 @@ name "prob:single_wave_quasilinear_smooth_initial"
 \begin_inset Formula $u\colon\mathbb{R}_{x}\times\mathbb{R}_{t}\to\mathbb{R}_{u}$
 \end_inset
 
-，使其满足「拟线性 (quasi-linear) 单波方程
+，使其满足“拟线性 (quasi-linear) 单波方程
 \begin_inset Index idx
 status open
 
@@ -784,25 +792,25 @@ PDE!quasilinear wave equation
 
 \end_inset
 
-」
+”
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\lambda(u)\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:single_wave_quasilinear}
+\left(\partial_{t}+a(u)\partial_{x}\right)u=0\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)\label{eq:微分方程：双曲型：单波：拟线性}
 \end{equation}
 
 \end_inset
 
-及一阶可微的初始条件（
+及一阶可微的初始条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：初值"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）。
+。
 \end_layout
 
 \begin_layout Standard
@@ -813,8 +821,26 @@ noprefix "false"
 \end_layout
 
 \begin_layout Remark*
-最简单的情形为 
-\begin_inset Formula $\lambda(u)=ku$
+与初值问题 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "prob:微分方程：双曲型：单波：线性"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 相比，这里只是将波速 
+\begin_inset Formula $a$
+\end_inset
+
+ 放宽为依赖于 
+\begin_inset Formula $u$
+\end_inset
+
+ 的函数，最简单的情形为 
+\begin_inset Formula $a(u)=ku$
 \end_inset
 
 ，其中 
@@ -826,17 +852,17 @@ noprefix "false"
 \end_inset
 
  即 
-\begin_inset Formula $\lambda(u)=1\cdot u$
+\begin_inset Formula $a(u)=1\cdot u$
 \end_inset
 
 ，则方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_quasilinear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：拟线性"
 
 \end_inset
 
- 被称为「无黏 Burgers 方程
+ 变为“无黏 Burgers 方程
 \begin_inset Index idx
 status collapsed
 
@@ -846,27 +872,19 @@ PDE!Burgers equation!inviscid ~
 
 \end_inset
 
-」。未知函数 
+”。未知函数 
 \begin_inset Formula $u$
 \end_inset
 
- 不一定代表
-\emph on
-速率
-\emph default
-，而 
+ 不一定代表“速率”，但 
 \begin_inset Formula $ku$
 \end_inset
 
- 必须具有
-\emph on
-速率
-\emph default
-的量纲，因此即使 
-\begin_inset Formula $k=1$
+ 必须具有“速率”的量纲，故不应省略 
+\begin_inset Formula $k$
 \end_inset
 
- 也应当将其写出。
+。
 \end_layout
 
 \begin_layout Standard
@@ -883,38 +901,46 @@ PDE!Burgers equation!inviscid ~
 
  内，方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_quasilinear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：拟线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 的特征线在直线 
-\begin_inset Formula $L_{t_{0}}:=\left\{ (x,t):t=t_{0}\right\} $
+ 的特征线（在直线 
+\begin_inset Formula $L(t_{0})\coloneqq\left\{ (x,t):t=t_{0}\right\} $
 \end_inset
 
- 以上的部分，是一族由 
-\begin_inset Formula $L_{t_{0}}$
+ 以上的部分）是一族由 
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
  发出、斜率为 
-\begin_inset Formula $\lambda(u_{0})$
+\begin_inset Formula $a(u_{0})$
 \end_inset
 
  的直线：
-\end_layout
-
-\begin_layout Lemma
 \begin_inset Formula 
-\begin{equation}
-x(t)-x_{0}=\lambda(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})\label{eq:single_wave_quasilinear_char_curve}
-\end{equation}
+\[
+x(t)-x_{0}=a(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})
+\]
 
 \end_inset
 
-由任何两个不同起点 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+始于任何两个不同起点 
 \begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
@@ -922,12 +948,12 @@ x(t)-x_{0}=\lambda(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})\label{eq:single_
 \begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- 发出的特征线 
-\begin_inset Formula $C_{p_{0}}$
+ 的特征线 
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  一般不再平行，但在 
@@ -947,8 +973,8 @@ x(t)-x_{0}=\lambda(u_{0})\cdot(t-t_{0})\qquad t\in[t_{0},t_{*})\label{eq:single_
 \begin_layout Lemma
 初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_quasilinear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：拟线性"
 
 \end_inset
 
@@ -965,8 +991,8 @@ reference "eq:single_wave_quasilinear"
 \begin_layout Theorem
 初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:single_wave_quasilinear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：单波：拟线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -980,12 +1006,12 @@ noprefix "false"
  内可以表示为隐函数
 \begin_inset Formula 
 \begin{equation}
-\boxed{u(x,t)=u_{0}\big(\underbrace{x-\lambda\big(u(x,t)\big)\cdot(t-t_{0})}_{x_{0}}\big)}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:single_wave_quasilinear_solution_smooth}
+\boxed{u(x,t)=u_{0}(\underbrace{x-a(u(x,t))\cdot(t-t_{0})}_{x_{0}})}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},t_{*})\label{eq:微分方程：双曲型：单波：拟线性：光滑解}
 \end{equation}
 
 \end_inset
 
-它是一阶可微的函数，因此被称为「光滑 (smooth) 解」。
+它是一阶可微的函数，因此被称为“光滑 (smooth) 解”。
 \end_layout
 
 \begin_layout Standard
@@ -997,24 +1023,17 @@ noprefix "false"
 
 \begin_layout Subsection
 光滑解的破裂
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:smooth_solution_breaking"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
 光滑解 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_quasilinear_solution_smooth"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：拟线性：光滑解"
 
 \end_inset
 
- 成立的前提为：由任何两个不同起点 
+ 成立的前提为：始于任何两个不同起点 
 \begin_inset Formula $(p_{0},t_{0})$
 \end_inset
 
@@ -1022,19 +1041,19 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 \begin_inset Formula $(q_{0},t_{0})$
 \end_inset
 
- 发出的特征线 
-\begin_inset Formula $C_{p_{0}}$
+ 的特征线 
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  在充分小的时段 
 \begin_inset Formula $[t_{0},t_{*})$
 \end_inset
 
- 内不会相交。本节将讨论「充分小」的确切含义，亦即 
+ 内不会相交。本节将讨论“充分小”的确切含义，亦即 
 \begin_inset Formula $t_{*}$
 \end_inset
 
@@ -1043,11 +1062,11 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 \end_inset
 
 ，则 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  是否相交只可能有以下三种情况：
@@ -1055,23 +1074,23 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)>\lambda\big(u_{0}(q_{0})\big)$
+\begin_inset Formula $a(u_{0}(p_{0}))>a(u_{0}(q_{0}))$
 \end_inset
 
 ，则 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  比 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  更贴近 
-\begin_inset Formula $L_{t_{0}}$
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
 ，二者相交于 
-\begin_inset Formula $L_{t_{0}}$
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
  上方。
@@ -1079,23 +1098,23 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)<\lambda\big(u_{0}(q_{0})\big)$
+\begin_inset Formula $a(u_{0}(p_{0}))<a(u_{0}(q_{0}))$
 \end_inset
 
 ，则 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  比 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  更偏离 
-\begin_inset Formula $L_{t_{0}}$
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
 ，二者相交于 
-\begin_inset Formula $L_{t_{0}}$
+\begin_inset Formula $L(t_{0})$
 \end_inset
 
  下方。
@@ -1103,15 +1122,15 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $\lambda\big(u_{0}(p_{0})\big)=\lambda\big(u_{0}(q_{0})\big)$
+\begin_inset Formula $a(u_{0}(p_{0}))=a(u_{0}(q_{0}))$
 \end_inset
 
 ，则 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  平行，二者永远不会相交。
@@ -1125,14 +1144,10 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 \end_layout
 
 \begin_layout Standard
-利用
-\emph on
-链式求导法则
-\emph default
-
+利用“链式求导法则”
 \begin_inset Formula 
 \begin{equation}
-\dv{\lambda\big(u_{0}(x_{0})\big)}{x_{0}}:=\dv{\lambda(u_{0})}{u_{0}}\dv{u_{0}(x_{0})}{x_{0}}\label{eq:chain_rule}
+\dv{a(u_{0}(x_{0}))}{x_{0}}=\dv{a(u_{0})}{u_{0}}\dv{u_{0}(x_{0})}{x_{0}}\label{eq:微分方程：双曲型：单波：链式求导}
 \end{equation}
 
 \end_inset
@@ -1146,7 +1161,7 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 
 \begin_layout Theorem
 设 
-\begin_inset Formula $p_{0},q_{0}\in\Omega$
+\begin_inset Formula $(p_{0},q_{0})\in\Omega^{2}$
 \end_inset
 
  且 
@@ -1157,10 +1172,10 @@ reference "eq:single_wave_quasilinear_solution_smooth"
 \begin_inset Formula 
 \[
 \begin{cases}
-\forall x_{0}\in\Omega:\dv*{\lambda}{x_{0}}\ge0\implies\forall t\in[t_{0},\infty):p(t)<q(t)\\
-\forall x_{0}\in\Omega:\dv*{\lambda}{x_{0}}<0\implies\exists t_{*}>t_{0}:\begin{cases}
+\forall x_{0}\in\Omega\colon\dv*{a}{x_{0}}\ge0\implies\forall t\in[t_{0},\infty)\colon p(t)<q(t)\\
+\forall x_{0}\in\Omega\colon\dv*{a}{x_{0}}<0\implies\exists t_{*}>t_{0}\colon\begin{cases}
 p(t_{*})=q(t_{*})\\
-\forall t\in[t_{0},t_{*}):p(t)<q(t)
+t\in[t_{0},t_{*})\implies p(t)<q(t)
 \end{cases}
 \end{cases}
 \]
@@ -1179,7 +1194,7 @@ p(t_{*})=q(t_{*})\\
 
 \begin_layout Proof
 由 
-\begin_inset Formula $\dv*{x}{t}=\lambda(u)$
+\begin_inset Formula $\dv*{x}{t}=a(u)$
 \end_inset
 
  及 
@@ -1189,17 +1204,17 @@ p(t_{*})=q(t_{*})\\
  可得
 \begin_inset Formula 
 \[
-\dv{\big(q(t)-p(t)\big)}{t}=\dv{q(t)}{t}-\dv{p(t)}{t}=\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)
+\dv{(q(t)-p(t))}{t}=\dv{q(t)}{t}-\dv{p(t)}{t}=a(u_{0}(q_{0}))-a(u_{0}(p_{0}))
 \]
 
 \end_inset
 
 等式右端是定值，它的正负号决定了特征线 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  是否会相交：
@@ -1208,23 +1223,23 @@ p(t_{*})=q(t_{*})\\
 \begin_deeper
 \begin_layout Itemize
 若 
-\begin_inset Formula $\dv*{\lambda}{x_{0}}\ge0$
+\begin_inset Formula $\forall x_{0}\in\Omega\colon\dv*{a}{x_{0}}\ge0$
 \end_inset
 
- 则
+，则
 \begin_inset Formula 
 \[
-p_{0}<q_{0}\implies\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)\ge0\implies\dv{\big(q(t)-p(t)\big)}{t}\ge0
+p_{0}<q_{0}\implies a(u_{0}(q_{0}))-a(u_{0}(p_{0}))\ge0\implies\dv{(q(t)-p(t))}{t}\ge0
 \]
 
 \end_inset
 
 其几何意义为：特征线 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  平行或发散，二者在 
@@ -1236,33 +1251,33 @@ p_{0}<q_{0}\implies\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)\g
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $\dv*{\lambda}{x_{0}}<0$
+\begin_inset Formula $\forall x_{0}\in\Omega\colon\dv*{a}{x_{0}}<0$
 \end_inset
 
- 则
+，则
 \begin_inset Formula 
 \[
-p_{0}<q_{0}\implies\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)<0\implies\dv{\big(q(t)-p(t)\big)}{t}<0
+p_{0}<q_{0}\implies a(u_{0}(q_{0}))-a(u_{0}(p_{0}))<0\implies\dv{(q(t)-p(t))}{t}<0
 \]
 
 \end_inset
 
 其几何意义为：特征线 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  以恒定的速率汇聚，二者相交的时刻 
 \begin_inset Formula $t_{*}$
 \end_inset
 
- 可以由以下代数方程
+ 可以由代数方程
 \begin_inset Formula 
 \[
-p(t_{*})=q(t_{*})\iff p_{0}+\lambda\big(u_{0}(p_{0})\big)\cdot(t_{*}-t_{0})=q_{0}+\lambda\big(u_{0}(q_{0})\big)\cdot(t_{*}-t_{0})
+p(t_{*})=q(t_{*})\iff p_{0}+a(u_{0}(p_{0}))\cdot(t_{*}-t_{0})=q_{0}+a(u_{0}(q_{0}))\cdot(t_{*}-t_{0})
 \]
 
 \end_inset
@@ -1270,7 +1285,7 @@ p(t_{*})=q(t_{*})\iff p_{0}+\lambda\big(u_{0}(p_{0})\big)\cdot(t_{*}-t_{0})=q_{0
 解得：
 \begin_inset Formula 
 \[
-t_{*}=t_{0}-\frac{q_{0}-p_{0}}{\lambda\big(u_{0}(q_{0})\big)-\lambda\big(u_{0}(p_{0})\big)}>t_{0}
+t_{*}=t_{0}-\frac{q_{0}-p_{0}}{a(u_{0}(q_{0}))-a(u_{0}(p_{0}))}>t_{0}
 \]
 
 \end_inset
@@ -1298,11 +1313,11 @@ status open
 \end_inset
 
 在 
-\begin_inset Formula $C_{p_{0}}$
+\begin_inset Formula $C(p_{0})$
 \end_inset
 
  与 
-\begin_inset Formula $C_{q_{0}}$
+\begin_inset Formula $C(q_{0})$
 \end_inset
 
  的交点 
@@ -1313,33 +1328,29 @@ status open
 \begin_inset Formula $u(x_{*},t_{*})$
 \end_inset
 
- 的值有两种可能：
-\begin_inset Formula 
-\[
-u(x_{*},t_{*})=u_{0}(p_{0})\qquad u(x_{*},t_{*})=u_{0}(q_{0})
-\]
-
+ 的值有 
+\begin_inset Formula $u_{0}(p_{0})$
 \end_inset
 
-任给的初始条件 
+ 或 
+\begin_inset Formula $u_{0}(q_{0})$
+\end_inset
+
+ 这两种可能。任给的初始条件 
 \begin_inset Formula $u_{0}(x_{0})$
 \end_inset
 
- 通常不能确保它们相等，从而导致
-\emph on
-函数值出现第一类间断
-\emph default
-，因此光滑解（
+ 通常不能确保它们相等，从而导致函数值发生跳跃，因此光滑解 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_quasilinear_solution_smooth"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：拟线性：光滑解"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）至晚在 
+ 至晚在 
 \begin_inset Formula $t_{*}$
 \end_inset
 
@@ -1351,14 +1362,14 @@ noprefix "false"
 \begin_inset Formula $t_{*}$
 \end_inset
 
- 时刻，它们的下确界就是（由 
+ 时刻，它们的下确界就是（始于 
 \begin_inset Formula $\Omega$
 \end_inset
 
- 发出的）光滑解的「破裂时刻 (breaking moment)」：
+ 的）光滑解的“破裂时刻 (breaking moment)”：
 \begin_inset Formula 
 \[
-t_{b}(\Omega):=\inf\left\{ t_{*}(p_{0},q_{0}):p_{0},q_{0}\in\Omega,\,p_{0}<q_{0}\right\} \qquad\forall x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+t_{\text{b}}(\Omega)\coloneqq\inf_{p_{0},q_{0}}\left\{ t_{*}(p_{0},q_{0}):(p_{0},q_{0})\in\Omega^{2},\ p_{0}<q_{0}\right\} 
 \]
 
 \end_inset
@@ -1373,50 +1384,56 @@ t_{b}(\Omega):=\inf\left\{ t_{*}(p_{0},q_{0}):p_{0},q_{0}\in\Omega,\,p_{0}<q_{0}
 
 \end_layout
 
-\begin_layout Remark*
-直接套用上述定义通常难以算出 
-\begin_inset Formula $t_{b}$
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[计算破裂时刻]
+\end_layout
+
 \end_inset
 
- 的值。考虑到光滑解破裂的实质是「函数值出现第一类间断」，这意味着 
+直接套用上述定义通常难以算出 
+\begin_inset Formula $t_{\text{b}}$
+\end_inset
+
+ 的值。考虑到光滑解破裂的实质是“函数值发生跳跃”，这意味着 
 \begin_inset Formula $\pdv*{u}{x}\to\infty$
 \end_inset
 
 ，于是寻找 
-\begin_inset Formula $t_{b}$
+\begin_inset Formula $t_{\text{b}}$
 \end_inset
 
  的问题就转化为寻找 
 \begin_inset Formula $\pdv*{u}{x}\to\infty$
 \end_inset
 
- 的条件。为此，利用
-\emph on
-隐函数求导法则
-\emph default
-计算光滑解的偏导数：
+ 的条件。为此，先用“隐函数求导法则”计算光滑解的偏导数：
 \begin_inset Formula 
 \[
-\pdv{u(x,t)}{x}=\left(1-\dv{\lambda(u)}{u}\pdv{u(x,t)}{x}(t-t_{0})\right)\dv{u_{0}}{x_{0}}
+\pdv{u(x,t)}{x}=\left(1-\dv{a(u)}{u}\pdv{u(x,t)}{x}(t-t_{0})\right)\dv{u_{0}}{x_{0}}
 \]
 
 \end_inset
 
-利用 
+在用 
 \begin_inset Formula $u(x,t)=u_{0}(x_{0})$
 \end_inset
 
  及链式求导法则 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:chain_rule"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：链式求导"
 
 \end_inset
 
  可得
 \begin_inset Formula 
 \[
-\pdv{u(x,t)}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{\lambda}{x_{0}}}
+\pdv{u(x,t)}{x}=\frac{\dv*{u_{0}}{x_{0}}}{1+(t-t_{0})\dv*{a}{x_{0}}}
 \]
 
 \end_inset
@@ -1425,30 +1442,30 @@ reference "eq:chain_rule"
 \begin_inset Formula $\pdv*{u}{x}\to\infty$
 \end_inset
 
-，此即光滑解破裂的充分条件：
+，此即光滑解破裂的（充分）条件：
 \begin_inset Formula 
 \[
-t_{b}(x_{0})=t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}
+t_{\text{b}}(x_{0})=t_{0}-\left(\dv*{a}{x_{0}}\right)^{-1}
 \]
 
 \end_inset
 
-这是由点 
+这是始于点 
 \begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
- 发出的特征线 
-\begin_inset Formula $C_{x_{0}}$
+ 的特征线 
+\begin_inset Formula $C(x_{0})$
 \end_inset
 
- 与其他特征线相交的时刻。它的下确界就是（由 
+ 与其他特征线相交的时刻。它的下确界就是（始于 
 \begin_inset Formula $\Omega$
 \end_inset
 
- 发出的）光滑解的破裂时刻
+ 的）光滑解的破裂时刻
 \begin_inset Formula 
 \[
-\boxed{t_{b}(\Omega)=\inf_{x_{0}\in\Omega}\left\{ t_{0}-\frac{1}{\dv*{\lambda}{x_{0}}}\right\} }\qquad\forall x_{0}\in\Omega:\dv{\lambda}{x_{0}}<0
+\boxed{t_{\text{b}}(\Omega)=\inf_{x_{0}\in\Omega}\left\{ t_{0}-\left(\dv*{a}{x_{0}}\right)^{-1}\right\} }
 \]
 
 \end_inset
@@ -1482,30 +1499,18 @@ status open
 
 \end_inset
 
-一维无限长均匀弹性弦的横向微幅振动是由「二阶线性波动方程」描述的：
+一维无限长均匀弹性弦的横向微幅振动是由“二阶线性波动方程”描述的：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}^{2}-\lambda^{2}\partial_{x}\right)u(x,t)=0\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)\label{eq:double_wave_linear}
+\left(\partial_{t}^{2}-a^{2}\partial_{x}\right)u=0\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)\label{eq:微分方程：双曲型：双波}
 \end{equation}
 
 \end_inset
 
-其中 
-\begin_inset Formula $\lambda^{2}$
-\end_inset
-
- 是弦的张力 
-\begin_inset Formula $T$
-\end_inset
-
- 与质量线密度 
-\begin_inset Formula $\rho$
-\end_inset
-
- 的比值。相应的初始条件由「初始位移」和「初始速度」共同构成：
+相应的初始条件由“初始位移”和“初始速度”共同构成：
 \begin_inset Formula 
 \begin{equation}
-u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)\label{eq:double_wave_initial}
+u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)\label{eq:微分方程：双曲型：双波：初值}
 \end{equation}
 
 \end_inset
@@ -1523,18 +1528,18 @@ u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)\label{eq:double_wave_initial}
 \begin_layout Solution*
 方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:double_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：双波"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 中的二阶微分算符可以分解为两个一阶微分算符的「乘积」：
+ 中的二阶微分算符可以分解为两个一阶微分算符的“乘积”：
 \begin_inset Formula 
 \[
-\partial_{t}^{2}-\lambda^{2}\partial_{x}=\left(\partial_{t}-\lambda\partial_{x}\right)\left(\partial_{t}+\lambda\partial_{x}\right)
+\partial_{t}^{2}-a^{2}\partial_{x}=\left(\partial_{t}-a\partial_{x}\right)\left(\partial_{t}+a\partial_{x}\right)
 \]
 
 \end_inset
@@ -1544,15 +1549,15 @@ noprefix "false"
 \[
 \begin{bmatrix}\xi\\
 \eta
-\end{bmatrix}=\begin{bmatrix}x+\lambda t\\
-x-\lambda t
+\end{bmatrix}\coloneqq\begin{bmatrix}x+at\\
+x-at
 \end{bmatrix}\implies\begin{bmatrix}\partial_{t}\\
 \partial_{x}
 \end{bmatrix}=\begin{bmatrix}\partial_{t}\xi & \partial_{t}\eta\\
 \partial_{x}\xi & \partial_{x}\eta
 \end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
 \partial_{\eta}
-\end{bmatrix}=\begin{bmatrix}\lambda & -\lambda\\
+\end{bmatrix}=\begin{bmatrix}a & -a\\
 1 & 1
 \end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
 \partial_{\eta}
@@ -1562,20 +1567,20 @@ x-\lambda t
 \end_inset
 
 只要该变换是非退化的，即 
-\begin_inset Formula $\lambda\ne0$
+\begin_inset Formula $a\ne0$
 \end_inset
 
 ，就有
 \begin_inset Formula 
 \[
-\begin{bmatrix}\partial_{t}-\lambda\partial_{x}\\
-\partial_{x}+\lambda\partial_{x}
-\end{bmatrix}=\begin{bmatrix}1 & -\lambda\\
-1 & +\lambda
+\begin{bmatrix}\partial_{t}-a\partial_{x}\\
+\partial_{x}+a\partial_{x}
+\end{bmatrix}=\begin{bmatrix}1 & -a\\
+1 & +a
 \end{bmatrix}\begin{bmatrix}\partial_{t}\\
 \partial_{x}
-\end{bmatrix}=\begin{bmatrix} & -2\lambda\\
-2\lambda
+\end{bmatrix}=\begin{bmatrix} & -2a\\
+2a
 \end{bmatrix}\begin{bmatrix}\partial_{\xi}\\
 \partial_{\eta}
 \end{bmatrix}
@@ -1585,15 +1590,15 @@ x-\lambda t
 
 于是可以将方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:double_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：双波"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 化为「标准 (canonical) 形式」：
+ 化为“标准 (canonical) 形式”：
 \begin_inset Formula 
 \[
 \partial_{\xi}\partial_{\eta}u=0
@@ -1604,7 +1609,7 @@ noprefix "false"
 它的通解为：
 \begin_inset Formula 
 \[
-u(x,t)=f(\xi)+g(\eta)=f(x+\lambda t)+g(x-\lambda t)
+u(x,t)=f(\xi)+g(\eta)=f(x+at)+g(x-at)
 \]
 
 \end_inset
@@ -1615,8 +1620,8 @@ u(x,t)=f(\xi)+g(\eta)=f(x+\lambda t)+g(x-\lambda t)
 
  可以是任何一阶可微的一元函数。代入初始条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:double_wave_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：双波：初值"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1630,13 +1635,13 @@ noprefix "false"
 ，从而得到原初值问题的解：
 \begin_inset Formula 
 \[
-u(x,t)=\frac{\phi(x+\lambda t)+\phi(x-\lambda t)}{2}+\frac{1}{2\lambda}\int_{x-\lambda t}^{x+\lambda t}\psi(\zeta)\dd{\zeta}
+u(x,t)=\frac{\phi(x+at)+\phi(x-at)}{2}+\frac{1}{2a}\int_{x-at}^{x+at}\psi(\zeta)\dd{\zeta}
 \]
 
 \end_inset
 
-它表示两个（线性）波分别以速度 
-\begin_inset Formula $\pm\lambda$
+它表示两个独立的（线性）波分别以速度 
+\begin_inset Formula $\pm a$
 \end_inset
 
  沿 
@@ -1666,35 +1671,61 @@ u(x,t)=\frac{\phi(x+\lambda t)+\phi(x-\lambda t)}{2}+\frac{1}{2\lambda}\int_{x-\
 \begin_inset Formula $U_{1},U_{2}$
 \end_inset
 
-，并将二阶交叉导数的协调关系 
-\begin_inset Formula $\partial_{t}\partial_{x}u=\partial_{x}\partial_{t}u$
-\end_inset
-
- 视为独立于原始方程的另一个（关于 
-\begin_inset Formula $U_{1},U_{2}$
-\end_inset
-
- 的二阶）方程，则二阶偏微分方程（
+，则二阶 PDE 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:double_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：双波"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）可以化为一阶偏微分方程组：
+ 可以降为一阶：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\begin{bmatrix} & -\lambda^{2}\\
--1
-\end{bmatrix}\partial_{x}\right)\begin{bmatrix}v(x,t)\\
-w(x,t)
+\partial_{t}U_{1}-a^{2}\partial_{x}U_{2}=0
+\]
+
+\end_inset
+
+再将二阶交叉导数的协调关系 
+\begin_inset Formula $\partial_{t}\partial_{x}u=\partial_{x}\partial_{t}u$
+\end_inset
+
+ 视为独立于原方程的另一个关于 
+\begin_inset Formula $U_{1},U_{2}$
+\end_inset
+
+ 的一阶 PDE：
+\begin_inset Formula 
+\[
+\partial_{t}U_{2}=\partial_{x}U_{1}
+\]
+
+\end_inset
+
+则二阶偏微分方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：双波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可以化为一阶偏微分方程组：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{t} & -a^{2}\partial_{x}\\
+-\partial_{t} & \partial_{x}
+\end{bmatrix}\begin{bmatrix}U_{1}\\
+U_{2}
 \end{bmatrix}=\begin{bmatrix}0\\
 0
-\end{bmatrix}\qquad\begin{bmatrix}v(x,t=0)\\
-w(x,t=0)
+\end{bmatrix}\qquad\begin{bmatrix}U_{1}(x,t=0)\\
+U_{2}(x,t=0)
 \end{bmatrix}=\begin{bmatrix}\psi(x)\\
 \dv*{\phi(x)}{x}
 \end{bmatrix}
@@ -1702,11 +1733,11 @@ w(x,t=0)
 
 \end_inset
 
-本章剩余内容将围绕这种（关于 
+本章剩余部分都将讨论这种（关于 
 \begin_inset Formula $\forall n\in\mathbb{N}$
 \end_inset
 
- 个未知函数的）方程组展开详细讨论。
+ 个未知函数的）方程组。
 \end_layout
 
 \begin_layout Standard
@@ -1729,7 +1760,7 @@ w(x,t=0)
 \end_inset
 
  个未知函数 
-\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ U_{i}(x,t)\right\} _{i=1}^{n}$
 \end_inset
 
  的一阶偏微分方程组来描写：
@@ -1740,20 +1771,20 @@ w(x,t=0)
 \begin_inset Formula $n$
 \end_inset
 
- 个独立的（形如 
+ 个独立的线性单波方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-）线性单波方程构成的线性方程组：
+ 构成的线性方程组：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\lambda_{i}\partial_{x}\right)u_{i}(x,t)=0\qquad i=1,\dots,n
+\left(\partial_{t}+a_{i}\partial_{x}\right)U_{i}(x,t)=0\qquad i=1,\dots,n
 \]
 
 \end_inset
@@ -1761,7 +1792,7 @@ noprefix "false"
 各未知函数可以独立地解出，具体方法已在《
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:single_wave"
+reference "sec:微分方程：双曲型：单波"
 
 \end_inset
 
@@ -1776,7 +1807,7 @@ reference "sec:single_wave"
  的导数按线性组合：
 \begin_inset Formula 
 \[
-\partial_{t}u_{i}(x,t)+\sum_{k=1}^{n}a_{ik}\partial_{x}u_{k}(x,t)=0\qquad i=1,\dots,n
+\partial_{t}U_{i}(x,t)+\sum_{k=1}^{n}A_{ik}\partial_{x}U_{k}(x,t)=0\qquad i=1,\dots,n
 \]
 
 \end_inset
@@ -1784,7 +1815,7 @@ reference "sec:single_wave"
 各未知函数不能独立地解出，但在某些情况下，可以将其转化为第一种情形，具体条件及方法将在《
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:multi_wave_system_linear"
+reference "sec:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1802,7 +1833,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-与线性代数方程组类似，偏微分方程组也可以写成更紧凑的矩阵形式。在数学和物理文献中，矩阵记法有多种不同风格。本文采用由 
+与线性代数方程组类似，偏微分方程组也可以写成更紧凑的矩阵形式。在数学、物理文献中，矩阵记法有多种不同风格。本章采用由 
 \begin_inset CommandInset href
 LatexCommand href
 name "Dirac"
@@ -1822,19 +1853,19 @@ literal "false"
 
  改进的 bra-ket 记号。表 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:matrix_notation"
+LatexCommand eqref
+reference "tab:微分方程：双曲型：矩阵记法"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 列出了本文用到的主要符号，其中 
+ 列出了本章用到的主要符号，其中 
 \begin_inset Formula $*,\dagger$
 \end_inset
 
- 分别表示复数的共轭与复数矩阵的共轭转置。
+ 分别表示“复数的共轭”与“复数矩阵的共轭转置”。
 \end_layout
 
 \begin_layout Standard
@@ -1856,7 +1887,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:matrix_notation"
+name "tab:微分方程：双曲型：矩阵记法"
 
 \end_inset
 
@@ -1898,10 +1929,10 @@ name "tab:matrix_notation"
 \SpecialChar LaTeX
  命令
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
-部分命令由
+部分命令取自
 \family typewriter
  
 \begin_inset CommandInset href
@@ -1914,7 +1945,7 @@ literal "false"
 
 
 \family default
- 提供。
+ 宏包。
 \end_layout
 
 \end_inset
@@ -1939,7 +1970,7 @@ literal "false"
 \begin_inset Text
 
 \begin_layout Plain Layout
-column matrix
+列阵
 \end_layout
 
 \end_inset
@@ -1973,9 +2004,9 @@ ket{U}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\begin{bmatrix}u_{1}\\
+\begin_inset Formula $\begin{bmatrix}U_{1}\\
 \vdots\\
-u_{n}
+U_{n}
 \end{bmatrix}$
 \end_inset
 
@@ -1990,7 +2021,7 @@ u_{n}
 \begin_inset Text
 
 \begin_layout Plain Layout
-column basis
+列基
 \end_layout
 
 \end_inset
@@ -1999,7 +2030,7 @@ column basis
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ket{k}$
+\begin_inset Formula $\ket{k}\equiv\ket{e_{k}}$
 \end_inset
 
 
@@ -2032,7 +2063,7 @@ ket{k}
 \begin_inset Formula $1$
 \end_inset
 
- 其余各行为 
+、其余各行为 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2047,7 +2078,7 @@ ket{k}
 \begin_inset Text
 
 \begin_layout Plain Layout
-row matrix
+行阵
 \end_layout
 
 \end_inset
@@ -2081,7 +2112,7 @@ bra{U}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\begin{bmatrix}u_{1}^{*} & \cdots & u_{n}^{*}\end{bmatrix}\equiv\ket{U}^{\dagger}$
+\begin_inset Formula $\begin{bmatrix}U_{1}^{*} & \cdots & U_{n}^{*}\end{bmatrix}\equiv\ket{U}^{\dagger}$
 \end_inset
 
 
@@ -2095,7 +2126,7 @@ bra{U}
 \begin_inset Text
 
 \begin_layout Plain Layout
-row basis
+行基
 \end_layout
 
 \end_inset
@@ -2104,7 +2135,7 @@ row basis
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\bra{i}$
+\begin_inset Formula $\bra{i}\equiv\bra{e_{i}}$
 \end_inset
 
 
@@ -2137,7 +2168,7 @@ bra{i}
 \begin_inset Formula $1$
 \end_inset
 
- 其余各行为 
+、其余各行为 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2152,7 +2183,7 @@ bra{i}
 \begin_inset Text
 
 \begin_layout Plain Layout
-square matrix
+方阵
 \end_layout
 
 \end_inset
@@ -2186,9 +2217,9 @@ underline{A}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\begin{bmatrix}a_{11} & \cdots & a_{1n}\\
+\begin_inset Formula $\begin{bmatrix}A_{11} & \cdots & A_{1n}\\
 \vdots &  & \vdots\\
-a_{n1} & \cdots & a_{nn}
+A_{n1} & \cdots & A_{nn}
 \end{bmatrix}$
 \end_inset
 
@@ -2203,7 +2234,7 @@ a_{n1} & \cdots & a_{nn}
 \begin_inset Text
 
 \begin_layout Plain Layout
-inner product
+内积
 \end_layout
 
 \end_inset
@@ -2237,7 +2268,7 @@ ip{U}{V}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\sum_{i=1}^{n}u_{i}^{*}v_{i}$
+\begin_inset Formula $\sum_{i=1}^{n}U_{i}^{*}V_{i}$
 \end_inset
 
 
@@ -2251,10 +2282,11 @@ ip{U}{V}
 \begin_inset Text
 
 \begin_layout Plain Layout
+第 
 \begin_inset Formula $i$
 \end_inset
 
--th row
+ 行
 \end_layout
 
 \end_inset
@@ -2288,7 +2320,7 @@ ip{i}{U}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ip{e_{i}}{U}\equiv u_{i}$
+\begin_inset Formula $\ip{e_{i}}{U}\equiv\ip{i}{U}\equiv U_{i}$
 \end_inset
 
 
@@ -2302,10 +2334,11 @@ ip{i}{U}
 \begin_inset Text
 
 \begin_layout Plain Layout
+第 
 \begin_inset Formula $k$
 \end_inset
 
--th column
+ 列
 \end_layout
 
 \end_inset
@@ -2339,7 +2372,7 @@ ip{U}{k}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ip{U}{e_{k}}\equiv u_{k}^{*}$
+\begin_inset Formula $\ip{U}{e_{k}}\equiv\ip{U}{k}\equiv U_{k}^{*}$
 \end_inset
 
 
@@ -2353,7 +2386,7 @@ ip{U}{k}
 \begin_inset Text
 
 \begin_layout Plain Layout
-matrix element
+矩阵元素
 \end_layout
 
 \end_inset
@@ -2387,7 +2420,7 @@ mel{i}{A}{k}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\mel{e_{i}}{A}{e_{k}}\equiv a_{ik}$
+\begin_inset Formula $\mel{e_{i}}{A}{e_{k}}\equiv\mel{i}{A}{k}\equiv A_{ik}$
 \end_inset
 
 
@@ -2401,7 +2434,7 @@ mel{i}{A}{k}
 \begin_inset Text
 
 \begin_layout Plain Layout
-bilinear form
+双线性型
 \end_layout
 
 \end_inset
@@ -2435,7 +2468,7 @@ mel{U}{A}{V}
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\sum_{i=1}^{n}\sum_{k=1}^{n}u_{i}^{*}a_{ik}v_{k}$
+\begin_inset Formula $\sum_{i=1}^{n}\sum_{k=1}^{n}U_{i}^{*}A_{ik}V_{k}$
 \end_inset
 
 
@@ -2467,7 +2500,7 @@ status open
 
 \end_inset
 
-对于给定的方阵 
+给定的方阵 
 \begin_inset Formula $\Matrix{A}\in\mathbb{C}^{n\times n}$
 \end_inset
 
@@ -2503,7 +2536,7 @@ status open
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
- 的「特征值 (eigenvalue)
+ 的“特征值 (eigenvalue)
 \begin_inset Index idx
 status collapsed
 
@@ -2513,18 +2546,18 @@ eigen!~value
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\bra{L}$
 \end_inset
 
- 为从属于 
+ 为对应于 
 \begin_inset Formula $\lambda$
 \end_inset
 
- 的「左特征向量 (left eigenvector)
+ 的“左特征向量 (left eigenvector)
 \begin_inset Index idx
 status collapsed
 
@@ -2534,18 +2567,18 @@ eigen!~vector!left ~
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\ket{R}$
 \end_inset
 
- 为从属于 
+ 为对应于 
 \begin_inset Formula $\lambda$
 \end_inset
 
- 的「右特征向量 (right eigenvector)
+ 的“右特征向量 (right eigenvector)
 \begin_inset Index idx
 status collapsed
 
@@ -2555,7 +2588,7 @@ eigen!~vector!right ~
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \end_deeper
@@ -2567,9 +2600,20 @@ eigen!~vector!right ~
 \end_layout
 
 \begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+特征向量正交性
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
-name "lem:orthogonal_eigenvectors"
+name "lem:微分方程：双曲型：特征向量正交性"
 
 \end_inset
 
@@ -2581,7 +2625,7 @@ name "lem:orthogonal_eigenvectors"
 \begin_inset Formula $n$
 \end_inset
 
- 个复特征值。每个特征值都至少有一个非零的左、右特征向量。从属于不同特征值的左、右特征向量是相互正交的：
+ 个复特征值。每个特征值都至少有一个非零的左、右特征向量。对应于不同特征值的左、右特征向量是相互正交的：
 \begin_inset Formula 
 \[
 \ip{L_{i}}{R_{k}}=0\impliedby\begin{cases}
@@ -2607,7 +2651,7 @@ name "lem:orthogonal_eigenvectors"
 线性一阶方程组
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:multi_wave_system_linear"
+name "sec:微分方程：双曲型：多波：线性"
 
 \end_inset
 
@@ -2615,9 +2659,20 @@ name "sec:multi_wave_system_linear"
 \end_layout
 
 \begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+线性多波
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:multi_wave_system_linear_smooth_initial"
+name "prob:微分方程：双曲型：多波：线性"
 
 \end_inset
 
@@ -2626,17 +2681,13 @@ name "prob:multi_wave_system_linear_smooth_initial"
 \end_inset
 
  个一阶可微的函数 
-\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ U_{i}(x,t)\right\} _{i=1}^{n}$
 \end_inset
 
-，使其满足
-\emph on
-常系数
-\emph default
-线性偏微分方程组：
+，使其满足“常系数”线性偏微分方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U(x,t)}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:multi_wave_system_linear}
+\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U}=\ket{0}\qquad(x,t)\in(-\infty,\infty)\times(t_{0},\infty)\label{eq:微分方程：双曲型：多波：线性}
 \end{equation}
 
 \end_inset
@@ -2644,7 +2695,7 @@ name "prob:multi_wave_system_linear_smooth_initial"
 及一阶可微的初始条件：
 \begin_inset Formula 
 \begin{equation}
-\ket{U(x_{0},t_{0})}=\ket{U_{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:multi_wave_system_initial}
+\ket{U(x_{0},t_{0})}=\ket{U_{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:微分方程：双曲型：多波：初值}
 \end{equation}
 
 \end_inset
@@ -2652,15 +2703,15 @@ name "prob:multi_wave_system_linear_smooth_initial"
 其中
 \begin_inset Formula 
 \[
-\Matrix{A}=\begin{bmatrix}a_{11} & \cdots & a_{1n}\\
+\Matrix{A}=\begin{bmatrix}A_{11} & \cdots & A_{1n}\\
 \vdots &  & \vdots\\
-a_{n1} & \cdots & a_{nn}
-\end{bmatrix}\in\mathbb{R}^{n\times n}\qquad\ket{U(x,t)}=\begin{bmatrix}u_{1}(x,t)\\
+A_{n1} & \cdots & A_{nn}
+\end{bmatrix}\in\mathbb{R}^{n\times n}\qquad\ket{U(x,t)}=\begin{bmatrix}U_{1}(x,t)\\
 \vdots\\
-u_{n}(x,t)
-\end{bmatrix}\qquad\ket{U_{0}(x_{0})}=\begin{bmatrix}u_{1}^{0}(x_{0})\\
+U_{n}(x,t)
+\end{bmatrix}\qquad\ket{U_{0}(x_{0})}=\begin{bmatrix}U_{0,1}(x_{0})\\
 \vdots\\
-u_{n}^{0}(x_{0})
+U_{0,n}(x_{0})
 \end{bmatrix}
 \]
 
@@ -2689,8 +2740,8 @@ status open
 
 方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_system_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2706,7 +2757,7 @@ noprefix "false"
 
 \begin_deeper
 \begin_layout Itemize
-如果 
+若 
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
@@ -2718,15 +2769,15 @@ noprefix "false"
 \begin_inset Formula $\lambda_{1}<\cdots<\lambda_{n}$
 \end_inset
 
-，则称该方程组为「（沿 
+，则称该方程组为“（沿 
 \begin_inset Formula $t$
 \end_inset
 
- 轴方向）严格双曲的 (strictly hyperbolic)」。
+ 轴方向）严格双曲的 (strictly hyperbolic)”。
 \end_layout
 
 \begin_layout Itemize
-如果 
+若 
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
@@ -2742,11 +2793,11 @@ noprefix "false"
 \begin_inset Formula $n$
 \end_inset
 
- 个线性无关的特征向量，则称该方程组为「（沿 
+ 个线性无关的特征向量，则称该方程组为“（沿 
 \begin_inset Formula $t$
 \end_inset
 
- 轴方向）若双曲的 (weakly hyperbolic)」。
+ 轴方向）弱双曲的 (weakly hyperbolic)”。
 \end_layout
 
 \end_deeper
@@ -2758,26 +2809,26 @@ noprefix "false"
 \end_layout
 
 \begin_layout Remark*
-该定义不过是将更一般的
+该定义是更一般的
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "def:pde_hyperbolic"
 
 \end_inset
 
-定义在一阶方程组 
+概念在一阶方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_system_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 上重新叙述了一遍，详见例 
+ 上的具体形式，详见例 
 \begin_inset CommandInset ref
-LatexCommand ref
+LatexCommand eqref
 reference "exa:1st_order_pde_system_types"
 
 \end_inset
@@ -2796,7 +2847,7 @@ reference "exa:1st_order_pde_system_types"
 若方程组 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:multi_wave_system_linear"
+reference "eq:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2826,20 +2877,36 @@ noprefix "false"
 \begin_inset Formula $n$
 \end_inset
 
- 个互异的实特征值，因此有 
+ 个互异的实特征值 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+，因此有 
 \begin_inset Formula $n$
 \end_inset
 
- 个独立的左、右特征向量。利用这些特征值、特征向量可以构造出三个方阵：
+ 个独立的左特征向量 
+\begin_inset Formula $\left\{ \bra{L_{i}}\right\} _{i=1}^{n}$
+\end_inset
+
+、
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的右特征向量 
+\begin_inset Formula $\left\{ \ket{R_{i}}\right\} _{i=1}^{n}$
+\end_inset
+
+，利用它们可以构造出三个方阵：
 \begin_inset Formula 
 \[
-\Matrix{\Lambda}:=\begin{bmatrix}\lambda_{1}\\
+\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
  & \ddots\\
  &  & \lambda_{n}
-\end{bmatrix}\qquad\Matrix{L}:=\begin{bmatrix}\bra{L_{1}}\\
+\end{bmatrix}\qquad\Matrix{L}\coloneqq\begin{bmatrix}\bra{L_{1}}\\
 \vdots\\
 \bra{L_{n}}
-\end{bmatrix}\qquad\Matrix{R}:=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}
+\end{bmatrix}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}
 \]
 
 \end_inset
@@ -2847,15 +2914,15 @@ noprefix "false"
 它们满足
 \begin_inset Formula 
 \[
-\Matrix{L}\Matrix{A}=\Matrix{\Lambda}\Matrix{L}\qquad\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}
+\Matrix{L}\Matrix{A}=\Matrix{\lambda}\Matrix{L}\qquad\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}
 \]
 
 \end_inset
 
 根据引理 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:orthogonal_eigenvectors"
+LatexCommand eqref
+reference "lem:微分方程：双曲型：特征向量正交性"
 
 \end_inset
 
@@ -2867,37 +2934,33 @@ reference "lem:orthogonal_eigenvectors"
 \begin_inset Formula $\Matrix{R}$
 \end_inset
 
- 都是可逆的，并且 
-\begin_inset Formula $\Matrix{R}^{-1}$
-\end_inset
-
- 可以被用作 
-\begin_inset Formula $\Matrix{L}$
-\end_inset
-
-：
+ 均可逆，且有
 \begin_inset Formula 
 \[
-\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\implies\Matrix{R}^{-1}\Matrix{A}=\Matrix{\Lambda}\Matrix{R}^{-1}\implies\Matrix{L}:=\Matrix{R}^{-1}\implies\Matrix{A}=\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\implies\Matrix{R}^{-1}\Matrix{A}=\Matrix{\lambda}\Matrix{R}^{-1}
 \]
 
 \end_inset
 
-借助这个 
+故 
+\begin_inset Formula $\Matrix{R}^{-1}$
+\end_inset
+
+ 是一个有效的 
 \begin_inset Formula $\Matrix{L}$
 \end_inset
 
-，可以定义 
+，借助它可以定义 
 \begin_inset Formula $n$
 \end_inset
 
- 个「特征变量 (characteristic variables)」：
+ 个“特征变量 (characteristic variables)”：
 \begin_inset Formula 
 \[
-\ket{V(x,t)}=\begin{bmatrix}v_{1}(x,t)\\
+\ket{V(x,t)}=\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
-v_{n}(x,t)
-\end{bmatrix}:=\begin{bmatrix}\ip{L_{1}}{U(x,t)}\\
+V_{n}(x,t)
+\end{bmatrix}\coloneqq\begin{bmatrix}\ip{L_{1}}{U(x,t)}\\
 \vdots\\
 \ip{L_{n}}{U(x,t)}
 \end{bmatrix}=\Matrix{L}\ket{U(x,t)}
@@ -2906,14 +2969,14 @@ v_{n}(x,t)
 \end_inset
 
 
-\begin_inset Formula $\Matrix{L}$
+\begin_inset Formula $\Matrix{L}=\Matrix{R}^{-1}$
 \end_inset
 
  与 
-\begin_inset Formula $\Matrix{L}^{-1}$
+\begin_inset Formula $\Matrix{L}^{-1}=\Matrix{R}$
 \end_inset
 
- 都是常数矩阵，因此可以与偏导数算符 
+ 都是常数矩阵，因此可以与算符 
 \begin_inset Formula $\partial_{t}$
 \end_inset
 
@@ -2927,8 +2990,8 @@ v_{n}(x,t)
 
  的方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_system_linear"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：线性"
 
 \end_inset
 
@@ -2939,9 +3002,7 @@ reference "eq:multi_wave_system_linear"
  的方程：
 \begin_inset Formula 
 \[
-\begin{aligned}\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U(x,t)} & =\big(\partial_{t}\underbrace{\Matrix{L}^{-1}\Matrix{L}}_{\Matrix{1}}+\underbrace{\Matrix{L}^{-1}\Matrix{\Lambda}\Matrix{L}}_{\Matrix{A}}\partial_{x}\big)\ket{U(x,t)}\\
- & =\Matrix{L}^{-1}\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\underbrace{\Matrix{L}\ket{U(x,t)}}_{\ket{V(x,t)}}=\ket{0}
-\end{aligned}
+\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U}=\left(\Matrix{R}\Matrix{L}\partial_{t}+\Matrix{R}\Matrix{\lambda}\Matrix{L}\partial_{x}\right)\ket{U}=\Matrix{R}\left(\partial_{t}+\Matrix{\lambda}\partial_{x}\right)\underbrace{\Matrix{L}\ket{U}}_{\ket{V}}=\ket{0}
 \]
 
 \end_inset
@@ -2949,27 +3010,27 @@ reference "eq:multi_wave_system_linear"
 即
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\ket{V(x,t)}=\Matrix{L}\ket{0}=\ket{0}
+\left(\partial_{t}+\Matrix{\lambda}\partial_{x}\right)\ket{V}=\ket{0}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\Matrix{\Lambda}$
+\begin_inset Formula $\Matrix{\lambda}$
 \end_inset
 
  是对角阵，因此这是 
 \begin_inset Formula $n$
 \end_inset
 
- 个独立的单波方程，称为「
+ 个独立的单波方程，称为“
 \begin_inset Formula $n$
 \end_inset
 
- 重单波方程」：
+ 重单波方程”：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\lambda_{i}\partial_{x}\right)v_{i}(x,t)=0\qquad i=1,\dots,n\label{eq:multi_wave_decomposed}
+\left(\partial_{t}+\lambda_{i}\partial_{x}\right)V_{i}=0\qquad i=1,\dots,n\label{eq:微分方程：双曲型：多波：解耦}
 \end{equation}
 
 \end_inset
@@ -2987,8 +3048,8 @@ reference "eq:multi_wave_system_linear"
 \begin_layout Theorem
 初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:multi_wave_system_linear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2998,7 +3059,7 @@ noprefix "false"
  的解为
 \begin_inset Formula 
 \[
-\boxed{\ket{U(x,t)}=\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+\boxed{\ket{U(x,t)}=\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
@@ -3019,8 +3080,8 @@ noprefix "false"
 
  的初值 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_system_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：初值"
 
 \end_inset
 
@@ -3031,9 +3092,9 @@ reference "eq:multi_wave_system_initial"
  的初值：
 \begin_inset Formula 
 \[
-\ket{V(x_{0},t_{0})}=\begin{bmatrix}v_{1}(x_{0},t_{0})\\
+\ket{V(x_{0},t_{0})}=\begin{bmatrix}V_{1}(x_{0},t_{0})\\
 \vdots\\
-v_{n}(x_{0},t_{0})
+V_{n}(x_{0},t_{0})
 \end{bmatrix}=\begin{bmatrix}\ip{L_{1}}{U(x_{0},t_{0})}\\
 \vdots\\
 \ip{L_{n}}{U(x_{0},t_{0})}
@@ -3044,44 +3105,44 @@ v_{n}(x_{0},t_{0})
 
 它们与 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_decomposed"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：解耦"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式构成了 
+ 构成了 
 \begin_inset Formula $n$
 \end_inset
 
  个独立的单波初值问题。代入 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:single_wave_linear_solution_smooth"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：单波：线性：光滑解"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式即得这 
+ 即得这 
 \begin_inset Formula $n$
 \end_inset
 
  个单波的解：
 \begin_inset Formula 
 \[
-v_{i}(x,t)=\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}\qquad i=1,\dots,n
+V_{i}(x,t)=\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}\qquad i=1,\dots,n
 \]
 
 \end_inset
 
 原初值问题 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:multi_wave_system_linear_smooth_initial"
+LatexCommand eqref
+reference "prob:微分方程：双曲型：多波：线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3091,11 +3152,11 @@ noprefix "false"
  的解是这些单波的线性组合：
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(x,t)} & =\Matrix{L}^{-1}\ket{V(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}v_{1}(x,t)\\
+\begin{aligned}\ket{U(x,t)} & =\Matrix{L}^{-1}\ket{V(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
-v_{n}(x,t)
+V_{n}(x,t)
 \end{bmatrix}\\
- & =\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-\lambda_{i}\cdot(t-t_{0})}_{x_{0}})}
+ & =\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}
 \end{aligned}
 \]
 
@@ -3117,7 +3178,7 @@ status open
 
 \begin_layout Plain Layout
 
-[变系数线性一阶方程组]
+[变系数方程组]
 \end_layout
 
 \end_inset
@@ -3126,37 +3187,37 @@ status open
 \begin_inset Formula $n$
 \end_inset
 
- 重单波方程（
+ 重单波方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_decomposed"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：解耦"
 
 \end_inset
 
- 式）的过程中，用到了「
+ 的过程中，用到了“
 \begin_inset Formula $\Matrix{L}$
 \end_inset
 
  及 
-\begin_inset Formula $\Matrix{L}^{-1}$
+\begin_inset Formula $\Matrix{R}$
 \end_inset
 
- 都是常数矩阵」的事实，它是「
+ 都是常数矩阵”的事实，它是“
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
- 为常数矩阵」的推论。若将 
+ 为常数矩阵”的推论。若将 
 \begin_inset Formula $\Matrix{A}$
 \end_inset
 
- 放宽为「显式依赖于 
+ 放宽为“显式依赖于 
 \begin_inset Formula $x,t$
 \end_inset
 
- 的方阵」：
+ 的方阵”：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\Matrix{A(x,t)}\partial_{x}\right)\ket{U(x,t)}=\ket{0}
+\left(\partial_{t}+\Matrix{A(x,t)}\partial_{x}\right)\ket{U}=\ket{0}
 \]
 
 \end_inset
@@ -3166,18 +3227,14 @@ reference "eq:multi_wave_decomposed"
 \end_inset
 
  的特征值 
-\begin_inset Formula $\Matrix{\Lambda(x,t)}$
+\begin_inset Formula $\Matrix{\lambda(x,t)}$
 \end_inset
 
  需要逐点计算，方程的双曲性也要逐点分析。即使方程是处处双曲的，
 \begin_inset Formula $\Matrix{L(x,t)}$
 \end_inset
 
- 及 
-\begin_inset Formula $\Matrix{L(x,t)}^{-1}$
-\end_inset
-
- 也不再是常数矩阵，将它们与偏导数算符 
+ 也不再是常数矩阵，将其与算符 
 \begin_inset Formula $\partial_{t}$
 \end_inset
 
@@ -3196,20 +3253,38 @@ reference "eq:multi_wave_decomposed"
  的）附加项：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\Matrix{\Lambda(x,t)}\partial_{x}\right)\ket{V(x,t)}=\Matrix{L(x,t)}\Matrix{D(x,t)}\Matrix{R(x,t)}\ket{V(x,t)}
+\Matrix{L}\partial_{\alpha}\ket{U}=\partial_{\alpha}\left(\Matrix{L}\ket{U}\right)-\left(\partial_{\alpha}\Matrix{L}\right)\ket{U}\qquad\alpha\in\left\{ t,x\right\} 
 \]
 
 \end_inset
 
-其中
+因此，变系数线性一阶方程组至多可以对一阶导数解耦：
 \begin_inset Formula 
 \[
-\Matrix{D(x,t)}:=\left(\partial_{t}+\Matrix{\Lambda(x,t)}\partial_{x}\right)\Matrix{L(x,t)}
+\begin{aligned}\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U} & =\Matrix{R}\left(\Matrix{L}\partial_{t}+\Matrix{\lambda}\Matrix{L}\partial_{x}\right)\ket{U}\\
+ & =\Matrix{R}\left(\partial_{t}+\Matrix{\lambda}\partial_{x}\right)\Matrix{L}\ket{U}-\Matrix{R}\left(\partial_{t}\Matrix{L}+\Matrix{\lambda}\partial_{x}\Matrix{L}\right)\ket{U}
+\end{aligned}
 \]
 
 \end_inset
 
-因此：变系数线性一阶方程组至多可以对一阶导数解耦。
+即一阶非齐次方程组
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\Matrix{\lambda}\partial_{x}\right)\ket{V}=\underbrace{\left(\partial_{t}\Matrix{L}+\Matrix{\lambda}\partial_{x}\Matrix{L}\right)\Matrix{R}}_{\Matrix{D}}\ket{V}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Matrix{D}$
+\end_inset
+
+ 是只依赖于 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 的变系数矩阵。
 \end_layout
 
 \begin_layout Standard
@@ -3225,49 +3300,36 @@ reference "eq:multi_wave_decomposed"
 
 \begin_layout Subsection
 拟线性一阶方程组
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:multi_wave_quasilinear_system"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Problem
-\begin_inset CommandInset label
-LatexCommand label
-name "prob:multi_wave_quasilinear_system_smooth_initial"
-
-\end_inset
-
 寻找 
 \begin_inset Formula $n$
 \end_inset
 
  个一阶可微的函数 
-\begin_inset Formula $\left\{ u_{i}(x,t)\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ U_{i}(x,t)\right\} _{i=1}^{n}$
 \end_inset
 
-，使其满足「拟线性 (quasilinear)」偏微分方程组：
+，使其满足“拟线性 (quasilinear)”偏微分方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\label{eq:multi_wave_quasilinear_system}
+\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\label{eq:微分方程：双曲型：拟线性}
 \end{equation}
 
 \end_inset
 
-及一阶可微的初始条件（
+及一阶可微的初始条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_system_initial"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：多波：初值"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）。
+。
 \end_layout
 
 \begin_layout Standard
@@ -3283,7 +3345,7 @@ noprefix "false"
 \end_inset
 
  的特征值 
-\begin_inset Formula $\Matrix{\Lambda(U)}$
+\begin_inset Formula $\Matrix{\lambda(U)}$
 \end_inset
 
  需要逐点计算，方程的双曲性也要逐点分析。
@@ -3302,34 +3364,34 @@ status open
 
 \begin_layout Plain Layout
 
-[特征相容关系]
+[特征相容条件]
 \end_layout
 
 \end_inset
 
 设方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
  在区域 
-\begin_inset Formula $\Omega\in\mathbb{R}_{u}^{n}$
+\begin_inset Formula $\Omega\in\mathbb{R}_{U}^{n}$
 \end_inset
 
  中是严格双曲的，则有
 \begin_inset Formula 
 \[
-\Matrix{A(U)}=\Matrix{L(U)}^{-1}\Matrix{\Lambda(U)}\Matrix{L(U)}
+\Matrix{A(U)}\Matrix{R(U)}=\Matrix{R(U)}\Matrix{\lambda(U)}\qquad\Matrix{L}\coloneqq\Matrix{R}^{-1}\qquad\Matrix{A(U)}=\Matrix{R(U)}\Matrix{\lambda(U)}\Matrix{L(U)}
 \]
 
 \end_inset
 
 将其代入方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3339,7 +3401,7 @@ noprefix "false"
  可得
 \begin_inset Formula 
 \[
-\left(\Matrix{L(U)}\partial_{t}+\Matrix{\Lambda(U)}\Matrix{L(U)}\partial_{x}\right)\ket{U}=\ket{0}
+\left(\Matrix{L(U)}\partial_{t}+\Matrix{\lambda(U)}\Matrix{L(U)}\partial_{x}\right)\ket{U}=\ket{0}
 \]
 
 \end_inset
@@ -3348,13 +3410,17 @@ noprefix "false"
 \begin_inset Formula $i$
 \end_inset
 
- 行被称为第 
+ 行被称为“第 
 \begin_inset Formula $i$
 \end_inset
 
- 个「特征相容关系 (characteristic compatibility condition)
+ 族 
+\bar under
+特征相容条件 (characteristic compatibility condition)
+\bar default
+
 \begin_inset Index idx
-status open
+status collapsed
 
 \begin_layout Plain Layout
 characteristic!~ compatibility condition
@@ -3362,10 +3428,10 @@ characteristic!~ compatibility condition
 
 \end_inset
 
-」：
+”：
 \begin_inset Formula 
 \begin{equation}
-\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=0\label{eq:char_compatibility}
+\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=0\qquad\left(\dv{t}\right)_{i}\coloneqq\partial_{t}+\lambda_{i}(U)\partial_{x}\label{eq:微分方程：双曲型：特征相容条件}
 \end{equation}
 
 \end_inset
@@ -3374,19 +3440,11 @@ characteristic!~ compatibility condition
 \begin_inset Formula $i$
 \end_inset
 
- 条特征线 
+ 族特征线 
 \begin_inset Formula $\dv*{x}{t}=\lambda_{i}$
 \end_inset
 
- 的常微分方程，其中
-\begin_inset Formula 
-\[
-\left(\dv{t}\right)_{i}:=\pdv{t}+\lambda_{i}(U)\pdv{x}
-\]
-
-\end_inset
-
-
+ 的常微分方程。
 \end_layout
 
 \begin_layout Standard
@@ -3397,17 +3455,21 @@ characteristic!~ compatibility condition
 \end_layout
 
 \begin_layout Remark*
-双曲型拟线性方程组 
+严格双曲的方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 在每一点都有 
+ 在 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 平面内的每一点都可以引出 
 \begin_inset Formula $n$
 \end_inset
 
@@ -3415,7 +3477,7 @@ noprefix "false"
 \begin_inset Formula $(x,t)$
 \end_inset
 
- 的斜率 
+ 处的斜率 
 \begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{n}$
 \end_inset
 
@@ -3423,7 +3485,7 @@ noprefix "false"
 \begin_inset Formula $(x,t)$
 \end_inset
 
-，还依赖于方程的解在该点的取值 
+，还依赖于方程组的解在该点的取值 
 \begin_inset Formula $\ket{U(x,t)}$
 \end_inset
 
@@ -3448,34 +3510,38 @@ status open
 
 \end_inset
 
-特征值 
-\begin_inset Formula $\lambda_{i}(u_{1},\dots,u_{n})$
+依赖于 
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 的特征值 
+\begin_inset Formula $\lambda_{i}(U)$
 \end_inset
 
  在 
-\begin_inset Formula $\mathbb{R}_{u}^{n}$
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
 \end_inset
 
- 中定义了一个「标量场 (scalar field)」，
+ 中定义了一个“标量场 (scalar field)”，
 \noun on
 称作
 \noun default
 方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 的「第 
+ 的“第 
 \begin_inset Formula $i$
 \end_inset
 
- 特征场 (the 
-\begin_inset Formula $i$
-\end_inset
-
--th characteristic field)
+ 族 
+\bar under
+特征场 (characteristic field
+\bar default
+)
 \begin_inset Index idx
 status collapsed
 
@@ -3485,7 +3551,15 @@ characteristic!~ field
 
 \end_inset
 
-」。特征场可以按其梯度与右特征向量是否正交来分类：
+”。特征场可以按其“梯度”
+\begin_inset Formula 
+\[
+\bra{\grad\lambda_{i}(U)}\coloneqq\begin{bmatrix}\pdv*{\lambda_{i}}{U_{1}} & \cdots & \pdv*{\lambda_{i}}{U_{n}}\end{bmatrix}
+\]
+
+\end_inset
+
+与“右特征向量”是否正交来分类：
 \end_layout
 
 \begin_deeper
@@ -3493,7 +3567,7 @@ characteristic!~ field
 若有
 \begin_inset Formula 
 \[
-\ip{\grad\lambda_{i}}{R_{i}}\ne0\qquad\forall(u_{1},\dots,u_{n})\in\Omega\subset\mathbb{R}_{u}^{n}
+\ip{\grad\lambda_{i}(U)}{R_{i}(U)}\ne0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
@@ -3502,7 +3576,7 @@ characteristic!~ field
 \begin_inset Formula $\Omega$
 \end_inset
 
- 内是「真正非线性的 (genuinely nonlinear)
+ 内是“真正非线性的 (genuinely nonlinear)
 \begin_inset Index idx
 status collapsed
 
@@ -3512,22 +3586,14 @@ characteristic!~ field!genuinely nonlinear ~
 
 \end_inset
 
-」。 
+”。 
 \end_layout
 
 \begin_layout Itemize
 若有
 \begin_inset Formula 
 \[
-\ip{\grad\lambda_{i}}{R_{i}}=0\qquad\forall(u_{1},\dots,u_{n})\in\Omega\subset\mathbb{R}_{u}^{n}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\bra{\grad\lambda_{i}}:=\begin{bmatrix}\pdv{\lambda_{i}}{u_{1}} & \cdots & \pdv{\lambda_{i}}{u_{n}}\end{bmatrix}
+\ip{\grad\lambda_{i}(U)}{R_{i}(U)}=0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
@@ -3536,7 +3602,7 @@ characteristic!~ field!genuinely nonlinear ~
 \begin_inset Formula $\Omega$
 \end_inset
 
- 内是「线性退化的 (linearly degenerate)
+ 内是“线性退化的 (linearly degenerate)
 \begin_inset Index idx
 status collapsed
 
@@ -3546,7 +3612,7 @@ characteristic!~ field!linearly degenerate ~
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \end_deeper
@@ -3562,35 +3628,23 @@ Riemann 不变量
 \end_layout
 
 \begin_layout Standard
-单个特征相容关系（
+单个特征相容条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:char_compatibility"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：特征相容条件"
 
 \end_inset
 
- 式）通常不能独立求解，而是要与其他 
-\begin_inset Formula $(n-1)$
-\end_inset
-
- 个特征相容关系联立为 ODE 系统。若能够找到这些 ODE 的 
+ 通常不能独立求解，而是要与其他特征相容条件联立为 ODE 系统。若能够找到它们的 
 \begin_inset Formula $n$
 \end_inset
 
- 个（独立的）首次积分，则可以将其转化为代数方程组，从而降低求解难度。这一方法是由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Riemann"
-target "https://en.wikipedia.org/wiki/Bernhard_Riemann"
-literal "false"
-
-\end_inset
-
- 提出的，其实质是：为 
+ 个（独立的）首次积分，则可以将其转化为代数方程组，从而降低求解难度。这一方法是由 Bernhard Riemann (1826–1866) 提出的，简而言之：
+为 
 \begin_inset Formula $n$
 \end_inset
 
- 个 ODE 寻找积分因子，使之成为 
+ 个 ODEs 寻找积分因子，使之成为 
 \begin_inset Formula $n$
 \end_inset
 
@@ -3612,34 +3666,34 @@ status open
 \begin_inset Formula $\phi(U)$
 \end_inset
 
- 满足
+ 的梯度与第 
+\begin_inset Formula $i$
+\end_inset
+
+ 族右特征向量处处正交：
 \begin_inset Formula 
 \[
-\ip{\grad{\phi(U)}}{R_{i}(U)}=0\qquad\forall\ket{U}\in\Omega\subset\mathbb{R}_{u}^{n}
+\ip{\grad{\phi(U)}}{R_{i}(U)}=0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
 
-则称它为方程组 
+则称该函数为方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 的一个「广义 
+ 的一个“第 
 \begin_inset Formula $i$
 \end_inset
 
--Riemann 不变量 (
-\begin_inset Formula $i$
-\end_inset
+ 族 
+\bar under
+广义 Riemann 不变量 (Generalized Riemann Invariant, GRI)
+\bar default
 
--generalized Riemann invariant, 
-\begin_inset Formula $i$
-\end_inset
-
--GRI)
 \begin_inset Index idx
 status collapsed
 
@@ -3649,7 +3703,7 @@ Riemann!~ invariant!generalized ~
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -3674,34 +3728,34 @@ status open
 \begin_inset Formula $\psi(U)$
 \end_inset
 
- 满足
+ 的梯度与第 
+\begin_inset Formula $i$
+\end_inset
+
+ 族左特征向量处处平行：
 \begin_inset Formula 
 \[
-\forall\ket{U}\in\Omega\subset\mathbb{R}_{u}^{n},\exists c\in\mathbb{R}:\bra{\grad{\psi(U)}}=c\bra{L_{i}(U)}
+\bra{\grad{\psi(U)}}\parallel\bra{L_{i}(U)}\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
 
-则称它为方程组 
+则称该函数为方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 的一个「狭义 
-\begin_inset Formula $k$
-\end_inset
-
--Riemann 不变量 (
+ 的一个“第 
 \begin_inset Formula $i$
 \end_inset
 
--specialized Riemann invariant, 
-\begin_inset Formula $i$
-\end_inset
+ 族 
+\bar under
+狭义 Riemann 不变量 (Specialized Riemann Invariant, SRI)
+\bar default
 
--SRI)
 \begin_inset Index idx
 status collapsed
 
@@ -3711,7 +3765,7 @@ Riemann!~ invariant!specialized ~
 
 \end_inset
 
-」。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -3722,19 +3776,19 @@ Riemann!~ invariant!specialized ~
 \end_layout
 
 \begin_layout Corollary
-每个 
-\begin_inset Formula $i$
-\end_inset
-
--SRI 都是一个 
-\begin_inset Formula $k$
-\end_inset
-
--GRI，其中 
+若 
 \begin_inset Formula $i\ne k$
 \end_inset
 
-。
+，则所有“第 
+\begin_inset Formula $i$
+\end_inset
+
+ 族 GRI”都是一个“第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族 SRI”。
 \end_layout
 
 \begin_layout Standard
@@ -3745,14 +3799,15 @@ Riemann!~ invariant!specialized ~
 \end_layout
 
 \begin_layout Lemma
+第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI 沿 
+ 族 GRI 沿 
 \begin_inset Formula $\ket{R_{i}}$
 \end_inset
 
- 的「迹线 (trajectory curve)」为常量。
+ 的“迹线 (trajectory curve)”为常量。
 \end_layout
 
 \begin_layout Standard
@@ -3764,7 +3819,7 @@ Riemann!~ invariant!specialized ~
 
 \begin_layout Proof
 在 
-\begin_inset Formula $\mathbb{R}_{u}^{n}$
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
 \end_inset
 
  中，
@@ -3779,7 +3834,7 @@ Riemann!~ invariant!specialized ~
 \begin_inset Formula $\ket{R_{i}}$
 \end_inset
 
- 的方向导数。因此，在无穷小微段 
+ 的“方向导数”。因此，在无穷小微段 
 \begin_inset Formula $\ket{\dd U}=\ket{R_{i}}\dd{\xi}$
 \end_inset
 
@@ -3799,7 +3854,7 @@ Riemann!~ invariant!specialized ~
 \begin_inset Formula $\ket{R_{i}}$
 \end_inset
 
- 迹线的参数。
+ 迹线的参数坐标。
 \end_layout
 
 \begin_layout Standard
@@ -3818,11 +3873,11 @@ Riemann!~ invariant!specialized ~
 
 \end_inset
 
-的任何一个首次积分，都是一个 
+的任何一个首次积分，都是一个第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI。
+ 族 GRI。
 \end_layout
 
 \begin_layout Standard
@@ -3833,11 +3888,11 @@ Riemann!~ invariant!specialized ~
 \end_layout
 
 \begin_layout Theorem
-独立的 
+独立的第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI 至多有 
+ 族 GRI 至多有 
 \begin_inset Formula $(n-1)$
 \end_inset
 
@@ -3852,34 +3907,35 @@ Riemann!~ invariant!specialized ~
 \end_layout
 
 \begin_layout Proof
+第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI 沿 
+ 族 GRI 沿 
 \begin_inset Formula $\ket{R_{i}}$
 \end_inset
 
- 迹线的常值性质相当于在 
-\begin_inset Formula $\mathbb{R}_{u}^{n}$
+ 迹线的守恒性相当于在 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
 \end_inset
 
  中定义了一个 
 \begin_inset Formula $(n-1)$
 \end_inset
 
- 维的「超曲面 (hypersurface)」：
+ 维的“超曲面 (hypersurface)”：
 \begin_inset Formula 
 \[
-S:=\left\{ \ket{U}\in\mathbb{R}_{u}^{n}:\phi(U)=0\right\} 
+S\coloneqq\left\{ \ket{U}\in\mathbb{R}_{U}^{n}:\phi(U)=0\right\} 
 \]
 
 \end_inset
 
-若独立的 
+若独立的第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI 有 
+ 族 GRI 有 
 \begin_inset Formula $m$
 \end_inset
 
@@ -3895,7 +3951,7 @@ S:=\left\{ \ket{U}\in\mathbb{R}_{u}^{n}:\phi(U)=0\right\}
 \begin_inset Formula $(n-m)$
 \end_inset
 
- 维「流形 (manifold)」，并且以 
+ 维“流形 (manifold)”，并且以 
 \begin_inset Formula $\ket{R_{i}}$
 \end_inset
 
@@ -3916,20 +3972,24 @@ S:=\left\{ \ket{U}\in\mathbb{R}_{u}^{n}:\phi(U)=0\right\}
 \begin_layout Remark*
 若方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
+\end_inset
+
+ 为弱双曲型，即 
+\begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
  有重复的特征值 
-\begin_inset Formula $\lambda_{i}=\lambda_{i+1}=\cdots$
+\begin_inset Formula $\exists i\colon\lambda_{i}=\lambda_{i+1}$
 \end_inset
 
-，则独立的 
+，则独立的第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI 可能不足 
+ 族 GRI 可能不足 
 \begin_inset Formula $(n-1)$
 \end_inset
 
@@ -3944,15 +4004,41 @@ reference "eq:multi_wave_quasilinear_system"
 \end_layout
 
 \begin_layout Subsection
-双变量双方程系统
+例：二元方程对
+\end_layout
+
+\begin_layout Standard
+考虑方程组 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
+
+\end_inset
+
+ 的特殊情形：
+\begin_inset Formula 
+\begin{equation}
+\left(\partial_{t}+\Matrix{A(U)}\right)\ket{U}=\ket{0}\qquad\ket{U}=\begin{bmatrix}U_{1}\\
+U_{2}
+\end{bmatrix}\qquad\Matrix{A(U)}=\begin{bmatrix}A_{11}(U) & A_{12}(U)\\
+A_{21}(U) & A_{22}(U)
+\end{bmatrix}\label{eq:微分方程：双曲型：二元方程对}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
-双曲型 
-\begin_inset Formula $2\times2$
+双曲型二元方程对 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：二元方程对"
+
 \end_inset
 
- 系统有两个特征场，每个特征场各有一个独立的 GRI 与 SRI。
+ 有两个特征场，每个特征场各有一个独立的 GRI 与 SRI。
 \end_layout
 
 \begin_layout Standard
@@ -3963,11 +4049,14 @@ reference "eq:multi_wave_quasilinear_system"
 \end_layout
 
 \begin_layout Proof
-对于双曲型 
-\begin_inset Formula $2\times2$
+双曲型二元方程对 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：二元方程对"
+
 \end_inset
 
- 系统，每个特征场分别只有一个 GRI。由左、右特征向量的正交性
+ 的每个特征场分别只有一个 GRI。由左、右特征向量的正交性
 \begin_inset Formula 
 \[
 \ip{L_{2}}{R_{1}}=\ip{L_{1}}{R_{2}}=0
@@ -4000,9 +4089,6 @@ reference "eq:multi_wave_quasilinear_system"
 \family default
 \series default
 \shape default
-\size default
-\emph default
-\bar default
 \strikeout default
 \xout default
 \uuline default
@@ -4012,12 +4098,12 @@ reference "eq:multi_wave_quasilinear_system"
 可以导出以下平行关系：
 \begin_inset Formula 
 \[
-\exists c_{1}\in\mathbb{R}:\bra{\grad{\phi}_{2}}=c_{1}\bra{L_{1}}\qquad,\exists c_{2}\in\mathbb{R}:\bra{\grad{\phi}_{1}}=c_{2}\bra{L_{2}}
+\exists c_{1}\in\mathbb{R}\colon\bra{\grad{\phi}_{2}}=c_{1}\bra{L_{1}}\qquad\exists c_{2}\in\mathbb{R}\colon\bra{\grad{\phi}_{1}}=c_{2}\bra{L_{2}}
 \]
 
 \end_inset
 
-这正是 SRI 的定义所需要的形式。
+这正是 SRI 的定义。
 \end_layout
 
 \begin_layout Standard
@@ -4028,19 +4114,22 @@ reference "eq:multi_wave_quasilinear_system"
 \end_layout
 
 \begin_layout Lemma
-双曲型 
-\begin_inset Formula $2\times2$
+双曲型二元方程对 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：双曲型：二元方程对"
+
 \end_inset
 
- 系统的 
+ 的第 
 \begin_inset Formula $i$
 \end_inset
 
--SRI 沿任何一条 
+ 族 SRI 沿第 
 \begin_inset Formula $i$
 \end_inset
 
--特征线为常量。
+ 族特征线为常量。
 \end_layout
 
 \begin_layout Standard
@@ -4051,20 +4140,20 @@ reference "eq:multi_wave_quasilinear_system"
 \end_layout
 
 \begin_layout Proof
-将 SRI 的定义代入特征相容关系（
+将 SRI 的定义代入特征相容条件 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:char_compatibility"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：特征相容条件"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）即得
+ 即得
 \begin_inset Formula 
 \[
-\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=\mel**{\grad{\psi}_{i}}{\left(\dv{t}\right)_{i}}{u}=\left(\dv{t}\right)_{i}\psi_{i}=0\qquad i=1,2
+\mel**{L_{i}(U)}{\dd_{i}}{U}=\mel**{\grad{\psi}_{i}}{\dd_{i}}{U}=\dd_{i}\psi_{i}=0\qquad i=1,2
 \]
 
 \end_inset
@@ -4080,21 +4169,17 @@ noprefix "false"
 \end_layout
 
 \begin_layout Theorem
-若双曲型 
-\begin_inset Formula $2\times2$
-\end_inset
-
- 系统（
+若双曲型二元方程对 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式）的解 
+ 的解 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
@@ -4105,7 +4190,7 @@ noprefix "false"
  的值可以由以下代数方程解出：
 \begin_inset Formula 
 \[
-\psi_{1}\big(U(x,t)\big)=\psi_{1}\big(U(x_{0},t_{0})\big)\qquad\psi_{2}\big(U(x,t)\big)=\psi_{2}\big(U(x_{0},t_{0})\big)
+\psi_{1}(U(x,t))=\psi_{1}(U(x_{0},t_{0}))\qquad\psi_{2}(U(x,t))=\psi_{2}(U(x_{0},t_{0}))
 \]
 
 \end_inset
@@ -4114,11 +4199,11 @@ noprefix "false"
 \begin_inset Formula $\psi_{i}$
 \end_inset
 
- 是该系统的 
+ 是其第 
 \begin_inset Formula $i$
 \end_inset
 
--SRI，并且 
+ 族 SRI，并且 
 \begin_inset Formula $(x_{0},t_{0})$
 \end_inset
 
@@ -4126,11 +4211,11 @@ noprefix "false"
 \begin_inset Formula $(x,t)$
 \end_inset
 
- 都在同一条 
+ 都在同一条第 
 \begin_inset Formula $i$
 \end_inset
 
--特征线上。
+ 族特征线上。
 \end_layout
 
 \begin_layout Standard
@@ -4146,7 +4231,7 @@ status open
 
 \begin_layout Plain Layout
 
-[一维等熵流动]
+[一维等熵气流]
 \end_layout
 
 \end_inset
@@ -4154,13 +4239,11 @@ status open
 
 \begin_inset Formula 
 \[
-\partial_{t}\begin{bmatrix}\rho\\
+\ket{U}=\begin{bmatrix}\rho\\
 \rho u
-\end{bmatrix}+\partial_{x}\begin{bmatrix}\rho u\\
-\rho uu+p
-\end{bmatrix}=\begin{bmatrix}0\\
-0
-\end{bmatrix}\qquad p=C\rho^{\gamma}
+\end{bmatrix}\qquad\Matrix{A(U)}=\begin{bmatrix}0 & 1\\
+a^{2}-u^{2} & 2u
+\end{bmatrix}\qquad a=\sqrt{C\gamma\rho^{\gamma-1}}
 \]
 
 \end_inset
@@ -4176,29 +4259,6 @@ status open
 \end_layout
 
 \begin_layout Solution*
-将其改写为拟线性一阶方程组（
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 式）形式：
-\begin_inset Formula 
-\[
-\ket{U}=\begin{bmatrix}\rho\\
-\rho u
-\end{bmatrix}\qquad\Matrix{A(U)}=\begin{bmatrix}0 & 1\\
-a^{2}-u^{2} & 2u
-\end{bmatrix}\qquad a=\sqrt{C\gamma\rho^{\gamma-1}}
-\]
-
-\end_inset
-
-
 \begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
@@ -4219,12 +4279,12 @@ u-a & u+a
 由常微分方程
 \begin_inset Formula 
 \[
-\ket{\dd U}\parallel\ket{R_{i}}\implies\frac{\dd{\rho}}{1}=\frac{\dd(\rho u)}{u\mp a}
+\frac{\dd{\rho}}{1}=\frac{\dd(\rho u)}{u\mp a}\impliedby\ket{\dd U}\parallel\ket{R_{i}}
 \]
 
 \end_inset
 
-可得相应的 GRI：
+解得相应的 GRI：
 \begin_inset Formula 
 \[
 \phi_{1}=u+\int\frac{a}{\rho}\dd{\rho}=u+\frac{2a}{\gamma-1}\qquad\phi_{2}=u-\int\frac{a}{\rho}\dd{\rho}=u-\frac{2a}{\gamma-1}
@@ -4232,7 +4292,7 @@ u-a & u+a
 
 \end_inset
 
-它们分别为另一个特征场的 SRI：
+它们分别为另一族特征场的 SRI：
 \begin_inset Formula 
 \[
 \psi_{1}=\phi_{2}=u-\frac{2a}{\gamma-1}\qquad\psi_{2}=\phi_{1}=u+\frac{2a}{\gamma-1}
@@ -4275,62 +4335,54 @@ u-\frac{2a}{\gamma-1}=\left(u_{0}-\frac{2a_{0}}{\gamma-1}\right)_{\lambda_{1}}\q
 \end_layout
 
 \begin_layout Subsection
-变量替换的影响
+换元不变量
 \end_layout
 
 \begin_layout Standard
 若用一组新的变量 
-\begin_inset Formula $(u'_{1},\dots,u'_{n})$
+\begin_inset Formula $(U'_{1},\dots,U'_{n})$
 \end_inset
 
- 替换双曲型方程组 
+ 替换方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 中的原始变量 
-\begin_inset Formula $(u_{1},\dots,u_{n})$
+ 中的变量 
+\begin_inset Formula $(U_{1},\dots,U_{n})$
 \end_inset
 
 ，则有
 \begin_inset Formula 
 \[
-\begin{bmatrix}\partial_{\alpha}u_{1}\\
+\underbrace{\begin{bmatrix}\partial_{\alpha}U_{1}\\
 \vdots\\
-\partial_{\alpha}u_{n}
-\end{bmatrix}=\underbrace{\begin{bmatrix}\pdv*{u_{1}}{u'_{1}} & \cdots & \pdv*{u_{1}}{u'_{n}}\\
+\partial_{\alpha}U_{n}
+\end{bmatrix}}_{\partial_{\alpha}\ket{U}}=\underbrace{\begin{bmatrix}\pdv*{U_{1}}{U'_{1}} & \cdots & \pdv*{U_{1}}{U'_{n}}\\
 \vdots & \ddots & \vdots\\
-\pdv*{u_{n}}{u'_{1}} & \cdots & \pdv*{u_{n}}{u'_{n}}
-\end{bmatrix}}_{\Matrix{J_{U\to U'}}}\begin{bmatrix}\partial_{\alpha}u'_{1}\\
+\pdv*{U_{n}}{U'_{1}} & \cdots & \pdv*{U_{n}}{U'_{n}}
+\end{bmatrix}}_{\Matrix{J_{U\to U'}}}\underbrace{\begin{bmatrix}\partial_{\alpha}U'_{1}\\
 \vdots\\
-\partial_{\alpha}u'_{n}
-\end{bmatrix}\qquad\partial_{\alpha}\ket{U}=\Matrix{J_{U\to U'}}\partial_{\alpha}\ket{U'}
+\partial_{\alpha}U'_{n}
+\end{bmatrix}}_{\partial_{\alpha}\ket{U'}}\qquad\alpha\in\left\{ t,x\right\} 
 \]
 
 \end_inset
 
-其中 
-\begin_inset Formula $\partial_{\alpha}=\partial_{t}$
-\end_inset
-
- 或 
-\begin_inset Formula $\partial_{x}$
-\end_inset
-
-。假定该替换是非退化的（即 
+假定此换元是非退化的，即 
 \begin_inset Formula $\det(\Matrix{J_{U\to U'}})\ne0$
 \end_inset
 
-），则关于 
+，则关于 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
  的方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
@@ -4341,16 +4393,8 @@ reference "eq:multi_wave_quasilinear_system"
  的方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\label{eq:multi_wave_changing_variables}
+\left(\partial_{t}+\Matrix{A'(U')}\partial_{x}\right)\ket{U'}=\ket{0}\qquad\Matrix{A'(U')}\coloneqq\Matrix{J_{U\to U'}}^{-1}\Matrix{A(U(U'))}\Matrix{J_{U\to U'}}\label{eq:微分方程：双曲型：换元：方程}
 \end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\Matrix{A'(U')}:=\Matrix{J_{U\to U'}^{-1}}\Matrix{A\big(U(U')\big)}\Matrix{J_{U\to U'}}
-\]
 
 \end_inset
 
@@ -4358,24 +4402,20 @@ reference "eq:multi_wave_quasilinear_system"
 \end_layout
 
 \begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:变量替换不改变特征值"
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+换元不改变特征值
+\end_layout
 
 \end_inset
 
-变量替换不改变特征值：
-\begin_inset Formula $\Matrix{A(U)}$
-\end_inset
 
- 与 
-\begin_inset Formula $\Matrix{A'(U')}$
-\end_inset
-
- 拥有相同的特征值，即
 \begin_inset Formula 
 \[
-\det(\Matrix{A(U)}-\lambda(U)\Matrix{1})=0\implies\det(\Matrix{A'(U')}-\lambda\big(U(U')\big)\Matrix{1})=0
+\det(\Matrix{A(U)}-\lambda_{i}(U)\Matrix{1})=0\implies\det(\Matrix{A'(U')}-\lambda_{i}(U(U'))\Matrix{1})=0
 \]
 
 \end_inset
@@ -4391,21 +4431,36 @@ name "thm:变量替换不改变特征值"
 \end_layout
 
 \begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+特征向量变换法则
+\end_layout
+
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:特征向量变换法则"
+name "thm:微分方程：双曲型：换元：特征向量"
 
 \end_inset
 
 若 
-\begin_inset Formula $\bra{L_{i}(U)},\ket{R_{i}(U)}$
+\begin_inset Formula $\bra{L_{i}(U)}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\ket{R_{i}(U)}$
 \end_inset
 
  分别是 
 \begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
- 的从属于特征值 
+ 的对应于特征值 
 \begin_inset Formula $\lambda_{i}(U)$
 \end_inset
 
@@ -4420,7 +4475,7 @@ name "thm:特征向量变换法则"
 则
 \begin_inset Formula 
 \[
-\bra{L'_{i}(U')}:=\bra{L_{i}(U)}\Matrix{J_{U\to U'}}\qquad\ket{R'_{i}(U')}:=\Matrix{J_{U\to U'}^{-1}}\ket{R_{i}(U)}
+\bra{L'_{i}(U')}\coloneqq\bra{L_{i}(U)}\Matrix{J_{U\to U'}}\qquad\ket{R'_{i}(U')}\coloneqq\Matrix{J_{U\to U'}}^{-1}\ket{R_{i}(U)}
 \]
 
 \end_inset
@@ -4429,8 +4484,8 @@ name "thm:特征向量变换法则"
 \begin_inset Formula $\Matrix{A'(U')}$
 \end_inset
 
- 的从属于特征值 
-\begin_inset Formula $\lambda_{i}\big(U(U')\big)$
+ 的对应于特征值 
+\begin_inset Formula $\lambda_{i}(U(U'))$
 \end_inset
 
  的左、右特征向量。
@@ -4443,30 +4498,40 @@ name "thm:特征向量变换法则"
 
 \end_layout
 
-\begin_layout Remark*
-变量替换不改变双曲性：若关于 
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+换元不改变双曲性
+\end_layout
+
+\end_inset
+
+若关于 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- 的方程（
+ 的方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 式）是双曲的，则关于 
+ 是双曲的，则关于 
 \begin_inset Formula $\ket{U'}$
 \end_inset
 
- 的方程（
+ 的方程 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_changing_variables"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：换元：方程"
 
 \end_inset
 
- 式）也是双曲的。
+ 也是双曲的。
 \end_layout
 
 \begin_layout Standard
@@ -4477,13 +4542,17 @@ reference "eq:multi_wave_changing_variables"
 \end_layout
 
 \begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:变量替换不改变Riemann不变量"
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+换元不改变广义 Riemann 不变量
+\end_layout
 
 \end_inset
 
-变量替换不改变广义 Riemann 不变量：若 
+若 
 \begin_inset Formula $\phi(U)$
 \end_inset
 
@@ -4491,37 +4560,37 @@ name "thm:变量替换不改变Riemann不变量"
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- 的方程（
+ 的方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：拟线性"
 
 \end_inset
 
- 式）的 
+ 的第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI，则 
-\begin_inset Formula $\phi'(U'):=\phi\big(U(U')\big)$
+ 族 GRI，则 
+\begin_inset Formula $\phi'(U')\coloneqq\phi(U(U'))$
 \end_inset
 
  也是关于 
 \begin_inset Formula $\ket{U'}$
 \end_inset
 
- 的方程（
+ 的方程组 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:multi_wave_changing_variables"
+LatexCommand eqref
+reference "eq:微分方程：双曲型：换元：方程"
 
 \end_inset
 
- 式）的 
+ 的第 
 \begin_inset Formula $i$
 \end_inset
 
--GRI。
+ 族 GRI。
 \end_layout
 
 \begin_layout Standard
@@ -4532,28 +4601,28 @@ reference "eq:multi_wave_changing_variables"
 \end_layout
 
 \begin_layout Proof
-由引理 
+由
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:特征向量变换法则"
+LatexCommand nameref
+reference "thm:微分方程：双曲型：换元：特征向量"
 
 \end_inset
 
- 得
+得
 \begin_inset Formula 
 \[
-\ket{R_{i}(U)}=\Matrix{J_{U\to U'}}\ket{R'_{i}(U')}=\begin{bmatrix}\pdv*{u_{1}}{u'_{1}} & \cdots & \pdv*{u_{1}}{u'_{n}}\\
+\ket{R_{i}(U)}=\Matrix{J_{U\to U'}}\ket{R'_{i}(U')}=\begin{bmatrix}\pdv*{U_{1}}{U'_{1}} & \cdots & \pdv*{U_{1}}{U'_{n}}\\
 \vdots & \ddots & \vdots\\
-\pdv*{u_{n}}{u'_{1}} & \cdots & \pdv*{u_{n}}{u'_{n}}
+\pdv*{U_{n}}{U'_{1}} & \cdots & \pdv*{U_{n}}{U'_{n}}
 \end{bmatrix}\ket{R'_{i}(U')}
 \]
 
 \end_inset
 
-将其代入 GRI 的定义，并利用链式求导法则，即得
+将其代入 GRI 定义，并利用链式求导法则，即得
 \begin_inset Formula 
 \[
-0=\ip{\grad_{U}\phi}{R_{i}(U)}=\overbrace{\underbrace{\begin{bmatrix}\pdv{\phi}{u_{1}} & \cdots & \pdv{\phi}{u_{n}}\end{bmatrix}}_{\bra{\grad_{U}\phi}}\Matrix{J_{U\to U'}}}^{\bra{\grad_{U'}\phi'}}\ket{R'_{i}(U')}=\ip{\grad_{U'}\phi'}{R'_{i}(U)}
+0=\ip{\grad_{U}\phi}{R_{i}(U)}=\overbrace{\underbrace{\begin{bmatrix}\pdv*{\phi}{U_{1}} & \cdots & \pdv*{\phi}{U_{n}}\end{bmatrix}}_{\bra{\grad_{U}\phi}}\Matrix{J_{U\to U'}}}^{\bra{\grad_{U'}\phi'}}\ket{R'_{i}(U')}=\ip{\grad_{U'}\phi'}{R'_{i}(U)}
 \]
 
 \end_inset
