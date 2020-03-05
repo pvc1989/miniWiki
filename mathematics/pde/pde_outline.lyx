@@ -105,13 +105,6 @@ theorems-chap
 
 \begin_layout Section
 泛定方程
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:泛定方程"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -264,9 +257,9 @@ Laplace 方程
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{equation}
-\laplacian u=0\label{eq:PDE::Laplace}
-\end{equation}
+\[
+\laplacian u=0
+\]
 
 \end_inset
 
@@ -508,25 +501,6 @@ P\qty(\vec{x})=\sum_{\abs{\vec{\alpha}}\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alph
 
 \end_layout
 
-\begin_layout Remark*
-指数中的等号不可省略，否则将与“乘方 (power)”混淆：
-\begin_inset Formula 
-\[
-\vec{x}^{=2}\coloneqq\left\{ \vec{x}^{\vec{\alpha}}:\abs{\vec{\alpha}}=2\right\} \qquad\vec{x}^{2}\coloneqq\vec{x}\vec{x}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Theorem
 \begin_inset ERT
 status open
@@ -573,13 +547,10 @@ status collapsed
 \end_inset
 
 ，有形式上几乎完全相同的公式：
-\end_layout
-
-\begin_layout Theorem
 \begin_inset Formula 
-\begin{equation}
-\qty(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}=\vec{0}}^{\vec{\alpha}}\binom{\vec{\alpha}}{\vec{\kappa}}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}\coloneqq\frac{\vec{\alpha}!}{\vec{\kappa}!\qty(\vec{\alpha}-\vec{\kappa})!}\label{eq:Binomial::Vector}
-\end{equation}
+\[
+\qty(\vec{x}+\vec{y})^{\vec{\alpha}}=\sum_{\vec{\kappa}=\vec{0}}^{\vec{\alpha}}\binom{\vec{\alpha}}{\vec{\kappa}}\vec{x}^{\vec{\kappa}}\vec{y}^{\vec{\alpha}-\vec{\kappa}}\qquad\binom{\vec{\alpha}}{\vec{\kappa}}\coloneqq\frac{\vec{\alpha}!}{\vec{\kappa}!\qty(\vec{\alpha}-\vec{\kappa})!}
+\]
 
 \end_inset
 
@@ -591,20 +562,6 @@ status collapsed
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-二项式展开式 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Binomial::Scalar"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 可以推广到多项式展开：
 \end_layout
 
 \begin_layout Theorem
@@ -818,12 +775,12 @@ status open
 
 可以证明：
 \begin_inset Formula 
-\begin{equation}
+\[
 \partial_{\nu}=\vec{\nu}\vdot\grad=\lim_{\substack{t\in\mathbb{R}\\
 t\to0
 }
-}\frac{u\qty(\vec{x}+t\vec{\nu})-u\qty(\vec{x})}{t}\qquad\partial_{\nu}^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\grad^{\vec{\alpha}}\label{eq:高阶方向导数展开}
-\end{equation}
+}\frac{u\qty(\vec{x}+t\vec{\nu})-u\qty(\vec{x})}{t}\qquad\partial_{\nu}^{m}=\sum_{\abs{\vec{\alpha}}=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\grad^{\vec{\alpha}}
+\]
 
 \end_inset
 
@@ -1000,13 +957,6 @@ status open
 
 \begin_layout Section
 方程分类
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:方程分类"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -1015,7 +965,7 @@ name "sec:方程分类"
 
 \begin_layout Standard
 关于未知函数 
-\begin_inset Formula $u\colon\mathbb{R}^{n}\to\mathbb{R}$
+\begin_inset Formula $U\colon\mathbb{R}^{n}\to\mathbb{R}$
 \end_inset
 
  的 
@@ -1025,7 +975,7 @@ name "sec:方程分类"
  阶 PDE 的一般形式为
 \begin_inset Formula 
 \begin{equation}
-F\qty(x,\partial^{\le m}u)=0\label{eq:PDE::General::Nonlinear}
+F\qty(\vec{x},\partial^{\le m}U)=0\label{eq:PDE::General::Nonlinear}
 \end{equation}
 
 \end_inset
@@ -1047,9 +997,9 @@ reference "eq:PDE::General::Nonlinear"
 
  可以化为
 \begin_inset Formula 
-\begin{equation}
-\sum_{\abs{\alpha}\le m}A_{\alpha}\partial^{\alpha}u=B\qquad A_{\alpha}\coloneqq A_{\alpha}(x)\qquad B\coloneqq B(x)\label{eq:PDE::General::Linear}
-\end{equation}
+\[
+\sum_{\abs{\vec{\alpha}}\le m}A_{\vec{\alpha}}\qty(\vec{x})\grad^{\vec{\alpha}}U=B\qty(\vec{x})
+\]
 
 \end_inset
 
@@ -1069,7 +1019,7 @@ reference "eq:PDE::General::Nonlinear"
 \end_inset
 
  中含有 
-\begin_inset Formula $\partial^{\le m}u$
+\begin_inset Formula $\grad^{\le m}u$
 \end_inset
 
  中任意两项（可以是相同的两项）的乘积。
@@ -1090,7 +1040,7 @@ reference "eq:PDE::General::Nonlinear"
  可以化为
 \begin_inset Formula 
 \begin{equation}
-\sum_{\abs{\alpha}=m}A_{\alpha}\partial^{\alpha}u=B\qquad A_{\alpha}\coloneqq A_{\alpha}\qty(x,\partial^{<m}u)\qquad B\coloneqq B\qty(x,\partial^{<m}u)\label{eq:PDE::General::Quasi-linear}
+\sum_{\abs{\vec{\alpha}}=m}A_{\vec{\alpha}}\qty(\vec{x},\grad^{<m}U)\grad^{\vec{\alpha}}U=B\qty(\vec{x},\grad^{<m}U)\label{eq:PDE::General::Quasi-linear}
 \end{equation}
 
 \end_inset
@@ -1111,17 +1061,17 @@ reference "eq:PDE::General::Quasi-linear"
 \end_inset
 
  中的 
-\begin_inset Formula $A_{\alpha}$
+\begin_inset Formula $A_{\vec{\alpha}}$
 \end_inset
 
  只依赖于 
-\begin_inset Formula $x$
+\begin_inset Formula $\vec{x}$
 \end_inset
 
 ，即
 \begin_inset Formula 
 \[
-\sum_{\abs{\alpha}=m}A_{\alpha}\partial^{\alpha}u=B\qquad A_{\alpha}\coloneqq A_{\alpha}(x)\qquad B\coloneqq B\qty(x,\partial^{<m}u)
+\sum_{\abs{\vec{\alpha}}=m}A_{\vec{\alpha}}\qty(\vec{x})\grad^{\vec{\alpha}}U=B\qty(\vec{x},\grad^{<m}U)
 \]
 
 \end_inset
@@ -1149,20 +1099,16 @@ reference "eq:PDE::General::Quasi-linear"
 \begin_inset Formula $M$
 \end_inset
 
- 个（独立的）方程，则通常将 
-\begin_inset Formula $u$
-\end_inset
-
- 改为大写的 
+ 个（独立的）方程，则将 
 \begin_inset Formula $U$
 \end_inset
 
- 并理解为 
+ 理解为 
 \begin_inset Formula $N\times1$
 \end_inset
 
  矩阵，将 
-\begin_inset Formula $F,B$
+\begin_inset Formula $B$
 \end_inset
 
  理解为 
@@ -1170,7 +1116,7 @@ reference "eq:PDE::General::Quasi-linear"
 \end_inset
 
  矩阵、将 
-\begin_inset Formula $A_{\alpha}$
+\begin_inset Formula $A_{\vec{\alpha}}$
 \end_inset
 
  理解为 
@@ -1187,9 +1133,9 @@ reference "eq:PDE::General::Quasi-linear"
 
  表示行矩阵），用下划线表示方阵（及一般矩阵）：
 \begin_inset Formula 
-\begin{equation}
-\ket{F}=\Operator{A}\ket{U}-\ket{B}=\ket{0}\qquad\Operator{A}\coloneqq\sum_{\abs{\vec{\alpha}}\le m}\Matrix{A_{\vec{\alpha}}}\grad^{\vec{\alpha}}\label{eq:PDEs::General::Quasi-linear}
-\end{equation}
+\[
+\Operator{A}\ket{U}=\ket{B}\qquad\Operator{A}\coloneqq\sum_{\abs{\vec{\alpha}}\le m}\Matrix{A_{\vec{\alpha}}}\grad^{\vec{\alpha}}
+\]
 
 \end_inset
 
@@ -1305,21 +1251,21 @@ reference "eq:PDE::System::Quasi-linear"
 
 \begin_layout Notation*
 本节中的 
-\begin_inset Formula $\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}$
+\begin_inset Formula $\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}$
 \end_inset
 
  或 
-\begin_inset Formula $\Matrix{A_{i}|_{\vec{x}}}$
+\begin_inset Formula $\Matrix{A_{i}\qty(\vec{x})}$
 \end_inset
 
- 都表示系数矩阵在点 
+ 表示系数矩阵在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
  处的取值：
 \begin_inset Formula 
 \[
-\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\coloneqq\Matrix{A_{\vec{\alpha}}\qty(\vec{x},\grad^{<m}U\qty(\vec{x}))}\qquad\Matrix{A_{i}|_{\vec{x}}}\coloneqq\Matrix{A_{i}\qty(\vec{x},\grad^{<m}U\qty(\vec{x}))}
+\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\coloneqq\Matrix{A_{\vec{\alpha}}\qty(\vec{x},\grad^{<m}U\qty(\vec{x}))}\qquad\Matrix{A_{i}\qty(\vec{x})}\coloneqq\Matrix{A_{i}\qty(\vec{x},\grad^{<m}U\qty(\vec{x}))}
 \]
 
 \end_inset
@@ -1340,7 +1286,7 @@ status open
 
 \begin_layout Plain Layout
 
-[特征型]
+[特征矩阵]
 \end_layout
 
 \end_inset
@@ -1359,7 +1305,7 @@ reference "eq:PDE::System::Quasi-linear"
  构造的方阵
 \begin_inset Formula 
 \[
-\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})}\coloneqq\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\vec{\sigma}^{\vec{\alpha}}
+\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})}\coloneqq\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\vec{\sigma}^{\vec{\alpha}}
 \]
 
 \end_inset
@@ -1388,7 +1334,7 @@ status open
 上述特征矩阵的“行列式 (determinant)”
 \begin_inset Formula 
 \[
-Q\qty(\vec{x},\vec{\sigma})\coloneqq\det\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})}\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\vec{\sigma}^{\vec{\alpha}})
+Q\qty(\vec{x},\vec{\sigma})\coloneqq\det(\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})})\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\vec{\sigma}^{\vec{\alpha}})
 \]
 
 \end_inset
@@ -1426,13 +1372,6 @@ status open
 
 \end_inset
 
-
-\begin_inset CommandInset label
-LatexCommand label
-name "def:特征方向"
-
-\end_inset
-
 若超曲面 
 \begin_inset Formula $S\coloneqq\left\{ \vec{x}\mid\phi(\vec{x})=0\right\} $
 \end_inset
@@ -1448,7 +1387,7 @@ name "def:特征方向"
  使上述特征型为零：
 \begin_inset Formula 
 \[
-Q\left(\vec{x},\grad\phi\qty(\vec{x})\right)\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\grad^{\vec{\alpha}}\phi\qty(\vec{x}))=0
+Q\qty(\vec{x},\grad\phi\qty(\vec{x}))\equiv\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\grad^{\vec{\alpha}}\phi\qty(\vec{x}))=0
 \]
 
 \end_inset
@@ -1559,7 +1498,7 @@ reference "eq:PDE::System::Quasi-linear"
  处没有非零的特征方向：
 \begin_inset Formula 
 \[
-Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\vec{\sigma}^{\vec{\alpha}})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
+Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\vec{\sigma}^{\vec{\alpha}})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
 \]
 
 \end_inset
@@ -1607,7 +1546,7 @@ name "def:pde_hyperbolic"
  的代数方程
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}|_{\vec{x}}}\qty(\vec{\sigma}-\lambda\vec{\tau})^{\vec{\alpha}})=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
+Q\qty(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}\qty(\vec{x})}\qty(\vec{\sigma}-\lambda\vec{\tau})^{\vec{\alpha}})=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
 \]
 
 \end_inset
@@ -1681,7 +1620,7 @@ reference "eq:PDEs::1st-order::Quasi-linear"
  的特征矩阵及特征型分别为
 \begin_inset Formula 
 \begin{equation}
-\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})}=\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\sigma_{i}\qquad Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\sigma_{i})\label{eq:PDE-System-1stOrder-CharForm}
+\Matrix{\Lambda\qty(\vec{x},\vec{\sigma})}=\sum_{i=1}^{n}\Matrix{A_{i}\qty(\vec{x})}\sigma_{i}\qquad Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\Matrix{A_{i}\qty(\vec{x})}\sigma_{i})\label{eq:PDE-System-1stOrder-CharForm}
 \end{equation}
 
 \end_inset
@@ -1693,7 +1632,7 @@ reference "eq:PDEs::1st-order::Quasi-linear"
  的一阶 PDE 的解
 \begin_inset Formula 
 \begin{equation}
-Q\left(\vec{x},\grad\phi\qty(\vec{x})\right)=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\pdv{\phi\qty(\vec{x})}{x_{i}})=0\label{eq:PDE-System-1stOrder-CharManifold}
+Q\qty(\vec{x},\grad\phi\qty(\vec{x}))=\det(\sum_{i=1}^{n}\Matrix{A_{i}\qty(\vec{x})}\pdv{\phi\qty(\vec{x})}{x_{i}})=0\label{eq:PDE-System-1stOrder-CharManifold}
 \end{equation}
 
 \end_inset
@@ -1707,10 +1646,10 @@ Q\left(\vec{x},\grad\phi\qty(\vec{x})\right)=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{
 
 \begin_deeper
 \begin_layout Description
-椭圆的 若
+椭圆型 若
 \begin_inset Formula 
 \[
-Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\sigma_{i})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
+Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\Matrix{A_{i}\qty(\vec{x})}\sigma_{i})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
 \]
 
 \end_inset
@@ -1731,14 +1670,14 @@ Q\qty(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\sigma_{
 \begin_inset space \space{}
 \end_inset
 
-严格双曲的 若关于 
+严格双曲型 若关于 
 \begin_inset Formula $\lambda$
 \end_inset
 
  的代数方程
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\vec{x}}}\qty(\sigma_{i}-\lambda\tau_{i}))=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
+Q\qty(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{i=1}^{n}\Matrix{A_{i}\qty(\vec{x})}\qty(\sigma_{i}-\lambda\tau_{i}))=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
 \]
 
 \end_inset
@@ -1763,7 +1702,7 @@ Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{i=1}^{n}\Matrix{A_{i}|_{\ve
 \begin_inset space \space{}
 \end_inset
 
-轴严格双曲的 若方程可以简化为
+轴严格双曲型 若方程可以简化为
 \begin_inset Formula 
 \[
 \left(\partial_{t}+\Matrix{A(t,x)}\partial_{x}\right)\ket{U(t,x)}=\ket{0}
@@ -1912,7 +1851,7 @@ ODE 的定解条件
  阶 ODE
 \begin_inset Formula 
 \begin{equation}
-F\left(x,u,\dv{u}{x},\dots,\dv[m]{u}{x}\right)=0\qquad x\in(a,b)\label{eq:ODE::General::MthOrder}
+F\qty(x,u,\dv{u}{x},\dots,\dv[m]{u}{x})=0\qquad x\in(a,b)\label{eq:ODE::General::MthOrder}
 \end{equation}
 
 \end_inset
@@ -2337,7 +2276,7 @@ status open
 \begin_inset Formula $(n-1)$
 \end_inset
 
- 维（光滑）超曲面 
+ 维超曲面 
 \begin_inset Formula $S$
 \end_inset
 
@@ -2348,12 +2287,12 @@ status open
  阶的各阶“法向导数值”
 \begin_inset Formula 
 \begin{equation}
-\left\{ \partial_{\nu}^{k}u\qty(\vec{x}):k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData}
+\left\{ \ket{\partial_{\nu}^{k}U\qty(\vec{x})}:k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData}
 \end{equation}
 
 \end_inset
 
-统称为“Cauchy 数据 (Cauchy data, CD)”，相应的（局部）定解问题称为“Cauchy 问题”。
+统称为“Cauchy 数据 (Cauchy Data, CD)”，相应的（局部）定解问题称为“Cauchy 问题”。
 \end_layout
 
 \begin_layout Standard
@@ -2419,7 +2358,7 @@ reference "eq:CauchyData"
  附近可以重写为
 \begin_inset Formula 
 \[
-\left\{ \partial_{\nu}^{k}u(0,y_{2},\dots,y_{n}):k=0,\dots,m-1;\ (0,y_{2},\dots,y_{n})\in S\right\} 
+\left\{ \ket{\partial_{\nu}^{k}U(0,y_{2},\dots,y_{n})}:k=0,\dots,m-1;\ (0,y_{2},\dots,y_{n})\in S\right\} 
 \]
 
 \end_inset
@@ -2443,10 +2382,10 @@ reference "eq:方向导数"
 \begin_inset Formula $x\mapsto y$
 \end_inset
 
- 是非退化的，原则上总是可以利用“链式法则 (chain rule)”
+ 是非退化的，原则上总是可以利用“链式求导法则”
 \begin_inset Formula 
 \[
-\pdv{u}{y_{k}}=\sum_{i=1}^{n}\pdv{u}{x_{i}}\pdv{x_{i}}{y_{k}}\qquad\forall k=1,\dots,n
+\pdv{U}{y_{k}}=\sum_{i=1}^{n}\pdv{U}{x_{i}}\pdv{x_{i}}{y_{k}}\qquad\forall k=1,\dots,n
 \]
 
 \end_inset
@@ -2478,7 +2417,7 @@ reference "eq:方向导数"
  外：
 \begin_inset Formula 
 \[
-\eval{\grad^{\vec{\alpha}}u}_{\vec{x}+\Delta\vec{x}}\approx\eval{\grad^{\vec{\alpha}}u}_{\vec{x}}+\sum_{k=1}^{n}\eval{\partial_{k}\grad^{\vec{\alpha}}u}_{\vec{x}}\Delta x_{k}\qquad\forall\abs{\vec{\alpha}}<m-1
+\eval{\grad^{\vec{\alpha}}U}_{\vec{x}+\increment\vec{x}}\approx\eval{\grad^{\vec{\alpha}}U}_{\vec{x}}+\sum_{k=1}^{n}\eval{\partial_{k}\grad^{\vec{\alpha}}U}_{\vec{x}}\increment x_{k}\qquad\forall\abs{\vec{\alpha}}<m-1
 \]
 
 \end_inset
@@ -2603,7 +2542,7 @@ noprefix "false"
  上给出的 CD：
 \begin_inset Formula 
 \begin{equation}
-\left\{ \partial_{\nu}^{k}\ket{U\qty(\vec{x})}:k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData::System}
+\left\{ \ket{\partial_{\nu}^{k}U}:k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData::System}
 \end{equation}
 
 \end_inset
@@ -2648,13 +2587,13 @@ reference "eq:PDE::System::Quasi-linear"
 \end_inset
 
  就得到关于 
-\begin_inset Formula $\partial_{\nu}^{m}\ket{U}$
+\begin_inset Formula $\ket{\partial_{\nu}^{m}U}$
 \end_inset
 
  的线性代数方程组，它的解存在且唯一的充要条件是
 \begin_inset Formula 
 \[
-\det\Matrix{A_{\vec{\alpha}}}\ne0\qquad\vec{\alpha}=(1,0,\dots,0)
+\det(\Matrix{A_{\vec{\alpha}}})\ne0\qquad\vec{\alpha}=(1,0,\dots,0)
 \]
 
 \end_inset
@@ -2674,14 +2613,11 @@ reference "eq:PDE::System::Quasi-linear"
 y_{2}\\
 \vdots\\
 y_{n}
-\end{bmatrix}=\begin{bmatrix}\phi(x_{1},\dots,x_{n})\\
+\end{bmatrix}\coloneqq\begin{bmatrix}\phi(x_{1},\dots,x_{n})\\
 x_{2}\\
 \vdots\\
 x_{n}
-\end{bmatrix}\implies\pdv{x_{k}}=\begin{cases}
-(\pdv*{\phi}{x_{1}})(\pdv*{y_{1}}) & k=1\\
-(\pdv*{\phi}{x_{k}})(\pdv*{y_{1}})+(\pdv*{y_{k}}) & k=2,\dots,n
-\end{cases}
+\end{bmatrix}\implies\partial_{x_{k}}=\sum_{i=1}^{n}\left(\partial_{x_{k}}y_{i}\right)\partial_{y_{i}}=\left(\partial_{x_{k}}\phi\right)\partial_{y_{1}}+\delta_{k}^{1}\partial_{y_{k}}
 \]
 
 \end_inset
@@ -2713,7 +2649,7 @@ x_{n}
  中：
 \begin_inset Formula 
 \[
-\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}=\underbrace{\left(\prod_{i=1}^{n}\left(\pdv{\phi}{x_{i}}\right)^{\alpha_{i}}\right)}_{\left(\grad\phi\right)^{\vec{\alpha}}}\pdv[m]{y_{1}}+C_{\vec{\alpha}}\qquad\forall\abs{\vec{\alpha}}=m
+\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}=\underbrace{\left(\prod_{i=1}^{n}\left(\pdv{\phi}{x_{i}}\right)^{\alpha_{i}}\right)}_{\grad^{\vec{\alpha}}\phi}\pdv[m]{y_{1}}+C_{\vec{\alpha}}\qquad\forall\abs{\vec{\alpha}}=m
 \]
 
 \end_inset
@@ -2745,13 +2681,13 @@ reference "eq:PDE::System::Quasi-linear"
 \end_inset
 
  就得到关于 
-\begin_inset Formula $\partial_{\nu}^{m}\ket{U}$
+\begin_inset Formula $\ket{\partial_{\nu}^{m}U}$
 \end_inset
 
  的线性代数方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}}\grad^{\vec{\alpha}}\phi\right)\,\partial_{\nu}^{m}\ket{U}=\Matrix{C}\label{eq:PDE::CharManifold::DAE}
+\left(\sum_{\abs{\vec{\alpha}}=m}\Matrix{A_{\vec{\alpha}}}\grad^{\vec{\alpha}}\phi\right)\ket{\partial_{\nu}^{m}U}=\Matrix{C}\label{eq:PDE::CharManifold::DAE}
 \end{equation}
 
 \end_inset
@@ -2792,7 +2728,7 @@ reference "sec:按特征流形分类"
 
 \begin_layout Remark*
 在特征流形上，解的最高阶法向导数值 
-\begin_inset Formula $\partial_{\nu}^{m}\ket{U\qty(\vec{x})}$
+\begin_inset Formula $\ket{\partial_{\nu}^{m}U\qty(\vec{x})}$
 \end_inset
 
  无法被唯一地确定，因此允许其出现第一类间断，但低于 
@@ -2828,8 +2764,8 @@ reference "eq:PDE::1d::String"
  的定解条件可以取作
 \begin_inset Formula 
 \[
-\begin{aligned}u(x=a,t)=f(t)\qquad u(x=b,t)=g(t) & \qquad t\in[0,\infty)\\
-u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x) & \qquad x\in[a,b]
+\begin{aligned}\text{边界条件}\qquad & u(x=a,t)=f(t)\qquad u(x=b,t)=g(t)\\
+\text{初始条件}\qquad & u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)
 \end{aligned}
 \]
 
@@ -2866,8 +2802,8 @@ noprefix "false"
  的定解条件可以取作
 \begin_inset Formula 
 \[
-\begin{aligned}u(x=a,t)=f(t)\qquad u(x=b,t)=g(t) & \qquad t\in[0,\infty)\\
-u(x,t=0)=\phi(x) & \qquad x\in[a,b]
+\begin{aligned}\text{边界条件}\qquad & u(x=a,t)=f(t)\qquad u(x=b,t)=g(t)\\
+\text{初始条件}\qquad & u(x,t=0)=\phi(x)
 \end{aligned}
 \]
 
