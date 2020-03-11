@@ -9,13 +9,12 @@
 \usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
-\master README.lyx
 \begin_modules
 theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -71,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -91,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -101,44 +101,80 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-守恒律与 Riemann 问题
+守恒律 & Riemann 问题
+\end_layout
+
+\begin_layout Section
+守恒律 & 弱解
+\end_layout
+
+\begin_layout Standard
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：双曲型：光滑解的破裂"
+
+\end_inset
+
+》一节已指出：即使定解条件光滑，双曲型方程的光滑解也有可能“破裂 (break)”，其实质是数学工具不足以描述物理过程。为了研究“光滑解破裂后，物理过程如何发展
+”，必须将“双曲型方程”收窄为“
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：守恒律：方程"
+
+\end_inset
+
+”，并将“光滑解”放宽为“
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：弱解"
+
+\end_inset
+
+”。
+\end_layout
+
+\begin_layout Subsection
+守恒律方程
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:riemann_problems"
+name "sec:微分方程：守恒律：方程"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-间断与弱解
-\end_layout
-
 \begin_layout Standard
-In the previous sections, we have seen that even with a smooth IC, the smooth
- solution of a quasilinear PDE (system) can finally become discontinuous.
- To handle such cases, we have to extend the notion of solutions to a weaker
- sense.
+最一般的“守恒律 (conservation law)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!~ law!~ in integral form
 \end_layout
 
-\begin_layout Subsection
-守恒律
-\end_layout
+\end_inset
 
-\begin_layout Standard
-Suppose
+”可以写成以下两种形式之一：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\left(\vec{F}-U\vec{u}^{\text{C}}\right)\dd{\Gamma} & =0\\
+\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\vec{F}\dd{\Gamma} & =0
+\end{aligned}
+\label{eq:微分方程：守恒律：标量：积分型}
+\end{equation}
+
+\end_inset
+
+其中
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\Omega$
 \end_inset
 
- is a 
-\noun on
-control volume
-\noun default
- (CV)
+ 表示空间中的某个区域（开集），称作“控制体 (Control Volume, CV)”
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "CV"
@@ -157,22 +193,18 @@ control!~ volume
 
 \end_inset
 
- in space.
+。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\partial\Omega$
 \end_inset
 
- is the boundary of 
-\begin_inset Formula $V$
+ 表示 
+\begin_inset Formula $\Omega$
 \end_inset
 
-, known as a 
-\noun on
-control surface
-\noun default
- (CS)
+ 的边界，称作“控制面 (Control Surface, CS)”
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "CS"
@@ -191,7 +223,7 @@ control!~ surface
 
 \end_inset
 
-.
+。
 \end_layout
 
 \begin_layout Itemize
@@ -224,124 +256,72 @@ status open
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\vec{u}^{C}$
+\begin_inset Formula $\vec{u}^{\text{C}}$
 \end_inset
 
-
-\begin_inset CommandInset nomenclature
-LatexCommand nomenclature
-symbol "$\\vec{u}^{C}$"
-description "velocity of a point on a control surface"
-literal "true"
-
-\end_inset
-
- is the velocity of a point on 
+ 表示 
 \begin_inset Formula $\partial\Omega$
 \end_inset
 
- (
-\begin_inset Formula $^{C}$
-\end_inset
-
- stands for 
-\bar under
-c
-\bar default
-ontrol volume)
+ 上某点的速度（上标 C 是“控制 (control)”的首字母）。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $U$
 \end_inset
 
- is the 
-\noun on
-conservation variable
-\noun default
-, usually the 
-\noun on
-density
-\noun default
- of some physical quantity.
+ 表示“守恒变量 (conservation variable)”，通常为单位体积内某物理量的总和。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\vec{F}$
 \end_inset
 
- is the 
-\noun on
-flux vector
-\noun default
-, i.e.
- how much such quantity passes through a 
-\emph on
-fixed
-\emph default
- surface in space per unit area within unit time.
+ 表示“通量 (flux)”，通常为单位时间内穿过单位面积（固定）控制面的某物理量的总和。它可以分解为 
+\begin_inset Formula $\vec{F}=\sum_{k=1}^{n}\vec{e}_{k}F_{k}$
+\end_inset
+
+，其中 
+\begin_inset Formula $F_{k}$
+\end_inset
+
+ 具有向量分量属性。
 \end_layout
 
 \begin_layout Standard
-Then, the 
-\noun on
-conservation law
-\noun default
+\begin_inset Separator plain
+\end_inset
 
-\begin_inset Index idx
-status collapsed
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
 
 \begin_layout Plain Layout
-conservation!~ law!~ in integral form
+
+[微分型]
 \end_layout
 
 \end_inset
 
- of 
-\begin_inset Formula $U$
-\end_inset
-
- can be written as
-\begin_inset Formula 
-\begin{equation}
-\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\vec{F}\dd{\Gamma}=0\label{ConservationLawIntegralForm}
-\end{equation}
-
-\end_inset
-
-or equivalently
-\begin_inset Formula 
-\begin{equation}
-\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\left(\vec{F}-U\vec{u}^{C}\right)\dd{\Gamma}=0\label{eq:ConservationLawOnMovingControlVolume}
-\end{equation}
-
-\end_inset
-
-which is usually used for 
-\emph on
-moving
-\emph default
- control volumes.
-\end_layout
-
-\begin_layout Standard
-If 
+若 
 \begin_inset Formula $\vec{F}$
 \end_inset
 
- is 
-\begin_inset Formula $C^{1}$
+ 对空间变量 
+\begin_inset Formula $\vec{x}$
 \end_inset
 
- smooth with respect to spatial variables, we can apply Gauss's divergence
- theorem to 
+ 可微，则“积分型守恒律” 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "ConservationLawIntegralForm"
+reference "eq:微分方程：守恒律：标量：积分型"
 
 \end_inset
 
-, which leads to
+ 可借助“Gauss's 散度定理”化为“微分型守恒律”
 \begin_inset Index idx
 status collapsed
 
@@ -353,58 +333,91 @@ conservation!~ law!~ in differential form
 
 
 \begin_inset Formula 
-\[
-\partial_{t}U+\divg\vec{F}=0
-\]
+\begin{equation}
+\partial_{t}U+\divg\vec{F}=0\label{eq:微分方程：守恒律：标量：微分型}
+\end{equation}
 
 \end_inset
 
-If the smoothness requirement is not satisfied, we should go back to the
- integral form, which will leads to the 
+实际上，在数学类文献中，通常不给出 
 \begin_inset CommandInset ref
-LatexCommand nameref
-reference "subsec:JumpConditions"
-plural "false"
-caps "false"
-noprefix "false"
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：积分型"
 
 \end_inset
 
-.
+，而是将上述微分方程“定义”为守恒律；在上述光滑性要求无法被满足的地方，需将导数理解为广义导数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Notation
-For a vector conservation law, or a system of conservation laws, we use
- a column matrix 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[方程组]
+\end_layout
+
+\end_inset
+
+关于单个未知函数的守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：积分型"
+
+\end_inset
+
+ 称作“标量守恒律 (scalar conservation law)”。类似的，关于单个向量的守恒律称作“向量守恒律 (vector conservation
+ law)”。更一般的，有“守恒律系统 (system of conservation laws)”，它含有若干个（标量或向量）守恒律。为了强调方程组属性：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+守恒变量 可以用“列矩阵 (column matrix)” 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- for the conservation variables, a scalar 
-\begin_inset Formula $U_{i}:=\ip{i}{U}$
-\end_inset
-
- for the 
+ 表示，它的第 
 \begin_inset Formula $i$
 \end_inset
 
-th element of 
-\begin_inset Formula $\ket{U}$
+ 个（标量或向量）分量可以用 
+\begin_inset Formula $U_{i}$
 \end_inset
 
-.
+ 或 
+\begin_inset Formula $\ip{i}{U}$
+\end_inset
+
+ 表示。
 \end_layout
 
+\begin_layout Description
+通量 可以用“列矩阵向量 (vector of column matrices)” 
+\begin_inset Formula $\vec{\ket{F}}$
+\end_inset
+
+ 表示，它可以分解为 
+\begin_inset Formula $\vec{\ket{F}}=\sum_{k=1}^{n}\vec{e}_{k}\ket{F_{k}}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\ket{F_{k}}$
+\end_inset
+
+ 是由若干标量或向量构成的列矩阵。
+\end_layout
+
+\end_deeper
 \begin_layout Notation
-In 3D space, we use a column matrix of vectors (or tensors) 
-\begin_inset Formula $\ket*{\vec{F}}$
-\end_inset
-
- for the flux, which can be decomposed as 
-\begin_inset Formula $\ket*{\vec{F}}=\sum_{k=1}^{3}\vec{e}_{k}\ket{F_{k}}$
-\end_inset
-
-.
- The conservation law is then written in one of the following forms
+按此记法，最一般的守恒律系统可以写成以下形式之一：
 \begin_inset ERT
 status open
 
@@ -418,9 +431,16 @@ begin{subequations}
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:微分方程：守恒律：方程组"
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\Omega}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\left(\ket*{\vec{F}}-\vec{u}^{C}\ket{U}\right)\dd{\Gamma}=\ket{0}\label{eq:ConservationLawSystemOnMovingControlVolume}
+\dv{t}\int_{\Omega}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{u}^{\text{C}}\ket{U}\right)\dd{\Gamma}=\ket{0}\label{eq:微分方程：守恒律：方程组：动体}
 \end{equation}
 
 \end_inset
@@ -428,50 +448,36 @@ begin{subequations}
 
 \begin_inset Formula 
 \begin{equation}
-\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\ket*{\vec{F}}\dd{\Gamma}=\ket{0}
+\begin{aligned}\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{\ket{F}}\dd{\Gamma} & =\ket{0}\\
+\partial_{t}\ket{U}+\divg\vec{\ket{F}} & =\ket{0}
+\end{aligned}
 \end{equation}
 
 \end_inset
 
-
+在三维空间中，微分型守恒律的直角坐标形式为
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}\ket{U}+\divg{\ket*{\vec{F}}}=\ket{0}
+\partial_{t}\ket{U}+\sum_{k=1}^{3}\partial_{k}\ket{F_{k}}=\ket{0}\label{eq:微分方程：守恒律：方程组：三维}
 \end{equation}
 
 \end_inset
 
-In Cartesian coordinates, the last one is
-\end_layout
-
-\begin_layout Notation
-\begin_inset Formula 
-\begin{equation}
-\boxed{\partial_{t}\ket{U}+\sum_{k=1}^{3}\partial_{k}\ket{F_{k}}}=\ket{0}\label{eq:ConservationLaws3dSystem}
-\end{equation}
-
+在一维空间中，只有一个 
+\begin_inset Formula $\ket{F_{k}}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Notation
-In 1D space, only one component of 
-\begin_inset Formula $\ket*{\vec{F}}$
-\end_inset
-
- is non-zero, so the subscripts can be ignored.
- Equation 
+ 非零，故可以省略其下标，
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaws3dSystem"
+reference "eq:微分方程：守恒律：方程组：三维"
 
 \end_inset
 
- becomes
+ 退化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}}\label{eq:ConservationLaws1dSystem}
+\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\label{eq:微分方程：守恒律：方程组：一维}
 \end{equation}
 
 \end_inset
@@ -479,48 +485,52 @@ reference "eq:ConservationLaws3dSystem"
 
 \end_layout
 
-\begin_layout Notation
-Scalar conservation laws are just special cases of 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+标量守恒律 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaws3dSystem"
+reference "eq:微分方程：守恒律：标量：微分型"
+
+\end_inset
+
+ 是守恒律方程组 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：方程组：三维"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:ConservationLaws1dSystem"
-plural "false"
-caps "false"
-noprefix "false"
-
+ 的特殊情形，可以省略矩阵符号 
+\begin_inset Formula $\ket{\phantom{0}}$
 \end_inset
 
-, in which 
-\begin_inset Formula $\ket{\phantom{U}}$
-\end_inset
-
- can be ignored, that is
+，从而有
 \begin_inset Formula 
 \begin{equation}
-\boxed{\partial_{t}U+\sum_{k=1}^{3}\partial_{k}F_{k}=0}
+\partial_{t}U+\sum_{k=1}^{3}\partial_{k}F_{k}=0
 \end{equation}
 
 \end_inset
 
-for 3D problems, and
+在一维空间中，可以进一步简化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\partial_{t}U+\partial_{x}F=0}\label{eq:ConservationLaw1dScalar}
+\partial_{t}U+\partial_{x}F=0\label{eq:微分方程：守恒律：标量：微分型：一维}
 \end{equation}
 
 \end_inset
 
-for 1D problems.
+
 \begin_inset ERT
 status open
 
@@ -531,6 +541,13 @@ status open
 end{subequations}
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -575,7 +592,7 @@ It has an infinitesimal height
 , which means
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{u}^{C}=\vec{u}^{\Gamma}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
+\lim_{h\to0}\vec{u}^{\text{C}}=\vec{u}^{\Gamma}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
 \]
 
 \end_inset
@@ -626,7 +643,7 @@ All of its walls are
 Then, the conservation law on a moving control volume 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLawSystemOnMovingControlVolume"
+reference "eq:微分方程：守恒律：方程组：动体"
 plural "false"
 caps "false"
 noprefix "false"
@@ -636,7 +653,7 @@ noprefix "false"
  is reduced to
 \begin_inset Formula 
 \[
-\int_{\Gamma_{+}\cup\Gamma_{-}}\vec{\nu}\cdot\left(\ket*{\vec{F}}-\vec{u}^{\Gamma}\ket{U}\right)\dd{\Gamma}=0
+\int_{\Gamma_{+}\cup\Gamma_{-}}\vec{\nu}\cdot\left(\vec{\ket{F}}-\vec{u}^{\Gamma}\ket{U}\right)\dd{\Gamma}=0
 \]
 
 \end_inset
@@ -684,21 +701,13 @@ name "eq:JumpConditions"
 
 \begin_inset Formula 
 \begin{equation}
-\boxed{\eval{\ket{U}}_{-}^{+}u_{\nu}^{\Gamma}=\eval{\ket{F_{\nu}}}_{-}^{+}}\qquad u_{\nu}^{\Gamma}:=\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\qquad\ket{F_{\nu}}:=\vec{e}_{\nu}\cdot\ket*{\vec{F}}
+\boxed{\eval{\ket{U}}_{-}^{+}u_{\nu}^{\Gamma}=\eval{\ket{F_{\nu}}}_{-}^{+}}\qquad u_{\nu}^{\Gamma}:=\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\qquad\ket{F_{\nu}}:=\vec{e}_{\nu}\cdot\vec{\ket{F}}
 \end{equation}
 
 \end_inset
 
-which is known as the 
-\noun on
-Rankine–Hugoniot condition
-\noun default
-, a.k.a.
- the 
-\noun on
-jump condition
-\noun default
-.
+which is known as the“ (Rankine–Hugoniot condition)”, a.k.a.
+ the“ (jump condition)”.
 \begin_inset Index idx
 status open
 
@@ -716,7 +725,7 @@ In 1D space, only one component of a vector is non-zero, for which the subscript
  can be ignored:
 \begin_inset Formula 
 \[
-\vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{u}^{\Gamma}=\vec{e}_{1}u^{\Gamma}\qquad\ket*{\vec{F}}=\vec{e}_{1}\ket{F}
+\vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{u}^{\Gamma}=\vec{e}_{1}u^{\Gamma}\qquad\vec{\ket{F}}=\vec{e}_{1}\ket{F}
 \]
 
 \end_inset
@@ -755,6 +764,13 @@ end{subequations}
 
 \begin_layout Subsection
 弱解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:微分方程：弱解"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Definition
@@ -788,11 +804,7 @@ If there exists an
 \end_layout
 
 \begin_layout Standard
-for any 
-\emph on
-compact supported smooth
-\emph default
- function 
+for any“compact supported smooth”function 
 \begin_inset Formula $\phi(x,t)$
 \end_inset
 
@@ -800,11 +812,7 @@ compact supported smooth
 \begin_inset Formula $U(x,t)$
 \end_inset
 
- is said to be a 
-\noun on
-weak solution
-\noun default
-
+ is said to be a“ (weak solution)”
 \begin_inset Index idx
 status collapsed
 
@@ -817,15 +825,11 @@ solution!weak ~
  of 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaw1dScalar"
+reference "eq:微分方程：守恒律：标量：微分型：一维"
 
 \end_inset
 
- (a scalar conservation law in 1D space) with the 
-\emph on
-piecewise smooth
-\emph default
- IC
+ (a scalar conservation law in 1D space) with the“piecewise smooth”IC
 \begin_inset Formula 
 \[
 U(x_{0},t_{0})=U_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
@@ -1073,11 +1077,8 @@ Using the terminology of gas dynamics, we can classify various discontinuities:
 \end_layout
 
 \begin_layout Itemize
-If the entropy condition takes an equal sign, it implies a 
-\noun on
-contact discontinuity
-\noun default
-
+If the entropy condition takes an equal sign, it implies a“ (contact discontinui
+ty)”
 \begin_inset Index idx
 status collapsed
 
@@ -1092,11 +1093,8 @@ discontinuity!contact ~
 \end_layout
 
 \begin_layout Itemize
-If the entropy condition takes a strict unequal sign, it implies a 
-\noun on
-shock wave
-\noun default
-
+If the entropy condition takes a strict unequal sign, it implies a“ (shock
+ wave)”
 \begin_inset Index idx
 status collapsed
 
@@ -1175,7 +1173,7 @@ Riemann!~ problem!~ for a single conservation law
  for a single conservation law in 1D space is the IVP defined by PDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaw1dScalar"
+reference "eq:微分方程：守恒律：标量：微分型：一维"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1235,7 +1233,7 @@ Riemann!~ problem!~ for a conservation law system
  in 1D space is the IVP defined by PDE 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:ConservationLaws1dSystem"
+reference "eq:微分方程：守恒律：方程组：一维"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1309,12 +1307,8 @@ status open
 
 \end_inset
 
-An IVP is said to be 
-\emph on
-self-similar
-\emph default
-, if the PDE and IC do not change when the independent variables are scaled
- with the same constant, e.g.
+An IVP is said to be“self-similar”, if the PDE and IC do not change when
+ the independent variables are scaled with the same constant, e.g.
 \begin_inset Formula 
 \[
 (x,t)\to(\alpha x,\alpha t)\qquad\forall\,\alpha\ne0
@@ -1502,11 +1496,7 @@ v_{i}(x,t)=\ip{i}{V(x,t)}=\begin{cases}
 \end_layout
 
 \begin_layout Standard
-The solution of the original RP is then the 
-\emph on
-superposition
-\emph default
- of all the 
+The solution of the original RP is then the“superposition”of all the 
 \begin_inset Formula $m$
 \end_inset
 
@@ -1559,19 +1549,11 @@ the jumps in the first
 \begin_inset Formula $k$
 \end_inset
 
- waves are to the 
-\emph on
-left
-\emph default
- of 
+ waves are to the“left”of 
 \begin_inset Formula $(x,t)$
 \end_inset
 
-, so these waves contributes their 
-\emph on
-right
-\emph default
- values;
+, so these waves contributes their“right”values;
 \end_layout
 
 \begin_layout Itemize
@@ -1579,19 +1561,11 @@ the jumps in the other
 \begin_inset Formula $(m-k)$
 \end_inset
 
- waves are to the 
-\emph on
-right
-\emph default
- of 
+ waves are to the“right”of 
 \begin_inset Formula $(x,t)$
 \end_inset
 
-, so these waves contributes their 
-\emph on
-left
-\emph default
- values;
+, so these waves contributes their“left”values;
 \end_layout
 
 \begin_layout Itemize
@@ -1833,21 +1807,13 @@ If
 \begin_inset Formula $x$
 \end_inset
 
--axis will 
-\emph on
-run into
-\emph default
- those emanating from the other half of the 
+-axis will“run into”those emanating from the other half of the 
 \begin_inset Formula $x$
 \end_inset
 
 -axis.
- In this case, a 
-\noun on
-shock wave
-\noun default
- separating the two families of parallel characteristic curves will emanate
- from 
+ In this case, a“ (shock wave)”separating the two families of parallel character
+istic curves will emanate from 
 \begin_inset Formula $(0,0)$
 \end_inset
 
@@ -1898,34 +1864,19 @@ U_{+} & x/t>u^{\Gamma}
 \begin_inset Formula $\lambda_{-}<\lambda_{+}$
 \end_inset
 
-, which means the two families of characteristic curves will 
-\emph on
-diverge
-\emph default
- from each other.
- In this case, a fan-shaped 
-\noun on
-centered expansion wave
-\noun default
- separating the two families of parallel characteristic curves will start
- from 
+, which means the two families of characteristic curves will“diverge”from
+ each other.
+ In this case, a fan-shaped“ (centered expansion wave)”separating the two
+ families of parallel characteristic curves will start from 
 \begin_inset Formula $(0,0)$
 \end_inset
 
 .
- The speed of the 
-\noun on
-wave head
-\noun default
- is 
+ The speed of the“ (wave head)”is 
 \begin_inset Formula $\lambda_{+}$
 \end_inset
 
-, while that of the 
-\noun on
-wave tail
-\noun default
- is 
+, while that of the“ (wave tail)”is 
 \begin_inset Formula $\lambda_{-}$
 \end_inset
 
@@ -1988,11 +1939,7 @@ There might be such a case that
 
 .
  In this case, there will be no mass/momentum/energy flowing across the
- discontinuity, thus it is called a 
-\noun on
-contact discontinuity
-\noun default
-.
+ discontinuity, thus it is called a“ (contact discontinuity)”.
  The speed of the contact discontinuity is the same as the left and right
  characteristic speed:
 \begin_inset Formula 
@@ -2092,11 +2039,8 @@ There are
 \end_inset
 
  elementary waves.
- Since the solution of an RP is self-similar, we can define the 
-\noun on
-slope
-\noun default
- as a new independent variable:
+ Since the solution of an RP is self-similar, we can define the“ (slope)”as
+ a new independent variable:
 \begin_inset Formula 
 \[
 \alpha:=x/t\implies\begin{cases}
@@ -2264,11 +2208,8 @@ th characteristic field is genuinely nonlinear, there might be such a case
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides run 
-\emph on
-into
-\emph default
- each other, which implies 
+Geometrically, this means the characteristic curves on both sides run“into”each
+ other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2327,12 +2268,8 @@ th characteristic field is genuinely nonlinear, there might be such a case
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides wave run
- 
-\emph on
-away
-\emph default
- from each other, which implies 
+Geometrically, this means the characteristic curves on both sides wave run“away”
+from each other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2429,11 +2366,8 @@ th characteristic field is linearly degenerate, then
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides run 
-\emph on
-parallel
-\emph default
- with each other, which implies 
+Geometrically, this means the characteristic curves on both sides run“parallel”w
+ith each other, which implies 
 \begin_inset Formula $k$
 \end_inset
 
