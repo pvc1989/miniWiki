@@ -174,7 +174,7 @@ conservation!~ law!~ in integral form
 \begin_inset Formula $\Omega$
 \end_inset
 
- 表示空间中的某个区域（开集），称作“控制体 (Control Volume, CV)”
+ 表示空间中的某个（开）区域，称作“控制体 (Control Volume, CV)”
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
 symbol "CV"
@@ -554,10 +554,10 @@ end{subequations}
 \end_layout
 
 \begin_layout Subsection
-跳跃关系
+跳跃条件
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:JumpConditions"
+name "sec:微分方程：守恒律：跳跃条件"
 
 \end_inset
 
@@ -565,11 +565,11 @@ name "subsec:JumpConditions"
 \end_layout
 
 \begin_layout Standard
-Suppose there is a discontinuity manifold 
+设间断面 
 \begin_inset Formula $\Gamma$
 \end_inset
 
- moving with velocity 
+ 上任意一点的运动速度为
 \begin_inset Formula 
 \[
 \vec{u}^{\Gamma}=\vec{e}_{\nu}u_{\nu}^{\Gamma}+\vec{e}_{\tau}u_{\tau}^{\Gamma}
@@ -577,19 +577,31 @@ Suppose there is a discontinuity manifold
 
 \end_inset
 
-Choose a cylindrical control volume 
+其中 
+\begin_inset Formula $\vec{e}_{\nu}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{e}_{\tau}$
+\end_inset
+
+ 分别为该点处的“单位法向量”与“单位切向量”。取如下跟随 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 移动的控制体 
 \begin_inset Formula $\Omega$
 \end_inset
 
- satisfying the following requirements:
+：
 \end_layout
 
 \begin_layout Itemize
-It has an infinitesimal height 
+厚度 
 \begin_inset Formula $h$
 \end_inset
 
-, which means
+ 为无穷小量，即
 \begin_inset Formula 
 \[
 \lim_{h\to0}\vec{u}^{\text{C}}=\vec{u}^{\Gamma}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
@@ -601,46 +613,42 @@ It has an infinitesimal height
 \end_layout
 
 \begin_layout Itemize
-All of its walls are 
-\begin_inset Formula $\perp\Gamma$
+控制体壁面与 
+\begin_inset Formula $\Gamma$
 \end_inset
 
-.
+ 垂直。
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $\Gamma$
 \end_inset
 
- is sandwiched between the top surface 
+ 夹在顶面 
 \begin_inset Formula $\Gamma_{+}$
 \end_inset
 
- (on which 
+（其上有 
 \begin_inset Formula $\vec{\nu}=\vec{e}_{\nu}$
 \end_inset
 
-) and the bottom surface 
+）与底面 
 \begin_inset Formula $\Gamma_{-}$
 \end_inset
 
- (on which 
+（其上有 
 \begin_inset Formula $\vec{\nu}=-\vec{e}_{\nu}$
 \end_inset
 
-) of 
-\begin_inset Formula $V$
-\end_inset
-
-, and 
-\begin_inset Formula $\Gamma_{+}\parallel\Gamma\parallel\Gamma_{-}$
-\end_inset
-
-.
+）之间，三者相互平行。
 \end_layout
 
 \begin_layout Standard
-Then, the conservation law on a moving control volume 
+于是移动控制体 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的守恒律 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:微分方程：守恒律：方程组：动体"
@@ -650,35 +658,23 @@ noprefix "false"
 
 \end_inset
 
- is reduced to
+ 退化为
 \begin_inset Formula 
 \[
-\int_{\Gamma_{+}\cup\Gamma_{-}}\vec{\nu}\cdot\left(\vec{\ket{F}}-\vec{u}^{\Gamma}\ket{U}\right)\dd{\Gamma}=0
+\int_{\Gamma_{+}\cup\Gamma_{-}}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{u}^{\Gamma}\ket{U}\right)\dd{\Gamma}=0
 \]
 
 \end_inset
 
-Replace 
+用 
 \begin_inset Formula $\vec{\nu}$
 \end_inset
 
- with 
+ 替换 
 \begin_inset Formula $\pm\vec{e}_{\nu}$
 \end_inset
 
- and let 
-\begin_inset Formula $\int_{\Gamma_{\pm}}\dd{\Gamma}\to0$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\left(\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\right)\big(\ket{U_{+}}-\ket{U_{-}}\big)=\vec{e}_{\nu}\cdot\ket*{\vec{F}_{+}}-\vec{e}_{\nu}\cdot\ket*{\vec{F}_{-}}
-\]
-
-\end_inset
-
-or written in a more compact form
+，并将积分区域收缩为一点，则以上积分式退化为
 \begin_inset ERT
 status open
 
@@ -694,22 +690,21 @@ begin{subequations}
 
 \begin_inset CommandInset label
 LatexCommand label
-name "eq:JumpConditions"
+name "eq:微分方程：守恒律：跳跃条件"
 
 \end_inset
 
 
 \begin_inset Formula 
 \begin{equation}
-\boxed{\eval{\ket{U}}_{-}^{+}u_{\nu}^{\Gamma}=\eval{\ket{F_{\nu}}}_{-}^{+}}\qquad u_{\nu}^{\Gamma}:=\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\qquad\ket{F_{\nu}}:=\vec{e}_{\nu}\cdot\vec{\ket{F}}
+\left(\ket{U}_{+}-\ket{U}_{-}\right)u_{\nu}^{\Gamma}=\ket{F_{\nu}}_{+}-\ket{F_{\nu}}_{-}\qquad u_{\nu}^{\Gamma}\coloneqq\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\qquad\ket{F_{\nu}}\coloneqq\vec{e}_{\nu}\cdot\vec{\ket{F}}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
 \end{equation}
 
 \end_inset
 
-which is known as the“ (Rankine–Hugoniot condition)”, a.k.a.
- the“ (jump condition)”.
+此即“跳跃条件 (jump condition)”，又名“Rankine–Hugoniot 条件”
 \begin_inset Index idx
-status open
+status collapsed
 
 \begin_layout Plain Layout
 condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
@@ -717,12 +712,21 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
 
 \end_inset
 
-
+。
 \end_layout
 
-\begin_layout Standard
-In 1D space, only one component of a vector is non-zero, for which the subscript
- can be ignored:
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维形式]
+\end_layout
+
+\end_inset
+
+在一维问题中，只有一个方向的向量分量非零，故可省略下标：
 \begin_inset Formula 
 \[
 \vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{u}^{\Gamma}=\vec{e}_{1}u^{\Gamma}\qquad\vec{\ket{F}}=\vec{e}_{1}\ket{F}
@@ -730,23 +734,30 @@ In 1D space, only one component of a vector is non-zero, for which the subscript
 
 \end_inset
 
-The jump condition can then be simplified as
+跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
+
+\end_inset
+
+ 退化为
 \begin_inset Formula 
 \begin{equation}
-\eval{\ket{U}}_{-}^{+}u^{\Gamma}=\eval{\ket{F}}_{-}^{+}
+\left(\ket{U}_{+}-\ket{U}_{-}\right)u^{\Gamma}=\ket{F}_{+}-\ket{F}_{-}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
 \end{equation}
 
 \end_inset
 
-for a system of conservation laws, and
+对于一维标量守恒律，还可以进一步省略上式中的矩阵符号：
 \begin_inset Formula 
 \begin{equation}
-\eval{U}_{-}^{+}u^{\Gamma}=\eval{F}_{-}^{+}
+\left(U_{+}-U_{-}\right)u^{\Gamma}=\left(F_{+}-F_{-}\right)\label{eq:微分方程：守恒律：跳跃条件：一维：标量}
 \end{equation}
 
 \end_inset
 
-for a single conservation law.
+
 \begin_inset ERT
 status open
 
@@ -757,6 +768,13 @@ status open
 end{subequations}
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -779,40 +797,51 @@ status open
 
 \begin_layout Plain Layout
 
-[Weak Solution of Single Conservation Law]
+[弱解]
 \end_layout
 
 \end_inset
 
-If there exists an 
-\begin_inset Formula $L_{2}$
+给定守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型：一维"
+
 \end_inset
 
- integrable function 
-\begin_inset Formula $U(x,t)$
-\end_inset
-
- that satisfies
+ 及“分段 (piecewise) 光滑”的初始条件
 \begin_inset Formula 
 \[
-\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U+\pdv{\phi}{x}F\right)\dd{x}\dd{t}+\int_{-\infty}^{+\infty}\phi(x_{0},t_{0})U_{0}(x_{0})\dd{x_{0}}=0
+U(x_{0},t_{0})=U_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-for any“compact supported smooth”function 
-\begin_inset Formula $\phi(x,t)$
+若存在 
+\begin_inset Formula $L_{2}$
 \end_inset
 
-, then 
+ 可积的函数 
 \begin_inset Formula $U(x,t)$
 \end_inset
 
- is said to be a“ (weak solution)”
+ 对任意“紧支 (compact supported) 光滑函数” 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 都满足
+\begin_inset Formula 
+\[
+\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U+\pdv{\phi}{x}F\right)\dd{x}\dd{t}+\int_{-\infty}^{+\infty}\phi\mathopen{}\left(x_{0},t_{0}\right)U_{0}(x_{0})\dd{x_{0}}=0
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 为该初值问题的一个“弱解 (weak solution)”
 \begin_inset Index idx
 status collapsed
 
@@ -822,104 +851,7 @@ solution!weak ~
 
 \end_inset
 
- of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:微分方程：守恒律：标量：微分型：一维"
-
-\end_inset
-
- (a scalar conservation law in 1D space) with the“piecewise smooth”IC
-\begin_inset Formula 
-\[
-U(x_{0},t_{0})=U_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-Any smooth solution is also a weak solution.
-\end_layout
-
-\begin_layout Proof
-For smooth solutions, we can move the temporal derivative from 
-\begin_inset Formula $\phi$
-\end_inset
-
- to 
-\begin_inset Formula $U$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U\right)\dd{x}\dd{t} & =\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(\pdv{\phi U}{t}-\phi\pdv{U}{t}\right)\dd{t}\dd{x}\\
-\int_{-\infty}^{+\infty}\left(\int_{t_{0}}^{+\infty}\pdv{\phi U}{t}\dd{t}\right)\dd{x} & =\int_{-\infty}^{+\infty}\eval{(\phi U)}_{t=t_{0}}^{t=+\infty}\dd{x}=\int_{-\infty}^{+\infty}\phi(x_{0},t_{0})U_{0}(x_{0})\dd{x_{0}}
-\end{aligned}
-\]
-
-\end_inset
-
-We drop the 
-\begin_inset Formula $t=+\infty$
-\end_inset
-
- term since 
-\begin_inset Formula $\phi(t=+\infty,x)=0$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Similarly, we can move the spatial derivative from 
-\begin_inset Formula $\phi$
-\end_inset
-
- to 
-\begin_inset Formula $F$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{x}F\right)\dd{x}\dd{t} & =\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi F}{x}-\phi\pdv{F}{x}\right)\dd{x}\dd{t}\\
-\int_{t_{0}}^{+\infty}\left(\int_{-\infty}^{+\infty}\pdv{\phi F}{x}\dd{x}\right)\dd{t} & =\int_{t_{0}}^{+\infty}\eval{(\phi F)}_{x=-\infty}^{x=+\infty}\dd{t}=0
-\end{aligned}
-\]
-
-\end_inset
-
-We drop the 
-\begin_inset Formula $x=\pm\infty$
-\end_inset
-
- terms since 
-\begin_inset Formula $\phi(t,x=\pm\infty)=0$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Proof
-Substitute them back into the definition of weak solution, we have
-\begin_inset Formula 
-\[
-\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\phi\cdot\left(\partial_{t}U+\partial_{x}F\right)\dd{t}\dd{x}=0
-\]
-
-\end_inset
-
-which leads to the PDE since 
-\begin_inset Formula $\phi$
-\end_inset
-
- is chosen arbitrarily.
+。
 \end_layout
 
 \begin_layout Standard
@@ -929,41 +861,148 @@ which leads to the PDE since
 
 \end_layout
 
+\begin_layout Theorem
+所有光滑解都是弱解。
+\end_layout
+
 \begin_layout Standard
-For conservation law systems, just replace 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于光滑解，可以利用分部积分，将 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的时间导数移动到 
 \begin_inset Formula $U$
 \end_inset
 
- with 
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U\right)\dd{x}\dd{t} & =\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(\pdv{\phi U}{t}-\phi\pdv{U}{t}\right)\dd{t}\dd{x}\\
+\int_{-\infty}^{+\infty}\left(\int_{t_{0}}^{+\infty}\pdv{\phi U}{t}\dd{t}\right)\dd{x} & =\int_{-\infty}^{+\infty}\eval{(\phi U)}_{t=t_{0}}^{t=+\infty}\dd{x}=\int_{-\infty}^{+\infty}-\phi\mathopen{}\left(x_{0},t_{0}\right)U_{0}(x_{0})\dd{x_{0}}
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个等号忽略 
+\begin_inset Formula $t=+\infty$
+\end_inset
+
+ 所对应的项，是因为 
+\begin_inset Formula $\phi(t=+\infty,x)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+类似地，可以将 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的空间导数移动到 
+\begin_inset Formula $F$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{x}F\right)\dd{x}\dd{t} & =\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi F}{x}-\phi\pdv{F}{x}\right)\dd{x}\dd{t}\\
+\int_{t_{0}}^{+\infty}\left(\int_{-\infty}^{+\infty}\pdv{\phi F}{x}\dd{x}\right)\dd{t} & =\int_{t_{0}}^{+\infty}\eval{(\phi F)}_{x=-\infty}^{x=+\infty}\dd{t}=0
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个等号忽略 
+\begin_inset Formula $x=\pm\infty$
+\end_inset
+
+ 所对应的项，是因为 
+\begin_inset Formula $\phi(t,x=\pm\infty)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+将以上结果代回弱解定义，即得
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\phi\cdot\left(\partial_{t}U+\partial_{x}F\right)\dd{t}\dd{x}=0
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的任意性可知 
+\begin_inset Formula $U$
+\end_inset
+
+ 的确是守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型：一维"
+
+\end_inset
+
+ 的解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+对于一维守恒律方程组，有类似的定义和结论：只需将 
+\begin_inset Formula $U$
+\end_inset
+
+ 替换为 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
+，将 
 \begin_inset Formula $F$
 \end_inset
 
- with 
+ 替换为 
 \begin_inset Formula $\ket{F}$
 \end_inset
 
-.
- For 3D problems, just replace 
-\begin_inset Formula $F$
+。对于三维问题，也有类似的定义和结论：只需将 
+\begin_inset Formula $\partial_{x}F$
 \end_inset
 
- with 
-\begin_inset Formula $\vec{F}$
+ 替换为 
+\begin_inset Formula $\divg F$
 \end_inset
 
- and 
-\begin_inset Formula $\pdv*{x}$
+ 或 
+\begin_inset Formula $\divg\vec{\ket{F}}$
 \end_inset
 
- with 
-\begin_inset Formula $\grad$
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
-.
+
 \end_layout
 
 \begin_layout Subsection
@@ -1019,7 +1058,7 @@ condition!entropy ~!Lax's ~
  as
 \begin_inset Formula 
 \[
-\lambda(U_{-})\ge u^{\Gamma}\ge\lambda(U_{+})\qquad\lambda(U):=\pdv{F}{U}
+\lambda(U_{-})\ge u^{\Gamma}\ge\lambda(U_{+})\qquad\lambda(U)\coloneqq\pdv{F}{U}
 \]
 
 \end_inset
@@ -2043,7 +2082,7 @@ There are
  a new independent variable:
 \begin_inset Formula 
 \[
-\alpha:=x/t\implies\begin{cases}
+\alpha\coloneqq x/t\implies\begin{cases}
 \pdv*{t}=(\pdv*{\alpha}{t})(\dv*{\alpha})\\
 \pdv*{x}=(\pdv*{\alpha}{x})(\dv*{\alpha})
 \end{cases}
@@ -2296,7 +2335,7 @@ in which
 
 are the speed of the wave head and the wave tail, respectively.
  A centered expansion wave is a smooth region, in which 
-\begin_inset Formula $\alpha:=x/t$
+\begin_inset Formula $\alpha\coloneqq x/t$
 \end_inset
 
  is an eigenvalue of 
