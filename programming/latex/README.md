@@ -118,6 +118,42 @@ xelatex ../hello.tex
 
 ## 数学物理符号
 
+### 符号类型与间距
+TeX 将数学符号分为以下几类：
+
+|    类型     |     命令     |                      示例                       |
+| :---------: | :----------: | :---------------------------------------------: |
+|  Ordinary   |  `\mathord`  |                       $a$                       |
+|  Operator   |  `\mathop`   |                     $\sum$                      |
+|   Binary    |  `\mathbin`  |                    $\times$                     |
+|  Relation   |  `\mathrel`  |                      $\le$                      |
+|   Opening   | `\mathopen`  |                    $\biggl($                    |
+|   Closing   | `\mathclose` |                    $\biggr)$                    |
+| Punctuation | `\mathpunct` |                       $,$                       |
+|    Inner    | `\mathinner` | $\dfrac12$ 或 $\left(\phantom{\dfrac12}\right)$ |
+
+并将它们之间的距离定义为（其中 * = 不可能，0 = 无间距，1 = `\thinmuskip`，2 = `\mediumskip`，3 = `\thickmuskip`，( ) = 在上下标模式中忽略）
+
+|       | Ord  |  Op  | Bin  | Rel  | Open | Close | Punct | Inner |
+| ----: | :--: | :--: | :--: | :--: | :--: | :---: | :---: | :---: |
+|   Ord |  0   |  1   | (2)  | (3)  |  0   |   0   |   0   |  (1)  |
+|    Op |  1   |  1   |  *   | (3)  |  0   |   0   |   0   |  (1)  |
+|   Bin | (2)  | (2)  |  *   |  *   | (2)  |   *   |   *   |  (2)  |
+|   Rel | (3)  | (3)  |  *   |  0   | (3)  |   0   |   0   |  (3)  |
+|  Open |  0   |  0   |  *   |  0   |  0   |   0   |   0   |   0   |
+| Close |  0   |  1   | (2)  | (3)  |  0   |   0   |   0   |  (1)  |
+| Punct | (1)  | (1)  |  *   | (1)  | (1)  |  (1)  |  (1)  |  (1)  |
+| Inner | (1)  |  1   | (2)  | (3)  | (1)  |   0   |  (1)  |  (1)  |
+
+比较以下写法（注意括号前后的间距）：
+
+|                       示例                       |             缺点             |
+| :----------------------------------------------: | :--------------------------: |
+|            $f ( \dfrac{x^2}{2} ) dx$             | 括号尺寸偏小，微分号前缺间距 |
+|       $f \left( \dfrac{x^2}{2} \right) dx$       | 函数名与开括号之间有多余间距 |
+|     $f \biggl( \dfrac{x^2}{2} \biggr) \, dx$     |      括号尺寸需手动调整      |
+| $f \mathopen{} \left( \dfrac{x^2}{2} \right) dx$ |   需手动插入 `\mathopen{}`   |
+
 ### `physics`
 
 ### `siunitx`
