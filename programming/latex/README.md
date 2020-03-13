@@ -1,20 +1,5 @@
 # LaTeX
 
-## 参考链接
-### [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
-### [TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/)
-### [慕子](https://www.zhihu.com/people/muzzi)的[知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
-- [(La)TeX 世界的几个层次](https://zhuanlan.zhihu.com/p/45507356)
-- [LaTeX，一个多义词](https://zhuanlan.zhihu.com/p/45996183)
-- [2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)
-  - [2019 年，不用 CTEX 套装的新理由](https://zhuanlan.zhihu.com/p/73304856)
-- [常用参考文档](https://zhuanlan.zhihu.com/p/43938945)
-
-### ⚠️ 信息污染源
-- 百度搜索
-- 中文博客
-- 祖传文档
-
 ## 发行版 + 编辑器
 
 ### TeX Live
@@ -207,3 +192,25 @@ fontsize={\footnotesize}
 ## 绘图
 
 ### `tikz`
+
+## 参考资料
+### 链接
+- [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
+- [TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/)
+- [慕子](https://www.zhihu.com/people/muzzi)的[知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
+  - [(La)TeX 世界的几个层次](https://zhuanlan.zhihu.com/p/45507356)
+  - [LaTeX，一个多义词](https://zhuanlan.zhihu.com/p/45996183)
+  - [2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)
+  - [2019 年，不用 CTEX 套装的新理由](https://zhuanlan.zhihu.com/p/73304856)
+- [常用参考文档](https://zhuanlan.zhihu.com/p/43938945)
+
+### 书籍
+- Knuth 1984《The TeXbook》
+- Lamport 1994《LaTeX: a Document Preparation System》
+- Mittelbach 2005《The LaTeX Companion》
+- Grätzer [2016《More Math into LaTeX》](10.1007/978-3-319-23796-1)
+
+### ⚠️ 信息污染源
+- 百度搜索
+- 中文博客
+- 祖传文档
