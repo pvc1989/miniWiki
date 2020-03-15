@@ -159,9 +159,9 @@ conservation!~ law!~ in integral form
 ”可以写成以下两种形式之一：
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\left(\vec{F}-U\vec{u}^{\text{C}}\right)\dd{\Gamma} & =0\\
-\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\cdot\vec{F}\dd{\Gamma} & =0
-\end{aligned}
+\begin{gathered}\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}^{\text{C}}U\right)\dd{\Gamma}=0\\
+\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd{\Gamma}=0
+\end{gathered}
 \label{eq:微分方程：守恒律：标量：积分型}
 \end{equation}
 
@@ -407,7 +407,7 @@ reference "eq:微分方程：守恒律：标量：积分型"
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- 表示，它的第 
+ 表示，其第 
 \begin_inset Formula $i$
 \end_inset
 
@@ -424,15 +424,11 @@ reference "eq:微分方程：守恒律：标量：积分型"
 
 \begin_layout Description
 通量 可以用“列矩阵向量 (vector of column matrices)” 
-\begin_inset Formula $\vec{\ket{F}}$
+\begin_inset Formula $\vec{\ket{F}}\coloneqq\sum_{k=1}^{n}\vec{e}_{k}\ket{F}_{k}$
 \end_inset
 
- 表示，它可以分解为 
-\begin_inset Formula $\vec{\ket{F}}=\sum_{k=1}^{n}\vec{e}_{k}\ket{F_{k}}$
-\end_inset
-
-，其中 
-\begin_inset Formula $\ket{F_{k}}$
+ 表示，其中 
+\begin_inset Formula $\ket{F}_{k}$
 \end_inset
 
  是由若干标量或向量构成的列矩阵。
@@ -451,9 +447,9 @@ reference "eq:微分方程：守恒律：标量：积分型"
 
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{\ket{F}}\dd{\Gamma} & =\ket{0}\\
-\partial_{t}\ket{U}+\divg\vec{\ket{F}} & =\ket{0}
-\end{aligned}
+\begin{gathered}\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{\ket{F}}\dd{\Gamma}=\ket{0}\\
+\partial_{t}\ket{U}+\divg\vec{\ket{F}}=\ket{0}
+\end{gathered}
 \end{equation}
 
 \end_inset
@@ -461,13 +457,13 @@ reference "eq:微分方程：守恒律：标量：积分型"
 在三维空间中，微分型守恒律的直角坐标形式为
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}\ket{U}+\sum_{k=1}^{3}\partial_{k}\ket{F_{k}}=\ket{0}\label{eq:微分方程：守恒律：方程组：三维}
+\partial_{t}\ket{U}+\partial_{x}\ket{F}_{x}+\partial_{y}\ket{F}_{y}+\partial_{z}\ket{F}_{z}=\ket{0}\label{eq:微分方程：守恒律：方程组：三维}
 \end{equation}
 
 \end_inset
 
 在一维空间中，只有一个 
-\begin_inset Formula $\ket{F_{k}}$
+\begin_inset Formula $\ket{F}_{k}$
 \end_inset
 
  非零，故可以省略其下标，
@@ -513,14 +509,10 @@ noprefix "false"
 
 \end_inset
 
- 的特殊情形，可以省略矩阵符号 
-\begin_inset Formula $\ket{\phantom{0}}$
-\end_inset
-
-，从而有
+ 的特殊情形，可以省略矩阵符号，从而有
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}U+\sum_{k=1}^{3}\partial_{k}F_{k}=0
+\partial_{t}U+\partial_{x}F_{x}+\partial_{y}F_{y}+\partial_{z}F_{z}=0
 \end{equation}
 
 \end_inset
@@ -595,13 +587,13 @@ name "eq:微分方程：守恒律：跳跃条件"
 
 \begin_layout Theorem
 设间断面 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $S$
 \end_inset
 
  上任意一点的运动速度为
 \begin_inset Formula 
 \[
-\vec{u}^{\Gamma}=\vec{e}_{\nu}u_{\nu}^{\Gamma}+\vec{e}_{\tau}u_{\tau}^{\Gamma}
+\vec{s}=\vec{e}_{\nu}s_{\nu}+\vec{e}_{\tau}s_{\tau}
 \]
 
 \end_inset
@@ -633,7 +625,7 @@ noprefix "false"
 \end_inset
 
  在间断面 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $S$
 \end_inset
 
  两侧的值满足如下“跳跃条件 (jump condition)”（又名“Rankine–Hugoniot 条件”
@@ -649,16 +641,12 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
 ）：
 \begin_inset Formula 
 \begin{equation}
-\left(\ket{U}_{+}-\ket{U}_{-}\right)u_{\nu}^{\Gamma}=\ket{F_{\nu}}_{+}-\ket{F_{\nu}}_{-}\qquad u_{\nu}^{\Gamma}\coloneqq\vec{e}_{\nu}\cdot\vec{u}^{\Gamma}\qquad\ket{F_{\nu}}\coloneqq\vec{e}_{\nu}\cdot\vec{\ket{F}}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
+\left(\ket{U}_{+}-\ket{U}_{-}\right)s_{\nu}=\ket{F}_{\nu+}-\ket{F}_{\nu-}\qquad s_{\nu}\coloneqq\vec{e}_{\nu}\vdot\vec{s}\qquad\ket{F}_{\nu\pm}\coloneqq\vec{e}_{\nu}\vdot\vec{\ket{F}}_{\pm}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
 \end{equation}
 
 \end_inset
 
-其中 
-\begin_inset Formula $\vec{\nu}$
-\end_inset
 
- 为该点处的“单位外法向量”。
 \end_layout
 
 \begin_layout Standard
@@ -670,7 +658,7 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
 
 \begin_layout Proof
 取如下跟随 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $S$
 \end_inset
 
  移动的控制体 
@@ -689,7 +677,7 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
  为无穷小量，即
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{u}^{\text{C}}=\vec{u}^{\Gamma}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
+\lim_{h\to0}\vec{u}^{\text{C}}=\vec{s}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
 \]
 
 \end_inset
@@ -699,26 +687,26 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
 
 \begin_layout Itemize
 控制体壁面与 
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $S$
 \end_inset
 
  垂直。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Gamma$
+\begin_inset Formula $S$
 \end_inset
 
  夹在顶面 
-\begin_inset Formula $\Gamma_{+}$
+\begin_inset Formula $S_{+}$
 \end_inset
 
 （其上有 
-\begin_inset Formula $\vec{\nu}=\vec{e}_{\nu}$
+\begin_inset Formula $\vec{\nu}=+\vec{e}_{\nu}$
 \end_inset
 
 ）与底面 
-\begin_inset Formula $\Gamma_{-}$
+\begin_inset Formula $S_{-}$
 \end_inset
 
 （其上有 
@@ -747,7 +735,7 @@ noprefix "false"
  退化为
 \begin_inset Formula 
 \[
-\int_{\Gamma_{+}\cup\Gamma_{-}}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{u}^{\Gamma}\ket{U}\right)\dd{\Gamma}=0
+\int_{S_{+}\cup S_{-}}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{s}\ket{U}\right)\dd{\Gamma}=0
 \]
 
 \end_inset
@@ -791,7 +779,7 @@ status open
 在一维问题中，只有一个方向的向量分量非零，故可省略下标：
 \begin_inset Formula 
 \[
-\vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{u}^{\Gamma}=\vec{e}_{1}u^{\Gamma}\qquad\vec{\ket{F}}=\vec{e}_{1}\ket{F}
+\vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{s}=\vec{e}_{1}s\qquad\vec{\ket{F}}=\vec{e}_{1}\ket{F}
 \]
 
 \end_inset
@@ -806,7 +794,7 @@ reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
  退化为
 \begin_inset Formula 
 \begin{equation}
-\left(\ket{U}_{+}-\ket{U}_{-}\right)u^{\Gamma}=\ket{F}_{+}-\ket{F}_{-}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
+\left(\ket{U}_{+}-\ket{U}_{-}\right)s=\ket{F}_{+}-\ket{F}_{-}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
 \end{equation}
 
 \end_inset
@@ -814,7 +802,7 @@ reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
 对于一维标量守恒律，还可以进一步省略上式中的矩阵符号：
 \begin_inset Formula 
 \begin{equation}
-\left(U_{+}-U_{-}\right)u^{\Gamma}=\left(F_{+}-F_{-}\right)\label{eq:微分方程：守恒律：跳跃条件：一维：标量}
+\left(U_{+}-U_{-}\right)s=\left(F_{+}-F_{-}\right)\label{eq:微分方程：守恒律：跳跃条件：一维：标量}
 \end{equation}
 
 \end_inset
@@ -1057,7 +1045,7 @@ reference "eq:微分方程：守恒律：标量：微分型：一维"
 \end_inset
 
  替换为 
-\begin_inset Formula $\divg F$
+\begin_inset Formula $\divg\vec{F}$
 \end_inset
 
  或 
@@ -1246,22 +1234,18 @@ condition!entropy ~!Lax's ~
 
 \end_inset
 
-
-\begin_inset Formula $U$
-\end_inset
-
- 在间断处的“左极限” 
+间断左右两侧的极限值 
 \begin_inset Formula $U_{-}$
 \end_inset
 
- 与“右极限” 
+ 与 
 \begin_inset Formula $U_{+}$
 \end_inset
 
- 总是使特征线（微元）“挤入 (run into)”或平行于间断轨迹（微元）：
+ 总是使特征线“汇入 (run into)”或平行于间断轨迹：
 \begin_inset Formula 
 \[
-\lambda(U_{-})\ge u^{\Gamma}\ge\lambda(U_{+})
+\lambda(U_{-})\ge s\ge\lambda(U_{+})
 \]
 
 \end_inset
@@ -1290,14 +1274,10 @@ condition!entropy ~!Lax's ~
 
 \end_inset
 
-
-\begin_inset Formula $\ket{U}$
-\end_inset
-
- 在间断处的左右极限值总是使某一族特征线（微元）挤入或平行于间断轨迹（微元）：
+间断左右两侧的极限值总是使某一族特征线汇入或平行于间断轨迹：
 \begin_inset Formula 
 \[
-\lambda_{k}(U_{-})\ge u^{\Gamma}\ge\lambda_{k}(U_{+})\qquad k\in\left\{ 1,\dots,n\right\} 
+\lambda_{k}(U_{-})\ge s\ge\lambda_{k}(U_{+})\qquad k\in\left\{ 1,\dots,n\right\} 
 \]
 
 \end_inset
@@ -1305,8 +1285,8 @@ condition!entropy ~!Lax's ~
 或更完整的
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\lambda_{1}(U_{+})\le\cdots\le\lambda_{k-1}(U_{+})\le\lambda_{k}(U_{+})\le u^{\Gamma} & \le\lambda_{k+1}(U_{+})\le\cdots\le\lambda_{n}(U_{+})\\
-\lambda_{1}(U_{-})\le\cdots\le\lambda_{k-1}(U_{-})\le u^{\Gamma}\le\lambda_{k}(U_{-}) & \le\lambda_{k+1}(U_{-})\le\cdots\le\lambda_{n}(U_{-})
+\begin{aligned}\lambda_{1}(U_{+})\le\cdots\le\lambda_{k-1}(U_{+})\le\lambda_{k}(U_{+})\le s & \le\lambda_{k+1}(U_{+})\le\cdots\le\lambda_{n}(U_{+})\\
+\lambda_{1}(U_{-})\le\cdots\le\lambda_{k-1}(U_{-})\le s\le\lambda_{k}(U_{-}) & \le\lambda_{k+1}(U_{-})\le\cdots\le\lambda_{n}(U_{-})
 \end{aligned}
 \label{eq:微分方程：守恒律：熵条件：方程组}
 \end{equation}
@@ -1348,7 +1328,7 @@ discontinuity!shock wave
 
 \end_inset
 
-几何上表现为特征线挤入间断轨迹，物理上有物质（质量、动量、能量）穿过间断面，并伴有熵增。
+几何上表现为特征线汇入间断轨迹，物理上有物质（质量、动量、能量）穿过间断面，并伴有熵增。
 \end_layout
 
 \begin_layout Description
@@ -1429,7 +1409,7 @@ status open
 
 \end_inset
 
-“Riemann 问题 (Riemann Problem, RP)”是一类特殊的守恒律（系统）“初值问题 (Initial Value Problem,
+“Riemann 问题 (Riemann Problem, RP)”是一类特殊的守恒律系统“初值问题 (Initial Value Problem,
  IVP)”：守恒变量的初始分布是分段光滑函数。特别地，若“初始条件 (Initial Condition, IC)”只依赖于一个空间自变量、只含有一个间断点、
 在间断点两侧为常值，则称这样的 RP 为“
 \bar under
@@ -1482,7 +1462,7 @@ status open
 
 \begin_layout Plain Layout
 
-[标量守恒律 RP]
+[标量守恒律 Riemann 问题]
 \end_layout
 
 \end_inset
@@ -1490,7 +1470,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:微分方程：守恒律：标量：RP"
+name "prob:微分方程：标量守恒律 Riemann 问题"
 
 \end_inset
 
@@ -1543,7 +1523,7 @@ status open
 
 \begin_layout Plain Layout
 
-[守恒律系统 RP]
+[守恒律系统 Riemann 问题]
 \end_layout
 
 \end_inset
@@ -1551,7 +1531,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:微分方程：守恒律：系统：RP"
+name "prob:微分方程：守恒律系统 Riemann 问题"
 
 \end_inset
 
@@ -1573,19 +1553,19 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \ket{U(x,t=0)}=\begin{cases}
-\ket{U_{-}} & x<0\\
-\ket{U_{+}} & x>0
+\ket{U}_{-} & x<0\\
+\ket{U}_{+} & x>0
 \end{cases}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\ket{U_{-}}$
+\begin_inset Formula $\ket{U}_{-}$
 \end_inset
 
  与 
-\begin_inset Formula $\ket{U_{+}}$
+\begin_inset Formula $\ket{U}_{+}$
 \end_inset
 
  为常值矩阵。
@@ -1673,7 +1653,7 @@ status open
 
 \begin_layout Plain Layout
 
-[线性单波 RP]
+[线性单波 Riemann 问题]
 \end_layout
 
 \end_inset
@@ -1691,11 +1671,11 @@ Riemann!~ problem!~ for linear advection equation
 在
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "prob:微分方程：守恒律：标量：RP"
+reference "prob:微分方程：标量守恒律 Riemann 问题"
 
 \end_inset
 
- 中，取 PDE 为“线性单波方程”
+中，取 PDE 为“线性单波方程”
 \begin_inset Index idx
 status collapsed
 
@@ -1743,10 +1723,10 @@ U_{+} & x/t>\lambda
 \begin_inset Formula $x/t=\lambda$
 \end_inset
 
- 上不满足 PDE，但满足“跳跃关系”及“（退化的）熵条件”：
+ 上不满足 PDE，但满足“跳跃关系”及“临界熵条件”：
 \begin_inset Formula 
 \[
-u^{\Gamma}=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}=\lambda\qquad\lambda(U_{-})=u^{\Gamma}=\lambda(U_{+})
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}=\lambda\qquad\lambda(U_{-})=s=\lambda(U_{+})
 \]
 
 \end_inset
@@ -1777,7 +1757,7 @@ status open
 
 \begin_layout Plain Layout
 
-[线性单波 RP]
+[线性多波 Riemann 问题]
 \end_layout
 
 \end_inset
@@ -1795,11 +1775,11 @@ Riemann!~ problem!~ for a linear hyperbolic system
 在
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "prob:微分方程：守恒律：系统：RP"
+reference "prob:微分方程：守恒律系统 Riemann 问题"
 
 \end_inset
 
- 中，取 PDE 为“一阶线性方程组”
+中，取 PDE 为“一阶线性方程组”
 \begin_inset Formula 
 \[
 \left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U}=0\qquad\Matrix{A}\in\mathbb{R}^{n\times n}
@@ -1826,7 +1806,7 @@ reference "prob:微分方程：守恒律：系统：RP"
  个独立的特征向量：
 \begin_inset Formula 
 \[
-\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\qquad\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\underbrace{\Matrix{R}\ket{1}}_{\ket{R_{1}}} & \cdots & \underbrace{\Matrix{R}\ket{n}}_{\ket{R_{n}}}\end{bmatrix}\qquad\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
  & \ddots\\
  &  & \lambda_{n}
 \end{bmatrix}
@@ -1837,7 +1817,7 @@ reference "prob:微分方程：守恒律：系统：RP"
 其中特征值按从小到大顺序排列：
 \begin_inset Formula 
 \[
-\le\lambda_{2}\le\cdots\le\lambda_{n-1}\le\lambda_{n}
+\lambda_{1}\le\lambda_{2}\le\cdots\le\lambda_{n-1}\le\lambda_{n}
 \]
 
 \end_inset
@@ -1856,10 +1836,10 @@ reference "prob:微分方程：守恒律：系统：RP"
 定义特征变量
 \begin_inset Formula 
 \[
-\ket{V(x,t)}\coloneqq\Matrix{L}\ket{U(x,t)}\qquad\Matrix{L}=\begin{bmatrix}\bra{L_{1}}\\
+\ket{V(x,t)}\coloneqq\Matrix{L}\ket{U(x,t)}\qquad\Matrix{R}^{-1}\eqqcolon\Matrix{L}=\begin{bmatrix}\bra{1}\Matrix{L}\eqqcolon\bra{L_{1}}\\
 \vdots\\
-\bra{L_{n}}
-\end{bmatrix}\coloneqq\Matrix{R}^{-1}
+\bra{n}\Matrix{L}\eqqcolon\bra{L_{n}}
+\end{bmatrix}
 \]
 
 \end_inset
@@ -1871,7 +1851,7 @@ reference "prob:微分方程：守恒律：系统：RP"
  所张成的空间：
 \begin_inset Formula 
 \[
-\ket{U_{-}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{-}}\qquad\ket{U_{+}}=\sum_{i=1}^{m}\ket{R_{i}}\ip{L_{i}}{U_{+}}
+\ket{U}_{-}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U}_{-}\qquad\ket{U}_{+}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U}_{+}
 \]
 
 \end_inset
@@ -1884,8 +1864,8 @@ reference "prob:微分方程：守恒律：系统：RP"
 \begin_inset Formula 
 \[
 \pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(x,t=0)=\begin{cases}
-\ip{L_{i}}{U_{-}} & x<0\\
-\ip{L_{i}}{U_{+}} & x>0
+\ip{L_{i}}{U}_{-} & x<0\\
+\ip{L_{i}}{U}_{+} & x>0
 \end{cases}
 \]
 
@@ -1895,8 +1875,8 @@ reference "prob:微分方程：守恒律：系统：RP"
 \begin_inset Formula 
 \[
 V_{i}(x,t)=\begin{cases}
-\ip{L_{i}}{U_{-}} & x/t<\lambda_{i}\\
-\ip{L_{i}}{U_{+}} & x/t>\lambda_{i}
+\ip{L_{i}}{U}_{-} & x/t<\lambda_{i}\\
+\ip{L_{i}}{U}_{+} & x/t>\lambda_{i}
 \end{cases}\qquad i=1,\dots,n
 \]
 
@@ -1961,7 +1941,7 @@ V_{i}(x,t)=\begin{cases}
 \end_inset
 
  处取右值 
-\begin_inset Formula $\left\{ \ip{L_{i}}{U_{+}}\right\} _{i=1}^{k}$
+\begin_inset Formula $\left\{ \ip{L_{i}}{U}_{+}\right\} _{i=1}^{k}$
 \end_inset
 
 。
@@ -1985,14 +1965,14 @@ V_{i}(x,t)=\begin{cases}
 \end_inset
 
  处取左值 
-\begin_inset Formula $\left\{ \ip{L_{i}}{U_{-}}\right\} _{i=k+1}^{n}$
+\begin_inset Formula $\left\{ \ip{L_{i}}{U}_{-}\right\} _{i=k+1}^{n}$
 \end_inset
 
 。
 \end_layout
 
 \begin_layout Itemize
-原始变量 
+原变量 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
@@ -2003,12 +1983,10 @@ V_{i}(x,t)=\begin{cases}
  处的取值为
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(x,t)} & =\Matrix{L}^{-1}\ket{V(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
+\ket{U(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
 V_{n}(x,t)
-\end{bmatrix}\\
- & =\sum_{i=1}^{k}\ip{L_{i}}{U_{+}}\ket{R_{i}}+\sum_{i=k+1}^{n}\ip{L_{i}}{U_{-}}\ket{R_{i}}
-\end{aligned}
+\end{bmatrix}
 \]
 
 \end_inset
@@ -2026,7 +2004,7 @@ V_{n}(x,t)
 \begin_inset Formula $x/t<\lambda_{1}$
 \end_inset
 
-，所有单波都取左值。
+，故未受到右侧扰动，所有单波都取左值。
 \end_layout
 
 \begin_layout Itemize
@@ -2038,18 +2016,18 @@ V_{n}(x,t)
 \begin_inset Formula $x/t>\lambda_{n}$
 \end_inset
 
-，所有单波都取右值。
+，故未受到左侧扰动，所有单波都取右值。
 \end_layout
 
 \end_deeper
 \begin_layout Solution*
-最终得到完整的 RP 解为
+最终得到完整解为
 \begin_inset Formula 
 \[
 \ket{U(x,t)}=\begin{cases}
-\ket{U_{-}} & x/t<\lambda_{1}\\
-\ket{U_{(k)}} & x/t\in(\lambda_{k},\lambda_{k+1})\\
-\ket{U_{+}} & x/t>\lambda_{n}
+\ket{U}_{-} & x/t<\lambda_{1}\\
+\ket{U}_{*k} & x/t\in(\lambda_{k},\lambda_{k+1})\\
+\ket{U}_{+} & x/t>\lambda_{n}
 \end{cases}\qc k=1,\dots,n-1
 \]
 
@@ -2058,7 +2036,7 @@ V_{n}(x,t)
 其中
 \begin_inset Formula 
 \[
-\ket{U_{(k)}}=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}}+\left(\sum_{i=k+1}^{n}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}}
+\ket{U}_{*k}=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U}_{+}+\left(\sum_{i=k+1}^{n}\dyad{R_{i}}{L_{i}}\right)\ket{U}_{-}
 \]
 
 \end_inset
@@ -2079,7 +2057,7 @@ status open
 
 \begin_layout Plain Layout
 
-间断类型
+接触间断
 \end_layout
 
 \end_inset
@@ -2105,7 +2083,7 @@ status open
 \end_inset
 
  个单波传递的速度，即 
-\begin_inset Formula $u^{\Gamma_{k}}=\lambda_{k}$
+\begin_inset Formula $s_{k}=\lambda_{k}$
 \end_inset
 
 。在特征线 
@@ -2125,12 +2103,12 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\eval{\ket{U}}_{(x=\lambda_{k}t-0,t)}^{(x=\lambda_{k}t+0,t)}u^{\Gamma_{k}}=\eval{\ket{F}}_{(x=\lambda_{k}t-0,t)}^{(x=\lambda_{k}t+0,t)}
+\eval{\ket{U}}_{x/t=\lambda_{k}-0}^{x/t=\lambda_{k}+0}s_{k}=\eval{\ket{F}}_{x/t=\lambda_{k}-0}^{x/t=\lambda_{k}+0}
 \]
 
 \end_inset
 
-及熵条件 
+及临界熵条件 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:微分方程：守恒律：熵条件：方程组"
@@ -2143,12 +2121,12 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\lambda_{k}(x=\lambda_{k}t-0,t)=u^{\Gamma_{k}}=\lambda_{k}(x=\lambda_{k}t+0,t)
+\lambda_{k}(x/t=\lambda_{k}-0)=s_{k}=\lambda_{k}(x/t=\lambda_{k}+0)
 \]
 
 \end_inset
 
-因此它们都是“接触间断”
+因此它们都是接触间断
 \begin_inset Index idx
 status collapsed
 
@@ -2172,7 +2150,25 @@ discontinuity!contact ~
 拟线性单波
 \end_layout
 
-\begin_layout Standard
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拟线性单波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：守恒律：拟线性单波 Riemann 问题"
+
+\end_inset
+
+
 \begin_inset Index idx
 status collapsed
 
@@ -2182,52 +2178,122 @@ Riemann!~ problem!~ for a single conservation law
 
 \end_inset
 
+在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：标量守恒律 Riemann 问题"
+
+\end_inset
+
+中，将 PDE 改写为拟线性单波方程：
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\lambda(U)\partial_{x}\right)U=0\qquad\lambda(U)\coloneqq\pdv*{F}{U}
+\]
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-The disturbance of the initial discontinuity spreads at a finite speed,
- so there must be two undisturbed regions in the solution, in which 
-\begin_inset Formula $U(x,t)$
+\begin_inset Separator plain
 \end_inset
 
- takes its initial value.
- These two undisturbed regions are connected by a disturbed region.
- Self-similarity implies that the interfaces of these regions are straight
- lines emanated from 
-\begin_inset Formula $(0,0)$
-\end_inset
 
-.
- So, the solution must have the following form:
+\end_layout
+
+\begin_layout Solution*
+初始间断以有限的速度传播，故左右两端必有未受扰动的常值区域。由解的自相似性可知：这两个常值区域之间是扇形的受扰动区域。因此解的一般结构为：
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
 U_{-} & x/t<\lambda_{-}\\
-U_{*} & x/t\in[\lambda_{-},\lambda_{+}]\\
+U_{*} & x/t\in(\lambda_{-},\lambda_{+})\\
 U_{+} & x/t>\lambda_{+}
 \end{cases}
 \]
 
 \end_inset
 
-in which
+其中 
+\begin_inset Formula $\lambda_{\pm}\coloneqq\lambda(U_{\pm})$
+\end_inset
+
+。实际求解任务是确定依赖于 
+\begin_inset Formula $x/t$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $U_{*}$
+\end_inset
+
+，有以下三种情况：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+膨胀波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!expansion wave
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\lambda_{-}<\lambda_{+}$
+\end_inset
+
+，即始于原点两侧的特征线相互“发散 (diverge)”，则受扰动区域会形成一道“扇形膨胀波 (fan-shaped expansion wave)”或“中心稀
+疏波 (centered rarefraction)”。此扇形的右侧与左侧边界分别是“波头 (wave head)”与“波尾 (wave tail)”的轨迹，其
+斜率 
+\begin_inset Formula $\lambda_{+}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\lambda_{-}$
+\end_inset
+
+ 分别为“波头速度”与“波尾速度”。在扇形区域内，
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 依然光滑（满足 PDE），其值可由特征线方程 
+\begin_inset Formula $x/t=\lambda(U)$
+\end_inset
+
+ 解出：
 \begin_inset Formula 
 \[
-\lambda(U)=\pdv{F}{U}\qquad\lambda_{\pm}=\lambda(U_{\pm})
+U(x,t)=\lambda^{-1}(x/t)
 \]
 
 \end_inset
 
-Our task is to determine 
-\begin_inset Formula $U_{*}$
+其中 
+\begin_inset Formula $\lambda^{-1}$
 \end_inset
 
-, which is a function depends on 
-\begin_inset Formula $x/t$
+ 表示 
+\begin_inset Formula $\lambda$
 \end_inset
 
-.
+ 的反函数。这种情况下的完整解为
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<\lambda_{-}\\
+\text{expansion} & x/t\in(\lambda_{-},\lambda_{+})\\
+U_{+} & x/t>\lambda_{+}
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Description
@@ -2241,133 +2307,36 @@ discontinuity!shock wave
 
 \end_inset
 
-If 
-\begin_inset Formula $\dv*{\lambda}{U}>0$
-\end_inset
-
- and 
-\begin_inset Formula $U_{-}>U_{+}$
-\end_inset
-
-, or 
-\begin_inset Formula $\dv*{\lambda}{U}<0$
-\end_inset
-
- and 
-\begin_inset Formula $U_{-}<U_{+}$
-\end_inset
-
-, we will have 
+若 
 \begin_inset Formula $\lambda_{-}>\lambda_{+}$
 \end_inset
 
-, which means the characteristic curves emanating from one half of the 
-\begin_inset Formula $x$
+，即始于原点两侧的特征线相互“汇聚 (converge)”，则两族特征线汇聚的地方会形成一道“激波 (shock wave)”，它的轨迹也是始于原点的射线，其斜
+率满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
+plural "false"
+caps "false"
+noprefix "false"
+
 \end_inset
 
--axis will“run into”those emanating from the other half of the 
-\begin_inset Formula $x$
-\end_inset
-
--axis.
- In this case, a“ (shock wave)”separating the two families of parallel character
-istic curves will emanate from 
-\begin_inset Formula $(0,0)$
-\end_inset
-
-.
- The speed of the shock wave is determined by the jump condition and the
- entropy condition
+ 及严格熵条件：
 \begin_inset Formula 
 \[
-u^{\Gamma}=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}>u^{\Gamma}>\lambda_{+}
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}>s>\lambda_{+}
 \]
 
 \end_inset
 
-is strictly satisfied.
- The complete solution is then
+这种情况下的完整解为
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
-U_{-} & x/t<u^{\Gamma}\\
-\text{shock} & x/t=u^{\Gamma}\\
-U_{+} & x/t>u^{\Gamma}
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-膨胀波 If 
-\begin_inset Formula $\dv*{\lambda}{U}>0$
-\end_inset
-
- and 
-\begin_inset Formula $U_{-}<U_{+}$
-\end_inset
-
-, or 
-\begin_inset Formula $\dv*{\lambda}{U}<0$
-\end_inset
-
- and 
-\begin_inset Formula $U_{-}>U_{+}$
-\end_inset
-
-, we will have 
-\begin_inset Formula $\lambda_{-}<\lambda_{+}$
-\end_inset
-
-, which means the two families of characteristic curves will“diverge”from
- each other.
- In this case, a fan-shaped“ (centered expansion wave)”separating the two
- families of parallel characteristic curves will start from 
-\begin_inset Formula $(0,0)$
-\end_inset
-
-.
- The speed of the“ (wave head)”is 
-\begin_inset Formula $\lambda_{+}$
-\end_inset
-
-, while that of the“ (wave tail)”is 
-\begin_inset Formula $\lambda_{-}$
-\end_inset
-
-.
- In the region between them, 
-\begin_inset Formula $u(x,t)$
-\end_inset
-
- is smooth enough to satisfy the PDE, which can be solved from the equation
- of characteristic curves:
-\begin_inset Formula 
-\[
-u(x,t)=\lambda^{-1}(x/t)\impliedby x/t=\lambda(u)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\lambda^{-1}$
-\end_inset
-
- means the inverse function of 
-\begin_inset Formula $\lambda$
-\end_inset
-
-.
- The complete solution is then
-\begin_inset Formula 
-\[
-U(x,t)=\begin{cases}
-U_{-} & x/t<\lambda_{-}\\
-\text{expansion} & x/t\in\left[\lambda_{-},\lambda_{+}\right]\\
-U_{+} & x/t>\lambda_{+}
+U_{-} & x/t<s\\
+\text{shock} & x/t=s\\
+U_{+} & x/t>s
 \end{cases}
 \]
 
@@ -2387,58 +2356,112 @@ discontinuity!contact ~
 
 \end_inset
 
-There might be such a case that 
-\begin_inset Formula $\lambda_{-}=\lambda_{+}$
+在 
+\begin_inset Formula $F(U)$
 \end_inset
 
-, even though 
+ 既非“严格凸函数”又非“严格凹函数”的情况下，可能在 
 \begin_inset Formula $U_{-}\ne U_{+}$
 \end_inset
 
-.
- In this case, there will be no mass/momentum/energy flowing across the
- discontinuity, thus it is called a“ (contact discontinuity)”.
- The speed of the contact discontinuity is the same as the left and right
- characteristic speed:
+ 时出现 
+\begin_inset Formula $\lambda_{-}=\lambda_{+}$
+\end_inset
+
+，这对应于“接触间断 (contact discontinuity)”，即没有物质穿透的间断，其传播速度满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及临界熵条件：
 \begin_inset Formula 
 \[
-\lambda_{-}=u^{\Gamma}=\lambda_{+}
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}=s=\lambda_{+}
 \]
 
 \end_inset
 
-The complete solution is then
+这种情况下的完整解为
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
-U_{-} & x/t<u^{\Gamma}\\
-\text{contact} & x/t=u^{\Gamma}\\
-U_{+} & x/t>u^{\Gamma}
+U_{-} & x/t<s\\
+\text{contact} & x/t=s\\
+U_{+} & x/t>s
 \end{cases}
 \]
 
 \end_inset
 
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
 接触间断兼具激波与膨胀波的特性：
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-A contact discontinuity can be seen as a limit case of a shock wave, since
- it is indeed a discontinuity, across which, the jump condition and the
- entropy condition are satisfied.
+两侧状态及通量满足跳跃条件及临界熵条件，因此是退化的激波。
 \end_layout
 
 \begin_layout Itemize
-A contact discontinuity can also be seen as a limit case of a centered expansion
- wave, when the angle of the fan-shaped region shrinks to 
+轨迹是一条射线，可以看做顶角为 
 \begin_inset Formula $0^{\circ}$
 \end_inset
 
-.
+ 的扇形，因此是退化的膨胀波。
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
+\end_inset
+
+上述三种波是
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律：拟线性单波 Riemann 问题"
+
+\end_inset
+
+的初始间断所有可能的传播形式。在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律：拟线性多波 Riemann 问题"
+
+\end_inset
+
+中，初始间断同样只能以这三种形式传播，因此可以将它们统称为“基本波 (elementary waves)”。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2450,7 +2473,25 @@ A contact discontinuity can also be seen as a limit case of a centered expansion
 拟线性多波
 \end_layout
 
-\begin_layout Standard
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拟线性多波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：守恒律：拟线性多波 Riemann 问题"
+
+\end_inset
+
+
 \begin_inset Index idx
 status collapsed
 
@@ -2460,94 +2501,60 @@ Riemann!~ problem!~ for a conservation law system
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Lemma
-守恒律方程组的 Riemann 解具有自相似结构：
-\begin_inset Formula $(x,t)$
-\end_inset
-
- 平面被 
-\begin_inset Formula $m$
-\end_inset
-
- 个基本波（激波、膨胀波、接触间断）划分为 
-\begin_inset Formula $(m+1)$
-\end_inset
-
- 个扇形常值区域。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-There are 
-\begin_inset Formula $m$
-\end_inset
-
- characteristic fields, so the initial discontinuity will be carried by
- 
-\begin_inset Formula $m$
-\end_inset
-
- elementary waves.
- Since the solution of an RP is self-similar, we can define the“ (slope)”as
- a new independent variable:
-\begin_inset Formula 
-\[
-\alpha\coloneqq x/t\implies\begin{cases}
-\pdv*{t}=(\pdv*{\alpha}{t})(\dv*{\alpha})\\
-\pdv*{x}=(\pdv*{\alpha}{x})(\dv*{\alpha})
-\end{cases}
-\]
-
-\end_inset
-
-PDE 
+在
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:multi_wave_quasilinear_system"
+LatexCommand nameref
+reference "prob:微分方程：守恒律系统 Riemann 问题"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- can be transformed into
+中，将 PDE 改写为拟线性多波方程组：
 \begin_inset Formula 
 \[
-\left(\Matrix{A}-\alpha\Matrix{I}\right)\ket{\dv{U}{\alpha}}=\ket{0}
+\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\Matrix{\pdv*{F}{U}}
 \]
 
 \end_inset
 
-which implies in smooth regions, either 
-\begin_inset Formula $\ket{\dv*{U}{\alpha}}=\ket{0}$
+其中 
+\begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
-, which means 
-\begin_inset Formula $\ket{U}$
+ 对任意 
+\begin_inset Formula $U$
 \end_inset
 
- is constant, or 
-\begin_inset Formula $\alpha$
+ 都有 
+\begin_inset Formula $n$
 \end_inset
 
- is an eigenvalue of 
-\begin_inset Formula $\Matrix{A}$
+ 个实特征值及 
+\begin_inset Formula $n$
 \end_inset
 
- and 
-\begin_inset Formula $\ket{\dv*{U}{\alpha}}$
+ 个独立的特征向量：
+\begin_inset Formula 
+\[
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\qquad\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+ & \ddots\\
+ &  & \lambda_{n}
+\end{bmatrix}
+\]
+
 \end_inset
 
- is the corresponding right eigenvector.
+其中特征值按从小到大顺序排列：
+\begin_inset Formula 
+\[
+\lambda_{1}\le\lambda_{2}\le\cdots\le\lambda_{n-1}\le\lambda_{n}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2557,70 +2564,59 @@ which implies in smooth regions, either
 
 \end_layout
 
-\begin_layout Notation
-Denote the slope on the right and left side of 
-\begin_inset Formula $k$
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
 \end_inset
 
-th elementary wave as 
-\begin_inset Formula $\alpha_{k+}$
+该问题的解具有自相似结构：守恒变量 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $\alpha_{k-}$
+ 是斜率 
+\begin_inset Formula $\alpha\coloneqq x/t$
 \end_inset
 
- respectively.
- 
-\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
-\end_inset
-
- cannot imply 
-\begin_inset Formula $\ket{U(\alpha_{k-})}=\ket{U(\alpha_{k+})}$
-\end_inset
-
-.
+ 的函数。因此
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-For shock waves, there are there 
-\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+只依赖于 
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $u^{\Gamma_{k}}=\alpha_{k\pm}$
+ 的 
+\begin_inset Formula $\Matrix{A(U)}\text{、}\Matrix{R(U)}\text{、}\Matrix{\lambda(U)}$
 \end_inset
 
-.
+ 也都是 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的函数。
 \end_layout
 
 \begin_layout Itemize
-For centered expansion waves, there are 
-\begin_inset Formula $\alpha_{k-}<\alpha_{k+}$
+解的光滑部分只有两种可能：“
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $\lambda_{k}(\alpha_{k\pm})=\alpha_{k\pm}$
+ 为常值”或“
+\begin_inset Formula $\ket{\dv*{U}{\alpha}}$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Itemize
-For contact discontinuities, there are there 
-\begin_inset Formula $\alpha_{k-}=\alpha_{k+}$
+ 是 
+\begin_inset Formula $\Matrix{A(U)}$
 \end_inset
 
-, 
-\begin_inset Formula $u^{\Gamma_{k}}=\alpha_{k\pm}$
-\end_inset
-
- and 
-\begin_inset Formula $\lambda_{k}(\alpha_{k\pm})=\alpha_{k\pm}$
-\end_inset
-
-.
+ 的右特征向量”。
 \end_layout
 
 \end_deeper
@@ -2631,8 +2627,31 @@ For contact discontinuities, there are there
 
 \end_layout
 
-\begin_layout Lemma
-激波或膨胀波一定属于真正非线性的特征场，接触间断一定属于线性退化的特征场。
+\begin_layout Proof
+将 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 取作新的独立变量，即有如下微分关系：
+\begin_inset Formula 
+\[
+\alpha\coloneqq x/t\implies\begin{cases}
+\pdv*{t}=\left(\pdv*{\alpha}{t}\right)\left(\dv*{\alpha}\right)\\
+\pdv*{x}=\left(\pdv*{\alpha}{x}\right)\left(\dv*{\alpha}\right)
+\end{cases}
+\]
+
+\end_inset
+
+于是“偏微分方程组”可以被改写为“特征值问题”的形式：
+\begin_inset Formula 
+\[
+\left(\Matrix{A}-\alpha\Matrix{I}\right)\ket{\dv{U}{\alpha}}=\ket{0}
+\]
+
+\end_inset
+
+因此解的光滑部分必为命题所述的两种可能之一。
 \end_layout
 
 \begin_layout Standard
@@ -2640,6 +2659,246 @@ For contact discontinuities, there are there
 \end_inset
 
 
+\end_layout
+
+\begin_layout Corollary
+所有间断均以恒定的速度沿 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴传播，它们在 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 平面中的轨迹是由原点 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ 发出的射线。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 道基本波的“右边界”与“左边界”的“传播速度”（同时也是各自轨迹的“斜率”）分别用 
+\begin_inset Formula $\alpha_{k+}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\alpha_{k-}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
+\end_inset
+
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 道基本波对应于第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个“特征场 (characteristic fields)”，即第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个特征值函数 
+\begin_inset Formula $\lambda_{k}(U)$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
+\end_inset
+
+ 中定义的标量场，并且
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+“激波”或“膨胀波”对应于“真正非线性的 (genuinely nonlinear)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!genuinely nonlinear ~
+\end_layout
+
+\end_inset
+
+”特征场：
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{k}}{R_{k}}\ne0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+“接触间断”对应于“线性退化的 (linearly degenerate)
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!linearly degenerate ~
+\end_layout
+
+\end_inset
+
+”特征场：
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{k}}{R_{k}}=0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+与单波情形类似，基本波的性质依赖于特征线方向，只是这里讨论的是第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族特征线：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+膨胀波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!expansion wave
+\end_layout
+
+\end_inset
+
+波头、波尾之间为一扇形光滑区域，在其中 
+\begin_inset Formula $\ket{\dv*{U}{\alpha}}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\Matrix{A(U)}$
+\end_inset
+
+ 的右特征向量：
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{\dv{U}{\alpha}}=\ip{\grad\lambda_{k}}{R_{k}}
+\]
+
+\end_inset
+
+且波头、波尾的速度 
+\begin_inset Formula $\alpha_{k\pm}$
+\end_inset
+
+ 分别与各自外侧的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 相等：
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(U(\alpha_{k-}))=\alpha_{k-}\qquad\lambda_{k+}\coloneqq\lambda_{k}(U(\alpha_{k+}))=\alpha_{k+}
+\]
+
+\end_inset
+
+且 
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ 对 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 单调递增：
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}(U(\alpha))}{\alpha}>0\qquad\alpha\in[\lambda_{k-},\lambda_{k+}]
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 由 
+\begin_inset Formula $\lambda_{k-}$
+\end_inset
+
+ 连续地增大到 
+\begin_inset Formula $\lambda_{k+}$
+\end_inset
+
+ 的过程中，
+\begin_inset Formula $\ket{U}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
+\end_inset
+
+ 中的轨迹是一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 中有
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}>0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
+\]
+
+\end_inset
+
+故此基本波对应于真正非线性的特征场。
 \end_layout
 
 \begin_layout Description
@@ -2653,144 +2912,75 @@ discontinuity!shock wave
 
 \end_inset
 
-If the 
-\begin_inset Formula $k$
-\end_inset
-
-th characteristic field is genuinely nonlinear, there might be such a case
- that
+波头紧贴波尾，二者速度分别为
 \begin_inset Formula 
 \[
-\lambda_{k}(\alpha_{k-})>\lambda_{k}(\alpha_{k+})
+\alpha_{k-}=s_{k}-0\qquad\alpha_{k+}=s_{k}+0
 \]
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides run“into”each
- other, which implies 
-\begin_inset Formula $k$
+其中激波速度 
+\begin_inset Formula $s_{k}$
 \end_inset
 
-th elementary wave is a shock wave.
- Physically, there are mass/momentum/energy flowing across the wave with
- entropy increasing.
- The change of 
+ 必须满足跳跃条件
+\begin_inset Formula 
+\[
+\eval{\ket{U}}_{\alpha_{k-}}^{\alpha_{k+}}s_{k}=\eval{\ket{F}}_{\alpha_{k-}}^{\alpha_{k+}}
+\]
+
+\end_inset
+
+且满足与激波两侧的特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 所构成的严格熵条件
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(U(\alpha_{k-}))>s_{k}>\lambda_{k}(U(\alpha_{k+}))\eqqcolon\lambda_{k+}
+\]
+
+\end_inset
+
+尽管激波两侧的状态只对应于 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
+\end_inset
+
+ 中的两个孤立点，但只要将二者对调，就依然可以像膨胀波一样分析：在 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 由 
+\begin_inset Formula $\lambda_{k+}$
+\end_inset
+
+ 连续地增大到 
+\begin_inset Formula $\lambda_{k-}$
+\end_inset
+
+ 的过程中，
 \begin_inset Formula $\ket{U}$
 \end_inset
 
- and 
-\begin_inset Formula $\ket{F}$
+ 在 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
 \end_inset
 
- must satisfy the jump condition:
+ 中的轨迹是一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 中有
 \begin_inset Formula 
 \[
-\eval{\ket{U}}_{k-}^{k+}u^{\Gamma_{k}}=\eval{\ket{F}}_{k-}^{k+}
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}>0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
 
-in which 
-\begin_inset Formula $u^{\Gamma_{k}}$
-\end_inset
-
- is the speed of the shock wave, which is also the slope of the shock wave
- path, i.e.
- 
-\begin_inset Formula $u^{\Gamma_{k}}=\alpha_{k\pm}$
-\end_inset
-
-.
- The entropy condition is satisfied with strict unequal signs:
-\begin_inset Formula 
-\[
-\lambda_{k}(\alpha_{k-})>u^{\Gamma_{k}}>\lambda_{k}(\alpha_{k+})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-膨胀波 If the 
-\begin_inset Formula $k$
-\end_inset
-
-th characteristic field is genuinely nonlinear, there might be such a case
- that
-\begin_inset Formula 
-\[
-\lambda_{k-1}(\alpha_{k-})<\lambda_{k}(\alpha_{k-})<\lambda_{k}(\alpha_{k+})<\lambda_{k+1}(\alpha_{k+})
-\]
-
-\end_inset
-
-Geometrically, this means the characteristic curves on both sides wave run“away”
-from each other, which implies 
-\begin_inset Formula $k$
-\end_inset
-
-th elementary wave is a centered expansion wave.
- Inside the wave, the 
-\begin_inset Formula $k$
-\end_inset
-
--characteristic curves must diverse from each other:
-\begin_inset Formula 
-\[
-\dv{\lambda_{k}(\alpha)}{\alpha}\ge0\qquad\alpha\in[\lambda_{-},\lambda_{+}]
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-\lambda_{-}=\lambda_{k}(\alpha_{k-})=\alpha_{k-}\qquad\lambda_{+}=\lambda_{k}(\alpha_{k+})=\alpha_{k+}
-\]
-
-\end_inset
-
-are the speed of the wave head and the wave tail, respectively.
- A centered expansion wave is a smooth region, in which 
-\begin_inset Formula $\alpha\coloneqq x/t$
-\end_inset
-
- is an eigenvalue of 
-\begin_inset Formula $\Matrix{A}$
-\end_inset
-
- and 
-\begin_inset Formula $\ket{\dv*{U}{\alpha}}$
-\end_inset
-
- is the corresponding right eigenvector.
- So, the 
-\begin_inset Formula $(m-1)$
-\end_inset
-
- generalized 
-\begin_inset Formula $k$
-\end_inset
-
--Riemann invariants are constants across wave:
-\begin_inset Formula 
-\[
-\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
-\]
-
-\end_inset
-
-which can be used to determine state inside the wave:
-\begin_inset Formula 
-\[
-\phi(\alpha_{k-})=\phi(\alpha)=\phi(\alpha_{k+})\qquad\alpha\in[\alpha_{k-},\alpha_{k+}]
-\]
-
-\end_inset
-
-
+故此基本波对应于真正非线性的特征场。
 \end_layout
 
 \begin_layout Description
@@ -2804,50 +2994,99 @@ discontinuity!contact ~
 
 \end_inset
 
-If the 
-\begin_inset Formula $k$
-\end_inset
+与单波情形类似，接触间断兼具激波与膨胀波的特性：
+\end_layout
 
-th characteristic field is linearly degenerate, then 
-\begin_inset Formula $\lambda_{k}$
-\end_inset
-
- does not change with 
-\begin_inset Formula $\ket{U}$
-\end_inset
-
-, which implies
+\begin_deeper
+\begin_layout Description
+与激波类似 波头紧贴波尾，二者速度分别为
 \begin_inset Formula 
 \[
-\lambda_{k-1}(\alpha_{k-})<\lambda_{k}(\alpha_{k-})=\lambda_{k}(\alpha_{k+})<\lambda_{k+1}(\alpha_{k+})
+\alpha_{k-}=s_{k}-0\qquad\alpha_{k+}=s_{k}+0
 \]
 
 \end_inset
 
-Geometrically, this means the characteristic curves on both sides run“parallel”w
-ith each other, which implies 
+其中激波速度 
+\begin_inset Formula $s_{k}$
+\end_inset
+
+ 必须满足跳跃条件
+\begin_inset Formula 
+\[
+\eval{\ket{U}}_{\alpha_{k-}}^{\alpha_{k+}}s_{k}=\eval{\ket{F}}_{\alpha_{k-}}^{\alpha_{k+}}
+\]
+
+\end_inset
+
+且满足与激波两侧的特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 所构成的临界熵条件
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(U(\alpha_{k-}))=s_{k}=\lambda_{k}(U(\alpha_{k+}))\eqqcolon\lambda_{k+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+与膨胀波类似 可以在 
+\begin_inset Formula $\mathbb{R}_{U}^{n}$
+\end_inset
+
+ 中找到一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 中有
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}=0\qquad\forall U\in\Omega\subset\mathbb{R}_{U}^{n}
+\]
+
+\end_inset
+
+故此基本波只可能对应于线性退化的特征场。
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riemann 不变量]
+\end_layout
+
+\end_inset
+
+若第 
 \begin_inset Formula $k$
 \end_inset
 
-th elementary wave is a contact discontinuity.
- Physically, there is no mass/momentum/energy flowing across a contact discontin
-uity, thus no entropy increasing.
- The jump condition and the entropy condition are satisfied automatically.
- A contact discontinuity can also be seen as a limit case of a centered
- expansion wave, when the angle of the fan-shaped region tends to be 
-\begin_inset Formula $0$
+ 道基本波为膨胀波或接触间断，则有 
+\begin_inset Formula $(n-1)$
 \end_inset
 
-.
- So, the 
-\begin_inset Formula $(m-1)$
-\end_inset
-
- generalized 
+ 个“第 
 \begin_inset Formula $k$
 \end_inset
 
--Riemann invariants are constants across the wave:
+ 族广义 Riemann 不变量”：
 \begin_inset Formula 
 \[
 \dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
@@ -2855,10 +3094,10 @@ uity, thus no entropy increasing.
 
 \end_inset
 
-which can be used to connect states on both sides of the wave:
+它们可以用来连接波头、波尾外侧的状态，并用来确定内部光滑区域的状态：
 \begin_inset Formula 
 \[
-\phi(\alpha_{k-})=\phi(\alpha_{k+})
+\phi(\alpha_{k-})=\phi(\alpha)=\phi(\alpha_{k+})\qquad\alpha\in[\alpha_{k-},\alpha_{k+}]
 \]
 
 \end_inset
