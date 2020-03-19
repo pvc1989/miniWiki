@@ -183,7 +183,7 @@ PDE!Euler equations!1D ~
 \end{bmatrix}\qquad\ket{F}=\begin{bmatrix}\rho u\\
 \rho uu+p\\
 \rho Hu
-\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}}{2}\qquad H=E+\frac{p}{\rho}
+\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma^{-}}+\frac{u^{2}}{2}\qquad H=E+\frac{p}{\rho}
 \end{gathered}
 \label{eq:euler_1d_conservative}
 \end{equation}
@@ -2825,7 +2825,7 @@ reference "tab:euler_char_field_1d"
  分别表示声速与总焓：
 \begin_inset Formula 
 \[
-a^{2}=\gamma RT=\frac{\gamma p}{\rho}\qquad H=E+\frac{p}{\rho}=\frac{a^{2}}{\gamma-1}+\frac{u^{2}}{2}
+a^{2}=\gamma RT=\frac{\gamma p}{\rho}\qquad H=E+\frac{p}{\rho}=\frac{a^{2}}{\gamma^{-}}+\frac{u^{2}}{2}
 \]
 
 \end_inset
@@ -2860,8 +2860,8 @@ Jacobian 矩阵
  的函数：
 \begin_inset Formula 
 \[
-\begin{gathered}\rho=U_{1}\qquad u=\frac{U_{2}}{U_{1}}\qquad p=(\gamma-1)U_{3}-\frac{\gamma-1}{2}\frac{U_{2}^{2}}{U_{1}}\\
-F_{1}=U_{2}\qquad F_{2}=(\gamma-1)U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}}\qquad F_{3}=\left(\gamma U_{3}-\frac{\gamma-1}{2}\frac{U_{2}^{2}}{U_{1}}\right)\frac{U_{2}}{U_{1}}
+\begin{gathered}\rho=U_{1}\qquad u=\frac{U_{2}}{U_{1}}\qquad p=\gamma^{-}U_{3}-\frac{\gamma^{-}}{2}\frac{U_{2}^{2}}{U_{1}}\\
+F_{1}=U_{2}\qquad F_{2}=\gamma^{-}U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}}\qquad F_{3}=\left(\gamma U_{3}-\frac{\gamma^{-}}{2}\frac{U_{2}^{2}}{U_{1}}\right)\frac{U_{2}}{U_{1}}
 \end{gathered}
 \]
 
@@ -2878,8 +2878,8 @@ F_{1}=U_{2}\qquad F_{2}=(\gamma-1)U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}
 \pdv*{F_{3}}{U_{1}} & \pdv*{F_{3}}{U_{2}} & \pdv*{F_{3}}{U_{3}}
 \end{bmatrix}\\
  & =\begin{bmatrix}0 & 1 & 0\\
-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}^{2}} & (3-\gamma)\frac{U_{2}^{2}}{U_{1}^{2}} & \gamma-1\\
-\left((\gamma-1)\frac{U_{2}^{2}}{U_{1}^{2}}\frac{U_{2}}{U_{1}}-\gamma\frac{U_{3}}{U_{1}}\frac{U_{2}}{U_{1}}\right) & \left(\gamma\frac{U_{3}}{U_{1}}-\frac{\gamma-1}{2}\frac{3U_{2}^{2}}{U_{1}^{2}}\right) & \gamma\frac{U_{2}}{U_{1}}
+\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}^{2}} & (3-\gamma)\frac{U_{2}^{2}}{U_{1}^{2}} & \gamma^{-}\\
+\left(\gamma^{-}\frac{U_{2}^{2}}{U_{1}^{2}}\frac{U_{2}}{U_{1}}-\gamma\frac{U_{3}}{U_{1}}\frac{U_{2}}{U_{1}}\right) & \left(\gamma\frac{U_{3}}{U_{1}}-\frac{\gamma^{-}}{2}\frac{3U_{2}^{2}}{U_{1}^{2}}\right) & \gamma\frac{U_{2}}{U_{1}}
 \end{bmatrix}
 \end{aligned}
 \]
@@ -2887,34 +2887,34 @@ F_{1}=U_{2}\qquad F_{2}=(\gamma-1)U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}
 \end_inset
 
 代入 
-\begin_inset Formula $\frac{U_{2}}{U_{1}}=u$
+\begin_inset Formula $U_{2}/U_{1}=u$
 \end_inset
 
  及 
-\begin_inset Formula $\gamma\frac{U_{3}}{U_{1}}=\gamma E$
+\begin_inset Formula $U_{3}/U_{1}=E$
 \end_inset
 
  可得
 \begin_inset Formula 
 \[
 \Matrix{A(U)}=\begin{bmatrix}0 & 1 & 0\\
-0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma-1\\
-\left((\gamma-1)u^{3}-\gamma Eu\right) & \big(\gamma E-1.5(\gamma-1)u^{2}\big) & \gamma u
+0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma^{-}\\
+\left(\gamma^{-}u^{3}-\gamma Eu\right) & \big(\gamma E-1.5\gamma^{-}u^{2}\big) & \gamma u
 \end{bmatrix}
 \]
 
 \end_inset
 
 代入 
-\begin_inset Formula $\gamma E=\frac{a^{2}}{\gamma-1}+\gamma\frac{u^{2}}{2}$
+\begin_inset Formula $\gamma E=a^{2}/\gamma^{-}+\gamma u^{2}/2$
 \end_inset
 
  可得
 \begin_inset Formula 
 \[
 \Matrix{A(U)}=\begin{bmatrix}0 & 1 & 0\\
-0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma-1\\
-\left((0.5\gamma-1)u^{3}-\frac{a^{2}}{\gamma-1}u\right) & \left((1.5-\gamma)u^{2}-\frac{a^{2}}{\gamma-1}\right) & \gamma u
+0.5(\gamma-3)u^{2} & (3-\gamma)u & \gamma^{-}\\
+\left(0.5\gamma^{-}u^{3}-ua^{2}/\gamma^{-}\right) & \left((1.5-\gamma)u^{2}-a^{2}/\gamma^{-}\right) & \gamma u
 \end{bmatrix}
 \]
 
@@ -2929,7 +2929,7 @@ F_{1}=U_{2}\qquad F_{2}=(\gamma-1)U_{3}-\frac{\gamma-3}{2}\frac{U_{2}^{2}}{U_{1}
 
 \begin_layout Standard
 特征值问题 
-\begin_inset Formula $\Matrix{\text{A}}\ket{\text{R}}=\lambda\ket{\text{R}}$
+\begin_inset Formula $\Matrix{A}\ket{R_{i}}=\lambda_{i}\ket{R_{i}}$
 \end_inset
 
  有三组解：
@@ -3009,7 +3009,7 @@ characteristic!~ field!linearly degenerate ~
 ，它的梯度为
 \begin_inset Formula 
 \[
-\bra{\grad{\lambda_{2}}}=\frac{1}{U_{1}}\begin{bmatrix}-\frac{U_{2}}{U_{1}} & 1 & 0\end{bmatrix}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}
+\bra{\grad{\lambda_{2}}}=\frac{1}{U_{1}}\begin{bmatrix}-\dfrac{U_{2}}{U_{1}} & 1 & 0\end{bmatrix}=\frac{1}{\rho}\begin{bmatrix}-u & 1 & 0\end{bmatrix}
 \]
 
 \end_inset
@@ -3136,11 +3136,11 @@ u^{2}/2
 \end_layout
 
 \begin_layout Lemma
-\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\begin_inset Formula $p/\rho^{\gamma}$
 \end_inset
 
  与 
-\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\begin_inset Formula $u+2a/\gamma^{-}$
 \end_inset
 
  是第一特征场的两个独立的广义 Riemann 不变量。
@@ -3154,11 +3154,11 @@ u^{2}/2
 \end_layout
 
 \begin_layout Lemma
-\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\begin_inset Formula $p/\rho^{\gamma}$
 \end_inset
 
  与 
-\begin_inset Formula $u-\frac{2a}{\gamma-1}$
+\begin_inset Formula $u-2a/\gamma^{-}$
 \end_inset
 
  是第三特征场的两个独立的广义 Riemann 不变量。
@@ -3184,9 +3184,9 @@ u^{2}/2
 \begin_inset Formula 
 \[
 \begin{aligned}\rho\dd{u}+a\dd{\rho}=0 & \impliedby\frac{\dd{\rho}}{1}=\frac{\dd{(\rho u)}}{u-a}\\
-\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}=0 & \impliedby\begin{cases}
+\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma^{-}}\right)}=0 & \impliedby\begin{cases}
 (H-ua)\dd{\rho}=\dd{(\rho E)}\\
-\rho E=p/(\gamma-1)+\rho u^{2}/2=\rho H-p\\
+\rho E=p/\gamma^{-}+\rho u^{2}/2=\rho H-p\\
 \rho\dd{u}+a\dd{\rho}=0
 \end{cases}
 \end{aligned}
@@ -3200,21 +3200,21 @@ u^{2}/2
 \begin_deeper
 \begin_layout Itemize
 第二行左端可以利用积分因子 
-\begin_inset Formula $\frac{1-\gamma}{\rho^{\gamma}}$
+\begin_inset Formula $-\gamma^{-}/\rho^{\gamma}$
 \end_inset
 
  化为全微分：
 \begin_inset Formula 
 \[
-\begin{aligned}\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma-1}\right)}\right) & =\frac{1-\gamma}{\rho^{\gamma}}\left(\frac{\dd{p}}{1-\gamma}+\frac{\gamma p}{\gamma-1}\frac{\dd{\rho}}{\rho}\right)\\
- & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma-1}\dd{\rho}=\dd(p\rho^{-\gamma})
+\begin{aligned}\frac{-\gamma^{-}}{\rho^{\gamma}}\left(\frac{p}{\rho}\dd{\rho}-\rho\dd{\left(\frac{p/\rho}{\gamma^{-}}\right)}\right) & =\frac{-\gamma^{-}}{\rho^{\gamma}}\left(\frac{\dd{p}}{1-\gamma}+\frac{\gamma p}{\gamma^{-}}\frac{\dd{\rho}}{\rho}\right)\\
+ & =\rho^{-\gamma}\dd{p}-p\gamma\rho^{-\gamma^{+}}\dd{\rho}=\dd(p\rho^{-\gamma})
 \end{aligned}
 \]
 
 \end_inset
 
 因此，
-\begin_inset Formula $\frac{p}{\rho^{\gamma}}$
+\begin_inset Formula $p/\rho^{\gamma}$
 \end_inset
 
  是第一特征场的一个广义 Riemann 不变量，相应的物理过程是等熵的。
@@ -3224,15 +3224,15 @@ u^{2}/2
 由等熵条件可得
 \begin_inset Formula 
 \[
-\begin{aligned}\dd{a} & =\dd{\sqrt{\gamma p\rho^{-1}}}=\dd{\sqrt{\rho^{\gamma-1}\underbrace{\gamma p\rho^{-\gamma}}_{\text{constant}}}}=\sqrt{\gamma p\rho^{-\gamma}}\dd{\rho^{\frac{\gamma-1}{2}}}\\
- & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma-1}{2}\rho^{\frac{\gamma-1}{2}-1}\dd{\rho}=\frac{\gamma-1}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}=\frac{\gamma-1}{2}\frac{a\dd{\rho}}{\rho}
+\begin{aligned}\dd{a} & =\dd{\sqrt{\gamma p\rho^{-1}}}=\dd{\sqrt{\rho^{\gamma^{-}}\underbrace{\gamma p\rho^{-\gamma}}_{\text{constant}}}}=\sqrt{\gamma p\rho^{-\gamma}}\dd{\rho^{\gamma^{-}/2}}\\
+ & =\sqrt{\gamma p\rho^{-\gamma}}\frac{\gamma^{-}}{2}\rho^{\gamma^{-}/2-1}\dd{\rho}=\frac{\gamma^{-}}{2}\sqrt{\gamma p\rho^{-1}}\rho^{-1}\dd{\rho}=\frac{\gamma^{-}}{2}\frac{a\dd{\rho}}{\rho}
 \end{aligned}
 \]
 
 \end_inset
 
 利用这一结果及积分因子 
-\begin_inset Formula $\frac{1}{\rho}$
+\begin_inset Formula $1/\rho$
 \end_inset
 
 ，可以将 
@@ -3242,13 +3242,13 @@ u^{2}/2
  左端化为全微分：
 \begin_inset Formula 
 \[
-\frac{1}{\rho}\left(\rho\dd{u}+a\dd{\rho}\right)=\dd{u}+\frac{2}{\gamma-1}\dd{a}=\dd(u+\frac{2a}{\gamma-1})
+\frac{1}{\rho}\left(\rho\dd{u}+a\dd{\rho}\right)=\dd{u}+\frac{2}{\gamma^{-}}\dd{a}=\dd(u+\frac{2a}{\gamma^{-}})
 \]
 
 \end_inset
 
 因此，
-\begin_inset Formula $u+\frac{2a}{\gamma-1}$
+\begin_inset Formula $u+2a/\gamma^{-}$
 \end_inset
 
  是第一特征场的一个广义 Riemann 不变量。
@@ -3832,7 +3832,7 @@ condition!jump ~
 \begin{equation}
 \begin{aligned}(u_{\text{A}}-u_{\Gamma})\rho_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\rho_{\text{B}}\\
 (u_{\text{A}}-u_{\Gamma})\rho_{\text{A}}u_{\text{A}}+p_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\rho_{\text{B}}u_{\text{B}}+p_{\text{B}}\\
-(u_{\text{A}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{A}}}{\gamma-1}+\frac{\rho_{\text{A}}u_{\text{A}}^{2}}{2}\right)}_{\rho_{\text{A}}E_{\text{A}}}+p_{\text{A}}u_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{B}}}{\gamma-1}+\frac{\rho_{\text{B}}u_{\text{B}}^{2}}{2}\right)}_{\rho_{\text{B}}E_{\text{B}}}+p_{\text{B}}u_{\text{B}}
+(u_{\text{A}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{A}}}{\gamma^{-}}+\frac{\rho_{\text{A}}u_{\text{A}}^{2}}{2}\right)}_{\rho_{\text{A}}E_{\text{A}}}+p_{\text{A}}u_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{B}}}{\gamma^{-}}+\frac{\rho_{\text{B}}u_{\text{B}}^{2}}{2}\right)}_{\rho_{\text{B}}E_{\text{B}}}+p_{\text{B}}u_{\text{B}}
 \end{aligned}
 \label{eq:euler_1d_jump}
 \end{equation}
@@ -3901,7 +3901,7 @@ u_{\text{A}}-u_{\text{B}}=v_{\text{A}}-v_{\text{B}}=\frac{p_{\text{A}}-p_{\text{
 \end_inset
 
  为“质量流率 (mass flow rate)”，
-\begin_inset Formula $P\coloneqq\left[(p_{\text{A}}+p_{\text{B}})\gamma+(p_{\text{A}}-p_{\text{B}})\right]/2$
+\begin_inset Formula $P\coloneqq\left((p_{\text{A}}+p_{\text{B}})\gamma+(p_{\text{A}}-p_{\text{B}})\right)/2$
 \end_inset
 
 。
@@ -4063,7 +4063,7 @@ u_{\text{A}}=u_{\text{B}}\mp\frac{\abs{p_{\text{B}}-p_{\text{A}}}}{\sqrt{\rho_{\
 这里利用了
 \begin_inset Formula 
 \[
-P=\frac{\gamma+1}{2}p_{\text{A}}+\frac{\gamma-1}{2}p_{\text{B}}>0\impliedby\begin{cases}
+P=\frac{\gamma^{+}}{2}p_{\text{A}}+\frac{\gamma^{-}}{2}p_{\text{B}}>0\impliedby\begin{cases}
 p_{\text{A}}>0\\
 p_{\text{B}}>0\\
 \gamma>1
@@ -4307,7 +4307,7 @@ condition!entropy ~!Lax's ~
 膨胀波前后的速度差为
 \begin_inset Formula 
 \begin{equation}
-u_{\text{A}}-u_{\text{B}}=\frac{2a_{\text{B}}}{\gamma-1}\left[\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right]\cdot\begin{cases}
+u_{\text{A}}-u_{\text{B}}=\frac{2a_{\text{B}}}{\gamma^{-}}\left[\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\gamma^{-}/(2\gamma)}-1\right]\cdot\begin{cases}
 -1 & \lambda_{1}\\
 +1 & \lambda_{3}
 \end{cases}\label{eq:速度差_膨胀波}
@@ -4373,7 +4373,7 @@ reference "eq:速度差_膨胀波"
 f(p_{\text{A}};p_{\text{B}},\rho_{\text{B}})=\begin{cases}
 (p_{\text{A}}-p_{\text{B}})/\sqrt{\rho_{\text{B}}P} & p_{\text{A}}>p_{\text{B}}\\
 0 & p_{\text{A}}=p_{\text{B}}\\
-\frac{2a_{\text{B}}}{\gamma-1}\left[\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right] & p_{\text{A}}<p_{\text{B}}
+(2a_{\text{B}}/\gamma^{-})\left[(p_{\text{A}}/p_{\text{B}})^{\gamma^{-}/(2\gamma)}-1\right] & p_{\text{A}}<p_{\text{B}}
 \end{cases}\label{eq:压力函数_单波}
 \end{equation}
 
@@ -4386,7 +4386,7 @@ f(p_{\text{A}};p_{\text{B}},\rho_{\text{B}})=\begin{cases}
  是连续可微且单调递增的，其中
 \begin_inset Formula 
 \[
-P=\frac{\gamma+1}{2}p_{\text{A}}+\frac{\gamma-1}{2}p_{\text{B}}\qquad a_{\text{B}}=\sqrt{\frac{\gamma p_{\text{B}}}{\rho_{\text{B}}}}
+P=\frac{\gamma^{+}}{2}p_{\text{A}}+\frac{\gamma^{-}}{2}p_{\text{B}}\qquad a_{\text{B}}=\sqrt{\frac{\gamma p_{\text{B}}}{\rho_{\text{B}}}}
 \]
 
 \end_inset
@@ -4405,7 +4405,7 @@ P=\frac{\gamma+1}{2}p_{\text{A}}+\frac{\gamma-1}{2}p_{\text{B}}\qquad a_{\text{B
 记
 \begin_inset Formula 
 \[
-f_{1}(p_{\text{A}})=\frac{p_{\text{A}}-p_{\text{B}}}{\sqrt{\rho_{\text{B}}P}},p_{\text{A}}>p_{\text{B}}\qquad f_{2}(p_{\text{A}})=\frac{2a_{\text{B}}}{\gamma-1}\left[\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\frac{\gamma-1}{2\gamma}}-1\right],p_{\text{A}}<p_{\text{B}}
+f_{1}(p_{\text{A}})=\frac{p_{\text{A}}-p_{\text{B}}}{\sqrt{\rho_{\text{B}}P}},p_{\text{A}}>p_{\text{B}}\qquad f_{2}(p_{\text{A}})=\frac{2a_{\text{B}}}{\gamma^{-}}\left[\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\gamma^{-}/(2\gamma)}-1\right],p_{\text{A}}<p_{\text{B}}
 \]
 
 \end_inset
@@ -4442,9 +4442,9 @@ reference "eq:压力函数_单波"
 \begin_inset Formula 
 \[
 \begin{aligned}\dv{f_{1}}{p_{\text{A}}} & =\frac{1}{\sqrt{\rho_{\text{B}}P}}+\frac{p_{\text{A}}-p_{\text{B}}}{\sqrt{\rho_{\text{B}}}}\dv{P^{-1/2}}{p_{\text{A}}}=\frac{1}{\sqrt{\rho_{\text{B}}P}}+\frac{p_{\text{A}}-p_{\text{B}}}{\sqrt{\rho_{\text{B}}}}\left(\frac{P^{-3/2}}{-2}\right)\dv{P}{p_{\text{A}}}\\
- & =\frac{1}{\sqrt{\rho_{\text{B}}P}}\left(1+\frac{\gamma+1}{4}\frac{p_{\text{B}}-p_{\text{A}}}{P}\right)\\
+ & =\frac{1}{\sqrt{\rho_{\text{B}}P}}\left(1+\frac{\gamma^{+}}{4}\frac{p_{\text{B}}-p_{\text{A}}}{P}\right)\\
 \lim_{\epsilon\to0^{-}}f_{1}'(p_{\text{B}}+\epsilon) & =\frac{1}{\sqrt{\rho_{\text{B}}\gamma p_{\text{B}}}}=\frac{1}{\rho_{\text{B}}a_{\text{B}}}\\
-\dv{f_{2}}{p_{\text{A}}} & =\frac{2a_{\text{B}}}{\gamma-1}\frac{\gamma-1}{2\gamma}\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\frac{\gamma-1}{2\gamma}-1}\frac{1}{p_{\text{B}}}=\frac{1}{\rho_{\text{B}}a_{\text{B}}}\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{-\frac{\gamma+1}{2\gamma}}\\
+\dv{f_{2}}{p_{\text{A}}} & =\frac{2a_{\text{B}}}{\gamma^{-}}\frac{\gamma^{-}}{2\gamma}\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{\frac{\gamma^{-}}{2\gamma}-1}\frac{1}{p_{\text{B}}}=\frac{1}{\rho_{\text{B}}a_{\text{B}}}\left(\frac{p_{\text{A}}}{p_{\text{B}}}\right)^{-\frac{\gamma^{+}}{2\gamma}}\\
 \lim_{\epsilon\to0^{+}}f_{2}'(p_{\text{B}}+\epsilon) & =\frac{1}{\sqrt{\rho_{\text{B}}\gamma p_{\text{B}}}}=\frac{1}{\rho_{\text{B}}a_{\text{B}}}
 \end{aligned}
 \]
@@ -4485,7 +4485,7 @@ f_{2}'(p_{\text{A}}) & p_{\text{A}}<p_{\text{B}}
 第二、三行的非负性是显然的；第一行的非负性也容易验证：
 \begin_inset Formula 
 \[
-1-\frac{\gamma+1}{4}\frac{p_{\text{A}}-p_{\text{B}}}{P}=1-\frac{1}{2}\frac{p_{\text{A}}-p_{\text{B}}}{p_{\text{A}}+\frac{\gamma-1}{\gamma+1}p_{\text{B}}}>1-\frac{1}{2}>0\impliedby\begin{cases}
+1-\frac{\gamma^{+}}{4}\frac{p_{\text{A}}-p_{\text{B}}}{P}=1-\frac{1}{2}\frac{p_{\text{A}}-p_{\text{B}}}{p_{\text{A}}+(\gamma^{-}/\gamma^{+})p_{\text{B}}}>1-\frac{1}{2}>0\impliedby\begin{cases}
 p_{\text{A}}>p_{\text{B}}\\
 \gamma>1
 \end{cases}
@@ -4524,7 +4524,7 @@ F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=f(p_{*};p_{+},\rho_{+})+f(p_{*};p_{-},\rho_{
  都是连续可微且单调递增的，并且有
 \begin_inset Formula 
 \[
-\lim_{p_{*}\to0^{+}}F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=\left(u_{+}-\frac{2a_{+}}{\gamma-1}\right)-\left(u_{-}+\frac{2a_{-}}{\gamma-1}\right)
+\lim_{p_{*}\to0^{+}}F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})=\left(u_{+}-\frac{2a_{+}}{\gamma^{-}}\right)-\left(u_{-}+\frac{2a_{-}}{\gamma^{-}}\right)
 \]
 
 \end_inset
@@ -4737,7 +4737,7 @@ status open
  满足
 \begin_inset Formula 
 \[
-F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})<0\iff u_{-}+\frac{2a_{-}}{\gamma-1}>u_{+}-\frac{2a_{+}}{\gamma-1}
+F(p_{*};\rho_{\pm},u_{\pm},p_{\pm})<0\iff u_{-}+\frac{2a_{-}}{\gamma^{-}}>u_{+}-\frac{2a_{+}}{\gamma^{-}}
 \]
 
 \end_inset
@@ -4837,7 +4837,7 @@ status open
  满足
 \begin_inset Formula 
 \begin{equation}
-F(0;\rho_{\pm},u_{\pm},p_{\pm})\ge0\iff u_{-}+\frac{2a_{-}}{\gamma-1}\le u_{+}-\frac{2a_{+}}{\gamma-1}\label{eq:真空条件}
+F(0;\rho_{\pm},u_{\pm},p_{\pm})\ge0\iff u_{-}+\frac{2a_{-}}{\gamma^{-}}\le u_{+}-\frac{2a_{+}}{\gamma^{-}}\label{eq:真空条件}
 \end{equation}
 
 \end_inset
@@ -4998,7 +4998,7 @@ reference "eq:euler_1d_jump"
  为膨胀波。它有两个广义 Riemann 不变量：
 \begin_inset Formula 
 \[
-\phi_{1}=\frac{p_{\text{B}}}{\rho_{\text{B}}^{\gamma}}\qquad\phi_{2}=u_{\text{B}}+\frac{2a_{\text{B}}}{\gamma-1}
+\phi_{1}=\frac{p_{\text{B}}}{\rho_{\text{B}}^{\gamma}}\qquad\phi_{2}=u_{\text{B}}+\frac{2a_{\text{B}}}{\gamma^{-}}
 \]
 
 \end_inset
@@ -5015,7 +5015,7 @@ reference "eq:euler_1d_jump"
 ），则
 \begin_inset Formula 
 \[
-a_{*-}\equiv a_{\text{A}}=\frac{\gamma-1}{2}(u_{\text{B}}-u_{\text{A}})+a_{\text{B}}\qquad\rho_{*-}\equiv\rho_{\text{A}}=\frac{\gamma p_{\text{A}}}{a_{\text{A}}^{2}}
+a_{*-}\equiv a_{\text{A}}=\frac{\gamma^{-}}{2}(u_{\text{B}}-u_{\text{A}})+a_{\text{B}}\qquad\rho_{*-}\equiv\rho_{\text{A}}=\frac{\gamma p_{\text{A}}}{a_{\text{A}}^{2}}
 \]
 
 \end_inset
@@ -5045,7 +5045,7 @@ a_{*-}\equiv a_{\text{A}}=\frac{\gamma-1}{2}(u_{\text{B}}-u_{\text{A}})+a_{\text
 \[
 \alpha_{1-}\equiv\alpha_{\text{B}}=u_{\text{B}}-a_{\text{B}}\qquad\alpha_{1+}\equiv\alpha_{\text{A}}=\phi_{2}\impliedby\begin{cases}
 \alpha_{\text{A}}=u_{\text{A}}-a_{\text{A}}\\
-\phi_{2}=u_{\text{A}}+2a_{\text{A}}/(\gamma-1)\\
+\phi_{2}=u_{\text{A}}+2a_{\text{A}}/\gamma^{-}\\
 a_{\text{A}}=0
 \end{cases}
 \]
@@ -5063,7 +5063,7 @@ a_{\text{A}}=0
  的特征线上）的状态，则再次利用 Riemann 不变量：
 \begin_inset Formula 
 \[
-a=\frac{\gamma-1}{\gamma+1}\left(\phi_{2}-\frac{x}{t}\right)\qquad\rho=\left(\frac{a^{2}}{\gamma\phi_{1}}\right)^{\frac{1}{\gamma-1}}\qquad u=\frac{x}{t}+a\qquad p=\frac{a^{2}\rho}{\gamma}
+a=\frac{\gamma^{-}}{\gamma^{+}}\left(\phi_{2}-\frac{x}{t}\right)\qquad\rho=\sqrt[\gamma^{-}]{\frac{a^{2}}{\gamma\phi_{1}}}\qquad u=\frac{x}{t}+a\qquad p=\frac{a^{2}\rho}{\gamma}
 \]
 
 \end_inset
@@ -5253,7 +5253,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $u_{\text{B}}+2a_{\text{B}}/(\gamma-1)$
+\begin_inset Formula $u_{\text{B}}+2a_{\text{B}}/\gamma^{-}$
 \end_inset
 
 
@@ -5265,7 +5265,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $u_{\text{B}}-2a_{\text{B}}/(\gamma-1)$
+\begin_inset Formula $u_{\text{B}}-2a_{\text{B}}/\gamma^{-}$
 \end_inset
 
 
@@ -5300,7 +5300,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $a_{\text{B}}+(u_{\text{B}}-u_{\text{A}})(\gamma-1)/2$
+\begin_inset Formula $a_{\text{B}}+(u_{\text{B}}-u_{\text{A}})\gamma^{-}/2$
 \end_inset
 
 
@@ -5312,7 +5312,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $a_{\text{B}}-(u_{\text{B}}-u_{\text{A}})(\gamma-1)/2$
+\begin_inset Formula $a_{\text{B}}-(u_{\text{B}}-u_{\text{A}})\gamma^{-}/2$
 \end_inset
 
 
@@ -5482,7 +5482,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\begin_inset Formula $(0+\phi_{2})\gamma^{-}/\gamma^{+}$
 \end_inset
 
 
@@ -5494,7 +5494,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(0-\phi_{2})(\gamma-1)/(\gamma+1)$
+\begin_inset Formula $(0-\phi_{2})\gamma^{-}/\gamma^{+}$
 \end_inset
 
 
@@ -5529,7 +5529,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(0+\phi_{2})(\gamma-1)/(\gamma+1)$
+\begin_inset Formula $(0+\phi_{2})\gamma^{-}/\gamma^{+}$
 \end_inset
 
 
@@ -5573,7 +5573,7 @@ Riemann 不变量
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\sqrt[\gamma-1]{a_{0}^{2}/(\gamma\phi_{1})}$
+\begin_inset Formula $\sqrt[\gamma^{-}]{a_{0}^{2}/(\gamma\phi_{1})}$
 \end_inset
 
 
@@ -5759,7 +5759,7 @@ PDE!Euler equations!2D ~
 \rho vv+p\\
 \rho Hv
 \end{bmatrix}\\
-E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
+E=\frac{p/\rho}{\gamma^{-}}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
 \end{gathered}
 \label{eq:pde_euler_2d}
 \end{equation}
@@ -5839,7 +5839,7 @@ noprefix "false"
 \rho uu+p\\
 \rho vu\\
 \rho Hu
-\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma-1}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
+\end{bmatrix}\qquad E=\frac{p/\rho}{\gamma^{-}}+\frac{u^{2}+v^{2}}{2}\qquad H=E+\frac{p}{\rho}
 \end{gathered}
 \]
 
@@ -6326,7 +6326,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v\right\} $
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma^{-}},v\right\} $
 \end_inset
 
 
@@ -6359,7 +6359,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v\right\} $
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma^{-}},v\right\} $
 \end_inset
 
 
@@ -6763,7 +6763,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma-1},v,w\right\} $
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u+\dfrac{2a}{\gamma^{-}},v,w\right\} $
 \end_inset
 
 
@@ -6805,7 +6805,7 @@ a\\
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma-1},v,w\right\} $
+\begin_inset Formula $\left\{ \dfrac{p}{\rho^{\gamma}},u-\dfrac{2a}{\gamma^{-}},v,w\right\} $
 \end_inset
 
 
@@ -6894,7 +6894,7 @@ reference "tab:euler_char_field_3d_x_split"
 \begin{aligned}(u_{\text{A}}-u_{\Gamma})\rho_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\rho_{\text{B}}\\
 (u_{\text{A}}-u_{\Gamma})\rho_{\text{A}}u_{\text{A}}+p_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\rho_{\text{B}}u_{\text{B}}+p_{\text{B}}\\
 (u_{\text{A}}-u_{\Gamma})\rho_{\text{A}}v_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\rho_{\text{B}}v_{\text{B}}\\
-(u_{\text{A}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{A}}}{\gamma-1}+\rho_{\text{A}}\frac{u_{\text{A}}^{2}+v_{\text{A}}^{2}}{2}\right)}_{\rho_{\text{A}}E_{\text{A}}}+p_{\text{A}}u_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{B}}}{\gamma-1}+\rho_{\text{B}}\frac{u_{\text{B}}^{2}+v_{\text{B}}^{2}}{2}\right)}_{\rho_{\text{B}}E_{\text{B}}}+p_{\text{B}}u_{\text{B}}
+(u_{\text{A}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{A}}}{\gamma^{-}}+\rho_{\text{A}}\frac{u_{\text{A}}^{2}+v_{\text{A}}^{2}}{2}\right)}_{\rho_{\text{A}}E_{\text{A}}}+p_{\text{A}}u_{\text{A}} & =(u_{\text{B}}-u_{\Gamma})\underbrace{\left(\frac{p_{\text{B}}}{\gamma^{-}}+\rho_{\text{B}}\frac{u_{\text{B}}^{2}+v_{\text{B}}^{2}}{2}\right)}_{\rho_{\text{B}}E_{\text{B}}}+p_{\text{B}}u_{\text{B}}
 \end{aligned}
 \label{eq:euler_2d_x_split_jump}
 \end{equation}
