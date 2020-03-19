@@ -49,7 +49,8 @@ if __name__ == '__main__':
         for b in beta_rad:
             theta_rad[i] = shock.theta(b)
             i += 1
-        plt.plot(numpy.rad2deg(theta_rad), beta_deg, label=r'$M_1=$'+str(m))
+        plt.plot(numpy.rad2deg(theta_rad), beta_deg,
+                 label=r'$M_\mathrm{Before}=$'+str(m))
     # sonic line
     beta_deg = list()
     theta_deg = list()
@@ -63,7 +64,7 @@ if __name__ == '__main__':
         theta = shock.theta(beta)
         beta_deg.append(numpy.rad2deg(beta))
         theta_deg.append(numpy.rad2deg(theta))
-    plt.plot(theta_deg, beta_deg, '--', label=r'$M_2=1$')
+    plt.plot(theta_deg, beta_deg, '--', label=r'$M_\mathrm{After}=1$')
     # output
     plt.legend()
     # plt.show()
