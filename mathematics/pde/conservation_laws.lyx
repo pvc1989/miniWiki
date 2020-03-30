@@ -2288,7 +2288,176 @@ U(x,t)=\lambda^{-1}(x/t)
 \begin_inset Formula $\lambda$
 \end_inset
 
- 的反函数。这种情况下的完整解为
+ 的反函数。这种情况下的特征线分布如图
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5,0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (left)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-0.6,-1.2,...,-3.6}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x-1,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (right)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {+0.6,+1.2,...,+3.0}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x+2,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% the expansion region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-1,-0.4,...,+2}   
+\backslash
+draw[->, very thick] (O) -- (
+\backslash
+x,4); 
+\end_layout
+
+\begin_layout Plain Layout
+
+% wave head and tail
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (-1,4) node[above]{$
+\backslash
+lambda_{-}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (+2,4) node[above]{$
+\backslash
+lambda_{+}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：膨胀波"
+
+\end_inset
+
+膨胀波
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：膨胀波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
@@ -2318,8 +2487,8 @@ discontinuity!shock wave
 \begin_inset Formula $\lambda_{-}>\lambda_{+}$
 \end_inset
 
-，即始于原点两侧的特征线相互“汇聚 (converge)”，则两族特征线汇聚的地方会形成一道“激波 (shock wave)”，它的轨迹也是始于原点的射线，其斜
-率满足跳跃条件 
+，即始于原点两侧的特征线相互“汇聚 (converge)”，则两族特征线汇聚的地方会形成一道“激波 (shock wave)”，它的轨迹也是始于原点的射线其斜率
+满足跳跃条件 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
@@ -2337,7 +2506,185 @@ s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}>s>\lambda_{+}
 
 \end_inset
 
-这种情况下的完整解为
+这种情况下的特征线分布如图
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5, 0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5, 0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0, 5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% the shock wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (1, 4) node[above]{$
+\backslash
+lambda_{-}>s>
+\backslash
+lambda_{+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (left)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {0.7, 1.4, ..., 3.5}  
+\backslash
+draw[->] (-
+\backslash
+y, 0) -- (
+\backslash
+y/4, 
+\backslash
+y);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {4.2, 4.9}   
+\backslash
+draw[->] (-
+\backslash
+y, 0) -- (-
+\backslash
+y+5, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (right)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {0.6, 1.2, ..., 3.6}   
+\backslash
+draw[->] (+
+\backslash
+y, 0) -- (
+\backslash
+y/4, 
+\backslash
+y);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {4.2, 4.8}   
+\backslash
+draw[->] (+
+\backslash
+y, 0) -- (+
+\backslash
+y-3, 4); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：激波"
+
+\end_inset
+
+激波
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：激波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
@@ -2393,7 +2740,131 @@ s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}=s=\lambda_{+}
 
 \end_inset
 
-这种情况下的完整解为
+这种情况下的特征线分布如
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5,0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-4.5, -3.6, ..., +3.6}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x+1, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% the contact wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (1, 4) node[above]{$
+\backslash
+lambda_{-}=s=
+\backslash
+lambda_{+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：接触间断"
+
+\end_inset
+
+接触间断
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：接触间断"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
 \begin_inset Formula 
 \[
 U(x,t)=\begin{cases}
