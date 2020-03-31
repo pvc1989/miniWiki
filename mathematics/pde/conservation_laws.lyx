@@ -166,8 +166,8 @@ conservation!~ law!~ in integral form
 ”可以写成以下两种形式之一：
 \begin_inset Formula 
 \begin{equation}
-\begin{gathered}\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}^{\text{C}}U\right)\dd{\Gamma}=0\\
-\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd{\Gamma}=0
+\begin{gathered}\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}_{\mathrm{CS}}U\right)\dd(\partial\Omega)=0\\
+\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd(\partial\Omega)=0
 \end{gathered}
 \label{eq:微分方程：守恒律：标量：积分型}
 \end{equation}
@@ -263,14 +263,14 @@ status open
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\vec{u}^{\text{C}}$
+\begin_inset Formula $\vec{u}_{\mathrm{CS}}$
 \end_inset
 
- 表示 
+ 表示控制面 
 \begin_inset Formula $\partial\Omega$
 \end_inset
 
- 上某点的速度（上标 C 是“控制 (control)”的首字母）。
+ 上某点的速度。
 \end_layout
 
 \begin_layout Itemize
@@ -446,7 +446,7 @@ reference "eq:微分方程：守恒律：标量：积分型"
 按此记法，最一般的守恒律系统可以写成以下形式之一：
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\Omega}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{u}^{\text{C}}\ket{U}\right)\dd{\Gamma}=\ket{0}\label{eq:微分方程：守恒律：方程组：动体}
+\dv{t}\int_{\Omega}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{u}_{\mathrm{CS}}\ket{U}\right)\dd(\partial\Omega)=\ket{0}\label{eq:微分方程：守恒律：方程组：动体}
 \end{equation}
 
 \end_inset
@@ -454,7 +454,7 @@ reference "eq:微分方程：守恒律：标量：积分型"
 
 \begin_inset Formula 
 \begin{equation}
-\begin{gathered}\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{\ket{F}}\dd{\Gamma}=\ket{0}\\
+\begin{gathered}\int_{\Omega}\partial_{t}\ket{U}\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{\ket{F}}\dd(\partial\Omega)=\ket{0}\\
 \partial_{t}\ket{U}+\divg\vec{\ket{F}}=\ket{0}
 \end{gathered}
 \end{equation}
@@ -684,7 +684,7 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
  为无穷小量，即
 \begin_inset Formula 
 \[
-\lim_{h\to0}\vec{u}^{\text{C}}=\vec{s}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
+\lim_{h\to0}\vec{u}_{\mathrm{CS}}=\vec{s}\qquad\lim_{h\to0}\int_{\Omega}\ket{U}\dd{\Omega}=\ket{0}
 \]
 
 \end_inset
@@ -742,7 +742,7 @@ noprefix "false"
  退化为
 \begin_inset Formula 
 \[
-\int_{S_{+}\cup S_{-}}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{s}\ket{U}\right)\dd{\Gamma}=0
+\int_{S_{+}\cup S_{-}}\vec{\nu}\vdot\left(\vec{\ket{F}}-\vec{s}\ket{U}\right)\dd(S_{+}\cup S_{-})=0
 \]
 
 \end_inset
@@ -1824,7 +1824,7 @@ reference "prob:微分方程：守恒律系统 Riemann 问题"
  个独立的特征向量：
 \begin_inset Formula 
 \[
-\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\underbrace{\Matrix{R}\ket{1}}_{\ket{R_{1}}} & \cdots & \underbrace{\Matrix{R}\ket{n}}_{\ket{R_{n}}}\end{bmatrix}\qquad\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\underbrace{\Matrix{R}\ket{1}}_{\ket{R_{1}}} & \cdots & \underbrace{\Matrix{R}\ket{n}}_{\ket{R_{n}}}\end{bmatrix}\qquad\Matrix{\Lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
  & \ddots\\
  &  & \lambda_{n}
 \end{bmatrix}
@@ -3027,7 +3027,7 @@ noprefix "false"
  个独立的特征向量：
 \begin_inset Formula 
 \[
-\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\qquad\Matrix{\lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\qquad\Matrix{R}\coloneqq\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\qquad\Matrix{\Lambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
  & \ddots\\
  &  & \lambda_{n}
 \end{bmatrix}
