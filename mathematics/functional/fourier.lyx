@@ -118,7 +118,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Stone–Weierstrass]
+[Weierstrass]
 \end_layout
 
 \end_inset
@@ -126,11 +126,11 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:Stone--Weierstrass"
+name "thm:Fourier：Weierstrass"
 
 \end_inset
 
-如果定义在 
+若定义在 
 \begin_inset Formula $\mathbb{R}^{n}$
 \end_inset
 
@@ -173,7 +173,7 @@ u(x_{1},...,x_{n})=\sum_{k_{1},...,k_{n}=0}^{\infty}A_{k_{1},...,k_{n}}x_{1}^{k_
 \begin_inset Formula $n=2$
 \end_inset
 
- 的情形：此时可以引入极坐标 
+ 的情形：引入极坐标 
 \begin_inset Formula $x_{1}=x=\rho\cos\theta$
 \end_inset
 
@@ -181,21 +181,22 @@ u(x_{1},...,x_{n})=\sum_{k_{1},...,k_{n}=0}^{\infty}A_{k_{1},...,k_{n}}x_{1}^{k_
 \begin_inset Formula $x_{2}=y=\rho\sin\theta$
 \end_inset
 
-。如果将问题的研究范围限制在单位圆周（
+，则上述结论在单位圆周 
 \begin_inset Formula $\rho=1$
 \end_inset
 
-）上，则上述结论可以表示为
+ 上可表示为
 \begin_inset Formula 
-\[
+\begin{equation}
 \begin{aligned}u(\theta) & =\sum_{k,l=0}^{\infty}A_{k,l}\cos[k](\theta)\sin[l](\theta)=\sum_{k,l=0}^{\infty}A_{k,l}\cdot\left(\frac{\ee^{\ii\theta}+\ee^{-\ii\theta}}{2}\right)^{k}\left(\frac{\ee^{\ii\theta}-\ee^{-\ii\theta}}{2\ii}\right)^{l}\\
- & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\ii n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos n\theta+\ii\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin n\theta
+ & =\sum_{n=-\infty}^{\infty}c_{n}\exp(\ii n\theta)=c_{0}+\sum_{n=1}^{\infty}\underbrace{\left(c_{n}+c_{-n}\right)}_{a_{n}}\cos(n\theta)+\ii\sum_{n=1}^{\infty}\underbrace{\left(c_{n}-c_{-n}\right)}_{b_{n}}\sin(n\theta)
 \end{aligned}
-\]
+\label{eq:Fourier：级数}
+\end{equation}
 
 \end_inset
 
-第二行的结果被称为「Fourier 级数」。
+第二行的结果被称为“Fourier 级数”。
 \end_layout
 
 \begin_layout Subsection
@@ -205,7 +206,7 @@ u(x_{1},...,x_{n})=\sum_{k_{1},...,k_{n}=0}^{\infty}A_{k_{1},...,k_{n}}x_{1}^{k_
 \begin_layout Standard
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "thm:Stone--Weierstrass"
+reference "thm:Fourier：Weierstrass"
 
 \end_inset
 
@@ -218,7 +219,10 @@ reference "thm:Stone--Weierstrass"
 \end_inset
 
  为周期的连续函数都可以唯一地展开为形如 
-\begin_inset Formula $\sum_{n\in\mathbb{Z}}c_{n}\exp(\ii n\theta)$
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：级数"
+
 \end_inset
 
  的 Fourier 级数。
@@ -237,69 +241,76 @@ reference "thm:Stone--Weierstrass"
 \end_inset
 
 ，只需将展开式 
-\begin_inset Formula $u(\theta)=\sum_{k}c_{k}\exp(\ii k\theta)$
+\begin_inset Formula $u(\theta)=\sum_{n\in\mathbb{Z}}c_{n}\exp(\ii n\theta)$
 \end_inset
 
- 代入积分 
-\begin_inset Formula $\int_{0}^{2\pi}\exp(-\ii l\theta)u(\theta)\dd{\theta}$
-\end_inset
-
-，并利用
+ 代入积分
 \begin_inset Formula 
 \[
-\int_{0}^{2\pi}\exp(\ii k\theta-\ii l\theta)\dd{\theta}=\begin{cases}
-\int_{0}^{2\pi}1\dd{\theta}=2\pi & k=l\\
-\eval{\frac{\exp(\ii k\theta-\ii l\theta)}{k-l}}_{0}^{2\pi}=0 & k\ne l
-\end{cases}\qquad\forall k,l\in\mathbb{Z}
+\int_{0}^{2\pi}u(\theta)\exp(-\ii n'\theta)\dd{\theta}\qquad n'\in\mathbb{Z}
 \]
 
 \end_inset
 
-即得函数 
-\begin_inset Formula $u(\theta)$
-\end_inset
-
- 的「Fourier 系数」：
+并利用正交关系
 \begin_inset Formula 
 \[
-c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\ii n\theta)u(\theta)\dd{\theta}\qquad\forall n\in\mathbb{Z}
+\int_{0}^{2\pi}\exp(\ii n\theta-\ii n'\theta)\dd{\theta}=\begin{cases}
+\int_{0}^{2\pi}1\dd{\theta}=2\pi & n=n'\\
+\eval{\frac{\exp(\ii n\theta-\ii n'\theta)}{n-n'}}_{0}^{2\pi}=0 & n\ne n'
+\end{cases}\qquad\forall(n,n')\in\mathbb{Z}^{2}
 \]
 
 \end_inset
 
-它是关于「离散指标（Discrete Index）」
+即得“Fourier 系数”
+\begin_inset Formula 
+\begin{equation}
+c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}u(\theta)\exp(-\ii n\theta)\dd{\theta}\qquad\forall n\in\mathbb{Z}\label{eq:Fourier：级数：系数}
+\end{equation}
+
+\end_inset
+
+它可以看作以“离散指标 (discrete index)” 
 \begin_inset Formula $n$
 \end_inset
 
- 的函数，完全由函数 
+ 为自变量的函数，因其完全由函数 
 \begin_inset Formula $u$
 \end_inset
 
- 确定，因此不妨记作 
+ 确定，不妨记 
 \begin_inset Formula $u_{n}\equiv c_{n}$
 \end_inset
 
-。值得注意的是：这里的积分并不要求 
-\begin_inset Formula $u(\theta)$
-\end_inset
-
- 连续。
+。
 \end_layout
 
 \begin_layout Standard
-另一方面，由任何一组系数 
+值得注意的是：
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：级数：系数"
+
+\end_inset
+
+ 中的积分并不要求 
+\begin_inset Formula $u(\theta)$
+\end_inset
+
+ 连续；另一方面，由任何一组系数 
 \begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
 \end_inset
 
- 所构造的 Fourier 级数 
-\begin_inset Formula $\sum_{n}u_{n}\exp(\ii n\theta)$
+ 所构造的级数 
+\begin_inset Formula $\sum_{n\in\mathbb{Z}}u_{n}\exp(\ii n\theta)$
 \end_inset
 
 ，只要它处处收敛，那么它就是一个以 
 \begin_inset Formula $2\pi$
 \end_inset
 
- 为周期的连续函数，即使导出 
+ 为周期的函数，这个函数与导出 
 \begin_inset Formula $\left\{ u_{n}\right\} _{n\in\mathbb{Z}}$
 \end_inset
 
@@ -307,7 +318,7 @@ c_{n}=\frac{1}{2\pi}\int_{0}^{2\pi}\exp(-\ii n\theta)u(\theta)\dd{\theta}\qquad\
 \begin_inset Formula $u$
 \end_inset
 
- 本身并不连续。
+ 未必相等。
 \end_layout
 
 \begin_layout Example*
@@ -340,20 +351,24 @@ T(\theta+2n\pi) & n\in\mathbb{Z}\\
 \end_layout
 
 \begin_layout Standard
-也就是说：某些含有间断的函数也可以展开为 Fourier 级数，但是所得的级数未必与原函数等价。由此可以引出几个问题：
+由此可见：某些含有间断的函数也可以展开为 Fourier 级数，但是所得的级数未必与原函数相等。由此可以引出几个问题：
 \end_layout
 
-\begin_layout Problem
+\begin_layout Question
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:Fourier-级数"
+name "prob:Fourier：级数"
 
 \end_inset
 
-什么样的函数可以展开为 Fourier 级数？如果可以展开，那么所得的级数与原函数之间是什么关系？
+什么样的函数可以展开为 Fourier 级数？
 \end_layout
 
-\begin_layout Problem
+\begin_layout Question
+如果可以展开，那么所得的级数与原函数之间是什么关系？
+\end_layout
+
+\begin_layout Question
 什么样的系数可以构造出处处收敛的 Fourier 级数？
 \end_layout
 
@@ -368,56 +383,57 @@ name "prob:Fourier-级数"
 为了回答这些问题，需要引用一些泛函分析的概念：
 \end_layout
 
-\begin_layout Itemize
-首先引入「函数空间 
+\begin_layout Description
+函数空间 它是由定义在 
+\begin_inset Formula $(\alpha,\beta)$
+\end_inset
+
+ 上的“几乎处处连续”的函数的全体所构成的（复）向量空间，用 
 \begin_inset Formula $\mathcal{V}$
 \end_inset
 
-」：它是由定义在 
-\begin_inset Formula $(a,b)$
-\end_inset
-
- 上的「几乎处处连续」的函数的全体所构成的（复）向量空间。这里的「几乎处处连续」是指：函数 
+ 来表示。这里的“几乎处处连续”是指：函数 
 \begin_inset Formula $u$
 \end_inset
 
- 至多含「可列（Enumerable）」个间断点，这样它的所有间断点至多构成一个零「测度（Measure）」集。如果要强调函数 
+ 至多含“可列个 (enumerable)”间断点，这样它的所有间断点至多构成一个“零测度集 (zero-measured set)”。为强调函数
+ 
 \begin_inset Formula $u$
 \end_inset
 
- 的向量属性，则将其记作 
+ 的“向量”属性，可用 
+\begin_inset Formula $\ket{u}_{\mathcal{V}}$
+\end_inset
+
+ 或 
 \begin_inset Formula $\ket{u}$
 \end_inset
 
-。
+ 来表示。
 \end_layout
 
-\begin_layout Itemize
-在 
+\begin_layout Description
+平方可积 在 
 \begin_inset Formula $\mathcal{V}$
 \end_inset
 
- 上可以引入「内积（Inner Product）」以及由它所导出的「范数（Norm）」:
+ 上可以引入“内积 (inner product)”以及由它所导出的“范数 (norm)”：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{a}^{b}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\norm{\ket{u}}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall\ket{u},\ket{v}\in\mathcal{V}
+\ip{u}{v}_{\mathcal{V}}\coloneqq\int_{\alpha}^{\beta}\Conj{u}(\theta)\,v(\theta)\dd{\theta}\qquad\norm{u}_{\mathcal{V}}\coloneqq\sqrt{\ip{u}_{\mathcal{V}}}
 \]
 
 \end_inset
 
-这里的积分应当理解为 Lebesgue 积分。若无特殊说明，下面只考虑由满足 
-\begin_inset Formula $\norm{u}<\infty$
+这里的积分应当理解为“Lebesgue 积分”。若无特殊说明，下面只考虑由平方可积函数（满足 
+\begin_inset Formula $\norm{u}_{\mathcal{V}}<\infty$
 \end_inset
 
- 的 
-\begin_inset Formula $\ket{u}$
+ 的函数）所构成的子空间 
+\begin_inset Formula $\mathcal{L}^{2}(\alpha,\beta)\subset\mathcal{V}$
 \end_inset
 
- 所构成的子空间 
-\begin_inset Formula $\mathcal{L}^{2}(a,b)\subset\mathcal{V}$
-\end_inset
-
-，它是「完备的（Complete）」：在 
+，它是“完备的 (complete)”：在 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
@@ -425,99 +441,103 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
-。作为赋范空间，它是一个 Banach 空间；作为内积空间，它是一个 Hilbert 空间。
+。它既是一个完备的赋范空间（Banach 空间），又是一个完备的内积空间（Hilbert 空间）。
 \end_layout
 
-\begin_layout Itemize
-有了内积，就可以找到 
+\begin_layout Description
+正交分解 有了内积，就可以找到 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
- 的一组「正交（Orthogonal）基」
-\begin_inset Formula $\left\{ \ket{g_{n}}\right\} _{n\in\mathbb{Z}}$
-\end_inset
-
- 及相应的「单位正交（Orthonormal）基」
-\begin_inset Formula $\left\{ \ket{e_{n}}\right\} _{n\in\mathbb{Z}}$
-\end_inset
-
-：
+ 的一组“正交基 (orthogonal basis)”
 \begin_inset Formula 
 \[
-\ip{g_{k}}{g_{l}}=\norm{g_{k}}\cdot\delta_{kl}\cdot\norm{g_{l}}\qquad\ip{k}{l}\equiv\ip{e_{k}}{e_{l}}=\delta_{kl}\qquad\forall k,l\in\mathbb{N}
+b_{n}(\theta)\coloneqq\ip{\theta}{b_{n}}_{\mathcal{L}^{2}}\qquad\ip{b_{n'}}{b_{n}}_{\mathcal{L}^{2}}=\norm{b_{n'}}_{\mathcal{L}^{2}}\cdot\delta_{n'n}\cdot\norm{b_{n}}_{\mathcal{L}^{2}}\qquad\forall(n',n)\in\mathbb{Z}^{2}
 \]
 
 \end_inset
 
-于是有「正交分解（Orthogonal Decomposition）」：
+及相应的“单位正交基 (orthonormal basis)”：
 \begin_inset Formula 
 \[
-\ket{u}=\sum_{n}\ket{n}\overbrace{\ip{n}{u}}^{u_{n}}=\overbrace{\sum_{n}\dyad{n}}^{\Operator{1}}\ket{u}\qquad\forall\ket{u}\in\mathcal{L}^{2}
+e_{n}(\theta)\coloneqq\ip{\theta}{e_{n}}_{\mathcal{L}^{2}}\qquad\ip{n'}{n}_{\mathcal{L}^{2}}\equiv\ip{e_{n'}}{e_{n}}_{\mathcal{L}^{2}}=\delta_{n'n}\qquad\forall(n',n)\in\mathbb{Z}^{2}
+\]
+
+\end_inset
+
+于是有“正交分解 (orthogonal decomposition)”：
+\begin_inset Formula 
+\[
+\ket{u}_{\mathcal{L}^{2}}=\sum_{n}\ket{n}_{\mathcal{L}^{2}}\overbrace{\ip{n}{u}_{\mathcal{L}^{2}}}^{u_{n}}=\overbrace{\sum_{n}\dyad{n}_{\mathcal{L}^{2}}}^{\Operator{1}_{\mathcal{L}^{2}}}\ket{u}_{\mathcal{L}^{2}}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $u_{n}=\ip{n}{u}$
+\begin_inset Formula $u_{n}=\ip{n}{u}_{\mathcal{L}^{2}}$
 \end_inset
 
  是 
-\begin_inset Formula $\ket{u}$
+\begin_inset Formula $\ket{u}_{\mathcal{L}^{2}}$
 \end_inset
 
  在 
 \begin_inset Formula $\ket{n}$
 \end_inset
 
- 上的「投影（Projection）」，
-\begin_inset Formula $\Operator{1}$
+ 上的“投影 (projection)”，
+\begin_inset Formula $\Operator{1}_{\mathcal{L}^{2}}$
 \end_inset
 
  是 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
- 上的「单位算符（Identity Operator）」，等式 
-\begin_inset Formula $\Operator{1}=\sum_{n}\dyad{n}$
+ 上的“恒等算符 (identity operator)”，等式 
+\begin_inset Formula $\Operator{1}_{\mathcal{L}^{2}}=\sum_{n}\dyad{n}_{\mathcal{L}^{2}}$
 \end_inset
 
- 被称为「完备性关系（Completeness Relation）」。
+ 被称为 
+\begin_inset Formula $\mathcal{L}^{2}$
+\end_inset
+
+ 上“完备性关系 (completeness relation)”。
 \end_layout
 
-\begin_layout Itemize
-有了范数就可以定义「零函数」：它是在定义域内「几乎处处为零（至多在一个零测度集上取有限的非零值）」的函数，因此其范数一定为零。如果两个函数的差是一个零函数，则称
-它们「几乎处处相等（至多在一个零测度集上不相等）」，用 
+\begin_layout Description
+等价关系 有了范数就可以定义“零函数”：它是在定义域内“几乎处处为零（至多在一个零测度集上取有限的非零值）”的函数，因此其范数一定为零。如果两个函数的差是一个零
+函数，则称它们“几乎处处相等（至多在一个零测度集上不相等）”，用 
 \begin_inset Formula $\doteq$
 \end_inset
 
- 表示。这种二元关系具有自反性、对称性、传递性，因而可以被视为是一种「等价关系（Equivalence Relation）」：
+ 表示。这种二元关系具有自反性、对称性、传递性，因而可以被视为是一种“等价关系 (equivalence relation)”：
 \begin_inset Formula 
 \[
-\ket{u}\doteq\ket{v}\iff\norm{u-v}=0
+\ket{u}_{\mathcal{L}^{2}}\doteq\ket{v}_{\mathcal{L}^{2}}\iff\norm{u-v}_{\mathcal{L}^{2}}=0
 \]
 
 \end_inset
 
-由此可以定义「等价类（Equivalence Class）」：
+由此可以定义“等价类 (equivalence class)”：
 \begin_inset Formula 
 \[
-\left\llbracket \ket{u}\right\rrbracket \equiv\left\llbracket u\right\rrbracket :=\left\{ \ket{v}:\ket{u}\doteq\ket{v}\right\} \qquad\forall\ket{u}\in\mathcal{L}^{2}
+\left\llbracket u\right\rrbracket \coloneqq\left\{ \ket{v}_{\mathcal{L}^{2}}\in\mathcal{L}^{2}:\ket{u}_{\mathcal{L}^{2}}\doteq\ket{v}_{\mathcal{L}^{2}}\right\} 
 \]
 
 \end_inset
 
-及「商空间（Quotient Space）」：
+及相应的“商空间 (quotient space)”：
 \begin_inset Formula 
 \[
-(\mathcal{L}^{2}/\doteq):=\left\{ \left\llbracket u\right\rrbracket :\ket{u}\in\mathcal{L}^{2}\right\} 
+(\mathcal{L}^{2}/\doteq)\coloneqq\left\{ \left\llbracket u\right\rrbracket :\ket{u}_{\mathcal{L}^{2}}\in\mathcal{L}^{2}\right\} 
 \]
 
 \end_inset
 
-商空间上的内积（也就是两个等价类的内积）定义为「代表元」的内积：
+商空间是以等价类为向量的空间，其上的内积可以定义为“代表元的内积”：
 \begin_inset Formula 
 \[
-\ip{\left\llbracket u\right\rrbracket }{\left\llbracket v\right\rrbracket }\equiv\ip{u}{v}_{\mathcal{L}^{2}/\doteq}:=\ip{u}{v}_{\mathcal{L}^{2}}\qquad\forall\ket{u}\in\left\llbracket u\right\rrbracket ,\forall\ket{v}\in\left\llbracket v\right\rrbracket ,\forall\left\llbracket u\right\rrbracket ,\left\llbracket v\right\rrbracket \in\mathcal{L}^{2}/\doteq
+\ip{u}{v}_{\mathcal{L}^{2}/\doteq}\coloneqq\ip{u}{v}_{\mathcal{L}^{2}}\qquad\forall\ket{u}_{\mathcal{L}^{2}}\in\left\llbracket u\right\rrbracket \qquad\forall\ket{v}_{\mathcal{L}^{2}}\in\left\llbracket v\right\rrbracket 
 \]
 
 \end_inset
@@ -525,27 +545,32 @@ name "prob:Fourier-级数"
 
 \end_layout
 
-\begin_layout Itemize
-用 
+\begin_layout Description
+系数空间 用 
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
  表示所有满足 
-\begin_inset Formula $\sum_{n}\abs{u_{n}}^{2}<\infty$
+\begin_inset Formula $\sum_{n\in\mathbb{Z}}\abs{u_{n}}^{2}<\infty$
 \end_inset
 
- 的 
-\begin_inset Formula $\aleph_{0}$
-\end_inset
-
- 维数组 
-\begin_inset Formula $[u]:=(...,u_{-1},u_{0},u_{1},...)$
-\end_inset
-
- 所构成的（复）向量空间，它在如下内积及其所导出的范数定义下也是完备的：
+ 的无穷维数组
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\ell^{2}}:=\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{[u]}\equiv\norm{u}:=\sqrt{\ip{u}}\qquad\forall[u],[v]\in\ell^{2}
+\ket{u}_{\ell^{2}}\coloneqq\begin{bmatrix}\vdots\\
+u_{-1}\\
+u_{0}\\
+u_{+1}\\
+\vdots
+\end{bmatrix}
+\]
+
+\end_inset
+
+所构成的（复）向量空间，它在如下“内积”及其所导出的“范数”定义下也是完备的：
+\begin_inset Formula 
+\[
+\ip{u}{v}_{\ell^{2}}\coloneqq\sum_{n\in\mathbb{Z}}\Conj{u}_{n}\,v_{n}\qquad\norm{u}_{\ell^{2}}\coloneqq\sqrt{\ip{u}_{\ell^{2}}}
 \]
 
 \end_inset
@@ -553,31 +578,24 @@ name "prob:Fourier-级数"
 
 \end_layout
 
-\begin_layout Itemize
+\begin_layout Description
+等距同构 系数空间 
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
  中的每一个成员 
-\begin_inset Formula $[u]$
+\begin_inset Formula $\ket{u}_{\ell^{2}}$
 \end_inset
 
- 都确定了 
+ 都确定了函数空间 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
  中的一个向量 
-\begin_inset Formula $\ket{u}=\sum_{n}u_{n}\ket{n}$
+\begin_inset Formula $\ket{u}_{\mathcal{L}^{2}}=\sum_{n\in\mathbb{Z}}u_{n}\ket{n}_{\mathcal{L}^{2}}$
 \end_inset
 
-，这是因为
-\begin_inset Formula 
-\[
-\norm{u}^{2}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}u_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}u_{n}\overbrace{\ip{k}{n}_{\mathcal{L}^{2}}}^{\delta_{kn}}=\sum_{n}\abs{u_{n}}^{2}<\infty
-\]
-
-\end_inset
-
-这样就建立了 
+，这样就建立了 
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
@@ -585,7 +603,15 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
- 的「单射（Injection）」，以及 
+ 的保范数“单射 (injection)”：
+\begin_inset Formula 
+\[
+\norm{u}_{\mathcal{L}^{2}}^{2}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}\,u_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\delta_{n'n}}=\sum_{n\in\mathbb{Z}}\abs{u_{n}}^{2}=\norm{u}_{\ell^{2}}^{2}
+\]
+
+\end_inset
+
+以及 
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
@@ -593,14 +619,10 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}/\doteq$
 \end_inset
 
- 的「双射（Bijection）」。
-\end_layout
-
-\begin_layout Itemize
-这种映射是保内积的：
+ 的保内积“双射 (bijection)”：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\ip{u}{v}_{\mathcal{L}^{2}}=\left(\sum_{k}u_{k}\ket{k}\right)^{\dagger}\left(\sum_{n}v_{n}\ket{n}\right)=\sum_{k}\sum_{n}\Conj{u}_{k}v_{n}\underbrace{\ip{k}{n}_{\mathcal{L}^{2}}}_{\delta_{kn}}=\ip{u}{v}_{\ell^{2}}
+\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}\,v_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\delta_{n'n}}=\ip{u}{v}_{\ell^{2}}
 \]
 
 \end_inset
@@ -613,39 +635,27 @@ name "prob:Fourier-级数"
 \begin_inset Formula $\mathcal{L}^{2}/\doteq$
 \end_inset
 
- 同构：
+ 是“等距同构的 (isometric)” 向量空间。于是向量 
 \begin_inset Formula $\ket{u}$
 \end_inset
 
- 既可以表示 
-\begin_inset Formula $\mathcal{L}^{2}$
-\end_inset
-
- 中的一个向量（函数 
-\begin_inset Formula $u$
-\end_inset
-
-），又可以表示 
-\begin_inset Formula $\ell^{2}$
-\end_inset
-
- 中与之对应的向量（数组 
-\begin_inset Formula $[u]$
-\end_inset
-
-）；
+ 与内积 
 \begin_inset Formula $\ip{u}{v}$
 \end_inset
 
- 既可以表示 
+ 不必再指明它们所属的空间：它们既可以表示 
 \begin_inset Formula $\mathcal{L}^{2}$
 \end_inset
 
- 中的内积，又可以表示 
+ 中的（函数）向量与内积，又可以表示 
+\begin_inset Formula $\mathcal{L}^{2}/\doteq$
+\end_inset
+
+ 中的（等价类）向量与内积，还可以表示 
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
- 中的内积。
+ 中的（数组）向量与内积。
 \end_layout
 
 \begin_layout Standard
@@ -656,60 +666,96 @@ name "prob:Fourier-级数"
 \end_layout
 
 \begin_layout Standard
-有了这些概念，不难发现：Fourier 级数不过是 
+不难发现：Fourier 级数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：级数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及系数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：级数：系数"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 不过是 
 \begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
 \end_inset
 
- 上的特例，这里的内积和单位正交基分别是：
+ 上的特例，这里的内积和单位正交基分别为
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{0}^{2\pi}\Conj{u}(\theta)v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}\coloneqq\int_{0}^{2\pi}\Conj{u}(\theta)\,v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}\coloneqq\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-现在可以回答前面提出的问题
+现在可以回答前面提出的问题 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "prob:Fourier-级数"
+reference "prob:Fourier：级数"
 
 \end_inset
 
 ：
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[标准周期]
+\end_layout
+
 \end_inset
 
- 中的任意一个函数都可以作 Fourier 级数展开，所得的级数与这个函数几乎处处相等：
+以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期且在 
+\begin_inset Formula $(0,2\pi)$
+\end_inset
+
+ 上平方可积的函数都可以作 Fourier 级数展开：
 \begin_inset Formula 
 \[
-\sum_{n}u_{n}\exp(\ii n\theta)=\lim_{\varepsilon\to0}\frac{u(\theta-\varepsilon)+u(\theta+\varepsilon)}{2}\doteq u(\theta)\qquad\forall\theta\in(0,2\pi)
+u(\theta)\equiv\ip{\theta}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2\pi}\frac{\exp(-\ii n\theta')}{\sqrt{2\pi}}u(\theta')\dd{\theta'}}_{u_{n}\equiv\ip{n}{u}}
+\]
+
+\end_inset
+
+所得的级数与这个函数几乎处处相等：
+\begin_inset Formula 
+\[
+\sum_{n\in\mathbb{Z}}u_{n}\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}=\lim_{\varepsilon\to0}\frac{u(\theta-\varepsilon)+u(\theta+\varepsilon)}{2}\doteq u(\theta)\qquad\forall\theta\in(0,2\pi)
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
 \begin_inset Formula $\ell^{2}$
 \end_inset
 
- 中的任意一个数组都可以构造出处处收敛的 Fourier 级数，从而定义了一个以 
+ 中的任意数组都可以构造出处处收敛的 Fourier 级数，从而定义出一个以 
 \begin_inset Formula $2\pi$
 \end_inset
 
- 为周期的连续函数，这个函数自然属于 
-\begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
+ 为周期且在 
+\begin_inset Formula $(0,2\pi)$
 \end_inset
 
-。
+ 上平方可积的函数。
 \end_layout
 
 \begin_layout Standard
@@ -732,31 +778,84 @@ reference "prob:Fourier-级数"
 \begin_inset Formula $x/a=\theta/\pi$
 \end_inset
 
-，即可将它转化为以 
+，即可将其转化为以 
 \begin_inset Formula $2\pi$
 \end_inset
 
- 为周期的函数。此时，函数空间为 
+ 为周期的函数。此时平方可积函数空间为 
 \begin_inset Formula $\mathcal{L}^{2}(0,2a)$
 \end_inset
 
-，内积和单位基向量分别为：
+，其上的内积与单位基向量分别为：
 \begin_inset Formula 
 \[
-\ip{u}{v}:=\int_{0}^{2a}\Conj{u}(x)v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}:=\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
-\]
-
-\end_inset
-
-Fourier 级数为：
-\begin_inset Formula 
-\[
-u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2a}\frac{\exp(-\ii n\pi x'/a)}{\sqrt{2a}}u(x')\dd{x'}}_{\ip{n}{u}}
+\ip{u}{v}\coloneqq\int_{0}^{2a}\Conj{u}(x)\,v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}\coloneqq\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一般周期]
+\end_layout
+
+\end_inset
+
+以 
+\begin_inset Formula $2a$
+\end_inset
+
+ 为周期且在 
+\begin_inset Formula $(0,2a)$
+\end_inset
+
+ 上平方可积的函数都可以作 Fourier 级数展开：
+\begin_inset Formula 
+\[
+u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2a}\frac{\exp(-\ii n\pi x'/a)}{\sqrt{2a}}u(x')\dd{x'}}_{u_{n}\equiv\ip{n}{u}}
+\]
+
+\end_inset
+
+所得的级数与这个函数几乎处处相等：
+\begin_inset Formula 
+\[
+\sum_{n\in\mathbb{Z}}u_{n}\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}=\lim_{\varepsilon\to0}\frac{u(x-\varepsilon)+u(x+\varepsilon)}{2}\doteq u(x)\qquad\forall x\in(0,2a)
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 中的任意数组都可以构造出处处收敛的 Fourier 级数，从而定义出一个以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期且在 
+\begin_inset Formula $(0,2\pi)$
+\end_inset
+
+ 上平方可积的函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Fourier 级数的收敛性
 \end_layout
 
 \begin_layout Section
@@ -772,8 +871,8 @@ Fourier 变换
 \begin_inset Formula $a\to\infty$
 \end_inset
 
- 的情形，可以将以上结果推广到非周期函数。定义 
-\begin_inset Formula $k:=n\pi/a$
+ 的情形，即可将以上结果推广到非周期函数。定义 
+\begin_inset Formula $k\coloneqq n\pi/a$
 \end_inset
 
 ，它的物理意义是：周期函数 
@@ -784,7 +883,7 @@ Fourier 变换
 \begin_inset Formula $2\pi$
 \end_inset
 
- 的区间内所含完整波形的个数，因此被称为「波数（Wave Number）」。
+ 的区间内所含完整波形的个数，因此被称为“波数 (wave number)”。
 \end_layout
 
 \begin_layout Itemize
@@ -800,22 +899,22 @@ Fourier 变换
 \begin_inset Formula $n$
 \end_inset
 
- 的离散函数，不妨记作 
+ 的离散函数，可记作 
 \begin_inset Formula $k_{n}$
 \end_inset
 
 ，并定义 
-\begin_inset Formula $\Delta k:=k_{n+1}-k_{n}=\pi/a$
+\begin_inset Formula $\increment k\coloneqq k_{n+1}-k_{n}=\pi/a$
 \end_inset
 
 。于是 
 \begin_inset Formula $u(x)$
 \end_inset
 
- 的 Fourier 级数展开可以写为
+ 的 Fourier 级数可写为
 \begin_inset Formula 
 \[
-u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\left[\int_{-a}^{+a}\frac{\exp(-\ii k_{n}x')}{\sqrt{2\pi}}u(x')\dd{x'}\right]}_{u_{n}}\Delta k=\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}u_{n}\Delta k
+u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\left(\int_{-a}^{+a}\frac{\exp(-\ii k_{n}x')}{\sqrt{2\pi}}u(x')\dd{x'}\right)}_{u_{n}}\increment k
 \]
 
 \end_inset
@@ -868,10 +967,10 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 \begin_inset Formula $u_{n}\equiv\tilde{u}(k_{n})$
 \end_inset
 
-，则上式右端成为 Riemann 和。如果它的极限存在，则一定等于以下 Riemann 积分：
+，则上式右端成为“Riemann 和”。如果它的极限存在，则一定等于以下“Riemann 积分”：
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\tilde{u}(k_{n})\Delta k
+\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\tilde{u}(k_{n})\underbrace{\pi/a}_{\increment k}
 \]
 
 \end_inset
@@ -880,19 +979,19 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 \begin_inset Formula $u(x)$
 \end_inset
 
- 的「Fourier 积分」，其中：
+ 的“Fourier 积分”，其中
 \begin_inset Formula 
 \[
-\tilde{u}(k):=\lim_{a\to\infty}\tilde{u}(k_{n})=\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}
+\tilde{u}(k)\coloneqq\lim_{a\to\infty}\tilde{u}(k_{n})=\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}
 \]
 
 \end_inset
 
-依然可以被称为函数 
+依然被称为函数 
 \begin_inset Formula $u(x)$
 \end_inset
 
- 的「Fourier 系数」，只不过这里是关于「连续指标」
+ 的“Fourier 系数”，只不过这里是关于“连续指标 (continuous index)” 
 \begin_inset Formula $k$
 \end_inset
 
@@ -900,7 +999,7 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 \end_layout
 
 \begin_layout Itemize
-尽管以上讨论过程用到了 Riemann 积分，但所得结果可以用 Lebesgue 积分重新加以解释，从而将适用范围推广到 
+尽管以上过程用到了“Riemann 积分”，但所得结果可以用“Lebesgue 积分”重新加以解释，从而将适用范围推广到 
 \begin_inset Formula $\mathcal{L}^{2}(-\infty,+\infty)$
 \end_inset
 
@@ -927,10 +1026,18 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 \end_layout
 
 \begin_layout Itemize
-在 Fourier 级数的分析中，单位基向量表示为：
+在 Fourier 级数的分析中，“单位基向量”为
 \begin_inset Formula 
 \[
-e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\qquad n\in\mathbb{Z}
+e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\boxed{\ip{\theta}{n}\coloneqq\exp(\ii n\theta)/\sqrt{2\pi}}
+\]
+
+\end_inset
+
+相应的“单位正交性”及“指标替换公式”分别为
+\begin_inset Formula 
+\[
+\ip{n'}{n}=\delta_{n'n}\qquad\forall\ket{u}\in\mathcal{L}^{2}(0,2\pi)\colon\underbrace{\ip{n'}{u}}_{u_{n'}}=\sum_{n\in\mathbb{Z}}\underbrace{\ip{n'}{n}}_{\delta_{n'n}}\underbrace{\ip{n}{u}}_{u_{n}}
 \]
 
 \end_inset
@@ -939,15 +1046,15 @@ e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\ip{\theta}{n}:=\frac{\exp(\ii n\thet
 \end_layout
 
 \begin_layout Itemize
-在 Fourier 积分的分析中，可以引入类似「单位基向量」：
+在 Fourier 积分的分析中，可引入与之类似的“单位基向量”：
 \begin_inset Formula 
 \[
-e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qquad k\in\mathbb{R}_{k}
+e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\boxed{\ip{x}{k}\coloneqq\exp(\ii kx)/\sqrt{2\pi}}
 \]
 
 \end_inset
 
-这里不过是用连续指标 
+这里只不过是用连续指标 
 \begin_inset Formula $k$
 \end_inset
 
@@ -955,28 +1062,31 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\ip{x}{k}:=\frac{\exp(\ii kx)}{\sqrt{2\pi}}\qqu
 \begin_inset Formula $n$
 \end_inset
 
-。此时的「单位正交性」应当理解为：
+，相应的“单位正交性”及“指标替换公式”分别为
 \begin_inset Formula 
 \[
-\ip{e_{\sigma}}{e_{\tau}}\equiv\ip{\sigma}{\tau}=\delta(\sigma-\tau)\qquad\forall\sigma,\tau\in\mathbb{R}_{k}
+\ip{k'}{k}=\delta(k'-k)\qquad\forall\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k})\colon\underbrace{\ip{k}{\tilde{u}}}_{\tilde{u}(k)}=\int_{\mathbb{R}_{k}}\underbrace{\ip{k'}{k}}_{\delta(k'-k)}\underbrace{\ip{k}{\tilde{u}}}_{\tilde{u}(k)}\dd{k}
 \]
 
 \end_inset
 
-由此可以导出 
+注意到后者中与 
+\begin_inset Formula $k$
+\end_inset
+
+ 无关的项提到积分号外，由此得 
 \begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
 \end_inset
 
- 上的完备性关系：
-\begin_inset Formula $\Operator{1}_{k}\equiv\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}$
+ 上的完备性关系
+\begin_inset Formula 
+\[
+\Operator{1}\equiv\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}
+\]
+
 \end_inset
 
-。
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-由 
+另由 
 \begin_inset Formula $\ip{k}=\delta(0)=\infty$
 \end_inset
 
@@ -984,24 +1094,31 @@ status collapsed
 \begin_inset Formula $\ket{k}\notin\mathcal{L}^{2}(\mathbb{R}_{k})$
 \end_inset
 
-，因此它不是 
+，因此 
+\begin_inset Formula $\ket{k}$
+\end_inset
+
+ 是一个比 
 \begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
 \end_inset
 
- 的单位基向量，而是一个比 
-\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k})$
-\end_inset
-
- 更大的（广义）函数空间的单位基向量。
-\end_layout
-
-\end_inset
-
-
+ 更大的（广义）函数空间的向量。
 \end_layout
 
 \begin_layout Itemize
-向量 
+函数 
+\begin_inset Formula $u$
+\end_inset
+
+ 在 
+\begin_inset Formula $x$
+\end_inset
+
+ 处的值 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 可以解释为向量 
 \begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x})$
 \end_inset
 
@@ -1009,11 +1126,15 @@ status collapsed
 \begin_inset Formula $x$
 \end_inset
 
--分量为 
-\begin_inset Formula $\ip{x}{u}\equiv u(x)$
+ 分量，即 
+\begin_inset Formula $u(x)\equiv\ip{x}{u}_{\mathbb{R}_{x}}$
 \end_inset
 
-，向量 
+；类似地，可以将 
+\begin_inset Formula $\tilde{u}(k)$
+\end_inset
+
+ 解释为向量 
 \begin_inset Formula $\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k})$
 \end_inset
 
@@ -1021,19 +1142,43 @@ status collapsed
 \begin_inset Formula $k$
 \end_inset
 
--分量为 
-\begin_inset Formula $\ip{k}{\tilde{u}}\equiv\tilde{u}(k)$
+ 分量，即 
+\begin_inset Formula $\tilde{u}(k)\equiv\ip{k}{\tilde{u}}_{\mathbb{R}_{k}}$
 \end_inset
 
-，二者「几乎」是同一个向量：
+。将二者代入 Fourier 积分，并将与 
+\begin_inset Formula $k$
+\end_inset
+
+ 无关的项提到积分号外，可得
 \begin_inset Formula 
 \[
-\ip{x}{u}\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\underbrace{\frac{\exp(\ii kx)}{\sqrt{2\pi}}}_{\ip{x}{k}}\underbrace{\tilde{u}(k)}_{\ip{k}{\tilde{u}}}\dd{k}=\bra{x}\underbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}_{\Operator{1}_{k}}\ket{\tilde{u}}=\ip{x}{\tilde{u}}
+\ip{x}{u}\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\underbrace{\frac{\exp(\ii kx)}{\sqrt{2\pi}}}_{\ip{x}{k}}\underbrace{\tilde{u}(k)}_{\ip{k}{\tilde{u}}}\dd{k}=\bra{x}\underbrace{\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)}_{\Operator{1}}\ket{\tilde{u}}=\ip{k}{\tilde{u}}
 \]
 
 \end_inset
 
+因此 
+\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x})$
+\end_inset
 
+ 与 
+\begin_inset Formula $\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k})$
+\end_inset
+
+ “几乎”是同一个向量，可以统一地记作 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+，并分别称 
+\begin_inset Formula $u(x)\equiv\ip{x}{u}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}(k)\equiv\ip{k}{u}$
+\end_inset
+
+ 为其“坐标表象 (coordinate representation)”与“波数表象 (wave number representation)”。
 \end_layout
 
 \begin_layout Standard
@@ -1047,26 +1192,6 @@ status collapsed
 一维 Fourier 变换
 \end_layout
 
-\begin_layout Standard
-将非周期函数 
-\begin_inset Formula $u(x)$
-\end_inset
-
- 表示为 Fourier 积分，需要先计算它的 Fourier 系数 
-\begin_inset Formula $\tilde{u}(k)$
-\end_inset
-
-，这一过程被称为「Fourier 变换」；而将所得的 
-\begin_inset Formula $\tilde{u}(k)$
-\end_inset
-
- 代入 Fourier 积分以获得 
-\begin_inset Formula $u(x)$
-\end_inset
-
- 的过程，则称为 Fourier 变换的「反演」：
-\end_layout
-
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1078,51 +1203,129 @@ status open
 
 \end_inset
 
-在
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:微分方程：积分变换：一般形式"
-
+将非周期函数 
+\begin_inset Formula $u(x)$
 \end_inset
 
-中取 
-\begin_inset Formula $(a,b)=(-\infty,+\infty)$
+ 表示为 Fourier 积分，需要先计算它的 Fourier 系数 
+\begin_inset Formula $\tilde{u}(k)$
 \end_inset
 
- 为积分区间、
-\begin_inset Formula $K(k,x)=\exp(-\ii kx)/\sqrt{2\pi}$
-\end_inset
-
- 为积分变换的核
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-在一些文献中，
-\begin_inset Formula $K(k,x)$
-\end_inset
-
- 不含 
-\begin_inset Formula $1/\sqrt{2\pi}$
-\end_inset
-
- 因子，或者指数中不含负号，这些差别都不会对 Fourier 分析的一般结论产生实质性的影响。
-\end_layout
-
-\end_inset
-
-，就得到「Fourier 变换」及其「反演」：
+，这一过程被称为“Fourier 变换”：
 \end_layout
 
 \begin_layout Definition
 \begin_inset Formula 
 \begin{equation}
-\boxed{\mathscr{F}[u](k)\equiv\tilde{u}(k)=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}\qquad\mathscr{F}^{-1}[\tilde{u}](x)\equiv u(x)\doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}}\label{eq:FourierTransform}
+\boxed{\tilde{u}(k)=\Operator{F}[u(x)]\coloneqq\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x)\dd{x}}\label{eq:Fourier：变换}
+\end{equation}
+
+\end_inset
+
+将所得的 
+\begin_inset Formula $\tilde{u}(k)$
+\end_inset
+
+ 代入 Fourier 积分以获得 
+\begin_inset Formula $u(x)$
+\end_inset
+
+ 的过程，则称为 Fourier 变换的“反演”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{u(x)\doteq\Operator{F}^{-1}[\tilde{u}(k)]\coloneqq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}}\label{eq:Fourier：反演}
 \end{equation}
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[bra-ket]
+\end_layout
+
+\end_inset
+
+利用 bra-ket 记号可以将二者写成更加对称的“插入完备性关系”的形式：
+\begin_inset Formula 
+\[
+\begin{gathered}\tilde{u}(k)=\ip{k}{u}=\bra{k}\left(\int_{\mathbb{R}_{x}}\dyad{x}\dd{x}\right)\ket{u}=\int_{\mathbb{R}_{x}}\ip{k}{x}\ip{x}{u}\dd{x}\\
+u(x)=\ip{x}{u}=\bra{x}\left(\int_{\mathbb{R}_{k}}\dyad{k}\dd{k}\right)\ket{u}=\int_{\mathbb{R}_{k}}\ip{x}{k}\ip{k}{u}\dd{k}
+\end{gathered}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\ip{k}{x}\coloneqq\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\qquad\ip{x}{k}\coloneqq\frac{\exp(+\ii kx)}{\sqrt{2\pi}}
+\]
+
+\end_inset
+
+分别称为 Fourier 变换及其逆变换的“核 (kernel)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[对称性]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:Fourier：变换：对称性"
+
+\end_inset
+
+上述定义中的 
+\begin_inset Formula $x$
+\end_inset
+
+ 与 
+\begin_inset Formula $k$
+\end_inset
+
+ 具有对称性 
+\begin_inset Formula $\ip{k}{x}=\Conj{\ip{x}{k}}$
+\end_inset
+
+。其他文献可能将 Fourier 变换的核取为 
+\begin_inset Formula $\exp(-\ii kx)$
+\end_inset
+
+，相应的 Fourier 逆变换的核为 
+\begin_inset Formula $\exp(+\ii kx)/(2\pi)$
+\end_inset
+
+，这种取法破坏了上述对称性。在实际应用中，Fourier 变换及其逆变换几乎总是成对使用，因此这种非对称性不会破坏 Fourier 分析的结论。
 \end_layout
 
 \begin_layout Standard
@@ -1142,6 +1345,12 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Fourier：变换：常用"
+
+\end_inset
+
 常用 Fourier 变换对
 \end_layout
 
@@ -1204,7 +1413,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2\pi}}$
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}$
 \end_inset
 
 
@@ -1239,7 +1448,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2a}{a^{2}+k^{2}}$
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}\dfrac{2a}{a^{2}+k^{2}}$
 \end_inset
 
 
@@ -1266,7 +1475,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2a}{a^{2}+x^{2}}$
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}\dfrac{2a}{a^{2}+x^{2}}$
 \end_inset
 
 
@@ -1313,7 +1522,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})$
+\begin_inset Formula $\dfrac{1}{\sqrt{2a}}\exp(-\dfrac{k^{2}}{4a})$
 \end_inset
 
 
@@ -1379,7 +1588,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ee^{-\alpha r}/r$
+\begin_inset Formula $\dfrac{\ee^{-\alpha r}}{r}$
 \end_inset
 
 
@@ -1391,7 +1600,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2}{\alpha^{2}+k^{2}}$
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}\dfrac{2}{\alpha^{2}+k^{2}}$
 \end_inset
 
 
@@ -1404,11 +1613,11 @@ Fourier 积分发散，但仍有意义。
 
 \begin_layout Plain Layout
 其中 
-\begin_inset Formula $r:=\sqrt{x^{2}+y^{2}+z^{2}}$
+\begin_inset Formula $r\coloneqq\sqrt{x^{2}+y^{2}+z^{2}}$
 \end_inset
 
 ，
-\begin_inset Formula $k:=\sqrt{k_{x}^{2}+k_{y}^{2}+k_{z}^{2}}$
+\begin_inset Formula $k\coloneqq\sqrt{k_{x}^{2}+k_{y}^{2}+k_{z}^{2}}$
 \end_inset
 
 ，
@@ -1426,7 +1635,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1/r$
+\begin_inset Formula $\dfrac{1}{r}$
 \end_inset
 
 
@@ -1438,7 +1647,7 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\frac{1}{\sqrt{2\pi}}\frac{2}{k^{2}}$
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}\dfrac{2}{k^{2}}$
 \end_inset
 
 
@@ -1521,7 +1730,7 @@ Fourier 积分发散，但仍有意义。
 从而有
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\exp(-\nicefrac{k^{2}}{4a})}{\sqrt{2\pi}}\sqrt{\frac{\pi}{a}}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\sqrt{\pi/a}}{\sqrt{2\pi}}\exp(-\frac{k^{2}}{4a})=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
 \]
 
 \end_inset
@@ -1549,16 +1758,16 @@ Fourier 积分发散，但仍有意义。
 \begin_inset Formula $x$
 \end_inset
 
--方向、
+ 方向、
 \begin_inset Formula $y$
 \end_inset
 
--方向上作 Fourier 变换：
+ 方向上作 Fourier 变换：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{F}_{x}[u](k;y) & =\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x,y)\dd{x}\\
-\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l) & =\int_{\mathbb{R}_{y}}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{y}\\
- & =\int_{\mathbb{R}_{y}}\left[\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\right]\dd{y}
+\begin{aligned}\tilde{u}(k,y) & =\Operator{F}_{x}[u(x,y)]=\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x,y)\dd{x}\\
+\tilde{\tilde{u}}(k,l) & =\Operator{F}_{y}\mathopen{}\left[\Operator{F}_{x}[\tilde{u}(k,y)]\right]=\int_{\mathbb{R}_{y}}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\tilde{u}(k,y)\dd{y}\\
+ & =\int_{\mathbb{R}_{y}}\left(\int_{\mathbb{R}_{x}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\right)\dd{y}
 \end{aligned}
 \]
 
@@ -1567,27 +1776,27 @@ Fourier 积分发散，但仍有意义。
 以及用 Fourier 积分表示：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{F}_{x}[u](k;y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\ii ly)}{\sqrt{2\pi}}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\\
-u(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\mathscr{F}_{x}[u](k;y)\dd{k}\\
- & \doteq\int_{\mathbb{R}_{k}}\left[\int_{\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\mathscr{F}_{y}\left[\mathscr{F}_{x}[u]\right](k,l)\dd{l}\right]\dd{k}
+\begin{aligned}\tilde{u}(k,y) & \doteq\int_{\mathbb{R}_{l}}\frac{\exp(+\ii ly)}{\sqrt{2\pi}}\tilde{\tilde{u}}(k,l)\dd{l}\\
+u(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\tilde{u}(k,y)\dd{k}\\
+ & \doteq\int_{\mathbb{R}_{k}}\left(\int_{\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\tilde{\tilde{u}}(k,l)\dd{l}\right)\dd{k}
 \end{aligned}
 \]
 
 \end_inset
 
-这种「二重 Fourier 变换（及其反演）」也可以依次在 
+这种“二重 Fourier 变换（及其反演）”也可以依次在 
 \begin_inset Formula $y$
 \end_inset
 
--、
+ 方向、
 \begin_inset Formula $x$
 \end_inset
 
--方向上实施，所得结果与之相同，因此可以将它们统一地定义为「二维空间的 Fourier 变换（及其反演）」：
+ 方向上实施，所得结果与之相同，因此可以将它们统一地定义为“二维空间的 Fourier 变换（及其反演）”：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{F}[u](k,l)\equiv\tilde{u}(k,l) & =\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\dd{y}\\
-\mathscr{F}^{-1}[\tilde{u}](x,y)\equiv u(x,y) & \doteq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\tilde{u}(k,l)\dd{k}\dd{l}
+\begin{aligned}\tilde{u}(k,l) & \equiv\Operator{F}[u(x,y)]\coloneqq\iint_{\mathbb{R}_{x}\times\mathbb{R}_{y}}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\dd{y}\\
+u(x,y) & \doteq\Operator{F}^{-1}[\tilde{u}(k,l)]\coloneqq\iint_{\mathbb{R}_{k}\times\mathbb{R}_{l}}\frac{\exp(+\ii kx+\ii ly)}{2\pi}\tilde{u}(k,l)\dd{k}\dd{l}
 \end{aligned}
 \]
 
@@ -1604,16 +1813,16 @@ u(x,y) & \doteq\int_{\mathbb{R}_{k}}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\mathscr{F}
  维空间。如果引入记号：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathbb{R}_{x}^{n} & =\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\quad & \vec{x} & =(x_{1},...,x_{n})\in\mathbb{R}_{x}^{n}\quad & \dd[n]{x} & =\dd{x_{1}}\cdots\dd{x_{n}}\\
-\mathbb{R}_{k}^{n} & =\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\quad & \vec{k} & =(k_{1},...,k_{n})\in\mathbb{R}_{k}^{n}\quad & \dd[n]{k} & =\dd{k_{1}}\cdots\dd{k_{n}}
-\end{aligned}
+\begin{gathered}\mathbb{R}_{x}^{n}\coloneqq\mathbb{R}_{x_{1}}\times\cdots\times\mathbb{R}_{x_{n}}\qquad\vec{x}\coloneqq(x_{1},...,x_{n})\in\mathbb{R}_{x}^{n}\qquad\dd[n]{x}\coloneqq\dd{x_{1}}\cdots\dd{x_{n}}\\
+\mathbb{R}_{k}^{n}\coloneqq\mathbb{R}_{k_{1}}\times\cdots\times\mathbb{R}_{k_{n}}\qquad\vec{k}\coloneqq(k_{1},...,k_{n})\in\mathbb{R}_{k}^{n}\qquad\dd[n]{k}\coloneqq\dd{k_{1}}\cdots\dd{k_{n}}
+\end{gathered}
 \]
 
 \end_inset
 
-并且在形式上定义「内积
+并且在形式上定义“内积
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 向量 
@@ -1624,12 +1833,12 @@ status open
 \begin_inset Formula $\vec{k}$
 \end_inset
 
- 分别属于不同的向量空间，因此这里的「内积」不是一般意义下属于某个向量空间的内积。
+ 分别属于不同的向量空间，因此这里的“内积”不是一般意义下属于某个向量空间的内积。
 \end_layout
 
 \end_inset
 
-」：
+”：
 \begin_inset Formula 
 \[
 \vec{k}\vdot\vec{x}=k_{1}x_{1}+\cdots+k_{n}x_{n}
@@ -1637,15 +1846,15 @@ status open
 
 \end_inset
 
-则「
+则“
 \begin_inset Formula $n$
 \end_inset
 
- 维空间的 Fourier 变换（及其反演）」可以写为更紧凑的形式：
+ 维空间的 Fourier 变换（及其反演）”可以写为更紧凑的形式：
 \begin_inset Formula 
-\[
-\boxed{\tilde{u}(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}u(\vec{x})\dd[n]{x}\qquad u(\vec{x})\doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\ee^{+\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\tilde{u}(\vec{k})\dd[n]{k}}
-\]
+\begin{equation}
+\boxed{\tilde{u}\qty(\vec{k})=\dotsint_{\mathbb{R}_{x}^{n}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}u\qty(\vec{x})\dd[n]{x}\qquad u\qty(\vec{x})\doteq\dotsint_{\mathbb{R}_{k}^{n}}\frac{\ee^{+\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\tilde{u}\qty(\vec{k})\dd[n]{k}}\label{eq:Fourier：变换：波数表象}
+\end{equation}
 
 \end_inset
 
@@ -1660,108 +1869,41 @@ status open
  并忽略积分区域。
 \end_layout
 
-\begin_layout Standard
-与一维的情况类似，
-\begin_inset Formula $u(\vec{x})$
-\end_inset
+\begin_layout Example
+\begin_inset ERT
+status open
 
- 与 
-\begin_inset Formula $\tilde{u}(\vec{k})$
-\end_inset
+\begin_layout Plain Layout
 
- 不过是同一个向量的两种等价的表示：
+[Coulomb via Yukawa]
 \end_layout
 
-\begin_layout Itemize
-首先定义 
-\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
 \end_inset
 
- 上的「单位正交基」：
-\begin_inset Formula 
-\[
-e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}:=\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}\qquad\forall\vec{k}\in\mathbb{R}_{k}^{n}
-\]
-
-\end_inset
-
-此时的「单位正交性」应当理解为：
-\begin_inset Formula 
-\[
-\ip{e_{\vec{\sigma}}}{e_{\vec{\tau}}}\equiv\ip*{\vec{\sigma}}{\vec{\tau}}=\int\frac{\ee^{\ii(\vec{\tau}-\vec{\sigma})\vdot\vec{x}}}{(2\pi)^{n}}\dd[n]{x}=\delta(\vec{\sigma}-\vec{\tau})\qquad\forall\vec{\sigma},\vec{\tau}\in\mathbb{R}_{k}^{n}
-\]
+验证表 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "tab:Fourier：变换：常用"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-由此可以导出 
-\begin_inset Formula $\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
-\end_inset
-
- 上的完备性关系：
-\begin_inset Formula $\Operator{1}_{k}\equiv\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Itemize
-向量 
-\begin_inset Formula $\ket{u}\in\mathcal{L}^{2}(\mathbb{R}_{x}^{n})$
-\end_inset
-
- 的 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
--分量为 
-\begin_inset Formula $\ip{\vec{x}}{u}\equiv u(\vec{x})$
-\end_inset
-
-，向量 
-\begin_inset Formula $\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}_{k}^{n})$
-\end_inset
-
- 的 
-\begin_inset Formula $\vec{k}$
-\end_inset
-
--分量为 
-\begin_inset Formula $\ip*{\vec{k}}{\tilde{u}}\equiv\tilde{u}(\vec{k})$
-\end_inset
-
-，二者「几乎」是同一个向量：
-\begin_inset Formula 
-\[
-\ip*{\vec{x}}{u}\equiv u(\vec{x})\doteq\int_{\mathbb{R}_{k}^{n}}\underbrace{\frac{\ee^{\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{n/2}}}_{\ip*{\vec{x}}{\vec{k}}}\underbrace{\tilde{u}(\vec{k})}_{\ip*{\vec{k}}{F}}\dd[n]{k}=\bra{\vec{x}}\underbrace{\left(\int_{\mathbb{R}_{k}^{n}}\dyad*{\vec{k}}\dd[n]{k}\right)}_{\Operator{1}_{k}}\ket{F}=\ip*{\vec{x}}{\tilde{u}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example*
-求 Coulomb 势函数 
-\begin_inset Formula $V_{c}(r):=1/r$
+ 中的 Coulomb 势函数 
+\begin_inset Formula $V_{\mathrm{C}}\qty(\vec{x})\coloneqq1/r$
 \end_inset
 
  和 Yukawa 势函数 
-\begin_inset Formula $V_{\alpha}(r):=\ee^{-\alpha r}/r$
+\begin_inset Formula $V_{\alpha}\qty(\vec{x})\coloneqq\ee^{-\alpha r}/r$
 \end_inset
 
-（其中 
+ 的 Fourier 变换，其中 
+\begin_inset Formula $r\coloneqq\sqrt{\vec{x}\vdot\vec{x}}$
+\end_inset
+
+ 且 
 \begin_inset Formula $\alpha>0$
-\end_inset
-
-）的 Fourier 变换，其中 
-\begin_inset Formula $r:=\norm{\vec{x}}$
 \end_inset
 
 。
@@ -1776,11 +1918,11 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 
 \begin_layout Proof
 将 
-\begin_inset Formula $V_{c}$
+\begin_inset Formula $V_{\mathrm{C}}$
 \end_inset
 
  代入三维 Fourier 变换的定义，会遇到积分不收敛的问题。注意到 
-\begin_inset Formula $V_{c}(r)=\lim_{\alpha\to0}V_{\alpha}(r)$
+\begin_inset Formula $V_{\mathrm{C}}(r)=\lim_{\alpha\to0}V_{\alpha}(r)$
 \end_inset
 
 ，可以先求出 
@@ -1788,21 +1930,18 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 \end_inset
 
  的 Fourier 变换，再对所得结果取极限，从而得到 
-\begin_inset Formula $V_{c}$
+\begin_inset Formula $V_{\mathrm{C}}$
 \end_inset
 
  的 Fourier 变换：
 \begin_inset Formula 
 \[
-\tilde{V}_{\alpha}(\vec{k})=\iiint_{\mathbb{R}_{x}^{3}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{3/2}}\frac{\ee^{-\alpha r}}{r}\dd[3]{x}\qquad\tilde{V}_{c}(\vec{k})=\lim_{\alpha\to0}\tilde{V}_{\alpha}(\vec{k})
+\tilde{V}_{\mathrm{C}}\qty(\vec{k})=\lim_{\alpha\to0}\tilde{V}_{\alpha}\qty(\vec{k})=\lim_{\alpha\to0}\iiint_{\mathbb{R}_{x}^{3}}\frac{\ee^{-\ii\vec{k}\vdot\vec{x}}}{(2\pi)^{3/2}}\frac{\ee^{-\alpha r}}{r}\dd[3]{x}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
+由于 
 \begin_inset Formula $V_{\alpha}(r)$
 \end_inset
 
@@ -1810,49 +1949,163 @@ e_{\vec{k}}(\vec{x})\equiv\ip*{\vec{x}}{e_{\vec{k}}}\equiv\ip*{\vec{x}}{\vec{k}}
 \begin_inset Formula $\mathbb{R}_{x}^{3}$
 \end_inset
 
- 的原点对称，因此在球坐标中计算最方便。原则上，
+ 的原点对称，因此在球坐标中计算最方便：
+\begin_inset Formula 
+\[
+\vec{x}=(r\sin\theta\cos\phi)\vec{e}_{x}+(r\sin\theta\sin\phi)\vec{e}_{y}+(r\cos\theta)\vec{e}_{z}
+\]
+
+\end_inset
+
+原则上，
 \begin_inset Formula $\vec{e}_{z}$
 \end_inset
 
- 的方向可以任取，最简单的方案是：令其「平行
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-向量 
-\begin_inset Formula $\vec{e}_{z}$
-\end_inset
-
- 和 
+ 的方向可以任取，最简单的方案是：令其“平行”于 
 \begin_inset Formula $\vec{k}$
 \end_inset
 
- 分别属于不同的向量空间，因此这里的「平行」应当理解为：
-\begin_inset Formula $\vec{k}\vdot\vec{e}_{z}=\norm*{\vec{k}}\cdot1\cdot\cos0$
+，即 
+\begin_inset Formula $\vec{k}=k\vec{e}_{z}$
 \end_inset
 
-。
-\end_layout
-
-\end_inset
-
-」于 
-\begin_inset Formula $\vec{k}$
-\end_inset
-
-，从而有
+，于是有
 \begin_inset Formula 
 \[
 \begin{aligned}\tilde{V}_{\alpha}(\vec{k}) & =\int_{0}^{\infty}\dd{r}\int_{0}^{\pi}\dd{\theta}\int_{0}^{2\pi}\dd{\phi}\frac{\ee^{-\ii kr\cos\theta}}{(2\pi)^{3/2}}\frac{\ee^{-\alpha r}}{r}r^{2}\sin\theta\\
- & =\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\underbrace{\left(\int_{0}^{\pi}\ee^{-\ii kr\cos\theta}\sin\theta\dd{\theta}\right)}_{u:=\cos\theta}\ee^{-\alpha r}r\dd{r}\\
- & =\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\frac{\ee^{\ii kr}-\ee^{-\ii kr}}{\ii kr}\ee^{-\alpha r}r\dd{r}\\
- & =\frac{1}{\sqrt{2\pi}}\frac{1}{\ii k}\left[\frac{-1}{-\alpha+\ii k}-\frac{-1}{-\alpha-\ii k}\right]=\frac{1}{\sqrt{2\pi}}\frac{2}{\alpha^{2}+k^{2}}
+ & =\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\underbrace{\left(\int_{0}^{\pi}\ee^{-\ii kr\cos\theta}\sin\theta\dd{\theta}\right)}_{u\coloneqq\cos\theta}\ee^{-\alpha r}r\dd{r}=\frac{1}{\sqrt{2\pi}}\int_{0}^{\infty}\frac{\ee^{\ii kr}-\ee^{-\ii kr}}{\ii kr}\ee^{-\alpha r}r\dd{r}\\
+ & =\frac{1}{\sqrt{2\pi}}\frac{1}{\ii k}\left(\frac{-1}{-\alpha+\ii k}-\frac{-1}{-\alpha-\ii k}\right)=\frac{1}{\sqrt{2\pi}}\frac{2}{\alpha^{2}+k^{2}}
 \end{aligned}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[动量表象]
+\end_layout
+
+\end_inset
+
+与一维的情况类似，
+\begin_inset Formula $u\qty(\vec{x})$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}\qty(\vec{k})$
+\end_inset
+
+ 不过是同一个向量 
+\begin_inset Formula $\ket{u}$
+\end_inset
+
+ 的两种等价的“表象 (representation)”。在量子力学中，比“波数表象”更常用的是“动量表象 (momentum representation)”
+：根据 de Broglie 假说，粒子的动量 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ 正比于其波矢量 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+，即 
+\begin_inset Formula $\vec{p}=\hbar\vec{k}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\hbar$
+\end_inset
+
+ 为“约化 Planck 常数”，于是可以用 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ 代替 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ 来定义 Fourier 变换对：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\tilde{u}\qty(\vec{p})=\ip{\vec{p}}{u}=\bra{\vec{p}}\left(\int_{\mathbb{R}_{x}^{n}}\dyad{\vec{x}}\dd[n]{x}\right)\ket{u}=\int_{\mathbb{R}_{x}^{n}}\ip{\vec{p}}{\vec{x}}\ip{\vec{x}}{u}\dd[n]{x}\\
+u\qty(\vec{x})=\ip{\vec{x}}{u}=\bra{\vec{x}}\left(\int_{\mathbb{R}_{p}^{n}}\dyad{\vec{p}}\dd[n]{p}\right)\ket{u}=\int_{\mathbb{R}_{p}^{n}}\ip{\vec{x}}{\vec{p}}\ip{\vec{p}}{u}\dd[n]{k}\\
+\ip{\vec{p}}{\vec{x}}\coloneqq\frac{\exp(-(\ii/\hbar)\vec{p}\vdot\vec{x})}{(2\pi\hbar)^{n/2}}\qquad\ip{\vec{x}}{\vec{p}}\coloneqq\frac{\exp(+(\ii/\hbar)\vec{p}\vdot\vec{x})}{(2\pi\hbar)^{n/2}}
+\end{gathered}
+\label{eq:Fourier：变换：动量表象}
+\end{equation}
+
+\end_inset
+
+这里为了保证 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ 的对称性 
+\begin_inset Formula $\ip{\vec{p}}{\vec{x}}=\Conj{\ip{\vec{x}}{\vec{p}}}$
+\end_inset
+
+，牺牲了 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{k}$
+\end_inset
+
+ 的对称性：将 
+\begin_inset Formula $\vec{p}=\hbar\vec{k}$
+\end_inset
+
+ 代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：变换：动量表象"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 并不能回到 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：变换：波数表象"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，而是会在分母或分子上多出一个 
+\begin_inset Formula $\hbar^{n/2}$
+\end_inset
+
+。如注 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "rem:Fourier：变换：对称性"
+
+\end_inset
+
+ 所述，这种非对称性是非实质性的。
 \end_layout
 
 \begin_layout Standard
@@ -1878,7 +2131,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:Fourier-变换的性质"
+name "tab:Fourier：变换：性质"
 
 \end_inset
 
@@ -1967,7 +2220,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-（原函数的）导数定理
+原函数导数定理
 \end_layout
 
 \end_inset
@@ -1976,7 +2229,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\dv*{x})^{n}u(x)$
+\begin_inset Formula $\dv*[n]{u(x)}{x}$
 \end_inset
 
 
@@ -1988,7 +2241,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\ii k)^{n}\tilde{u}(k)$
+\begin_inset Formula $\qty(\ii k)^{n}\,\tilde{u}\qty(k)$
 \end_inset
 
 
@@ -2011,7 +2264,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\grad{u}(\vec{x})$
+\begin_inset Formula $\grad u(\vec{x})$
 \end_inset
 
 
@@ -2023,7 +2276,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\ii\vec{k})\tilde{u}(\vec{k})$
+\begin_inset Formula $\ii\vec{k}\,\tilde{u}\qty(\vec{k})$
 \end_inset
 
 
@@ -2046,7 +2299,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\div\grad{u}(\vec{x})$
+\begin_inset Formula $\divg\grad u(\vec{x})$
 \end_inset
 
 
@@ -2058,7 +2311,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(-\vec{k}\vdot\vec{k})\tilde{u}(\vec{k})$
+\begin_inset Formula $-\vec{k}\vdot\vec{k}\,\tilde{u}\qty(\vec{k})$
 \end_inset
 
 
@@ -2072,7 +2325,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-（像函数的）导数定理
+像函数导数定理
 \end_layout
 
 \end_inset
@@ -2093,7 +2346,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\ii\dv*{k})\tilde{u}(k)$
+\begin_inset Formula $\ii\dv*{\tilde{u}(k)}{k}$
 \end_inset
 
 
@@ -2128,7 +2381,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\ii\dv*{x})^{n}\tilde{u}(k)$
+\begin_inset Formula $\ii^{n}\dv*[n]{\tilde{u}(k)}{k}$
 \end_inset
 
 
@@ -2163,7 +2416,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(\ii k)^{-1}\tilde{u}(k)$
+\begin_inset Formula $\tilde{u}(k)/(\ii k)$
 \end_inset
 
 
@@ -2186,7 +2439,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\exp(\ii k_{0}x)u(x)$
+\begin_inset Formula $u(x)\exp(\ii k_{0}x)$
 \end_inset
 
 
@@ -2233,7 +2486,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ee^{-\ii kx_{0}}\tilde{u}(k)$
+\begin_inset Formula $\tilde{u}(k)\exp(-\ii kx_{0})$
 \end_inset
 
 
@@ -2256,7 +2509,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}$
+\begin_inset Formula $\int_{-\infty}^{+\infty}u(y)\,v(x-y)\dd{y}$
 \end_inset
 
 
@@ -2268,7 +2521,7 @@ Fourier 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\tilde{u}(k)\tilde{v}(k)$
+\begin_inset Formula $\tilde{u}(k)\,\tilde{v}(k)$
 \end_inset
 
 
@@ -2289,37 +2542,36 @@ Fourier 变换的性质
 
 \end_layout
 
-\begin_layout Example*
-验证 Fourier 变换的卷积定理。
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[卷积定理]
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
 将卷积代入 Fourier 变换的定义：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{F}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right](k) & =\int_{-\infty}^{+\infty}\ee^{-\ii kx}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right]\dd{x}\\
- & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\ee^{-\ii kx}u(y)v(x-y)\dd{x}\dd{y}
+\begin{aligned}\Operator{F}\left[\int_{-\infty}^{+\infty}u(y)\,v(x-y)\dd{y}\right] & =\int_{-\infty}^{+\infty}\frac{\ee^{-\ii kx}}{\sqrt{2\pi}}\left[\int_{-\infty}^{+\infty}u(y)\,v(x-y)\dd{y}\right]\dd{x}\\
+ & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\frac{\ee^{-\ii kx}}{\sqrt{2\pi}}u(y)\,v(x-y)\dd{x}\dd{y}
 \end{aligned}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\square_{x,y}(h):=\left\{ (x,y):\abs{x}<h,\abs{y}<h\right\} $
+\begin_inset Formula $\square_{x,y}(h)\coloneqq\left\{ (x,y):\abs{x}<h,\abs{y}<h\right\} $
 \end_inset
 
  是 
 \begin_inset Formula $(x,y)$
 \end_inset
 
- 平面上的四边形积分区域。引入坐标变换
+ 平面上的四边形区域。引入坐标变换
 \begin_inset Formula 
 \[
 \begin{bmatrix}x\\
@@ -2338,10 +2590,14 @@ y
 \end_inset
 
  变换为 
-\begin_inset Formula $\square_{\sigma,\tau}(h):=\left\{ (\sigma,\tau):\abs{\sigma+\tau}<h,\abs{\sigma}<h\right\} $
+\begin_inset Formula $\square_{\sigma,\tau}(h)\coloneqq\left\{ (\sigma,\tau):\abs{\sigma+\tau}<h,\abs{\sigma}<h\right\} $
 \end_inset
 
-，取极限就得到 
+，后者是 
+\begin_inset Formula $(\sigma,\tau)$
+\end_inset
+
+ 平面上的四边形区域，取极限就得到 
 \begin_inset Formula 
 \[
 \lim_{h\to\infty}\square_{\sigma,\tau}(h)=\left\{ (\sigma,\tau):\abs{\sigma+\tau}<\infty,\abs{\sigma}<\infty\right\} \equiv\mathbb{R}_{\sigma}\times\mathbb{R}_{\tau}
@@ -2349,12 +2605,12 @@ y
 
 \end_inset
 
-从而有
+因此有
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{F}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right](k) & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\ee^{-\ii kx}u(y)v(x-y)\dd{x}\dd{y}\\
-x=\sigma+\tau,y=\sigma\implies & =\lim_{h\to\infty}\iint_{\square_{\sigma,\tau}(h)}\ee^{-\ii k\sigma}\ee^{-\ii k\tau}u(\sigma)v(\tau)\dd{\sigma}\dd{\tau}\\
- & =\underbrace{\left[\int_{\mathbb{R}_{\sigma}}\ee^{-\ii k\sigma}u(\sigma)\dd{\sigma}\right]}_{\tilde{u}(k)}\cdot\underbrace{\left[\int_{\mathbb{R}_{\tau}}\ee^{-\ii k\tau}v(\tau)\dd{\tau}\right]}_{\tilde{v}(k)}
+\begin{aligned}\Operator{F}\left[\int_{-\infty}^{+\infty}u(y)v(x-y)\dd{y}\right] & =\lim_{h\to\infty}\iint_{\square_{x,y}(h)}\ee^{-\ii kx}u(y)\,v(x-y)\dd{x}\dd{y}\\
+(x,y)=(\sigma+\tau,\sigma)\implies & =\lim_{h\to\infty}\iint_{\square_{\sigma,\tau}(h)}\ee^{-\ii k\sigma}\ee^{-\ii k\tau}u(\sigma)\,v(\tau)\dd{\sigma}\dd{\tau}\\
+ & =\underbrace{\left(\int_{\mathbb{R}_{\sigma}}\ee^{-\ii k\sigma}u(\sigma)\dd{\sigma}\right)}_{\tilde{u}(k)}\underbrace{\left(\int_{\mathbb{R}_{\tau}}\ee^{-\ii k\tau}v(\tau)\dd{\tau}\right)}_{\tilde{v}(k)}
 \end{aligned}
 \]
 
@@ -2379,14 +2635,14 @@ Laplace 变换
 \end_layout
 
 \begin_layout Standard
-Fourier 变换
+Fourier 变换 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:FourierTransform"
+reference "eq:Fourier：变换"
 
 \end_inset
 
-要求原函数属于 
+ 要求原函数属于 
 \begin_inset Formula $\mathcal{L}^{2}(-\infty,+\infty)$
 \end_inset
 
@@ -2406,10 +2662,10 @@ reference "eq:FourierTransform"
 \begin_inset Formula $\eta(t)$
 \end_inset
 
-），这样就得到了「Laplace 变换」：
+），这样就得到了“Laplace 变换”：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\mathscr{L}[u](p)\equiv\tilde{u}(p):=\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a}\label{eq:LaplaceTransform}
+\boxed{\Operator{L}[u(t)]\equiv\tilde{u}(p)\coloneqq\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\qquad\Re p>a}\label{eq:Laplace：变换}
 \end{equation}
 
 \end_inset
@@ -2422,7 +2678,7 @@ reference "eq:FourierTransform"
 \begin_inset Formula $a$
 \end_inset
 
- 被称为「收敛横标」，它是由 
+ 被称为“收敛横标”，它是由 
 \begin_inset Formula $u(t)$
 \end_inset
 
@@ -2430,12 +2686,12 @@ reference "eq:FourierTransform"
 \begin_inset Formula $t\to\infty$
 \end_inset
 
- 时的渐进行为决定的实常数，其意义体现在以下「Laplace 变换存在的充分条件」中：
+ 时的渐进行为决定的实常数，其意义体现在以下“Laplace 变换存在的充分条件”中：
 \end_layout
 
 \begin_layout Theorem*
 如果 
-\begin_inset Formula $\exists\,M>0$
+\begin_inset Formula $\exists M>0$
 \end_inset
 
  以及 
@@ -2449,7 +2705,7 @@ reference "eq:FourierTransform"
  几乎处处成立，则
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LaplaceTransform"
+reference "eq:Laplace：变换"
 
 \end_inset
 
@@ -2483,7 +2739,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:常用-Laplace-变换对"
+name "tab:Laplace：变换：常用"
 
 \end_inset
 
@@ -3042,7 +3298,7 @@ name "tab:常用-Laplace-变换对"
 例
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "exa:倒数平方根的 Laplace 变换"
+reference "exa:Laplace：变换：倒数平方根"
 
 \end_inset
 
@@ -3067,7 +3323,7 @@ reference "exa:倒数平方根的 Laplace 变换"
 \begin_layout Example
 \begin_inset CommandInset label
 LatexCommand label
-name "exa:倒数平方根的 Laplace 变换"
+name "exa:Laplace：变换：倒数平方根"
 
 \end_inset
 
@@ -3101,7 +3357,7 @@ name "exa:倒数平方根的 Laplace 变换"
 ：
 \begin_inset Formula 
 \[
-\begin{aligned}\Gamma(x):=\int_{0}^{\infty}\ee^{-t}t^{x-1}\dd{t}\implies\Gamma(\nicefrac{1}{2}) & =\int_{0}^{\infty}\frac{\ee^{-t}}{\sqrt{t}}\dd{t}=\int_{-\infty}^{+\infty}\ee^{-x^{2}}\dd{x}=\sqrt{\pi}\\
+\begin{aligned}\Gamma(x)\coloneqq\int_{0}^{\infty}\ee^{-t}t^{x-1}\dd{t}\implies\Gamma(\nicefrac{1}{2}) & =\int_{0}^{\infty}\frac{\ee^{-t}}{\sqrt{t}}\dd{t}=\int_{-\infty}^{+\infty}\ee^{-x^{2}}\dd{x}=\sqrt{\pi}\\
 pt\to t\implies & =\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{pt}}\dd(pt)=\sqrt{p}\int_{0}^{\infty}\frac{\ee^{-pt}}{\sqrt{t}}\dd{t}
 \end{aligned}
 \]
@@ -3134,7 +3390,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "tab:Laplace-变换的性质"
+name "tab:Laplace：变换：性质"
 
 \end_inset
 
@@ -3442,7 +3698,7 @@ Laplace 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\exp(p_{0}t)u(t)$
+\begin_inset Formula $u(t)\exp(p_{0}t)$
 \end_inset
 
 
@@ -3477,7 +3733,7 @@ Laplace 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\eta(t-t_{0})u(t-t_{0})$
+\begin_inset Formula $\eta(t-t_{0})\,u(t-t_{0})$
 \end_inset
 
 
@@ -3489,7 +3745,7 @@ Laplace 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\ee^{-pt_{0}}\tilde{u}(p)$
+\begin_inset Formula $\tilde{u}(p)\exp(-p_{0}t)$
 \end_inset
 
 
@@ -3512,7 +3768,7 @@ Laplace 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}$
+\begin_inset Formula $\int_{0}^{t}u(\tau)\,v(t-\tau)\dd{\tau}$
 \end_inset
 
 
@@ -3524,7 +3780,7 @@ Laplace 变换的性质
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\tilde{u}(p)\tilde{v}(p)$
+\begin_inset Formula $\tilde{u}(p)\,\tilde{v}(p)$
 \end_inset
 
 
@@ -3545,30 +3801,29 @@ Laplace 变换的性质
 
 \end_layout
 
-\begin_layout Example*
-验证 Laplace 变换的卷积定理。
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[卷积定理]
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
 将卷积代入 Laplace 变换的定义：
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\int_{0}^{\infty}\ee^{-pt}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right]\dd{t}\\
- & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}
+\begin{aligned}\Operator{L}\left[\int_{0}^{t}u(\tau)\,v(t-\tau)\dd{\tau}\right] & =\int_{0}^{\infty}\ee^{-pt}\left(\int_{0}^{t}u(\tau)\,v(t-\tau)\dd{\tau}\right)\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)\,v(t-\tau)\dd{\tau}\dd{t}
 \end{aligned}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\triangle_{\tau,t}(h):=\left\{ (\tau,t):\tau\in[0,t],t\in[0,h]\right\} $
+\begin_inset Formula $\triangle_{\tau,t}(h)\coloneqq\left\{ (\tau,t):\tau\in[0,t],t\in[0,h]\right\} $
 \end_inset
 
  是 
@@ -3594,7 +3849,7 @@ y
 \end_inset
 
  变换为 
-\begin_inset Formula $\triangle_{x,y}(h):=\left\{ (x,y):x\in[0,h],y\in[0,h],x+y\in[0,h]\right\} $
+\begin_inset Formula $\triangle_{x,y}(h)\coloneqq\left\{ (x,y):x\in[0,h],y\in[0,h],x+y\in[0,h]\right\} $
 \end_inset
 
 ，取极限就得到 
@@ -3608,9 +3863,9 @@ y
 从而有
 \begin_inset Formula 
 \[
-\begin{aligned}\mathscr{L}\left[\int_{0}^{t}u(\tau)v(t-\tau)\dd{\tau}\right](p) & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)v(t-\tau)\dd{\tau}\dd{t}\\
- & =\lim_{h\to\infty}\iint_{\triangle_{x,y}(h)}\ee^{-px}\ee^{-py}u(x)v(y)\dd{x}\dd{y}\\
- & =\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-px}u(x)\dd{x}\right]}_{\tilde{u}(p)}\cdot\underbrace{\left[\int_{\mathbb{R}_{y}^{+}}\ee^{-py}v(y)\dd{y}\right]}_{\tilde{v}(p)}
+\begin{aligned}\Operator{L}\left[\int_{0}^{t}u(\tau)\,v(t-\tau)\dd{\tau}\right] & =\lim_{h\to\infty}\iint_{\triangle_{\tau,t}(h)}\ee^{-pt}u(\tau)\,v(t-\tau)\dd{\tau}\dd{t}\\
+ & =\lim_{h\to\infty}\iint_{\triangle_{x,y}(h)}\ee^{-px}\ee^{-py}u(x)\,v(y)\dd{x}\dd{y}\\
+ & =\underbrace{\left(\int_{\mathbb{R}_{y}^{+}}\ee^{-px}u(x)\dd{x}\right)}_{\tilde{u}(p)}\underbrace{\left(\int_{\mathbb{R}_{y}^{+}}\ee^{-py}v(y)\dd{y}\right)}_{\tilde{v}(p)}
 \end{aligned}
 \]
 
@@ -3631,20 +3886,20 @@ Laplace 变换的反演
 \end_layout
 
 \begin_layout Standard
-在实际应用中，灵活运用
+在实际应用中，灵活运用 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "tab:常用-Laplace-变换对"
+reference "tab:Laplace：变换：常用"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-和 
+ 和 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "tab:Laplace-变换的性质"
+reference "tab:Laplace：变换：性质"
 plural "false"
 caps "false"
 noprefix "false"
@@ -3658,14 +3913,14 @@ noprefix "false"
 在构造 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LaplaceTransform"
+reference "eq:Laplace：变换"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- 式的过程中，衰减因子 
+ 的过程中，衰减因子 
 \begin_inset Formula $\ee^{-\sigma t}\sqrt{2\pi}$
 \end_inset
 
@@ -3681,18 +3936,18 @@ noprefix "false"
 \begin_inset Formula $u(t)$
 \end_inset
 
- 上的因子，因此「对 
+ 上的因子，因此“对 
 \begin_inset Formula $u(t)$
 \end_inset
 
- 作 Laplace 变换」相当于「对 
-\begin_inset Formula $u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}$
+ 作 Laplace 变换”相当于“对 
+\begin_inset Formula $u(t)\,\eta(t)\exp(-\sigma t)\sqrt{2\pi}$
 \end_inset
 
- 作 Fourier 变换」：
+ 作 Fourier 变换”：
 \begin_inset Formula 
 \[
-\tilde{u}(p)\equiv\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\equiv\int_{-\infty}^{+\infty}\frac{\ee^{-\ii\omega t}}{\sqrt{2\pi}}\underbrace{\left[u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\right]}_{v(t)}\dd{t}\equiv\tilde{v}(\omega)
+\tilde{u}(p)\equiv\int_{0}^{\infty}\ee^{-pt}u(t)\dd{t}\equiv\int_{-\infty}^{+\infty}\frac{\ee^{-\ii\omega t}}{\sqrt{2\pi}}\underbrace{\left(u(t)\,\eta(t)\exp(-\sigma t)\sqrt{2\pi}\right)}_{v(t)}\dd{t}\equiv\tilde{v}(\omega)
 \]
 
 \end_inset
@@ -3700,7 +3955,7 @@ noprefix "false"
 后者的反演是已知的：
 \begin_inset Formula 
 \[
-u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\infty}\frac{\ee^{+\ii\omega t}}{\sqrt{2\pi}}\tilde{v}(\omega)\dd{\omega}
+u(t)\,\eta(t)\exp(-\sigma t)\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\infty}\frac{\ee^{+\ii\omega t}}{\sqrt{2\pi}}\tilde{v}(\omega)\dd{\omega}
 \]
 
 \end_inset
@@ -3716,7 +3971,7 @@ u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\infty}\f
 ，就得到
 \begin_inset Formula 
 \[
-u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\tilde{v}(\omega)\dd{\omega}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}
+u(t)\,\eta(t)\exp(-\sigma t)\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\tilde{v}(\omega)\dd{\omega}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}
 \]
 
 \end_inset
@@ -3725,17 +3980,17 @@ u(t)\eta(t)\ee^{-\sigma t}\sqrt{2\pi}=\ee^{-\sigma t}\sqrt{2\pi}\int_{-\infty}^{
 \begin_inset Formula $t>0$
 \end_inset
 
- 的部分（有 
-\begin_inset Formula $\eta(t)=1$
+ 的部分（其他部分 
+\begin_inset Formula $\eta(t)=0$
 \end_inset
 
-），所得结果就是「Laplace 变换的反演」：
+），所得结果就是“Laplace 变换的反演”：
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\mathscr{L}^{-1}[\tilde{u}](t)\equiv u(t)\doteq\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}\qquad t>0}
+\boxed{u(t)\doteq\Operator{L}^{-1}[\tilde{u}(p)]=\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\ee^{pt}}{2\pi\ii}\tilde{u}(p)\dd{p}\qquad t>0}
 \]
 
 \end_inset
