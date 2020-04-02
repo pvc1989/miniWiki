@@ -101,7 +101,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-特征线法
+双曲型系统的光滑解
 \end_layout
 
 \begin_layout Section
@@ -243,11 +243,11 @@ reference "eq:微分方程：双曲型：单波：初值"
 \begin_inset Formula $t_{0}$
 \end_inset
 
- 时刻的空间变量，有助于与 
+ 时刻的空间自变量，有助于与 
 \begin_inset Formula $t$
 \end_inset
 
- 时刻的空间变量 
+ 时刻的空间自变量 
 \begin_inset Formula $x$
 \end_inset
 
@@ -389,7 +389,7 @@ C(x_{0})\coloneqq\left\{ (x,t):\phi(x,t)=0,\ t\ge t_{0};\ \phi(x_{0},t_{0})=0\ri
 \begin_inset Formula $x$
 \end_inset
 
- 表示“函数”。于是，上述关于 
+ 表示“函数”。于是上述关于 
 \begin_inset Formula $\phi(x,t)$
 \end_inset
 
@@ -2091,7 +2091,7 @@ status open
 相应的初始条件由“初始位移”和“初始速度”共同构成：
 \begin_inset Formula 
 \begin{equation}
-u(x,t=0)=\phi(x)\qquad\partial_{t}u(x,t=0)=\psi(x)\label{eq:微分方程：双曲型：双波：初值}
+u(x,t=0)=u_{0}(x)\qquad\partial_{t}u(x,t=0)=v_{0}(x)\label{eq:微分方程：双曲型：双波：初值}
 \end{equation}
 
 \end_inset
@@ -2216,7 +2216,7 @@ noprefix "false"
 ，从而得到原初值问题的解：
 \begin_inset Formula 
 \[
-u(x,t)=\frac{\phi(x+at)+\phi(x-at)}{2}+\int_{x-at}^{x+at}\frac{\psi(\zeta)}{2a}\dd{\zeta}
+u(x,t)=\frac{u_{0}(x+at)+u_{0}(x-at)}{2}+\int_{x-at}^{x+at}\frac{v_{0}(\zeta)}{2a}\dd{\zeta}
 \]
 
 \end_inset
@@ -2283,18 +2283,14 @@ U_{2}
 0
 \end{bmatrix}\qquad\begin{bmatrix}U_{1}(x,t=0)\\
 U_{2}(x,t=0)
-\end{bmatrix}=\begin{bmatrix}\psi(x)\\
-\dv*{\phi(x)}{x}
+\end{bmatrix}=\begin{bmatrix}v_{0}(x)\\
+\dv*{u_{0}(x)}{x}
 \end{bmatrix}
 \]
 
 \end_inset
 
-本章剩余部分都将讨论这种（关于 
-\begin_inset Formula $\forall n\in\mathbb{N}$
-\end_inset
-
- 个未知函数的）方程组。
+本章剩余部分都将讨论这种（关于整数个未知函数的）方程组。
 \end_layout
 
 \begin_layout Standard
@@ -2431,10 +2427,14 @@ U_{n}(x,t)
 
 \end_inset
 
-及一阶可微的初始条件：
+及对 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ 一阶可导的初始条件：
 \begin_inset Formula 
 \begin{equation}
-\ket{U(x_{0},t_{0})}=\ket{U_{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:微分方程：双曲型：多波：初值}
+\ket{U(x_{0},t_{0})}\eqqcolon\ket{U_{0}(x_{0})}\qquad x_{0}\in(-\infty,\infty)\label{eq:微分方程：双曲型：多波：初值}
 \end{equation}
 
 \end_inset
@@ -2653,7 +2653,11 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
- 轴方向）严格双曲的 (strictly hyperbolic)”。
+ 轴方向）
+\bar under
+严格双曲的 (strictly hyperbolic)
+\bar default
+”。
 \end_layout
 
 \begin_layout Itemize
@@ -2677,7 +2681,11 @@ noprefix "false"
 \begin_inset Formula $t$
 \end_inset
 
- 轴方向）弱双曲的 (weakly hyperbolic)”。
+ 轴方向）
+\bar under
+弱双曲的 (weakly hyperbolic)
+\bar default
+”。
 \end_layout
 
 \end_deeper
@@ -2837,7 +2845,7 @@ reference "lem:微分方程：双曲型：特征向量正交性"
  个“特征变量 (characteristic variables)”：
 \begin_inset Formula 
 \[
-\ket{V(x,t)}=\begin{bmatrix}V_{1}(x,t)\\
+\ket{V(x,t)}\coloneqq\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
 V_{n}(x,t)
 \end{bmatrix}\coloneqq\begin{bmatrix}\ip{L_{1}}{U(x,t)}\\
@@ -2856,7 +2864,7 @@ V_{n}(x,t)
 \begin_inset Formula $\Matrix{L}^{-1}=\Matrix{R}$
 \end_inset
 
- 都是常数矩阵，因此可以与算符 
+ 都是常数矩阵，因此可以与微分算符 
 \begin_inset Formula $\partial_{t}$
 \end_inset
 
@@ -2864,7 +2872,7 @@ V_{n}(x,t)
 \begin_inset Formula $\partial_{x}$
 \end_inset
 
- 交换顺序。于是，关于 
+ 交换顺序。于是关于 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
@@ -2882,7 +2890,7 @@ reference "eq:微分方程：双曲型：多波：线性"
  的方程：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U}=\left(\Matrix{R}\Matrix{L}\partial_{t}+\Matrix{R}\Matrix{\Lambda}\Matrix{L}\partial_{x}\right)\ket{U}=\Matrix{R}\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\underbrace{\Matrix{L}\ket{U}}_{\ket{V}}=\ket{0}
+\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U}=\left(\Matrix{R}\Matrix{L}\partial_{t}+\Matrix{R}\Matrix{\Lambda}\Matrix{L}\partial_{x}\right)\ket{U}=\Matrix{R}\cdot\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\underbrace{\Matrix{L}\ket{U}}_{\ket{V}}=\ket{0}
 \]
 
 \end_inset
@@ -2903,11 +2911,7 @@ reference "eq:微分方程：双曲型：多波：线性"
 \begin_inset Formula $n$
 \end_inset
 
- 个独立的单波方程，称为“
-\begin_inset Formula $n$
-\end_inset
-
- 重单波方程”：
+ 个独立的单波方程：
 \begin_inset Formula 
 \begin{equation}
 \left(\partial_{t}+\lambda_{i}\partial_{x}\right)V_{i}=0\qquad i=1,\dots,n\label{eq:微分方程：双曲型：多波：解耦}
@@ -2939,7 +2943,7 @@ noprefix "false"
  的解为
 \begin_inset Formula 
 \[
-\boxed{\ket{U(x,t)}=\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
+\boxed{\ket{U(x,t)}=\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(x-\lambda_{i}\cdot(t-t_{0}))}}\qquad(x,t)\in(-\infty,\infty)\times[t_{0},\infty)
 \]
 
 \end_inset
@@ -3014,7 +3018,7 @@ noprefix "false"
  个单波的解：
 \begin_inset Formula 
 \[
-V_{i}(x,t)=\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}\qquad i=1,\dots,n
+V_{i}(x,t)=\ip*{L_{i}}{U_{0}(x-\lambda_{i}\cdot(t-t_{0}))}\qquad i=1,\dots,n
 \]
 
 \end_inset
@@ -3032,11 +3036,11 @@ noprefix "false"
  的解是这些单波的线性组合：
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{U(x,t)} & =\Matrix{L}^{-1}\ket{V(x,t)}=\Matrix{R}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
+\begin{aligned}\ket{U(x,t)} & =\underbrace{\Matrix{L}^{-1}}_{\Matrix{R}}\ket{V(x,t)}=\begin{bmatrix}\ket{R_{1}} & \cdots & \ket{R_{n}}\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
 \vdots\\
 V_{n}(x,t)
 \end{bmatrix}\\
- & =\sum_{i=1}^{n}\ket{R_{i}}\ip*{L_{i}}{U_{0}(\underbrace{x-a_{i}\cdot(t-t_{0})}_{x_{0}})}
+ & =\sum_{i=1}^{n}\ket{R_{i}}\underbrace{\ip*{L_{i}}{U_{0}(x-\lambda_{i}\cdot(t-t_{0}))}}_{V_{i}(x,t)}
 \end{aligned}
 \]
 
@@ -3058,16 +3062,16 @@ status open
 
 \begin_layout Plain Layout
 
-[变系数方程组]
+[变系数]
 \end_layout
 
 \end_inset
 
-在获得解耦的 
+在获得 
 \begin_inset Formula $n$
 \end_inset
 
- 重单波方程 
+ 个独立的单波方程 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:微分方程：双曲型：多波：解耦"
@@ -3114,7 +3118,7 @@ reference "eq:微分方程：双曲型：多波：解耦"
 \begin_inset Formula $\Matrix{L(x,t)}$
 \end_inset
 
- 也不再是常数矩阵，将其与算符 
+ 也不再是常数矩阵，将其与微分算符 
 \begin_inset Formula $\partial_{t}$
 \end_inset
 
@@ -3133,7 +3137,7 @@ reference "eq:微分方程：双曲型：多波：解耦"
  的）附加项：
 \begin_inset Formula 
 \[
-\Matrix{L}\partial_{\alpha}\ket{U}=\partial_{\alpha}\left(\Matrix{L}\ket{U}\right)-\left(\partial_{\alpha}\Matrix{L}\right)\ket{U}\qquad\alpha\in\left\{ t,x\right\} 
+\Matrix{L(x,t)}\partial_{\alpha}\ket{U}=\partial_{\alpha}\left(\Matrix{L(x,t)}\ket{U}\right)-\left(\partial_{\alpha}\Matrix{L(x,t)}\right)\ket{U}\qquad\alpha\in\left\{ t,x\right\} 
 \]
 
 \end_inset
@@ -3142,13 +3146,13 @@ reference "eq:微分方程：双曲型：多波：解耦"
 \begin_inset Formula 
 \[
 \begin{aligned}\left(\partial_{t}+\Matrix{A}\partial_{x}\right)\ket{U} & =\Matrix{R}\cdot\left(\Matrix{L}\partial_{t}+\Matrix{\Lambda}\Matrix{L}\partial_{x}\right)\ket{U}\\
- & =\Matrix{R}\cdot\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\Matrix{L}\ket{U}-\Matrix{R}\cdot\left(\partial_{t}\Matrix{L}+\Matrix{\Lambda}\partial_{x}\Matrix{L}\right)\ket{U}
+ & =\Matrix{R}\cdot\left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\Matrix{L}\ket{U}-\Matrix{R}\cdot\left(\partial_{t}\Matrix{L}+\Matrix{\Lambda}\partial_{x}\Matrix{L}\right)\ket{U}=\ket{0}
 \end{aligned}
 \]
 
 \end_inset
 
-即一阶非齐次方程组
+此即一阶非齐次方程组
 \begin_inset Formula 
 \[
 \left(\partial_{t}+\Matrix{\Lambda}\partial_{x}\right)\ket{V}=\underbrace{\left(\partial_{t}\Matrix{L}+\Matrix{\Lambda}\partial_{x}\Matrix{L}\right)\Matrix{R}}_{\Matrix{D}}\ket{V}
@@ -3311,7 +3315,7 @@ characteristic!~ compatibility condition
 ”：
 \begin_inset Formula 
 \begin{equation}
-\mel**{L_{i}(U)}{\left(\dv{t}\right)_{i}}{U}=0\qquad\left(\dv{t}\right)_{i}\coloneqq\partial_{t}+\lambda_{i}(U)\partial_{x}\label{eq:微分方程：双曲型：特征相容条件}
+\mel**{L_{i}(U)}{\dd_{i}}{U}=0\qquad\dd_{i}\coloneqq\partial_{t}+\lambda_{i}(U)\partial_{x}\label{eq:微分方程：双曲型：特征相容条件}
 \end{equation}
 
 \end_inset
@@ -3446,24 +3450,20 @@ characteristic!~ field
 
 \end_inset
 
-与“右特征向量”是否正交来分类：
+与相应的“右特征向量”是否正交分为
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-若有
-\begin_inset Formula 
-\[
-\ip{\grad\lambda_{i}(U)}{R_{i}(U)}\ne0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
-\]
-
+\begin_layout Description
+真正非线性的
+\begin_inset space \space{}
 \end_inset
 
-则称该特征场在 
-\begin_inset Formula $\Omega$
+(genuinely
+\begin_inset space \space{}
 \end_inset
 
- 内是“真正非线性的 (genuinely nonlinear)
+nonlinear) 
 \begin_inset Index idx
 status collapsed
 
@@ -3473,23 +3473,27 @@ characteristic!~ field!genuinely nonlinear ~
 
 \end_inset
 
-”。 
-\end_layout
-
-\begin_layout Itemize
-若有
+若
 \begin_inset Formula 
 \[
-\ip{\grad\lambda_{i}(U)}{R_{i}(U)}=0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
+\ip{\grad\lambda_{i}(U)}{R_{i}(U)}\ne0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
 \]
 
 \end_inset
 
-则称该特征场在 
-\begin_inset Formula $\Omega$
+
+\end_layout
+
+\begin_layout Description
+线性退化的
+\begin_inset space \space{}
 \end_inset
 
- 内是“线性退化的 (linearly degenerate)
+(linearly
+\begin_inset space \space{}
+\end_inset
+
+degenerate) 
 \begin_inset Index idx
 status collapsed
 
@@ -3499,7 +3503,15 @@ characteristic!~ field!linearly degenerate ~
 
 \end_inset
 
-”。
+若
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{i}(U)}{R_{i}(U)}=0\qquad\forall(U_{1},\dots,U_{n})\in\Omega\subset\mathbb{R}_{U}^{n}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -3905,7 +3917,7 @@ reference "eq:微分方程：双曲型：拟线性"
  的特殊情形：
 \begin_inset Formula 
 \begin{equation}
-\left(\partial_{t}+\Matrix{A(U)}\right)\ket{U}=\ket{0}\qquad\ket{U}=\begin{bmatrix}U_{1}\\
+\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\qquad\ket{U}=\begin{bmatrix}U_{1}\\
 U_{2}
 \end{bmatrix}\qquad\Matrix{A(U)}=\begin{bmatrix}A_{11}(U) & A_{12}(U)\\
 A_{21}(U) & A_{22}(U)

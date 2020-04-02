@@ -101,7 +101,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-守恒律 & Riemann 问题
+守恒律系统的广义解
 \begin_inset CommandInset label
 LatexCommand label
 name "chap:微分方程：守恒律"
@@ -112,7 +112,7 @@ name "chap:微分方程：守恒律"
 \end_layout
 
 \begin_layout Section
-守恒律
+守恒律系统
 \end_layout
 
 \begin_layout Standard
@@ -124,7 +124,7 @@ reference "sec:微分方程：双曲型：光滑解的破裂"
 \end_inset
 
 》一节已指出：即使定解条件光滑，双曲型方程的光滑解也有可能“破裂 (break)”，其实质是数学工具不足以描述物理过程。为了研究“光滑解破裂后，物理过程如何发展
-”，必须将“双曲型方程”收窄为“守恒律”，并将“光滑解”放宽为“弱解”。
+”，必须将“双曲型系统”收窄为“守恒律系统”，并将“光滑解”放宽为“广义解”。
 \end_layout
 
 \begin_layout Subsection
@@ -290,14 +290,22 @@ on laws)”，它含有若干个（标量或向量）守恒律。为了强调方
 
 \begin_layout Description
 通量 可以用“列矩阵向量 (vector of column matrices)” 
-\begin_inset Formula $\vec{\ket{F}}\coloneqq\sum_{k=1}^{n}\vec{e}_{k}\ket{F}_{k}$
+\begin_inset Formula $\vec{\ket{F}}\coloneqq\sum_{k=1}^{n}\vec{e}_{k}\ket{F_{k}}$
 \end_inset
 
  表示，其中 
-\begin_inset Formula $\ket{F}_{k}$
+\begin_inset Formula $\ket{F_{k}}$
 \end_inset
 
- 是由若干标量或向量构成的列矩阵。
+ 是由若干标量或向量构成的列矩阵，其第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个（标量或向量）分量用 
+\begin_inset Formula $\ip{i}{F_{k}}$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -391,13 +399,13 @@ status open
 在三维空间中，微分型守恒律系统的直角坐标形式为
 \begin_inset Formula 
 \begin{equation}
-\partial_{t}\ket{U}+\partial_{x}\ket{F}_{x}+\partial_{y}\ket{F}_{y}+\partial_{z}\ket{F}_{z}=\ket{0}\label{eq:微分方程：守恒律：系统：三维}
+\partial_{t}\ket{U}+\partial_{x}\ket{F_{x}}+\partial_{y}\ket{F_{y}}+\partial_{z}\ket{F_{z}}=\ket{0}\label{eq:微分方程：守恒律：系统：三维}
 \end{equation}
 
 \end_inset
 
 在一维空间中，只有一个 
-\begin_inset Formula $\ket{F}_{k}$
+\begin_inset Formula $\ket{F_{k}}$
 \end_inset
 
  非零，故可以省略其下标，
@@ -569,7 +577,7 @@ condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
 ”）：
 \begin_inset Formula 
 \begin{equation}
-\left(\ket{U}_{+}-\ket{U}_{-}\right)s_{\nu}=\ket{F}_{\nu+}-\ket{F}_{\nu-}\qquad s_{\nu}\coloneqq\vec{e}_{\nu}\vdot\vec{s}\qquad\ket{F}_{\nu\pm}\coloneqq\vec{e}_{\nu}\vdot\vec{\ket{F}}_{\pm}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
+\left(\ket{U_{+}}-\ket{U_{-}}\right)s_{\nu}=\ket{F_{\nu+}}-\ket{F_{\nu-}}\qquad s_{\nu}\coloneqq\vec{e}_{\nu}\vdot\vec{s}\qquad\ket{F_{\nu\pm}}\coloneqq\vec{e}_{\nu}\vdot\vec{\ket{F}}_{\pm}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
 \end{equation}
 
 \end_inset
@@ -722,7 +730,7 @@ reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
  退化为
 \begin_inset Formula 
 \begin{equation}
-\left(\ket{U}_{+}-\ket{U}_{-}\right)s=\ket{F}_{+}-\ket{F}_{-}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
+\left(\ket{U_{+}}-\ket{U_{-}}\right)s=\ket{F_{+}}-\ket{F_{-}}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
 \end{equation}
 
 \end_inset
@@ -762,7 +770,7 @@ end{subequations}
 \end_layout
 
 \begin_layout Subsection
-弱解
+广义解（弱解）
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:微分方程：守恒律：弱解"
@@ -1196,7 +1204,7 @@ condition!entropy ~!Lax's ~
 对于一维守恒律系统
 \begin_inset Formula 
 \[
-\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\Matrix{\pdv*{F}{U}}
+\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\pdv*{\ket{F}}{\ket{U}}
 \]
 
 \end_inset
@@ -1492,19 +1500,19 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \ket{U(x,t=0)}=\begin{cases}
-\ket{U}_{-} & x<0\\
-\ket{U}_{+} & x>0
+\ket{U_{-}} & x<0\\
+\ket{U_{+}} & x>0
 \end{cases}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\ket{U}_{-}$
+\begin_inset Formula $\ket{U_{-}}$
 \end_inset
 
  与 
-\begin_inset Formula $\ket{U}_{+}$
+\begin_inset Formula $\ket{U_{+}}$
 \end_inset
 
  为常值矩阵。
@@ -1794,7 +1802,7 @@ reference "prob:微分方程：守恒律系统 Riemann 问题"
  所张成的空间：
 \begin_inset Formula 
 \[
-\ket{U}_{-}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U}_{-}\qquad\ket{U}_{+}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U}_{+}
+\ket{U_{-}}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U_{-}}\qquad\ket{U_{+}}=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U_{+}}
 \]
 
 \end_inset
@@ -1807,8 +1815,8 @@ reference "prob:微分方程：守恒律系统 Riemann 问题"
 \begin_inset Formula 
 \[
 \pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(x,t=0)=\begin{cases}
-\ip{L_{i}}{U}_{-} & x<0\\
-\ip{L_{i}}{U}_{+} & x>0
+\ip{L_{i}}{U_{-}} & x<0\\
+\ip{L_{i}}{U_{+}} & x>0
 \end{cases}
 \]
 
@@ -1818,8 +1826,8 @@ reference "prob:微分方程：守恒律系统 Riemann 问题"
 \begin_inset Formula 
 \[
 V_{i}(x,t)=\begin{cases}
-\ip{L_{i}}{U}_{-} & x/t<\lambda_{i}\\
-\ip{L_{i}}{U}_{+} & x/t>\lambda_{i}
+\ip{L_{i}}{U_{-}} & x/t<\lambda_{i}\\
+\ip{L_{i}}{U_{+}} & x/t>\lambda_{i}
 \end{cases}\qquad i=1,\dots,n
 \]
 
@@ -1884,7 +1892,7 @@ V_{i}(x,t)=\begin{cases}
 \end_inset
 
  处取右值 
-\begin_inset Formula $\left\{ \ip{L_{i}}{U}_{+}\right\} _{i=1}^{k}$
+\begin_inset Formula $\left\{ \ip{L_{i}}{U_{+}}\right\} _{i=1}^{k}$
 \end_inset
 
 。
@@ -1908,7 +1916,7 @@ V_{i}(x,t)=\begin{cases}
 \end_inset
 
  处取左值 
-\begin_inset Formula $\left\{ \ip{L_{i}}{U}_{-}\right\} _{i=k+1}^{n}$
+\begin_inset Formula $\left\{ \ip{L_{i}}{U_{-}}\right\} _{i=k+1}^{n}$
 \end_inset
 
 。
@@ -1968,9 +1976,9 @@ V_{n}(x,t)
 \begin_inset Formula 
 \[
 \ket{U(x,t)}=\begin{cases}
-\ket{U}_{-} & x/t<\lambda_{1}\\
-\ket{U}_{*k} & x/t\in(\lambda_{k},\lambda_{k+1})\\
-\ket{U}_{+} & x/t>\lambda_{n}
+\ket{U_{-}} & x/t<\lambda_{1}\\
+\ket{U_{*k}} & x/t\in(\lambda_{k},\lambda_{k+1})\\
+\ket{U_{+}} & x/t>\lambda_{n}
 \end{cases}\qc k=1,\dots,n-1
 \]
 
@@ -1979,7 +1987,7 @@ V_{n}(x,t)
 其中
 \begin_inset Formula 
 \[
-\ket{U}_{*k}=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U}_{+}+\left(\sum_{i=k+1}^{n}\dyad{R_{i}}{L_{i}}\right)\ket{U}_{-}
+\ket{U_{*k}}=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\ket{U_{+}}+\left(\sum_{i=k+1}^{n}\dyad{R_{i}}{L_{i}}\right)\ket{U_{-}}
 \]
 
 \end_inset
@@ -2928,7 +2936,7 @@ noprefix "false"
 中，将 PDE 改写为拟线性多波方程组：
 \begin_inset Formula 
 \[
-\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\Matrix{\pdv*{F}{U}}
+\left(\partial_{t}+\Matrix{A(U)}\partial_{x}\right)\ket{U}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\pdv*{\ket{F}}{\ket{U}}
 \]
 
 \end_inset
