@@ -2148,7 +2148,7 @@ literal "false"
 
 \begin_layout Standard
 (W)ENO 格式虽不能完全消除数值振荡（故不是 TVD 格式），但可以将数值振荡的幅值限制在 
-\begin_inset Formula $\order(h^{p})$
+\begin_inset Formula $\order{h^{p}}$
 \end_inset
 
  以下（因此是 TVB 格式），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
@@ -2185,13 +2185,13 @@ reference "eq:激波捕捉：守恒律：标量"
 \begin_inset Formula $f_{i\pm\nicefrac{1}{2}}$
 \end_inset
 
- 为待构造的数值通量。不失一般性，下面只考虑 
+ 为下面将要构造的数值通量。不失一般性，这里只考虑 
 \begin_inset Formula $a(u_{i})>0$
 \end_inset
 
  的情形
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 对于 
@@ -2219,7 +2219,7 @@ status open
 \begin_inset Formula $f_{i+\nicefrac{1}{2}}$
 \end_inset
 
- 时，含有五个点的大模板（用指标偏移量表示）
+ 时，含有五个点的大模板（用编号偏移量表示）
 \begin_inset Formula 
 \[
 S_{i}=\begin{bmatrix}-2 & -1 & 0 & +1 & +2\end{bmatrix}
@@ -2227,7 +2227,7 @@ S_{i}=\begin{bmatrix}-2 & -1 & 0 & +1 & +2\end{bmatrix}
 
 \end_inset
 
-被分解为三个（三点）小模板：
+被分解为三个（分别含三个点）小模板：
 \begin_inset Formula 
 \[
 S_{i}^{(1)}=\begin{bmatrix}-2 & -1 & 0\end{bmatrix}\qquad S_{i}^{(2)}=\begin{bmatrix}-1 & 0 & +1\end{bmatrix}\qquad S_{i}^{(3)}=\begin{bmatrix}0 & +1 & +2\end{bmatrix}
@@ -2239,10 +2239,13 @@ S_{i}^{(1)}=\begin{bmatrix}-2 & -1 & 0\end{bmatrix}\qquad S_{i}^{(2)}=\begin{bma
 \begin_inset Formula $\left(\partial_{x}f\right)_{i}$
 \end_inset
 
- 的三阶近似：
+ 的三阶近似，取加权平均即得大模板上的数值通量：
 \begin_inset Formula 
 \[
-\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
+f_{i+\nicefrac{1}{2}}=\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
+f_{i+\nicefrac{1}{2}}^{(2)}\\
+f_{i+\nicefrac{1}{2}}^{(3)}
+\end{bmatrix}\qquad\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
 f_{i+\nicefrac{1}{2}}^{(2)}\\
 f_{i+\nicefrac{1}{2}}^{(3)}
 \end{bmatrix}=\frac{1}{6}\begin{bmatrix}2 & -7 & 11\\
@@ -2253,17 +2256,6 @@ f_{i-1}\\
 f_{i}\\
 f_{i+1}\\
 f_{i+2}
-\end{bmatrix}
-\]
-
-\end_inset
-
-它们的加权平均值可以用作大模板上的数值通量：
-\begin_inset Formula 
-\[
-f_{i+\nicefrac{1}{2}}=\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
-f_{i+\nicefrac{1}{2}}^{(2)}\\
-f_{i+\nicefrac{1}{2}}^{(3)}
 \end{bmatrix}
 \]
 
@@ -2285,7 +2277,7 @@ f_{i+\nicefrac{1}{2}}^{(3)}
 \begin_inset Formula $f_{i+\nicefrac{1}{2}}$
 \end_inset
 
- 应当逼近（五点）大模板上的理想（五阶）格式：
+ 应当逼近（五点）大模板上的（五阶）“理想格式”：
 \begin_inset Formula 
 \[
 f_{i+\nicefrac{1}{2}}=\frac{\begin{bmatrix}2 & -13 & 47 & 27 & -3\end{bmatrix}}{60}\begin{bmatrix}f_{i-2}\\
@@ -2301,7 +2293,7 @@ f_{i+2}
 这可以通过取“理想权重”来实现：
 \begin_inset Formula 
 \[
-\begin{bmatrix}w_{*}^{(1)} & w_{*}^{(2)} & w_{*}^{(3)}\end{bmatrix}\coloneqq\begin{bmatrix}\dfrac{1}{10} & \dfrac{6}{10} & \dfrac{3}{10}\end{bmatrix}
+\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}=\begin{bmatrix}w_{*}^{(1)} & w_{*}^{(2)} & w_{*}^{(3)}\end{bmatrix}\coloneqq\frac{\begin{bmatrix}1 & 6 & 3\end{bmatrix}}{10}
 \]
 
 \end_inset
@@ -2310,7 +2302,11 @@ f_{i+2}
 \end_layout
 
 \begin_layout Itemize
-在非光滑区域，被间断穿过的小模板即“坏模板 (troubled stencil)”上的权重应当接近零，但所有小模板的权重之和依然为 
+在非光滑区域，被间断穿过的小模板即“坏模板 (troubled stencil)”上的权重应当接近 
+\begin_inset Formula $0$
+\end_inset
+
+，但所有小模板的权重之和依然为 
 \begin_inset Formula $1$
 \end_inset
 
@@ -2334,58 +2330,71 @@ literal "false"
 \begin_inset Formula $S_{i}^{(k)}$
 \end_inset
 
- 上构造以 
-\begin_inset Formula $x_{i}$
+ 上构造二次多项式 
+\begin_inset Formula $q_{i}^{(k)}$
 \end_inset
 
- 为中心的二次 Taylor 展开式
+ 作为对 
+\begin_inset Formula $f$
+\end_inset
+
+ 的近似：
 \begin_inset Formula 
 \[
-Q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{(k)}\frac{(x-x_{i})^{2}}{2}
+q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{(k)}\frac{(x-x_{i})^{2}}{2}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left(\pdv*{f}{x}\right)_{i}^{(k)}\text{、}\left(\pdv*[2]{f}{x}\right)_{i}^{(k)}$
+\begin_inset Formula $\left(\partial_{x}f\right)_{i}^{(k)}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\left(\partial_{x}^{2}f\right)_{i}^{(k)}$
 \end_inset
 
  分别表示由 
-\begin_inset Formula $S_{i}^{(k)}$
+\begin_inset Formula $\left\{ f_{i+s}:s\in S_{i}^{(k)}\right\} $
 \end_inset
 
- 给出的 
-\begin_inset Formula $\pdv*{f}{x}\text{、}\pdv*[2]{f}{x}$
+ 给出的一阶与二阶差商，即 
+\begin_inset Formula $\partial_{x}f$
+\end_inset
+
+ 与 
+\begin_inset Formula $\partial_{x}^{2}f$
 \end_inset
 
  在点 
 \begin_inset Formula $x_{i}$
 \end_inset
 
- 处的估计值。
-\end_layout
-
-\begin_layout Enumerate
-计算各个小模板的“光滑度指示器 (smoothness indicator)”
+ 处的近似值：
 \begin_inset Formula 
 \[
-\beta_{i}^{(k)}\coloneqq\int_{x_{i-\nicefrac{1}{2}}}^{x_{i}+\nicefrac{1}{2}}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{(k)}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{(k)}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{(k)}h^{2}\right)^{2}
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\begin{bmatrix}\beta_{i}^{(1)}\\
-\beta_{i}^{(2)}\\
-\beta_{i}^{(3)}
-\end{bmatrix}=\frac{1}{4}\begin{bmatrix}(f_{i-2}-4f_{i-1}+3f_{i})^{2}\\
-(f_{i-1}-f_{i+1})^{2}\\
-(3f_{i}-4f_{i+1}+f_{i+2})^{2}
-\end{bmatrix}+\frac{13}{12}\begin{bmatrix}(f_{i-2}-2f_{i-1}+f_{i})^{2}\\
-(f_{i-1}-2f_{i}+f_{i+1})^{2}\\
-(f_{i}-2f_{i+1}+f_{i+2})^{2}
+\begin{bmatrix}\left(\partial_{x}f\right)_{i}^{(1)}\\
+\left(\partial_{x}f\right)_{i}^{(2)}\\
+\left(\partial_{x}f\right)_{i}^{(3)}
+\end{bmatrix}=\frac{1}{2h}\begin{bmatrix}1 & -4 & 3\\
+ & -1 &  & 1\\
+ &  & 3 & -4 & 1
+\end{bmatrix}\begin{bmatrix}f_{i-2}\\
+f_{i-1}\\
+f_{i}\\
+f_{i+1}\\
+f_{i+2}
+\end{bmatrix}\qquad\begin{bmatrix}\left(\partial_{x}^{2}f\right)_{i}^{(1)}\\
+\left(\partial_{x}^{2}f\right)_{i}^{(2)}\\
+\left(\partial_{x}^{2}f\right)_{i}^{(3)}
+\end{bmatrix}=\frac{1}{h^{2}}\begin{bmatrix}1 & -2 & 1\\
+ & 1 & -2 & 1\\
+ &  & 1 & -2 & 1
+\end{bmatrix}\begin{bmatrix}f_{i-2}\\
+f_{i-1}\\
+f_{i}\\
+f_{i+1}\\
+f_{i+2}
 \end{bmatrix}
 \]
 
@@ -2394,12 +2403,43 @@ Q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
+\begin_layout Enumerate
+计算二次多项式 
+\begin_inset Formula $q_{i}^{(k)}$
+\end_inset
+
+ 在控制体 
+\begin_inset Formula $(x_{i-\nicefrac{1}{2}},x_{i+\nicefrac{1}{2}})$
+\end_inset
+
+ 上的“光滑程度”
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}\coloneqq\int_{x_{i-\nicefrac{1}{2}}}^{x_{i}+\nicefrac{1}{2}}\sum_{p=1}^{2}\left(\dv[p]{q_{i}^{(k)}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{(k)}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{(k)}h^{2}\right)^{2}
+\]
+
+\end_inset
+
 在光滑区域，它们都趋于同一个二阶小量，且两两之差为六阶小量：
 \begin_inset Formula 
 \[
-\beta_{i}^{(k)}=\underbrace{\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}}_{\beta_{i}^{*}=\order{h^{2}}}+\order{h^{6}}
+\beta_{i}^{(k)}=\beta_{i}^{*}+\order{h^{6}}\qquad\beta_{i}^{*}\coloneqq\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}
+\]
+
+\end_inset
+
+在非光滑区域，坏模板上的 
+\begin_inset Formula $q_{i}^{(k)}$
+\end_inset
+
+ 偏离 
+\begin_inset Formula $f$
+\end_inset
+
+ 的 Taylor 展开式较多，因此
+\begin_inset Formula 
+\[
+\beta_{i}^{(k)}=\order{1}\gg\order{h^{2}}
 \]
 
 \end_inset
@@ -2407,21 +2447,8 @@ Q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{
 
 \end_layout
 
-\begin_layout Itemize
-在非光滑区域，坏模板给出的 
-\begin_inset Formula $Q_{i}^{(k)}$
-\end_inset
-
- 偏离真实 Taylor 展开式较多，因此相应的 
-\begin_inset Formula $\beta_{i}^{(k)}=\order{1}\gg\order{h^{2}}$
-\end_inset
-
-。
-\end_layout
-
-\end_deeper
 \begin_layout Enumerate
-构造非线性权重
+计算非线性权重
 \begin_inset Formula 
 \[
 w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}^{(3)}}\qquad\alpha_{i}^{(k)}=\frac{w_{*}^{(k)}}{\left(\beta_{i}^{(k)}+\varepsilon\right)^{2}}\qquad\varepsilon=10^{-6}
@@ -2429,12 +2456,7 @@ w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}
 
 \end_inset
 
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-在光滑区域，非线性权重接近理想权重：
+在光滑区域，上述非线性权重接近理想权重：
 \begin_inset Formula 
 \[
 w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\beta_{i}^{*})^{2}+\order{h^{8}}}
@@ -2446,18 +2468,17 @@ w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\b
 \begin_inset Formula $f_{i+\nicefrac{1}{2}}$
 \end_inset
 
- 具有五阶精度。
-\end_layout
+ 具有五阶精度；在非光滑区域，坏模板的实际权重（与其他小模板的权重相比）接近 
+\begin_inset Formula $0$
+\end_inset
 
-\begin_layout Itemize
-在非光滑区域，坏模板的实际权重（与其他小模板的权重相比）接近零，但大模板上的 
+，但大模板上的 
 \begin_inset Formula $f_{i+\nicefrac{1}{2}}$
 \end_inset
 
  依然具有三阶精度。
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2471,6 +2492,254 @@ w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\b
 LatexCommand label
 name "sec:WENO：相邻单元"
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+用 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 表示分片光滑的多项式 
+\begin_inset Formula $p$
+\end_inset
+
+ 限制在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 内的部分，即
+\begin_inset Formula 
+\[
+p_{i}\qty(\vec{x})=p|_{E_{i}}\qty(\vec{x})\qquad\vec{x}\in E_{i}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 内不够光滑（含数值振荡），则需基于相邻
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+这里的“相邻”是指单元之间有公共边界，即几何区域相邻，而非单元编号相邻。
+\end_layout
+
+\end_inset
+
+单元 
+\begin_inset Formula $\left\{ E_{i+s}:s\in S_{i}\right\} $
+\end_inset
+
+ 构造出另一个多项式 
+\begin_inset Formula $p_{i}^{\mathrm{new}}$
+\end_inset
+
+ 作为 
+\begin_inset Formula $p|_{E_{i}}$
+\end_inset
+
+，具体过程如下：
+\end_layout
+
+\begin_layout Enumerate
+将 
+\begin_inset Formula $p_{i+s}$
+\end_inset
+
+ 的定义域延伸到 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上，并对函数值作适当平移，使所得的 
+\begin_inset Formula $\tilde{p}_{i+s}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值等于 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值：
+\begin_inset Formula 
+\[
+\tilde{p}_{i+s}\qty(\vec{x})\coloneqq p_{i+s}\qty(\vec{x})-\ev{p_{i+s}}_{i}+\ev{p_{i}}_{i}\qquad s\in S_{i}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\ev{\phi}_{i}$
+\end_inset
+
+ 表示函数 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值：
+\begin_inset Formula 
+\[
+\ev{\phi}_{i}\coloneqq\int_{E_{i}}\frac{\phi\qty(\vec{x})}{\abs{E_{i}}}\dd{E_{i}}\qquad\abs{E_{i}}\coloneqq\int_{E_{i}}1\dd{E_{i}}
+\]
+
+\end_inset
+
+若对 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 也作上述平移，则所得的 
+\begin_inset Formula $\tilde{p}_{i+0}$
+\end_inset
+
+ 显然与 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ 相等。为方便叙述，下面令 
+\begin_inset Formula $0\in S_{i}$
+\end_inset
+
+，即令 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 亦为与 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 相邻的单元。
+\end_layout
+
+\begin_layout Enumerate
+为每个 
+\begin_inset Formula $\tilde{p}_{i+s}$
+\end_inset
+
+ 分配线性权重 
+\begin_inset Formula $\gamma_{i+s}$
+\end_inset
+
+，使得 
+\begin_inset Formula $\sum_{s\in S_{i}}\gamma_{i+s}=1$
+\end_inset
+
+，可取
+\begin_inset Formula 
+\[
+\gamma_{i+s}=\begin{cases}
+0.001 & s\ne0\\
+1-\sum_{s\in S_{i}\setminus\left\{ 0\right\} }\gamma_{i+s} & s=0
+\end{cases}
+\]
+
+\end_inset
+
+数值实验表明：较大的 
+\begin_inset Formula $\gamma_{i+0}$
+\end_inset
+
+ 有利于在光滑处保持精度；较小的 
+\begin_inset Formula $\gamma_{i+0}$
+\end_inset
+
+ 有利于在间断处压制振荡。
+\end_layout
+
+\begin_layout Enumerate
+计算 
+\begin_inset Formula $\tilde{p}_{i+s}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的光滑程度，记作 
+\begin_inset Formula $\beta\qty(\tilde{p}_{i+s},E_{i})$
+\end_inset
+
+，其中
+\begin_inset Formula 
+\[
+\beta(\phi,\Omega)=\sum_{\abs{\alpha}=1}^{k}\frac{\abs{\Omega}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{\Omega}\left(\frac{\partial^{\abs{\alpha}}\phi}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\dd{\Omega}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $(\abs{\alpha}!)^{2}$
+\end_inset
+
+ 用于避免高阶导数的占比过多。
+\end_layout
+
+\begin_layout Enumerate
+计算非线性权重
+\begin_inset Formula 
+\[
+w_{i+s}=\frac{\tilde{w}_{i+s}}{\sum_{s\in S_{i}}\tilde{w}_{i+s}}\qquad\tilde{w}_{i+s}\coloneqq\frac{\gamma_{i+s}}{\left(\varepsilon+\beta\qty(\tilde{p}_{i+s},E_{i})\right)^{2}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 用于避免分母为 
+\begin_inset Formula $0$
+\end_inset
+
+，可取 
+\begin_inset Formula $\varepsilon=10^{-6}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+按上述非线性权重，取 
+\begin_inset Formula $\tilde{p}_{i+s}$
+\end_inset
+
+ 的加权平均作为 
+\begin_inset Formula $p|_{E_{i}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+p_{i}^{\mathrm{new}}\qty(\vec{x})\coloneqq\sum_{s\in S_{i}}w_{i+s}\tilde{p}_{i+s}\qty(\vec{x})\qquad\vec{x}\in E_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
