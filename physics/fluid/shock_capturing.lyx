@@ -2497,38 +2497,30 @@ name "sec:WENO：相邻单元"
 
 \end_layout
 
-\begin_layout Standard
-用 
-\begin_inset Formula $p_{i}$
-\end_inset
-
- 表示分片光滑的多项式 
-\begin_inset Formula $p$
+\begin_layout Notation*
+为方便叙述，将分片光滑的函数 
+\begin_inset Formula $\phi$
 \end_inset
 
  限制在单元 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 内的部分，即
+ 上的部分记为
 \begin_inset Formula 
 \[
-p_{i}\qty(\vec{x})=p|_{E_{i}}\qty(\vec{x})\qquad\vec{x}\in E_{i}
+\phi_{i}\qty(\vec{x})\coloneqq\phi\qty(\vec{x})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
 
-若 
-\begin_inset Formula $p_{i}$
-\end_inset
-
- 在 
+并将单元 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 内不够光滑（含数值振荡），则需基于相邻
+ 及与之相邻
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 这里的“相邻”是指单元之间有公共边界，即几何区域相邻，而非单元编号相邻。
@@ -2536,32 +2528,88 @@ status open
 
 \end_inset
 
-单元 
-\begin_inset Formula $\left\{ E_{i+s}:s\in S_{i}\right\} $
+的那些单元的指标集（即局部模板）记为
+\begin_inset Formula 
+\[
+S_{i}\coloneqq\left\{ s:\partial E_{i}\cap\partial E_{s}\ne\varnothing\right\} 
+\]
+
 \end_inset
 
- 构造出另一个多项式 
-\begin_inset Formula $p_{i}^{\mathrm{new}}$
-\end_inset
 
- 作为 
-\begin_inset Formula $p|_{E_{i}}$
-\end_inset
-
-，具体过程如下：
 \end_layout
 
-\begin_layout Enumerate
-将 
-\begin_inset Formula $p_{i+s}$
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- 的定义域延伸到 
+
+\end_layout
+
+\begin_layout Standard
+“基于相邻单元的 WENO 重构”是由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Zhong & Shu (2013)"
+target "https://doi.org/10.1016/j.jcp.2012.08.028"
+literal "true"
+
+\end_inset
+
+ 在结构网格上提出，并由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Zhu & Zhong & Shu & Qiu (2013)"
+target "https://doi.org/10.1016/j.jcp.2013.04.012"
+literal "false"
+
+\end_inset
+
+ 推广到非结构网格的一种激波捕捉方法，其核心思想为：利用相邻单元上的函数集 
+\begin_inset Formula $\left\{ \phi_{s}:s\in S_{i}\right\} $
+\end_inset
+
+ 重新构造一个足够光滑（基本无振荡）的新函数 
+\begin_inset Formula $\phi_{i}^{\mathrm{new}}$
+\end_inset
+
+，以取代在 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上，并对函数值作适当平移，使所得的 
-\begin_inset Formula $\tilde{p}_{i+s}$
+ 内不够光滑（含数值振荡）的旧函数 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[标量守恒律]
+\end_layout
+
+\end_inset
+
+主要步骤如下：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+将 
+\begin_inset Formula $\phi_{s}$
+\end_inset
+
+ 的定义域延拓到 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上，并对函数值作适当平移，使所得的函数 
+\begin_inset Formula $\phi_{s\to i}$
 \end_inset
 
  在 
@@ -2569,7 +2617,7 @@ status open
 \end_inset
 
  上的均值等于 
-\begin_inset Formula $p_{i}$
+\begin_inset Formula $\phi_{i}$
 \end_inset
 
  在 
@@ -2579,17 +2627,17 @@ status open
  上的均值：
 \begin_inset Formula 
 \[
-\tilde{p}_{i+s}\qty(\vec{x})\coloneqq p_{i+s}\qty(\vec{x})-\ev{p_{i+s}}_{i}+\ev{p_{i}}_{i}\qquad s\in S_{i}
+\phi_{s\to i}\qty(\vec{x})\coloneqq\phi_{s}\qty(\vec{x})-\ev{\phi_{s}}_{i}+\ev{\phi_{i}}_{i})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\ev{\phi}_{i}$
+\begin_inset Formula $\ev{\phi_{s}}_{i}$
 \end_inset
 
  表示函数 
-\begin_inset Formula $\phi$
+\begin_inset Formula $\phi_{s}$
 \end_inset
 
  在单元 
@@ -2599,68 +2647,44 @@ status open
  上的均值：
 \begin_inset Formula 
 \[
-\ev{\phi}_{i}\coloneqq\int_{E_{i}}\frac{\phi\qty(\vec{x})}{\abs{E_{i}}}\dd{E_{i}}\qquad\abs{E_{i}}\coloneqq\int_{E_{i}}1\dd{E_{i}}
+\ev{\phi_{s}}_{i}\coloneqq\int_{E_{i}}\frac{\phi_{s}\qty(\vec{x})}{\abs{E_{i}}}\dd{E_{i}}\qquad\abs{E_{i}}\coloneqq\int_{E_{i}}1\dd{E_{i}}
 \]
 
 \end_inset
 
-若对 
-\begin_inset Formula $p_{i}$
-\end_inset
 
- 也作上述平移，则所得的 
-\begin_inset Formula $\tilde{p}_{i+0}$
-\end_inset
-
- 显然与 
-\begin_inset Formula $p_{i}$
-\end_inset
-
- 相等。为方便叙述，下面令 
-\begin_inset Formula $0\in S_{i}$
-\end_inset
-
-，即令 
-\begin_inset Formula $E_{i}$
-\end_inset
-
- 亦为与 
-\begin_inset Formula $E_{i}$
-\end_inset
-
- 相邻的单元。
 \end_layout
 
 \begin_layout Enumerate
-为每个 
-\begin_inset Formula $\tilde{p}_{i+s}$
+为 
+\begin_inset Formula $\phi_{s\to i}$
 \end_inset
 
  分配线性权重 
-\begin_inset Formula $\gamma_{i+s}$
+\begin_inset Formula $w_{s\to i}^{*}$
 \end_inset
 
 ，使得 
-\begin_inset Formula $\sum_{s\in S_{i}}\gamma_{i+s}=1$
+\begin_inset Formula $\sum_{s\in S_{i}}w_{s\to i}^{*}=1$
 \end_inset
 
-，可取
+，例如
 \begin_inset Formula 
 \[
-\gamma_{i+s}=\begin{cases}
-0.001 & s\ne0\\
-1-\sum_{s\in S_{i}\setminus\left\{ 0\right\} }\gamma_{i+s} & s=0
+w_{s\to i}^{*}=\begin{cases}
+0.001 & s\ne i\\
+1-\sum_{s\in S_{i}\setminus\left\{ i\right\} }w_{s\to i}^{*} & s=i
 \end{cases}
 \]
 
 \end_inset
 
 数值实验表明：较大的 
-\begin_inset Formula $\gamma_{i+0}$
+\begin_inset Formula $w_{i\to i}^{*}$
 \end_inset
 
- 有利于在光滑处保持精度；较小的 
-\begin_inset Formula $\gamma_{i+0}$
+ 有利于在光滑处保持精度，较小的 
+\begin_inset Formula $w_{i\to i}^{*}$
 \end_inset
 
  有利于在间断处压制振荡。
@@ -2668,21 +2692,17 @@ status open
 
 \begin_layout Enumerate
 计算 
-\begin_inset Formula $\tilde{p}_{i+s}$
+\begin_inset Formula $\phi_{s\to i}$
 \end_inset
 
  在 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上的光滑程度，记作 
-\begin_inset Formula $\beta\qty(\tilde{p}_{i+s},E_{i})$
-\end_inset
-
-，其中
+ 上的光滑程度，记作
 \begin_inset Formula 
 \[
-\beta(\phi,\Omega)=\sum_{\abs{\alpha}=1}^{k}\frac{\abs{\Omega}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{\Omega}\left(\frac{\partial^{\abs{\alpha}}\phi}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\dd{\Omega}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\sigma\qty(\phi_{s\to i},E_{i})=\sum_{\abs{\alpha}=1}^{k}\frac{\abs{E_{i}}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\abs{\alpha}}\phi_{s\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\dd{E_{i}}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
 \]
 
 \end_inset
@@ -2698,7 +2718,7 @@ status open
 计算非线性权重
 \begin_inset Formula 
 \[
-w_{i+s}=\frac{\tilde{w}_{i+s}}{\sum_{s\in S_{i}}\tilde{w}_{i+s}}\qquad\tilde{w}_{i+s}\coloneqq\frac{\gamma_{i+s}}{\left(\varepsilon+\beta\qty(\tilde{p}_{i+s},E_{i})\right)^{2}}
+w_{s\to i}=\frac{w_{s\to i}^{\sigma}}{\sum_{s\in S_{i}}w_{s\to i}^{\sigma}}\qquad w_{s\to i}^{\sigma}\coloneqq\frac{w_{s\to i}^{*}}{\left(\varepsilon+\sigma\qty(\phi_{s\to i},E_{i})\right)^{2}}
 \]
 
 \end_inset
@@ -2719,23 +2739,49 @@ w_{i+s}=\frac{\tilde{w}_{i+s}}{\sum_{s\in S_{i}}\tilde{w}_{i+s}}\qquad\tilde{w}_
 \end_layout
 
 \begin_layout Enumerate
-按上述非线性权重，取 
-\begin_inset Formula $\tilde{p}_{i+s}$
+按上述非线性权重，对 
+\begin_inset Formula $\left\{ \phi_{s}:s\in S_{i}\right\} $
 \end_inset
 
- 的加权平均作为 
-\begin_inset Formula $p|_{E_{i}}$
+ 作加权平均，以所得的新函数 
+\begin_inset Formula $\phi_{i}^{\mathrm{new}}$
+\end_inset
+
+ 取代旧函数 
+\begin_inset Formula $\phi_{i}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-p_{i}^{\mathrm{new}}\qty(\vec{x})\coloneqq\sum_{s\in S_{i}}w_{i+s}\tilde{p}_{i+s}\qty(\vec{x})\qquad\vec{x}\in E_{i}
+\phi_{i}^{\mathrm{new}}\qty(\vec{x})\coloneqq\sum_{s\in S_{i}}w_{s\to i}\,\phi_{s\to i}\qty(\vec{x})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[守恒律系统]
+\end_layout
+
+\end_inset
+
+主要步骤如下：
 \end_layout
 
 \begin_layout Standard
