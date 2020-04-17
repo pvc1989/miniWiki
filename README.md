@@ -3,7 +3,7 @@
 ## 目录
 
 ### 数学
-
+- [高等代数 (Advanced Algebra)](./mathematics/algebra/README.lyx)
 - [实分析 (Real Analysis)](./mathematics/real/README.lyx)
 - [复分析 (Complex Analysis)](./mathematics/complex/README.lyx)
 - [泛函分析 (Functional Analysis)](./mathematics/functional/README.lyx)
@@ -69,4 +69,3 @@
 |   macOS    |  `~/Library/texmf`   | `ln -s TARGET LINK`  |
 | Windows 10 |      `~/texmf`       | `mklink LINK TARGET` |
 
-## 
