@@ -5,8 +5,6 @@
 \ExecuteOptions{bold}
 \ProcessOptions\relax  % terminates the option processing
 
-% multicolumn table of contents
-\RequirePackage[toc,lof,lot]{multitoc}
 % graphics
 \RequirePackage{tikz}
 \usetikzlibrary{intersections}
@@ -14,6 +12,8 @@
 \usetikzlibrary{angles}
 \usetikzlibrary{calc}
 \usetikzlibrary{quotes}
+\PassOptionsToPackage{chapter}{minted}
+
 
 \RequirePackage{accents}  % more accents
 % fonts
@@ -59,17 +59,6 @@
 \fi
 %% english fonts
 \setmainfont{STIX Two Text}
-%% chinese fonts
-\RequirePackage[heading]{ctex}
-\ctexset{
-  part/format += \sffamily,
-  chapter/format += \sffamily,
-  section/format += \sffamily,
-  subsection/format += \sffamily,
-  subsubsection/format += \sffamily,
-  paragraph/format += \sffamily,
-  subparagraph/format += \sffamily,
-}
 % scientific symbols
 \RequirePackage{physics}
 \RequirePackage{esvect}
@@ -119,5 +108,24 @@
 \newcommand\Laguerre[1]{\operatorname{L}_{#1}}
 \newcommand\Legendre[1]{\operatorname{P}_{#1}}
 \newcommand\Neumann[1]{\operatorname{N}_{#1}}
+
+% chinese related settings
+\RequirePackage[heading]{ctex}
+\ctexset{
+  part/format += \sffamily,
+  chapter/format += \sffamily,
+  section/format += \sffamily,
+  subsection/format += \sffamily,
+  subsubsection/format += \sffamily,
+  paragraph/format += \sffamily,
+  subparagraph/format += \sffamily,
+  contentsname = 章节目录,
+  listtablename = 表格目录,
+  listfigurename = 插图目录,
+}
+\AtBeginDocument{
+  \renewcommand{\listingscaption}{代码}
+  \renewcommand{\listoflistingscaption}{代码目录}
+}
 
 \endinput
