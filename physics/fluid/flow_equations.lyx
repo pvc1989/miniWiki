@@ -693,7 +693,7 @@ status open
  可导，则有如下等式成立：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\phi\dd{V}=\int_{V}\pdv{\phi}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\phi\dd(\partial V)}\label{eq:流动方程：Reynolds}
+\boxed{\dv{t}\int_{V}\phi=\int_{V}\pdv{\phi}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi}\label{eq:流动方程：Reynolds}
 \end{equation}
 
 \end_inset
@@ -710,7 +710,7 @@ status open
 
 \begin_layout Proof
 将 
-\begin_inset Formula $\int_{V}\phi\dd{V}$
+\begin_inset Formula $\int_{V}\phi$
 \end_inset
 
  代入 
@@ -720,7 +720,7 @@ status open
  的定义：
 \begin_inset Formula 
 \[
-\left(\dv{t}\int_{V}\phi\dd{V}\right)_{t_{1}}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V_{2}}-\int_{V_{1}}\phi_{1}\dd{V_{1}}}{t_{2}-t_{1}}
+\left(\dv{t}\int_{V}\phi\right)_{t_{1}}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}-\int_{V_{1}}\phi_{1}}{t_{2}-t_{1}}
 \]
 
 \end_inset
@@ -730,13 +730,13 @@ status open
 \end_inset
 
  用于区分两个时刻。将 
-\begin_inset Formula $0=\int_{V_{1}}\phi_{2}\dd{V_{1}}-\int_{V_{1}}\phi_{2}\dd{V_{1}}$
+\begin_inset Formula $0=\int_{V_{1}}\phi_{2}-\int_{V_{1}}\phi_{2}$
 \end_inset
 
  加到右侧的分母上，则分式可以拆成两项：
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{1}}\phi_{1}\dd{V_{1}}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V_{1}}-\int_{V_{1}}\phi_{1}\dd{V_{1}}}{t_{2}-t_{1}}+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V_{2}}-\int_{V_{1}}\phi_{2}\dd{V_{1}}}{t_{2}-t_{1}}
+\dv{t}\int_{V_{1}}\phi_{1}=\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}-\int_{V_{1}}\phi_{1}}{t_{2}-t_{1}}+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}-\int_{V_{1}}\phi_{2}}{t_{2}-t_{1}}
 \]
 
 \end_inset
@@ -772,7 +772,7 @@ reference "eq:流动方程：Reynolds"
 ：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}\dd{V_{1}}-\int_{V_{1}}\phi_{1}\dd{V_{1}}}{t_{2}-t_{1}}=\int_{V_{1}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}\dd{V_{1}}=\int_{V_{1}}\left(\pdv{\phi}{t}\right)_{1}\dd{V_{1}}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{1}}\phi_{2}-\int_{V_{1}}\phi_{1}}{t_{2}-t_{1}}=\int_{V_{1}}\lim_{t_{2}\to t_{1}}\frac{\phi_{2}-\phi_{1}}{t_{2}-t_{1}}=\int_{V_{1}}\left(\pdv{\phi}{t}\right)_{1}
 \]
 
 \end_inset
@@ -802,24 +802,12 @@ noprefix "false"
  时，“净增体积”是一个厚度趋于零的薄层，对其上的“体积分”取极限就得到“面积分”：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}\dd{V_{2}}-\int_{V_{1}}\phi_{2}\dd{V_{2}}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\vec{n}_{1}\vdot\bcancel{(t_{2}-t_{1})}\vec{u}_{1}{}_{\mathrm{CS}}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}\dd(\partial V_{1})=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\phi\dd(\partial V)\right)_{1}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}-\int_{V_{1}}\phi_{2}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\left(\vec{n}\vdot\vec{u}_{\mathrm{CS}}\right)_{1}\bcancel{(t_{2}-t_{1})}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi\right)_{1}
 \]
 
 \end_inset
 
-其中 
-\begin_inset Formula $\vec{n}_{1}\coloneqq\vec{n}\qty(\vec{x},t_{1})$
-\end_inset
-
- 为 
-\begin_inset Formula $\partial V$
-\end_inset
-
- 在 
-\begin_inset Formula $t_{1}$
-\end_inset
-
- 时刻的“单位外法向量”。忽略下标，就得到 
+忽略下标，就得到 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:流动方程：Reynolds"
@@ -878,7 +866,7 @@ derivative!material ~!~ of an integral
  上的“时间全导数”，即
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V_{\mathrm{CS}}}\phi\dd{V_{\mathrm{CS}}}\coloneqq\dv{t}\int_{V_{\mathrm{MB}}}\phi\dd{V_{\mathrm{MB}}}}\label{eq:流动方程：物质导数：定义}
+\boxed{\DDt{}\int_{V_{\mathrm{CS}}}\phi\coloneqq\dv{t}\int_{V_{\mathrm{MB}}}\phi}\label{eq:流动方程：物质导数：定义}
 \end{equation}
 
 \end_inset
@@ -905,8 +893,8 @@ derivative!material ~!~ of an integral
 物质导数任何控制体都有：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\begin{aligned}\DDt{}\int_{V_{\mathrm{CS}}}\phi\dd{V_{\mathrm{CS}}} & =\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\dd{V_{\mathrm{CS}}}+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi\dd(\partial V_{\mathrm{CS}})\\
- & =\dv{t}\int_{V_{\mathrm{CS}}}\phi\dd{V_{\mathrm{CS}}}+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\phi\dd(\partial V_{\mathrm{CS}})
+\boxed{\begin{aligned}\DDt{}\int_{V_{\mathrm{CS}}}\phi & =\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi\\
+ & =\dv{t}\int_{V_{\mathrm{CS}}}\phi+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\phi
 \end{aligned}
 }\label{eq:流动方程：物质导数：积分展开}
 \end{equation}
@@ -924,8 +912,12 @@ derivative!material ~!~ of an integral
 \end_layout
 
 \begin_layout Proof
-对 
-\begin_inset Formula $\dv{t}\int_{V_{\mathrm{MB}}}\phi\dd{V_{\mathrm{MB}}}$
+物质体 
+\begin_inset Formula $V_{\mathrm{MB}}$
+\end_inset
+
+ 也是控制体，对 
+\begin_inset Formula $\int_{V_{\mathrm{MB}}}\phi$
 \end_inset
 
  应用 Reynolds 输运定理 
@@ -938,12 +930,12 @@ reference "eq:流动方程：Reynolds"
  即得
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\phi\dd{V_{\mathrm{MB}}}=\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}\dd{V_{\mathrm{MB}}}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\phi\dd(\partial V_{\mathrm{MB}})
+\DDt{}\int_{V_{\mathrm{CS}}}\phi=\dv{t}\int_{V_{\mathrm{MB}}}\phi=\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi
 \]
 
 \end_inset
 
-根据“物质体”的定义，该时刻 
+根据“物质体”的定义，此时 
 \begin_inset Formula $V_{\mathrm{MB}}$
 \end_inset
 
@@ -962,9 +954,7 @@ reference "eq:流动方程：Reynolds"
 ，从而有
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}\dd{V_{\mathrm{MB}}} & =\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\dd{V_{\mathrm{CS}}}\\
-\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\phi\dd(\partial V_{\mathrm{MB}}) & =\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}\phi\dd(\partial V_{\mathrm{MB}})=\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi\dd(\partial V_{\mathrm{CS}})
-\end{aligned}
+\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}=\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\qquad\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi=\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi
 \]
 
 \end_inset
@@ -979,30 +969,22 @@ noprefix "false"
 
 \end_inset
 
- 的第一行。
-\end_layout
-
-\begin_layout Proof
-为了得到第二行，只需将第一行中的 
-\begin_inset Formula $\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\dd{V_{\mathrm{CS}}}$
-\end_inset
-
- 用
-\begin_inset Formula 
-\[
-\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\dd{V_{\mathrm{CS}}}=\dv{t}\int_{V_{\mathrm{CS}}}\phi\dd{V_{\mathrm{CS}}}-\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi\dd(\partial V_{\mathrm{CS}})
-\]
-
-\end_inset
-
-代替，它可以由 Reynolds 输运定理 
+ 的第一行。为了得到第二行，只需将第一行中的体积分用 Reynolds 输运定理 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:流动方程：Reynolds"
 
 \end_inset
 
- 移项得到。
+ 的移项形式
+\begin_inset Formula 
+\[
+\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}=\dv{t}\int_{V_{\mathrm{CS}}}\phi-\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi
+\]
+
+\end_inset
+
+代替。
 \end_layout
 
 \begin_layout Subsection
@@ -1031,7 +1013,7 @@ noprefix "false"
  的第一行中的“面积分”应用 Gauss 散度定理，从而有
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\phi\dd{V}=\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\dd{V_{\mathrm{CS}}}+\int_{V_{\mathrm{CS}}}\divg(\vec{u}\phi)\dd{V_{\mathrm{CS}}}=\int_{V}\left(\pdv{\phi}{t}+\divg(\vec{u}\phi)\right)\dd{V_{\mathrm{CS}}}
+\DDt{}\int_{V}\phi=\int_{V}\pdv{\phi}{t}+\int_{V}\divg(\vec{u}\phi)=\int_{V}\left(\pdv{\phi}{t}+\divg(\vec{u}\phi)\right)
 \]
 
 \end_inset
@@ -1070,16 +1052,16 @@ noprefix "false"
  分别表示“体积”和“均值”： 
 \begin_inset Formula 
 \[
-\abs{V}\coloneqq\int_{V}1\dd{V}\qquad\ev{\cdots}\coloneqq\frac{1}{\abs{V}}\int_{V}\cdots\dd{V}
+\abs{V}\coloneqq\int_{V}1\qquad\ev{\cdots}\coloneqq\frac{1}{\abs{V}}\int_{V}(\cdots)
 \]
 
 \end_inset
 
 如果令 
-\begin_inset Formula $V$
+\begin_inset Formula $\abs{V}\to0$
 \end_inset
 
- 趋向于无穷小，则 
+，则 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -1177,9 +1159,9 @@ noprefix "false"
  的性质：
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\Dt{(\phi+\psi)}=\Dt{\phi}+\Dt{\psi} & \qquad & \vec{u}\vdot\grad(\phi+\psi)=\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
-\Dt{(\phi\psi)}=\phi\Dt{\psi}+\psi\Dt{\phi} & \qquad & \vec{u}\vdot\grad(\phi\psi)=\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
-\end{aligned}
+\begin{gathered}\Dt{(\phi+\psi)}=\Dt{\phi}+\Dt{\psi}\qquad\vec{u}\vdot\grad(\phi+\psi)=\vec{u}\vdot\grad{\phi}+\vec{u}\vdot\grad{\psi}\\
+\Dt{(\phi\psi)}=\phi\Dt{\psi}+\psi\Dt{\phi}\qquad\vec{u}\vdot\grad(\phi\psi)=\phi\vec{u}\vdot\grad{\phi}+\psi\vec{u}\vdot\grad{\phi}
+\end{gathered}
 \label{eq:流动方程：物质导数：线性性质}
 \end{equation}
 
@@ -1287,13 +1269,13 @@ conservation!~ of mass
 \end_inset
 
  内所含总质量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\rho\dd{V_{\mathrm{MB}}}$
+\begin_inset Formula $\int_{V_{\mathrm{MB}}}\rho$
 \end_inset
 
  不随时间变化，即
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\rho\dd{V}=0
+\dv{t}\int_{V_{\mathrm{MB}}}\rho=0
 \]
 
 \end_inset
@@ -1323,7 +1305,7 @@ conservation!~ of mass
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\rho\dd{V}=0\label{eq:流动方程：质量：物质导数}
+\DDt{}\int_{V}\rho=0\label{eq:流动方程：质量：物质导数}
 \end{equation}
 
 \end_inset
@@ -1341,8 +1323,8 @@ noprefix "false"
  可以得到两种等价的“积分型”质量守恒方程：
 \begin_inset Formula 
 \[
-\begin{gathered}\int_{V}\pdv{\rho}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{u}\rho\dd(\partial V)=0\\
-\dv{t}\int_{V}\rho\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\rho\dd(\partial V)=0
+\begin{gathered}\int_{V}\pdv{\rho}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}\rho=0\\
+\dv{t}\int_{V}\rho+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\rho=0
 \end{gathered}
 \]
 
@@ -1406,7 +1388,7 @@ reference "eq:流动方程：质量：微分型：守恒型"
 \end_inset
 
  为任意充分光滑的函数，则作用在 
-\begin_inset Formula $\int_{V}\psi\rho\dd{V}$
+\begin_inset Formula $\int_{V}\psi\rho$
 \end_inset
 
  上的 
@@ -1414,13 +1396,13 @@ reference "eq:流动方程：质量：微分型：守恒型"
 \end_inset
 
 可按如下规则移入 
-\begin_inset Formula $\int_{V}\cdots\dd{V}$
+\begin_inset Formula $\int_{V}\cdots$
 \end_inset
 
  内：
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\DDt{\psi}\rho\dd{V}\label{eq:流动方程：物质导数：移入积分号内}
+\DDt{}\int_{V}\psi\rho=\int_{V}\DDt{\psi}\rho\label{eq:流动方程：物质导数：移入积分号内}
 \end{equation}
 
 \end_inset
@@ -1449,7 +1431,7 @@ noprefix "false"
  及“Gauss 散度定理”可得
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\psi\rho\dd{V}=\int_{V}\pdv{(\psi\rho)}{t}\dd{V}+\oint_{\partial V}\vec{n}\vdot(\vec{u}\psi\rho)\dd(\partial V)=\int_{V}\left[\pdv{(\psi\rho)}{t}+\divg(\vec{u}\psi\rho)\right]\dd{V}
+\DDt{}\int_{V}\psi\rho=\int_{V}\pdv{(\psi\rho)}{t}+\oint_{\partial V}\vec{n}\vdot(\vec{u}\psi\rho)=\int_{V}\left(\pdv{(\psi\rho)}{t}+\divg(\vec{u}\psi\rho)\right)
 \]
 
 \end_inset
@@ -1489,7 +1471,7 @@ noprefix "false"
  可得
 \begin_inset Formula 
 \[
-\int_{V}\DDt{\psi}\rho\dd{V}=\int_{V}\left(\pdv{\psi}{t}+\vec{u}\vdot\grad{\psi}\right)\rho\dd{V}
+\int_{V}\DDt{\psi}\rho=\int_{V}\left(\pdv{\psi}{t}+\vec{u}\vdot\grad{\psi}\right)\rho
 \]
 
 \end_inset
@@ -1519,7 +1501,7 @@ noprefix "false"
 比较这两个结果，它们相等的充要条件为
 \begin_inset Formula 
 \[
-\int_{V}\left[\pdv{\rho}{t}+\divg(\vec{u}\rho)\right]\psi\dd{V}=0
+\int_{V}\left(\pdv{\rho}{t}+\divg(\vec{u}\rho)\right)\psi=0
 \]
 
 \end_inset
@@ -1575,7 +1557,7 @@ conservation!~ of momentum
 \end_inset
 
  内所含总动量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{u}\rho\dd{V_{\mathrm{MB}}}$
+\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{u}\rho$
 \end_inset
 
  的时间变化率，等于作用在 
@@ -1592,7 +1574,7 @@ conservation!~ of momentum
 \begin_layout Axiom
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\vec{u}\rho\dd{V_{\mathrm{MB}}}=\int_{V_{\mathrm{MB}}}\vec{b}\dd{V_{\mathrm{MB}}}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\Dyad{\sigma}\dd(\partial V_{\mathrm{MB}})
+\dv{t}\int_{V_{\mathrm{MB}}}\vec{u}\rho=\int_{V_{\mathrm{MB}}}\vec{b}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\Dyad{\sigma}
 \]
 
 \end_inset
@@ -1686,7 +1668,7 @@ tensor!stress ~
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\vec{u}\rho\dd{V}=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Dyad{\sigma}\dd(\partial V)\label{eq:流动方程：动量：物质导数：sigma}
+\DDt{}\int_{V}\vec{u}\rho=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\Dyad{\sigma}\label{eq:流动方程：动量：物质导数：sigma}
 \end{equation}
 
 \end_inset
@@ -1745,7 +1727,7 @@ reference "eq:流动方程：动量：物质导数：sigma"
 式可以改写为
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\vec{u}\rho\dd{V}+\oint_{\partial V}\vec{n}p\dd(\partial V)=\int_{V}\vec{b}\dd{V}+\oint_{\partial V}\vec{n}\vdot\Dyad{\tau}\dd(\partial V)\label{eq:流动方程：动量：物质导数：tau}
+\DDt{}\int_{V}\vec{u}\rho+\oint_{\partial V}\vec{n}p=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\Dyad{\tau}\label{eq:流动方程：动量：物质导数：tau}
 \end{equation}
 
 \end_inset
@@ -1809,7 +1791,7 @@ reference "sec:流动方程：速度梯度"
 如果本构方程是线性的，即
 \begin_inset Formula 
 \begin{equation}
-\tau_{ik}=D_{ikrs}E_{rs}\qquad i,k,r,s=1,2,3\label{eq:流动方程：本构关系：线性}
+\tau_{ik}=D_{ikrs}E_{rs}\qquad(i,k)=\left\{ 1,2,3\right\} ^{2}\label{eq:流动方程：本构关系：线性}
 \end{equation}
 
 \end_inset
@@ -1960,7 +1942,7 @@ conservation!~ of angular momentum
 \end_inset
 
  内所含总角动量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{x}\cross\vec{u}\rho\dd{V_{\mathrm{MB}}}$
+\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{x}\cross\vec{u}\rho$
 \end_inset
 
  的时间变化率，等于作用在 
@@ -1985,7 +1967,7 @@ conservation!~ of angular momentum
 在（不考虑分布式力偶的）流体力学中，它等价于应力张量或黏性应力张量的对称性：
 \begin_inset Formula 
 \[
-\sigma_{ik}=\sigma_{ki}\iff\tau_{ik}=\tau_{ki}\qquad\forall i,\forall k=1,2,3
+\sigma_{ik}=\sigma_{ki}\iff\tau_{ik}=\tau_{ki}\qquad\forall(i,k)=\left\{ 1,2,3\right\} ^{2}
 \]
 
 \end_inset
@@ -2030,13 +2012,13 @@ conservation!~ of energy
 \end_inset
 
  内所含总能量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V_{\mathrm{MB}}}$
+\begin_inset Formula $\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho$
 \end_inset
 
  的时间变化率，等于“热源 (heat source)”、“传热 (heat conduction)”、“做功 (work)”之和：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{t}\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V_{\mathrm{MB}}} & =\int_{V_{\mathrm{MB}}}j\dd{V_{\mathrm{MB}}}-\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{q}\dd(\partial V_{\mathrm{MB}})\end{aligned}
+\begin{aligned}\dv{t}\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho & =\int_{V_{\mathrm{MB}}}j-\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{q}\end{aligned}
 \]
 
 \end_inset
@@ -2077,7 +2059,7 @@ conservation!~ of energy
 ，时间全导数应当用物质导数代替：
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V}=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\sigma}\vdot\vec{u}-\vec{q}\right)\dd(\partial V)\label{eq:流动方程：能量：物质导数：sigma}
+\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\sigma}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：sigma}
 \end{equation}
 
 \end_inset
@@ -2103,10 +2085,7 @@ reference "eq:流动方程：动量：物质导数：tau"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho\dd{V} & +\oint_{\partial V}\vec{n}\vdot\vec{u}p\dd(\partial V)\\
-=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)\dd{V} & +\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\tau}\vdot\vec{u}-\vec{q}\right)\dd(\partial V)
-\end{aligned}
-\label{eq:流动方程：能量：物质导数：tau}
+\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho+\oint_{\partial V}\vec{n}\vdot\vec{u}p=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\tau}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：tau}
 \end{equation}
 
 \end_inset
@@ -2177,7 +2156,7 @@ conservation!system of ~ laws!Navier–Stokes equations in integral form
 ：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{P}}\dd(\partial V)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}\dd(\partial V)+\int_{V}\ket{H}\dd{V}}\label{eq:流动方程：Navier--Stokes：积分型：物质导数}
+\boxed{\DDt{}\int_{V}\ket{U}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{P}}=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}}\label{eq:流动方程：Navier--Stokes：积分型：物质导数}
 \end{equation}
 
 \end_inset
@@ -2259,7 +2238,7 @@ noprefix "false"
  化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\int_{V}\partial_{t}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{F}}\dd(\partial V)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}\dd(\partial V)+\int_{V}\ket{H}\dd{V}}\label{eq:流动方程：Navier--Stokes：积分型：守恒型}
+\boxed{\int_{V}\partial_{t}\ket{U}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{F}}=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}}\label{eq:流动方程：Navier--Stokes：积分型：守恒型}
 \end{equation}
 
 \end_inset
@@ -2296,7 +2275,7 @@ noprefix "false"
  化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}\dd{V}+\oint_{\partial V}\vec{n}\vdot\left(\vec{\ket{F}}-\vec{u}_{\mathrm{CS}}\ket{U}\right)\dd(\partial V)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}\dd(\partial V)+\int_{V}\ket{H}\dd{V}}\label{eq:流动方程：Navier--Stokes：积分型：移动控制体}
+\boxed{\dv{t}\int_{V}\ket{U}+\oint_{\partial V}\vec{n}\vdot\left(\vec{\ket{F}}-\vec{u}_{\mathrm{CS}}\ket{U}\right)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}}\label{eq:流动方程：Navier--Stokes：积分型：移动控制体}
 \end{equation}
 
 \end_inset
@@ -2308,7 +2287,7 @@ noprefix "false"
 ，则
 \begin_inset Formula 
 \[
-\dv{t}\int_{V}\ket{U}\dd{V}=\int_{V}\partial_{t}\ket{U}\dd{V}
+\dv{t}\int_{V}\ket{U}=\int_{V}\partial_{t}\ket{U}
 \]
 
 \end_inset
@@ -2341,7 +2320,7 @@ noprefix "false"
  中的“面积分”应用 Gauss 散度定理（假设被积函数充分光滑）即得
 \begin_inset Formula 
 \[
-\int_{V}\partial_{t}\ket{U}\dd{V}+\int_{V}\divg\vec{\ket{F}}\dd{V}=\int_{V}\divg\vec{\ket{G}}\dd{V}+\int_{V}\ket{H}\dd{V}
+\int_{V}\partial_{t}\ket{U}+\int_{V}\divg\vec{\ket{F}}=\int_{V}\divg\vec{\ket{G}}+\int_{V}\ket{H}
 \]
 
 \end_inset
@@ -2515,7 +2494,7 @@ reference "eq:流动方程：Navier--Stokes：积分型：守恒型"
  等价的
 \begin_inset Formula 
 \begin{equation}
-\int_{V}\rho\Dt{\ket{W}}\dd{V}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{P}}\dd(\partial V)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}\dd(\partial V)+\int_{V}\ket{H}\dd{V}\label{eq:流动方程：Navier--Stokes：积分型：非守恒型}
+\int_{V}\rho\Dt{\ket{W}}+\oint_{\partial V}\vec{n}\vdot\vec{\ket{P}}=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}\label{eq:流动方程：Navier--Stokes：积分型：非守恒型}
 \end{equation}
 
 \end_inset
@@ -2623,12 +2602,12 @@ reference "eq:流动方程：质量：微分型：非守恒型"
 它在三维直角坐标系中的分量形式为
 \begin_inset Formula 
 \begin{equation}
-\rho\Dt\begin{bmatrix}\rho\\
+\rho\Dt{\begin{bmatrix}\rho\\
 u_{1}\\
 u_{2}\\
 u_{3}\\
 e_{0}
-\end{bmatrix}+\begin{bmatrix}\rho^{2}\partial_{\alpha}u_{\alpha}\\
+\end{bmatrix}}+\begin{bmatrix}\rho^{2}\partial_{\alpha}u_{\alpha}\\
 \partial_{1}p\\
 \partial_{2}p\\
 \partial_{3}p\\
@@ -2684,11 +2663,11 @@ reference "eq:流动方程：Navier--Stokes：非守恒型：向量型"
 
 \end_inset
 
- 第二行），暂不代入 
+ 第二行，暂不代入 
 \begin_inset Formula $\Dyad{\sigma}=\Dyad{\tau}-p\Dyad{1}$
 \end_inset
 
-）
+）得
 \begin_inset Formula 
 \[
 \vec{u}\vdot\rho\Dt{\vec{u}}=\vec{u}\vdot\left(\divg\Dyad{\sigma}+\vec{b}\right)
@@ -2882,7 +2861,7 @@ status open
  有如下关系
 \begin_inset Formula 
 \[
-e=\frac{RT}{\gamma-1}=\frac{p/\rho}{\gamma-1}\implies\rho\Dt{e}=\frac{\Dt{p}-p\rho^{-1}\Dt{\rho}}{\gamma-1}=\frac{\Dt{p}+p\divg\vec{u}}{\gamma-1}
+e=\frac{RT}{\gamma-1}=\frac{p/\rho}{\gamma-1}\implies\rho\Dt{e}=\frac{\Dt{p}-(p/\rho)\Dt{\rho}}{\gamma-1}=\frac{\Dt{p}+p\divg\vec{u}}{\gamma-1}
 \]
 
 \end_inset
@@ -2942,7 +2921,7 @@ reference "eq:流动方程：内能方程"
  第二行），并利用“热力学第一定律”：
 \begin_inset Formula 
 \[
-\dd{e}=T\dd{s}-p\dd{v}\implies\Dt{e}=T\Dt{s}-p\Dt{v}
+\dd{e}=T\dd{s}-p\implies\Dt{e}=T\Dt{s}-p\Dt{v}
 \]
 
 \end_inset

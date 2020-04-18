@@ -957,7 +957,7 @@ Element
 s 之间没有（除公共边界以外的）实质性的重叠，即
 \begin_inset Formula 
 \[
-\underbrace{\int_{\Omega=E_{i}\cap E_{k}}\dd{\Omega}}_{\abs{E_{i}\cap E_{k}}}=\delta_{ik}\underbrace{\int_{\Omega=E_{k}}\dd{\Omega}}_{\abs{E_{k}}}\qquad\forall(i,k)\in I(E)\times I(E)
+\underbrace{\int_{E_{i}\cap E_{k}}1}_{\abs{E_{i}\cap E_{k}}}=\delta_{ik}\underbrace{\int_{E_{k}}1}_{\abs{E_{k}}}\qquad\forall(i,k)\in I(E)\times I(E)
 \]
 
 \end_inset
@@ -1136,7 +1136,7 @@ s 的公共端点为 CS，因此
  的长度（一维体积）可以记为
 \begin_inset Formula 
 \[
-h_{i}\coloneqq\abs{E_{i}}\coloneqq\int_{E_{i}}\dd{E_{i}}=x_{i+\half}-x_{i-\half}\qquad\forall i\in I(E)
+h_{i}\coloneqq\abs{E_{i}}\coloneqq\int_{E_{i}}1=\int_{x_{i-\half}}^{x_{i+\half}}1\dd{x}=x_{i+\half}-x_{i-\half}\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1266,7 +1266,7 @@ s 的引用。
 但它实际上是对“积分型守恒律”
 \begin_inset Formula 
 \[
-\int_{\Omega}\partial_{t}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd(\partial\Omega)=0
+\int_{\Omega}\partial_{t}U+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}=0
 \]
 
 \end_inset
@@ -1286,7 +1286,7 @@ s 的引用。
  提到积分号外，从而得到另一种形式的“积分型守恒律”
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}\dd(\partial\Omega)=0\label{eq:有限体积：守恒律：积分型：静止控制体}
+\dv{t}\int_{\Omega}U+\oint_{\partial\Omega}\vec{\nu}\vdot\vec{F}=0\label{eq:有限体积：守恒律：积分型：静止控制体}
 \end{equation}
 
 \end_inset
@@ -1310,7 +1310,7 @@ s 的引用。
 ，就得到“半离散格式”：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{E_{i}}U^{h}\dd{E_{i}}+\oint_{\partial E_{i}}\vec{\nu}\vdot\vec{F}^{h}\dd(\partial E_{i})=0\qquad\forall i\in I(E)}\label{eq:有限体积：守恒律：半离散：固定控制体}
+\boxed{\dv{t}\int_{E_{i}}U^{h}+\oint_{\partial E_{i}}\vec{\nu}\vdot\vec{F}^{h}=0\qquad\forall i\in I(E)}\label{eq:有限体积：守恒律：半离散：固定控制体}
 \end{equation}
 
 \end_inset
@@ -1340,7 +1340,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
  的影响：
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\Omega}U\dd{\Omega}+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}_{\mathrm{CS}}U\right)\dd(\partial\Omega)=0\label{eq:有限体积：守恒律：积分型：移动控制体}
+\dv{t}\int_{\Omega}U+\oint_{\partial\Omega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}_{\mathrm{CS}}U\right)=0\label{eq:有限体积：守恒律：积分型：移动控制体}
 \end{equation}
 
 \end_inset
@@ -1348,7 +1348,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{E_{i}}U^{h}\dd{E_{i}}+\oint_{\partial E_{i}}\vec{\nu}\vdot\left(\vec{F}^{h}-\vec{u}_{\mathrm{CS}}U^{h}\right)\dd(\partial E_{i})=0\qquad\forall i\in I(E)\label{eq:有限体积：守恒律：半离散：移动控制体}
+\dv{t}\int_{E_{i}}U^{h}+\oint_{\partial E_{i}}\vec{\nu}\vdot\left(\vec{F}^{h}-\vec{u}_{\mathrm{CS}}U^{h}\right)=0\qquad\forall i\in I(E)\label{eq:有限体积：守恒律：半离散：移动控制体}
 \end{equation}
 
 \end_inset
@@ -1441,7 +1441,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 ，并将所得等式叠加，就得到
 \begin_inset Formula 
 \[
-\dv{t}\int_{E_{i}\cup E_{k}}U^{h}\dd(E_{i}\cup E_{k})+\oint_{\partial E_{i}\cup\partial E_{k}}\vec{\nu}\vdot\vec{F}^{h}\dd(\partial E_{i}\cup\partial E_{k})=0\qquad\forall(i,k)\in I(E)\times I(E)
+\dv{t}\int_{E_{i}\cup E_{k}}U^{h}+\oint_{\partial E_{i}\cup\partial E_{k}}\vec{\nu}\vdot\vec{F}^{h}=0\qquad\forall(i,k)\in I(E)\times I(E)
 \]
 
 \end_inset
@@ -1501,7 +1501,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
  两侧的积分恰好相互抵消，从而有
 \begin_inset Formula 
 \[
-\oint_{\Gamma=\partial E_{i}\cup\partial E_{k}}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}=\oint_{\Gamma=\partial(E_{i}\cup E_{k})}\vec{\nu}\vdot\vec{F}^{h}\dd{\Gamma}
+\oint_{\partial E_{i}\cup\partial E_{k}}\vec{\nu}\vdot\vec{F}^{h}=\oint_{\partial(E_{i}\cup E_{k})}\vec{\nu}\vdot\vec{F}^{h}
 \]
 
 \end_inset
@@ -1998,7 +1998,7 @@ reference "sec:间断有限元"
  在每个控制体（单元）内按常数分布：
 \begin_inset Formula 
 \[
-U\qty(\vec{x},t_{n})=\bar{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U\dd{E_{i}}}{\abs{E_{i}}\coloneqq\int_{E_{i}}1\dd{E_{i}}}\qquad\forall\vec{x}\in E_{i}
+U\qty(\vec{x},t_{n})=\bar{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U}{\abs{E_{i}}\coloneqq\int_{E_{i}}1}\qquad\forall\vec{x}\in E_{i}
 \]
 
 \end_inset
@@ -2016,7 +2016,7 @@ reference "eq:有限体积：Godunov：推进"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\abs{E_{i}}}\oint_{\partial E_{i}}F_{\nu}^{n}\dd(\partial E_{i})}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\abs{E_{i}}}\oint_{\partial E_{i}}F_{\nu}^{n}}
 \]
 
 \end_inset
@@ -2446,7 +2446,7 @@ name "sec:间断有限元"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\Omega}\left(\partial_{t}U+\divg\vec{F}\right)V\dd{\Omega}=0\qquad\forall V,\forall\Omega
+\int_{\Omega}\left(\partial_{t}U+\divg\vec{F}\right)V=0\qquad\forall V,\forall\Omega
 \]
 
 \end_inset
@@ -2454,7 +2454,7 @@ name "sec:间断有限元"
 经过一次“分部积分 (integral by parts)”并利用“Gauss 散度定理”可得
 \begin_inset Formula 
 \begin{equation}
-\int_{\Omega}\left(V\partial_{t}U-\vec{F}\vdot\grad V\right)\dd{\Omega}+\oint_{\partial\Omega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V\dd(\partial\Omega)=0\qquad\forall V,\forall\Omega\label{eq:间断有限元：积分方程}
+\int_{\Omega}\left(V\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\Omega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=0\qquad\forall V,\forall\Omega\label{eq:间断有限元：积分方程}
 \end{equation}
 
 \end_inset
@@ -2520,9 +2520,9 @@ reference "eq:间断有限元：积分方程"
  可得
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{\Omega}V\,\partial_{t}U\dd{\Omega}\approx\int_{\Omega}V^{h}\,\partial_{t}U^{h}\dd{\Omega} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\Omega}\psi_{l}\phi_{k}\dd{\Omega}\right)\dv{\hat{U}_{k}}{t}\\
-\int_{\Omega}\vec{F}\vdot\grad V\dd{\Omega}\approx\int_{\Omega}\vec{F}^{h}\vdot\grad V^{h}\dd{\Omega} & =\sum_{l}\hat{V}_{l}\,\int_{\Omega}\left(\grad\psi_{l}\right)\vdot\vec{F}\mathopen{}\left(U^{h}\right)\dd{\Omega}\\
-\oint_{\partial\Omega}F_{\nu}\,V\dd(\partial\Omega)\approx\oint_{\partial\Omega}F_{\nu}^{h}\,V^{h}\dd(\partial\Omega) & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\Omega}\psi_{l}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)\dd(\partial\Omega)
+\begin{aligned}\int_{\Omega}V\,\partial_{t}U\approx\int_{\Omega}V^{h}\,\partial_{t}U^{h} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\Omega}\psi_{l}\phi_{k}\right)\dv{\hat{U}_{k}}{t}\\
+\int_{\Omega}\vec{F}\vdot\grad V\approx\int_{\Omega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\Omega}\left(\grad\psi_{l}\right)\vdot\vec{F}\mathopen{}\left(U^{h}\right)\\
+\oint_{\partial\Omega}F_{\nu}\,V\approx\oint_{\partial\Omega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\Omega}\psi_{l}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{aligned}
 \]
 
@@ -2550,7 +2550,7 @@ reference "sec:有限体积：近似 Riemann 解"
 。借助内积符号
 \begin_inset Formula 
 \[
-\ip{\phi}{\psi}\coloneqq\int_{\Omega}\phi\qty(\vec{x})\,\psi\qty(\vec{x})\dd{\Omega}
+\ip{\phi}{\psi}\coloneqq\int_{\Omega}\phi\qty(\vec{x})\,\psi\qty(\vec{x})
 \]
 
 \end_inset
@@ -2571,10 +2571,10 @@ reference "sec:有限体积：近似 Riemann 解"
 \end{bmatrix}}_{\ket{U}}=\underbrace{\int_{\Omega}\begin{bmatrix}\grad\psi_{1}\\
 \vdots\\
 \grad\psi_{L}
-\end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)\dd{\Omega}-\oint_{\partial\Omega}\begin{bmatrix}\psi_{1}\\
+\end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)-\oint_{\partial\Omega}\begin{bmatrix}\psi_{1}\\
 \vdots\\
 \psi_{L}
-\end{bmatrix}F_{\nu}\mathopen{}\left(U^{h},U_{+}^{h}\right)\dd(\partial\Omega)}_{\ket{B(U)}}
+\end{bmatrix}F_{\nu}\mathopen{}\left(U^{h},U_{+}^{h}\right)}_{\ket{B(U)}}
 \]
 
 \end_inset
@@ -2651,10 +2651,10 @@ name "eq:间断有限元：矩阵方程"
 \ket{B(U)}\coloneqq\int_{E_{i}}\begin{bmatrix}\grad\phi_{1}\\
 \vdots\\
 \grad\phi_{L}
-\end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)\dd{E_{i}}-\oint_{\partial E_{i}}\begin{bmatrix}\phi_{1}\\
+\end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)-\oint_{\partial E_{i}}\begin{bmatrix}\phi_{1}\\
 \vdots\\
 \phi_{L}
-\end{bmatrix}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)\dd(\partial E_{i})
+\end{bmatrix}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{gathered}
 \end{equation}
 
@@ -2779,7 +2779,7 @@ reference "eq:间断有限元：矩阵方程"
  上的“正交基 (orthogonal basis)”
 \begin_inset Formula 
 \[
-\ip{\phi_{k}}{\phi_{l}}\coloneqq\int_{E_{i}}\phi_{k}\qty(\vec{x})\,\phi_{l}\qty(\vec{x})\dd{E_{i}}=\ip{\phi_{k}}{\phi_{k}}\delta_{kl}\qquad\forall k,\forall l
+\ip{\phi_{k}}{\phi_{l}}\coloneqq\int_{E_{i}}\phi_{k}\qty(\vec{x})\,\phi_{l}\qty(\vec{x})=\ip{\phi_{k}}{\phi_{k}}\delta_{kl}\qquad\forall k,\forall l
 \]
 
 \end_inset
@@ -2803,7 +2803,7 @@ reference "eq:间断有限元：矩阵方程"
  取为“归一化的 (normalized)”正交基
 \begin_inset Formula 
 \[
-\ip{\phi_{k}}{\phi_{l}}\coloneqq\int_{E_{i}}\phi_{k}\qty(\vec{x})\,\phi_{l}\qty(\vec{x})\dd{E_{i}}=\delta_{kl}\qquad\forall k,\forall l
+\ip{\phi_{k}}{\phi_{l}}\coloneqq\int_{E_{i}}\phi_{k}\qty(\vec{x})\,\phi_{l}\qty(\vec{x})=\delta_{kl}\qquad\forall k,\forall l
 \]
 
 \end_inset
@@ -3299,7 +3299,7 @@ name "tab:间断有限元：数值积分：直线段"
  上的“面积分 (surface integral)”可以化为“标准三角形”上的“二重积分 (double integral)”：
 \begin_inset Formula 
 \[
-\iint_{\Omega=\triangle ABC}\phi\qty(\vec{x})\dd{\Omega}=\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\lambda_{A},\lambda_{B})\,\abs{J_{x\to\lambda}}\dd{\lambda_{A}}\dd{\lambda_{B}}
+\iint_{\triangle ABC}\phi\qty(\vec{x})=\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\lambda_{A},\lambda_{B})\,\abs{J_{x\to\lambda}}\dd{\lambda_{A}}\dd{\lambda_{B}}
 \]
 
 \end_inset
@@ -3374,7 +3374,7 @@ y_{A}-y_{C} & y_{B}-y_{C}
 ”程序给出近似：
 \begin_inset Formula 
 \[
-\iint_{\Omega=\triangle ABC}\phi\qty(\vec{x})\dd{\Omega}=\abs{J_{x\to\lambda}}\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi\qty(\vec{\lambda}_{q})\dd{\lambda_{A}}\dd{\lambda_{B}}\approx2\abs{\triangle ABC}\sum_{q=1}^{Q}\phi\qty(\vec{\lambda}_{q})\,w_{q}
+\iint_{\triangle ABC}\phi\qty(\vec{x})=\abs{J_{x\to\lambda}}\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi\qty(\vec{\lambda}_{q})\dd{\lambda_{A}}\dd{\lambda_{B}}\approx2\abs{\triangle ABC}\sum_{q=1}^{Q}\phi\qty(\vec{\lambda}_{q})\,w_{q}
 \]
 
 \end_inset
@@ -3864,7 +3864,7 @@ noprefix "false"
 ，是为了方便与其他文献对照，后者通常将“三角形上的 Gauss–Legendre 求积”定义为
 \begin_inset Formula 
 \[
-\iint_{\Omega=\triangle ABC}\phi\qty(\vec{x})\dd{\Omega}\approx\abs{\triangle ABC}\sum_{q=1}^{Q}\phi\qty(\vec{\lambda}_{q})\,W_{q}
+\iint_{\triangle ABC}\phi\qty(\vec{x})\approx\abs{\triangle ABC}\sum_{q=1}^{Q}\phi\qty(\vec{\lambda}_{q})\,W_{q}
 \]
 
 \end_inset
