@@ -205,10 +205,11 @@ fontsize={\footnotesize}
 - [常用参考文档](https://zhuanlan.zhihu.com/p/43938945)
 
 ### 书籍
-- Knuth 1984《The TeXbook》
-- Lamport 1994《LaTeX: a Document Preparation System》
-- Mittelbach 2005《The LaTeX Companion》
-- Grätzer [2016《More Math into LaTeX》](10.1007/978-3-319-23796-1)
+- 《The TeXbook》Knuth 1984
+- 《LaTeX: a Document Preparation System》Lamport 1994
+- 《The LaTeX Companion》Mittelbach 2005
+- [《More Math into LaTeX》Grätzer  2016](https://doi.org/10.1007/978-3-319-23796-1)
+- [《LaTeX》on Wikibooks](https://en.wikibooks.org/wiki/LaTeX)
 
 ### ⚠️ 信息污染源
 - 百度搜索
