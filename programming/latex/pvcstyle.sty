@@ -1,11 +1,25 @@
 \ProvidesPackage{pvcstyle}
-
+%
+% Options for Mathematics
+%
+% Turn on/off arrows above vectors:
+\newif\if@arrow\@arrowfalse\DeclareOption{arrow}{\@arrowtrue}
+\ExecuteOptions{arrow}
+% Turn on/off boldness of vectors:
 \newif\if@bold\@boldfalse\DeclareOption{bold}{\@boldtrue}
-\newif\if@euler\@eulerfalse\DeclareOption{euler}{\@eulertrue}
 \ExecuteOptions{bold}
+%
+% Options for Fonts
+%
+\newif\if@euler\@eulerfalse\DeclareOption{euler}{\@eulertrue}
+\newif\if@latin\@latinfalse\DeclareOption{latin}{\@latintrue}
+%
+% Options for Code Highlighting
+%
+\PassOptionsToPackage{chapter}{minted}
+
 \ProcessOptions\relax  % terminates the option processing
 
-\PassOptionsToPackage{chapter}{minted}
 
 
 \RequirePackage{accents}  % more accents
