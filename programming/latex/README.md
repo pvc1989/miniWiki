@@ -209,7 +209,7 @@ fontsize={\footnotesize}
 - 《LaTeX: a Document Preparation System》Lamport 1994
 - 《The LaTeX Companion》Mittelbach 2005
 - [《More Math into LaTeX》Grätzer  2016](https://doi.org/10.1007/978-3-319-23796-1)
-- [《LaTeX》on Wikibooks](https://en.wikibooks.org/wiki/LaTeX)
+- 《[TeX](https://en.wikibooks.org/wiki/TeX)》and 《[LaTeX](https://en.wikibooks.org/wiki/LaTeX)》on Wikibooks
 
 ### ⚠️ 信息污染源
 - 百度搜索
