@@ -6,10 +6,7 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -17,7 +14,7 @@ theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -73,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -93,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -107,11 +105,775 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-线性算子的特征子空间
+特征子空间
+\end_layout
+
+\begin_layout Subsection
+特征值、特征向量、特征子空间
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征值、特征向量]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若存在元素 
+\begin_inset Formula $\lambda\in\mathbb{F}$
+\end_inset
+
+ 及非零向量 
+\begin_inset Formula $\vec{v}\in\mathcal{V}$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\Operator{A}\vec{v}=\lambda\vec{v}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的一个“特征值 (eigen-value)”，称 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的一个属于特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的“特征向量 (eigen-vector)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+给定 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的任意一个特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+，集合
+\begin_inset Formula 
+\[
+\mathcal{V}_{\lambda}\coloneqq\left\{ \vec{v}\in\mathcal{V}:\Operator{A}\vec{v}=\lambda\vec{v}\right\} \subset\mathcal{V}
+\]
+
+\end_inset
+
+是一个线性空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征子空间、几何重数]
+\end_layout
+
+\end_inset
+
+称上述 
+\begin_inset Formula $\mathcal{V}_{\lambda}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的属于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的“特征子空间 (eigen-subspace)”，并称 
+\begin_inset Formula $\dim\mathcal{V}_{\lambda}$
+\end_inset
+
+ 为特征值 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的“几何重数 (geometric multiplicity)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}}\end{Bmatrix}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{2,1} & \dots & \vec{v}_{2,r_{2}}\end{Bmatrix}$
+\end_inset
+
+ 分别为 
+\begin_inset Formula $\mathcal{V}_{\lambda_{1}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\mathcal{V}_{\lambda_{2}}$
+\end_inset
+
+ 中的线性无关向量组，则
+\begin_inset Formula 
+\[
+\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}} & \vec{v}_{2,1} & \dots & \vec{v}_{2,r_{2}}\end{Bmatrix}
+\]
+
+\end_inset
+
+为 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 中的线性无关向量组。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{i,1} & \dots & \vec{v}_{1,r_{i}}\end{Bmatrix}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+ 中的线性无关向量组（其中 
+\begin_inset Formula $i=1,2,\dots,s$
+\end_inset
+
+），则
+\begin_inset Formula 
+\[
+\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}} & \dots & \vec{v}_{s,1} & \dots & \vec{v}_{s,r_{s}}\end{Bmatrix}
+\]
+
+\end_inset
+
+为 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 中的线性无关向量组。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+设线性无关向量组 
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基。若线性算子 
+\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
+\end_inset
+
+ 与其特征向量 
+\begin_inset Formula $\vec{v}\in\mathcal{V}$
+\end_inset
+
+ 在此基下的矩阵分别为 
+\begin_inset Formula $\Matrix{A}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\ket{v}\in\mathbb{F}^{n\times1}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\Operator{A}\vec{v}=\lambda\vec{v}\iff\Matrix{A}\ket{v}=\lambda\ket{v}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子，则
+\begin_inset Formula 
+\[
+f(\lambda)\coloneqq\det(\lambda\Matrix{I}-\Matrix{A})
+\]
+
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的一个 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征多项式、特征方程]
+\end_layout
+
+\end_inset
+
+称 
+\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“特征多项式 (characteristic polynomial)”，并称方程 
+\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“特征方程 (characteristic equation)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+以下条件等价：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\Matrix{A}\ket{v}=\lambda\ket{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 是一元 
+\begin_inset Formula $n$
+\end_inset
+
+ 次代数方程 
+\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
+\end_inset
+
+ 在域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 内之根。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\ket{v}$
+\end_inset
+
+ 是 
+\begin_inset Formula $n$
+\end_inset
+
+ 元一次方程组 
+\begin_inset Formula $\left(\lambda\Matrix{I}-\Matrix{A}\right)\ket{v}$
+\end_inset
+
+ 的非零解。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征方程在域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 内有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个根，则 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征多项式可以分解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个一次因式乘积：
+\begin_inset Formula 
+\begin{equation}
+\det(\lambda\Matrix{I}-\Matrix{A})=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}\qquad\sum_{i=1}^{s}r_{i}=n\label{eq:线性算子：特征多项式：因式分解}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[代数重数]
+\end_layout
+
+\end_inset
+
+称 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:线性算子：特征多项式：因式分解"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 为特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的“代数重数 (algebraic multiplicity)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+相似矩阵具有相同的特征多项式
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\exists\Matrix{P}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\Matrix{A}=\Matrix{P}^{-1}\Matrix{B}\Matrix{P}$
+\end_inset
+
+，则 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{B}$
+\end_inset
+
+ 有相同的特征多项式，从而有相同的特征值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 可对角化条件
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可对角化]
+\end_layout
+
+\end_inset
+
+若存在域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基，使得线性算子 
+\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
+\end_inset
+
+ 在此基下的矩阵 
+\begin_inset Formula $\Matrix{A}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+ 为对角阵，则称 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为“可对角化算子 (diagonalizable operator)”，并称此 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在任意一组基下的矩阵为“可对角化矩阵 (diagonalizable matrix)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可对角化条件]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子，则以下条件等价：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+存在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基 
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\end_inset
+
+，使得 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在此基下的矩阵 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 为对角阵：
+\begin_inset Formula 
+\begin{equation}
+\Operator{A}\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}\Matrix{A}\qquad\Matrix{A}\coloneqq\begin{bmatrix}a_{1}\\
+ & \ddots\\
+ &  & a_{n}
+\end{bmatrix}\label{eq:线性算子：对角阵：一般}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的特征向量。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 有一组由 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征向量构成的基。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathcal{V}=\bigoplus_{i=1}^{s}\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的互异特征值（共 
+\begin_inset Formula $s$
+\end_inset
+
+ 个）。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\dim\mathcal{V}=\sum_{i=1}^{s}\dim\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的互异特征值（共 
+\begin_inset Formula $s$
+\end_inset
+
+ 个）。
+\end_layout
+
+\begin_layout Enumerate
+特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的代数重数 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 与几何重数 
+\begin_inset Formula $\dim\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+ 相等，其中 
+\begin_inset Formula $i=1,\dots,s$
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+适当调整基 
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\end_inset
+
+ 中向量顺序，可将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:线性算子：对角阵：一般"
+
+\end_inset
+
+ 式中的矩阵 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 化为
+\begin_inset Formula 
+\[
+\Operator{A}\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}\Matrix{A}\qquad\Matrix{A}\coloneqq\begin{bmatrix}\Matrix{\Lambda_{1}}\\
+ & \ddots\\
+ &  & \Matrix{\Lambda_{s}}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Matrix{\Lambda_{i}}$
+\end_inset
+
+ 为以 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 为对角元的 
+\begin_inset Formula $r_{i}\equiv\dim\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+ 级对角阵（共 
+\begin_inset Formula $s$
+\end_inset
+
+ 个）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
