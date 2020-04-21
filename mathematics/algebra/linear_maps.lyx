@@ -109,7 +109,7 @@ theorems-chap
 \end_layout
 
 \begin_layout Subsection
-特征值、特征向量、特征子空间
+特征值 & 特征向量
 \end_layout
 
 \begin_layout Definition
@@ -179,6 +179,326 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Theorem
+设线性无关向量组 
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基。若线性算子 
+\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
+\end_inset
+
+ 与其特征向量 
+\begin_inset Formula $\vec{v}\in\mathcal{V}$
+\end_inset
+
+ 在此基下的矩阵分别为 
+\begin_inset Formula $\Matrix{A}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\ket{v}\in\mathbb{F}^{n\times1}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\Operator{A}\vec{v}=\lambda\vec{v}\iff\Matrix{A}\ket{v}=\lambda\ket{v}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子，则
+\begin_inset Formula 
+\begin{equation}
+f(\lambda)\coloneqq\det(\lambda\Matrix{I}-\Matrix{A})\label{eq:线性算子：特征多项式：定义}
+\end{equation}
+
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的一个 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征多项式、特征方程]
+\end_layout
+
+\end_inset
+
+称 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:线性算子：特征多项式：定义"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $f(\lambda)$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“特征多项式 (characteristic polynomial)”，并称方程 
+\begin_inset Formula $f(\lambda)=0$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“特征方程 (characteristic equation)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $\Matrix{A}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+、
+\begin_inset Formula $\ket{v}\in\mathbb{F}^{n\times1}$
+\end_inset
+
+、
+\begin_inset Formula $\lambda\in\mathbb{F}$
+\end_inset
+
+，则以下条件等价：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\Matrix{A}\ket{v}=\lambda\ket{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 是一元 
+\begin_inset Formula $n$
+\end_inset
+
+ 次代数方程 
+\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
+\end_inset
+
+ 在域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 内之根。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\ket{v}$
+\end_inset
+
+ 是 
+\begin_inset Formula $n$
+\end_inset
+
+ 元一次方程组 
+\begin_inset Formula $\left(\lambda\Matrix{I}-\Matrix{A}\right)\ket{v}$
+\end_inset
+
+ 的非零解。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征方程在域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 内有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个根，则 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征多项式可以分解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个一次因式乘积，即
+\begin_inset Formula 
+\begin{equation}
+\det(\lambda\Matrix{I}-\Matrix{A})=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}\qquad\sum_{i=1}^{s}r_{i}=n\label{eq:线性算子：特征多项式：因式分解}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[代数重数]
+\end_layout
+
+\end_inset
+
+称 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:线性算子：特征多项式：因式分解"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 为特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的“代数重数 (algebraic multiplicity)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+相似矩阵具有相同的特征多项式
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\exists\Matrix{P}\in\mathbb{F}^{n\times n}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\Matrix{A}=\Matrix{P}^{-1}\Matrix{B}\Matrix{P}$
+\end_inset
+
+，则 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{B}$
+\end_inset
+
+ 有相同的特征多项式，从而有相同的特征值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+特征子空间
 \end_layout
 
 \begin_layout Lemma
@@ -323,294 +643,24 @@ status open
 
 \end_layout
 
-\begin_layout Theorem
-设线性无关向量组 
-\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
-\end_inset
-
- 为域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 上的 
-\begin_inset Formula $n$
-\end_inset
-
- 维线性空间 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 的一组基。若线性算子 
-\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
-\end_inset
-
- 与其特征向量 
-\begin_inset Formula $\vec{v}\in\mathcal{V}$
-\end_inset
-
- 在此基下的矩阵分别为 
-\begin_inset Formula $\Matrix{A}\in\mathbb{F}^{n\times n}$
-\end_inset
-
- 与 
-\begin_inset Formula $\ket{v}\in\mathbb{F}^{n\times1}$
-\end_inset
-
-，则
-\begin_inset Formula 
-\[
-\Operator{A}\vec{v}=\lambda\vec{v}\iff\Matrix{A}\ket{v}=\lambda\ket{v}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-若 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 为域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 上的 
-\begin_inset Formula $n$
-\end_inset
-
- 维线性空间 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 上的线性算子，则
-\begin_inset Formula 
-\[
-f(\lambda)\coloneqq\det(\lambda\Matrix{I}-\Matrix{A})
-\]
-
-\end_inset
-
- 为域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 上的一个 
-\begin_inset Formula $n$
-\end_inset
-
- 次多项式。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[特征多项式、特征方程]
-\end_layout
-
-\end_inset
-
-称 
-\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})$
-\end_inset
-
- 为 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 的“特征多项式 (characteristic polynomial)”，并称方程 
-\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
-\end_inset
-
- 为 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 的“特征方程 (characteristic equation)”。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-以下条件等价：
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $\Matrix{A}\ket{v}=\lambda\ket{v}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\lambda$
-\end_inset
-
- 是一元 
-\begin_inset Formula $n$
-\end_inset
-
- 次代数方程 
-\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
-\end_inset
-
- 在域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 内之根。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\ket{v}$
-\end_inset
-
- 是 
-\begin_inset Formula $n$
-\end_inset
-
- 元一次方程组 
-\begin_inset Formula $\left(\lambda\Matrix{I}-\Matrix{A}\right)\ket{v}$
-\end_inset
-
- 的非零解。
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Corollary
-若 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 的特征方程在域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 内有 
-\begin_inset Formula $n$
-\end_inset
-
- 个根，则 
-\begin_inset Formula $\Operator{A}$
-\end_inset
-
- 的特征多项式可以分解为 
-\begin_inset Formula $n$
-\end_inset
-
- 个一次因式乘积：
-\begin_inset Formula 
-\begin{equation}
-\det(\lambda\Matrix{I}-\Matrix{A})=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}\qquad\sum_{i=1}^{s}r_{i}=n\label{eq:线性算子：特征多项式：因式分解}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[代数重数]
-\end_layout
-
-\end_inset
-
-称 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:线性算子：特征多项式：因式分解"
-
-\end_inset
-
- 式中的 
-\begin_inset Formula $r_{i}$
-\end_inset
-
- 为特征值 
+特征值 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
- 的“代数重数 (algebraic multiplicity)”。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
+ 的代数重数 
+\begin_inset Formula $r_{i}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-相似矩阵具有相同的特征多项式
-\end_layout
-
+ 不小于几何重数 
+\begin_inset Formula $\dim\mathcal{V}_{\lambda_{i}}$
 \end_inset
 
-若 
-\begin_inset Formula $\exists\Matrix{P}\in\mathbb{F}^{n\times n}$
+，其中 
+\begin_inset Formula $i=1,\dots,s$
 \end_inset
 
- 使得 
-\begin_inset Formula $\Matrix{A}=\Matrix{P}^{-1}\Matrix{B}\Matrix{P}$
-\end_inset
-
-，则 
-\begin_inset Formula $\Matrix{A}$
-\end_inset
-
- 与 
-\begin_inset Formula $\Matrix{B}$
-\end_inset
-
- 有相同的特征多项式，从而有相同的特征值。
+。
 \end_layout
 
 \begin_layout Standard
@@ -877,7 +927,7 @@ reference "eq:线性算子：对角阵：一般"
 \end_layout
 
 \begin_layout Section
-线性算子的不变子空间
+不变子空间
 \end_layout
 
 \begin_layout Subsection
