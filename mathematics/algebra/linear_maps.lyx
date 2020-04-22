@@ -777,7 +777,7 @@ status open
 \Operator{A}\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}\Matrix{A}\qquad\Matrix{A}\coloneqq\begin{bmatrix}a_{1}\\
  & \ddots\\
  &  & a_{n}
-\end{bmatrix}\label{eq:线性算子：对角阵：一般}
+\end{bmatrix}\label{eq:线性算子：对角化}
 \end{equation}
 
 \end_inset
@@ -881,7 +881,7 @@ status open
  中向量顺序，可将 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:线性算子：对角阵：一般"
+reference "eq:线性算子：对角化"
 
 \end_inset
 
@@ -927,7 +927,536 @@ reference "eq:线性算子：对角阵：一般"
 \end_layout
 
 \begin_layout Section
+相似最简形
+\end_layout
+
+\begin_layout Subsection
 不变子空间
+\end_layout
+
+\begin_layout Lemma
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+\forall\vec{v}\in\mathcal{W}\implies\Operator{A}\vec{v}\in\mathcal{W}
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 是一个线性空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[不变子空间]
+\end_layout
+
+\end_inset
+
+上述线性空间 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 被称为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“不变子空间 (eigen-subspace)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 是由线性无关向量组 
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{1} & \dots & \vec{v}_{k}\end{Bmatrix}$
+\end_inset
+
+ 张成的线性空间，且 
+\begin_inset Formula $\forall i\in\left\{ 1,\dots,k\right\} \colon\Operator{A}\vec{v}_{i}\in\mathcal{W}$
+\end_inset
+
+，则 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[不变子空间上的算子]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\mathcal{W}\subset\mathcal{V}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
+\end_inset
+
+ 的不变子空间，则 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 上的限制 
+\begin_inset Formula $\Operator{A}|\mathcal{W}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\mathcal{W}$
+\end_inset
+
+ 上的线性算子。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[不变子空间的商空间上的算子]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\mathcal{W}\subset\mathcal{V}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\Operator{A}\in\mathcal{L}(\mathcal{V})$
+\end_inset
+
+ 的不变子空间，则 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在商空间 
+\begin_inset Formula $\mathcal{V}/\mathcal{W}$
+\end_inset
+
+ 上诱导出的映射
+\begin_inset Formula 
+\[
+\begin{aligned}\Operator{A}/\mathcal{W}\colon\mathcal{V}/\mathcal{W} & \to\mathcal{V}/\mathcal{W}\\
+\vec{v}+\mathcal{W} & \mapsto\Operator{A}\vec{v}+\mathcal{W}
+\end{aligned}
+\]
+
+\end_inset
+
+是 
+\begin_inset Formula $\mathcal{V}/\mathcal{W}$
+\end_inset
+
+ 上的线性算子。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分块可对角化条件]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子，则以下条件等价：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+存在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基 
+\begin_inset Formula $\begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}$
+\end_inset
+
+，使得 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在此基下的矩阵 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 为分块对角阵：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\Operator{A} & \begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}\\
+= & \begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}\begin{bmatrix}\Matrix{A_{1}}\\
+ & \ddots\\
+ &  & \Matrix{A_{s}}
+\end{bmatrix}
+\end{aligned}
+\label{eq:线性算子：分块对角化}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\Matrix{A_{i}}$
+\end_inset
+
+ 为 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 级方阵。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathcal{V}=\bigoplus_{i=1}^{s}\mathcal{W}_{i}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\mathcal{W}_{i}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 维不变子空间（共 
+\begin_inset Formula $s$
+\end_inset
+
+ 个）。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+于是“将 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 化为分块对角阵”归结为“用 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间对 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 作直和分解”。
+\end_layout
+
+\begin_layout Subsection
+直和分解
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的核空间 
+\begin_inset Formula $\ker\Operator{A}\coloneqq\left\{ \vec{v}\in\mathcal{V}:\Operator{A}\vec{v}=\vec{0}\right\} $
+\end_inset
+
+、象空间 
+\begin_inset Formula $\Operator{A}\mathcal{V}\coloneqq\left\{ \Operator{A}\vec{v}:\vec{v}\in\mathcal{V}\right\} $
+\end_inset
+
+、特征子空间 
+\begin_inset Formula $\mathcal{V}_{\lambda_{i}}\coloneqq\left\{ \vec{v}\in\mathcal{V}:\Operator{A}\vec{v}=\lambda_{i}\vec{v}\right\} $
+\end_inset
+
+ 都是 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Operator{B}$
+\end_inset
+
+ 是“可对易的 (commutative)”，即 
+\begin_inset Formula $\Operator{A}\Operator{B}=\Operator{B}\Operator{A}$
+\end_inset
+
+，则 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的核空间 
+\begin_inset Formula $\ker\Operator{A}$
+\end_inset
+
+、象空间 
+\begin_inset Formula $\Operator{A}\mathcal{V}$
+\end_inset
+
+、特征子空间 
+\begin_inset Formula $\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+ 都是 
+\begin_inset Formula $\Operator{B}$
+\end_inset
+
+ 的不变子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+算子 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 与其自身的单项式 
+\begin_inset Formula $\Operator{A}^{k}$
+\end_inset
+
+ 及更一般的多项式
+\begin_inset Formula 
+\[
+f\qty(\Operator{A})\coloneqq\sum_{k=0}^{m}a_{k}\Operator{A}^{k}\qquad\forall k\colon a_{k}\in\mathbb{F}
+\]
+
+\end_inset
+
+均可对易，从而有 
+\begin_inset Formula $\ker f\qty(\Operator{A})$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若多项式 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 可以分解为两个互素因式乘积，即 
+\begin_inset Formula $f(x)=f_{1}(x)\cdot f_{2}(x)$
+\end_inset
+
+ 且 
+\begin_inset Formula $\gcd(f_{1},f_{2})=1$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\ker f\qty(\Operator{A})=\ker f_{1}\qty(\Operator{A})\oplus\ker f_{2}\qty(\Operator{A})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若多项式 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 可以分解为 
+\begin_inset Formula $s$
+\end_inset
+
+ 个互素因式乘积，即 
+\begin_inset Formula $f(x)=\prod_{i=1}^{s}f_{i}(x)$
+\end_inset
+
+ 且 
+\begin_inset Formula $\forall(i,k)\colon\gcd(f_{i},f_{k})=1$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\ker f\qty(\Operator{A})=\bigoplus_{i=1}^{s}\ker f_{i}\qty(\Operator{A})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上述直和分解式右端的每一项都是 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间，于是“用 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的不变子空间对 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 作直和分解”归结为“寻找多项式 
+\begin_inset Formula $f$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\mathcal{V}=\ker f\qty(\Operator{A})$
+\end_inset
+
+”。
+\end_layout
+
+\begin_layout Subsection
+零化多项式
 \end_layout
 
 \begin_layout Subsection
