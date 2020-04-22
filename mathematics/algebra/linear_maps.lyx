@@ -252,7 +252,7 @@ status open
  上的线性算子，则
 \begin_inset Formula 
 \begin{equation}
-f(\lambda)\coloneqq\det(\lambda\Matrix{I}-\Matrix{A})\label{eq:线性算子：特征多项式：定义}
+f(\lambda)\coloneqq\det(\lambda\Matrix{1}-\Matrix{A})\label{eq:线性算子：特征多项式：定义}
 \end{equation}
 
 \end_inset
@@ -352,7 +352,7 @@ reference "eq:线性算子：特征多项式：定义"
 \end_inset
 
  次代数方程 
-\begin_inset Formula $\det(\lambda\Matrix{I}-\Matrix{A})=0$
+\begin_inset Formula $\det(\lambda\Matrix{1}-\Matrix{A})=0$
 \end_inset
 
  在域 
@@ -371,7 +371,7 @@ reference "eq:线性算子：特征多项式：定义"
 \end_inset
 
  元一次方程组 
-\begin_inset Formula $\left(\lambda\Matrix{I}-\Matrix{A}\right)\ket{v}$
+\begin_inset Formula $\left(\lambda\Matrix{1}-\Matrix{A}\right)\ket{v}$
 \end_inset
 
  的非零解。
@@ -409,7 +409,7 @@ reference "eq:线性算子：特征多项式：定义"
  个一次因式乘积，即
 \begin_inset Formula 
 \begin{equation}
-\det(\lambda\Matrix{I}-\Matrix{A})=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}\qquad\sum_{i=1}^{s}r_{i}=n\label{eq:线性算子：特征多项式：因式分解}
+\det(\lambda\Matrix{1}-\Matrix{A})=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}\qquad\sum_{i=1}^{s}r_{i}=n\label{eq:线性算子：特征多项式：因式分解}
 \end{equation}
 
 \end_inset
@@ -927,7 +927,7 @@ reference "eq:线性算子：对角化"
 \end_layout
 
 \begin_layout Section
-相似最简形
+相似最简型
 \end_layout
 
 \begin_layout Subsection
@@ -996,7 +996,7 @@ status open
 \begin_inset Formula $\Operator{A}$
 \end_inset
 
- 的“不变子空间 (eigen-subspace)”。
+ 的“不变子空间 (invariant subspace)”。
 \end_layout
 
 \begin_layout Standard
@@ -1237,7 +1237,7 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Remark*
 于是“将 
 \begin_inset Formula $\Matrix{A}$
 \end_inset
@@ -1251,6 +1251,13 @@ status open
 \end_inset
 
  作直和分解”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1431,8 +1438,12 @@ f\qty(\Operator{A})\coloneqq\sum_{k=0}^{m}a_{k}\Operator{A}^{k}\qquad\forall k\c
 
 \end_layout
 
-\begin_layout Standard
-上述直和分解式右端的每一项都是 
+\begin_layout Remark*
+注意到 
+\begin_inset Formula $\mathcal{V}=\ker\Operator{0}$
+\end_inset
+
+ 且上述直和分解式右端的每一项都是 
 \begin_inset Formula $\Operator{A}$
 \end_inset
 
@@ -1449,14 +1460,528 @@ f\qty(\Operator{A})\coloneqq\sum_{k=0}^{m}a_{k}\Operator{A}^{k}\qquad\forall k\c
 \end_inset
 
  使得 
-\begin_inset Formula $\mathcal{V}=\ker f\qty(\Operator{A})$
+\begin_inset Formula $f\qty(\Operator{A})=\Operator{0}$
 \end_inset
 
 ”。
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 零化多项式
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[零化多项式]
+\end_layout
+
+\end_inset
+
+若多项式 
+\begin_inset Formula $f$
+\end_inset
+
+ 使得 
+\begin_inset Formula $f\qty(\Operator{A})=\Operator{0}$
+\end_inset
+
+，则称 
+\begin_inset Formula $f$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“零化多项式 (annihilating polynomial)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Hamilton--Caylay]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子，则其特征多项式
+\begin_inset Formula 
+\[
+f(\lambda)\coloneqq\det(\lambda\Matrix{1}-\Matrix{A})
+\]
+
+\end_inset
+
+是 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的一个零化多项式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[矩阵版本]
+\end_layout
+
+\end_inset
+
+矩阵
+\begin_inset Formula 
+\[
+\left(\lambda\Matrix{1}-\Matrix{A}\right)=\begin{bmatrix}\lambda-a_{11} & \cdots & 0-a_{n1}\\
+\vdots & \ddots & \vdots\\
+0-a_{n1} & \cdots & \lambda-a_{nn}
+\end{bmatrix}
+\]
+
+\end_inset
+
+各行各列均只有一个 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的一次多项式，故伴随矩阵
+\begin_inset Formula 
+\[
+\left(\lambda\Matrix{1}-\Matrix{A}\right)^{*}=\begin{bmatrix}g_{11}(\lambda) & \cdots & g_{n1}(\lambda)\\
+\vdots & \ddots & \vdots\\
+g_{n1}(\lambda) & \cdots & g_{nn}(\lambda)
+\end{bmatrix}
+\]
+
+\end_inset
+
+中的每一个元素 
+\begin_inset Formula $g_{ij}(\lambda)$
+\end_inset
+
+ 都是 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的至多 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 次多项式，从而可以化为
+\begin_inset Formula 
+\[
+\left(\lambda\Matrix{1}-\Matrix{A}\right)^{*}=\sum_{k=1}^{n}\Matrix{B_{k-1}}\lambda^{k-1}\qquad\forall k\colon\Matrix{B_{k}}\in\mathbb{F}^{n\times n}
+\]
+
+\end_inset
+
+将其代入恒等式
+\begin_inset Formula 
+\[
+\left(\lambda\Matrix{1}-\Matrix{A}\right)^{*}\left(\lambda\Matrix{1}-\Matrix{A}\right)=\Matrix{1}\det(\lambda\Matrix{1}-\Matrix{A})=\Matrix{1}f(\lambda)
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\begin{aligned}\Matrix{1}f(\lambda) & =\left(\Matrix{B_{n-1}}\lambda^{n-1}+\Matrix{B_{n-2}}\lambda^{n-2}+\cdots+\Matrix{B_{1}}\lambda^{1}+\Matrix{B_{0}}\lambda^{0}\right)\left(\lambda\Matrix{1}-\Matrix{A}\right)\\
+ & =\Matrix{B_{n-1}}\lambda^{n}+\sum_{k=2}^{n}\left(\Matrix{B_{k-2}}-\Matrix{B_{k-1}}\Matrix{A}\right)\lambda^{k-1}+\Matrix{B_{0}}\Matrix{A}\lambda^{0}
+\end{aligned}
+\]
+
+\end_inset
+
+另一方面，因 
+\begin_inset Formula $f(\lambda)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的 
+\begin_inset Formula $n$
+\end_inset
+
+ 次首一
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+首一：最高次项系数为一。
+\end_layout
+
+\end_inset
+
+多项式，故有
+\begin_inset Formula 
+\[
+\Matrix{1}f(\lambda)=\Matrix{1}\lambda^{n}+\Matrix{1}a_{n-1}\lambda^{n-1}+\cdots+\Matrix{1}a_{1}\lambda^{1}+\Matrix{1}a_{0}\lambda^{0}
+\]
+
+\end_inset
+
+比较同类项系数可得
+\begin_inset Formula 
+\[
+\begin{aligned}\Matrix{B_{n-1}}\phantom{-\Matrix{B_{n-1}}\Matrix{A}} & =\Matrix{1}\\
+\Matrix{B_{n-2}}-\Matrix{B_{n-1}}\Matrix{A} & =\Matrix{1}a_{n-1}\\
+ & \vdots\\
+\Matrix{B_{0}}-\Matrix{B_{1}}\Matrix{A} & =\Matrix{1}a_{1}\\
+-\Matrix{B_{0}}\Matrix{A} & =\Matrix{1}a_{0}
+\end{aligned}
+\]
+
+\end_inset
+
+以 
+\begin_inset Formula $\Matrix{A}^{n-k+1}$
+\end_inset
+
+ 右乘第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行，再对各行求和，即得
+\begin_inset Formula 
+\[
+\Matrix{0}=f\qty(\Matrix{A})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征多项式有因式分解 
+\begin_inset Formula $f(\lambda)=\prod_{i=1}^{s}p_{i}^{r_{i}}(\lambda)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\begin{Bmatrix}p_{1}(\lambda) & \dots & p_{s}(\lambda)\end{Bmatrix}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上两两互素的首一多项式，则 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 有直和分解
+\begin_inset Formula 
+\[
+\mathcal{V}=\ker f\qty(\Operator{A})=\bigoplus_{i=1}^{s}\ker p_{i}^{r_{i}}\qty(\Operator{A})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的特征多项式有因式分解 
+\begin_inset Formula $f(\lambda)=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{r_{i}}$
+\end_inset
+
+，其中 
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的互异特征值，则 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 有直和分解
+\begin_inset Formula 
+\begin{equation}
+\mathcal{V}=\ker f\qty(\Operator{A})=\bigoplus_{i=1}^{s}\ker\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{r_{i}}\label{eq:线性算子：直和分解：根子空间}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[根子空间]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:线性算子：直和分解：根子空间"
+
+\end_inset
+
+ 式中的 
+\begin_inset Formula $\ker\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{r_{i}}$
+\end_inset
+
+ 称为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的属于 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的“根子空间 (root subspace)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+尽管根子空间的定义中出现了 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的代数重数 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+，但有可能存在小于 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ 的正整数 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\ker\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{t_{i}}=\ker\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{r_{i}}
+\]
+
+\end_inset
+
+因此对每个 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 而言，最小的那个 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ 也是属于 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的基本性质。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+三维空间中的 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴投影算子 
+\begin_inset Formula $\Operator{P_{x}}$
+\end_inset
+
+ 在标准基 
+\begin_inset Formula $\begin{Bmatrix}\vec{i} & \vec{j} & \vec{k}\end{Bmatrix}$
+\end_inset
+
+ 下的矩阵为
+\begin_inset Formula 
+\[
+\Matrix{P_{x}}\coloneqq\begin{bmatrix}1 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}
+\]
+
+\end_inset
+
+易得其特征多项式、特征值、代数重数分别为
+\begin_inset Formula 
+\[
+\det(\Matrix{P_{x}})=(\lambda-1)\lambda^{2}\implies\begin{cases}
+\lambda_{1}=1 & r_{1}=1\\
+\lambda_{2}=0 & r_{2}=2
+\end{cases}
+\]
+
+\end_inset
+
+不难发现，如下矩阵的任意次幂等于其自身：
+\begin_inset Formula 
+\[
+\Matrix{P_{x}}-\lambda_{2}\Matrix{1}=\begin{bmatrix}1 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{bmatrix}
+\]
+
+\end_inset
+
+故存在 
+\begin_inset Formula $t_{2}=1<r_{2}$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\ker\left(\Operator{A}-\lambda_{2}\Operator{1}\right)^{t_{2}}=\ker\left(\Operator{A}-\lambda_{2}\Operator{1}\right)^{r_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+最小多项式
+\end_layout
+
+\begin_layout Subsection
+幂零算子
+\end_layout
+
+\begin_layout Standard
+“幂零 (nilpotent)”
 \end_layout
 
 \begin_layout Subsection
