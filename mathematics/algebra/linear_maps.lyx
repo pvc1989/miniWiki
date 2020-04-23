@@ -2511,7 +2511,7 @@ status open
 
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
 若 
 \begin_inset Formula $\Operator{B}$
 \end_inset
@@ -2580,7 +2580,7 @@ status open
 \begin_layout Lemma
 \begin_inset Formula 
 \[
-\dim\mathcal{W}_{0}=\dim\ker\Operator{B}=\dim\mathcal{W}-\Operator{B}\dim\mathcal{W}
+\dim\mathcal{W}_{0}=\dim\ker\Operator{B}=\dim\mathcal{W}-\dim\Operator{B}\mathcal{W}
 \]
 
 \end_inset
@@ -2595,7 +2595,7 @@ status open
 
 \end_layout
 
-\begin_layout Corollary
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -2622,11 +2622,11 @@ status open
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
- 上的幂零算子，幂零指数为 
+ 上的幂零指数为 
 \begin_inset Formula $l$
 \end_inset
 
-，则存在 
+ 的幂零算子，则存在 
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
@@ -2634,15 +2634,15 @@ status open
 \begin_inset Formula $\Operator{B}$
 \end_inset
 
- 在此基下的矩阵为 Jordan 型矩阵，称为 
-\begin_inset Formula $\Operator{B}$
-\end_inset
-
- 的“Jordan 标准型”，且 Jordan 块总数为 
+ 在此基下的矩阵为含有 
 \begin_inset Formula $\dim\ker\Operator{B}$
 \end_inset
 
-。
+ 个 Jordan 块的 Jordan 型矩阵（称为 
+\begin_inset Formula $\Operator{B}$
+\end_inset
+
+ 的“Jordan 标准型”）。
 \end_layout
 
 \begin_layout Standard
@@ -2726,11 +2726,11 @@ status open
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
- 上的幂零算子，幂零指数为 
+ 上的幂零指数为 
 \begin_inset Formula $l$
 \end_inset
 
-，则 
+ 的幂零算子，则 
 \begin_inset Formula $\Matrix{J_{k}(0)}$
 \end_inset
 
@@ -2741,7 +2741,7 @@ status open
  的 Jordan 标准型中出现的次数为
 \begin_inset Formula 
 \[
-N_{k}\coloneqq\rank\Operator{B}^{k-1}+\rank\Operator{B}^{k+1}-2\rank\Operator{B}^{k}\qquad k=1,\dots,l
+N(k)\coloneqq\rank\Operator{B}^{k-1}+\rank\Operator{B}^{k+1}-2\rank\Operator{B}^{k}\qquad k=1,\dots,l
 \]
 
 \end_inset
@@ -2756,7 +2756,54 @@ N_{k}\coloneqq\rank\Operator{B}^{k-1}+\rank\Operator{B}^{k+1}-2\rank\Operator{B}
 
 \end_layout
 
-\begin_layout Corollary
+\begin_layout Lemma
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的最小多项式为 
+\begin_inset Formula $m(\lambda)=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{t_{i}}$
+\end_inset
+
+，则对 
+\begin_inset Formula $\mathcal{W}_{i}\coloneqq\ker(\Operator{A}-\lambda_{i}\Operator{1})^{t_{i}}$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+\ker\left(\Operator{A}|\mathcal{W}_{i}-\lambda_{i}\Operator{1}|\mathcal{W}_{i}\right)^{k}=\ker\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{k}\qquad\forall k\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -2767,9 +2814,79 @@ status open
 
 \end_inset
 
+设 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 为域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 维线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 上的线性算子。若 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的最小多项式为 
+\begin_inset Formula $m(\lambda)=\prod_{i=1}^{s}(\lambda-\lambda_{i})^{t_{i}}$
+\end_inset
+
+，则存在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组基，使得 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 在此基下的矩阵为 Jordan 型矩阵（称为 
+\begin_inset Formula $\Operator{A}$
+\end_inset
+
+ 的“Jordan 标准型”），其中
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+主对角元为 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的 Jordan 块的个数 
+\begin_inset Formula $\dim\ker(\Operator{A}-\lambda_{i}\Operator{1})$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+主对角元为 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的 
+\begin_inset Formula $k$
+\end_inset
+
+ 级 Jordan 块的个数为
+\begin_inset Formula 
+\[
+N_{i}(k)\coloneqq\rank\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{k-1}+\rank\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{k+1}-2\rank\left(\Operator{A}-\lambda_{i}\Operator{1}\right)^{k}
+\]
+
+\end_inset
+
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
