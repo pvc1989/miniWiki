@@ -14,6 +14,7 @@
 ### 物理
 - [热力学 (Thermodynamics)](./physics/heat/README.lyx)
 - [流体力学 (Fluid Mechanics)](./physics/fluid/README.lyx)
+- [量子力学 (Quantum Mechanics)](./physics/quantum/README.lyx)
 
 ### 算法
 - [数值分析 (Numerical Analysis)](./algorithms/numerical_analysis/README.lyx)
@@ -51,7 +52,8 @@
 ## 说明
 
 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》部分的内容含有大量数学公式，因此整理为 [LyX](./programming/latex/README.md#LyX) 文档。
-本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节；根目录下的[合订本](#README.lyx)大致按逻辑顺序重新编排了章节，删去了重复的内容。
+本页内的链接指向可单独编译的分卷，不同分卷可能含有重复章节。
+根目录下的《[合订本](./README.lyx)》大致按逻辑顺序重新编排了章节，删去了重复的内容。
 
 《[编程](#编程)》《[工具](#工具)》部分的内容含有大量代码，因此整理为 [Markdown](./tools/markdown.md) 文档。
 
