@@ -106,6 +106,13 @@ theorems-chap
 
 \begin_layout Section
 气体压强
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:气体动理学：气体压强"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -256,7 +263,7 @@ reference "eq:气体动理学：气压：v_x"
  式即得
 \begin_inset Formula 
 \begin{equation}
-p=(2/3)nm\expval{v^{2}/2}=(2/3)n\expval{mv^{2}/2}\label{eq:气体动理学：气压：单个分子动能}
+p=(2/3)\,nm\expval{v^{2}/2}=(2/3)\,n\expval{mv^{2}/2}\label{eq:气体动理学：气压：单个分子动能}
 \end{equation}
 
 \end_inset
@@ -283,7 +290,7 @@ reference "eq:气体动理学：气压：单个分子动能"
  式即得
 \begin_inset Formula 
 \begin{equation}
-pV=(2/3)N\expval{mv^{2}/2}=(\gamma-1)U\label{eq:气体动理学：气压：内能}
+pV=(2/3)\,N\expval{mv^{2}/2}=(\gamma-1)U\label{eq:气体动理学：气压：内能}
 \end{equation}
 
 \end_inset
@@ -380,7 +387,7 @@ p(v_{x})=2nmv_{x}^{2}\\
 p_{x}\coloneqq mv_{x}
 \end{cases}\\
 p=n\expval{p_{x}v_{x}} & \impliedby p=2n\expval{mv_{x}^{2}/2}\\
-p=(1/3)n\expval{\vec{p}\vdot\vec{v}} & \impliedby p=(2/3)n\expval{mv^{2}/2}
+p=(1/3)\,n\expval{\vec{p}\vdot\vec{v}} & \impliedby p=(2/3)\,n\expval{mv^{2}/2}
 \end{aligned}
 \]
 
@@ -421,8 +428,271 @@ pV^{4/3}=C\impliedby pV^{5/3}=C
 气体温度
 \end_layout
 
+\begin_layout Subsection
+温度平衡
+\end_layout
+
+\begin_layout Standard
+考虑两端封闭、中间以理想（与管壁间无摩擦的）活塞隔开的管道，管道两段分别充有两种单原子气体。由《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:气体动理学：气体压强"
+
+\end_inset
+
+》一节可知，活塞保持平衡首先意味着两侧“压强平衡”，即
+\begin_inset Formula 
+\begin{equation}
+p_{1}=p_{2}\iff n_{1}\expval{m_{1}v_{1}^{2}/2}=n_{2}\expval{m_{2}v_{2}^{2}/2}\label{eq:气体动理学：压强平衡}
+\end{equation}
+
+\end_inset
+
+但这并非是此系统唯一的平衡条件。若 
+\begin_inset Formula $n_{1}\gg n_{2}$
+\end_inset
+
+，则 
+\begin_inset Formula $\expval{m_{1}v_{1}^{2}/2}\ll\expval{m_{2}v_{2}^{2}/2}$
+\end_inset
+
+ 依然使 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：压强平衡"
+
+\end_inset
+
+ 式成立，但这种状态不会长期维持。下面将证明：经过较长时间的撞击，活塞两侧的气体分子动能将趋于一致，即
+\begin_inset Formula 
+\[
+\expval{m_{1}v_{1}^{2}/2}=\expval{m_{2}v_{2}^{2}/2}
+\]
+
+\end_inset
+
+基于此条件将引出“温度”的定义，故此条件被称为“温度平衡”。
+\end_layout
+
+\begin_layout Subsection
+相对碰撞
+\end_layout
+
+\begin_layout Standard
+先考虑两个单原子分子的理想弹性碰撞。此问题在质心参考系中较易研究，为此先计算二者质心：
+\begin_inset Formula 
+\[
+\vec{v}_{\mathrm{CM}}\coloneqq\frac{m_{1}\vec{v}_{1}+m_{2}\vec{v}_{2}}{m_{1}+m_{2}}=\frac{m_{1}\vec{v}_{1}'+m_{2}\vec{v}_{2}'}{m_{1}+m_{2}}
+\]
+
+\end_inset
+
+其中第二个等号由动量守恒保证。这里只关注二者碰撞前的相对速度 
+\begin_inset Formula $\vec{w}\coloneqq\vec{v}_{1}-\vec{v}_{2}$
+\end_inset
+
+ 与质心速度 
+\begin_inset Formula $\vec{v}_{\mathrm{CM}}$
+\end_inset
+
+ 之间的关系：
+\begin_inset Formula 
+\[
+\begin{aligned}\vec{w}\vdot\vec{v}_{\mathrm{CM}} & =\frac{(\vec{v}_{1}-\vec{v}_{2})\vdot(m_{1}\vec{v}_{1}+m_{2}\vec{v}_{2})}{m_{1}+m_{2}}\\
+ & =\frac{m_{1}v_{1}^{2}-m_{2}v_{2}^{2}+(m_{2}-m_{1})\,\vec{v}_{1}\vdot\vec{v}_{2}}{m_{1}+m_{2}}
+\end{aligned}
+\]
+
+\end_inset
+
+对于含有大量分子的气体，充分长时间的碰撞会使 
+\begin_inset Formula $\expval{\vec{w}\vdot\vec{v}_{\mathrm{CM}}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\expval{\vec{v}_{1}\vdot\vec{v}_{2}}$
+\end_inset
+
+ 均趋于 
+\begin_inset Formula $0$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\begin{equation}
+\expval{m_{1}v_{1}^{2}/2}=\expval{m_{2}v_{2}^{2}/2}\label{eq:气体动理学：动能平衡}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+温度定义
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：动能平衡"
+
+\end_inset
+
+ 式是一种独立于 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：压强平衡"
+
+\end_inset
+
+ 式的新的平衡条件，因此可以用来定义一种新的物理量，称为“气体温度 (temperature of gas)”，简称“气温”。温度平衡是通过“大量气体分子经过充
+分长时间的自由碰撞”达到、并由 
+\begin_inset Formula $\expval{mv^{2}/2}$
+\end_inset
+
+ 表征的，故可将“气温”定义为
+\begin_inset Formula 
+\begin{equation}
+\expval{mv^{2}/2}\eqqcolon(3/2)\,kT\label{eq:气体动理学：温度定义}
+\end{equation}
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\expval{mv^{2}/2}$
+\end_inset
+
+ 是大量气体分子经过充分长时间的自由碰撞后单个分子的平均动能。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $k=\si{1.38\times10^{-23}}{J/K}$
+\end_inset
+
+ 称为 Boltzmann 常量。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $3/2$
+\end_inset
+
+ 是为了简化其他公式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 理想气体
+\end_layout
+
+\begin_layout Subsection
+单原子分子
+\end_layout
+
+\begin_layout Standard
+将温度定义 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：温度定义"
+
+\end_inset
+
+ 代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：气压：内能"
+
+\end_inset
+
+ 式可得
+\begin_inset Formula 
+\[
+pV=(2/3)\,N\expval{mv^{2}/2}=NkT
+\]
+
+\end_inset
+
+此式被称为单原子分子气体的“状态方程”。化学和工程中通常用“物质的量 (amount of substance)”
+\begin_inset Formula 
+\[
+n\coloneqq N/N_{\mathrm{A}}
+\]
+
+\end_inset
+
+代替“个数”来描述含有大量成员的系统，其中 
+\begin_inset Formula $N_{\mathrm{A}}=\SI{6.022e23}{\per\mole}$
+\end_inset
+
+ 为“Avogadro 常数”。于是可以将状态方程改写为
+\begin_inset Formula 
+\[
+pV=(NkT=nN_{\mathrm{A}}kT)=nRT
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $R\coloneqq N_{\mathrm{A}}k=\SI{8.317}{\joule\per\mole\per\kelvin}$
+\end_inset
+
+ 称为“普适气体常量 (universal gas constant)”。
+\end_layout
+
+\begin_layout Subsection
+多原子分子
+\end_layout
+
+\begin_layout Standard
+温度定义 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:气体动理学：温度定义"
+
+\end_inset
+
+ 中的 
+\begin_inset Formula $3kT/2$
+\end_inset
+
+ 可以分摊到单原子的三个（平动）自由度上：每个自由度各分得 
+\begin_inset Formula $kT/2$
+\end_inset
+
+。这一结论可以推广到多原子分子：由 
+\begin_inset Formula $r$
+\end_inset
+
+ 个原子组成的分子共有 
+\begin_inset Formula $3r$
+\end_inset
+
+ 个自由度，每个自由度的平均动能为 
+\begin_inset Formula $kT/2$
+\end_inset
+
+，故整个分子的平均动能为 
+\begin_inset Formula $3rkT/2$
+\end_inset
+
+，其中 
+\begin_inset Formula $3kT/2$
+\end_inset
+
+ 为质心动能，其余 
+\begin_inset Formula $(3r-3)kT/2$
+\end_inset
+
+ 为分子内部各原子相对质心运动的动能。
 \end_layout
 
 \end_body
