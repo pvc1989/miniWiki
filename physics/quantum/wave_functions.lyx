@@ -182,9 +182,9 @@ E=\hbar\omega\qquad\vec{p}=\hbar\vec{k}
 \begin_layout Itemize
 “自由粒子”对应于“平面波”
 \begin_inset Formula 
-\[
-A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}=A\ee^{(\ii/\hbar)(Et-\vec{p}\vdot\vec{x})}
-\]
+\begin{equation}
+A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}=A\ee^{(\ii/\hbar)\qty(Et-\vec{p}\vdot\vec{x})}\label{eq:态矢量：平面波}
+\end{equation}
 
 \end_inset
 
@@ -192,7 +192,7 @@ A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}=A\ee^{(\ii/\hbar)(Et-\vec{p}\vdot\vec{
 \begin_inset Formula $A$
 \end_inset
 
- 为复振幅。
+ 为常值复振幅。
 \end_layout
 
 \begin_layout Standard
@@ -200,11 +200,18 @@ A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}=A\ee^{(\ii/\hbar)(Et-\vec{p}\vdot\vec{
 \end_layout
 
 \begin_layout Subsection
-波函数（坐标表象）
+波函数
 \end_layout
 
 \begin_layout Standard
-单个微观粒子所处的量子状态是由自变量为位置 
+作为 de Broglie 平面波 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:态矢量：平面波"
+
+\end_inset
+
+ 式的推广，单个微观粒子所处的状态可以由自变量为位置 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
@@ -216,23 +223,400 @@ A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}=A\ee^{(\ii/\hbar)(Et-\vec{p}\vdot\vec{
 \begin_inset Formula $\psi\qty(\vec{x},t)$
 \end_inset
 
- 来描述的，这与机械波、电磁波的描述方式类似，因此被称为“波函数”。
-\end_layout
-
-\begin_layout Subsection
-统计诠释
+ 来描述。这种函数在形式上与机械波、电磁波的描述方式类似，因此被称为“波函数”。单个粒子拥有波函数，意味着单个粒子本身就具有波动性，它可以与其自身发生干涉。双缝
+干涉实验中的干涉图像，就是这种单个粒子的波动性不断复现的结果，而不是不同粒子之间发生了干涉。
 \end_layout
 
 \begin_layout Standard
-Born (1926) 
+波函数物理意义至今仍无定论。目前最主流的观点是 Born (1926) 提出的“统计诠释 (statistical interpretation)”：某粒子的波
+函数 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 又被称为其“概率振幅 (probability amplitude)”，它在 
+\begin_inset Formula $\qty(\vec{x},t)$
+\end_inset
+
+ 处的模平方，即 
+\begin_inset Formula $\abs{\psi\qty(\vec{x},t)}^{2}$
+\end_inset
+
+，正比于 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻该粒子位于 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处的概率密度。推而广之，由 
+\begin_inset Formula $n$
+\end_inset
+
+ 个粒子组成的量子系统可以由波函数 
+\begin_inset Formula $\psi\qty(\vec{x}_{1},\dots,\vec{x}_{n},t)$
+\end_inset
+
+ 来描述，它的模平方 
+\begin_inset Formula $\abs{\psi\qty(\vec{x}_{1},\dots,\vec{x}_{n},t)}^{2}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $t$
+\end_inset
+
+ 时刻粒子 
+\begin_inset Formula $1,\dots,n$
+\end_inset
+
+ 分别位于 
+\begin_inset Formula $\vec{x}_{1},\dots,\vec{x}_{n}$
+\end_inset
+
+ 处的概率密度。
+\end_layout
+
+\begin_layout Standard
+只要 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 所描述的那个粒子不发生湮灭，则“该粒子位于全空间”是一个“必然事件”：
+\begin_inset Formula 
+\[
+\Pr(\vec{x}\in\mathbb{R}^{3}\qty(\vec{x}))=\int_{\mathbb{R}^{3}\qty(\vec{x})}\abs{\psi\qty(\vec{x},t)}^{2}=1
+\]
+
+\end_inset
+
+该式称为波函数的“归一化条件”。对于由 
+\begin_inset Formula $n$
+\end_inset
+
+ 个粒子组成的量子系统，也有类似的归一化条件：
+\begin_inset Formula 
+\[
+\Pr(i=1,\dots,n:\vec{x}_{i}\in\mathbb{R}^{3}\qty(\vec{x}_{i}))=\int_{\prod_{i=1}^{n}\mathbb{R}^{3}\qty(\vec{x}_{i})}\abs{\psi\qty(\vec{x}_{1},\dots,\vec{x}_{n},t)}^{2}=1
+\]
+
+\end_inset
+
+然而，并不是所有波函数都可以被归一化（例如平面波），此时 
+\begin_inset Formula $\abs{\psi\qty(\vec{x},t)}^{2}$
+\end_inset
+
+ 应理解为相对概率密度。
+\end_layout
+
+\begin_layout Subsection
+叠加原理
+\end_layout
+
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[叠加原理]
+\end_layout
+
+\end_inset
+
+若波函数 
+\begin_inset Formula $\psi_{1},\psi_{2}$
+\end_inset
+
+ 描述了某量子系统的两种可能的状态，则波函数 
+\begin_inset Formula $c_{1}\psi_{1}+c_{2}\psi_{2}$
+\end_inset
+
+ 亦为该系统的一种可能的状态，其中 
+\begin_inset Formula $c_{1},c_{2}$
+\end_inset
+
+ 为复常数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一般而言，概率密度不满足叠加原理，而是遵循以下法则：
+\begin_inset Formula 
+\[
+\begin{aligned}\abs{c_{1}\psi_{1}+c_{2}\psi_{2}}^{2} & =\Conj{(c_{1}\psi_{1}+c_{2}\psi_{2})}(c_{1}\psi_{1}+c_{2}\psi_{2})\\
+ & =\underbrace{\Conj{(c_{1}\psi_{1})}(c_{1}\psi_{1})}_{\rho_{1}}+\underbrace{\Conj{(c_{2}\psi_{2})}(c_{2}\psi_{2})}_{\rho_{1}}+\underbrace{\Conj{(c_{1}\psi_{1})}(c_{2}\psi_{2})+\Conj{(c_{2}\psi_{2})}(c_{1}\psi_{1})}_{\rho_{1,2}}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\rho_{1,2}$
+\end_inset
+
+ 就体现了波的“干涉 (interference)”。
+\end_layout
+
+\begin_layout Standard
+根据叠加原理，一个给定的量子系统的所有可能的状态构成了一个线性空间 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+。该线性空间中的每一个状态 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 都是一个向量，记作 
+\begin_inset Formula $\ket{\psi}$
+\end_inset
+
+，称为“态矢量 (state vector)”。若存在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 中的一组线性无关的基本状态 
+\begin_inset Formula $\left\{ \ket{\psi_{a}}\right\} _{a\in A}$
+\end_inset
+
+，使得 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 中的任何一个向量 
+\begin_inset Formula $\ket{\psi}$
+\end_inset
+
+ 都可以表示成它们的线性组合
+\begin_inset Formula 
+\[
+\ket{\psi}=\begin{cases}
+\sum_{a\in A}c_{a}\ket{\psi_{a}} & A\sim\mathbb{N}\\
+\int_{A}c_{a}\ket{\psi_{a}}\dd{a} & A\sim\mathbb{R}
+\end{cases}
+\]
+
+\end_inset
+
+则称它们为 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的一组“基 (basis)”。一般而言，指标集 
+\begin_inset Formula $A$
+\end_inset
+
+ 含有无穷多个成员，因此 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 通常是无穷维的。
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维驻波]
+\end_layout
+
+\end_inset
+
+波函数 
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 总是可以展开为 
+\begin_inset Formula $\left\{ \psi_{a}(x)\coloneqq\delta(x-a)\right\} _{a\in\mathbb{R}}$
+\end_inset
+
+ 的线性组合：
+\begin_inset Formula 
+\[
+\psi(x)=\int_{-\infty}^{+\infty}\psi(a)\,\delta(x-a)\dd{a}=\int_{-\infty}^{+\infty}c_{a}\,\psi_{a}(x)\dd{a}
+\]
+
+\end_inset
+
+其中求和指标 
+\begin_inset Formula $a$
+\end_inset
+
+ 及自由指标 
+\begin_inset Formula $x$
+\end_inset
+
+ 的物理意义均为“坐标 (coordinate)”，故称 
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 为向量 
+\begin_inset Formula $\ket{\psi}$
+\end_inset
+
+ 的“坐标表象 (coordinate representation)”。系数 
+\begin_inset Formula $c_{a}=\psi(a)$
+\end_inset
+
+ 可以理解为 
+\begin_inset Formula $\ket{\psi}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\ket{\psi_{a}}$
+\end_inset
+
+ 上的“投影 (projection)”，记作 
+\begin_inset Formula $\ip{\psi_{a}}{\psi}$
+\end_inset
+
+；而 
+\begin_inset Formula $a$
+\end_inset
+
+ 又与 
+\begin_inset Formula $\psi_{a}$
+\end_inset
+
+ 一一对应，故可引入简化记号
+\begin_inset Formula 
+\[
+\ket{a}\coloneqq\ket{\psi_{a}}\qquad\bra{a}\coloneqq\bra{\psi_{a}}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\psi(a)=\ip{\psi_{a}}{\psi}=\ip{a}{\psi}\qquad\delta(x-a)=\psi_{a}(x)=\ip{x}{\psi_{a}}=\ip{x}{a}
+\]
+
+\end_inset
+
+利用这些记号，可将展开式改写为
+\begin_inset Formula 
+\[
+\ip{x}{\psi}=\int_{-\infty}^{+\infty}\ip{a}{\psi}\ip{x}{a}\dd{a}=\bra{x}\left(\int_{-\infty}^{+\infty}\dyad{a}\dd{a}\right)\ket{\psi}
+\]
+
+\end_inset
+
+比较两端可发现“完备性条件 (completeness condition)”：
+\begin_inset Formula 
+\[
+1=\int_{-\infty}^{+\infty}\dyad{a}\dd{a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 动量表象
 \end_layout
 
-\begin_layout Section
-态叠加原理
+\begin_layout Standard
+一维驻波 
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 可以分解为无穷多个简谐驻波的线性组合：
+\begin_inset Formula 
+\[
+\psi(x)=\int_{-\infty}^{+\infty}\tilde{\psi}(k)\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\dd{k}\qquad\tilde{\psi}(k)\coloneqq\int_{-\infty}^{+\infty}\psi(x)\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\dd{x}
+\]
+
+\end_inset
+
+在数学中，此二式被称为“Fourier 变换对”，其中第一式为 
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 的“Fourier 展开”，
+\begin_inset Formula $\tilde{\psi}(k)$
+\end_inset
+
+ 被称为 
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 的“Fourier 系数”或“Fourier 变换”。在量子力学中，
+\begin_inset Formula $\psi(x)$
+\end_inset
+
+ 为态矢量 
+\begin_inset Formula $\ket{\psi}$
+\end_inset
+
+ 的“坐标表象” 
+\begin_inset Formula $\ip{x}{\psi}$
+\end_inset
+
+，而 
+\begin_inset Formula $\tilde{\psi}(k)$
+\end_inset
+
+ 为与之对应地“波数表象” 
+\begin_inset Formula $\ip{k}{\psi}$
+\end_inset
+
+。利用 Dirac 记号，可以将上述“Fourier 变换对”改写为
+\begin_inset Formula 
+\[
+\begin{gathered}\tilde{\psi}(k)=\ip{k}{\psi}=\int_{\mathbb{R}(x)}\ip{k}{x}\ip{x}{\psi}\qquad\psi(x)=\ip{x}{\psi}=\int_{\mathbb{R}(k)}\ip{x}{k}\ip{k}{\psi}\\
+\ip{k}{x}\coloneqq\exp(-\ii kx)\divslash(2\pi)^{1/2}\qquad\ip{x}{k}\coloneqq\exp(+\ii kx)\divslash(2\pi)^{1/2}
+\end{gathered}
+\]
+
+\end_inset
+
+对于三维驻波，也有类似结论。
+\end_layout
+
+\begin_layout Standard
+在量子力学中，更常用的是“动量表象 (momentum representation)”，它可以由 de Broglie 关系 
+\begin_inset Formula $\vec{p}=\hbar\vec{k}$
+\end_inset
+
+ 得到：
+\begin_inset Formula 
+\[
+\begin{gathered}\tilde{\psi}\qty(\vec{p})=\ip{\vec{p}}{\psi}=\int_{\mathbb{R}^{n}\qty(\vec{x})}\ip{\vec{p}}{\vec{x}}\ip{\vec{x}}{\psi}\qquad\psi\qty(\vec{x})=\ip{\vec{x}}{\psi}=\int_{\mathbb{R}^{n}\qty(\vec{p})}\ip{\vec{x}}{\vec{p}}\ip{\vec{p}}{\psi}\\
+\ip{\vec{p}}{\vec{x}}\coloneqq\exp(-(\ii/\hbar)\,\vec{p}\vdot\vec{x})\divslash(2\pi\hbar)^{n/2}\qquad\ip{\vec{x}}{\vec{p}}\coloneqq\exp(+(\ii/\hbar)\,\vec{p}\vdot\vec{x})\divslash(2\pi\hbar)^{n/2}
+\end{gathered}
+\]
+
+\end_inset
+
+这里为了保证 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ 的对称性 
+\begin_inset Formula $\ip{\vec{p}}{\vec{x}}=\Conj{\ip{\vec{x}}{\vec{p}}}$
+\end_inset
+
+，适当调整了系数。
 \end_layout
 
 \begin_layout Section
