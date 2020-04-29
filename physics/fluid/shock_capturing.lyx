@@ -120,7 +120,14 @@ name "chap:激波捕捉"
 \end_layout
 
 \begin_layout Standard
-双曲型守恒律系统
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "chap:微分方程：守恒律"
+
+\end_inset
+
+》一章指出：双曲型守恒律系统
 \begin_inset Formula 
 \begin{equation}
 \partial_{t}\ket{U}+\partial_{x}\ket{F(U)}=0\qquad\Matrix{A(U)}\coloneqq\pdv*{\ket{F}}{\ket{U}}\label{eq:激波捕捉：守恒律：系统}
@@ -166,28 +173,20 @@ discontinuity) 上述两种间断的临界情形：既看作熵变为零的激�
 
 \end_layout
 
-\begin_layout Standard
-本章主要讨论适用于线性平流方程
-\begin_inset Formula 
-\begin{equation}
-\partial_{t}u+a\partial_{x}u=0\qquad a=\text{const}\label{eq:激波捕捉：线性平流}
-\end{equation}
-
-\end_inset
-
-或更一般的标量守恒律
-\begin_inset Formula 
-\begin{equation}
-\partial_{t}u+\partial_{x}f(u)=0\qquad a(u)\coloneqq\pdv*{f}{u}\label{eq:激波捕捉：守恒律：标量}
-\end{equation}
-
-\end_inset
-
-的数值计算方法。
-\end_layout
-
 \begin_layout Subsection
 Gibbs 现象
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Gottlieb & Shu (1997)"
+target "https://doi.org/10.1137/S0036144596301390"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -247,10 +246,7 @@ status open
 \end_inset
 
 若标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  的两组初值 
@@ -333,16 +329,12 @@ u_{i}^{n+1}=H\qty(\dots,u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},\dots)
  对其每一个自变量的偏导数都是非负的，即
 \begin_inset Formula 
 \begin{equation}
-\pdv*{H}{u_{i+s}^{n}}\ge0\qquad s=0,\pm1,\pm2,\dots
+\pdv*{H}{\qty(u_{i+s}^{n})}\ge0\qquad s=0,\pm1,\pm2,\dots
 \end{equation}
 
 \end_inset
 
-则称该格式具有“单调性 (monotonicity)”，或称之为“
-\bar under
-单调 (monetone)
-\bar default
- 格式”
+则称该格式具有“单调性 (monotonicity)”，或称之为“单调格式 (monetone scheme)”
 \begin_inset Index idx
 status open
 
@@ -383,10 +375,7 @@ name "lem:激波捕捉：单调格式"
 \end_inset
 
 若标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  的两组离散初值 
@@ -445,10 +434,7 @@ noprefix "false"
 \end_inset
 
  求解标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  不会产生新的“极值 (extrema)”，即：
@@ -559,10 +545,7 @@ m\equiv v_{i}^{n+1}\le u_{i}^{n+1}\qquad\forall i
 
 \begin_layout Example
 用于求解标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  的常用单调格式包括：
@@ -593,7 +576,7 @@ name "eq:激波捕捉：单调格式：三点"
 
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{\nicefrac{1}{2}}\qty(u_{i-1}^{n},u_{i}^{n})-f_{\nicefrac{1}{2}}\qty(u_{i}^{n},u_{i+1}^{n})\right)
+u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{1/2}\qty(u_{i-1}^{n},u_{i}^{n})-f_{1/2}\qty(u_{i}^{n},u_{i+1}^{n})\right)
 \end{equation}
 
 \end_inset
@@ -601,7 +584,7 @@ u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{\nicefrac{1}{2}}\qty(u_{i-1}^{
 是单调的，当且仅当
 \begin_inset Formula 
 \begin{equation}
-\pdv{f_{\nicefrac{1}{2}}(u_{L},u_{R})}{u_{L}}\ge0\qand\pdv{f_{\nicefrac{1}{2}}(u_{L},u_{R})}{u_{R}}\le0\qquad\forall u_{L},\forall u_{R}
+\pdv{f_{1/2}(u_{L},u_{R})}{u_{L}}\ge0\qand\pdv{f_{1/2}(u_{L},u_{R})}{u_{R}}\le0\qquad\forall u_{L},\forall u_{R}
 \end{equation}
 
 \end_inset
@@ -748,13 +731,7 @@ status open
 \end_inset
 
 用于求解线性平流方程 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：线性平流"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Formula $\left(\partial_{t}+a\partial_{x}\right)u=0$
 \end_inset
 
  的单调线性格式 
@@ -869,11 +846,7 @@ u_{i}^{n+1}=H\qty(\dots,u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},\dots)
 \begin_inset Formula $\left\{ u_{i}^{n+1}\right\} $
 \end_inset
 
-，则称其为“
-\bar under
-保单调 (Monotonicity Preserving, MP)
-\bar default
- 格式”
+，则称其为“保单调格式 (monotonicity preserving scheme) ”
 \begin_inset Index idx
 status open
 
@@ -926,7 +899,7 @@ TV!Total Variation
 
 \end_inset
 
- 是一个以 
+是一个以 
 \begin_inset Formula $t$
 \end_inset
 
@@ -970,7 +943,7 @@ TV!Total Variation
  是“网格 (mesh) 函数”，即 
 \begin_inset Formula 
 \[
-u(x,t)=u_{i}^{n}\qquad\forall x\in(x_{i-\nicefrac{1}{2}},x_{i+\nicefrac{1}{2}}),\forall t\in[t_{n},t_{n+1})
+u(x,t)=u_{i}^{n}\qquad\forall x\in(x_{i-1/2},x_{i+1/2}),\forall t\in[t_{n},t_{n+1})
 \]
 
 \end_inset
@@ -1000,7 +973,7 @@ status open
 
 \begin_layout Plain Layout
 
-[TVD]
+[TVD 函数]
 \end_layout
 
 \end_inset
@@ -1025,11 +998,7 @@ t_{2}\ge t_{1}\implies\TV(u;t_{2})\le\TV(u;t_{1})
 
 \end_inset
 
-则称之为“
-\bar under
-总变差递减 (TV Diminishing, TVD)
-\bar default
- 函数”
+则称之为“总变差递减函数 (TV Diminishing function, TVD function)”
 \begin_inset Index idx
 status open
 
@@ -1086,11 +1055,7 @@ u_{i}^{n+1}=H\qty(\dots,u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},\dots)
 
 \end_inset
 
-则称之为“
-\bar under
-总变差递减 (TV Diminishing, TVD)
-\bar default
- 格式”
+则称之为“总变差递减格式 (TV Diminishing scheme, TVD scheme)”
 \begin_inset Index idx
 status open
 
@@ -1132,19 +1097,9 @@ scheme!TVD ~
 \end_layout
 
 \begin_layout Remark
-标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
-\end_inset
-
- 的物理解是 TVD 函数，由 TVD 格式得到的数值解正确地“模仿 (mimic)”了这一性质，因此不会引入数值振荡。正因如此，TVD 格式（曾经）是求解守恒
-律（系统）的主要途径；与此同时，以 WENO 为代表的“
-\bar under
-总变差有界 (TV Bounded, TVB)
-\bar default
- 格式”也得到了发展，它们可以看做是 TVD 格式的弱化和推广。
+标量守恒律的物理解是 TVD 函数，由 TVD 格式得到的数值解正确地“模仿 (mimic)”了这一性质，因此不会引入数值振荡。正因如此，TVD
+ 格式（曾经）是求解守恒律（系统）的主要途径；与此同时，以 WENO 为代表的“总变差有界 (TV Bounded, TVB)”格式也得到了发展，它们可以看做是
+ TVD 格式的弱化和推广。
 \end_layout
 
 \begin_layout Standard
@@ -1240,13 +1195,7 @@ name "thm:激波捕捉：Harten"
 \end_inset
 
 用于求解标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  的五点格式
@@ -1272,7 +1221,7 @@ name "eq:激波捕捉：Harten"
 
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=u_{i}^{n}-\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}+\left(u_{i+1}^{n}-u_{i}^{n}\right)C_{i+\nicefrac{1}{2}}^{+}\qquad\forall i
+u_{i}^{n+1}=u_{i}^{n}-\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-1/2}^{-}+\left(u_{i+1}^{n}-u_{i}^{n}\right)C_{i+1/2}^{+}\qquad\forall i
 \end{equation}
 
 \end_inset
@@ -1280,7 +1229,7 @@ u_{i}^{n+1}=u_{i}^{n}-\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-
 是一种 TVD 格式，如果它的（可变）系数满足
 \begin_inset Formula 
 \begin{equation}
-\left(C_{i-\nicefrac{1}{2}}^{-}\ge0\right)\land\left(C_{i+\nicefrac{1}{2}}^{+}\ge0\right)\land\left(1-C_{i-\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\ge0\right)\qquad\forall i\label{eq:激波捕捉：Harten：条件}
+\left(C_{i-1/2}^{-}\ge0\right)\land\left(C_{i+1/2}^{+}\ge0\right)\land\left(1-C_{i-1/2}^{-}-C_{i+1/2}^{+}\ge0\right)\qquad\forall i\label{eq:激波捕捉：Harten：条件}
 \end{equation}
 
 \end_inset
@@ -1288,7 +1237,7 @@ u_{i}^{n+1}=u_{i}^{n}-\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-
 其中
 \begin_inset Formula 
 \begin{equation}
-C_{i-\nicefrac{1}{2}}^{-}=C_{i-\nicefrac{1}{2}}^{-}\left(u_{i-2}^{n},u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n}\right)\qquad C_{i+\nicefrac{1}{2}}^{+}=C_{i+\nicefrac{1}{2}}^{+}\left(u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},u_{i+2}^{n}\right)
+C_{i-1/2}^{-}=C_{i-1/2}^{-}\left(u_{i-2}^{n},u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n}\right)\qquad C_{i+1/2}^{+}=C_{i+1/2}^{+}\left(u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},u_{i+2}^{n}\right)
 \end{equation}
 
 \end_inset
@@ -1320,8 +1269,8 @@ end{subequations}
 对相邻两点应用该格式：
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i+0}^{n+1} & =u_{i+0}^{n}-\left(u_{i+0}^{n}-u_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}+\left(u_{i+1}^{n}-u_{i+0}^{n}\right)C_{i+\nicefrac{1}{2}}^{+}\\
-u_{i+1}^{n+1} & =u_{i+1}^{n}-\left(u_{i+1}^{n}-u_{i+0}^{n}\right)C_{i+\nicefrac{1}{2}}^{-}+\left(u_{i+2}^{n}-u_{i+1}^{n}\right)C_{i+\nicefrac{3}{2}}^{+}
+\begin{aligned}u_{i+0}^{n+1} & =u_{i+0}^{n}-\left(u_{i+0}^{n}-u_{i-1}^{n}\right)C_{i-1/2}^{-}+\left(u_{i+1}^{n}-u_{i+0}^{n}\right)C_{i+1/2}^{+}\\
+u_{i+1}^{n+1} & =u_{i+1}^{n}-\left(u_{i+1}^{n}-u_{i+0}^{n}\right)C_{i+1/2}^{-}+\left(u_{i+2}^{n}-u_{i+1}^{n}\right)C_{i+3/2}^{+}
 \end{aligned}
 \]
 
@@ -1330,9 +1279,9 @@ u_{i+1}^{n+1} & =u_{i+1}^{n}-\left(u_{i+1}^{n}-u_{i+0}^{n}\right)C_{i+\nicefrac{
 从第二行中减去第一行：
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i+1}^{n+1}-u_{i+0}^{n+1} & =\left(u_{i+1}^{n}-u_{i+0}^{n}\right)\left(1-C_{i+\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\right)\\
- & +\left(u_{i+0}^{n}-u_{i-1}^{n}\right)C_{i-\nicefrac{1}{2}}^{-}\\
- & +\left(u_{i+2}^{n}-u_{i+1}^{n}\right)C_{i+\nicefrac{3}{2}}^{+}
+\begin{aligned}u_{i+1}^{n+1}-u_{i+0}^{n+1} & =\left(u_{i+1}^{n}-u_{i+0}^{n}\right)\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\\
+ & +\left(u_{i+0}^{n}-u_{i-1}^{n}\right)C_{i-1/2}^{-}\\
+ & +\left(u_{i+2}^{n}-u_{i+1}^{n}\right)C_{i+3/2}^{+}
 \end{aligned}
 \]
 
@@ -1352,9 +1301,9 @@ reference "eq:激波捕捉：Harten：条件"
 ，可得不等式：
 \begin_inset Formula 
 \[
-\begin{aligned}\abs{u_{i+1}^{n+1}-u_{i+0}^{n+1}} & \le\abs{u_{i+1}^{n}-u_{i+0}^{n}}\left(1-C_{i+\nicefrac{1}{2}}^{-}-C_{i+\nicefrac{1}{2}}^{+}\right)\\
- & +\abs{u_{i+0}^{n}-u_{i-1}^{n}}C_{i-\nicefrac{1}{2}}^{-}\\
- & +\abs{u_{i+2}^{n}-u_{i+1}^{n}}C_{i+\nicefrac{3}{2}}^{+}
+\begin{aligned}\abs{u_{i+1}^{n+1}-u_{i+0}^{n+1}} & \le\abs{u_{i+1}^{n}-u_{i+0}^{n}}\left(1-C_{i+1/2}^{-}-C_{i+1/2}^{+}\right)\\
+ & +\abs{u_{i+0}^{n}-u_{i-1}^{n}}\,C_{i-1/2}^{-}\\
+ & +\abs{u_{i+2}^{n}-u_{i+1}^{n}}\,C_{i+3/2}^{+}
 \end{aligned}
 \]
 
@@ -1368,8 +1317,8 @@ reference "eq:激波捕捉：Harten：条件"
 \begin_inset Formula 
 \[
 \begin{aligned}\sum_{i}\abs{u_{i+1}^{n+1}-u_{i+0}^{n+1}} & \le\sum_{i}\abs{u_{i+1}^{n}-u_{i+0}^{n}}\\
- & +\sum_{i}\abs{u_{i+0}^{n}-u_{i-1}^{n}}C_{i-\nicefrac{1}{2}}^{-}-\sum_{i}\abs{u_{i+1}^{n}-u_{i+0}^{n}}C_{i+\nicefrac{1}{2}}^{-}\\
- & +\sum_{i}\abs{u_{i+2}^{n}-u_{i+1}^{n}}C_{i+\nicefrac{3}{2}}^{+}-\sum_{i}\abs{u_{i+1}^{n}-u_{i+0}^{n}}C_{i+\nicefrac{1}{2}}^{+}
+ & +\sum_{i}\abs{u_{i+0}^{n}-u_{i-1}^{n}}\,C_{i-1/2}^{-}-\sum_{i}\abs{u_{i+1}^{n}-u_{i+0}^{n}}\,C_{i+1/2}^{-}\\
+ & +\sum_{i}\abs{u_{i+2}^{n}-u_{i+1}^{n}}\,C_{i+3/2}^{+}-\sum_{i}\abs{u_{i+1}^{n}-u_{i+0}^{n}}\,C_{i+1/2}^{+}
 \end{aligned}
 \]
 
@@ -1405,10 +1354,7 @@ reference "thm:激波捕捉：Harten"
 \end_inset
 
  定理提供了一种构造五点 TVD 格式的范式。考虑用于求解标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
  的守恒型格式
@@ -1434,7 +1380,7 @@ name "eq:激波捕捉：通量限制器"
 
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-\nicefrac{1}{2}}^{\mathrm{TVD}}-f_{i+\nicefrac{1}{2}}^{\mathrm{TVD}}\right)\qquad\forall i
+u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-1/2}^{\mathrm{TVD}}-f_{i+1/2}^{\mathrm{TVD}}\right)\qquad\forall i
 \end{equation}
 
 \end_inset
@@ -1443,21 +1389,21 @@ u_{i}^{n+1}=u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-\nicefrac{1}{2}}^{\mathrm{TV
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}^{\mathrm{TVD}}$
+\begin_inset Formula $f_{i+1/2}^{\mathrm{TVD}}$
 \end_inset
 
  表示高阶 TVD 通量，它可以看作是由一阶 TVD 通量 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}$
+\begin_inset Formula $f_{i+1/2}^{\mathrm{Low}}$
 \end_inset
 
  与高阶非 TVD 通量 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}^{\mathrm{High}}$
+\begin_inset Formula $f_{i+1/2}^{\mathrm{High}}$
 \end_inset
 
  组合而得：
 \begin_inset Formula 
 \begin{equation}
-f_{i+\nicefrac{1}{2}}^{\mathrm{TVD}}=f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}+\left(f_{i+\nicefrac{1}{2}}^{\mathrm{High}}-f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}\right)\phi_{i+\nicefrac{1}{2}}\qquad\forall i
+f_{i+1/2}^{\mathrm{TVD}}=f_{i+1/2}^{\mathrm{Low}}+\left(f_{i+1/2}^{\mathrm{High}}-f_{i+1/2}^{\mathrm{Low}}\right)\phi_{i+1/2}\qquad\forall i
 \end{equation}
 
 \end_inset
@@ -1467,15 +1413,15 @@ f_{i+\nicefrac{1}{2}}^{\mathrm{TVD}}=f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}+\left(
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}$
+\begin_inset Formula $f_{i+1/2}^{\mathrm{Low}}$
 \end_inset
 
  可以取自（基于精确 Riemann 解的）Godunov 格式或 Lax–Friedrichs 格式：
 \begin_inset Formula 
 \[
-f_{i+\nicefrac{1}{2}}^{\mathrm{Low}}=\begin{cases}
-f_{i+\nicefrac{1}{2}}^{\mathrm{G}}=\tilde{f}_{i+\nicefrac{1}{2}}^{n}(x/t=0)\\
-f_{i+\nicefrac{1}{2}}^{\mathrm{LF}}=\dfrac{f_{i}^{n}+f_{i+1}^{n}}{2}+\dfrac{h_{x}}{h_{t}}\dfrac{u_{i}^{n}-u_{i+1}^{n}}{2}
+f_{i+1/2}^{\mathrm{Low}}=\begin{cases}
+f_{i+1/2}^{\mathrm{G}}=\tilde{f}_{i+1/2}^{n}(x/t=0)\\
+f_{i+1/2}^{\mathrm{LF}}=\dfrac{f_{i}^{n}+f_{i+1}^{n}}{2}+\dfrac{h_{x}}{h_{t}}\dfrac{u_{i}^{n}-u_{i+1}^{n}}{2}
 \end{cases}
 \]
 
@@ -1485,15 +1431,15 @@ f_{i+\nicefrac{1}{2}}^{\mathrm{LF}}=\dfrac{f_{i}^{n}+f_{i+1}^{n}}{2}+\dfrac{h_{x
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}^{\mathrm{High}}$
+\begin_inset Formula $f_{i+1/2}^{\mathrm{High}}$
 \end_inset
 
  可以取自具有时空二阶精度的 Lax–Wendroff 格式或 Warming–Beam 格式：
 \begin_inset Formula 
 \[
-f_{i+\nicefrac{1}{2}}^{\mathrm{High}}=\begin{cases}
-f_{i+\nicefrac{1}{2}}^{\mathrm{LW}}=f\qty(\dfrac{u_{i}^{n}+u_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{f_{i}^{n}-f_{i+1}^{n}}{2})\\
-f_{i+\nicefrac{1}{2}}^{\mathrm{WB}}=
+f_{i+1/2}^{\mathrm{High}}=\begin{cases}
+f_{i+1/2}^{\mathrm{LW}}=f\qty(\dfrac{u_{i}^{n}+u_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{f_{i}^{n}-f_{i+1}^{n}}{2})\\
+f_{i+1/2}^{\mathrm{WB}}=
 \end{cases}
 \]
 
@@ -1504,25 +1450,19 @@ f_{i+\nicefrac{1}{2}}^{\mathrm{WB}}=
 
 \begin_layout Itemize
 对于线性平流方程 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：线性平流"
-plural "false"
-caps "false"
-noprefix "false"
-
+\begin_inset Formula $\left(\partial_{t}+a\partial_{x}\right)u=0$
 \end_inset
 
 ，这些格式退化为线性的：
 \begin_inset Formula 
 \[
-\begin{aligned}f_{i+\nicefrac{1}{2}}^{\mathrm{Low}} & =A\times\begin{cases}
+\begin{aligned}f_{i+1/2}^{\mathrm{Low}} & =A\times\begin{cases}
 u_{i}^{n} & \text{Godunov}\\
-\phantom{\dfrac{\sigma-1}{2}u_{i-1}^{n}+}\dfrac{1+\sigma}{2\sigma}u_{i}^{n}+\dfrac{1-\sigma}{2\sigma}u_{i+1}^{n} & \text{Lax\text{–}Friedrichs}
+\dfrac{1+\sigma}{2\sigma}u_{i}^{n}+\dfrac{1-\sigma}{2\sigma}u_{i+1}^{n} & \text{Lax\text{–}Friedrichs}
 \end{cases}\\
-f_{i+\nicefrac{1}{2}}^{\mathrm{High}} & =A\times\begin{cases}
-\phantom{\dfrac{\sigma-1}{2}u_{i-1}^{n}+}\dfrac{1+\sigma}{2}u_{i}^{n}+\dfrac{1-\sigma}{2}u_{i+1}^{n} & \text{Lax–Wendroff}\\
-\dfrac{\sigma-1}{2}u_{i-1}^{n}+\dfrac{3-\sigma}{2}u_{i}^{n}\phantom{+\dfrac{\sigma-1}{2}u_{i-1}^{n}} & \text{Warming–Beam}
+f_{i+1/2}^{\mathrm{High}} & =A\times\begin{cases}
+\dfrac{1+\sigma}{2}u_{i}^{n}+\dfrac{1-\sigma}{2}u_{i+1}^{n} & \text{Lax–Wendroff}\\
+\dfrac{\sigma-1}{2}u_{i-1}^{n}+\dfrac{3-\sigma}{2}u_{i}^{n} & \text{Warming–Beam}
 \end{cases}
 \end{aligned}
 \]
@@ -1539,7 +1479,7 @@ f_{i+\nicefrac{1}{2}}^{\mathrm{High}} & =A\times\begin{cases}
 \end_inset
 
  光滑程度的系数 
-\begin_inset Formula $\phi_{i+\nicefrac{1}{2}}$
+\begin_inset Formula $\phi_{i+1/2}$
 \end_inset
 
  用于调节高阶通量的占比，因此被称为“通量限制器 (flux limiter)”。最简单的“光滑程度指示器 (smoothness indicator)”是变量
@@ -1688,7 +1628,7 @@ Write the 2nd order upwind scheme
 into its conservative form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+\nicefrac{1}{2}}^{n}-u_{i-\nicefrac{1}{2}}^{n}\right)\qquad\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
+u_{i}^{n+1}=u_{i}^{n}-\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\sigma\qquad\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
 \]
 
 \end_inset
@@ -1696,7 +1636,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+\nicefrac{1}{2}}^{n}-u_{i-\nicefrac{
 in which
 \begin_inset Formula 
 \[
-u_{i+\nicefrac{1}{2}}=u_{i}+\frac{u_{i}-u_{i-1}}{2}
+u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}
 \]
 
 \end_inset
@@ -1708,7 +1648,7 @@ Multiply the correction term by a limiter
 :
 \begin_inset Formula 
 \[
-u_{i+\nicefrac{1}{2}}=u_{i}+\frac{u_{i}-u_{i-1}}{2}\phi(r_{i})\qquad r_{i}=r_{i}^{+}=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}
+u_{i+1/2}=u_{i}+\frac{u_{i}-u_{i-1}}{2}\phi(r_{i})\qquad r_{i}=r_{i}^{+}=\frac{u_{i+1}-u_{i}}{u_{i}-u_{i-1}}
 \]
 
 \end_inset
@@ -1726,11 +1666,11 @@ noprefix "false"
 :
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1}=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}+\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\phi_{i}^{n}\right)\\
- & +\sigma\cdot\left(u_{i-1}^{n}+\frac{u_{i-1}^{n}-u_{i-2}^{n}}{2}\phi_{i-1}^{n}\right)\\
-=u_{i}^{n} & -\sigma\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)\\
- & -\sigma\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\\
-=u_{i}^{n} & -C_{i-\nicefrac{1}{2}}^{-}\cdot\left(u_{i}^{n}-u_{i-1}^{n}\right)+C_{i+\nicefrac{1}{2}}^{+}\cdot\left(u_{i+1}^{n}-u_{i}^{n}\right)
+\begin{aligned}u_{i}^{n+1}=u_{i}^{n} & -\left(u_{i}^{n}+\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\phi_{i}^{n}\right)\sigma\\
+ & +\left(u_{i-1}^{n}+\frac{u_{i-1}^{n}-u_{i-2}^{n}}{2}\phi_{i-1}^{n}\right)\sigma\\
+=u_{i}^{n} & -\left(u_{i}^{n}-u_{i-1}^{n}\right)\sigma\\
+ & -\frac{u_{i}^{n}-u_{i-1}^{n}}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\sigma\\
+=u_{i}^{n} & -\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-1/2}^{-}+\left(u_{i+1}^{n}-u_{i}^{n}\right)C_{i+1/2}^{+}
 \end{aligned}
 \]
 
@@ -1739,7 +1679,7 @@ noprefix "false"
 in which
 \begin_inset Formula 
 \[
-C_{i-\nicefrac{1}{2}}^{-}=\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\qquad C_{i+\nicefrac{1}{2}}^{+}=0
+C_{i-1/2}^{-}=\sigma+\frac{\sigma}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\qquad C_{i+1/2}^{+}=0
 \]
 
 \end_inset
@@ -1757,7 +1697,7 @@ noprefix "false"
  then becomes
 \begin_inset Formula 
 \[
-0\le\sigma\cdot\left(1+\frac{1}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\right)\le1
+0\le\sigma+\frac{\sigma}{2}\left(\phi_{i}^{n}-\frac{\phi_{i-1}^{n}}{r_{i-1}^{n}}\right)\le1
 \]
 
 \end_inset
@@ -1805,7 +1745,7 @@ Write the Lax–Wendroff Scheme
 into its conservative form:
 \begin_inset Formula 
 \[
-u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+\nicefrac{1}{2}}^{n}-u_{i-\nicefrac{1}{2}}^{n}\right)\qquad\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
+u_{i}^{n+1}=u_{i}^{n}-\left(u_{i+1/2}^{n}-u_{i-1/2}^{n}\right)\sigma\qquad\sigma=\frac{ah_{t}}{h_{x}}\in(0,1)
 \]
 
 \end_inset
@@ -1813,7 +1753,7 @@ u_{i}^{n+1}=u_{i}^{n}-\sigma\cdot\left(u_{i+\nicefrac{1}{2}}^{n}-u_{i-\nicefrac{
 in which
 \begin_inset Formula 
 \[
-u_{i+\nicefrac{1}{2}}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)
+u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)
 \]
 
 \end_inset
@@ -1825,7 +1765,7 @@ Multiply the correction term by a limiter
 :
 \begin_inset Formula 
 \[
-u_{i+\nicefrac{1}{2}}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)\phi(r_{i})\qquad r_{i}=r_{i}^{-}=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
+u_{i+1/2}=u_{i}+\frac{1-\sigma}{2}\left(u_{i+1}-u_{i}\right)\phi(r_{i})\qquad r_{i}=r_{i}^{-}=\frac{u_{i}-u_{i-1}}{u_{i+1}-u_{i}}
 \]
 
 \end_inset
@@ -1843,7 +1783,7 @@ noprefix "false"
 , in which
 \begin_inset Formula 
 \[
-C_{i-\nicefrac{1}{2}}^{-}=\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\qquad C_{i+\nicefrac{1}{2}}^{+}=0
+C_{i-1/2}^{-}=\sigma+\frac{(1-\sigma)\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\qquad C_{i+1/2}^{+}=0
 \]
 
 \end_inset
@@ -1861,7 +1801,7 @@ noprefix "false"
  then becomes
 \begin_inset Formula 
 \[
-0\le\sigma\left(1+\frac{1-\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\right)\le1
+0\le\sigma+\frac{(1-\sigma)\sigma}{2}\left(\frac{\phi_{i}^{n}}{r_{i}^{n}}-\phi_{i-1}^{n}\right)\le1
 \]
 
 \end_inset
@@ -1957,7 +1897,7 @@ van Leer
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(r+\abs{r})/(1+r)$
+\begin_inset Formula $(r+\abs{r})\divslash(1+r)$
 \end_inset
 
 
@@ -1980,7 +1920,7 @@ van Albada
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $(r+r^{2})/(1+r^{2})$
+\begin_inset Formula $(r+r^{2})\divslash(1+r^{2})$
 \end_inset
 
 
@@ -2052,7 +1992,7 @@ MUSCL
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\max\left(0,\min\left(2r,(r+1)/2,2\right)\right)$
+\begin_inset Formula $\max(0,\min(2r,(r+1)/2,2))$
 \end_inset
 
 
@@ -2075,7 +2015,7 @@ alpha
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\max\left(0,\min\left(2r,\alpha r+1-\alpha,2\right)\right)$
+\begin_inset Formula $\max(0,\min(2r,\alpha r+1-\alpha,2))$
 \end_inset
 
 
@@ -2124,7 +2064,7 @@ TVD 斜率
 \end_layout
 
 \begin_layout Section
-WENO 限制器
+WENO 重构
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:激波捕捉：WENO"
@@ -2193,34 +2133,26 @@ name "sec:WENO：重叠模板"
 
 \begin_layout Standard
 为求解一维标量守恒律 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:激波捕捉：守恒律：标量"
-
+\begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
-，在等距网格上引入守恒型空间差分格式
+，在等距网格上引入守恒型差分格式
 \begin_inset Formula 
 \[
-\left(\partial_{x}f\right)_{i}\equiv\eval{\pdv{f}{x}}_{i}\approx\frac{f_{i+\nicefrac{1}{2}}-f_{i-\nicefrac{1}{2}}}{h}
+\left(\partial_{x}f\right)_{i}\equiv\eval{\pdv{f}{x}}_{i}\approx\frac{f_{i+1/2}-f_{i-1/2}}{h}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $f_{i\pm\nicefrac{1}{2}}$
+\begin_inset Formula $f_{i\pm1/2}$
 \end_inset
 
  为下面将要构造的数值通量。不失一般性，这里只考虑 
 \begin_inset Formula $a(u_{i})>0$
 \end_inset
 
- 的情形
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-对于 
+ 的情形；对于 
 \begin_inset Formula $a(u_{i})<0$
 \end_inset
 
@@ -2228,52 +2160,48 @@ status collapsed
 \begin_inset Formula $i$
 \end_inset
 
- 后面的加减号互换，例如 
+ 后面的 
+\begin_inset Formula $\pm$
+\end_inset
+
+ 互换，例如 
 \begin_inset Formula $f_{i+1}$
 \end_inset
 
- 替换为 
+ 换为 
 \begin_inset Formula $f_{i-1}$
 \end_inset
 
-。
-\end_layout
-
+，以此类推。在构造 
+\begin_inset Formula $f_{i+1/2}$
 \end_inset
 
-。在构造 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}$
-\end_inset
-
- 时，含有五个点的大模板（用编号偏移量表示）
+ 时，含有五个点的大模板（用下标偏移量表示）
 \begin_inset Formula 
 \[
-S_{i}=\begin{bmatrix}-2 & -1 & 0 & +1 & +2\end{bmatrix}
+S=\begin{bmatrix}-2 & -1 & 0 & +1 & +2\end{bmatrix}
 \]
 
 \end_inset
 
-被分解为三个（分别含三个点）小模板：
+被分解为三个各含三个点且部分重叠的小模板：
 \begin_inset Formula 
 \[
-S_{i}^{(1)}=\begin{bmatrix}-2 & -1 & 0\end{bmatrix}\qquad S_{i}^{(2)}=\begin{bmatrix}-1 & 0 & +1\end{bmatrix}\qquad S_{i}^{(3)}=\begin{bmatrix}0 & +1 & +2\end{bmatrix}
+S_{1}=\begin{bmatrix}-2 & -1 & 0\end{bmatrix}\qquad S_{2}=\begin{bmatrix}-1 & 0 & +1\end{bmatrix}\qquad S_{3}=\begin{bmatrix}0 & +1 & +2\end{bmatrix}
 \]
 
 \end_inset
 
-它们可以构造出三种 
+由此可以构造出三种对 
 \begin_inset Formula $\left(\partial_{x}f\right)_{i}$
 \end_inset
 
- 的三阶近似，取加权平均即得大模板上的数值通量：
+ 的三阶近似，相应的数值通量分别为
 \begin_inset Formula 
 \[
-f_{i+\nicefrac{1}{2}}=\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
-f_{i+\nicefrac{1}{2}}^{(2)}\\
-f_{i+\nicefrac{1}{2}}^{(3)}
-\end{bmatrix}\qquad\begin{bmatrix}f_{i+\nicefrac{1}{2}}^{(1)}\\
-f_{i+\nicefrac{1}{2}}^{(2)}\\
-f_{i+\nicefrac{1}{2}}^{(3)}
+\begin{bmatrix}f_{i+1/2}^{S_{1}}\\
+f_{i+1/2}^{S_{2}}\\
+f_{i+1/2}^{S_{3}}
 \end{bmatrix}=\frac{1}{6}\begin{bmatrix}2 & -7 & 11\\
  & -1 & 5 & 2\\
  &  & 2 & 5 & -1
@@ -2287,26 +2215,41 @@ f_{i+2}
 
 \end_inset
 
+对三者取加权平均即得大模板上的数值通量：
+\begin_inset Formula 
+\[
+f_{i+1/2}=\begin{bmatrix}w_{1} & w_{2} & w_{3}\end{bmatrix}\begin{bmatrix}f_{i+1/2}^{S_{1}}\\
+f_{i+1/2}^{S_{2}}\\
+f_{i+1/2}^{S_{3}}
+\end{bmatrix}
+\]
+
+\end_inset
+
 其中 
-\begin_inset Formula $\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}$
+\begin_inset Formula $\begin{bmatrix}w_{1} & w_{2} & w_{3}\end{bmatrix}$
 \end_inset
 
  是根据 
-\begin_inset Formula $\left\{ f_{i+s}:s\in S_{i}\right\} $
+\begin_inset Formula $f$
 \end_inset
 
- 的光滑程度构造的“非线性权重”：
+ 在 
+\begin_inset Formula $\begin{bmatrix}S_{1} & S_{2} & S_{3}\end{bmatrix}$
+\end_inset
+
+ 上的光滑程度构造的“非线性权重”：
 \end_layout
 
 \begin_layout Itemize
 在充分光滑的区域，上述 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}$
+\begin_inset Formula $f_{i+1/2}$
 \end_inset
 
  应当逼近（五点）大模板上的（五阶）“理想格式”：
 \begin_inset Formula 
 \[
-f_{i+\nicefrac{1}{2}}=\frac{\begin{bmatrix}2 & -13 & 47 & 27 & -3\end{bmatrix}}{60}\begin{bmatrix}f_{i-2}\\
+f_{i+1/2}^{S}=\frac{\begin{bmatrix}2 & -13 & 47 & 27 & -3\end{bmatrix}}{60}\begin{bmatrix}f_{i-2}\\
 f_{i-1}\\
 f_{i}\\
 f_{i+1}\\
@@ -2319,7 +2262,7 @@ f_{i+2}
 这可以通过取“理想权重”来实现：
 \begin_inset Formula 
 \[
-\begin{bmatrix}w_{i}^{(1)} & w_{i}^{(2)} & w_{i}^{(3)}\end{bmatrix}=\begin{bmatrix}w_{*}^{(1)} & w_{*}^{(2)} & w_{*}^{(3)}\end{bmatrix}\coloneqq\frac{\begin{bmatrix}1 & 6 & 3\end{bmatrix}}{10}
+\begin{bmatrix}w_{1} & w_{2} & w_{3}\end{bmatrix}=\begin{bmatrix}w_{1}^{\star} & w_{2}^{\star} & w_{3}^{\star}\end{bmatrix}\coloneqq\frac{\begin{bmatrix}1 & 6 & 3\end{bmatrix}}{10}
 \]
 
 \end_inset
@@ -2353,35 +2296,39 @@ literal "false"
 
 \begin_layout Enumerate
 在小模板 
-\begin_inset Formula $S_{i}^{(k)}$
+\begin_inset Formula $S_{k}$
 \end_inset
 
  上构造二次多项式 
-\begin_inset Formula $q_{i}^{(k)}$
+\begin_inset Formula $Q_{i}^{S_{k}}$
 \end_inset
 
- 作为对 
+ 作为在 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 附近对 
 \begin_inset Formula $f$
 \end_inset
 
  的近似：
 \begin_inset Formula 
 \[
-q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{(k)}\frac{(x-x_{i})^{2}}{2}
+Q_{i}^{S_{k}}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{S_{k}}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{S_{k}}\frac{(x-x_{i})^{2}}{2}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left(\partial_{x}f\right)_{i}^{(k)}$
+\begin_inset Formula $\left(\partial_{x}f\right)_{i}^{S_{k}}$
 \end_inset
 
  与 
-\begin_inset Formula $\left(\partial_{x}^{2}f\right)_{i}^{(k)}$
+\begin_inset Formula $\left(\partial_{x}^{2}f\right)_{i}^{S_{k}}$
 \end_inset
 
  分别表示由 
-\begin_inset Formula $\left\{ f_{i+s}:s\in S_{i}^{(k)}\right\} $
+\begin_inset Formula $\left\{ f_{i+s}:s\in S_{k}\right\} $
 \end_inset
 
  给出的一阶与二阶差商，即 
@@ -2399,11 +2346,11 @@ q_{i}^{(k)}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{(k)}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{
  处的近似值：
 \begin_inset Formula 
 \[
-\begin{bmatrix}\left(\partial_{x}f\right)_{i}^{(1)}\\
-\left(\partial_{x}f\right)_{i}^{(2)}\\
-\left(\partial_{x}f\right)_{i}^{(3)}
+\begin{bmatrix}\left(\partial_{x}f\right)_{i}^{S_{1}}\\
+\left(\partial_{x}f\right)_{i}^{S_{2}}\\
+\left(\partial_{x}f\right)_{i}^{S_{3}}
 \end{bmatrix}=\frac{1}{2h}\begin{bmatrix}1 & -4 & 3\\
- & -1 &  & 1\\
+ & -1 & 0 & 1\\
  &  & 3 & -4 & 1
 \end{bmatrix}\begin{bmatrix}f_{i-2}\\
 f_{i-1}\\
@@ -2418,9 +2365,9 @@ f_{i+2}
 
 \begin_inset Formula 
 \[
-\begin{bmatrix}\left(\partial_{x}^{2}f\right)_{i}^{(1)}\\
-\left(\partial_{x}^{2}f\right)_{i}^{(2)}\\
-\left(\partial_{x}^{2}f\right)_{i}^{(3)}
+\begin{bmatrix}\left(\partial_{x}^{2}f\right)_{i}^{S_{1}}\\
+\left(\partial_{x}^{2}f\right)_{i}^{S_{2}}\\
+\left(\partial_{x}^{2}f\right)_{i}^{S_{3}}
 \end{bmatrix}=\frac{1}{h^{2}}\begin{bmatrix}1 & -2 & 1\\
  & 1 & -2 & 1\\
  &  & 1 & -2 & 1
@@ -2439,41 +2386,49 @@ f_{i+2}
 
 \begin_layout Enumerate
 计算二次多项式 
-\begin_inset Formula $q_{i}^{(k)}$
+\begin_inset Formula $Q_{i}^{S_{k}}$
 \end_inset
 
  在控制体 
-\begin_inset Formula $(x_{i-\nicefrac{1}{2}},x_{i+\nicefrac{1}{2}})$
+\begin_inset Formula $(x_{i-1/2},x_{i+1/2})$
 \end_inset
 
  上的“光滑程度”
 \begin_inset Formula 
 \[
-\beta_{i}^{(k)}\coloneqq\int_{x_{i-\nicefrac{1}{2}}}^{x_{i}+\nicefrac{1}{2}}\sum_{p=1}^{2}\left(\dv[p]{q_{i}^{(k)}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{(k)}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{(k)}h^{2}\right)^{2}
+\beta_{i}^{S_{k}}\coloneqq\int_{x_{i-1/2}}^{x_{i+1/2}}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{S_{k}}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{S_{k}}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{S_{k}}h^{2}\right)^{2}
 \]
 
 \end_inset
 
-在光滑区域，它们都趋于同一个二阶小量，且两两之差为六阶小量：
+在光滑区域，它们都趋于同一个二阶小量，记作 
+\begin_inset Formula $\beta_{i}^{\star}$
+\end_inset
+
+，且两两之差为六阶小量：
 \begin_inset Formula 
 \[
-\beta_{i}^{(k)}=\beta_{i}^{*}+\order{h^{6}}\qquad\beta_{i}^{*}\coloneqq\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}
+\beta_{i}^{S_{k}}=\beta_{i}^{\star}+\order{h^{6}}\qquad\beta_{i}^{\star}\coloneqq\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}
 \]
 
 \end_inset
 
 在非光滑区域，坏模板上的 
-\begin_inset Formula $q_{i}^{(k)}$
+\begin_inset Formula $Q_{i}^{S_{k}}$
 \end_inset
 
  偏离 
 \begin_inset Formula $f$
 \end_inset
 
- 的 Taylor 展开式较多，因此
+ 在 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 处的 Taylor 展开式较多，因此
 \begin_inset Formula 
 \[
-\beta_{i}^{(k)}=\order{1}\gg\order{h^{2}}
+\beta_{i}^{S_{k}}=\order{1}\gg\order{h^{2}}
 \]
 
 \end_inset
@@ -2485,7 +2440,7 @@ f_{i+2}
 计算非线性权重
 \begin_inset Formula 
 \[
-w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}^{(3)}}\qquad\alpha_{i}^{(k)}=\frac{w_{*}^{(k)}}{\left(\beta_{i}^{(k)}+\varepsilon\right)^{2}}\qquad\varepsilon=10^{-6}
+w_{k}=\frac{w_{k}^{\beta}}{w_{3}^{\beta}+w_{2}^{\beta}+w_{3}^{\beta}}\qquad w_{k}^{\beta}=\frac{w_{k}^{\star}}{\left(\varepsilon+\beta_{i}^{S_{k}}\right)^{2}}\qquad\varepsilon=10^{-6}
 \]
 
 \end_inset
@@ -2493,13 +2448,13 @@ w_{i}^{(k)}=\frac{\alpha_{i}^{(k)}}{\alpha_{i}^{(1)}+\alpha_{i}^{(2)}+\alpha_{i}
 在光滑区域，上述非线性权重接近理想权重：
 \begin_inset Formula 
 \[
-w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\beta_{i}^{*})^{2}+\order{h^{8}}}
+w_{k}=w_{k}^{\star}+\order{h^{4}}\impliedby w_{k}^{\beta}=\frac{w_{k}^{\star}}{(\beta_{i}^{\star})^{2}+\order{h^{8}}}
 \]
 
 \end_inset
 
 故大模板上的 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}$
+\begin_inset Formula $f_{i+1/2}$
 \end_inset
 
  具有五阶精度；在非光滑区域，坏模板的实际权重（与其他小模板的权重相比）接近 
@@ -2507,7 +2462,7 @@ w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\b
 \end_inset
 
 ，但大模板上的 
-\begin_inset Formula $f_{i+\nicefrac{1}{2}}$
+\begin_inset Formula $f_{i+1/2}$
 \end_inset
 
  依然具有三阶精度。
@@ -2521,10 +2476,10 @@ w_{i}^{(k)}=w_{*}^{(k)}+\order{h^{4}}\impliedby\alpha_{k}=\frac{w_{*}^{(k)}}{(\b
 \end_layout
 
 \begin_layout Subsection
-基于相邻单元
+基于邻接单元
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:WENO：相邻单元"
+name "sec:WENO：邻接单元"
 
 \end_inset
 
@@ -2536,11 +2491,11 @@ name "sec:WENO：相邻单元"
 \begin_inset Formula $\phi$
 \end_inset
 
- 限制在单元 
+ 在单元 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上的部分记为
+ 上的“限制 (restriction)”记为
 \begin_inset Formula 
 \[
 \phi_{i}\qty(\vec{x})\coloneqq\phi\qty(\vec{x})\qquad\vec{x}\in E_{i}
@@ -2552,25 +2507,15 @@ name "sec:WENO：相邻单元"
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 及与之相邻
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-这里的“相邻”是指单元之间有公共边界，即几何区域相邻，而非单元编号相邻。
-\end_layout
-
-\end_inset
-
-的那些单元的指标集（即局部模板）记为
+ 及与之邻接的那些单元的下标集（即局部模板）记为
 \begin_inset Formula 
 \[
-S_{i}\coloneqq\left\{ s:\partial E_{i}\cap\partial E_{s}\ne\varnothing\right\} 
+K_{i}\coloneqq\left\{ k:\partial E_{i}\cap\partial E_{k}\ne\varnothing\right\} 
 \]
 
 \end_inset
 
-
+这里的“邻接”是指单元之间有公共边界，即几何区域相邻，而非单元编号相邻。
 \end_layout
 
 \begin_layout Standard
@@ -2581,7 +2526,7 @@ S_{i}\coloneqq\left\{ s:\partial E_{i}\cap\partial E_{s}\ne\varnothing\right\}
 \end_layout
 
 \begin_layout Standard
-“基于相邻单元的 WENO 重构”是由 
+“基于邻接单元的 WENO 重构”是由 
 \begin_inset CommandInset href
 LatexCommand href
 name "Zhong & Shu (2013)"
@@ -2599,11 +2544,15 @@ literal "false"
 
 \end_inset
 
- 推广到非结构网格的一种激波捕捉方法，其核心思想为：利用相邻单元上的函数集 
-\begin_inset Formula $\left\{ \phi_{s}:s\in S_{i}\right\} $
+ 推广到非结构网格的一种激波捕捉方法，其核心思想为：根据邻接单元上的函数 
+\begin_inset Formula $\left\{ \phi_{k}:k\in K_{i}\right\} $
 \end_inset
 
- 重新构造一个足够光滑（基本无振荡）的新函数 
+ 在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的光滑程度，通过加权平均构造一个基本无振荡的新函数 
 \begin_inset Formula $\phi_{i}^{\mathrm{new}}$
 \end_inset
 
@@ -2611,7 +2560,7 @@ literal "false"
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 内不够光滑（含数值振荡）的旧函数 
+ 内含数值振荡的旧函数 
 \begin_inset Formula $\phi_{i}$
 \end_inset
 
@@ -2629,21 +2578,25 @@ status open
 
 \end_inset
 
-主要步骤如下：
+对每个邻接单元，即 
+\begin_inset Formula $\forall k\in K_{i}$
+\end_inset
+
+：
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 将 
-\begin_inset Formula $\phi_{s}$
+\begin_inset Formula $\phi_{k}$
 \end_inset
 
- 的定义域延拓到 
+ 延拓到 
 \begin_inset Formula $E_{i}$
 \end_inset
 
  上，并对函数值作适当平移，使所得的函数 
-\begin_inset Formula $\phi_{s\to i}$
+\begin_inset Formula $\phi_{k\to i}$
 \end_inset
 
  在 
@@ -2661,17 +2614,17 @@ status open
  上的均值：
 \begin_inset Formula 
 \[
-\phi_{s\to i}\qty(\vec{x})\coloneqq\phi_{s}\qty(\vec{x})-\ev{\phi_{s}}_{i}+\ev{\phi_{i}}_{i})\qquad\vec{x}\in E_{i}
+\phi_{k\to i}\qty(\vec{x})\coloneqq\phi_{k}\qty(\vec{x})-\ev{\phi_{k}}_{i}+\ev{\phi_{i}}_{i}\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\ev{\phi_{s}}_{i}$
+\begin_inset Formula $\ev{\psi}_{i}$
 \end_inset
 
  表示函数 
-\begin_inset Formula $\phi_{s}$
+\begin_inset Formula $\psi$
 \end_inset
 
  在单元 
@@ -2681,7 +2634,7 @@ status open
  上的均值：
 \begin_inset Formula 
 \[
-\ev{\phi_{s}}_{i}\coloneqq\frac{\int_{E_{i}}\phi_{s}\qty(\vec{x})}{\int_{E_{i}}1}=\int_{E_{i}}\frac{\phi_{s}\qty(\vec{x})}{\abs{E_{i}}}
+\ev{\psi}_{i}\coloneqq\frac{\int_{E_{i}}\psi\qty(\vec{x})}{\int_{E_{i}}1}=\int_{E_{i}}\frac{\psi\qty(\vec{x})}{\abs{E_{i}}}
 \]
 
 \end_inset
@@ -2691,34 +2644,26 @@ status open
 
 \begin_layout Enumerate
 为 
-\begin_inset Formula $\phi_{s\to i}$
+\begin_inset Formula $\phi_{k\to i}$
 \end_inset
 
- 分配线性权重 
-\begin_inset Formula $w_{s\to i}^{*}$
-\end_inset
-
-，使得 
-\begin_inset Formula $\sum_{s\in S_{i}}w_{s\to i}^{*}=1$
-\end_inset
-
-，例如
+ 分配理想权重：
 \begin_inset Formula 
 \[
-w_{s\to i}^{*}=\begin{cases}
-0.001 & s\ne i\\
-1-\sum_{s\in S_{i}\setminus\left\{ i\right\} }w_{s\to i}^{*} & s=i
+w_{k\to i}^{\star}=\begin{cases}
+0.001 & k\ne i\\
+1-\sum_{k\in K_{i}\setminus\left\{ i\right\} }w_{k\to i}^{\star} & k=i
 \end{cases}
 \]
 
 \end_inset
 
 数值实验表明：较大的 
-\begin_inset Formula $w_{i\to i}^{*}$
+\begin_inset Formula $w_{i\to i}^{\star}$
 \end_inset
 
  有利于在光滑处保持精度，较小的 
-\begin_inset Formula $w_{i\to i}^{*}$
+\begin_inset Formula $w_{i\to i}^{\star}$
 \end_inset
 
  有利于在间断处压制振荡。
@@ -2726,17 +2671,17 @@ w_{s\to i}^{*}=\begin{cases}
 
 \begin_layout Enumerate
 计算 
-\begin_inset Formula $\phi_{s\to i}$
+\begin_inset Formula $\phi_{k\to i}$
 \end_inset
 
  在 
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上的光滑程度，记作
+ 上的光滑程度：
 \begin_inset Formula 
 \[
-\sigma\qty(\phi_{s\to i},E_{i})=\sum_{\abs{\alpha}=1}^{k}\frac{\abs{E_{i}}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\abs{\alpha}}\phi_{s\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\beta_{k\to i}=\sum_{\abs{\alpha}=1}^{p}\frac{\abs{E_{i}}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\abs{\alpha}}\phi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
 \]
 
 \end_inset
@@ -2749,10 +2694,10 @@ w_{s\to i}^{*}=\begin{cases}
 \end_layout
 
 \begin_layout Enumerate
-计算非线性权重
+计算非线性权重：
 \begin_inset Formula 
 \[
-w_{s\to i}=\frac{w_{s\to i}^{\sigma}}{\sum_{s\in S_{i}}w_{s\to i}^{\sigma}}\qquad w_{s\to i}^{\sigma}\coloneqq\frac{w_{s\to i}^{*}}{\left(\varepsilon+\sigma\qty(\phi_{s\to i},E_{i})\right)^{2}}
+w_{k\to i}=\frac{w_{k\to i}^{\beta}}{\sum_{k\in K_{i}}w_{k\to i}^{\beta}}\qquad w_{k\to i}^{\beta}\coloneqq\frac{w_{k\to i}^{\star}}{\left(\varepsilon+\beta_{k\to i}\right)^{2}}
 \]
 
 \end_inset
@@ -2772,9 +2717,10 @@ w_{s\to i}=\frac{w_{s\to i}^{\sigma}}{\sum_{s\in S_{i}}w_{s\to i}^{\sigma}}\qqua
 。
 \end_layout
 
-\begin_layout Enumerate
+\end_deeper
+\begin_layout Algorithm
 按上述非线性权重，对 
-\begin_inset Formula $\left\{ \phi_{s}:s\in S_{i}\right\} $
+\begin_inset Formula $\left\{ \phi_{k}:k\in K_{i}\right\} $
 \end_inset
 
  作加权平均，以所得的新函数 
@@ -2788,7 +2734,7 @@ w_{s\to i}=\frac{w_{s\to i}^{\sigma}}{\sum_{s\in S_{i}}w_{s\to i}^{\sigma}}\qqua
 ：
 \begin_inset Formula 
 \[
-\phi_{i}^{\mathrm{new}}\qty(\vec{x})\coloneqq\sum_{s\in S_{i}}w_{s\to i}\,\phi_{s\to i}\qty(\vec{x})\qquad\vec{x}\in E_{i}
+\phi_{i}^{\mathrm{new}}\qty(\vec{x})\coloneqq\sum_{k\in K_{i}}w_{k\to i}\,\phi_{k\to i}\qty(\vec{x})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
@@ -2796,7 +2742,6 @@ w_{s\to i}=\frac{w_{s\to i}^{\sigma}}{\sum_{s\in S_{i}}w_{s\to i}^{\sigma}}\qqua
 
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2810,12 +2755,33 @@ status open
 
 \begin_layout Plain Layout
 
-[守恒律系统]
+[一维方程组]
 \end_layout
 
 \end_inset
 
-主要步骤如下：
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[高维方程组]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
