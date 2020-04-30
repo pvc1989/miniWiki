@@ -2486,8 +2486,37 @@ name "sec:WENO：邻接单元"
 
 \end_layout
 
+\begin_layout Standard
+本节介绍由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Zhong & Shu (2013)"
+target "https://doi.org/10.1016/j.jcp.2012.08.028"
+literal "false"
+
+\end_inset
+
+ 提出（适用于结构网格）、并由 
+\begin_inset CommandInset href
+LatexCommand href
+name "Zhu & Zhong & Shu & Qiu (2013)"
+target "https://doi.org/10.1016/j.jcp.2013.04.012"
+literal "false"
+
+\end_inset
+
+ 推广（适用于非结构网格）的
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:间断有限元"
+
+\end_inset
+
+型 WENO 重构方法。
+\end_layout
+
 \begin_layout Notation*
-为方便叙述，将分片光滑的函数 
+为方便叙述，将分片光滑的（标量或向量）函数 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -2525,59 +2554,47 @@ K_{i}\coloneqq\left\{ k:\partial E_{i}\cap\partial E_{k}\ne\varnothing\right\}
 
 \end_layout
 
-\begin_layout Standard
-“基于邻接单元的 WENO 重构”是由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Zhong & Shu (2013)"
-target "https://doi.org/10.1016/j.jcp.2012.08.028"
-literal "false"
-
-\end_inset
-
- 在结构网格上提出，并由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Zhu & Zhong & Shu & Qiu (2013)"
-target "https://doi.org/10.1016/j.jcp.2013.04.012"
-literal "false"
-
-\end_inset
-
- 推广到非结构网格的一种激波捕捉方法，其核心思想为：根据邻接单元上的函数 
-\begin_inset Formula $\left\{ \phi_{k}:k\in K_{i}\right\} $
-\end_inset
-
- 在单元 
-\begin_inset Formula $E_{i}$
-\end_inset
-
- 上的光滑程度，通过加权平均构造一个基本无振荡的新函数 
-\begin_inset Formula $\phi_{i}^{\mathrm{new}}$
-\end_inset
-
-，以取代在 
-\begin_inset Formula $E_{i}$
-\end_inset
-
- 内含数值振荡的旧函数 
-\begin_inset Formula $\phi_{i}$
-\end_inset
-
-。
-\end_layout
-
 \begin_layout Algorithm
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[标量守恒律]
+[标量函数]
 \end_layout
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:WENO：基于邻接单元：标量函数"
+
+\end_inset
+
+设 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 为分段光滑的标量函数
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+通常为标量守恒律 
+\begin_inset Formula $\partial_{t}u+\divg\vec{f}=0$
+\end_inset
+
+ 的多项式近似解；也可以是双曲型方程组的某个特征变量。
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
 对每个邻接单元，即 
 \begin_inset Formula $\forall k\in K_{i}$
 \end_inset
@@ -2595,7 +2612,7 @@ status open
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上，并对函数值作适当平移，使所得的函数 
+ 上，并对函数值作适当平移，使所得的 
 \begin_inset Formula $\phi_{k\to i}$
 \end_inset
 
@@ -2634,7 +2651,7 @@ status open
  上的均值：
 \begin_inset Formula 
 \[
-\ev{\psi}_{i}\coloneqq\frac{\int_{E_{i}}\psi\qty(\vec{x})}{\int_{E_{i}}1}=\int_{E_{i}}\frac{\psi\qty(\vec{x})}{\abs{E_{i}}}
+\ev{\psi}_{i}\coloneqq\frac{\int_{E_{i}}\psi\qty(\vec{x})}{\abs{E_{i}}\coloneqq\int_{E_{i}}1}
 \]
 
 \end_inset
@@ -2718,12 +2735,12 @@ w_{k\to i}=\frac{w_{k\to i}^{\beta}}{\sum_{k\in K_{i}}w_{k\to i}^{\beta}}\qquad 
 \end_layout
 
 \end_deeper
-\begin_layout Algorithm
-按上述非线性权重，对 
+\begin_layout Enumerate
+按上述非线性权重对 
 \begin_inset Formula $\left\{ \phi_{k}:k\in K_{i}\right\} $
 \end_inset
 
- 作加权平均，以所得的新函数 
+ 作平均，以所得的新函数 
 \begin_inset Formula $\phi_{i}^{\mathrm{new}}$
 \end_inset
 
@@ -2742,6 +2759,7 @@ w_{k\to i}=\frac{w_{k\to i}^{\beta}}{\sum_{k\in K_{i}}w_{k\to i}^{\beta}}\qquad 
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2760,9 +2778,205 @@ status open
 
 \end_inset
 
+设多项式列阵 
+\begin_inset Formula $\ket{U}_{i}$
+\end_inset
+
+ 为一维守恒律方程组
+\begin_inset Formula 
+\[
+\partial_{t}\ket{U}+\partial_{x}\ket{F}=\ket{0}\qquad\Matrix{A(U)}\coloneqq\pdv*{\ket{F}}{\ket{U}}
+\]
+
+\end_inset
+
+在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的近似解。若 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 被识别为坏单元，则
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+将各邻接单元上的 
+\begin_inset Formula $\ket{U}_{k}$
+\end_inset
+
+ 延拓到 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上，并对函数值作适当平移，使所得的 
+\begin_inset Formula $\ket{U}_{k\to i}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值等于 
+\begin_inset Formula $\ket{U}_{i}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值。
+\end_layout
+
+\begin_layout Enumerate
+用 
+\begin_inset Formula $\ket{U}_{i}$
+\end_inset
+
+ 在 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的均值（重构不变量）计算 
+\begin_inset Formula $\Matrix{A}$
+\end_inset
+
+ 的特征矩阵：
+\begin_inset Formula 
+\[
+\Matrix{A}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\implies\Matrix{L}\coloneqq\Matrix{R}^{-1}\implies\Matrix{L}\Matrix{A}=\Matrix{\Lambda}\Matrix{L}
+\]
+
+\end_inset
+
+所得的 
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Matrix{R}$
+\end_inset
+
+ 均为数量矩阵。 
+\end_layout
+
+\begin_layout Enumerate
+用上述 
+\begin_inset Formula $\Matrix{L}$
+\end_inset
+
+ 定义“特征变量”：
+\begin_inset Formula 
+\[
+\ket{V}\coloneqq\Matrix{L}\ket{U}
+\]
+
+\end_inset
+
+这一步称为“局部特征分解 (local characteristic decomposition)”。具体地：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+计算 
+\begin_inset Formula $\ket{V}_{k\to i}\coloneqq\Matrix{L}\ket{U}_{k\to i}$
+\end_inset
+
+，即 
+\begin_inset Formula $\ket{V}$
+\end_inset
+
+ 的多项式近似。
+\end_layout
+
+\begin_layout Enumerate
+平移后的 
+\begin_inset Formula $\ket{U}_{k\to i}$
+\end_inset
+
+ 已确保均值不变，故不必再对 
+\begin_inset Formula $\ket{V}_{k\to i}$
+\end_inset
+
+ 作平移。
+\end_layout
+
+\begin_layout Enumerate
+对 
+\begin_inset Formula $\left\{ \ket{V}_{k\to i}\right\} _{k\in K_{i}}$
+\end_inset
+
+ 逐行调用算法 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "alg:WENO：基于邻接单元：标量函数"
+
+\end_inset
+
+，具体到第 
+\begin_inset Formula $r$
+\end_inset
+
+ 行：
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\forall k\in K_{i}$
+\end_inset
+
+：计算 
+\begin_inset Formula $\ip{r}{V}_{k\to i}$
+\end_inset
+
+ 的光滑程度 
+\begin_inset Formula $\beta_{k\to i}$
+\end_inset
+
+ 及相应的非线性权重 
+\begin_inset Formula $w_{k\to i}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Enumerate
+按所得权重组合出 
+\begin_inset Formula $\ket{V}_{i}^{\mathrm{new}}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $r$
+\end_inset
+
+ 行：
+\begin_inset Formula 
+\[
+\ip{r}{V}_{i}^{\mathrm{new}}\coloneqq\sum_{k\in K_{i}}w_{k\to i}\ip{r}{V}_{k\to i}
+\]
+
+\end_inset
+
 
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+将“特征变量”还原为“守恒变量”：
+\begin_inset Formula 
+\[
+\ket{U}_{i}^{\mathrm{new}}\coloneqq\Matrix{R}\ket{V}_{i}^{\mathrm{new}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -2781,7 +2995,82 @@ status open
 
 \end_inset
 
+在 
+\begin_inset Formula $E_{i}$
+\end_inset
 
+ 的某段以 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 为单位外法向量的边界上，考虑高维守恒律方程组
+\begin_inset Formula 
+\[
+\partial_{t}\ket{U}+\divg\vec{\ket{F}}=\ket{0}
+\]
+
+\end_inset
+
+在“法向坐标系”中的分裂形式
+\begin_inset Formula 
+\[
+\partial_{t}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{F_{\nu}}\coloneqq\vec{\nu}\vdot\vec{\ket{F}}
+\]
+
+\end_inset
+
+提取“法向 Jacobian 矩阵”
+\begin_inset Formula 
+\[
+\left(\partial_{t}+\Matrix{A_{\nu}}\partial_{\nu}\right)\ket{U}=\ket{0}\qquad\Matrix{A_{\nu}}\coloneqq\pdv*{\ket{F_{\nu}}}{U}
+\]
+
+\end_inset
+
+计算其特征值、特征向量：
+\begin_inset Formula 
+\[
+\Matrix{A_{\nu}}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\qquad\Matrix{L}\coloneqq\Matrix{R}^{-1}
+\]
+
+\end_inset
+
+定义“特征变量”
+\begin_inset Formula 
+\[
+\ket{V}\coloneqq\Matrix{L}\ket{U}
+\]
+
+\end_inset
+
+对 
+\begin_inset Formula $\ket{V}$
+\end_inset
+
+ 的各分量依次应用算法 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "alg:WENO：基于邻接单元：标量函数"
+
+\end_inset
+
+，所得的结果记为 
+\begin_inset Formula $\ket{V}^{\mathrm{new}}$
+\end_inset
+
+，再将特征变量变回原始变量
+\begin_inset Formula 
+\[
+\ket{U}^{\mathrm{new}}\coloneqq\Matrix{R}\ket{V}^{\mathrm{new}}
+\]
+
+\end_inset
+
+对各边界得到的 
+\begin_inset Formula $\ket{U}^{\mathrm{new}}$
+\end_inset
+
+ 按相应边界的尺寸作加权平均。
 \end_layout
 
 \begin_layout Standard
