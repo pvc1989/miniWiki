@@ -2274,7 +2274,7 @@ i+k
 上考虑形如
 \begin_inset Formula 
 \[
-\frac{U_{i}^{n+1}-U_{i}^{n}}{h_{t}}+\frac{F_{i+\nicefrac{1}{2}}^{n}-F_{i-\nicefrac{1}{2}}^{n}}{h_{x}}=0
+\frac{U_{i}^{n+1}-U_{i}^{n}}{h_{t}}+\frac{F_{i+1/2}^{n}-F_{i-1/2}^{n}}{h_{x}}=0
 \]
 
 \end_inset
@@ -2282,8 +2282,8 @@ i+k
 即
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}U_{i}^{n+1} & =U_{i}^{n}-\frac{h_{t}}{h_{x}}\underbrace{F_{\nicefrac{1}{2}}\qty(\cancel{U_{i-k}^{n}},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},U_{i+k}^{n})}_{F_{i+\nicefrac{1}{2}}^{n}}\\
- & \phantom{=U_{i}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{F_{\nicefrac{1}{2}}\qty(U_{i-k}^{n},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},\cancel{U_{i+k}^{n}})}_{F_{i-\nicefrac{1}{2}}^{n}}\\
+\begin{aligned}U_{i}^{n+1} & =U_{i}^{n}-\frac{h_{t}}{h_{x}}\underbrace{F_{1/2}\qty(\cancel{U_{i-k}^{n}},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},U_{i+k}^{n})}_{F_{i+1/2}^{n}}\\
+ & \phantom{=U_{i}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{F_{1/2}\qty(U_{i-k}^{n},U_{i-k+1}^{n},\dots,U_{i+k-1}^{n},\cancel{U_{i+k}^{n}})}_{F_{i-1/2}^{n}}\\
  & =H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})\equiv H_{i}^{n}
 \end{aligned}
 \label{eq:有限差分：时空耦合：单步显式}
@@ -2440,7 +2440,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =(1-\sigma)U_{i}^{n}+\sigma U_{i-1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}\coloneqq F_{i}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-1/2}^{n}-F_{i+1/2}^{n}\right)\qc F_{i+1/2}^{n}\coloneqq F_{i}^{n}
 \end{aligned}
 \]
 
@@ -2456,13 +2456,13 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{G}}\qty(U_{i}^{n},U_{i+1}^{n})=F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0))
+F_{i+1/2}^{n}\equiv F_{1/2}^{\text{G}}\qty(U_{i}^{n},U_{i+1}^{n})=F\qty(\tilde{U}_{i+1/2}^{n}(0))
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\tilde{U}_{i+\nicefrac{1}{2}}^{n}(0)$
+\begin_inset Formula $\tilde{U}_{i+1/2}^{n}(0)$
 \end_inset
 
  表示局部 Riemann 问题
@@ -2491,7 +2491,7 @@ U_{i+1}^{n} & x>0
  恰好为间断面特殊情形纳入其中：
 \begin_inset Formula 
 \[
-\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0)\ne\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0)\implies F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(-0))=F\qty(\tilde{U}_{i+\nicefrac{1}{2}}^{n}(+0))
+\tilde{U}_{i+1/2}^{n}(-0)\ne\tilde{U}_{i+1/2}^{n}(+0)\implies F\qty(\tilde{U}_{i+1/2}^{n}(-0))=F\qty(\tilde{U}_{i+1/2}^{n}(+0))
 \]
 
 \end_inset
@@ -2540,7 +2540,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \end_inset
 
 ，再用 
-\begin_inset Formula $\nicefrac{1}{2}\qty(U_{i-1}^{n}+U_{i+1}^{n})$
+\begin_inset Formula $\qty(U_{i-1}^{n}+U_{i+1}^{n})/2$
 \end_inset
 
  替换 
@@ -2553,7 +2553,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\frac{U_{i}^{n+1}-\nicefrac{1}{2}\qty(U_{i-1}^{n}+U_{i+1}^{n})}{h_{t}}+\frac{F_{i+1}^{n}-F_{i-1}^{n}}{2h_{x}}=0
+\frac{U_{i}^{n+1}-\qty(U_{i-1}^{n}+U_{i+1}^{n})/2}{h_{t}}+\frac{F_{i+1}^{n}-F_{i-1}^{n}}{2h_{x}}=0
 \]
 
 \end_inset
@@ -2565,7 +2565,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{1+\sigma}{2}U_{i-1}^{n}+\frac{1-\sigma}{2}U_{i+1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}\coloneqq\frac{\sigma+1}{2\sigma}F_{i}^{n}+\frac{\sigma-1}{2\sigma}F_{i+1}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-1/2}^{n}-F_{i+1/2}^{n}\right)\qc F_{i+1/2}^{n}\coloneqq\frac{\sigma+1}{2\sigma}F_{i}^{n}+\frac{\sigma-1}{2\sigma}F_{i+1}^{n}
 \end{aligned}
 \]
 
@@ -2581,7 +2581,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LF}}\qty(U_{i}^{n},U_{i+1}^{n})\coloneqq\frac{F_{i}^{n}+F_{i+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{U_{i}^{n}-U_{i+1}^{n}}{2}
+F_{i+1/2}^{n}\equiv F_{1/2}^{\text{LF}}\qty(U_{i}^{n},U_{i+1}^{n})\coloneqq\frac{F_{i}^{n}+F_{i+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{U_{i}^{n}-U_{i+1}^{n}}{2}
 \]
 
 \end_inset
@@ -2647,7 +2647,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}+\sigma}{2}U_{i-1}^{n}+(1-\sigma^{2})U_{i}^{n}+\frac{\sigma^{2}-\sigma}{2}U_{i+1}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}\coloneqq\dfrac{1+\sigma}{2}F_{i}^{n}+\dfrac{1-\sigma}{2}F_{i+1}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-1/2}^{n}-F_{i+1/2}^{n}\right)\qc F_{i+1/2}^{n}\coloneqq\dfrac{1+\sigma}{2}F_{i}^{n}+\dfrac{1-\sigma}{2}F_{i+1}^{n}
 \end{aligned}
 \]
 
@@ -2663,7 +2663,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LW}}\qty(U_{i}^{n},U_{i+1}^{n})\coloneqq F\qty(\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2})
+F_{i+1/2}^{n}\equiv F_{1/2}^{\text{LW}}\qty(U_{i}^{n},U_{i+1}^{n})\coloneqq F\qty(\dfrac{U_{i}^{n}+U_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{F_{i}^{n}-F_{i+1}^{n}}{2})
 \]
 
 \end_inset
@@ -2726,7 +2726,7 @@ reference "eq:有限差分：时空耦合：线性平流"
 \begin_inset Formula 
 \[
 \begin{aligned}U_{i}^{n+1} & =\frac{\sigma^{2}-\sigma}{2}U_{i-2}^{n}+(2\sigma-\sigma^{2})U_{i-1}^{n}+\frac{\sigma^{2}-3\sigma+2}{2}U_{i}^{n}\\
- & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-\nicefrac{1}{2}}^{n}-F_{i+\nicefrac{1}{2}}^{n}\right)\qc F_{i+\nicefrac{1}{2}}^{n}\coloneqq\frac{\sigma-1}{2}F_{i-1}^{n}+\frac{3-\sigma}{2}F_{i}^{n}
+ & =U_{i}^{n}+\frac{h_{t}}{h_{x}}\left(F_{i-1/2}^{n}-F_{i+1/2}^{n}\right)\qc F_{i+1/2}^{n}\coloneqq\frac{\sigma-1}{2}F_{i-1}^{n}+\frac{3-\sigma}{2}F_{i}^{n}
 \end{aligned}
 \]
 
@@ -2742,7 +2742,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-F_{i+\nicefrac{1}{2}}^{n}\equiv F_{\nicefrac{1}{2}}^{\text{LB}}\qty(U_{i-1}^{n},U_{i}^{n})\coloneqq F_{i}^{n}+\frac{F\qty(U_{i}^{n+1_{*}})-F_{i-1}^{n}}{2}\qc U_{i}^{n+1_{*}}=U_{i}^{n}-\frac{h_{t}}{h_{x}}\left(F_{i}^{n}-F_{i-1}^{n}\right)
+F_{i+1/2}^{n}\equiv F_{1/2}^{\text{LB}}\qty(U_{i-1}^{n},U_{i}^{n})\coloneqq F_{i}^{n}+\frac{F\qty(U_{i}^{n+1_{*}})-F_{i-1}^{n}}{2}\qc U_{i}^{n+1_{*}}=U_{i}^{n}-\frac{h_{t}}{h_{x}}\left(F_{i}^{n}-F_{i-1}^{n}\right)
 \]
 
 \end_inset
@@ -2849,7 +2849,7 @@ reference "eq:有限差分：时空耦合：单步显式"
  元函数
 \begin_inset Formula 
 \[
-F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}})
+F_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}})
 \]
 
 \end_inset
@@ -2861,7 +2861,7 @@ F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}}
  个自变量。为方便叙述，引入偏导数记号
 \begin_inset Formula 
 \[
-\partial_{s}F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{F_{\nicefrac{1}{2}}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}}\qc s\in S_{i}\setminus\left\{ k\right\} 
+\partial_{s}F_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{F_{1/2}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}}\qc s\in S_{i}\setminus\left\{ k\right\} 
 \]
 
 \end_inset
@@ -2869,7 +2869,7 @@ F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}}
 并补充定义
 \begin_inset Formula 
 \[
-\partial_{k}F_{\nicefrac{1}{2}}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv0
+\partial_{k}F_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv0
 \]
 
 \end_inset
@@ -2905,13 +2905,13 @@ name "lem:有限差分：时空耦合：数值通量性质"
 \end_inset
 
 函数 
-\begin_inset Formula $F_{\nicefrac{1}{2}}$
+\begin_inset Formula $F_{1/2}$
 \end_inset
 
  具有以下“相容性 (consistency)”：
 \begin_inset Formula 
 \begin{equation}
-F_{\nicefrac{1}{2}}(U,\dots,U)=F(U)
+F_{1/2}(U,\dots,U)=F(U)
 \end{equation}
 
 \end_inset
@@ -2919,7 +2919,7 @@ F_{\nicefrac{1}{2}}(U,\dots,U)=F(U)
 由一阶微分可以导出
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}\partial_{s}F_{\nicefrac{1}{2}}(U,\dots,U)=A(U)
+\sum_{s\in S_{i}}\partial_{s}F_{1/2}(U,\dots,U)=A(U)
 \end{equation}
 
 \end_inset
@@ -3028,8 +3028,8 @@ H(U,\dots,U)=U
 
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=\delta_{s}^{0}- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
-+ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
+\begin{aligned}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=\delta_{s}^{0}- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{1/2}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
++ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{1/2}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
 \end{aligned}
 \end{equation}
 
@@ -3038,8 +3038,8 @@ H(U,\dots,U)=U
 
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\partial_{r}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{r-1}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
-+ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{\nicefrac{1}{2}}}{\phi_{r}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
+\begin{aligned}\partial_{r}\partial_{s}H\qty(U_{i-k}^{n},\dots,U_{i+k}^{n})=- & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{1/2}}{\phi_{r-1}}{\phi_{s-1}}}_{\phi_{-k}=U_{i-k+1}^{n},\dots,\phi_{k-1}=U_{i+k}^{n}}\\
++ & \frac{h_{t}}{h_{x}}\eval{\pdv{F_{1/2}}{\phi_{r}}{\phi_{s}}}_{\phi_{-k}=U_{i-k}^{n},\dots,\phi_{k-1}=U_{i+k-1}^{n}}
 \end{aligned}
 \end{equation}
 

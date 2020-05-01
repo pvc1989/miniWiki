@@ -1122,11 +1122,11 @@ s 的公共端点为 CS，因此
 \end_inset
 
  需放宽为 
-\begin_inset Formula $E_{i}\coloneqq(x_{i-\half},x_{i+\half})$
+\begin_inset Formula $E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})$
 \end_inset
 
 ，其中 
-\begin_inset Formula $x_{i\pm\half}$
+\begin_inset Formula $x_{i\pm1/2}$
 \end_inset
 
  表示“单元两端点的坐标值”。按此记法，
@@ -1136,7 +1136,7 @@ s 的公共端点为 CS，因此
  的长度（一维体积）可以记为
 \begin_inset Formula 
 \[
-h_{i}\coloneqq\abs{E_{i}}\coloneqq\int_{E_{i}}1=\int_{x_{i-\half}}^{x_{i+\half}}1\dd{x}=x_{i+\half}-x_{i-\half}\qquad\forall i\in I(E)
+h_{i}\coloneqq\abs{E_{i}}\coloneqq\int_{E_{i}}1=\int_{x_{i-1/2}}^{x_{i+1/2}}1\dd{x}=x_{i+1/2}-x_{i-1/2}\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1393,7 +1393,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
  的两个端点 
-\begin_inset Formula $x_{i\pm\half}$
+\begin_inset Formula $x_{i\pm1/2}$
 \end_inset
 
 ，面积分退化为 
@@ -1401,13 +1401,13 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
  在 
-\begin_inset Formula $x_{i\pm\half}$
+\begin_inset Formula $x_{i\pm1/2}$
 \end_inset
 
  处取值之差：
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{x_{i-\half}}^{x_{i+\half}}U^{h}\dd{x}+F_{i+\half}^{h}-F_{i-\half}^{h}=0\qquad\forall i\in I(E)\label{eq:有限体积：守恒型格式：一维}
+\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}U^{h}\dd{x}+F_{i+1/2}^{h}-F_{i-1/2}^{h}=0\qquad\forall i\in I(E)\label{eq:有限体积：守恒型格式：一维}
 \end{equation}
 
 \end_inset
@@ -1594,13 +1594,13 @@ Godunov 假设：在
  在每个控制体（单元）内按常数分布
 \begin_inset Formula 
 \[
-U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\coloneqq(x_{i-\half},x_{i+\half})\qquad\forall i\in I(E)
+U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})\qquad\forall i\in I(E)
 \]
 
 \end_inset
 
 这种分布相当于在每个控制面上分别定义了一个（以 
-\begin_inset Formula $\xi\coloneqq x-x_{i+\half}$
+\begin_inset Formula $\xi\coloneqq x-x_{i+1/2}$
 \end_inset
 
  和 
@@ -1610,7 +1610,7 @@ U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\coloneqq(x_{i-\half},x_{i+\ha
  为自变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
 \begin_inset Formula 
 \[
-\check{U}_{i+\half}^{n}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近\,}(0,0)
+\check{U}_{i+1/2}^{n}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近\,}(0,0)
 \]
 
 \end_inset
@@ -1724,7 +1724,7 @@ reference "sec:有限体积：近似 Riemann 解"
  作空间平均，即引入定义（并直接计算）
 \begin_inset Formula 
 \[
-\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+\half}-x_{i-\half}}\int_{x_{i-\half}}^{x_{i+\half}}\check{U}^{n}(x,t_{n+1})\dd{x}
+\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1752,7 +1752,7 @@ reference "sec:有限体积：近似 Riemann 解"
 作为改进，Godunov 引入的第二个方案是将积分形式的守恒律
 \begin_inset Formula 
 \[
-\dv{t}\int_{x_{i-\half}}^{x_{i+\half}}U\dd{x}+F_{i+\half}-F_{i-\half}=0
+\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}U\dd{x}+F_{i+1/2}-F_{i-1/2}=0
 \]
 
 \end_inset
@@ -1772,7 +1772,7 @@ reference "sec:有限体积：近似 Riemann 解"
  上积分，从而得到离散形式的守恒律
 \begin_inset Formula 
 \begin{equation}
-\eval[\int_{x_{i-\half}}^{x_{i+\half}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=0\label{eq:有限体积：Godunov：离散}
+\eval[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
 \end{equation}
 
 \end_inset
@@ -1796,7 +1796,7 @@ reference "sec:有限体积：近似 Riemann 解"
 并（仿照原始版本）定义（但不直接计算）
 \begin_inset Formula 
 \[
-\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+\half}-x_{i-\half}}\int_{x_{i-\half}}^{x_{i+\half}}\check{U}^{n}(x,t_{n+1})\dd{x}
+\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1811,7 +1811,7 @@ reference "eq:有限体积：Godunov：离散"
  的第一个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{x_{i-\half}}^{x_{i+\half}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+\half}-x_{i-\half})
+\eval[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
 \]
 
 \end_inset
@@ -1823,7 +1823,7 @@ reference "eq:有限体积：Godunov：离散"
 为了化简第二个积分，引入“数值通量 (numerical flux)”
 \begin_inset Formula 
 \[
-F_{i+\half}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x_{i+\half},t)\right)\dd{t}
+F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x_{i+1/2},t)\right)\dd{t}
 \]
 
 \end_inset
@@ -1833,13 +1833,13 @@ F_{i+\half}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\mathopen{
 \end_inset
 
  内，被积函数中的 
-\begin_inset Formula $\check{U}^{n}(x_{i+\half},t)\coloneqq\check{U}_{i+\half}^{n}(0)$
+\begin_inset Formula $\check{U}^{n}(x_{i+1/2},t)\coloneqq\check{U}_{i+1/2}^{n}(0)$
 \end_inset
 
  为常量，因此这里的积分可以直接得到：
 \begin_inset Formula 
 \[
-F_{i+\half}^{n}=F\mathopen{}\left(\check{U}_{i+\half}^{n}(0)\right)
+F_{i+1/2}^{n}=F\mathopen{}\left(\check{U}_{i+1/2}^{n}(0)\right)
 \]
 
 \end_inset
@@ -1854,7 +1854,7 @@ reference "eq:有限体积：Godunov：离散"
  的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-\half}}^{x_{i+\half}}=\left(F_{i+\half}^{n}-F_{i-\half}^{n}\right)(t_{n+1}-t_{n})
+\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
 \]
 
 \end_inset
@@ -1873,7 +1873,7 @@ reference "eq:有限体积：Godunov：离散"
  就得到了显式迭代格式
 \begin_inset Formula 
 \begin{equation}
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+\half}-x_{i-\half}}\left(F_{i+\half}^{n}-F_{i-\half}^{n}\right)\qquad F_{i\pm\half}^{n}=F\mathopen{}\left(\check{U}_{i\pm\half}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+1/2}-x_{i-1/2}}\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)\qquad F_{i\pm1/2}^{n}=F\mathopen{}\left(\check{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
 \end{equation}
 
 \end_inset
@@ -1906,7 +1906,7 @@ reference "eq:有限体积：守恒型格式：一维"
 \end_inset
 
 ，并用局部 Riemann 问题的“精确解”计算近似通量 
-\begin_inset Formula $F_{i\pm\half}^{n}\coloneqq F\mathopen{}\left(\check{U}_{i\pm\half}^{n}(0)\right)$
+\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq F\mathopen{}\left(\check{U}_{i\pm1/2}^{n}(0)\right)$
 \end_inset
 
 ，即得 
@@ -2168,7 +2168,7 @@ status open
  替换一维 Burgers 方程
 \begin_inset Formula 
 \[
-\partial_{t}U+\partial_{x}(U^{2}/2)=0
+\partial_{t}U+\partial_{x}\qty(U^{2}/2)=0
 \]
 
 \end_inset
@@ -2180,7 +2180,7 @@ status open
 ，就得到二维 Burgers 方程
 \begin_inset Formula 
 \[
-\partial_{t}U+\underbrace{\left(\alpha_{x}\partial_{x}+\alpha_{y}\partial_{y}\right)}_{\partial_{\alpha}}(U^{2}/2)=0
+\partial_{t}U+\underbrace{\left(\alpha_{x}\partial_{x}+\alpha_{y}\partial_{y}\right)}_{\partial_{\alpha}}\qty(U^{2}/2)=0
 \]
 
 \end_inset
