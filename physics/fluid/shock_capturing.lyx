@@ -2778,6 +2778,13 @@ status open
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:WENO：基于邻接单元：一维方程组"
+
+\end_inset
+
 设多项式列阵 
 \begin_inset Formula $\ket{U}_{i}$
 \end_inset
@@ -2995,15 +3002,11 @@ status open
 
 \end_inset
 
-在 
-\begin_inset Formula $E_{i}$
+设多项式列阵 
+\begin_inset Formula $\ket{U}_{i}$
 \end_inset
 
- 的某段以 
-\begin_inset Formula $\vec{\nu}$
-\end_inset
-
- 为单位外法向量的边界上，考虑高维守恒律方程组
+ 为高维守恒律方程组
 \begin_inset Formula 
 \[
 \partial_{t}\ket{U}+\divg\vec{\ket{F}}=\ket{0}
@@ -3011,7 +3014,31 @@ status open
 
 \end_inset
 
-在“法向坐标系”中的分裂形式
+在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的近似解。若 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 被识别为坏单元，则
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\forall k\in K_{i}\setminus\left\{ i\right\} $
+\end_inset
+
+：在公共边界 
+\begin_inset Formula $B_{i,k}\coloneqq\partial E_{i}\cap\partial E_{k}$
+\end_inset
+
+ 上，对守恒律方程组沿外法向 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 的“法向分裂形式”
 \begin_inset Formula 
 \[
 \partial_{t}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{F_{\nu}}\coloneqq\vec{\nu}\vdot\vec{\ket{F}}
@@ -3019,60 +3046,44 @@ status open
 
 \end_inset
 
-提取“法向 Jacobian 矩阵”
-\begin_inset Formula 
-\[
-\left(\partial_{t}+\Matrix{A_{\nu}}\partial_{\nu}\right)\ket{U}=\ket{0}\qquad\Matrix{A_{\nu}}\coloneqq\pdv*{\ket{F_{\nu}}}{U}
-\]
-
-\end_inset
-
-计算其特征值、特征向量：
-\begin_inset Formula 
-\[
-\Matrix{A_{\nu}}\Matrix{R}=\Matrix{R}\Matrix{\Lambda}\qquad\Matrix{L}\coloneqq\Matrix{R}^{-1}
-\]
-
-\end_inset
-
-定义“特征变量”
-\begin_inset Formula 
-\[
-\ket{V}\coloneqq\Matrix{L}\ket{U}
-\]
-
-\end_inset
-
-对 
-\begin_inset Formula $\ket{V}$
-\end_inset
-
- 的各分量依次应用算法 
+应用算法 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "alg:WENO：基于邻接单元：标量函数"
+reference "alg:WENO：基于邻接单元：一维方程组"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-，所得的结果记为 
-\begin_inset Formula $\ket{V}^{\mathrm{new}}$
+，所得结果记为 
+\begin_inset Formula $\ket{U}_{k\to i}^{\mathrm{new}}$
 \end_inset
 
-，再将特征变量变回原始变量
+。
+\end_layout
+
+\begin_layout Enumerate
+按 
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ 的面积对 
+\begin_inset Formula $\ket{U}_{k\to i}^{\mathrm{new}}$
+\end_inset
+
+ 作加权平均：
 \begin_inset Formula 
 \[
-\ket{U}^{\mathrm{new}}\coloneqq\Matrix{R}\ket{V}^{\mathrm{new}}
+\ket{U}_{i}^{\mathrm{new}}\coloneqq\frac{\sum_{k\in K_{i}\setminus\left\{ i\right\} }\abs{E_{k}}\cdot\ket{U}_{k\to i}^{\mathrm{new}}}{\sum_{k\in K_{i}\setminus\left\{ i\right\} }\abs{E_{k}}}
 \]
 
 \end_inset
 
-对各边界得到的 
-\begin_inset Formula $\ket{U}^{\mathrm{new}}$
-\end_inset
 
- 按相应边界的尺寸作加权平均。
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
