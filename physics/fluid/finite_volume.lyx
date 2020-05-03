@@ -2003,7 +2003,7 @@ U\qty(\vec{x},t_{n})=\bar{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U}{\abs{E_{i}}\co
 
 \end_inset
 
-于是，适用于一维问题的 Godunov 格式 
+于是，一维版本的 Godunov 格式 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:有限体积：Godunov：推进"
@@ -2025,10 +2025,10 @@ reference "eq:有限体积：Godunov：推进"
 \begin_inset Formula $F_{\nu}^{n}$
 \end_inset
 
- 由局部 Riemann 问题的精确解给出：
+ 由局部 Riemann 解给出：
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Itemize
 在控制面 
 \begin_inset Formula $S_{k}\subset\partial E_{i}$
 \end_inset
@@ -2051,7 +2051,7 @@ reference "eq:有限体积：Godunov：推进"
 \begin_deeper
 \begin_layout Itemize
 该问题以 
-\begin_inset Formula $\nu\coloneqq\qty(\vec{x}-\vec{s})\vdot\vec{\nu}$
+\begin_inset Formula $\nu\coloneqq\vec{\nu}\vdot\qty(\vec{x}-\vec{s})$
 \end_inset
 
  及 
@@ -2066,40 +2066,26 @@ reference "eq:有限体积：Godunov：推进"
 \begin_inset Formula $F_{\nu}\coloneqq\vec{\nu}\vdot\vec{F}$
 \end_inset
 
- 为“法向通量”，因此不妨称该方程为“法向守恒律”。
+ 为“法向通量”。
 \end_layout
 
 \begin_layout Itemize
-若 
-\begin_inset Formula $U\text{、}F_{\nu}$
-\end_inset
-
- 中含有向量在“全局坐标系”中的分量，则需先将它们变换到“法向坐标系”，然后再调用一维 Riemann 求解器。
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-利用上述 Riemann 问题的精确解 
+调用 Riemann 求解器，得到自相似解 
 \begin_inset Formula $\check{U}_{\vec{s}}^{n}(\nu/\tau)$
 \end_inset
 
- 计算法向通量 
-\begin_inset Formula $F_{\nu}\mathopen{}\left(\check{U}_{\vec{s}}^{n}(0)\right)$
+ 及法向通量 
+\begin_inset Formula $F_{\nu}^{n}\qty(\vec{s})=F_{\nu}\mathopen{}\left(\check{U}_{\vec{s}}^{n}(\pm0)\right)$
 \end_inset
 
 。
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 \begin_inset Formula $S_{k}$
 \end_inset
 
- 两侧的状态分别沿 
-\begin_inset Formula $S_{k}$
-\end_inset
-
- 为常值，因此下标中的 
+ 两侧的状态均为常值，故 
 \begin_inset Formula $\vec{s}$
 \end_inset
 
@@ -2107,31 +2093,41 @@ reference "eq:有限体积：Godunov：推进"
 \begin_inset Formula $S_{k}$
 \end_inset
 
- 代替，并以 
-\begin_inset Formula $F_{\nu}\mathopen{}\left(\check{U}_{S_{k}}^{n}(0)\right)$
+ 代替，即 
+\begin_inset Formula $F_{\nu}^{n}\qty(S_{k})=F_{\nu}\mathopen{}\left(\check{U}_{S_{k}}^{n}(\pm0)\right)$
 \end_inset
 
- 作为 
-\begin_inset Formula $F_{\nu}^{n}$
-\end_inset
-
- 在 
-\begin_inset Formula $S_{k}$
-\end_inset
-
- 上的取值。
+。
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
 若 
-\begin_inset Formula $F_{\nu}^{n}$
-\end_inset
-
- 中含有向量在“法向坐标系”中的分量，则需先将它们变换到“全局坐标系”，然后再对守恒变量 
 \begin_inset Formula $U$
 \end_inset
 
- 作更新。
+ 的某个分量可以看作某个向量在“全局坐标系”中的分量，则需对此分量作以下变换：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+调用 Riemann 求解器前，需将 
+\begin_inset Formula $U$
+\end_inset
+
+ 的“全局（分量）形式”变换为“局部（分量）形式”。
+\end_layout
+
+\begin_layout Itemize
+获得 Riemann 解后，需按上一步的逆变换（将 
+\begin_inset Formula $U$
+\end_inset
+
+ 的“局部形式”变换为“全局形式”）对 
+\begin_inset Formula $F_{\nu}^{n}$
+\end_inset
+
+ 作变换。
 \end_layout
 
 \end_deeper
@@ -2205,7 +2201,11 @@ status open
 \begin_inset Formula $\vec{\nu}\vdot\vec{\alpha}$
 \end_inset
 
- 为常量，故相应局部 Riemann 问题的求解仍可调用一维 Burgers–Riemann 求解器。
+ 为常量，故相应局部 Riemann 问题的求解仍可调用一维 Burgers–Riemann 求解器；
+\begin_inset Formula $U$
+\end_inset
+
+ 不含向量分量，故无需作变换。
 \end_layout
 
 \begin_layout Standard
@@ -2243,7 +2243,7 @@ status open
 于是单元边界上的“法向守恒律”及相应的“法向通量”分别为
 \begin_inset Formula 
 \[
-\partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=0\qquad\ket{F_{\nu}}\coloneqq\vec{\nu}\vdot\vec{\ket{F}}=\begin{bmatrix}\rho u_{\nu}\\
+\partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{F_{\nu}}\coloneqq\vec{\nu}\vdot\vec{\ket{F}}=\begin{bmatrix}\rho u_{\nu}\\
 \rho u_{\nu}\vec{u}+p\vec{\nu}\\
 \rho h_{0}u_{\nu}
 \end{bmatrix}
@@ -2278,59 +2278,50 @@ status open
 将这些分量代入上述“法向守恒律”及“法向通量”，即得“法向守恒律”在“法向坐标系”中的具体形式：
 \begin_inset Formula 
 \[
-\partial_{t}\begin{bmatrix}\rho\\
+\partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{U}\coloneqq\begin{bmatrix}\rho\\
 \rho u_{\nu}\\
 \rho u_{\sigma}\\
 \rho u_{\pi}\\
 \rho e_{0}
-\end{bmatrix}+\partial_{\nu}\begin{bmatrix}\rho u_{\nu}\\
+\end{bmatrix}\qquad\ket{F_{\nu}}\coloneqq\begin{bmatrix}\rho u_{\nu}\\
 \rho u_{\nu}u_{\nu}+p\\
 \rho u_{\sigma}u_{\nu}\\
 \rho u_{\pi}u_{\nu}\\
 \rho h_{0}u_{\nu}
-\end{bmatrix}=\begin{bmatrix}0\\
-0\\
-0\\
-0\\
-0
 \end{bmatrix}
 \]
 
 \end_inset
 
-这正是三维 Euler 方程的“
-\begin_inset Formula $\nu$
-\end_inset
-
- 
-\bar under
-分裂 (split)
-\bar default
- 形式”即“法向分裂形式”，故可调用三维 Euler–Riemann 求解器，详见 
+这正是三维 Euler 方程的“法向分裂形式”，故可调用三维 Euler–Riemann 求解器，详见《
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "sec:激波管：高维版本"
 
 \end_inset
 
- 节。
-\end_layout
-
-\begin_layout Itemize
-输入的 
-\begin_inset Formula $\ket{U_{\pm}^{n}}$
+》一节。
+\begin_inset Formula $\ket{U}$
 \end_inset
 
- 是在“全局坐标系”中给出的：
+ 的中间三个分量为向量 
+\begin_inset Formula $\rho\vec{u}$
+\end_inset
+
+ 在“法向坐标系”中的分量，因此在调用 Riemann 求解器前后需对这三行作如下变换：
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-首末两个分量均为标量，故无需变换。
-\end_layout
+上一时间步的 
+\begin_inset Formula $\ket{U_{\pm}^{n}}$
+\end_inset
 
-\begin_layout Itemize
-中间三个分量均为向量在“全局坐标系”中的分量，故需变换到“法向坐标系”：
+ 是在“全局坐标系”中给出的，而传给 Riemann 求解器的 
+\begin_inset Formula $\ket{U_{\pm}^{n}}$
+\end_inset
+
+ 应当在“法向坐标系”中给出，因此中间三行应当由“全局形式”变换为“局部形式”：
 \begin_inset Formula 
 \[
 \begin{bmatrix}\ip{\nu}{U_{\pm}^{n}}\\
@@ -2350,22 +2341,16 @@ reference "sec:激波管：高维版本"
 
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
-输出的 
+Riemann 求解器输出的 
 \begin_inset Formula $\ket{F_{\nu}^{n}}$
 \end_inset
 
- 是在“法向坐标系”中给出的：
-\end_layout
+ 是在“法向坐标系”中给出的，而下一时间步的 
+\begin_inset Formula $\ket{U_{\pm}^{n+1}}$
+\end_inset
 
-\begin_deeper
-\begin_layout Itemize
-首末两个分量均为标量，故无需变换。
-\end_layout
-
-\begin_layout Itemize
-中间两个分量均为向量在“法向坐标系”中的分量，故需变换到“全局坐标系”：
+ 应当在“全局坐标系”中给出，因此中间三行应当由“局部形式”变换为“全局形式”：
 \begin_inset Formula 
 \[
 \begin{bmatrix}\ip{x}{F_{\nu}^{n}}\\
