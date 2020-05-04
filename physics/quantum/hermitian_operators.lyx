@@ -6,10 +6,7 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -17,7 +14,7 @@ theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -73,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -93,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -103,7 +101,233 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
+可观测量
+\end_layout
+
+\begin_layout Section
+物理量测量
+\end_layout
+
+\begin_layout Subsection
+Heisenberg's 矩阵
+\end_layout
+
+\begin_layout Standard
+量子力学的矩阵描述（即“矩阵力学”）是由 Heisenberg (1925) 提出的，其核心思想为：理论应以“可观测量 (observable
+ quantity)”为基础；每个可观测量都可以表示为一个（无穷维）矩阵，其中每个矩阵元都与两个态有关。
+\begin_inset Formula 
+\[
+\Matrix{C}=\begin{bmatrix}C_{11} & \cdots & C_{1n} & \cdots\\
+\vdots & \ddots & \vdots & \cdots\\
+C_{n1} & \cdots & C_{nn} & \cdots\\
+\vdots & \vdots & \vdots & \ddots
+\end{bmatrix}\qquad C_{ik}\coloneqq\mel{\psi_{i}}{\Operator{C}}{\psi_{k}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+波函数坍缩
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Operator{C}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+物理量期望值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\expval{C}_{\psi}\coloneqq\expval{\Operator{C}}{\psi}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\expval{C}_{\psi}=\sum_{n\in\mathbb{N}}\lambda_{n}\abs{a_{n}}^{2}\impliedby\begin{cases}
+\ket{\psi}=\sum_{n\in\mathbb{N}}a_{n}\ket{\psi_{n}}\\
+\Operator{C}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}} & n\in\mathbb{N}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Hermitian 算符
+\end_layout
+
+\begin_layout Subsection
+Hilbert 空间
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ip{\phi}{\psi}\coloneqq\int_{-\infty}^{+\infty}\Conj{\phi(x)}\psi(x)\dd{x}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\abs{\psi}\coloneqq\sqrt{\ip{\psi}{\psi}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{L}^{2}(\mathbb{R}(x))\coloneqq\left\{ \psi(x):\abs{\psi}<\infty\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+共轭算符
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Operator{B}=\Operator{C}^{\dagger}\iff\forall\ket{\phi},\forall\ket{\psi}\colon\ip*{\Operator{B}\phi}{\psi}=\ip*{\phi}{\Operator{C}\psi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Hermitian 算符的性质
+\end_layout
+
+\begin_layout Section
+表象变换
+\end_layout
+
+\begin_layout Subsection
+矩阵表示
+\end_layout
+
+\begin_layout Subsection
+基底变换
+\end_layout
+
+\begin_layout Subsection
+不变量
+\end_layout
+
+\begin_layout Section
+测不准原理
+\end_layout
+
+\begin_layout Subsection
+对易子
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+[\Operator{B},\Operator{C}]\coloneqq\Operator{B}\Operator{C}-\Operator{C}\Operator{B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+定量形式
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[测不准原理]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\expval{\left(\increment B\right)^{2}}\expval{\left(\increment C\right)^{2}}\ge\frac{\expval{D}^{2}}{4}\impliedby\begin{cases}
+[\Operator{B},\Operator{C}]=\ii\Operator{D}\ne\Operator{0}\\
+\Operator{\increment B}\coloneqq\Operator{B}-\expval*{B}\\
+\Operator{\increment C}\coloneqq\Operator{C}-\expval*{C}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+守恒与对称
+\end_layout
+
+\begin_layout Subsection
+守恒量与 
+\begin_inset Formula $\Operator{H}$
+\end_inset
+
+ 对易
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\forall\ket{\psi(t)}\colon\dv*{\expval{C}_{\psi}}{t}=0\iff\comm*{\Operator{C}}{\Operator{H}}=\Operator{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+对称变换
 \end_layout
 
 \end_body
