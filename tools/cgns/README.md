@@ -1,6 +1,9 @@
 # CGNS
 
-CGNS 是一种通用（跨平台、易扩展、被广泛采用）的 CFD 文件（数据库）系统。[SIDS](#SIDS) 给出了这种文件格式的抽象定义。Fortran/C 程序库 [MLL](#MLL) 是对 SIDS 的一种具体实现，它提供了读写（以 ADF 或 HDF5 作为底层数据格式的）CGNS 文件的中层 API。
+CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数据库）系统。
+
+- [SIDS](#SIDS) 给出了这种文件格式的抽象定义。
+- [MLL](#MLL) 是对 SIDS 的一种具体实现，它提供了读写（以 ADF 或 HDF5 作为底层数据格式的）CGNS 文件的 Fortran 及 C 语言 API。
 
 | 术语 |                             含义                             |
 | :--: | :----------------------------------------------------------: |
@@ -25,69 +28,73 @@ CGNS 是一种通用（跨平台、易扩展、被广泛采用）的 CFD 文件�
 - [AIAA Drag Prediction Workshop (DPW)](https://aiaa-dpw.larc.nasa.gov) 
   - [Download Grids](https://dpw.larc.nasa.gov/DPW6/)
 
-符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [***CGNSview***](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件（目录）树*。
+符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [***CGNSview***](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件树*。
 
 ### 文件结构
 
-本节内容来自于 SIDS 的入门指南 [***Overview of the SIDS***](https://cgns.github.io/CGNS_docs_current/user/sids.html)。
+本节内容可视为官方入门指南 [***Overview of the SIDS***](https://cgns.github.io/CGNS_docs_current/user/sids.html) 的精简版。
 
 #### Node
 
-每个 CGNS 文件（数据库）在逻辑上是一棵由若干 ***结点 (node)*** 相互链接而成的 ***树 (tree)***。每个 node 都含有以下数据：
+每个 CGNS 文件（数据库）在逻辑上是一棵由若干 ***结点 (node)*** 相互链接而成的 ***树 (tree)***。每个结点都含有以下数据：
 
 - ***`Label`*** 表示其类型，通常是以 `_t` 为后缀的预定义类型。
-- ***`Name`*** 表示其身份，通常是由用户自定义的字符串，但有时需取作预定义的名称。
+- ***`Name`*** 表示其身份，通常是由用户自定义的字符串，但有时需符合命名规范。
 - ***`Data`*** 是实际数据，可以为空（用 `MT` 表示）。
-- 指向其 parent、child(ren) 的链接。
+- 指向其 ***亲 (parent)*** 或 ***子 (child)*** 的链接。
+
+⚠️ 为避免混淆，本文档约定 ***结点 (node)*** 只表示上述树结点，而将网格中的点称为 ***顶点 (vertex)*** 或 ***网格点 (mesh point)***。
 
 #### Root
 
-最顶层（没有 parent）的那个 node 称为 ***根 (root)***，它以如下 node(s) 作为其 child(ren)：
+最顶层（没有亲）的那个结点称为 ***根 (root)***，它有如下子结点：
 
 - 一个 ***`CGNSLibraryVersion_t`*** 结点：
   - `Name` 为 `CGNSLibraryVersion`。
   - `Data` 为 CGNS 的版本号。
-- 若干 [***`CGNSBase_t`***](#`CGNSBase_t`)(s)，分别表示一个 ***算例 (case)***：
-  - 多数 CGNS 文件只有一个 `CGNSBase_t`。
-  - 如果含有多个，则不同 `CGNSBase_t` 之间不共享数据。
+- 若干 [***`CGNSBase_t`***](#`CGNSBase_t`)(s) 结点，分别表示一个 ***算例 (case)***：
+  - 多数 CGNS 文件只有一个 `CGNSBase_t` 结点。
+  - 若含有多个 `CGNSBase_t` 结点，则不同之间不共享数据。
 
 #### `CGNSBase_t` 
 
-一个 `CGNSBase_t` 含有以下信息：
+一个 `CGNSBase_t` 结点含有以下信息：
 
-- `Name` 可以任取，例如取作文件名。
-- `Data` 为两个整数：***单元维数 (cell dim)*** 与 ***物理维数 (physics dim)***，分别表示 *顶级单元* 与 *所处空间* 的维数。
-- 若干 [***`Zone_t`***](#`Zone_t`)，分别表示网格中的一块区域。
+- `Name` 可以任取，通常取作文件名。
+- `Data` 为两个整数：***单元维数 (cell dim)*** 与 ***物理维数 (physics dim)***。
+- 若干 [***`Zone_t`***](#`Zone_t`) 结点，每个表示一块网格。
 
 #### `Zone_t`
 
-一个 `Zone_t` 含有以下信息：
+一个 `Zone_t` 结点含有以下信息：
 
-- 一个 ***`ZoneType_t`***，用于表示此区域的（网格）类型：
+- 一个 ***`ZoneType_t`*** 结点，用于表示此区域的（网格）类型：
   - `Name` 为 `ZoneType`。 
-  - `Data` 取自 `Structured`、`Unstructured`、`UserDefined`、`Null`。
-- 若干 [***`GridCoordinates_t`***](#`GridCoordinates_t`)，用于表示 *结点坐标*。
-- 若干 [***`Element_t`***](#`Element_t`)，用于表示 *非结构网格的单元结点列表*。
-- 若干 [***`FlowSolution_t`***](#`FlowSolution_t`)，用于表示 *物理量在结点或单元上的值*。
-- 若干 [***`ZoneBC_t`***](#`ZoneBC_t`)，用于表示 *边界条件*。
-- 若干 [***`ZoneGridConnectivity_t`***](#`ZoneGridConnectivity_t`)，用于表示 *多块网格的连接方式*。
+  - `Data` 取自 `Structured | Unstructured | UserDefined | Null`。
+- 若干 [***`GridCoordinates_t`***](#`GridCoordinates_t`) 结点，用于表示 *结点坐标*。
+- 若干 [***`Element_t`***](#`Element_t`) 结点，用于表示 *非结构网格的单元结点列表*。
+- 若干 [***`FlowSolution_t`***](#`FlowSolution_t`) 结点，用于表示 *物理量在结点或单元上的值*。
+- 若干 [***`ZoneBC_t`***](#`ZoneBC_t`) 结点，用于表示 *边界条件*。
+- 若干 [***`ZoneGridConnectivity_t`***](#`ZoneGridConnectivity_t`) 结点，用于表示 *多块网格的连接方式*。
 
 #### `GridCoordinates_t`
 
-每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示变化的网格。最初的那个通常以 `GridCoordinates` 为其 `Name`。
+每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示随时间变化的网格。最初的那个通常以 `GridCoordinates` 为其 `Name`。
 
-各 *结点坐标分量* 分别存储为一个 ***`DataArray_t`***：
+各 *结点坐标分量* 分别存储为一个 ***`DataArray_t`*** 结点：
 
-- `Name` 应取自 `CoordinateX`、`CoordinateY`、`CoordinateZ`、`CoordinateR`、`CoordinateTheta`、`CoordinatePhi`、`CoordinateNormal`。
-- 数组 *个数* 必须等于其所属 `CGNSBase_t` 中的 *物理维数*。
-- 数组 *长度* 必须等于其所属 `Zone_t` 中（相应方向）的 *结点个数* 与 *外皮层数* 之和。
+- `Name` 应取自
+  - 直角坐标：`CoordinateX | CoordinateY | CoordinateZ`
+  - 球坐标：`CoordinateR | CoordinateTheta | CoordinatePhi`
+- 数组 *个数* 必须等于其所属 `CGNSBase_t` 结点的 *物理维数*。
+- 数组 *长度* 必须等于其所属 `Zone_t` 结点（沿相应方向）的 *结点个数* 与 *外表层数* 之和。
 
 #### `Element_t`
 
 #### `FlowSolution_t`
 
-- 各物理量分别存储为一个 `DataArray_t`，它们都是 `FlowSolution_t` 的 children。
-- 每个 `Zone_t` 下可以有多个 `FlowSolution_t`。
+- 各物理量分别存储为一个 `DataArray_t` 结点。
+- 每个 `Zone_t` 下可以有多个 `FlowSolution_t` 结点。
 
 #### `ZoneBC_t`
 
@@ -97,10 +104,10 @@ CGNS 是一种通用（跨平台、易扩展、被广泛采用）的 CFD 文件�
 
 本节主要内容来自于 MLL 的入门指南 [***A User's Guide to CGNS***](https://cgns.github.io/CGNS_docs_current/user/)：
 
-- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [***Mid-Level Library***](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行* 存储，Fortran 的多维数组 *按列* 存储，因此 *C 的行* 对应于 *Fortran 的列*。
+- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [***Mid-Level Library***](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *C 的行* 对应于 *Fortran 的列*。
 - 原文采用了 先具体介绍 *结构 (structured) 网格*、再简要介绍 *非结构 (unstructured) 网格* 的展开方式，这里则将二者同步展开，以便读者比较二者的异同。
 
-下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可以在 CMake 中勾选 `CGNS_BUILD_TESTING`，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 ### 单区网格
 
@@ -154,16 +161,16 @@ ier = cg_zone_read(
 其中
 
 - 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
-- `cell_dim`、`phys_dim` 分别表示 单元（流形）维数、物理（空间）维数。
+- `cell_dim`、`phys_dim` 分别表示 *单元（流形）维数*、*物理（空间）维数*。
 - `zone_size` 是一个二维数组（的头地址），
-  - 其行数为三，各行分别表示 结点、单元、边界点 数量。
-  - 对于 结构网格：
-    - 列数 至少为 空间维数，各列分别对应于三个（逻辑）方向的数量。
-    - 各方向的 单元数 总是比 结点数 少一个。
-    - 边界点 没有意义，因此最后一行全部为零。
-  - 对于 非结构网格：
-    - 列数 至少为 一。
-    - 若单元编号没有排序，则边界点数量为零。
+  - 其行数为三，各行分别表示 *顶点数*、*单元数*、*边界点数* 。
+  - 对于 *结构网格*：
+    - *列数* 至少为 *空间维数*，每列分别对应一个（逻辑）方向。
+    - 各方向的 *单元数* 总是比 *顶点数* 少一。
+    - *边界点* 没有意义，因此最后一行全部为零。
+  - 对于 *非结构网格*：
+    - *列数* 至少为一。
+    - 若单元编号没有排序，则 *边界点数* 为零。
 
 #### 读写坐标
 
@@ -188,17 +195,19 @@ ier = cg_coord_read(
 
 其中
 
-- 设结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
-  - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的结点数外，其余维度的长度 *必须等于* 相应方向的结点数。
+- 若由 `zone_size[0]` 算出的结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
+  - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的顶点数外，其余维度的长度 *必须等于* 相应方向的顶点数。
   - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
-- 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即 `CoordinateX`、`CoordinateY`、`CoordinateZ`。
+- 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即
+  - 直角坐标：`CoordinateX | CoordinateY | CoordinateZ`
+  - 球坐标：`CoordinateR | CoordinateTheta | CoordinatePhi`
 - `data_type` 应当与 `coord_array` 的类型匹配：
   - `CGNS_ENUMV(RealSingle)` 对应 `float`。
   - `CGNS_ENUMV(RealDouble)` 对应 `double`。
 
 #### 读写单元
 
-结构网格的 *结点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
+结构网格的 *顶点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
 
 ```c
 // Write fixed size element data:
@@ -229,12 +238,12 @@ ier = cg_elements_read(
 
 其中
 
-- `cg_section_write()` 在给定的 `Zone_t` 对象下新建一个 `Elements_t` 对象，即 *单元片段 (element section)*。
-- 一个 `Zone_t` 下可以有多个 `Elements_t`：
+- `cg_section_write()` 在给定的 `Zone_t` 结点下新建一个 *单元片段 (element section)*，即 `Elements_t` 结点。
+- 一个 `Zone_t` 结点下可以有多个 `Elements_t` 结点：
+  - 同一个 `Elements_t` 结点下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，常用的有 `NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 | PENTA_6 | HEXA_8`。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
-  - 同一个 `Elements_t` 下的所有单元必须是同一种类型，即 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，例如 `NODE`、`BAR_2`、`TRI_3`、`QUAD_4`、`TETRA_4`、`PYRA_5`、`PENTA_6`、`HEXA_8`。
-- `first`、`last` 为当前 `Elements_t` 内首、末单元的编号。
-- `n_boundary` 为当前 `Elements_t` 的最后一个边界点的编号。如果单元编号没有排序，则设为 `0`。
+- `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
+- `n_boundary` 为当前 `Elements_t` 对象的最后一个边界点的编号。若单元编号没有排序，则设为 `0`。
 - `parent_flag` 用于判断 parent data 是否存在。
 
 #### 运行示例
@@ -304,7 +313,7 @@ Successfully read unstructured grid from file grid_c.cgns
 
 ### 流场数据
 
-#### 结点数据
+#### 顶点数据
 
 |      |       结构网格       |      非结构网格       |
 | :--: | :------------------: | :-------------------: |
@@ -343,12 +352,12 @@ ier = cg_field_read(
 
 其中
 
-- `cg_sol_write()` 用于在 `Zone_t` 对象下创建一个表示 *一组物理量* 的 `FlowSolution_t` 对象。
-  - 同一个  `Zone_t` 下的 `FlowSolution_t` 可以有多个。
-  - 所有 `FlowSolution_t` 都平行于 表示网格的 `GridCoordinates_t`。
-- `cg_field_write()` 用于在 `FlowSolution_t` 对象下创建一个表示 *单个物理量* 的对象，例如  `DataArray_t`、`Rind_t`。
-  - `sol_array` 尺寸应当与结点数量匹配：对于结构网格，通常声明为多维数组；对于非结构网格，通常声明为一位数组。
-  - `field_name` 应当取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density`、`Pressure`。
+- `cg_sol_write()` 用于在 `Zone_t` 结点下创建一个表示 *一组物理量* 的 `FlowSolution_t` 结点。
+  - 同一个  `Zone_t` 结点下可以有多个 `FlowSolution_t` 结点。
+  - 所有 `FlowSolution_t` 结点都平行于 `GridCoordinates_t` 结点。
+- `cg_field_write()` 用于在 `FlowSolution_t` 结点下创建一个表示 *单个物理量* 的结点，例如  `DataArray_t` 结点、`Rind_t` 结点。
+  - `sol_array` 尺寸应当与顶点数量匹配：对于结构网格，通常声明为多维数组；对于非结构网格，通常声明为一位数组。
+  - `field_name` 应当取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density | Pressure`。
 
 #### 单元数据
 
@@ -357,9 +366,9 @@ ier = cg_field_read(
 - 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
 - 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
 
-#### 外皮数据
+#### 外表数据
 
-***外皮 (rind) 数据*** 是指存储在网格表面的一层或多层 *影子 (ghost) 单元* 上的数据 ：
+***外表数据 (rind data)*** 是指存储在网格表面的一层或多层 *影子单元 (ghost cells)* 上的数据 ：
 
 ```
 ┌───╔═══╦═══╦═══╗───┬───┐      ═══ 网格单元
@@ -398,8 +407,8 @@ ier = cg_rind_read(int *rind_data);
 
 其中
 
-- `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
-- 外皮数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
+- `cg_goto()` 用于定位将要创建 `Rind_t` 结点的那个 `FlowSolution_t` 结点。
+- 外表数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
 ### 边界条件
 
@@ -452,13 +461,13 @@ ier = cg_boco_read(
 
 其中
 
-- `cg_boco_write()` 用于创建一个表示具体边界条件的 `BC_t` 对象。
-  - 每个 `BC_t` 都是某个 `IndexRange_t` 或 `IndexArray_t`  的 parent。
-  - 所有 `BC_t` 都是同一个 `ZoneBC_t` 的 child(ren)。
-  - 这个唯一的 `ZoneBC_t`是 `Zone_t` 的 child，因此是 `GridCoordinates_t` 及 `FlowSolution_t` 的 sibling。
-- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid`、`BCInflowSupersonic`、`BCOutflowSubsonic`，完整列表参见 [***Boundary Condition Type Structure Definition***](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
+- `cg_boco_write()` 用于创建一个表示具体边界条件的 `BC_t` 结点。
+  - 每个 `BC_t` 结点都是某个 `IndexRange_t` 结点或 `IndexArray_t` 结点的亲结点。
+  - 所有 `BC_t` 结点都是同一个 `ZoneBC_t` 结点的子结点。
+  - 这个唯一的 `ZoneBC_t` 结点是某个 `Zone_t` 结点的子结点，因此是 `GridCoordinates_t` 结点及 `FlowSolution_t` 结点的同辈结点。
+- `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid | BCInflowSupersonic | BCOutflowSubsonic`，完整列表参见 [***Boundary Condition Type Structure Definition***](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)。
 - 二维数组 `point_set` 用于指定结点编号，其行数（至少）为 `n_point`。
-  - 对于结构网格，`point_set` 的列数 为 空间维数，而 `n_point`
+  - 对于结构网格，`point_set` 的列数为 *空间维数*，而 `n_point`
     - 为 `2`，若 `point_set_type` 为 `CGNS_ENUMV(PointRange)`。此时 `point_set` 的第一、二行分别表示编号的下界、上界。
     - 为 此边界的结点总数，若 `point_set_type` 为 `CGNS_ENUMV(PointList)`。
   - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point`
@@ -466,10 +475,10 @@ ier = cg_boco_read(
 
 #### 非结构网格
 
-尽管 *非结构网格* 可以像 *结构网格* 那样，通过指定边界上的 *结点* 来施加边界条件，但利用 [*读写单元*](#读写单元) 时创建的 `Element_t` 对象来指定边界上的 *单元* 通常会更加方便。`write_bcpnts_unst.c` 与 `read_bcpnts_unst.c` 展示了这种方法，主要的 API 如下：
+尽管 *非结构网格* 可以像 *结构网格* 那样，通过指定边界上的 *结点* 来施加边界条件，但利用 [*读写单元*](#读写单元) 时创建的 `Element_t` 结点来指定边界上的 *单元* 通常会更加方便。`write_bcpnts_unst.c` 与 `read_bcpnts_unst.c` 展示了这种方法，主要的 API 如下：
 
 ```c
-/* API `write_bcpnt_unst.c` and `read_bcpnt_unst.c` */
+/* API in `write_bcpnt_unst.c` and `read_bcpnt_unst.c` */
 
 // Write boundary condition type and data:
 ier = cg_boco_write(
@@ -497,3 +506,35 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 
 ### 多区网格
 
+### 动态数据
+
+#### 网格固定不变
+顶点坐标、拓扑关系可复用，单个 CGNS 文件即可表示。
+`write_timevert_str.c` 与 `read_timevert_str.c` 展示了这种方法。
+主要 API 用法如下：
+
+```c
+/* API in `write_timevert_str.c` and `read_timevert_str.c` */
+
+// Base-level
+cg_simulation_type_write(file_id, base_id, CGNS_ENUMV(TimeAccurate));
+cg_biter_write(file_id, base_id, "TimeIterValues", n_steps);
+cg_goto(ifile_id, base_id, "BaseIterativeData_t", 1, "end");
+int n_steps = 3;
+double times[3] = {1.0, 2.0, 3.0};
+cg_array_write("TimeValues", CGNS_ENUMV(RealDouble), 1, &n_steps, &times);
+// Zone-level
+cg_ziter_write(file_id, base_id, zone_id, "ZoneIterativeData");
+cg_goto(file_id, base_id, "Zone_t", zone_id, "ZoneIterativeData_t", 1, "end");
+char names[97];  /* need an extra byte for the terminating '\0' */
+strcpy(names   , "FlowSolution1");
+strcpy(names+32, "FlowSolution2");
+strcpy(names+64, "FlowSolution3");
+cgsize_t n_dims[2] = {32, 3};
+cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
+    2, n_dims, names/* the head of a 2d array, whose type is char[3][32] */);
+```
+
+#### 网格作刚体运动
+
+#### 网格变形或变拓扑
