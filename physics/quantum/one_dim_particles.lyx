@@ -105,15 +105,212 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-一维定态 Schrödinger 方程
+定态 Schrödinger 方程
 \end_layout
 
 \begin_layout Subsection
 分离变量
 \end_layout
 
+\begin_layout Standard
+若势能 
+\begin_inset Formula $V$
+\end_inset
+
+ 与时间 
+\begin_inset Formula $t$
+\end_inset
+
+ 无关，则将分离变量的波函数 
+\begin_inset Formula $\psi\qty(\vec{x},t)=\phi(\vec{x})\,f(t)$
+\end_inset
+
+ 代入 Schrödinger 方程
+\begin_inset Formula 
+\begin{equation}
+\ii\hbar\pdv{\psi}{t}=\frac{-\hbar^{2}}{2m}\laplacian\psi+V\psi\label{eq:一维粒子：Schrodinger 方程}
+\end{equation}
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\frac{\ii\hbar}{f}\dv{f}{t}=\frac{1}{\phi}\left(\frac{-\hbar^{2}}{2m}\laplacian\phi+V\phi\right)
+\]
+
+\end_inset
+
+左端只依赖于时间 
+\begin_inset Formula $t$
+\end_inset
+
+，右端只依赖于位置 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+，故二者只能等于某常数 
+\begin_inset Formula $E$
+\end_inset
+
+，于是得到两个独立的方程
+\begin_inset Formula 
+\[
+\ii\hbar\dv{f}{t}=Ef\qquad\left(\frac{-\hbar^{2}}{2m}\laplacian+V\right)\phi=E\phi
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+第一式可以直接积分解得
+\begin_inset Formula 
+\[
+f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\ee^{-(\ii/\hbar)\,Et}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $A$
+\end_inset
+
+ 为待定的积分常数。
+\end_layout
+
+\begin_layout Itemize
+第二式不依赖于时间，因此被称为“定态 Schrödinger 方程”；又因为左端的微分算符对应于（总）能量
+\begin_inset Formula 
+\[
+\Operator{H}=\Operator{T}+\Operator{V}=\frac{-\hbar^{2}}{2m}\laplacian+V\qty(\vec{x})
+\]
+
+\end_inset
+
+故定态 Schrödinger 方程也被称为“能量本征方程”，常数 
+\begin_inset Formula $E$
+\end_inset
+
+ 与函数 
+\begin_inset Formula $\phi\qty(\vec{x})$
+\end_inset
+
+ 分别为算符 
+\begin_inset Formula $\Operator{H}$
+\end_inset
+
+ 的“本征值”与（属于本征值 
+\begin_inset Formula $E$
+\end_inset
+
+ 的）“本征函数”。
+\end_layout
+
+\begin_layout Itemize
+每个本征值 
+\begin_inset Formula $E$
+\end_inset
+
+ 都至少有一个本征函数 
+\begin_inset Formula $\phi_{E}\qty(\vec{x})$
+\end_inset
+
+，相应的解
+\begin_inset Formula 
+\begin{equation}
+\psi_{E}\qty(\vec{x},t)=\phi_{E}(\vec{x})\exp(\frac{Et}{\ii\hbar})\label{eq:一维粒子：本征态}
+\end{equation}
+
+\end_inset
+
+表示一个驻波：空间概率分布不随时间变化。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-一般性质
+一般叠加态
+\end_layout
+
+\begin_layout Standard
+Hermitian 算符 
+\begin_inset Formula $\Operator{H}$
+\end_inset
+
+ 的所有本征值都是实数，因此可按大小排列为
+\begin_inset Formula 
+\[
+E_{0}\le E_{1}\le E_{2}\le\cdots\le E_{n-1}\le E_{n}\le E_{n+1}\le\cdots
+\]
+
+\end_inset
+
+其中等号表示某些本征值可能有多个线性无关的本征函数，物理上称为“能级简并”。按此记法，属于本征值 
+\begin_inset Formula $E_{n}$
+\end_inset
+
+ 的本征函数（在至多相差一个常系数的意义下）是唯一的，可以用具有相同下标的 
+\begin_inset Formula $\phi_{n}\qty(\vec{x})$
+\end_inset
+
+ 来表示。
+\end_layout
+
+\begin_layout Standard
+根据叠加原理，原方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:一维粒子：Schrodinger 方程"
+
+\end_inset
+
+ 的一般解（叠加态）是所有形如 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:一维粒子：本征态"
+
+\end_inset
+
+ 的驻波（本征态）的线性组合
+\begin_inset Formula 
+\[
+\psi\qty(\vec{x},t)=\sum_{n\in\mathbb{N}}c_{n}\exp(\frac{E_{n}t}{\ii\hbar})\phi_{n}(\vec{x})
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+ 为常系数，由初始条件决定；若所有本征函数族 
+\begin_inset Formula $\left\{ \phi_{n}\qty(\vec{x})\right\} _{n\in\mathbb{N}}$
+\end_inset
+
+ 均已正交归一化，则它们可由以下投影获得：
+\begin_inset Formula 
+\[
+c_{n}=\ip{\phi_{n}}{\psi_{t=0}}\impliedby\begin{cases}
+\ip{u}{v}\coloneqq\int_{\mathbb{R}^{3}\qty(\vec{x})}\Conj{u\qty(\vec{x})}v\qty(\vec{x})\\
+\ip{\phi_{m}}{\phi_{n}}=\delta_{m}^{n}\\
+\psi_{t=0}\qty(\vec{x})\coloneqq\psi\qty(\vec{x},t=0)
+\end{cases}
+\]
+
+\end_inset
+
+因此求解定态 Schrödinger 方程（以获得正交归一完备基底）是求解 Schrödinger 方程的主要任务。
+\end_layout
+
+\begin_layout Subsection
+一维定态系统的一般性质
 \end_layout
 
 \begin_layout Section
