@@ -2,20 +2,21 @@
 
 CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数据库）系统。
 
-- [SIDS](#SIDS) 给出了这种文件格式的抽象定义。
-- [MLL](#MLL) 是对 SIDS 的一种具体实现，它提供了读写（以 ADF 或 HDF5 作为底层数据格式的）CGNS 文件的 Fortran 及 C 语言 API。
+- [**SIDS**](#SIDS) 给出了这种文件格式的抽象定义。
+- [**MLL**](#MLL) 是对 SIDS 的一种具体实现，它提供了读写（以 ADF 或 HDF5 作为底层数据格式的）CGNS 文件的 Fortran 及 C 语言 API。
+- 文档中常用缩写含义如下：
 
-| 术语 |                             含义                             |
-| :--: | :----------------------------------------------------------: |
-| ADF  | [**A**dvanced **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/adf) |
-| API  |        **A**pplication **P**rogramming **I**nterface         |
-| CFD  |           **C**omputational **F**luid **D**ynamics           |
-| CGNS | [**C**FD **G**eneral **N**otation **S**ystem](https://cgns.github.io/) |
-| CPEX |           **C**GNS **P**roposal for **EX**tension            |
-| FMM  |               **F**ile **M**apping **M**anual                |
-| HDF  | [**H**ierarchical **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/hdf5) |
-| MLL  | [**M**id-**L**evel **L**ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
-| SIDS | [**S**tandard **I**nterface **D**ata **S**tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
+|   术语   |                             含义                             |
+| :------: | :----------------------------------------------------------: |
+| **ADF**  | [**A**dvanced **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/adf) |
+| **API**  |        **A**pplication **P**rogramming **I**nterface         |
+| **CFD**  |           **C**omputational **F**luid **D**ynamics           |
+| **CGNS** | [**C**FD **G**eneral **N**otation **S**ystem](https://cgns.github.io/) |
+| **CPEX** |           **C**GNS **P**roposal for **EX**tension            |
+| **FMM**  |               **F**ile **M**apping **M**anual                |
+| **HDF**  | [**H**ierarchical **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/hdf5) |
+| **MLL**  | [**M**id-**L**evel **L**ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
+| **SIDS** | [**S**tandard **I**nterface **D**ata **S**tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
 
 ## SIDS
 
@@ -28,73 +29,105 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 - [AIAA Drag Prediction Workshop (DPW)](https://aiaa-dpw.larc.nasa.gov) 
   - [Download Grids](https://dpw.larc.nasa.gov/DPW6/)
 
-符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [***CGNSview***](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件树*。
+符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [**CGNSview**](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件树*。
 
 ### 文件结构
 
-本节内容可视为官方入门指南 [***Overview of the SIDS***](https://cgns.github.io/CGNS_docs_current/user/sids.html) 的精简版。
+本节内容可视为官方入门指南《[**Overview of the SIDS**](https://cgns.github.io/CGNS_docs_current/user/sids.html)》的精简版。
 
-#### Node
+#### 结点树
 
 每个 CGNS 文件（数据库）在逻辑上是一棵由若干 ***结点 (node)*** 相互链接而成的 ***树 (tree)***。每个结点都含有以下数据：
 
-- ***`Label`*** 表示其类型，通常是以 `_t` 为后缀的预定义类型。
-- ***`Name`*** 表示其身份，通常是由用户自定义的字符串，但有时需符合命名规范。
-- ***`Data`*** 是实际数据，可以为空（用 `MT` 表示）。
+- `Label` 表示其类型，通常是以 `_t` 为后缀的预定义类型。
+- `Name` 表示其身份，通常是由用户自定义的字符串，但有时需符合命名规范。
+- `Data` 是实际数据，可以为空（用 `MT` 表示）。
 - 指向其 ***亲 (parent)*** 或 ***子 (child)*** 的链接。
 
 ⚠️ 为避免混淆，本文档约定 ***结点 (node)*** 只表示上述树结点，而将网格中的点称为 ***顶点 (vertex)*** 或 ***网格点 (mesh point)***。
 
-#### Root
+#### 根结点
 
-最顶层（没有亲）的那个结点称为 ***根 (root)***，它有如下子结点：
+```c++
+root
+├── CGNSLibraryVersion_t
+│   ├── Name: CGNSLibraryVersion
+│   └── Data: 版本号
+└── CGNSBase_t  // 可有多个，各表示一个算例
+```
 
-- 一个 ***`CGNSLibraryVersion_t`*** 结点：
-  - `Name` 为 `CGNSLibraryVersion`。
-  - `Data` 为 CGNS 的版本号。
-- 若干 [***`CGNSBase_t`***](#`CGNSBase_t`)(s) 结点，分别表示一个 ***算例 (case)***：
-  - 多数 CGNS 文件只有一个 `CGNSBase_t` 结点。
-  - 若含有多个 `CGNSBase_t` 结点，则不同之间不共享数据。
+#### `CGNSBase_t`
 
-#### `CGNSBase_t` 
-
-一个 `CGNSBase_t` 结点含有以下信息：
-
-- `Name` 可以任取，通常取作文件名。
-- `Data` 为两个整数：***单元维数 (cell dim)*** 与 ***物理维数 (physics dim)***。
-- 若干 [***`Zone_t`***](#`Zone_t`) 结点，每个表示一块网格。
+```c++
+CGNSBase_t
+├── Name: 文件名
+├── Data: cell_dim  // int
+│					phys_dim  // int
+└── Zone_t  // 可有多个，各表示一块网格
+```
 
 #### `Zone_t`
 
-一个 `Zone_t` 结点含有以下信息：
-
-- 一个 ***`ZoneType_t`*** 结点，用于表示此区域的（网格）类型：
-  - `Name` 为 `ZoneType`。 
-  - `Data` 取自 `Structured | Unstructured | UserDefined | Null`。
-- 若干 [***`GridCoordinates_t`***](#`GridCoordinates_t`) 结点，用于表示 *结点坐标*。
-- 若干 [***`Element_t`***](#`Element_t`) 结点，用于表示 *非结构网格的单元结点列表*。
-- 若干 [***`FlowSolution_t`***](#`FlowSolution_t`) 结点，用于表示 *物理量在结点或单元上的值*。
-- 若干 [***`ZoneBC_t`***](#`ZoneBC_t`) 结点，用于表示 *边界条件*。
-- 若干 [***`ZoneGridConnectivity_t`***](#`ZoneGridConnectivity_t`) 结点，用于表示 *多块网格的连接方式*。
+```c++
+Zone_t
+├── ZoneType_t
+│   ├── Name: ZoneType
+│   └── Data: Structured | Unstructured | UserDefined | Null
+├── GridCoordinates_t       // 结点坐标
+├── Element_t               // 单元结点列表（非结构网格特有）
+├── FlowSolution_t          // 物理量在结点或单元上的值
+├── ZoneBC_t                // 边界条件
+└── ZoneGridConnectivity_t  // 多块网格的衔接方式
+```
 
 #### `GridCoordinates_t`
 
-每个 `Zone_t` 下可以有多个 `GridCoordinates_t`，用于表示随时间变化的网格。最初的那个通常以 `GridCoordinates` 为其 `Name`。
-
-各 *结点坐标分量* 分别存储为一个 ***`DataArray_t`*** 结点：
-
-- `Name` 应取自
-  - 直角坐标：`CoordinateX | CoordinateY | CoordinateZ`
-  - 球坐标：`CoordinateR | CoordinateTheta | CoordinatePhi`
-- 数组 *个数* 必须等于其所属 `CGNSBase_t` 结点的 *物理维数*。
-- 数组 *长度* 必须等于其所属 `Zone_t` 结点（沿相应方向）的 *结点个数* 与 *外表层数* 之和。
+```c++
+GridCoordinates_t
+├── Name: GridCoordinates
+└── DataArray_t  // 个数 == 所属 CGNSBase_t 结点的 phys_dim
+    ├── Name: CoordinateX | CoordinateY | CoordinateZ |
+    │ 				CoordinateR | CoordinateTheta | CoordinatePhi
+    └── Data: 一位数组，长度 = 结点个数 + 外表层数  // 沿当前方向
+```
 
 #### `Element_t`
 
+```c++
+Element_t
+├── IndexRange_t
+│   ├── Name: ElementRange
+│   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
+├── ElementType_t
+│   └── Data: NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 |
+│             PENTA_6 | HEXA_8 | ... | NGON_n | NFACE_n | MIXED
+└── DataArray_t
+│   ├── Name: ElementConnectivity
+│   └── Data: int[ElementDataSize]  // ElementDataSize :=
+│ 			// 同种单元 ElementSize * NPE(ElementType)
+│ 			// 多种单元 Sum(NPE(ElementType[n]) + 1)
+│       // NPE := number of nodes for the given ElementType
+└── DataArray_t
+    ├── Name: ElementStartOffset
+    └── Data: int[ElementSize + 1] 
+```
+
 #### `FlowSolution_t`
 
-- 各物理量分别存储为一个 `DataArray_t` 结点。
-- 每个 `Zone_t` 下可以有多个 `FlowSolution_t` 结点。
+```c++
+Element_t
+├── GridLocation_t
+│   └── Data: Vertex | CellCenter
+├── IndexRange_t  // 与 IndexList_t 二选一
+│   ├── Name: PointRange
+│   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
+├── IndexList_t  // 与 IndexRange_t 二选一
+│   ├── Name: PointList
+│   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
+└── DataArray_t
+    ├── Name: Pressure | Density | VelocityX | MomentumX | ...
+    └── Data: DataType[DataSize = (CellSize | VertexSize) + RindSize]
+```
 
 #### `ZoneBC_t`
 
@@ -102,12 +135,12 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ## MLL
 
-本节主要内容来自于 MLL 的入门指南 [***A User's Guide to CGNS***](https://cgns.github.io/CGNS_docs_current/user/)：
+本节主要参考了 MLL 的入门指南《[**A User's Guide to CGNS**](https://cgns.github.io/CGNS_docs_current/user/)》：
 
-- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见 [***Mid-Level Library***](https://cgns.github.io/CGNS_docs_current/midlevel/)。⚠️ C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *C 的行* 对应于 *Fortran 的列*。
+- 原文主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。完整的 API 参见《[**Mid-Level Library**](https://cgns.github.io/CGNS_docs_current/midlevel/)》。⚠️ C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *C 的行* 对应于 *Fortran 的列*。
 - 原文采用了 先具体介绍 *结构 (structured) 网格*、再简要介绍 *非结构 (unstructured) 网格* 的展开方式，这里则将二者同步展开，以便读者比较二者的异同。
 
-下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+下载或克隆 [**CGNS 代码库**](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 ### 单区网格
 
