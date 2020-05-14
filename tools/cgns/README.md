@@ -62,7 +62,7 @@ root
 CGNSBase_t
 ├── Name: 文件名
 ├── Data: cell_dim  // int
-│					phys_dim  // int
+│         phys_dim  // int
 └── Zone_t  // 可有多个，各表示一块网格
 ```
 
@@ -87,7 +87,7 @@ GridCoordinates_t
 ├── Name: GridCoordinates
 └── DataArray_t  // 个数 == 所属 CGNSBase_t 结点的 phys_dim
     ├── Name: CoordinateX | CoordinateY | CoordinateZ |
-    │ 				CoordinateR | CoordinateTheta | CoordinatePhi
+    │         CoordinateR | CoordinateTheta | CoordinatePhi
     └── Data: 一位数组，长度 = 结点个数 + 外表层数  // 沿当前方向
 ```
 
@@ -104,8 +104,8 @@ Element_t
 └── DataArray_t
 │   ├── Name: ElementConnectivity
 │   └── Data: int[ElementDataSize]  // ElementDataSize :=
-│ 			// 同种单元 ElementSize * NPE(ElementType)
-│ 			// 多种单元 Sum(NPE(ElementType[n]) + 1)
+│       // 同种单元 ElementSize * NPE(ElementType)
+│       // 多种单元 Sum(NPE(ElementType[n]) + 1)
 │       // NPE := number of nodes for the given ElementType
 └── DataArray_t
     ├── Name: ElementStartOffset
