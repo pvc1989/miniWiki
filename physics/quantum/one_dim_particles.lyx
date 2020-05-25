@@ -122,13 +122,13 @@ theorems-chap
 \end_inset
 
  无关，则将分离变量的波函数 
-\begin_inset Formula $\psi\qty(\vec{x},t)=\phi(\vec{x})\,f(t)$
+\begin_inset Formula $\psi(\vec{x},t)=\phi(\vec{x})\,f(t)$
 \end_inset
 
  代入 Schrödinger 方程
 \begin_inset Formula 
 \begin{equation}
-\ii\hbar\pdv{\psi}{t}=\frac{-\hbar^{2}}{2m}\laplacian\psi+V\psi\label{eq:一维粒子：Schrodinger 方程}
+\ii\hbar\pdv{\psi(\vec{x},t)}{t}=\frac{-\hbar^{2}}{2m}\laplacian\psi(\vec{x},t)+V(\vec{x})\,\psi(\vec{x},t)\label{eq:一维粒子：Schrodinger 方程}
 \end{equation}
 
 \end_inset
@@ -136,7 +136,7 @@ theorems-chap
 可得
 \begin_inset Formula 
 \[
-\frac{\ii\hbar}{f}\dv{f}{t}=\frac{1}{\phi}\left(\frac{-\hbar^{2}}{2m}\laplacian\phi+V\phi\right)
+\frac{\ii\hbar}{f(t)}\dv{f(t)}{t}=\frac{1}{\phi(\vec{x})}\left(\frac{-\hbar^{2}}{2m}\laplacian\phi(\vec{x})+V(\vec{x})\,\phi(\vec{x})\right)
 \]
 
 \end_inset
@@ -156,7 +156,7 @@ theorems-chap
 ，于是得到两个独立的方程
 \begin_inset Formula 
 \[
-\ii\hbar\dv{f}{t}=Ef\qquad\left(\frac{-\hbar^{2}}{2m}\laplacian+V\right)\phi=E\phi
+\ii\hbar\dv{f(t)}{t}=E\,f(t)\qquad\left(\frac{-\hbar^{2}}{2m}\laplacian+V(\vec{x})\right)\phi(\vec{x})=E\,\phi(\vec{x})
 \]
 
 \end_inset
@@ -168,7 +168,7 @@ theorems-chap
 第一式可以直接积分解得
 \begin_inset Formula 
 \[
-f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\ee^{-(\ii/\hbar)\,Et}
+f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\exp(-\ii\omega_{E}t)\qquad\omega_{E}\coloneqq\frac{E}{\hbar}
 \]
 
 \end_inset
@@ -177,14 +177,18 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\ee^{-(\ii/\hbar)\,Et}
 \begin_inset Formula $A$
 \end_inset
 
- 为待定的积分常数。
+ 为待定的积分常数（可以吸收进 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的系数）。
 \end_layout
 
 \begin_layout Itemize
 第二式不依赖于时间，因此被称为“定态 Schrödinger 方程”；又因为左端的微分算符对应于（总）能量
 \begin_inset Formula 
 \[
-\hat{H}=\hat{T}+\hat{V}=\frac{-\hbar^{2}}{2m}\laplacian+V\qty(\vec{x})
+\hat{H}=\hat{T}+\hat{V}=\frac{-\hbar^{2}}{2m}\laplacian+V(\vec{x})
 \]
 
 \end_inset
@@ -194,7 +198,7 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\ee^{-(\ii/\hbar)\,Et}
 \end_inset
 
  与函数 
-\begin_inset Formula $\phi\qty(\vec{x})$
+\begin_inset Formula $\phi(\vec{x})$
 \end_inset
 
  分别为算符 
@@ -214,13 +218,13 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\ee^{-(\ii/\hbar)\,Et}
 \end_inset
 
  都至少有一个本征函数 
-\begin_inset Formula $\phi_{E}\qty(\vec{x})$
+\begin_inset Formula $\phi_{E}(\vec{x})$
 \end_inset
 
 ，相应的解
 \begin_inset Formula 
 \begin{equation}
-\psi_{E}\qty(\vec{x},t)=\phi_{E}(\vec{x})\exp(\frac{Et}{\ii\hbar})\label{eq:一维粒子：本征态}
+\psi_{E}(\vec{x},t)=\phi_{E}(\vec{x})\exp(-\ii\omega_{E}t)\label{eq:一维粒子：本征态}
 \end{equation}
 
 \end_inset
@@ -256,8 +260,12 @@ E_{0}\le E_{1}\le E_{2}\le\cdots\le E_{n-1}\le E_{n}\le E_{n+1}\le\cdots
 \begin_inset Formula $E_{n}$
 \end_inset
 
- 的本征函数（在至多相差一个常系数的意义下）是唯一的，可以用具有相同下标的 
-\begin_inset Formula $\phi_{n}\qty(\vec{x})$
+ 的本征函数（在至多相差一个常系数的意义下）是唯一的，可以用下标同为 
+\begin_inset Formula $n$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $\phi_{n}(\vec{x})$
 \end_inset
 
  来表示。
@@ -281,7 +289,7 @@ reference "eq:一维粒子：本征态"
  的驻波（本征态）的线性组合
 \begin_inset Formula 
 \[
-\psi\qty(\vec{x},t)=\sum_{n\in\mathbb{N}}c_{n}\exp(\frac{E_{n}t}{\ii\hbar})\phi_{n}(\vec{x})
+\psi(\vec{x},t)=\sum_{n\in\mathbb{N}}c_{n}\,\phi_{n}(\vec{x})\exp(-\ii\omega_{n}t)
 \]
 
 \end_inset
@@ -290,17 +298,21 @@ reference "eq:一维粒子：本征态"
 \begin_inset Formula $\left\{ c_{n}\right\} _{n\in\mathbb{N}}$
 \end_inset
 
- 为常系数，由初始条件决定；若所有本征函数族 
-\begin_inset Formula $\left\{ \phi_{n}\qty(\vec{x})\right\} _{n\in\mathbb{N}}$
+ 为常系数，由初始条件决定；若本征函数族 
+\begin_inset Formula $\left\{ \phi_{n}(\vec{x})\right\} _{n\in\mathbb{N}}$
 \end_inset
 
- 均已正交归一化，则它们可由以下投影获得：
+ 已正交归一化，则 
+\begin_inset Formula $c_{n}$
+\end_inset
+
+ 可由以下投影获得：
 \begin_inset Formula 
 \[
 c_{n}=\ip{\phi_{n}}{\psi_{t=0}}\impliedby\begin{cases}
-\ip{u}{v}\coloneqq\int_{\mathbb{R}^{3}\qty(\vec{x})}\Conj{u\qty(\vec{x})}v\qty(\vec{x})\\
+\ip{u}{v}\coloneqq\int_{\mathbb{R}^{3}(\vec{x})}\Conj{u(\vec{x})}v(\vec{x})\\
 \ip{\phi_{m}}{\phi_{n}}=\delta_{m}^{n}\\
-\psi_{t=0}\qty(\vec{x})\coloneqq\psi\qty(\vec{x},t=0)
+\psi_{t=0}(\vec{x})\coloneqq\psi(\vec{x},t=0)
 \end{cases}
 \]
 
