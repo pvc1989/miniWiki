@@ -17,43 +17,68 @@
 % Options for Code Highlighting
 %
 \PassOptionsToPackage{chapter}{minted}
-
-\ProcessOptions\relax  % terminates the option processing
-
-
-
-\RequirePackage{accents}  % more accents
-% fonts
-%% STIX Math: https://github.com/stipub/stixfonts
-%% Neo Euler: % https://github.com/khaledhosny/euler-otf
-%% math fonts
-\RequirePackage{unicode-math}
-\if@euler  % almost every symbol is upright
+%
+% Terminates Option Processing
+%
+\ProcessOptions\relax
+%
+% Packages for Package Writing
+%
+\RequirePackage{ifthen}  % mimic logical expressions
+%
+% Packages for Mathematics
+%
+\RequirePackage{amsmath}
+\RequirePackage{amsopn}
+\RequirePackage{amssymb}
+\RequirePackage{mathtools}
+% \RequirePackage{esint}  % more integrals
+\RequirePackage{physics}
+\RequirePackage{accents}  % more accents, must follow `amsmath`.
+\RequirePackage[a]{esvect}
+\RequirePackage{siunitx}
+\RequirePackage{tensor}
+%
+% Fonts for Mathematics and Western Languages
+%
+\ifthenelse{\boolean{@latin}}{  % `then` branch of `latin`
+  % mathematical symbols
+  \newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
+}{  % `else` branch of `latin`
+\ifthenelse{\boolean{@euler}}{  % `then` branch of `euler`
+  %% mathematical symbols
+  \newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
+}{  % `else` branch of `euler`
+  % i.e. the default branch
+  \RequirePackage{unicode-math}
+  % https://github.com/stipub/stixfonts
+  % font for english text
+  \setmainfont{STIX Two Text}
+  % font for mathematical symbols
   \setmathfont{STIX Two Math}[
-    math-style = upright,
-    bold-style = upright,
-    sans-style = upright,
-    StylisticSet={3,8},
-  ]
-  \setmathfont{Neo Euler}[
-    range = {\partial, \mbfpartial,
-               up/{latin, Latin, greek, Greek},
-             bfup/{latin, Latin, greek, Greek},
-    }
-  ]
-  \if@bold
-    \renewcommand{\symbfit}[1]{\symbf{#1}}
-  \fi
-\else  % almost every symbol is italic
-  \setmathfont{STIX Two Math}[
+    % almost every symbol is italic
     math-style = ISO,
     bold-style = ISO,
     sans-style = italic,
-    nabla = italic,
-    StylisticSet={3},
   ]
+  % mathematical symbols
+  \newcommand{\Matrix}[1]{\mathinner{\underparen{#1}}}
+  \if@bold
+    \renewcommand{\vdot}{\vysmblkcircle}
+  \fi
+}}
+%
+% Commands for Slashes
+%
+\ifx\fracslash\undefined
+\newcommand{\fracslash}{/}
 \fi
-%% bold option
+\ifx\divslash\undefined
+\newcommand{\divslash}{\mathbin{/}}
+\fi
+%
+% Commands for Boldness
+%
 \if@bold
   \renewcommand{\mathbf}[1]{\symbf{#1}}
   \renewcommand{\boldsymbol}[1]{\symbf{#1}}
@@ -61,38 +86,53 @@
   \renewcommand{\symbf}[1]{#1}
   \renewcommand{\symbfit}[1]{#1}
   \renewcommand{\symbfsf}[1]{\symsf{#1}}
+  \renewcommand{\symbfsfup}[1]{\symsfup{#1}}
   \renewcommand{\mathbf}[1]{#1}
   \renewcommand{\boldsymbol}[1]{#1}
 \fi
-%% english fonts
-\setmainfont{STIX Two Text}
-% scientific symbols
-\RequirePackage{physics}
-\RequirePackage{esvect}
-\RequirePackage{siunitx}
-%% constants
-\usepackage{nicefrac}
-\RequirePackage{xfrac}
-\newcommand{\half}{\sfrac{1}{2}}
-\renewcommand{\nicefrac}[2]{\sfrac{#1}{#2}}
-\newcommand{\ii}{\mathtt{i}}
-\newcommand{\iu}{\mathtt{i}}
-\newcommand{\ee}{\mathtt{e}}
-\newcommand{\e}{\mathtt{e}}
-\newcommand{\Conj}[1]{\overline{#1}}
-%% algebra
+%
+% Commands for Constants
+%
+\RequirePackage{nicefrac}
+\newcommand{\half}{\nicefrac{1}{2}}
+\newcommand{\ii}{\symup{i}}
+\newcommand{\iu}{\ii}
+\newcommand{\ee}{\symup{e}}
+\newcommand{\e}{\ee}
+\newcommand{\Conj}[1]{\mathinner{\overline{#1}}}
+%
+% Commands for Algebra
+%
 \let\oldvec\vec
+\if@arrow
+\else
+\renewcommand{\oldvec}[1]{#1}
+\fi
 \renewcommand{\vec}[1]{\oldvec{\symbf{#1}}}
-\renewcommand{\vdot}{\vysmblkcircle}
 \newcommand{\Dyad}[1]{\oldvec{\oldvec{\symbf{#1}}}}
-\newcommand{\DyadDot}{\mathbin{\vysmblkcircle\vysmblkcircle}}
+\newcommand{\DyadDot}{\mathbin{\vdot\vdot}}
 \newcommand{\Tensor}[1]{\undertilde{\symbf{#1}}}
-\newcommand{\Operator}[1]{\hat{\symbfsf{#1}}}
-\newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
-%% calculus
-\let\divg\divergence  % `physics` and `unicode-math` treat \div differently.
+\newcommand{\Operator}[1]{\mathinner{\widehat{#1}}}
+%
+% Commands for Calculus
+%
+% mimic integral signs in `esint` are not defined in `unicode-math`:
+\ifx\dotsint\undefined
+\newcommand{\dotsint}{\int\!\!\!\mathord{\cdot}\mathord{\cdot}\mathord{\cdot}\!\!\!\int}\fi
+\ifx\ointclockwise\undefined
+\newcommand{\ointclockwise}{\varointclockwise}
+\fi
+\ifx\varointctrclockwise\undefined
+\newcommand{\varointctrclockwise}{\ointctrclockwise}
+\fi
+\ifx\varoiint\undefined
+\newcommand{\varoiint}{\oiint}
+\fi
+% `physics` and `unicode-math` treat `\div` differently:
+\let\divg\divergence  % define another abbr for `\divergence`.
+% material derivatives:
 \DeclareDocumentCommand\diffD{}{\mathrm{D}}
-\DeclareDocumentCommand\Dt{ o g d() }{ % D_{t}
+\DeclareDocumentCommand\Dt{ o g d() }{  % D_{t}
 	% o: optional n for nth differential
 	% g: optional argument for readability and to control spacing
 	% d: long-form as in d(cos x)
@@ -104,9 +144,11 @@
 		{\mathinner{\diffD_{t}\IfNoValueTF{#1}{}{^{#1}}#2} \IfNoValueTF{#3}{}{(#3)}}
   }
 \newcommand{\DDt}[1]{\frac{\diffD #1}{\diffD t}}
-%% named functions
-\DeclareMathOperator{\Card}{card}
-%% special functions
+%
+% Commands for Named Functions
+%
+\DeclareMathOperator{\Card}{card}  % cardinality of a set
+\DeclareMathOperator{\TV}{TV}  % total variation of a function
 \newcommand\Bessel[1]{\operatorname{J}_{#1}}
 \newcommand\ChebyshevI[1]{\operatorname{T}_{#1}}
 \newcommand\ConHypGeo{\sideset{_{1}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
@@ -115,8 +157,9 @@
 \newcommand\Laguerre[1]{\operatorname{L}_{#1}}
 \newcommand\Legendre[1]{\operatorname{P}_{#1}}
 \newcommand\Neumann[1]{\operatorname{N}_{#1}}
-
-% chinese related settings
+%
+% Settings for Chinese
+%
 \RequirePackage[heading]{ctex}
 \ctexset{
   part/format += \sffamily,
@@ -131,11 +174,15 @@
   listfigurename = 插图目录,
 }
 \AtBeginDocument{
+  \ifx\listingscaption\undefined
+  \else
   \renewcommand{\listingscaption}{代码}
   \renewcommand{\listoflistingscaption}{代码目录}
+  \fi
 }
-
-% graphics
+%
+% Settings for Graphics
+%
 \RequirePackage{tikz}
 \usetikzlibrary{intersections}
 \usetikzlibrary{arrows.meta}
