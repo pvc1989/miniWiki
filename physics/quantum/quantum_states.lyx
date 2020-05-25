@@ -390,7 +390,7 @@ Schrödinger 方程
  应满足“微扰波动方程”：
 \begin_inset Formula 
 \[
-\pdv[2]{\rho}{t}=a^{2}\laplacian\rho
+\pdv[2]{\rho}{t}=c^{2}\laplacian\rho
 \]
 
 \end_inset
@@ -619,7 +619,7 @@ Hilbert 空间
 \end_inset
 
  中的一组线性无关的状态 
-\begin_inset Formula $\left\{ \ket{\psi_{a}}\right\} _{a\in A}$
+\begin_inset Formula $\left\{ \ket{\psi_{\alpha}}\right\} _{\alpha\in A}$
 \end_inset
 
 ，使得 
@@ -634,15 +634,15 @@ Hilbert 空间
 \begin_inset Formula 
 \begin{equation}
 \ket{\psi}=\begin{cases}
-\sum_{a\in A}c_{a}\ket{\psi_{a}} & A\sim\mathbb{N}\\
-\int_{A}c_{a}\ket{\psi_{a}}\dd{a} & A\sim\mathbb{R}
+\sum_{\alpha\in A}c_{\alpha}\ket{\psi_{\alpha}} & A\sim\mathbb{N}\\
+\int_{A}c_{\alpha}\ket{\psi_{\alpha}}\dd{\alpha} & A\sim\mathbb{R}
 \end{cases}\label{eq:量子态：线性展开}
 \end{equation}
 
 \end_inset
 
 则称 
-\begin_inset Formula $\left\{ \ket{\psi_{a}}\right\} _{a\in A}$
+\begin_inset Formula $\left\{ \ket{\psi_{\alpha}}\right\} _{\alpha\in A}$
 \end_inset
 
  为 
@@ -650,7 +650,7 @@ Hilbert 空间
 \end_inset
 
  的一组“基底 (basis)”，其中每一个 
-\begin_inset Formula $\ket{\psi_{a}}$
+\begin_inset Formula $\ket{\psi_{\alpha}}$
 \end_inset
 
  称为一个“基矢量 (basis vector)”。一般而言，指标集 
@@ -680,7 +680,7 @@ reference "eq:量子态：线性展开"
 \end_inset
 
 ，一个很自然的疑问便是：基矢量 
-\begin_inset Formula $\ket{\psi_{a}}$
+\begin_inset Formula $\ket{\psi_{\alpha}}$
 \end_inset
 
  在矢量 
@@ -763,13 +763,13 @@ status open
 \end_inset
 
  总是可以展开为 
-\begin_inset Formula $\left\{ \psi_{a}(x)\coloneqq\delta(x-a)\right\} _{a\in\mathbb{R}}$
+\begin_inset Formula $\left\{ \psi_{\alpha}(x)\coloneqq\delta(x-\alpha)\right\} _{\alpha\in\mathbb{R}}$
 \end_inset
 
  的线性组合：
 \begin_inset Formula 
 \begin{equation}
-\psi(x)=\int_{-\infty}^{+\infty}\psi(a)\,\delta(x-a)\dd{a}=\int_{-\infty}^{+\infty}c_{a}\,\psi_{a}(x)\dd{a}\label{eq:量子态：一维驻波：坐标分解}
+\psi(x)=\int_{-\infty}^{+\infty}\psi(\alpha)\,\delta(x-\alpha)\dd{\alpha}=\int_{-\infty}^{+\infty}c_{\alpha}\,\psi_{\alpha}(x)\dd{\alpha}\label{eq:量子态：一维驻波：坐标分解}
 \end{equation}
 
 \end_inset
@@ -779,7 +779,7 @@ status open
 
 \begin_layout Itemize
 求和指标 
-\begin_inset Formula $a$
+\begin_inset Formula $\alpha$
 \end_inset
 
  与自由指标 
@@ -807,7 +807,7 @@ status open
 \end_inset
 
 则系数 
-\begin_inset Formula $c_{a}=\psi(a)$
+\begin_inset Formula $c_{\alpha}=\psi(\alpha)$
 \end_inset
 
  可以理解为矢量 
@@ -815,11 +815,11 @@ status open
 \end_inset
 
  在基矢量 
-\begin_inset Formula $\ket{\psi_{a}}$
+\begin_inset Formula $\ket{\psi_{\alpha}}$
 \end_inset
 
  上的“投影 (projection)”，故可记作 
-\begin_inset Formula $\ip{\psi_{a}}{\psi}$
+\begin_inset Formula $\ip{\psi_{\alpha}}{\psi}$
 \end_inset
 
 。
@@ -827,17 +827,17 @@ status open
 
 \begin_layout Itemize
 指标 
-\begin_inset Formula $a$
+\begin_inset Formula $\alpha$
 \end_inset
 
  与函数 
-\begin_inset Formula $\psi_{a}$
+\begin_inset Formula $\psi_{\alpha}$
 \end_inset
 
  一一对应，故可引入简化记号
 \begin_inset Formula 
 \[
-\ket{a}\coloneqq\ket{\psi_{a}}\qquad\bra{a}\coloneqq\bra{\psi_{a}}
+\ket{\alpha}\coloneqq\ket{\psi_{\alpha}}\qquad\bra{\alpha}\coloneqq\bra{\psi_{\alpha}}
 \]
 
 \end_inset
@@ -845,7 +845,7 @@ status open
 从而有
 \begin_inset Formula 
 \[
-\psi(a)=\ip{\psi_{a}}{\psi}=\ip{a}{\psi}\qquad\delta(x-a)=\psi_{a}(x)=\ip{x}{\psi_{a}}=\ip{x}{a}
+\psi(\alpha)=\ip{\psi_{\alpha}}{\psi}=\ip{\alpha}{\psi}\qquad\delta(x-\alpha)=\psi_{\alpha}(x)=\ip{x}{\psi_{\alpha}}=\ip{x}{\alpha}
 \]
 
 \end_inset
@@ -864,7 +864,7 @@ reference "eq:量子态：一维驻波：坐标分解"
  改写为
 \begin_inset Formula 
 \[
-\ip{x}{\psi}=\int_{-\infty}^{+\infty}\ip{a}{\psi}\ip{x}{a}\dd{a}=\bra{x}\left(\int_{-\infty}^{+\infty}\dyad{a}\dd{a}\right)\ket{\psi}
+\ip{x}{\psi}=\int_{-\infty}^{+\infty}\ip{\alpha}{\psi}\ip{x}{\alpha}\dd{\alpha}=\bra{x}\left(\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}\right)\ket{\psi}
 \]
 
 \end_inset
@@ -872,7 +872,7 @@ reference "eq:量子态：一维驻波：坐标分解"
 比较两端可发现“完备性条件 (completeness condition)”：
 \begin_inset Formula 
 \[
-1=\int_{-\infty}^{+\infty}\dyad{a}\dd{a}
+1=\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}
 \]
 
 \end_inset
