@@ -346,7 +346,7 @@ tensor!angular velocity ~
 ：
 \begin_inset Formula 
 \[
-\Dyad{E}\coloneqq\vec{e}_{i}\vec{e}_{k}E_{ik}\qquad E_{ik}\coloneqq\frac{\partial_{i}u_{k}+\partial_{k}u_{i}}{2}
+\vec{\vec{E}}\coloneqq\vec{e}_{i}\vec{e}_{k}E_{ik}\qquad E_{ik}\coloneqq\frac{\partial_{i}u_{k}+\partial_{k}u_{i}}{2}
 \]
 
 \end_inset
@@ -364,7 +364,7 @@ tensor!strain rate ~
 ：
 \begin_inset Formula 
 \[
-\Dyad{\Omega}\coloneqq\vec{e}_{i}\vec{e}_{k}\Omega_{ik}\qquad\Omega_{ik}\coloneqq\frac{\partial_{i}u_{k}-\partial_{k}u_{i}}{2}
+\vec{\vec{\Omega}}\coloneqq\vec{e}_{i}\vec{e}_{k}\Omega_{ik}\qquad\Omega_{ik}\coloneqq\frac{\partial_{i}u_{k}-\partial_{k}u_{i}}{2}
 \]
 
 \end_inset
@@ -372,7 +372,7 @@ tensor!strain rate ~
 容易验证：
 \begin_inset Formula 
 \[
-\grad\vec{u}=\Dyad{E}+\Dyad{\Omega}\qquad\partial_{i}u_{k}=E_{ik}+\Omega_{ik}\qquad\partial_{k}u_{i}=E_{ik}-\Omega_{ik}
+\grad\vec{u}=\vec{\vec{E}}+\vec{\vec{\Omega}}\qquad\partial_{i}u_{k}=E_{ik}+\Omega_{ik}\qquad\partial_{k}u_{i}=E_{ik}-\Omega_{ik}
 \]
 
 \end_inset
@@ -401,7 +401,7 @@ reference "chap:TensorAnalysis"
 
 \begin_layout Standard
 在三维空间中，角速度张量 
-\begin_inset Formula $\Dyad{\Omega}$
+\begin_inset Formula $\vec{\vec{\Omega}}$
 \end_inset
 
  只有三个独立“分量 (component)”，这是其反对称性 (
@@ -411,7 +411,7 @@ reference "chap:TensorAnalysis"
 ) 的直接推论：
 \begin_inset Formula 
 \[
-\Dyad{\Omega}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
+\vec{\vec{\Omega}}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \Omega_{12} & -\Omega_{31}\\
 -\Omega_{12} & 0 & \Omega_{23}\\
 \Omega_{31} & -\Omega_{23} & 0
 \end{bmatrix}\begin{bmatrix}\vec{e}_{1}\\
@@ -471,7 +471,7 @@ vector!pseudo-~
 ，并且满足以下微分等式：
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\vdot\Dyad{\Omega}=\vec{\Omega}\cross\dd{\vec{x}}
+\dd{\vec{x}}\vdot\vec{\vec{\Omega}}=\vec{\Omega}\cross\dd{\vec{x}}
 \]
 
 \end_inset
@@ -491,7 +491,7 @@ vector!pseudo-~
  即得
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\vdot\Dyad{\Omega}=\dd{x_{j}}\Omega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\cross\dd{\vec{x}}
+\dd{\vec{x}}\vdot\vec{\vec{\Omega}}=\dd{x_{j}}\Omega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\Omega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\Omega_{i}\dd{x_{j}}=\vec{\Omega}\cross\dd{\vec{x}}
 \]
 
 \end_inset
@@ -1574,7 +1574,7 @@ conservation!~ of momentum
 \begin_layout Axiom
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\vec{u}\rho=\int_{V_{\mathrm{MB}}}\vec{b}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\Dyad{\sigma}
+\dv{t}\int_{V_{\mathrm{MB}}}\vec{u}\rho=\int_{V_{\mathrm{MB}}}\vec{b}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{\vec{\sigma}}
 \]
 
 \end_inset
@@ -1617,7 +1617,7 @@ conservation!~ of momentum
 
 \begin_layout Itemize
 二阶张量 
-\begin_inset Formula $\Dyad{\sigma}$
+\begin_inset Formula $\vec{\vec{\sigma}}$
 \end_inset
 
  为“
@@ -1639,7 +1639,7 @@ tensor!stress ~
 \end_inset
 
  的点积 
-\begin_inset Formula $\vec{n}\vdot\Dyad{\sigma}$
+\begin_inset Formula $\vec{n}\vdot\vec{\vec{\sigma}}$
 \end_inset
 
  是一个向量，表示作用在 
@@ -1668,7 +1668,7 @@ tensor!stress ~
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\vec{u}\rho=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\Dyad{\sigma}\label{eq:流动方程：动量：物质导数：sigma}
+\DDt{}\int_{V}\vec{u}\rho=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\vec{\vec{\sigma}}\label{eq:流动方程：动量：物质导数：sigma}
 \end{equation}
 
 \end_inset
@@ -1678,7 +1678,7 @@ tensor!stress ~
 
 \begin_layout Standard
 在流体力学中，应力张量 
-\begin_inset Formula $\Dyad{\sigma}$
+\begin_inset Formula $\vec{\vec{\sigma}}$
 \end_inset
 
  总是被分解为“
@@ -1696,7 +1696,7 @@ tensor!isotropic ~!~ of pressure
 \end_inset
 
  
-\begin_inset Formula $-p\Dyad{1}$
+\begin_inset Formula $-p\vec{\vec{1}}$
 \end_inset
 
  与“
@@ -1714,7 +1714,7 @@ tensor!stress ~!viscous ~
 \end_inset
 
  
-\begin_inset Formula $\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\tau}}$
 \end_inset
 
  之和，于是
@@ -1727,7 +1727,7 @@ reference "eq:流动方程：动量：物质导数：sigma"
 式可以改写为
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\vec{u}\rho+\oint_{\partial V}\vec{n}p=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\Dyad{\tau}\label{eq:流动方程：动量：物质导数：tau}
+\DDt{}\int_{V}\vec{u}\rho+\oint_{\partial V}\vec{n}p=\int_{V}\vec{b}+\oint_{\partial V}\vec{n}\vdot\vec{\vec{\tau}}\label{eq:流动方程：动量：物质导数：tau}
 \end{equation}
 
 \end_inset
@@ -1740,7 +1740,7 @@ reference "eq:流动方程：动量：物质导数：sigma"
 \end_inset
 
  由“热力学状态”决定。二阶张量 
-\begin_inset Formula $\Dyad{1}$
+\begin_inset Formula $\vec{\vec{1}}$
 \end_inset
 
  为“
@@ -1760,7 +1760,7 @@ tensor!isotropic ~!unit
 ，它满足
 \begin_inset Formula 
 \[
-\Dyad{1}\vdot\vec{v}=\vec{v}=\vec{v}\vdot\Dyad{1}\qquad\forall\vec{v}
+\vec{\vec{1}}\vdot\vec{v}=\vec{v}=\vec{v}\vdot\vec{\vec{1}}\qquad\forall\vec{v}
 \]
 
 \end_inset
@@ -1769,7 +1769,7 @@ tensor!isotropic ~!unit
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\tau}}$
 \end_inset
 
  由“流体微团的相对运动”决定的，后者正是由 
@@ -1780,7 +1780,7 @@ reference "sec:流动方程：速度梯度"
 \end_inset
 
  节中定义的应变率张量 
-\begin_inset Formula $\Dyad{E}$
+\begin_inset Formula $\vec{\vec{E}}$
 \end_inset
 
  刻画的，它们之间的关系被称为“本构方程 (constitutive relation)”。
@@ -1872,13 +1872,13 @@ reference "eq:流动方程：本构关系：线性"
 或等价的
 \begin_inset Formula 
 \[
-\Dyad{\tau}=2\mu\Dyad{E}+\left(\zeta-\frac{2}{3}\mu\right)\left(\divg\vec{u}\right)\Dyad{1}
+\vec{\vec{\tau}}=2\mu\vec{\vec{E}}+\left(\zeta-\frac{2}{3}\mu\right)\left(\divg\vec{u}\right)\vec{\vec{1}}
 \]
 
 \end_inset
 
 可见 
-\begin_inset Formula $\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\tau}}$
 \end_inset
 
  中依然含有“正应力 (normal stress)”
@@ -2059,13 +2059,13 @@ conservation!~ of energy
 ，时间全导数应当用物质导数代替：
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\sigma}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：sigma}
+\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\vec{\vec{\sigma}}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：sigma}
 \end{equation}
 
 \end_inset
 
 考虑到 
-\begin_inset Formula $\Dyad{\sigma}=-p\Dyad{1}+\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\sigma}}=-p\vec{\vec{1}}+\vec{\vec{\tau}}$
 \end_inset
 
 ，并仿照 
@@ -2085,7 +2085,7 @@ reference "eq:流动方程：动量：物质导数：tau"
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho+\oint_{\partial V}\vec{n}\vdot\vec{u}p=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\Dyad{\tau}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：tau}
+\DDt{}\int_{V}\left(e+\abs{\vec{u}}^{2}/2\right)\rho+\oint_{\partial V}\vec{n}\vdot\vec{u}p=\int_{V}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V}\vec{n}\vdot\left(\vec{\vec{\tau}}\vdot\vec{u}-\vec{q}\right)\label{eq:流动方程：能量：物质导数：tau}
 \end{equation}
 
 \end_inset
@@ -2172,11 +2172,11 @@ conservation!system of ~ laws!Navier–Stokes equations in integral form
 \rho\vec{u}\\
 \rho e_{0}
 \end{bmatrix}\qquad\vec{\ket{P}}=\begin{bmatrix}\vec{0}\\
-p\Dyad{1}\\
+p\vec{\vec{1}}\\
 p\vec{u}
 \end{bmatrix}\qquad\vec{\ket{G}}=\begin{bmatrix}\vec{0}\\
-\Dyad{\tau}\\
-\Dyad{\tau}\vdot\vec{u}-\vec{q}
+\vec{\vec{\tau}}\\
+\vec{\vec{\tau}}\vdot\vec{u}-\vec{q}
 \end{bmatrix}\qquad\ket{H}=\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\vdot\vec{u}+j
@@ -2218,7 +2218,7 @@ noprefix "false"
 \vec{u}\rho\\
 e_{0}\rho
 \end{bmatrix}+\begin{bmatrix}\vec{0}\\
-p\Dyad{1}\\
+p\vec{\vec{1}}\\
 p\vec{u}
 \end{bmatrix}
 \]
@@ -2374,11 +2374,11 @@ name "eq:流动方程：Navier--Stokes：守恒型"
 \rho\vec{u}\\
 \rho e_{0}
 \end{bmatrix}+\divg\begin{bmatrix}\rho\vec{u}\\
-\rho\vec{u}\vec{u}+p\Dyad{1}\\
+\rho\vec{u}\vec{u}+p\vec{\vec{1}}\\
 (\rho e_{0}+p)\vec{u}
 \end{bmatrix}=\divg\begin{bmatrix}\vec{0}\\
-\Dyad{\tau}\\
-\Dyad{\tau}\vdot\vec{u}-\vec{q}
+\vec{\vec{\tau}}\\
+\vec{\vec{\tau}}\vdot\vec{u}-\vec{q}
 \end{bmatrix}+\begin{bmatrix}0\\
 \vec{b}\\
 \vec{b}\vdot\vec{u}+j
@@ -2591,8 +2591,8 @@ reference "eq:流动方程：质量：微分型：非守恒型"
 \begin_inset Formula 
 \begin{equation}
 \begin{aligned}\rho\Dt{\rho}+\rho^{2}\divg\vec{u} & =0\\
-\rho\Dt{\vec{u}}+\divg(p\Dyad{1}) & =\divg\Dyad{\tau}+\vec{b}\\
-\rho\Dt{e_{0}}+\divg(p\vec{u}) & =\divg(\Dyad{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
+\rho\Dt{\vec{u}}+\divg(p\vec{\vec{1}}) & =\divg\vec{\vec{\tau}}+\vec{b}\\
+\rho\Dt{e_{0}}+\divg(p\vec{u}) & =\divg(\vec{\vec{\tau}}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \end{aligned}
 \label{eq:流动方程：Navier--Stokes：非守恒型：向量型}
 \end{equation}
@@ -2664,13 +2664,13 @@ reference "eq:流动方程：Navier--Stokes：非守恒型：向量型"
 \end_inset
 
  第二行，暂不代入 
-\begin_inset Formula $\Dyad{\sigma}=\Dyad{\tau}-p\Dyad{1}$
+\begin_inset Formula $\vec{\vec{\sigma}}=\vec{\vec{\tau}}-p\vec{\vec{1}}$
 \end_inset
 
 ）得
 \begin_inset Formula 
 \[
-\vec{u}\vdot\rho\Dt{\vec{u}}=\vec{u}\vdot\left(\divg\Dyad{\sigma}+\vec{b}\right)
+\vec{u}\vdot\rho\Dt{\vec{u}}=\vec{u}\vdot\left(\divg\vec{\vec{\sigma}}+\vec{b}\right)
 \]
 
 \end_inset
@@ -2693,7 +2693,7 @@ reference "eq:流动方程：物质导数：线性性质"
 即得描述“比动能 (specific kinetic energy)”变化率的“动能方程”：
 \begin_inset Formula 
 \begin{equation}
-\rho\Dt(\abs{\vec{u}}^{2}/2)=\vec{u}\vdot\left(\divg\Dyad{\sigma}+\vec{b}\right)\label{eq:流动方程：动能方程}
+\rho\Dt(\abs{\vec{u}}^{2}/2)=\vec{u}\vdot\left(\divg\vec{\vec{\sigma}}+\vec{b}\right)\label{eq:流动方程：动能方程}
 \end{equation}
 
 \end_inset
@@ -2739,7 +2739,7 @@ reference "eq:流动方程：动能方程"
 \begin_inset Formula 
 \[
 \begin{aligned}\rho\Dt{e} & =\rho\Dt{e_{0}}-\rho\Dt(\abs{\vec{u}}^{2}/2)\\
- & =\divg(\Dyad{\sigma}\vdot\vec{u})-\vec{u}\vdot\left(\divg\Dyad{\sigma}\right)-\divg\vec{q}+j
+ & =\divg(\vec{\vec{\sigma}}\vdot\vec{u})-\vec{u}\vdot\left(\divg\vec{\vec{\sigma}}\right)-\divg\vec{q}+j
 \end{aligned}
 \]
 
@@ -2760,17 +2760,17 @@ status open
 \end_inset
 
 任意两个二阶张量 
-\begin_inset Formula $\Dyad{A}=A_{ik}\vec{e}_{i}\vec{e}_{k}$
+\begin_inset Formula $\vec{\vec{A}}=A_{ik}\vec{e}_{i}\vec{e}_{k}$
 \end_inset
 
  与 
-\begin_inset Formula $\Dyad{B}=B_{ik}\vec{e}_{i}\vec{e}_{k}$
+\begin_inset Formula $\vec{\vec{B}}=B_{ik}\vec{e}_{i}\vec{e}_{k}$
 \end_inset
 
  的内积定义为
 \begin_inset Formula 
 \[
-\Dyad{A}\DyadDot\Dyad{B}=A_{ik}B_{ik}
+\vec{\vec{A}}\DotDot\vec{\vec{B}}=A_{ik}B_{ik}
 \]
 
 \end_inset
@@ -2787,19 +2787,19 @@ status open
 
 \begin_layout Lemma
 与“力（向量）与速度（向量）的内积表示功率”类似，“应力（张量）与应变率（张量）的内积”也具有功率的量纲。在流体力学中，主要考虑 
-\begin_inset Formula $\Dyad{\sigma},\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\sigma}},\vec{\vec{\tau}}$
 \end_inset
 
  与 
-\begin_inset Formula $\grad\vec{u},\Dyad{E}$
+\begin_inset Formula $\grad\vec{u},\vec{\vec{E}}$
 \end_inset
 
  的内积：
 \begin_inset Formula 
 \[
-\begin{aligned}\Dyad{1}\DyadDot\Dyad{E} & =\divg\vec{u}\\
-\Dyad{\sigma}\DyadDot\left(\grad\vec{u}\right) & =\divg(\Dyad{\sigma}\vdot\vec{u})-\vec{u}\vdot\left(\divg\Dyad{\sigma}\right)\\
- & =\Dyad{\sigma}\DyadDot\Dyad{E}=\Dyad{\tau}\DyadDot\Dyad{E}-p\divg\vec{u}
+\begin{aligned}\vec{\vec{1}}\DotDot\vec{\vec{E}} & =\divg\vec{u}\\
+\vec{\vec{\sigma}}\DotDot\left(\grad\vec{u}\right) & =\divg(\vec{\vec{\sigma}}\vdot\vec{u})-\vec{u}\vdot\left(\divg\vec{\vec{\sigma}}\right)\\
+ & =\vec{\vec{\sigma}}\DotDot\vec{\vec{E}}=\vec{\vec{\tau}}\DotDot\vec{\vec{E}}-p\divg\vec{u}
 \end{aligned}
 \]
 
@@ -2819,8 +2819,8 @@ status open
 于是内能方程可以写成
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\rho\Dt{e} & =\Dyad{\sigma}\DyadDot\left(\grad\vec{u}\right)-\divg\vec{q}+j\\
- & =\Dyad{\tau}\DyadDot\Dyad{E}-p\divg\vec{u}-\divg\vec{q}+j
+\begin{aligned}\rho\Dt{e} & =\vec{\vec{\sigma}}\DotDot\left(\grad\vec{u}\right)-\divg\vec{q}+j\\
+ & =\vec{\vec{\tau}}\DotDot\vec{\vec{E}}-p\divg\vec{u}-\divg\vec{q}+j
 \end{aligned}
 \label{eq:流动方程：内能方程}
 \end{equation}
@@ -2879,7 +2879,7 @@ noprefix "false"
  并将压力项移到等号左边，即得描述压力变化的“压力方程”：
 \begin_inset Formula 
 \begin{equation}
-\frac{\Dt{p}+\gamma p\divg\vec{u}}{\gamma-1}=\Dyad{\tau}\DyadDot\Dyad{E}-\divg\vec{q}+j\label{eq:流动方程：压力方程}
+\frac{\Dt{p}+\gamma p\divg\vec{u}}{\gamma-1}=\vec{\vec{\tau}}\DotDot\vec{\vec{E}}-\divg\vec{q}+j\label{eq:流动方程：压力方程}
 \end{equation}
 
 \end_inset
@@ -2929,7 +2929,7 @@ reference "eq:流动方程：内能方程"
 可以得到描述“比熵 (specific entropy)”变化率的“熵方程”：
 \begin_inset Formula 
 \begin{equation}
-\rho T\Dt{s}=\Dyad{\tau}\DyadDot\Dyad{E}-\divg\vec{q}+j\label{eq:流动方程：熵方程}
+\rho T\Dt{s}=\vec{\vec{\tau}}\DotDot\vec{\vec{E}}-\divg\vec{q}+j\label{eq:流动方程：熵方程}
 \end{equation}
 
 \end_inset
@@ -3000,7 +3000,7 @@ reference "eq:流动方程：Navier--Stokes：非守恒型：向量型"
 代回能量方程即得
 \begin_inset Formula 
 \[
-\rho\Dt(h+\abs{\vec{u}}^{2}/2)=\partial_{t}p+\divg(\Dyad{\tau}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
+\rho\Dt(h+\abs{\vec{u}}^{2}/2)=\partial_{t}p+\divg(\vec{\vec{\tau}}\vdot\vec{u}-\vec{q})+\vec{b}\vdot\vec{u}+j
 \]
 
 \end_inset
@@ -3405,7 +3405,7 @@ Euler 方程
 \end_inset
 
  的基础上，进一步忽略黏性项 
-\begin_inset Formula $\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\tau}}$
 \end_inset
 
 、传热项 
@@ -3468,7 +3468,7 @@ reference "eq:流动方程：Navier--Stokes：守恒型：直角坐标"
 \end_inset
 
 、黏性项 
-\begin_inset Formula $\Dyad{\tau}$
+\begin_inset Formula $\vec{\vec{\tau}}$
 \end_inset
 
 、传热项 
