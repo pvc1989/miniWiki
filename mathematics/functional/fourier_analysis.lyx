@@ -420,7 +420,7 @@ name "prob:Fourier：级数"
  上可以引入“内积 (inner product)”以及由它所导出的“范数 (norm)”：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\mathcal{V}}\coloneqq\int_{\alpha}^{\beta}\Conj{u}(\theta)\,v(\theta)\dd{\theta}\qquad\norm{u}_{\mathcal{V}}\coloneqq\sqrt{\ip{u}_{\mathcal{V}}}
+\ip{u}{v}_{\mathcal{V}}\coloneqq\int_{\alpha}^{\beta}\Conj{u(\theta)}v(\theta)\dd{\theta}\qquad\norm{u}_{\mathcal{V}}\coloneqq\sqrt{\ip{u}_{\mathcal{V}}}
 \]
 
 \end_inset
@@ -570,7 +570,7 @@ u_{+1}\\
 所构成的（复）向量空间，它在如下“内积”及其所导出的“范数”定义下也是完备的：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\ell^{2}}\coloneqq\sum_{n\in\mathbb{Z}}\Conj{u}_{n}\,v_{n}\qquad\norm{u}_{\ell^{2}}\coloneqq\sqrt{\ip{u}_{\ell^{2}}}
+\ip{u}{v}_{\ell^{2}}\coloneqq\sum_{n\in\mathbb{Z}}\Conj{u}_{n}v_{n}\qquad\norm{u}_{\ell^{2}}\coloneqq\sqrt{\ip{u}_{\ell^{2}}}
 \]
 
 \end_inset
@@ -606,7 +606,7 @@ u_{+1}\\
  的保范数“单射 (injection)”：
 \begin_inset Formula 
 \[
-\norm{u}_{\mathcal{L}^{2}}^{2}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}\,u_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\updelta_{n'n}}=\sum_{n\in\mathbb{Z}}\abs{u_{n}}^{2}=\norm{u}_{\ell^{2}}^{2}
+\norm{u}_{\mathcal{L}^{2}}^{2}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}u_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\updelta_{n'n}}=\sum_{n\in\mathbb{Z}}\abs{u_{n}}^{2}=\norm{u}_{\ell^{2}}^{2}
 \]
 
 \end_inset
@@ -622,7 +622,7 @@ u_{+1}\\
  的保内积“双射 (bijection)”：
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}\,v_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\updelta_{n'n}}=\ip{u}{v}_{\ell^{2}}
+\ip{u}{v}_{\mathcal{L}^{2}/\doteq}=\sum_{n'\in\mathbb{Z}}\sum_{n\in\mathbb{Z}}\Conj{u}_{n'}v_{n}\underbrace{\ip{n'}{n}_{\mathcal{L}^{2}}}_{\updelta_{n'n}}=\ip{u}{v}_{\ell^{2}}
 \]
 
 \end_inset
@@ -693,7 +693,7 @@ noprefix "false"
  上的特例，这里的内积和单位正交基分别为
 \begin_inset Formula 
 \[
-\ip{u}{v}\coloneqq\int_{0}^{2\pi}\Conj{u}(\theta)\,v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}\coloneqq\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}\coloneqq\int_{0}^{2\pi}\Conj{u(\theta)}v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}\coloneqq\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -789,7 +789,7 @@ u(\theta)\equiv\ip{\theta}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\
 ，其上的内积与单位基向量分别为：
 \begin_inset Formula 
 \[
-\ip{u}{v}\coloneqq\int_{0}^{2a}\Conj{u}(x)\,v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}\coloneqq\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
+\ip{u}{v}\coloneqq\int_{0}^{2a}\Conj{u(x)}v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}\coloneqq\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
 \]
 
 \end_inset
@@ -1369,7 +1369,7 @@ name "tab:Fourier：变换：常用"
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="3">
+<lyxtabular version="3" rows="11" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1428,11 +1428,122 @@ name "tab:Fourier：变换：常用"
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Fourier 积分发散，但仍有意义。
+积分发散，但按广义函数解释仍成立。
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{1}{\sqrt{2\pi}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\updelta(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\updelta_{2X}(x)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\mathrm{sinc}(kX)}{\sqrt{2\pi}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\updelta_{2T}(t)\coloneqq\begin{cases}
+(2T)^{-1} & \abs{t}\le T\\
+0 & \abs{t}>T
+\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\dfrac{\mathrm{sinc}(Kx)}{\sqrt{2\pi}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\updelta_{2K}(k)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -1620,11 +1731,11 @@ Fourier 积分发散，但仍有意义。
 
 \begin_layout Plain Layout
 其中 
-\begin_inset Formula $r\coloneqq\sqrt{x^{2}+y^{2}+z^{2}}$
+\begin_inset Formula $r\coloneqq(x^{2}+y^{2}+z^{2})^{1/2}$
 \end_inset
 
 ，
-\begin_inset Formula $k\coloneqq\sqrt{k_{x}^{2}+k_{y}^{2}+k_{z}^{2}}$
+\begin_inset Formula $k\coloneqq(k_{x}^{2}+k_{y}^{2}+k_{z}^{2})^{1/2}$
 \end_inset
 
 ，
@@ -1688,11 +1799,59 @@ Fourier 积分发散，但仍有意义。
 
 \end_layout
 
-\begin_layout Example*
-验证
+\begin_layout Example
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})\qquad\forall a>0
+\updelta_{2X}(x)\xrightleftharpoons[\hat{F}^{-1}]{\hat{F}}\frac{\mathrm{sinc}(kX)}{\sqrt{2\pi}}\qquad\frac{\mathrm{sinc}(Kx)}{\sqrt{2\pi}}\xrightleftharpoons[\hat{F}^{-1}]{\hat{F}}\updelta_{2K}(k)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对第一式验证正变换：
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{F}[\updelta_{2X}(x)] & =\int_{-X}^{+X}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\cdot\frac{1}{2X}\dd{x}=\frac{\exp(-\ii kX)-\exp(+\ii kX)}{-\ii k\cdot2X\cdot\sqrt{2\pi}}\\
+ & =\frac{2\ii\sin(-kX)}{-2\ii kX\sqrt{2\pi}}=\frac{1}{\sqrt{2\pi}}\frac{\sin(kX)}{kX}=\frac{\mathrm{sinc}(kX)}{\sqrt{2\pi}}
+\end{aligned}
+\]
+
+\end_inset
+
+对第二式验证逆变换：
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{F}^{-1}[\updelta_{2K}(k)] & =\int_{-K}^{+K}\frac{\exp(+\ii kx)}{\sqrt{2\pi}}\cdot\frac{1}{2K}\dd{k}=\frac{\exp(+\ii Kx)-\exp(-\ii Kx)}{+\ii x\cdot2K\cdot\sqrt{2\pi}}\\
+ & =\frac{2\ii\sin(+Kx)}{+2\ii Kx\sqrt{2\pi}}=\frac{1}{\sqrt{2\pi}}\frac{\sin(Kx)}{Kx}=\frac{\mathrm{sinc}(Kx)}{\sqrt{2\pi}}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\exp(-ax^{2})\xrightleftharpoons[\hat{F}^{-1}]{\hat{F}}\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})\qquad\forall a>0
 \]
 
 \end_inset
@@ -1711,7 +1870,8 @@ Fourier 积分发散，但仍有意义。
 代入 Fourier 变换的定义，得到
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x} & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\frac{\ii k}{2a}\right)^{2}-\left(\frac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
+\begin{aligned}\hat{F}[\exp(-ax^{2})] & \coloneqq\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}\\
+ & =\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{+\infty}\exp(-a\cdot\left[\left(x+\frac{\ii k}{2a}\right)^{2}-\left(\frac{\ii k}{2a}\right)^{2}\right])\dd{x}\\
  & =\frac{1}{\sqrt{2\pi}}\exp(-\frac{k^{2}}{4a})\int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}
 \end{aligned}
 \]
@@ -1737,7 +1897,7 @@ Fourier 积分发散，但仍有意义。
 从而有
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}\exp(-ax^{2})\dd{x}=\frac{\sqrt{\pi/a}}{\sqrt{2\pi}}\exp(-\frac{k^{2}}{4a})=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
+\hat{F}[\exp(-ax^{2})]=\frac{\sqrt{\pi/a}}{\sqrt{2\pi}}\exp(-\frac{k^{2}}{4a})=\frac{1}{\sqrt{2a}}\exp(-\frac{k^{2}}{4a})
 \]
 
 \end_inset
