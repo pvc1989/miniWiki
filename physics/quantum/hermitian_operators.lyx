@@ -117,11 +117,11 @@ Heisenberg's 矩阵
  quantity)”为基础；每个可观测量都可以表示为一个（无穷维）矩阵，其中每个矩阵元都与两个态有关。
 \begin_inset Formula 
 \[
-\Mat{C}=\begin{bmatrix}C_{11} & \cdots & C_{1n} & \cdots\\
+\Mat{A}=\begin{bmatrix}A_{11} & \cdots & A_{1n} & \cdots\\
 \vdots & \ddots & \vdots & \cdots\\
-C_{n1} & \cdots & C_{nn} & \cdots\\
+A_{n1} & \cdots & A_{nn} & \cdots\\
 \vdots & \vdots & \vdots & \ddots
-\end{bmatrix}\qquad C_{ik}\coloneqq\mel{\psi_{i}}{\hat{C}}{\psi_{k}}
+\end{bmatrix}\qquad A_{ik}\coloneqq\mel{\psi_{i}}{\hat{A}}{\psi_{k}}
 \]
 
 \end_inset
@@ -136,7 +136,7 @@ C_{n1} & \cdots & C_{nn} & \cdots\\
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\hat{C}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}}
+\hat{A}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}}
 \]
 
 \end_inset
@@ -151,7 +151,7 @@ C_{n1} & \cdots & C_{nn} & \cdots\\
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\expval{C}_{\psi}\coloneqq\expval{\hat{C}}{\psi}
+\langle\hat{A}\rangle_{\psi}\coloneqq\ev{\hat{A}}{\psi}
 \]
 
 \end_inset
@@ -159,9 +159,9 @@ C_{n1} & \cdots & C_{nn} & \cdots\\
 
 \begin_inset Formula 
 \[
-\expval{C}_{\psi}=\sum_{n\in\mathbb{N}}\lambda_{n}\abs{a_{n}}^{2}\impliedby\begin{cases}
-\ket{\psi}=\sum_{n\in\mathbb{N}}a_{n}\ket{\psi_{n}}\\
-\hat{C}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}} & n\in\mathbb{N}
+\langle\hat{A}\rangle_{\psi}=\sum_{n\in\mathbb{N}}\lambda_{n}\abs{C_{n}}^{2}\impliedby\begin{cases}
+\ket{\psi}=\sum_{n\in\mathbb{N}}C_{n}\ket{\psi_{n}}\\
+\hat{A}\ket{\psi_{n}}=\lambda_{n}\ket{\psi_{n}} & n\in\mathbb{N}
 \end{cases}
 \]
 
@@ -206,13 +206,13 @@ Hilbert 空间
 \end_layout
 
 \begin_layout Subsection
-共轭算符
+伴随 & 自伴随
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\hat{B}=\hat{C}^{\dagger}\iff\forall\ket{\phi},\forall\ket{\psi}\colon\ip*{\hat{B}\phi}{\psi}=\ip*{\phi}{\hat{C}\psi}
+\hat{A}=\hat{B}^{\dagger}\iff\forall\ket{\phi},\forall\ket{\psi}\colon\ip*{\hat{A}\phi}{\psi}=\ip*{\phi}{\hat{B}\psi}
 \]
 
 \end_inset
@@ -222,6 +222,57 @@ Hilbert 空间
 
 \begin_layout Subsection
 Hermitian 算符的性质
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[涨落]
+\end_layout
+
+\end_inset
+
+算符 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+ 的“涨落”定义为
+\begin_inset Formula 
+\[
+\Delta\hat{A}\equiv\widehat{\Delta A}\coloneqq\hat{A}-\langle\hat{A}\rangle\hat{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\hat{A}=\hat{A}^{\dagger}\implies\langle(\Delta\hat{A})^{2}\rangle=\langle\hat{A}^{2}\rangle-\langle\hat{A}\rangle^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -251,7 +302,7 @@ Hermitian 算符的性质
 \begin_layout Standard
 \begin_inset Formula 
 \[
-[\hat{B},\hat{C}]\coloneqq\hat{B}\hat{C}-\hat{C}\hat{B}
+[\hat{A},\hat{B}]\coloneqq\hat{A}\hat{B}-\hat{B}\hat{A}
 \]
 
 \end_inset
@@ -274,14 +325,132 @@ status open
 
 \end_inset
 
+若 
+\begin_inset Formula $\hat{A},\hat{B}$
+\end_inset
 
+ 皆为 Hermitian 算符，则
+\begin_inset Formula 
+\begin{equation}
+\langle(\Delta\hat{A})^{2}\rangle\,\langle(\Delta\hat{B})^{2}\rangle\ge\langle\hat{C}/2\rangle^{2}\impliedby[\hat{A},\hat{B}]=\ii\hat{C}\ne\hat{0}\label{eq:可观测量：测不准原理}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+设 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 为实变量，则
 \begin_inset Formula 
 \[
-\expval{\left(\increment B\right)^{2}}\expval{\left(\increment C\right)^{2}}\ge\frac{\expval{D}^{2}}{4}\impliedby\begin{cases}
-[\hat{B},\hat{C}]=\ii\hat{D}\ne\hat{0}\\
-\hat{\increment B}\coloneqq\hat{B}-\expval*{B}\\
-\hat{\increment C}\coloneqq\hat{C}-\expval*{C}
-\end{cases}
+(\xi\hat{A}+\ii\hat{B})^{\dagger}=\xi^{*}\hat{A}^{\dagger}+\ii^{*}\hat{B}^{\dagger}=\xi\hat{A}-\ii\hat{B}
+\]
+
+\end_inset
+
+状态 
+\begin_inset Formula $\ket{\phi}\coloneqq(\xi\hat{A}+\ii\hat{B})\ket{\psi}$
+\end_inset
+
+ 的模平方是一个非负实数，可按定义展开为
+\begin_inset Formula 
+\[
+\begin{aligned}\ip{\phi} & =\bra{\psi}\left(\xi\hat{A}-\ii\hat{B}\right)\left(\xi\hat{A}+\ii\hat{B}\right)\ket{\psi}\\
+ & =\bra{\psi}\left(\xi^{2}\hat{A}^{2}+\xi\ii\hat{A}\hat{B}-\xi\ii\hat{B}\hat{A}+\hat{B}^{2}\right)\ket{\psi}\\
+ & =\mathinner{\langle\hat{A}^{2}\rangle}\xi^{2}-\mathinner{\langle\hat{C}\rangle}\xi+\langle\hat{B}^{2}\rangle\eqqcolon Q(\xi)
+\end{aligned}
+\]
+
+\end_inset
+
+这是一个首项系数为正（由 
+\begin_inset Formula $\hat{A}=\hat{A}^{\dagger}$
+\end_inset
+
+ 保证）的一元二次三项式，其极小值
+\begin_inset Formula 
+\[
+\min_{\xi\in\mathbb{R}}Q(\xi)=\langle\hat{B}^{2}\rangle-\frac{\langle\hat{C}\rangle^{2}}{4\mathinner{\langle A^{2}\rangle}}\impliedby\xi=\frac{\langle\hat{C}\rangle}{2\mathinner{\langle\hat{A}^{2}\rangle}}
+\]
+
+\end_inset
+
+应非负，因此有
+\begin_inset Formula 
+\begin{equation}
+\langle\hat{A}^{2}\rangle\,\langle\hat{B}^{2}\rangle\ge\langle\hat{C}/2\rangle^{2}\label{eq:可观测量：测不准原理：Hermitian 算符}
+\end{equation}
+
+\end_inset
+
+显然 
+\begin_inset Formula $\Delta\hat{A},\Delta\hat{B}$
+\end_inset
+
+ 亦皆为 Hermitian 算符，且
+\begin_inset Formula 
+\[
+[\Delta\hat{A},\Delta\hat{B}]=[\hat{A},\hat{B}]=\ii\hat{C}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:可观测量：测不准原理：Hermitian 算符"
+
+\end_inset
+
+ 式即得 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:可观测量：测不准原理"
+
+\end_inset
+
+ 式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+已知 
+\begin_inset Formula $\hat{x},\widehat{p_{x}}$
+\end_inset
+
+ 皆为 Hermitian 算符，且 
+\begin_inset Formula $[\hat{x},\widehat{p_{x}}]=\ii\hbar\hat{1}$
+\end_inset
+
+，代入 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:可观测量：测不准原理"
+
+\end_inset
+
+ 式即得
+\begin_inset Formula 
+\[
+\langle(\Delta\hat{x})^{2}\rangle\,\langle(\Delta\widehat{p_{x}})^{2}\rangle\ge(\hbar/2)^{2}
 \]
 
 \end_inset
@@ -301,17 +470,13 @@ status open
 \end_layout
 
 \begin_layout Subsection
-守恒量与 
-\begin_inset Formula $\hat{H}$
-\end_inset
-
- 对易
+与 Hamiltonian 对易
 \end_layout
 
 \begin_layout Theorem
 \begin_inset Formula 
 \[
-\forall\ket{\psi(t)}\colon\dv*{\expval{C}_{\psi}}{t}=0\iff\comm*{\hat{C}}{\hat{H}}=\hat{0}
+\forall\ket{\psi(t)}\colon\dv*{\langle\hat{C}\rangle_{\psi}}{t}=0\iff\comm*{\hat{C}}{\hat{H}}=\hat{0}
 \]
 
 \end_inset
