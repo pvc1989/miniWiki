@@ -109,7 +109,7 @@ theorems-chap
 \end_layout
 
 \begin_layout Subsection
-特征值 & 特征向量
+特征值、特征向量
 \end_layout
 
 \begin_layout Definition
@@ -183,7 +183,7 @@ status open
 
 \begin_layout Theorem
 设线性无关向量组 
-\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{Bmatrix}$
 \end_inset
 
  为域 
@@ -371,7 +371,7 @@ reference "eq:线性算子：特征多项式：定义"
 \end_inset
 
  元一次方程组 
-\begin_inset Formula $\left(\lambda\Mat{1}-\Mat{A}\right)\ket{v}$
+\begin_inset Formula $\left(\lambda\Mat{1}-\Mat{A}\right)\ket{v}=\ket{0}$
 \end_inset
 
  的非零解。
@@ -390,7 +390,23 @@ reference "eq:线性算子：特征多项式：定义"
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的特征方程在域 
+ 的特征多项式 
+\begin_inset Formula $f(\lambda)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的 
+\begin_inset Formula $n$
+\end_inset
+
+ 次多项式，且特征方程 
+\begin_inset Formula $f(\lambda)=0$
+\end_inset
+
+ 在域 
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
@@ -398,11 +414,11 @@ reference "eq:线性算子：特征多项式：定义"
 \begin_inset Formula $n$
 \end_inset
 
- 个根，则 
-\begin_inset Formula $\hat{A}$
+ 个（可重复的）根，则 
+\begin_inset Formula $f(\lambda)$
 \end_inset
 
- 的特征多项式可以分解为 
+ 可以分解为 
 \begin_inset Formula $n$
 \end_inset
 
@@ -466,12 +482,20 @@ status open
 
 \begin_layout Plain Layout
 
-相似矩阵具有相同的特征多项式
+[相似矩阵的特征多项式相同]
 \end_layout
 
 \end_inset
 
 若 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Mat{B}$
+\end_inset
+
+ 相似，即 
 \begin_inset Formula $\exists\Mat{P}\in\mathbb{F}^{n\times n}$
 \end_inset
 
@@ -487,7 +511,7 @@ status open
 \begin_inset Formula $\Mat{B}$
 \end_inset
 
- 有相同的特征多项式，从而有相同的特征值。
+ 具有相同的特征多项式，从而有相同的特征值。
 \end_layout
 
 \begin_layout Standard
@@ -507,18 +531,26 @@ status open
 \end_inset
 
  的任意一个特征值 
-\begin_inset Formula $\lambda$
+\begin_inset Formula $\lambda_{i}$
 \end_inset
 
 ，集合
 \begin_inset Formula 
 \[
-\mathcal{V}_{\lambda}\coloneqq\left\{ \vec{v}\in\mathcal{V}:\hat{A}\vec{v}=\lambda\vec{v}\right\} \subset\mathcal{V}
+\mathcal{V}_{\lambda_{i}}\coloneqq\left\{ \vec{v}\in\mathcal{V}:\hat{A}\vec{v}=\lambda_{i}\vec{v}\right\} \subset\mathcal{V}
 \]
 
 \end_inset
 
-是一个线性空间。
+是一个线性空间，且
+\begin_inset Formula 
+\[
+\mathcal{V}_{\lambda_{i}}=\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -540,7 +572,7 @@ status open
 \end_inset
 
 称上述 
-\begin_inset Formula $\mathcal{V}_{\lambda}$
+\begin_inset Formula $\mathcal{V}_{\lambda_{i}}$
 \end_inset
 
  为 
@@ -548,15 +580,15 @@ status open
 \end_inset
 
  的属于 
-\begin_inset Formula $\lambda$
+\begin_inset Formula $\lambda_{i}$
 \end_inset
 
  的“特征子空间 (eigen-subspace)”，并称 
-\begin_inset Formula $\dim\mathcal{V}_{\lambda}$
+\begin_inset Formula $\dim\mathcal{V}_{\lambda_{i}}$
 \end_inset
 
- 为特征值 
-\begin_inset Formula $\lambda$
+ 为 
+\begin_inset Formula $\lambda_{i}$
 \end_inset
 
  的“几何重数 (geometric multiplicity)”。
@@ -571,11 +603,11 @@ status open
 
 \begin_layout Lemma
 若 
-\begin_inset Formula $\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{1,1} & \cdots & \vec{v}_{1,r_{1}}\end{Bmatrix}$
 \end_inset
 
  与 
-\begin_inset Formula $\begin{Bmatrix}\vec{v}_{2,1} & \dots & \vec{v}_{2,r_{2}}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{2,1} & \cdots & \vec{v}_{2,r_{2}}\end{Bmatrix}$
 \end_inset
 
  分别为 
@@ -589,7 +621,7 @@ status open
  中的线性无关向量组，则
 \begin_inset Formula 
 \[
-\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}} & \vec{v}_{2,1} & \dots & \vec{v}_{2,r_{2}}\end{Bmatrix}
+\begin{Bmatrix}\vec{v}_{1,1} & \cdots & \vec{v}_{1,r_{1}} & \vec{v}_{2,1} & \cdots & \vec{v}_{2,r_{2}}\end{Bmatrix}\coloneqq\begin{Bmatrix}\vec{v}_{1,1} & \cdots & \vec{v}_{1,r_{1}}\end{Bmatrix}\cup\begin{Bmatrix}\vec{v}_{2,1} & \cdots & \vec{v}_{2,r_{2}}\end{Bmatrix}
 \]
 
 \end_inset
@@ -610,7 +642,7 @@ status open
 
 \begin_layout Theorem
 若 
-\begin_inset Formula $\begin{Bmatrix}\vec{v}_{i,1} & \dots & \vec{v}_{1,r_{i}}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{v}_{i,1} & \cdots & \vec{v}_{i,r_{i}}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -624,7 +656,7 @@ status open
 ），则
 \begin_inset Formula 
 \[
-\begin{Bmatrix}\vec{v}_{1,1} & \dots & \vec{v}_{1,r_{1}} & \dots & \vec{v}_{s,1} & \dots & \vec{v}_{s,r_{s}}\end{Bmatrix}
+\begin{Bmatrix}\vec{v}_{1,1} & \cdots & \vec{v}_{1,r_{1}} & \cdots & \vec{v}_{s,1} & \cdots & \vec{v}_{s,r_{s}}\end{Bmatrix}\coloneqq\bigcup_{i=1}^{s}\begin{Bmatrix}\vec{v}_{i,1} & \cdots & \vec{v}_{i,r_{i}}\end{Bmatrix}
 \]
 
 \end_inset
@@ -685,7 +717,11 @@ status open
 
 \end_inset
 
-若存在域 
+设 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 为域 
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
@@ -693,15 +729,15 @@ status open
 \begin_inset Formula $n$
 \end_inset
 
- 维线性空间 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 的一组基，使得线性算子 
+ 维线性空间。若线性算子 
 \begin_inset Formula $\hat{A}\in\mathcal{L}(\mathcal{V})$
 \end_inset
 
- 在此基下的矩阵 
+ 在 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ 的某一组基下的矩阵 
 \begin_inset Formula $\Mat{A}\in\mathbb{F}^{n\times n}$
 \end_inset
 
@@ -729,7 +765,7 @@ status open
 
 \begin_layout Plain Layout
 
-[可对角化条件]
+[可对角化]
 \end_layout
 
 \end_inset
@@ -760,7 +796,7 @@ status open
 \end_inset
 
  的一组基 
-\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{Bmatrix}$
 \end_inset
 
 ，使得 
@@ -774,7 +810,7 @@ status open
  为对角阵：
 \begin_inset Formula 
 \begin{equation}
-\hat{A}\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}\Mat{A}\qquad\Mat{A}\coloneqq\begin{bmatrix}a_{1}\\
+\hat{A}\begin{bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{bmatrix}\Mat{A}\qquad\Mat{A}\coloneqq\begin{bmatrix}a_{1}\\
  & \ddots\\
  &  & a_{n}
 \end{bmatrix}\label{eq:线性算子：对角化}
@@ -812,7 +848,7 @@ status open
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{s}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -831,7 +867,7 @@ status open
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{s}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -874,8 +910,8 @@ status open
 \end_layout
 
 \begin_layout Corollary
-适当调整基 
-\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{Bmatrix}$
+适当调整 
+\begin_inset Formula $\begin{Bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{Bmatrix}$
 \end_inset
 
  中向量顺序，可将 
@@ -892,7 +928,7 @@ reference "eq:线性算子：对角化"
  化为
 \begin_inset Formula 
 \[
-\hat{A}\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \dots & \vec{e}_{n}\end{bmatrix}\Mat{A}\qquad\Mat{A}\coloneqq\begin{bmatrix}\Mat{\varLambda_{1}}\\
+\hat{A}\begin{bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{bmatrix}=\begin{bmatrix}\vec{e}_{1} & \cdots & \vec{e}_{n}\end{bmatrix}\Mat{A}\qquad\Mat{A}\coloneqq\begin{bmatrix}\Mat{\varLambda_{1}}\\
  & \ddots\\
  &  & \Mat{\varLambda_{s}}
 \end{bmatrix}
@@ -958,7 +994,7 @@ reference "eq:线性算子：对角化"
  满足
 \begin_inset Formula 
 \[
-\forall\vec{v}\in\mathcal{W}\implies\hat{A}\vec{v}\in\mathcal{W}
+\vec{w}\in\mathcal{W}\implies\hat{A}\vec{w}\in\mathcal{W}
 \]
 
 \end_inset
@@ -1012,14 +1048,18 @@ status open
 \end_inset
 
  是由线性无关向量组 
-\begin_inset Formula $\begin{Bmatrix}\vec{v}_{1} & \dots & \vec{v}_{k}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\vec{w}_{1} & \cdots & \vec{w}_{k}\end{Bmatrix}$
 \end_inset
 
- 张成的线性空间，且 
-\begin_inset Formula $\forall i\in\left\{ 1,\dots,k\right\} \colon\hat{A}\vec{v}_{i}\in\mathcal{W}$
+ 张成的线性空间，且
+\begin_inset Formula 
+\[
+i\in\left\{ 1,\dots,k\right\} \implies\hat{A}\vec{w}_{i}\in\mathcal{W}
+\]
+
 \end_inset
 
-，则 
+则 
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
@@ -1065,7 +1105,7 @@ status open
 \end_inset
 
  上的限制 
-\begin_inset Formula $\hat{A}|\mathcal{W}$
+\begin_inset Formula $\hat{A}|_{\mathcal{W}}$
 \end_inset
 
  是 
@@ -1139,7 +1179,7 @@ status open
 
 \begin_layout Plain Layout
 
-[分块可对角化条件]
+[可分块对角化]
 \end_layout
 
 \end_inset
@@ -1170,7 +1210,7 @@ status open
 \end_inset
 
  的一组基 
-\begin_inset Formula $\begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}$
+\begin_inset Formula $\begin{bmatrix}\vec{e}_{1,1} & \cdots & \vec{e}_{1,r_{1}} & \cdots & \vec{e}_{s,1} & \cdots & \vec{e}_{s,r_{s}}\end{bmatrix}$
 \end_inset
 
 ，使得 
@@ -1184,8 +1224,8 @@ status open
  为分块对角阵：
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\hat{A} & \begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}\\
-= & \begin{bmatrix}\vec{e}_{1,1} & \dots & \vec{e}_{1,r_{1}} & \dots & \vec{e}_{s,1} & \dots & \vec{e}_{s,r_{s}}\end{bmatrix}\begin{bmatrix}\Mat{A_{1}}\\
+\begin{aligned}\hat{A} & \begin{bmatrix}\vec{e}_{1,1} & \cdots & \vec{e}_{1,r_{1}} & \cdots & \vec{e}_{s,1} & \cdots & \vec{e}_{s,r_{s}}\end{bmatrix}\\
+= & \begin{bmatrix}\vec{e}_{1,1} & \cdots & \vec{e}_{1,r_{1}} & \cdots & \vec{e}_{s,1} & \cdots & \vec{e}_{s,r_{s}}\end{bmatrix}\begin{bmatrix}\Mat{A_{1}}\\
  & \ddots\\
  &  & \Mat{A_{s}}
 \end{bmatrix}
@@ -1346,7 +1386,11 @@ status open
 \begin_inset Formula $\hat{A}^{k}$
 \end_inset
 
- 及更一般的多项式
+ 及更一般的 
+\begin_inset Formula $m$
+\end_inset
+
+ 次多项式
 \begin_inset Formula 
 \[
 f(\hat{A})\coloneqq\sum_{k=0}^{m}a_{k}\hat{A}^{k}\qquad\forall k\colon a_{k}\in\mathbb{F}
@@ -1377,7 +1421,7 @@ f(\hat{A})\coloneqq\sum_{k=0}^{m}a_{k}\hat{A}^{k}\qquad\forall k\colon a_{k}\in\
 \begin_inset Formula $f(x)$
 \end_inset
 
- 可以分解为两个互素因式乘积，即 
+ 可以分解为两个互素多项式的乘积，即 
 \begin_inset Formula $f(x)=f_{1}(x)\cdot f_{2}(x)$
 \end_inset
 
@@ -1412,7 +1456,7 @@ f(\hat{A})\coloneqq\sum_{k=0}^{m}a_{k}\hat{A}^{k}\qquad\forall k\colon a_{k}\in\
 \begin_inset Formula $s$
 \end_inset
 
- 个互素因式乘积，即 
+ 个互素多项式的乘积，即 
 \begin_inset Formula $f(x)=\prod_{i=1}^{s}f_{i}(x)$
 \end_inset
 
@@ -1564,16 +1608,6 @@ f(\lambda)\coloneqq\det(\lambda\Mat{1}-\Mat{A})
 \end_layout
 
 \begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[矩阵版本]
-\end_layout
-
-\end_inset
-
 矩阵
 \begin_inset Formula 
 \[
@@ -1733,7 +1767,7 @@ status collapsed
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}p_{1}(\lambda) & \dots & p_{s}(\lambda)\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}p_{1}(\lambda) & \cdots & p_{s}(\lambda)\end{Bmatrix}$
 \end_inset
 
  为 
@@ -1788,7 +1822,7 @@ status collapsed
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{s}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -1939,7 +1973,7 @@ reference "eq:线性算子：直和分解：特征多项式"
 
 \end_inset
 
-不难发现，如下矩阵的任意次幂等于其自身：
+不难发现：矩阵
 \begin_inset Formula 
 \[
 \Mat{P_{x}}-\lambda_{2}\Mat{1}=\begin{bmatrix}1 & 0 & 0\\
@@ -1950,7 +1984,7 @@ reference "eq:线性算子：直和分解：特征多项式"
 
 \end_inset
 
-故存在 
+的任意次幂等于其自身，故存在 
 \begin_inset Formula $t_{2}=1<r_{2}$
 \end_inset
 
@@ -2049,7 +2083,7 @@ status open
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- 中有相同的根（重数可以不同）。
+ 中有相同的根（重数可能不同）。
 \end_layout
 
 \begin_layout Standard
@@ -2060,7 +2094,7 @@ status open
 \end_layout
 
 \begin_layout Corollary
-相似矩阵有相同的最小多项式。
+相似矩阵的最小多项式相同。
 \end_layout
 
 \begin_layout Standard
@@ -2087,19 +2121,7 @@ status open
 \begin_inset Formula $\mathcal{V}=\bigoplus_{i=1}^{s}\mathcal{W}_{i}$
 \end_inset
 
-，则 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
- 的最小多项式 
-\begin_inset Formula $m(\lambda)$
-\end_inset
-
- 为 
-\begin_inset Formula $\begin{Bmatrix}m_{1}(\lambda) & \dots & m_{s}(\lambda)\end{Bmatrix}$
-\end_inset
-
- 的最小公倍式，其中 
+，且 
 \begin_inset Formula $m_{i}(\lambda)$
 \end_inset
 
@@ -2108,10 +2130,22 @@ status open
 \end_inset
 
  上的线性算子 
-\begin_inset Formula $\hat{A}|\mathcal{W}_{i}$
+\begin_inset Formula $\hat{A}|_{\mathcal{W}_{i}}$
 \end_inset
 
- 的最小多项式。 
+ 的最小多项式，则 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+ 的最小多项式 
+\begin_inset Formula $m(\lambda)$
+\end_inset
+
+ 为 
+\begin_inset Formula $\begin{Bmatrix}m_{1}(\lambda) & \cdots & m_{s}(\lambda)\end{Bmatrix}$
+\end_inset
+
+ 的最小公倍式。
 \end_layout
 
 \begin_layout Standard
@@ -2143,7 +2177,7 @@ status open
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{s}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -2178,7 +2212,7 @@ status open
 
 \begin_layout Plain Layout
 
-[可对角化条件]
+[可对角化]
 \end_layout
 
 \end_inset
@@ -2192,7 +2226,7 @@ status open
 \end_inset
 
 ，其中 
-\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \dots & \lambda_{s}\end{Bmatrix}$
+\begin_inset Formula $\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{s}\end{Bmatrix}$
 \end_inset
 
  为 
@@ -2209,13 +2243,36 @@ status open
 
 \end_layout
 
+\begin_layout Proof
+将 
+\begin_inset Formula $\mathcal{V}_{\lambda_{i}}=\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\mathcal{V}=\ker m(\hat{A})$
+\end_inset
+
+ 代入可对角化条件 
+\begin_inset Formula $\mathcal{V}=\bigoplus_{i=1}^{s}\mathcal{V}_{\lambda_{i}}$
+\end_inset
+
+ 即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Remark*
 容易验证：
 \begin_inset Formula 
 \[
-\hat{B}_{i}^{t_{i}}=\hat{0}|\mathcal{W}_{i}\impliedby\begin{cases}
+\hat{B}_{i}^{t_{i}}=\hat{0}|_{\mathcal{W}_{i}}\impliedby\begin{cases}
 \mathcal{W}_{i}\coloneqq\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)^{t_{i}}\\
-\hat{B}_{i}\coloneqq\hat{A}|\mathcal{W}_{i}-\lambda_{i}\hat{1}|\mathcal{W}_{i}
+\hat{B}_{i}\coloneqq\hat{A}|_{\mathcal{W}_{i}}-\lambda_{i}\hat{1}|_{\mathcal{W}_{i}}
 \end{cases}
 \]
 
@@ -2237,7 +2294,7 @@ status open
 
 \begin_layout Plain Layout
 
-[幂零算子]
+[幂零算子、幂零指数]
 \end_layout
 
 \end_inset
@@ -2274,7 +2331,7 @@ status open
 \begin_inset Formula $\hat{B}$
 \end_inset
 
- 为“幂零算子 (nilpotent operator)”，称 
+ 为“幂零算子 (nilpotent operator)”，并称 
 \begin_inset Formula $l$
 \end_inset
 
@@ -2331,7 +2388,7 @@ status open
 ，以下向量组线性无关：
 \begin_inset Formula 
 \[
-\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \dots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
+\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \cdots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
 \]
 
 \end_inset
@@ -2368,7 +2425,7 @@ status open
  属于由线性无关组
 \begin_inset Formula 
 \[
-\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \dots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
+\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \cdots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
 \]
 
 \end_inset
@@ -2415,24 +2472,20 @@ status open
 ，线性无关向量组
 \begin_inset Formula 
 \[
-\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \dots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
+\begin{Bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \cdots & \hat{B}\vec{v} & \vec{v}\end{Bmatrix}
 \]
 
 \end_inset
 
-可取为由它们所张成的 
-\begin_inset Formula $l$
-\end_inset
-
- 维线性空间的一组基，且 
+可取为由它们所张成的强循环子空间的一组基，且 
 \begin_inset Formula $\hat{B}$
 \end_inset
 
  在此基下的矩阵具有最简形式：
 \begin_inset Formula 
 \[
-\begin{aligned}\hat{B} & \begin{bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \dots & \hat{B}\vec{v} & \vec{v}\end{bmatrix}\\
-= & \begin{bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \dots & \hat{B}\vec{v} & \vec{v}\end{bmatrix}\begin{bmatrix}0 & 1 & 0 & \cdots & 0\\
+\begin{aligned}\hat{B} & \begin{bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \cdots & \hat{B}\vec{v} & \vec{v}\end{bmatrix}\\
+= & \begin{bmatrix}\hat{B}^{l-1}\vec{v} & \hat{B}^{l-2}\vec{v} & \cdots & \hat{B}\vec{v} & \vec{v}\end{bmatrix}\begin{bmatrix}0 & 1 & 0 & \cdots & 0\\
 \vdots & \ddots & \ddots & \ddots & \vdots\\
 \vdots & \ddots & \ddots & \ddots & 0\\
 \vdots & \ddots & \ddots & \ddots & 1\\
@@ -2622,11 +2675,7 @@ status open
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
- 上的幂零指数为 
-\begin_inset Formula $l$
-\end_inset
-
- 的幂零算子，则存在 
+ 上的幂零算子，则存在 
 \begin_inset Formula $\mathcal{W}$
 \end_inset
 
@@ -2638,11 +2687,11 @@ status open
 \begin_inset Formula $\dim\ker\hat{B}$
 \end_inset
 
- 个 Jordan 块的 Jordan 型矩阵（称为 
+ 个 Jordan 块的 Jordan 型矩阵，此矩阵称为 
 \begin_inset Formula $\hat{B}$
 \end_inset
 
- 的“Jordan 标准型”）。
+ 的“Jordan 标准型”。
 \end_layout
 
 \begin_layout Standard
@@ -2782,13 +2831,13 @@ N(k)\coloneqq\rank\hat{B}^{k-1}+\rank\hat{B}^{k+1}-2\rank\hat{B}^{k}\qquad k=1,\
 \end_inset
 
 ，则对 
-\begin_inset Formula $\mathcal{W}_{i}\coloneqq\ker(\hat{A}-\lambda_{i}\hat{1})^{t_{i}}$
+\begin_inset Formula $\mathcal{W}_{i}\coloneqq\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)^{t_{i}}$
 \end_inset
 
  有
 \begin_inset Formula 
 \[
-\ker\left(\hat{A}|\mathcal{W}_{i}-\lambda_{i}\hat{1}|\mathcal{W}_{i}\right)^{k}=\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)^{k}\qquad\forall k\in\mathbb{N}_{+}
+\ker\left(\hat{A}|_{\mathcal{W}_{i}}-\lambda_{i}\hat{1}|_{\mathcal{W}_{i}}\right)^{k}=\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)^{k}\qquad\forall k\in\mathbb{N}_{+}
 \]
 
 \end_inset
@@ -2860,7 +2909,7 @@ status open
 \end_inset
 
  的 Jordan 块的个数 
-\begin_inset Formula $\dim\ker(\hat{A}-\lambda_{i}\hat{1})$
+\begin_inset Formula $\dim\ker\left(\hat{A}-\lambda_{i}\hat{1}\right)$
 \end_inset
 
 。
@@ -2909,11 +2958,11 @@ status open
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的 Jordan 标准型，除 Jordan 块的排列顺序外，是由 
+ 的 Jordan 标准型，除 Jordan 块的排列顺序外，由 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 唯一确定的。
+ 唯一确定。
 \end_layout
 
 \begin_layout Standard

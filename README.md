@@ -3,7 +3,7 @@
 ## 目录
 
 ### 数学
-- [代数 (Algebra)](./mathematics/algebra/README.lyx)
+- [线性代数 (Linear Algebra)](./mathematics/algebra/README.lyx)
 - [实分析 (Real Analysis)](./mathematics/real/README.lyx)
 - [复分析 (Complex Analysis)](./mathematics/complex/README.lyx)
 - [泛函分析 (Functional Analysis)](./mathematics/functional/README.lyx)
