@@ -116,7 +116,7 @@ theorems-chap
 \begin_inset Formula 
 \begin{equation}
 \begin{gathered}M\dv[2]{u(t)}{t}+C\dv{u(t)}{t}+Ku(t)=F(t)\qquad t>0\\
-u(0)=u_{0}\qquad\dv{u(0)}{t}=\dot{u}_{0}
+u(0)=u_{0}\qquad\dv*{u(0)}{t}=\dot{u}_{0}
 \end{gathered}
 \label{eq:LTI：MCKF：初值问题}
 \end{equation}
@@ -635,9 +635,6 @@ reference "eq:LTI：MCKF：零阻尼解"
 \end_inset
 
  个自由度的一阶线性时不变系统
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
 \ket{\dot{x}(t)}=\Mat{A}\ket{x(t)}+\ket{u(t)}\qquad\ket{x(t=0)}=\ket{x}_{0}\label{eq:LTI：一阶系统：初值问题}
@@ -650,8 +647,7 @@ reference "eq:LTI：MCKF：零阻尼解"
 \[
 \begin{aligned}\overbrace{p\ket{\tilde{x}(p)}-\ket{x}_{0}}^{\hat{L}\ket{\dot{x}(t)}} & =\Mat{A}\overbrace{\ket{\tilde{x}(p)}}^{\hat{L}\ket{x(t)}}+\overbrace{\ket{\tilde{u}(p)}}^{\hat{L}\ket{u(t)}}\\
 \ket{\tilde{x}(p)} & =\left(p\Mat{1}-\Mat{A}\right)^{-1}\left(\ket{x}_{0}+\ket{\tilde{u}(p)}\right)\\
-\ket{x(t)}=\hat{L}^{-1}\ket{\tilde{x}(p)} & =\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)\ket{x}_{0}\\
- & +\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)*\ket{u(t)}
+\ket{x(t)}=\hat{L}^{-1}\ket{\tilde{x}(p)} & =\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)\cdot\ket{x}_{0}+\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)*\ket{u(t)}
 \end{aligned}
 \]
 
@@ -671,6 +667,40 @@ reference "eq:LTI：一阶系统：初值问题"
  的计算。
 \end_layout
 
+\begin_layout Remark*
+类比标量变换 
+\begin_inset Formula $\hat{L}^{-1}\left(p-a\right)^{-1}=\exp(at)$
+\end_inset
+
+ 可将 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LTI：一阶系统：初值问题"
+
+\end_inset
+
+ 的解在形式上写成
+\begin_inset Formula 
+\[
+\ket{x(t)}=\ee^{\Mat{A}t}\cdot\ket{x}_{0}+\ee^{\Mat{A}t}*\ket{u(t)}\qquad\ee^{\Mat{A}t}\coloneqq\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}
+\]
+
+\end_inset
+
+于是求解过程归结为计算 
+\begin_inset Formula $\ee^{\Mat{A}t}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Lemma
 \begin_inset ERT
 status open
@@ -682,24 +712,10 @@ status open
 
 \end_inset
 
-若
+
 \begin_inset Formula 
 \[
-\Mat{A}=\Diag\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{n}\end{Bmatrix}
-\]
-
-\end_inset
-
-则
-\begin_inset Formula 
-\[
-\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}(p-\lambda_{1})^{-1}\\
-\vdots\\
-(p-\lambda_{n})^{-1}
-\end{Bmatrix}\qquad\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\exp(\lambda_{1}t)\\
-\vdots\\
-\exp(\lambda_{n}t)
-\end{Bmatrix}
+\Mat{A}=\Diag\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{n}\end{Bmatrix}\implies\ee^{\Mat{A}t}=\Diag\begin{Bmatrix}\exp(\lambda_{1}t) & \cdots & \exp(\lambda_{n}t)\end{Bmatrix}
 \]
 
 \end_inset
@@ -725,19 +741,35 @@ status open
 
 \end_inset
 
-若
+
 \begin_inset Formula 
 \[
-\Mat{A}=\Mat{J_{n}(\lambda)}=\begin{bmatrix}\lambda & 1\\
+\Mat{A}=\begin{bmatrix}\lambda & 1\\
  & \ddots & \ddots\\
  &  & \ddots & 1\\
  &  &  & \lambda
-\end{bmatrix}_{n\times n}
+\end{bmatrix}_{n\times n}\implies\ee^{\Mat{A}t}=\exp(\lambda t)\begin{bmatrix}1 & \cdots & \dfrac{t^{k-1}}{(k-1)!} & \cdots & \dfrac{t^{n-1}}{(n-1)!}\\
+ & \ddots & \ddots & \ddots & \vdots\\
+ &  & \ddots & \ddots & \dfrac{t^{k-1}}{(k-1)!}\\
+ &  &  & \ddots & \vdots\\
+ &  &  &  & 1
+\end{bmatrix}
 \]
 
 \end_inset
 
-则
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+容易验证
 \begin_inset Formula 
 \[
 \left(p\Mat{1}-\Mat{A}\right)^{-1}=\begin{bmatrix}(p-\lambda)^{-1} & \cdots & (p-\lambda)^{-k} & \cdots & (p-\lambda)^{-n}\\
@@ -753,12 +785,7 @@ status open
 
 \begin_inset Formula 
 \[
-\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\begin{bmatrix}\exp(\lambda t) & \cdots & \dfrac{t^{k-1}\exp(\lambda t)}{(k-1)!} & \cdots & \dfrac{t^{n-1}\exp(\lambda t)}{(n-1)!}\\
- & \ddots & \ddots & \ddots & \vdots\\
- &  & \ddots & \ddots & \dfrac{t^{k-1}\exp(\lambda t)}{(k-1)!}\\
- &  &  & \ddots & \vdots\\
- &  &  &  & \exp(\lambda t)
-\end{bmatrix}
+\mathopen{\hat{L}^{-1}}\left[\frac{1}{(p-\lambda)^{k}}\right]=\Res\eval{\frac{\exp(pt)}{(p-\lambda)^{k}}}_{p=\lambda}=\dfrac{t^{k-1}\exp(\lambda t)}{(k-1)!}\qquad k=1,\dots,n
 \]
 
 \end_inset
@@ -784,28 +811,10 @@ status open
 
 \end_inset
 
-若 
-\begin_inset Formula $\Mat{A}$
-\end_inset
 
- 为分块对角阵：
 \begin_inset Formula 
 \[
-\Mat{A}=\Diag\begin{Bmatrix}\Mat{A_{1}} & \cdots & \Mat{A_{k}}\end{Bmatrix}
-\]
-
-\end_inset
-
-则各小块定义的子系统可独立求解：
-\begin_inset Formula 
-\[
-\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\left(p\Mat{1}-\Mat{A_{1}}\right)^{-1}\\
-\vdots\\
-\left(p\Mat{1}-\Mat{A_{k}}\right)^{-1}
-\end{Bmatrix}\qquad\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\hat{L}^{-1}\left(p\Mat{1}-\Mat{A_{1}}\right)^{-1}\\
-\vdots\\
-\hat{L}^{-1}\left(p\Mat{1}-\Mat{A_{k}}\right)^{-1}
-\end{Bmatrix}
+\Mat{A}=\Diag\begin{Bmatrix}\Mat{A_{1}} & \cdots & \Mat{A_{k}}\end{Bmatrix}\implies\ee^{\Mat{A}t}=\Diag\begin{Bmatrix}\ee^{\Mat{A_{1}}t} & \cdots & \ee^{\Mat{A_{k}}t}\end{Bmatrix}
 \]
 
 \end_inset
@@ -842,7 +851,7 @@ status open
 ，使其化为 Jordan 标准型：
 \begin_inset Formula 
 \[
-\Mat{A}\Mat{R}=\Mat{R}\Mat{\varLambda}\qquad\Mat{\varLambda}=\Diag\begin{Bmatrix}\Mat{J_{s(1)}(\lambda_{1})} & \cdots & \Mat{J_{s(k)}(\lambda_{k})}\end{Bmatrix}
+\Mat{A}\Mat{R}=\Mat{R}\Mat{J}\qquad\Mat{J}=\Diag\begin{Bmatrix}\Mat{J_{s(1)}(\lambda_{1})} & \cdots & \Mat{J_{s(k)}(\lambda_{k})}\end{Bmatrix}
 \]
 
 \end_inset
@@ -876,7 +885,7 @@ noprefix "false"
  可化为若干独立的子问题：
 \begin_inset Formula 
 \[
-\begin{gathered}\ket{\dot{y}(t)}=\Mat{\varLambda}\ket{y(t)}+\ket{v(t)}\\
+\begin{gathered}\ket{\dot{y}(t)}=\Mat{J}\ket{y(t)}+\ket{v(t)}\\
 \begin{bmatrix}\dot{y}_{i(r)}(t)\\
 \vdots\\
 \vdots\\
@@ -903,7 +912,15 @@ k(r)\coloneqq i(r)+s(r)
 
 \end_inset
 
+将所有结果合并成 
+\begin_inset Formula $\ket{y(t)}$
+\end_inset
 
+，左乘 
+\begin_inset Formula $\Mat{R}$
+\end_inset
+
+ 即得原问题的解。
 \end_layout
 
 \begin_layout Standard
