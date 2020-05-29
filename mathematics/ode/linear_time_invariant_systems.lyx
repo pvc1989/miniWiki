@@ -625,5 +625,293 @@ reference "eq:LTI：MCKF：零阻尼解"
 
 \end_layout
 
+\begin_layout Subsection
+多自由度一阶系统
+\end_layout
+
+\begin_layout Standard
+拥有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个自由度的一阶线性时不变系统
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\ket{\dot{x}(t)}=\Mat{A}\ket{x(t)}+\ket{u(t)}\qquad\ket{x(t=0)}=\ket{x}_{0}\label{eq:LTI：一阶系统：初值问题}
+\end{equation}
+
+\end_inset
+
+可以用 Laplace 变换求解：
+\begin_inset Formula 
+\[
+\begin{aligned}\overbrace{p\ket{\tilde{x}(p)}-\ket{x}_{0}}^{\hat{L}\ket{\dot{x}(t)}} & =\Mat{A}\overbrace{\ket{\tilde{x}(p)}}^{\hat{L}\ket{x(t)}}+\overbrace{\ket{\tilde{u}(p)}}^{\hat{L}\ket{u(t)}}\\
+\ket{\tilde{x}(p)} & =\left(p\Mat{1}-\Mat{A}\right)^{-1}\left(\ket{x}_{0}+\ket{\tilde{u}(p)}\right)\\
+\ket{x(t)}=\hat{L}^{-1}\ket{\tilde{x}(p)} & =\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)\ket{x}_{0}\\
+ & +\left(\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}\right)*\ket{u(t)}
+\end{aligned}
+\]
+
+\end_inset
+
+于是初值问题 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LTI：一阶系统：初值问题"
+
+\end_inset
+
+ 的求解归结为 
+\begin_inset Formula $\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}$
+\end_inset
+
+ 的计算。
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[对角阵]
+\end_layout
+
+\end_inset
+
+若
+\begin_inset Formula 
+\[
+\Mat{A}=\Diag\begin{Bmatrix}\lambda_{1} & \cdots & \lambda_{n}\end{Bmatrix}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}(p-\lambda_{1})^{-1}\\
+\vdots\\
+(p-\lambda_{n})^{-1}
+\end{Bmatrix}\qquad\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\exp(\lambda_{1}t)\\
+\vdots\\
+\exp(\lambda_{n}t)
+\end{Bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Jordan 块]
+\end_layout
+
+\end_inset
+
+若
+\begin_inset Formula 
+\[
+\Mat{A}=\Mat{J_{n}(\lambda)}=\begin{bmatrix}\lambda & 1\\
+ & \ddots & \ddots\\
+ &  & \ddots & 1\\
+ &  &  & \lambda
+\end{bmatrix}_{n\times n}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\left(p\Mat{1}-\Mat{A}\right)^{-1}=\begin{bmatrix}(p-\lambda)^{-1} & \cdots & (p-\lambda)^{-k} & \cdots & (p-\lambda)^{-n}\\
+ & \ddots & \ddots & \ddots & \vdots\\
+ &  & \ddots & \ddots & (p-\lambda)^{-k}\\
+ &  &  & \ddots & \vdots\\
+ &  &  &  & (p-\lambda)^{-1}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\begin{bmatrix}\exp(\lambda t) & \cdots & \dfrac{t^{k-1}\exp(\lambda t)}{(k-1)!} & \cdots & \dfrac{t^{n-1}\exp(\lambda t)}{(n-1)!}\\
+ & \ddots & \ddots & \ddots & \vdots\\
+ &  & \ddots & \ddots & \dfrac{t^{k-1}\exp(\lambda t)}{(k-1)!}\\
+ &  &  & \ddots & \vdots\\
+ &  &  &  & \exp(\lambda t)
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分块对角阵]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ 为分块对角阵：
+\begin_inset Formula 
+\[
+\Mat{A}=\Diag\begin{Bmatrix}\Mat{A_{1}} & \cdots & \Mat{A_{k}}\end{Bmatrix}
+\]
+
+\end_inset
+
+则各小块定义的子系统可独立求解：
+\begin_inset Formula 
+\[
+\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\left(p\Mat{1}-\Mat{A_{1}}\right)^{-1}\\
+\vdots\\
+\left(p\Mat{1}-\Mat{A_{k}}\right)^{-1}
+\end{Bmatrix}\qquad\hat{L}^{-1}\left(p\Mat{1}-\Mat{A}\right)^{-1}=\Diag\begin{Bmatrix}\hat{L}^{-1}\left(p\Mat{1}-\Mat{A_{1}}\right)^{-1}\\
+\vdots\\
+\hat{L}^{-1}\left(p\Mat{1}-\Mat{A_{k}}\right)^{-1}
+\end{Bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一般方阵]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ 为一般方阵，则存在可逆矩阵 
+\begin_inset Formula $\Mat{R}$
+\end_inset
+
+，使其化为 Jordan 标准型：
+\begin_inset Formula 
+\[
+\Mat{A}\Mat{R}=\Mat{R}\Mat{\varLambda}\qquad\Mat{\varLambda}=\Diag\begin{Bmatrix}\Mat{J_{s(1)}(\lambda_{1})} & \cdots & \Mat{J_{s(k)}(\lambda_{k})}\end{Bmatrix}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $s(i)$
+\end_inset
+
+ 表示第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个 Jordan 块的大小。引入特征变量
+\begin_inset Formula 
+\[
+\ket{y(t)}\coloneqq\Mat{R}^{-1}\ket{x(t)}\qquad\ket{v(t)}\coloneqq\Mat{R}^{-1}\ket{u(t)}
+\]
+
+\end_inset
+
+则原问题 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LTI：一阶系统：初值问题"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 可化为若干独立的子问题：
+\begin_inset Formula 
+\[
+\begin{gathered}\ket{\dot{y}(t)}=\Mat{\varLambda}\ket{y(t)}+\ket{v(t)}\\
+\begin{bmatrix}\dot{y}_{i(r)}(t)\\
+\vdots\\
+\vdots\\
+\dot{y}_{k(r)}(t)
+\end{bmatrix}=\begin{bmatrix}\lambda_{r} & 1\\
+ & \ddots & \ddots\\
+ &  & \ddots & 1\\
+ &  &  & \lambda_{r}
+\end{bmatrix}\begin{bmatrix}y_{i(r)}(t)\\
+\vdots\\
+\vdots\\
+y_{k(r)}(t)
+\end{bmatrix}+\begin{bmatrix}v_{i(r)}(t)\\
+\vdots\\
+\vdots\\
+v_{k(r)}(t)
+\end{bmatrix}\qquad\begin{cases}
+r=1,\dots,s\\
+i(r)\coloneqq\sum_{i=1}^{r-1}s(i)\\
+k(r)\coloneqq i(r)+s(r)
+\end{cases}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
