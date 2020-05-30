@@ -43,11 +43,9 @@
 %
 \ifthenelse{\boolean{@latin}}{  % `then` branch of `latin`
   % mathematical symbols
-  \newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
 }{  % `else` branch of `latin`
 \ifthenelse{\boolean{@euler}}{  % `then` branch of `euler`
   %% mathematical symbols
-  \newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
 }{  % `else` branch of `euler`
   % i.e. the default branch
   \RequirePackage{unicode-math}
@@ -60,10 +58,21 @@
     bold-style = ISO,
   ]
   % mathematical symbols
-  \newcommand{\Matrix}[1]{\mathinner{\underparen{#1}}}
   \if@bold
     \renewcommand{\vdot}{\vysmblkcircle}
   \fi
+  %% italic versions of the capital Greek letters
+  \renewcommand{\varGamma}{\mitGamma}
+  \renewcommand{\varDelta}{\mitDelta}
+  \renewcommand{\varTheta}{\mitTheta}
+  \renewcommand{\varLambda}{\mitLambda}
+  \renewcommand{\varXi}{\mitXi}
+  \renewcommand{\varPi}{\mitPi}
+  \renewcommand{\varSigma}{\mitSigma}
+  \renewcommand{\varUpsilon}{\mitUpsilon}
+  \renewcommand{\varPhi}{\mitPhi}
+  \renewcommand{\varPsi}{\mitPsi}
+  \renewcommand{\varOmega}{\mitOmega}
 }}
 %
 % Commands for Slashes
@@ -99,6 +108,7 @@
 %
 % Commands for Algebra
 %
+\newcommand{\Matrix}[1]{\mathinner{\underline{#1}}}
 \let\Mat\Matrix
 \let\oldvec\vec
 \if@arrow
@@ -142,6 +152,8 @@
 %
 % Commands for Named Functions
 %
+\DeclareMathOperator{\Diag}{diag}
+\DeclareMathOperator{\Span}{span}
 \DeclareMathOperator{\Card}{card}  % cardinality of a set
 \DeclareMathOperator{\TV}{TV}  % total variation of a function
 \newcommand\Bessel[1]{\operatorname{J}_{#1}}
