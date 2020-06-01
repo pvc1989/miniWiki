@@ -456,7 +456,7 @@ b_{n}(\theta)\coloneqq\ip{\theta}{b_{n}}_{\mathcal{L}^{2}}\qquad\ip{b_{n'}}{b_{n
 
 \end_inset
 
-及相应的“单位正交基 (orthonormal basis)”：
+及相应的“正交归一基 (orthonormal basis)”：
 \begin_inset Formula 
 \[
 e_{n}(\theta)\coloneqq\ip{\theta}{e_{n}}_{\mathcal{L}^{2}}\qquad\ip{n'}{n}_{\mathcal{L}^{2}}\equiv\ip{e_{n'}}{e_{n}}_{\mathcal{L}^{2}}=\updelta_{n'n}\qquad\forall(n',n)\in\mathbb{Z}^{2}
@@ -689,7 +689,7 @@ noprefix "false"
 \begin_inset Formula $\mathcal{L}^{2}(0,2\pi)$
 \end_inset
 
- 上的特例，这里的内积和单位正交基分别为
+ 上的特例，这里的内积和正交归一基分别为
 \begin_inset Formula 
 \[
 \ip{u}{v}\coloneqq\int_{0}^{2\pi}\Conj{u(\theta)}v(\theta)\dd{\theta}\qquad\left\{ e_{n}(\theta)\equiv\ip{\theta}{n}\coloneqq\frac{\exp(\ii n\theta)}{\sqrt{2\pi}}\right\} _{n\in\mathbb{Z}}
@@ -764,38 +764,6 @@ u(\theta)\equiv\ip{\theta}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\
 
 \end_layout
 
-\begin_layout Standard
-若函数 
-\begin_inset Formula $u(x)$
-\end_inset
-
- 以 
-\begin_inset Formula $2a$
-\end_inset
-
- 为周期，则只需作变量替换 
-\begin_inset Formula $x/a=\theta/\pi$
-\end_inset
-
-，即可将其转化为以 
-\begin_inset Formula $2\pi$
-\end_inset
-
- 为周期的函数。此时平方可积函数空间为 
-\begin_inset Formula $\mathcal{L}^{2}(0,2a)$
-\end_inset
-
-，其上的内积与单位基向量分别为：
-\begin_inset Formula 
-\[
-\ip{u}{v}\coloneqq\int_{0}^{2a}\Conj{u(x)}v(x)\dd{x}\qquad\left\{ e_{n}(x)\equiv\ip{x}{n}\coloneqq\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}\right\} _{n\in\mathbb{Z}}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Corollary
 \begin_inset ERT
 status open
@@ -808,25 +776,25 @@ status open
 \end_inset
 
 以 
-\begin_inset Formula $2a$
+\begin_inset Formula $X$
 \end_inset
 
  为周期且在 
-\begin_inset Formula $(0,2a)$
+\begin_inset Formula $[0,X)$
 \end_inset
 
  上平方可积的函数都可以作 Fourier 级数展开：
 \begin_inset Formula 
 \[
-u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}}_{\ip{x}{n}}\underbrace{\int_{0}^{2a}\frac{\exp(-\ii n\pi x'/a)}{\sqrt{2a}}u(x')\dd{x'}}_{u_{n}\equiv\ip{n}{u}}
+u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{1}{\sqrt{X}}\exp(\ii n\frac{2\pi}{X}x)}_{\ip{x}{n}}\underbrace{\int_{0}^{X}\frac{u(x')}{\sqrt{X}}\exp(-\ii n\frac{2\pi}{X}x')\dd{x'}}_{u_{n}\equiv\ip{n}{u}}
 \]
 
 \end_inset
 
-所得的级数与这个函数几乎处处相等：
+所得的级数与该函数几乎处处相等：
 \begin_inset Formula 
 \[
-\sum_{n\in\mathbb{Z}}u_{n}\frac{\exp(\ii n\pi x/a)}{\sqrt{2a}}=\lim_{\varepsilon\to0}\frac{u(x-\varepsilon)+u(x+\varepsilon)}{2}\doteq u(x)\qquad\forall x\in(0,2a)
+\sum_{n\in\mathbb{Z}}\frac{u_{n}}{\sqrt{X}}\exp(\ii n\frac{2\pi}{X}x)=\lim_{\varepsilon\to0}\frac{u(x-\varepsilon)+u(x+\varepsilon)}{2}\doteq u(x)\qquad\forall x\in[0,X)
 \]
 
 \end_inset
@@ -836,11 +804,11 @@ u(x)\equiv\ip{x}{u}\doteq\sum_{n\in\mathbb{Z}}\underbrace{\frac{\exp(\ii n\pi x/
 \end_inset
 
  中的任意数组都可以构造出处处收敛的 Fourier 级数，从而定义出一个以 
-\begin_inset Formula $2\pi$
+\begin_inset Formula $X$
 \end_inset
 
  为周期且在 
-\begin_inset Formula $(0,2\pi)$
+\begin_inset Formula $[0,X)$
 \end_inset
 
  上平方可积的函数。
@@ -874,11 +842,11 @@ name "sec:Fourier：变换"
 
 \begin_layout Standard
 考虑 
-\begin_inset Formula $a\to\infty$
+\begin_inset Formula $X\to\infty$
 \end_inset
 
  的情形，即可将以上结果推广到非周期函数。定义 
-\begin_inset Formula $k\coloneqq n\pi/a$
+\begin_inset Formula $k\coloneqq n\cdot2\pi/X$
 \end_inset
 
 ，它的物理意义是：周期函数 
@@ -894,7 +862,7 @@ name "sec:Fourier：变换"
 
 \begin_layout Itemize
 当 
-\begin_inset Formula $a<\infty$
+\begin_inset Formula $\abs{X}<\infty$
 \end_inset
 
  时，
@@ -910,7 +878,7 @@ name "sec:Fourier：变换"
 \end_inset
 
 ，并定义 
-\begin_inset Formula $\Delta k\coloneqq k_{n+1}-k_{n}=\pi/a$
+\begin_inset Formula $\Delta k\coloneqq k_{n+1}-k_{n}=2\pi/X$
 \end_inset
 
 。于是 
@@ -930,7 +898,7 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 
 \begin_layout Itemize
 当 
-\begin_inset Formula $a\to\infty$
+\begin_inset Formula $X\to\infty$
 \end_inset
 
  时，
@@ -976,7 +944,7 @@ u(x)\doteq\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\underbrace{\
 ，则上式右端成为“Riemann 和”。如果它的极限存在，则一定等于以下“Riemann 积分”：
 \begin_inset Formula 
 \[
-\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}=\lim_{a\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\tilde{u}(k_{n})\underbrace{\pi/a}_{\Delta k}
+\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{\sqrt{2\pi}}\tilde{u}(k)\dd{k}=\lim_{X\to\infty}\sum_{n\in\mathbb{Z}}\frac{\exp(\ii k_{n}x)}{\sqrt{2\pi}}\tilde{u}(k_{n})\underbrace{2\pi/X}_{\Delta k}
 \]
 
 \end_inset
@@ -1040,7 +1008,7 @@ e_{n}(\theta)\equiv\ip{\theta}{e_{n}}\equiv\boxed{\ip{\theta}{n}\coloneqq\frac{\
 
 \end_inset
 
-相应的“单位正交性”及“指标替换公式”分别为
+相应的“正交归一性”及“指标替换公式”分别为
 \begin_inset Formula 
 \[
 \ip{n'}{n}=\updelta_{n'n}\qquad\forall\ket{u}\in\mathcal{L}^{2}(0,2\pi)\colon\underbrace{\ip{n'}{u}}_{u_{n'}}=\sum_{n\in\mathbb{Z}}\underbrace{\ip{n'}{n}}_{\updelta_{n'n}}\underbrace{\ip{n}{u}}_{u_{n}}
@@ -1068,7 +1036,7 @@ e_{k}(x)\equiv\ip{x}{e_{k}}\equiv\boxed{\ip{x}{k}\coloneqq\frac{\exp(\ii kx)}{\s
 \begin_inset Formula $n$
 \end_inset
 
-，相应的“单位正交性”及“指标替换公式”分别为
+，相应的“正交归一性”及“指标替换公式”分别为
 \begin_inset Formula 
 \[
 \ip{k'}{k}=\updelta(k'-k)\qquad\forall\ket{\tilde{u}}\in\mathcal{L}^{2}(\mathbb{R}(k))\colon\underbrace{\ip{k}{\tilde{u}}}_{\tilde{u}(k)}=\int_{\mathbb{R}(k)}\underbrace{\ip{k'}{k}}_{\updelta(k'-k)}\underbrace{\ip{k}{\tilde{u}}}_{\tilde{u}(k)}\dd{k}
@@ -1885,7 +1853,17 @@ name "tab:Fourier：变换：常用"
 \begin_inset Formula $\exp(-az^{2})$
 \end_inset
 
- 没有有限远的奇点，因此由“留数定理”可知：
+ 没有有限远的奇点，故由
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "chap:留数定理"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+可得
 \begin_inset Formula 
 \[
 \int_{\ii\frac{k}{2a}-\infty}^{\ii\frac{k}{2a}+\infty}\exp(-az^{2})\dd{z}=\int_{-\infty}^{+\infty}\exp(-ax^{2})\dd{x}=\sqrt{\frac{\pi}{a}}
@@ -1932,7 +1910,7 @@ name "tab:Fourier：变换：常用"
 \begin_inset Formula 
 \[
 \begin{aligned}\tilde{u}(k,y) & =\hat{F}_{x}[u(x,y)]=\int_{\mathbb{R}(x)}\frac{\exp(-\ii kx)}{\sqrt{2\pi}}u(x,y)\dd{x}\\
-\tilde{\tilde{u}}(k,l) & =\hat{F}_{y}\mathopen{}\left[\hat{F}_{x}[\tilde{u}(k,y)]\right]=\int_{\mathbb{R}(y)}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\tilde{u}(k,y)\dd{y}\\
+\tilde{\tilde{u}}(k,l) & =\mathopen{\hat{F}_{y}}\left[\hat{F}_{x}[\tilde{u}(k,y)]\right]=\int_{\mathbb{R}(y)}\frac{\exp(-\ii ly)}{\sqrt{2\pi}}\tilde{u}(k,y)\dd{y}\\
  & =\int_{\mathbb{R}(y)}\left(\int_{\mathbb{R}(x)}\frac{\exp(-\ii kx-\ii ly)}{2\pi}u(x,y)\dd{x}\right)\dd{y}
 \end{aligned}
 \]
@@ -4202,6 +4180,341 @@ u(t)\doteq\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\exp(pt)}{2\pi\ii}\til
 \end_inset
 
  在上述半平面内的所有极点的集合。
+\end_layout
+
+\begin_layout Section
+离散序列变换
+\end_layout
+
+\begin_layout Subsection
+离散时间 Fourier 变换（DTFT）
+\end_layout
+
+\begin_layout Standard
+对时域连续且非周期的函数 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 按间隔 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 作等距采样，得到时域离散且非周期的函数：
+\begin_inset Formula 
+\[
+u_{\tau}(t)=\sum_{n=-\infty}^{+\infty}u(t)\,\updelta(t-n\tau)=\sum_{n=-\infty}^{+\infty}u(n\tau)\,\updelta(t-n\tau)\qquad t\in\mathbb{R}
+\]
+
+\end_inset
+
+其 Fourier 变换为
+\begin_inset Formula 
+\[
+\tilde{u}_{\tau}(\omega)=\int_{-\infty}^{+\infty}u_{\tau}(t)\frac{\exp(-\ii\omega t)}{\sqrt{2\pi}}\dd{t}=\sum_{n=-\infty}^{+\infty}u(n\tau)\frac{\exp(-\ii\omega n\tau)}{\sqrt{2\pi}}\qquad\omega\in\mathbb{R}
+\]
+
+\end_inset
+
+由此可见：
+\end_layout
+
+\begin_layout Itemize
+序列 
+\begin_inset Formula $\left\{ U_{n}\coloneqq u(n\tau)\right\} _{n=-\infty}^{+\infty}$
+\end_inset
+
+ 完全决定了函数 
+\begin_inset Formula $u_{\tau}(t)$
+\end_inset
+
+，故二者等价；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u_{\tau}(t)$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}_{\tau}(\omega)$
+\end_inset
+
+ 构成 Fourier 变换对，故二者亦等价；
+\end_layout
+
+\begin_layout Itemize
+由等价的传递性得 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n=-\infty}^{+\infty}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}_{\tau}(\omega)$
+\end_inset
+
+ 等价，不妨将后者写成 
+\begin_inset Formula $\tilde{U}(\omega)$
+\end_inset
+
+ 以体现二者的一一对应。
+\end_layout
+
+\begin_layout Standard
+取适当的时间单位使 
+\begin_inset Formula $\tau=1$
+\end_inset
+
+，则时域非周期序列 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n=-\infty}^{+\infty}$
+\end_inset
+
+ 到频域连续函数 
+\begin_inset Formula $\tilde{U}(\omega)$
+\end_inset
+
+ 的变换就是所谓的“DTFT (Discrete Time Fourier Transform)”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\tilde{U}(\omega)=\sum_{n=-\infty}^{+\infty}U_{n}\frac{\exp(-\ii\omega n)}{\sqrt{2\pi}}\qquad\omega\in\mathbb{R}}\label{eq:Fourier：DTFT}
+\end{equation}
+
+\end_inset
+
+显然 
+\begin_inset Formula $\tilde{U}(\omega)$
+\end_inset
+
+ 是频域内以 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ 为周期的连续函数。利用正交归一关系
+\begin_inset Formula 
+\[
+\int_{0}^{2\pi}\frac{\exp(-\ii\omega m)}{\sqrt{2\pi}}\frac{\exp(+\ii\omega n)}{\sqrt{2\pi}}\dd{\omega}=\updelta_{m}^{n}
+\]
+
+\end_inset
+
+可得 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：DTFT"
+
+\end_inset
+
+ 的反演为
+\begin_inset Formula 
+\[
+\boxed{U_{n}=\int_{0}^{2\pi}\tilde{U}(\omega)\frac{\exp(+\ii\omega n)}{\sqrt{2\pi}}\dd{\omega}\qquad n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+DTFT 可视为“时域与频域互换的 Fourier 级数”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+离散 Fourier 级数（DFS）
+\end_layout
+
+\begin_layout Standard
+仿照 DTFT，对时域连续且以 
+\begin_inset Formula $T$
+\end_inset
+
+ 为周期的函数 
+\begin_inset Formula $u(t)$
+\end_inset
+
+ 按间隔 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 作等距采样，并约定 
+\begin_inset Formula $\exists N\in\mathbb{N}_{+}\colon T=N\tau$
+\end_inset
+
+，得到时域离散且以 
+\begin_inset Formula $T$
+\end_inset
+
+ 为周期的函数：
+\begin_inset Formula 
+\[
+u_{\tau}(t)=\begin{cases}
+\sum_{n=0}^{N-1}u(n\tau)\,\updelta(t-n\tau) & t\in[0,T)\\
+u_{\tau}\qty(t-\lfloor t/T\rfloor\cdot T) & t\in\mathbb{R}
+\end{cases}
+\]
+
+\end_inset
+
+其 Fourier 级数为
+\begin_inset Formula 
+\[
+u_{\tau}(t)=\sum_{m=-\infty}^{+\infty}\frac{\tilde{u}_{\tau}(m)}{\sqrt{N\tau}}\exp(\ii m\frac{2\pi}{N\tau}t)\qquad\tilde{u}_{\tau}(m)\coloneqq\int_{0}^{T}\frac{u_{\tau}(t)}{\sqrt{N\tau}}\exp(-\ii m\frac{2\pi}{N\tau}t)\dd{t}
+\]
+
+\end_inset
+
+由此可见：
+\end_layout
+
+\begin_layout Itemize
+有限序列 
+\begin_inset Formula $\left\{ U_{n}\coloneqq u(n\tau)\right\} _{n=0}^{N-1}$
+\end_inset
+
+ 完全决定了函数 
+\begin_inset Formula $u_{\tau}(t)$
+\end_inset
+
+，故二者等价；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u_{\tau}(t)$
+\end_inset
+
+ 与 
+\begin_inset Formula $\tilde{u}_{\tau}(m)$
+\end_inset
+
+ 构成 Fourier 级数对，故二者亦等价；
+\end_layout
+
+\begin_layout Itemize
+取适当的时间单位使 
+\begin_inset Formula $\tau=1$
+\end_inset
+
+，则 Fourier 系数
+\begin_inset Formula 
+\[
+\tilde{u}_{\tau}(m)=\sum_{n=0}^{N-1}\frac{U_{n}}{\sqrt{N}}\exp(-\ii m\frac{2\pi}{N}n)\qquad m\in\mathbb{\mathbb{Z}}
+\]
+
+\end_inset
+
+成为频域内以 
+\begin_inset Formula $N$
+\end_inset
+
+ 为周期的离散函数，故完全由有限子列 
+\begin_inset Formula $\left\{ \tilde{u}_{\tau}(m)\right\} _{m=0}^{N-1}$
+\end_inset
+
+ 决定；
+\end_layout
+
+\begin_layout Itemize
+由等价的传递性得 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n=0}^{N-1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\left\{ \tilde{u}_{\tau}(m)\right\} _{m=0}^{N-1}$
+\end_inset
+
+ 等价，不妨将 
+\begin_inset Formula $\tilde{u}_{\tau}(m)$
+\end_inset
+
+ 写成 
+\begin_inset Formula $\tilde{U}_{m}$
+\end_inset
+
+ 以体现二者的一一对应。
+\end_layout
+
+\begin_layout Standard
+于是时域周期序列 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n=\infty}^{N-1}$
+\end_inset
+
+ 到频域周期序列 
+\begin_inset Formula $\left\{ \tilde{U}_{m}\right\} _{m=0}^{N-1}$
+\end_inset
+
+ 的变换就是所谓的“DFS (Discrete Fourier Series)”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\tilde{U}_{m}=\begin{cases}
+\sum_{n=0}^{N-1}\frac{U_{n}}{\sqrt{N}}\exp(-\ii m\frac{2\pi}{N}n) & m=0,\dots,(N-1)\\
+\tilde{U}_{m-\lfloor m/N\rfloor\cdot N} & m\in\mathbb{Z}
+\end{cases}}\label{eq:Fourier：DFS}
+\end{equation}
+
+\end_inset
+
+利用正交归一关系
+\begin_inset Formula 
+\[
+\sum_{m=0}^{N-1}\frac{1}{N}\exp(+\ii m\frac{2\pi}{N}n')\exp(-\ii m\frac{2\pi}{N}n)=\updelta_{n'n}
+\]
+
+\end_inset
+
+可得 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：DFS"
+
+\end_inset
+
+ 的反演为
+\begin_inset Formula 
+\[
+\boxed{U_{n}=\begin{cases}
+\sum_{m=0}^{N-1}\frac{\tilde{U}_{m}}{\sqrt{N}}\exp(+\ii m\frac{2\pi}{N}n) & n=0,\dots,(N-1)\\
+U_{n-\lfloor n/N\rfloor\cdot N} & n\in\mathbb{Z}
+\end{cases}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+离散 Fourier 变换（DFT）
+\end_layout
+
+\begin_layout Standard
+将 DFS 中离散指标的取值范围限制在一个周期内，就得到“DFT (Discrete Fourier Transform)”：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\boxed{\tilde{U}_{m}=\sum_{n=0}^{N-1}\frac{U_{n}}{\sqrt{N}}\exp(-\ii m\frac{2\pi}{N}n)\qquad m=0,\dots,(N-1)}\label{eq:Fourier：DFT}
+\end{equation}
+
+\end_inset
+
+相应的反演被称为“IDFT (Inverse DFT)”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{U_{n}=\sum_{m=0}^{N-1}\frac{\tilde{U}_{m}}{\sqrt{N}}\exp(+\ii m\frac{2\pi}{N}n)\qquad n=0,\dots,(N-1)}\label{eq:Fourier：IDFT}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Z 变换
 \end_layout
 
 \end_body
