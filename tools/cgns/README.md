@@ -107,7 +107,7 @@ Element_t
 │       // 同种单元 ElementSize * NPE(ElementType)
 │       // 多种单元 Sum(NPE(ElementType[n]) + 1)
 │       // NPE := number of nodes for the given ElementType
-└── DataArray_t
+└── DataArray_t  // 含多种单元时使用
     ├── Name: ElementStartOffset
     └── Data: int[ElementSize + 1] 
 ```
@@ -115,18 +115,24 @@ Element_t
 #### `FlowSolution_t`
 
 ```c++
-Element_t
+FlowSolution_t
 ├── GridLocation_t
-│   └── Data: Vertex | CellCenter
-├── IndexRange_t  // 与 IndexList_t 二选一
+│   └── Data: Vertex | CellCenter | EdgeCenter | FaceCenter
+├── IndexRange_t  // 与 IndexList_t 二选一，对 Vertex | CellCenter 非必需
 │   ├── Name: PointRange
-│   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
-├── IndexList_t  // 与 IndexRange_t 二选一
+│   └── Data: int[2] = {first, last}
+├── IndexList_t  // 与 IndexRange_t 二选一，对 Vertex | CellCenter 非必需
 │   ├── Name: PointList
-│   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
+│   └── Data: int[2] = {first, last}
 └── DataArray_t
     ├── Name: Pressure | Density | VelocityX | MomentumX | ...
-    └── Data: DataType[DataSize = (CellSize | VertexSize) + RindSize]
+    └── Data: DataType[DataSize]  /* 编号与相应的 Element_t 一致
+        if (有 PointRange | PointList):
+            DataSize = Size(PointRange | PointList)
+        else:
+            DataSize = VertexSize | CellSize
+            if (有 Rind):
+                DataSize += RindSize  */
 ```
 
 #### `ZoneBC_t`
@@ -154,38 +160,32 @@ Element_t
 #### 通用操作
 
 ```c
-// Open a CGNS file:
-ier = cg_open(
+// File operations:
+cg_open(// Open a CGNS file:
     char *file_name,
     int mode/* CG_MODE_WRITE | CG_MODE_READ | CG_MODE_MODIFY */,
     // output:
     int *file_id);
-// Close a CGNS file:
-ier = cg_close(int file_id);
-
-// Stop the execution of the program:
-void cg_error_exit();
-
-// Create and/or write to a CGNS base node:
-ier = cg_base_write(
+cg_close(// Close a CGNS file:
+  	int file_id);
+void cg_error_exit();  // Stop the execution of the program:
+// Base operations:
+cg_base_write(// Create and/or write to a CGNS base node:
     int file_id, char *base_name, int cell_dim, int phys_dim,
     // output:
     int *base_id);
-// Read CGNS base information:
-ier = cg_base_read(
+cg_base_read(// Read CGNS base information:
     int file_id, int base_id,
     // output:
     char *base_name, int *cell_dim, int *phys_dim);
-
-// Create and/or write to a zone node:
-ier = cg_zone_write(
+// Zone operations:
+cg_zone_write(// Create and/or write to a zone node:
     int file_id, int base_id, char *zone_name, cgsize_t *zone_size,
     ZoneType_t zone_type/* CGNS_ENUMV(Structured) |
                            CGNS_ENUMV(Unstructured) */,
     // output:
     int *zone_id);
-// Read zone information:
-ier = cg_zone_read(
+cg_zone_read(// Read zone information:
     int file_id, int base_id, int zone_id,
     // output:
     char *zone_name, cgsize_t *zone_size);
@@ -195,7 +195,7 @@ ier = cg_zone_read(
 
 - 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
 - `cell_dim`、`phys_dim` 分别表示 *单元（流形）维数*、*物理（空间）维数*。
-- `zone_size` 是一个二维数组（的头地址），
+- `zone_size` 是一个二维数组（的首地址），
   - 其行数为三，各行分别表示 *顶点数*、*单元数*、*边界点数* 。
   - 对于 *结构网格*：
     - *列数* 至少为 *空间维数*，每列分别对应一个（逻辑）方向。
@@ -208,27 +208,23 @@ ier = cg_zone_read(
 #### 读写坐标
 
 ```c
-// Write grid coordinates:
-ier = cg_coord_write(
+cg_coord_write(// Write grid coordinates:
     int file_id, int base_id, int zone_id,
     DataType_t data_type/* CGNS_ENUMV(RealDouble) */,
-    char *coord_name/* "CoordinateX" */,
-    void *coord_array,
+    char *coord_name, void *coord_array,
     // output:
     int *coord_id);
-// Read grid coordinates:
-ier = cg_coord_read(
+cg_coord_read(// Read grid coordinates:
     int file_id, int base_id, int zone_id,
     char *coord_name, DataType_t data_type,
-    cgsize_t *range_min, cgsize_t *range_max,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
     // output:
     void *coord_array);
-// Get info for an element section:
 ```
 
 其中
 
-- 若由 `zone_size[0]` 算出的结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为头地址的前 `N` 个元素。
+- 若由 `zone_size[0]` 算出的结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为首地址的前 `N` 个元素。
   - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的顶点数外，其余维度的长度 *必须等于* 相应方向的顶点数。
   - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
 - 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即
@@ -243,27 +239,24 @@ ier = cg_coord_read(
 结构网格的 *顶点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
 
 ```c
-// Write fixed size element data:
-ier = cg_section_write(
+cg_section_write(// Write fixed size element data:
     int file_id, int base_id, int zone_id,
     char *section_name, ElementType_t element_type,
-    cgsize_t first, cgsize_t last, int n_boundary, cgsize_t *elements,
+    cgsize_t first, cgsize_t last, int n_boundary,
+    cgsize_t *elements/* element connectivity data */,
     // output:
     int *section_id);
-// Get number of element sections:
-ier = cg_nsections(
+cg_nsections(// Get number of element sections:
     int file_id, int base_id, int zone_id,
     // output:
     int *n_section);
-// Get info for an element section:
-ier = cg_section_read(
+cg_section_read(// Get info for an element section:
     int file_id, int base_id, int zone_id, int section_id,
     // output:
     char *section_name, ElementType_t *element_type,
     cgsize_t *first, cgsize_t *last, int *n_boundary,
     int *parent_flag);
-// Read fixed size element data:
-ier = cg_elements_read(
+cg_elements_read(// Read fixed size element data:
     int file_id, int base_id, int zone_id, int section_id,
     // output:
     cgsize_t *elements, cgsize_t *parent_data);
@@ -276,7 +269,7 @@ ier = cg_elements_read(
   - 同一个 `Elements_t` 结点下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，常用的有 `NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 | PENTA_6 | HEXA_8`。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
 - `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
-- `n_boundary` 为当前 `Elements_t` 对象的最后一个边界点的编号。若单元编号没有排序，则设为 `0`。
+- `n_boundary` 为当前 `Elements_t` 对象内边界单元个数：若单元已排序，则前 `n_boundary` 个单元为边界单元；若单元未排序，则 `n_boundary = 0`。
 - `parent_flag` 用于判断 parent data 是否存在。
 
 #### 运行示例
@@ -356,26 +349,28 @@ Successfully read unstructured grid from file grid_c.cgns
 新增的 API 如下：
 
 ```c
-// Create and/or write to a `FlowSolution_t` node:
-ier = cg_sol_write(
+cg_sol_write(// Create and/or write to a `FlowSolution_t` node:
     int file_id, int base_id, int zone_id, char *sol_name,
     GridLocation_t location/* CGNS_ENUMV(Vertex) */,
     // output:
     int *sol_id);
-// Get info about a `FlowSolution_t` node:
-ier = cg_sol_info(
+cg_sol_info(// Get info about a `FlowSolution_t` node:
     int file_id, int base_id, int zone_id, int sol_id,
     // output:
     char *sol_name, GridLocation_t *location);
-
-// Write flow solution:
-ier = cg_field_write(
+cg_field_write(// Write flow solution:
     int file_id, int base_id, int zone_id, int sol_id,
     DataType_t datatype, char *field_name, void *sol_array,
     // output:
     int *field_id);
-// Read flow solution:
-ier = cg_field_read(
+cg_field_partial_write(
+    int file_id, int base_id, int zone_id, int sol_id,
+    DataType_t datatype, char *field_name,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
+    void *sol_array,
+    // output:
+  	int *field_id);
+cg_field_read(// Read flow solution:
     int file_id, int base_id, int zone_id, int sol_id,
     char *field_name, DataType_t data_type,
     cgsize_t *range_min, cgsize_t *range_max,
