@@ -44,7 +44,7 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 - `Data` 是实际数据，可以为空（用 `MT` 表示）。
 - 指向其 ***亲 (parent)*** 或 ***子 (child)*** 的链接。
 
-⚠️ 为避免混淆，本文档约定 ***结点 (node)*** 只表示上述树结点，而将网格中的点称为 ***顶点 (vertex)*** 或 ***网格点 (mesh point)***。
+⚠️ 为避免混淆，本文档约定 ***结点 (node)*** 只表示上述树结点，而将网格中的点称为 ***顶点 (vertex)*** 或 ***格点 (mesh/grid point)***。
 
 #### 根结点
 
@@ -534,11 +534,73 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 
 ### 多区网格
 
-### 动态数据
+## 动态数据
 
-#### 网格固定不变
-顶点坐标、拓扑关系可复用，单个 CGNS 文件即可表示。
-`write_timevert_str.c` 与 `read_timevert_str.c` 展示了这种方法。
+### 迭代数据结构
+
+SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步的数据：
+
+- `BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格改变拓扑](#网格改变拓扑)）也用来存储 *指向各步的指针*。
+  
+  ```c++
+  BaseIterativeData_t := {
+  int NumberOfSteps                                                  (r)
+  
+    DataArray_t<real, 1, NumberOfSteps> TimeValues ;                   (o/r)
+  DataArray_t<int,  1, NumberOfSteps> IterationValues ;              (r/o)
+  
+    DataArray_t<int,  1, NumberOfSteps> NumberOfZones ;                (o)
+    DataArray_t<int,  1, NumberOfSteps> NumberOfFamilies ;             (o)
+    DataArray_t<char, 3, [65, MaxNumberOfZones, NumberOfSteps]>
+       ZonePointers ;                                                  (o)
+    DataArray_t<char, 3, [65, MaxNumberOfFamilies, NumberOfSteps]>
+     FamilyPointers ;                                                (o)
+  
+  List( DataArray_t<> DataArray1 ... DataArrayN ) ;                  (o)
+  
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+  
+  DataClass_t DataClass ;                                            (o)
+  
+  DimensionalUnits_t DimensionalUnits ;                              (o)
+  
+    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+  }
+  ```
+- `ZoneIterativeData_t` 位于 `Zone_t` 之下，一般用于存储 *指向各步的指针*。
+  
+```c++
+  ZoneIterativeData_t< int NumberOfSteps > := {
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+      RigidGridMotionPointers ;                                       (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+      ArbitraryGridMotionPointers ;                                   (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+      GridCoordinatesPointers ;                                       (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+      FlowSolutionPointers ;                                          (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+      ZoneGridConnectivityPointers ;                                  (o)
+    DataArray_t<char, 2, [32, NumberOfSteps]>
+    ZoneSubRegionPointers ;                                         (o)
+  
+  List( DataArray_t<> DataArray1 ... DataArrayN ) ;                  (o)
+  
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+  
+  DataClass_t DataClass ;                                            (o)
+  
+  DimensionalUnits_t DimensionalUnits ;                              (o)
+  
+  List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+  }
+```
+- 上述 *指针* 目前由 *字符串* 实现。
+
+### 网格固定不变
+网格固定不变 意味着 `GridCoordinates_t` 及 `Elements_t`(s) 可复用，故只需记录各时间步上的 `FlowSolution_t`(s)。
+
+教程中的 `write_timevert_str.c` 与 `read_timevert_str.c` 展示了这种方法。
 主要 API 用法如下：
 
 ```c
@@ -563,6 +625,63 @@ cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
     2, n_dims, names/* the head of a 2d array, whose type is char[3][32] */);
 ```
 
-#### 网格作刚体运动
+### 网格刚体运动
 
-#### 网格变形或变拓扑
+网格刚体运动 意味着 `Elements_t`(s) 可复用，而格点坐标可以由 *初始位置*（记录在当前 `Zone_t` 下唯一的 `GridCoordinates_t` 中）与 *刚体运动信息*（随体坐标系的原点位置及速度、转角及转速等）快速地算出，后者记录在 `RigidGridMotion_t` 中（一个时间步对应一个这样的  `RigidGridMotion_t`，对应关系由 `ZoneIterativeData_t` 中的 `RigidGridMotionPointers` 管理）。
+
+```c++
+RigidGridMotion_t := {
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+  RigidGridMotionType_t RigidGridMotionType ;                        (r)
+
+  DataArray_t<real, 2, [PhysicalDimension, 2]> OriginLocation ;      (r)
+  DataArray_t<real, 1,  PhysicalDimension>     RigidRotationAngle ;  (o/d)
+  DataArray_t<real, 1,  PhysicalDimension>     RigidVelocity ;       (o)
+  DataArray_t<real, 1,  PhysicalDimension>     RigidRotationRate ;   (o)
+
+  List( DataArray_t DataArray1 ... DataArrayN ) ;                    (o)
+
+  DataClass_t DataClass ;                                            (o)
+
+  DimensionalUnits_t DimensionalUnits ;                              (o)
+
+  List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+}
+```
+
+
+
+### 格点任意运动
+
+格点任意运动 意味着 `Elements_t`(s) 仍可复用，但格点坐标不再能快速算出，故需为每个时间步分别
+- 创建一个 `GridCoordinates_t`，用于记录该时间步的 *格点坐标*，并将其 *名称* 记录在 `ZoneIterativeData_t` 中（通常命名为 `GridCoordinatesPointers`）。
+- 一个 `ArbitraryGridMotion_t`，用于记录其所属 `Zone_t` 的 *格点速度*，并将其 *名称* 记录在 `ZoneIterativeData_t` 中（通常命名为 `ArbitraryGridMotionPointers`）。
+
+```c++
+ArbitraryGridMotion_t< int IndexDimension, 
+											 int VertexSize[IndexDimension], 
+											 int CellSize[IndexDimension] > := {
+  ArbitraryGridMotionType_t ArbitraryGridMotionType ;                (r)
+
+  List(DataArray_t<real, IndexDimension, DataSize[]>
+       GridVelocityX GridVelocityY ... ) ;                             (o)
+
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+  GridLocation_t GridLocation ;                                      (o/d)
+
+  Rind_t<IndexDimension> Rind ;                                      (o/d)
+
+  DataClass_t DataClass ;                                            (o)
+
+  DimensionalUnits_t DimensionalUnits ;                              (o)
+
+  List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+}
+```
+
+### 网格改变拓扑
+
+网格改变拓扑 意味着 网格大小变化，故需创建新的 `Zone_t` 以对应 *网格大小发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
+
