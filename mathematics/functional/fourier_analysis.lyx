@@ -2756,6 +2756,13 @@ y
 
 \begin_layout Section
 Laplace 变换
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Laplace 变换"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -4113,7 +4120,9 @@ u(t)\,\epsilon(t)\exp(-\sigma t)\sqrt{2\pi}\equiv v(t)\doteq\int_{-\infty}^{+\in
 ，即得
 \begin_inset Formula 
 \[
-u(t)\,\epsilon(t)\exp(-\sigma t)\sqrt{2\pi}=\exp(-\sigma t)\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\tilde{v}(\omega)\dd{\omega}=\exp(-\sigma t)\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\exp(pt)}{2\pi\ii}\tilde{u}(p)\dd{p}
+\begin{aligned}u(t)\,\epsilon(t)\exp(-\sigma t)\sqrt{2\pi} & =\exp(-\sigma t)\sqrt{2\pi}\int_{-\infty}^{+\infty}\frac{\ee^{(\sigma+\ii\omega)t}}{2\pi}\tilde{v}(\omega)\dd{\omega}\\
+ & =\exp(-\sigma t)\sqrt{2\pi}\int_{-\infty}^{+\infty}\tilde{u}(p)\exp(pt)\frac{\dd{p}}{2\pi\ii}
+\end{aligned}
 \]
 
 \end_inset
@@ -4132,7 +4141,7 @@ u(t)\,\epsilon(t)\exp(-\sigma t)\sqrt{2\pi}=\exp(-\sigma t)\sqrt{2\pi}\int_{-\in
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{u(t)\doteq\hat{L}^{-1}[\tilde{u}(p)]=\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\frac{\exp(pt)}{2\pi\ii}\tilde{u}(p)\dd{p}\qquad t>0}
+\boxed{u(t)\doteq\hat{L}^{-1}[\tilde{u}(p)]=\int_{\sigma-\ii\infty}^{\sigma+\ii\infty}\tilde{u}(p)\exp(pt)\frac{\dd{p}}{2\pi\ii}\qquad t>0}
 \]
 
 \end_inset
@@ -4514,7 +4523,153 @@ U_{n-\lfloor n/N\rfloor\cdot N} & n\in\mathbb{Z}
 \end_layout
 
 \begin_layout Subsection
-Z 变换
+Z 变换（ZT）
+\end_layout
+
+\begin_layout Standard
+若序列 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 不足以使 DTFT 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：DTFT"
+
+\end_inset
+
+ 中的级数收敛，则可（仿照 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Laplace 变换"
+
+\end_inset
+
+ 对 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Fourier：变换"
+
+\end_inset
+
+ 的改造）为每一项引入（当 
+\begin_inset Formula $n\to+\infty$
+\end_inset
+
+ 或 
+\begin_inset Formula $n\to-\infty$
+\end_inset
+
+ 时指数收敛的）实数因子 
+\begin_inset Formula $r^{n}\sqrt{2\pi}$
+\end_inset
+
+，这样 DTFT 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：DTFT"
+
+\end_inset
+
+ 就被改造为
+\begin_inset Formula 
+\[
+\tilde{U}(\omega;r)=\sum_{n=-\infty}^{+\infty}U_{n}r^{n}\exp(-\ii\omega n)\qquad(\omega,r)\in\mathbb{R}^{2}
+\]
+
+\end_inset
+
+记 
+\begin_inset Formula $z\coloneqq r\exp(-\ii\omega)$
+\end_inset
+
+ 即得 
+\begin_inset Formula $\left\{ U_{n}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 的“Z 变换”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\tilde{U}(z)=\sum_{n=-\infty}^{+\infty}U_{n}z^{n}\qquad z\in\mathbb{C}}\label{eq:Fourier：ZT}
+\end{equation}
+
+\end_inset
+
+它是 
+\begin_inset Formula $\left\{ U_{n}r^{n}\sqrt{2\pi}\right\} _{n\in\mathbb{Z}}$
+\end_inset
+
+ 的 DTFT，故其反演为
+\begin_inset Formula 
+\[
+U_{n}r^{n}\sqrt{2\pi}=\int_{0}^{2\pi}\tilde{U}(z)\frac{\exp(+\ii\omega n)}{\sqrt{2\pi}}\dd{\omega}\qquad n\in\mathbb{Z}
+\]
+
+\end_inset
+
+两端同除以 
+\begin_inset Formula $r^{n}\sqrt{2\pi}$
+\end_inset
+
+ 并利用
+\begin_inset Formula 
+\[
+\dd{\omega}=\frac{\dd{z}}{\ii z}\impliedby\begin{cases}
+z\coloneqq r\exp(-\ii\omega)\\
+\omega\in[0,2\pi)
+\end{cases}
+\]
+
+\end_inset
+
+即得 ZT 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：ZT"
+
+\end_inset
+
+ 的反演：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{U_{n}=\ointctrclockwise_{\abs{z}=r}\frac{\tilde{U}(z)}{z^{n+1}}\frac{\dd{z}}{2\pi\ii}\qquad n\in\mathbb{Z}}
+\]
+
+\end_inset
+
+为使 
+\begin_inset Formula $\tilde{U}(z)$
+\end_inset
+
+ 有意义，积分路径应位于 ZT 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Fourier：ZT"
+
+\end_inset
+
+ 中级数的收敛域内。
+\end_layout
+
+\begin_layout Remark*
+Z 变换可视为“离散化的 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Laplace 变换"
+
+\end_inset
+
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
