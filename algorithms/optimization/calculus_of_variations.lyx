@@ -1,0 +1,578 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+变分学
+\end_layout
+
+\begin_layout Section
+泛函的驻值条件
+\end_layout
+
+\begin_layout Subsection
+函数的驻值条件
+\end_layout
+
+\begin_layout Subsection
+泛函的一阶变分
+\end_layout
+
+\begin_layout Standard
+设 
+\begin_inset Formula $I$
+\end_inset
+
+ 是依赖于 
+\begin_inset Formula $n$
+\end_inset
+
+ 个一阶可微函数 
+\begin_inset Formula $\left\{ u_{i}(t)\right\} _{i=1}^{n}$
+\end_inset
+
+ 的泛函：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+I(u_{1},\dots,u_{n})=\int_{t_{1}}^{t_{2}}L(t,u_{1},\dots,u_{n},u'_{1},\dots,u'_{n})\dd{t}\label{eq:变分：泛函}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+u'_{i}\coloneqq\dv{u_{i}}{t}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+且 
+\begin_inset Formula $L$
+\end_inset
+
+ 一阶可微。引入向量记号
+\begin_inset Formula 
+\[
+\vec{u}\coloneqq\sum_{i=1}^{n}\vec{e}_{i}u_{i}\qquad\vec{u}'\coloneqq\sum_{i=1}^{n}\vec{e}_{i}u'_{i}
+\]
+
+\end_inset
+
+则泛函 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:变分：泛函"
+
+\end_inset
+
+ 可简记为
+\begin_inset Formula 
+\[
+I(\vec{u})=\int_{t_{1}}^{t_{2}}L(t,\vec{u},\vec{u}')\dd{t}
+\]
+
+\end_inset
+
+设此泛函在 
+\begin_inset Formula $\vec{u}=\vec{u}_{*}$
+\end_inset
+
+ 处取驻值，其必要条件为：对任意一阶可微（向量）函数 
+\begin_inset Formula $\vec{v}(t)\coloneqq\sum_{i=1}^{n}\vec{e}_{i}v_{i}(t)$
+\end_inset
+
+ 都有一元函数
+\begin_inset Formula 
+\[
+g(\varepsilon)\coloneqq I(\vec{u}_{*}+\varepsilon\vec{v})\equiv\int_{t_{1}}^{t_{2}}L(t,\vec{u}_{*}+\varepsilon\vec{v},\vec{u}'_{*}+\varepsilon\vec{v}')\dd{t}
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $\varepsilon=0$
+\end_inset
+
+ 处取驻值。容易验证 
+\begin_inset Formula $g(\varepsilon)$
+\end_inset
+
+ 一阶可微，于是其在 
+\begin_inset Formula $\varepsilon=0$
+\end_inset
+
+ 处取驻值的必要条件为
+\begin_inset Formula 
+\begin{equation}
+0=g'(0)=\int_{t_{1}}^{t_{2}}\left(\sum_{i=1}^{n}v_{i}\frac{\partial}{\partial u_{i}}+\sum_{i=1}^{n}v'_{i}\frac{\partial}{\partial u'_{i}}\right)L(t,\vec{u}_{*},\vec{u}'_{*})\dd{t}\label{eq:变分：泛函：驻值：必要条件}
+\end{equation}
+
+\end_inset
+
+右端积分式是由 
+\begin_inset Formula $I(\vec{u})$
+\end_inset
+
+ 导出泛函，它既依赖于驻值点 
+\begin_inset Formula $\vec{u}_{*}$
+\end_inset
+
+，又依赖于可变函数 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 及其导数 
+\begin_inset Formula $\vec{v}'$
+\end_inset
+
+ 的一次项，故称为 
+\begin_inset Formula $I(\vec{u})$
+\end_inset
+
+ 在 
+\begin_inset Formula $\vec{u}_{*}$
+\end_inset
+
+ 处的“一阶变分”，用 
+\begin_inset Formula $\updelta I(\vec{v};\vec{u}_{*})$
+\end_inset
+
+ 表示。若记
+\begin_inset Formula 
+\[
+\partial_{\vec{u}}\coloneqq\sum_{i=1}^{n}\vec{e}_{i}\pdv{u_{i}}\qquad\partial_{\vec{u}'}\coloneqq\sum_{i=1}^{n}\vec{e}_{i}\pdv{u'_{i}}\qquad\langle\vec{u}\vert\vec{v}\rangle\coloneqq\int_{t_{1}}^{t_{2}}\vec{u}(t)\vdot\vec{v}(t)\dd{t}
+\]
+
+\end_inset
+
+则驻值条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:变分：泛函：驻值：必要条件"
+
+\end_inset
+
+ 可简记为
+\begin_inset Formula 
+\begin{equation}
+0=\updelta I(\vec{v};\vec{u}_{*})=\langle\vec{v}\vert\partial_{\vec{u}}L\rangle+\langle\vec{v}'\vert\partial_{\vec{u}'}L\rangle\label{eq:变分：泛函：驻值：必要条件：向量形式}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Euler–Lagrange 方程
+\end_layout
+
+\begin_layout Standard
+假设 
+\begin_inset Formula $\vec{u}_{*}(t)$
+\end_inset
+
+ 的端点值已知，即 
+\begin_inset Formula $\vec{v}(t_{1})=\vec{v}(t_{2})=\vec{0}$
+\end_inset
+
+，则借助分部积分
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+可以写成更加熟悉的形式：
+\begin_inset Formula 
+\[
+\int_{t_{1}}^{t_{2}}\vec{u}'\vdot\vec{v}\dd{t}+\int_{t_{1}}^{t_{2}}\vec{u}\vdot\vec{v}'\dd{t}=\int_{t_{1}}^{t_{2}}(\vec{u}\vdot\vec{v})'\dd{t}=\left[\vec{u}(t)\vdot\vec{v}(t)\right|_{t_{1}}^{t_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\langle\vec{u}'\vert\vec{v}\rangle+\langle\vec{u}\vert\vec{v}'\rangle=\vec{u}(t_{2})\vdot\vec{v}(t_{2})-\vec{u}(t_{1})\vdot\vec{v}(t_{1})
+\]
+
+\end_inset
+
+可将同时依赖于 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{v}'$
+\end_inset
+
+ 的驻值条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:变分：泛函：驻值：必要条件：向量形式"
+
+\end_inset
+
+ 化为只依赖于二者之一的形式：
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}0 & =\langle\vec{v}\vert\partial_{\vec{u}}L\rangle+\underbrace{\cancelto{0}{\vec{v}(t_{2})}\vdot\partial_{\vec{u}'}L(t_{2})-\cancelto{0}{\vec{v}(t_{1})}\vdot\partial_{\vec{u}'}L(t_{1})-\langle\vec{v}\vert(\partial_{\vec{u}'}L)'\rangle}_{\langle\vec{v}'\vert\partial_{\vec{u}'}L\rangle}\\
+ & =\underbrace{\cancelto{0}{\vec{v}(t_{2})}\vdot\int_{t_{1}}^{t_{2}}\partial_{\vec{u}}L\dd{\tau}-\cancelto{0}{\vec{v}(t_{1})}\vdot\int_{t_{1}}^{t_{1}}\partial_{\vec{u}}L\dd{\tau}-\langle\vec{v}'\vert\int_{t_{1}}^{t}\partial_{\vec{u}}L\dd{\tau}\rangle}_{\langle\vec{v}\vert\partial_{\vec{u}}L\rangle\equiv\langle\vec{v}\vert\dv{t}\int_{t_{1}}^{t}\partial_{\vec{u}}L\dd{\tau}\rangle}+\langle\vec{v}'\vert\partial_{\vec{u}'}L\rangle
+\end{aligned}
+\label{eq:变分：泛函：驻值：必要条件：分部积分}
+\end{equation}
+
+\end_inset
+
+对第一行利用 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的任意性，可得微分形式的“Euler–Lagrange 方程”：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\partial_{\vec{u}}L=(\partial_{\vec{u}'}L)'}\label{eq:变分：泛函：驻值：必要条件：Euler--Lagrange}
+\end{equation}
+
+\end_inset
+
+它是驻值点 
+\begin_inset Formula $\vec{u}_{*}(t)$
+\end_inset
+
+ 所应满足的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个联立的二阶微分方程：
+\begin_inset Formula 
+\[
+\frac{\partial L}{\partial u{}_{i}}=\dv{t}\frac{\partial L}{\partial u'_{i}}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+微分形式的 Euler–Lagrange 方程右端需要 
+\begin_inset Formula $L$
+\end_inset
+
+ 二阶可微；若 
+\begin_inset Formula $L$
+\end_inset
+
+ 仅一阶可微，则应改写为积分形式：
+\begin_inset Formula 
+\[
+\partial_{\vec{u}'}L=\int_{t_{1}}^{t}\partial_{\vec{u}}L\dd{\tau}+C
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C$
+\end_inset
+
+ 为任意积分常数。该式可由 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:变分：泛函：驻值：必要条件：分部积分"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 式第二行推得，它依赖于如下引理。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[du Bois-Reymond]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\psi\in C[t_{1},t_{2}]$
+\end_inset
+
+ 且
+\begin_inset Formula 
+\[
+\int_{t_{1}}^{t_{2}}\phi'(t)\,\psi(t)\dd{t}=0\qquad\forall\phi\in C_{0}^{1}[t_{1},t_{2}]\coloneqq\left\{ \phi\in C^{1}[t_{1},t_{2}]:\phi(t_{1})=\phi(t_{2})=0\right\} 
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 为常值函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+取
+\begin_inset Formula 
+\[
+c\coloneqq\int_{t_{1}}^{t_{2}}\frac{\psi(t)}{t_{2}-t_{1}}\dd{t}\implies\phi(t)\coloneqq\int_{t_{1}}^{t}(\psi(\tau)-c)\dd{\tau}\in C_{0}^{1}[t_{1},t_{2}]
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\int_{t_{1}}^{t_{2}}(\psi-c)^{2}\dd{t}=\int_{t_{1}}^{t_{2}}(\psi^{2}-c\psi)\dd{t}=\int_{t_{1}}^{t_{2}}\phi'\,\psi\dd{t}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+泛函的极值条件
+\end_layout
+
+\begin_layout Subsection
+函数的极值条件
+\end_layout
+
+\begin_layout Subsection
+泛函的二阶变分
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}g''(0) & \coloneqq\dv{\varepsilon}g'(0)=\int_{t_{1}}^{t_{2}}\left(\sum_{i=1}^{n}v_{i}\frac{\partial}{\partial u_{i}}+\sum_{i=1}^{n}v'_{i}\frac{\partial}{\partial u'_{i}}\right)^{2}L(t,\vec{u}_{*},\vec{u}'_{*})\dd{t}\\
+ & =\int_{t_{1}}^{t_{2}}\sum_{i=1}^{n}\sum_{k=1}^{n}\left(\frac{v_{i}v_{k}\partial^{2}}{\partial u_{i}\partial u_{k}}+\frac{v_{i}v'_{k}\partial^{2}}{\partial u_{i}\partial u'_{k}}+\frac{v'_{i}v_{k}\partial^{2}}{\partial u'_{i}\partial u_{k}}+\frac{v'_{i}v'_{k}\partial^{2}}{\partial u'_{i}\partial u'_{k}}\right)L(t,\vec{u}_{*},\vec{u}'_{*})\dd{t}
+\end{aligned}
+\label{eq:部分：泛函：极值：二阶变分}
+\end{equation}
+
+\end_inset
+
+若 
+\begin_inset Formula $L$
+\end_inset
+
+ 二阶可微，则中间两项可合并。右端积分式是由 
+\begin_inset Formula $I(\vec{u})$
+\end_inset
+
+ 导出泛函，它既依赖于驻值点 
+\begin_inset Formula $\vec{u}_{*}$
+\end_inset
+
+，又依赖于可变函数 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 及其导数 
+\begin_inset Formula $\vec{v}'$
+\end_inset
+
+ 的二次项，故称为 
+\begin_inset Formula $I(\vec{u})$
+\end_inset
+
+ 在 
+\begin_inset Formula $\vec{u}_{*}$
+\end_inset
+
+ 处的“二阶变分”，用 
+\begin_inset Formula $\updelta^{2}I(\vec{v};\vec{u}_{*})$
+\end_inset
+
+ 表示。若引入三个（由 
+\begin_inset Formula $L$
+\end_inset
+
+ 的二阶偏导数构造的）矩阵：
+\begin_inset Formula 
+\[
+\begin{gathered}\Mat{A_{*}(t)}\coloneqq\dyad{\partial_{\vec{u}'}}{\partial_{\vec{u}'}}L(t,\vec{u}_{*},\vec{u}'_{*})=\sum_{i=1}^{n}\sum_{k=1}^{n}\vert i\rangle\langle k\vert\frac{\partial^{2}L(t,\vec{u}_{*},\vec{u}'_{*})}{\partial u'_{i}\partial u'_{k}}\\
+\Mat{B_{*}(t)}\coloneqq\dyad{\partial_{\vec{u}}}{\partial_{\vec{u}'}}L(t,\vec{u}_{*},\vec{u}'_{*})=\sum_{i=1}^{n}\sum_{k=1}^{n}\vert i\rangle\langle k\vert\frac{\partial^{2}L(t,\vec{u}_{*},\vec{u}'_{*})}{\partial u_{i}\partial u'_{k}}\\
+\Mat{C_{*}(t)}\coloneqq\dyad{\partial_{\vec{u}}}{\partial_{\vec{u}}}L(t,\vec{u}_{*},\vec{u}'_{*})=\sum_{i=1}^{n}\sum_{k=1}^{n}\vert i\rangle\langle k\vert\frac{\partial^{2}L(t,\vec{u}_{*},\vec{u}'_{*})}{\partial u_{i}\partial u_{k}}
+\end{gathered}
+\]
+
+\end_inset
+
+并将含矩阵的积分简记为
+\begin_inset Formula 
+\[
+\langle\vec{u}\vert\Mat{A}\vert\vec{v}\rangle\coloneqq\int_{t_{1}}^{t_{2}}\sum_{i=1}^{n}\sum_{k=1}^{n}\underbrace{\langle u\vert i\rangle}_{u_{i}}\underbrace{\langle i\vert A\vert k\rangle}_{A_{ik}}\underbrace{\langle k\vert v\rangle}_{v_{k}}\dd{t}
+\]
+
+\end_inset
+
+则二阶变分 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:部分：泛函：极值：二阶变分"
+
+\end_inset
+
+ 可简记为
+\begin_inset Formula 
+\[
+\updelta^{2}I(\vec{v};\vec{u}_{*})=\langle\vec{v}'\vert\Mat{A_{*}}\vert\vec{v}'\rangle+\langle\vec{v}'\vert\Mat{2B_{*}}\vert\vec{v}\rangle+\langle\vec{v}\vert\Mat{C_{*}}\vert\vec{v}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Legendre–Hadamard 条件
+\end_layout
+
+\begin_layout Subsection
+Jacobi 场
+\end_layout
+
+\begin_layout Section
+含约束极值问题
+\end_layout
+
+\end_body
+\end_document
