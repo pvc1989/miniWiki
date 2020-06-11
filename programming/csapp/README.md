@@ -21,7 +21,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](http://www.cs.cmu.ed
 
 #### 二：表示及操纵信息
 
-#### 三：机器级程序表示
+#### [三：程序的机器级表示](./3_machine_level_programming.md)
 
 #### 四：处理器架构
 
