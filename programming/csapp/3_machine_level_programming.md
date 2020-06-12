@@ -8,7 +8,7 @@ Intel 长期主导 笔记本、台式机、服务器 处理器市场。
 
 里程碑产品：
 
-|    名称    | 时间 | 主频（MHz） |     技术要点      |
+|    名称    | 时间 | 主频（单位：MHz） |     技术要点      |
 | :--------: | :--: | :---------: | :-----------: |
 |    8086    | 1978 |    5~10     |     16 位     |
 |    i386    | 1985 |    16~33    |     32 位     |
@@ -27,21 +27,46 @@ Intel 长期主导 笔记本、台式机、服务器 处理器市场。
 - 性能略逊于 Intel，但价格有优势。
 - 在 64 位处理器的研发上，采取了渐进式策略，推出了 *x86-64* 指令集。
 
+### Moore's Law
+
+> Gordon Moore (1965): the number of transistors per chip would double every year for the next 10 years.
+
+> 实际：处理器上的晶体管数量平均每 18 个月翻一番。
+
 ## 2 程序编码
 
-|               英文名               |  中文名  |           含义           |
-| :--------------------------------: | :------: | :----------------------: |
-| ISA (Instruction Set Architecture) | 体系结构 |  指令集定义、寄存器命名  |
-|         Micro-architecture         |  微架构  | ISA 的物理实现（微电路） |
-|            Machine Code            |  机器码  | 机器读取或执行的 bit 流  |
-|           Assembly Code            |  汇编码  |     机器码的文字形式     |
+### 编码形式
 
-汇编码可见的信息：
+|               英文名               |  中文名  |           含义            |
+| :--------------------------------: | :------: | :-----------------------: |
+| ISA (Instruction Set Architecture) | 体系结构 |  机器码格式及行为的定义   |
+|         Micro-architecture         |  微架构  | ISA 的物理实现（微电路）  |
+|            Machine Code            |  机器码  | 用 0/1 序列表示的指令序列 |
+|           Assembly Code            |  汇编码  | 用汇编语言表示的指令序列  |
+|            Source Code             |  源代码  | 用高级语言表示的指令序列  |
 
+汇编码可见（源代码不可见）的信息：
 - 程序计数器 (Program Counter)：下一条指令的地址（在 x86-64 中由 `%rip` 保存）。
 - 寄存器 (Register)：位于 CPU 内部的临时数据存储器（顶级缓存）。
 - 条件码 (Condition Code)：存储最近一条指令的状态，用于条件分支。
 - 内存 (Memory)：可按字节寻址的（抽象）数组，用于存放数据及指令。
+
+源代码可见（汇编码不可见）的信息：
+
+- 变量名
+- 聚合数据结构
+- 不同类型的指针
+- 指针与整数的区别
+
+汇编码的可读性介于机器码与源代码之间：
+
+- 汇编语言由机器（处理器架构）决定，面向不同机器的汇编程序员需要学习不同版本的汇编语言。《CS:APP3e》只介绍  x86-64 这一目前最主流的版本，并重点关注 GCC 与 Linux 用到的那一小部分。
+- 高级语言隔离了这种机器相关性（具有跨平台性），编译器负责将同一份高级语言代码在不同机器上转换为相应的汇编码。
+
+对高级语言程序员而言，学习汇编语言主要是为了 *读* 而不是 *写* 汇编码：
+- 理解编译优化，分析代码效率。
+- 理解、分析代码的运行期行为（调试）。
+- 发现、修复系统程序的安全漏洞。
 
 ### 示例代码
 
@@ -54,15 +79,58 @@ int main() {
 }
 ```
 
-|           步骤           |           命令            |        输出        |
-| :----------------------: | :-----------------------: | :----------------: |
-| 构建（编译、汇编、链接） |   `cc -o hello hello.c`   | 可执行文件 `hello` |
-|      编译 (Compile)      |      `cc -S hello.c`      | 汇编文件 `hello.s` |
-|     汇编 (Assemble)      |  `as -o hello.o hello.s`  | 目标文件 `hello.o` |
-|       链接 (Link)        | `ld -o hello hello.o -lc` | 可执行文件 `hello` |
-|   反汇编 (Disassemble)   |    `objdump -d hello`     |       汇编码       |
+|         步骤         |             命令             |         输出         |
+| :------------------: | :--------------------------: | :------------------: |
+|    构建（四合一）    |    `cc -o hello hello.c`     |  可执行文件 `hello`  |
+| 预处理 (Preprocess)  |  `cc -E hello.c > hello.i`   |   含库函数的源代码   |
+|    编译 (Compile)    |       `cc -S hello.i`        |  汇编文件 `hello.s`  |
+|   汇编 (Assemble)    |   `as -o hello.o hello.s`    |  目标文件 `hello.o`  |
+|     链接 (Link)      |  `ld -o hello hello.o -lc`   |  可执行文件 `hello`  |
+| 反汇编 (Disassemble) | `objdump -d hello > hello.d` | 由机器码反推的汇编码 |
 
+⚠️ 如果用 GCC 编译，可加编译选项 `-Og` 以使机器码与源代码具有大致相同的结构。
+
+汇编文件 `hello.s` 的内容大致如下（可能随系统、编译器而变化），其中以 `.` 开头的行是用于引导汇编器、链接器的指令，可忽略：
+
+```assembly
+_main:                                  ## @main
+	.cfi_startproc
+## %bb.0:
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register %rbp
+	leaq	L_str(%rip), %rdi
+	callq	_puts
+	xorl	%eax, %eax
+	popq	%rbp
+	retq
+```
+
+目标文件 `hello.o` 及可执行文件 `hello` 的反汇编结果大致如下（可能随系统、编译器而变化）：
+```assembly
+# objdump -d hello.o
+0000000000000000 _main:
+       0: 55                            pushq   %rbp
+       1: 48 89 e5                      movq    %rsp, %rbp
+       4: 48 8d 3d 09 00 00 00          leaq    9(%rip), %rdi
+       b: e8 00 00 00 00                callq   0 <_main+0x10>
+      10: 31 c0                         xorl    %eax, %eax
+      12: 5d                            popq    %rbp
+      13: c3                            retq
+# objdump -d hello
+0000000100000f70 _main:
+100000f70: 55                           pushq   %rbp
+100000f71: 48 89 e5                     movq    %rsp, %rbp
+100000f74: 48 8d 3d 2b 00 00 00         leaq    43(%rip), %rdi
+100000f7b: e8 04 00 00 00               callq   4 <dyld_stub_binder+0x100000f84>
+100000f80: 31 c0                        xorl    %eax, %eax
+100000f82: 5d                           popq    %rbp
+100000f83: c3                           retq
+```
 反汇编也可以在 *调试器 (debugger)* 中进行：
+
 ```shell
 gdb hello  # 进入调试环境，引导符变为 (gdb)
 (gdb) disassemble main  # 定位到 main() 函数，输出其汇编码
@@ -70,27 +138,32 @@ gdb hello  # 进入调试环境，引导符变为 (gdb)
 输出结果（可能随系统、编译器而变化）如下：
 ```assembly
 Dump of assembler code for function main:
-   0x0000000100000f60 <+0>:     push   %rbp
-   0x0000000100000f61 <+1>:     mov    %rsp,%rbp
-   0x0000000100000f64 <+4>:     sub    $0x10,%rsp
-   0x0000000100000f68 <+8>:     movl   $0x0,-0x4(%rbp)
-   0x0000000100000f6f <+15>:    lea    0x34(%rip),%rdi        # 0x100000faa
-   0x0000000100000f76 <+22>:    mov    $0x0,%al
-   0x0000000100000f78 <+24>:    callq  0x100000f8a
-   0x0000000100000f7d <+29>:    xor    %ecx,%ecx
-   0x0000000100000f7f <+31>:    mov    %eax,-0x8(%rbp)
-   0x0000000100000f82 <+34>:    mov    %ecx,%eax
-   0x0000000100000f84 <+36>:    add    $0x10,%rsp
-   0x0000000100000f88 <+40>:    pop    %rbp
-   0x0000000100000f89 <+41>:    retq   
+   0x0000000100000f70 <+0>:     push   %rbp
+   0x0000000100000f71 <+1>:     mov    %rsp,%rbp
+   0x0000000100000f74 <+4>:     lea    0x2b(%rip),%rdi        # 0x100000fa6
+   0x0000000100000f7b <+11>:    callq  0x100000f84
+   0x0000000100000f80 <+16>:    xor    %eax,%eax
+   0x0000000100000f82 <+18>:    pop    %rbp
+   0x0000000100000f83 <+19>:    retq   
 End of assembler dump.
 ```
-### 汇编代码
+### 汇编要素
 
 - 函数名下方的每一行分别对应一条指令。
-  - 形如 `0x0000000100000f60` 的 64 位 16 进制数，表示各条指令的首地址。
-  - `<+n>` 表示当前指令相对于函数入口的 *偏移量*（以字节为单位）。相邻两行的偏移量之差 等于 前一行指令的机器码长度。
-  - 通常，指令的机器码长度与其使用频率成反比，最长 1 字节，最短 15 字节。
+  - 形如 `100000f70` 或 `0x0000000100000f60` 的 64 位 16 进制整数，表示各条指令的首地址。由的 `hello.o` 与 `hello` 的反汇编结果可见，一些函数的地址会被 *链接器 (linker)* 修改，详见《[链接](#./linking.md)》。
+  - 首地址后面的若干 16 进制整数（每 8 位一组，即每组 1 字节），表示该行指令的 *机器码*，由此可以算出各条指令的长度（字节数）。整个函数的机器码可以在 `gdb` 中连续打印：
+    ```shell
+    gdb hello
+    (gdb) x/20xb main  # 打印始于 main 的 20 个字节
+    ```
+    得到
+    ```assembly
+    0x100000f70 <main>:     0x55    0x48    0x89    0xe5    0x48    0x8d    0x3d      0x2b
+    0x100000f78 <main+8>:   0x00    0x00    0x00    0xe8    0x04    0x00    0x00      0x00
+    0x100000f80 <main+16>:  0x31    0xc0    0x5d    0xc3
+    ```
+  - `<+n>` 表示当前指令相对于函数入口的 *偏移量*（以字节为单位）。由相邻两行的偏移量之差也可以算出前一行指令的机器码长度。
+  - 指令的 *机器码长度* 与其 *使用频率* 及 *[运算对象](#运算对象)个数* 大致成反比，最长 1 字节，最短 15 字节。
 - 以 `%` 起始的 `%rsp`、`%rdi` 等符号表示 *寄存器*，用于存储临时数据：
   - 整数：长度为 1、2、4、8 字节，表示整数或地址。
   - 浮点数：长度为 4、8、10 字节，表示浮点数。
@@ -117,24 +190,29 @@ End of assembler dump.
 
 ### 整数寄存器
 
-| 全 64 位 | 后 32 位 | 后 16 位 | 后 8 位 |     字面含义      |   实际含义   |      |
-| :------: | :------: | :------: | :-----: | :---------------: | :----------: | ---- |
-|  `%rax`  |  `%eax`  |  `%ax`   |  `%al`  |    accumulate     |    返回值    |      |
-|  `%rbx`  |  `%ebx`  |  `%bx`   |  `%bl`  |       base        | 被调函数保留 |      |
-|  `%rcx`  |  `%ecx`  |  `%cx`   |  `%cl`  |      counter      | 第 4 个实参  |      |
-|  `%rdx`  |  `%edx`  |  `%dx`   |  `%dl`  |       data        | 第 3 个实参  |      |
-|  `%rsi`  |  `%esi`  |  `%si`   |         |   source index    | 第 2 个实参  |      |
-|  `%rdi`  |  `%edi`  |  `%di`   |         | destination index | 第 1 个实参  |      |
-|  `%rbp`  |  `%ebp`  |  `%bp`   |         |   base pointer    | 被调函数保留 |      |
-|  `%rsp`  |  `%esp`  |  `%sp`   |         |   stack pointer   | 函数调用栈尾 |      |
-|  `%r8`   |  `%r8d`  |          |         |                   | 第 5 个实参  |      |
-|  `%r9`   |  `%r9d`  |          |         |                   | 第 6 个实参  |      |
-|  `%r10`  | `%r10d`  |          |         |                   | 主调函数保留 |      |
-|  `%r11`  | `%r11d`  |          |         |                   | 主调函数保留 |      |
-|  `%r12`  | `%r12d`  |          |         |                   | 被调函数保留 |      |
-|  `%r13`  | `%r13d`  |          |         |                   | 被调函数保留 |      |
-|  `%r14`  | `%r14d`  |          |         |                   | 被调函数保留 |      |
-|  `%r15`  | `%r15d`  |          |         |                   | 被调函数保留 |      |
+| 全 64 位 | 后 32 位 | 后 16 位 | 后 8 位 |     字面含义      |   实际含义   |
+| :------: | :------: | :------: | :-----: | :---------------: | :----------: |
+|  `%rax`  |  `%eax`  |  `%ax`   |  `%al`  |    accumulate     |    返回值    |
+|  `%rbx`  |  `%ebx`  |  `%bx`   |  `%bl`  |       base        | 被调函数保留 |
+|  `%rcx`  |  `%ecx`  |  `%cx`   |  `%cl`  |      counter      | 第 4 个实参  |
+|  `%rdx`  |  `%edx`  |  `%dx`   |  `%dl`  |       data        | 第 3 个实参  |
+|  `%rsi`  |  `%esi`  |  `%si`   |         |   source index    | 第 2 个实参  |
+|  `%rdi`  |  `%edi`  |  `%di`   |         | destination index | 第 1 个实参  |
+|  `%rbp`  |  `%ebp`  |  `%bp`   |         |   base pointer    | 被调函数保留 |
+|  `%rsp`  |  `%esp`  |  `%sp`   |         |   stack pointer   | 函数调用栈尾 |
+|  `%r8`   |  `%r8d`  |          |         |                   | 第 5 个实参  |
+|  `%r9`   |  `%r9d`  |          |         |                   | 第 6 个实参  |
+|  `%r10`  | `%r10d`  |          |         |                   | 主调函数保留 |
+|  `%r11`  | `%r11d`  |          |         |                   | 主调函数保留 |
+|  `%r12`  | `%r12d`  |          |         |                   | 被调函数保留 |
+|  `%r13`  | `%r13d`  |          |         |                   | 被调函数保留 |
+|  `%r14`  | `%r14d`  |          |         |                   | 被调函数保留 |
+|  `%r15`  | `%r15d`  |          |         |                   | 被调函数保留 |
+
+每个 64 位寄存器的后 32、16、8 位，都可以被当做“短”寄存器来访问。约定：
+
+- 生成 1、2 字节结果的指令，不会修改其余字节。
+- 生成 4 字节结果的指令，会将前 4 个字节置 `0`。
 
 ### 运算对象
 
@@ -148,7 +226,7 @@ End of assembler dump.
 - `M` 表示 *Memory*，可以视为是一个以 *64 位整数* 为索引的整型数组。
 - `R` 表示 *Register*，可以视为是一个以 *寄存器名称* 为索引的整型数组。
 - `D` 表示 *Displacement*，可以是 1、2、4 字节整数，若缺省则视为 `0`。
-- `B` 表示 *Base*，可以是 16 个整型寄存器之一，不可缺省。
+- `B` 表示 *Base*，可以是 16 个整型寄存器之一，若缺省则 `Register[B]` 视为 `0`。
 - `I` 表示 *Index*，可以是 `%rsp` 外的 15 个整型寄存器之一，若缺省则 `Register[I]` 视为 `0`。
 - `S` 表示 *Scale*，可以是 `1`、`2`、`4`、`8` 之一，若缺省值则视为 `0`。
 
@@ -156,12 +234,53 @@ End of assembler dump.
 
 ```assembly
 movq source, destination
+movl source, destination
+movw source, destination
+movb source, destination
 ```
-
-其中
-
-- `mov` 后面的 `q` 表示 *quad-word*；有时也会是其他后缀，详见《[指令后缀](#指令后缀)》。
 - `source` 及 `destination` 为该指令的 *[运算对象](#运算对象)*，且只能有一个为 Memory。
+- `mov` 后面的 `q` 表示 `destination` 的大小为 *quad-word*；其他后缀的含义见《[指令后缀](#指令后缀)》。
+- `mov` 的一个主要变种是 `movabs`：
+  
+  - 若 `movq` 的 `source` 是 immediate，则只能是 32 位带符号整数，其符号位将被填入 `desination` 的前 32 位。若要阻止填充，则应使用 `movl` 等。
+  - 若 `movabsq` 的 `source` 是 immediate，则可以是 64 位整数，此时 `desination` 必须是 register。
+- `mov` 还有另外几个变种：
+  
+  ```assembly
+  movz s, d  # d = ZeroExtend(s)
+    movzbw s, d
+    movzbl s, d
+    movzwl s, d
+    movzbq s, d  # 通常被 movzbl s, d 代替，理由同 movzlq s, d
+    movzwq s, d
+    # movzlq s, d 不存在，其语义可通过 movl s, d 实现，这是因为：
+    # 生成 4 字节结果的指令，会将前 4 个字节置 `0`。
+  movs s, d  # d = SignExtend(s)
+    movsbw s, d
+    movsbl s, d
+    movswl s, d
+    movsbq s, d
+    movswq s, d
+    movslq s, d
+  cltq  # 等效于 movslq %eax, %rax 但其机器码更短
+  ```
+- 以下示例体现了这几个版本的区别：
+  ```assembly
+  movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
+  movb    $-1,                 %al   # %rax = 00112233445566FF
+  movw    $-1,                 %ax   # %rax = 001122334455FFFF
+  movl    $-1,                 %eax  # %rax = 00000000FFFFFFFF
+  movq    $-1,                 %rax  # %rax = FFFFFFFFFFFFFFFF
+  movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
+  movb    $0xAA,               %dl   # %dl  = AA
+  movb    %dl,                 %al   # %rax = 00112233445566AA
+  movsbq  %dl,                 %rax  # %rax = FFFFFFFFFFFFFFAA
+  movzbq  %dl,                 %rax  # %rax = 00000000000000AA
+  ```
+
+### 交换数据
+
+虽然不存在直接交换数据的指令，但可以通过一组 `mov` 来实现：
 
 ```c
  void swap(long* px, long* py) {
@@ -181,6 +300,8 @@ ret
 ```
 
 ### 压栈出栈
+
+x86-64 规定：栈顶元素的地址保存在寄存器 `%rsp` 中，并且小于栈内其他元素的地址。
 
 |   指令    |      含义      |              语义               |
 | :-------: | :------------: | :-----------------------------: |
@@ -212,6 +333,8 @@ leaq source, destination
 
 ### 一元运算
 
+其运算对象既是 source 又是 destination。
+
 |    指令     |          含义          |   语义    |
 | :---------: | :--------------------: | :-------: |
 |   `inc d`   |       INCrement        |   `d++`   |
@@ -220,6 +343,8 @@ leaq source, destination
 |   `not d`   |       complement       | `d = ~d`  |
 
 ### 二元运算
+
+第一个运算对象是 source，第二个运算对象既是 source 又是 destination。
 
 |    指令     |     含义     |   语义   |
 | :---------: | :----------: | :------: |
@@ -238,6 +363,27 @@ leaq source, destination
 | `sal k, d` | Shift Arithmeticly to the Left  | `d <<= k` |  在右端，补 `0`  |
 | `shr k, d` |  SHift logically to the Right   | `d >>= k` |  在左端，补 `0`  |
 | `sar k, d` | Shift Arithmeticly to the Right | `d >>= k` | 在左端，补符号位 |
+
+其中 `k` 可以是 immediate，也可以是 `%cl` 这个特殊的 register：
+- 后缀为 `b` 的版本，取 `%cl` 的后 3 位所表示的值，至多移 7 位。
+- 后缀为 `w` 的版本，取 `%cl` 的后 4 位所表示的值，至多移 15 位。
+- 后缀为 `l` 的版本，取 `%cl` 的后 5 位所表示的值，至多移 31 位。
+- 后缀为 `q` 的版本，取 `%cl` 的后 6 位所表示的值，至多移 63 位。
+
+### 特殊算术运算
+
+x86-64 还提供了一些长达 128 位的整数（Intel 称之为 *oct word*）的算术运算指令：
+
+- 一元乘法：
+  - `imulq s` 为带符号乘法，`mulq s` 为无符号乘法
+  - 语义为 `R[%rdx]:R[%rax] = s * R[%rax]`
+- 一元除法：
+  - `idivq s` 为带符号除法，`divq s` 为无符号除法
+  - 二者均以 `R[%rdx]:R[%rax]` 为 *被除数 (dividend)*，以 `s` 为 *除数 (divisor)*，所得的 *商 (quotient)* 存入 `%rax`，*余数 (remainder)* 存入 `%rdx`
+  - ⚠️ 不存在“二元除法”指令
+- `cqto` 用于构造带符号除法的被除数：
+  - 字面含义为 Convert Quad-word To Oct-word
+  - 语义为 `R[%rdx]:R[%rax] = SignExtend(R[%rax])`
 
 ## 6 控制
 
