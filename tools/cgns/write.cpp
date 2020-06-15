@@ -52,7 +52,8 @@ int main() {
   std::printf("    is being creating...\n");
   cgsize_t grid_size[3][1];
   constexpr int ni{21}, nj{17}, nk{9};
-  grid_size[0][0] = ni * nj * nk;  // vertex size
+  constexpr int n_nodes = ni * nj * nk;
+  grid_size[0][0] = n_nodes;  // vertex size
   constexpr int n_hexa_elems = (ni-1) * (nj-1) * (nk-1);
   grid_size[1][0] = n_hexa_elems;  // cell size
   grid_size[2][0] = 0;  // boundary vertex size (zero if elements not sorted)
@@ -228,53 +229,84 @@ int main() {
    */
   {
     constexpr int kSteps = nk - 1;
-    // set time steps:
-    double time[kSteps];
-    for (int k = 0; k < kSteps; ++k) {
-      time[k] = k * 0.1;
+    /* Create A BaseIterativeData_t */
+    {
+      // create BaseIterativeData_t:
+      cg_biter_write(file_id, base_id, "TimeStepsAndValues", kSteps);
+      // goto this BaseIterativeData_t:
+      cg_goto(file_id, base_id, "BaseIterativeData_t", 1, "end");
+      // set time steps:
+      double time[kSteps];
+      for (int k = 0; k < kSteps; ++k) {
+        time[k] = k * k * 0.1;
+      }
+      // write time values:
+      cgsize_t data_dim[1] = {kSteps};  // data size in each dimension
+      cg_array_write("TimeValues", CGNS_ENUMV(RealDouble), 1, data_dim, &time);
     }
     // set data to be write:
-    double data[n_hexa_elems];
+    double node_data[n_nodes];
+    i_node = 0;
+    for (int k = 0; k < nk; k++) {
+      for (int j = 0; j < nj; j++) {
+        for (int i = 0; i < ni; i++) {
+          node_data[i_node++] = j * 2.5;
+        }
+      }
+    }
+    assert(n_nodes == i_node);
+    double cell_data[n_hexa_elems];
     i_elem = 0;
     for (int k = 1; k < nk; k++) {
       for (int j = 1; j < nj; j++) {
         for (int i = 1; i < ni; i++) {
-          data[i_elem++] = j * 2.5;
+          cell_data[i_elem++] = j * 2.5;
         }
       }
     }
     assert(n_hexa_elems == i_elem);
     // common info for all steps:
-    auto sol_name_prefix = std::string("CellData");
-    char field_name[kNameLength + 1] = "Temperature";
-    char sol_names[kNameLength * kSteps + 1];
-    char* dest = sol_names;
-    // write solution for each step:
-    cgsize_t range_min, range_max = 0;
+    auto node_sol_prefix = std::string("NodeData#");
+    char node_field_name[kNameLength + 1] = "Pressure";
+    char node_sol_names[kNameLength * kSteps + 1];
+    char* node_dest = node_sol_names;
+    auto cell_sol_prefix = std::string("CellData#");
+    char cell_field_name[kNameLength + 1] = "Density";
+    char cell_sol_names[kNameLength * kSteps + 1];
+    char* cell_dest = cell_sol_names;
+    // write solutions for each step:
+    cgsize_t node_range_min, node_range_max = 0;
+    cgsize_t cell_range_min, cell_range_max = 0;
     for (int k = 0; k < kSteps; ++k) {
-      int sol_id;
-      auto sol_name = sol_name_prefix + std::to_string(k);
+      int sol_id, field_id;
+      std::string sol_name;
+      // node data:
+      sol_name = node_sol_prefix + std::to_string(k);
+      cg_sol_write(file_id, base_id, zone_id,
+          sol_name.c_str(), CGNS_ENUMV(Vertex), &sol_id);
+      std::strcpy(node_dest, sol_name.c_str());
+      node_dest += kNameLength;
+      node_range_min = node_range_max + 1;
+      node_range_max += nj * ni;
+      // std::printf("%d, %d\n", node_range_min, node_range_max);
+      cg_field_partial_write(file_id, base_id, zone_id, sol_id,
+          CGNS_ENUMV(RealDouble), node_field_name,
+          &node_range_min, &node_range_max, &node_data[node_range_min-1],
+          &field_id);
+      // cell data:
+      sol_name = cell_sol_prefix + std::to_string(k);
       cg_sol_write(file_id, base_id, zone_id,
           sol_name.c_str(), CGNS_ENUMV(CellCenter), &sol_id);
-      std::strcpy(dest, sol_name.c_str());
-      dest += kNameLength;
-      // partial write:
-      int field_id;
-      range_min = range_max + 1;
-      range_max += (nj-1) * (ni-1);
+      std::strcpy(cell_dest, sol_name.c_str());
+      cell_dest += kNameLength;
+      cell_range_min = cell_range_max + 1;
+      cell_range_max += (nj-1) * (ni-1);
       cg_field_partial_write(file_id, base_id, zone_id, sol_id,
-          CGNS_ENUMV(RealDouble), field_name,
-          &range_min, &range_max, &data[range_min-1], &field_id);
+          CGNS_ENUMV(RealDouble), cell_field_name,
+          &cell_range_min, &cell_range_max, &cell_data[cell_range_min-1],
+          &field_id);
     }
-    // create BaseIterativeData_t:
-    cg_biter_write(file_id, base_id, "TimeIterValues", kSteps);
-    // goto this BaseIterativeData_t:
-    cg_goto(file_id, base_id, "BaseIterativeData_t", 1, "end");
-    // write time values:
-    {
-      cgsize_t data_dim[1] = {kSteps};  // data size in each dimension
-      cg_array_write("TimeValues", CGNS_ENUMV(RealDouble), 1, data_dim, &time);
-    }
+    /* Create A ZoneIterativeData_t */
     // create ZoneIterativeData_t:
     cg_ziter_write(file_id, base_id, zone_id, "ZoneIterativeData");
     // goto this ZoneIterativeData_t:
@@ -284,7 +316,9 @@ int main() {
     {
       cgsize_t data_dim[2] = {kNameLength, kSteps};
       cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
-          2, data_dim, sol_names);
+          2, data_dim, node_sol_names);
+      // cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
+      //     2, data_dim, cell_sol_names);
     }
     // add SimulationType:
     cg_simulation_type_write(file_id, base_id, CGNS_ENUMV(TimeAccurate));

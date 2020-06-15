@@ -690,3 +690,41 @@ ArbitraryGridMotion_t< int IndexDimension,
 
 网格改变拓扑 意味着 网格大小变化，故需创建新的 `Zone_t` 以对应 *网格大小发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
 
+```c++
+CGNSBase_t "RemeshingCase" {
+  BaseIterativeData_t "Steps" {
+    int "NumberOfSteps" = 4
+    DataArray_t<double> "TimeValues" = {0, 5, 10, 15, 20}
+    DataArray_t<int> "NumberOfZones" = {1, 1, 1, 1, 1}
+    DataArray_t<char*> "ZonePointers" = {
+      "Zone1", "Zone1", "Zone1", "Zone2", "Zone2"
+    }
+  }
+  Zone_t "Zone1" {
+    GridCoordinates_t "GridCoordinates"
+    Elements_t "Elements"
+    ZoneBC_t "ZoneBC"
+    FlowSolution_t "Solution0"
+    FlowSolution_t "Solution5"
+    FlowSolution_t "Solution10"
+    ZoneIterativeData_t {
+      DataArray_t<char*> "FlowSolutionPointers" = {
+        "Solution0", "Solution5", "Solution10", "Null", "Null"
+      }
+    }
+  }
+  Zone_t "Zone2" = {
+    GridCoordinates_t "GridCoordinates"
+    Elements_t "Elements"
+    ZoneBC_t "ZoneBC"
+    FlowSolution_t "Solution15"
+    FlowSolution_t "Solution20"
+    ZoneIterativeData_t {
+      DataArray_t<char*> "FlowSolutionPointers" = {
+        "Null", "Null", "Null", "Solution15", "Solution20"
+      }
+    }
+  }
+}
+```
+
