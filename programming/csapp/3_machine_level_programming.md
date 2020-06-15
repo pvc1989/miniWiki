@@ -453,6 +453,236 @@ setg    %al         # 将最后一位设为 0 或 1
 - `setb` 用于 *无符号小于*，只有一种情形：
   - `a - b` 向下溢出（`CF == 1`）
 
+### 跳转指令
+
+*跳转 (jump)* 指令的基本形式为 `j_ dest`，用于跳转到 `dest` 所表示的指令。其中
+
+- `jmp` 为 *无条件跳转*，对应于 C 语言中 `goto` 语句。
+- 其他均为 *有条件跳转*，指令后缀的含义与上一节的 `set_` 系列指令类似。
+
+### 条件分支
+
+C 语言中有三种表达 *条件分支 (conditional branch)* 的方式：
+
+```c
+/* if-else */
+long absdiff(long x, long y) {
+  long d;
+  if (x > y) d = x-y;
+  else       d = y-x;
+  return d;
+}
+/* operator */
+long absdiff(long x, long y) {
+  long d;
+  d = x > y ? x-y : y-x;
+  return d;
+}
+/* goto */
+long absdiff(long x, long y) {
+  long d;
+  if (x <= y) goto Else;
+  d = x-y;
+  goto Done;
+Else:
+  d = y-x;
+Done:
+  return d;
+}
+```
+
+要得到与源代码结构最接近的汇编码，需降低优化等级：
+
+```assembly
+# gcc -Og -S -fno-if-conversion
+_absdiff:
+        movq    %rdi, %rax  # d = x
+        cmpq    %rsi, %rdi
+        jle     L2          # x <= y
+        subq    %rsi, %rax  # d -= y
+        ret
+L2:
+        subq    %rdi, %rsi  # y -= x
+        movq    %rsi, %rax  # d = y
+        ret
+```
+
+提高优化等级，编译器会在 *两个分支的计算都是安全的且计算量都很小* 的情况下，先计算两个分支、再作比较、最后利用 *条件移动 (conditional move)* 指令 `cmov_` 完成选择：
+
+```assembly
+# gcc -O1 -S
+_absdiff:
+        movq    %rdi, %rdx  # c = x
+        subq    %rsi, %rdx  # c -= y
+        movq    %rsi, %rax  # d = y
+        subq    %rdi, %rax  # d -= x
+        cmpq    %rsi, %rdi
+        cmovg   %rdx, %rax  # x > y ? d = c : d = d;
+        ret
+```
+
+### 循环语句
+
+C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
+
+- `do`-`while` 语句：
+  ```c
+  /* do-while */
+  long pcount(unsigned long x) {
+    long count = 0;
+    do {
+      count += x & 0x1;
+      x >>= 1;
+    } while (x);
+    return count;
+  }
+  ```
+  以 `gcc -Og -S` 编译得如下汇编码：
+  ```assembly
+  pcount:
+          movl    $0, %eax    # count = 0
+  L2:  # loop:
+          movq    %rdi, %rdx  # t = x
+          andl    $1, %edx    # t &= 0x1
+          addq    %rdx, %rax  # count += t
+          shrq    %rdi        # x >>= 1
+       # test:
+          jne     L2          # while (x)
+       # done:
+          ret
+  ```
+- `while` 语句：
+  ```c
+  long pcount(unsigned long x) {
+    long count = 0;
+    while (x) {
+      count += x & 0x1;
+      x >>= 1;
+    }
+    return count;
+  }
+  ```
+  以 `gcc -Og -S` 编译得如下汇编码：
+  ```assembly
+  _pcount:
+          movl    $0, %eax    # count = 0
+  L2:  # test:
+          testq   %rdi, %rdi  # while (x)
+          je      L4
+       # loop:
+          movq    %rdi, %rdx  
+          andl    $1, %edx
+          addq    %rdx, %rax
+          shrq    %rdi
+          jmp     L2
+  L4:  # done:
+          ret
+  ```
+  此版本在进入循环前先做了一次检测，若恰有 `x == 0` 则会带来性能提升。
+- `for` 语句：
+  ```c
+  #define SIZE 8*sizeof(unsigned long)
+  long pcount(unsigned long x) {
+    long count = 0;
+    for (int i = 0; i != SIZE; ++i) {
+      count += (x >> i) & 0x1;
+    }
+    return count;
+  }
+  ```
+  以 `gcc -O2 -S` 编译得如下汇编码：
+  ```assembly
+  _pcount:
+       # init:
+          xorl    %ecx, %ecx  # i = 0
+          xorl    %r8d, %r8d  # count = 0
+  L2:  # loop:
+          movq    %rdi, %rax  # t = x
+          shrq    %cl, %rax   # t >>= i
+          addl    $1, %ecx    # t &= 0x1
+          andl    $1, %eax    # ++i
+          addq    %rax, %r8   # count += t
+       # test:
+          cmpl    $64, %ecx   # i != SIZE
+          jne     L2
+       # done: 
+          movq    %r8, %rax
+          ret
+  ```
+  编译器知道计数器 `i` 的初值与终值，故首次检测被跳过。
+
+### 选择语句
+
+```c
+long choose(long x, long y, long z) {
+  long w = 1; 
+  switch(x) {
+    case 1:
+      w = y * z;
+      break;
+    case 2:
+      w = y / z;
+      /* Fall Through */
+    case 3:
+      w += z;
+      break;
+    case 5:
+    case 6:
+      w -= z;
+      break;
+    default:
+      w = 2;
+  }
+  return w;
+}
+```
+以 `gcc -Og -S` 编译得如下汇编码：
+```assembly
+_choose:
+        movq    %rdx, %rcx  # z_copy = z
+        cmpq    $3, %rdi
+        je      L8          # x == 3
+        jg      L3          # x > 3
+     # x < 3
+        cmpq    $1, %rdi
+        je      L4          # x == 1
+        cmpq    $2, %rdi    # x == 2
+        jne     L11
+     # case 2:
+        movq    %rsi, %rax  # y_copy = y
+        cqto                # R[%rdx]:R[%rax] = SignExtend(y_copy)
+        idivq   %rcx        # R[%rax] = y_copy / z_copy
+        jmp     L2          # Fall into case 3
+L11: # default:
+        movl    $2, %eax    # w = 2
+        ret
+L3:  # x > 3
+        subq    $5, %rdi    # x -= 5
+        cmpq    $1, %rdi
+        ja      L12         # x > 1 (case 4, 7, 8, ...)
+     # case 6:
+        movl    $1, %eax    # w = 1
+        subq    %rdx, %rax  # w -= z
+        ret
+L4:  # case 1:
+        movq    %rdx, %rax
+        imulq   %rsi, %rax
+        ret
+L8:  # init:
+        movl    $1, %eax    # w = 1
+L2:  # case 3:
+        addq    %rcx, %rax  # w += z_copy
+        ret
+L12: # default:
+        movl    $2, %eax    # w = 2
+        ret
+```
+- 编译器通常会打乱各种情形的顺序。
+- 若分支总数 $N$ 较大，则用 `switch` 可以减少判断次数：
+  - 若情形分布较密集，则编译器会为每一种情形各生成一个标签，故 `switch` 语句只需要 $\Theta(1) $ 次判断。
+  - 若情形分布较稀疏，则编译器会生成一棵平衡搜索树，故 `switch` 语句至多需要 $\Theta(\log N)$ 次判断。
+  - 与之等价的 `if`-`else` 语句可能（例如 `default` 情形）需要 $\Theta(N)$ 次判断。
+
 ## 7 过程（函数）
 
 ## 8 数组分配与访问
