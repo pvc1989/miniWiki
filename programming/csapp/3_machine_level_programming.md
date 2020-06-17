@@ -188,26 +188,26 @@ End of assembler dump.
 
 ## 4 访问信息
 
-### 整数寄存器
+### 整型寄存器
 
 | 全 64 位 | 后 32 位 | 后 16 位 | 后 8 位 |     字面含义      |   实际含义   |
 | :------: | :------: | :------: | :-----: | :---------------: | :----------: |
 |  `%rax`  |  `%eax`  |  `%ax`   |  `%al`  |    accumulate     |    返回值    |
-|  `%rbx`  |  `%ebx`  |  `%bx`   |  `%bl`  |       base        | 被调函数保留 |
+|  `%rbx`  |  `%ebx`  |  `%bx`   |  `%bl`  |       base        | 被调函数保存 |
 |  `%rcx`  |  `%ecx`  |  `%cx`   |  `%cl`  |      counter      | 第 4 个实参  |
 |  `%rdx`  |  `%edx`  |  `%dx`   |  `%dl`  |       data        | 第 3 个实参  |
 |  `%rsi`  |  `%esi`  |  `%si`   | `%sil`  |   source index    | 第 2 个实参  |
 |  `%rdi`  |  `%edi`  |  `%di`   | `%dil`  | destination index | 第 1 个实参  |
-|  `%rbp`  |  `%ebp`  |  `%bp`   | `%bpl`  |   base pointer    | 被调函数保留 |
-|  `%rsp`  |  `%esp`  |  `%sp`   | `%spl`  |   stack pointer   | 函数调用栈尾 |
+|  `%rbp`  |  `%ebp`  |  `%bp`   | `%bpl`  |   base pointer    | 被调函数保存 |
+|  `%rsp`  |  `%esp`  |  `%sp`   | `%spl`  |   stack pointer   | 函数调用栈顶 |
 |  `%r8`   |  `%r8d`  |          | `%r8b`  |                   | 第 5 个实参  |
 |  `%r9`   |  `%r9d`  |          | `%r9b`  |                   | 第 6 个实参  |
-|  `%r10`  | `%r10d`  |          | `%r10b` |                   | 主调函数保留 |
-|  `%r11`  | `%r11d`  |          | `%r11b` |                   | 主调函数保留 |
-|  `%r12`  | `%r12d`  |          | `%r12b` |                   | 被调函数保留 |
-|  `%r13`  | `%r13d`  |          | `%r13b` |                   | 被调函数保留 |
-|  `%r14`  | `%r14d`  |          | `%r14b` |                   | 被调函数保留 |
-|  `%r15`  | `%r15d`  |          | `%r15b` |                   | 被调函数保留 |
+|  `%r10`  | `%r10d`  |          | `%r10b` |                   |  主调函数b   |
+|  `%r11`  | `%r11d`  |          | `%r11b` |                   | 主调函数保存 |
+|  `%r12`  | `%r12d`  |          | `%r12b` |                   | 被调函数保存 |
+|  `%r13`  | `%r13d`  |          | `%r13b` |                   | 被调函数保存 |
+|  `%r14`  | `%r14d`  |          | `%r14b` |                   | 被调函数保存 |
+|  `%r15`  | `%r15d`  |          | `%r15b` |                   | 被调函数保存 |
 
 每个 64 位寄存器的后 32、16、8 位，都可以被当做“短”寄存器来访问。约定：
 
@@ -683,11 +683,177 @@ L12: # default:
   - 若情形分布较稀疏，则编译器会生成一棵平衡搜索树，故 `switch` 语句至多需要 $\Theta(\log N)$ 次判断。
   - 与之等价的 `if`-`else` 语句可能（例如 `default` 情形）需要 $\Theta(N)$ 次判断。
 
-## 7 过程（函数）
+## 7 函数（过程）
 
-## 8 数组分配与访问
+*函数 (function)*，又称 *过程 (procedure)*、*方法 (method)*、*子例程 (subroutine)*、*句柄 (handler)*，是模块化编程的基础：每个函数都是一个生产或加工数据的功能模块。几乎所有高级编程语言都提供了这种机制，并且各种语言用于定义函数的语法都大同小异。这是因为它们几乎都采用了同一种 *机器级实现*，后者正是本节所要介绍的内容。
 
-## 9 异构数据结构（结构体）
+它是软件功能的最小单位，因此是模块化编程的基础。
+
+### 运行期栈
+
+若函数 `Q` 被函数 `P` 调用，则 `P` 与 `Q` 分别被称为 *主调者 (caller)* 与 *被调者(callee)*。函数调用正是通过 *控制权 (control)* 及 *数据 (data)* 在二者之间相互 *传递 (pass)* 来实现的：
+
+- [**传递控制**](#传递控制)：Caller 利用 `call` 指令将控制权转移给 Callee；Callee 运行结束后，利用 `ret` 指令将控制权交还给 Caller。
+- [**传递数据**](#传递数据)：Caller 将第一个整型输入值存入 `%rdi`、将第二个整型输入值存入 `%rsi`、……，供 Callee 读取；Callee 将整型返回值存入 `%rax` 中，供 Caller 读取。
+- [**局部存储**](#局部存储)：在 Callee 运行的那段时间，Caller 处于冻结状态，其状态（局部变量的值、下一条指令的地址、……）被保存在寄存器或内存中。
+
+尽管某些局部变量可以只在寄存器中度过其生存期，但与内存相比，寄存器所能容纳的数据量非常有限，因此后者才是更一般的局部存储机制。
+
+每个 Caller 都在内存中拥有一段被称为 *帧 (frame)* 的连续存储空间，其分配与释放遵循 *栈 (stack)* 的 *后进先出 (LIFO)* 规则，因此这种内存管理机制（或这段内存空间）很自然地被称为 *运行期栈 (run-time stack)*。
+
+栈顶地址
+- 随着栈内数据的增加而减小，因此这是一个“向下生长”的栈。
+- 保存在 `%rsp` 中（注意与 `%rip` 区分，后者为即将被执行的那条指令的地址）。
+
+### 传递控制
+
+假设有如下两个函数：
+
+```c
+long mult2(long a, long b) {
+  long s = a * b;
+  return s;
+}
+void multstore(long x, long y, long *dest) {
+  long t = mult2(x, y);
+  *dest = t;
+}
+ 
+```
+
+编译（所得可执行文件的反汇编）结果为
+
+```assembly
+0000000100000f5c _mult2:
+100000f5c: 48 89 f8                     movq    %rdi, %rax
+100000f5f: 48 0f af c6                  imulq   %rsi, %rax
+100000f63: c3                           retq
+
+0000000100000f64 _multstore:
+100000f64: 53                           pushq   %rbx
+100000f65: 48 89 d3                     movq    %rdx, %rbx
+100000f68: e8 ef ff ff ff               callq   -17 <_mult2>
+100000f6d: 48 89 03                     movq    %rax, (%rbx)
+100000f70: 5b                           popq    %rbx
+100000f71: c3                           retq 
+```
+
+其中
+
+- `call` 指令依次完成以下两步：
+  - 将下一条指令的地址（此处为 `0x100000f6d`）压入运行期栈。
+  - 将 `%rip` 设为被调函数的首地址（此处为 `0x100000f5c`，它与返回地址 `0x100000f6d` 相距 `-17` 即 `-0x11`），即向被调函数移交控制权。
+- `ret` 指令依次完成以下两步：
+  - 从运行期栈弹出返回地址（此处为 `0x100000f6d`）。
+  - 将 `%rip` 设为上述返回地址，即向主调函数交还控制权。
+
+### 传递数据
+
+- 整型返回值通过 `%rax` 传递。
+- 前六个整型（含指针型）实参通过寄存器（直接）传递，对应关系参见《[整型寄存器](#整型寄存器)》
+- 其他整型实参通过主调函数的帧（间接）传递。
+
+### 局部存储
+
+函数可以在自己的栈内保存以下数据：
+
+- 局部变量：寄存器无法容纳的局部变量，以及[数组](#数组的分配与访问)、[异质数据结构](#异质数据结构)。
+- 返回地址：见[传递控制](#传递控制)。
+- 寄存器值：
+  - 被调函数保存的寄存器：一个函数在使用此类寄存器前，需将它们的值存储到自己的帧内；在移交控制权前，需将这些寄存器恢复为使用前的状态。[整型寄存器](#整型寄存器)中的 `%rbx`、`%rbp`、`%r12`、`%r13`、`%r14`、`%r15` 均属于此类。
+  - 主调函数保存的寄存器：一个函数在调用其他函数（含递归调用自身）前，需将（自己用到的）此类寄存器的值存储到自己的帧内。用于[传递数据](#传递数据)的寄存器都属于这一类；完整列表见《[整型寄存器](#整型寄存器)》。
+
+参考以下示例：
+
+```c
+long incr(long *p, long val) {
+  long x = *p;
+  long y = x + val;
+  *p = y;
+  return x;
+}
+```
+```assembly
+_incr:
+        movq    (%rdi), %rax  # incr 的局部变量在寄存器内度过其生存期：
+        addq    %rax, %rsi    # x 位于 %rax 中，y 位于 %rsi 中。
+        movq    %rsi, (%rdi)
+        ret
+```
+```c
+long call_incr() {
+  long v1 = 15213;
+  long v2 = incr(&v1, 3000);
+  return v1+v2;
+}
+```
+```assembly
+_call_incr:
+        subq    $24, %rsp        # 分配 call_incr 的帧
+        movq    $15213, 8(%rsp)  # 将局部变量 v1 存储到帧内
+        leaq    8(%rsp), %rdi    # 构造传给 incr 的第一个实参
+        movl    $3000, %esi      # 构造传给 incr 的第二个实参
+        call    _incr						 # 返回时 %rax 存储了 v2 的值
+        addq    8(%rsp), %rax    # v2 += v1
+        addq    $24, %rsp        # 释放 call_incr 的帧
+        ret
+```
+```c
+long call_incr2(long x) {
+  long v1 = 15213;
+  long v2 = incr(&v1, 3000);
+  return x+v2;
+}
+int main(int argc, char* argv[]) {
+  call_incr2(argc);
+  return 0;
+}
+```
+```assembly
+_call_incr2:
+        pushq   %rbx             # call_incr2 是 main 的被调函数
+        subq    $16, %rsp        #
+        movq    %rdi, %rbx       # 将 call_incr2 的第一个实参存入 %rdx
+        movq    $15213, 8(%rsp)  #
+        leaq    8(%rsp), %rdi    # 将 incr 的第一个实参存入 %rdi
+        movl    $3000, %esi      #
+        call    _incr            #
+        addq    %rbx, %rax       # v2 += x
+        addq    $16, %rsp        #
+        popq    %rbx             # 还原 %rbx 的值
+        ret
+```
+
+### 递归函数
+
+```c
+#include <stdlib.h>
+#include <stdio.h>
+unsigned long factorial(unsigned n) {
+  return n <= 1 ? 1 : n * factorial(n-1);
+}
+int main(int argc, char* argv[]) {
+  unsigned int n = atoi(argv[1]);
+  printf("%d!=%ld\n", n, factorial(n));
+}
+```
+
+```assembly
+_factorial:
+        cmpl    $1, %edi
+        ja      L8
+        movl    $1, %eax
+        ret
+L8:
+        pushq   %rbx
+        movl    %edi, %ebx
+        subl    $1, %edi    # n - 1
+        call    _factorial  # f(n-1)
+        imulq   %rbx, %rax  # n * f(n-1)
+        popq    %rbx
+        ret
+```
+
 
 ## 10 结合控制与数据
 
