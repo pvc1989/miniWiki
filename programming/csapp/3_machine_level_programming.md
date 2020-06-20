@@ -971,7 +971,7 @@ struct node_t {
 };
 ```
 
-此结构体类型含三个成员（类型为 `int[4]` 的数组、类型为 `size_t` 的整数、类型为 `struct node_t *` 的指针），各成员在内存中的分布如下：
+此 `struct` 含三个成员（类型为 `int[4]` 的数组、类型为 `size_t` 的整数、类型为 `struct node_t *` 的指针），各成员在内存中的分布如下：
 
 ```
 { a[0] }{ a[1] }{ a[2] }{ a[3] }{      i       }{     next     }
@@ -1004,19 +1004,83 @@ L4:  # node == 0
         ret
 ```
 
-以上“成员无缝分布”的结构体并不是普遍的，更一般的结构体需按[数据对齐](#数据对齐)规则安排成员。
+以上“成员无缝分布”的 `struct` 并不是普遍的，更一般的 `struct` 需按[数据对齐](#数据对齐)规则安排成员。
 
 ### `union`
 
+C 语言中的 `union` 与 `struct` 有相同的 *语法 (syntax)*，但有不同的 *语义 (semantics)* 及相应的机器级表示：`union` 的所有成员共享同一段内存空间，整个 `union` 的尺寸不小于最大成员的尺寸。
+
+若某种二叉树的叶结点（只）含两个 `double` 成员、非叶结点（只）含两个指针成员，则结点类型有两种典型的定义方式：
+```c
+struct node_s {
+  struct {
+    struct node_s *left;
+    struct node_s *right;
+  } children;
+  double data[2];
+};
+union node_u {
+  struct {
+    union node_u *left;
+    union node_u *right;
+  } children;
+  double data[2];
+};
+```
+前者需要 `32` 字节，后者只需要 `16` 字节；但后者无法通过成员判断其是否为叶结点（前者可由 `left` 与 `right` 是否为空判断），为此需引入额外的成员：
+```c
+typedef enum { N_LEAF, N_INTERNAL } nodetype_t;
+struct node_t {
+  union {
+    struct {
+      struct node_t *left;
+      struct node_t *right;
+    } internal;
+    double data[2];
+  } info;
+  nodetype_t type;
+};
+```
+该方案每个结点的大小为 `16 + 4 + 4 == 24` 字节，其中最后 `4` 个字节不存储数据，仅用于[数据对齐](#数据对齐)。
+
+`union` 的另一个用处是获取其他类型的字节表示：
+```c
+#include <stdlib.h>
+#include <stdio.h>
+unsigned long double2bits(double d) {
+  union {
+    double d;
+    unsigned long u;
+  } temp;
+  temp.d = d;
+  return temp.u;
+}
+int main(int argc, char* argv[]) {
+  double x = atof(argv[1]);
+  printf("%g's byte representation is\n", x);
+  unsigned long l = double2bits(x);
+  int shift = 64;
+  for (int i = 0; i != sizeof(unsigned long); ++i) {
+    // for each byte:
+    printf(" ");
+    for (int j = 0; j != 8; ++j) {
+      printf("%ld", l >> (--shift) & 1);
+    }
+  }
+  assert(shift == 0);
+  printf("\n");
+}
+```
+
 ### 数据对齐
 
-一般的结构体按以下规则 *对齐 (align)* 成员：
+一般的 `struct` 按以下规则 *对齐 (align)* 成员：
 
 - 各成员按声明的顺序分布。
 - 大小为 `K` 字节的初等（非聚合类型）成员，其 *首地址* 必须是 `K` 的整数倍。
-- 整个结构体的 *首地址* 及 *长度* 必须是其 *最大初等成员* 大小的整数倍。
+- 整个 `struct` 的 *首地址* 及 *长度* 必须是其 *最大初等成员* 大小的整数倍。
 
-因此整个结构体的大小可能大于其全部成员大小之和。例如：
+因此整个 `struct` 的大小可能大于其全部成员大小之和。例如：
 
 ```c
 struct X1 {
@@ -1052,7 +1116,7 @@ struct X2 {
 0               8       12      16  18          24
 ```
 
-其中 `[18,24)` 不存储数据，只是用来满足整个结构体的对齐要求。
+其中 `[18,24)` 不存储数据，只是用来满足整个 `struct` 的对齐要求。
 
 为节省存储空间，可采取 *贪心 (greedy)* 策略，即 *尺寸越大的成员越靠前声明*。例如：
 
