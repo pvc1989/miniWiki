@@ -8,13 +8,13 @@ Intel 长期主导 笔记本、台式机、服务器 处理器市场。
 
 里程碑产品：
 
-|    名称    | 时间 | 主频（单位：MHz） |     技术要点      |
-| :--------: | :--: | :---------: | :-----------: |
-|    8086    | 1978 |    5~10     |     16 位     |
-|    i386    | 1985 |    16~33    |     32 位     |
-| Pentium 4E | 2004 |  2800~3800  | 64 位、超线程 |
-|   Core 2   | 2006 |  1060~3500  |     多核    |
-|  Core i7   | 2008 |  1700~3900  |     四核、超线程  |
+|    名称    | 时间 | 主频（单位：MHz） |   技术要点    |
+| :--------: | :--: | :---------------: | :-----------: |
+|    8086    | 1978 |       5~10        |     16 位     |
+|    i386    | 1985 |       16~33       |     32 位     |
+| Pentium 4E | 2004 |     2800~3800     | 64 位、超线程 |
+|   Core 2   | 2006 |     1060~3500     |     多核      |
+|  Core i7   | 2008 |     1700~3900     | 四核、超线程  |
 
 - i386 引入了 *IA32 (Intel Architecture 32-bit)* 指令集。
 - Pentium 4E 采用了 *EM64T* 指令集（基本等价于 *x86-64* 指令集）。
@@ -46,6 +46,7 @@ Intel 长期主导 笔记本、台式机、服务器 处理器市场。
 |            Source Code             |  源代码  | 用高级语言表示的指令序列  |
 
 汇编码可见（源代码不可见）的信息：
+
 - 程序计数器 (Program Counter)：下一条指令的地址（在 x86-64 中由 `%rip` 保存）。
 - 寄存器 (Register)：位于 CPU 内部的临时数据存储器（顶级缓存）。
 - 条件码 (Condition Code)：存储最近一条指令的状态，用于条件分支。
@@ -64,6 +65,7 @@ Intel 长期主导 笔记本、台式机、服务器 处理器市场。
 - 高级语言隔离了这种机器相关性（具有跨平台性），编译器负责将同一份高级语言代码在不同机器上转换为相应的汇编码。
 
 对高级语言程序员而言，学习汇编语言主要是为了 *读* 而不是 *写* 汇编码：
+
 - 理解编译优化，分析代码效率。
 - 理解、分析代码的运行期行为（调试）。
 - 发现、修复系统程序的安全漏洞。
@@ -109,6 +111,7 @@ _main:                                  ## @main
 ```
 
 目标文件 `hello.o` 及可执行文件 `hello` 的反汇编结果大致如下（可能随系统、编译器而变化）：
+
 ```assembly
 # objdump -d hello.o
 0000000000000000 _main:
@@ -129,13 +132,16 @@ _main:                                  ## @main
 100000f82: 5d                           popq    %rbp
 100000f83: c3                           retq
 ```
+
 反汇编也可以在 *调试器 (debugger)* 中进行：
 
 ```shell
 gdb hello  # 进入调试环境，引导符变为 (gdb)
 (gdb) disassemble main  # 定位到 main() 函数，输出其汇编码
 ```
+
 输出结果（可能随系统、编译器而变化）如下：
+
 ```assembly
 Dump of assembler code for function main:
    0x0000000100000f70 <+0>:     push   %rbp
@@ -147,28 +153,40 @@ Dump of assembler code for function main:
    0x0000000100000f83 <+19>:    retq   
 End of assembler dump.
 ```
+
 ### 汇编要素
 
 - 函数名下方的每一行分别对应一条指令。
+
   - 形如 `100000f70` 或 `0x0000000100000f60` 的 64 位 16 进制整数，表示各条指令的首地址。由的 `hello.o` 与 `hello` 的反汇编结果可见，一些函数的地址会被 *链接器 (linker)* 修改，详见《[链接](#./linking.md)》。
+
   - 首地址后面的若干 16 进制整数（每 8 位一组，即每组 1 字节），表示该行指令的 *机器码*，由此可以算出各条指令的长度（字节数）。整个函数的机器码可以在 `gdb` 中连续打印：
+
     ```shell
     gdb hello
     (gdb) x/20xb main  # 打印始于 main 的 20 个字节
     ```
+
     得到
+
     ```assembly
     0x100000f70 <main>:     0x55    0x48    0x89    0xe5    0x48    0x8d    0x3d      0x2b
     0x100000f78 <main+8>:   0x00    0x00    0x00    0xe8    0x04    0x00    0x00      0x00
     0x100000f80 <main+16>:  0x31    0xc0    0x5d    0xc3
     ```
+
   - `<+n>` 表示当前指令相对于函数入口的 *偏移量*（以字节为单位）。由相邻两行的偏移量之差也可以算出前一行指令的机器码长度。
+
   - 指令的 *机器码长度* 与其 *使用频率* 及 *[运算对象](#运算对象)个数* 大致成反比，最长 1 字节，最短 15 字节。
+
 - 以 `%` 起始的 `%rsp`、`%rdi` 等符号表示 *寄存器*，用于存储临时数据：
+
   - 整数：长度为 1、2、4、8 字节，表示整数或地址。
   - 浮点数：长度为 4、8、10 字节，表示浮点数。
   - 没有聚合类型（数组、结构体）。
+
 - 形如英文单词的 `mov`、`lea` 等符号表示 *指令*，用于
+
   - 对寄存器、内存中的数据作算术运算。
   - 在寄存器、内存间传递数据（双向读写）。
   - 无条件跳转、条件分支。
@@ -223,6 +241,7 @@ End of assembler dump.
 |   Memory   | 形如 `D(B,I,S)` 的表达式 | 内存寻址 |
 
 其中 `D(B,I,S)` 表示取地址 `M[R[B] + S * R[I] + D]` 的值。
+
 - `M` 表示 *Memory*，可以视为是一个以 *64 位整数* 为索引的整型数组。
 - `R` 表示 *Register*，可以视为是一个以 *寄存器名称* 为索引的整型数组。
 - `D` 表示 *Displacement*，可以是 1、2、4 字节整数，若缺省则视为 `0`。
@@ -238,14 +257,18 @@ movl source, destination
 movw source, destination
 movb source, destination
 ```
+
 - `source` 及 `destination` 为该指令的 *[运算对象](#运算对象)*，且只能有一个为 Memory。
+
 - `mov` 后面的 `q` 表示 `destination` 的大小为 *quad-word*；其他后缀的含义见《[指令后缀](#指令后缀)》。
+
 - `mov` 的一个主要变种是 `movabs`：
-  
+
   - 若 `movq` 的 `source` 是 immediate，则只能是 32 位带符号整数，其符号位将被填入 `desination` 的前 32 位。若要阻止填充，则应使用 `movl` 等。
   - 若 `movabsq` 的 `source` 是 immediate，则可以是 64 位整数，此时 `desination` 必须是 register。
+
 - `mov` 还有另外几个变种：
-  
+
   ```assembly
   movz s, d  # d = ZeroExtend(s)
     movzbw s, d
@@ -264,7 +287,9 @@ movb source, destination
     movslq s, d
   cltq  # 等效于 movslq %eax, %rax 但其机器码更短
   ```
+
 - 以下示例体现了这几个版本的区别：
+
   ```assembly
   movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
   movb    $-1,                 %al   # %rax = 00112233445566FF
@@ -318,13 +343,19 @@ leaq source, destination
 ```
 
 - `lea` 由 *Load Effective Address* 的首字母构成，相当于 C 语言的 `p = &x[i]` 语句。
+
 - `source` 只能是 Memory。
+
 - `destination` 只能是 Register，用于存储 `source` 所表示的 *地址值*，但不访问该地址。
+
 - 该指令速度极快，故编译器可能用它来分解算术运算，例如：
+
   ```c
   long m12(long x) { return x * 12; }
   ```
+
   通常被编译为
+
   ```assembly
   leaq    (%rdi,%rdi,2), %rax  # 相当于 t = x + 2 * x
   salq    $2, %rax             # 相当于 t <<= 2
@@ -335,12 +366,12 @@ leaq source, destination
 
 其运算对象既是 source 又是 destination。
 
-|    指令     |          含义          |   语义    |
-| :---------: | :--------------------: | :-------: |
-|   `inc d`   |       INCrement        |   `d++`   |
-|   `dec d`   |       DECrement        |   `d--`   |
-|   `neg d`   |         NEGate         | `d = -d`  |
-|   `not d`   |       complement       | `d = ~d`  |
+|  指令   |    含义    |   语义   |
+| :-----: | :--------: | :------: |
+| `inc d` | INCrement  |  `d++`   |
+| `dec d` | DECrement  |  `d--`   |
+| `neg d` |   NEGate   | `d = -d` |
+| `not d` | complement | `d = ~d` |
 
 ### 二元运算
 
@@ -365,6 +396,7 @@ leaq source, destination
 | `sar k, d` | Shift Arithmeticly to the Right | `d >>= k` | 在左端，补符号位 |
 
 其中 `k` 可以是 immediate，也可以是 `%cl` 这个特殊的 register：
+
 - 后缀为 `b` 的版本，取 `%cl` 的后 3 位所表示的值，至多移 7 位。
 - 后缀为 `w` 的版本，取 `%cl` 的后 4 位所表示的值，至多移 15 位。
 - 后缀为 `l` 的版本，取 `%cl` 的后 5 位所表示的值，至多移 31 位。
@@ -399,6 +431,7 @@ CPU 用一组名为 *条件码 (condition code)* 的 1-bit 寄存器记录最近
 | `OF` | Overflow Flag | 最近一条指令触发 *带符号溢出* |
 
 一些（不显然的）约定：
+
 - `leaq` 指令不改变条件码。
 - 逻辑运算将 `CF` 及 `OF` 置零。
 - 移位运算将 `CF` 设为最后一个被移出的位，而 `OF` 仅在 *移动一位* 时会被修改。
@@ -424,6 +457,7 @@ CPU 用一组名为 *条件码 (condition code)* 的 1-bit 寄存器记录最近
 |   `setb d`   | Below (unsigned `<`) |        `d = CF`        |
 
 表中只列出了几个有代表性的指令，遇到其他指令可以根据以下规则猜出其语义：
+
 - 后缀前端的 `n` 表示 *Not*，后端的 `e` 表示 `or Equal`，因此 `setnle` 就表示 *(set when) Not Less or Equal*，类似的指令可按此规则解读。
 - 某些指令具有同义词（例如 `setg` 与 `setnle`），它们具有相同的机器码。编译器、反汇编器在生成汇编码时，从同义词中任选其一。
 
@@ -526,6 +560,7 @@ _absdiff:
 C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
 
 - `do`-`while` 语句：
+
   ```c
   /* do-while */
   long pcount(unsigned long x) {
@@ -537,7 +572,9 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
     return count;
   }
   ```
+
   以 `gcc -Og -S` 编译得如下汇编码：
+
   ```assembly
   pcount:
           movl    $0, %eax    # count = 0
@@ -551,7 +588,9 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
        # done:
           ret
   ```
+
 - `while` 语句：
+
   ```c
   long pcount(unsigned long x) {
     long count = 0;
@@ -562,7 +601,9 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
     return count;
   }
   ```
+
   以 `gcc -Og -S` 编译得如下汇编码：
+
   ```assembly
   _pcount:
           movl    $0, %eax    # count = 0
@@ -578,8 +619,11 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
   L4:  # done:
           ret
   ```
+
   此版本在进入循环前先做了一次检测，若恰有 `x == 0` 则会带来性能提升。
+
 - `for` 语句：
+
   ```c
   #define SIZE 8*sizeof(unsigned long)
   long pcount(unsigned long x) {
@@ -590,7 +634,9 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
     return count;
   }
   ```
+
   以 `gcc -O2 -S` 编译得如下汇编码：
+
   ```assembly
   _pcount:
        # init:
@@ -609,6 +655,7 @@ C 语言中有三种（不用 `goto`）表达 *循环 (loop)* 的方式：
           movq    %r8, %rax
           ret
   ```
+
   编译器知道计数器 `i` 的初值与终值，故首次检测被跳过。
 
 ### 选择语句
@@ -636,7 +683,9 @@ long choose(long x, long y, long z) {
   return w;
 }
 ```
+
 以 `gcc -Og -S` 编译得如下汇编码：
+
 ```assembly
 _choose:
         movq    %rdx, %rcx  # z_copy = z
@@ -677,6 +726,7 @@ L12: # default:
         movl    $2, %eax    # w = 2
         ret
 ```
+
 - 编译器通常会打乱各种情形的顺序。
 - 若分支总数 $N$ 较大，则用 `switch` 可以减少判断次数：
   - 若情形分布较密集，则编译器会为每一种情形各生成一个标签，故 `switch` 语句只需要 $\Theta(1) $ 次判断。
@@ -702,6 +752,7 @@ L12: # default:
 每个 Caller 都在内存中拥有一段被称为 *帧 (frame)* 的连续存储空间，其分配与释放遵循 *栈 (stack)* 的 *后进先出 (LIFO)* 规则，因此这种内存管理机制（或这段内存空间）很自然地被称为 *运行期栈 (run-time stack)*。
 
 栈顶地址
+
 - 随着栈内数据的增加而减小，因此这是一个“向下生长”的栈。
 - 保存在 `%rsp` 中（注意与 `%rip` 区分，后者为即将被执行的那条指令的地址）。
 
@@ -773,6 +824,7 @@ long incr(long *p, long val) {
   return x;
 }
 ```
+
 ```assembly
 _incr:
         movq    (%rdi), %rax  # incr 的局部变量在寄存器内度过其生存期：
@@ -780,6 +832,7 @@ _incr:
         movq    %rsi, (%rdi)
         ret
 ```
+
 ```c
 long call_incr() {
   long v1 = 15213;
@@ -787,6 +840,7 @@ long call_incr() {
   return v1+v2;
 }
 ```
+
 ```assembly
 _call_incr:
         subq    $24, %rsp        # 分配 call_incr 的帧
@@ -798,6 +852,7 @@ _call_incr:
         addq    $24, %rsp        # 释放 call_incr 的帧
         ret
 ```
+
 ```c
 long call_incr2(long x) {
   long v1 = 15213;
@@ -809,6 +864,7 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 ```
+
 ```assembly
 _call_incr2:
         pushq   %rbx             # call_incr2 是 main 的被调函数
