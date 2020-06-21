@@ -1066,7 +1066,10 @@ L4:  # node == 0
 
 C 语言中的 `union` 与 `struct` 有相同的 *语法 (syntax)*，但有不同的 *语义 (semantics)* 及相应的机器级表示：`union` 的所有成员共享同一段内存空间，整个 `union` 的尺寸不小于最大成员的尺寸。
 
-若某种二叉树的叶结点（只）含两个 `double` 成员、非叶结点（只）含两个指针成员，则结点类型有两种典型的定义方式：
+⚠️ 该机制弱化了编译器的类型检查功能，可能会导致程序错误，应尽量少用。
+
+`union` 可用于定义相似的数据类型。若某种二叉树的叶结点（只）含两个 `double` 成员、非叶结点（只）含两个指针成员，则结点类型有两种典型的定义方式：
+
 ```c
 struct node_s {
   struct {
@@ -1100,6 +1103,7 @@ struct node_t {
 该方案每个结点的大小为 `16 + 4 + 4 == 24` 字节，其中最后 `4` 个字节不存储数据，仅用于[数据对齐](#数据对齐)。
 
 `union` 的另一个用处是获取其他类型的字节表示：
+
 ```c
 #include <stdlib.h>
 #include <stdio.h>
@@ -1126,6 +1130,45 @@ int main(int argc, char* argv[]) {
   assert(shift == 0);
   printf("\n");
 }
+```
+
+这种用法可以被用来检测系统的字节顺序：
+
+- 若最重要的字节地址最小，则为 *大端 (big endian)* 系统。
+- 若最次要的字节地址最小，则为 *小端 (little endian)* 系统。
+
+```c
+#include <stdio.h>
+int main() {
+  union {
+    unsigned char c[8];
+    unsigned short s[4];
+    unsigned int i[2];
+    unsigned long l[1];
+  } x;
+  for (int j = 0; j < 8; j++) {
+    x.c[j] = 0xf0 + j;
+  }
+  printf("chars 0-7 == [0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x]\n",
+         x.c[0], x.c[1], x.c[2], x.c[3], x.c[4], x.c[5], x.c[6], x.c[7]);
+  printf("shorts 0-3 == [0x%x, 0x%x, 0x%x, 0x%x]\n",
+         x.s[0], x.s[1], x.s[2], x.s[3]);
+  printf("ints 0-1 == [0x%x, 0x%x]\n", x.i[0], x.i[1]);
+  printf("long 0 == [0x%lx]\n", x.l[0]);
+}
+```
+
+```shell
+# on big endian system:
+ char[0, 8) == [0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7]
+short[0, 4) == [0xf0f1, 0xf2f3, 0xf4f5, 0xf6f7]
+  int[0, 2) == [0xf0f1f2f3, 0xf4f5f6f7]
+ long[0, 1) == [0xf0f1f2f3f4f5f6f7]
+# on little endian system:
+ char[0, 8) == [0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7]
+short[0, 4) == [0xf1f0, 0xf3f2, 0xf5f4, 0xf7f6]
+  int[0, 2) == [0xf3f2f1f0, 0xf7f6f5f4]
+ long[0, 1) == [0xf7f6f5f4f3f2f1f0]
 ```
 
 ### 数据对齐
