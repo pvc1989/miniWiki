@@ -33,8 +33,9 @@
   - [Python](./programming/python.md)
   - [UML](./programming/uml/README.md) + [PlantUML](./programming/uml/README.md#PlantUML)
 - 构建工具
-  - [Git](./programming/git.md#Git) + [GitHub](./programming/git.md#GitHub)
-  - [GNU Make](./programming/make/README.md#GNU-Make) + [CMake](./programming/make/README.md#CMake)
+  - [版本控制](./programming/git.md)：Git + GitHub
+  - [批量构建](./programming/make/README.md)：GNU Make + CMake
+  - [断点调试](./programming/debug/README.md)：GDB + LLDB
 - 文档排版
   - [Markdown](./programming/markdown.md) + [Typora](./programming/markdown.md#Typora)
   - [LaTeX](./programming/latex/README.md) + [LyX](./programming/latex/README.md#LyX)
