@@ -159,3 +159,10 @@ chmod 644 .ssh/authorized_keys
 
 作为特例，如果希望能够通过 SSH 免密访问本地主机上的当前用户，只需在本地主机上开启 SSH 服务，并将当前用户的公钥写入自己的 `~/.ssh/authorized_keys` 文件。
 
+## 在远程主机运行任务
+
+```shell
+$ nohup command [options]    # 在远程主机的前台运行任务
+$ nohup command [options] &  # 在远程主机的后台运行任务
+```
+
