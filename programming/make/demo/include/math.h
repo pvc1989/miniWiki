@@ -1,6 +1,6 @@
-#ifndef PROJECT_MATH_H_
-#define PROJECT_MATH_H_
+#ifndef MATH_H_
+#define MATH_H_
 
-int factorial(int);
+long factorial(long);
 
-#endif  /* PROJECT_MATH_H_ */
+#endif  /* MATH_H_ */
