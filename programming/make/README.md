@@ -1,4 +1,4 @@
-# 构建工具
+# 批量构建
 
 ## 目录
 
@@ -261,19 +261,28 @@ cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 ### 常用选项
 ```shell
 # 查看帮助
-cmake --help[-<topic>]
+--help[-<topic>]
 # 查看版本号
-cmake --version
+--version
 # 打开项目
-cmake --open <dir>
+--open <dir>
 # 将 CMake 变量 var 的值设为 value
-cmake [{-D <var>=<value>}...] -P <cmake-script-file>
+[{-D <var>=<value>}...] -P <cmake-script-file>
 # 运行外部程序
-cmake -E <command> [<options>]
+-E <command> [<options>]
 # 查找包
-cmake --find-package [<options>]
+--find-package [<options>]
 # 指定「源文件目录」和「构建目录」，需要 cmake 3.13.5+
-cmake -S <source-dir> -B <build-dir>
+-S <source-dir> -B <build-dir>
+# 示例
+cd <source-dir>
+mkdir build
+mkdir build/Debug
+cd build/Debug
+cmake -S ../.. -B . \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
+      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-9
 ```
 
 ## `CMakeLists.txt` 文件
