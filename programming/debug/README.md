@@ -101,6 +101,12 @@ LLDB 命令具有以下结构：
 # 设断点于函数 `main` 的入口处
 (gdb)  break                 main
 (lldb) breakpoint set --name main
+# 设断点于所有名称中含有 `push` 的（C++）类方法的入口处
+(gdb)  break                   push
+(lldb) breakpoint set --method push
+# 设断点于 C++ 类方法特定版本的入口处
+(gdb)  break        Class::Method(int, int)
+(lldb) br s --name 'Class::Method(int, int)'  # 含空格，需置于 ' ' 中
 # 设断点于文件 `test.c` 的第 `12` 行
 (gdb)  break                 test.c   :    12
 (lldb) breakpoint set --file test.c --line 12
@@ -125,8 +131,8 @@ LLDB 命令具有以下结构：
 (gdb)             delete
 (lldb) breakpoint delete
 # 创建条件断点
-(gdb)  break                 foo   if               strcmp(x, "hello") == 0
-(lldb) breakpoint set --name foo --condition '(int) strcmp(x, "hello") == 0'
+(gdb)  break                 foo   if         count == 37
+(lldb) breakpoint set --name foo --condition 'count == 37'
 # 为现有断点设置条件（置于 ' ' 内）
 (gdb)  condition N             CONDITION
 (lldb) br modify N --condition CONDITION
@@ -135,6 +141,8 @@ LLDB 命令具有以下结构：
 ### 执行
 
 ```shell
+# 跳转至指定位置
+(gdb/lldb) jump *0x1007145
 # 源码级步进（遇到函数则进入其内部）：
 (lldb) thread step-in
 (gdb/lldb)    step
@@ -197,15 +205,18 @@ LLDB 命令具有以下结构：
   # F = which Format (d=decimal, x=hex, o=octal, etc.)
   # 若 S 或 F 未给定，则取前一次的值。
 (gdb/lldb) x/w   0x100d33  # 查看 始于 `0x100d33` 的 4-byte word
-(gdb/lldb) x/wd  $rsp      # 查看 始于 `R[%rsp]` 的 4-byte word，以十进制显示
-(gdb/lldb) x/2g  $rsp      # 查看 始于 `R[%rsp]` 的 `2` 个 quad-word
+(gdb/lldb) x/wd  $rsp      # 查看 始于 `R[%rsp]`  的 4-byte word，以十进制显示
+(gdb/lldb) x/2g  $rsp      # 查看 始于 `R[%rsp]`  的 `2` 个 quad-word
 (gdb/lldb) x/a   $rsp      # 查看 `R[%rsp]` 中的地址
 (gdb/lldb) x/s   0x100d33  # 查看 始于 `0x100d33` 的字符串
 (gdb/lldb) x/20b main      # 查看 始于 `main` 的前 `20` 个字节
 (gdb/lldb) x/10i main      # 查看 始于 `main` 的前 `10` 条指令
-# 查看 局部变量 `foo` 的值
-(lldb) frame variable --format x foo
-# 查看 全局变量 `foo` 的值
+# 查看 局部变量的值
+(gdb)  info args
+(gdb)  info locals
+(lldb) frame variable  # 当前帧内所有局部变量的值
+(lldb) frame variable --format x foo  # 按格式 `x` 显示 `foo` 的值
+# 查看 全局变量的值
 (lldb) target variable foo
 ```
 
@@ -221,6 +232,19 @@ LLDB 命令具有以下结构：
 # 查看 指定寄存器的值
 (gdb)  info all-registers rdi rax
 (lldb) register read      rdi rax
+```
+
+
+# 创建、修改变量
+```shell
+# 为帧内现有的变量赋值
+(gdb)  set variable i = 40
+(gdb)  set         (i = 40)
+(lldb) expression   i = 40    # 除 expression 外，类似 C 语句
+# 创建临时变量
+(gdb)  set variable  $i = 40
+(gdb)  set          ($i = 40)
+(lldb) expression int i = 40  # 除 expression 外，类似 C 语句
 ```
 
 ### 查看其它信息
