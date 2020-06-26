@@ -6,7 +6,7 @@
 
 ### Daemon
 
-名为 `dockerd` 的可执行程序，启动后为寄生在宿主机上的后台进程，提供对 *镜像 (image)*、*容器 (container)* 等 Docker 对象的管理服务。
+名为 `dockerd` 的可执行程序，启动后为寄生在宿主机上的后台进程，提供对 ***镜像 (image)***、***容器 (container)*** 等 Docker 对象的管理服务。
 
 ### Client
 
@@ -22,7 +22,7 @@
 
 ### Containers
 
-镜像的可执行实例（类似于安装后的软件实例）。单个<镜像>|<安装包>可以在同一台主机上<生成多个容器>|<安装多个实例>，不同<名称的容器>|<位置的实例>运行时互不干扰。
+镜像的可执行实例（类似于安装后的软件实例）。单个【镜像】/【安装包】可以在同一台主机上【生成多个容器】/【安装多个实例】，不同【名称的容器】/【位置的实例】运行时互不干扰。
 
 |                          容器                          |                     虚拟机                      |
 | :----------------------------------------------------: | :---------------------------------------------: |
@@ -37,6 +37,15 @@ docker --version
 docker --help
 docker COMMAND --help
 ```
+
+某些常用（但不是所有）选项支持简化写法：
+
+```shell
+docker -v  # docker --version
+docker -h  # docker --hep
+```
+
+初学时应掌握完整写法，熟练后再用简化写法。
 
 ### Images
 
@@ -57,34 +66,45 @@ docker pull ubuntu:16.04  # TAG 默认为 latest
 
 ### Containers
 
-每个 CONTAINER 都可以通过其 ID（的头几位）或 NAME 来指明。
-
 ```shell
 # List containers:
 docker ps [OPTIONS]
 docker ps  # 列出活动容器
-docker ps -a  # 列出所有容器# Start one or more stopped containers:
+docker ps --all  # 列出所有容器
 # Start/Stop one or more stopped containers:
 docker start [OPTIONS] CONTAINER [CONTAINER...]
-docker stop [OPTIONS] CONTAINER [CONTAINER...]
+docker stop  [OPTIONS] CONTAINER [CONTAINER...]
 # ⚠️ Kill one or more running containers:
 docker kill [OPTIONS] CONTAINER [CONTAINER...]
 # Attach local stdin, stdout, and stderr to a running container:
 docker attach [OPTIONS] CONTAINER
+docker start --attach CONTAINER
 # Remove one or more containers:
 docker rm [OPTIONS] CONTAINER [CONTAINER...]
-docker rm -f $(docker ps -qa)  # ⚠️ 强制删除所有容器
+docker rm --force $(docker ps -qa)  # ⚠️ 强制删除所有容器
 ```
+
+每个 `CONTAINER` 都可以通过其 *`ID` 的前几位* 或 *`NAME`* 来指明。
 
 ### Run
 
 ```shell
 # Run a command in a new container:
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
-docker run -it ubuntu  # 以互动模式启动虚拟终端
-docker run -w DIR ubuntu  # 启动容器后以 DIR 为工作目录
-docker run -v HOST_DIR:DIR ubuntu # 容器读写 DIR == 宿主读写 HOST_DIR
-docker run -v `pwd`:`pwd` -w `pwd` -it ubuntu  # 挂载并进入同名目录
+docker run --interactive --tty IMAGE  # 以互动模式启动虚拟终端
+docker run --workdir WORK_DIR IMAGE  # 启动容器后以 DIR 为工作目录
+docker run --volume HOST_DIR:WORK_DIR IMAGE # 将 HOST_DIR 挂载为 WORK_DIR
+# 简化写法：
+docker run -it IMAGE
+docker run -w WORK_DIR IMAGE
+docker run -v HOST_DIR:WORK_DIR IMAGE
+```
+所谓 ***挂载 (mount)*** 是指 *容器读写 `WORK_DIR`* 等效于 *宿主读写 `HOST_DIR`*。
+【常用场景】将宿主的当前目录挂载到容器的同名目录：
+
+```shell
+docker run -v `pwd`:`pwd` -w `pwd` -it IMAGE  # 路径不能有空格
+docker run --mount type=bind,src="$(pwd)",dst="$(pwd)" -w "$(pwd)" -it IMAGE  # 【推荐】可读性更强、路径更灵活
 ```
 
 ## 参考资料
