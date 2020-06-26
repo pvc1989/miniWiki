@@ -1,6 +1,6 @@
 # Linux
 
-## [安装](./install/README.md)
+## [安装与配置](./install/README.md)
 
 ## 文本编辑器
 

@@ -45,6 +45,7 @@
 - [CGNS](./tools/cgns/README.md) (**C**FD **G**eneral **N**otation **S**ystem)
 - [Gmsh](./tools/gmsh/README.md) (a 3D finite element mesh generator with built-in CAD engine and post-processor)
 - [Linux](./tools/linux/README.md) (a family of open source Unix-like operating systems)
+  - [安装与配置](./tools/linux/install/README.md)
   - [SSH](./tools/linux/ssh.md) (**S**ecure **SH**ell)
   - [Vim](./tools/linux/vim.md) (**V**i **IM**proved, a programmer's text editor)
 - [Docker](./tools/docker/README.md) (a platform for developers and sysadmins to build, run, and share applications with **container**s)
