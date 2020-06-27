@@ -111,6 +111,12 @@ void phase_1(char* input) {  /* 0x400ee0 */
 }
 ```
 
+So, the 1st line should be
+
+```
+Border relations with Canada have never been better.
+```
+
 ## Phase 2
 
 ### `read_six_numbers`
@@ -149,7 +155,7 @@ Dump of assembler code for function phase_2:
    0x400efe <+2>:     sub    $0x28,%rsp  # allocate local array
    0x400f02 <+6>:     mov    %rsp,%rsi   # head of the array
    0x400f05 <+9>:     callq  0x40145c <read_six_numbers>
-                      # 用 `x/6wd $rsp` 可查看这 6 个数
+                      # use `x/6wd $rsp` to examine these numbers
    0x400f0a <+14>:    cmpl   $0x1,(%rsp)  # a[0] - 1
    0x400f0e <+18>:    je     0x400f30 <phase_2+52>    # == 0
    0x400f10 <+20>:    callq  0x40143a <explode_bomb>  # != 0
@@ -190,5 +196,129 @@ void phase_2(char* input) {  /* 0x400efc */
     ++curr;  /* <+41> */
   } while (curr != last);  /* <+45> */
 }
+```
+
+So, the 2nd line should begin with
+
+```
+1 2 4 8 16 32
+```
+
+## Phase 3
+
+### `phase_3`
+
+```assembly
+Dump of assembler code for function phase_3:
+   0x400f43 <+0>:     sub    $0x18,%rsp
+   0x400f47 <+4>:     lea    0xc(%rsp),%rcx  # int y
+   0x400f4c <+9>:     lea    0x8(%rsp),%rdx  # int x
+   0x400f51 <+14>:    mov    $0x4025cf,%esi  # "%d %d"
+   0x400f56 <+19>:    mov    $0x0,%eax
+   0x400f5b <+24>:    callq  0x400bf0 <__isoc99_sscanf@plt>
+   0x400f60 <+29>:    cmp    $0x1,%eax  # n - 1
+   0x400f63 <+32>:    jg     0x400f6a <phase_3+39>    # > 0
+   0x400f65 <+34>:    callq  0x40143a <explode_bomb>  # <= 0
+   0x400f6a <+39>:    cmpl   $0x7,0x8(%rsp)  # x - 7
+   0x400f6f <+44>:    ja     0x400fad <phase_3+106>  # > 0
+   0x400f71 <+46>:    mov    0x8(%rsp),%eax          # <= 0 (unsigned)
+   0x400f75 <+50>:    jmpq   *0x402470(,%rax,8)  # switch (x)
+   # use `x/8gx 0x402470` to examine the table, which gives
+   #   0x00402470: 0x0000000000400f7c 0x0000000000400fb9
+   #   0x00402480: 0x0000000000400f83 0x0000000000400f8a
+   #   0x00402490: 0x0000000000400f91 0x0000000000400f98
+   #   0x004024a0: 0x0000000000400f9f 0x0000000000400fa6
+   # thus we have
+   # case 0:
+   0x400f7c <+57>:    mov    $0xcf,%eax   # t = 207
+   0x400f81 <+62>:    jmp    0x400fbe <phase_3+123>
+   # case 2:
+   0x400f83 <+64>:    mov    $0x2c3,%eax  # t = 707
+   0x400f88 <+69>:    jmp    0x400fbe <phase_3+123>
+   # case 3:
+   0x400f8a <+71>:    mov    $0x100,%eax  # t = 256
+   0x400f8f <+76>:    jmp    0x400fbe <phase_3+123>
+   # case 4:
+   0x400f91 <+78>:    mov    $0x185,%eax  # t = 389
+   0x400f96 <+83>:    jmp    0x400fbe <phase_3+123>
+   # case 5:
+   0x400f98 <+85>:    mov    $0xce,%eax   # t = 206
+   0x400f9d <+90>:    jmp    0x400fbe <phase_3+123>
+   # case 6:
+   0x400f9f <+92>:    mov    $0x2aa,%eax  # t = 682
+   0x400fa4 <+97>:    jmp    0x400fbe <phase_3+123>
+   # case 7:
+   0x400fa6 <+99>:    mov    $0x147,%eax  # t = 327
+   0x400fab <+104>:   jmp    0x400fbe <phase_3+123>
+   # default:
+   0x400fad <+106>:   callq  0x40143a <explode_bomb>  # (unsigned)x > 7
+   0x400fb2 <+111>:   mov    $0x0,%eax    # t = 0
+   0x400fb7 <+116>:   jmp    0x400fbe <phase_3+123>
+   # case 1:
+   0x400fb9 <+118>:   mov    $0x137,%eax  # t = 311
+   # out of the switch
+   0x400fbe <+123>:   cmp    0xc(%rsp),%eax  # t - y
+   0x400fc2 <+127>:   je     0x400fc9 <phase_3+134>   # == 0
+   0x400fc4 <+129>:   callq  0x40143a <explode_bomb>  # != 0
+   0x400fc9 <+134>:   add    $0x18,%rsp
+   0x400fcd <+138>:   retq 
+```
+
+```c
+void phase_3(char* input) {
+  unsigned int x
+  unsigned int y;
+  int n = sscanf(input, "%d %d", &x, &y);
+  if (n <= 1) {
+    explode_bomb();  /* <+34> */
+  }
+  unsigned int t;  /* %rax */
+  switch (x) {  /* <+39> */
+  case 0:
+    t = 0xcf;
+    break;
+  case 1:
+    t = 0x137;
+    break;
+  case 2:
+    t = 0x2c3;
+    break;
+  case 3:
+    t = 0x100;
+    break;
+  case 4:
+    t = 0x185;
+    break;
+  case 5:
+    t = 0xce;
+    break;
+  case 6:
+    t = 0x2aa;
+    break;
+  case 7:
+    t = 0x147;
+    break;
+  default:
+    explode_bomb();  /* <+106> */
+    t = 0;
+    break;
+  }
+  if (t != y) {  /* <+123> */
+    explode_bomb();  /* <+129> */
+  }
+}
+```
+
+So, the 3rd line should begin with any one of the following 8 cases:
+
+```
+0 207
+1 311
+2 707
+3 389
+4 206
+5 682
+6 682
+7 327
 ```
 
