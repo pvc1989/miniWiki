@@ -7,6 +7,27 @@
 ### [Vim](./vim.md)
 
 ## Shell
+
+### 数据流重定向
+
+|   名称   |   覆盖   |   追加    |
+| :------: | :------: | :-------: |
+| `stdout` | `1> dst` | `1>> dst` |
+| `stderr` | `2> dst` | `2>> dst` |
+
+示例：
+
+```shell
+# 正常信息、错误信息 均输出到 屏幕
+$ find ~/.. -name .bash_history
+# 正常信息 输出到 stdout.txt 文件，错误信息 输出到 屏幕
+$ find ~/.. -name .bash_history > stdout.txt
+# 正常信息 输出到 stdout.txt 文件，错误信息 输出到 stderr.txt 文件
+$ find ~/.. -name .bash_history > stdout.txt 2> stderr.txt
+# 正常信息、错误信息 均输出到 stdout_stderr.txt 文件
+$ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
+```
+
 ### [SSH](./ssh.md)
 
 ## 进程管理
