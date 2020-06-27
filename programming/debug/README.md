@@ -39,6 +39,42 @@ $ c++ -g hello.cpp -o hello
    set startup-with-shell off
    ```
 
+### 在 [Docker](../../tools/docker/README.md) 容器中使用 GDB
+
+```shell
+# 非 Linux 主机：
+$ docker pull ubuntu
+$ docker run --mount type=bind,src="$(pwd)",dst="/root/code" -w "/root/code" -it ubuntu
+# 在 Linux 环境中安装 GDB/LLDB：
+$ apt update
+$ apt install gdb
+# 进入 GDB 环境：
+$ gdb <executable>
+(gdb) b main
+(gdb) r
+# 在 GDB 中运行程序出错：
+Starting program: <executable>
+warning: Error disabling address space randomization: Operation not permitted
+warning: Could not trace the inferior process.
+warning: ptrace: Operation not permitted
+During startup program exited with code 127.
+# 退出 GDB 环境：
+(gdb) q
+# 退出 Linux 环境：
+$ exit
+```
+
+⚠️ 在此环境中使用 [LLDB](#LLDB) 也有类似问题。
+
+【解决方法】新建容器时增加以下选项：
+
+- `--cap-add=SYS_PTRACE` [add Linux capabilities](https://docs.docker.com/engine/reference/commandline/run/#options)
+- `--security-opt seccomp=unconfined` [run a container without the default seccomp profile](https://docs.docker.com/engine/security/seccomp/#run-without-the-default-seccomp-profile)
+
+```shell
+$ docker run --mount type=bind,src="$(pwd)",dst="/root/code" -w "/root/code" --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it ubuntu
+```
+
 ## LLDB
 
 ### 参考文档
@@ -235,7 +271,7 @@ LLDB 命令具有以下结构：
 ```
 
 
-# 创建、修改变量
+### 创建、修改变量
 ```shell
 # 为帧内现有的变量赋值
 (gdb)  set variable i = 40
