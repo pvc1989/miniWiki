@@ -39,7 +39,7 @@ $ c++ -g hello.cpp -o hello
    set startup-with-shell off
    ```
 
-### 在 [Docker](../../tools/docker/README.md) 容器中使用 GDB
+### 在 [Docker](../docker/README.md) 容器中使用 GDB
 
 ```shell
 # 非 Linux 主机：
