@@ -281,6 +281,9 @@ LLDB 命令具有以下结构：
 (gdb)  set variable  $i = 40
 (gdb)  set          ($i = 40)
 (lldb) expression int i = 40  # 除 expression 外，类似 C 语句
+# 修改内存中的值
+(gdb)  set        *(int*) 0x7ff52c = -2
+(lldb) expression *(int*) 0x7ff52c = -2  # 除 expression 外，类似 C 语句
 ```
 
 ### 查看其它信息
