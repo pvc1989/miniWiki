@@ -1,8 +1,11 @@
+---
+layout: page
+---
 # 学习笔记
 
 ## 目录
 
-### 数学
+### [数学](./mathematics/README.md)
 
 |                       卷                        |  章  |  节  |  进度   |
 | :---------------------------------------------: | :--: | :--: | :-----: |
@@ -14,7 +17,7 @@
 |   [偏微分方程](./mathematics/pde/README.lyx)    |      |      | `00111` |
 |  [微分几何](./mathematics/geometry/README.lyx)  |      |      | `00001` |
 
-### 物理
+### [物理](./physics/README.md)
 
 |                    卷                    |  章  |  节  |  进度   |
 | :--------------------------------------: | :--: | :--: | :-----: |
@@ -22,8 +25,7 @@
 |  [流体力学](./physics/fluid/README.lyx)  |      |      | `00111` |
 | [量子力学](./physics/quantum/README.lyx) |      |      | `00011` |
 
-
-### 算法
+### [算法](./algorithms/README.md)
 
 |                           卷                           |  章  |  节  |  进度   |
 | :----------------------------------------------------: | :--: | :--: | :-----: |
@@ -31,9 +33,9 @@
 |      [优化](./algorithms/optimization/README.lyx)      |      |      | `00001` |
 |    [有限元](./algorithms/finite_element/README.lyx)    |      |      | `00011` |
 
-### 编程
+### [编程](./programming/README.md)
 - 计算机系统
-  - [CSAPP (Computer Systems: A Programmer's Perspective)](./programming/csapp/README.md)
+  - [CSAPP](./programming/csapp/README.md)
 - 设计思想
   - [设计原则](./programming/principles/README.md)
   - [设计模式](./programming/patterns/README.md)
@@ -44,12 +46,12 @@
   - [UML](./programming/uml/README.md)
     - [PlantUML](./programming/uml/README.md#PlantUML)
 - 并行计算
-  - [MPI](./programming/mpi/README.md) (**M**essage **P**assing **I**nterface)
+  - [MPI](./programming/mpi/README.md)
 - 网格离散
-  - [CGNS](./programming/cgns/README.md) (**C**FD **G**eneral **N**otation **S**ystem)
-  - [Gmsh](./programming/gmsh/README.md) (a 3D finite element mesh generator with built-in CAD engine and post-processor)
-  - [VTK](./programming/vtk/README.md) (**V**isualization **T**ool**K**it)
-    - [ParaView](./programming/vtk/README.md#ParaView) (an open-source, multi-platform data analysis and visualization application)
+  - [CGNS](./programming/cgns/README.md)
+  - [Gmsh](./programming/gmsh/README.md)
+  - [VTK](./programming/vtk/README.md)
+    - [ParaView](./programming/vtk/README.md#ParaView)
 - 构建工具
   - [版本控制](./programming/git.md)
     - [Git](./programming/git.md#Git)
@@ -61,20 +63,20 @@
     - [GDB](./programming/debug/README.md#GDB)
     - [LLDB](./programming/debug/README.md#LLDB)
 - 开发环境
-  - [Linux](./programming/linux/README.md) (a family of open source Unix-like operating systems)
+  - [Linux](./programming/linux/README.md)
     - [安装与配置](./programming/linux/install/README.md)
-    - [SSH](./programming/linux/ssh.md) (**S**ecure **SH**ell)
-    - [Vim](./programming/linux/vim.md) (**V**i **IM**proved, a programmer's text editor)
-  - [Docker](./programming/docker/README.md) (a platform for developers and sysadmins to build, run, and share applications with containers)
+    - [SSH](./programming/linux/ssh.md)
+    - [Vim](./programming/linux/vim.md)
+  - [Docker](./programming/docker/README.md)
 
-### 文档
+### [文档](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
   -  [LyX](./documenting/latex/README.md#LyX)
 - [Markdown](./documenting/markdown.md)
   -  [Typora](./documenting/markdown.md#Typora)
-- [书签](./programming/bookmark)
-  - [PDFBookmarker](./programming/bookmark.md#PDFBookmarker) (add bookmarks into PDF using PyPDF2)
-  - [DJVUSED](./programming/bookmark.md#DJVUSED) (a multi-purpose DjVu document editor)
+- [编辑书签](./documenting/bookmark)
+  - [PDFBookmarker](./documenting/bookmark.md#PDFBookmarker)
+  - [DJVUSED](./documenting/bookmark.md#DJVUSED)
 
 ## 说明
 
@@ -86,7 +88,7 @@
 
 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 [Markdown](./programming/markdown.md) 文档。
 
-### 编译 LyX 文档
+### 编译文档
 
 编译 LyX 文档（生成 PDF 或 HTML 文件）需要：
 
