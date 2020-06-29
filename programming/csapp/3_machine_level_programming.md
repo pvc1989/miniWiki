@@ -96,7 +96,7 @@ int main() {
 
 汇编文件 `hello.s` 的内容大致如下（可能因 操作系统、编译器 不同而存在差异），其中以 `.` 开头的行是用于引导 汇编器、链接器 的指令，可忽略：
 
-```assembly
+```nasm
 _main:                                  ## @main
 	.cfi_startproc
 ## %bb.0:
@@ -114,7 +114,7 @@ _main:                                  ## @main
 
 目标文件 `hello.o` 及可执行文件 `hello` 的反汇编结果大致如下（可能因 操作系统、编译器 不同而存在差异）：
 
-```assembly
+```nasm
 # objdump -d hello.o
 0000000000000000 _main:
        0: 55                            pushq   %rbp
@@ -144,7 +144,7 @@ gdb hello  # 进入调试环境，引导符变为 (gdb)
 
 输出结果（可能因 操作系统、编译器、调试器 不同而存在差异）如下：
 
-```assembly
+```nasm
 Dump of assembler code for function main:
    0x0000000100000f70 <+0>:     push   %rbp
    0x0000000100000f71 <+1>:     mov    %rsp,%rbp
@@ -254,7 +254,7 @@ End of assembler dump.
 
 ### 移动数据
 
-```assembly
+```nasm
 movq source, destination
 movl source, destination
 movw source, destination
@@ -272,7 +272,7 @@ movb source, destination
 
 - `mov` 还有两类用于 *短整数* 向 *长整数* 扩展的变种：
 
-  ```assembly
+  ```nasm
   movz s, d  # d = ZeroExtend(s)
     movzbw s, d
     movzbl s, d
@@ -292,7 +292,7 @@ movb source, destination
 - `cltq` 是 `movslq %eax, %rax` 的简写（机器码更短）。
 - 以下示例体现了这几个版本的区别：
 
-  ```assembly
+  ```nasm
   movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
   movb    $-1,                 %al   # %rax = 00112233445566FF
   movw    $-1,                 %ax   # %rax = 001122334455FFFF
@@ -318,7 +318,7 @@ movb source, destination
  }
 ```
 
-```assembly
+```nasm
 movq    (%rdi), %rax
 movq    (%rsi), %rdx
 movq    %rdx, (%rdi)
@@ -340,7 +340,7 @@ x86-64 规定：栈顶字节的地址保存在寄存器 `%rsp` 中，并且小�
 
 ### 加载有效地址
 
-```assembly
+```nasm
 leaq source, destination
 ```
 
@@ -358,7 +358,7 @@ leaq source, destination
 
   通常被编译为
 
-  ```assembly
+  ```nasm
   leaq    (%rdi,%rdi,2), %rax  # 相当于 t = x + 2 * x
   salq    $2, %rax             # 相当于 t <<= 2
   ret
@@ -479,13 +479,13 @@ CPU 用一组名为 ***条件码 (condition code)*** 的寄存器记录最近一
 int greater(long x, long y) { return x > y; }
 ```
 
-```assembly
+```nasm
 cmpq    %rsi, %rdi
 setg    %al         # 将最后一位设为 0 或 1
 movzbl  %al, %eax   # 将前 7 位清零
 ```
 
-```assembly
+```nasm
 xorl    %eax, %eax  # 将全 8 位清零
 cmpq    %rsi, %rdi
 setg    %al         # 将最后一位设为 0 或 1
@@ -531,7 +531,7 @@ Done:
 
 要得到与源代码结构最接近的汇编码，需降低优化等级：
 
-```assembly
+```nasm
 # gcc -Og -S -fno-if-conversion
 _absdiff:
         movq    %rdi, %rax  # d = x
@@ -547,7 +547,7 @@ L2:
 
 提高优化等级，编译器会在 *两个分支都安全* 且 *计算量都很小* 的情况下，先计算两个分支，再作比较，最后利用 ***条件移动 (conditional move)*** 指令 `cmov_` 完成选择：
 
-```assembly
+```nasm
 # gcc -O1 -S
 _absdiff:
         movq    %rdi, %rdx  # c = x
@@ -579,7 +579,7 @@ C 语言中有三种（不用 `goto`）表达 ***循环 (loop)*** 的方式：
 
   以 `gcc -Og -S` 编译得如下汇编码：
 
-  ```assembly
+  ```nasm
   pcount:
           movl    $0, %eax    # count = 0
   L2:  # loop:
@@ -608,7 +608,7 @@ C 语言中有三种（不用 `goto`）表达 ***循环 (loop)*** 的方式：
 
   以 `gcc -Og -S` 编译得如下汇编码：
 
-  ```assembly
+  ```nasm
   _pcount:
           movl    $0, %eax    # count = 0
   L2:  # test:
@@ -641,7 +641,7 @@ C 语言中有三种（不用 `goto`）表达 ***循环 (loop)*** 的方式：
 
   以 `gcc -O2 -S` 编译得如下汇编码：
 
-  ```assembly
+  ```nasm
   _pcount:
        # init:
           xorl    %ecx, %ecx  # i = 0
@@ -690,7 +690,7 @@ long choose(long x, long y, long z) {
 
 以 `gcc -Og -S` 编译得如下汇编码：
 
-```assembly
+```nasm
 _choose:
         movq    %rdx, %rcx  # z_copy = z
         cmpq    $3, %rdi
@@ -776,7 +776,7 @@ void multstore(long x, long y, long *dest) {
 
 编译（所得可执行文件的反汇编）结果为
 
-```assembly
+```nasm
 0000000100000f5c _mult2:
 100000f5c: 48 89 f8                     movq    %rdi, %rax
 100000f5f: 48 0f af c6                  imulq   %rsi, %rax
@@ -833,7 +833,7 @@ long incr(long *p, long val) {
 }
 ```
 
-```assembly
+```nasm
 _incr:
         movq    (%rdi), %rax  # incr 的局部变量在寄存器内度过其生存期：
         addq    %rax, %rsi    # x 位于 %rax 中，y 位于 %rsi 中。
@@ -849,7 +849,7 @@ long call_incr() {
 }
 ```
 
-```assembly
+```nasm
 _call_incr:
         subq    $24, %rsp        # 分配 call_incr 的帧
         movq    $15213, 8(%rsp)  # 将局部变量 v1 存储到帧内
@@ -873,7 +873,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-```assembly
+```nasm
 _call_incr2:
         pushq   %rbx             # call_incr2 是 main 的被调函数
         subq    $16, %rsp        #
@@ -902,7 +902,7 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-```assembly
+```nasm
 _factorial:
         cmpl    $1, %edi
         ja      L8
@@ -984,7 +984,7 @@ long get_element(long a[N][N], long i, long j) {
 }
 ```
 
-```assembly
+```nasm
 _get_element:  # R[%rdi] = a, R[%rsi] = i, R[%rdx] = j
         salq    $5, %rsi             # R[%rsi] = 8 * N * i
         addq    %rsi, %rdi           # R[%rdi] = a + 8*N*i
@@ -1005,7 +1005,7 @@ long get_element(long n,/* 必须紧跟在 n 之后 */long a[n][n],
 }
 ```
 
-```assembly
+```nasm
 _get_element:  # R[%rdi] = n, R[%rsi] = a, R[%rdx] = i, R[%rcx] = j
         imulq   %rdi, %rdx           # R[%rdx] = n * i
         leaq    (%rsi,%rdx,8), %rax  # R[%rax] = a + 8*n*i
@@ -1055,7 +1055,7 @@ void set_val(struct node_t *node, int val) {
 }
 ```
 
-```assembly
+```nasm
 _set_val:  # R[%rdi] = node, R[%rsi] = val
 L2:  # loop:
         testq   %rdi, %rdi           # node == 0?

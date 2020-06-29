@@ -20,7 +20,7 @@ int string_length(char* s);
 
 ### `strings_not_equal()`
 
-```assembly
+```nasm
 Dump of assembler code for function strings_not_equal:
    0x401338 <+0>:     push   %r12
    0x40133a <+2>:     push   %rbp
@@ -87,7 +87,7 @@ int strings_not_equal(char* s1, char* s2) {  /* 0x401338 */
 
 ### `phase_1()`
 
-```assembly
+```nasm
 Dump of assembler code for function phase_1:
    0x400ee0 <+0>:     sub    $0x8,%rsp
    0x400ee4 <+4>:     mov    $0x402400,%esi
@@ -121,7 +121,7 @@ Border relations with Canada have never been better.
 
 ### `read_six_numbers()`
 
-```assembly
+```nasm
 Dump of assembler code for function read_six_numbers:
    0x40145c <+0>:     sub    $0x18,%rsp
    0x401460 <+4>:     mov    %rsi,%rdx
@@ -148,7 +148,7 @@ int read_six_numbers(char* s, int a[]);
 
 ### `phase_2()`
 
-```assembly
+```nasm
 Dump of assembler code for function phase_2:
    0x400efc <+0>:     push   %rbp
    0x400efd <+1>:     push   %rbx
@@ -208,7 +208,7 @@ So, the 2nd line should begin with
 
 ### `phase_3()`
 
-```assembly
+```nasm
 Dump of assembler code for function phase_3:
    0x400f43 <+0>:     sub    $0x18,%rsp
    0x400f47 <+4>:     lea    0xc(%rsp),%rcx  # int y
@@ -326,7 +326,7 @@ So, the 3rd line should begin with any one of the following 8 cases:
 
 ### `func4()`
 
-```assembly
+```nasm
 Dump of assembler code for function func4:
    0x400fce <+0>:     sub    $0x8,%rsp
    0x400fd2 <+4>:     mov    %edx,%eax   # t = c
@@ -380,7 +380,7 @@ int func4(int a, int b, int c) {
 
 ### `phase_4()`
 
-```assembly
+```nasm
 Dump of assembler code for function phase_4:
    0x40100c <+0>:     sub    $0x18,%rsp
    0x401010 <+4>:     lea    0xc(%rsp),%rcx
