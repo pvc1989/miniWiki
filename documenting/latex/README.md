@@ -7,9 +7,9 @@
 
 1. 下载并 *完整* 安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
 2. 安装完成后，应当可以用以下命令打开 [`ctex` 宏包](https://ctan.org/pkg/ctex)的文档《[CTeX 宏集手册](https://ctan.org/pkg/ctex)》：
-```shell
-texdoc ctex
-```
+   ```shell
+   texdoc ctex
+   ```
 
 ### TeXstudio
 [TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX「编辑器 (editor)」。
@@ -34,11 +34,11 @@ texdoc ctex
   - CTeX 文档类，例如 `ctexart`、`ctexrep`、`ctexbook`。
   - 其他文档类 +  [CTeX 宏包](https://ctan.org/pkg/ctex)。
 1. 用 `xelatex` 命令编译：
-```shell
-mkdir build
-cd build
-xelatex ../hello.tex
-```
+   ```shell
+   mkdir build
+   cd build
+   xelatex ../hello.tex
+   ```
 
 ### LyX 中文支持
 
@@ -171,15 +171,13 @@ pip3 install pygments
 
 1. 「程序列表」→「语法高亮支持包」→「Minted」。
 2. 「程序列表」→「空白处」可以设置 `minted` 宏包参数，例如：
-
-```latex
-style=xcode
-frame=leftline
-baselinestretch={1.0}
-breaklines=true
-fontsize={\footnotesize}
-```
-
+   ```latex
+   style=xcode
+   frame=leftline
+   baselinestretch={1.0}
+   breaklines=true
+   fontsize={\footnotesize}
+   ```
 3. 「输出格式」→「允许运行外部程序」。
 4. 首次编译该文档时，会弹出警告对话框，选择「对该文档总是允许」。
 
