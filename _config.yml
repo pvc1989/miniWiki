@@ -1,0 +1,290 @@
+defaults: # 将所有配置选项使用<https://jekyllrb.com/docs/configuration/front-matter-defaults/>功能进行配置
+  - scope:
+      path: "" # an empty string here means all files in the project
+    values: # 以下配置项也可以在任意页面自定义
+      jekyll-theme-WuK: # 我的主题的自定义样式都在这个命名空间
+        default:
+          body:
+            theme-base: theme-base-0f # 可选的主题色包括08~0f，见 <https://github.com/poole/lanyon>
+            layout-reverse: false # 开启后sidebar在右边，反之左边
+            sidebar-overlay: false # 开启后正文不随sidebar移动而移动
+          append_to_head: # 通过内嵌html的方式引入并定制插件，删改前确定知道自己在做什么。定制插件的方式可以参考这篇文章 <https://wu-kan.cn/_posts/2019-01-18-基于Jekyll搭建个人博客/>
+            - | #一些页面优化标签，看不懂可跳过
+              <meta
+                name="viewport"
+                content="width=device-width,minimum-scale=1,initial-scale=1"
+              />
+              <meta
+                http-equiv="content-type"
+                content="text/html; charset=utf-8"
+              />
+              <link
+                rel="alternate"
+                href="/feed.xml"
+                title="RSS"
+                type="application/rss+xml"
+              />
+            - | # 网站小图标，可换成你自己的图片，改href中的部分即可
+              <link
+                rel="apple-touch-icon-precomposed"
+                href="/assets/cat.jpg?s=320"
+              />
+              <link
+                rel="shortcut
+                icon"
+                href="/assets/cat.jpg?s=32"
+              />
+            - | # 来自lanyon的页面样式，不要改
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/combine/gh/poole/lanyon@v1.1.0/public/css/poole.min.css,gh/poole/lanyon@v1.1.0/public/css/lanyon.min.css,gh/poole/lanyon@v1.1.0/public/css/syntax.min.css"
+              />
+            - | # 用js引入fontawesome图标样式，功能更丰富
+              <script
+                async="async"
+                src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/js/all.min.js"
+              ></script>
+            - | # 网页标题使用加粗字号
+              <style>
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6 {
+                  font-weight: bold;
+                }
+              </style>
+            - | # 修复行内图片默认样式
+              <style>
+                img {
+                  display: inline-block;
+                  margin: 0;
+                }
+              </style>
+            - | # 彩虹滚动条，仅对Chrome系浏览器生效
+              <style>
+                ::-webkit-scrollbar {
+                  width: 3px;
+                  height: 3px;
+                }
+                ::-webkit-scrollbar-thumb {
+                  background-image: linear-gradient(45deg, Cyan 0%, Magenta 50%, Yellow 100%);
+                }
+              </style>
+            - | # 选中字体颜色
+              <style>
+                ::selection {
+                  color: White;
+                  background: Black;
+                }
+              </style>
+          sidebar: # 此配置项下是一些关于侧边栏的配置
+            disable: false # 是否不显示sidebar
+            avatar: # 侧边栏显示的头像
+              enable: true
+              img: /assets/cat.jpg # 头像的地址
+            nav: # 导航部分的内容，你也可以自己增加文字、图标（来自fontawesome）和对应的链接
+              - title: '<i class="fas fa-home fa-fw"></i> 首页'
+                href: /
+              - title: '<i class="fas fa-tags fa-fw"></i> 数学'
+                href: /mathematics/
+              - title: '<i class="fas fa-tags fa-fw"></i> 物理'
+                href: /physics/
+              - title: '<i class="fas fa-tags fa-fw"></i> 算法'
+                href: /algorithms/
+              - title: '<i class="fas fa-tags fa-fw"></i> 编程'
+                href: /programming/
+              - title: '<i class="fas fa-tags fa-fw"></i> 文档'
+                href: /documenting/
+            jekyll-toc: # 侧边栏的目录插件，https://github.com/allejo/jekyll-toc
+              enable: true
+              prepend: | # 目录过长时自动折叠
+                <style>
+                  #toc {
+                    overflow: auto auto;
+                    max-height: 66.6vh;
+                  }
+                </style>
+            append_to_sidebar:
+              - | # 修复点击侧边栏按钮回到顶部的问题
+                <style>
+                  .sidebar-checkbox {
+                    display: none;
+                  }
+                  .sidebar-toggle {
+                    position: fixed;
+                  }
+                </style>
+              - | # 侧边栏头像效果
+                <style>
+                  .effect {
+                    margin: 1rem;
+                    perspective: 900px;
+                  }
+                  .effect-info {
+                    text-align: center;
+                    backface-visibility: hidden;
+                    position: absolute;
+                    top: 0;
+                    transform-style: preserve-3d;
+                  }
+                  .effect-img {
+                    z-index: 11;
+                    width: 100%;
+                    height: 100%;
+                    position: relative;
+                    transition: all 0.5s ease-in-out;
+                  }
+                  .effect-img:before {
+                    position: absolute;
+                    display: block;
+                  }
+                  .effect-right_to_left .effect-img {
+                    transform-origin: 0% 50%;
+                  }
+                  .effect-right_to_left:hover .effect-img {
+                    transform: rotate3d(0, 1, 0, -180deg);
+                  }
+                </style>
+              - | # 觉得我的主题好用的话，让更多的人知道它吧！
+                <div>
+                  <i class="fas fa-thumbs-up fa-fw"></i>
+                  <a href="https://jekyll-theme-WuK.wu-kan.cn">
+                    jekyll-theme-WuK
+                  </a>
+                </div>
+        page:
+          masthead: # 显示顶栏
+            enable: true
+          katex: # katex 数学公式插件
+            enable: true
+            append: |
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
+              />
+              <script
+                src="https://cdn.jsdelivr.net/combine/npm/katex@0.11.1/dist/katex.min.js,npm/katex@0.11.1/dist/contrib/mathtex-script-type.min.js,npm/katex@0.11.1/dist/contrib/auto-render.min.js"
+                async="async"
+                onload='renderMathInElement(document.body, { delimiters: [{ left: "$", right: "$", display: false }] })'
+              ></script>
+          mermaid: # mermaid图插件
+            enable: true
+            append: |
+              <style>
+                pre.language-mermaid,
+                code.language-mermaid {
+                  display: none;
+                }
+                .mermaid {
+                  overflow: auto auto;
+                  max-width: 100%;
+                  max-height: 66.6vh;
+                }
+              </style>
+              <script
+                src="https://cdn.jsdelivr.net/npm/mermaid@8.5.1/dist/mermaid.min.js"
+                async="async"
+                onload='
+                  for(let x of document.getElementsByClassName("language-mermaid"))
+                    if(x.nodeName=="CODE")
+                    {
+                      let m = document.createElement("div");
+                      m.classList.add("mermaid");
+                      m.textContent = x.textContent;
+                      x.parentNode.insertAdjacentElement("beforebegin", m);
+                    }'
+              ></script>
+          prism: # 代码高亮插件
+            enable: true
+            append: |
+              <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/combine/npm/prismjs@1.20.0/plugins/line-numbers/prism-line-numbers.min.css,npm/prismjs@1.20.0/plugins/toolbar/prism-toolbar.min.css,gh/PrismJS/prism-themes@1955cfef6953b3a59e66016e8a1e016b45d6cc79/themes/prism-ghcolors.min.css"
+              />
+              <script
+                src="https://cdn.jsdelivr.net/combine/npm/prismjs@1.20.0/components/prism-core.min.js,npm/prismjs@1.20.0/plugins/autoloader/prism-autoloader.min.js,npm/prismjs@1.20.0/plugins/line-numbers/prism-line-numbers.min.js,npm/prismjs@1.20.0/plugins/toolbar/prism-toolbar.min.js"
+                async="async"
+                onload='
+                  Prism.plugins.autoloader.languages_path = "https:\/\/cdn.jsdelivr.net/npm/prismjs/components/";
+                  for(let x of document.getElementsByTagName("pre"))
+                    x.classList.add("line-numbers");
+                  Prism.plugins.toolbar.registerButton("select-code", function (env) {
+                    let button = document.createElement("button");
+                    button.textContent = "select this " + env.language;
+                    button.addEventListener("click", function () {
+                      if (document.body.createTextRange) {
+                        let range = document.body.createTextRange();
+                        range.moveToElementText(env.element);
+                        range.select();
+                      } else if (window.getSelection) {
+                        let selection = window.getSelection();
+                        let range = document.createRange();
+                        range.selectNodeContents(env.element);
+                        selection.removeAllRanges();
+                          selection.addRange(range);
+                      }
+                    });
+                    return button;
+                  })'
+              ></script>
+          prepend:
+            - | # 代码块过长自动折叠
+              <style>
+                pre {
+                  max-height: 66.6vh;
+                  overflow: auto;
+                }
+              </style>
+            - | # 增加宽屏下的显示内容
+              <style>
+                .container {
+                  min-width: 66.6%;
+                }
+              </style>
+            - | # 给文章加上磨砂背景，防止被背景影响阅读；同时加上加载动画
+              <style>
+                .masthead,
+                .container.content {
+                  padding-top: 1rem;
+                  padding-bottom: 1rem;
+                  margin-bottom: 1.5rem;
+                  box-shadow: 0 0 .75rem rgba(0, 0, 0, 0.1);
+                  background-color: rgba(255,255,255,.8);
+                  animation-duration: 2s;
+                  animation-name: fadeIn;
+                }
+                @keyframes fadeIn {
+                  from {
+                    opacity: 0;
+                  }
+                  to {
+                    opacity: 1;
+                  }
+                }
+              </style>
+
+# githubpage上支持的插件见<https://pages.github.com/versions/>
+plugins: # <https://jekyllrb.com/docs/plugins/>
+  - jekyll-readme-index # 使用readme做index，从而和github渲染效果一致
+  - jekyll-default-layout # 为每个markdown自动生成layout
+  - jekyll-seo-tag # 为每个页面生成标题
+  - jekyll-sitemap # 为站点生成站点地图
+  - jekyll-feed # 为站点生成RSS源
+  - jekyll-remote-theme # 使用remote_theme插件实现主题的前后分离，详见<https://github.com/benbalter/jekyll-remote-theme/>
+
+remote_theme: https://github.com/wu-kan/jekyll-theme-WuK@4.0.0 #使用固定版本号以防止主题更新导致站点显示错乱
+
+readme_index: # 缺失index.md和index.html时，使用README.md代替之
+  with_frontmatter: true # 支持带有yaml头的README
+
+markdown: kramdown
+kramdown: # 见<https://kramdown.gettalong.org/options.html>
+  input: GFM # 见<http://jekyllcn.com/docs/configuration/#kramdown>
+  syntax_highlighter_opts: # 可见<https://kramdown.gettalong.org/syntax_highlighter/rouge.html>
+    block:
+      disable: false # 关掉代码块默认的高亮，换用 prismjs
+      line_numbers: false #渲染出来的效果好鬼畜
+    span:
+      disable: true
