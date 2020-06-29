@@ -31,7 +31,7 @@ $ c++ -g hello.cpp -o hello
    ```
 
 1. 创建并信任证书：
-   参考 https://sourceware.org/gdb/wiki/PermissionsDarwin
+   参考 [PermissionsDarwin](https://sourceware.org/gdb/wiki/PermissionsDarwin)
 
 1. 在 GDB 环境用如下命令（可写入 `~/.gdbinit` 中）关闭从终端启动被调试程序：
 

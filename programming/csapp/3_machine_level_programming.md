@@ -1264,7 +1264,9 @@ struct Y2 {
 
 ### 理解指针
 
-### [使用 GDB 调试器](#../debug/README.md)
+### 使用 GDB 调试器
+
+见《[断点调试](../debug/README.md)》。
 
 ### 越界访问与缓冲区溢出
 
