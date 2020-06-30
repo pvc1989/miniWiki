@@ -428,3 +428,135 @@ void phase_4(char* input) {
 3 0
 ```
 
+## Phase 5
+
+### `phase_5()`
+
+```nasm
+Dump of assembler code for function phase_5:
+   0x401062 <+0>:     push   %rbx
+   0x401063 <+1>:     sub    $0x20,%rsp
+   0x401067 <+5>:     mov    %rdi,%rbx
+   0x40106a <+8>:     mov    %fs:0x28,%rax  # store canary
+   0x401073 <+17>:    mov    %rax,0x18(%rsp)
+   0x401078 <+22>:    xor    %eax,%eax
+   0x40107a <+24>:    callq  0x40131b <string_length>
+   0x40107f <+29>:    cmp    $0x6,%eax
+   0x401082 <+32>:    je     0x4010d2 <phase_5+112>  # wanted
+   0x401084 <+34>:    callq  0x40143a <explode_bomb>
+   0x401089 <+39>:    jmp    0x4010d2 <phase_5+112>
+   # \begin{loop}
+   0x40108b <+41>:    movzbl (%rbx,%rax,1),%ecx  # int R[%ecx] = a[i]
+   0x40108f <+45>:    mov    %cl,(%rsp)   # char M[R[%rsp]] = a[i]
+   0x401092 <+48>:    mov    (%rsp),%rdx  # long R[%rdx] = M[R[%rsp]]
+   0x401096 <+52>:    and    $0xf,%edx    # a[i] is the loweset byte
+   0x401099 <+55>:    movzbl 0x4024b0(%rdx),%edx  # s = M[0x4024b0 + s]
+   0x4010a0 <+62>:    mov    %dl,0x10(%rsp,%rax,1)  # a[i] = s
+   0x4010a4 <+66>:    add    $0x1,%rax  # ++i
+   0x4010a8 <+70>:    cmp    $0x6,%rax  # i - 6
+   0x4010ac <+74>:    jne    0x40108b <phase_5+41>  # while (i != 0)
+   # \end{loop}
+   0x4010ae <+76>:    movb   $0x0,0x16(%rsp)  # a[6] == `\0`
+   0x4010b3 <+81>:    mov    $0x40245e,%esi   # "flyers" as 2nd arg
+   0x4010b8 <+86>:    lea    0x10(%rsp),%rdi  #   &a[0]  as 1st arg
+   0x4010bd <+91>:    callq  0x401338 <strings_not_equal>
+   0x4010c2 <+96>:    test   %eax,%eax
+   0x4010c4 <+98>:    je     0x4010d9 <phase_5+119>  # wanted
+   0x4010c6 <+100>:   callq  0x40143a <explode_bomb>
+   0x4010cb <+105>:   nopl   0x0(%rax,%rax,1)
+   0x4010d0 <+110>:   jmp    0x4010d9 <phase_5+119>
+   0x4010d2 <+112>:   mov    $0x0,%eax
+   0x4010d7 <+117>:   jmp    0x40108b <phase_5+41>
+   0x4010d9 <+119>:   mov    0x18(%rsp),%rax  # pick out stored canary
+   0x4010de <+124>:   xor    %fs:0x28,%rax
+   0x4010e7 <+133>:   je     0x4010ee <phase_5+140>  # no overflow
+   0x4010e9 <+135>:   callq  0x400b30 <__stack_chk_fail@plt>
+   0x4010ee <+140>:   add    $0x20,%rsp  # good bye
+   0x4010f2 <+144>:   pop    %rbx
+   0x4010f3 <+145>:   retq 
+```
+
+### Step-by-Step
+
+1. From `<+24>` to `<+34>`, we know ***Line 5 should be a 6-`char` string (excluding the `'\0'` at the end)***.
+
+1. There is a 6-step loop between `<+41>` and `<+74>`, which does not call `explode_bomb()`. So, it's safe to set a breakpoint after it, and let the process keep running until `<+76>` is hit.
+
+1. From `<+76>` to `<+100>`, we know ***the target string at `0x40245e` is `flyers`***, which is indeed 6-`char` long.
+
+1. Now, it's time to examine the loop in detail. We are working on a *little-endian* system, so `a[i]` resides in the least-significant byte, and the the net effect of the 3 instructions beginning at `<+81>` is
+   ```c
+   R[%rdx] = ZeroExtend(a[i] % 0x10);
+   ```
+   So, the C code for the loop might be
+   ```c
+   void phase_5(char* input) {
+     if (string_length(input) != 6) explode_bomb();
+     for (char* curr = a; curr != a+6; ++curr) {
+       int t = *curr;    /* %ecx */
+       long s = t % 16;  /* %rdx */
+       s = *(int *)(0x4024b0 + s);
+       *curr = (char) s;
+     }
+   }
+   ```
+   
+1. The 16 bytes beginning at `0x4024b0`, denoted as `char b[16]`, are
+   ```shell
+   (lldb) x/16bd 0x4024b0
+   0x004024b0: 109
+   0x004024b1: 97
+   0x004024b2: 100
+   0x004024b3: 117
+   0x004024b4: 105
+   0x004024b5: 101
+   0x004024b6: 114
+   0x004024b7: 115
+   0x004024b8: 110
+   0x004024b9: 102
+   0x004024ba: 111
+   0x004024bb: 116
+   0x004024bc: 118
+   0x004024bd: 98
+   0x004024be: 121
+   0x004024bf: 108
+   ```
+while the 6 bytes in `flyers`, beginning at `0x40245e`, denoted as `char c[6]`, are
+   ```shell
+   (lldb) x/6bd 0x40245e
+   0x0040245e: 102
+   0x0040245f: 108
+   0x00402460: 121
+   0x00402461: 101
+   0x00402462: 114
+   0x00402463: 115
+   ```
+   So, the mapping gives a strong implication to the answer:
+   ```c
+   c[0] == 102 == b[0x9]
+   c[1] == 108 == b[0xf]
+   c[2] == 121 == b[0xe]
+   c[3] == 101 == b[0x5]
+   c[4] == 114 == b[0x6]
+   c[5] == 115 == b[0x7]
+   ```
+   
+1. The 6 bytes in Line 5, denoting as `char a[6]`, should be
+   ```c
+   a[0] == 0x9 + 0x10*K
+   a[1] == 0xf + 0x10*K
+   a[2] == 0xe + 0x10*K
+   a[3] == 0x5 + 0x10*K
+   a[4] == 0x6 + 0x10*K
+   a[5] == 0x7 + 0x10*K
+   ```
+   The answer is not unique. When `k == 4` the answer is
+   ```c
+   0x49 == 'I'
+   0x4f == 'O'
+   0x4e == 'N'
+   0x45 == 'E'
+   0x46 == 'F'
+   0x47 == 'G'
+   ```
+
