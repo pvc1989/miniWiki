@@ -560,3 +560,347 @@ while the 6 bytes in `flyers`, beginning at `0x40245e`, denoted as `char c[6]`, 
    0x47 == 'G'
    ```
 
+## Phase 6
+
+### `read_six_numbers()`
+
+```nasm
+0x4010f4 <+0>:     push   %r14
+0x4010f6 <+2>:     push   %r13
+0x4010f8 <+4>:     push   %r12
+0x4010fa <+6>:     push   %rbp
+0x4010fb <+7>:     push   %rbx
+0x4010fc <+8>:     sub    $0x50,%rsp  # allocate array
+0x401100 <+12>:    mov    %rsp,%r13
+0x401103 <+15>:    mov    %rsp,%rsi
+0x401106 <+18>:    callq  0x40145c <read_six_numbers>
+0x40110b <+23>:    mov    %rsp,%r14  # save &a[0] for later use
+```
+`read_six_numbers()` implies ***Line 6 must begin with 6 integers***. So, the first 2 lines in the C code looks like
+
+```c
+int a[6];
+read_six_numbers(input, a);  /* <+18> */
+```
+
+### `1, 2, 3, 4, 5, 6`
+
+```nasm
+# init the loop
+0x40110e <+26>:    mov    $0x0,%r12d  # int i = 0
+# enter the loop
+0x401114 <+32>:    mov    %r13,%rbp  # R[%rbp] == &a[i]
+0x401117 <+35>:    mov    0x0(%r13),%eax  # unsigned int t = a[i]
+0x40111b <+39>:    sub    $0x1,%eax  # t -= 1
+0x40111e <+42>:    cmp    $0x5,%eax  # t - 5
+0x401121 <+45>:    jbe    0x401128 <phase_6+52>  # unsigned <=
+0x401123 <+47>:    callq  0x40143a <explode_bomb>  # t > 5
+0x401128 <+52>:    add    $0x1,%r12d  # ++i
+0x40112c <+56>:    cmp    $0x6,%r12d  # i - 6
+0x401130 <+60>:    je     0x401153 <phase_6+95>  # i == 6
+# enter the inner loop
+0x401132 <+62>:    mov    %r12d,%ebx  # int j = i
+0x401135 <+65>:    movslq %ebx,%rax   # R[%rax] = j
+0x401138 <+68>:    mov    (%rsp,%rax,4),%eax  # R[%eax] = a[j]
+0x40113b <+71>:    cmp    %eax,0x0(%rbp)  # a[i-1] - a[j]
+0x40113e <+74>:    jne    0x401145 <phase_6+81>
+0x401140 <+76>:    callq  0x40143a <explode_bomb>  # a[i-1] == a[j]
+0x401145 <+81>:    add    $0x1,%ebx  # ++j
+0x401148 <+84>:    cmp    $0x5,%ebx  # j - 5
+0x40114b <+87>:    jle    0x401135 <phase_6+65>  # j <= 5
+# leave the inner loop
+0x40114d <+89>:    add    $0x4,%r13  # a += 1
+0x401151 <+93>:    jmp    0x401114 <phase_6+32>
+# leave the loop
+```
+
+The `jbe` in `<+45>` tells us the temporary `int` in `%eax` should be `unsigned`.
+
+The nested loops between `<+32>` and `<+93>` correspond to the following C code:
+```c
+for (int i = 0; true; ) {
+  unsigned int t = a[i] - 1;
+  if (t > 5) explode_bomb();  /* <+47> */
+  ++i;
+  if (i == 6) break;
+  for (int j = i; j <= 5; ++j)
+    if (a[i-1] == a[j])  /* <+76> */
+      explode_bomb();
+}
+```
+It tells us ***the 6 numbers must be distinct (implied by `<+76>`) and within `{1, 2, 3, 4, 5, 6}` (implied by `<+47>`)***; their order, however, is undetermined. Try the most natural one, for example:
+
+```nasm
+(lldb) x/6wd $rsp
+0x7fffffffe4c0: 1
+0x7fffffffe4c4: 2
+0x7fffffffe4c8: 3
+0x7fffffffe4cc: 4
+0x7fffffffe4d0: 5
+0x7fffffffe4d4: 6
+```
+
+### `a[i] = 7 - a[i]`
+
+```nasm
+# init the loop
+0x401153 <+95>:    lea    0x18(%rsp),%rsi  # int* a_n = &a[6]
+0x401158 <+100>:   mov    %r14,%rax        # int* a_i = &a[i]
+0x40115b <+103>:   mov    $0x7,%ecx  # t = 7
+# enter the loop
+0x401160 <+108>:   mov    %ecx,%edx  # s = t
+0x401162 <+110>:   sub    (%rax),%edx  # s -= a[i]
+0x401164 <+112>:   mov    %edx,(%rax)  # a[i] = 7 - a[i] 👈
+0x401166 <+114>:   add    $0x4,%rax  # a_i += 1
+0x40116a <+118>:   cmp    %rsi,%rax  # a_i - a_n
+0x40116d <+121>:   jne    0x401160 <phase_6+108>  # a_i != a_n
+# leave the loop
+```
+
+This loop replaces `a[i]` with `7 - a[i]` for each `i`, that is
+
+```c
+int* a_i = a;
+int* a_n = a + 6;
+int t = 7;
+do {
+  *a_i = 7 - *a_i;
+  a_i += 1;
+} while (a_i != a_n);
+```
+
+So, it's safe to go through the loop and stop after it.
+
+### Array of Nodes
+
+```nasm
+# init the loop
+0x40116f <+123>:   mov    $0x0,%esi  # void* offset = 0
+# begin loop
+0x401174 <+128>:   jmp    0x401197 <phase_6+163>
+# begin inner loop
+0x401176 <+130>:   mov    0x8(%rdx),%rdx  # target = *(target + 8)
+0x40117a <+134>:   add    $0x1,%eax  # count += 1
+0x40117d <+137>:   cmp    %ecx,%eax  # count - value
+0x40117f <+139>:   jne    0x401176 <phase_6+130>  # while (count != value)
+0x401181 <+141>:   jmp    0x401188 <phase_6+148>
+# end inner loop
+0x401183 <+143>:   mov    $0x6032d0,%edx  # if (value <= 1)
+# after if-else
+0x401188 <+148>:   mov    %rdx,0x20(%rsp,%rsi,2)  # b[i] = target
+0x40118d <+153>:   add    $0x4,%rsi   # offset += 4
+0x401191 <+157>:   cmp    $0x18,%rsi  # offset - 24
+0x401195 <+161>:   je     0x4011ab <phase_6+183>
+# enter the loop
+0x401197 <+163>:   mov    (%rsp,%rsi,1),%ecx  # int value = *(int*)((void*) a + offset)
+0x40119a <+166>:   cmp    $0x1,%ecx  # value - 1
+0x40119d <+169>:   jle    0x401183 <phase_6+143>  # if (value <= 1)
+0x40119f <+171>:   mov    $0x1,%eax  # if (value > 1) count = 1
+0x4011a4 <+176>:   mov    $0x6032d0,%edx  # void* target = 0x6032d0
+0x4011a9 <+181>:   jmp    0x401176 <phase_6+130>  # inner loop
+# leave the loop
+```
+
+This section is another loop:
+
+```c
+T* b[6];
+void* offset = 0;  /* <+123> */
+/* <+130> */
+while (offset != 24/* <+157> */) {
+  T* target;
+  int value = *(int*)((void*)a + offset);  /* <+163> */
+  if (value > 1) {  /* <+166> */
+    /* <+171> */
+    int count = 1;
+    target = 0x6032d0;  /* <+176> */
+    do {
+      target = *(T*)((void*)target + 8); /* <+130> */
+      ++count;
+    } while (count != value);  /* <+139> */
+  } else {  /* value <= 1 */
+    target = 0x6032d0;  /* <+143> */
+  }
+  *((void*)b + offset*2) = target;  /* <+148> */
+  offset += 4;
+} /* <+181> */
+```
+
+From `<+130>` we know `T` must be a recursive data structure, e.g.
+
+```c
+struct T {
+  long data;
+  T* next;
+};
+```
+
+By looking at the bytes started at `0x6032d0`, we know that it is a ***linked list***:
+
+```nasm
+(lldb) x/12gx 0x6032d0
+0x006032d0: 0x000000010000014c 0x00000000006032e0
+0x006032e0: 0x00000002000000a8 0x00000000006032f0
+0x006032f0: 0x000000030000039c 0x0000000000603300
+0x00603300: 0x00000004000002b3 0x0000000000603310
+0x00603310: 0x00000005000001dd 0x0000000000603320
+0x00603320: 0x00000006000001bb 0x0000000000000000
+```
+
+So, the loop can be clarified as
+
+```c
+T* b[6];
+for (int i = 0; i != 6; ++i) {
+  T* target = 0x6032d0;
+  int value = a[i];
+  int count = 1;
+  while (count != value) {
+    target = target->next; /* <+130> */
+    ++count;
+  }
+  b[i] = target;
+}
+```
+
+Again, it's safe to go through the loop and stop after it (at `<+183>`).
+
+The loop use `int a[6]` to build another array, located at `%rsp+0x20` and denoted as `T* b[6]`, whose elements come from the linked list and reordered by `a[]`'s elements':
+
+```nasm
+# stop at <+183>
+(lldb) x/6wd $rsp # int a[6]
+0x7fffffffe4c0: 6
+0x7fffffffe4c4: 5
+0x7fffffffe4c8: 4
+0x7fffffffe4cc: 3
+0x7fffffffe4d0: 2
+0x7fffffffe4d4: 1
+(lldb) x/6gx $rsp+0x20  # T* b[6]
+0x7fffffffe4e0: 0x0000000000603320 0x0000000000603310
+0x7fffffffe4f0: 0x0000000000603300 0x00000000006032f0
+0x7fffffffe500: 0x00000000006032e0 0x00000000006032d0
+```
+
+### Rebuild the List
+```nasm
+0x4011ab <+183>:   mov    0x20(%rsp),%rbx  # T* rbx = b[0];  // head
+0x4011b0 <+188>:   lea    0x28(%rsp),%rax  # T** rax = &b[1];
+0x4011b5 <+193>:   lea    0x50(%rsp),%rsi  # T** rsi = &b[6];  // tail
+0x4011ba <+198>:   mov    %rbx,%rcx        # T* rcx = b[0];  // b[i-1]
+# enter the loop
+0x4011bd <+201>:   mov    (%rax),%rdx      # T* rdx = *rax;  // b[i]
+0x4011c0 <+204>:   mov    %rdx,0x8(%rcx)   # rcx->next = rdx;
+0x4011c4 <+208>:   add    $0x8,%rax        # rax += 1;  // &b[i+1]
+0x4011c8 <+212>:   cmp    %rsi,%rax        # rax - tail
+0x4011cb <+215>:   je     0x4011d2 <phase_6+222> 
+0x4011cd <+217>:   mov    %rdx,%rcx        # rcx = rdx;  // b[i]
+0x4011d0 <+220>:   jmp    0x4011bd <phase_6+201>  # while (rax != tail)
+# leave the loop
+```
+This loop just rebuild a linked list according to the new order:
+```c
+T** curr = &b[1];
+T** tail = &b[6];
+T*  prev =  b[0];
+while (curr != tail) {
+  prev->next = *curr;
+  curr += 1;
+  prev = *curr;
+}
+```
+
+### Sort by `rank`
+
+At this point, `%rdx` holds `b[5]` and `%rbx` holds `b[0]`.
+
+```nasm
+0x4011d2 <+222>:   movq   $0x0,0x8(%rdx)  # b[5]->next = 0;
+0x4011da <+230>:   mov    $0x5,%ebp  # i = 5;
+# enter the loop
+0x4011df <+235>:   mov    0x8(%rbx),%rax  # rax = rbx->next;
+0x4011e3 <+239>:   mov    (%rax),%eax     # int eax = *rax;
+0x4011e5 <+241>:   cmp    %eax,(%rbx)     # rbx->data - eax;
+0x4011e7 <+243>:   jge    0x4011ee <phase_6+250>
+0x4011e9 <+245>:   callq  0x40143a <explode_bomb>  # rbx->data < eax
+0x4011ee <+250>:   mov    0x8(%rbx),%rbx  # rbx = rbx->next;
+0x4011f2 <+254>:   sub    $0x1,%ebp  # --i;
+0x4011f5 <+257>:   jne    0x4011df <phase_6+235>
+# leave the loop
+```
+
+This loop checks each pair of neighbouring nodes:
+
+```c
+b[5]->next = 0;  /* <+222> */
+T* curr = b;
+int i = 5/* <+230> */;
+while (i != 0/* <+257> */) {
+  T* next = curr->next;  /* <+235> */
+  if (curr->data < next->data)
+    explode_bomb();  /* <+245> */
+  curr = curr->next;  /* <+250> */
+  --i;/* <+250> */
+}
+```
+
+It is now clear that the `data` field should begin with an `int` member:
+```c
+struct node {
+  int rank;
+  int id;  /* optional */
+  struct node* next;
+};
+```
+and this member should keep decreasing along the list. Recall the original list:
+```nasm
+(lldb) x/12gx 0x6032d0
+0x006032d0: 0x000000010000014c 0x00000000006032e0
+0x006032e0: 0x00000002000000a8 0x00000000006032f0
+0x006032f0: 0x000000030000039c 0x0000000000603300
+0x00603300: 0x00000004000002b3 0x0000000000603310
+0x00603310: 0x00000005000001dd 0x0000000000603320
+0x00603320: 0x00000006000001bb 0x0000000000000000
+```
+
+It can be transformed into the following table:
+
+|  Address   | `rank`  | `id` |   `next`   |
+| :--------: | :-----: | :--: | :--------: |
+| `0x6032d0` | `0x14c` | `1`  | `0x6032e0` |
+| `0x6032e0` | `0x0a8` | `2`  | `0x6032f0` |
+| `0x6032f0` | `0x39c` | `3`  | `0x603300` |
+| `0x603300` | `0x2b3` | `4`  | `0x603310` |
+| `0x603310` | `0x1dd` | `5`  | `0x603320` |
+| `0x603320` | `0x1bb` | `6`  | `0x000000` |
+
+The `rank`s are initially unsorted. Sort then in the descending order, we have
+
+|  Address   | `rank`  | `id` |   `next`   |
+| :--------: | :-----: | :--: | :--------: |
+| `0x6032f0` | `0x39c` | `3`  | `0x603300` |
+| `0x603300` | `0x2b3` | `4`  | `0x603310` |
+| `0x603310` | `0x1dd` | `5`  | `0x603320` |
+| `0x603320` | `0x1bb` | `6`  | `0x000000` |
+| `0x6032d0` | `0x14c` | `1`  | `0x6032e0` |
+| `0x6032e0` | `0x0a8` | `2`  | `0x6032f0` |
+
+Column `id` gives the needed `a[]` used to build `b[]`, see [Array of Nodes](#Array-of-Nodes). So, Line 6 should begin with
+
+```
+4 3 2 1 6 5
+```
+
+The rest of the code release the frame and recover callee saved registers:
+
+
+```nasm
+0x4011f7 <+259>:   add    $0x50,%rsp
+0x4011fb <+263>:   pop    %rbx
+0x4011fc <+264>:   pop    %rbp
+0x4011fd <+265>:   pop    %r12
+0x4011ff <+267>:   pop    %r13
+0x401201 <+269>:   pop    %r14
+0x401203 <+271>:   retq
+```
+
