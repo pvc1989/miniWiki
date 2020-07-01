@@ -6,12 +6,13 @@ layout: page
 ## 编写说明
 
 ### 语言
-
-- 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 [LyX](./documenting/latex/README.md#LyX) 文档。
-  本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
-  根目录下的《[合订本](./README.lyx)》大致按逻辑顺序重新编排了章节（重复的只保留一份）。
-- 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 [Markdown](./programming/markdown.md) 文档。
-- 本仓库已启用 [**GitHub Pages**](https://pvcstillingradschool.github.io/miniWiki/)，目前仅支持 [Markdown](./programming/markdown.md) 文档。
+- [LyX](./documenting/latex/README.md#LyX)
+  - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 LyX 文档。
+  - 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
+  - 根目录下的《[合订本](./README.lyx)》大致按逻辑顺序重新编排了章节（重复的只保留一份）。
+- [Markdown](./programming/markdown.md)
+  - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 Markdown 文档。
+  - 本仓库已启用 [**GitHub Pages**](https://pvcstillingradschool.github.io/miniWiki/)，目前仅支持 Markdown 文档。
 
 ### 编译
 
@@ -33,7 +34,7 @@ layout: page
      $ bundle exec jekyll serve
      ```
   1. 生成的文件位于 `./_site/` 中。
-  1. 在浏览器中访问 `http://127.0.0.1:4000/` 或 `https://localhost:4000/`。
+  1. 在浏览器中访问 [`http://127.0.0.1:4000/`](http://127.0.0.1:4000/) 或 [`http://localhost:4000/`](http://localhost:4000/)。
 
 ### 排版
 
