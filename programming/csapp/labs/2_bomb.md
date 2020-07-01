@@ -1,14 +1,46 @@
 # Bomb Lab
 
-## Dangerous Functions
+## Solution
 
-### `explode_bomb()`
+### One Solution
+
+There are more than one possible solutions, one of which is
+
+```
+Border relations with Canada have never been better.
+1 2 4 8 16 32
+7 327
+0 0
+IONEFG
+4 3 2 1 6 5
+```
+
+Give them to the `bomb`, you will get these output:
+
+```
+Welcome to my fiendish little bomb. You have 6 phases with
+which to blow yourself up. Have a nice day!
+Phase 1 defused. How about the next one?
+That's number 2.  Keep going!
+Halfway there!
+So you got that one.  Try this one.
+Good work!  On to the next...
+Congratulations! You've defused the bomb!
+```
+
+### Dangerous Functions
+
+The following function and those who call it are dangerous:
 
 ```c
 void explode_bomb();
 ```
 
-👉 Set a breakpoint at the head of this function to avoid explosion.
+👉 Set a breakpoint at the entry of this function to avoid explosion.
+
+```shell
+(gdb/lldb) b explode_bomb
+```
 
 ## Phase 1
 
@@ -476,7 +508,7 @@ Dump of assembler code for function phase_5:
    0x4010f3 <+145>:   retq 
 ```
 
-### Step-by-Step
+### Key Steps
 
 1. From `<+24>` to `<+34>`, we know ***Line 5 should be a 6-`char` string (excluding the `'\0'` at the end)***.
 
