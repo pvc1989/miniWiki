@@ -113,6 +113,17 @@ LLDB 命令具有以下结构：
 - `help <command>` 获取帮助信息。
 - 回车键 重复上一条命令。
 
+### 选择汇编代码格式
+
+常用的 [汇编代码格式](../csapp/3_machine_level_programming.md#汇编代码格式) 有 ATT 和 Intel 两种。GDB/LLDB 均默认选用 ATT 格式；以下命令可用于更改此设定：
+
+```shell
+(gdb)           set            disassembly-flavor intel
+(lldb) settings set target.x86-disassembly-flavor intel
+```
+
+
+
 ### 启动、退出被调试程序
 
 ```shell
