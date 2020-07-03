@@ -12,9 +12,17 @@
 CMU [15-213/18-213: Introduction to Computer Systems (ICS)](http://www.cs.cmu.edu/~213/)
 
 - [Fall 2015](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/) 有二位作者按照第三版内容授课的[视频](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22)。
-- Labs
-  1. Data
-  2. [Bomb](./labs/2_bomb.md)
+
+- [Lab Assignments](#http://csapp.cs.cmu.edu/3e/labs.html)
+
+  1. [Data Lab](./labs/bomb/README.md)
+  2. [Bomb Lab](./labs/bomb/README.md)
+  3. [Attack Lab](./labs/bomb/README.md) or Buffer Lab (IA32)
+  4. Architecture Lab or Architecture Lab (Y86)
+  5. [Cache Lab](./labs/bomb/README.md) or Performance Lab
+  6. [Shell Lab](./labs/bomb/README.md)
+  7. [Malloc Lab](./labs/bomb/README.md)
+  8. [Proxy Lab](./labs/bomb/README.md)
 
 ## 全书目录
 
