@@ -1,6 +1,10 @@
 # Bomb Lab
 
-## Solution
+## Resources
+- [Linux/x86-64 binary bomb](http://csapp.cs.cmu.edu/3e/bomb.tar) for self-study
+- [Recitation 4: Bomb Lab](https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0ed08c72-f0f1-4982-aebc-92d3db7af9fd)
+
+## Hints
 
 ### One Solution
 
