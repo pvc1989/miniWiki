@@ -1310,7 +1310,148 @@ C 语言的 ***指针 (pointer)*** 是对（虚拟）内存读写操作的一种
 
 ### 越界访问与缓冲区溢出
 
+C 标准库的[文件读写](https://en.cppreference.com/w/c/io)及[字符串处理](https://en.cppreference.com/w/c/string/byte)模块提供了一些不安全的字符串接口（函数或预定义宏）：
+
+```c
+#include <stdio.h>
+char* gets(char* dest)
+#include <string.h>
+char* stpcpy(char* dest, const char* src);
+char* strcat(char* s1, const char* s2);
+int sprintf(char* dest, const char* format/* 含 %s */, ...);
+```
+
+这些接口不检查（`dest` 或 `s1` 所指的）目标空间是否足够大，使用不当会造成缓冲区溢出，曾经是系统安全漏洞的一大来源。
+
+例如以下从 `stdin` 读取任意长度字符串的接口：
+
+```c
+char *gets(char *dest) { /* Declared in header <stdio.h> */
+  int c;
+  char *curr = dest;
+  while ((c = getchar()) != '\n' && c != EOF)
+    *curr++ = c;
+  if (c == EOF && curr == dest) /* No characters read */
+    return NULL;
+  *curr++ = '\0'; /* Terminate string */
+  return s;
+}
+```
+
+典型使用场景：
+
+```c
+void echo() { /* Read input line and write it back */
+  char buffer[8]; /* Way too small! */
+  gets(buffer);
+  puts(buffer);
+}
+```
+
+编译时加上 `-fno-stack-protector` 选项，得以下汇编码：
+
+```gas
+echo:
+  subq	$24, %rsp
+  movq	%rsp, %rdi
+  call	gets
+  movq	%rsp, %rdi
+  call	puts
+  addq	$24, %rsp
+  ret
+```
+
+- 第一行在[运行期栈](#运行期栈)内为函数 `echo` 分配了长度为 24 字节的帧。执行这条指令后，函数 `echo` 的返回地址位于 `R[rsp]+24` 为首的 8 字节中。
+- 第二、三行说明 `buffer` 位于 `R[rsp]` 到 `R[rsp]+7` 这 8 字节中，而 `R[rsp]+8` 到 `R[rsp]+23` 这段空间没有被用到。
+- `gets` 无法判断输入是否过长，有可能发生越界：
+  - 若有效输入不多于 7 个字符，则一切正常。
+  - 若有效输入介于 8 到 23 个字符之间，则 `echo` 帧内的剩余空间会被污染，但 `echo` 的返回地址未被修改，故 `echo` 还能正确返回。
+  - 若有效输入不少于 24 个字符，则 `echo` 的返回地址被破坏，故 `echo` 无法正确返回。
+
+👉 使用含长度检查的接口可避免上述缓冲区溢出：
+```c
+#include <stdio.h>
+char* fgets(char* dest, int n, FILE* stream);
+#include <string.h>
+char* stpncpy(char* dest, const char* src, size_t n);
+char* strncat(char* s1, const char* s2, size_t n);
+int snprintf(char* dest, size_t n, const char* format/* 含 %s */, ...);
+```
+
 ### 阻断缓冲区溢出攻击
+
+缓冲区溢出可能被用来实施攻击：
+
+- 以字符串形式输入一段可执行程序（例如启动命令行终端）的编码。
+- 利用缓冲区溢出，将原来的返回地址篡改为上述代码段的起始地址。
+
+#### 地址空间布局随机化
+
+攻击者要成功篡改返回地址，需掌握目标系统的运行期栈信息 —— 这在早期并不困难，攻击者只要能获得目标系统的软件版本，就能在本地推算出这一信息。
+
+***栈随机化 (stack randomization)*** 技术（在创建新进程时）令运行期栈的起始位置随机变化，因此可以在一定程度上避免上述漏洞。现代 Linux 默认采用这项技术，在 Linux 系统上运行如下程序即可看出效果：
+
+```c
+/* stack_demo.c */
+int main() {
+  long local;
+  printf("local at %p\n", &local);
+  return 0;
+}
+```
+
+```shell
+$ ./stack_demo
+local at 0x7ffee86e4820
+$ ./stack_demo
+local at 0x7ffee22bd820
+$ ./stack_demo
+local at 0x7ffeeda9f820
+```
+
+更一般的，有 ***地址空间布局随机化 (address-space layout randomization, ASLR)*** 技术 —— 它为整个地址空间的所有组成片段（程序代码、库代码、运行期栈、全局变量、堆）都引入了随机性，从而进一步增加了攻击者推算出所需地址的难度。
+
+然而，上述技术并不能彻底解决缓冲区溢出攻击，***`nop` 雪橇*** 就是一种常见的破解方案：
+
+- 在攻击代码前插入一段 `nop` 序列，即以 `nop` 指令（意为 No OPeration）的编码（例如 `0x90`）不断重复而构成的序列。
+- 只要（被篡改的）返回地址指向这段 `nop` 序列中的任何一个 `nop` 指令，则程序控制权将 ***滑行 (slide)*** 至攻击代码。
+- 假设运行期栈的起始地址有 $2^{N}$ 种概率相同的情形，取 `nop` 序列的长度为 $2^{L}$ 字节（单次攻击覆盖 $2^{L}$ 种情形），则每 $2^{N-L}$ 次攻击即可期望命中 $1$ 次。
+
+#### 栈保护器（金丝雀）
+
+该机制得名于旧时煤矿利用 ***金丝雀 (canary)*** 检测巷道内的危险气体是否超标。
+
+仍以函数 `echo()` 为例，编译时不加 `-fno-stack-protector` 选项，得以下汇编码：
+
+```gas
+echo:
+  subq	$24, %rsp
+  movq  %fs:40, %rax  # 从内存中取出 canary
+  movq  %rax, 8(%rsp) # 存放在 buffer 后面
+  xorl  %eax, %eax
+  movq	%rsp, %rdi
+  call	gets
+  movq	%rsp, %rdi
+  call	puts
+  movq  8(%rsp), %rax # 将 buffer 后的 canary 取出
+  xorq  %fs:40, %rax  # 与内存中的原始值作比较
+  je    .L9
+  call  __stack_chk_fail
+.L9:
+  addq	$24, %rsp
+  ret
+```
+
+其中 `%fs:40` 可以理解为从内存中读取的随机值（很难被攻击者猜到）。该机制只引入了一点点（读取、比较 canary 的）性能开销，便（几乎）能阻断所有缓冲区溢出攻击。
+
+#### 限制可执行代码的地址范围
+
+虚拟内存空间在逻辑上被划分为若干 ***页 (page)***，每页含 2048 或 4096 字节。多数系统支持为各页赋予不同的访问权限：
+- ***可读 (Readable)***
+- ***可写 (Writable)***
+- ***可执行 (eXecutable)***
+- 旧时的 x86 架构将 R 与 X 用同一个标志位（类似于[条件码](#条件码)）表示，故无法区分一段字节是可读数据还是可执行代码。
+- 现代的 64 处理器均引入了名为 `NX` 的标志位，用于表示当前内存页 ***不可执行 (Not eXecutable, NX)***。只要栈空间所在的页被标记为 *不可执行*，通过缓冲区溢出植入的攻击代码便无法被执行。
 
 ### 支持尺寸可变的帧
 
