@@ -15,14 +15,14 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](http://www.cs.cmu.ed
 
 - [Lab Assignments](#http://csapp.cs.cmu.edu/3e/labs.html)
 
-  1. [Data Lab](./labs/bomb/README.md)
+  1. [Data Lab](./labs/data/README.md)
   2. [Bomb Lab](./labs/bomb/README.md)
-  3. [Attack Lab](./labs/bomb/README.md) or Buffer Lab (IA32)
-  4. Architecture Lab or Architecture Lab (Y86)
-  5. [Cache Lab](./labs/bomb/README.md) or Performance Lab
-  6. [Shell Lab](./labs/bomb/README.md)
-  7. [Malloc Lab](./labs/bomb/README.md)
-  8. [Proxy Lab](./labs/bomb/README.md)
+  3. [Attack Lab](./labs/attack/README.md) | Buffer Lab (IA32)
+  4. Architecture Lab | Architecture Lab (Y86)
+  5. [Cache Lab](./labs/cache/README.md) | Performance Lab
+  6. [Shell Lab](./labs/shell/README.md)
+  7. [Malloc Lab](./labs/malloc/README.md)
+  8. [Proxy Lab](./labs/proxy/README.md)
 
 ## 全书目录
 
