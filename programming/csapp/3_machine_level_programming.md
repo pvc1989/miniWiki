@@ -425,19 +425,28 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
 
 ### 汇编代码格式
 
-|            |        ATT 格式        |        Intel 格式        |
-| :--------: | :--------------------: | :----------------------: |
-|   使用者   | GDB, OBJDUMP, CS:APP3e |     Intel, Microsoft     |
-|   指令名   |         `movq`         |    去掉 `q`，即 `mov`    |
-|  操作对象  |      `movq s, d`       |   逆序，即 `mov d, s`    |
-|   即时数   |         `$0x0`         |    去掉 `$`，即 `0x0`    |
-|   寄存器   |         `%rsp`         |    去掉 `%`，即 `rsp`    |
-|   地址值   |      `D(B, I, S)`      |     `[B + I*S + D]`      |
-|  数据长度  |   `movb (%rbx), %al`   | `mov al, BYTE PTR [rbx]` |
-|   注释符   |          `#`           |           `;`            |
-| 代码块标记 |         `gas`          |          `nasm`          |
+|            |      ATT 格式      |        Intel 格式        |
+| :--------: | :----------------: | :----------------------: |
+|   使用者   |   GNU, CS:APP3e    |     Intel, Microsoft     |
+|   指令名   |       `movq`       |    去掉 `q`，即 `mov`    |
+|  操作对象  |    `movq s, d`     |   逆序，即 `mov d, s`    |
+|   即时数   |       `$0x0`       |    去掉 `$`，即 `0x0`    |
+|   寄存器   |       `%rsp`       |    去掉 `%`，即 `rsp`    |
+|   地址值   |    `D(B, I, S)`    |     `[B + I*S + D]`      |
+|  数据长度  | `movb (%rbx), %al` | `mov al, BYTE PTR [rbx]` |
+|   注释符   |        `#`         |           `;`            |
+| 代码块标记 |       `gas`        |          `nasm`          |
 
 由此可见：*Intel 格式* 比 *ATT 格式* 更清晰、易读。除此之外，各种代码高亮插件对 Intel 格式（代码块标记为 `nasm`）的支持也普遍做得更好，因此推荐使用这种格式。
+
+GCC、GDB、OBJDUMP 等工具默认选择 ATT 格式，可通过以下设置切换为 Intel 格式：
+
+```shell
+$ gcc -S -masm=intel hello.c
+$ objdump -d -x86-asm-syntax=intel hello.o
+(gdb)           set            disassembly-flavor intel
+(lldb) settings set target.x86-disassembly-flavor intel
+```
 
 ## 6 控制
 
@@ -1411,7 +1420,7 @@ local at 0x7ffeeda9f820
 
 更一般的，有 ***地址空间布局随机化 (address-space layout randomization, ASLR)*** 技术 —— 它为整个地址空间的所有组成片段（程序代码、库代码、运行期栈、全局变量、堆）都引入了随机性，从而进一步增加了攻击者推算出所需地址的难度。
 
-然而，上述技术并不能彻底解决缓冲区溢出攻击，***`nop` 雪橇*** 就是一种常见的破解方案：
+然而，上述技术并不能彻底解决缓冲区溢出攻击，***`nop` 滑板 (sled)*** 就是一种常见的破解方案：
 
 - 在攻击代码前插入一段 `nop` 序列，即以 `nop` 指令（意为 No OPeration）的编码（例如 `0x90`）不断重复而构成的序列。
 - 只要（被篡改的）返回地址指向这段 `nop` 序列中的任何一个 `nop` 指令，则程序控制权将 ***滑行 (slide)*** 至攻击代码。

