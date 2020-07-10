@@ -416,7 +416,7 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
 
 |            |      ATT 格式      |        Intel 格式        |
 | :--------: | :----------------: | :----------------------: |
-|   使用者   |   GNU, CS:APP3e    |     Intel, Microsoft     |
+|   使用者   |   ATT, CS:APP3e    |     Intel, Microsoft     |
 |   指令名   |       `movq`       |    去掉 `q`，即 `mov`    |
 |  操作对象  |    `movq s, d`     |   逆序，即 `mov d, s`    |
 |   即时数   |       `$0x0`       |    去掉 `$`，即 `0x0`    |
@@ -431,7 +431,8 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
 GCC、GDB、OBJDUMP 等工具默认选择 ATT 格式，可通过以下设置切换为 Intel 格式：
 
 ```shell
-$ gcc -S -masm=intel hello.c
+$ gcc -S -masm=intel hello.c # -o hello.s
+$ nasm -f elf64      hello.s # -o hello.o
 $ objdump -d -x86-asm-syntax=intel hello.o
 (gdb)           set            disassembly-flavor intel
 (lldb) settings set target.x86-disassembly-flavor intel
