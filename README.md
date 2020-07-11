@@ -9,7 +9,7 @@ layout: page
 - [LyX](./documenting/latex/README.md#LyX)
   - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 LyX 文档。
   - 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
-  - 根目录下的《[合订本](./README.lyx)》大致按逻辑顺序重新编排了章节（重复的只保留一份）。
+  - [顶层 `README.lyx`](./README.lyx) 大致按逻辑顺序重新编排了章节（重复的只保留一份）。
 - [Markdown](./programming/markdown.md)
   - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 Markdown 文档。
   - 本仓库已启用 [**GitHub Pages**](https://pvcstillingradschool.github.io/miniWiki/)，目前仅支持 Markdown 文档。
@@ -20,7 +20,7 @@ layout: page
 - 编译 LyX 文档（生成 PDF 文件）：
   1. 安装 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启 [中文支持](./documenting/latex/README.md#中文支持) 及 [代码高亮](./documenting/latex/README.md#代码高亮)。
   1. 安装 [STIX](https://github.com/stipub/stixfonts) 字体。
-  1. 在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的 ***符号链接 (symbolic link)***：
+  1. 如果要编译除 [顶层 `README.lyx`](./README.lyx) 以外的其他 LyX 或 TeX 文档，则需在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的 ***符号链接 (symbolic link)***：
     
      |  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
      | :--------: | :------------------: | :------------------: |
