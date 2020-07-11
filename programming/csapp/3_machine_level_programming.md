@@ -163,20 +163,9 @@ End of assembler dump.
 - 函数名下方的每一行分别对应一条 ***指令 (instruction)***：
 
   - 形如 `100000f70` 或 `0x0000000100000f60` 的 64 位 16 进制整数，表示各条指令的首地址。由的 `hello.o` 与 `hello` 的反汇编结果可见，一些函数的地址会被 [***链接器 (linker)***](./linking.md) 修改。
-
-  - 首地址后面的若干 16 进制整数（每 8 位一组，即每组 1 字节），表示该行指令的 *机器码*，由此可以算出各条指令的长度（字节数）。整个函数的机器码可在调试环境中打印：
-
-    ```shell
-    gdb hello
-    (gdb) x/20xb main  # 以 十六进制 打印始于 main 的 20 字节
-    0x100000f70 <main>:     0x55    0x48    0x89    0xe5    0x48    0x8d    0x3d      0x2b
-    0x100000f78 <main+8>:   0x00    0x00    0x00    0xe8    0x04    0x00    0x00      0x00
-    0x100000f80 <main+16>:  0x31    0xc0    0x5d    0xc3
-    ```
-    
+- 首地址后面的若干 16 进制整数（每 8 位一组，即每组 1 字节），表示该行指令的 *机器码*，由此可以算出各条指令的长度（字节数）。
   - `<+n>` 表示当前指令相对于函数入口（以字节为单位）的 ***偏移量 (offset)***。由相邻两行的偏移量之差也可以算出前一行指令的机器码长度。
-  
-  - 指令的 *机器码长度* 与其 *使用频率* 及 *[运算对象](#运算对象)个数* 大致成反比（类似于 Hoffman 编码），最长 1 字节，最短 15 字节。
+- 指令的 *机器码长度* 与其 *使用频率* 及 *[运算对象](#运算对象)个数* 大致成反比（类似于 Hoffman 编码），最长 1 字节，最短 15 字节。
   
 - 形如英文单词的 `mov` 等符号表示 *指令名*，用于
 
@@ -334,8 +323,8 @@ x86-64 规定：栈顶字节的地址保存在寄存器 `%rsp` 中，并且小�
 
 |   指令    |      含义      |              语义               |
 | :-------: | :------------: | :-----------------------------: |
-| `pushq s` | PUSH Quad word | `R[%rsp] -= 8; M[R[%rsp]] = s;` |
-| `popq d`  | POP quad word  | `d = M[R[%rsp]]; R[%rsp] += 8;` |
+| `pushq s` | PUSH Quad word | `R[rsp] -= 8; M[R[rsp]] = s;` |
+| `popq d`  | POP quad word  | `d = M[R[rsp]]; R[rsp] += 8;` |
 
 
 ## 5 算术及逻辑运算
@@ -411,23 +400,23 @@ leaq source, destination
 
 x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的）128 位整数的算术运算指令：
 
-- 128 位整数用 `R[%rdx]:R[%rax]` 表示，冒号前、后的两个 64 位寄存器分别表示其前、后 64 位。
+- 128 位整数用 `R[rdx]:R[rax]` 表示，冒号前、后的两个 64 位寄存器分别表示其前、后 64 位。
 - 一元乘法：
   - `imulq s` 为带符号乘法，`mulq s` 为无符号乘法。
-  - 语义为 `R[%rdx]:R[%rax] = s * R[%rax]`
+  - 语义为 `R[rdx]:R[rax] = s * R[rax]`
 - 一元除法：
   - `idivq s` 为带符号除法，`divq s` 为无符号除法。
-  - 二者均以 `R[%rdx]:R[%rax]` 为 ***被除数 (dividend)***，以 `s` 为 ***除数 (divisor)***，所得的 ***商 (quotient)*** 存入 `%rax`，***余数 (remainder)*** 存入 `%rdx`
+  - 二者均以 `R[rdx]:R[rax]` 为 ***被除数 (dividend)***，以 `s` 为 ***除数 (divisor)***，所得的 ***商 (quotient)*** 存入 `%rax`，***余数 (remainder)*** 存入 `%rdx`
   - ⚠️ 不存在“二元除法”指令。
 - `cqto` 用于构造带符号除法的被除数：
   - 指令名取自 Convert Quad-word To Oct-word 的首字母。
-  - 语义为 `R[%rdx]:R[%rax] = SignExtend(R[%rax])`
+  - 语义为 `R[rdx]:R[rax] = SignExtend(R[rax])`
 
 ### 汇编代码格式
 
 |            |      ATT 格式      |        Intel 格式        |
 | :--------: | :----------------: | :----------------------: |
-|   使用者   |   GNU, CS:APP3e    |     Intel, Microsoft     |
+|   使用者   |   ATT, CS:APP3e    |     Intel, Microsoft     |
 |   指令名   |       `movq`       |    去掉 `q`，即 `mov`    |
 |  操作对象  |    `movq s, d`     |   逆序，即 `mov d, s`    |
 |   即时数   |       `$0x0`       |    去掉 `$`，即 `0x0`    |
@@ -442,7 +431,8 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
 GCC、GDB、OBJDUMP 等工具默认选择 ATT 格式，可通过以下设置切换为 Intel 格式：
 
 ```shell
-$ gcc -S -masm=intel hello.c
+$ gcc -S -masm=intel hello.c # -o hello.s
+$ nasm -f elf64      hello.s # -o hello.o
 $ objdump -d -x86-asm-syntax=intel hello.o
 (gdb)           set            disassembly-flavor intel
 (lldb) settings set target.x86-disassembly-flavor intel
@@ -730,8 +720,8 @@ _choose:
         jne     L11
      # case 2:
         movq    %rsi, %rax  # y_copy = y
-        cqto                # R[%rdx]:R[%rax] = SignExtend(y_copy)
-        idivq   %rcx        # R[%rax] = y_copy / z_copy
+        cqto                # R[rdx]:R[rax] = SignExtend(y_copy)
+        idivq   %rcx        # R[rax] = y_copy / z_copy
         jmp     L2          # Fall into case 3
 L11: # default:
         movl    $2, %eax    # w = 2
@@ -1012,9 +1002,9 @@ long get_element(long a[N][N], long i, long j) {
 ```
 
 ```gas
-_get_element:  # R[%rdi] = a, R[%rsi] = i, R[%rdx] = j
-        salq    $5, %rsi             # R[%rsi] = 8 * N * i
-        addq    %rsi, %rdi           # R[%rdi] = a + 8*N*i
+_get_element:  # R[rdi] = a, R[rsi] = i, R[rdx] = j
+        salq    $5, %rsi             # R[rsi] = 8 * N * i
+        addq    %rsi, %rdi           # R[rdi] = a + 8*N*i
         movq    (%rdi,%rdx,8), %rax  # M[a + 8*N*i + 8*j]
         ret
 ```
@@ -1033,10 +1023,10 @@ long get_element(long n,/* 必须紧跟在 n 之后 */long a[n][n],
 ```
 
 ```gas
-_get_element:  # R[%rdi] = n, R[%rsi] = a, R[%rdx] = i, R[%rcx] = j
-        imulq   %rdi, %rdx           # R[%rdx] = n * i
-        leaq    (%rsi,%rdx,8), %rax  # R[%rax] = a + 8*n*i
-        movl    (%rax,%rcx,8), %rax  # R[%rax] = M[a + 8*n*i + 8*j]
+_get_element:  # R[rdi] = n, R[rsi] = a, R[rdx] = i, R[rcx] = j
+        imulq   %rdi, %rdx           # R[rdx] = n * i
+        leaq    (%rsi,%rdx,8), %rax  # R[rax] = a + 8*n*i
+        movl    (%rax,%rcx,8), %rax  # R[rax] = M[a + 8*n*i + 8*j]
         ret
 ```
 
@@ -1083,7 +1073,7 @@ void set_val(struct node_t *node, int val) {
 ```
 
 ```gas
-_set_val:  # R[%rdi] = node, R[%rsi] = val
+_set_val:  # R[rdi] = node, R[rsi] = val
 L2:  # loop:
         testq   %rdi, %rdi           # node == 0?
         je      L4
