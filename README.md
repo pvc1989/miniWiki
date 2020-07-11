@@ -20,12 +20,6 @@ layout: page
 - 编译 LyX 文档（生成 PDF 文件）：
   1. 安装 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启 [中文支持](./documenting/latex/README.md#中文支持) 及 [代码高亮](./documenting/latex/README.md#代码高亮)。
   1. 安装 [STIX](https://github.com/stipub/stixfonts) 字体。
-  1. 在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的 ***符号链接 (symbolic link)***：
-    
-     |  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
-     | :--------: | :------------------: | :------------------: |
-     |   macOS    |  `~/Library/texmf`   | `ln -s TARGET LINK`  |
-     | Windows 10 |      `~/texmf`       | `mklink LINK TARGET` |
 
 - 编译 Markdown 文档（生成 HTML 文件）：
   1. 打开命令行终端，安装 [prerequisites](https://help.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll#prerequisites)。
