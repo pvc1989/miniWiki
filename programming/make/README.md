@@ -12,6 +12,7 @@
   - [`cmake` 命令](#cmake-cmd)
   - [`CMakeLists.txt` 文件](#CMakeLists)
   - [CMake Tools](#CMakeTools)
+- [Ninja](#Ninja)
 
 # 手动构建
 ## 手动构建过程
@@ -219,6 +220,7 @@ library.o : library.c
 以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./demo/Makefile)。
 
 # CMake
+
 ## 参考资料
 ### 官方文档
 - [帮助文档](https://cmake.org/cmake/help/latest/)
@@ -258,7 +260,7 @@ cmake [<options>] -S <source-dir> -B <build-dir>
 cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 ```
 
-### 常用选项
+### 选项
 ```shell
 # 查看帮助
 --help[-<topic>]
@@ -274,8 +276,11 @@ cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 --find-package [<options>]
 # 指定「源文件目录」和「构建目录」，需要 cmake 3.13.5+
 -S <source-dir> -B <build-dir>
-# 示例
-cd <source-dir>
+```
+
+### 示例
+```shell
+cd <source-dir> # demo
 mkdir build
 mkdir build/Debug
 cd build/Debug
@@ -294,7 +299,7 @@ cmake -S ../.. -B . \
 
 完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)。
 
-### 常用命令
+### 命令
 完整的 CMake 命令列表参见 [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html)。
 
 设置项目所允许的最低版本：
@@ -344,10 +349,10 @@ set(<variable> <value>... CACHE <type> <docstring> [FORCE])
 set(ENV{<variable>} [<value>])
 ```
 
-### 常用变量
+### 变量
 完整的 CMake 变量列表参见 [`cmake-variables(7)`](https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html)。
 
-### 创建目标
+### 目标
 
 添加构建可执行文件的目标：
 ```cmake
@@ -397,8 +402,6 @@ target_link_libraries(<target> ... <item>... ...)
 
 本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 调试 C/C++ 程序的方法。
 
-### 调试 CMake 项目
-
 1. 用 VS Code 打开一个 CMake 项目。
 2. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在 `.vscode` 之下创建两个 `json` 文件：
    - `settings.json` 用于设定构建目录等全局配置项。本节示例 [`demo/.vscode/settings.json`](./demo/.vscode/settings.json) 只设置了构建目录，完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
@@ -410,3 +413,75 @@ target_link_libraries(<target> ... <item>... ...)
    - [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
 5. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此法不依赖于本节介绍的 CMake Tools。
+
+# Ninja
+
+## 参考资料
+
+- [Manual](https://ninja-build.org/manual.html)
+
+## 安装
+
+- macOS
+
+  ```shell
+  brew install ninja
+  ninja --version
+  ```
+
+- Ubuntu
+
+  ```shell
+  apt install ninja-build
+  ninja --version
+  ```
+
+## `ninja` 命令<a name="ninja-cmd"></a>
+
+### 选项
+
+```
+usage: ninja [options] [targets...]
+
+if targets are unspecified, builds the 'default' target (see manual).
+
+options:
+  --version      print ninja version ("1.10.0")
+  -v, --verbose  show all command lines while building
+
+  -C DIR   change to DIR before doing anything else
+  -f FILE  specify input build file [default=build.ninja]
+
+  -j N     run N jobs in parallel (0 means infinity) [default=3 on this system]
+  -k N     keep going until N jobs fail (0 means infinity) [default=1]
+  -l N     do not start new jobs if the load average is greater than N
+  -n       dry run (don't run commands but act like they succeeded)
+
+  -d MODE  enable debugging (use '-d list' to list modes)
+  -t TOOL  run a subtool (use '-t list' to list subtools)
+    terminates toplevel options; further flags are passed to the tool
+  -w FLAG  adjust warnings (use '-w list' to list warnings)
+```
+
+### 示例
+
+```shell
+cd <source-dir> # demo
+mkdir build
+mkdir build/Debug
+cd build/Debug
+cmake -G Ninja \
+      -S ../.. -B . \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
+      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-9
+ninja
+ninja clean
+```
+
+## `build.ninja` 文件
+
+用于驱动 [`ninja` 命令](#ninja-cmd) 运行的脚本文件，类似于 [`Makefile` 文件](#Makefile)。
+
+不要手写！用 [CMake](#CMake) 生成！
+
