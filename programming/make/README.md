@@ -6,12 +6,12 @@
   - [手动构建过程](#手动构建过程)
   - [使用构建工具的动机](#使用构建工具的动机)
 - [GNU Make](#GNU-Make)
-  - [`make` 命令](#`make`-命令)
-  - [`Makefile` 文件](#`Makefile`-文件)
+  - [`make` 命令](#make-cmd)
+  - [`Makefile` 文件](#Makefile)
 - [CMake](#CMake)
-  - [`cmake` 命令](#`cmake`-命令)
-  - [`CMakeLists.txt` 文件](#`CMakeLists.txt`-文件)
-  - [CMake Tools](#CMake-Tools)
+  - [`cmake` 命令](#cmake-cmd)
+  - [`CMakeLists.txt` 文件](#CMakeLists)
+  - [CMake Tools](#CMakeTools)
 
 # 手动构建
 ## 手动构建过程
@@ -101,11 +101,11 @@ rm -rf *
 |  编译及链接选项  | 依赖于环境（操作系统、编译器） |           不依赖于环境            |
 |     （同上）     |       无法体现在源代码中       |         是源代码的一部分          |
 
-# GNU Make
+# GNU Make<a name="GNU-Make"></a>
 ## 参考资料
 - [官方文档](https://www.gnu.org/software/make)
 
-## `make` 命令
+## `make` 命令<a name="make-cmd"></a>
 一般形式：
 ```shell
 make [options] [targets]
@@ -122,15 +122,15 @@ make [options] [targets]
 |     `-k`      |   即使部分目标失败，仍继续构建其他目标   |
 
 ### 目标
-一个「目标 (target)」表示一个定义在 [`Makefile`](#`Makefile`-文件) 中的构建任务，通常为「可执行(executable) 文件」或「库 (library)」的文件名，也可以只是一个「标签 (tag)」。
+一个「目标 (target)」表示一个定义在 [`Makefile`](#Makefile) 中的构建任务，通常为「可执行(executable) 文件」或「库 (library)」的文件名，也可以只是一个「标签 (tag)」。
 如果没有为 `make` 指定目标，则以 `Makefile` 中的第一个目标为默认目标。
 
 一个目标可以被重复构建多次。
 每次构建前，`make` 会自动检查该目标的「依赖项 (prerequisite)」。只有依赖项需要被更新时，才会在依赖项全部被更新后，重新构建该目标。
 这项检查是递归的，因此最终将传递到被更新过的源文件上。
 
-## `Makefile` 文件
-`Makefile` 是驱动 [`make` 命令](#`make`-命令)的「脚本 (script) 文件」：
+## `Makefile` 文件<a name="Makefile"></a>
+`Makefile` 是驱动 [`make` 命令](#make-cmd)的「脚本 (script) 文件」：
 
 - 默认文件名为 `Makefile` 或 `makefile`。
 - 也可以用其他文件名，但必须在 `make` 后面用 `-f filename` 来指定。
@@ -244,9 +244,9 @@ library.o : library.c
 - 「外部构建 (out-of-source build)」：在源文件目录外构建 👍。
 - 「构建配置 (build configuration)」：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
 
-## `cmake` 命令
+## `cmake` 命令<a name="cmake-cmd"></a>
 CMake 参与的构建过程可以分为以下两个阶段：
-1. CMake 读取 `CMakeLists.txt` 文件，生成「本地构建工具 (native build tool)」(e.g. [`make`](#`make-命令`)）所需的「本地构建文件 (native build file)」(e.g. [`Makefile`](#`Makefile`-文件))：
+1. CMake 读取 `CMakeLists.txt` 文件，生成「本地构建工具 (native build tool)」(e.g. [`make`](#make-cmd)）所需的「本地构建文件 (native build file)」(e.g. [`Makefile`](#Makefile))：
 ```shell
 cmake [<options>] <source-dir>
 cmake [<options>] <existing-build-dir>
@@ -285,7 +285,7 @@ cmake -S ../.. -B . \
       -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-9
 ```
 
-## `CMakeLists.txt` 文件
+## `CMakeLists.txt` 文件<a name="CMakeLists"></a>
 `CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件，它由「命令 (command)」和「注释 (comment)」组成：
 
 - 命令的名称 *不区分大小写*，形式上与函数调用类似。
@@ -391,7 +391,7 @@ target_link_libraries(<target> ... <item>... ...)
 - [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `lib_math`。
 - [`demo/test/CMakeLists.txt`](./demo/test/CMakeLists.txt) 用于构建 `test_math`。
 
-## CMake Tools
+## CMake Tools<a name="CMake-Tools"></a>
 
 微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有 *体量轻、易扩展、多语言、跨平台* 等优点，利用各种 [***扩展 (extensions)***](https://marketplace.visualstudio.com/) 很容易将其改造为多语言共用的 ***集成开发环境 (Integrated Development Environment, IDE)***。
 
