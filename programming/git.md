@@ -72,8 +72,11 @@ git diff --staged
 ```
 
 ```shell
+# 撤销对某文件的修改
+# （注：需要 Git v2.23+）
+git restore [file]
 # 从暂存区中撤回某文件，但保留对其所做的修改
-git reset [file]
+git restore --staged [file]
 ```
 
 ```shell
