@@ -1,9 +1,8 @@
 # Git
 
 ## 参考资料
-- [***GitHub Guides***](https://guides.github.com) 简明扼要地介绍了依托 [GitHub](https://github.com/) 进行项目开发的流程和技巧，其中 [***Understanding the GitHub flow***](https://guides.github.com/introduction/flow/)、[***Hello World***](https://guides.github.com/activities/hello-world/)、[***Mastering Markdown***](https://guides.github.com/features/mastering-markdown/)、[***Forking Projects***](https://guides.github.com/activities/forking/) 是新手必读的简易入门教程。
-- [***Pro Git***](https://git-scm.com/book/en/v2) 系统深入地介绍了 Git 的原理及操作。
-- [***软件工程***](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/) 的 6.5 节介绍了 Git 的概念及操作，注册后可以在线观看。
+- 《[Pro Git](https://git-scm.com/book/en/v2)》系统深入地介绍了 Git 的原理及操作。
+- 《[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/)》的 6.5 节介绍了 Git 的概念及操作，注册后可以在线观看。
 
 ## 基本概念
 ***版本控制系统 (version control system, VCS)*** 是一种用来追踪文件修改历史的软件，是软件开发过程中管理源代码的必备工具。目前最流行的 VCS 是诞生于 2005 年的开源软件 [Git](https://git-scm.com/)。它是由 [Linus Torvalds](https://en.wikipedia.org/wiki/Linus_Torvalds) 为了管理 Linux 内核而创建，并与其他代码贡献者一同开发的。
@@ -17,7 +16,7 @@ Git 是一种分布式的 VCS，每个代码贡献者及用户都可以在本地
 ## 常用命令
 尽管我们可以通过 [GitHub Desktop](https://desktop.github.com) 等 GUI 来完成绝大多数常用 Git 操作，但有一些高级功能只能通过 CLI 来完成。Git 新手应当以 CLI 为学习重点，在对常用命令比较熟悉之后，再根据需要选用 GUI。
 
-### 配置
+### 系统配置
 
 ```shell
 # 查看配置信息
@@ -30,7 +29,7 @@ git config --global user.email "[email address]"
 git config --global color.ui auto
 ```
 
-### 帮助
+### 获取帮助
 ```shell
 # 通过以下三种方式，都可以获得关于 git command 的帮助信息
 git help <command>
@@ -38,7 +37,7 @@ git <command> --help
 man git-<command>
 ```
 
-### 新建
+### 创建仓库
 ```shell
 # 在本地新建名为 project-name 的仓库
 git init [project-name]
@@ -46,10 +45,15 @@ git init [project-name]
 
 ```shell
 # 从指定远程服务器获取仓库，创建本地副本
-git clone [url]
+git clone <repository> [<directory>]
+# 克隆含有子模块的项目
+git clone --recurse-submodules[=<pathspec] <repository> [<directory>]
+# 相当于
+git clone <repository> [<directory>]
+git submodule update --init --recursive
 ```
 
-### 提交
+### 提交修改
 ```shell
 # 查看自上次提交之后所做的修改
 git status
@@ -85,7 +89,7 @@ git add [forgotten file]
 git commit --amend
 ```
 
-### 撤销
+### 撤销提交
 ```shell
 # 撤销自某次提交以后的所有提交，但保留对文件所做的修改
 git reset [commit]
@@ -94,7 +98,7 @@ git reset [commit]
 git reset --hard [commit]
 ```
 
-### 删除
+### 删除文件
 ```shell
 # 删除文件，并暂存该操作
 git rm [file]
@@ -102,13 +106,13 @@ git rm [file]
 git rm --cached [file]
 ```
 
-### 移动
+### 移动文件
 ```shell
 # 移动或重命名文件
 git mv [file-original] [file-renamed]
 ```
 
-### 分支
+### 分支管理
 ```shell
 # 查看当前仓库的所有分支
 git branch
@@ -128,7 +132,17 @@ git checkout [branch-name]
 git merge [branch]
 ```
 
-### 历史
+### 版本标签
+
+```shell
+# 查看现有标签
+git tag --list
+# 签出到指定标签
+git checkout v4.1.1
+```
+
+### 历史记录
+
 ```shell
 # 查看当前分支的版本历史
 git log
@@ -152,7 +166,7 @@ git diff [first-branch]...[second-branch]
 git show [commit]
 ```
 
-### 远程
+### 远程同步
 ```shell
 # 创建并签出到远程分支 <remote>/<branch> 的本地追踪分支 <branch>
 # <remote>/<branch> 称作 <branch> 的 ***上游 (upstream) 分支*** 
@@ -184,6 +198,8 @@ git push [remote] [branch]
 
 # GitHub
 
+《[GitHub Guides](https://guides.github.com)》简明扼要地介绍了依托 [GitHub](https://github.com/) 进行项目开发的流程和技巧，其中 《[Understanding the GitHub flow](https://guides.github.com/introduction/flow/)》《[Hello World](https://guides.github.com/activities/hello-world/)》《[Mastering Markdown](https://guides.github.com/features/mastering-markdown/)》《[Forking Projects](https://guides.github.com/activities/forking/)》是新手必读的简易入门教程。
+
 ## GitHub Flow
 [***GitHub Flow***](https://guides.github.com/introduction/flow/) 是一种基于 Git 分支机制及 GitHub 代码仓库托管网站进行软件开发的流程，主要包括以下几个步骤。
 
@@ -206,4 +222,4 @@ git push [remote] [branch]
 利用 GitHub，可以在合并前对子分支中的代码进行验证。在经过代码审查并且通过分支内的单元测试后，可以将这些修改部署到产品中，进行系统集成测试。
 
 ### 合并修改
-经过验证后，主分支维护者就可以将子分支中的修改合并到主分支上。在 GitHub 上，可以在 PR 里嵌入一些关键词，用以关联一些 ***问题 (issue)***。当 PR 被合并后，相关的 issue 也随之而被关闭。关键词使用方法参见 [***Closing issues using keywords***](https://help.github.com/articles/closing-issues-using-keywords/)。
+经过验证后，主分支维护者就可以将子分支中的修改合并到主分支上。在 GitHub 上，可以在 PR 里嵌入一些关键词，用以关联一些 ***问题 (issue)***。当 PR 被合并后，相关的 issue 也随之而被关闭。关键词使用方法参见《[Closing issues using keywords](https://help.github.com/articles/closing-issues-using-keywords/)》。
