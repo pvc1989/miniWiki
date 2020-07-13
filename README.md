@@ -102,6 +102,7 @@ layout: page
   - [批量构建](./programming/make/README.md)
     - [GNU Make](./programming/make/README.md#GNU-Make)
     - [CMake](./programming/make/README.md#CMake)
+    - [Ninja](./programming/make/README.md#Ninja)
   - [断点调试](./programming/debug/README.md)
     - [GDB](./programming/debug/README.md#GDB)
     - [LLDB](./programming/debug/README.md#LLDB)

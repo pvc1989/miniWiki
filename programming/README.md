@@ -29,6 +29,7 @@
 ### [批量构建](./make/README.md)
 #### [GNU Make](./make/README.md#GNU-Make)
 #### [CMake](./make/README.md#CMake)
+#### [Ninja](./make/README.md#Ninja)
 ### [断点调试](./debug/README.md)
 #### [GDB](./debug/README.md#GDB)
 #### [LLDB](./debug/README.md#LLDB)
