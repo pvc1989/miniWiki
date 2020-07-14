@@ -55,19 +55,19 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ### 官方文档
 
-- 入门指南：[*A User's Guide to CGN*S](https://cgns.github.io/CGNS_docs_current/user/)
+- 入门指南：[*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)
 - 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)
 
 ### 数组索引
 
 入门指南主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。
 
-- C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *C's row* 对应于 *Fortran's column*。
+- C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *row in C* 对应于 *column in Fortran*。
 - Fortran 的数组索引是从 `1` 开始的（这与 SIDS 一致），而 C 则从 `0` 开始（故调用 C-API 时可能需要转换）。
 
 ### 演示代码
 
-下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例源文件。源文件头部的注释给出了各示例的独立构建方式；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 ## 基本模块
 
@@ -574,6 +574,7 @@ SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步
   }
   ```
 - `ZoneIterativeData_t` 位于 `Zone_t` 之下，一般用于存储 *指向各步的指针*。
+  
   ```c++
   ZoneIterativeData_t< int NumberOfSteps > := {
     DataArray_t<char, 2, [32, NumberOfSteps]>
@@ -600,7 +601,8 @@ SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步
     List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ; (o)
   }
   ```
-- 上述 *指针* 目前由 *字符串* 实现。
+
+⚠️ 上述 *指针* 目前由 *字符串* 实现。
 
 ### 网格固定不变
 网格固定不变 意味着 `GridCoordinates_t` 及 `Elements_t`(s) 可复用，故只需记录各时间步上的 `FlowSolution_t`(s)。
@@ -630,6 +632,8 @@ cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
     2, n_dims, names/* the head of a 2d array, whose type is char[3][32] */);
 ```
 
+⚠️ 一个 `FlowSolution_t` 对应一个 `GridLocation_t` —— 这意味着所有物理量必须是同一种类型（`Vertex` 或 `CellCenter`），不能既有 `Vertex` 型数据、又有 `CellCenter` 型数据。
+
 ### 网格刚体运动
 
 网格刚体运动 意味着 `Elements_t`(s) 可复用，而格点坐标可以由 *初始位置*（记录在当前 `Zone_t` 下唯一的 `GridCoordinates_t` 中）与 *刚体运动信息*（随体坐标系的原点位置及速度、转角及转速等）快速地算出，后者记录在 `RigidGridMotion_t` 中（一个时间步对应一个这样的  `RigidGridMotion_t`，对应关系由 `ZoneIterativeData_t` 中的 `RigidGridMotionPointers` 管理）。
@@ -654,8 +658,6 @@ RigidGridMotion_t := {
   List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
 }
 ```
-
-
 
 ### 格点任意运动
 
@@ -688,7 +690,7 @@ ArbitraryGridMotion_t< int IndexDimension,
 
 ### 网格改变拓扑
 
-网格改变拓扑 意味着 网格大小变化，故需创建新的 `Zone_t` 以对应 *网格大小发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
+网格改变拓扑 意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应 *网格拓扑发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
 
 ```c++
 CGNSBase_t "RemeshingCase" {
@@ -727,4 +729,6 @@ CGNSBase_t "RemeshingCase" {
   }
 }
 ```
+
+[`write_adaptive_grid.cpp`](./write_adaptive_grid.cpp) 演示了这种方法。
 

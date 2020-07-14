@@ -2,9 +2,9 @@
   Creates a simple 3d adaptive refined grid.
 
   Example compilation for this program is (change paths if needed!):
-    c++ -std=c++11 -o write_adaptive_grid.exe write_adaptive_grid.cpp \
-    -I/usr/local/include -L/usr/local/lib -lcgns && \
-    ./write_adaptive_grid.exe && cgnscheck adaptive_grid.cgns
+    c++ -std=c++11 -g -o write_adaptive_grid.exe ../write_adaptive_grid.cpp \
+      -I/usr/local/include -L/usr/local/lib -lcgns && \
+    ./write_adaptive_grid.exe 4 && cgnscheck adaptive_grid.cgns
  */
 
 #include <algorithm>
@@ -20,8 +20,9 @@
 # define cgsize_t int
 #endif
 
-int main() {
+int main(int argc, char* argv[]) {
   constexpr int kNameLength = 32;
+  constexpr int kZonePointerLength = kNameLength + kNameLength + 1;
   /*
     Create A CGNS File
    */
@@ -38,14 +39,15 @@ int main() {
     Create A CGNSBase_t
    */
   // set base name:
-  char base_name[kNameLength + 1] = "AdaptiveGrid";
-  std::printf("A CGNSBase_t named \"%s\"\n", base_name);
+  auto base_name = std::string("BaseOfAdaptiveGrid");
+  assert(base_name.size() <= kNameLength);
+  std::printf("A CGNSBase_t named \"%s\"\n", base_name.c_str());
   std::printf("    is being creating... ");
   // set base dims:
   int cell_dim{2}, phys_dim{3};
   // get base id:
   int base_id;
-  if (cg_base_write(file_id, base_name, cell_dim, phys_dim, &base_id))
+  if (cg_base_write(file_id, base_name.c_str(), cell_dim, phys_dim, &base_id))
     cg_error_exit();
   std::printf("has been created with id %d.\n", base_id);
   // set simulation type:
@@ -54,14 +56,15 @@ int main() {
   /*
     Create Multiple Levels
    */
-  int n_levels = 3;
+  assert(argc >= 2);
+  int n_levels = atoi(argv[1]);
   assert(n_levels < 8);
   auto time_values = std::vector<double>(n_levels);
-  auto zone_pointers = std::vector<char>(32 * n_levels, '\0');
+  auto zone_pointers = std::vector<char>(kZonePointerLength * n_levels, '\0');
   auto head = zone_pointers.begin();
   for (int level = 0; level < n_levels; level++) {
     // set zone name:
-    auto zone_name = "Zone#" + std::to_string(level);
+    auto zone_name = "Zone[" + std::to_string(level) + "]";
     assert(zone_name.size() <= kNameLength);
     std::printf("A Zone_t named \"%s\"\n", zone_name.c_str());
     std::printf("    is being creating... ");
@@ -133,12 +136,13 @@ int main() {
     // set cell data:
     // set iteration info:
     time_values[level] = level * 0.1;
+    zone_name = base_name + "/" + zone_name;
     std::copy(zone_name.begin(), zone_name.end(), head);
-    head += 32;
+    head += kZonePointerLength;
   }
-  assert(zone_pointers.begin() + 32 * n_levels == head);
+  assert(zone_pointers.begin() + kZonePointerLength * n_levels == head);
   for (int l = 0; l < n_levels; ++l) {
-    std::printf("%s %d\n", &zone_pointers[32 * l], l);
+    std::printf("%s\n", &zone_pointers[kZonePointerLength * l]);
   }
   /*
     Create A BaseIterativeData_t
@@ -149,7 +153,7 @@ int main() {
   if (cg_goto(file_id, base_id, "BaseIterativeData_t", 1, "end"))
     cg_error_exit();
   // write time values and pointers:
-  cgsize_t data_dim[3] = {32, 1, n_levels};
+  cgsize_t data_dim[3] = {kZonePointerLength, 1, n_levels};
   if (cg_array_write("TimeValues", CGNS_ENUMV(RealDouble), 1, data_dim + 2,
       time_values.data()))
     cg_error_exit();
