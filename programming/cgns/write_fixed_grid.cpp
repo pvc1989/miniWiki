@@ -2,12 +2,9 @@
   Creates simple 3-D unstructured grid and writes it to a CGNS file.
 
   Example compilation for this program is (change paths if needed!):
-
-    c++ -std=c++11 -I/usr/local/include -c write.cpp && \
-    c++ -o write.exe write.o -L/usr/local/lib -lcgns && \
-    ./write.exe && cgnscheck *.cgns && cgnsview *.cgns
-
-  (../../lib is the location where the compiled library libcgns.a is located)
+    c++ -std=c++11 -o write_fixed_grid.exe ../write_fixed_grid.cpp \
+      -I/usr/local/include -L/usr/local/lib -lcgns && \
+    ./write_fixed_grid.exe && cgnscheck fixed_grid.cgns
  */
 
 #include <cassert>
@@ -26,7 +23,7 @@ int main() {
   /*
     Create A CGNS File
    */
-  char file_name[kNameLength+1] = "unstructed.cgns";
+  char file_name[kNameLength+1] = "fixed_grid.cgns";
   std::printf("A file named \"%s\"\n", file_name);
   std::printf("    is being creating...\n");
   int file_id;
@@ -36,7 +33,7 @@ int main() {
   /*
     Create A CGNSBase_t Node
    */
-  char base_name[kNameLength+1] = "SimpleBase";
+  char base_name[kNameLength+1] = "BaseOfFixedGrid";
   std::printf("A `CGNSBase_t` named \"%s\"\n", base_name);
   std::printf("    is being creating...\n");
   int cell_dim{3}, phys_dim{3};
@@ -47,7 +44,7 @@ int main() {
     Create A Zone_t Node
    */
   char zone_name[kNameLength+1];
-  strcpy(zone_name, "HexaZone");
+  strcpy(zone_name, "ZoneOfHexa");
   std::printf("A `Zone_t` named \"%s\"\n", zone_name);
   std::printf("    is being creating...\n");
   cgsize_t grid_size[3][1];
@@ -232,7 +229,7 @@ int main() {
     /* Create A BaseIterativeData_t */
     {
       // create BaseIterativeData_t:
-      cg_biter_write(file_id, base_id, "TimeStepsAndValues", kSteps);
+      cg_biter_write(file_id, base_id, "TimeSteps", kSteps);
       // goto this BaseIterativeData_t:
       cg_goto(file_id, base_id, "BaseIterativeData_t", 1, "end");
       // set time steps:
@@ -266,11 +263,11 @@ int main() {
     }
     assert(n_hexa_elems == i_elem);
     // common info for all steps:
-    auto node_sol_prefix = std::string("NodeData#");
+    auto node_sol_prefix = std::string("NodeData[");
     char node_field_name[kNameLength + 1] = "Pressure";
     char node_sol_names[kNameLength * kSteps + 1];
     char* node_dest = node_sol_names;
-    auto cell_sol_prefix = std::string("CellData#");
+    auto cell_sol_prefix = std::string("CellData[");
     char cell_field_name[kNameLength + 1] = "Density";
     char cell_sol_names[kNameLength * kSteps + 1];
     char* cell_dest = cell_sol_names;
@@ -281,7 +278,7 @@ int main() {
       int sol_id, field_id;
       std::string sol_name;
       // node data:
-      sol_name = node_sol_prefix + std::to_string(k);
+      sol_name = node_sol_prefix + std::to_string(k) + "]";
       cg_sol_write(file_id, base_id, zone_id,
           sol_name.c_str(), CGNS_ENUMV(Vertex), &sol_id);
       std::strcpy(node_dest, sol_name.c_str());
@@ -294,7 +291,7 @@ int main() {
           &node_range_min, &node_range_max, &node_data[node_range_min-1],
           &field_id);
       // cell data:
-      sol_name = cell_sol_prefix + std::to_string(k);
+      sol_name = cell_sol_prefix + std::to_string(k) + "]";
       cg_sol_write(file_id, base_id, zone_id,
           sol_name.c_str(), CGNS_ENUMV(CellCenter), &sol_id);
       std::strcpy(cell_dest, sol_name.c_str());
@@ -315,10 +312,10 @@ int main() {
     // define which flow FlowSolution_t corresponds with which time step:
     {
       cgsize_t data_dim[2] = {kNameLength, kSteps};
-      cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
+      cg_array_write("FlowSolutionOnNodesPointers", CGNS_ENUMV(Character),
           2, data_dim, node_sol_names);
-      // cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
-      //     2, data_dim, cell_sol_names);
+      cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
+          2, data_dim, cell_sol_names);
     }
     // add SimulationType:
     cg_simulation_type_write(file_id, base_id, CGNS_ENUMV(TimeAccurate));
