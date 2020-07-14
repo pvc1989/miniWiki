@@ -22,7 +22,7 @@
 ### 源文件 (Source Files)
 假设有如下简单的 C 语言项目：
 ```
-demo
+.
 ├── include
 │   └── math.h
 ├── src
@@ -31,11 +31,11 @@ demo
     └── math.c
 ```
 各文件大致内容如下：
-- [`include/math.h`](./demo/include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
-- [`src/math.c`](./demo/src/math.c) 实现 `factorial` 的功能。
-- [`test/math.c`](./demo/test/math.c) 测试 `factorial` 的功能。
+- [`include/math.h`](./include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
+- [`src/math.c`](./src/math.c) 实现 `factorial` 的功能。
+- [`test/math.c`](./test/math.c) 测试 `factorial` 的功能。
 
-为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `demo` 的完整路径。
+为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `./` 的完整路径。
 为避免污染 `SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
 
 ### 编译 (Compile)
@@ -217,7 +217,7 @@ library.o : library.c
 ```
 
 ### 示例
-以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./demo/Makefile)。
+以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./Makefile)。
 
 # CMake
 
@@ -280,7 +280,7 @@ cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 
 ### 示例
 ```shell
-cd <source-dir> # demo
+cd <source-dir> # ./
 mkdir build
 mkdir build/Debug
 cd build/Debug
@@ -392,9 +392,9 @@ target_link_libraries(<target> ... <item>... ...)
 依然以《[手动构建](#手动构建)》中的项目为例。
 创建三个 `CMakeLists.txt` 文件：
 
-- [`demo/CMakeLists.txt`](./demo/CMakeLists.txt) 用于管理整个项目。
-- [`demo/src/CMakeLists.txt`](./demo/src/CMakeLists.txt) 用于构建 `lib_math`。
-- [`demo/test/CMakeLists.txt`](./demo/test/CMakeLists.txt) 用于构建 `test_math`。
+- [`./CMakeLists.txt`](./CMakeLists.txt) 用于管理整个项目。
+- [`./src/CMakeLists.txt`](./src/CMakeLists.txt) 用于构建 `lib_math`。
+- [`./test/CMakeLists.txt`](./test/CMakeLists.txt) 用于构建 `test_math`。
 
 ## CMake Tools<a name="CMake-Tools"></a>
 
@@ -404,8 +404,8 @@ target_link_libraries(<target> ... <item>... ...)
 
 1. 用 VS Code 打开一个 CMake 项目。
 2. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在 `.vscode` 之下创建两个 `json` 文件：
-   - `settings.json` 用于设定构建目录等全局配置项。本节示例 [`demo/.vscode/settings.json`](./demo/.vscode/settings.json) 只设置了构建目录，完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
-   - `launch.json` 用于控制可执行文件的运行及调试。本节示例 [`demo/.vscode/launch.json`](./demo/.vscode/launch.json) 引自官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》。
+   - `settings.json` 用于设定构建目录等全局配置项。本节示例 [`./.vscode/settings.json`](./.vscode/settings.json) 只设置了构建目录，完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
+   - `launch.json` 用于控制可执行文件的运行及调试。本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 引自官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》。
 3. 在 VS Code 底部的 ***状态栏 (status bar)*** 中：
    - 单击 `CMake`，在 VS Code 顶部会弹出四种 ***构建类型 (build type)***，单击其中一种，完成 ***配置 (configure)***。若对某些 CMake 选项的默认值不满意，可在 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
    - 在 `Build` 右侧默认显式 `all`，此为默认构建目标，可单击之以选择其他目标。单击 `Build`，完成 ***构建 (build)***。
@@ -466,7 +466,7 @@ options:
 ### 示例
 
 ```shell
-cd <source-dir> # demo
+cd <source-dir> # ./
 mkdir build
 mkdir build/Debug
 cd build/Debug
