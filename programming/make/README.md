@@ -35,17 +35,24 @@
 - [`src/math.c`](./src/math.c) 实现 `factorial` 的功能。
 - [`test/math.c`](./test/math.c) 测试 `factorial` 的功能。
 
-为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `./` 的完整路径。
-为避免污染 `SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
+创建环境变量：
+- 为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `./` 的完整路径。
+- 为避免污染 `SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
+
+```shell
+SOURCE_DIR=$(pwd)
+mkdir _build
+BUILD_DIR=$SOURCE_DIR/_build
+```
 
 ### 编译 (Compile)
 
 ```shell
 cd ${BUILD_DIR}
 # 将 源文件 src/math.c 编译为 目标文件 lib_math.o
-cc -o lib_math.o -c ${SOURCE_DIR}/src/math.c
+cc -I${SOURCE_DIR}/include -o lib_math.o  -c ${SOURCE_DIR}/src/math.c
 # 将 源文件 test/math.c 编译为 目标文件 test_math.o
-cc -o test_math.o -c ${SOURCE_DIR}/test/math.c
+cc -I${SOURCE_DIR}/include -o test_math.o -c ${SOURCE_DIR}/test/math.c
 ```
 
 ### 打包 (Package)
@@ -68,6 +75,7 @@ cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
 # 将 目标文件 math.o 及静态库 libmath.a 链接进 test_math_a
 cc -static -o test_math_a test_math.o -L${BUILD_DIR} -lmath
 ```
+
 ⚠️ [在 macOS 下，无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html)，因此无法实现第三种方式。
 
 ### 运行 (Run)
@@ -79,14 +87,17 @@ cd ${BUILD_DIR}
 ```
 运行结果均为：
 ```shell
+factorial(0) == 1
 factorial(1) == 1
 factorial(2) == 2
 factorial(3) == 6
-factorial(12) == 479001600
-factorial(13) == 1932053504
-factorial(13) / factorial(12) == 4
+factorial(19) == 121645100408832000
+factorial(20) == 2432902008176640000
+factorial(21) == -4249290049419214848 (overflowed)
+factorial(20) / factorial(19) == 20
+factorial(21) / factorial(20) == -1 (overflowed)
 ```
-其中 `factorial(13)` 超出了 `int` 可容纳的范围，发生了「上溢 (overflow)」。
+其中 `factorial(21)` 超出了 `long` 可容纳的范围，发生了 ***上溢 (overflow)***。
 
 ### 清理 (Clean)
 ```shell
@@ -280,14 +291,14 @@ cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 
 ### 示例
 ```shell
-cd <source-dir> # ./
-mkdir build
-mkdir build/Debug
-cd build/Debug
+cd ${SOURCE_DIR} # ./
+mkdir _build
+mkdir _build/Debug
+cd _build/Debug
 cmake -S ../.. -B . \
       -DCMAKE_BUILD_TYPE=Debug \
-      -DCMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
-      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-9
+      -DCMAKE_C_COMPILER=/usr/local/bin/gcc \
+      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++
 ```
 
 ## `CMakeLists.txt` 文件<a name="CMakeLists"></a>
@@ -466,10 +477,10 @@ options:
 ### 示例
 
 ```shell
-cd <source-dir> # ./
-mkdir build
-mkdir build/Debug
-cd build/Debug
+cd ${SOURCE_DIR} # ./
+mkdir _build
+mkdir _build/Debug
+cd _build/Debug
 cmake -G Ninja \
       -S ../.. -B . \
       -DCMAKE_BUILD_TYPE=Debug \

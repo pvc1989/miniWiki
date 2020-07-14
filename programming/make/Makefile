@@ -1,6 +1,8 @@
 # Remember to tweak these values after moving this `Makefile`.
 SOURCE_DIR ?= $(PWD)
-BUILD_DIR ?= $(PWD)/build
+BUILD_DIR ?= $(PWD)/_build
+
+CFLAGS += -I$(PWD)/include
 
 OBJS = test_math.o lib_math.o
 LIBS = libmath.so libmath.a
@@ -23,10 +25,10 @@ test_math_a: test_math.o libmath.a
 	cd $(BUILD_DIR); $(CC) -o $@ -static $< -L. -lmath
 
 test_math.o:
-	cd $(BUILD_DIR); $(CC) -o $@ -c $(CFLAGS) $(SOURCE_DIR)/test/math.c
+	cd $(BUILD_DIR); $(CC) $(CFLAGS) -o $@ -c $(SOURCE_DIR)/test/math.c
 
 lib_math.o:
-	cd $(BUILD_DIR); $(CC) -o $@ -c $(CFLAGS) $(SOURCE_DIR)/src/math.c
+	cd $(BUILD_DIR); $(CC) $(CFLAGS) -o $@ -c $(SOURCE_DIR)/src/math.c
 
 libmath.so: lib_math.o
 	cd $(BUILD_DIR); $(CC) -o $@ -shared -fpic $(SOURCE_DIR)/src/math.c
