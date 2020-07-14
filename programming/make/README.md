@@ -411,18 +411,26 @@ target_link_libraries(<target> ... <item>... ...)
 
 微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有 *体量轻、易扩展、多语言、跨平台* 等优点，利用各种 [***扩展 (extensions)***](https://marketplace.visualstudio.com/) 很容易将其改造为多语言共用的 ***集成开发环境 (Integrated Development Environment, IDE)***。
 
-本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 调试 C/C++ 程序的方法。
+本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 构建及调试 C/C++ 项目的方法。
+
+### 构建
 
 1. 用 VS Code 打开一个 CMake 项目。
-2. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在 `.vscode` 之下创建两个 `json` 文件：
-   - `settings.json` 用于设定构建目录等全局配置项。本节示例 [`./.vscode/settings.json`](./.vscode/settings.json) 只设置了构建目录，完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
-   - `launch.json` 用于控制可执行文件的运行及调试。本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 引自官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》。
-3. 在 VS Code 底部的 ***状态栏 (status bar)*** 中：
+1. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在 `.vscode` 之下创建名为 `settings.json` 的文件，用于设定构建目录等全局配置项。
+   - 本节示例 [`./.vscode/settings.json`](./.vscode/settings.json) 设置了 `cmake.buildDirectory`（构建目录）及  `cmake.generator`（构建工具）两个变量。
+   - 完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
+1. 在 VS Code 底部的 ***状态栏 (status bar)*** 中：
    - 单击 `CMake`，在 VS Code 顶部会弹出四种 ***构建类型 (build type)***，单击其中一种，完成 ***配置 (configure)***。若对某些 CMake 选项的默认值不满意，可在 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
    - 在 `Build` 右侧默认显式 `all`，此为默认构建目标，可单击之以选择其他目标。单击 `Build`，完成 ***构建 (build)***。
-4. 在源文件中设置若干 ***断点 (breakpoint)***，按功能键 `F5` 启动调试。
+
+
+### 调试
+
+1. 在 `.vscode` 之下创建名为 `launch.json` 的文件，用于控制可执行文件的运行及调试。
+   - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 引自官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》。
+1. 在源文件中设置若干 ***断点 (breakpoint)***，按功能键 `F5` 启动调试。
    - [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
-5. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
+1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此法不依赖于本节介绍的 CMake Tools。
 
 # Ninja
