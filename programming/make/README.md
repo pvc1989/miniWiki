@@ -427,7 +427,7 @@ target_link_libraries(<target> ... <item>... ...)
 ### 调试
 
 1. 在 `.vscode` 之下创建名为 `launch.json` 的文件，用于控制可执行文件的运行及调试。
-   - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 引自官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》。
+   - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 基于官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》中的示例，只修改了个别选项的值。
 1. 在源文件中设置若干 ***断点 (breakpoint)***，按功能键 `F5` 启动调试。
    - [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
 1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
