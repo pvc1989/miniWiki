@@ -124,12 +124,12 @@ LLDB 命令具有以下结构：
 
 
 
-### 启动、退出被调试程序
+### 启动、贴附、退出 被调试程序
 
 ```shell
-# 加载被调试程序：
+# 加载 被调试程序：
 (gdb/lldb) file <debugee>
-# 运行被调试的程序：
+# 运行 被调试程序：
 (gdb/lldb) run [argv]
 (gdb/lldb) r   [argv]
 # 为下次 `run` 设置输入参数
@@ -138,7 +138,12 @@ LLDB 命令具有以下结构：
 # 查看下次 `run` 的输入参数
 (gdb)           show            args
 (lldb) settings show target.run-args
-# 退出被调试的程序
+# 贴附 被调试程序：
+(gdb/lldb)     attach        <process-id>
+(lldb) process attach --pid  <process-id>
+(lldb) process attach --name <process-name>
+(lldb) process attach --name <process-name> --waitfor
+# 退出 被调试程序：
 (gdb/lldb) kill
 ```
 
@@ -211,7 +216,19 @@ LLDB 命令具有以下结构：
 (gdb/lldb) finish
 ```
 
-### 查看代码
+### 查看源代码
+
+```shell
+(gdb/lldb) list      # List subsequent lines
+# `list` is an abbreviation for `_regexp-list`
+list <file>:<line>   # List around specific file/line
+list <line>          # List current file around specified line
+list <function-name> # List specified function
+list 0x<address>     # List around specified address
+list -[<count>]      # List previous <count> lines
+```
+
+### 查看汇编码
 
 ```shell
 # 反汇编 当前函数

@@ -140,6 +140,7 @@ git merge [branch]
 ```shell
 # 查看现有标签
 git tag --list
+git tag --list v4.1*
 # 签出到指定标签
 git checkout v4.1.1
 ```
