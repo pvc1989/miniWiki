@@ -546,61 +546,62 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 
 SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步的数据：
 
-- `BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格改变拓扑](#网格改变拓扑)）也用来存储 *指向各步的指针*。
+`BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格改变拓扑](#网格改变拓扑)）也用来存储 *指向各步的指针*：
   
-  ```c++
-  BaseIterativeData_t := {
-    int NumberOfSteps                                                  (r)
+```c++
+BaseIterativeData_t := {
+  int NumberOfSteps                                                  (r)
+
+  DataArray_t<real, 1, NumberOfSteps> TimeValues ;                   (o/r)
+  DataArray_t<int,  1, NumberOfSteps> IterationValues ;              (r/o)
+
+  DataArray_t<int,  1, NumberOfSteps> NumberOfZones ;                (o)
+  DataArray_t<int,  1, NumberOfSteps> NumberOfFamilies ;             (o)
+  DataArray_t<char, 3, [65, MaxNumberOfZones, NumberOfSteps]>
+    ZonePointers ;                                                   (o)
+  DataArray_t<char, 3, [65, MaxNumberOfFamilies, NumberOfSteps]>
+    FamilyPointers ;                                                 (o)
+
+  List( DataArray_t<> DataArray1 ... DataArrayN ) ;                  (o)
+
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
+
+  DataClass_t DataClass ;                                            (o)
+
+  DimensionalUnits_t DimensionalUnits ;                              (o)
+
+  List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
+}
+```
+
+`ZoneIterativeData_t` 位于 `Zone_t` 之下，一般用于存储 *指向各步的指针*：
   
-    DataArray_t<real, 1, NumberOfSteps> TimeValues ;                   (o/r)
-    DataArray_t<int,  1, NumberOfSteps> IterationValues ;              (r/o)
-  
-    DataArray_t<int,  1, NumberOfSteps> NumberOfZones ;                (o)
-    DataArray_t<int,  1, NumberOfSteps> NumberOfFamilies ;             (o)
-    DataArray_t<char, 3, [65, MaxNumberOfZones, NumberOfSteps]>
-      ZonePointers ;                                                   (o)
-    DataArray_t<char, 3, [65, MaxNumberOfFamilies, NumberOfSteps]>
-      FamilyPointers ;                                                 (o)
-  
-    List( DataArray_t<> DataArray1 ... DataArrayN ) ;                  (o)
-  
-    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                 (o)
-  
-    DataClass_t DataClass ;                                            (o)
-    
-    DimensionalUnits_t DimensionalUnits ;                              (o)
-  
-    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ;  (o)
-  }
-  ```
-- `ZoneIterativeData_t` 位于 `Zone_t` 之下，一般用于存储 *指向各步的指针*。
-  
-  ```c++
-  ZoneIterativeData_t< int NumberOfSteps > := {
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      RigidGridMotionPointers ;                                       (o)
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      ArbitraryGridMotionPointers ;                                   (o)
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      GridCoordinatesPointers ;                                       (o)
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      FlowSolutionPointers ;                                          (o)
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      ZoneGridConnectivityPointers ;                                  (o)
-    DataArray_t<char, 2, [32, NumberOfSteps]>
-      ZoneSubRegionPointers ;                                         (o)
-  
-    List( DataArray_t<> DataArray1 ... DataArrayN ) ;                 (o)
-  
-    List( Descriptor_t Descriptor1 ... DescriptorN ) ;                (o)
-    
-    DataClass_t DataClass ;                                           (o)
-  
-    DimensionalUnits_t DimensionalUnits ;                             (o)
-    
-    List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ; (o)
-  }
-  ```
+```c++
+ZoneIterativeData_t< int NumberOfSteps > := {
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    RigidGridMotionPointers ;                                       (o)
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    ArbitraryGridMotionPointers ;                                   (o)
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    GridCoordinatesPointers ;                                       (o)
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    FlowSolutionPointers ;                                          (o)
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    ZoneGridConnectivityPointers ;                                  (o)
+  DataArray_t<char, 2, [32, NumberOfSteps]>
+    ZoneSubRegionPointers ;                                         (o)
+
+  List( DataArray_t<> DataArray1 ... DataArrayN ) ;                 (o)
+
+  List( Descriptor_t Descriptor1 ... DescriptorN ) ;                (o)
+
+  DataClass_t DataClass ;                                           (o)
+
+  DimensionalUnits_t DimensionalUnits ;                             (o)
+
+  List( UserDefinedData_t UserDefinedData1 ... UserDefinedDataN ) ; (o)
+}
+```
 
 ⚠️ 上述 *指针* 目前由 *字符串* 实现。
 
