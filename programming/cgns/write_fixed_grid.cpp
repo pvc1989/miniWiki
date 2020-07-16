@@ -47,6 +47,7 @@ int main() {
   cg_dataclass_write(CGNS_ENUMV(Dimensional));
   cg_units_write(CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter), CGNS_ENUMV(Second),
                  CGNS_ENUMV(Kelvin), CGNS_ENUMV(Degree));
+  float dimensional_exponents[5] = {0., 1., 0., 0., 0.};
   /*
     Create A Zone_t Node
    */
@@ -84,14 +85,13 @@ int main() {
   }
   assert(i_node == grid_size[0][0]);
   int coord_id;
-  float coordinate_exponents[5] = {0., 1., 0., 0., 0.};
   // user must use SIDS-standard names (e.g. "CoordinateX") here:
   char coord_name[kNameLength+1] = "CoordinateX";
   cg_coord_write(file_id, base_id, zone_id,
       CGNS_ENUMV(RealDouble), coord_name, x, &coord_id);
   cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
           "DataArray_t", coord_id, "end");
-  cg_exponents_write(CGNS_ENUMV(RealSingle), coordinate_exponents);
+  cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   std::printf("    A `DataArray_t` named \"%s\" has been created with id %d.\n",
       coord_name, coord_id);
   std::strcpy(coord_name, "CoordinateY");
@@ -99,7 +99,7 @@ int main() {
       CGNS_ENUMV(RealDouble), coord_name, y, &coord_id);
   cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
           "DataArray_t", coord_id, "end");
-  cg_exponents_write(CGNS_ENUMV(RealSingle), coordinate_exponents);
+  cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   std::printf("    A `DataArray_t` named \"%s\" has been created with id %d.\n",
       coord_name, coord_id);
   std::strcpy(coord_name, "CoordinateZ");
@@ -107,7 +107,7 @@ int main() {
       CGNS_ENUMV(RealDouble), coord_name, z, &coord_id);
   cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
           "DataArray_t", coord_id, "end");
-  cg_exponents_write(CGNS_ENUMV(RealSingle), coordinate_exponents);
+  cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   std::printf("    A `DataArray_t` named \"%s\" has been created with id %d.\n",
       coord_name, coord_id);
   /*
@@ -218,8 +218,11 @@ int main() {
                    CGNS_ENUMV(RealDouble), field_name, data[0][0], &field_id);
     cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
             "DataArray_t", field_id, "end");
-    float exponents[5] = {1., -1., -2., 0., 0.};
-    cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+    assert(strcmp(field_name, "Pressure") == 0);
+    dimensional_exponents[0] = +1.0;
+    dimensional_exponents[1] = -1.0;
+    dimensional_exponents[2] = -2.0;
+    cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   }
   // density at cell centers
   {
@@ -243,8 +246,11 @@ int main() {
         CGNS_ENUMV(RealDouble), field_name, data, &field_id);
     cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
             "DataArray_t", field_id, "end");
-    float exponents[5] = {1., -3., 0., 0., 0.};
-    cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+    assert(strcmp(field_name, "Density") == 0);
+    dimensional_exponents[0] = +1.0;
+    dimensional_exponents[1] = -3.0;
+    dimensional_exponents[2] = -0.0;
+    cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   }
   /*
     Write Time-Dependent Flow Solutions
@@ -290,12 +296,10 @@ int main() {
     // common info for all steps:
     auto node_sol_prefix = std::string("NodeData[");
     char node_field_name[kNameLength + 1] = "Pressure";
-    float pressure_exponents[5] = {1., -1., -2., 0., 0.};
     char node_sol_names[kNameLength * kSteps + 1];
     char* node_dest = node_sol_names;
     auto cell_sol_prefix = std::string("CellData[");
     char cell_field_name[kNameLength + 1] = "Density";
-    float density_exponents[5] = {1., -3., -0., 0., 0.};
     char cell_sol_names[kNameLength * kSteps + 1];
     char* cell_dest = cell_sol_names;
     // write solutions for each step:
@@ -319,7 +323,11 @@ int main() {
           &field_id);
       cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
               "DataArray_t", field_id, "end");
-      cg_exponents_write(CGNS_ENUMV(RealSingle), pressure_exponents);
+      assert(strcmp(node_field_name, "Pressure") == 0);
+      dimensional_exponents[0] = +1.0;
+      dimensional_exponents[1] = -1.0;
+      dimensional_exponents[2] = -2.0;
+      cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
       // cell data:
       sol_name = cell_sol_prefix + std::to_string(k) + "]";
       cg_sol_write(file_id, base_id, zone_id,
@@ -334,7 +342,11 @@ int main() {
           &field_id);
       cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
               "DataArray_t", field_id, "end");
-      cg_exponents_write(CGNS_ENUMV(RealSingle), density_exponents);
+      assert(strcmp(cell_field_name, "Density") == 0);
+      dimensional_exponents[0] = +1.0;
+      dimensional_exponents[1] = -3.0;
+      dimensional_exponents[2] = -0.0;
+      cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
     }
     /* Create A ZoneIterativeData_t */
     // create ZoneIterativeData_t:
@@ -349,6 +361,9 @@ int main() {
           2, data_dim, node_sol_names);
       cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
           2, data_dim, cell_sol_names);
+      cg_goto(file_id, base_id, "Zone_t", zone_id,
+              "ZoneIterativeData_t", 1, "DataArray_t", 1, "end");
+      cg_dataclass_write(CGNS_ENUMV(NondimensionalParameter));
     }
     // add SimulationType:
     cg_simulation_type_write(file_id, base_id, CGNS_ENUMV(TimeAccurate));
