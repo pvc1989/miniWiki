@@ -444,6 +444,43 @@ ier = cg_rind_read(int *rind_data);
 - `cg_goto()` 用于定位将要创建 `Rind_t` 结点的那个 `FlowSolution_t` 结点。
 - 外表数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
+## 量纲信息
+
+### `DataClass_t`
+
+```c
+/* Write data class: */
+cg_goto(file_id, base_id, "end");
+cg_dataclass_write(CGNS_ENUMV(Dimensional));
+cg_dataclass_write(CGNS_ENUMV(NondimensionalParameter));
+```
+
+### `DimensionalUnits_t`
+
+```c
+/* Write first five dimensional units: */
+cg_units_write(CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter),
+               CGNS_ENUMV(Second), CGNS_ENUMV(Kelvin),
+               CGNS_ENUMV(Degree));
+```
+
+###`DimensionalExponents_t` 
+
+```c
+/* Write first five dimensional exponents of coordinates: */
+float exponents[5] = {0., 1., 0., 0., 0.};
+cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
+        "DataArray_t", coord_id, "end");
+cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+/* Write first five dimensional exponents of pressure: */
+dimensional_exponents[0] = +1.0;
+dimensional_exponents[1] = -1.0;
+dimensional_exponents[2] = -2.0;
+cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
+        "DataArray_t", field_id, "end");
+cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+```
+
 ## 边界条件
 
 ### 结构网格
@@ -547,7 +584,7 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步的数据：
 
 `BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格改变拓扑](#网格改变拓扑)）也用来存储 *指向各步的指针*：
-  
+
 ```c++
 BaseIterativeData_t := {
   int NumberOfSteps                                                  (r)
@@ -575,7 +612,7 @@ BaseIterativeData_t := {
 ```
 
 `ZoneIterativeData_t` 位于 `Zone_t` 之下，一般用于存储 *指向各步的指针*：
-  
+
 ```c++
 ZoneIterativeData_t< int NumberOfSteps > := {
   DataArray_t<char, 2, [32, NumberOfSteps]>
