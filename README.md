@@ -65,7 +65,7 @@ layout: page
 |                    卷                    |  章  |  节  |  进度   |
 | :--------------------------------------: | :--: | :--: | :-----: |
 |   [热力学](./physics/heat/README.lyx)    |      |      | `00001` |
-|  [流体力学](./physics/fluid/README.lyx)  |      |      | `00111` |
+|  [流体力学](./physics/fluid/README.md)   |      |      | `00111` |
 | [量子力学](./physics/quantum/README.lyx) |      |      | `00011` |
 
 ### [算法](./algorithms/README.md)
