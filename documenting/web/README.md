@@ -252,4 +252,221 @@ title : 网页
 
 [翁恺《JavaScript》](https://study.163.com/course/courseMain.htm?courseId=195001)
 
-## 
+## 概述
+
+JavaScript 是一种脚本语言，用这种语言写成的代码可以在解释器（浏览器）中动态运行。
+
+JavaScript 代码可以直接嵌入到 HTML 文件的 `head` 或 `body` 中：
+
+```html
+<body onload="alert('hi')">
+  <script>
+    document.write("<h1>hello, world</h1>");
+  </script>
+</body>
+```
+
+## 变量
+
+定义变量时不需指定变量的类型，只需将关键词 `var` 置于变量名前：
+
+```js
+var hello = "hello";
+document.write(hello);  // 输出 "hello"
+```
+
+数值不分整型与浮点型：
+
+```js
+var age = 16;
+age = age / 3;        // age == 5.333333333333333
+age++;                // age = age + 1;
+document.write(age);  // 输出 "6.333333333333333"
+```
+
+二元运算符 `+` 有两种含义：
+- 两侧均为数值对象时，表示数学加号。
+- 任意一侧为字符串时，表示字符串连接。
+
+```js
+var hello = "hello ";
+hello = hello + "world ";
+var age = 16;
+document.write(hello + age);  // 输出 "hello world 16"
+```
+
+## 分支
+
+熟悉 C 语言的读者可跳过本节。
+
+### `?:` 运算符
+
+```js
+var score = 59;
+(score >= 60) ? alert("及格了！") : alert("不及格！");
+alert("得分：" + score);
+```
+
+### `if`-`else` 语句
+
+```js
+var score = 59;
+if (score >= 60) {
+  alert("及格了！");
+}
+else {
+  alert("不及格！");
+}
+alert("得分：" + score);
+```
+
+### `switch` 语句
+
+```js
+var score = 75;
+score = score - score % 10;  // score == 70
+switch (score / 10) {
+case 10:
+case 9:
+  alert("A");
+  break
+case 8:
+  alert("B");
+  break
+case 7:
+  alert("C");
+  break
+case 6:
+  alert("D");
+  break
+default:
+  alert("F");
+}
+```
+
+## 循环
+
+### `while` 语句
+
+```js
+var count = 0;
+while (count < 3) {
+  alert(++count);
+}
+```
+
+### `do`-`while` 语句
+
+```js
+var count = 5;
+do {
+  alert(count--);
+} while (count != 0);
+alert("点火！");
+```
+
+### `for` 语句
+
+```js
+for (i = 5; i != 0; i--) {
+  alert(i);
+}
+alert("点火！");
+```
+
+## 函数
+
+### 普通函数
+
+```js
+function print(s) { document.write(s); }
+print("hello");
+```
+
+```js
+function factorial(n) {
+  if (n < 0) {
+    alert("Illegal input!");
+  }
+  else {
+    return (n <= 1) ? 1 : n * factorial(n-1);
+  }
+}
+document.write(factorial(5));
+```
+
+### 函数对象
+
+```js
+var f = new Function("x", "y", "return x * y");
+function g(x, y) { return x * y; }
+document.write(f(4, 5), " == ", g(4, 5));
+```
+
+### 变量作用域
+
+- 定义在所有函数外部的变量，对整个网页可见。
+- 定义在某个函数内部的变量，仅对当前函数可见，并覆盖同名的全局变量。
+- 一个局部变量在一个函数内部只能定义一次（即使其中一个位于 `{}` 内部）。
+
+## 数组
+
+### 列表初始化
+
+```js
+var scores = ["red", "green", "blue"];
+for (i = 0; i != scores.length; ++i) {
+  document.write(scores[i], "<br>");
+}
+```
+
+### 直接初始化
+
+```js
+var scores = Array("red", "green", "blue");
+for (i = 0; i != scores.length; ++i) {
+  document.write(scores[i], "<br>");
+}
+```
+
+### 默认初始化
+
+```js
+var colors = new Array();
+colors[0] = "red";
+colors[1] = "green";
+colors[colors.length] = "blue";
+for (i = 0; i != colors.length; ++i) {
+  document.write(colors[i], "<br>");
+}
+```
+
+### 长度变化
+
+向数组的 `length` 成员赋值可用来显式指定数组长度。
+
+若在任意位置插入元素，则数组长度会根据需要自动调整，中间空出的元素是未定义的：
+
+```js
+var colors = new Array();
+colors[0] = "red";
+colors[1] = "green";
+// colors[2] = undefined;
+colors[3] = "blue";
+for (i = 0; i != colors.length; ++i) {
+  document.write(colors[i], "<br>");
+}
+```
+
+### 数据结构
+
+```js
+var colors = new Array();
+colors.push("red", "green");
+colors.push("blue");
+document.write(colors.toString(), "<br>");  // red,green,blue
+colors.pop();
+document.write(colors.toString(), "<br>");  // red,green
+colors.shift();
+document.write(colors.toString(), "<br>");  // green
+```
