@@ -248,23 +248,33 @@ title : 网页
 
 # JavaScript
 
-## 入门
+## 概述
+
+JavaScript 是一种脚本语言，用它写成的代码可以在解释器（浏览器）中动态运行。
+
+### 入门教程
 
 [翁恺《JavaScript》](https://study.163.com/course/courseMain.htm?courseId=195001)
 
-## 概述
+### 在 HTML 中使用 JavaScript
 
-JavaScript 是一种脚本语言，用这种语言写成的代码可以在解释器（浏览器）中动态运行。
+JavaScript 代码可以
 
-JavaScript 代码可以直接嵌入到 HTML 文件的 `head` 或 `body` 中：
+- 直接嵌入到 HTML 文件的 `head` 或 `body` 中：
 
-```html
-<body onload="alert('hi')">
-  <script>
-    document.write("<h1>hello, world</h1>");
-  </script>
-</body>
-```
+  ```html
+  <body onload="alert('hi')">
+    <script>
+      document.write("<h1>hello, world</h1>");
+    </script>
+  </body>
+  ```
+
+- 存放在 `.js` 文件中，再通过以下方式引入到 HTML 中：
+
+  ```html
+  <script src="util.js"></script>
+  ```
 
 ## 变量
 
@@ -470,3 +480,156 @@ document.write(colors.toString(), "<br>");  // red,green
 colors.shift();
 document.write(colors.toString(), "<br>");  // green
 ```
+
+## 对象
+
+### 创建对象
+
+```js
+var object = new Object();
+var circle = {x: 0, y: 0, r: 2};
+```
+
+### 增加成员
+
+```js
+var book = new Object();
+book.title = "ABC";
+book.price = 30.5;
+```
+
+### 删除成员
+
+```js
+delete book.title;
+book.price = null;
+```
+
+### 遍历成员
+
+```js
+var book = {title: "ABC", price: 30.5};
+for (var member in book) {
+  document.write(member, " == ", book[member], "<br>");
+}
+```
+
+### 构造函数
+
+```js
+function Circle(x, y, r) {
+  this.x = x;
+  this.y = y;
+  this.r = r;
+  this.area = function() {
+    return 3.1415926535897932384626 * this.r * this.r;
+  };
+}
+var circle = new Circle(0, 0, 10);
+document.write(circle.area());
+```
+
+### 对象原型
+
+```js
+function Book(title, price) {
+  this.title = title;
+  this.price = price;
+  this.discount = 1.0;
+}
+Book.prototype = {
+  constructor: Book,
+  setDiscount : function(discount) { return this.discount = discount; },
+  getPrice : function() { return this.price * this.discount; },
+};
+var a = new Book("A", 10);
+var b = new Book("B", 10);
+b.setDiscount(0.8);
+document.write(a.getPrice(), "<br>");
+document.write(b.getPrice(), "<br>");
+```
+
+## `window`
+
+浏览器可以看作一个名为 `window` 对象。
+所有全局变量实际上是 `window` 的成员。
+
+```js
+var answer = 12;
+alert(window.answer);
+```
+
+### 事件处理器
+
+```html
+<p onmouseover="alert('hi');" onmouseout="alert('bye');">一个段落</p>
+```
+
+### 简单对话框
+
+```html
+<script>
+  if (confirm("继续？")) {
+    alert("好！");
+  } else {
+    alert("再见");
+  }
+  var name = prompt("姓名：");
+  alert(name);
+</script>
+```
+
+### 打开新窗口
+
+```html
+<body onload="setInterval('update()', 2000);">
+  <script>
+    var w = open("https://bing.com", "bing", "resizable=yes", "width=400", "height=300");
+  </script>
+</body>
+```
+
+### `location`
+
+```html
+<head>
+  <script>
+    function jump() {
+      location = "https://bing.com";
+    }
+  </script>
+</head>
+<body onload="setInterval('jump()', 2000);">
+  <script>
+    document.write(location);
+  </script>
+</body>
+```
+
+## `document`
+
+`window.document` 表示当前 HTML 页面。
+
+```js
+for (x in document) {
+  document.write(x, "<br>");
+}
+```
+
+### 成员容器
+
+```html
+<body>
+  <img name="cat" src="cat.jpg"/>
+  <p name="math">数学</p>
+  <script>
+    alert(document.cat.src);
+    alert(document.images[0].src);
+    alert(document.getElementsByName("math"));
+  </script>
+</body>
+```
+
+名为 `document.images` 的成员是一个容器，用于存储当前页面内的所有图片。
+与之类似的还有 `document.forms` 及 `document.anchors` 这两个成员，
+但不存在名为 `document.paragraphs` 的成员。
