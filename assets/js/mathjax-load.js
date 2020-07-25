@@ -1,6 +1,18 @@
 window.MathJax = {
   tex: {
     inlineMath: [['$', '$'], ['\\(', '\\)']],
+    macros: {
+      coloneqq: "\mathrel{:=}",
+      grad: "\\boldsymbol{\\nabla}",
+      vdot: "\\mathbin{\\boldsymbol{\\cdot}}",
+      divg: "\\grad\\vdot",
+      Vec: ["\\vec{\\boldsymbol{#1}}", 1],
+      ket: ["\\mathinner{\\vert#1\\rangle}", 1],
+      Mat: ["\\mathinner{\\underparen{#1}}", 1],
+      ip: ["\\mathinner{\\langle#1\\vert#2\\rangle}", 2],
+      dv: ["\\frac{\\mathrm{d}#1}{\\mathrm{d}#2}", 2],
+      pdv: ["\\frac{\\partial#1}{\\partial#2}", 2],
+    },
   },
 };
 (function () {
