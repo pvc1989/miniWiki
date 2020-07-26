@@ -1,5 +1,28 @@
 # LaTeX
 
+## 参考资料
+### 链接
+- [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
+- [TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/)
+- [慕子](https://www.zhihu.com/people/muzzi)的[知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
+  - [(La)TeX 世界的几个层次](https://zhuanlan.zhihu.com/p/45507356)
+  - [LaTeX，一个多义词](https://zhuanlan.zhihu.com/p/45996183)
+  - [2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)
+  - [2019 年，不用 CTEX 套装的新理由](https://zhuanlan.zhihu.com/p/73304856)
+- [常用参考文档](https://zhuanlan.zhihu.com/p/43938945)
+
+### 书籍
+- 《The TeXbook》Knuth 1984
+- 《LaTeX: a Document Preparation System》Lamport 1994
+- 《The LaTeX Companion》Mittelbach 2005
+- 《[More Math into LaTeX](https://doi.org/10.1007/978-3-319-23796-1)》Grätzer  2016
+- 《[TeX](https://en.wikibooks.org/wiki/TeX)》and 《[LaTeX](https://en.wikibooks.org/wiki/LaTeX)》on Wikibooks
+
+### ⚠️ 信息污染源
+- 百度搜索
+- 中文博客
+- 祖传文档
+
 ## 发行版 + 编辑器
 
 ### TeX Live
@@ -10,12 +33,6 @@
 
 ### TeXstudio
 [TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX ***编辑器 (editor)***。
-
-### LyX
-
-[LyX](https://lyx.org) 是一款开源、支持“所见即所思”的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word “所及即所得”的优势。
-
-先完整安装 [TeX Live](#TeX-Live)，再安装 [LyX](https://www.lyx.org/Download)。二者都安装好后，在 LyX【首选项】中设置环境变量 `PATH` 以确保 `xelatex` 等命令能够被 LyX 搜索到。
 
 ## 中文支持
 
@@ -32,15 +49,6 @@
    cd build
    xelatex ../hello.tex
    ```
-
-### LyX 中文支持
-
-新建一个 LyX 文档，其【文档类】可任选，然后进入【文档】→【首选项】进行如下设置：
-
-1. 【LaTeX 导言区】中增加一行 `\usepackage{ctex}`
-2. 【语言】→【语言】→【汉语（简体中文）】
-3. 【语言】→【文件编码】→【其他】→【Unicode (XeTeX) (utf8)】
-4. 【字体】→【使用非 TeX 字体（通过 XeTeX/LuaTeX）】
 
 ## 字体设置
 
@@ -86,13 +94,6 @@
 \setmathfont{Neo-Euler}[range=\mathalpha]
 ```
 *完整* 安装 [TeX Live](#TeX-Live) 后，应当可以用 `texdoc unimath` 命令打开《Every symbol (most symbols) defined by `unicode-math`》。
-
-### LyX 字体设置
-
-[CTeX 系列文档类](https://ctan.org/pkg/ctex) 及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
-如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [unicode-math 宏包](#unicode-math)。
-
-如果要进行更精细的字体设置，则不应勾选【使用非 TeX 字体】，而是在【LaTeX 导言区】中手动加载[字体设置](#字体设置)宏包。
 
 ## 数学物理符号
 
@@ -158,12 +159,40 @@ $ pip3 install pygments
 - [minted 宏包](https://ctan.org/pkg/minted) 用于代码高亮。
 - 二者混用可能会引发路径错误，修复方案可参考《[宏包 import 对 minted 无效](https://zhuanlan.zhihu.com/p/39117864)》。
 
-### LyX 代码高亮
+## 绘图
+
+### tikz
+
+## LyX
+
+[LyX](https://lyx.org) 是一款开源、支持“所见即所思”的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word “所及即所得”的优势。
+
+先完整安装 [TeX Live](#TeX-Live)，再安装 [LyX](https://www.lyx.org/Download)。二者都安装好后，在 LyX【首选项】中设置环境变量 `PATH` 以确保 `xelatex` 等命令能够被 LyX 搜索到。
+
+### 中文支持<a name="LyX-中文支持"></a>
+
+新建一个 LyX 文档，其【文档类】可任选，然后进入【文档】→【首选项】进行如下设置：
+
+1. 【LaTeX 导言区】中增加一行 `\usepackage{ctex}`
+2. 【语言】→【语言】→【汉语（简体中文）】
+3. 【语言】→【文件编码】→【其他】→【Unicode (XeTeX) (utf8)】
+4. 【字体】→【使用非 TeX 字体（通过 XeTeX/LuaTeX）】
+
+### 字体设置<a name="LyX-字体设置"></a>
+
+[CTeX 系列文档类](https://ctan.org/pkg/ctex) 及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
+如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [unicode-math 宏包](#unicode-math)。
+
+如果要进行更精细的字体设置，则不应勾选【使用非 TeX 字体】，而是在【LaTeX 导言区】中手动加载[字体设置](#字体设置)宏包。
+
+### 代码高亮<a name="LyX-代码高亮"></a>
 
 进入【文档】→【首选项】进行如下设置：
 
 1. 【程序列表】→【语法高亮支持包】→【Minted】。
+
 2. 【程序列表】→【空白处】可以设置 minted 宏包参数，例如：
+
    ```latex
    style=xcode
    frame=leftline
@@ -171,38 +200,15 @@ $ pip3 install pygments
    breaklines=true
    fontsize={\footnotesize}
    ```
+
 3. 【输出格式】→【允许运行外部程序】。
+
 4. 首次编译该文档时，会弹出警告对话框，选择【对该文档总是允许】。
 
 在 LyX 文件中插入外部代码文件的步骤如下：
+
 1. 【插入】→【文件】→【子文档】，弹出对话框。
 2. 【文件】后的空白处输入源文件地址，或点击【浏览】选择源文件。
 3. 【包含类别】选择【程序列表】。
 4. 【更多参数】右侧的空白处添加语言，例如  `language=python`。
 
-## 绘图
-
-### tikz
-
-## 参考资料
-### 链接
-- [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
-- [TeX - LaTeX Stack Exchange](https://tex.stackexchange.com/)
-- [慕子](https://www.zhihu.com/people/muzzi)的[知乎专栏](https://zhuanlan.zhihu.com/typography-and-latex)
-  - [(La)TeX 世界的几个层次](https://zhuanlan.zhihu.com/p/45507356)
-  - [LaTeX，一个多义词](https://zhuanlan.zhihu.com/p/45996183)
-  - [2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)
-  - [2019 年，不用 CTEX 套装的新理由](https://zhuanlan.zhihu.com/p/73304856)
-- [常用参考文档](https://zhuanlan.zhihu.com/p/43938945)
-
-### 书籍
-- 《The TeXbook》Knuth 1984
-- 《LaTeX: a Document Preparation System》Lamport 1994
-- 《The LaTeX Companion》Mittelbach 2005
-- 《[More Math into LaTeX](https://doi.org/10.1007/978-3-319-23796-1)》Grätzer  2016
-- 《[TeX](https://en.wikibooks.org/wiki/TeX)》and 《[LaTeX](https://en.wikibooks.org/wiki/LaTeX)》on Wikibooks
-
-### ⚠️ 信息污染源
-- 百度搜索
-- 中文博客
-- 祖传文档
