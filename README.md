@@ -116,6 +116,7 @@ layout: page
 ### [文档](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
   - [LyX](./documenting/latex/README.md#LyX)
+  - [MathJax](./documenting/latex/README.md#MathJax)
 - [Markdown](./documenting/markdown.md)
   - [Typora](./documenting/markdown.md#Typora)
 - [网页](./documenting/web/README.md)

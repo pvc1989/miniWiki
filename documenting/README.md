@@ -2,6 +2,7 @@
 
 ## [LaTeX](./latex/README.md)
 ### [LyX](./latex/README.md#LyX)
+### [MathJax](./latex/README.md#MathJax)
 
 ## [Markdown](./markdown.md)
 ### [Typora](./markdown.md#Typora)

@@ -212,3 +212,96 @@ $ pip3 install pygments
 3. 【包含类别】选择【程序列表】。
 4. 【更多参数】右侧的空白处添加语言，例如  `language=python`。
 
+## MathJax
+
+### 常用链接
+
+- [主页](https://www.mathjax.org/)
+- [文档](https://docs.mathjax.org/en/latest/index.html)
+- [源码](https://github.com/mathjax/MathJax-src)
+- [组件](https://github.com/mathjax/MathJax)
+
+### [配置、加载](https://docs.mathjax.org/en/latest/web/configuration.html)
+
+【方法一】直接在网页（HTML 文件）内配置、加载：
+
+```html
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+```
+
+【方法二】将配置写入 `mathjax-config.js` 文件，再由网页依次加载此文件及 MathJax 组件：
+
+```js
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+```
+
+```html
+<script src="mathjax-config.js" defer></script>
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+```
+
+【方法三】将配置、加载均写入 `mathjax-load.js` 文件，再由网页加载此文件：
+
+```js
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+
+(function () {
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js';
+  script.async = true;
+  document.head.appendChild(script);
+})();
+```
+
+```html
+<script src="mathjax-load.js" async></script>
+```
+
+### [定义 TeX 宏](https://docs.mathjax.org/en/latest/input/tex/macros.html)
+
+【方法一】直接在数学环境中定义，作用域为当前网页内的所有数学环境：
+
+```tex
+\(
+   \def\RR{{\bf R}}
+   \def\bold#1{{\bf #1}}
+\)
+```
+
+【方法二】在配置 MathJax 时定义，作用域为加载该配置的所有数学环境：
+
+```js
+window.MathJax = {
+  tex: {
+    macros: {
+      RR: "{\\bf R}",
+      bold: ["{\\bf #1}", 1]
+    }
+  }
+};
+```
