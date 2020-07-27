@@ -1,8 +1,10 @@
-# 利用 SSH 访问远程 Linux 主机
+---
+title: Secure SHell (SSH)
+---
 
 本文参考了[鳥哥](http://linux.vbird.org/vbird/)的《[文字介面連線伺服器：SSH 伺服器](http://linux.vbird.org/linux_server/0310telnetssh.php#ssh_server)》。原文以 CentOS 6 为例进行讲解的，本文根据 Ubuntu 16.04 LTS 的特点做了一些修改。对于不同的 Linux 发行版，大多数命令是一致的，只在软件包管理命令等细节上略有区别。
 
-## SSH 加密通信原理
+# SSH 加密通信原理
 
 SSH (**S**ecure **SH**ell) 是一种用于远程访问 Linux 主机的 CLI 软件。它通过对通信数据进行加密与解密，使得本地主机可以 *安全地* 访问远程主机上的 shell，从而使用其资源。
 
@@ -25,7 +27,7 @@ SSH 对数据的加密与解密主要是依靠成对的「公钥 (public key)」
 5. 客户端随机生成自己的公钥和私钥，并将公钥（明文）传送给服务端。
 6. 当服务端和客户端分别拥有自己的公私钥和对方的公钥后，便建立了 SSH 连接，可以开始互相传送数据。
 
-## 在服务端开启 SSH 服务
+# 在服务端开启 SSH 服务
 
 ```shell
 # 检查 SSH 服务的状态:
@@ -39,9 +41,9 @@ sudo systemctl enable ssh
 systemctl status ssh
 ```
 
-## 从客户端登入远程主机
+# 从客户端登入远程主机
 
-### 从 Linux 主机访问远程 Linux 主机
+## 从 Linux 主机访问远程 Linux 主机
 
 ```shell
 # 如果需要，安装 SSH 客户端软件：
@@ -61,14 +63,14 @@ ssh -f user@address do_something
 ```
 输入 `exit` 则结束本次 SSH 连接，但一般不会关闭远程主机。
 
-### 从 Windows 主机访问远程 Linux 主机
+## 从 Windows 主机访问远程 Linux 主机
 
 首先需要在 Windows 主机上安装 SSH 客户端软件，例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)。启动后，在地址栏输入远程 Linux 主机的 IP 地址和端口号（默认为 `22`），然后会弹出一个虚拟终端，在以下提示信息后面输入用户名，并按提示输入密码，即可建立 SSH 连接：
 ``` shell
 login as:
 ```
 
-### 修改远程 Linux 主机上当前用户的密码
+## 修改远程 Linux 主机上当前用户的密码
 
 建立远程连接后，在终端中输入以下命令：
 ```shell
@@ -76,9 +78,9 @@ passwd
 ```
 然后根据提示输入原密码和新密码，这样在下次连接时就需要使用新密码了。
 
-## 传输文件
+# 传输文件
 
-### SFTP: Secure File Transfer Program
+## Secure File Transfer Program (SFTP)
 
 与 `ssh` 命令类似，登入远程主机上的指定用户：
 
@@ -109,7 +111,7 @@ sftp> get remote_file local_dir
 sftp> get local_file
 ```
 
-### SCP: Secure Copy Program
+## Secure Copy Program (SCP)
 
 ```shell
 # 上传
@@ -120,7 +122,7 @@ scp user@address:file local_dir
 scp -r user@address:dir local_dir
 ```
 
-## 免密访问
+# 免密访问
 
 默认情况下，每次建立 SSH 连接都需要输入远程主机上指定用户的密码。当需要频繁建立连接时，我们希望免去这一步骤。这一需求可以通过「将客户端公钥写入服务端的 `~/.ssh/authorized_keys` 文件中」来实现。
 
@@ -159,10 +161,9 @@ chmod 644 .ssh/authorized_keys
 
 作为特例，如果希望能够通过 SSH 免密访问本地主机上的当前用户，只需在本地主机上开启 SSH 服务，并将当前用户的公钥写入自己的 `~/.ssh/authorized_keys` 文件。
 
-## 在远程主机运行任务
+# 在远程主机运行任务
 
 ```shell
 $ nohup command [options]    # 在远程主机的前台运行任务
 $ nohup command [options] &  # 在远程主机的后台运行任务
 ```
-

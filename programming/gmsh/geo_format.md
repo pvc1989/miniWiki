@@ -1,4 +1,7 @@
-# GEO 文件说明
+---
+title: GEO 文件说明
+---
+
 Gmsh 自定义了一种脚本语言, 用各种命令驱动主程序执行
 - 构造几何对象
 - 划分网格
@@ -6,7 +9,7 @@ Gmsh 自定义了一种脚本语言, 用各种命令驱动主程序执行
 等功能. 这些命令以字符形式存储于 GEO 文件 (即 `.geo` 文件) 中. 当 GEO 文件被加载时, `文本解析器 (parser)` 会将字符形式的命令解析到对应的可执行代码.
 > GEO 命令的语法与 C++ 较为接近. 在代码编辑器(如 [Visual Studio Code](https://code.visualstudio.com)) 中, 将 GEO 文件的语言设置为 C++, 可以高亮显示一些信息, 有助于提高可读性.
 
-[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 采用如下符号约定:
+《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》采用如下符号约定:
 
 1. 关键词用 `UpperCamelCase` 或 `Upper Camel Case` 表示.
 2. 变量用 `lowerCamelCase` 表示.
@@ -15,10 +18,10 @@ Gmsh 自定义了一种脚本语言, 用各种命令驱动主程序执行
 5. 可替换项用 `|` 分隔.
 6. 重复项用 `...` 表示.
 
-## 通用命令及选项
+# 通用命令及选项
 在这里, `通用`指的是某项功能不专属于几何/网格/求解器/后处理模块.
 
-### 注释
+## 注释
 注释是给人阅读的辅助信息, parser 会忽略这些内容.
 GEO 文件里的注释采用 C++ 风格:
 
@@ -27,12 +30,12 @@ GEO 文件里的注释采用 C++ 风格:
 
 除注释以外, 所有空白字符 (空格 `' '`, 制表符 `\t`, 换行符 `\n`) 也都被 parser 忽略.
 
-### 表达式
+## 表达式
 GEO 表达式的取值有两种类型: 字符型, 浮点型 (没有整型).
 对于计算结果有确定取值类型的表达式, 可以根据计算结果的类型将其归为`浮点型表达式 (Floating Point Expressions)` 或`字符型表达式 (Character Expressions)`.
 此外, 还有一种计算结果类型不定的表达式, 专门用于表示颜色信息, 因此称为`颜色表达式 (Color Expressions)`.
 
-#### 浮点型表达式
+### 浮点型表达式
 符号后接 `~{floatExpr}` 表示用 `_` 将该符号和 `floatExpr` 的计算结果`串接 (concatenate)` 起来. 例如:
 ```cpp
 For i In {1:3}
@@ -70,7 +73,7 @@ newsl   // 下一个可用的 Surface Loop tag
 newreg  // 下一个可用的 REGion tag, 即 max(new*, physicalTags)
 ```
 
-#### 字符型表达式
+### 字符型表达式
 预定义的字符型表达式:
 ```cpp
 Today  // 以字符形式表示的当前日期
@@ -111,7 +114,7 @@ N2S(string)
 DefineString(charExpr, onelabOptions)
 ```
 
-#### 颜色表达式
+### 颜色表达式
 `颜色表达式 (Colors Expressions)` 用于表示颜色信息, 可以是以下任意一种形式:
 ```cpp
 colorName
@@ -120,7 +123,7 @@ colorName
 colorOption
 ```
 
-### 运算符
+## 运算符
 GEO 文件里的运算符与 C/C++ 里的同名运算符类似.
 但有一个例外: 这里的`逻辑或 (logical or)` 运算符 `||` 总是会对其两侧的表达式求值; 而在 C/C++ 里, 只要第一个表达式的值为 `true`, 则不会对第二个表达式求值.
 
@@ -137,7 +140,7 @@ GEO 文件里的运算符与 C/C++ 里的同名运算符类似.
 10. `?:`
 11. `=`, `+=`, `-=`, `*=`, `/=`
 
-### 内置函数
+## 内置函数
 所有函数名的首字母均为大写, 除以下几个函数以 `F` 为首字母外, 其余函数均为其本名 (如 `Sin`, `Cos`, `Tan`):
 
 | 函数 | 功能 |
@@ -145,12 +148,12 @@ GEO 文件里的运算符与 C/C++ 里的同名运算符类似.
 | `Fabs(x)` | 绝对值 |
 | `Fmod(x, y)` | `x % y`, 结果与 `x` 同号 |
 
-完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [Built-in functions](http://gmsh.info/doc/texinfo/gmsh.html#Built_002din-functions).
+完整列表参见《[Built-in functions](http://gmsh.info/doc/texinfo/gmsh.html#Built_002din-functions)》。
 
-### 自定义宏
+## 自定义宏
 暂时不用.
 
-### 控制流
+## 控制流
 从 `begin` 到 `end`, 含起止项, 步进为 `step` (默认值为 `1`):
 ```cpp
 // 不使用循环指标时:
@@ -174,7 +177,7 @@ Else
 EndIf
 ```
 
-### 通用命令
+## 通用命令
 一些常用命令:
 ```cpp
 Abort;  // 中断解析当前脚本
@@ -184,13 +187,13 @@ Merge filename;  // 将指定文件中的数据合并到当前模型
 Printf("%g", Pi);  // 在终端或 GUI 信息栏输出 "3.14159"
 Printf("%g", Pi) > "temp.txt";  // 输出到指定文件
 ```
-完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [4.7 General commands](http://gmsh.info/doc/texinfo/gmsh.html#General-commands).
+完整列表参见《[4.7 General commands](http://gmsh.info/doc/texinfo/gmsh.html#General-commands)》
 
-### 通用选项
+## 通用选项
 暂时不用.
 
-## 几何模块
-### CAD 内核
+# 几何模块
+## CAD 内核
 CAD 内核可以在 GEO 文件头部通过以下命令之一设定:
 ```cpp
 SetFactory("built-in");
@@ -207,9 +210,9 @@ SetFactory("OpenCASCADE");
 第二种为开源 CAD 系统 [OpenCASCADE](https://www.opencascade.com) 的内核, 支持一些高级几何对象的创建和操作.
 如果没有特殊的需求, 建议使用这种内核.
 
-### 创建初等实体
+## 创建初等实体
 只具有几何意义的对象称为`初等实体 (elementary entity)`.
-初等实体在创建时, 被赋予一个正整数 (`非正整数`为系统保留) 编号, [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 中称其为`标签 (tag)`.
+初等实体在创建时,，被赋予一个正整数 (`非正整数`为系统保留) 编号，《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》称其为 ***标签 (tag)***。
 这些 `tag` 满足:
 - 每个初等 `Point` 具有唯一的 `tag` 
 - 每个初等 `Curve` 具有唯一的 `tag` 
@@ -222,7 +225,7 @@ SetFactory("OpenCASCADE");
 - 花括号 `{}` 中的编号表示`引用`一个已有的实体.
 - 尖括号 `< >` 之间的内容为可选项.
 
-#### `Point`s
+### `Point`s
 创建三维点:
 ```cpp
 Point(pointTag) ={
@@ -231,7 +234,7 @@ Point(pointTag) ={
 };
 ```
 
-#### `Curve`s
+### `Curve`s
 通过连接两点创建直线段:
 ```cpp
 Line(curveTag) = {startPointTag, endPointTag};
@@ -260,7 +263,7 @@ Circle(curveTag) ={
 };
 ```
 
-#### `Surface`s
+### `Surface`s
 如果使用 built-in 内核, 必须按以下流程:
 ```cpp
 // 先创建一个或多个曲线环 (Curve Loop):
@@ -288,7 +291,7 @@ Rectangle(surfaceTag) = {
 };
 ```
 
-#### `Volume`s
+### `Volume`s
 如果使用 built-in 内核, 必须按以下流程:
 ```cpp
 // 先创建一个或多个`曲面环 (Surface Loop)`:
@@ -330,7 +333,7 @@ Wedge(volumeTag) = {
 };
 ```
 
-#### 复合实体
+### 复合实体
 复合实体仍然是几何实体, 它由多个具有相同维度的初等实体组成.
 在生成网格时, 这些初等实体的整体将被视作一个几何实体, 即允许一个单元跨越多个初等实体的边界.
 
@@ -339,7 +342,7 @@ Compound Curve(curveTag) = {curveTagList};
 Compound Surface(surfaceTag) = {surfaceTagList};
 ```
 
-#### 通过拉伸创建
+### 通过拉伸创建
 通过拉伸低维实体来创建高维实体:
 ```cpp
 // 通过 平移 拉伸:
@@ -367,7 +370,7 @@ Extrude{
 }
 ```
 
-### 创建物理实体
+## 创建物理实体
 一组相同维度的初等实体可以组合成一个`物理实体 (physical entity)`, 以便赋予它们物理意义.
 例如: 材料属性, 载荷分布, 边界条件等.
 
@@ -379,9 +382,9 @@ Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
 ```
 这里的 `Entity` 可以是 `Point`, `Curve`, `Surface`, `Volume` 中的任意一个.
 
-### 编辑几何实体
+## 编辑几何实体
 
-#### 布尔运算
+### 布尔运算
 `布尔运算 (Boolean Operation)` 就是将几何区域看作点集的集合运算.
 只有 OpenCASCADE 内核支持布尔运算.
 所有布尔运算都是通过一条作用在两个实体列表上的指令来完成的:
@@ -389,12 +392,14 @@ Physical Entity(tag | name<, tag>) <+|->= {entityTagList};
 ```cpp
 BooleanOperation{passiveEntityList}{toolEntityList}
 ```
+
 - `BooleanOperation` 代表某种布尔运算, 可以是 `BooleanIntersection`, `BooleanUnion`, `BooleanDifference` 之一.
 - `passiveEntityList` 代表`被动 (passive)` 实体列表, `toolEntityList` 代表`工具 (tool)` 实体列表, 它们可以是
-```cpp
-<Physical> Curve | Surface | Volume{tagList};  // ; 不能省略
-<... | Delete;>  // 运算完成后删去对应的实体
-```
+
+  ```cpp
+  <Physical> Curve | Surface | Volume{tagList};  // ; 不能省略
+  <... | Delete;>  // 运算完成后删去对应的实体
+  ```
 
 新版 Gmsh 支持将运算结果存储为新的实体:
 ```cpp
@@ -411,7 +416,7 @@ Mesh 2;
 ```
 [demos/boolean](https://gitlab.onelab.info/gmsh/gmsh/tree/master/demos/boolean/) 中有更多示例.
 
-#### 几何变换
+### 几何变换
 
 ```cpp
 // 按相同比例放缩:
@@ -446,7 +451,7 @@ Translate{
 Duplicata{<Physical> Point | Curve | Surface | Volume{tagList}; ...};
 ```
 
-#### 提取边界
+### 提取边界
 
 ```cpp
 // 提取边界上低一维的实体, 返回其标签:
@@ -457,7 +462,7 @@ CombinedBoundary{entityList}
 PointsOf{entityList}
 ```
 
-#### 删除
+### 删除
 
 ```cpp
 删除坐标相同的冗余点:
@@ -469,18 +474,18 @@ Coherence;
 如果列表中的某个实体被列表以外的其他实体所依赖, 则不执行 `Delete` 命令.
 `Recursive` 表示 `Delete` 命令递归地作用到所有次级实体上.
 
-### 几何选项
-详见 [5.2. Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options).
+## 几何选项
+详见《[5.2. Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options)》。
 
-## 网格模块
+# 网格模块
 
-### 物理实体对网格的影响
+## 物理实体对网格的影响
 - 如果没有创建物理实体, 那么所有单元都会被写入网格文件.
 - 如果创建了物理实体, 那么
     - 默认情况下, 只有物理实体上的单元会被写入网格文件, 结点和单元会被重新编号.
     - 通过设置 `Mesh.SaveAll` 选项或使用命令行参数 `-save_all` 可以保存所有单元.
 
-### 设定单元尺寸
+## 设定单元尺寸
 单元尺寸可以通过以下三种方式设定:
 - 如果设定了 `Mesh.CharacteristicLengthFromPoints`, 那么可以为每个 `Point` 设定一个`特征长度 (Characteristic Length)`.
 - 如果设定了 `Mesh.CharacteristicLengthFromCurvature`, 那么网格尺寸将与`曲率 (Curvature)` 相适应.
@@ -493,9 +498,9 @@ Coherence;
 Characteristic Length{pointTagList} = length;
 ```
 
-完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [6.3.1. Specifying mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes).
+完整列表参见《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》的《[6.3.1. Specifying mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes)》。
 
-### 生成结构网格
+## 生成结构网格
 Gmsh 所生成的网格都是`非结构的 (unstructured)`, 即各单元的取向和结点邻接关系完全由其结点列表决定, 而不要求相邻单元之间有其他形式的关联, 因此不能算是真正意义上的`结构 (structured)` 网格.
 
 所有结构网格单元 (四边形, 六面体, 三棱柱) 都是通过合并单纯形 (三角形, 四面体) 而得到的:
@@ -506,7 +511,7 @@ Recombine Surface{surfaceTagList};
 Recombine Volume{volumeTagList};
 ```
 
-#### 通过拉伸生成
+### 通过拉伸生成
 与几何模块中的同名函数类似, 只是多了一个 `layers` 参数:
 ```cpp
 // 通过 平移 拉伸:
@@ -554,7 +559,7 @@ num[] = Extrude {0,0,1} { Surface{1}; Layers{10}; };
 // num[1] 为拉伸出的空间区域
 ```
 
-#### 通过 Transfinite 插值生成
+### 通过 Transfinite 插值生成
 生成一维结构网格:
 ```cpp
 Transfinite Curve{curveTagList} = nodeNumber <Using direction ratio>;
@@ -609,7 +614,7 @@ Recombine Volume{1};
 Mesh 3;
 ```
 
-### 其他命令
+## 其他命令
 ```cpp
 // 生成 dim 维网格:
 Mesh dim;
@@ -624,14 +629,14 @@ Coherence Mesh;
 // 将网格分为 part 块:
 PartitionMesh part;
 ```
-完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [5.1.8 Miscellaneous](http://gmsh.info/doc/texinfo/gmsh.html#Miscellaneous-geometry-commands).
+完整列表参见《[5.1.8 Miscellaneous](http://gmsh.info/doc/texinfo/gmsh.html#Miscellaneous-geometry-commands)》。
 
-### 网格选项
-详见 [6.4. Mesh options](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-options).
+## 网格选项
+详见《[6.4. Mesh options](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-options)》。
 
 
-## 求解器模块
+# 求解器模块
 暂时不用.
 
-## 后处理模块
+# 后处理模块
 暂时不用.

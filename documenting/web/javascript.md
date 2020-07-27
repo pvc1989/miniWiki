@@ -1,14 +1,16 @@
-# JavaScript
+---
+title: JavaScript
+---
 
-## 概述
+# 概述
 
 JavaScript 是一种脚本语言，用它写成的代码可以在解释器（浏览器）中动态运行。
 
-### 入门教程
+## 入门教程
 
 [翁恺《JavaScript》](https://study.163.com/course/courseMain.htm?courseId=195001)
 
-### 在 HTML 中使用 JavaScript
+## 在 HTML 中使用 JavaScript
 
 JavaScript 代码可以
 
@@ -28,7 +30,7 @@ JavaScript 代码可以
   <script src="util.js"></script>
   ```
 
-## 变量
+# 变量
 
 定义变量时不需指定变量的类型，只需将关键词 `var` 置于变量名前：
 
@@ -57,11 +59,11 @@ var age = 16;
 document.write(hello + age);  // 输出 "hello world 16"
 ```
 
-## 分支
+# 分支
 
 熟悉 C 语言的读者可跳过本节。
 
-### `?:` 运算符
+## `?:` 运算符
 
 ```js
 var score = 59;
@@ -69,7 +71,7 @@ var score = 59;
 alert("得分：" + score);
 ```
 
-### `if`-`else` 语句
+## `if`-`else` 语句
 
 ```js
 var score = 59;
@@ -82,7 +84,7 @@ else {
 alert("得分：" + score);
 ```
 
-### `switch` 语句
+## `switch` 语句
 
 ```js
 var score = 75;
@@ -106,9 +108,9 @@ default:
 }
 ```
 
-## 循环
+# 循环
 
-### `while` 语句
+## `while` 语句
 
 ```js
 var count = 0;
@@ -117,7 +119,7 @@ while (count < 3) {
 }
 ```
 
-### `do`-`while` 语句
+## `do`-`while` 语句
 
 ```js
 var count = 5;
@@ -127,7 +129,7 @@ do {
 alert("点火！");
 ```
 
-### `for` 语句
+## `for` 语句
 
 ```js
 for (i = 5; i != 0; i--) {
@@ -136,9 +138,9 @@ for (i = 5; i != 0; i--) {
 alert("点火！");
 ```
 
-## 函数
+# 函数
 
-### 普通函数
+## 普通函数
 
 ```js
 function print(s) { document.write(s); }
@@ -157,7 +159,7 @@ function factorial(n) {
 document.write(factorial(5));
 ```
 
-### 函数对象
+## 函数对象
 
 ```js
 var f = new Function("x", "y", "return x * y");
@@ -165,15 +167,15 @@ function g(x, y) { return x * y; }
 document.write(f(4, 5), " == ", g(4, 5));
 ```
 
-### 变量作用域
+## 变量作用域
 
 - 定义在所有函数外部的变量，对整个网页可见。
 - 定义在某个函数内部的变量，仅对当前函数可见，并覆盖同名的全局变量。
 - 一个局部变量在一个函数内部只能定义一次（即使其中一个位于 `{}` 内部）。
 
-## 数组
+# 数组
 
-### 列表初始化
+## 列表初始化
 
 ```js
 var scores = ["red", "green", "blue"];
@@ -182,7 +184,7 @@ for (i = 0; i != scores.length; ++i) {
 }
 ```
 
-### 直接初始化
+## 直接初始化
 
 ```js
 var scores = Array("red", "green", "blue");
@@ -191,7 +193,7 @@ for (i = 0; i != scores.length; ++i) {
 }
 ```
 
-### 默认初始化
+## 默认初始化
 
 ```js
 var colors = new Array();
@@ -203,7 +205,7 @@ for (i = 0; i != colors.length; ++i) {
 }
 ```
 
-### 长度变化
+## 长度变化
 
 向数组的 `length` 成员赋值可用来显式指定数组长度。
 
@@ -220,7 +222,7 @@ for (i = 0; i != colors.length; ++i) {
 }
 ```
 
-### 数据结构
+## 数据结构
 
 ```js
 var colors = new Array();
@@ -233,16 +235,16 @@ colors.shift();
 document.write(colors.toString(), "<br>");  // green
 ```
 
-## 对象
+# 对象
 
-### 创建对象
+## 创建对象
 
 ```js
 var object = new Object();
 var circle = {x: 0, y: 0, r: 2};
 ```
 
-### 增加成员
+## 增加成员
 
 ```js
 var book = new Object();
@@ -250,14 +252,14 @@ book.title = "ABC";
 book.price = 30.5;
 ```
 
-### 删除成员
+## 删除成员
 
 ```js
 delete book.title;
 book.price = null;
 ```
 
-### 遍历成员
+## 遍历成员
 
 ```js
 var book = {title: "ABC", price: 30.5};
@@ -266,7 +268,7 @@ for (var member in book) {
 }
 ```
 
-### 构造函数
+## 构造函数
 
 ```js
 function Circle(x, y, r) {
@@ -281,7 +283,7 @@ var circle = new Circle(0, 0, 10);
 document.write(circle.area());
 ```
 
-### 对象原型
+## 对象原型
 
 ```js
 function Book(title, price) {
@@ -301,7 +303,7 @@ document.write(a.getPrice(), "<br>");
 document.write(b.getPrice(), "<br>");
 ```
 
-## `window`
+# `window`
 
 浏览器可以看作一个名为 `window` 对象。
 所有全局变量实际上是 `window` 的成员。
@@ -311,13 +313,13 @@ var answer = 12;
 alert(window.answer);
 ```
 
-### 事件处理器
+## 事件处理器
 
 ```html
 <p onmouseover="alert('hi');" onmouseout="alert('bye');">一个段落</p>
 ```
 
-### 简单对话框
+## 简单对话框
 
 ```html
 <script>
@@ -331,7 +333,7 @@ alert(window.answer);
 </script>
 ```
 
-### 打开新窗口
+## 打开新窗口
 
 ```html
 <body onload="setInterval('update()', 2000);">
@@ -341,7 +343,7 @@ alert(window.answer);
 </body>
 ```
 
-### `location`
+## `location`
 
 ```html
 <head>
@@ -358,7 +360,7 @@ alert(window.answer);
 </body>
 ```
 
-## `document`
+# `document`
 
 `window.document` 表示当前 HTML 页面。
 
@@ -368,7 +370,7 @@ for (x in document) {
 }
 ```
 
-### 成员容器
+## 成员容器
 
 ```html
 <body>

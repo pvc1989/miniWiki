@@ -1,4 +1,6 @@
-# 物理
+---
+title: 物理
+---
 
-## [流体力学](./fluid/README.md)
+# [流体力学](./fluid/README.md)
 

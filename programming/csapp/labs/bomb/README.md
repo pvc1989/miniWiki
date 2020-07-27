@@ -1,12 +1,14 @@
-# Bomb Lab
+---
+title: Bomb Lab
+---
 
-## Resources
+# Resources
 - [Linux/x86-64 binary bomb](http://csapp.cs.cmu.edu/3e/bomb.tar) for self-study
 - [Recitation 4: Bomb Lab](https://scs.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=0ed08c72-f0f1-4982-aebc-92d3db7af9fd)
 
-## Hints
+# Hints
 
-### One Solution
+## One Solution
 
 There are more than one possible solutions, one of which is
 
@@ -32,7 +34,7 @@ Good work!  On to the next...
 Congratulations! You've defused the bomb!
 ```
 
-### Dangerous Functions
+## Dangerous Functions
 
 The following function and those who call it are dangerous:
 
@@ -46,9 +48,9 @@ void explode_bomb();
 (gdb/lldb) b explode_bomb
 ```
 
-## Phase 1
+# Phase 1
 
-### `string_length()`
+## `string_length()`
 
 ```nasm
 0x40131b <+0>:     cmp    BYTE PTR [rdi],0x0
@@ -68,7 +70,7 @@ void explode_bomb();
 int string_length(char* s);
 ```
 
-### `strings_not_equal()`
+## `strings_not_equal()`
 
 ```nasm
 0x401338 <+0>:     push   r12
@@ -134,7 +136,7 @@ int strings_not_equal(char* s1, char* s2) {  /* 0x401338 */
 }
 ```
 
-### `phase_1()`
+## `phase_1()`
 
 ```nasm
 0x400ee0 <+0>:     sub    rsp,0x8
@@ -165,9 +167,9 @@ So, the 1st line should be
 Border relations with Canada have never been better.
 ```
 
-## Phase 2
+# Phase 2
 
-### `read_six_numbers()`
+## `read_six_numbers()`
 
 ```nasm
 0x40145c <+0>:     sub    rsp,0x18
@@ -193,7 +195,7 @@ Border relations with Canada have never been better.
 int read_six_numbers(char* s, int a[]);
 ```
 
-### `phase_2()`
+## `phase_2()`
 
 ```nasm
 0x400efc <+0>:     push   rbp
@@ -250,9 +252,9 @@ So, the 2nd line should begin with
 1 2 4 8 16 32
 ```
 
-## Phase 3
+# Phase 3
 
-### `phase_3()`
+## `phase_3()`
 
 ```nasm
 0x400f43 <+0>:     sub    rsp,0x18
@@ -368,9 +370,9 @@ So, the 3rd line should begin with any one of the following 8 cases:
 7 327
 ```
 
-## Phase 4
+# Phase 4
 
-### `func4()`
+## `func4()`
 
 ```nasm
 0x400fce <+0>:     sub    rsp,0x8
@@ -423,7 +425,7 @@ int func4(int a, int b, int c) {
 }
 ```
 
-### `phase_4()`
+## `phase_4()`
 
 ```nasm
 0x40100c <+0>:     sub    rsp,0x18
@@ -472,9 +474,9 @@ void phase_4(char* input) {
 3 0
 ```
 
-## Phase 5
+# Phase 5
 
-### `phase_5()`
+## `phase_5()`
 
 ```nasm
 0x401062 <+0>:     push   rbx
@@ -519,7 +521,7 @@ void phase_4(char* input) {
 0x4010f3 <+145>:   ret
 ```
 
-### Key Steps
+## Key Steps
 
 1. From `<+24>` to `<+34>`, we know ***Line 5 should be a 6-`char` string (excluding the `'\0'` at the end)***.
 
@@ -603,9 +605,9 @@ void phase_4(char* input) {
    0x47 == 'G'
    ```
 
-## Phase 6
+# Phase 6
 
-### `read_six_numbers()`
+## `read_six_numbers()`
 
 ```nasm
 0x4010f4 <+0>:     push   r14
@@ -626,7 +628,7 @@ int a[6];
 read_six_numbers(input, a);  /* <+18> */
 ```
 
-### `1, 2, 3, 4, 5, 6`
+## `1, 2, 3, 4, 5, 6`
 
 ```nasm
 ; initialize the loop
@@ -683,7 +685,7 @@ It tells us ***the 6 numbers must be distinct (implied by `<+76>`) and within `{
 0x7fffffffe4d4: 6
 ```
 
-### `a[i] = 7 - a[i]`
+## `a[i] = 7 - a[i]`
 
 ```nasm
 ; initialize the loop
@@ -714,7 +716,7 @@ do {
 
 So, it's safe to go through the loop and stop after it.
 
-### Array of Nodes
+## Array of Nodes
 
 ```nasm
 ; initialize the loop
@@ -825,7 +827,7 @@ The loop use `int a[6]` to build another array, located at `%rsp+0x20` and denot
 0x7fffffffe500: 0x00000000006032e0 0x00000000006032d0
 ```
 
-### Rebuild the List
+## Rebuild the List
 ```nasm
 0x4011ab <+183>:   mov    rbx,QWORD PTR [rsp+0x20]  ; T* rbx = b[0];  // head
 0x4011b0 <+188>:   lea    rax,[rsp+0x28]  ; T** rax = &b[1];
@@ -853,7 +855,7 @@ while (curr != tail) {
 }
 ```
 
-### Sort by `rank`
+## Sort by `rank`
 
 At this point, `%rdx` holds `b[5]` and `%rbx` holds `b[0]`.
 

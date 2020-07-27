@@ -1,15 +1,19 @@
+---
+title: 基于 VTK 的数据显示工具
+---
+
 # VTK
 
 在不同的语境下，[***VTK (Visualization ToolKit)***](https://www.vtk.org) 可能表示：
 - 用于 ***数据显示 (Data Visualization)*** 的 C++ 程序库。
-- 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)和[现代 XML 格式](#现代-XML-格式)。
-- [传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)文件的默认扩展名。
+- 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md)和[现代 XML 格式](#XML)。
+- [传统 VTK 格式](./legacy_vtk_format.md)文件的默认扩展名。
 
 ## 文件格式
 
 详细定义见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《VTK File Formats》一节。
 
-### 数据类型
+### VTK 类名
 
 VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中省去了该字段（即 `DataSet` 应理解为 `vtkDataSet`）。
 
@@ -17,9 +21,9 @@ VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中
 
 ### 传统 VTK 格式
 
-这种格式的[定义](./legacy_vtk_format.md#传统-VTK-格式)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
+这种格式的[定义](./legacy_vtk_format.md)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
 
-### 现代 XML 格式
+### 现代 XML 格式<a name="XML"></a>
 这是一种支持 ***随机访问 (random access)*** 和 ***并行读写 (parallel IO)*** 的文件格式，以 `.vt[irsupm]` 为扩展名：
 
 | 扩展名 | 数据集类型              |
@@ -31,7 +35,7 @@ VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中
 | `vtp` | `vtkPolyData`         |
 | `vtm` | `vtkMultiBlockDataSet` |
 
-这种格式的定义比[传统 VTK 格式](./legacy_vtk_format.md#传统-VTK-格式)复杂，建议直接调用 VTK 程序库提供的 [API](#API)。
+这种格式的定义比[传统 VTK 格式](./legacy_vtk_format.md)复杂，建议直接调用 VTK 程序库提供的 [API](#API)。
 
 如果在本地部署 VTK 程序库有困难（无网络、无权限），可以考虑使用 [PyEVTK](https://bitbucket.org/pauloh/pyevtk)。
 它完全用 Python & Cython 实现，因此不依赖于 VTK 程序库。
@@ -109,13 +113,13 @@ cmake --build .
 ./read *.vtk *.vtu  # 读取在《Python 示例》中生成的文件
 ```
 
-## ParaView
+# ParaView
 
 [ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
 
 启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》适合于系统学习。
 
-### 简单数据显示
+## 简单数据显示
 
 使用 ParaView 主要分三个基本步骤：
 
@@ -125,7 +129,7 @@ cmake --build .
 
 对于同一个数据文件，第 1 步只需执行 1 次，而第 2、3 步可以执行多次。
 
-### 动态数据显示
+## 动态数据显示
 
 最简单（最通用）的动态数据显示方式，是将每一时间步的数据写入一个对应于该时刻的文件，这样的一个文件对应于动画中的一帧。ParaView 在加载按以下任意一种风格命名的一 ***组 (group)*** 文件时，会自动将它们识别为一个 ***文件序列 (file series)***：
 
@@ -140,7 +144,7 @@ foo.vtksN
 ```
 其中 `foo` 可以是任意非空字符串，`N` 为整数编号，扩展名 `.vtk` 可以替换为任意[ VTK 文件格式](#文件格式)所对应的扩展名。
 
-### 远程数据显式
+## 远程数据显式
 - 在远程及本地主机上：
   - 安装（版本号接近的）ParaView 软件。
   - 不建议用 *包管理工具* 安装，建议[到官网下载预编译版本](https://www.paraview.org/download/)。

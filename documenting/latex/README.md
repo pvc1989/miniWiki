@@ -1,5 +1,8 @@
-# LaTeX
+---
+title: LaTeX
+---
 
+# LaTeX
 ## 参考资料
 ### 链接
 - [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
@@ -25,7 +28,7 @@
 
 ## 发行版 + 编辑器
 
-### TeX Live
+### TeX Live<a name="TeX-Live"></a>
 [TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX ***发行版 (distribution)***。
 
 1. 下载并 *完整* 安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
@@ -163,13 +166,13 @@ $ pip3 install pygments
 
 ### tikz
 
-## LyX
+# LyX
 
 [LyX](https://lyx.org) 是一款开源、支持“所见即所思”的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word “所及即所得”的优势。
 
 先完整安装 [TeX Live](#TeX-Live)，再安装 [LyX](https://www.lyx.org/Download)。二者都安装好后，在 LyX【首选项】中设置环境变量 `PATH` 以确保 `xelatex` 等命令能够被 LyX 搜索到。
 
-### 中文支持<a name="LyX-中文支持"></a>
+## 中文支持<a name="LyX-中文支持"></a>
 
 新建一个 LyX 文档，其【文档类】可任选，然后进入【文档】→【首选项】进行如下设置：
 
@@ -178,14 +181,14 @@ $ pip3 install pygments
 3. 【语言】→【文件编码】→【其他】→【Unicode (XeTeX) (utf8)】
 4. 【字体】→【使用非 TeX 字体（通过 XeTeX/LuaTeX）】
 
-### 字体设置<a name="LyX-字体设置"></a>
+## 字体设置<a name="LyX-字体设置"></a>
 
 [CTeX 系列文档类](https://ctan.org/pkg/ctex) 及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
 如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [unicode-math 宏包](#unicode-math)。
 
 如果要进行更精细的字体设置，则不应勾选【使用非 TeX 字体】，而是在【LaTeX 导言区】中手动加载[字体设置](#字体设置)宏包。
 
-### 代码高亮<a name="LyX-代码高亮"></a>
+## 代码高亮<a name="LyX-代码高亮"></a>
 
 进入【文档】→【首选项】进行如下设置：
 
@@ -212,16 +215,16 @@ $ pip3 install pygments
 3. 【包含类别】选择【程序列表】。
 4. 【更多参数】右侧的空白处添加语言，例如  `language=python`。
 
-## MathJax
+# MathJax
 
-### 常用链接
+## 常用链接
 
 - [主页](https://www.mathjax.org/)
 - [文档](https://docs.mathjax.org/en/latest/index.html)
 - [源码](https://github.com/mathjax/MathJax-src)
 - [组件](https://github.com/mathjax/MathJax)
 
-### [配置、加载](https://docs.mathjax.org/en/latest/web/configuration.html)
+## [配置、加载](https://docs.mathjax.org/en/latest/web/configuration.html)
 
 【方法一】直接在网页（HTML 文件）内配置、加载：
 
@@ -282,7 +285,7 @@ window.MathJax = {
 <script src="mathjax-load.js" async></script>
 ```
 
-### [定义 TeX 宏](https://docs.mathjax.org/en/latest/input/tex/macros.html)
+## [定义 TeX 宏](https://docs.mathjax.org/en/latest/input/tex/macros.html)
 
 【方法一】直接在数学环境中定义，作用域为当前网页内的所有数学环境：
 

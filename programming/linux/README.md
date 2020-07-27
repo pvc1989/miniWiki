@@ -1,14 +1,16 @@
-# Linux
+---
+title: Linux
+---
 
-## [安装与配置](./install/README.md)
+# [安装与配置](./install/README.md)
 
-## 文本编辑器
+# 文本编辑器
 
-### [Vim](./vim.md)
+## [Vim](./vim.md)
 
-## Shell
+# Shell
 
-### 数据流重定向
+## 数据流重定向
 
 |   名称   |   覆盖   |   追加    |
 | :------: | :------: | :-------: |
@@ -28,10 +30,10 @@ $ find ~/.. -name .bash_history > stdout.txt 2> stderr.txt
 $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 ```
 
-### [SSH](./ssh.md)
+## [SSH](./ssh.md)
 
-## 进程管理
-### 基本概念
+# 进程管理
+## 基本概念
 本节的 ***程序 (program)*** 特指（存储在磁盘中的）可执行文件，而 ***进程 (process)*** 则是（被操作系统加载到内存中的）某个程序的运行实例。
 操作系统在加载一个程序使其成为一个进程时，会为其分配一个 ***Process ID (PID)*** 并附上进程触发者的 ***User ID (UID)*** 及 ***Group ID (GID)***。
 
@@ -40,7 +42,7 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 - 依赖者（即被触发者）被称为 ***子进程 (child process)***。
 - 子进程将亲进程的 UID、GID 继承下来，并以亲进程的 PID 作为自己的 ***Parent Process ID (PPID)***。
 
-### 查看进程
+## 查看进程
 
 |          命令           |                     功能                     |
 | :---------------------: | :------------------------------------------: |
@@ -52,7 +54,7 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 |          `top`          |     动态显示所有进程状态（按 `q` 退出）      |
 | `top -o +cpu -s 3 -n 4` |  CPU 升序、采样周期 `3` 秒、最多 `4` 个进程  |
 
-### 管理进程
+## 管理进程
 
 |          命令           |                     功能                     |
 | :---------------------: | :------------------------------------------: |
@@ -62,7 +64,7 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 | `killall -s -9 process` |               显示但不执行操作               |
 
 
-### 管理任务
+## 管理任务
 由同一个 shell 进程触发的子进程称为 ***任务 (job)***。若系统只提供了一个 shell 进程，则用户通常需要将 ***任务 (job)*** 在 ***前台 (foreground)*** 与 ***后台 (background)*** 之间来回切换，以便让多个任务同时运行。
 
 ⚠️ 这里的 *前台*、*后台* 是相对于当前 shell 进程而言的；若这个 shell 进程是远程主机提供的，则退出 shell 意味着退出所有后台任务（仍在后台的任务会阻断 shell 的退出）。《[利用 SSH 访问远程 Linux 主机](./ssh.md)》介绍了如何访问远程主机以及在 *远程主机的后台* 运行任务。

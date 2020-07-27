@@ -1,11 +1,11 @@
 ---
 layout: page
+title: 首页
 ---
-# 学习笔记
 
-## 编写说明
+# 编写说明
 
-### 语言
+## 语言
 - [LyX](./documenting/latex/README.md#LyX)
   - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 LyX 文档。
   - 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
@@ -14,7 +14,7 @@ layout: page
   - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 Markdown 文档。
   - 本仓库已启用 [**GitHub Pages**](https://pvcstillingradschool.github.io/miniWiki/)，目前仅支持 Markdown 文档。
 
-### 编译
+## 编译
 
 - 在任意路径下创建本仓库的副本。
 - 编译 LyX 文档（生成 PDF 文件）：
@@ -36,19 +36,19 @@ layout: page
   1. 生成的文件位于 `./_site/` 中。
   1. 在浏览器中访问 [`http://127.0.0.1:4000/`](http://127.0.0.1:4000/) 或 [`http://localhost:4000/`](http://localhost:4000/)。
 
-### 排版
+## 排版
 
 - 【空格】以下情形手动空一格：
   - 英文单词、行内公式、行内代码 两侧（左侧为行首、右侧为标点者除外）
   - 可能因断词产生歧义的汉字之间（例如「以 光武帝之德」与「以光 武帝之德」）
 - 【待补充】
 
-### 纠错
+## 纠错
 移步 [Issues](https://github.com/pvcStillInGradSchool/miniWiki/issues)，尽量做到一个 issue 对应一个问题。
 
-## 内容目录
+# 内容目录
 
-### [数学](./mathematics/README.md)
+## [数学](./mathematics/README.md)
 
 |                       卷                        |  章  |  节  |  进度   |
 | :---------------------------------------------: | :--: | :--: | :-----: |
@@ -60,7 +60,7 @@ layout: page
 |   [偏微分方程](./mathematics/pde/README.lyx)    |      |      | `00111` |
 |  [微分几何](./mathematics/geometry/README.lyx)  |      |      | `00001` |
 
-### [物理](./physics/README.md)
+## [物理](./physics/README.md)
 
 |                    卷                    |  章  |  节  |  进度   |
 | :--------------------------------------: | :--: | :--: | :-----: |
@@ -68,7 +68,7 @@ layout: page
 |  [流体力学](./physics/fluid/README.md)   |      |      | `00111` |
 | [量子力学](./physics/quantum/README.lyx) |      |      | `00011` |
 
-### [算法](./algorithms/README.md)
+## [算法](./algorithms/README.md)
 
 |                           卷                           |  章  |  节  |  进度   |
 | :----------------------------------------------------: | :--: | :--: | :-----: |
@@ -76,7 +76,7 @@ layout: page
 |      [优化](./algorithms/optimization/README.lyx)      |      |      | `00001` |
 |    [有限元](./algorithms/finite_element/README.lyx)    |      |      | `00011` |
 
-### [编程](./programming/README.md)
+## [编程](./programming/README.md)
 - 计算机系统
   - [CSAPP](./programming/csapp/README.md)
 - 设计思想
@@ -113,7 +113,7 @@ layout: page
     - [Vim](./programming/linux/vim.md)
   - [Docker](./programming/docker/README.md)
 
-### [文档](./documenting/README.md)
+## [文档](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
   - [LyX](./documenting/latex/README.md#LyX)
   - [MathJax](./documenting/latex/README.md#MathJax)
@@ -123,6 +123,6 @@ layout: page
   - [HTML](./documenting/web/html.md)
   - [CSS](./documenting/web/css.md)
   - [JavaScript](./documenting/web/javascript.md)
-- [编辑书签](./documenting/bookmark)
+- [书签编辑器](./documenting/bookmark)
   - [PDFBookmarker](./documenting/bookmark.md#PDFBookmarker)
   - [DJVUSED](./documenting/bookmark.md#DJVUSED)

@@ -1,8 +1,10 @@
-# 编辑书签
+---
+title: 书签编辑器
+---
 
-## PDF
-### [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)
-#### 用法示例
+# PDF 书签编辑器
+## [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)
+### 用法示例
 ```bash
 # 将 toc.txt 中的目录添加到 book.pdf，另存为 new-book.pdf
 python3 pdfbookmarker.py book.pdf toc.txt new-book.pdf
@@ -32,14 +34,14 @@ python3 pdfbookmarker.py book.pdf toc.txt
 ++"1.1  第二节标题"|5
 ```
 
-## DjVu
-### [DJVUSED](http://djvu.sourceforge.net/doc/man/djvused.html)
-#### 常用选项
+# DjVu 书签编辑器
+## [DJVUSED](http://djvu.sourceforge.net/doc/man/djvused.html)
+### 常用选项
 - `-e <script>` 从命令行获取命令
 - `-s` 执行完命令后保存文件
 - `-u` 按 UTF-8 输出
 
-#### 用法示例
+### 用法示例
 ```bash
 # 打印第 3 页的文字
 djvused file.djvu -e 'select 3; print-pure-txt'

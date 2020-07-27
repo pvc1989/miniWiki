@@ -1,3 +1,7 @@
+---
+title: Python
+---
+
 # 入门教程
 
 - [The Python Tutorial](https://docs.python.org/3/tutorial/index.html) --- 最`官方`的教程

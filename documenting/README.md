@@ -1,17 +1,19 @@
-# 文档
+---
+title: 文档
+---
 
-## [LaTeX](./latex/README.md)
-### [LyX](./latex/README.md#LyX)
-### [MathJax](./latex/README.md#MathJax)
+# [LaTeX](./latex/README.md)
+## [LyX](./latex/README.md#LyX)
+## [MathJax](./latex/README.md#MathJax)
 
-## [Markdown](./markdown.md)
-### [Typora](./markdown.md#Typora)
+# [Markdown](./markdown.md)
+## [Typora](./markdown.md#Typora)
 
-## [网页](./web/README.md)
-### [HTML](./web/html.md)
-### [CSS](./web/css.md)
-### [JavaScript](./web/javascript.md)
+# [网页](./web/README.md)
+## [HTML](./web/html.md)
+## [CSS](./web/css.md)
+## [JavaScript](./web/javascript.md)
 
-## [编辑书签](./bookmark.md)
-### [PDFBookmarker](./bookmark.md#PDFBookmarker)
-### [DJVUSED](./bookmark.md#DJVUSED)
+# [书签编辑器](./bookmark.md)
+## [PDFBookmarker](./bookmark.md#PDFBookmarker)
+## [DJVUSED](./bookmark.md#DJVUSED)

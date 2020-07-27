@@ -1,3 +1,7 @@
+---
+title: Octave/MATLAB
+---
+
 # GNU Octave
 
 [Octave](https://www.gnu.org/software/octave/) 是一款开源的数值计算软件. 

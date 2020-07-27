@@ -1,4 +1,6 @@
-# CGNS
+---
+title: CGNS
+---
 
 CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数据库）系统。
 
@@ -18,20 +20,20 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 | **MLL**  | [**M**id-**L**evel **L**ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
 | **SIDS** | [**S**tandard **I**nterface **D**ata **S**tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
 
-## SIDS
+# SIDS
 
-### 官方文档
+## 官方文档
 
 - 入门指南：[*Overview of the SIDS*](https://cgns.github.io/CGNS_docs_current/user/sids.html)
 - 完整定义：[*CGNS Standard Interface Data Structures*](https://cgns.github.io/CGNS_docs_current/sids/index.html)
 
-### 文件读写
+## 文件读写
 
 符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [**CGNSview**](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问 *文件树*。
 
 ⚠️ [**Gmsh**](../gmsh/README.md)、 [**VTK**](../vtk/README.md) 只能打开比它们所依赖的 *CGNS 库* 更“旧”的 *CGNS 文件*。
 
-### 示例文件
+## 示例文件
 
 - [Example CGNS Files](http://cgns.github.io/CGNSFiles.html)
 - [AIAA High Lift Workshop (HiLiftPW)](https://hiliftpw.larc.nasa.gov)
@@ -40,7 +42,7 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 - [AIAA Drag Prediction Workshop (DPW)](https://aiaa-dpw.larc.nasa.gov) 
   - [Download Grids](https://dpw.larc.nasa.gov/DPW6/)
 
-### 树状结构
+## 树状结构
 
 每个 CGNS 文件（数据库）在逻辑上是一棵由若干 ***结点 (node)*** 相互链接而成的 ***树 (tree)***。每个结点都含有以下数据：
 
@@ -51,27 +53,27 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ⚠️ 为避免混淆，本文档约定 ***结点 (node)*** 只表示上述树结点，而将网格中的点称为 ***顶点 (vertex)*** 或 ***格点 (mesh/grid point)***。
 
-## MLL
+# MLL
 
-### 官方文档
+## 官方文档
 
 - 入门指南：[*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)
 - 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)
 
-### 数组索引
+## 数组索引
 
 入门指南主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。
 
 - C 的多维数组 *按行 (row major)* 存储，Fortran 的多维数组 *按列 (column major)*  存储，因此 *row in C* 对应于 *column in Fortran*。
 - Fortran 的数组索引是从 `1` 开始的（这与 SIDS 一致），而 C 则从 `0` 开始（故调用 C-API 时可能需要转换）。
 
-### 演示代码
+## 演示代码
 
 下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
-## 基本模块
+# 基本模块
 
-### 根结点
+## 根结点
 
 ```c++
 root
@@ -94,7 +96,7 @@ void cg_error_exit();  // Stop the execution of the program:
 
 用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
 
-### `CGNSBase_t`
+## `CGNSBase_t`
 
 ```c++
 CGNSBase_t
@@ -115,7 +117,7 @@ cg_base_read(// Read CGNS base information:
     char *base_name, int *cell_dim, int *phys_dim);
 ```
 
-### `Zone_t`
+## `Zone_t`
 
 ```c++
 Zone_t
@@ -155,14 +157,14 @@ cg_zone_read(// Read zone information:
     - *列数* 至少为一。
     - 若单元编号没有排序，则 *边界点数* 为零。
 
-## 单区网格
+# 单区网格
 
 |      |      结构网格      |     非结构网格      |
 | :--: | :----------------: | :-----------------: |
 | 写出 | `write_grid_str.c` | `write_grid_unst.c` |
 | 读入 | `read_grid_str.c`  | `read_grid_unst.c`  |
 
-###  `GridCoordinates_t`
+##  `GridCoordinates_t`
 
 ```c++
 GridCoordinates_t
@@ -199,7 +201,7 @@ cg_coord_read(// Read grid coordinates:
   - `CGNS_ENUMV(RealSingle)` 对应 `float`。
   - `CGNS_ENUMV(RealDouble)` 对应 `double`。
 
-### `Element_t`
+## `Element_t`
 
 结构网格的 *顶点信息* 已经隐含了 *单元信息*，因此不需要显式创建单元。与之相反，非结构网格的单元信息需要显式给出：
 
@@ -256,7 +258,7 @@ cg_elements_read(// Read fixed size element data:
 - `n_boundary` 为当前 `Elements_t` 对象内边界单元个数：若单元已排序，则前 `n_boundary` 个单元为边界单元；若单元未排序，则 `n_boundary = 0`。
 - `parent_flag` 用于判断 parent data 是否存在。
 
-### 运行示例
+## 运行示例
 
 结构网格：
 
@@ -321,8 +323,8 @@ Successfully read unstructured grid from file grid_c.cgns
 
 ⚠️ 本节生成的 `grid_c.cgns` 将在后续示例中反复使用，因此必确正确运行 `write_grid_str` 或 `write_grid_unst`，以获得以上输出。
 
-## 流场数据
-### `FlowSolution_t`
+# 流场数据
+## `FlowSolution_t`
 
 ```c++
 FlowSolution_t
@@ -345,7 +347,7 @@ FlowSolution_t
                 DataSize += RindSize  */
 ```
 
-### 顶点数据
+## 顶点数据
 
 |      |       结构网格       |      非结构网格       |
 | :--: | :------------------: | :-------------------: |
@@ -393,14 +395,14 @@ cg_field_read(// Read flow solution:
   - `sol_array` 尺寸应当与顶点数量匹配：对于结构网格，通常声明为多维数组；对于非结构网格，通常声明为一位数组。
   - `field_name` 应当取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，例如 `Density | Pressure`。
 
-### 单元数据
+## 单元数据
 
 `write_flowcent_str.c` 与 `read_flowcent_str.c` 展示了这种流场表示方法，所用 API 与前一小节几乎完全相同，只需注意：
 
 - 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
 - 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
 
-### 外表数据
+## 外表数据
 
 ***外表数据 (rind data)*** 是指存储在网格表面的一层或多层 *影子单元 (ghost cells)* 上的数据 ：
 
@@ -444,9 +446,9 @@ ier = cg_rind_read(int *rind_data);
 - `cg_goto()` 用于定位将要创建 `Rind_t` 结点的那个 `FlowSolution_t` 结点。
 - 外表数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
-## 量纲信息
+# 量纲信息
 
-### `DataClass_t`
+## `DataClass_t`
 
 ```c
 /* Write data class: */
@@ -455,7 +457,7 @@ cg_dataclass_write(CGNS_ENUMV(Dimensional));
 cg_dataclass_write(CGNS_ENUMV(NondimensionalParameter));
 ```
 
-### `DimensionalUnits_t`
+## `DimensionalUnits_t`
 
 ```c
 /* Write first five dimensional units: */
@@ -481,9 +483,9 @@ cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
 cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
 ```
 
-## 边界条件
+# 边界条件
 
-### 结构网格
+## 结构网格
 
 两种 BC 表示方法：
 
@@ -544,7 +546,7 @@ ier = cg_boco_read(
   - 对于非结构网格，`point_set` 的列数为 `1`，而 `n_point`
     - 为 此边界的结点总数，且 `point_set_type` 只能为 `CGNS_ENUMV(PointList)`。
 
-### 非结构网格
+## 非结构网格
 
 尽管 *非结构网格* 可以像 *结构网格* 那样，通过指定边界上的 *结点* 来施加边界条件，但利用读写单元时创建的 `Element_t` 结点来指定边界上的 *单元* 通常会更加方便。`write_bcpnts_unst.c` 与 `read_bcpnts_unst.c` 展示了这种方法，主要的 API 如下：
 
@@ -575,11 +577,11 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 - `grid_location == CGNS_ENUMV(FaceCenter)` 表当前 BC 作用在 *面单元* 上，即 `cell_set` 是存储面单元编号的数组。
 - 调用 `cg_gridlocation_write()` 之前必须先用 `cg_goto()` 定位到所需的 `BC_t` 对象。
 
-## 多区网格
+# 多区网格
 
-## 动态数据
+# 动态数据
 
-### [迭代数据结构](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#IterativeData)
+## [迭代数据结构](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#IterativeData)
 
 SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步的数据：
 
@@ -642,7 +644,7 @@ ZoneIterativeData_t< int NumberOfSteps > := {
 
 ⚠️ 上述 *指针* 目前由 *字符串* 实现。
 
-### 网格固定不变
+## 网格固定不变
 *网格固定不变* 意味着 `GridCoordinates_t` 及 `Elements_t`(s) 可复用，故只需将各时间步上的 `FlowSolution_t`(s) 记录在 `ZoneIterativeData_t` 内的 `FlowSolutionPointers` 中。
 
 官方教程中的 `write_timevert_str.c` 与 `read_timevert_str.c` 展示了这种方法。
@@ -676,7 +678,7 @@ cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
 - 在同一个 `FlowSolutionPointers` 内，所有 `FlowSolution_t`(s) 必须有相同的  `GridLocation_t` 值。
 - 若要同时记录[顶点数据](#顶点数据)与[单元数据](#单元数据)，则应[平行于 `FlowSolutionPointers` 再创建一个 `FlowSolutionXXXPointers`](https://gitlab.kitware.com/paraview/paraview/-/issues/19838#note_732151)，这样两类数据都能被 [ParaView](../vtk/README.md#ParaView) 识别。示例 [`write_fixed_grid.cpp`](./write_fixed_grid.cpp) 验证了这种方法。
 
-### [网格刚体运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#RigidGridMotion)
+## [网格刚体运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#RigidGridMotion)
 
 *网格刚体运动* 意味着 `Elements_t`(s) 可复用，而格点坐标可以由 *初始位置*（记录在当前 `Zone_t` 下唯一的 `GridCoordinates_t` 中）与 *刚体运动信息*（随体坐标系的原点位置及速度、转角及转速等）快速地算出，后者记录在 `RigidGridMotion_t` 中（一个时间步对应一个这样的  `RigidGridMotion_t`，对应关系由 `ZoneIterativeData_t` 中的 `RigidGridMotionPointers` 管理）。
 
@@ -701,7 +703,7 @@ RigidGridMotion_t := {
 }
 ```
 
-### [格点任意运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ArbitraryGridMotion)
+## [格点任意运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ArbitraryGridMotion)
 
 *格点任意运动* 意味着 `Elements_t`(s) 仍可复用，但格点坐标不再能快速算出，故需为每个时间步分别
 
@@ -731,7 +733,7 @@ ArbitraryGridMotion_t< int IndexDimension,
 }
 ```
 
-### [网格改变拓扑](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ex:adaptedunstructuredmesh)
+## [网格改变拓扑](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ex:adaptedunstructuredmesh)
 
 *网格改变拓扑* 意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应 *网格拓扑发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
 

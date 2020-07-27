@@ -1,15 +1,15 @@
-# 断点调试
-
-## 编译选项
+---
+title: 断点调试
+---
 
 ```shell
 $ cc -g hello.c -o hello
 $ c++ -g hello.cpp -o hello
 ```
 
-## GDB
+# GDB
 
-### 参考文档
+## 参考文档
 
 - [Homepage](https://www.gnu.org/software/gdb/)
 - [Debugging with GDB](https://sourceware.org/gdb/current/onlinedocs/gdb/)
@@ -17,11 +17,11 @@ $ c++ -g hello.cpp -o hello
 - [Beej's Quick Guide to GDB](http://beej.us/guide/bggdb/)
 - [Debugging Under Unix: `gdb` Tutorial](https://www.cs.cmu.edu/~gilpin/tutorial/)
 
-### 图形界面
+## 图形界面
 - GDB 自带的 GUI 模式：以 `gdb -tui` 启动。
 - [DDD：Data Display Debugger](http://www.gnu.org/software/ddd/)
 
-### 在 macOS 上使用 GDB
+## 在 macOS 上使用 GDB
 
 1. 安装或更新：
 
@@ -39,7 +39,7 @@ $ c++ -g hello.cpp -o hello
    set startup-with-shell off
    ```
 
-### 在 [Docker](../docker/README.md) 容器中使用 GDB
+## 在 [Docker](../docker/README.md) 容器中使用 GDB
 
 ```shell
 # 非 Linux 主机：
@@ -75,15 +75,15 @@ $ exit
 $ docker run --mount type=bind,src="$(pwd)",dst="/root/code" -w "/root/code" --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it ubuntu
 ```
 
-## LLDB
+# LLDB
 
-### 参考文档
+## 参考文档
 
 - [Homepage](#http://lldb.llvm.org/)
 - [Tutorial](https://lldb.llvm.org/use/tutorial.html)
 - [GDB to LLDB command map](https://lldb.llvm.org/use/map.html)
 
-### 命令结构
+## 命令结构
 LLDB 命令具有以下结构：
 ```
 <noun> <verb> [-options [option-value]] [argument [argument...]]
@@ -91,9 +91,9 @@ LLDB 命令具有以下结构：
 可见：LLDB 命令通常比与之等价的 GDB 命令更长，但前者含义更加明确。
 在命令缩写（别名）、自动补全的帮助下，使用 LLDB 命令并不需要输入很多字符。
 
-## 命令速查
+# 常用命令
 
-### 进入、退出调试器环境
+## 进入、退出 调试器环境
 
 *调试器环境* 是以 `(gdb)` 或 `(lldb)` 为行首提示符的命令行环境。
 
@@ -113,7 +113,7 @@ LLDB 命令具有以下结构：
 - `help <command>` 获取帮助信息。
 - 回车键 重复上一条命令。
 
-### 选择汇编代码格式
+## 选择 汇编代码格式
 
 常用的 [汇编代码格式](../csapp/3_machine_level_programming.md#汇编代码格式) 有 ATT 和 Intel 两种。GDB/LLDB 均默认选用 ATT 格式；以下命令可用于更改此设定：
 
@@ -122,9 +122,7 @@ LLDB 命令具有以下结构：
 (lldb) settings set target.x86-disassembly-flavor intel
 ```
 
-
-
-### 启动、贴附、退出 被调试程序
+## 启动、贴附、退出 被调试程序
 
 ```shell
 # 加载 被调试程序：
@@ -147,7 +145,7 @@ LLDB 命令具有以下结构：
 (gdb/lldb) kill
 ```
 
-### 断点
+## 断点
 
 ```shell
 # 设断点于函数 `main` 的入口处
@@ -190,7 +188,7 @@ LLDB 命令具有以下结构：
 (lldb) br modify N --condition CONDITION
 ```
 
-### 执行
+## 执行
 
 ```shell
 # 跳转至指定位置
@@ -216,7 +214,7 @@ LLDB 命令具有以下结构：
 (gdb/lldb) finish
 ```
 
-### 查看源代码
+## 查看源代码
 
 ```shell
 (gdb/lldb) list      # List subsequent lines
@@ -228,7 +226,7 @@ list 0x<address>     # List around specified address
 list -[<count>]      # List previous <count> lines
 ```
 
-### 查看汇编码
+## 查看汇编码
 
 ```shell
 # 反汇编 当前函数
@@ -248,7 +246,7 @@ list -[<count>]      # List previous <count> lines
 (lldb) disassemble --start-address 0x1eb8 --count 20
 ```
 
-### 查看数据
+## 查看数据
 
 ```shell
 # 查看 `foo` 的值，其中
@@ -284,7 +282,7 @@ list -[<count>]      # List previous <count> lines
 (lldb) target variable foo
 ```
 
-### 查看寄存器
+## 查看寄存器
 
 ```shell
 # 查看 所有整型寄存器的值
@@ -299,7 +297,7 @@ list -[<count>]      # List previous <count> lines
 ```
 
 
-### 创建、修改变量
+## 创建、修改变量
 ```shell
 # 为帧内现有的变量赋值
 (gdb)  set variable i = 40
@@ -314,7 +312,7 @@ list -[<count>]      # List previous <count> lines
 (lldb) expression *(int*) 0x7ff52c = -2  # 除 expression 外，类似 C 语句
 ```
 
-### 查看其它信息
+## 查看其它信息
 
 ```shell
 # 查看 当前调用栈信息
@@ -331,7 +329,7 @@ list -[<count>]      # List previous <count> lines
 (gdb)  info frame
 ```
 
-## 调试 CMake 项目
+# 调试 CMake 项目
 
-### [CMake Tools](../make/README.md#CMake-Tools)
+## [CMake Tools](../make/README.md#CMake-Tools)
 

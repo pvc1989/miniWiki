@@ -1,26 +1,28 @@
-# Docker
+---
+title: Docker
+---
 
-## 体系结构
+# 体系结构
 
 ![](https://docs.docker.com/engine/images/architecture.svg)
 
-### Daemon
+## Daemon
 
 名为 `dockerd` 的可执行程序，启动后为寄生在宿主机上的后台进程，提供对 ***镜像 (image)***、***容器 (container)*** 等 Docker 对象的管理服务。
 
-### Client
+## Client
 
 名为 `docker` 的可执行程序，提供了用户与 Docker 系统互动的命令行接口。
 
-### Registry
+## Registry
 
 存储 Docker 镜像的站点，默认为 https://hub.docker.com，也可以配置成其他站点。
 
-### Images
+## Images
 
 用于创建容器的只读模板（类似于软件安装包）。新镜像通过在旧镜像之上逐层添加配置指令而获得。通常将较为复杂的配置写在 Dockerfile 中，以便在其他主机上复现。
 
-### Containers
+## Containers
 
 镜像的可执行实例（类似于安装后的软件实例）。单个【镜像】/【安装包】可以在同一台主机上【生成多个容器】/【安装多个实例】，不同【名称的容器】/【位置的实例】运行时互不干扰。
 
@@ -30,7 +32,7 @@
 
 
 
-## 常用命令
+# 常用命令
 
 ```shell
 docker --version
@@ -47,7 +49,7 @@ docker -h  # docker --hep
 
 初学时应掌握完整写法，熟练后再用简化写法。
 
-### Images
+## Images
 
 ```shell
 # List images:
@@ -64,7 +66,7 @@ docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 docker pull ubuntu:16.04  # TAG 默认为 latest
 ```
 
-### Containers
+## Containers
 
 ```shell
 # List containers:
@@ -86,7 +88,7 @@ docker rm --force $(docker ps -qa)  # ⚠️ 强制删除所有容器
 
 每个 `CONTAINER` 都可以通过其 *`ID` 的前几位* 或 *`NAME`* 来指明。
 
-### Run
+## Run
 
 ```shell
 # Run a command in a new container:
@@ -107,7 +109,7 @@ docker run -v `pwd`:`pwd` -w `pwd` -it IMAGE  # 路径不能有空格
 docker run --mount type=bind,src="$(pwd)",dst="$(pwd)" -w "$(pwd)" -it IMAGE  # 【推荐】可读性更强、路径更灵活
 ```
 
-## 参考资料
+# 参考资料
 
 - 官方文档
   - [Overview](https://docs.docker.com/get-started/overview/)

@@ -1,10 +1,12 @@
-# 流体力学
+---
+title: 流体力学
+---
 
-## 有限体积
+# 有限体积
 
-### 间断有限元
+## 间断有限元
 
-#### 局部弱形式
+### 局部弱形式
 
 $$
 \boxed{\pdv{U}{t}+\divg\Vec{F}=0}
@@ -19,7 +21,7 @@ $$
 =\int_{\varOmega}\Vec{F}\vdot\grad V-\oint_{\partial\varOmega}\left(\Vec{\nu}\vdot\Vec{F}\right)V\qquad\forall V,\forall\varOmega
 $$
 
-#### 正交基函数
+### 正交基函数
 
 $$
 U(\Vec{x},t)\approx U^{h}(\Vec{x},t)=\sum_{k=1}^{K}\hat{U}_{k}(t)\,\phi_{k}(\Vec{x})\qquad V(\Vec{x})\approx V^{h}(\Vec{x})=\sum_{l=1}^{L}\hat{V}_{l}\,\psi_{l}(\Vec{x})

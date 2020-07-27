@@ -1,4 +1,7 @@
-# MSH 文件说明
+---
+title: MSH 文件说明
+---
+
 MSH 文件 (即扩展名为 `.msh` 的文件) 用于存储网格信息 (结点位置和连接关系) 以及与之关联的属性数据 (位移, 速度, 应力等).
 MSH 文件有两种模式:
 - ASCII 文本模式: 所有信息均以 ASCII 字符表示.
@@ -36,7 +39,7 @@ $EndComments
 
 下面以脚本文件 [`RECTANGLE.geo`](./RECTANGLE.geo) 生成的网格文件 [`RECTANGLE.msh`](./RECTANGLE.msh) 为例来说明 MSH 文件格式.
 
-## `MeshFormat`
+# `MeshFormat`
 ```cpp
 $MeshFormat
 4 0 8
@@ -47,7 +50,7 @@ $EndMeshFormat
 - 文件`模式`, `0` 为文本模式, `1` 为二进制模式;
 - `字长`, 即 `sizeof(double)` 的值, 一般为 `8`.
 
-## `PhysicalNames` (optional)
+# `PhysicalNames`
 这一段用于描述物理对象信息, 以便后面按物理对象查找结点和单元.
 ```cpp
 $PhysicalNames
@@ -63,10 +66,10 @@ $EndPhysicalNames
   - 前两个整数 (即使在二进制模式下, 也用字符表示) 分别表示`维度`和`标签`;
   - 最后的字符串 (最长可含 `127` 个字符) 为`名称`.
 
-## `Entities`
+# `Entities`
 这一段用于描述初等实体信息, 以便后面按初等实体查找结点和单元.
 
-### 总数
+## 总数
 第一行表示各维度初等实体的个数:
 ```cpp
 4 4 1 0
@@ -78,7 +81,7 @@ $EndPhysicalNames
 
 随后各行依次表示各初等实体的信息.
 
-### `Point`s
+## `Point`s
 前 `4` 行表示初等 `Point`s:
 ```cpp
 1 0 0 0 0 0 0 0 
@@ -94,7 +97,7 @@ $EndPhysicalNames
   - 如果为 `0`, 则该行到此结束, 例如: 这里的所有各行.
   - 如果不为 `0`, 则给出相应个数 `int`, 表示该点所属`物理实体的标签`.
 
-### `Curve`s
+## `Curve`s
 随后 `4` 行表示初等 `Curve`s:
 ```cpp
 1 0 0 0 0 0 0 0 0 
@@ -118,7 +121,7 @@ $EndPhysicalNames
     - `Curve{3}` 有两个边界 `Point`s: `Point{3, -4}`.
     - `Curve{4}` 有两个边界 `Point`s: `Point{4, -1}`.
 
-### `Surface`s
+## `Surface`s
 `Surface` 段的格式与 `Curve` 段类似, 只不过把最后的`边界点`替换为`边界曲线`.
 
 这里有 `1` 行表示初等 `Surface`:
@@ -137,13 +140,13 @@ $EndPhysicalNames
   - 如果不为 `0`, 则给出相应个数 `int`, 表示该 `Surface` 所拥有的`边界曲线的标签`, 负标签值表示取向相反. 例如:
     - `Surface{1}` 拥有 `4` 条边界 `Curve`s: `Curve{1, 2, 3, 4}`.
 
-### `Volume`s
+## `Volume`s
 `Volume` 段的格式与 `Surface` 段类似, 只不过把最后的`边界曲线`替换为`边界曲面`.
 
-## `PartitionedEntities` (optional)
+# `PartitionedEntities`
 暂时不用.
 
-## `Nodes`
+# `Nodes`
 这一段用于描述`结点位置`以及`结点与实体的归属关系`.
 
 第一行表示各维度实体的个数:
@@ -174,7 +177,7 @@ $EndPhysicalNames
 
 其他实体上的结点信息可以按同样的方法读出.
 
-## `Elements`
+# `Elements`
 这一段用于描述`单元类型`, `结点与单元的归属关系`以及`单元与实体的归属关系`.
 
 第一行表示各维度实体的个数:
@@ -182,15 +185,15 @@ $EndPhysicalNames
 5 5
 ```
 - 第一个 `unsigned long` 表示`实体总数`. 这里有 `5` 个实体:
-    - `0` 个 `Point`s,
-    - `3` 条 `Curve`s,
-    - `2` 片 `Surface`s,
-    - `0` 块 `Volume`.
+  - `0` 个 `Point`s,
+  - `3` 条 `Curve`s,
+  - `2` 片 `Surface`s,
+  - `0` 块 `Volume`.
 - 第二个 `unsigned long` 表示`单元总数`. 这里有 `5` 个 `Element`s:
-    - `0` 个零维单元,
-    - `3` 个一维单元,
-    - `2` 个二维单元,
-    - `0` 个三维单元.
+  - `0` 个零维单元,
+  - `3` 个一维单元,
+  - `2` 个二维单元,
+  - `0` 个三维单元.
 
 然后以每个实体为一组, 依次列出各组所拥有的单元.
 例如第一行:
@@ -225,24 +228,24 @@ $Elements
 $EndElements
 ```
 
-### 单元结点编号
+## 单元结点编号
 
 完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [9.2 Node ordering](http://gmsh.info/doc/texinfo/gmsh.html#Node-ordering).
 
-## `Periodic` (optional)
+# `Periodic`
 暂时不用.
 
-## `GhostElements` (optional)
+# `GhostElements`
 暂时不用.
 
-## `NodeData` (optional)
+# `NodeData`
 暂时不用.
 
-## `ElementData` (optional)
+# `ElementData`
 暂时不用.
 
-## `ElementNodeData` (optional)
+# `ElementNodeData`
 暂时不用.
 
-## `InterpolationScheme` (optional)
+# `InterpolationScheme`
 暂时不用.

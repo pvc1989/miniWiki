@@ -1,14 +1,14 @@
-# CSS
+---
+title: CSS
+---
 
-## 入门
-
-[翁恺《CSS3》](https://study.163.com/course/courseMain.htm?courseId=190001)
-
-## 概述
+# 概述
 
 现代网页提倡内容与样式分离：
 - 内容由 ***HTML (Hyper Text Markup Language)*** 定义。
 - 样式由 ***CSS (Cascading Style Sheets)*** 定义。
+
+## 导入样式
 
 三种方式：
 - 外部样式：在 `<head>` 中，引入外部 CSS 文件（推荐），例如
@@ -26,9 +26,13 @@
   <p style="background-color: green;">本段背景为绿色</p>
   ```
 
-## 背景
+## 入门教程
 
-### 背景颜色
+[翁恺《CSS3》](https://study.163.com/course/courseMain.htm?courseId=190001)
+
+# 背景
+
+## 背景颜色
 
 ```html
 <body style="background-color: red;">本页背景为红色
@@ -38,7 +42,7 @@
 </body>
 ```
 
-### 背景图片
+## 背景图片
 
 ```html
 <p style="background-image: url(./images/cat.jpg);">本段背景为 <code>./images/cat.jpg</code></p>
@@ -48,9 +52,9 @@
 <p style="background: url(./images/cat.jpg) center fixed;">本段背景为 <code>./images/cat.jpg</code>、居中、固定</p>
 ```
 
-## 文本
+# 文本
 
-### 段落
+## 段落
 
 ```html
 <p style="color: rgb(255,0,0)">文字为红色</p>
@@ -64,7 +68,7 @@
 <p style="letter-spacing: 10mm">字符间相距十毫米</p>
 ```
 
-### 字体
+## 字体
 
 ```html
 <p style="font-family: serif">有衬线 serif</p>
@@ -84,7 +88,7 @@
 <p style="font-size: 2em">二倍大小的字符</p>
 ```
 
-### 效果
+## 效果
 
 ```html
 <h1 style="text-shadow: 2px 3px 4px rgba(0,255,0,0.5)">文字带阴影</h1>
@@ -98,7 +102,7 @@
            outline-style: dashed">文字带边框</h1>
 ```
 
-## 列表
+# 列表
 
 ```html
 <ul style="list-style-type: circle;
@@ -108,7 +112,7 @@
 </ul>
 ```
 
-## 表格
+# 表格
 
 ```html
 <table style="border: 1px solid blue; border-collapse: collapse;
@@ -127,7 +131,7 @@
 </table>
 ```
 
-## 边距
+# 边距
 
 ```html
 <p>
@@ -140,9 +144,9 @@
 </p>
 ```
 
-## 定位
+# 定位
 
-### 相对定位
+## 相对定位
 
 对象占据自己原来的位置，并相对于该位置作偏移。
 
@@ -156,7 +160,7 @@
 </div>
 ```
 
-### 绝对定位
+## 绝对定位
 
 对象放弃自己原来的位置，并相对于外层可定位对象的位置作偏移。
 
@@ -170,15 +174,15 @@
 </div>
 ```
 
-### 浮动定位
+## 浮动定位
 
 ```html
 <img src="not_found.jpg" style="float: right"/>
 ```
 
-## 样式选择器
+# 样式选择器
 
-### 元素选择器
+## 元素选择器
 
 ```html
 <head>
@@ -189,7 +193,7 @@
 </head>
 ```
 
-### 类选择器
+## 类选择器
 
 ```html
 <head>
@@ -203,7 +207,7 @@
 </body>
 ```
 
-### 属性选择器
+## 属性选择器
 
 ```html
 <head>
@@ -216,7 +220,7 @@
 </body>
 ```
 
-### 后代选择器
+## 后代选择器
 
 ```html
 <head>
