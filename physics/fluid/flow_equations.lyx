@@ -410,9 +410,9 @@ reference "chap:TensorAnalysis"
 ) 的直接推论：
 \begin_inset Formula 
 \[
-\vec{\vec{\varOmega}}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & \varOmega_{12} & -\varOmega_{31}\\
--\varOmega_{12} & 0 & \varOmega_{23}\\
-\varOmega_{31} & -\varOmega_{23} & 0
+\vec{\vec{\varOmega}}=\begin{bmatrix}\vec{e}_{1} & \vec{e}_{2} & \vec{e}_{3}\end{bmatrix}\begin{bmatrix}0 & +\varOmega_{12} & -\varOmega_{31}\\
+-\varOmega_{12} & 0 & +\varOmega_{23}\\
++\varOmega_{31} & -\varOmega_{23} & 0
 \end{bmatrix}\begin{bmatrix}\vec{e}_{1}\\
 \vec{e}_{2}\\
 \vec{e}_{3}
@@ -444,7 +444,7 @@ vector!angular velocity ~
 \end{bmatrix}=\begin{bmatrix}\varOmega_{23}\\
 \varOmega_{31}\\
 \varOmega_{12}
-\end{bmatrix}\iff\varOmega_{jk}=\varOmega_{i}\epsilon_{ijk}\qquad\epsilon_{ijk}=\begin{cases}
+\end{bmatrix}\iff\varOmega_{jk}=\varOmega_{i}\epsilon_{ijk}\quad\text{其中}\quad\epsilon_{ijk}=\begin{cases}
 +1 & ijk=123,231,312\\
 -1 & ijk=321,132,213\\
 0 & \text{其他}
@@ -837,7 +837,7 @@ noprefix "false"
 \end_inset
 
  表示物质体，以便与一般控制体 
-\begin_inset Formula $V_{\mathrm{CS}}$
+\begin_inset Formula $V$
 \end_inset
 
  区分。
@@ -845,7 +845,7 @@ noprefix "false"
 
 \begin_layout Definition
 控制体 
-\begin_inset Formula $V_{\mathrm{CS}}$
+\begin_inset Formula $V$
 \end_inset
 
  上的“物质导数 (material derivative)”
@@ -865,7 +865,7 @@ derivative!material ~!~ of an integral
  上的“时间全导数”，即
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V_{\mathrm{CS}}}\phi\coloneqq\dv{t}\int_{V_{\mathrm{MB}}}\phi}\label{eq:流动方程：物质导数：定义}
+\boxed{\DDt{}\int_{V}\phi\coloneqq\dv{t}\int_{V_{\mathrm{MB}}}\phi}\label{eq:流动方程：物质导数：定义}
 \end{equation}
 
 \end_inset
@@ -892,8 +892,8 @@ derivative!material ~!~ of an integral
 物质导数任何控制体都有：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\begin{aligned}\DDt{}\int_{V_{\mathrm{CS}}}\phi & =\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi\\
- & =\dv{t}\int_{V_{\mathrm{CS}}}\phi+\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\phi
+\boxed{\begin{aligned}\DDt{}\int_{V}\phi & =\int_{V}\pdv{\phi}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}\phi\\
+ & =\dv{t}\int_{V}\phi+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\phi
 \end{aligned}
 }\label{eq:流动方程：物质导数：积分展开}
 \end{equation}
@@ -929,7 +929,7 @@ reference "eq:流动方程：Reynolds"
  即得
 \begin_inset Formula 
 \[
-\DDt{}\int_{V_{\mathrm{CS}}}\phi=\dv{t}\int_{V_{\mathrm{MB}}}\phi=\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi
+\DDt{}\int_{V}\phi=\dv{t}\int_{V_{\mathrm{MB}}}\phi=\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi
 \]
 
 \end_inset
@@ -939,7 +939,7 @@ reference "eq:流动方程：Reynolds"
 \end_inset
 
  与 
-\begin_inset Formula $V_{\mathrm{CS}}$
+\begin_inset Formula $V$
 \end_inset
 
  重合，并且在 
@@ -953,7 +953,7 @@ reference "eq:流动方程：Reynolds"
 ，从而有
 \begin_inset Formula 
 \[
-\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}=\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}\qquad\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi=\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}\phi
+\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}=\int_{V}\pdv{\phi}{t}\qquad\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi=\oint_{\partial V}\vec{n}\vdot\vec{u}\phi
 \]
 
 \end_inset
@@ -978,7 +978,7 @@ reference "eq:流动方程：Reynolds"
  的移项形式
 \begin_inset Formula 
 \[
-\int_{V_{\mathrm{CS}}}\pdv{\phi}{t}=\dv{t}\int_{V_{\mathrm{CS}}}\phi-\oint_{\partial V_{\mathrm{CS}}}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi
+\int_{V}\pdv{\phi}{t}=\dv{t}\int_{V}\phi-\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi
 \]
 
 \end_inset
@@ -1966,7 +1966,7 @@ conservation!~ of angular momentum
 在（不考虑分布式力偶的）流体力学中，它等价于应力张量或黏性应力张量的对称性：
 \begin_inset Formula 
 \[
-\sigma_{ik}=\sigma_{ki}\iff\tau_{ik}=\tau_{ki}\qquad\forall(i,k)=\left\{ 1,2,3\right\} ^{2}
+\underbrace{-p\delta_{ik}+\tau_{ik}}_{\sigma_{ik}}=\underbrace{-p\delta_{ki}+\tau_{ki}}_{\sigma_{ki}}\qquad\forall(i,k)\in\left\{ 1,2,3\right\} ^{2}
 \]
 
 \end_inset
@@ -2017,7 +2017,7 @@ conservation!~ of energy
  的时间变化率，等于“热源 (heat source)”、“传热 (heat conduction)”、“做功 (work)”之和：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{t}\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho & =\int_{V_{\mathrm{MB}}}j-\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{q}\end{aligned}
+\begin{aligned}\dv{t}\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho & =\int_{V_{\mathrm{MB}}}\left(\vec{b}\vdot\vec{u}+j\right)-\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\left(\vec{\vec{\sigma}}\vdot\vec{u}-\vec{q}\right)\end{aligned}
 \]
 
 \end_inset
@@ -2374,7 +2374,7 @@ name "eq:流动方程：Navier--Stokes：守恒型"
 \rho e_{0}
 \end{bmatrix}+\divg\begin{bmatrix}\rho\vec{u}\\
 \rho\vec{u}\vec{u}+p\vec{\vec{1}}\\
-(\rho e_{0}+p)\vec{u}
+\rho h_{0}\vec{u}
 \end{bmatrix}=\divg\begin{bmatrix}\vec{0}\\
 \vec{\vec{\tau}}\\
 \vec{\vec{\tau}}\vdot\vec{u}-\vec{q}
@@ -2398,7 +2398,7 @@ name "eq:流动方程：Navier--Stokes：守恒型"
 \rho u_{1}u_{\alpha}+p\updelta_{1\alpha}\\
 \rho u_{2}u_{\alpha}+p\updelta_{2\alpha}\\
 \rho u_{3}u_{\alpha}+p\updelta_{3\alpha}\\
-(\rho e_{0}+p)u_{\alpha}
+\rho h_{0}u_{\alpha}
 \end{bmatrix}=\partial_{\alpha}\begin{bmatrix}0\\
 \tau_{\alpha1}\\
 \tau_{\alpha2}\\
@@ -2417,16 +2417,20 @@ b_{\alpha}u_{\alpha}+j
 其中
 \begin_inset Formula 
 \[
-e_{0}=e+\frac{1}{2}u_{\alpha}u_{\alpha}\qquad\partial_{t}\coloneqq\pdv{t}\qquad\partial_{\alpha}\coloneqq\pdv{x_{\alpha}}
+e_{0}=e+\frac{1}{2}u_{\alpha}u_{\alpha}\qquad h_{0}=e_{0}+\frac{p}{\rho}\qquad\partial_{t}\coloneqq\pdv{t}\qquad\partial_{\alpha}\coloneqq\pdv{x_{\alpha}}
 \]
 
 \end_inset
 
-并且约定：重复的下标 
-\begin_inset Formula $\alpha\text{、}\beta$
+并且约定：单项式中重复的下标（
+\begin_inset Formula $\alpha$
 \end_inset
 
- 表示求和。
+ 或 
+\begin_inset Formula $\beta$
+\end_inset
+
+）表示求和。
 \begin_inset ERT
 status open
 
