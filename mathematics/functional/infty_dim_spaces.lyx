@@ -6,10 +6,7 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -17,7 +14,7 @@ theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -73,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -93,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -826,11 +824,11 @@ status open
 \begin_inset Formula $F(+)$
 \end_inset
 
- 的基准元 —— 记作 
+ 的基准元 —— 用 
 \begin_inset Formula $0$
 \end_inset
 
- —— 外的任意元素）均有乘法逆元，则称 
+ 表示 —— 外的任意元素）均有乘法逆元，则称 
 \begin_inset Formula $F(+,\times)$
 \end_inset
 
@@ -867,7 +865,7 @@ status open
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- 分别为“[加法]交换群”与“数域”，并定义一种被称为“数[量]乘法 (scalar multiplication)”的运算
+ 分别为“[加法]交换群”与“数域”，并定义一种被称为“向量数乘 (vector multiplied by a scalar)”的运算
 \begin_inset Formula 
 \[
 m\colon\mathbb{F}\times V\to V\qquad\left(\forall(\alpha,\vec{u})\in\mathbb{F}\times V\right)\left((\alpha,\vec{u})\mapsto m(\alpha,\vec{u})\equiv\alpha*\vec{u}\in V\right)
@@ -896,7 +894,7 @@ m\colon\mathbb{F}\times V\to V\qquad\left(\forall(\alpha,\vec{u})\in\mathbb{F}\t
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- 的单位元（即群 
+ 的单位元（即乘法幺半群 
 \begin_inset Formula $(\mathbb{F},\times)$
 \end_inset
 
@@ -966,7 +964,7 @@ status open
 \begin_inset Formula $*$
 \end_inset
 
-（数量乘法的运算符）。例如：上述定义中的 
+（向量数乘的运算符）。例如：上述定义中的 
 \begin_inset Formula $(\alpha\times\beta)*\vec{u}$
 \end_inset
 
@@ -1003,7 +1001,7 @@ status open
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- 及数乘 
+ 及向量数乘 
 \begin_inset Formula $*$
 \end_inset
 
@@ -1011,11 +1009,11 @@ status open
 \begin_inset Formula $V(+,\mathbb{F},*)$
 \end_inset
 
- 通常是互异的。在域 
+ 通常是互异的。在 
 \begin_inset Formula $\mathbb{F}$
 \end_inset
 
- 及数乘 
+ 及 
 \begin_inset Formula $*$
 \end_inset
 
@@ -1032,6 +1030,359 @@ status open
 \end_inset
 
 ”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+线性子空间
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[子空间]
+\end_layout
+
+\end_inset
+
+若线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $W$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+对向量加法封闭 
+\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in W^{2}\right)\left((\vec{u}+\vec{v})\in W\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+对向量数量封闭 
+\begin_inset Formula $\left(\forall(\vec{u},\lambda)\in W\times\mathbb{F}\right)\left((\lambda\vec{u})\in W\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $W(+,\mathbb{F},*)$
+\end_inset
+
+ 为 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的“[线性]子空间 ([linear] subspace)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性包络]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $W$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的子集，则 
+\begin_inset Formula $W$
+\end_inset
+
+ 的“线性包络 (linear hull)” —— 记作 
+\begin_inset Formula $W_{\mathrm{LH}}$
+\end_inset
+
+ —— 是指所有以 
+\begin_inset Formula $W$
+\end_inset
+
+ 为子集的那些 
+\begin_inset Formula $V$
+\end_inset
+
+ 的线性子空间的交集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[由子集张成的集合]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $W$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的子集，则“由 
+\begin_inset Formula $W$
+\end_inset
+
+ 张成的 (spanned by 
+\begin_inset Formula $W$
+\end_inset
+
+)”集合 —— 记作 
+\begin_inset Formula $\mathrm{span}(W)$
+\end_inset
+
+ —— 是指
+\begin_inset Formula 
+\[
+\mathrm{span}(W)\coloneqq\left\{ \sum_{i=1}^{n}\lambda_{i}\vec{u}_{i}:\left(n\in\mathbb{N}\right)\land\left(\left\{ \lambda_{i}\right\} _{i}^{n}\subset\mathbb{F}\right)\land\left(\left\{ \vec{u}_{i}\right\} _{i}^{n}\subset W\right)\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $W$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的子集，则 
+\begin_inset Formula $W_{\mathrm{LH}}=\mathrm{span}(W)$
+\end_inset
+
+ 且 
+\begin_inset Formula $W_{\mathrm{LH}}(+,\mathbb{F},*)$
+\end_inset
+
+ 是 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的线性子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性相关、线性无关]
+\end_layout
+
+\end_inset
+
+设 
+\begin_inset Formula $W$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的（可能含有无限多个向量的）非空子集。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若存在 
+\begin_inset Formula $W$
+\end_inset
+
+ 的有限子集 
+\begin_inset Formula $\left\{ \vec{u}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 使关于 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i}^{n}$
+\end_inset
+
+ 的方程 
+\begin_inset Formula $\sum_{i=1}^{n}\lambda_{i}\vec{u}_{i}=\vec{0}$
+\end_inset
+
+ 有非零解，则称 
+\begin_inset Formula $W$
+\end_inset
+
+ 是“线性相关的 (linearly dependent)”；反之，
+\end_layout
+
+\begin_layout Itemize
+若所有 
+\begin_inset Formula $W$
+\end_inset
+
+ 的有限子集 
+\begin_inset Formula $\left\{ \vec{u}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 都无法使关于 
+\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i}^{n}$
+\end_inset
+
+ 的方程 
+\begin_inset Formula $\sum_{i=1}^{n}\lambda_{i}\vec{u}_{i}=\vec{0}$
+\end_inset
+
+ 有非零解，则称 
+\begin_inset Formula $W$
+\end_inset
+
+ 是“线性无关的 (linearly independent)”。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[维数、基]
+\end_layout
+
+\end_inset
+
+若由有限多个向量所构成的集合 
+\begin_inset Formula $\left\{ \vec{e}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 的一个线性无关子集，且 
+\begin_inset Formula $\mathrm{span}(B)=V$
+\end_inset
+
+，则称 
+\begin_inset Formula $V$
+\end_inset
+
+ 是一个“
+\begin_inset Formula $n$
+\end_inset
+
+-维 (
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional)”空间，用 
+\begin_inset Formula $\dim V=n$
+\end_inset
+
+ 表示，并称 
+\begin_inset Formula $\left\{ \vec{e}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的一组“基[向量] (basis [vectors])”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无穷维空间]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $V$
+\end_inset
+
+ 没有由有限多个向量所构成的基，则称 
+\begin_inset Formula $V$
+\end_inset
+
+ 是一个“无穷维 (infinite-dimensional)”空间。
 \end_layout
 
 \begin_layout Standard
