@@ -269,7 +269,7 @@ tensor!~ of rank two
 \begin_inset Formula $\vec{u}=\sum_{k}\vec{e}_{k}u_{k}$
 \end_inset
 
- 的“张量积 (tensor product)”。在直角坐标系下，基向量 
+ 的“张量积 (tensor product)”。在直角坐标系下，单位基向量 
 \begin_inset Formula $\vec{e}_{i}$
 \end_inset
 
@@ -376,15 +376,8 @@ tensor!strain rate ~
 
 \end_inset
 
-这里“用双箭头表示二阶张量”是对“用单箭头表示一阶张量”的自然推广。对于更高阶的张量，一般不再以箭头表示，而是采用“
-\bar under
-指标 (index)
-\bar default
- 记法”或“
-\bar under
-下波浪线 (under-tilde)
-\bar default
- 记法”，详见《
+这里“用双箭头表示二阶张量”是对“用单箭头表示一阶张量”的自然推广。对于更高阶的张量，一般不再以箭头表示，而是采用“[指标|下波浪线]记法 ([index|un
+der-tilde] notation)”，详见《
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "chap:TensorAnalysis"
@@ -467,7 +460,15 @@ vector!pseudo-~
 
 \end_inset
 
-，并且满足以下微分等式：
+，即遵循以下分量变换规则：
+\begin_inset Formula 
+\[
+\varOmega'_{k}=\varOmega_{i}A_{ik}\det(\Mat{A})\impliedby(\vec{e}'_{i}=A_{ik}\vec{e}_{k})\land(\vec{e}'_{i}\vdot\vec{e}'_{k}=\updelta_{ik}=\vec{e}{}_{i}\vdot\vec{e}_{k})
+\]
+
+\end_inset
+
+并且满足以下微分恒等式：
 \begin_inset Formula 
 \[
 \dd{\vec{x}}\vdot\vec{\vec{\varOmega}}=\vec{\varOmega}\cross\dd{\vec{x}}
@@ -479,7 +480,73 @@ vector!pseudo-~
 \end_layout
 
 \begin_layout Proof
+先证明分量变换规则。由 
+\begin_inset Formula $\epsilon_{ijk}=\epsilon_{jki}=\epsilon_{kij}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\epsilon_{ijk}\epsilon_{ipq}=\updelta_{jp}\updelta_{kq}-\updelta_{jq}\updelta_{kp}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\varOmega_{ij}\epsilon_{ijk}=\underbrace{\varOmega_{q}\epsilon_{ijq}}_{\varOmega_{ij}}\epsilon_{ijk}=\varOmega_{q}\cdot(\underbrace{\overbrace{\updelta_{jj}}^{3}\updelta_{qk}-\overbrace{\updelta_{jk}\updelta_{qj}}^{\updelta_{qk}}}_{\epsilon_{ijq}\epsilon_{ijk}})=\varOmega_{q}\cdot2\updelta_{qk}=2\varOmega_{k}
+\]
+
+\end_inset
+
+将二阶张量的变换规则 
+\begin_inset Formula $\varOmega'_{ij}=\varOmega_{pq}A_{pi}A_{qj}$
+\end_inset
+
+ 代入上式（应用于变换后的分量）即得
+\begin_inset Formula 
+\[
+2\varOmega'_{k}=\underbrace{\varOmega_{pq}A_{pi}A_{qj}}_{\varOmega'_{ij}}\epsilon_{ijk}=\underbrace{\varOmega_{r}\epsilon_{pqr}}_{\varOmega_{pq}}A_{pi}A_{qj}\epsilon_{ijk}=\underbrace{\updelta_{rs}\varOmega_{s}}_{\varOmega_{r}}\epsilon_{pqr}A_{pi}A_{qj}\epsilon_{ijk}
+\]
+
+\end_inset
+
 利用 
+\begin_inset Formula $\Mat{A}$
+\end_inset
+
+ 的单位正交性
+\begin_inset Formula 
+\[
+\updelta_{ik}=\underbrace{A_{ir}\vec{e}{}_{r}}_{\vec{e}'_{i}}\vdot\underbrace{A_{ks}\vec{e}{}_{s}}_{\vec{e}'_{k}}=A_{ir}\underbrace{\vec{e}{}_{r}\vdot\vec{e}{}_{s}}_{\updelta_{rs}}A_{ks}=A_{ir}A_{kr}
+\]
+
+\end_inset
+
+可将 
+\begin_inset Formula $2\varOmega'_{k}=\updelta_{rs}\varOmega_{s}\epsilon_{pqr}A_{pi}A_{qj}\epsilon_{ijk}$
+\end_inset
+
+ 中的 
+\begin_inset Formula $\updelta_{rs}$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $A_{rt}A_{st}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\begin{aligned}2\varOmega'_{k} & =\varOmega_{s}\underbrace{A_{rt}A_{st}}_{\updelta_{rs}}\epsilon_{pqr}A_{pi}A_{qj}\epsilon_{ijk}=\varOmega_{s}A_{st}\underbrace{\epsilon_{pqr}A_{pi}A_{qj}A_{rt}}_{\epsilon_{ijt}\det(\Mat{A})}\epsilon_{ijk}\\
+ & =\varOmega_{s}A_{st}\det(\Mat{A})\underbrace{\epsilon_{ijt}\epsilon_{ijk}}_{2\updelta_{tk}}=2\varOmega_{s}\underbrace{A_{st}\updelta_{tk}}_{A_{sk}}\det(\Mat{A})=2\varOmega_{i}A_{ik}\det(\Mat{A})
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+再证明微分恒等式。利用 
 \begin_inset Formula $\vec{e}_{i}\vdot\vec{e}_{j}=\updelta_{ij}$
 \end_inset
 
@@ -490,7 +557,7 @@ vector!pseudo-~
  即得
 \begin_inset Formula 
 \[
-\dd{\vec{x}}\vdot\vec{\vec{\varOmega}}=\dd{x_{j}}\varOmega_{jk}\vec{e}_{k}=\dd{x_{j}}\left(\varOmega_{i}\epsilon_{ijk}\right)\vec{e}_{k}=\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}\varOmega_{i}\dd{x_{j}}=\vec{\varOmega}\cross\dd{\vec{x}}
+\dd{\vec{x}}\vdot\vec{\vec{\varOmega}}=(\dd{x_{j}})\varOmega_{jk}\vec{e}_{k}=(\dd{x_{j}})\underbrace{\varOmega_{i}\epsilon_{ijk}}_{\varOmega_{jk}}\vec{e}_{k}=(\dd{x_{j}})\varOmega_{i}\underbrace{\vec{e}_{i}\cross\vec{e}_{j}}_{\epsilon_{ijk}\vec{e}_{k}}=\underbrace{\varOmega_{i}\vec{e}_{i}}_{\vec{\varOmega}}\cross\underbrace{\vec{e}_{j}\dd{x_{j}}}_{\dd{\vec{x}}}
 \]
 
 \end_inset
