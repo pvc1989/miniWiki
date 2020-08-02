@@ -105,18 +105,14 @@ Lebesgue 理论
 \end_layout
 
 \begin_layout Section
-动机
-\end_layout
-
-\begin_layout Section
-点集的测度
+点集测度
 \end_layout
 
 \begin_layout Subsection
 公理化定义
 \end_layout
 
-\begin_layout Axiom
+\begin_layout Definition
 \begin_inset ERT
 status open
 
@@ -130,23 +126,19 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "axm:积分：测度：理想"
+name "def:Lebesgue-measure-ideal"
 
 \end_inset
 
-定义在点集 
+若以点集 
 \begin_inset Formula $V$
 \end_inset
 
- 上的函数 
-\begin_inset Formula $m$
+ 的子集为自变量的实值函数 
+\begin_inset Formula $m\colon2^{V}\to\mathbb{R}$
 \end_inset
 
- 是一种 
-\bar under
-测度 (measure)
-\bar default
-，当且仅当它具有以下性质：
+ 具有以下五条性质：
 \end_layout
 
 \begin_deeper
@@ -155,14 +147,18 @@ name "axm:积分：测度：理想"
 \begin_inset space \space{}
 \end_inset
 
-(Normalization) 
-\begin_inset Formula $\exists C\subset V$
+(normalization) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 至少有一个测度(值)为 
+\begin_inset Formula $1$
+\end_inset
+
+ 的子集，即
 \begin_inset Formula 
 \[
-m(C)=1
+\left(\exists C\subset V\right)\left(m(C)=1\right)
 \]
 
 \end_inset
@@ -175,14 +171,14 @@ m(C)=1
 \begin_inset space \space{}
 \end_inset
 
-(Positivity) 
-\begin_inset Formula $\forall A\subset V$
+(positivity) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的所有子集均有非负的测度(值)，即
 \begin_inset Formula 
 \[
-m(A)\in[0,\infty]
+\left(\forall A\subset V\right)\left(m(A)\ge0\right)
 \]
 
 \end_inset
@@ -195,14 +191,14 @@ m(A)\in[0,\infty]
 \begin_inset space \space{}
 \end_inset
 
-(Monotonicity) 
-\begin_inset Formula $\forall(A,B)\subset V^{2}$
+(monotonicity) 若点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的两个子集具有从属关系，则子集的测度(值)不大于其超集的测度(值)，即
 \begin_inset Formula 
 \[
-A\subset B\implies m(A)\le m(B)
+\left(\forall A\subset V,\ \forall B\subset V\right)\left(A\subset B\implies m(A)\le m(B)\right)
 \]
 
 \end_inset
@@ -215,14 +211,14 @@ A\subset B\implies m(A)\le m(B)
 \begin_inset space \space{}
 \end_inset
 
-(Additivity) 
-\begin_inset Formula $\forall(A,B)\subset V^{2}$
+(additivity) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 互斥子集之并的测度(值)等于这些子集的测度(值)之和，即
 \begin_inset Formula 
 \[
-A\cap B=\varnothing\implies m(A\cup B)=m(A)+m(B)
+\left(\forall A\subset V,\ \forall B\subset V\right)\left(A\cap B=\varnothing\implies m(A\cup B)=m(A)+m(B)\right)
 \]
 
 \end_inset
@@ -235,18 +231,22 @@ A\cap B=\varnothing\implies m(A\cup B)=m(A)+m(B)
 \begin_inset space \space{}
 \end_inset
 
-(Translation
-\begin_inset space ~
+(translation
+\begin_inset space \space{}
 \end_inset
 
-Invariance) 
-\begin_inset Formula $\forall x\in V\text{，}\forall A\subset V$
+invariance) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的所有子集与 
+\begin_inset Formula $V$
+\end_inset
+
+ 中任意元素关于该子集的陪集具有相同的测度(值)，即
 \begin_inset Formula 
 \[
-x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies m(x+A)=m(A)
+\left(\forall x\in V,\ \forall A\subset V\right)\left(m(x+A)=m(A)\right)
 \]
 
 \end_inset
@@ -255,6 +255,22 @@ x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies m(x+A)=m(A)
 \end_layout
 
 \end_deeper
+\begin_layout Definition
+则称函数 
+\begin_inset Formula $m$
+\end_inset
+
+ 是点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的一个
+\bar under
+测度(函数) (measure (function))
+\bar default
+。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -263,19 +279,33 @@ x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies m(x+A)=m(A)
 \end_layout
 
 \begin_layout Remark*
-这里隐含了“点集 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[理想测度不存在]
+\end_layout
+
+\end_inset
+
+即使对于 
+\begin_inset Formula $V\coloneqq\mathbb{R}^{n}$
+\end_inset
+
+ 这样简单的点集，也无法构造出一种具有上述五条性质的理想测度(函数)。因此，该定义需要被适当地放松。一种做法是：放弃“点集 
 \begin_inset Formula $V$
 \end_inset
 
- 的任意子集都具有测度（值）”，然而即使对于 
-\begin_inset Formula $V=\mathbb{R}^{n}$
+ 的所有子集均可测”这一要求，即允许 
+\begin_inset Formula $V$
 \end_inset
 
- 这样简单的点集，也无法构造出一种满足以上所有性质的测度（函数）。因此，上述公理中的某些性质需要作适当地放松。换言之：应当允许一些点集是 
+ 的一些子集是
 \bar under
 不可测的 (non-measurable)
 \bar default
-。在分析学中，经常需要对至多可列个点集求交或并。如果输入的点集可测，那么输出的点集自然应当可测。对上述公理的放松应当体现这一要求。
+。另一方面，我们在分析学中经常对“至多可列个”点集求[并|交]，因此很自然地希望“至多可列个可测点集的[并|交]依然可测”。
 \end_layout
 
 \begin_layout Standard
@@ -285,7 +315,40 @@ x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies m(x+A)=m(A)
 
 \end_layout
 
-\begin_layout Axiom
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可测集类]
+\end_layout
+
+\end_inset
+
+用 
+\begin_inset Formula $\mathcal{M}_{V}\coloneqq\left\{ A\subset V\mid\exists m(A)\right\} $
+\end_inset
+
+ 表示由点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的所有可测子集组成的
+\bar under
+可测集类 (the class of measurable sets)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
 \begin_inset ERT
 status open
 
@@ -299,7 +362,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "axm:积分：测度：勒贝格"
+name "def:Lebesgue-measure"
 
 \end_inset
 
@@ -313,27 +376,19 @@ measure!axiom of ~
 
 \end_inset
 
-定义在点集 
+若以点集 
 \begin_inset Formula $V$
 \end_inset
 
- 上的函数 
-\begin_inset Formula $m$
+ 的可测子集（即可测集类 
+\begin_inset Formula $\mathcal{M}_{V}$
 \end_inset
 
- 是一种 
-\bar under
-Lebesgue 测度 (Lebesgue measure)
-\bar default
-，当且仅当它具有以下性质（其中 
-\begin_inset Formula $\mathcal{M}_{V}\coloneqq\left\{ A\subset V\mid\exists m(A)\right\} $
+ 中的点集）为自变量的实值函数 
+\begin_inset Formula $m\colon\mathcal{M}_{V}\to\mathbb{R}$
 \end_inset
 
- 是由 
-\begin_inset Formula $V$
-\end_inset
-
- 中的所有可测集组成的“可测集类”）：
+ 具有以下五条性质：
 \end_layout
 
 \begin_deeper
@@ -342,14 +397,18 @@ Lebesgue 测度 (Lebesgue measure)
 \begin_inset space \space{}
 \end_inset
 
-(Normalization) 
-\begin_inset Formula $\exists C\subset V$
+(normalization) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 至少有一个测度(值)为 
+\begin_inset Formula $1$
+\end_inset
+
+ 的子集，即
 \begin_inset Formula 
 \[
-m(C)=1
+\left(\exists C\subset\mathcal{M}_{V}\right)\left(m(C)=1\right)
 \]
 
 \end_inset
@@ -362,14 +421,14 @@ m(C)=1
 \begin_inset space \space{}
 \end_inset
 
-(Positivity) 
-\begin_inset Formula $\forall A\in\mathcal{M}_{V}$
+(positivity) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的所有可测子集均有非负的测度(值)，即
 \begin_inset Formula 
 \[
-m(A)\in[0,\infty]
+\left(\forall A\in\mathcal{M}_{V}\right)\left(m(A)\ge0\right)
 \]
 
 \end_inset
@@ -382,14 +441,14 @@ m(A)\in[0,\infty]
 \begin_inset space \space{}
 \end_inset
 
-(Complementarity) 
-\begin_inset Formula $\forall A\in\mathcal{M}_{V}$
+(complementarity) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的所有可测子集的补集均可测，即
 \begin_inset Formula 
 \[
-(V\setminus A)\in\mathcal{M}_{V}
+\left(\forall A\in\mathcal{M}_{V}\right)\left((V\setminus A)\in\mathcal{M}_{V}\right)
 \]
 
 \end_inset
@@ -402,18 +461,22 @@ m(A)\in[0,\infty]
 \begin_inset space \space{}
 \end_inset
 
-(Translation
-\begin_inset space ~
+(translation
+\begin_inset space \space{}
 \end_inset
 
-Invariance) 
-\begin_inset Formula $\forall A\in\mathcal{M}_{V}\text{，}\forall x\in V$
+invariance) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的所有可测子集与 
+\begin_inset Formula $V$
+\end_inset
+
+ 中任意元素关于该子集的陪集具有相同的测度(值)，即
 \begin_inset Formula 
 \[
-x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies\left((x+A)\in\mathcal{M}_{V}\right)\land\left(m(x+A)=m(A)\right)
+\left(\forall A\in\mathcal{M}_{V},\ \forall x\in V\right)\left(m(x+A)=m(A)\right)
 \]
 
 \end_inset
@@ -423,7 +486,7 @@ x+A\coloneqq\left\{ x+a\mid a\in A\right\} \implies\left((x+A)\in\mathcal{M}_{V}
 
 \begin_layout Description
 Borel
-\begin_inset space ~
+\begin_inset space \space{}
 \end_inset
 
 性质
@@ -431,23 +494,113 @@ Borel
 \end_inset
 
 (Borel
-\begin_inset space ~
+\begin_inset space \space{}
 \end_inset
 
-Property) 开集可测。
+property) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的所有开子集均可测。
 \end_layout
 
 \end_deeper
-\begin_layout Axiom
-以及如下性质（其中 
-\begin_inset Formula $\forall k\in K\colon A_{k}\in\mathcal{M}_{V}$
+\begin_layout Definition
+及以下三条性质（其中 
+\begin_inset Formula $\left\{ A_{k}\right\} _{k=1}^{n}\subset\mathcal{M}_{V}$
 \end_inset
 
-，
-\begin_inset Formula $K$
+）：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+Boolean
+\begin_inset space \space{}
 \end_inset
 
- 为可数指标集）：
+代数性质
+\begin_inset space \space{}
+\end_inset
+
+(Boolean
+\begin_inset space \space{}
+\end_inset
+
+algebra
+\begin_inset space \space{}
+\end_inset
+
+property) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的有限个可测子集的[并|交]亦可测，即
+\begin_inset Formula 
+\[
+\left(\bigcup_{k=1}^{n}A_{k}\in\mathcal{M}_{V}\right)\land\left(\bigcap_{k=1}^{n}A_{k}\in\mathcal{M}_{V}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+有限亚可加性
+\begin_inset space \space{}
+\end_inset
+
+(finite
+\begin_inset space \space{}
+\end_inset
+
+sub-additivity) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的有限个可测子集之并的测度(值)不大于这些子集的测度(值)之和，即
+\begin_inset Formula 
+\[
+m\left(\bigcup_{k=1}^{n}A_{k}\right)\le\sum_{k=1}^{n}m(A_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+有限可加性
+\begin_inset space \space{}
+\end_inset
+
+(finite
+\begin_inset space \space{}
+\end_inset
+
+additivity) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的有限个互斥可测子集之并的测度(值)等于这些子集的测度(值)之和，即
+\begin_inset Formula 
+\[
+\left(\forall(i,j)\in\left\{ 1,\dots,n\right\} ^{2}\right)\left(A_{i}\cap A_{j}=\varnothing\right)\implies m\left(\bigcup_{k=1}^{n}A_{k}\right)=\sum_{k=1}^{n}m(A_{k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+及以下三条性质（其中 
+\begin_inset Formula $\left\{ A_{k}\right\} _{k=1}^{\infty}\subset\mathcal{M}_{V}$
+\end_inset
+
+）：
 \end_layout
 
 \begin_deeper
@@ -463,14 +616,18 @@ Property) 开集可测。
 \begin_inset Formula $\sigma$
 \end_inset
 
--Algebra
-\begin_inset space ~
+-algebra
+\begin_inset space \space{}
 \end_inset
 
-Property) 
+property) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的可列个可测子集的[并|交]亦可测，即
 \begin_inset Formula 
 \[
-\bigcup_{k\in K}A_{k}\in\mathcal{M}_{V}\qquad\bigcap_{k\in K}A_{k}\in\mathcal{M}_{V}
+\left(\bigcup_{k=1}^{\infty}A_{k}\in\mathcal{M}_{V}\right)\land\left(\bigcap_{k=1}^{\infty}A_{k}\in\mathcal{M}_{V}\right)
 \]
 
 \end_inset
@@ -483,14 +640,18 @@ Property)
 \begin_inset space \space{}
 \end_inset
 
-(Countable
-\begin_inset space ~
+(countable
+\begin_inset space \space{}
 \end_inset
 
-Sub-Additivity) 
+sub-additivity) 点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 的可列个可测子集之并的测度(值)不大于这些子集的测度(值)之和，即
 \begin_inset Formula 
 \[
-m\left(\bigcup_{k\in K}A_{k}\right)\le\sum_{k\in K}m(A_{k})
+m\left(\bigcup_{k=1}^{\infty}A_{k}\right)\le\sum_{k=1}^{\infty}m(A_{k})
 \]
 
 \end_inset
@@ -503,18 +664,18 @@ m\left(\bigcup_{k\in K}A_{k}\right)\le\sum_{k\in K}m(A_{k})
 \begin_inset space \space{}
 \end_inset
 
-(Countable
-\begin_inset space ~
+(countable
+\begin_inset space \space{}
 \end_inset
 
-Additivity) 
-\begin_inset Formula $\forall(i,j)\in K^{2}\colon A_{i}\cap A_{j}=\varnothing$
+additivity) 点集 
+\begin_inset Formula $V$
 \end_inset
 
-：
+ 的可列个互斥可测子集之并的测度(值)等于这些子集的测度(值)之和，即
 \begin_inset Formula 
 \[
-m\left(\bigcup_{k\in K}A_{k}\right)=\sum_{k\in K}m(A_{k})
+\left(\forall(i,j)\in\left\{ 1,\dots,n,\dots\right\} ^{2}\right)\left(A_{i}\cap A_{j}=\varnothing\right)\implies m\left(\bigcup_{k=1}^{\infty}A_{k}\right)=\sum_{k=1}^{\infty}m(A_{k})
 \]
 
 \end_inset
@@ -523,29 +684,18 @@ m\left(\bigcup_{k\in K}A_{k}\right)=\sum_{k\in K}m(A_{k})
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
+\begin_layout Definition
+则称函数 
+\begin_inset Formula $m$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Remark*
-若指标集 
-\begin_inset Formula $K$
+ 是点集 
+\begin_inset Formula $V$
 \end_inset
 
- 有限，则以上三条性质分别减弱为 
+ 上的一个 
 \bar under
-Boolean 代数性质 (Boolean algebra property)
-\bar default
-、
-\bar under
-有限亚可加性 (finite sub-additivity)
-\bar default
-、
-\bar under
-有限可加性 (finite additivity)
+Lebesgue 测度
 \bar default
 。
 \end_layout
@@ -568,22 +718,7 @@ status open
 
 \end_inset
 
-“单调性”可以由“互补性”、“有限可加性”、“非负性”导出，因此不再作为公理条件提出。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark*
-对于 
-\begin_inset Formula $V=\mathbb{R}^{n}$
-\end_inset
-
-，的确可以构造出这样的测度。
+“单调性”可以由“互补性”、“有限可加性”、“非负性”导出，因此不再单独提出。
 \end_layout
 
 \begin_layout Standard
@@ -759,10 +894,10 @@ name "def:积分：测度：开覆盖"
 \end_layout
 
 \begin_layout Remark*
-满足公理 
+满足定义 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "axm:积分：测度：勒贝格"
+reference "def:Lebesgue-measure"
 plural "false"
 caps "false"
 noprefix "false"
