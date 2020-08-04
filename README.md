@@ -12,7 +12,7 @@ title: 首页
   - [顶层 `README.lyx`](./README.lyx) 大致按逻辑顺序重新编排了章节（重复的只保留一份）。
 - [Markdown](./programming/markdown.md)
   - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 Markdown 文档。
-  - 本仓库已启用 [**GitHub Pages**](https://pvcstillingradschool.github.io/miniWiki/)，目前仅支持 Markdown 文档。
+  - 本仓库已启用 [GitHub Pages](https://docs.github.com/en/github/working-with-github-pages)（[首页](https://pvcstillingradschool.github.io/miniWiki/)），目前仅支持 Markdown 文档。
 
 ## 编译
 
