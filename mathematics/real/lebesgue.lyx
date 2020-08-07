@@ -2284,6 +2284,16 @@ status open
 \end_layout
 
 \begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[几乎处处]
+\end_layout
+
+\end_inset
+
 对于二元关系符，原符号上方加一点或 a.e.
  表示此关系几乎处处成立，例如：
 \begin_inset Formula 
@@ -2312,7 +2322,7 @@ f\doteq g\qquad f\stackrel{\text{a.e.}}{=}g\qquad f\stackrel{\text{a.e.}}{>}g\qq
 \end_layout
 
 \begin_layout Claim*
-本节中所有“函数”均为“一元实变实值函数”，所有“可测集”均为 
+若未加特别说明，则本节中的“函数”均指“一元实变实值函数”，且“点集”均指 
 \begin_inset Formula $\mathbb{R}$
 \end_inset
 
@@ -2341,7 +2351,7 @@ status open
 \begin_inset Formula $f$
 \end_inset
 
- 是定义在可测集 
+ 是定义在 (Lebesgue) 可测集 
 \begin_inset Formula $E$
 \end_inset
 
@@ -2349,7 +2359,7 @@ status open
 \begin_inset Formula $\forall a\in\mathbb{R}$
 \end_inset
 
-：
+，点集
 \begin_inset Formula 
 \[
 E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\} 
@@ -2357,11 +2367,7 @@ E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\}
 
 \end_inset
 
-都是 
-\begin_inset Formula $E$
-\end_inset
-
- 的可测子集，则称 
+均可测，则称 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2369,11 +2375,11 @@ E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\}
 \begin_inset Formula $E$
 \end_inset
 
- 上的“Lebesgue 
+ 上的 (Lebesgue) 
 \bar under
 可测函数 (measurable function)
 \bar default
-”。
+。
 \end_layout
 
 \begin_layout Standard
@@ -2389,14 +2395,22 @@ E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\}
 \end_inset
 
 ”可以放宽为“
-\begin_inset Formula $\forall a\in A\subset\mathbb{R}$
+\begin_inset Formula $\forall a\in A$
 \end_inset
 
  且 
 \begin_inset Formula $A$
 \end_inset
 
- 是稠密的”。
+ 是 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 的稠密子集（例如 
+\begin_inset Formula $\mathbb{Q}$
+\end_inset
+
+）”。
 \end_layout
 
 \begin_layout Standard
@@ -2419,7 +2433,7 @@ E(f>a)\coloneqq\left\{ x\in E\mid f(x)>a\right\}
 \begin_inset Formula $\forall a\in\mathbb{R}$
 \end_inset
 
-：
+，点集
 \begin_inset Formula 
 \[
 \begin{aligned}E(f\ge a) & \coloneqq\left\{ x\in E\mid f(x)\ge a\right\}  & E(f<a) & \coloneqq\left\{ x\in E\mid f(x)<a\right\} \\
@@ -2449,7 +2463,7 @@ status open
 
 \begin_layout Plain Layout
 
-连续函数可测
+[连续函数可测]
 \end_layout
 
 \end_inset
@@ -2470,7 +2484,7 @@ status open
 
 \begin_layout Plain Layout
 
-简单函数
+[简单函数]
 \end_layout
 
 \end_inset
@@ -2483,25 +2497,21 @@ name "def:积分：可测：简单函数"
 \end_inset
 
 设 
-\begin_inset Formula $E_{1},E_{2},\dots,E_{n}$
+\begin_inset Formula $\left\{ E_{k}\right\} _{k=1}^{K}$
 \end_inset
 
  为两两互斥的可测集。若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 在各个 
-\begin_inset Formula $E_{i}$
+ 在每个 
+\begin_inset Formula $E_{k}$
 \end_inset
 
- 上的分别取常值 
-\begin_inset Formula $c_{i}\in\mathbb{R}$
-\end_inset
-
-：
+ 上都取常值，即
 \begin_inset Formula 
 \[
-f(x)=c_{i}\impliedby x\in E_{i}\qquad\forall i=1,2,\dots,n
+\left(\forall k\in\left\{ 1,\dots,K\right\} \right)\left(x\in E_{k}\implies f(x)=c_{k}\right)
 \]
 
 \end_inset
@@ -2510,13 +2520,13 @@ f(x)=c_{i}\impliedby x\in E_{i}\qquad\forall i=1,2,\dots,n
 \begin_inset Formula $f$
 \end_inset
 
- 是定义在 
-\begin_inset Formula $E=\bigcup_{i=1}^{n}E_{i}$
+ 是定义在（可测）点集 
+\begin_inset Formula $E\coloneqq\bigcup_{i=1}^{n}E_{i}$
 \end_inset
 
- 上的 
+ 上的
 \bar under
-简单 (simple) 函数
+简单函数 (simple function)
 \bar default
 。
 \end_layout
@@ -2534,12 +2544,33 @@ status open
 
 \begin_layout Plain Layout
 
-简单函数可测
+[简单函数可测]
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[零函数]
+\end_layout
+
+\end_inset
+
+几乎处处为零（只在零测度集上有非零值）的函数被称为“零函数”。
 \end_layout
 
 \begin_layout Standard
@@ -2555,12 +2586,12 @@ status open
 
 \begin_layout Plain Layout
 
-零函数可测
+[零函数可测]
 \end_layout
 
 \end_inset
 
-几乎处处为零的函数（简称“零函数”）可测。
+
 \end_layout
 
 \begin_layout Standard
@@ -2571,7 +2602,17 @@ status open
 \end_layout
 
 \begin_layout Remark*
-连续函数、简单函数、零函数的连续性逐渐退化：分别含有零个、（至多）有限个、（至多）可数个间断点。
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[连续性逐渐退化]
+\end_layout
+
+\end_inset
+
+连续函数、简单函数、零函数分别含有零个、有限个、无穷多个间断点。
 \end_layout
 
 \begin_layout Standard
@@ -2582,16 +2623,30 @@ status open
 \end_layout
 
 \begin_layout Theorem
-设函数在可测集 
-\begin_inset Formula $E_{1},E_{2}$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数在并集上可测等价于在各子集上可测]
+\end_layout
+
+\end_inset
+
+若函数在可测集 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $E_{2}$
 \end_inset
 
  上有定义，则“
 \begin_inset Formula $f$
 \end_inset
 
-在 
-\begin_inset Formula $E=E_{1}\cup E_{2}$
+ 在 
+\begin_inset Formula $E_{1}\cup E_{2}$
 \end_inset
 
  上可测”等价于“
@@ -2599,10 +2654,14 @@ status open
 \end_inset
 
  在 
-\begin_inset Formula $E_{1},E_{2}$
+\begin_inset Formula $E_{1}$
 \end_inset
 
- 上都可测”。
+ 与 
+\begin_inset Formula $E_{2}$
+\end_inset
+
+ 上均可测”。
 \end_layout
 
 \begin_layout Standard
@@ -2613,7 +2672,17 @@ status open
 \end_layout
 
 \begin_layout Corollary
-设函数 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数在零测度集上的值不影响其可测性]
+\end_layout
+
+\end_inset
+
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2625,11 +2694,19 @@ status open
 \begin_inset Formula $f$
 \end_inset
 
-在 
+ 在 
 \begin_inset Formula $E$
 \end_inset
 
- 上可测”等价于“
+ 上可测”等价于“任取 
+\begin_inset Formula $E$
+\end_inset
+
+ 的零测度子集 
+\begin_inset Formula $E_{0}$
+\end_inset
+
+，函数 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2637,15 +2714,7 @@ status open
 \begin_inset Formula $E\setminus E_{0}$
 \end_inset
 
- 上可测，其中 
-\begin_inset Formula $E_{0}$
-\end_inset
-
- 是 
-\begin_inset Formula $E$
-\end_inset
-
- 的任意零测度子集”。
+ 上可测”。
 \end_layout
 
 \begin_layout Standard
@@ -2666,15 +2735,19 @@ status open
 
 \end_inset
 
-设函数 
-\begin_inset Formula $f,g$
+若 
+\begin_inset Formula $f$
 \end_inset
 
- 在可测集 
+ 与 
+\begin_inset Formula $g$
+\end_inset
+
+ 均为点集 
 \begin_inset Formula $E$
 \end_inset
 
- 上可测，则它们的和、差、积、商都是可测函数。
+ 上的可测函数，则二者的和、差、积、商都是可测函数。
 \end_layout
 
 \begin_layout Standard
@@ -2693,68 +2766,15 @@ status open
 \begin_inset Formula $f$
 \end_inset
 
- 及函数列 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+ 及函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 中的每个函数都是定义在可测集 
+ 中的每个函数都是在可测集 
 \begin_inset Formula $E\subset\mathbb{R}$
 \end_inset
 
- 上的一元实函数。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[处处收敛]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
-\end_inset
-
- 在 
-\begin_inset Formula $E$
-\end_inset
-
- 上 
-\bar under
-处处 (everywhere) 收敛
-\bar default
- 到 
-\begin_inset Formula $f$
-\end_inset
-
-，记作 
-\begin_inset Formula $(f_{n}\to f)_{x\in E}^{n\to\infty}$
-\end_inset
-
- 或更简洁的 
-\begin_inset Formula $f_{n}\to f$
-\end_inset
-
-，是指
-\begin_inset Formula 
-\[
-\forall\epsilon>0\text{，}\forall x\in E\text{，}\exists N\in\mathbb{R}\text{，}\forall n>N\text{：}\abs{f(x)-f_{n}(x)}<\epsilon
-\]
-
-\end_inset
-
-
+ 上有定义的一元实函数。
 \end_layout
 
 \begin_layout Standard
@@ -2775,39 +2795,92 @@ status open
 
 \end_inset
 
-
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 在 
+ 在可测集 
 \begin_inset Formula $E$
 \end_inset
 
- 上 
+ 上
 \bar under
-一致 (uniformly) 收敛
+一致 (uniformly)
 \bar default
- 到 
+ 收敛到函数 
 \begin_inset Formula $f$
 \end_inset
 
-，记作 
-\begin_inset Formula $(f_{n}\rightrightarrows f)_{x\in E}^{n\to\infty}$
-\end_inset
-
- 或更简洁的 
-\begin_inset Formula $f_{n}\rightrightarrows f$
-\end_inset
-
-，是指
+ 是指
 \begin_inset Formula 
 \[
-\forall\epsilon>0\text{，}\exists N\in\mathbb{R}\text{，}\forall n>N\text{：}\abs{f(x)-f_{n}(x)}<\epsilon
+\left(\forall\epsilon>0\right)\left(\exists K\in\mathbb{R}\right)\left(\forall k>K\right)\left(\forall x\in E\right)\left(\abs{f(x)-f_{k}(x)}<\epsilon\right)
 \]
 
 \end_inset
 
+用 
+\begin_inset Formula $(f_{k}\rightrightarrows f)_{x\in E}^{k\to\infty}$
+\end_inset
 
+ 或更简洁的 
+\begin_inset Formula $f_{k}\rightrightarrows f$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[处处收敛]
+\end_layout
+
+\end_inset
+
+函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
+\end_inset
+
+ 在可测集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上
+\bar under
+处处 (everywhere)
+\bar default
+ 收敛到函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 是指
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\forall x\in E\right)\left(\exists K\in\mathbb{N}\right)\left(\forall k>K\right)\left(\abs{f(x)-f_{k}(x)}<\epsilon\right)
+\]
+
+\end_inset
+
+用 
+\begin_inset Formula $(f_{k}\to f)_{x\in E}^{k\to\infty}$
+\end_inset
+
+ 或更简洁的 
+\begin_inset Formula $f_{k}\to f$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -2828,39 +2901,39 @@ status open
 
 \end_inset
 
-
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 在 
+ 在可测集 
 \begin_inset Formula $E$
 \end_inset
 
- 上 
+ 上
 \bar under
-几乎处处 (almost everywhere) 收敛
+几乎处处 (almost everywhere)
 \bar default
- 到 
+ 收敛到函数 
 \begin_inset Formula $f$
 \end_inset
 
-，记作 
-\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
-\end_inset
-
- 或更简洁的 
-\begin_inset Formula $f_{n}\stackrel{\text{a.e.}}{\to}f$
-\end_inset
-
-，是指
+ 是指
 \begin_inset Formula 
 \[
-\exists E_{0}\subset E\text{，}m(E_{0})=0\text{：}(f_{n}\to f)_{x\in E\setminus E_{0}}^{n\to\infty}
+\left(\exists E_{0}\subset E,\ m(E_{0})=0\right)\left((f_{n}\to f)_{x\in E\setminus E_{0}}^{n\to\infty}\right)
 \]
 
 \end_inset
 
+用 
+\begin_inset Formula $(f_{k}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{k\to\infty}$
+\end_inset
 
+ 或更简洁的 
+\begin_inset Formula $f_{k}\stackrel{\text{a.e.}}{\to}f$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -2881,47 +2954,51 @@ status open
 
 \end_inset
 
-
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 在 
+ 在可测集 
 \begin_inset Formula $E$
 \end_inset
 
- 上 
+ 上
 \bar under
-依测度 (in measure) 收敛
+依测度 (in measure)
 \bar default
- 到 
+ 收敛到函数 
 \begin_inset Formula $f$
 \end_inset
 
-，记作 
-\begin_inset Formula $(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}$
+ 是指：这些函数均几乎处处有界，且 
+\begin_inset Formula $\forall\epsilon>0$
 \end_inset
 
- 或更简洁的 
-\begin_inset Formula $f_{n}\stackrel{\text{i.m.}}{\to}f$
+ 点集 
+\begin_inset Formula $\left\{ x\in E\mathrel{\Big|}\abs{f_{k}(x)-f(x)}\ge\epsilon\right\} $
 \end_inset
 
-，是指 
-\begin_inset Formula $f$
+ 的测度随 
+\begin_inset Formula $k\to\infty$
 \end_inset
 
- 及 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
-\end_inset
-
- 中的每个函数均几乎处处有界，且
+ 而趋于零，即
 \begin_inset Formula 
 \[
-\forall\epsilon>0\colon\lim_{n\to\infty}m\qty(\left\{ x\in E\mid\epsilon\le\abs{f_{n}(x)-f(x)}\right\} )=0
+\left(\forall\epsilon>0\right)\left(\lim_{k\to\infty}\mathopen{m}\left(\left\{ x\in E\mathrel{\Big|}\abs{f_{k}(x)-f(x)}\ge\epsilon\right\} \right)=0\right)
 \]
 
 \end_inset
 
+ 用 
+\begin_inset Formula $(f_{n}\stackrel{m}{\to}f)_{x\in E}^{n\to\infty}$
+\end_inset
 
+ 或更简洁的 
+\begin_inset Formula $f_{k}\stackrel{m}{\to}f$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -2942,26 +3019,22 @@ status open
 
 \end_inset
 
-若 
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 及所有 
-\begin_inset Formula $f_{n}$
+ 及函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 在测度有限的 
+ 中的所有函数在测度有限的点集 
 \begin_inset Formula $E$
 \end_inset
 
- 上均可测且几乎处处有界，则 
-\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
-\end_inset
-
- 等价于
+ 上均可测且几乎处处有界，则
 \begin_inset Formula 
 \[
-\forall\delta>0\text{，}\exists E_{\delta}\subset E\text{：}m(E_{\delta})<\delta\text{，}(f_{n}\rightrightarrows f)_{x\in E\setminus E_{\delta}}^{n\to\infty}
+(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}\iff\left(\forall\delta>0\right)\left(\exists E_{\delta}\subset E,\ m(E_{\delta})<\delta\right)\left((f_{n}\rightrightarrows f)_{x\in E\setminus E_{\delta}}^{n\to\infty}\right)
 \]
 
 \end_inset
@@ -2987,22 +3060,22 @@ status open
 
 \end_inset
 
-若 
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 及所有 
-\begin_inset Formula $f_{n}$
+ 及函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
- 在测度有限的 
+ 中的所有函数在测度有限的点集 
 \begin_inset Formula $E$
 \end_inset
 
  上均可测且几乎处处有界，则
 \begin_inset Formula 
 \[
-(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}\implies(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}
+(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}\implies(f_{n}\stackrel{m}{\to}f)_{x\in E}^{n\to\infty}
 \]
 
 \end_inset
@@ -3028,19 +3101,35 @@ status open
 
 \end_inset
 
-若 
-\begin_inset Formula $(f_{n}\stackrel{\text{i.m.}}{\to}f)_{x\in E}^{n\to\infty}$
+若函数序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
-，则存在 
-\begin_inset Formula $\left\{ n_{k}\right\} _{k\in\mathbb{N}}\subset\mathbb{N}$
+ 依测度收敛到函数 
+\begin_inset Formula $f$
 \end_inset
 
- 使得 
-\begin_inset Formula $(f_{n_{k}}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{k\to\infty}$
+，则存在指标子序列 
+\begin_inset Formula $\left\{ n_{k}\right\} _{k=1}^{\infty}\subset\mathbb{N}$
 \end_inset
 
-。
+ 使得函数子序列 
+\begin_inset Formula $\left\{ f_{n_{k}}\right\} _{k=1}^{\infty}$
+\end_inset
+
+ 几乎处处收敛到函数 
+\begin_inset Formula $f$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+(f_{k}\stackrel{m}{\to}f)_{x\in E}^{k\to\infty}\implies\left(\exists\left\{ n_{k}\right\} _{k=1}^{\infty}\subset\mathbb{N}\right)\left((f_{n_{k}}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{k\to\infty}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3051,19 +3140,29 @@ status open
 \end_layout
 
 \begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可测函数序列几乎处处收敛到可测函数]
+\end_layout
+
+\end_inset
+
 若 
-\begin_inset Formula $(f_{n}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{n\to\infty}$
+\begin_inset Formula $(f_{k}\stackrel{\text{a.e.}}{\to}f)_{x\in E}^{k\to\infty}$
 \end_inset
 
  且所有 
-\begin_inset Formula $f_{n}$
+\begin_inset Formula $f_{k}$
 \end_inset
 
  在 
 \begin_inset Formula $E$
 \end_inset
 
- 上均可测，则 
+ 上均可测，则函数 
 \begin_inset Formula $f$
 \end_inset
 
@@ -3082,38 +3181,38 @@ status open
 \end_layout
 
 \begin_layout Theorem
-若 
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 在 
+ 在点集 
 \begin_inset Formula $E$
 \end_inset
 
- 上可测，则存在（可测的）
+ 上可测，则存在
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "def:积分：可测：简单函数"
 
 \end_inset
 
-列 
-\begin_inset Formula $\left\{ f_{n}\right\} _{n\in\mathbb{N}}$
+序列 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
 ，使得
 \begin_inset Formula 
 \[
-\left\{ \abs{f_{n}}\le\abs{f}\right\} _{x\in E}^{n\in\mathbb{N}}\land(f_{n}\to f)_{x\in E}^{n\to\infty}
+\left(\left\{ \abs{f_{k}}\le\abs{f}\right\} _{x\in E}^{k\in\mathbb{N}}\right)\land\left((f_{k}\to f)_{x\in E}^{k\to\infty}\right)
 \]
 
 \end_inset
 
-若 
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 有界，则上述收敛是一致的。
+ 有界，则上述“处处收敛”可加强为“一致收敛”。
 \end_layout
 
 \begin_layout Standard
@@ -3134,11 +3233,11 @@ status open
 
 \end_inset
 
-若 
+若函数 
 \begin_inset Formula $f$
 \end_inset
 
- 在测度有限的 
+ 在测度有限的点集 
 \begin_inset Formula $E$
 \end_inset
 
@@ -3146,15 +3245,19 @@ status open
 \begin_inset Formula $\forall\delta>0$
 \end_inset
 
-：存在闭集 
-\begin_inset Formula $F_{\delta}\subset E$
+，存在 
+\begin_inset Formula $E$
+\end_inset
+
+ 的闭子集 
+\begin_inset Formula $F_{\delta}$
 \end_inset
 
 ，使得 
-\begin_inset Formula $m(E\setminus F_{\delta})<0$
+\begin_inset Formula $m(E\setminus F_{\delta})<\delta$
 \end_inset
 
- 且 
+ 且函数 
 \begin_inset Formula $f$
 \end_inset
 
