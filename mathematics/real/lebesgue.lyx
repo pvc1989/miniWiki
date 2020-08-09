@@ -105,7 +105,7 @@ Lebesgue 理论
 \end_layout
 
 \begin_layout Section
-点集测度
+点集的 Lebesgue 测度
 \end_layout
 
 \begin_layout Subsection
@@ -2314,14 +2314,14 @@ f\doteq g\qquad f\stackrel{\text{a.e.}}{=}g\qquad f\stackrel{\text{a.e.}}{>}g\qq
 \end_layout
 
 \begin_layout Section
-可测函数
+Lebesgue 可测函数
 \end_layout
 
 \begin_layout Subsection
 \begin_inset Formula $f\colon\mathbb{R}\to\mathbb{R}$
 \end_inset
 
-
+ 的可测性
 \end_layout
 
 \begin_layout Claim*
@@ -2549,7 +2549,7 @@ name "def:积分：可测：简单函数"
 \end_inset
 
  是定义在（可测）点集 
-\begin_inset Formula $E\coloneqq\bigcup_{i=1}^{n}E_{i}$
+\begin_inset Formula $E\coloneqq\bigcup_{j=1}^{K}E_{k}$
 \end_inset
 
  上的
@@ -2760,28 +2760,12 @@ status open
 
 \begin_layout Plain Layout
 
-[可测函数的数量乘积亦可测]
+[可测函数构成向量空间]
 \end_layout
 
 \end_inset
 
-若 
-\begin_inset Formula $f$
-\end_inset
 
- 为点集 
-\begin_inset Formula $E$
-\end_inset
-
- 上的可测函数，则其乘 
-\begin_inset Formula $\forall\alpha\in\mathbb{R}$
-\end_inset
-
- 所得的函数 
-\begin_inset Formula $\alpha f$
-\end_inset
-
- 亦可测。
 \end_layout
 
 \begin_layout Standard
@@ -2797,7 +2781,7 @@ status open
 
 \begin_layout Plain Layout
 
-[可测函数的和差积商亦可测]
+[可测函数的积、商均可测]
 \end_layout
 
 \end_inset
@@ -2814,7 +2798,15 @@ status open
 \begin_inset Formula $E$
 \end_inset
 
- 上的可测函数，则二者的和、差、积、商都是可测函数。
+ 上的可测函数，则 
+\begin_inset Formula $f\cdot g$
+\end_inset
+
+ 与 
+\begin_inset Formula $f/g$
+\end_inset
+
+ 都是可测函数。
 \end_layout
 
 \begin_layout Standard
@@ -2828,7 +2820,7 @@ status open
 \begin_inset Formula $f\colon\mathbb{R}^{n}\to\mathbb{R}^{m}$
 \end_inset
 
-
+ 的可测性
 \end_layout
 
 \begin_layout Definition
@@ -2885,7 +2877,7 @@ f^{-1}(A)\coloneqq\left\{ x\in E\mid f(x)\in A\right\} \subset\mathbb{R}^{n}
 \end_layout
 
 \begin_layout Subsection
-函数列收敛
+函数序列的收敛性
 \end_layout
 
 \begin_layout Claim*
@@ -3457,7 +3449,590 @@ status open
 \end_layout
 
 \begin_layout Section
-可积函数
+函数的 Lebesgue 积分
+\end_layout
+
+\begin_layout Subsection
+简单函数的 Lebesgue 积分
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[简单函数]
+\end_layout
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f\colon\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ 的可测子集 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的取值之集 
+\begin_inset Formula $f(E)$
+\end_inset
+
+ 是 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 的有限子集，即
+\begin_inset Formula 
+\[
+\left(\exists\left\{ c_{k}\right\} _{k=1}^{K}\subset\mathbb{R}\right)\left(\forall x\in E\right)\left(f(x)\in\left\{ c_{k}\right\} _{k=1}^{K}\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $f$
+\end_inset
+
+ 是定义在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的
+\bar under
+简单函数 (simple function)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[〔特征|指示器〕函数]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ 的可测子集 
+\begin_inset Formula $E$
+\end_inset
+
+ 的
+\bar under
+〔特征|指示器〕函数 ([characteristic|indicator] function)
+\bar default
+
+\begin_inset Formula 
+\[
+1_{E}(x)\equiv\chi_{E}(x)\coloneqq\begin{cases}
+1 & x\in E\\
+0 & x\notin E
+\end{cases}
+\]
+
+\end_inset
+
+是 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+ 上的简单函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[简单函数构成向量空间]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[简单函数可由特征函数线性组合而得]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可测函数可表为简单函数序列的极限]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[简单函数的 Lebesgue 积分]
+\end_layout
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f\colon\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 是定义在 (Lebesgue) 可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上、取值于 
+\begin_inset Formula $f(E)\coloneqq\left\{ c_{k}\right\} _{k=1}^{K}$
+\end_inset
+
+ 的简单函数，则称
+\begin_inset Formula 
+\[
+\int_{E}f\coloneqq\sum_{k=1}^{K}c_{k}\cdot m(E(f=c_{k}))
+\]
+
+\end_inset
+
+为 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的 (Lebesgue) 
+\bar under
+积分 (integral)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+非负可测函数的 Lebesgue 积分
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[非负可测函数的 Lebesgue 积分]
+\end_layout
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f\colon\mathbb{R}^{n}\to[0,+\infty]$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上的非负可测函数，则称
+\begin_inset Formula 
+\[
+\int_{E}f\coloneqq\sup\left\{ \int_{E}s:\left(s\text{ 是 }E\text{ 上的非负简单函数}\right)\land\left(s\le f\right)\right\} 
+\]
+
+\end_inset
+
+为 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的 (Lebesgue) 
+\bar under
+积分 (integral)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[移动凸起]
+\end_layout
+
+\end_inset
+
+定义在 
+\begin_inset Formula $E\coloneqq[0,+\infty)$
+\end_inset
+
+ 上名为
+\bar under
+移动凸起 (moving bump)
+\bar default
+ 的函数序列 
+\begin_inset Formula $\left\{ f_{k}\coloneqq1_{[k,k+1)}\right\} _{k=1}^{\infty}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+处处收敛到 
+\begin_inset Formula $0$
+\end_inset
+
+，即 
+\begin_inset Formula $\left(\forall x\in\mathbb{R}\right)\left(\lim_{k\to\infty}f_{k}(x)=0\right)$
+\end_inset
+
+，从而有 
+\begin_inset Formula $\int_{E}\lim_{k\to\infty}f_{k}=0$
+\end_inset
+
+，但
+\end_layout
+
+\begin_layout Itemize
+积分值序列 
+\begin_inset Formula $\left\{ \int_{E}f_{k}=1\right\} _{k=1}^{\infty}$
+\end_inset
+
+ 收敛到 
+\begin_inset Formula $1$
+\end_inset
+
+，从而有 
+\begin_inset Formula $\lim_{k\to\infty}\int_{E}f_{k}=1$
+\end_inset
+
+，故
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\int_{E}\lim_{k\to\infty}f_{k}\neq\lim_{k\to\infty}\int_{E}f_{k}$
+\end_inset
+
+，即积分与极限不能交换顺序。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Fatou：下极限的积分 $
+\backslash
+le$ 积分的下极限]
+\end_layout
+
+\end_inset
+
+若若 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上的非负可测函数序列，则
+\begin_inset Formula 
+\[
+\int_{E}\liminf_{k\to\infty}f_{k}\le\liminf_{k\to\infty}\int_{E}f_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+绝对可积函数的 Lebesgue 积分
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[绝对可积函数]
+\end_layout
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f\colon\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上的可测函数，且 
+\begin_inset Formula $\int_{E}\abs{f}<+\infty$
+\end_inset
+
+，则称 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上是 (Lebesgue) 
+\bar under
+绝对可积的 (absolutely integrable)
+\bar default
+，用 
+\begin_inset Formula $f\in L^{1}(E)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[〔正|负〕值部分]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f^{+}\coloneqq+\max(f,0)\qquad f^{-}\coloneqq-\min(f,0)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[绝对可积函数的 Lebesgue 积分]
+\end_layout
+
+\end_inset
+
+若函数 
+\begin_inset Formula $f\colon\mathbb{R}^{n}\to\mathbb{R}$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上的绝对可积函数，则称
+\begin_inset Formula 
+\[
+\int_{E}f\coloneqq\int_{E}f^{+}-\int_{E}f^{-}
+\]
+
+\end_inset
+
+为 
+\begin_inset Formula $f$
+\end_inset
+
+ 在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的 (Lebesgue) 
+\bar under
+积分 (integral)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lebesgue 控制收敛]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\left\{ f_{k}\right\} _{k=1}^{\infty}$
+\end_inset
+
+ 是定义在可测集 
+\begin_inset Formula $E\subset\mathbb{R}^{n}$
+\end_inset
+
+ 上依测度收敛的可测函数序列，且其中的所有函数都被（在 
+\begin_inset Formula $E$
+\end_inset
+
+ 上绝对可积的）函数 
+\begin_inset Formula $\phi\in L^{1}(E)$
+\end_inset
+
+ 
+\bar under
+控制 (dominate)
+\bar default
+，即
+\begin_inset Formula 
+\[
+\left(\forall x\in E\right)\left(\forall k\in\mathbb{N}\right)\left(\abs{f_{k}(x)}\le\phi(x)\right)
+\]
+
+\end_inset
+
+则积分与极限可交换顺序，即
+\begin_inset Formula 
+\[
+\int_{E}\lim_{k\to\infty}f_{k}=\lim_{k\to\infty}\int_{E}f_{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
