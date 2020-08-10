@@ -6,7 +6,7 @@ title: 三：程序的机器级表示
 
 ## Intel
 
-Intel 长期主导 笔记本、台式机、服务器 处理器市场。
+Intel 长期主导（笔记本、台式机、服务器）处理器市场。
 
 里程碑产品：
 
@@ -87,18 +87,18 @@ int main() {
 }
 ```
 
-|          工具           |             命令             |          输出          |
-| :---------------------: | :--------------------------: | :--------------------: |
-|   工具链 (Tool Chain)   |    `cc -o hello hello.c`     |   可执行文件 `hello`   |
-| 预处理器 (Preprocessor) |  `cc -E hello.c > hello.i`   |    含库函数的源代码    |
-|    编译器 (Compiler)    |       `cc -S hello.i`        |   汇编文件 `hello.s`   |
-|   汇编器 (Assembler)    |   `as -o hello.o hello.s`    |   目标文件 `hello.o`   |
-|     链接器 (Linker)     |  `ld -o hello hello.o -lc`   |   可执行文件 `hello`   |
-| 反汇编器 (Disassembler) | `objdump -d hello > hello.d` | 由机器码反推的汇编代码 |
+|          工具           |             命令             |           输出           |
+| :---------------------: | :--------------------------: | :----------------------: |
+|   工具链 (Tool Chain)   |    `cc -o hello hello.c`     |    可执行文件 `hello`    |
+| 预处理器 (Preprocessor) |  `cc -E hello.c > hello.i`   |     含库函数的源代码     |
+|    编译器 (Compiler)    |       `cc -S hello.i`        |    汇编文件 `hello.s`    |
+|   汇编器 (Assembler)    |   `as -o hello.o hello.s`    |    目标文件 `hello.o`    |
+|     链接器 (Linker)     |  `ld -o hello hello.o -lc`   |    可执行文件 `hello`    |
+| 反汇编器 (Disassembler) | `objdump -d hello > hello.d` | 由机器码反推出的汇编代码 |
 
 ⚠️ 如果用 `gcc` 编译，可加编译选项 `-Og` 使 *机器码* 与 *源代码* 具有大致相同的结构。
 
-汇编文件 `hello.s` 的内容大致如下（可能因 操作系统、编译器 不同而存在差异），其中以 `.` 开头的行是用于引导 汇编器、链接器 的指令，可忽略：
+汇编文件 `hello.s` 的内容大致如下（可能因 操作系统、编译器 不同而存在差异），其中以 `.` 开头的行是用于引导 汇编器、链接器 的指令，人工解读时可忽略：
 
 ```gas
 _main:                                  # @main
@@ -139,7 +139,7 @@ _main:                                  # @main
 100000f83: c3                           retq
 ```
 
-反汇编也可以在 [***调试器 (debugger)***](../debug/README.md) 中进行：
+反汇编也可以在 [***调试器 (debugger)***](../debug/README.md) 中完成：
 
 ```shell
 gdb hello  # 进入调试环境，引导符变为 (gdb)
@@ -164,10 +164,10 @@ End of assembler dump.
 
 - 函数名下方的每一行分别对应一条 ***指令 (instruction)***：
 
-  - 形如 `100000f70` 或 `0x0000000100000f60` 的 64 位 16 进制整数，表示各条指令的首地址。由的 `hello.o` 与 `hello` 的反汇编结果可见，一些函数的地址会被 [***链接器 (linker)***](./linking.md) 修改。
+  - 形如 `100000f70` 或 `0x0000000100000f60` 的 64 位 16 进制整数，表示各条指令的首地址。由 `hello.o` 与 `hello` 的反汇编结果可见，一些函数的地址会被 [***链接器 (linker)***](./linking.md) 修改。
 - 首地址后面的若干 16 进制整数（每 8 位一组，即每组 1 字节），表示该行指令的 *机器码*，由此可以算出各条指令的长度（字节数）。
   - `<+n>` 表示当前指令相对于函数入口（以字节为单位）的 ***偏移量 (offset)***。由相邻两行的偏移量之差也可以算出前一行指令的机器码长度。
-- 指令的 *机器码长度* 与其 *使用频率* 及 *[运算对象](#运算对象)个数* 大致成反比（类似于 Hoffman 编码），最长 1 字节，最短 15 字节。
+- 指令的 *机器码长度* 与其 *使用频率* 大致成反比（类似于 Hoffman 编码），最长 1 字节，最短 15 字节。
   
 - 形如英文单词的 `mov` 等符号表示 *指令名*，用于
 
@@ -187,14 +187,14 @@ End of assembler dump.
 
 ## 指令后缀
 
-| 后缀 |               名称                | 长度（bit） |    C 语言类型     |
-| :--: | :-------------------------------: | :---------: | :---------------: |
-| `b`  |           Byte（字节）            |      8      |      `char`       |
-| `w`  |          Word（单倍词）           |     16      |      `short`      |
-| `l`  |   (Long) double word（双倍词）    |     32      |       `int`       |
-| `q`  |        Quad word（四倍词）        |     64      | `long` 或 `void*` |
-| `s`  |    Single precision（单精度）     |     32      |      `float`      |
-| `l`  | (Long) double precision（双精度） |     64      |     `double`      |
+| 后缀 |                 名称                  | 长度（bit） |    C 语言类型     |
+| :--: | :-----------------------------------: | :---------: | :---------------: |
+| `b`  |           **b**yte（字节）            |      8      |      `char`       |
+| `w`  |           **w**ord（单词）            |     16      |      `short`      |
+| `l`  |   (**l**ong) double word（二倍词）    |     32      |       `int`       |
+| `q`  |        **q**uad word（四倍词）        |     64      | `long` 或 `void*` |
+| `s`  |    **s**ingle precision（单精度）     |     32      |      `float`      |
+| `l`  | (**l**ong) double precision（双精度） |     64      |     `double`      |
 
 # 4 访问信息
 
@@ -221,81 +221,81 @@ End of assembler dump.
 
 每个 64 位寄存器的 *后 32、16、8 位* 都可以被当作“短”寄存器来访问，并且约定
 
-- 在 *后 2 字节* 上做运算的指令 不会修改 *前 6 字节*。
-- 在 *后 4 字节* 上做运算的指令 会将 *前 4 字节* 设为 `0`。
+- 修改 *后 2 字节* 的指令 不会修改 *前 6 字节*。
+- 修改 *后 4 字节* 的指令 会将 *前 4 字节* 置零。
 
 ## 运算对象
 
-在汇编代码中，位于 *指令名* 后方、以逗号分隔的表达式称为 ***运算对象 (operand)***。运算对象有三种类型：
+指令的 ***运算对象 (operand)*** 是指位于 *指令名* 后方、以逗号分隔的表达式，可分为以下三类：
 
 |     表达式类型     |        格式         |   含义   |
 | :----------------: | :-----------------: | :------: |
 | 即时数 (Immediate) | 以 `$` 起始的整数值 | 整型常量 |
 | 寄存器 (Register)  | 以 `%` 起始的寄存器 | 局部变量 |
-| 内存地址 (Memory)  |   形如 `D(B,I,S)`   | 内存地址 |
+|   内存 (Memory)    |   形如 `D(B,I,S)`   | 内存地址 |
 
-其中 `D(B,I,S)` 表示由 `R[B]+S*R[I]+D` 算出的地址值（除 [`lea`](#加载有效地址) 外均读取 `M[R[B]+S*R[I]+D]` 的值），各符号含义如下：
+其中 `D(B,I,S)` 表示按 `R[B]+S*R[I]+D` 算出的地址值（除 [`lea`](#加载有效地址) 外均读取 `M[R[B]+S*R[I]+D]` 的值），各符号含义如下：
 
-| 符号 |         名称          |                   解释                    |   缺省值   |
-| :--: | :-------------------: | :---------------------------------------: | :--------: |
-| `M`  |     内存 (Memory)     |      一个以 *64 位整数* 为索引的数组      |            |
-| `R`  |   寄存器 (Register)   |      一个以 *寄存器名* 为索引的数组       |            |
-| `B`  |     基础值 (Base)     | 可以是 16 个[整型寄存器](#整型寄存器)之一 | `R[] == 0` |
-| `I`  |    索引值 (Index)     |  可以是 `%rsp` 外的 15 个整型寄存器之一   | `R[] == 0` |
-| `S`  |    比例值 (Scale)     |      可以是 `1`、`2`、`4`、`8` 之一       |    `0`     |
-| `D`  | 位移值 (Displacement) |          可以是 1、2、4 字节整数          |    `0`     |
+| 符号 |        名称         |                   解释                    |   缺省值    |
+| :--: | :-----------------: | :---------------------------------------: | :---------: |
+| `M`  |    内存 (Memory)    |      一个以 *64 位整数* 为索引的数组      |             |
+| `R`  |  寄存器 (Register)  |      一个以 *寄存器名* 为索引的数组       |             |
+| `B`  |     基础 (Base)     | 可以是 16 个[整型寄存器](#整型寄存器)之一 | `R[B] == 0` |
+| `I`  |    索引 (Index)     | 可以是除 `%rsp` 外的 15 个整型寄存器之一  | `R[I] == 0` |
+| `S`  |    比例 (Scale)     |      可以是 `1`、`2`、`4`、`8` 之一       |  `S == 0`   |
+| `D`  | 位移 (Displacement) |          可以是 1、2、4 字节整数          |  `D == 0`   |
 
 ## 移动数据
 
 ```gas
-movq source, destination
-movl source, destination
-movw source, destination
-movb source, destination
+movq source, target
+movl source, target
+movw source, target
+movb source, target
 ```
 
-- `source` 及 `destination` 为该指令的[运算对象](#运算对象)，且只能有一个为内存地址。
+- `source` 及 `target` 为该指令的[运算对象](#运算对象)，且只能有一个为内存地址。
 
-- `mov` 后面的 `q` 表示 `destination` 的大小为一个 *Quad word*；其他后缀的含义见《[指令后缀](#指令后缀)》。
+- `mov` 后面的 `q` 表示 `target` 的大小为一个 **q**uad word；其他后缀的含义见《[指令后缀](#指令后缀)》。
 
 - `mov` 的一个重要变种是 `movabs`，二者的区别在于
 
-  - 若 `movq` 的 `source` 为 *即时数*，则只能是 32 位带符号整数，其符号位将被填入 `desination` 的前 32 位。若要阻止填充，则应使用 `movl` 等。
-  - 若 `movabsq` 的 `source` 为 *即时数*，则可以是 64 位整数，此时 `desination` 必须是 *寄存器*。
+  - 若 `movq` 的 `source` 为 *即时数*，则只能是 32 位带符号整数，其符号位将被填入 `target` 的前 32 位；若要阻止填充，则应使用 `movl` 等。
+  - 若 `movabsq` 的 `source` 为 *即时数*，则可以是 64 位整数，此时 `target` 必须是 *寄存器*。
 
 - `mov` 还有两类用于 *短整数* 向 *长整数* 扩展的变种：
 
   ```gas
-  movz s, d  # d = ZeroExtend(s)
-    movzbw s, d
-    movzbl s, d
-    movzwl s, d
-    movzbq s, d  # 通常被 movzbl s, d 代替，理由同 movzlq s, d
-    movzwq s, d
-  # movzlq s, d 不存在，其语义可通过 movl s, d 实现，这是因为：
-  # 生成 4 字节结果的指令，会将前 4 个字节置 `0`。
-  movs s, d  # d = SignExtend(s)
-    movsbw s, d
-    movsbl s, d
-    movswl s, d
-    movsbq s, d
-    movswq s, d
-    movslq s, d
+  movz s, t  # t = ZeroExtend(s)
+    movzbw s, t
+    movzbl s, t
+    movzwl s, t
+    movzbq s, t  # 通常被 movzbl s, t 代替，理由同 movzlq s, t
+    movzwq s, t
+  # movzlq s, t  # 该指令不存在，其语义可通过 movl s, t 实现，这是因为：
+                 # 生成 4 字节结果的指令，会将前 4 个字节置零。
+  movs s, t  # t = SignExtend(s)
+    movsbw s, t
+    movsbl s, t
+    movswl s, t
+    movsbq s, t
+    movswq s, t
+    movslq s, t
   ```
 - `cltq` 是 `movslq %eax, %rax` 的简写（机器码更短）。
 - 以下示例体现了这几个版本的区别：
 
   ```gas
-  movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
-  movb    $-1,                 %al   # %rax = 00112233445566FF
-  movw    $-1,                 %ax   # %rax = 001122334455FFFF
-  movl    $-1,                 %eax  # %rax = 00000000FFFFFFFF ⚠️
-  movq    $-1,                 %rax  # %rax = FFFFFFFFFFFFFFFF
-  movabsq $0x0011223344556677, %rax  # %rax = 0011223344556677
-  movb    $0xAA,               %dl   # %dl  = AA
-  movb    %dl,                 %al   # %rax = 00112233445566AA
-  movsbq  %dl,                 %rax  # %rax = FFFFFFFFFFFFFFAA ⚠️
-  movzbq  %dl,                 %rax  # %rax = 00000000000000AA ⚠️
+  movabsq $0x0011223344556677, %rax  # R[rax] = 0x0011223344556677
+  movb    $-1,                 %al   # R[rax] = 0x00112233445566FF
+  movw    $-1,                 %ax   # R[rax] = 0x001122334455FFFF
+  movl    $-1,                 %eax  # R[rax] = 0x00000000FFFFFFFF ⚠️
+  movq    $-1,                 %rax  # R[rax] = 0xFFFFFFFFFFFFFFFF
+  movabsq $0x0011223344556677, %rax  # R[rax] = 0x0011223344556677
+  movb    $0xAA,               %dl   # R[rdx] = 0x??????????????AA
+  movb    %dl,                 %al   # R[rax] = 0x00112233445566AA
+  movsbq  %dl,                 %rax  # R[rax] = 0xFFFFFFFFFFFFFFAA ⚠️
+  movzbq  %dl,                 %rax  # R[rax] = 0x00000000000000AA ⚠️
   ```
 
 ## 交换数据
@@ -323,10 +323,10 @@ ret
 
 x86-64 规定：栈顶字节的地址保存在寄存器 `%rsp` 中，并且小于栈内其他字节的地址。
 
-|   指令    |      含义      |              语义               |
-| :-------: | :------------: | :-----------------------------: |
-| `pushq s` | PUSH Quad word | `R[rsp] -= 8; M[R[rsp]] = s;` |
-| `popq d`  | POP quad word  | `d = M[R[rsp]]; R[rsp] += 8;` |
+|   指令    |        含义        |             语义              |
+| :-------: | :----------------: | :---------------------------: |
+| `pushq s` | **push q**uad word | `R[rsp] -= 8; M[R[rsp]] = s;` |
+| `popq t`  | **pop q**uad word  | `t = M[R[rsp]]; R[rsp] += 8;` |
 
 
 # 5 算术及逻辑运算
@@ -334,14 +334,14 @@ x86-64 规定：栈顶字节的地址保存在寄存器 `%rsp` 中，并且小�
 ## 加载有效地址
 
 ```gas
-leaq source, destination
+leaq source, target
 ```
 
 - `lea` 由 ***Load Effective Address（加载有效地址）*** 的首字母构成，相当于 C 语言的 *取地址* 运算（例如 `p = &x[i];`）。
 
 - `source` 只能是 *内存地址*。
 
-- `destination` 只能是 *寄存器*，用于存储 `source` 所表示的 *内存地址*，但不访问该地址。
+- `target` 只能是 *寄存器*，用于存储 `source` 所表示的 *内存地址*，但不访问该地址。
 
 - 该指令速度极快，常被用来分解算术运算，例如：
 
@@ -359,36 +359,36 @@ leaq source, destination
 
 ## 一元运算
 
-唯一的运算对象既是 source 又是 destination：
+唯一的运算对象既是 source 又是 target：
 
-|  指令   |    含义    |   语义   |
-| :-----: | :--------: | :------: |
-| `inc d` | INCrement  |  `d++`   |
-| `dec d` | DECrement  |  `d--`   |
-| `neg d` |   NEGate   | `d = -d` |
-| `not d` | complement | `d = ~d` |
+|  指令   |     含义      |   语义   |
+| :-----: | :-----------: | :------: |
+| `inc d` | **inc**rement |  `d++`   |
+| `dec d` | **dec**rement |  `d--`   |
+| `neg d` |  **neg**ate   | `d = -d` |
+| `not d` |  complement   | `d = ~d` |
 
 ## 二元运算
 
-第一个运算对象是 source，第二个运算对象既是 source 又是 destination：
+第一个运算对象是 source，第二个运算对象既是 source 又是 target：
 
-|    指令     |      含义       |   语义   |
-| :---------: | :-------------: | :------: |
-| `add s, d`  |       ADD       | `d += s` |
-| `sub s, d`  |    SUBtract     | `d -= s` |
-| `imul s, d` | signed MULtiply | `d *= s` |
-| `xor s, d`  |  eXclusive OR   | `d ^= s` |
-|  `or s, d`  |   bitwise OR    | `d |= s` |
-| `and s, d`  |   bitwise AND   | `d &= s` |
+|    指令     |         含义         |   语义   |
+| :---------: | :------------------: | :------: |
+| `add s, t`  |       **add**        | `t += s` |
+| `sub s, t`  |     **sub**tract     | `t -= s` |
+| `imul s, t` | signed **mul**tiply  | `t *= s` |
+| `xor s, t`  | e**x**clusive **or** | `t ^= s` |
+|  `or s, t`  |    bitwise **or**    | `t |= s` |
+| `and s, t`  |   bitwise **and**    | `t &= s` |
 
 ## 移位运算
 
-|    指令    |              含义               |   语义    |    移出的空位    |
-| :--------: | :-----------------------------: | :-------: | :--------------: |
-| `shl k, d` |   SHift logically to the Left   | `d <<= k` |  在右端，补 `0`  |
-| `sal k, d` | Shift Arithmeticly to the Left  | `d <<= k` |  在右端，补 `0`  |
-| `shr k, d` |  SHift logically to the Right   | `d >>= k` |  在左端，补 `0`  |
-| `sar k, d` | Shift Arithmeticly to the Right | `d >>= k` | 在左端，补符号位 |
+|    指令    |                    含义                     |   语义    |    移出的空位    |
+| :--------: | :-----------------------------------------: | :-------: | :--------------: |
+| `shl k, t` |     **sh**ift logically to the **l**eft     | `t <<= k` |  在右端，补 `0`  |
+| `sal k, t` | **s**hift **a**rithmeticly to the **l**eft  | `t <<= k` |  在右端，补 `0`  |
+| `shr k, t` |    **sh**ift logically to the **r**ight     | `t >>= k` |  在左端，补 `0`  |
+| `sar k, t` | **s**hift **a**rithmeticly to the **r**ight | `t >>= k` | 在左端，补符号位 |
 
 其中 `k` 为移动的位数，可以是
 - *即时数*，且为 `1` 时可省略（即退化为一元运算）。
@@ -402,7 +402,7 @@ leaq source, destination
 
 x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的）128 位整数的算术运算指令：
 
-- 128 位整数用 `R[rdx]:R[rax]` 表示，冒号前、后的两个 64 位寄存器分别表示其前、后 64 位。
+- 作为运算对象的 128 位整数用 `R[rdx]:R[rax]` 表示，冒号前、后的两个 64 位寄存器分别表示其前、后 64 位。
 - 一元乘法：
   - `imulq s` 为带符号乘法，`mulq s` 为无符号乘法。
   - 语义为 `R[rdx]:R[rax] = s * R[rax]`
@@ -411,7 +411,7 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
   - 二者均以 `R[rdx]:R[rax]` 为 ***被除数 (dividend)***，以 `s` 为 ***除数 (divisor)***，所得的 ***商 (quotient)*** 存入 `%rax`，***余数 (remainder)*** 存入 `%rdx`
   - ⚠️ 不存在“二元除法”指令。
 - `cqto` 用于构造带符号除法的被除数：
-  - 指令名取自 Convert Quad-word To Oct-word 的首字母。
+  - 指令名取自 **c**onvert **q**uad-word **t**o **o**ct-word 的首字母。
   - 语义为 `R[rdx]:R[rax] = SignExtend(R[rax])`
 
 ## 汇编代码格式
@@ -420,22 +420,22 @@ x86-64 还提供了一些针对（Intel 称之为 ***八倍词 (oct word)*** 的
 | :--------: | :----------------: | :----------------------: |
 |   使用者   |   ATT, CS:APP3e    |     Intel, Microsoft     |
 |   指令名   |       `movq`       |    去掉 `q`，即 `mov`    |
-|  操作对象  |    `movq s, d`     |   逆序，即 `mov d, s`    |
+|  操作对象  |    `movq s, t`     |   逆序，即 `mov t, s`    |
 |   即时数   |       `$0x0`       |    去掉 `$`，即 `0x0`    |
 |   寄存器   |       `%rsp`       |    去掉 `%`，即 `rsp`    |
 |   地址值   |    `D(B, I, S)`    |     `[B + I*S + D]`      |
 |  数据长度  | `movb (%rbx), %al` | `mov al, BYTE PTR [rbx]` |
-|   注释符   |        `#`         |           `;`            |
+| 注释起始符 |        `#`         |           `;`            |
 | 代码块标记 |       `gas`        |          `nasm`          |
 
-由此可见：*Intel 格式* 比 *ATT 格式* 更清晰、易读。除此之外，各种代码高亮插件对 Intel 格式（代码块标记为 `nasm`）的支持也普遍做得更好，因此推荐使用这种格式。
+可见：*Intel 格式* 比 *ATT 格式* 更清晰、易读。除此之外，各种代码高亮插件对 Intel 格式的支持也普遍做得更好，因此推荐使用这种格式。
 
 GCC、GDB、OBJDUMP 等工具默认选择 ATT 格式，可通过以下设置切换为 Intel 格式：
 
 ```shell
-$ gcc -S -masm=intel hello.c # -o hello.s
-$ nasm -f elf64      hello.s # -o hello.o
-$ objdump -d -x86-asm-syntax=intel hello.o
+gcc -S -masm=intel hello.c # -o hello.s
+nasm -f elf64      hello.s # -o hello.o
+objdump -d -x86-asm-syntax=intel hello.o
 (gdb)           set            disassembly-flavor intel
 (lldb) settings set target.x86-disassembly-flavor intel
 ```
@@ -455,8 +455,8 @@ CPU 用一组名为 ***条件码 (condition code)*** 的寄存器记录最近一
 
 修改条件码可以看做相关指令的副作用。除[算术及逻辑运算](#算术及逻辑运算)指令，以下指令（这里省略[指令后缀](#指令后缀)）也会修改条件码：
 
-- `cmp a, b` 根据 `sub a, b` 指令的结果设置条件码（但不执行 `sub` 指令）。
-- `test a, b` 根据 `and a, b` 指令的结果设置条件码（但不执行 `and` 指令）。
+- `cmp s, t` 根据 `sub s, t` 的结果设置条件码（但不执行 `sub` 指令）。
+- `test s, t` 根据 `and s, t` 的结果设置条件码（但不执行 `and` 指令）。
 
 ⚠️ 一些（不显然的）约定：
 
@@ -467,32 +467,32 @@ CPU 用一组名为 ***条件码 (condition code)*** 的寄存器记录最近一
 
 ## 读取条件码
 
-高级语言代码经常将逻辑表达式的结果用整数（`0` 或 `1`）表示，这在汇编代码中是通过 `set_` 系列指令来实现的：
+高级语言代码经常将逻辑表达式的结果用整数（`0` 或 `1`）表示，这在汇编代码中是通过 `set` 系列指令来实现的：
 
 
-|     指令     |       后缀含义       |          语义          |
-| :----------: | :------------------: | :--------------------: |
-| `set[e|z] d` |    Equal \| Zero     |        `d = ZF`        |
-|   `sets d`   |  Signed (Negative)   |        `d = SF`        |
-|   `setg d`   | Greater (signed `>`) | `d = ~(SF ^ OF) & ~ZF` |
-|   `setl d`   |  Less (signed `<`)   |     `d = SF ^ OF`      |
-|   `seta d`   | Above (unsigned `>`) |    `d = ~CF & ~ZF`     |
-|   `setb d`   | Below (unsigned `<`) |        `d = CF`        |
+|     指令     |         后缀含义         |          语义          |
+| :----------: | :----------------------: | :--------------------: |
+| `set[e|z] t` |  **e**qual \| **z**ero   |        `t = ZF`        |
+|   `sets t`   |  **s**igned (negative)   |        `t = SF`        |
+|   `setg t`   | **g**eater (signed `>`)  | `t = ~(SF ^ OF) & ~ZF` |
+|   `setl t`   |  **l**ess (signed `<`)   |     `t = SF ^ OF`      |
+|   `seta t`   | **a**bove (unsigned `>`) |    `t = ~CF & ~ZF`     |
+|   `setb t`   | **b**elow (unsigned `<`) |        `t = CF`        |
 
 表中 *语义* 一列的关键在于 `setl` 与 `setb` 这两行：
 
 - `setl` 用于 *带符号小于*，有两种情形：
-  - `a - b` 未溢出（`OF == 0`）且表示一个负数（`SF == 1`）
-  - `a - b` 向下溢出（`OF == 1`）且表示一个正数（`SF == 0`）
+  - 上一条指令得到一个负数（`SF == 1`）且未溢出（`OF == 0`）
+  - 上一条指令得到一个正数（`SF == 0`）且向下溢出（`OF == 1`）
 - `setb` 用于 *无符号小于*，只有一种情形：
-  - `a - b` 向下溢出（`CF == 1`）
+  - 上一条指令向下溢出（`CF == 1`）
 
 表中只列出了几个有代表性的指令，遇到其他指令可以根据以下规则猜出其语义：
 
-- 后缀前端的 `n` 表示 *Not*，后端的 `e` 表示 `or Equal`，因此 `setnle` 就表示 *(set when) Not Less or Equal*，类似的指令可按此规则解读。
+- 后缀前端的 `n` 表示 **n**ot，后端的 `e` 表示 or **e**qual，因此 `setnle` 就表示 (set when) **n**ot **l**ess or **e**qual，类似的指令可按此规则解读。
 - 某些指令具有同义词（例如 `setg` 与 `setnle`），它们具有相同的机器码。编译器、反汇编器在生成汇编代码时，从同义词中任选其一。
 
-以上指令根据（前一条 `cmp` 或 `test` 指令的）比较结果，将单字节的 `d` 设为 `0` 或 `1`；为了获得 32 或 64 位的 `0` 或 `1`，通常需配合 [`movzbq`](#移动数据) 或 [`xorl`](#二元运算) 将更高位清零：
+以上指令根据（前一条 `cmp` 或 `test` 指令的）比较结果，将单字节的 `t` 设为 `0` 或 `1`；为了获得 32 或 64 位的 `0` 或 `1`，通常需配合 [`movzbq`](#移动数据) 或 [`xorl`](#二元运算) 将更高位置零：
 
 ```c
 int greater(long x, long y) { return x > y; }
@@ -500,22 +500,22 @@ int greater(long x, long y) { return x > y; }
 
 ```gas
 cmpq    %rsi, %rdi
-setg    %al         # 将最后一位设为 0 或 1
-movzbl  %al, %eax   # 将前 7 位清零
+setg    %al         # 将 R[rax] 的末 1 字节设为 0 或 1
+movzbl  %al, %eax   # 将 R[rax] 的首 7 字节设为 0
 ```
 
 ```gas
-xorl    %eax, %eax  # 将全 8 位清零
+xorl    %eax, %eax  # 将 R[rax] 的全 8 字节设为 0
 cmpq    %rsi, %rdi
-setg    %al         # 将最后一位设为 0 或 1
+setg    %al         # 将 R[rax] 的末 1 字节设为 0 或 1
 ```
 
 ## 跳转指令
 
-***跳转 (Jump)*** 指令的基本形式为 `j_ dest`，用于跳转到 `dest` 所表示的指令。其中
+***跳转 (Jump)*** 指令的基本形式为 `j_ target`，用于跳转到 `target` 所表示的指令。其中
 
 - `jmp` 为 *无条件跳转*，对应于 C 语言中 `goto` 语句。
-- 其他均为 *有条件跳转*，指令后缀的含义参见上一节。
+- 其他均为 *有条件跳转*，指令名后缀的含义参见上一节。
 
 ## 条件分支
 
@@ -564,7 +564,7 @@ L2:
         ret
 ```
 
-提高优化等级，编译器会在 *两个分支都安全* 且 *计算量都很小* 的情况下，先计算两个分支，再作比较，最后利用 ***条件移动 (conditional move)*** 指令 `cmov_` 完成选择：
+提高优化等级，编译器会在 *两个分支都安全* 且 *计算量都很小* 的情况下，先计算两个分支，再作比较，最后利用 ***条件移动 (conditional move)*** 指令 `cmov` 完成选择：
 
 ```gas
 # gcc -O1 -S
@@ -574,7 +574,7 @@ _absdiff:
         movq    %rsi, %rax  # d = y
         subq    %rdi, %rax  # d -= x
         cmpq    %rsi, %rdi
-        cmovg   %rdx, %rax  # x > y ? d = c : d = d;
+        cmovg   %rdx, %rax  # x > y ? d = c : ;
         ret
 ```
 
@@ -761,8 +761,6 @@ L12: # default:
 
 ***函数 (function)*** 又称 ***过程 (procedure)***、***方法 (method)***、***子例程 (subroutine)***、***句柄 (handler)***，是模块化编程的基础：每个函数都是一个生产或加工数据的功能模块。几乎所有高级语言都提供了这种机制，并且各种语言用于定义函数的语法都大同小异。这是因为它们几乎都采用了同一种 *机器级实现*，后者正是本节的内容。
 
-它是软件功能的最小单位，因此是模块化编程的基础。
-
 ## 运行期栈
 
 若函数 `Q` 被函数 `P` 调用，则 `P` 与 `Q` 分别被称为 ***主调者 (caller)*** 与 ***被调者(callee)***。函数调用正是通过 ***控制 (control)*** 及 ***数据 (data)*** 在二者之间相互 ***传递 (pass)*** 来实现的：
@@ -937,8 +935,6 @@ L8:
         ret
 ```
 
-
-
 # 8 数组
 
 ## 基本原则
@@ -947,7 +943,7 @@ L8:
 
 - 它是以同种类型的对象为成员的容器，因此是一种 ***均质的 (homogeneous)*** 数据类型。
 - 所有成员在（虚拟）内存中连续分布。
-- 通过 ***指标 (index)*** 访问每个成员的时间大致相同。
+- 通过 ***指标 (index)*** 访问每个成员所需的时间大致相同。
 
 几乎所有高级编程语言都有数组类型，其中以 C 语言的数组语法（如[指针算术](#指针算术)）最能体现数组的机器级表示。在 C 代码中，以  `a`  为变量名、含 `N` 个 `T` 型（可以是复合类型）对象的数组（通常）以如下方式声明：
 
@@ -1042,32 +1038,32 @@ _get_element:  # R[rdi] = n, R[rsi] = a, R[rdx] = i, R[rcx] = j
 
 - 它（通常）是以不同类型的对象为成员的容器。
 - 各成员在（虚拟）内存中按声明的顺序分布，但不一定连续分布。
-- 通过 *名称 (name)* 访问每个成员的时间大致相同。
+- 通过 ***名称 (name)*** 访问每个成员所需的时间大致相同。
 
-在 C 代码中，结构体用 `struct` 关键词来定义：
+在 C 代码中，结构体（类型）用 `struct` 关键词来定义：
 
 ```c
 struct node_t {
   int a[4];
-  size_t i;
+  long i;
   struct node_t *next;
 };
 ```
 
-此 `struct` 含三个成员（类型为 `int[4]` 的数组、类型为 `size_t` 的整数、类型为 `struct node_t *` 的指针），各成员在内存中的分布如下：
+此 `struct` 含三个成员（类型为 `int[4]` 的数组、类型为 `long` 的整数、类型为 `struct node_t *` 的指针），各成员在（64 位系统）内存中的分布如下：
 
 ```
 | a[0]  | a[1]  | a[2]  | a[3]  |       i       |     next      |
-^       ^       ^       ^       ^               ^               ^
-0       4       8       12      16              24              32
+ ^       ^       ^       ^       ^               ^               ^
++0      +4      +8      +12     +16             +24             +32
 ```
 
-编译所得的汇编代码中看不到成员名称，访问成员的操作全部被翻译为偏移量：
+编译所得的汇编代码中看不到成员名称，访问成员的操作全部被转化为地址偏移操作：
 
 ```c
 void set_val(struct node_t *node, int val) {
   while (node) {
-    int i = node->i;
+    long i = node->i;
     node->a[i] = val;
     node = node->next;
   }
@@ -1079,7 +1075,7 @@ _set_val:  # R[rdi] = node, R[rsi] = val
 L2:  # loop:
         testq   %rdi, %rdi           # node == 0?
         je      L4
-        movslq  16(%rdi), %rax       # i = node->i
+        movq    16(%rdi), %rax       # i = node->i
         movl    %esi, (%rdi,%rax,4)  # node->a[i] = val
         movq    24(%rdi), %rdi       # node = node->next
         jmp     L2
@@ -1094,7 +1090,7 @@ L4:  # node == 0
 C 语言中的 `union` 与 `struct` 有相同的 ***语法 (syntax)***，但有不同的 ***语义 (semantics)*** 及相应的机器级表示：
 
 - `union` 的所有成员共享同一段内存空间。
-- 整个 `union` 的长度不小于最大成员的长度。
+- 整个 `union` 的长度 $\ge$ 最大成员的长度。
 
 ⚠️ 该机制弱化了编译器的类型检查功能，很容易导致错误，应尽量少用。
 
@@ -1184,12 +1180,12 @@ int main() {
   for (int j = 0; j < 8; j++) {
     x.c[j] = 0xf0 + j;
   }
-  printf("chars 0-7 == [0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x]\n",
+  printf(" char[0, 8) == [0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x, 0x%x]\n",
          x.c[0], x.c[1], x.c[2], x.c[3], x.c[4], x.c[5], x.c[6], x.c[7]);
-  printf("shorts 0-3 == [0x%x, 0x%x, 0x%x, 0x%x]\n",
+  printf("short[0, 4) == [0x%x, 0x%x, 0x%x, 0x%x]\n",
          x.s[0], x.s[1], x.s[2], x.s[3]);
-  printf("ints 0-1 == [0x%x, 0x%x]\n", x.i[0], x.i[1]);
-  printf("long 0 == [0x%lx]\n", x.l[0]);
+  printf("  int[0, 2) == [0x%x, 0x%x]\n", x.i[0], x.i[1]);
+  printf(" long[0, 1) == [0x%lx]\n", x.l[0]);
 }
 ```
 
@@ -1285,22 +1281,30 @@ struct Y2 {
 
 C 语言的 ***指针 (pointer)*** 是对（虚拟）内存读写操作的一种抽象。
 
+### 指针的类型与值
+
 - 每个指针都有一个与之关联的类型，表示所指对象的类型。
   - 类型为 `T*` 的指针 指向 类型为 `T` 的对象。
   - 类型为 `void*` 的指针可以指向任意类型的对象，使用前必须被显式或隐式地 ***转换 (cast)*** 为具体类型。
 - 每个指针都有一个 ***值 (value)***，表示所指对象在（虚拟）内存中的位置（地址）。
   - 未初始化的指针可能有任意值。
   - 值为 `NULL` 或 `0` 的指针不指向任何对象。
+- 对一个指针进行（显式或隐式）类型转换，只改变它的类型，不改变它的值。
+  - 在相应的汇编代码中，没有 *指针类型转换指令*，但可以从指针加减法的放大倍数上看出影响。
+
+### 与指针有关的运算符
+
 - 取地址运算符 `&` 作用在 ***左值表达式 (lvalue expression)*** 上，得到一个地址值。
   - *左值表达式* 是指可以出现在 *赋值运算符* 左侧的表达式。
   - 在相应的汇编代码中，表现为 `lea` 指令。
 - 解引用运算符 `*` 作用在指针上，得到所指对象的一个 ***左值引用 (lvalue reference)***。
   - 在相应的汇编代码中，表现为内存型[运算对象](#运算对象)。
+
+### 用作指针的数组或函数
+
 - [数组](#数组)与指针关系紧密。
   - 数组名可以被当作指针使用。
   - 数组表达式 `a[i]` 与指针表达式 `*(a+i)` 完全等价。
-- 对一个指针进行（显式或隐式）类型转换，只改变它的类型，不改变它的值。
-  - 在相应的汇编代码中，没有 *指针类型转换指令*，但可以从指针加减法的放大倍数上看出影响。
 - 指针可以指向[函数](#函数)。
   - 函数类型由其形参类型及返回类型决定。
   - 函数名可以用来给这种类型的指针赋值。
@@ -1335,7 +1339,7 @@ char *gets(char *dest) { /* Declared in header <stdio.h> */
   if (c == EOF && curr == dest) /* No characters read */
     return NULL;
   *curr++ = '\0'; /* Terminate string */
-  return s;
+  return dest;
 }
 ```
 
@@ -1343,7 +1347,7 @@ char *gets(char *dest) { /* Declared in header <stdio.h> */
 
 ```c
 void echo() { /* Read input line and write it back */
-  char buffer[8]; /* Way too small! */
+  char buffer[8]; /* Too small! */
   gets(buffer);
   puts(buffer);
 }
@@ -1362,8 +1366,8 @@ echo:
   ret
 ```
 
-- 第一行在[运行期栈](#运行期栈)内为函数 `echo` 分配了长度为 24 字节的帧。执行这条指令后，函数 `echo` 的返回地址位于 `R[rsp]+24` 为首的 8 字节中。
-- 第二、三行说明 `buffer` 位于 `R[rsp]` 到 `R[rsp]+7` 这 8 字节中，而 `R[rsp]+8` 到 `R[rsp]+23` 这段空间没有被用到。
+- 第一条指令在[运行期栈](#运行期栈)内为函数 `echo` 分配了长度为 24 字节的帧。执行这条指令后，函数 `echo` 的返回地址位于 `R[rsp]+24` 为首的 8 字节中。
+- 第二、三条指令说明 `buffer` 位于 `R[rsp]` 到 `R[rsp]+7` 这 8 字节中，而 `R[rsp]+8` 到 `R[rsp]+23` 这段空间没有被用到。
 - `gets` 无法判断输入是否过长，有可能发生越界：
   - 若有效输入不多于 7 个字符，则一切正常。
   - 若有效输入介于 8 到 23 个字符之间，则 `echo` 帧内的剩余空间会被污染，但 `echo` 的返回地址未被修改，故 `echo` 还能正确返回。
@@ -1384,7 +1388,7 @@ int snprintf(char* dest, size_t n, const char* format/* 含 %s */, ...);
 缓冲区溢出可能被用来实施攻击：
 
 - 以字符串形式输入一段可执行程序（例如启动命令行终端）的编码。
-- 利用缓冲区溢出，将原来的返回地址篡改为上述代码段的起始地址。
+- 利用缓冲区溢出，将原来的返回地址篡改为上述可执行代码段的起始地址。
 
 ### 地址空间布局随机化
 
@@ -1412,15 +1416,15 @@ local at 0x7ffeeda9f820
 
 更一般的，有 ***地址空间布局随机化 (address-space layout randomization, ASLR)*** 技术 —— 它为整个地址空间的所有组成片段（程序代码、库代码、运行期栈、全局变量、堆）都引入了随机性，从而进一步增加了攻击者推算出所需地址的难度。
 
-然而，上述技术并不能彻底解决缓冲区溢出攻击，***`nop` 滑板 (sled)*** 就是一种常见的破解方案：
+然而，该技术并不能彻底解决缓冲区溢出攻击。***`nop` 滑板 (`nop` sled)*** 就是一种常见的破解方案：
 
-- 在攻击代码前插入一段 `nop` 序列，即以 `nop` 指令（意为 No OPeration）的编码（例如 `0x90`）不断重复而构成的序列。
+- 在攻击代码前插入一段 `nop` 序列，即以 `nop` 指令（意为 **n**o **op**eration）的编码（例如 `0x90`）不断重复而构成的序列。
 - 只要（被篡改的）返回地址指向这段 `nop` 序列中的任何一个 `nop` 指令，则程序控制权将 ***滑行 (slide)*** 至攻击代码。
-- 假设运行期栈的起始地址有 $2^{N}$ 种概率相同的情形，取 `nop` 序列的长度为 $2^{L}$ 字节（单次攻击覆盖 $2^{L}$ 种情形），则每 $2^{N-L}$ 次攻击即可期望命中 $1$ 次。
+- 若运行期栈的起始地址有 $2^{N}$ 种概率相同的情形，且 `nop` 序列的长度为 $2^{L}$ 字节（单次攻击覆盖 $2^{L}$ 种情形），则每 $2^{N-L}$ 次攻击即可期望命中 $1$ 次。
 
-### 栈保护器（金丝雀）
+### 栈保护器（金丝雀）<a name="canary"></a>
 
-该机制得名于旧时煤矿利用 ***金丝雀 (canary)*** 检测巷道内的危险气体是否超标。
+旧时煤矿利用 ***金丝雀 (canary)*** 是否存活来检测巷道内的危险气体是否超标。
 
 仍以函数 `echo()` 为例，编译时不加 `-fno-stack-protector` 选项，得以下汇编码：
 
@@ -1443,16 +1447,16 @@ echo:
   ret
 ```
 
-其中 `%fs:40` 可以理解为从内存中读取的随机值（很难被攻击者猜到）。该机制只引入了一点点（读取、比较 canary 的）性能开销，便（几乎）能阻断所有缓冲区溢出攻击。
+其中 `%fs:40` 可以理解为从内存中读取的随机值（几乎不可能被攻击者猜到）。该机制只引入了一点点（读取、比较 canary 的）性能开销，便（几乎）能阻断所有缓冲区溢出攻击。
 
 ### 限制可执行代码的地址范围
 
 虚拟内存空间在逻辑上被划分为若干 ***页 (page)***，每页含 2048 或 4096 字节。多数系统支持为各页赋予不同的访问权限：
-- ***可读 (Readable)***
-- ***可写 (Writable)***
-- ***可执行 (eXecutable)***
-- 旧时的 x86 架构将 R 与 X 用同一个标志位（类似于[条件码](#条件码)）表示，故无法区分一段字节是可读数据还是可执行代码。
-- 现代的 64 处理器均引入了名为 `NX` 的标志位，用于表示当前内存页 ***不可执行 (Not eXecutable, NX)***。只要栈空间所在的页被标记为 *不可执行*，通过缓冲区溢出植入的攻击代码便无法被执行。
+- 三种权限：***可读 (Readable)***、***可写 (Writable)***、***可执行 (eXecutable)***。
+- 旧时的 x86 架构将 R 与 X 用同一个权限位（类似于[条件码](#条件码)）表示，故无法区分一段字节是可读数据还是可执行代码。
+- 现代的 64 位处理器均引入了名为 `NX` 的权限位，用于表示当前页 ***不可执行 (Not eXecutable, NX)***。只要栈空间所在页被标记了 `NX` 权限，植入其中的攻击代码便无法被执行。
+
+此技术没有额外的性能损失（优于[“金丝雀”](#canary)），但无法抵御 ***ROP (Return Oriented Programming)*** 攻击 —— 此技术利用可执行指令片段拼接出攻击指令，详见《[Attack Lab](./labs/attack/README.md#rtarget)》。
 
 ## 支持长度可变的帧
 
@@ -1516,7 +1520,7 @@ leaq 0(,%rax,8), %r8 # R[r8 ] = &p[0]
 movq %r8, %rcx       # R[rcx] = &p[0]
 ```
 
-此时 `R[r8]` 及 `R[rcp]` 均存储了数组 `p` 的首地址，其值不小于 `R[rsp]` 且为 `8` 的整数倍 —— 这体现了（长度为 `8` 字节的）指针型数组成员的[数据对齐](#数据对齐)规则。
+此时 `R[r8]` 及 `R[rcp]` 均存储了数组 `p` 的首地址，其值不小于 `R[rsp]` 且为 `8` 的整数倍，这体现了（长度为 `8` 字节的）指针型数组成员的[数据对齐](#数据对齐)规则。
 
 
 # 11 浮点代码
