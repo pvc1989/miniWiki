@@ -116,25 +116,41 @@ theorems-chap
 实数集的完备性
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Subsection
+Cauchy 收敛准则
+\end_layout
+
+\begin_layout Definition
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[柯西收敛]
+[〔基本|Cauchy〕序列]
 \end_layout
 
 \end_inset
 
+若实数序列 
+\begin_inset Formula $\left\{ x_{n}\right\} _{n=0}^{\infty}$
+\end_inset
 
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:实数：完备：柯西收敛"
+ 满足
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists K\in\mathbb{N}\right)\left(\abs{x_{p}-x_{q}}<\epsilon\impliedby\begin{cases}
+p>K\\
+q>K
+\end{cases}\right)
+\]
 
 \end_inset
 
-
+则称其为
+\bar under
+〔基本|Cauchy〕序列 ([fundamental|Cauchy] sequence)
+\bar default
+。
 \end_layout
 
 \begin_layout Standard
@@ -150,7 +166,195 @@ status open
 
 \begin_layout Plain Layout
 
-[单调有界]
+[Cauchy 收敛准则]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:实数：完备：柯西收敛"
+
+\end_inset
+
+实数序列 
+\begin_inset Formula $\left\{ x_{n}\right\} _{n=0}^{\infty}$
+\end_inset
+
+ 收敛（到某个实数），当且仅当它是一个〔基本|Cauchy〕序列。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+单调有界定理
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[单调序列]
+\end_layout
+
+\end_inset
+
+若实数序列 
+\begin_inset Formula $\left\{ x_{n}\right\} _{n=0}^{\infty}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall n\in\mathbb{N}\right)\left(x_{n}>x_{n+1}\right)$
+\end_inset
+
+，则称其为
+\bar under
+递减的 (decreasing)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall n\in\mathbb{N}\right)\left(x_{n}<x_{n+1}\right)$
+\end_inset
+
+，则称其为
+\bar under
+递增的 (increasing)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall n\in\mathbb{N}\right)\left(x_{n}\le x_{n+1}\right)$
+\end_inset
+
+，则称其为
+\bar under
+非减的 (non-decreasing)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall n\in\mathbb{N}\right)\left(x_{n}\ge x_{n+1}\right)$
+\end_inset
+
+，则称其为
+\bar under
+非增的 (non-increasing)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+以上四种情况之一，则称其为
+\bar under
+单调的 (monotonic)
+\bar default
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界序列]
+\end_layout
+
+\end_inset
+
+若实数序列 
+\begin_inset Formula $\left\{ x_{n}\right\} _{n=0}^{\infty}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\exists M\in\mathbb{R}\right)\left(\forall n\in\mathbb{N}\right)\left(x_{n}<M\right)$
+\end_inset
+
+，则称其为
+\bar under
+上有界的 (upper bounded)
+\bar default
+，并称 
+\begin_inset Formula $M$
+\end_inset
+
+ 是该序列的一个
+\bar under
+上界 (upper bound)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\exists M\in\mathbb{R}\right)\left(\forall n\in\mathbb{N}\right)\left(x_{n}>M\right)$
+\end_inset
+
+，则称其为
+\bar under
+下有界的 (lower bounded)
+\bar default
+，并称 
+\begin_inset Formula $M$
+\end_inset
+
+ 是该序列的一个
+\bar under
+下界 (lower bound)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+以上两种情况，则称其为
+\bar under
+有界的 (bounded)
+\bar default
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Weierstrass]
 \end_layout
 
 \end_inset
@@ -162,9 +366,94 @@ name "thm:实数：完备：单调有界"
 
 \end_inset
 
+单调非减且上有界的实数序列收敛到某个实数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
+\begin_layout Subsection
+确界存在定理
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[〔上|下〕确界]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $A$
+\end_inset
+
+ 与实数 
+\begin_inset Formula $M$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall x\in A\right)\left(x<M\right)\land\left(\forall\epsilon>0\right)\left(\exists x\in[M-\epsilon,+\infty)\cap A\right)$
+\end_inset
+
+，则称 
+\begin_inset Formula $M$
+\end_inset
+
+ 是 
+\begin_inset Formula $A$
+\end_inset
+
+ 的
+\bar under
+上确界 (supremum)
+\bar default
+，用 
+\begin_inset Formula $\sup A$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\forall x\in A\right)\left(x>M\right)\land\left(\forall\epsilon>0\right)\left(\exists x\in(-\infty,M+\epsilon]\cap A\right)$
+\end_inset
+
+，则称 
+\begin_inset Formula $M$
+\end_inset
+
+ 是 
+\begin_inset Formula $A$
+\end_inset
+
+ 的
+\bar under
+下确界 (infimum)
+\bar default
+，用 
+\begin_inset Formula $\inf A$
+\end_inset
+
+ 表示。
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -190,7 +479,48 @@ name "thm:实数：完备：确界存在"
 
 \end_inset
 
+有〔上|下〕界的实数序列必有〔上|下〕确界。
+\end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+闭区间套定理
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭区间套]
+\end_layout
+
+\end_inset
+
+若闭区间序列 
+\begin_inset Formula $\left\{ [a_{n},b_{n}]\right\} _{n=0}^{\infty}$
+\end_inset
+
+ 具有如下嵌套关系
+\begin_inset Formula 
+\[
+\left(\forall n\in\mathbb{N}\right)\left(a_{n}\le a_{n+1}\le b_{n+1}\le b_{n}\right)
+\]
+
+\end_inset
+
+则称序列是一个
+\bar under
+闭区间套 (nested closed interval)
+\bar default
+。
 \end_layout
 
 \begin_layout Standard
@@ -206,7 +536,7 @@ status open
 
 \begin_layout Plain Layout
 
-[闭区间套]
+[Cauchy--Cantor：闭区间套的交集非空]
 \end_layout
 
 \end_inset
@@ -218,7 +548,27 @@ name "thm:实数：完备：闭区间套"
 
 \end_inset
 
+若 
+\begin_inset Formula $\left\{ [a_{n},b_{n}]\right\} _{n=0}^{\infty}$
+\end_inset
 
+ 是一个闭区间套，则这些闭区间的交集非空，即
+\begin_inset Formula 
+\[
+\left(\exists c\in\mathbb{R}\right)\left(\forall n\in\mathbb{N}\right)\left(c\in[a_{n},b_{n}]\right)
+\]
+
+\end_inset
+
+若还有 
+\begin_inset Formula $\lim_{n\to\infty}(b_{n}-a_{n})=0$
+\end_inset
+
+，则上述公共点 
+\begin_inset Formula $c$
+\end_inset
+
+ 是唯一的。
 \end_layout
 
 \begin_layout Standard
@@ -228,13 +578,17 @@ name "thm:实数：完备：闭区间套"
 
 \end_layout
 
+\begin_layout Subsection
+有限覆盖定理
+\end_layout
+
 \begin_layout Theorem
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[有限覆盖]
+[Heine--Borel--Lebesgue]
 \end_layout
 
 \end_inset
@@ -247,6 +601,106 @@ name "thm:实数：完备：有限覆盖"
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\left([\alpha,\beta]\subset\bigcup_{n}(a_{n},b_{n})\right)\implies\left(\exists K\in\mathbb{N}\right)\left([\alpha,\beta]\subset\bigcup_{k=1}^{K}(a_{n_{k}},b_{n_{k}})\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+聚点定理
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+delta$-邻域]
+\end_layout
+
+\end_inset
+
+点 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 上的 
+\begin_inset Formula $\delta$
+\end_inset
+
+-
+\bar under
+邻域 (neighbourhood)
+\bar default
+ 是指开区间 
+\begin_inset Formula $(x-\delta,x+\delta)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 为正实数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[〔极限|聚〕点]
+\end_layout
+
+\end_inset
+
+若点 
+\begin_inset Formula $p\in\mathbb{R}$
+\end_inset
+
+ 的所有邻域内都含有无穷多个取自点集 
+\begin_inset Formula $A\subset\mathbb{R}$
+\end_inset
+
+ 的点，则称 
+\begin_inset Formula $p$
+\end_inset
+
+ 为 
+\begin_inset Formula $A$
+\end_inset
+
+ 的一个
+\bar under
+〔极限|聚〕点 (limit point)
+\bar default
+。
 \end_layout
 
 \begin_layout Standard
@@ -262,7 +716,7 @@ status open
 
 \begin_layout Plain Layout
 
-[聚点]
+[Bolzano--Weierstrass]
 \end_layout
 
 \end_inset
@@ -274,7 +728,7 @@ name "thm:实数：完备：聚点"
 
 \end_inset
 
-
+含无穷多个成员的有界实数点集必有聚点。
 \end_layout
 
 \begin_layout Standard
