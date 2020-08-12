@@ -416,22 +416,22 @@ target_link_libraries(<target> ... <item>... ...)
 ### 构建
 
 1. 用 VS Code 打开一个 CMake 项目。
-1. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在 `.vscode` 之下创建名为 `settings.json` 的文件，用于设定构建目录等全局配置项。
+1. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在其中创建名为 `settings.json` 的文件，用于设定构建目录等全局配置项。
    - 本节示例 [`./.vscode/settings.json`](./.vscode/settings.json) 设置了 `cmake.buildDirectory`（构建目录）及  `cmake.generator`（构建工具）两个变量。
    - 完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
 1. 在 VS Code 底部的 ***状态栏 (status bar)*** 中：
-   - 单击 `CMake`，在 VS Code 顶部会弹出四种 ***构建类型 (build type)***，单击其中一种，完成 ***配置 (configure)***。若对某些 CMake 选项的默认值不满意，可在 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
-   - 在 `Build` 右侧默认显式 `all`，此为默认构建目标，可单击之以选择其他目标。单击 `Build`，完成 ***构建 (build)***。
+   - 单击 `CMake`，从顶部弹出的四种 ***构建类型 (build type)*** 中任选一种，单击之以完成 ***配置 (configure)***。若对某些 CMake 选项的默认值不满意，可在生成的 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
+   - 单击 `Build`，完成 ***构建 (build)***。默认构建目标为 `Build` 右侧的 `all`，可单击之以选择其他目标。
 
 
 ### 调试
 
-1. 在 `.vscode` 之下创建名为 `launch.json` 的文件，用于控制可执行文件的运行及调试。
-   - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 基于官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》中的示例，只修改了个别选项的值。
-1. 在源文件中设置若干 ***断点 (breakpoint)***，按功能键 `F5` 启动调试。
-   - [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
+1. 在 `.vscode` 中创建名为 `launch.json` 的文件，用于控制可执行文件的运行及调试。
+   - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 基本照搬了官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》中的示例，只修改了个别选项的值。
+1. 在 VS Code 中打开源文件。单击行号左侧以设置 ***断点 (breakpoint)***。按功能键 `F5` 启动调试。
+   - ⚠️ [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
 1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
-   - 此法不依赖于本节介绍的 CMake Tools。
+   - 此方法不依赖于本节介绍的 VS Code 及 CMake Tools。
 
 # Ninja
 

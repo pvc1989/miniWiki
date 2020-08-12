@@ -41,6 +41,8 @@ $ c++ -g hello.cpp -o hello
 
 ## 在 [Docker](../docker/README.md) 容器中使用 GDB
 
+按一般流程创建容器、启动 GDB 环境后，运行 ***被调试程序 (debugee)*** 时会出错：
+
 ```shell
 # 非 Linux 主机：
 $ docker pull ubuntu
@@ -97,11 +99,12 @@ LLDB 命令具有以下结构：
 
 *调试器环境* 是以 `(gdb)` 或 `(lldb)` 为行首提示符的命令行环境。
 
-- 进入调试器环境：在命令行终端中输入 `gdb` 或 `lldb` 命令（通常附上 *被调试程序 (debugee)* 的文件名）。
+- 进入调试器环境：在命令行终端中输入 `gdb` 或 `lldb` 命令（通常附上 ***被调试程序 (debugee)*** 的文件名）。
 - 退出调试器环境：在 `(gdb/lldb)` 后输入 `quit` 或 `q` 或按 `Ctrl + D` 组合键。
 
 本节剩余部分所述 *命令* 均为调试器环境中的命令。
 在没有歧义的情况下，这些命令（及选项）通常都支持（首字母、首二字母）简写：
+
 ```shell
 (gdb)  break                 test.c   :    12
 (gdb)  b                     test.c   :    12
@@ -130,10 +133,10 @@ LLDB 命令具有以下结构：
 # 运行 被调试程序：
 (gdb/lldb) run [argv]
 (gdb/lldb) r   [argv]
-# 为下次 `run` 设置输入参数
+# 为下次 `run` 设置输入参数：
 (gdb)           set            args [argv]
 (lldb) settings set target.run-args [argv]
-# 查看下次 `run` 的输入参数
+# 查看下次 `run` 的输入参数：
 (gdb)           show            args
 (lldb) settings show target.run-args
 # 贴附 被调试程序：
@@ -145,60 +148,62 @@ LLDB 命令具有以下结构：
 (gdb/lldb) kill
 ```
 
+在 Unix-like 系统中，可用 [`ps` 或 `jobs`](../linux/README.md#进程管理) 查询进程号、进程名。
+
 ## 断点
 
 ```shell
-# 设断点于函数 `main` 的入口处
+# 设断点于函数 `main` 的入口处：
 (gdb)  break                 main
 (lldb) breakpoint set --name main
-# 设断点于所有名称中含有 `push` 的（C++）类方法的入口处
+# 设断点于所有名称中含有 `push` 的（C++）类方法的入口处：
 (gdb)  break                   push
 (lldb) breakpoint set --method push
-# 设断点于 C++ 类方法特定版本的入口处
+# 设断点于 C++ 类方法特定版本的入口处：
 (gdb)  break        Class::Method(int, int)
 (lldb) br s --name 'Class::Method(int, int)'  # 含空格，需置于 ' ' 中
-# 设断点于文件 `test.c` 的第 `12` 行
+# 设断点于文件 `test.c` 的第 `12` 行：
 (gdb)  break                 test.c   :    12
 (lldb) breakpoint set --file test.c --line 12
-# 设断点于 `0x400544` 处
+# 设断点于 `0x400544` 处：
 (gdb)  break                    *0x400544
 (lldb) breakpoint set --address  0x400544
-# 列出所有断点
+# 列出所有断点：
 (gdb)  info breakpoints
 (lldb) breakpoint list
-# 停用 `1` 号断点
+# 停用 `1` 号断点：
 (gdb)             disable 1
 (lldb) breakpoint disable 1
-# 启用 `1` 号断点
+# 启用 `1` 号断点：
 (gdb)             enable 1
 (lldb) breakpoint enable 1
-# 删除 `1` 号断点
+# 删除 `1` 号断点：
 (gdb)             delete 1
 (lldb) breakpoint delete 1
-# 删除 `main` 入口处的断点
+# 删除 `main` 入口处的断点：
 (gdb)  clear main
-# 删除所有断点
+# 删除所有断点：
 (gdb)             delete
 (lldb) breakpoint delete
-# 创建条件断点
+# 创建条件断点：
 (gdb)  break                 foo   if         count == 37
 (lldb) breakpoint set --name foo --condition 'count == 37'
-# 为现有断点设置条件（置于 ' ' 内）
-(gdb)  condition N             CONDITION
-(lldb) br modify N --condition CONDITION
+# 为第 `K` 号断点设置条件：
+(gdb)  condition K             CONDITION
+(lldb) br modify K --condition CONDITION
 ```
 
 ## 执行
 
 ```shell
-# 跳转至指定位置
+# 跳转至指定位置：
 (gdb/lldb) jump *0x1007145
 # 源码级步进（遇到函数则进入其内部）：
 (lldb) thread step-in
 (gdb/lldb)    step
 # 源码级跨越（遇到函数则视其为一行）：
 (lldb) thread step-over
-(gdb/lldb) next
+(gdb/lldb)    next
 # 指令级步进（遇到函数则进入其内部）：
 (lldb) thread step-inst
 (gdb)         stepi
@@ -207,7 +212,7 @@ LLDB 命令具有以下结构：
 (lldb) thread step-inst-over
 (gdb)         nexti
 (gdb/lldb)    ni
-# 恢复执行：
+# 恢复执行（直到端点或退出）：
 (gdb/lldb) continue
 # 执行至当前函数返回：
 (lldb) thread step-out
@@ -229,19 +234,19 @@ list -[<count>]      # List previous <count> lines
 ## 查看汇编码
 
 ```shell
-# 反汇编 当前函数
+# 反汇编 当前函数：
 (gdb)  disassemble
 (lldb) disassemble --frame
-# 反汇编 名为 `main` 的函数
+# 反汇编 名为 `main` 的函数：
 (gdb)  disassemble        main
 (lldb) disassemble --name main
-# 反汇编 含有 `0x400544` 的函数
+# 反汇编 含有 `0x400544` 的函数：
 (gdb)  disassemble           0x400544
 (lldb) disassemble --address 0x400544
-# 反汇编 始于 `0x1eb8` 终于 `0x1ec3` 的指令
+# 反汇编 始于 `0x1eb8` 终于 `0x1ec3` 的指令：
 (gdb)  disassemble                 0x1eb8               0x1ec3
 (lldb) disassemble --start-address 0x1eb8 --end-address 0x1ec3
-# 反汇编 始于 `0x1eb8` 的 `20` 条指令
+# 反汇编 始于 `0x1eb8` 的 `20` 条指令：
 (gdb/lldb)                   x/20i 0x1eb8
 (lldb) disassemble --start-address 0x1eb8 --count 20
 ```
