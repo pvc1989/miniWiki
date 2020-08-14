@@ -54,31 +54,25 @@ title: 首页
 
 ## [数学](./mathematics/README.md)
 
-|                       卷                        |  章  |  节  |  进度   |
-| :---------------------------------------------: | :--: | :--: | :-----: |
-|  [线性代数](./mathematics/algebra/README.lyx)   |      |      | `00001` |
-|     [实分析](./mathematics/real/README.lyx)     |      |      | `00001` |
-|   [复分析](./mathematics/complex/README.lyx)    |      |      | `11111` |
-| [泛函分析](./mathematics/functional/README.lyx) |      |      | `00011` |
-|   [常微分方程](./mathematics/ode/README.lyx)    |      |      | `00111` |
-|   [偏微分方程](./mathematics/pde/README.lyx)    |      |      | `00111` |
-|  [微分几何](./mathematics/geometry/README.lyx)  |      |      | `00001` |
+- [线性代数](./mathematics/algebra/README.lyx)
+- [实分析](./mathematics/real_analysis/README.lyx)
+- [复分析](./mathematics/complex/README.lyx)
+- [泛函分析](./mathematics/functional/README.lyx)
+- [常微分方程](./mathematics/ode/README.lyx)
+- [偏微分方程](./mathematics/pde/README.lyx)
+- [微分几何](./mathematics/geometry/README.lyx)
 
 ## [物理](./physics/README.md)
 
-|                    卷                    |  章  |  节  |  进度   |
-| :--------------------------------------: | :--: | :--: | :-----: |
-|   [热力学](./physics/heat/README.lyx)    |      |      | `00001` |
-|  [流体力学](./physics/fluid/README.md)   |      |      | `00111` |
-| [量子力学](./physics/quantum/README.lyx) |      |      | `00011` |
+- [热力学](./physics/heat/README.lyx)
+- [流体力学](./physics/fluid/README.md)
+- [量子力学](./physics/quantum/README.lyx)
 
 ## [算法](./algorithms/README.md)
 
-|                           卷                           |  章  |  节  |  进度   |
-| :----------------------------------------------------: | :--: | :--: | :-----: |
-| [数值分析](./algorithms/numerical_analysis/README.lyx) |      |      | `00001` |
-|      [优化](./algorithms/optimization/README.lyx)      |      |      | `00001` |
-|    [有限元](./algorithms/finite_element/README.lyx)    |      |      | `00011` |
+- [数值分析](./algorithms/numerical_analysis/README.lyx)
+- [优化](./algorithms/optimization/README.lyx)
+- [有限元](./algorithms/finite_element/README.lyx)
 
 ## [编程](./programming/README.md)
 - 计算机系统
