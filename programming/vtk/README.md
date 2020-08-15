@@ -119,6 +119,30 @@ cmake --build .
 
 启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》适合于系统学习。
 
+## 可执行程序
+
+### `paraview`
+
+`paraview` 是基于 Qt 的 GUI 程序。
+
+### `pvpython`
+
+`pvpython` 是封装了 ParaView 程序库的 Python shell —— 在其中可以使用 Python 自带的功能，也可以像调用其他 Python 模块（包）一样加载 ParaView 模块：
+
+```python
+from paraview.simple import *
+```
+
+在 `paraview` (GUI) 中的所有操作，几乎都可以在 `pvpython` (CLI) 中以 Python 指令的形式来完成。这些指令可以被同步记录到 `.py` 文件中，只需在 `paraview` (GUI) 中以 Tools → Start Trace 开启记录、以 Tools → Stop Trace 停止记录。
+
+### `pvbatch`
+
+`pvbatch` 是由 `.py` 文件驱动的 CLI 程序。
+
+### `pvserver`
+
+`pvserver` 是运行在远程主机上的 CLI 程序。
+
 ## 简单数据显示
 
 使用 ParaView 主要分三个基本步骤：
