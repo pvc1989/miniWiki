@@ -58,7 +58,7 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 ## 官方文档
 
 - 入门指南：[*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)
-- 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)
+- 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/) + [*Parallel CGNS Routines*](https://cgns.github.io/CGNS_docs_current/pcgns/)
 
 ## 数组索引
 
@@ -69,7 +69,23 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ## 演示代码
 
-下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例（含并行版本示例），可在 CMake 中开启 `CGNS_ENABLE_TESTS` 等选项：
+
+```shell
+cd ${SOURCE_DIR}
+mkdir _build
+mkdir _build/Debug
+cd _build/Debug
+cmake -DCMAKE_BUILD_TYPE=Debug \
+      -DCGNS_ENABLE_TESTS=ON \
+      -DCGNS_ENABLE_HDF5=ON \
+      -DHDF5_NEED_MPI=ON \
+      -DCGNS_ENABLE_PARALLEL=ON \
+      -G Ninja -B . -S ../..
+      
+```
+
+这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 # 基本模块
 
@@ -92,9 +108,12 @@ cg_open(// Open a CGNS file:
 cg_close(// Close a CGNS file:
     int file_id);
 void cg_error_exit();  // Stop the execution of the program:
+// 并行版本：
+cgp_open(char *file_name, int mode, /* output: */int *file_id);
+cgp_close(int file_id);
 ```
 
-用于新建对象的函数 `cg_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
+用于新建对象的函数 `*_open()` 或 `*_write()` 总是以 `int` 型的 `id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
 
 ## `CGNSBase_t`
 
@@ -172,9 +191,14 @@ GridCoordinates_t
 └── DataArray_t  // 个数 == 所属 CGNSBase_t 结点的 phys_dim
     ├── Name: CoordinateX | CoordinateY | CoordinateZ |
     │         CoordinateR | CoordinateTheta | CoordinatePhi
-    └── Data: 一位数组，长度 = 结点个数 + 外层层数  // 沿当前方向
+    └── Data: 一位数组，长度 = 结点个数 + 外表层数  // 沿当前方向
 ```
 ```c
+cg_grid_write(// Create a GridCoordinates_t node:
+    int file_id, int base_id, int zone_id,
+    char *grid_name/* GridCoordinates */,
+    // output:
+    int *grid_id);
 cg_coord_write(// Write grid coordinates:
     int file_id, int base_id, int zone_id,
     DataType_t data_type/* CGNS_ENUMV(RealDouble) */,
@@ -187,11 +211,24 @@ cg_coord_read(// Read grid coordinates:
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based
     // output:
     void *coord_array);
+// 并行版本：
+cgp_coord_write(// Create a coordinate data node:
+    int file_id, int base_id, int zone_id,
+    DataType_t data_type, char *coord_name, /* output: */int *coord_id);
+cgp_coord_write_data(// Write coordinate data in parallel:
+    int file_id, int base_id, int zone_id, int coord_id,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
+    void *coord_array);
+cgp_coord_read_data(// Read coordinate data in parallel:
+    int file_id, int base_id, int zone_id, int coord_id,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
+    /* output: */void *coord_array);
 ```
 
 其中
 
-- 若由 `zone_size[0]` 算出的结点总数为 `N`，则函数 `cg_coord_write()` 写出的是以 `coord_array` 为首地址的前 `N` 个元素。
+- 函数 `cg_coord_write()` 写出的是以 `coord_array` 为首地址的前 `N` 个元素：
+  -  `N` 可由 `zone_size[0]` 算出。
   - 对于结构网格，`coord_array`  通常声明为多维数组，此时除第一维长度 *至少等于* 该方向的顶点数外，其余维度的长度 *必须等于* 相应方向的顶点数。
   - 对于非结构网格，`coord_array`  通常声明为长度不小于 `N` 的一维数组。
 - 坐标名 `coord_name` 必须取自 [*SIDS-standard names*](https://cgns.github.io/CGNS_docs_current/sids/dataname.html)，即
@@ -200,6 +237,9 @@ cg_coord_read(// Read grid coordinates:
 - `data_type` 应当与 `coord_array` 的类型匹配：
   - `CGNS_ENUMV(RealSingle)` 对应 `float`。
   - `CGNS_ENUMV(RealDouble)` 对应 `double`。
+- 并行版本的“写”分两步：
+  - 先用 `cgp_write_coord()` 创建空结点；
+  - 再用 `cgp_write_coord_date()` 写入当前进程所负责的片段。
 
 ## `Element_t`
 
@@ -246,6 +286,21 @@ cg_elements_read(// Read fixed size element data:
     int file_id, int base_id, int zone_id, int section_id,
     // output:
     cgsize_t *elements, cgsize_t *parent_data);
+// 并行版本：
+cgp_section_write(// Create a section data node:
+    int file_id, int base_id, int zone_id,
+    char *section_name, ElementType_t element_type,
+    cgsize_t first, cgsize_t last, int n_boundary,
+    // output:
+    int *section_id);
+cgp_elements_write_data(// Write element data in parallel:
+    int file_id, int base_id, int zone_id, int section_id,
+    cgsize_t first, cgsize_t last, cgsize_t *elements);
+cgp_elements_read_data(// Read element data in parallel:
+    int file_id, int base_id, int zone_id, int section_id,
+    cgsize_t first, cgsize_t last,
+    // output:
+    cgsize_t *elements);
 ```
 
 其中
@@ -384,6 +439,21 @@ cg_field_read(// Read flow solution:
     cgsize_t *range_min, cgsize_t *range_max,
     // output:
     void *sol_array);
+// 并行版本：
+cgp_field_write(// Create a solution field data node:
+    int file_id, int base_id, int zone_id, int sol_id,
+    DataType_t datatype, char *field_name,
+    // output:
+    int *field_id);
+cgp_field_write_data(// Write field data in parallel:
+    int file_id, int base_id, int zone_id, int sol_id, int field_id,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
+    void *sol_array);
+cgp_field_read_data(// Read field data in parallel:
+    int file_id, int base_id, int zone_id, int sol_id, int field_id,
+    cgsize_t *range_min, cgsize_t *range_max,  // 1-based
+    // output:
+    void *sol_array);
 ```
 
 其中
@@ -402,9 +472,9 @@ cg_field_read(// Read flow solution:
 - 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
 - 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
 
-## 外层数据
+## 外表数据
 
-***外层数据 (rind data)*** 是指存储在网格表面的一层或多层 *影子单元 (ghost cells)* 上的数据 ：
+***外表数据 (rind data)*** 是指存储在网格表面的一层或多层 *影子单元 (ghost cells)* 上的数据 ：
 
 ```
 ┌───╔═══╦═══╦═══╗───┬───┐      ═══ 网格单元
@@ -444,7 +514,7 @@ ier = cg_rind_read(int *rind_data);
 其中
 
 - `cg_goto()` 用于定位将要创建 `Rind_t` 结点的那个 `FlowSolution_t` 结点。
-- 外层数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
+- 外表数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与 *扩充后的* 单元数量协调。
 
 # 量纲信息
 
@@ -776,4 +846,3 @@ CGNSBase_t "RemeshingCase" {
 ```
 
 [`write_adaptive_grid.cpp`](./write_adaptive_grid.cpp) 演示了这种方法。
-
