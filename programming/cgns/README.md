@@ -58,7 +58,28 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 ## 官方文档
 
 - 入门指南：[*A User's Guide to CGNS*](https://cgns.github.io/CGNS_docs_current/user/)
-- 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/) + [*Parallel CGNS Routines*](https://cgns.github.io/CGNS_docs_current/pcgns/)
+- 完整定义：[*Mid-Level Library*](https://cgns.github.io/CGNS_docs_current/midlevel/)
+  - 并行版本：[*Parallel CGNS Routines*](https://cgns.github.io/CGNS_docs_current/pcgns/)
+
+## 并行版本
+
+并行版的 CGNS/MLL 依赖于并行版的 HDF5，后者依赖于 MPI 实现。安装这两个依赖项最简单的方式为：
+
+```shell
+apt  install hdf5-mpi # Ubuntu
+brew install hdf5-mpi # macOS
+```
+
+安装完成后，即可在构建 CGNS/MLL 时，开启并行相关选项：
+
+```shell
+cmake -DCMAKE_BUILD_TYPE=Debug \
+      -DCGNS_ENABLE_HDF5=ON \ # 并行版本必须启用 HDF5
+      -DHDF5_NEED_MPI=ON -DCGNS_ENABLE_PARALLEL=ON \ # 启用并行版本
+      -G Ninja -B ${BUILD_DIR} -S ${SOURCE_DIR}
+```
+
+
 
 ## 数组索引
 
@@ -69,23 +90,7 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ## 演示代码
 
-下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例（含并行版本示例），可在 CMake 中开启 `CGNS_ENABLE_TESTS` 等选项：
-
-```shell
-cd ${SOURCE_DIR}
-mkdir _build
-mkdir _build/Debug
-cd _build/Debug
-cmake -DCMAKE_BUILD_TYPE=Debug \
-      -DCGNS_ENABLE_TESTS=ON \
-      -DCGNS_ENABLE_HDF5=ON \
-      -DHDF5_NEED_MPI=ON \
-      -DCGNS_ENABLE_PARALLEL=ON \
-      -G Ninja -B . -S ../..
-      
-```
-
-这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
+下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS) 后，可在 `${SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 等选项，这样生成的可执行文件位于 `${BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
 # 基本模块
 
