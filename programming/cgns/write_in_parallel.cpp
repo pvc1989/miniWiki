@@ -1,7 +1,7 @@
 /*
   mpicxx ../write_in_parallel.cpp -o write_in_parallel \
     -I/usr/local/include -L/usr/local/lib -lcgns -lhdf5 -std=c++17 &&
-  mpiexec -np 2 write_in_parallel
+  mpiexec -np 2 write_in_parallel 21
  */
 
 #include <cassert>

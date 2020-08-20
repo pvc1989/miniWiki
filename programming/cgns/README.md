@@ -172,14 +172,14 @@ cg_zone_read(// Read zone information:
 
 - `cell_dim`、`phys_dim` 分别表示 *单元（流形）维数*、*物理（空间）维数*。
 - `zone_size` 是一个二维数组（的首地址），
-  - 其行数为三，各行分别表示 *顶点数*、*单元数*、*边界点数* 。
+  - 其行数为三，各行分别表示 *顶点数*、*单元数*、*边界单元数* 。
   - 对于 *结构网格*：
     - *列数* 至少为 *空间维数*，每列分别对应一个（逻辑）方向。
     - 各方向的 *单元数* 总是比 *顶点数* 少一。
-    - *边界点* 没有意义，因此最后一行全部为零。
+    - *边界单元* 没有意义，因此最后一行全部为零。
   - 对于 *非结构网格*：
     - *列数* 至少为一。
-    - 若单元编号没有排序，则 *边界点数* 为零。
+    - 若没有对单元排序（边界单元在前、内部单元在后），则 *边界单元数* 为零。
 
 # 单区网格
 
@@ -315,7 +315,7 @@ cgp_elements_read_data(// Read element data in parallel:
   - 同一个 `Elements_t` 结点下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，常用的有 `NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 | PENTA_6 | HEXA_8`。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
 - `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
-- `n_boundary` 为当前 `Elements_t` 对象内边界单元个数：若单元已排序，则前 `n_boundary` 个单元为边界单元；若单元未排序，则 `n_boundary = 0`。
+- `n_boundary` 为当前 `Elements_t` 对象的 *边界单元数*：若 `n_boundary > 0`，则单元已被排序，且前  `n_boundary` 个单元为边界单元。
 - `parent_flag` 用于判断 parent data 是否存在。
 
 ## 运行示例
@@ -660,7 +660,7 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 
 SIDS 定义了两种迭代数据结构，以管理多个时间（或迭代）步的数据：
 
-`BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格改变拓扑](#网格改变拓扑)）也用来存储 *指向各步的指针*：
+`BaseIterativeData_t` 位于 `CGNSBase_t` 之下，一般用于存储 *时间步总数* 及 *各步的时间值*，有时（如[网格拓扑发生改变](#网格拓扑发生改变)）也用来存储 *指向各步的指针*：
 
 ```c++
 BaseIterativeData_t := {
@@ -720,7 +720,7 @@ ZoneIterativeData_t< int NumberOfSteps > := {
 ⚠️ 上述 *指针* 目前由 *字符串* 实现。
 
 ## 网格固定不变
-*网格固定不变* 意味着 `GridCoordinates_t` 及 `Elements_t`(s) 可复用，故只需将各时间步上的 `FlowSolution_t`(s) 记录在 `ZoneIterativeData_t` 内的 `FlowSolutionPointers` 中。
+*网格固定不变* 意味着 `GridCoordinates_t` 及 `Elements_t`(s) 可复用，故只需将各时间步上的 `FlowSolution_t`(s) 记录在 `ZoneIterativeData_t` 内的 `(DataArray_t) FlowSolutionPointers` 中。
 
 官方教程中的 `write_timevert_str.c` 与 `read_timevert_str.c` 演示了这种方法。
 主要 API 用法如下：
@@ -751,11 +751,11 @@ cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
 
 - 在同一个 `FlowSolution_t` 内，不能既[顶点数据](#顶点数据)、又有[单元数据](#单元数据)。
 - 在同一个 `FlowSolutionPointers` 内，所有 `FlowSolution_t`(s) 必须有相同的  `GridLocation_t` 值。
-- 若要同时记录[顶点数据](#顶点数据)与[单元数据](#单元数据)，则应[平行于 `FlowSolutionPointers` 再创建一个 `FlowSolutionXXXPointers`](https://gitlab.kitware.com/paraview/paraview/-/issues/19838#note_732151)，这样两类数据都能被 [ParaView](../vtk/README.md#ParaView) 识别。示例 [`write_fixed_grid.cpp`](./write_fixed_grid.cpp) 验证了这种方法。
+- 若要同时记录[顶点数据](#顶点数据)与[单元数据](#单元数据)，则应[平行于 `FlowSolutionPointers` 再创建一个 `FlowSolutionXXXPointers`](https://gitlab.kitware.com/paraview/paraview/-/issues/19838#note_732151)，这样两类数据都能被 [ParaView](../vtk/README.md#ParaView) 识别。示例文件 [`write_fixed_grid.cpp`](./write_fixed_grid.cpp) 演示了这种方法。
 
-## [网格刚体运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#RigidGridMotion)
+## [网格作刚体运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#RigidGridMotion)
 
-*网格刚体运动* 意味着 `Elements_t`(s) 可复用，而格点坐标可以由 *初始位置*（记录在当前 `Zone_t` 下唯一的 `GridCoordinates_t` 中）与 *刚体运动信息*（随体坐标系的原点位置及速度、转角及转速等）快速地算出，后者记录在 `RigidGridMotion_t` 中（一个时间步对应一个这样的  `RigidGridMotion_t`，对应关系由 `ZoneIterativeData_t` 中的 `RigidGridMotionPointers` 管理）。
+*网格作刚体运动* 意味着 `Elements_t`(s) 可复用，而格点坐标可以由 *初始位置*（记录在当前 `Zone_t` 下唯一的 `GridCoordinates_t` 中）与 *刚体运动信息*（随体坐标系的原点位置、原点速度、坐标架转角、坐标架转速等）快速地算出，后者记录在 `RigidGridMotion_t` 中（一个时间步对应一个这样的  `RigidGridMotion_t`，对应关系由 `ZoneIterativeData_t` 中的 `(DataArray_t) RigidGridMotionPointers` 管理）。
 
 ```c++
 RigidGridMotion_t := {
@@ -778,12 +778,12 @@ RigidGridMotion_t := {
 }
 ```
 
-## [格点任意运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ArbitraryGridMotion)
+## [格点作任意运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ArbitraryGridMotion)
 
-*格点任意运动* 意味着 `Elements_t`(s) 仍可复用，但格点坐标不再能快速算出，故需为每个时间步分别
+*格点作任意运动* 意味着 `Elements_t`(s) 仍可复用，但格点坐标不再能快速算出，故需为每个时间步分别创建
 
-- 创建一个 `GridCoordinates_t`，用于记录该时间步的 *格点坐标*，并将其 *名称* 记录在 `ZoneIterativeData_t` 中（通常命名为 `GridCoordinatesPointers`）。
-- 一个 `ArbitraryGridMotion_t`，用于记录其所属 `Zone_t` 的 *格点速度*，并将其 *名称* 记录在 `ZoneIterativeData_t` 中（通常命名为 `ArbitraryGridMotionPointers`）。
+- 一个 `GridCoordinates_t`，用于记录该时间步的 *格点坐标*，并将其 *名称* 记录在 `ZoneIterativeData_t` 下的 `(DataArray_t) GridCoordinatesPointers` 中。
+- 一个 `ArbitraryGridMotion_t`，用于记录其所属 `Zone_t` 的 *格点速度*，并将其 *名称* 记录在 `ZoneIterativeData_t` 下的 `(DataArray_t) ArbitraryGridMotionPointers` 中。
 
 ```c++
 ArbitraryGridMotion_t< int IndexDimension, 
@@ -808,9 +808,9 @@ ArbitraryGridMotion_t< int IndexDimension,
 }
 ```
 
-## [网格改变拓扑](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ex:adaptedunstructuredmesh)
+## [网格拓扑发生改变](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ex:adaptedunstructuredmesh)
 
-*网格改变拓扑* 意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应 *网格拓扑发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `ZonePointers` 管理。
+*网格拓扑发生改变* 意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应 *网格拓扑发生变化的* 各时间步，对应关系由其所属 `CGNSBase_t` 中的 `(DataArray_t) ZonePointers` 管理。示例文件 [`write_adaptive_grid.cpp`](./write_adaptive_grid.cpp) 演示了这种方法。
 
 ```c++
 CGNSBase_t "RemeshingCase" {
@@ -850,4 +850,3 @@ CGNSBase_t "RemeshingCase" {
 }
 ```
 
-[`write_adaptive_grid.cpp`](./write_adaptive_grid.cpp) 演示了这种方法。

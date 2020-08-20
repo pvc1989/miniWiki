@@ -21,13 +21,11 @@
 #endif
 
 int main(int argc, char* argv[]) {
-  constexpr int kNameLength = 32;
-  constexpr int kZonePointerLength = kNameLength + kNameLength + 1;
   /*
     Create A CGNS File
    */
   // set file name:
-  char file_name[kNameLength + 1] = "adaptive_grid.cgns";
+  char file_name[33] = "adaptive_grid.cgns";
   std::printf("A file named \"%s\"\n", file_name);
   std::printf("    is being creating... ");
   // get file id:
@@ -40,9 +38,9 @@ int main(int argc, char* argv[]) {
    */
   // set base name:
   auto base_name = std::string("BaseOfAdaptiveGrid");
-  assert(base_name.size() <= kNameLength);
-  std::printf("A CGNSBase_t named \"%s\"\n", base_name.c_str());
-  std::printf("    is being creating... ");
+  assert(base_name.size() <= 32);
+  std::printf("  A CGNSBase_t named \"%s\"\n", base_name.c_str());
+  std::printf("      is being creating... ");
   // set base dims:
   int cell_dim{2}, phys_dim{3};
   // get base id:
@@ -60,14 +58,14 @@ int main(int argc, char* argv[]) {
   int n_levels = atoi(argv[1]);
   assert(n_levels < 8);
   auto time_values = std::vector<double>(n_levels);
-  auto zone_pointers = std::vector<char>(kZonePointerLength * n_levels, '\0');
+  auto zone_pointers = std::vector<char>(/* 65 */32 * n_levels, '\0');
   auto head = zone_pointers.begin();
   for (int level = 0; level < n_levels; level++) {
     // set zone name:
     auto zone_name = "Zone[" + std::to_string(level) + "]";
-    assert(zone_name.size() <= kNameLength);
-    std::printf("A Zone_t named \"%s\"\n", zone_name.c_str());
-    std::printf("    is being creating... ");
+    assert(zone_name.size() <= 32);
+    std::printf("    A Zone_t named \"%s\"\n", zone_name.c_str());
+    std::printf("        is being creating... ");
     // set zone size:
     int n_cells_x{2 << level}, n_cells_y{1 << level};
     int n_nodes_x{n_cells_x + 1}, n_nodes_y{n_cells_y + 1};
@@ -80,6 +78,8 @@ int main(int argc, char* argv[]) {
         CGNS_ENUMV(Unstructured), &zone_id))
       cg_error_exit();
     std::printf("has been created with id %d.\n", zone_id);
+    // create a ZoneIterativeData_t:
+    cg_ziter_write(file_id, base_id, zone_id, "ZoneIterativeData");
     // set nodes (coordinates):
     double dx = 2.0 / n_cells_x;
     double dy = 1.0 / n_cells_y;
@@ -111,9 +111,9 @@ int main(int argc, char* argv[]) {
         CGNS_ENUMV(RealDouble), "CoordinateZ", coord_z.data(), &coord_id))
       cg_error_exit();
     // set cells (connectivities):
-    char section_name[kNameLength+1] = "Interior";
-    std::printf("An Elements_t named \"%s\"", section_name);
-    std::printf(" is being creating... ");
+    char section_name[33] = "Interior";
+    std::printf("      An Elements_t named \"%s\"\n", section_name);
+    std::printf("          is being creating... ");
     cgsize_t quad_elems[n_cells][4];
     int section_id;
     int i_elem = 0;
@@ -131,18 +131,18 @@ int main(int argc, char* argv[]) {
     cg_section_write(file_id, base_id, zone_id,
         section_name, CGNS_ENUMV(QUAD_4), i_elem_first, i_elem_last,
         0/* n_boundary_elements */, quad_elems[0], &section_id);
-    std::printf("    has been created with id %d.\n", section_id);
+    std::printf("has been created with id %d.\n", section_id);
     // set node data:
     // set cell data:
     // set iteration info:
     time_values[level] = level * 0.1;
-    zone_name = base_name + "/" + zone_name;
+    // zone_name = base_name + "/" + zone_name;
     std::copy(zone_name.begin(), zone_name.end(), head);
-    head += kZonePointerLength;
+    head += /* 65 */32;
   }
-  assert(zone_pointers.begin() + kZonePointerLength * n_levels == head);
+  assert(zone_pointers.begin() + /* 65 */32 * n_levels == head);
   for (int l = 0; l < n_levels; ++l) {
-    std::printf("%s\n", &zone_pointers[kZonePointerLength * l]);
+    std::printf("%s\n", &head[/* 65 */32 * l]);
   }
   /*
     Create A BaseIterativeData_t
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
   if (cg_goto(file_id, base_id, "BaseIterativeData_t", 1, "end"))
     cg_error_exit();
   // write time values and pointers:
-  cgsize_t data_dim[3] = {kZonePointerLength, 1, n_levels};
+  cgsize_t data_dim[3] = {/* 65 */32, 1, n_levels};
   if (cg_array_write("TimeValues", CGNS_ENUMV(RealDouble), 1, data_dim + 2,
       time_values.data()))
     cg_error_exit();
