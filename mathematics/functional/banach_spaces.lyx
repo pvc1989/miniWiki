@@ -6,10 +6,7 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
 \use_default_options true
 \begin_modules
@@ -17,7 +14,7 @@ theorems-ams
 theorems-ams-extended
 theorems-chap
 \end_modules
-\maintain_unincluded_children false
+\maintain_unincluded_children true
 \language chinese-simplified
 \language_package default
 \inputencoding utf8-plain
@@ -73,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -93,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -108,6 +106,363 @@ Banach 空间
 
 \begin_layout Section
 距离与范数
+\end_layout
+
+\begin_layout Subsection
+常用不等式
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[共轭指数]
+\end_layout
+
+\end_inset
+
+若正实数 
+\begin_inset Formula $p$
+\end_inset
+
+ 与 
+\begin_inset Formula $q$
+\end_inset
+
+ 满足 
+\begin_inset Formula $1/p+1/q=1$
+\end_inset
+
+，则称 
+\begin_inset Formula $p$
+\end_inset
+
+ 与 
+\begin_inset Formula $q$
+\end_inset
+
+ 互为
+\bar under
+共轭指数 (conjugate exponents)
+\bar default
+。特别地，规定 
+\begin_inset Formula $1$
+\end_inset
+
+ 与 
+\begin_inset Formula $+\infty$
+\end_inset
+
+ 互为共轭指数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Young]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $p$
+\end_inset
+
+ 与 
+\begin_inset Formula $q$
+\end_inset
+
+ 是取自 
+\begin_inset Formula $(1,+\infty)$
+\end_inset
+
+ 的共轭指数，且 
+\begin_inset Formula $x$
+\end_inset
+
+ 与 
+\begin_inset Formula $y$
+\end_inset
+
+ 均为非负实数，则
+\begin_inset Formula 
+\[
+xy\le x^{p}/p+y^{q}/q
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+固定 
+\begin_inset Formula $y$
+\end_inset
+
+，分析关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $f(x)=x^{p}/p+y^{q}/q-xy$
+\end_inset
+
+ 的单调性、极值点：
+\begin_inset Formula 
+\[
+f'(x_{*})=x_{*}^{p-1}-y=0\implies x_{*}=y^{1/(p-1)}=y^{q/p}\implies f''(x_{*})=(p-1)x_{*}^{p-2}>0
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $x_{*}=y^{q/p}$
+\end_inset
+
+ 是极小值点，代入 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 即得
+\begin_inset Formula 
+\[
+0=f(y^{q/p})\le f(x)=x^{p}/p+y^{q}/q-xy\qquad\forall x\in[0,+\infty)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Hölder]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $p$
+\end_inset
+
+ 与 
+\begin_inset Formula $q$
+\end_inset
+
+ 是取自 
+\begin_inset Formula $(1,+\infty)$
+\end_inset
+
+ 的共轭指数，且有 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\le+\infty$
+\end_inset
+
+ 及 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}\le+\infty$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\boxed{\sum_{n=1}^{\infty}\vert x_{n}\cdot y_{n}\vert\le\left(\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\right)^{1/p}\cdot\left(\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}\right)^{1/q}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+若 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}=0$
+\end_inset
+
+ 或 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}=0$
+\end_inset
+
+，则结论显然成立；下面只考虑 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\ne0$
+\end_inset
+
+ 且 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}\ne0$
+\end_inset
+
+ 的情形。利用 Young's 不等式：
+\begin_inset Formula 
+\[
+\frac{\vert x_{k}\vert}{\left(\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\right)^{1/p}}\cdot\frac{\vert y_{k}\vert}{\left(\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}\right)^{1/q}}\le\frac{1}{p}\frac{\vert x_{k}\vert^{p}}{\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}}+\frac{1}{q}\frac{\vert y_{k}\vert^{q}}{\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}}
+\]
+
+\end_inset
+
+对 
+\begin_inset Formula $k$
+\end_inset
+
+ 求和即得
+\begin_inset Formula 
+\[
+\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert\cdot\vert y_{k}\vert}{\left(\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\right)^{1/p}\cdot\left(\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}\right)^{1/q}}\le\frac{1}{p}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}}{\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}}}+\frac{1}{q}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert y_{k}\vert^{q}}{\sum_{n=1}^{\infty}\vert y_{n}\vert^{q}}}=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Minkowski]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $p\in(1,+\infty)$
+\end_inset
+
+，且有 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\le+\infty$
+\end_inset
+
+ 及 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert y_{n}\vert^{p}\le+\infty$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\boxed{\left(\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert^{p}\right)^{1/p}\le\left(\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\right)^{1/p}+\left(\sum_{n=1}^{\infty}\vert y_{n}\vert^{p}\right)^{1/p}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+若 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert^{p}=0$
+\end_inset
+
+，则结论显然成立；下面只考虑 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert^{p}\ne0$
+\end_inset
+
+ 的情形。由 
+\begin_inset Formula $\vert x_{n}+y_{n}\vert\le\vert x_{n}\vert+\vert y_{n}\vert$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert^{p} & =\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert\cdot\vert x_{n}+y_{n}\vert^{p-1}\\
+ & \le\sum_{n=1}^{\infty}\vert x_{n}\vert\cdot\vert x_{n}+y_{n}\vert^{p-1}+\sum_{n=1}^{\infty}\vert y_{n}\vert\cdot\vert x_{n}+y_{n}\vert^{p-1}
+\end{aligned}
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $q\coloneqq p/(p-1)$
+\end_inset
+
+，则有 
+\begin_inset Formula $1/p+1/q=1$
+\end_inset
+
+，故可对右端两项分别应用 Hölder's 不等式：
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{n=1}^{\infty}\vert x_{n}\vert\cdot\vert x_{n}+y_{n}\vert^{p-1} & \le\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}\cdot\left(\sum_{k=1}^{\infty}\left(\vert x_{n}+y_{n}\vert^{p-1}\right)^{q}\right)^{1/q}\\
+\sum_{n=1}^{\infty}\vert y_{n}\vert\cdot\vert x_{n}+y_{n}\vert^{p-1} & \le\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{p}\right)^{1/p}\cdot\left(\sum_{k=1}^{\infty}\left(\vert x_{n}+y_{n}\vert^{p-1}\right)^{q}\right)^{1/q}
+\end{aligned}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\sum_{n=1}^{\infty}\vert x_{n}+y_{n}\vert^{p}\le\left(\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}+\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{p}\right)^{1/p}\right)\left(\sum_{k=1}^{\infty}\vert x_{n}+y_{n}\vert^{(p-1)q}\right)^{1/q}
+\]
+
+\end_inset
+
+两边同除以
+\begin_inset Formula 
+\[
+\left(\sum_{k=1}^{\infty}\vert x_{n}+y_{n}\vert^{p}\right)^{1-1/p}=\left(\sum_{k=1}^{\infty}\vert x_{n}+y_{n}\vert^{(p-1)q}\right)^{1/q}\impliedby q=\frac{p}{p-1}
+\]
+
+\end_inset
+
+即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
