@@ -465,6 +465,248 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+向量的范数
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[范数]
+\end_layout
+
+\end_inset
+
+若定义在向量空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 上的实值映射 
+\begin_inset Formula $g\colon V(+,\mathbb{F},*)\to\mathbb{R}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall\vec{v}\in V\right)\left(g(\vec{v})\ge0\right)\land\left(g(\vec{v})=0\iff\vec{v}=\vec{0}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+准线性 
+\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(g(\lambda\vec{v})=\vert\lambda\vert\cdot g(\vec{v})\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三角不等式 
+\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(g(\vec{u}+\vec{v})\le g(\vec{u})+g(\vec{v})\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $g(\vec{v})$
+\end_inset
+
+ 是向量 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的
+\bar under
+范数 (norm)
+\bar default
+（值），用 
+\begin_inset Formula $\mathinner{\Vert\vec{v}\Vert}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[赋范线性空间]
+\end_layout
+
+\end_inset
+
+若映射 
+\begin_inset Formula $\mathinner{\Vert\cdot\Vert}\colon V(+,\mathbb{F},*)\to\mathbb{R}$
+\end_inset
+
+ 满足范数的定义，则称以 
+\begin_inset Formula $\mathinner{\Vert\cdot\Vert}$
+\end_inset
+
+ 为范数的线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 是一个
+\bar under
+赋范线性空间 (normed linear space)
+\bar default
+，用 
+\begin_inset Formula $V(+,\mathbb{F},*,\mathinner{\Vert\cdot\Vert})$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[序列空间]
+\end_layout
+
+\end_inset
+
+以序列 
+\begin_inset Formula $[x_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 为向量的线性空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 可以被赋予范数
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\left(\sum_{n=1}^{\infty}\vert x_{n}\vert^{p}\right)^{1/p}\qquad p\in[1,+\infty)
+\]
+
+\end_inset
+
+且由范数值有限的那些向量所构成的集合
+\begin_inset Formula 
+\[
+\ell_{p}\coloneqq\left\{ \vec{x}\in X\mid\mathinner{\Vert\vec{x}\Vert}_{p}<+\infty\right\} 
+\]
+
+\end_inset
+
+是 
+\begin_inset Formula $X$
+\end_inset
+
+ 的线性子空间。特别地，当 
+\begin_inset Formula $p\to+\infty$
+\end_inset
+
+ 时，有
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{n=1}^{\infty}\vert x_{n}\vert\qquad\ell_{\infty}\coloneqq\left\{ \vec{x}\in X\mid\mathinner{\Vert\vec{x}\Vert}_{\infty}<+\infty\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数空间]
+\end_layout
+
+\end_inset
+
+以函数 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ 为向量的线性空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 可以被赋予范数
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\left(\int_{a}^{b}\vert x(t)\vert^{p}\dd{t}\right)^{1/p}\qquad p\in[1,+\infty)
+\]
+
+\end_inset
+
+且由范数值有限的那些向量所构成的集合
+\begin_inset Formula 
+\[
+\mathcal{L}_{p}\coloneqq\left\{ \vec{x}\in X\mid\mathinner{\Vert\vec{x}\Vert}_{p}<+\infty\right\} 
+\]
+
+\end_inset
+
+是 
+\begin_inset Formula $X$
+\end_inset
+
+ 的线性子空间。特别地，当 
+\begin_inset Formula $p\to+\infty$
+\end_inset
+
+ 时，有
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{t\in(a,b)}\vert x(t)\vert\qquad\ell_{\infty}\coloneqq\left\{ \vec{x}\in X\mid\mathinner{\Vert\vec{x}\Vert}_{\infty}<+\infty\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 完备的赋范线性空间
 \end_layout
