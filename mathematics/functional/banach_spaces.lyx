@@ -105,7 +105,7 @@ Banach 空间
 \end_layout
 
 \begin_layout Section
-范数与赋范线性空间
+范数与度量
 \end_layout
 
 \begin_layout Subsection
@@ -814,7 +814,7 @@ status open
 \end_layout
 
 \begin_layout Subsection
-由范数诱导出的拓扑
+由范数诱导出的度量
 \end_layout
 
 \begin_layout Standard
@@ -1218,8 +1218,333 @@ status open
 
 \end_layout
 
+\begin_layout Theorem
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集，则 
+\begin_inset Formula $X=\bar{X}$
+\end_inset
+
+ 等价于“
+\begin_inset Formula $X$
+\end_inset
+
+ 是闭集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+商空间上的范数
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[陪集的范数]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 是赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的闭子空间，则任意陪集的范数可以被定义为
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\bar{X})\in(V/\bar{X})
+\]
+
+\end_inset
+
+且以此为范数的商空间 
+\begin_inset Formula $V/\bar{X}$
+\end_inset
+
+ 是一个赋范线性空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+容易验证
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}+\vec{x}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}-\vec{x}\Vert\eqqcolon d(\vec{v},\bar{X})
+\]
+
+\end_inset
+
+下面来验证其满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall(\vec{v}+\bar{X})\in V/\bar{X}\right)\left(\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})\ge0\right)$
+\end_inset
+
+ 且
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})=0\iff\vec{v}\in\bar{X}\iff\vec{v}+\bar{X}=\vec{0}+\bar{X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+绝对齐次性 
+\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(\Vert\lambda*(\vec{v}+\bar{X})\Vert=\vert\lambda\vert\cdot\Vert\vec{v}+\bar{X}\Vert\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三角不等式 
+\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(\Vert(\vec{u}+\vec{v})+\bar{X}\Vert\le\Vert\vec{u}+\bar{X}\Vert+\Vert\vec{v}+\bar{X}\Vert\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[商范数]
+\end_layout
+
+\end_inset
+
+上述定义在商空间上的范数被称为
+\bar under
+商范数 (quotient norm)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-完备的赋范线性空间
+度量空间的完备性
+\end_layout
+
+\begin_layout Subsection
+依范数收敛
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[依范数收敛]
+\end_layout
+
+\end_inset
+
+给定由赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\exists\vec{x}_{*}\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\lim_{n\to\infty}\Vert\vec{x}_{n}-\vec{x}_{*}\Vert=0$
+\end_inset
+
+，则称 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 
+\bar under
+依范数收敛 (converge in norm)
+\bar default
+ 或
+\bar under
+强收敛 (strongly converge)
+\bar default
+ 到 
+\begin_inset Formula $\vec{x}_{*}$
+\end_inset
+
+，并称 
+\begin_inset Formula $\vec{x}_{*}$
+\end_inset
+
+ 是 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 的
+\bar under
+极限 (limit)
+\bar default
+，用 
+\begin_inset Formula $\lim_{n\to\infty}\vec{x}_{n}=\vec{x}_{*}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\vec{x}_{n}\to\vec{x}_{*}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭集中的收敛序列的极限仍属于该闭集]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 是赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的闭子集，且由 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 有属于 
+\begin_inset Formula $V$
+\end_inset
+
+ 的极限，则该极限亦属于 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\lim_{n\to\infty}\vec{x}_{n}\eqqcolon\vec{x}_{*}\in V\implies\vec{x}_{*}\in\bar{X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cauchy 序列
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy 序列]
+\end_layout
+
+\end_inset
+
+给定由赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0$
+\end_inset
+
+，则称 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 是一个 
+\bar under
+Cauchy 序列 (Cauchy sequence)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
