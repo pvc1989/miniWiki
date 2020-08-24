@@ -105,7 +105,7 @@ Banach 空间
 \end_layout
 
 \begin_layout Section
-距离与范数
+范数与赋范线性空间
 \end_layout
 
 \begin_layout Subsection
@@ -501,7 +501,7 @@ status open
 \end_layout
 
 \begin_layout Description
-准线性 
+绝对齐次性 
 \begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(g(\lambda\vec{v})=\vert\lambda\vert\cdot g(\vec{v})\right)$
 \end_inset
 
@@ -698,6 +698,517 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+范数的等价性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[等价的范数]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $g_{1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $g_{2}$
+\end_inset
+
+ 是定义在向量空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 上的两种范数，且存在正实数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 与 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\lambda\cdot g_{1}(\vec{v})\le g_{2}(\vec{v})\le\mu\cdot g_{1}(\vec{v})\qquad\forall\vec{v}\in V
+\]
+
+\end_inset
+
+则称这两种范数是
+\bar under
+等价的 (equivalent)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+范数等价性是一种映射之间的等价关系（满足自反性、对称性、传递性）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+在 
+\begin_inset Formula $N$
+\end_inset
+
+-维线性空间 
+\begin_inset Formula $\left\{ \begin{bmatrix}x_{1} & \cdots & x_{N}\end{bmatrix}\in\mathbb{C}^{1\times N}\right\} $
+\end_inset
+
+ 上，可以定义如下三种等价的范数：
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{1}\coloneqq\sum_{n=1}^{N}\vert x_{n}\vert\qquad\mathinner{\Vert\vec{x}\Vert}_{2}\coloneqq\left(\sum_{n=1}^{N}\vert x_{n}\vert^{2}\right)^{1/2}\qquad\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{n=1}^{N}\vert x_{n}\vert
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+有限维空间上的所有范数彼此等价。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+由范数诱导出的拓扑
+\end_layout
+
+\begin_layout Standard
+“（单个）向量的范数”是对“线段的长度”这一初等几何概念的推广，后者又被定义为“（构成该线段的）两点之间的距离”。类似地，“两点之间的距离”被推广为“点集上的度
+量”。
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[点集上的度量]
+\end_layout
+
+\end_inset
+
+若定义在点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的二元实值映射 
+\begin_inset Formula $d\colon V\times V\to\mathbb{R}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall(x,y)\in V^{2}\right)\left(d(x,y)\ge0\right)\land\left(d(x,y)=0\iff x=y\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+对称性 
+\begin_inset Formula $\left(\forall(x,y)\in V^{2}\right)\left(d(x,y)=d(y,x)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三角不等式 
+\begin_inset Formula $\left(\forall(x,y,z)\in V^{3}\right)\left(d(x,z)\le d(x,y)+d(y,z)\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $d$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的一种
+\bar under
+度量 (metric)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[度量空间]
+\end_layout
+
+\end_inset
+
+若映射 
+\begin_inset Formula $d$
+\end_inset
+
+ 是点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的一种度量，则称以 
+\begin_inset Formula $d$
+\end_inset
+
+ 为度量的 
+\begin_inset Formula $V$
+\end_inset
+
+ 是一个
+\bar under
+度量空间 (metric space)
+\bar default
+，用 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在线性空间中，任意两个向量相减都得到一个新的向量，因此可以将每个“向量”都视为一个“点”，并将任意两“点”之间的距离定义为这两个“向量”之差的范数。
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[由范数诱导出度量]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\Vert\cdot\Vert$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 上的一种范数，则映射
+\begin_inset Formula 
+\[
+d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert\qquad\forall(\vec{x},\vec{y})\in V^{2}
+\]
+
+\end_inset
+
+是集合 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的一种度量，并称该度量是由该范数
+\bar under
+诱导出的 (induced by)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[由度量诱导出范数]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $d$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 上的一种度量，且满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+平移不变性 
+\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\vec{z})\in V^{3}\right)\left(d(\vec{x}+\vec{z})=d(\vec{y}+\vec{z})\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Description
+绝对齐次性 
+\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\lambda)\in V^{2}\times\mathbb{F}\right)\left(d(\lambda\vec{x},\lambda\vec{y})=\vert\lambda\vert\cdot d(\vec{x},\vec{y})\right)$
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
+则映射
+\begin_inset Formula 
+\[
+\Vert\vec{x}\Vert\coloneqq d(\vec{x},0)\qquad\forall\vec{x}\in V
+\]
+
+\end_inset
+
+是线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*)$
+\end_inset
+
+ 上的一种范数，并称该范数是由该度量
+\bar under
+诱导出的 (induced by)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[开球、闭球、球面]
+\end_layout
+
+\end_inset
+
+赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的以下子集
+\begin_inset Formula 
+\[
+\begin{aligned}B(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert<r\right\} \\
+B[\vec{a},r] & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert\le r\right\} \\
+S(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert=r\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+分别被称为以 
+\begin_inset Formula $\vec{a}\in V$
+\end_inset
+
+ 为球心、以 
+\begin_inset Formula $r\in\mathbb{R}_{+}$
+\end_inset
+
+ 为半径的
+\bar under
+开球 (open ball)
+\bar default
+、
+\bar under
+闭球 (closed ball)
+\bar default
+、
+\bar under
+球面 (sphere)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[开集、闭集]
+\end_layout
+
+\end_inset
+
+给定赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $\left(\forall\vec{x}\in X\right)\left(\exists\delta>0\right)\left(B(\vec{x},\delta)\subset X\right)$
+\end_inset
+
+，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是一个
+\bar under
+开集 (open set)
+\bar default
+。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $V\setminus X$
+\end_inset
+
+ 是一个开集，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是一个
+\bar under
+闭集 (closed set)
+\bar default
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭包]
+\end_layout
+
+\end_inset
+
+给定赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，它的
+\bar under
+闭包 (closure)
+\bar default
+是所有以 
+\begin_inset Formula $X$
+\end_inset
+
+ 为子集的那些 
+\begin_inset Formula $V$
+\end_inset
+
+ 的闭子集的交集，用 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
