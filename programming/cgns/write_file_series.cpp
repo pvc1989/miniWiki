@@ -1,11 +1,10 @@
 /* 
-  Creates a simple 3d adaptive refined grid.
+  Write a simple 3d adaptive refined grid into file series.
 
-  Example compilation for this program is (change paths if needed!):
+  Typical compilation and execution (change paths if needed):
     c++ -std=c++11 -o write_file_series.exe ../write_file_series.cpp \
       -I/usr/local/include -L/usr/local/lib -lcgns && \
-    ./write_file_series.exe 3 && \
-    cgnscheck step#0.cgns && cgnscheck step#1.cgns && cgnscheck step#2.cgns
+    ./write_file_series.exe 4 && cgnscheck step#*.cgns
  */
 
 #include <algorithm>

@@ -1,7 +1,7 @@
 /* 
   Creates simple 3-D unstructured grid and writes it to a CGNS file.
 
-  Example compilation for this program is (change paths if needed!):
+  Typical compilation and execution (change paths if needed):
     c++ -std=c++11 -o write_fixed_grid.exe ../write_fixed_grid.cpp \
       -I/usr/local/include -L/usr/local/lib -lcgns && \
     ./write_fixed_grid.exe && cgnscheck fixed_grid.cgns
@@ -199,7 +199,7 @@ int main() {
   /*
     Write Time-Independent Flow Solutions
    */
-  {
+  {/* pressure on nodes */
     int sol_id;
     char sol_name[kNameLength+1] = "NodeData";
     cg_sol_write(file_id, base_id, zone_id,
@@ -224,8 +224,7 @@ int main() {
     dimensional_exponents[2] = -2.0;
     cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
   }
-  // density at cell centers
-  {
+  {/* density at cell centers */
     int sol_id;
     char sol_name[kNameLength+1] = "CellData";
     cg_sol_write(file_id, base_id, zone_id,

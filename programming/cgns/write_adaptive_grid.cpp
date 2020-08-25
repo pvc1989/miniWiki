@@ -1,7 +1,7 @@
 /* 
-  Creates a simple 3d adaptive refined grid.
+  Write a simple 3d adaptive refined grid into a single file.
 
-  Example compilation for this program is (change paths if needed!):
+  Typical compilation and execution (change paths if needed):
     c++ -std=c++11 -g -o write_adaptive_grid.exe ../write_adaptive_grid.cpp \
       -I/usr/local/include -L/usr/local/lib -lcgns && \
     ./write_adaptive_grid.exe 4 && cgnscheck adaptive_grid.cgns
