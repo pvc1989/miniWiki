@@ -21,12 +21,11 @@
 #endif
 
 int write_step(int step) {
-  constexpr int kNameLength = 32;
   /*
     Create A CGNS File
    */
   // set file name:
-  char file_name[kNameLength + 1];
+  char file_name[33];
   sprintf(file_name, "step#%d.cgns", step);
   std::printf("A file named \"%s\"\n", file_name);
   std::printf("    is being creating... ");
@@ -39,7 +38,7 @@ int write_step(int step) {
     Create A CGNSBase_t
    */
   // set base name:
-  char base_name[kNameLength + 1];
+  char base_name[33];
   sprintf(base_name, "SimpleBase");
   std::printf("A CGNSBase_t named \"%s\"\n", base_name);
   std::printf("    is being creating... ");
@@ -93,17 +92,15 @@ int write_step(int step) {
   }
   assert(i == n_nodes);
   int coord_id;
-  if (cg_coord_write(file_id, base_id, zone_id,
-      CGNS_ENUMV(RealDouble), "CoordinateX", coord_x.data(), &coord_id))
-    cg_error_exit();
-  if (cg_coord_write(file_id, base_id, zone_id,
-      CGNS_ENUMV(RealDouble), "CoordinateY", coord_y.data(), &coord_id))
-    cg_error_exit();
-  if (cg_coord_write(file_id, base_id, zone_id,
-      CGNS_ENUMV(RealDouble), "CoordinateZ", coord_z.data(), &coord_id))
+  if (cg_coord_write(file_id, base_id, zone_id, CGNS_ENUMV(RealDouble),
+                     "CoordinateX", coord_x.data(), &coord_id) ||
+      cg_coord_write(file_id, base_id, zone_id, CGNS_ENUMV(RealDouble),
+                     "CoordinateY", coord_y.data(), &coord_id) ||
+      cg_coord_write(file_id, base_id, zone_id, CGNS_ENUMV(RealDouble),
+                     "CoordinateZ", coord_z.data(), &coord_id))
     cg_error_exit();
   // set cells (connectivities):
-  char section_name[kNameLength+1] = "Interior";
+  char section_name[33] = "Interior";
   std::printf("An Elements_t named \"%s\"", section_name);
   std::printf(" is being creating... ");
   cgsize_t quad_elems[n_cells][4];
@@ -125,7 +122,31 @@ int write_step(int step) {
       0/* n_boundary_elements */, quad_elems[0], &section_id);
   std::printf("    has been created with id %d.\n", section_id);
   // set node data:
+  {
+    int sol_id;
+    cg_sol_write(file_id, base_id, zone_id, "NodeData",
+                 CGNS_ENUMV(Vertex), &sol_id);
+    auto field = std::vector<double>(coord_x.size());
+    for (int n = 0; n < coord_x.size(); n++) {
+      field[n] += coord_x[n] + coord_y[n];
+    }
+    int field_id;
+    cg_field_write(file_id, base_id, zone_id, sol_id, CGNS_ENUMV(RealDouble),
+                   "Pressure", field.data(), &field_id);
+  }
   // set cell data:
+  {
+    int sol_id;
+    cg_sol_write(file_id, base_id, zone_id, "CellData",
+                 CGNS_ENUMV(CellCenter), &sol_id);
+    auto field = std::vector<double>(n_cells);
+    for (int n = 0; n < n_cells; n++) {
+      field[n] = n;
+    }
+    int field_id;
+    cg_field_write(file_id, base_id, zone_id, sol_id, CGNS_ENUMV(RealDouble),
+                   "Density", field.data(), &field_id);
+  }
   /*
     Close the CGNS File
    */
