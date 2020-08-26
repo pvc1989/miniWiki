@@ -105,7 +105,7 @@ Banach 空间
 \end_layout
 
 \begin_layout Section
-范数与度量
+赋范线性空间
 \end_layout
 
 \begin_layout Subsection
@@ -813,8 +813,12 @@ status open
 
 \end_layout
 
+\begin_layout Section
+度量及拓扑
+\end_layout
+
 \begin_layout Subsection
-由范数诱导出的度量
+一般的度量
 \end_layout
 
 \begin_layout Standard
@@ -1005,6 +1009,10 @@ d(y,X)\coloneqq\inf_{x\in X}d(x,y)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+由范数诱导出的度量
 \end_layout
 
 \begin_layout Standard
@@ -1315,96 +1323,47 @@ status open
 \end_layout
 
 \begin_layout Subsection
-商空间上的范数
+有界与完全有界
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Definition
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[陪集的范数]
+[有界]
 \end_layout
 
 \end_inset
 
 若 
-\begin_inset Formula $\bar{X}$
+\begin_inset Formula $X$
 \end_inset
 
  是赋范线性空间 
 \begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
 \end_inset
 
- 的闭子空间，则任意陪集的范数可以被定义为
+ 的子集，且
 \begin_inset Formula 
 \[
-\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\bar{X})\in(V/\bar{X})
+\left(\exists M>0\right)\left(\forall\vec{x}\in X\right)\left(\Vert\vec{x}\Vert<C\right)
 \]
 
 \end_inset
 
-且以此为范数的商空间 
-\begin_inset Formula $V/\bar{X}$
+则称 
+\begin_inset Formula $X$
 \end_inset
 
- 是一个赋范线性空间。
+ 是
+\bar under
+有界的 (bounded)
+\bar default
+。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-容易验证
-\begin_inset Formula 
-\[
-\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}+\vec{x}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}-\vec{x}\Vert\eqqcolon d(\vec{v},\bar{X})
-\]
-
-\end_inset
-
-下面来验证其满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-非负性 
-\begin_inset Formula $\left(\forall(\vec{v}+\bar{X})\in V/\bar{X}\right)\left(\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})\ge0\right)$
-\end_inset
-
- 且
-\begin_inset Formula 
-\[
-\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})=0\iff\vec{v}\in\bar{X}\iff\vec{v}+\bar{X}=\vec{0}+\bar{X}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-绝对齐次性 
-\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(\Vert\lambda*(\vec{v}+\bar{X})\Vert=\vert\lambda\vert\cdot\Vert\vec{v}+\bar{X}\Vert\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-三角不等式 
-\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(\Vert(\vec{u}+\vec{v})+\bar{X}\Vert\le\Vert\vec{u}+\bar{X}\Vert+\Vert\vec{v}+\bar{X}\Vert\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1418,16 +1377,259 @@ status open
 
 \begin_layout Plain Layout
 
-[商范数]
+[$
+\backslash
+epsilon$-网]
 \end_layout
 
 \end_inset
 
-上述定义在商空间上的范数被称为
+给定正实数 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 及赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 与 
+\begin_inset Formula $Y$
+\end_inset
+
+，若
+\begin_inset Formula 
+\[
+\left(\forall\vec{x}\in X\right)\left(\exists\vec{y}\in Y\right)\left(\Vert\vec{x}-\vec{y}\Vert<\epsilon\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $Y$
+\end_inset
+
+ 是 
+\begin_inset Formula $X$
+\end_inset
+
+ 的一个 
 \bar under
-商范数 (quotient norm)
+
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-网 (
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-net)
+\bar default
+，用 
+\begin_inset Formula $X_{\epsilon}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界]
+\end_layout
+
+\end_inset
+
+给定赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists\left\{ \vec{x}_{n}\right\} _{n=1}^{N}\eqqcolon X_{\epsilon}\subset V\right)\left(X\subset\bigcup_{n=1}^{N}B(\vec{x}_{n},\epsilon)\right)
+\]
+
+\end_inset
+
+即 
+\begin_inset Formula $V$
+\end_inset
+
+ 中存在含有限个元素的 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-网 
+\begin_inset Formula $X_{\epsilon}$
+\end_inset
+
+，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是
+\bar under
+完全有界的 (totally bounded)
+\bar default
+或
+\bar under
+预紧的 (precompact)
 \bar default
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上述 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-网的选取范围可以限制在 
+\begin_inset Formula $X$
+\end_inset
+
+ 上：
+\end_layout
+
+\begin_layout Theorem
+赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的，当且仅当
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists\left\{ \vec{x}_{n}\right\} _{n=1}^{N}\eqqcolon X_{\epsilon}\subset X\right)\left(X\subset\bigcup_{n=1}^{N}B(\vec{x}_{n},\epsilon)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+赋范线性空间的所有完全有界的子集都是有界的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界 $
+\backslash
+nRightarrow$ 完全有界]
+\end_layout
+
+\end_inset
+
+取 
+\begin_inset Formula $V\coloneqq\ell_{2}$
+\end_inset
+
+ 及 
+\begin_inset Formula $B\coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}\Vert\le1\right\} $
+\end_inset
+
+，则 
+\begin_inset Formula $B$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的有界子集，但非完全有界的。理由如下：从 
+\begin_inset Formula $B$
+\end_inset
+
+ 中选出可列个元素
+\begin_inset Formula 
+\[
+\vec{e}_{n}\coloneqq\begin{bmatrix}0 & \cdots & 0 & 1 & 0 & \cdots\end{bmatrix}\qquad\forall n\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $1$
+\end_inset
+
+ 仅出现在 
+\begin_inset Formula $\vec{e}_{n}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $n$
+\end_inset
+
+ 位，则有
+\begin_inset Formula 
+\[
+\Vert\vec{e}_{m}-\vec{e}_{n}\Vert=\begin{cases}
+\sqrt{2} & m\ne n\\
+0 & m=n
+\end{cases}\qquad\forall(m,n)\in\mathbb{N}_{+}^{2}
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\epsilon\in(0,\sqrt{2}/2)$
+\end_inset
+
+ 即得可列个两两分离的开球 
+\begin_inset Formula $\left\{ B(\vec{e}_{n},\epsilon)\right\} _{n=1}^{\infty}$
+\end_inset
+
+，它们的并集显然不可能被含有限个元素的 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-网覆盖。
 \end_layout
 
 \begin_layout Standard
@@ -2084,8 +2286,8 @@ status open
 \begin_inset Formula $\sum_{n=1}^{\infty}\Vert\vec{x}_{n}\Vert<+\infty$
 \end_inset
 
-，则称 
-\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+，则称级数 
+\begin_inset Formula $\sum_{n=1}^{\infty}\vec{x}_{n}$
 \end_inset
 
  是
@@ -2093,6 +2295,179 @@ status open
 绝对收敛的 (absolutely convergent)
 \bar default
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 是一个 Banach 空间，当且仅当所有（由 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的元素构成的）绝对收敛的级数亦是（依范数）收敛的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+商空间上的分析
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[陪集的范数]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 是赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的闭子空间，则任意陪集的范数可以被定义为
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\bar{X})\in(V/\bar{X})
+\]
+
+\end_inset
+
+且以此为范数的商空间 
+\begin_inset Formula $V/\bar{X}$
+\end_inset
+
+ 是一个赋范线性空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+容易验证
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}+\vec{x}\Vert=\inf_{\vec{x}\in\bar{X}}\Vert\vec{v}-\vec{x}\Vert\eqqcolon d(\vec{v},\bar{X})
+\]
+
+\end_inset
+
+下面来验证其满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall(\vec{v}+\bar{X})\in V/\bar{X}\right)\left(\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})\ge0\right)$
+\end_inset
+
+ 且
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert=d(\vec{v},\bar{X})=0\iff\vec{v}\in\bar{X}\iff\vec{v}+\bar{X}=\vec{0}+\bar{X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+绝对齐次性 
+\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(\Vert\lambda*(\vec{v}+\bar{X})\Vert=\vert\lambda\vert\cdot\Vert\vec{v}+\bar{X}\Vert\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三角不等式 
+\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(\Vert(\vec{u}+\vec{v})+\bar{X}\Vert\le\Vert\vec{u}+\bar{X}\Vert+\Vert\vec{v}+\bar{X}\Vert\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[商范数]
+\end_layout
+
+\end_inset
+
+上述定义在商空间上的范数被称为
+\bar under
+商范数 (quotient norm)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $\bar{X}$
+\end_inset
+
+ 是赋范线性空间 
+\begin_inset Formula $V(+,\mathbb{F},*,\Vert\cdot\Vert)$
+\end_inset
+
+ 的闭子空间，则定义了商范数
+\begin_inset Formula 
+\[
+\Vert\vec{v}+\bar{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\bar{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\bar{X})\in(V/\bar{X})
+\]
+
+\end_inset
+
+的商空间 
+\begin_inset Formula $V/\bar{X}$
+\end_inset
+
+ 是一个 Banach 空间。
 \end_layout
 
 \begin_layout Standard
