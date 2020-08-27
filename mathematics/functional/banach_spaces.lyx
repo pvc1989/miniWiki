@@ -777,17 +777,48 @@ status open
 
 \begin_layout Example
 在 
-\begin_inset Formula $N$
+\begin_inset Formula $n$
 \end_inset
 
 -维线性空间 
-\begin_inset Formula $\left\{ \begin{bmatrix}x_{1} & \cdots & x_{N}\end{bmatrix}\in\mathbb{C}^{1\times N}\right\} $
+\begin_inset Formula $\left\{ \begin{bmatrix}x_{1} & \cdots & x_{n}\end{bmatrix}\in\mathbb{C}^{1\times n}\right\} $
 \end_inset
 
  上，可以定义如下三种等价的范数：
 \begin_inset Formula 
 \[
-\mathinner{\Vert\vec{x}\Vert}_{1}\coloneqq\sum_{n=1}^{N}\vert x_{n}\vert\qquad\mathinner{\Vert\vec{x}\Vert}_{2}\coloneqq\left(\sum_{n=1}^{N}\vert x_{n}\vert^{2}\right)^{1/2}\qquad\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{n=1}^{N}\vert x_{n}\vert
+\mathinner{\Vert\vec{x}\Vert}_{1}\coloneqq\sum_{i=1}^{n}\vert x_{i}\vert\qquad\mathinner{\Vert\vec{x}\Vert}_{2}\coloneqq\left(\sum_{i=1}^{n}\vert x_{i}\vert^{2}\right)^{1/2}\qquad\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{i=1}^{n}\vert x_{i}\vert
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 
+\begin_inset Formula $\left\{ \vec{x}_{i}\right\} _{i=1}^{n}$
+\end_inset
+
+ 是 
+\begin_inset Formula $n$
+\end_inset
+
+-维赋范线性空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 的一组基，则
+\begin_inset Formula 
+\[
+\left(\exists M>0\right)\left(\forall\left\{ a_{i}\right\} _{i=1}^{n}\subset\mathbb{F}\right)\left(M\sum_{i=1}^{n}\vert a_{i}\vert\le\left\Vert \sum_{i=1}^{n}a_{i}\vec{x}_{i}\right\Vert \right)
 \]
 
 \end_inset
@@ -803,7 +834,7 @@ status open
 \end_layout
 
 \begin_layout Theorem
-有限维空间上的所有范数彼此等价。
+有限维赋范线性空间的所有范数都是等价的。
 \end_layout
 
 \begin_layout Standard
@@ -814,7 +845,7 @@ status open
 \end_layout
 
 \begin_layout Section
-度量及拓扑
+〔度量|拓扑〕空间
 \end_layout
 
 \begin_layout Subsection
@@ -925,7 +956,7 @@ status open
 \end_inset
 
 若映射 
-\begin_inset Formula $d$
+\begin_inset Formula $d\colon V\times V\to\mathbb{R}$
 \end_inset
 
  是点集 
@@ -1131,6 +1162,10 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+由度量诱导出的拓扑
+\end_layout
+
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1142,16 +1177,16 @@ status open
 
 \end_inset
 
-赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
  的以下子集
 \begin_inset Formula 
 \[
-\begin{aligned}B(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert<r\right\} \\
-B[\vec{a},r] & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert\le r\right\} \\
-S(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid\Vert\vec{x}-\vec{a}\Vert=r\right\} 
+\begin{aligned}B(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid d(\vec{x},\vec{a})<r\right\} \\
+B[\vec{a},r] & \coloneqq\left\{ \vec{x}\in V\mid d(\vec{x},\vec{a})\le r\right\} \\
+S(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V\mid d(\vec{x},\vec{a})=r\right\} 
 \end{aligned}
 \]
 
@@ -1193,25 +1228,20 @@ status open
 
 \begin_layout Plain Layout
 
-[开集、闭集]
+[开集]
 \end_layout
 
 \end_inset
 
-给定赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+给定度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
  的子集 
 \begin_inset Formula $X$
 \end_inset
 
-，
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-若 
+，若 
 \begin_inset Formula $\left(\forall\vec{x}\in X\right)\left(\exists\delta>0\right)\left(B(\vec{x},\delta)\subset X\right)$
 \end_inset
 
@@ -1226,8 +1256,108 @@ status open
 。
 \end_layout
 
-\begin_layout Itemize
-若 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拓扑空间]
+\end_layout
+
+\end_inset
+
+若点集 
+\begin_inset Formula $V$
+\end_inset
+
+ 及其开子集满足
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+空集 
+\begin_inset Formula $\varnothing$
+\end_inset
+
+ 与 
+\begin_inset Formula $V$
+\end_inset
+
+ 自身都是开集；
+\end_layout
+
+\begin_layout Enumerate
+有限个 
+\begin_inset Formula $V$
+\end_inset
+
+ 的开子集的交集，仍然是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的开子集；
+\end_layout
+
+\begin_layout Enumerate
+可数个 
+\begin_inset Formula $V$
+\end_inset
+
+ 的开子集的并集，仍然是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的开子集；
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是一个
+\bar under
+拓扑空间 (topological space)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[闭集]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $V$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，闭集若 
 \begin_inset Formula $V\setminus X$
 \end_inset
 
@@ -1242,7 +1372,6 @@ status open
 。
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1261,8 +1390,8 @@ status open
 
 \end_inset
 
-给定赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+给定拓扑空间 
+\begin_inset Formula $V$
 \end_inset
 
  的子集 
@@ -1300,19 +1429,60 @@ status open
 \begin_inset Formula $X$
 \end_inset
 
- 是赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+ 是拓扑空间 
+\begin_inset Formula $V$
 \end_inset
 
- 的子集，则 
+ 的子集，则“
 \begin_inset Formula $X=\bar{X}$
 \end_inset
 
- 等价于“
+”等价于“
 \begin_inset Formula $X$
 \end_inset
 
  是闭集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[紧集]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $V$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $X$
+\end_inset
+
+ 的所有开覆盖都可以选出一个有限子覆盖，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是一个
+\bar under
+紧集 (compact set)
+\bar default
+。
 \end_layout
 
 \begin_layout Standard
@@ -1348,7 +1518,7 @@ status open
  的子集，且
 \begin_inset Formula 
 \[
-\left(\exists M>0\right)\left(\forall\vec{x}\in X\right)\left(\Vert\vec{x}\Vert<C\right)
+\left(\exists M>0\right)\left(\forall\vec{x}\in X\right)\left(\Vert\vec{x}\Vert<M\right)
 \]
 
 \end_inset
@@ -1453,8 +1623,8 @@ status open
 
 \end_inset
 
-给定赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+给定度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
  的子集 
@@ -1516,8 +1686,8 @@ status open
 \end_layout
 
 \begin_layout Theorem
-赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
  的子集 
@@ -1543,6 +1713,18 @@ status open
 \end_layout
 
 \begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界 $
+\backslash
+nRightarrow$ 有界]
+\end_layout
+
+\end_inset
+
 赋范线性空间的所有完全有界的子集都是有界的。
 \end_layout
 
@@ -1609,7 +1791,7 @@ nRightarrow$ 完全有界]
  位，则有
 \begin_inset Formula 
 \[
-\Vert\vec{e}_{m}-\vec{e}_{n}\Vert=\begin{cases}
+d(\vec{e}_{m},\vec{e}_{n})=\begin{cases}
 \sqrt{2} & m\ne n\\
 0 & m=n
 \end{cases}\qquad\forall(m,n)\in\mathbb{N}_{+}^{2}
@@ -1644,7 +1826,7 @@ nRightarrow$ 完全有界]
 \end_layout
 
 \begin_layout Subsection
-依范数收敛
+向量序列的收敛性
 \end_layout
 
 \begin_layout Definition
@@ -1662,7 +1844,7 @@ status open
 \begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
 \end_inset
 
- 中的元素构成的序列 
+ 中的向量构成的序列 
 \begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
 \end_inset
 
@@ -1708,7 +1890,68 @@ status open
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[依度量收敛]
+\end_layout
+
+\end_inset
+
+给定由度量空间 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 中的点构成的序列 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\exists\vec{x}_{*}\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\lim_{n\to\infty}d(\vec{x}_{n},\vec{x}_{*})=0$
+\end_inset
+
+，则称序列 
+\begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 
+\bar under
+依度量收敛 (converge in metric)
+\bar default
+ 到它的
+\bar under
+极限 (limit)
+\bar default
+ 
+\begin_inset Formula $\vec{x}_{*}$
+\end_inset
+
+，用 
+\begin_inset Formula $\lim_{n\to\infty}\vec{x}_{n}=\vec{x}_{*}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\vec{x}_{n}\to\vec{x}_{*}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -1723,15 +1966,15 @@ status open
 \begin_inset Formula $\bar{X}$
 \end_inset
 
- 是赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+ 是度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
- 的闭子集，且由 
+ 的闭子集，且 
 \begin_inset Formula $\bar{X}$
 \end_inset
 
- 中的元素构成的序列 
+ 中的某个序列 
 \begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
 \end_inset
 
@@ -1761,10 +2004,6 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
-Cauchy 序列
-\end_layout
-
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1776,16 +2015,16 @@ status open
 
 \end_inset
 
-给定由赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+给定度量空间 
+\begin_inset Formula $V(d)$
 \end_inset
 
- 中的元素构成的序列 
+ 中的序列 
 \begin_inset Formula $[\vec{x}_{n}]_{n=1}^{\infty}$
 \end_inset
 
 ，若 
-\begin_inset Formula $\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0$
+\begin_inset Formula $\lim_{m\to\infty,n\to\infty}d(\vec{x}_{m},\vec{x}_{n})=0$
 \end_inset
 
 ，则称 
@@ -1856,7 +2095,7 @@ Cauchy 序列 (Cauchy sequence)
 
 \begin_deeper
 \begin_layout Enumerate
-\begin_inset Formula $\vert d(\vec{x},X)-d(\vec{y},X)\vert\le d(\vec{x},\vec{y})=\Vert\vec{x}-\vec{y}\Vert$
+\begin_inset Formula $\vert d(\vec{x},X)-d(\vec{y},X)\vert\le d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert$
 \end_inset
 
 
@@ -1943,8 +2182,56 @@ Cauchy 序列 (Cauchy sequence)
 
 \end_layout
 
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界 $
+\backslash
+iff$ 所有序列都有 Cauchy 子列]
+\end_layout
+
+\end_inset
+
+度量空间 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+iff$
+\end_layout
+
+\end_inset
+
+ 所有 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的序列都有 Cauchy 子列。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-完备的度量空间
+度量空间的完备性
 \end_layout
 
 \begin_layout Definition
@@ -1953,8 +2240,15 @@ status open
 
 \begin_layout Plain Layout
 
-[完备的度量空间]
+[完备性]
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:completeness(in-Banach)"
 
 \end_inset
 
@@ -1975,6 +2269,21 @@ status open
 不完备的 (incomplete)
 \bar default
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+若无特别说明，则约定数域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 作为度量空间是完备的。
 \end_layout
 
 \begin_layout Standard
@@ -2074,7 +2383,9 @@ status open
 
 \begin_layout Plain Layout
 
-[$p$-绝对可和序列空间是完备的]
+[$
+\backslash
+ell_{p}$ 是完备的]
 \end_layout
 
 \end_inset
@@ -2149,8 +2460,242 @@ x_{n}(t)\coloneqq\begin{cases}
 
 \end_layout
 
+\begin_layout Theorem
+有限维赋范线性空间都是完备的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-度量空间中的级数
+度量空间的列紧性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[列紧性]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:sequentially-compact(in-Banach)"
+
+\end_inset
+
+给定度量空间 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的所有序列都有收敛到 
+\begin_inset Formula $V$
+\end_inset
+
+ 中某点的子列，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是
+\bar under
+列紧的 (sequentially compact)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+度量空间 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界且完备的度量空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+Banach 空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+有限维赋范线性空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若赋范线性空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，则 
+\begin_inset Formula $X$
+\end_inset
+
+ 是有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+列紧度量空间 
+\begin_inset Formula $V(d)$
+\end_inset
+
+ 的闭子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 亦是列紧集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riesz]
+\end_layout
+
+\end_inset
+
+若赋范线性空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 的真子空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 是闭集，则
+\begin_inset Formula 
+\[
+\left(\forall\epsilon\in(0,1)\right)\left(\exists\vec{z}\in V,\ \Vert\vec{z}\Vert=1\right)\left(\forall\vec{y}\in X\right)\left(\Vert\vec{y}-\vec{z}\Vert>1-\epsilon\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+赋范线性空间 
+\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\end_inset
+
+ 是有限维的，当且仅当单位闭球 
+\begin_inset Formula $B[\vec{0},1]$
+\end_inset
+
+ 是紧集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+赋范线性空间中的级数
 \end_layout
 
 \begin_layout Definition
@@ -2304,7 +2849,7 @@ status open
 
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Theorem
 赋范线性空间 
 \begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
 \end_inset
@@ -2321,6 +2866,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+有限维赋范线性空间
 \end_layout
 
 \begin_layout Section
