@@ -109,7 +109,303 @@ Banach 空间
 \end_layout
 
 \begin_layout Subsection
+公理化定义
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[范数]
+\end_layout
+
+\end_inset
+
+若定义在线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 上的映射 
+\begin_inset Formula $g\colon(V,\mathbb{F})\to\mathbb{R}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall\vec{v}\in V\right)\left(\left(g(\vec{v})\ge0\right)\land\left(g(\vec{v})=0\iff\vec{v}=\vec{o}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+绝对齐次性 
+\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(g(\lambda\vec{v})=\vert\lambda\vert\cdot g(\vec{v})\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三角不等式 
+\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(g(\vec{u}+\vec{v})\le g(\vec{u})+g(\vec{v})\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $g(\vec{v})$
+\end_inset
+
+ 是“向量 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的
+\bar under
+范数 (norm)
+\bar default
+”，用 
+\begin_inset Formula $\mathinner{\Vert\vec{v}\Vert}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[赋范线性空间]
+\end_layout
+
+\end_inset
+
+定义了范数 
+\begin_inset Formula $\mathinner{\Vert\,\Vert}\colon(V,\mathbb{F})\to\mathbb{R}$
+\end_inset
+
+ 的线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 被称为“
+\bar under
+赋范 (normed)
+\bar default
+ 线性空间”，用 
+\begin_inset Formula $V(\mathbb{F},\mathinner{\Vert\,\Vert})$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+常见的范数
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[数组空间]
+\end_layout
+
+\end_inset
+
+以数组 
+\begin_inset Formula $[x_{k}]_{k=1}^{n}$
+\end_inset
+
+ 为向量（用 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 表示）的线性空间 
+\begin_inset Formula $V$
+\end_inset
+
+ 可以被赋予范数
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\begin{cases}
+\left(\sum_{k=1}^{n}\vert x_{k}\vert^{p}\right)^{1/p} & p\in[1,+\infty)\\
+\max_{k=1}^{n}\vert x_{k}\vert & p\to+\infty
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[数列空间]
+\end_layout
+
+\end_inset
+
+以数列 
+\begin_inset Formula $[x_{k}]_{k=1}^{\infty}\subset\mathbb{F}$
+\end_inset
+
+ 为向量（用 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 表示）的线性空间 
+\begin_inset Formula $\mathbb{F}^{\infty}$
+\end_inset
+
+ 可以被赋予范数
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\begin{cases}
+\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p} & p\in[1,+\infty)\\
+\sup_{k=1}^{\infty}\vert x_{k}\vert & p\to+\infty
+\end{cases}
+\]
+
+\end_inset
+
+且由范数值有限的那些向量（称作“
+\begin_inset Formula $p$
+\end_inset
+
+-
+\bar under
+绝对可和 (absolutely summable)
+\bar default
+ 序列”）所构成的集合
+\begin_inset Formula 
+\[
+\ell^{p}(\mathbb{F})\coloneqq\left\{ \vec{x}\in\mathbb{F}^{\infty}:\mathinner{\Vert\vec{x}\Vert}_{p}<+\infty\right\} 
+\]
+
+\end_inset
+
+是数列空间 
+\begin_inset Formula $\mathbb{F}^{\infty}$
+\end_inset
+
+ 的线性子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数空间]
+\end_layout
+
+\end_inset
+
+以函数 
+\begin_inset Formula $u\colon\varOmega\to\mathbb{F}$
+\end_inset
+
+ 为向量（用 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ 表示）的线性空间 
+\begin_inset Formula $\left\{ u\colon\varOmega\to\mathbb{F}\right\} $
+\end_inset
+
+ 可以被赋予范数
+\begin_inset Formula 
+\[
+\mathinner{\Vert\vec{u}\Vert}_{p}\coloneqq\begin{cases}
+\left(\int_{\varOmega}\vert u\vert^{p}\right)^{1/p} & p\in[1,+\infty)\\
+\sup_{x\in\varOmega}\vert u(x)\vert & p\to+\infty
+\end{cases}
+\]
+
+\end_inset
+
+且由范数值有限的那些向量（称作“
+\begin_inset Formula $p$
+\end_inset
+
+-
+\bar under
+绝对可积 (absolutely integrable)
+\bar default
+ 函数”）所构成的集合
+\begin_inset Formula 
+\[
+\mathcal{L}^{p}(\varOmega)\coloneqq\left\{ \vec{u}\in\left\{ u\colon\varOmega\to\mathbb{F}\right\} :\mathinner{\Vert\vec{u}\Vert}_{p}<+\infty\right\} 
+\]
+
+\end_inset
+
+是函数空间 
+\begin_inset Formula $\left\{ u\colon\varOmega\to\mathbb{F}\right\} $
+\end_inset
+
+ 的线性子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 常用不等式
+\end_layout
+
+\begin_layout Standard
+要证明一个映射满足范数的公理化定义，通常只需验证其满足三角不等式。为此，本节给出几个常用不等式的证明（重点是最后一个，故将前几个作为引理）。
 \end_layout
 
 \begin_layout Definition
@@ -135,7 +431,7 @@ status open
 \begin_inset Formula $1/p+1/q=1$
 \end_inset
 
-，则称 
+，则称“
 \begin_inset Formula $p$
 \end_inset
 
@@ -147,7 +443,7 @@ status open
 \bar under
 共轭指数 (conjugate exponents)
 \bar default
-。特别地，规定 
+”。特别地，规定 
 \begin_inset Formula $1$
 \end_inset
 
@@ -176,30 +472,12 @@ status open
 
 \end_inset
 
-若 
-\begin_inset Formula $p$
-\end_inset
 
- 与 
-\begin_inset Formula $q$
-\end_inset
-
- 是取自 
-\begin_inset Formula $(1,+\infty)$
-\end_inset
-
- 的共轭指数，且 
-\begin_inset Formula $x$
-\end_inset
-
- 与 
-\begin_inset Formula $y$
-\end_inset
-
- 均为非负实数，则
 \begin_inset Formula 
 \[
 xy\le x^{p}/p+y^{q}/q\impliedby\begin{cases}
+(p,q)\in(1,+\infty)^{2} & 1/p+1/q=1\\
+(x,y)\in(0,+\infty)^{2}
 \end{cases}
 \]
 
@@ -273,30 +551,15 @@ status open
 
 \end_inset
 
-若 
-\begin_inset Formula $p$
-\end_inset
 
- 与 
-\begin_inset Formula $q$
-\end_inset
-
- 是取自 
-\begin_inset Formula $(1,+\infty)$
-\end_inset
-
- 的共轭指数，且有 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\le+\infty$
-\end_inset
-
- 及 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}\le+\infty$
-\end_inset
-
-，则
 \begin_inset Formula 
 \[
-\boxed{\sum_{i=1}^{\infty}\vert x_{i}\cdot y_{i}\vert\le\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}\cdot\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}\right)^{1/q}}
+\sum_{k=1}^{\infty}\vert x_{k}\cdot y_{k}\vert\le\underbrace{\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}}_{\Vert\vec{x}\Vert_{p}}\cdot\underbrace{\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{q}\right)^{1/q}}_{\Vert\vec{y}\Vert_{q}}\impliedby\begin{cases}
+(p,q)\in(1,+\infty)^{2}\\
+1/p+1/q=1\\{}
+[x_{k}]_{k=1}^{\infty}\in\ell^{p}\\{}
+[y_{k}]_{k=1}^{\infty}\in\ell^{q}
+\end{cases}
 \]
 
 \end_inset
@@ -313,25 +576,25 @@ status open
 
 \begin_layout Proof
 若 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}=0$
+\begin_inset Formula $\Vert\vec{x}\Vert_{p}=0$
 \end_inset
 
  或 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}=0$
+\begin_inset Formula $\Vert\vec{y}\Vert_{q}=0$
 \end_inset
 
 ，则结论显然成立；下面只考虑 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\ne0$
+\begin_inset Formula $\Vert\vec{x}\Vert_{p}\ne0$
 \end_inset
 
  且 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}\ne0$
+\begin_inset Formula $\Vert\vec{y}\Vert_{q}\ne0$
 \end_inset
 
  的情形。利用 Young's 不等式：
 \begin_inset Formula 
 \[
-\frac{\vert x_{k}\vert}{\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}}\cdot\frac{\vert y_{k}\vert}{\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}\right)^{1/q}}\le\frac{1}{p}\frac{\vert x_{k}\vert^{p}}{\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}}+\frac{1}{q}\frac{\vert y_{k}\vert^{q}}{\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}}
+\frac{\vert x_{k}\vert}{\Vert\vec{x}\Vert_{p}}\cdot\frac{\vert y_{k}\vert}{\Vert\vec{y}\Vert_{q}}\le\frac{1}{p}\left(\frac{\vert x_{k}\vert}{\Vert\vec{x}\Vert_{p}}\right)^{p}+\frac{1}{q}\left(\frac{\vert y_{k}\vert}{\Vert\vec{y}\Vert_{q}}\right)^{q}
 \]
 
 \end_inset
@@ -343,7 +606,7 @@ status open
  求和即得
 \begin_inset Formula 
 \[
-\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert\cdot\vert y_{k}\vert}{\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}\cdot\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}\right)^{1/q}}\le\frac{1}{p}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}}{\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}}}+\frac{1}{q}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert y_{k}\vert^{q}}{\sum_{i=1}^{\infty}\vert y_{i}\vert^{q}}}=1
+\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert\cdot\vert y_{k}\vert}{\Vert\vec{x}\Vert_{p}\cdot\Vert\vec{y}\Vert_{q}}\le\frac{1}{p}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}}{\Vert\vec{x}\Vert_{p}^{p}}}+\frac{1}{q}\cancelto{1}{\frac{\sum_{k=1}^{\infty}\vert y_{k}\vert^{q}}{\Vert\vec{y}\Vert_{q}^{q}}}=1
 \]
 
 \end_inset
@@ -369,22 +632,14 @@ status open
 
 \end_inset
 
-若 
-\begin_inset Formula $p\in(1,+\infty)$
-\end_inset
 
-，且有 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\le+\infty$
-\end_inset
-
- 及 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert y_{i}\vert^{p}\le+\infty$
-\end_inset
-
-，则
 \begin_inset Formula 
 \[
-\boxed{\left(\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p}\right)^{1/p}\le\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}+\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{p}\right)^{1/p}}
+\boxed{\left(\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p}\right)^{1/p}\le\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}+\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{p}\right)^{1/p}}\impliedby\begin{cases}
+p\in(1,+\infty)\\{}
+[x_{k}]_{k=1}^{\infty}\in\ell^{p}\\{}
+[y_{k}]_{k=1}^{\infty}\in\ell^{p}
+\end{cases}
 \]
 
 \end_inset
@@ -401,22 +656,22 @@ status open
 
 \begin_layout Proof
 若 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p}=0$
+\begin_inset Formula $\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p}=0$
 \end_inset
 
 ，则结论显然成立；下面只考虑 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p}\ne0$
+\begin_inset Formula $\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p}\ne0$
 \end_inset
 
  的情形。由 
-\begin_inset Formula $\vert x_{i}+y_{i}\vert\le\vert x_{i}\vert+\vert y_{i}\vert$
+\begin_inset Formula $\vert x_{k}+y_{k}\vert\le\vert x_{k}\vert+\vert y_{k}\vert$
 \end_inset
 
  得
 \begin_inset Formula 
 \[
-\begin{aligned}\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p} & =\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert\cdot\vert x_{i}+y_{i}\vert^{p-1}\\
- & \le\sum_{i=1}^{\infty}\vert x_{i}\vert\cdot\vert x_{i}+y_{i}\vert^{p-1}+\sum_{i=1}^{\infty}\vert y_{i}\vert\cdot\vert x_{i}+y_{i}\vert^{p-1}
+\begin{aligned}\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p} & =\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert\cdot\vert x_{k}+y_{k}\vert^{p-1}\\
+ & \le\sum_{k=1}^{\infty}\vert x_{k}\vert\cdot\vert x_{k}+y_{k}\vert^{p-1}+\sum_{k=1}^{\infty}\vert y_{k}\vert\cdot\vert x_{k}+y_{k}\vert^{p-1}
 \end{aligned}
 \]
 
@@ -433,8 +688,8 @@ status open
 ，故可对右端两项分别应用 Hölder's 不等式：
 \begin_inset Formula 
 \[
-\begin{aligned}\sum_{i=1}^{\infty}\vert x_{i}\vert\cdot\vert x_{i}+y_{i}\vert^{p-1} & \le\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}\cdot\left(\sum_{i=1}^{\infty}\left(\vert x_{i}+y_{i}\vert^{p-1}\right)^{q}\right)^{1/q}\\
-\sum_{i=1}^{\infty}\vert y_{i}\vert\cdot\vert x_{i}+y_{i}\vert^{p-1} & \le\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{p}\right)^{1/p}\cdot\left(\sum_{i=1}^{\infty}\left(\vert x_{i}+y_{i}\vert^{p-1}\right)^{q}\right)^{1/q}
+\begin{aligned}\sum_{k=1}^{\infty}\vert x_{k}\vert\cdot\vert x_{k}+y_{k}\vert^{p-1} & \le\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}\cdot\left(\sum_{k=1}^{\infty}\left(\vert x_{k}+y_{k}\vert^{p-1}\right)^{q}\right)^{1/q}\\
+\sum_{k=1}^{\infty}\vert y_{k}\vert\cdot\vert x_{k}+y_{k}\vert^{p-1} & \le\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{p}\right)^{1/p}\cdot\left(\sum_{k=1}^{\infty}\left(\vert x_{k}+y_{k}\vert^{p-1}\right)^{q}\right)^{1/q}
 \end{aligned}
 \]
 
@@ -443,7 +698,7 @@ status open
 从而有
 \begin_inset Formula 
 \[
-\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p}\le\left(\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}+\left(\sum_{i=1}^{\infty}\vert y_{i}\vert^{p}\right)^{1/p}\right)\left(\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{(p-1)q}\right)^{1/q}
+\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p}\le\left(\left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p}+\left(\sum_{k=1}^{\infty}\vert y_{k}\vert^{p}\right)^{1/p}\right)\left(\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{(p-1)q}\right)^{1/q}
 \]
 
 \end_inset
@@ -451,7 +706,7 @@ status open
 两边同除以
 \begin_inset Formula 
 \[
-\left(\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{p}\right)^{1-1/p}=\left(\sum_{i=1}^{\infty}\vert x_{i}+y_{i}\vert^{(p-1)q}\right)^{1/q}\impliedby q=\frac{p}{p-1}
+\left(\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{p}\right)^{1-1/p}=\left(\sum_{k=1}^{\infty}\vert x_{k}+y_{k}\vert^{(p-1)q}\right)^{1/q}\impliedby q=\frac{p}{p-1}
 \]
 
 \end_inset
@@ -467,7 +722,7 @@ status open
 \end_layout
 
 \begin_layout Subsection
-向量的范数
+等价的范数
 \end_layout
 
 \begin_layout Definition
@@ -476,271 +731,21 @@ status open
 
 \begin_layout Plain Layout
 
-[范数]
-\end_layout
-
-\end_inset
-
-若定义在向量空间 
-\begin_inset Formula $V(\mathbb{F})$
-\end_inset
-
- 上的实值映射 
-\begin_inset Formula $g\colon V(\mathbb{F})\to\mathbb{R}$
-\end_inset
-
- 满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-非负性 
-\begin_inset Formula $\left(\forall\vec{v}\in V\right)\left(g(\vec{v})\ge0\right)\land\left(g(\vec{v})=0\iff\vec{v}=\vec{0}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-绝对齐次性 
-\begin_inset Formula $\left(\forall(\vec{v},\lambda)\in V\times\mathbb{F}\right)\left(g(\lambda\vec{v})=\vert\lambda\vert\cdot g(\vec{v})\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-三角不等式 
-\begin_inset Formula $\left(\forall(\vec{u},\vec{v})\in V^{2}\right)\left(g(\vec{u}+\vec{v})\le g(\vec{u})+g(\vec{v})\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $g(\vec{v})$
-\end_inset
-
- 是向量 
-\begin_inset Formula $\vec{v}$
-\end_inset
-
- 的
-\bar under
-范数 (norm)
-\bar default
-（值），用 
-\begin_inset Formula $\mathinner{\Vert\vec{v}\Vert}$
-\end_inset
-
- 或 
-\begin_inset Formula $\mathinner{\vert\vec{v}\vert}$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[赋范线性空间]
-\end_layout
-
-\end_inset
-
-定义了范数 
-\begin_inset Formula $\mathinner{\Vert\ \Vert}\colon V(\mathbb{F})\to\mathbb{R}$
-\end_inset
-
- 的线性空间 
-\begin_inset Formula $V(\mathbb{F})$
-\end_inset
-
- 被称作
-\bar under
-赋范线性空间 (normed linear space)
-\bar default
-，用 
-\begin_inset Formula $V(\mathbb{F},\mathinner{\Vert\ \Vert})$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[数列空间]
-\end_layout
-
-\end_inset
-
-以数列 
-\begin_inset Formula $[x_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 为向量（用 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
- 表示）的线性空间 
-\begin_inset Formula $V$
-\end_inset
-
- 可以被赋予范数
-\begin_inset Formula 
-\[
-\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}\qquad p\in[1,+\infty)
-\]
-
-\end_inset
-
-且由范数值有限的那些向量所构成的集合
-\begin_inset Formula 
-\[
-\ell_{p}\coloneqq\left\{ \vec{x}\in V:\mathinner{\Vert\vec{x}\Vert}_{p}<+\infty\right\} 
-\]
-
-\end_inset
-
-是 
-\begin_inset Formula $V$
-\end_inset
-
- 的线性子空间。特别地，当 
-\begin_inset Formula $p\to+\infty$
-\end_inset
-
- 时，有
-\begin_inset Formula 
-\[
-\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{i=1}^{\infty}\vert x_{n}\vert\qquad\ell_{\infty}\coloneqq\left\{ \vec{x}\in V:\mathinner{\Vert\vec{x}\Vert}_{\infty}<+\infty\right\} 
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[函数空间]
-\end_layout
-
-\end_inset
-
-以函数 
-\begin_inset Formula $u\colon\varOmega\to\mathbb{F}$
-\end_inset
-
- 为向量（用 
-\begin_inset Formula $\vec{u}$
-\end_inset
-
- 表示）的线性空间 
-\begin_inset Formula $V$
-\end_inset
-
- 可以被赋予范数
-\begin_inset Formula 
-\[
-\mathinner{\Vert\vec{u}\Vert}_{p}\coloneqq\left(\int_{\varOmega}\vert u\vert^{p}\right)^{1/p}\qquad p\in[1,+\infty)
-\]
-
-\end_inset
-
-且由范数值有限的那些向量所构成的集合
-\begin_inset Formula 
-\[
-\mathcal{L}_{p}\coloneqq\left\{ \vec{u}\in V:\mathinner{\Vert\vec{u}\Vert}_{p}=\left(\int_{\varOmega}\vert u\vert^{p}\right)^{1/p}<+\infty\right\} 
-\]
-
-\end_inset
-
-是 
-\begin_inset Formula $V$
-\end_inset
-
- 的线性子空间。特别地，当 
-\begin_inset Formula $p\to+\infty$
-\end_inset
-
- 时，有
-\begin_inset Formula 
-\[
-\mathinner{\Vert\vec{u}\Vert}_{\infty}\coloneqq\sup_{\xi\in\varOmega}\vert u(\xi)\vert\qquad\ell_{\infty}\coloneqq\left\{ \vec{u}\in V:\mathinner{\Vert\vec{u}\Vert}_{\infty}<+\infty\right\} 
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-范数的等价性
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[范数的等价性]
+[等价的范数]
 \end_layout
 
 \end_inset
 
 若 
-\begin_inset Formula $g_{1}$
+\begin_inset Formula $\Vert\,\Vert_{p}$
 \end_inset
 
  与 
-\begin_inset Formula $g_{2}$
+\begin_inset Formula $\Vert\,\Vert_{q}$
 \end_inset
 
  是定义在线性空间 
-\begin_inset Formula $V(\mathbb{F})$
+\begin_inset Formula $(V,\mathbb{F})$
 \end_inset
 
  上的两种范数，且存在正实数 
@@ -754,16 +759,24 @@ status open
  使得
 \begin_inset Formula 
 \[
-\lambda\cdot g_{1}(\vec{v})\le g_{2}(\vec{v})\le\mu\cdot g_{1}(\vec{v})\qquad\forall\vec{v}\in V
+\lambda\cdot\Vert\vec{v}\Vert_{p}\le\Vert\vec{v}\Vert_{q}\le\mu\cdot\Vert\vec{v}\Vert_{p}\qquad\forall\vec{v}\in V
 \]
 
 \end_inset
 
-则称这两种范数是
+则称“
+\begin_inset Formula $\Vert\,\Vert_{p}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Vert\,\Vert_{q}$
+\end_inset
+
+ 是
 \bar under
 等价的 (equivalent)
 \bar default
-。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -790,13 +803,13 @@ status open
 \end_inset
 
 -维线性空间 
-\begin_inset Formula $\left\{ \begin{bmatrix}x_{1} & \cdots & x_{n}\end{bmatrix}\in\mathbb{C}^{1\times n}\right\} $
+\begin_inset Formula $\mathbb{C}^{n}$
 \end_inset
 
  上，可以定义如下三种等价的范数：
 \begin_inset Formula 
 \[
-\mathinner{\Vert\vec{x}\Vert}_{1}\coloneqq\sum_{i=1}^{n}\vert x_{i}\vert\qquad\mathinner{\Vert\vec{x}\Vert}_{2}\coloneqq\left(\sum_{i=1}^{n}\vert x_{i}\vert^{2}\right)^{1/2}\qquad\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\sup_{i=1}^{n}\vert x_{i}\vert
+\mathinner{\Vert\vec{x}\Vert}_{1}\coloneqq\sum_{k=1}^{n}\vert x_{k}\vert\qquad\mathinner{\Vert\vec{x}\Vert}_{2}\coloneqq\left(\sum_{k=1}^{n}\vert x_{k}\vert^{2}\right)^{1/2}\qquad\mathinner{\Vert\vec{x}\Vert}_{\infty}\coloneqq\max_{k=1}^{n}\vert x_{k}\vert
 \]
 
 \end_inset
@@ -813,17 +826,17 @@ status open
 
 \begin_layout Lemma
 若 
-\begin_inset Formula $\left\{ \vec{x}_{i}\right\} _{i=1}^{n}$
+\begin_inset Formula $\left\{ \vec{e}_{k}\right\} _{k=1}^{n}$
 \end_inset
 
  是 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  的一组基，则
 \begin_inset Formula 
 \[
-\left(\exists M>0\right)\left(\forall\left\{ \lambda_{i}\right\} _{i=1}^{n}\subset\mathbb{F}\right)\left(M\sum_{i=1}^{n}\vert\lambda_{i}\vert\le\left\Vert \sum_{i=1}^{n}\lambda_{i}\vec{x}_{i}\right\Vert \right)
+\left(\exists M>0\right)\left(\forall\left\{ \lambda_{k}\right\} _{k=1}^{n}\subset\mathbb{F}\right)\left(M\sum_{k=1}^{n}\vert\lambda_{k}\vert\le\left\Vert \sum_{k=1}^{n}\lambda_{k}\vec{e}_{k}\right\Vert \right)
 \]
 
 \end_inset
@@ -849,17 +862,239 @@ status open
 
 \end_layout
 
-\begin_layout Section
-度量及拓扑
+\begin_layout Subsection
+依范数收敛
 \end_layout
 
-\begin_layout Subsection
-一般的度量
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[依范数收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "converge-in-norm(def-in-Banach)"
+
+\end_inset
+
+给定赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 中的序列 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\exists\vec{x}\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\lim_{k\to\infty}\Vert\vec{x}_{k}-\vec{x}\Vert=0$
+\end_inset
+
+，则称“序列 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 
+\bar under
+依范数收敛 (converge in norm)
+\bar default
+ 到它的
+\bar under
+极限 (limit)
+\bar default
+ 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+”，用 
+\begin_inset Formula $\lim_{k\to\infty}\vec{x}_{k}=\vec{x}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\vec{x}_{k}\stackrel{\Vert\,\Vert}{\to}\vec{x}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[部分和]
+\end_layout
+
+\end_inset
+
+给定由线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+，称 
+\begin_inset Formula $\vec{s}_{n}\coloneqq\sum_{k=1}^{n}\vec{x}_{k}$
+\end_inset
+
+ 为该序列的（前 
+\begin_inset Formula $n$
+\end_inset
+
+ 项）
+\bar under
+部分和 (partial sum)
+\bar default
+，并称 
+\begin_inset Formula $[\vec{s}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+ 为 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 的
+\bar under
+部分和序列 (sequence of partial sums)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[级数]
+\end_layout
+
+\end_inset
+
+给定由赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 及其部分和序列 
+\begin_inset Formula $[\vec{s}_{n}]_{n=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\exists\vec{s}\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\lim_{n\to\infty}\Vert\vec{s}_{n}-\vec{s}\Vert=0$
+\end_inset
+
+，则称 
+\begin_inset Formula $\sum_{k=1}^{\infty}\vec{x}_{n}$
+\end_inset
+
+ 是一个
+\bar under
+级数 (series)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[绝对收敛]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "absolutely-converge(def-in-Banach)"
+
+\end_inset
+
+给定由赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 中的元素构成的序列 
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\sum_{k=1}^{\infty}\Vert\vec{x}_{k}\Vert<+\infty$
+\end_inset
+
+，则称级数 
+\begin_inset Formula $\sum_{k=1}^{\infty}\vec{x}_{k}$
+\end_inset
+
+ 是
+\bar under
+绝对收敛的 (absolutely convergent)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+度量
 \end_layout
 
 \begin_layout Standard
 “（单个）向量的范数”是对“线段的长度”这一初等几何概念的推广，后者又被定义为“（构成该线段的）两点之间的距离”。类似地，“两点之间的距离”被推广为“点集上的度
 量”。
+\end_layout
+
+\begin_layout Subsection
+公理化定义
 \end_layout
 
 \begin_layout Definition
@@ -877,7 +1112,7 @@ status open
 \begin_inset Formula $V$
 \end_inset
 
- 上的二元实值映射 
+ 上的映射 
 \begin_inset Formula $d\colon V\times V\to\mathbb{R}$
 \end_inset
 
@@ -887,7 +1122,7 @@ status open
 \begin_deeper
 \begin_layout Description
 非负性 
-\begin_inset Formula $\left(\forall(x,y)\in V^{2}\right)\left(d(x,y)\ge0\right)\land\left(d(x,y)=0\iff x=y\right)$
+\begin_inset Formula $\left(\forall(p,q)\in V^{2}\right)\left(\left(d(p,q)\ge0\right)\land\left(d(p,q)=0\iff p=q\right)\right)$
 \end_inset
 
 
@@ -895,7 +1130,7 @@ status open
 
 \begin_layout Description
 对称性 
-\begin_inset Formula $\left(\forall(x,y)\in V^{2}\right)\left(d(x,y)=d(y,x)\right)$
+\begin_inset Formula $\left(\forall(p,q)\in V^{2}\right)\left(d(p,q)=d(q,p)\right)$
 \end_inset
 
 
@@ -903,7 +1138,7 @@ status open
 
 \begin_layout Description
 三角不等式 
-\begin_inset Formula $\left(\forall(x,y,z)\in V^{3}\right)\left(d(x,z)\le d(x,y)+d(y,z)\right)$
+\begin_inset Formula $\left(\forall(p,q,r)\in V^{3}\right)\left(d(p,q)\le d(p,r)+d(q,r)\right)$
 \end_inset
 
 
@@ -915,31 +1150,31 @@ status open
 \begin_inset Formula $d$
 \end_inset
 
- 是 
+ 是“点集 
 \begin_inset Formula $V$
 \end_inset
 
- 上的一种
+ 上的
 \bar under
 度量 (metric)
 \bar default
-，并称 
-\begin_inset Formula $d(x,y)$
+”，并称 
+\begin_inset Formula $d(p,q)$
 \end_inset
 
- 是 
-\begin_inset Formula $x$
+ 是“
+\begin_inset Formula $p$
 \end_inset
 
  与 
-\begin_inset Formula $y$
+\begin_inset Formula $q$
 \end_inset
 
  之间的
 \bar under
 距离 (distance)
 \bar default
-。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -968,12 +1203,12 @@ status open
 \begin_inset Formula $V$
 \end_inset
 
- 是被称作
+ 被称为“
 \bar under
-度量空间 (metric space)
+度量 (metric)
 \bar default
-，用 
-\begin_inset Formula $V(d)$
+ 空间”，用 
+\begin_inset Formula $(V,d)$
 \end_inset
 
  表示。
@@ -998,7 +1233,7 @@ status open
 \end_inset
 
 若 
-\begin_inset Formula $y$
+\begin_inset Formula $p$
 \end_inset
 
  与 
@@ -1006,19 +1241,19 @@ status open
 \end_inset
 
  分别为度量空间 
-\begin_inset Formula $V(d)$
+\begin_inset Formula $(V,d)$
 \end_inset
 
  中的点与点集，则称
 \begin_inset Formula 
 \[
-d(y,X)\coloneqq\inf_{x\in X}d(x,y)
+d(p,X)=d(X,p)\coloneqq\inf_{x\in X}d(x,p)
 \]
 
 \end_inset
 
-为 
-\begin_inset Formula $y$
+为“
+\begin_inset Formula $p$
 \end_inset
 
  到 
@@ -1029,7 +1264,7 @@ d(y,X)\coloneqq\inf_{x\in X}d(x,y)
 \bar under
 距离 (distance)
 \bar default
-。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -1048,7 +1283,7 @@ d(y,X)\coloneqq\inf_{x\in X}d(x,y)
 \end_layout
 
 \begin_layout Standard
-在线性空间中，任意两个向量相减都得到一个新的向量，因此可以将每个“向量”都视为一个“点”，并将任意两“点”之间的距离定义为这两个“向量”之差的范数。
+在线性空间中，任意两个向量相减都得到一个新的向量。如果把每个“向量”都视为一个“点”，则任意两“点”之间的距离可以定义为这两个“向量”之差的范数。
 \end_layout
 
 \begin_layout Theorem
@@ -1065,11 +1300,11 @@ to$ 度量]
 \end_inset
 
 若 
-\begin_inset Formula $\Vert\ \Vert$
+\begin_inset Formula $\Vert\,\Vert$
 \end_inset
 
  是线性空间 
-\begin_inset Formula $V(\mathbb{F})$
+\begin_inset Formula $(V,\mathbb{F})$
 \end_inset
 
  上的一种范数，则映射
@@ -1084,19 +1319,19 @@ d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert\qquad\forall(\vec{x},\vec{y
 \begin_inset Formula $V$
 \end_inset
 
- 上的一种度量，并称 
-\begin_inset Formula $d$
-\end_inset
-
- 是由 
-\begin_inset Formula $\Vert\ \Vert$
+ 上的一种度量，并称“范数 
+\begin_inset Formula $\Vert\,\Vert$
 \end_inset
 
  
 \bar under
-诱导出的 (induced by)
+诱导出 (induce)
 \bar default
-。
+ 度量 
+\begin_inset Formula $d$
+\end_inset
+
+”。
 \end_layout
 
 \begin_layout Standard
@@ -1124,7 +1359,7 @@ to$ 范数]
 \end_inset
 
  是线性空间 
-\begin_inset Formula $V(\mathbb{F})$
+\begin_inset Formula $(V,\mathbb{F})$
 \end_inset
 
  上的一种度量，且满足
@@ -1133,7 +1368,7 @@ to$ 范数]
 \begin_deeper
 \begin_layout Description
 平移不变性 
-\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\vec{z})\in V^{3}\right)\left(d(\vec{x}+\vec{z})=d(\vec{y}+\vec{z})\right)$
+\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\vec{z})\in V^{3}\right)\left(d(\vec{x}+\vec{z},\vec{y}+\vec{z})=d(\vec{x},\vec{y})\right)$
 \end_inset
 
 
@@ -1152,28 +1387,28 @@ to$ 范数]
 则映射
 \begin_inset Formula 
 \[
-\Vert\vec{x}\Vert\coloneqq d(\vec{x},0)\qquad\forall\vec{x}\in V
+\Vert\vec{x}\Vert\coloneqq d(\vec{x},\vec{o})\qquad\forall\vec{x}\in V
 \]
 
 \end_inset
 
 是线性空间 
-\begin_inset Formula $V(\mathbb{F})$
+\begin_inset Formula $(V,\mathbb{F})$
 \end_inset
 
- 上的一种范数，并称 
-\begin_inset Formula $\Vert\ \Vert$
-\end_inset
-
- 是由 
+ 上的一种范数，并称“度量 
 \begin_inset Formula $d$
 \end_inset
 
  
 \bar under
-诱导出的 (induced by)
+诱导出 (induce)
 \bar default
-。
+ 范数 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+”。
 \end_layout
 
 \begin_layout Standard
@@ -1184,11 +1419,7 @@ to$ 范数]
 \end_layout
 
 \begin_layout Subsection
-度量 
-\begin_inset Formula $\to$
-\end_inset
-
- 拓扑
+依度量收敛
 \end_layout
 
 \begin_layout Definition
@@ -1197,47 +1428,52 @@ status open
 
 \begin_layout Plain Layout
 
-[开球、闭球、球面]
+[依度量收敛]
 \end_layout
 
 \end_inset
 
-度量空间 
-\begin_inset Formula $V(d)$
+给定度量空间 
+\begin_inset Formula $(V,d)$
 \end_inset
 
- 的以下子集
-\begin_inset Formula 
-\[
-\begin{aligned}B(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V:d(\vec{x},\vec{a})<r\right\} \\
-B[\vec{a},r] & \coloneqq\left\{ \vec{x}\in V:d(\vec{x},\vec{a})\le r\right\} \\
-S(\vec{a},r) & \coloneqq\left\{ \vec{x}\in V:d(\vec{x},\vec{a})=r\right\} 
-\end{aligned}
-\]
-
+ 中的点列 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
 \end_inset
 
-分别被称为以 
-\begin_inset Formula $\vec{a}\in V$
+，若 
+\begin_inset Formula $\exists p\in V$
 \end_inset
 
- 为球心、
-\begin_inset Formula $r\in\mathbb{R}_{+}$
+ 使得 
+\begin_inset Formula $\lim_{k\to\infty}d(p_{k},p)=0$
 \end_inset
 
- 为半径的
+，则称“点列 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 
 \bar under
-开球 (open ball)
+依度量收敛 (converge in metric)
 \bar default
-、
+ 到它的
 \bar under
-闭球 (closed ball)
+极限 (limit)
 \bar default
-、
-\bar under
-球面 (sphere)
-\bar default
-。
+ 
+\begin_inset Formula $p$
+\end_inset
+
+”，用 
+\begin_inset Formula $\lim_{k\to\infty}p_{k}=p$
+\end_inset
+
+ 或 
+\begin_inset Formula $p_{k}\stackrel{d}{\to}p$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -1253,32 +1489,536 @@ status open
 
 \begin_layout Plain Layout
 
-[开集]
+[Cauchy 序列]
 \end_layout
 
 \end_inset
 
 给定度量空间 
-\begin_inset Formula $V(d)$
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 中的点列 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\lim_{m\to\infty,n\to\infty}d(p_{m},p_{n})=0$
+\end_inset
+
+，则称 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 是“Cauchy 序列”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+给定赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+，若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的非空子集，
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的向量，
+\begin_inset Formula $[\vec{x}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 与 
+\begin_inset Formula $[\vec{y}_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的向量序列，
+\begin_inset Formula $[\lambda_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 中的数列，则
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\vert d(\vec{x},X)-d(\vec{y},X)\vert\le d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $-\Vert\vec{x}-\vec{y}\Vert\le\Vert\vec{x}\Vert-\Vert\vec{y}\Vert\le\Vert\vec{x}-\vec{y}\Vert$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lim_{k\to\infty}\vec{x}_{k}=\vec{x}\right)\implies\left(\lim_{k\to\infty}\Vert\vec{x}_{k}\Vert=\Vert\vec{x}\Vert\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lim_{k\to\infty}\vec{x}_{k}=\vec{x}\right)\land\left(\lim_{k\to\infty}\vec{y}_{k}=\vec{y}\right)\implies\left(\lim_{k\to\infty}(\vec{x}_{k}+\vec{y}_{k})\to\vec{x}+\vec{y}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lim_{k\to\infty}\vec{x}_{k}=\vec{x}\right)\land\left(\lim_{k\to\infty}\lambda_{k}=\lambda\right)\implies\left(\lim_{k\to\infty}\lambda_{k}\vec{x}_{k}=\lambda\vec{x}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的线性子空间，则 
+\begin_inset Formula $\overline{X}$
+\end_inset
+
+ 亦为 
+\begin_inset Formula $V$
+\end_inset
+
+ 的线性子空间。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0\right)\implies\left(\exists M>0\right)\left(\forall n\in\mathbb{N}_{+}\right)\left(\Vert\vec{x}_{n}\Vert<M\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lim_{k\to\infty}\vec{x}_{k}=\vec{x}\right)\implies\left(\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+含收敛子列的 Cauchy 序列，亦收敛到该子列的极限。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+完备的度量空间
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完备的度量空间]
+\end_layout
+
+\end_inset
+
+若度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 中的所有 Cauchy 序列都收敛到 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的某一点，则称 
+\begin_inset Formula $V$
+\end_inset
+
+ 是“
+\bar under
+完备的 (complete)
+\bar default
+ 度量空间”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+若无特别说明，则约定数域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 作为度量空间是完备的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Banach 空间]
+\end_layout
+
+\end_inset
+
+若赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 关于其范数 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+ 所诱导出的度量 
+\begin_inset Formula $d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert$
+\end_inset
+
+ 是完备的，则称它是“Banach 空间”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 是一个 Banach 空间，当且仅当 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的所有
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "absolutely-converge(def-in-Banach)"
+
+\end_inset
+
+的级数亦是
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "converge-in-norm(def-in-Banach)"
+
+\end_inset
+
+的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+有限维赋范线性空间都是 Banach 空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $p\in[1,+\infty)$
+\end_inset
+
+，则 
+\begin_inset Formula $\ell^{p}$
+\end_inset
+
+ 是 Banach 空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $p\in[1,+\infty)$
+\end_inset
+
+，则 
+\begin_inset Formula $\mathcal{L}^{p}$
+\end_inset
+
+ 是 Banach 空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[连续函数空间]
+\end_layout
+
+\end_inset
+
+连续函数序列
+\begin_inset Formula 
+\[
+x_{k}(t)\coloneqq\begin{cases}
+0 & t\in[-1,0]\\
+kt & t\in(0,1/k]\\
+1 & t\in(1/k,1]
+\end{cases}\qquad\forall k\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+关于范数
+\begin_inset Formula 
+\[
+\Vert u\Vert_{2}\coloneqq\left(\int_{-1}^{+1}(u(t))^{2}\dd{t}\right)^{1/2}\qquad\Vert u\Vert_{\infty}\coloneqq\max_{t\in[-1,1]}\vert u(t)\vert
+\]
+
+\end_inset
+
+ 都是 Cauchy 序列，但其“极限”
+\begin_inset Formula 
+\[
+x(t)\coloneqq\begin{cases}
+0 & t\in[-1,0]\\
+1 & t\in(0,+1]
+\end{cases}
+\]
+
+\end_inset
+
+不是连续函数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完备化]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+所有度量空间都可以完备化。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+有界与完全有界
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界集]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集，且
+\begin_inset Formula 
+\[
+\left(\exists M>0\right)\left(\forall(x,y)\in X^{2}\right)\left(d(x,y)<M\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是“
+\bar under
+有界 (bounded)
+\bar default
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+epsilon$-网]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ 及度量空间 
+\begin_inset Formula $(V,d)$
 \end_inset
 
  的子集 
 \begin_inset Formula $X$
 \end_inset
 
-，若 
-\begin_inset Formula $\left(\forall\vec{x}\in X\right)\left(\exists\delta>0\right)\left(B(\vec{x},\delta)\subset X\right)$
+ 与 
+\begin_inset Formula $Y$
 \end_inset
 
-，则称 
+，若
+\begin_inset Formula 
+\[
+\left(\forall x\in X\right)\left(\exists y\in Y\right)\left(d(x,y)<\epsilon\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $Y$
+\end_inset
+
+ 是“
 \begin_inset Formula $X$
 \end_inset
 
- 是一个
+ 的 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-
 \bar under
-开集 (open set)
+网 (net)
 \bar default
-。
+”，用 
+\begin_inset Formula $X_{\epsilon}$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -1286,6 +2026,253 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界集]
+\end_layout
+
+\end_inset
+
+给定度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists\left\{ x_{k}\right\} _{k=1}^{n}\eqqcolon X_{\epsilon}\subset V\right)\left(X\subset\bigcup_{k=1}^{n}B(x_{k},\epsilon)\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是“
+\bar under
+完全有界 (totally bounded)
+\bar default
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+上述定义中的 
+\begin_inset Formula $X_{\epsilon}$
+\end_inset
+
+ 可以从子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 中选取：
+\end_layout
+
+\begin_layout Theorem
+度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的，当且仅当
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists\left\{ x_{k}\right\} _{k=1}^{n}\eqqcolon X_{\epsilon}\subset X\right)\left(X\subset\bigcup_{k=1}^{n}B(x_{k},\epsilon)\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界 $
+\backslash
+Rightarrow$ 有界]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界 $
+\backslash
+nRightarrow$ 完全有界]
+\end_layout
+
+\end_inset
+
+取 
+\begin_inset Formula $V\coloneqq\ell^{2}$
+\end_inset
+
+ 及 
+\begin_inset Formula $B\coloneqq\left\{ \vec{x}\in V:d(\vec{x},\vec{o})\le1\right\} $
+\end_inset
+
+，则 
+\begin_inset Formula $B$
+\end_inset
+
+ 有界，但非完全有界。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+从 
+\begin_inset Formula $B$
+\end_inset
+
+ 中选出可列个元素
+\begin_inset Formula 
+\[
+\vec{e}_{k}\coloneqq\begin{bmatrix}0 & \cdots & 0 & 1 & 0 & \cdots\end{bmatrix}\qquad\forall k\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $1$
+\end_inset
+
+ 仅出现在 
+\begin_inset Formula $\vec{e}_{k}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 位，则有
+\begin_inset Formula 
+\[
+d(\vec{e}_{k},\vec{e}_{l})=\begin{cases}
+\sqrt{2} & k\ne l\\
+0 & k=l
+\end{cases}\qquad\forall(k,l)\in\mathbb{N}_{+}^{2}
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\epsilon\in(0,\sqrt{2}/2)$
+\end_inset
+
+ 即得可列个两两分离的开球 
+\begin_inset Formula $\left\{ B(\vec{e}_{k},\epsilon)\right\} _{k=1}^{\infty}$
+\end_inset
+
+，显然 
+\begin_inset Formula $\bigcup_{k=1}^{\infty}B(\vec{e}_{k},\epsilon)$
+\end_inset
+
+ 不可能被含有限个元素的 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-网覆盖。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完全有界 $
+\backslash
+Leftrightarrow$ 所有序列都有 Cauchy 子列]
+\end_layout
+
+\end_inset
+
+度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的，当且仅当所有 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的序列都有 Cauchy 子列。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+拓扑
+\end_layout
+
+\begin_layout Subsection
+公理化定义
 \end_layout
 
 \begin_layout Definition
@@ -1303,7 +2290,11 @@ status open
 \begin_inset Formula $V$
 \end_inset
 
- 及其开子集满足
+ 及定义在其上的开集系统 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 满足
 \end_layout
 
 \begin_deeper
@@ -1349,11 +2340,15 @@ status open
 \begin_inset Formula $X$
 \end_inset
 
- 是一个
+ 是“
 \bar under
-拓扑空间 (topological space)
+拓扑 (topological)
 \bar default
-。
+ 空间”，用 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -1375,14 +2370,14 @@ status open
 \end_inset
 
 给定拓扑空间 
-\begin_inset Formula $V$
+\begin_inset Formula $(V,\tau)$
 \end_inset
 
  的子集 
 \begin_inset Formula $X$
 \end_inset
 
-，闭集若 
+，若 
 \begin_inset Formula $V\setminus X$
 \end_inset
 
@@ -1390,11 +2385,11 @@ status open
 \begin_inset Formula $X$
 \end_inset
 
- 是一个
+ 是“
 \bar under
-闭集 (closed set)
+闭 (closed)
 \bar default
-。
+ 集”。
 \end_layout
 
 \begin_layout Standard
@@ -1416,18 +2411,14 @@ status open
 \end_inset
 
 给定拓扑空间 
-\begin_inset Formula $V$
+\begin_inset Formula $(V,\tau)$
 \end_inset
 
  的子集 
 \begin_inset Formula $X$
 \end_inset
 
-，它的
-\bar under
-闭包 (closure)
-\bar default
-是所有以 
+，称所有以 
 \begin_inset Formula $X$
 \end_inset
 
@@ -1435,7 +2426,15 @@ status open
 \begin_inset Formula $V$
 \end_inset
 
- 的闭子集的交集，用 
+ 的闭子集的交集为“
+\begin_inset Formula $X$
+\end_inset
+
+ 的
+\bar under
+闭包 (closure)
+\bar default
+”，用 
 \begin_inset Formula $\overline{X}$
 \end_inset
 
@@ -1455,7 +2454,7 @@ status open
 \end_inset
 
  是拓扑空间 
-\begin_inset Formula $V$
+\begin_inset Formula $(V,\tau)$
 \end_inset
 
  的子集，则“
@@ -1482,13 +2481,419 @@ status open
 
 \begin_layout Plain Layout
 
+[拓扑基]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 的一族开子集 
+\begin_inset Formula $B$
+\end_inset
+
+，若 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的所有开集都可以表示成 
+\begin_inset Formula $B$
+\end_inset
+
+ 中开集之并，则称 
+\begin_inset Formula $B$
+\end_inset
+
+ 是“
+\begin_inset Formula $V$
+\end_inset
+
+ 的一个
+\bar under
+拓扑基 (base for the topology)
+\bar default
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+度量 
+\begin_inset Formula $\to$
+\end_inset
+
+ 拓扑
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[开球、闭球、球面]
+\end_layout
+
+\end_inset
+
+度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的以下子集
+\begin_inset Formula 
+\[
+\begin{aligned}B(a,\delta) & \coloneqq\left\{ x\in V:d(x,a)<\delta\right\} \\
+\overline{B}(a,\delta) & \coloneqq\left\{ x\in V:d(x,a)\le\delta\right\} \\
+S(a,\delta) & \coloneqq\left\{ x\in V:d(x,a)=\delta\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+分别被称为以 
+\begin_inset Formula $a\in V$
+\end_inset
+
+ 为球心、
+\begin_inset Formula $\delta>0$
+\end_inset
+
+ 为半径的
+\bar under
+开球 (open ball)
+\bar default
+、
+\bar under
+闭球 (closed ball)
+\bar default
+、
+\bar under
+球面 (sphere)
+\bar default
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[度量空间中的开集]
+\end_layout
+
+\end_inset
+
+给定度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $\left(\forall x\in X\right)\left(\exists\delta>0\right)\left(B(x,\delta)\subset X\right)$
+\end_inset
+
+，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是“
+\bar under
+开 (open)
+\bar default
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[度量空间中的闭集]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\overline{X}$
+\end_inset
+
+ 是度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的闭子集，则
+\begin_inset Formula 
+\[
+x\in\overline{X}\impliedby\begin{cases}
+[x_{k}]_{k=1}^{\infty}\subset\overline{X}\\
+x\coloneqq\lim_{k\to\infty}x_{k}\in V
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+依拓扑收敛
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[邻域]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 中的点 
+\begin_inset Formula $p$
+\end_inset
+
+ 及开集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $p\in X$
+\end_inset
+
+，则称“
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $p$
+\end_inset
+
+ 的邻域 (neighborhood)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[去心邻域]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 中的点 
+\begin_inset Formula $p$
+\end_inset
+
+ 及其邻域 
+\begin_inset Formula $U(p)$
+\end_inset
+
+，称 
+\begin_inset Formula $U(p)\setminus\left\{ p\right\} $
+\end_inset
+
+ 为 
+\begin_inset Formula $p$
+\end_inset
+
+ 的“去心邻域 (deleted neighborhood)”，用 
+\begin_inset Formula $\mathring{U}(p)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[依拓扑收敛]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 中的点列 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
+\end_inset
+
+，若 
+\begin_inset Formula $\exists p\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula 
+\[
+\left(\forall U(p)\in\tau\right)\left(\exists N\in\mathbb{N}_{+}\right)\left([p_{k}]_{k=N}^{\infty}\subset U(p)\right)
+\]
+
+\end_inset
+
+则称“点列 
+\begin_inset Formula $[p_{k}]_{k=1}^{\infty}$
+\end_inset
+
+ 
+\bar under
+依拓扑收敛 (converge in topology)
+\bar default
+ 到它的
+\bar under
+极限 (limit)
+\bar default
+ 
+\begin_inset Formula $p$
+\end_inset
+
+”，用 
+\begin_inset Formula $\lim_{k\to\infty}p_{k}=p$
+\end_inset
+
+ 或 
+\begin_inset Formula $p_{k}\stackrel{\tau}{\to}p$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+紧、预紧、列紧
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[开覆盖]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若存在一族 
+\begin_inset Formula $V$
+\end_inset
+
+ 的开子集 
+\begin_inset Formula $\left\{ Y_{\alpha}\right\} _{\alpha\in A}$
+\end_inset
+
+ 使得 
+\begin_inset Formula $X\subset\bigcup_{\alpha\in A}Y_{\alpha}$
+\end_inset
+
+，则称这族开子集是“
+\begin_inset Formula $X$
+\end_inset
+
+ 的
+\bar under
+开覆盖 (open cover)
+\bar default
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 [紧集]
 \end_layout
 
 \end_inset
 
 给定拓扑空间 
-\begin_inset Formula $V$
+\begin_inset Formula $(V,\tau)$
 \end_inset
 
  的子集 
@@ -1503,11 +2908,237 @@ status open
 \begin_inset Formula $X$
 \end_inset
 
- 是一个
+ 是“
 \bar under
-紧集 (compact set)
+紧 (compact)
 \bar default
-。
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[预紧集]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $\overline{X}$
+\end_inset
+
+ 是紧集，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是“
+\bar under
+预紧 (precompact)
+\bar default
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[列紧集]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(V,\tau)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+，若 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的所有序列都有（依拓扑）收敛到 
+\begin_inset Formula $V$
+\end_inset
+
+ 中某点的子列，则称 
+\begin_inset Formula $X$
+\end_inset
+
+ 是“
+\bar under
+列紧 (sequentially compact)
+\bar default
+ 集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的子集，则以下叙述等价
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧的。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $X$
+\end_inset
+
+ 是紧的。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界且完备的。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，则 
+\begin_inset Formula $X$
+\end_inset
+
+ 是有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+列紧度量空间 
+\begin_inset Formula $(V,d)$
+\end_inset
+
+ 的闭子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 亦是列紧集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riesz]
+\end_layout
+
+\end_inset
+
+若赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的真子空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 是闭集，则
+\begin_inset Formula 
+\[
+\left(\forall\epsilon\in(0,1)\right)\left(\exists\vec{z}\in V,\ \Vert\vec{z}\Vert=1\right)\left(\forall\vec{y}\in X\right)\left(\Vert\vec{y}-\vec{z}\Vert>1-\epsilon\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 是有限维的，当且仅当单位闭球 
+\begin_inset Formula $B[\vec{o},1]$
+\end_inset
+
+ 是紧集。
 \end_layout
 
 \begin_layout Standard
@@ -1518,7 +3149,7 @@ status open
 \end_layout
 
 \begin_layout Subsection
-可分性与 Schauder 基
+稠密集与可分空间
 \end_layout
 
 \begin_layout Definition
@@ -1533,7 +3164,7 @@ status open
 \end_inset
 
 给定拓扑空间 
-\begin_inset Formula $V$
+\begin_inset Formula $(V,\tau)$
 \end_inset
 
  的子集 
@@ -1548,11 +3179,11 @@ status open
 \begin_inset Formula $X$
 \end_inset
 
- 是一个
+ 是“
 \bar under
-稠密集 (dense set)
+稠密 (dense)
 \bar default
-。
+ 集”。
 \end_layout
 
 \begin_layout Standard
@@ -1562,7 +3193,7 @@ status open
 
 \end_layout
 
-\begin_layout Corollary
+\begin_layout Theorem
 \begin_inset ERT
 status open
 
@@ -1574,7 +3205,7 @@ status open
 \end_inset
 
 给定度量空间 
-\begin_inset Formula $V(d)$
+\begin_inset Formula $(V,d)$
 \end_inset
 
  的子集 
@@ -1584,7 +3215,7 @@ status open
 ，若
 \begin_inset Formula 
 \[
-\left(\forall\vec{v}\in V,\ \forall\epsilon>0\right)\left(\exists\vec{x}\in X\right)\left(d(\vec{v},\vec{x})<\epsilon\right)
+\left(\forall p\in V,\ \forall\epsilon>0\right)\left(\exists q\in X\right)\left(d(p,q)<\epsilon\right)
 \]
 
 \end_inset
@@ -1614,11 +3245,11 @@ status open
 
 \end_inset
 
-含有可数稠密子集的拓扑空间被称为
+拥有含可数个元素的稠密子集的拓扑空间被称为“
 \bar under
 可分的 (separable)
 \bar default
-。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -1630,7 +3261,7 @@ status open
 
 \begin_layout Theorem
 赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  可分，当且仅当 
@@ -1638,7 +3269,7 @@ status open
 \end_inset
 
 ，使得 
-\begin_inset Formula $V=\overline{\mathrm{span}(X)}$
+\begin_inset Formula $V=\overline{\mathrm{span}}(X)$
 \end_inset
 
  且 
@@ -1679,16 +3310,16 @@ status open
 \end_layout
 
 \begin_layout Example
-序列空间 
-\begin_inset Formula $\ell_{p}$
-\end_inset
-
- 可分，其中 
+若 
 \begin_inset Formula $p\in[1,+\infty)$
 \end_inset
 
-；但 
-\begin_inset Formula $\ell_{\infty}$
+，则 
+\begin_inset Formula $\ell^{p}$
+\end_inset
+
+ 可分；但 
+\begin_inset Formula $\ell^{\infty}$
 \end_inset
 
  不可分。
@@ -1699,6 +3330,130 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Banach 空间
+\end_layout
+
+\begin_layout Subsection
+拓扑性质
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[完备 $
+\backslash
+Leftrightarrow$ 闭]
+\end_layout
+
+\end_inset
+
+Banach 空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的线性子空间 
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的完备子空间，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的闭子空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+有限维赋范线性空间（都是 Banach 空间，从而）都是闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[列紧 $
+\backslash
+Leftrightarrow$ 完全有界且闭]
+\end_layout
+
+\end_inset
+
+Banach 空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是完全有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+有限维赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 是列紧集，当且仅当 
+\begin_inset Formula $X$
+\end_inset
+
+ 是有界的闭集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Schauder 基
 \end_layout
 
 \begin_layout Definition
@@ -1713,27 +3468,27 @@ status open
 \end_inset
 
 给定 Banach 空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  中的向量序列 
-\begin_inset Formula $\left\{ \vec{e}_{i}\right\} _{i=1}^{\infty}$
+\begin_inset Formula $\left\{ \vec{e}_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
 ，若
 \begin_inset Formula 
 \[
-\left(\forall\vec{x}\in V\right)\left(\exists\left\{ \lambda_{i}\right\} _{i=1}^{\infty}\subset\mathbb{F}\right)\left(\lim_{N\to\infty}\left\Vert \vec{x}-\sum_{i=1}^{N}\lambda_{i}\vec{e}_{i}\right\Vert \right)=0
+\left(\forall\vec{x}\in V\right)\left(\exists\left\{ \lambda_{k}\right\} _{k=1}^{\infty}\subset\mathbb{F}\right)\left(\lim_{n\to\infty}\left\Vert \vec{x}-\sum_{k=1}^{n}\lambda_{k}\vec{e}_{k}\right\Vert \right)=0
 \]
 
 \end_inset
 
 且数量序列 
-\begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{\infty}$
+\begin_inset Formula $\left\{ \lambda_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
  唯一，则称向量序列 
-\begin_inset Formula $\left\{ \vec{e}_{i}\right\} _{i=1}^{\infty}$
+\begin_inset Formula $\left\{ \vec{e}_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
  是 
@@ -1745,7 +3500,7 @@ status open
 Schauder 基
 \bar default
 ，并称 
-\begin_inset Formula $\sum_{i=1}^{\infty}\lambda_{i}\vec{e}_{i}$
+\begin_inset Formula $\sum_{k=1}^{\infty}\lambda_{k}\vec{e}_{k}$
 \end_inset
 
  是 
@@ -1768,15 +3523,15 @@ Schauder 基
 
 \begin_layout Corollary
 向量序列 
-\begin_inset Formula $\left\{ \vec{e}_{i}\right\} _{i=1}^{\infty}$
+\begin_inset Formula $\left\{ \vec{e}_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
  是 Banach 空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  的一个 Schauder 基，当且仅当 
-\begin_inset Formula $V=\overline{\mathrm{span}\left\{ \vec{e}_{i}\right\} _{i=1}^{\infty}}$
+\begin_inset Formula $V=\overline{\mathrm{span}}\left\{ \vec{e}_{k}\right\} _{k=1}^{\infty}$
 \end_inset
 
  且 
@@ -1826,1384 +3581,12 @@ Schauder 基
 
 \end_layout
 
-\begin_layout Subsection
-有界与完全有界
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[有界]
-\end_layout
-
-\end_inset
-
-若 
-\begin_inset Formula $X$
-\end_inset
-
- 是赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的子集，且
-\begin_inset Formula 
-\[
-\left(\exists M>0\right)\left(\forall\vec{x}\in X\right)\left(\Vert\vec{x}\Vert<M\right)
-\]
-
-\end_inset
-
-则称 
-\begin_inset Formula $X$
-\end_inset
-
- 是
-\bar under
-有界的 (bounded)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-epsilon$-网]
-\end_layout
-
-\end_inset
-
-给定正实数 
-\begin_inset Formula $\epsilon$
-\end_inset
-
- 及赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 与 
-\begin_inset Formula $Y$
-\end_inset
-
-，若
-\begin_inset Formula 
-\[
-\left(\forall\vec{x}\in X\right)\left(\exists\vec{y}\in Y\right)\left(\Vert\vec{x}-\vec{y}\Vert<\epsilon\right)
-\]
-
-\end_inset
-
-则称 
-\begin_inset Formula $Y$
-\end_inset
-
- 是 
-\begin_inset Formula $X$
-\end_inset
-
- 的一个 
-\bar under
-
-\begin_inset Formula $\epsilon$
-\end_inset
-
--网 (
-\begin_inset Formula $\epsilon$
-\end_inset
-
--net)
-\bar default
-，用 
-\begin_inset Formula $X_{\epsilon}$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[完全有界]
-\end_layout
-
-\end_inset
-
-给定度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
-，若
-\begin_inset Formula 
-\[
-\left(\forall\epsilon>0\right)\left(\exists\left\{ \vec{x}_{n}\right\} _{i=1}^{N}\eqqcolon X_{\epsilon}\subset V\right)\left(X\subset\bigcup_{i=1}^{N}B(\vec{x}_{n},\epsilon)\right)
-\]
-
-\end_inset
-
-即 
-\begin_inset Formula $V$
-\end_inset
-
- 中存在含有限个元素的 
-\begin_inset Formula $\epsilon$
-\end_inset
-
--网 
-\begin_inset Formula $X_{\epsilon}$
-\end_inset
-
-，则称 
-\begin_inset Formula $X$
-\end_inset
-
- 是
-\bar under
-完全有界的 (totally bounded)
-\bar default
- 或
-\bar under
-预紧的 (precompact)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-上述 
-\begin_inset Formula $\epsilon$
-\end_inset
-
--网的选取范围可以限制在 
-\begin_inset Formula $X$
-\end_inset
-
- 上：
-\end_layout
-
-\begin_layout Theorem
-度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是完全有界的，当且仅当
-\begin_inset Formula 
-\[
-\left(\forall\epsilon>0\right)\left(\exists\left\{ \vec{x}_{n}\right\} _{i=1}^{N}\eqqcolon X_{\epsilon}\subset X\right)\left(X\subset\bigcup_{i=1}^{N}B(\vec{x}_{n},\epsilon)\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[完全有界 $
-\backslash
-nRightarrow$ 有界]
-\end_layout
-
-\end_inset
-
-赋范线性空间的所有完全有界的子集都是有界的。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[有界 $
-\backslash
-nRightarrow$ 完全有界]
-\end_layout
-
-\end_inset
-
-取 
-\begin_inset Formula $V\coloneqq\ell_{2}$
-\end_inset
-
- 及 
-\begin_inset Formula $B\coloneqq\left\{ \vec{x}\in V:\Vert\vec{x}\Vert\le1\right\} $
-\end_inset
-
-，则 
-\begin_inset Formula $B$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的有界子集，但非完全有界的。理由如下：从 
-\begin_inset Formula $B$
-\end_inset
-
- 中选出可列个元素
-\begin_inset Formula 
-\[
-\vec{e}_{n}\coloneqq\begin{bmatrix}0 & \cdots & 0 & 1 & 0 & \cdots\end{bmatrix}\qquad\forall n\in\mathbb{N}_{+}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $1$
-\end_inset
-
- 仅出现在 
-\begin_inset Formula $\vec{e}_{n}$
-\end_inset
-
- 的第 
-\begin_inset Formula $n$
-\end_inset
-
- 位，则有
-\begin_inset Formula 
-\[
-d(\vec{e}_{m},\vec{e}_{n})=\begin{cases}
-\sqrt{2} & m\ne n\\
-0 & m=n
-\end{cases}\qquad\forall(m,n)\in\mathbb{N}_{+}^{2}
-\]
-
-\end_inset
-
-取 
-\begin_inset Formula $\epsilon\in(0,\sqrt{2}/2)$
-\end_inset
-
- 即得可列个两两分离的开球 
-\begin_inset Formula $\left\{ B(\vec{e}_{n},\epsilon)\right\} _{i=1}^{\infty}$
-\end_inset
-
-，它们的并集显然不可能被含有限个元素的 
-\begin_inset Formula $\epsilon$
-\end_inset
-
--网覆盖。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-度量空间的完备性
+商空间与积空间
 \end_layout
 
 \begin_layout Subsection
-向量序列的收敛性
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[依范数收敛]
-\end_layout
-
-\end_inset
-
-给定由赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 中的向量构成的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
-，若 
-\begin_inset Formula $\exists\vec{x}_{*}\in V$
-\end_inset
-
- 使得 
-\begin_inset Formula $\lim_{i\to\infty}\Vert\vec{x}_{i}-\vec{x}_{*}\Vert=0$
-\end_inset
-
-，则称序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 
-\bar under
-依范数收敛 (converge in norm)
-\bar default
- 到它的
-\bar under
-极限 (limit)
-\bar default
- 
-\begin_inset Formula $\vec{x}_{*}$
-\end_inset
-
-，用 
-\begin_inset Formula $\lim_{i\to\infty}\vec{x}_{i}=\vec{x}_{*}$
-\end_inset
-
- 或 
-\begin_inset Formula $\vec{x}_{i}\to\vec{x}_{*}$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[依度量收敛]
-\end_layout
-
-\end_inset
-
-给定由度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 中的点构成的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
-，若 
-\begin_inset Formula $\exists\vec{x}_{*}\in V$
-\end_inset
-
- 使得 
-\begin_inset Formula $\lim_{i\to\infty}d(\vec{x}_{i},\vec{x}_{*})=0$
-\end_inset
-
-，则称序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 
-\bar under
-依度量收敛 (converge in metric)
-\bar default
- 到它的
-\bar under
-极限 (limit)
-\bar default
- 
-\begin_inset Formula $\vec{x}_{*}$
-\end_inset
-
-，用 
-\begin_inset Formula $\lim_{i\to\infty}\vec{x}_{i}=\vec{x}_{*}$
-\end_inset
-
- 或 
-\begin_inset Formula $\vec{x}_{i}\to\vec{x}_{*}$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[闭集中的收敛序列的极限仍属于该闭集]
-\end_layout
-
-\end_inset
-
-若 
-\begin_inset Formula $\overline{X}$
-\end_inset
-
- 是度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的闭子集，且 
-\begin_inset Formula $\overline{X}$
-\end_inset
-
- 中的某个序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 有属于 
-\begin_inset Formula $V$
-\end_inset
-
- 的极限，则该极限亦属于 
-\begin_inset Formula $\overline{X}$
-\end_inset
-
-，即
-\begin_inset Formula 
-\[
-\lim_{i\to\infty}\vec{x}_{i}\eqqcolon\vec{x}_{*}\in V\implies\vec{x}_{*}\in\overline{X}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Cauchy 序列]
-\end_layout
-
-\end_inset
-
-给定度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 中的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
-，若 
-\begin_inset Formula $\lim_{m\to\infty,n\to\infty}d(\vec{x}_{m},\vec{x}_{n})=0$
-\end_inset
-
-，则称 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 是一个 
-\bar under
-Cauchy 序列 (Cauchy sequence)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-给定赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
-，若 
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的非空子集，
-\begin_inset Formula $\vec{x}$
-\end_inset
-
- 与 
-\begin_inset Formula $\vec{y}$
-\end_inset
-
- 是取自 
-\begin_inset Formula $V$
-\end_inset
-
- 的任意元素，
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 与 
-\begin_inset Formula $[\vec{y}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 是由 
-\begin_inset Formula $V$
-\end_inset
-
- 中元素构造的序列，
-\begin_inset Formula $[\lambda_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 是由 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 中元素构造的序列，则
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $\vert d(\vec{x},X)-d(\vec{y},X)\vert\le d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $-\Vert\vec{x}-\vec{y}\Vert\le\Vert\vec{x}\Vert-\Vert\vec{y}\Vert\le\Vert\vec{x}-\vec{y}\Vert$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\left(\lim_{i\to\infty}\vec{x}_{i}=\vec{x}\right)\implies\left(\lim_{i\to\infty}\Vert\vec{x}_{i}\Vert=\Vert\vec{x}\Vert\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\left(\lim_{i\to\infty}\vec{x}_{i}=\vec{x}\right)\land\left(\lim_{i\to\infty}\vec{y}_{i}=\vec{y}\right)\implies\left(\lim_{i\to\infty}(\vec{x}_{i}+\vec{y}_{i})\to\vec{x}+\vec{y}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\left(\lim_{i\to\infty}\vec{x}_{i}=\vec{x}\right)\land\left(\lim_{i\to\infty}\lambda_{i}=\lambda\right)\implies\left(\lim_{i\to\infty}\lambda_{i}\vec{x}_{i}=\lambda\vec{x}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-若 
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的线性子空间，则 
-\begin_inset Formula $\overline{X}$
-\end_inset
-
- 亦为 
-\begin_inset Formula $V$
-\end_inset
-
- 的线性子空间。
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\left(\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0\right)\implies\left(\exists M>0\right)\left(\forall n\in\mathbb{N}_{+}\right)\left(\Vert\vec{x}_{n}\Vert<M\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $\left(\lim_{i\to\infty}\vec{x}_{i}=\vec{x}\right)\implies\left(\lim_{m\to\infty,n\to\infty}\Vert\vec{x}_{m}-\vec{x}_{n}\Vert=0\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-含收敛子列的 Cauchy 序列，亦收敛到该子列的极限。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[完全有界 $
-\backslash
-iff$ 所有序列都有 Cauchy 子列]
-\end_layout
-
-\end_inset
-
-度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是完全有界的 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-$
-\backslash
-iff$
-\end_layout
-
-\end_inset
-
- 所有 
-\begin_inset Formula $X$
-\end_inset
-
- 中的序列都有 Cauchy 子列。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-度量空间的完备性
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[完备性]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "def:completeness(in-Banach)"
-
-\end_inset
-
-若度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 中的所有 Cauchy 序列都收敛到 
-\begin_inset Formula $V$
-\end_inset
-
- 中的某一点，则称该度量空间是
-\bar under
-完备的 (complete)
-\bar default
-，否则称之为
-\bar under
-不完备的 (incomplete)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-若无特别说明，则约定数域 
-\begin_inset Formula $\mathbb{F}$
-\end_inset
-
- 作为度量空间是完备的。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Banach 空间]
-\end_layout
-
-\end_inset
-
-若赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 关于其范数 
-\begin_inset Formula $\Vert\ \Vert$
-\end_inset
-
- 所诱导出的度量 
-\begin_inset Formula $d(\vec{x},\vec{y})\coloneqq\Vert\vec{x}-\vec{y}\Vert$
-\end_inset
-
- 是完备的，则称它是一个 
-\bar under
-Banach 空间 (Banach space)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[完备子空间 $
-\backslash
-iff$ 闭子空间]
-\end_layout
-
-\end_inset
-
-若 
-\begin_inset Formula $X$
-\end_inset
-
- 是 Banach 空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的线性子空间，则“
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的完备子空间”等价于“
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的闭子空间”。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-ell_{p}$ 是完备的]
-\end_layout
-
-\end_inset
-
-以序列 
-\begin_inset Formula $[x_{i}]_{i=1}^{\infty}\eqqcolon\vec{x}$
-\end_inset
-
- 为向量的赋范线性空间
-\begin_inset Formula 
-\[
-\ell_{p}\coloneqq\left\{ \vec{x}\in X:\mathinner{\Vert\vec{x}\Vert}_{p}<+\infty\right\} \qquad\mathinner{\Vert\vec{x}\Vert}_{p}\coloneqq\left(\sum_{i=1}^{\infty}\vert x_{i}\vert^{p}\right)^{1/p}\qquad p\in[1,+\infty)
-\]
-
-\end_inset
-
-是 Banach 空间。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[连续函数空间是不完备的]
-\end_layout
-
-\end_inset
-
-给定如下连续函数序列及范数：
-\begin_inset Formula 
-\[
-x_{n}(t)\coloneqq\begin{cases}
-0 & t\in(-1,0]\\
-nt & t\in(0,1/n]\\
-1 & t\in(1/n,1]
-\end{cases}\qquad\Vert x_{n}\Vert_{2}\coloneqq\left(\int_{0}^{1}(x_{n}(t))^{2}\dd{t}\right)^{1/2}\qquad\forall n\in\mathbb{N}
-\]
-
-\end_inset
-
- 可以验证：
-\begin_inset Formula $[x_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 是 Cauchy 序列，但其“极限”
-\begin_inset Formula 
-\[
-x_{n}(t)\coloneqq\begin{cases}
-0 & t\in(-1,0]\\
-1 & t\in(0,+1]
-\end{cases}
-\]
-
-\end_inset
-
-不是连续函数。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-有限维赋范线性空间都是完备的闭集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-度量空间的列紧性
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[列紧性]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "def:sequentially-compact(in-Banach)"
-
-\end_inset
-
-给定度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
-，若 
-\begin_inset Formula $X$
-\end_inset
-
- 中的所有序列都有收敛到 
-\begin_inset Formula $V$
-\end_inset
-
- 中某点的子列，则称 
-\begin_inset Formula $X$
-\end_inset
-
- 是
-\bar under
-列紧的 (sequentially compact)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是列紧集，当且仅当 
-\begin_inset Formula $X$
-\end_inset
-
- 是完全有界且完备的度量空间。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-Banach 空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是列紧集，当且仅当 
-\begin_inset Formula $X$
-\end_inset
-
- 是完全有界的闭集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-有限维赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是列紧集，当且仅当 
-\begin_inset Formula $X$
-\end_inset
-
- 是有界的闭集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-若赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 是列紧集，则 
-\begin_inset Formula $X$
-\end_inset
-
- 是有界的闭集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-列紧度量空间 
-\begin_inset Formula $V(d)$
-\end_inset
-
- 的闭子集 
-\begin_inset Formula $X$
-\end_inset
-
- 亦是列紧集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Riesz]
-\end_layout
-
-\end_inset
-
-若赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 的真子空间 
-\begin_inset Formula $X$
-\end_inset
-
- 是闭集，则
-\begin_inset Formula 
-\[
-\left(\forall\epsilon\in(0,1)\right)\left(\exists\vec{z}\in V,\ \Vert\vec{z}\Vert=1\right)\left(\forall\vec{y}\in X\right)\left(\Vert\vec{y}-\vec{z}\Vert>1-\epsilon\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 是有限维的，当且仅当单位闭球 
-\begin_inset Formula $B[\vec{0},1]$
-\end_inset
-
- 是紧集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-赋范线性空间中的级数
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[部分和]
-\end_layout
-
-\end_inset
-
-给定由线性空间 
-\begin_inset Formula $V(\mathbb{F})$
-\end_inset
-
- 中的元素构成的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
-，称 
-\begin_inset Formula $\vec{s}_{n}\coloneqq\sum_{k=1}^{n}\vec{x}_{k}$
-\end_inset
-
- 为该序列的（前 
-\begin_inset Formula $n$
-\end_inset
-
- 项）
-\bar under
-部分和 (partial sum)
-\bar default
-，并称 
-\begin_inset Formula $[\vec{s}_{n}]_{i=1}^{\infty}$
-\end_inset
-
- 为 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 的
-\bar under
-部分和序列 (sequence of partial sums)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[级数和]
-\end_layout
-
-\end_inset
-
-给定由赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 中的元素构成的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 及其部分和序列 
-\begin_inset Formula $[\vec{s}_{n}]_{i=1}^{\infty}$
-\end_inset
-
-，若 
-\begin_inset Formula $\exists\vec{s}\in V$
-\end_inset
-
- 使得 
-\begin_inset Formula $\lim_{n\to\infty}\Vert\vec{s}_{n}-\vec{s}\Vert=0$
-\end_inset
-
-，则称 
-\begin_inset Formula $\vec{s}\coloneqq\sum_{i=1}^{\infty}\vec{x}_{n}$
-\end_inset
-
- 是 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
- 的
-\bar under
-级数和 (series sum)
-\bar default
-，简称
-\bar under
-级数 (series)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[绝对收敛]
-\end_layout
-
-\end_inset
-
-给定由赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 中的元素构成的序列 
-\begin_inset Formula $[\vec{x}_{i}]_{i=1}^{\infty}$
-\end_inset
-
-，若 
-\begin_inset Formula $\sum_{i=1}^{\infty}\Vert\vec{x}_{n}\Vert<+\infty$
-\end_inset
-
-，则称级数 
-\begin_inset Formula $\sum_{i=1}^{\infty}\vec{x}_{n}$
-\end_inset
-
- 是
-\bar under
-绝对收敛的 (absolutely convergent)
-\bar default
-。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
-\end_inset
-
- 是一个 Banach 空间，当且仅当所有（由 
-\begin_inset Formula $V$
-\end_inset
-
- 中的元素构成的）绝对收敛的级数亦是（依范数）收敛的。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-商空间上的分析
+商空间
 \end_layout
 
 \begin_layout Lemma
@@ -3222,19 +3605,19 @@ status open
 \end_inset
 
  是赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  的闭子空间，则任意陪集的范数可以被定义为
 \begin_inset Formula 
 \[
-\Vert\vec{v}+\overline{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\overline{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\overline{X})\in(V/\overline{X})
+\Vert\vec{v}+\overline{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\overline{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\overline{X})\in(V\mathbin{/}\overline{X})
 \]
 
 \end_inset
 
 且以此为范数的商空间 
-\begin_inset Formula $V/\overline{X}$
+\begin_inset Formula $V\mathbin{/}\overline{X}$
 \end_inset
 
  是一个赋范线性空间。
@@ -3262,13 +3645,13 @@ status open
 \begin_deeper
 \begin_layout Description
 非负性 
-\begin_inset Formula $\left(\forall(\vec{v}+\overline{X})\in V/\overline{X}\right)\left(\Vert\vec{v}+\overline{X}\Vert=d(\vec{v},\overline{X})\ge0\right)$
+\begin_inset Formula $\left(\forall(\vec{v}+\overline{X})\in(V\mathbin{/}\overline{X})\right)\left(\Vert\vec{v}+\overline{X}\Vert=d(\vec{v},\overline{X})\ge0\right)$
 \end_inset
 
  且
 \begin_inset Formula 
 \[
-\Vert\vec{v}+\overline{X}\Vert=d(\vec{v},\overline{X})=0\iff\vec{v}\in\overline{X}\iff\vec{v}+\overline{X}=\vec{0}+\overline{X}
+\Vert\vec{v}+\overline{X}\Vert=d(\vec{v},\overline{X})=0\iff\vec{v}\in\overline{X}\iff\vec{v}+\overline{X}=\vec{o}+\overline{X}
 \]
 
 \end_inset
@@ -3331,19 +3714,19 @@ status open
 \end_inset
 
  是赋范线性空间 
-\begin_inset Formula $V(\mathbb{F},\Vert\ \Vert)$
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
 \end_inset
 
  的闭子空间，则定义了商范数
 \begin_inset Formula 
 \[
-\Vert\vec{v}+\overline{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\overline{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\overline{X})\in(V/\overline{X})
+\Vert\vec{v}+\overline{X}\Vert\coloneqq\inf_{\vec{z}\in(\vec{v}+\overline{X})}\Vert\vec{z}\Vert\qquad\forall(\vec{v}+\overline{X})\in(V\mathbin{/}\overline{X})
 \]
 
 \end_inset
 
 的商空间 
-\begin_inset Formula $V/\overline{X}$
+\begin_inset Formula $V\mathbin{/}\overline{X}$
 \end_inset
 
  是一个 Banach 空间。
@@ -3354,6 +3737,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+积空间
 \end_layout
 
 \begin_layout Section
