@@ -105,7 +105,11 @@ Hilbert 空间
 \end_layout
 
 \begin_layout Section
-向量的内积
+内积
+\end_layout
+
+\begin_layout Subsection
+公理化定义
 \end_layout
 
 \begin_layout Definition
@@ -119,7 +123,77 @@ status open
 
 \end_inset
 
+若定义在线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 上的映射 
+\begin_inset Formula $g\colon V\times V\to\mathbb{F}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+非负性 
+\begin_inset Formula $\left(\forall\vec{y}\in V\right)\left(\left(g(\vec{y},\vec{y})\ge0\right)\land\left(g(\vec{y},\vec{y})=0\iff\vec{y}=\vec{o}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+半线性 
+\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\vec{z},\lambda)\in V^{3}\times\mathbb{F}\right)\left(g(\vec{x},\lambda\vec{y}+\vec{z})=\lambda\cdot g(\vec{x},\vec{y})+g(\vec{x},\vec{z})\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+共轭对称性 
+\begin_inset Formula $\left(\forall(\vec{x},\vec{y})\in V^{2}\right)\left(g(\vec{y},\vec{x})=\overline{g(\vec{x},\vec{y})}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $g(\vec{x},\vec{y})$
+\end_inset
+
+ 是“向量 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 的
+\bar under
 内积 (inner product)
+\bar default
+”，用 
+\begin_inset Formula $\mathinner{\langle\vec{x}\vert\vec{y}\rangle}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+上述定义中的“半线性”条件是对第二个自变量提出的，这符合物理和工程文献的习惯；但数学文献通常将这一条件对第一个自变量提出；两种提法没有本质差别，只需在同一文献中
+保持一致即可。
 \end_layout
 
 \begin_layout Standard
@@ -140,11 +214,27 @@ status open
 
 \end_inset
 
-内积空间 (inner product space)，
+定义了内积 
+\begin_inset Formula $\mathinner{\langle\,\vert\,\rangle}$
+\end_inset
+
+ 的线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 称作“（数域 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的）〔内积|
 \bar under
 预 (pre)
 \bar default
--Hilbert 空间
+-Hilbert〕空间”，用 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -152,6 +242,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+常用的内积
 \end_layout
 
 \begin_layout Example
@@ -162,109 +256,30 @@ status open
 
 [$
 \backslash
-mathbb{R}^n$ 与 $
-\backslash
-mathbb{C}^n$]
+mathbb{F}^n$]
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
+给定数组空间 
+\begin_inset Formula $\mathbb{F}^{n}$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-mathbb{C}^{n
-\backslash
-times n}$]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-ell^2$]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[$
-\backslash
-mathcal{L}^2$]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Cauchy--Буняковский (Bunyakowsky)--Schwarz]
-\end_layout
-
-\end_inset
-
-
+ 中的一对向量
 \begin_inset Formula 
 \[
-\vert\langle\vec{x}\vert\vec{y}\rangle\vert^{2}\le\langle\vec{x}\vert\vec{x}\rangle\langle\vec{y}\vert\vec{y}\rangle
+\vec{x}\coloneqq[x_{k}]_{k=1}^{n}=\begin{bmatrix}x_{1} & \cdots & x_{n}\end{bmatrix}\qquad\vec{y}\coloneqq[y_{k}]_{k=1}^{n}=\begin{bmatrix}y_{1} & \cdots & y_{n}\end{bmatrix}
+\]
+
+\end_inset
+
+二者的内积可定义为
+\begin_inset Formula 
+\[
+\langle\vec{x}\vert\vec{y}\rangle\coloneqq\sum_{k=1}^{n}\begin{cases}
+\overline{x_{k}}\cdot y_{k} & \mathbb{F}=\mathbb{C}\\
+x_{k}\cdot y_{k} & \mathbb{F}=\mathbb{R}
+\end{cases}
 \]
 
 \end_inset
@@ -279,9 +294,179 @@ status open
 
 \end_layout
 
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+ell^2(
+\backslash
+mathbb{F})$]
+\end_layout
+
+\end_inset
+
+给定数列空间 
+\begin_inset Formula $\ell^{2}(\mathbb{F})$
+\end_inset
+
+ 中一对向量
+\begin_inset Formula 
+\[
+\vec{x}\coloneqq[x_{k}]_{k=1}^{\infty}=\begin{bmatrix}x_{1} & \cdots & x_{n} & \cdots\end{bmatrix}\qquad\vec{y}\coloneqq[y_{k}]_{k=1}^{\infty}=\begin{bmatrix}y_{1} & \cdots & y_{n} & \cdots\end{bmatrix}
+\]
+
+\end_inset
+
+二者的内积可定义为
+\begin_inset Formula 
+\[
+\langle\vec{x}\vert\vec{y}\rangle\coloneqq\sum_{k=1}^{\infty}\begin{cases}
+\overline{x_{k}}\cdot y_{k} & \mathbb{F}=\mathbb{C}\\
+x_{k}\cdot y_{k} & \mathbb{F}=\mathbb{R}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+mathcal{L}^2(
+\backslash
+varOmega)$]
+\end_layout
+
+\end_inset
+
+给定函数空间 
+\begin_inset Formula $\mathcal{L}^{2}(\varOmega)$
+\end_inset
+
+ 中的一对向量
+\begin_inset Formula 
+\[
+\vec{x}\coloneqq x(t)\qquad\vec{y}\coloneqq y(t)\qquad t\in\varOmega
+\]
+
+\end_inset
+
+二者的内积可定义为
+\begin_inset Formula 
+\[
+\langle\vec{x}\vert\vec{y}\rangle\coloneqq\int_{\varOmega}\overline{x(t)}\,y(t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+mathbb{F}^{n
+\backslash
+times n}$]
+\end_layout
+
+\end_inset
+
+给定矩阵空间 
+\begin_inset Formula $\mathbb{F}^{n\times n}$
+\end_inset
+
+ 中的向量
+\begin_inset Formula 
+\[
+\vec{x}\coloneqq\begin{bmatrix}x_{1,1} & \cdots & x_{1,n}\\
+\vdots &  & \vdots\\
+x_{n,1} & \cdots & x_{n,n}
+\end{bmatrix}\eqqcolon\Mat{X}\qquad\vec{y}\coloneqq\begin{bmatrix}y_{1,1} & \cdots & y_{1,n}\\
+\vdots &  & \vdots\\
+y_{n,1} & \cdots & y_{n,n}
+\end{bmatrix}\eqqcolon\Mat{Y}
+\]
+
+\end_inset
+
+二者的内积可定义为
+\begin_inset Formula 
+\[
+\langle\vec{x}\vert\vec{y}\rangle\coloneqq\mathrm{tr}\qty(\Mat{X}^{\dagger}\Mat{Y})=\sum_{l=1}^{n}\sum_{k=1}^{n}\begin{cases}
+\overline{x_{kl}}\cdot y_{kl} & \mathbb{F}=\mathbb{C}\\
+x_{kl}\cdot y_{kl} & \mathbb{F}=\mathbb{R}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+依内积收敛
+\end_layout
+
 \begin_layout Section
 内积 
-\begin_inset Formula $\rightleftarrows$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texorpdfstring{$
+\backslash
+rightleftarrows$⇄}{⇄}
+\end_layout
+
+\end_inset
+
+ 范数
+\end_layout
+
+\begin_layout Subsection
+内积 
+\begin_inset Formula $\to$
 \end_inset
 
  范数
@@ -300,7 +485,35 @@ to$ 范数]
 
 \end_inset
 
+给定内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
 
+，映射
+\begin_inset Formula 
+\[
+\Vert\vec{x}\Vert\coloneqq\sqrt{\langle\vec{x}\vert\vec{x}\rangle}\qquad\forall\vec{x}\in V
+\]
+
+\end_inset
+
+是线性空间 
+\begin_inset Formula $(V,\mathbb{F})$
+\end_inset
+
+ 上的一种范数，并称“内积 
+\begin_inset Formula $\langle\,\vert\,\rangle$
+\end_inset
+
+ 
+\bar under
+诱导出 (induce)
+\bar default
+ 范数 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+”。
 \end_layout
 
 \begin_layout Standard
@@ -316,14 +529,32 @@ status open
 
 \begin_layout Plain Layout
 
-[范数 $
-\backslash
-to$ 内积]
+[极化]
 \end_layout
 
 \end_inset
 
+若 
+\begin_inset Formula $\vec{x}$
+\end_inset
 
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 是内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 中的向量，且 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+ 是由 
+\begin_inset Formula $\langle\,\vert\,\rangle$
+\end_inset
+
+ 诱导出的范数，则
 \begin_inset Formula 
 \[
 \langle\vec{x}\vert\vec{y}\rangle=\frac{1}{4}\begin{cases}
@@ -355,6 +586,34 @@ status open
 
 \end_inset
 
+若 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 是内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 中的向量，且 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+ 是由 
+\begin_inset Formula $\langle\,\vert\,\rangle$
+\end_inset
+
+ 诱导出的范数，则
+\begin_inset Formula 
+\[
+\Vert\vec{x}+\vec{y}\Vert^{2}+\Vert\vec{x}-\vec{y}\Vert^{2}=2\Vert\vec{x}\Vert^{2}+\Vert\vec{y}\Vert^{2}
+\]
+
+\end_inset
+
 
 \end_layout
 
@@ -365,12 +624,750 @@ status open
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
+范数 
+\begin_inset Formula $\to$
+\end_inset
+
+ 内积
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[范数 $
+\backslash
+to$ 内积]
+\end_layout
+
+\end_inset
+
+赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+ 的范数 
+\begin_inset Formula $\Vert\,\Vert$
+\end_inset
+
+ 可以诱导出内积，当且仅当
+\begin_inset Formula 
+\[
+\Vert\vec{x}+\vec{y}\Vert^{2}+\Vert\vec{x}-\vec{y}\Vert^{2}=2\Vert\vec{x}\Vert^{2}+\Vert\vec{y}\Vert^{2}\qquad\forall(\vec{x},\vec{y})\in V^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+给定赋范线性空间 
+\begin_inset Formula $(V,\mathbb{F},\Vert\,\Vert)$
+\end_inset
+
+，若 
+\begin_inset Formula $V$
+\end_inset
+
+ 的所有二维子空间都是 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的内积空间，则 
+\begin_inset Formula $V$
+\end_inset
+
+ 亦是 
+\begin_inset Formula $\mathbb{F}$
+\end_inset
+
+ 上的内积空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+ell^p$]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $p\ne2$
+\end_inset
+
+，则 
+\begin_inset Formula $\ensuremath{\ell^{p}}$
+\end_inset
+
+的范数 
+\begin_inset Formula $\Vert\,\Vert_{p}$
+\end_inset
+
+ 不能诱导出内积。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+取
+\begin_inset Formula 
+\[
+\vec{x}=\begin{bmatrix}1 & 1 & 0 & \cdots\end{bmatrix}\in\ensuremath{\ell^{p}}\qquad\vec{y}=\begin{bmatrix}1 & -1 & 0 & \cdots\end{bmatrix}\in\ensuremath{\ell^{p}}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\Vert\vec{x}\Vert_{p}=2^{1/p}=\Vert\vec{y}\Vert_{p}\qquad\Vert\vec{x}+\vec{y}\Vert_{p}=2=\Vert\vec{x}-\vec{y}\Vert_{p}
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $p\ne2$
+\end_inset
+
+ 时不满足平行四边形条件：
+\begin_inset Formula 
+\[
+\Vert\vec{x}+\vec{y}\Vert_{p}^{2}+\Vert\vec{x}-\vec{y}\Vert_{p}^{2}=8\ne4\cdot2^{2/p}=2\Vert\vec{x}\Vert_{p}^{2}+2\Vert\vec{y}\Vert_{p}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+连续函数空间 
+\begin_inset Formula $\ensuremath{\mathcal{C}[a,b]}$
+\end_inset
+
+ 的范数 
+\begin_inset Formula $\Vert\,\Vert_{\infty}$
+\end_inset
+
+ 不能诱导出内积。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+取
+\begin_inset Formula 
+\[
+\vec{x}=x(t)=1\qquad\vec{y}=y(t)=\frac{t-a}{b-a}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\Vert\vec{x}\Vert_{\infty}=1=\Vert\vec{y}\Vert_{\infty}\qquad\Vert\vec{x}+\vec{y}\Vert_{\infty}=2\qquad\Vert\vec{x}-\vec{y}\Vert_{\infty}=1
+\]
+
+\end_inset
+
+不满足平行四边形条件：
+\begin_inset Formula 
+\[
+\Vert\vec{x}+\vec{y}\Vert_{\infty}^{2}+\Vert\vec{x}-\vec{y}\Vert_{\infty}^{2}=5\ne4=2\Vert\vec{x}\Vert_{\infty}^{2}+2\Vert\vec{y}\Vert_{\infty}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 完备的内积空间
 \end_layout
 
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Hilbert 空间]
+\end_layout
+
+\end_inset
+
+若内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 关于其内积 
+\begin_inset Formula $\langle\,\vert\,\rangle$
+\end_inset
+
+ 诱导出的范数 
+\begin_inset Formula $\Vert\,\Vert\coloneqq\sqrt{\langle\,\vert\,\rangle}$
+\end_inset
+
+ 是完备的，则称“
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 关于内积 
+\begin_inset Formula $\langle\,\vert\,\rangle$
+\end_inset
+
+ 是完备的”，并称 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 是一个“Hilbert 空间”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+数列空间 
+\begin_inset Formula $\ell^{2}$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\langle\vec{x}\vert\vec{y}\rangle\coloneqq\sum_{k=1}^{\infty}\begin{cases}
+\overline{x_{k}}\cdot y_{k} & \mathbb{F}=\mathbb{C}\\
+x_{k}\cdot y_{k} & \mathbb{F}=\mathbb{R}
+\end{cases}
+\]
+
+\end_inset
+
+是完备的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+连续函数空间 
+\begin_inset Formula $\mathcal{C}[-1,1]$
+\end_inset
+
+ 关于内积
+\begin_inset Formula 
+\[
+\langle x\vert y\rangle\coloneqq\int_{-1}^{+1}\overline{x(t)}\,y(t)\dd{t}
+\]
+
+\end_inset
+
+是不完备的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
+正交分解
+\end_layout
+
+\begin_layout Subsection
+正交性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[正交]
+\end_layout
+
+\end_inset
+
+给定内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 中的向量 
+\begin_inset Formula $\vec{x},\vec{y}$
+\end_inset
+
+ 及子集 
+\begin_inset Formula $X,Y$
+\end_inset
+
+，称
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+向量与向量正交 
+\begin_inset Formula $\vec{x}\perp\vec{y}\impliedby\langle\vec{x}\vert\vec{y}\rangle=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+向量与集合正交 
+\begin_inset Formula $\vec{x}\perp Y\impliedby\left(\forall\vec{y}\in Y\right)\left(\vec{x}\perp\vec{y}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+集合与集合正交 
+\begin_inset Formula $X\perp Y\impliedby\left(\forall(\vec{x},\vec{y})\in(X\times Y)\right)\left(\vec{x}\perp\vec{y}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[正交补]
+\end_layout
+
+\end_inset
+
+给定内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $Y$
+\end_inset
+
+，称 
+\begin_inset Formula $V$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $\left\{ \vec{x}\in V:\vec{x}\perp Y\right\} $
+\end_inset
+
+ 为“集合 
+\begin_inset Formula $Y$
+\end_inset
+
+ 的
+\bar under
+正交补 (orthogonal complement)
+\bar default
+”，用 
+\begin_inset Formula $Y^{\perp}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 与 
+\begin_inset Formula $Y$
+\end_inset
+
+ 是内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 的子集，则
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\left\{ \vec{o}\right\} $
+\end_inset
+
+ 与 
+\begin_inset Formula $V$
+\end_inset
+
+ 互为正交补
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $X^{\perp}$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的闭子空间
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $X\subset(X^{\perp})^{\perp}\eqqcolon X^{\perp\perp}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的线性子空间，则 
+\begin_inset Formula $X\cap X^{\perp}=\left\{ \vec{o}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $X\subset Y\implies Y^{\perp}\subset X^{\perp}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $X^{\perp}=(\mathrm{span}X)^{\perp}=(\overline{\mathrm{span}}(X))^{\perp}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+勾股定理
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Pythagoras]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\vec{x}\perp\vec{y}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\Vert\vec{x}\Vert^{2}+\Vert\vec{y}\Vert^{2}=\begin{cases}
+\Vert\vec{x}+\vec{y}\Vert^{2} & \mathbb{F}=\mathbb{R}\\
+\Vert\vec{x}+\vec{y}\Vert^{2}=\Vert\vec{x}+\sqrt{-1}\vec{y}\Vert^{2} & \mathbb{F}=\mathbb{C}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+若 
+\begin_inset Formula $\left\{ \vec{x}_{k}\right\} _{k=1}^{n}$
+\end_inset
+
+ 是一组两两正交的向量，则
+\begin_inset Formula 
+\[
+\left\Vert \sum_{k=1}^{n}\vec{x}_{k}\right\Vert ^{2}=\sum_{k=1}^{n}\Vert\vec{x}_{k}\Vert^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 射影定理
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[射影]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[最优逼近点]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[最优逼近映射]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+正交基
+\end_layout
+
+\begin_layout Subsection
+Fourier 展开
+\end_layout
+
+\begin_layout Section
+内积不等式
+\end_layout
+
+\begin_layout Subsection
+Cauchy 不等式
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cauchy--Буняковский (Bunyakowsky)--Schwarz]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 是内积空间 
+\begin_inset Formula $(V,\mathbb{F},\langle\,\vert\,\rangle)$
+\end_inset
+
+ 中的向量，则
+\begin_inset Formula 
+\[
+\vert\langle\vec{x}\vert\vec{y}\rangle\vert^{2}\le\langle\vec{x}\vert\vec{x}\rangle\langle\vec{y}\vert\vec{y}\rangle
+\]
+
+\end_inset
+
+其中等号成立，当且仅当 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 线性相关。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+不失一般性，假设 
+\begin_inset Formula $\vec{x}\ne\vec{o}$
+\end_inset
+
+ 且 
+\begin_inset Formula $\vec{y}\ne\vec{o}$
+\end_inset
+
+；否则结论显然成立。任取 
+\begin_inset Formula $\lambda\in\mathbb{F}$
+\end_inset
+
+，由内积条件可得
+\begin_inset Formula 
+\[
+0\le\langle\vec{x}-\lambda\vec{y}\vert\vec{x}-\lambda\vec{y}\rangle=\langle\vec{x}\vert\vec{x}\rangle+\overline{\lambda}\lambda\langle\vec{y}\vert\vec{y}\rangle-\overline{\lambda}\langle\vec{y}\vert\vec{x}\rangle-\lambda\langle\vec{x}\vert\vec{y}\rangle
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\lambda=\langle\vec{y}\vert\vec{x}\rangle\mathbin{/}\langle\vec{y}\vert\vec{y}\rangle$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+0\le\langle\vec{x}-\lambda\vec{y}\vert\vec{x}-\lambda\vec{y}\rangle=\langle\vec{x}\vert\vec{x}\rangle+\cancelto{0}{\overline{\lambda}\frac{\langle\vec{y}\vert\vec{x}\rangle}{\langle\vec{y}\vert\vec{y}\rangle}\langle\vec{y}\vert\vec{y}\rangle-\overline{\lambda}\langle\vec{y}\vert\vec{x}\rangle}-\frac{\langle\vec{y}\vert\vec{x}\rangle}{\langle\vec{y}\vert\vec{y}\rangle}\langle\vec{x}\vert\vec{y}\rangle
+\]
+
+\end_inset
+
+两边同乘 
+\begin_inset Formula $\langle\vec{y}\vert\vec{y}\rangle$
+\end_inset
+
+ 并移项，即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
