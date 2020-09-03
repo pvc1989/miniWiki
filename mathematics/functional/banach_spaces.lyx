@@ -254,7 +254,7 @@ status open
  可以被赋予范数
 \begin_inset Formula 
 \[
-\Vert\vec{x}\Vert _{p}\coloneqq\begin{cases}
+\Vert\vec{x}\Vert_{p}\coloneqq\begin{cases}
 \left(\sum_{k=1}^{n}\vert x_{k}\vert^{p}\right)^{1/p} & p\in[1,+\infty)\\
 \max_{k=1}^{n}\vert x_{k}\vert & p\to+\infty
 \end{cases}
@@ -298,7 +298,7 @@ status open
  可以被赋予范数
 \begin_inset Formula 
 \[
-\Vert\vec{x}\Vert _{p}\coloneqq\begin{cases}
+\Vert\vec{x}\Vert_{p}\coloneqq\begin{cases}
 \left(\sum_{k=1}^{\infty}\vert x_{k}\vert^{p}\right)^{1/p} & p\in[1,+\infty)\\
 \sup_{k=1}^{\infty}\vert x_{k}\vert & p\to+\infty
 \end{cases}
@@ -317,7 +317,7 @@ status open
  序列”）所构成的集合
 \begin_inset Formula 
 \[
-\ell^{p}(\mathbb{F})\coloneqq\left\{ \vec{x}\in\mathbb{F}^{\infty}:\Vert\vec{x}\Vert _{p}<+\infty\right\} 
+\ell^{p}(\mathbb{F})\coloneqq\left\{ \vec{x}\in\mathbb{F}^{\infty}:\Vert\vec{x}\Vert_{p}<+\infty\right\} 
 \]
 
 \end_inset
@@ -809,7 +809,7 @@ status open
  上，可以定义如下三种等价的范数：
 \begin_inset Formula 
 \[
-\Vert\vec{x}\Vert _{1}\coloneqq\sum_{k=1}^{n}\vert x_{k}\vert\qquad\Vert\vec{x}\Vert _{2}\coloneqq\left(\sum_{k=1}^{n}\vert x_{k}\vert^{2}\right)^{1/2}\qquad\Vert\vec{x}\Vert _{\infty}\coloneqq\max_{k=1}^{n}\vert x_{k}\vert
+\Vert\vec{x}\Vert_{1}\coloneqq\sum_{k=1}^{n}\vert x_{k}\vert\qquad\Vert\vec{x}\Vert_{2}\coloneqq\left(\sum_{k=1}^{n}\vert x_{k}\vert^{2}\right)^{1/2}\qquad\Vert\vec{x}\Vert_{\infty}\coloneqq\max_{k=1}^{n}\vert x_{k}\vert
 \]
 
 \end_inset
@@ -3914,6 +3914,752 @@ status open
 
 \begin_layout Section
 Hahn–Banach 定理
+\end_layout
+
+\begin_layout Subsection
+有界的线性算子
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界的算子]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，若
+\begin_inset Formula 
+\[
+\left(\exists M>0\right)\left(\forall\vec{x}\in V\right)\left(\Vert\hat{T}\vec{x}\Vert\le M\cdot\Vert\vec{x}\Vert\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 是“由 
+\begin_inset Formula $X$
+\end_inset
+
+ 到 
+\begin_inset Formula $Y$
+\end_inset
+
+ 的
+\bar under
+有界 (bounded)
+\bar default
+ 线性算子”，用 
+\begin_inset Formula $\hat{T}\in\mathcal{BL}(X,Y)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[算子的范数]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，称非负实数
+\begin_inset Formula 
+\[
+\inf\left\{ M>0:\left(\forall\vec{x}\in V\right)\left(\Vert\hat{T}\vec{x}\Vert\le M\cdot\Vert\vec{x}\Vert\right)\right\} 
+\]
+
+\end_inset
+
+为“算子 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 的范数”，用 
+\begin_inset Formula $\Vert\hat{T}\Vert$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\begin{aligned}\Vert\hat{T}\Vert & =\alpha\coloneqq\sup\left\{ \Vert\hat{T}\vec{x}\Vert\mathbin{/}\Vert\vec{x}\Vert:\vec{x}\in X\setminus\left\{ \vec{o}\right\} \right\} \\
+ & =\beta\coloneqq\sup\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert=1\right\} \\
+ & =\gamma\coloneqq\sup\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert\le1\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+先证 
+\begin_inset Formula $\Vert\hat{T}\Vert=\alpha$
+\end_inset
+
+：由 
+\begin_inset Formula $\sup$
+\end_inset
+
+ 的定义可知
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}\Vert\mathbin{/}\Vert\vec{x}\Vert\le\alpha\qquad\forall\vec{x}\in X\setminus\left\{ \vec{o}\right\} 
+\]
+
+\end_inset
+
+两边同乘分母，并补充 
+\begin_inset Formula $\vec{x}=\vec{o}$
+\end_inset
+
+ 的平凡情形，可得
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}\Vert\le\alpha\cdot\Vert\vec{x}\Vert\qquad\forall\vec{x}\in X
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $\Vert\hat{T}\Vert$
+\end_inset
+
+ 及 
+\begin_inset Formula $\inf$
+\end_inset
+
+ 的定义可知 
+\begin_inset Formula $\Vert\hat{T}\Vert\le\alpha$
+\end_inset
+
+；另一方面，由
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}\Vert\le\Vert\hat{T}\Vert\cdot\Vert\vec{x}\Vert\qquad\forall\vec{x}\in X
+\]
+
+\end_inset
+
+可知 
+\begin_inset Formula $\Vert\hat{T}\Vert$
+\end_inset
+
+ 为 
+\begin_inset Formula $\left\{ \Vert\hat{T}\vec{x}\Vert\mathbin{/}\Vert\vec{x}\Vert:\vec{x}\in X\setminus\left\{ \vec{o}\right\} \right\} $
+\end_inset
+
+ 的上界，而 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 是相应的上确界，故 
+\begin_inset Formula $\alpha\le\Vert\hat{T}\Vert$
+\end_inset
+
+；两个不等式同时成立，当且仅当所有 
+\begin_inset Formula $\le$
+\end_inset
+
+ 都取等号。
+\end_layout
+
+\begin_layout Proof
+再证 
+\begin_inset Formula $\alpha=\beta=\gamma$
+\end_inset
+
+：容易验证
+\begin_inset Formula 
+\[
+\left\{ \Vert\hat{T}\vec{x}\Vert\mathbin{/}\Vert\vec{x}\Vert:\vec{x}\ne\vec{o}\right\} \subset\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert=1\right\} \subset\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert\le1\right\} 
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\alpha\le\beta\le\gamma$
+\end_inset
+
+；另一方面，由
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}\Vert\mathbin{/}\Vert\vec{x}\Vert\le\alpha\qquad\forall\vec{x}\in X\setminus\left\{ \vec{o}\right\} 
+\]
+
+\end_inset
+
+可知 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 亦是 
+\begin_inset Formula $\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert\le1\right\} $
+\end_inset
+
+ 的上界，即
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}\Vert\le\alpha\cdot\Vert\vec{x}\Vert\le\alpha\qquad\forall\Vert\vec{x}\Vert<1
+\]
+
+\end_inset
+
+而 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ 是相应的上确界，故 
+\begin_inset Formula $\gamma\le\alpha$
+\end_inset
+
+；两个不等式同时成立，当且仅当所有 
+\begin_inset Formula $\le$
+\end_inset
+
+ 都取等号。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，则“算子范数”
+\begin_inset Formula 
+\[
+\Vert\hat{T}\Vert\coloneqq\sup\left\{ \Vert\hat{T}\vec{x}\Vert:\Vert\vec{x}\Vert=1\right\} \qquad\forall\hat{T}\in\mathcal{BL}(X,Y)
+\]
+
+\end_inset
+
+也是（以“算子”为“向量”的）线性空间 
+\begin_inset Formula $\mathcal{BL}(X,Y)$
+\end_inset
+
+ 上的“向量范数”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+容易验证：
+\begin_inset Formula 
+\[
+\Vert\alpha\hat{T}\Vert=\vert\alpha\vert\cdot\Vert\hat{T}\Vert
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Vert\hat{S}+\hat{T}\Vert\le\Vert\hat{S}\Vert+\Vert\hat{T}\Vert
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，则 
+\begin_inset Formula $\hat{T}\in\mathcal{BL}(X)$
+\end_inset
+
+，当且仅当 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 总是将 
+\begin_inset Formula $X$
+\end_inset
+
+ 的有界子集变换为 
+\begin_inset Formula $X$
+\end_inset
+
+ 的有界子集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+有限维赋范线性空间上的线性算子都是有界的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界的积分算子]
+\end_layout
+
+\end_inset
+
+给定有界连续函数空间 
+\begin_inset Formula $X=\mathcal{BC}[0,\infty)$
+\end_inset
+
+ 及范数 
+\begin_inset Formula $\Vert\vec{x}\Vert_{\infty}=\sup_{t\in[0,\infty)}\vert x(t)\vert$
+\end_inset
+
+，取积分算子
+\begin_inset Formula 
+\[
+\hat{T}\colon x(t)\mapsto\int_{0}^{t}x(\tau)\frac{\dd{\tau}}{t}
+\]
+
+\end_inset
+
+则该算子是有界的：
+\begin_inset Formula 
+\[
+\begin{aligned}\Vert\hat{T}\vec{x}\Vert_{\infty} & =\sup_{t\in[0,\infty)}\left\vert \int_{0}^{t}x(\tau)\frac{\dd{\tau}}{t}\right\vert \le\sup_{t\in[0,\infty)}\int_{0}^{t}\vert x(\tau)\vert\frac{\dd{\tau}}{t}\\
+ & \le\int_{0}^{t}\left(\sup_{\tau\in[0,t)}\vert x(\tau)\vert\right)\frac{\dd{\tau}}{t}\le\left(\sup_{\tau\in[0,\infty)}\vert x(\tau)\vert\right)\int_{0}^{t}\frac{\dd{\tau}}{t}=\Vert\vec{x}\Vert_{\infty}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[无界的微分算子]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+ 上的多项式空间 
+\begin_inset Formula $X=\mathcal{P}[0,1]$
+\end_inset
+
+ 及范数 
+\begin_inset Formula $\Vert\vec{x}\Vert_{\infty}=\max_{t\in[0,1]}\vert x(t)\vert$
+\end_inset
+
+，取微分算子
+\begin_inset Formula 
+\[
+\hat{T}\colon x(t)\mapsto\dv{x(t)}{t}
+\]
+
+\end_inset
+
+则该算子是无界的：令 
+\begin_inset Formula $\vec{x}_{n}=t^{n}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\Vert\vec{x}_{n}\Vert=1\qquad\Vert\hat{T}\vec{x}_{n}\Vert=\max_{t\in[0,1]}\vert n\cdot t^{n-1}\vert=n=n\cdot\Vert\vec{x}_{n}\Vert\qquad\forall n\in\mathbb{N}
+\]
+
+\end_inset
+
+ 故不存在 
+\begin_inset Formula $M>0$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\Vert\hat{T}\vec{x}_{n}\Vert=n\cdot\Vert\vec{x}_{n}\Vert<M\cdot\Vert\vec{x}_{n}\Vert\qquad\forall n\in\mathbb{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[逆算子存在且有界的条件]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{y}}\Vert)$
+\end_inset
+
+，若 
+\begin_inset Formula $\hat{T}\in\mathcal{BL}(X,Y)$
+\end_inset
+
+ 且 
+\begin_inset Formula $Y=\hat{T}X$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\exists\hat{T}^{-1}\in\mathcal{BL}(Y,X)\iff\left(\exists K>0\right)\left(\forall\vec{x}\in X\right)\left(\Vert\hat{T}\vec{x}\Vert>K\cdot\Vert\vec{x}\Vert\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+连续的线性算子
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[单点连续]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\colon X\to Y$
+\end_inset
+
+，若 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 在 
+\begin_inset Formula $X$
+\end_inset
+
+ 中的一点 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ 处满足
+\begin_inset Formula 
+\[
+\left(\forall\epsilon>0\right)\left(\exists\delta>0\right)\left(\Vert\vec{x}-\vec{a}\Vert<\delta\implies\Vert\hat{T}\vec{x}-\hat{T}\vec{a}\Vert<\epsilon\right)
+\]
+
+\end_inset
+
+则称“
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 
+\bar under
+在点 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ 处连续 (continuous at point 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+)
+\bar default
+”，用 
+\begin_inset Formula $\hat{T}\in\mathcal{C}(\vec{a})$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[处处连续]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\colon X\to Y$
+\end_inset
+
+，若 
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 在 
+\begin_inset Formula $X$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $A$
+\end_inset
+
+ 中的每一点都连续，则称“
+\begin_inset Formula $\hat{T}$
+\end_inset
+
+ 在 
+\begin_inset Formula $A$
+\end_inset
+
+ 中
+\bar under
+处处连续 (continuous everywhere)
+\bar default
+”，用 
+\begin_inset Formula $\hat{T}\in\mathcal{C}(A)$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有界 $
+\backslash
+Leftrightarrow$ 处处连续 $
+\backslash
+Leftrightarrow$ 单点连续]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(X,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 与 
+\begin_inset Formula $(Y,\mathbb{F},\Vert\vec{\phantom{x}}\Vert)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{T}\in\mathcal{L}(X,Y)$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\hat{T}\in\mathcal{BL}(X,Y)\iff\hat{T}\in\mathcal{CL}(X,Y)\iff\hat{T}\in\mathcal{C}(\vec{o})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+有限维赋范线性空间上的线性算子都是连续的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
