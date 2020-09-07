@@ -145,7 +145,7 @@ status open
 
 \begin_layout Description
 半线性 
-\begin_inset Formula $\left(\forall(\vec{x},\vec{y},\vec{z},\alpha)\in V^{3}\times\mathbb{F}\right)\left(g(\vec{x},\alpha\vec{y}+\vec{z})=\alpha\cdot g(\vec{x},\vec{y})+g(\vec{x},\vec{z})\right)$
+\begin_inset Formula $\left(\forall(\alpha,\vec{x},\vec{y},\vec{z})\in\mathbb{F}\times V^{3}\right)\left(g(\vec{x},\alpha\vec{y}+\vec{z})=\alpha\cdot g(\vec{x},\vec{y})+g(\vec{x},\vec{z})\right)$
 \end_inset
 
 
@@ -196,8 +196,8 @@ status open
 \end_layout
 
 \begin_layout Remark
-上述定义中的“半线性”条件是对第二个自变量提出的，这符合物理和工程文献的习惯；但数学文献通常将该条件对第一个自变量提出。两种提法没有本质差别，只需在同一文献中保
-持一致即可。
+上述定义中的“半线性”条件是对第二个自变量提出的，这符合物理文献的习惯；但数学文献通常将该条件对第一个自变量提出。两种提法没有本质差别，只需在同一文献中保持一致
+即可。
 \end_layout
 
 \begin_layout Standard
@@ -1942,6 +1942,12 @@ status open
 \end_layout
 
 \begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "non-trivial-ortho-complement(cor-in-Hilbert)"
+
+\end_inset
+
 若 
 \begin_inset Formula $\overline{X}$
 \end_inset
@@ -2737,47 +2743,61 @@ status open
 对偶空间
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[Riesz--Fréchet]
+[$
+\backslash
+vec{
+\backslash
+varphi}
+\backslash
+in V
+\backslash
+Rightarrow
+\backslash
+hat{
+\backslash
+varphi}
+\backslash
+in V^{*}$]
 \end_layout
 
 \end_inset
 
 给定 
-\begin_inset Formula $\mathbb{F}$
+\begin_inset Formula $(V,\mathbb{F},\langle\vec{\phantom{x}}\vert\vec{\phantom{x}}\rangle)$
 \end_inset
 
- 上的 Hilbert 空间 
-\begin_inset Formula $\mathcal{H}$
+ 及 
+\begin_inset Formula $\vec{\varphi}\in V$
 \end_inset
 
-，若 
-\begin_inset Formula $\varphi\in\mathcal{H}^{*}=\mathcal{BL}(\mathcal{H},\mathbb{F})$
+，并定义映射 
+\begin_inset Formula $\hat{\varphi}\colon V\to\mathbb{F}$
 \end_inset
 
-，则存在唯一的 
-\begin_inset Formula $\vec{\varphi}\in\mathcal{H}$
-\end_inset
-
- 使得
+ 如下
 \begin_inset Formula 
 \[
-\varphi(\vec{x})=\langle\vec{x}\vert\vec{\varphi}\rangle\qquad\forall\vec{x}\in\mathcal{H}
+\vec{v}\mapsto\langle\vec{\varphi}\vert\vec{v}\rangle\eqqcolon\hat{\varphi}(\vec{v})\qquad\forall\vec{v}\in V
 \]
 
 \end_inset
 
-且 
-\begin_inset Formula $\varphi$
+则 
+\begin_inset Formula $\hat{\varphi}\in\mathcal{BL}(V,\mathbb{F})\eqqcolon V^{*}$
+\end_inset
+
+，且 
+\begin_inset Formula $\hat{\varphi}$
 \end_inset
 
  的算子范数 
-\begin_inset Formula $\Vert\varphi\Vert_{\mathcal{H}^{*}}$
+\begin_inset Formula $\Vert\hat{\varphi}\Vert_{V^{*}}$
 \end_inset
 
  与 
@@ -2785,10 +2805,318 @@ status open
 \end_inset
 
  的向量范数 
-\begin_inset Formula $\Vert\vec{\varphi}\Vert_{\mathcal{H}}$
+\begin_inset Formula $\Vert\vec{\varphi}\Vert_{V}$
 \end_inset
 
  相等。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula $\hat{\varphi}\in\mathcal{L}(V,\mathbb{F})$
+\end_inset
+
+ 可由 
+\begin_inset Formula $\langle\vec{\phantom{x}}\vert\vec{\phantom{x}}\rangle$
+\end_inset
+
+ 的（共轭）线性可直接得到。下面证明有界性：由 Cauchy 不等式得
+\begin_inset Formula 
+\[
+\vert\hat{\varphi}(\vec{v})\vert=\vert\langle\vec{\varphi}\vert\vec{v}\rangle\vert\le\Vert\vec{\varphi}\Vert_{V}\cdot\Vert\vec{v}\Vert_{V}\qquad\forall\vec{v}\in V
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\hat{\varphi}\in\mathcal{BL}(V,\mathbb{F})$
+\end_inset
+
+ 且 
+\begin_inset Formula $\Vert\hat{\varphi}\Vert_{V^{*}}\le\Vert\vec{\varphi}\Vert_{V}$
+\end_inset
+
+；另一方面，由 
+\begin_inset Formula $\Vert\vec{\phantom{x}}\Vert_{V}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\Vert\hat{\phantom{x}}\Vert_{V^{*}}$
+\end_inset
+
+的定义又可得
+\begin_inset Formula 
+\[
+\Vert\vec{\varphi}\Vert_{V}\cdot\Vert\vec{\varphi}\Vert_{V}=\vert\langle\vec{\varphi}\vert\vec{\varphi}\rangle\vert=\vert\hat{\varphi}(\vec{\varphi})\vert\le\Vert\hat{\varphi}\Vert_{V^{*}}\cdot\Vert\vec{\varphi}\Vert_{V}
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\Vert\vec{\varphi}\Vert_{V}\le\Vert\hat{\varphi}\Vert_{V^{*}}$
+\end_inset
+
+；两个 
+\begin_inset Formula $\le$
+\end_inset
+
+ 同时成立，当且仅当二者都取等号。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riesz--Fréchet: $
+\backslash
+hat{
+\backslash
+varphi}
+\backslash
+in
+\backslash
+mathcal{H}^{*}
+\backslash
+Rightarrow
+\backslash
+vec{
+\backslash
+varphi}
+\backslash
+in
+\backslash
+mathcal{H}$]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $(V,\mathbb{F},\langle\vec{\phantom{x}}\vert\vec{\phantom{x}}\rangle)$
+\end_inset
+
+ 及 
+\begin_inset Formula $\hat{\varphi}\in\mathcal{BL}(V,\mathbb{F})\eqqcolon V^{*}$
+\end_inset
+
+，若 
+\begin_inset Formula $V$
+\end_inset
+
+ 是 Hilbert 空间，则存在唯一的 
+\begin_inset Formula $\vec{\varphi}\in V$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\hat{\varphi}(\vec{v})=\langle\vec{\varphi}\vert\vec{v}\rangle\qquad\forall\vec{v}\in V
+\]
+
+\end_inset
+
+且 
+\begin_inset Formula $\hat{\varphi}$
+\end_inset
+
+ 的算子范数 
+\begin_inset Formula $\Vert\hat{\varphi}\Vert_{V^{*}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{\varphi}$
+\end_inset
+
+ 的向量范数 
+\begin_inset Formula $\Vert\vec{\varphi}\Vert_{V}$
+\end_inset
+
+ 相等。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+不失一般性，只考虑 
+\begin_inset Formula $\hat{\varphi}\ne\hat{o}$
+\end_inset
+
+；否则 
+\begin_inset Formula $\vec{\varphi}=\vec{o}$
+\end_inset
+
+ 平凡地满足要求。
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+存在性 取 
+\begin_inset Formula $\hat{\varphi}$
+\end_inset
+
+ 的核空间 
+\begin_inset Formula $\mathcal{N}\coloneqq\left\{ \vec{v}\in V:\hat{\varphi}(\vec{v})=0\right\} $
+\end_inset
+
+，易证 
+\begin_inset Formula $\mathcal{N}=\overline{\mathrm{span}}(\mathcal{N})$
+\end_inset
+
+ 且 
+\begin_inset Formula $\mathcal{N}\subsetneq V$
+\end_inset
+
+；由 
+\begin_inset Formula $V$
+\end_inset
+
+ 的完备性（参见 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "non-trivial-ortho-complement(cor-in-Hilbert)"
+
+\end_inset
+
+）可得 
+\begin_inset Formula $\mathcal{N}^{\perp}$
+\end_inset
+
+ 非平凡，故可从中任取 
+\begin_inset Formula $\vec{x}\ne\vec{o}$
+\end_inset
+
+，并构造单位向量 
+\begin_inset Formula $\vec{e}\coloneqq\vec{x}\mathbin{/}\Vert\vec{x}\Vert$
+\end_inset
+
+；则 
+\begin_inset Formula $\forall\vec{v}\in V$
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+\begin{gathered}\vec{n}\coloneqq\hat{\varphi}(\vec{v})\,\vec{e}-\hat{\varphi}(\vec{e})\,\vec{v}\implies\hat{\varphi}(\vec{n})=\hat{\varphi}(\vec{v})\,\hat{\varphi}(\vec{e})-\hat{\varphi}(\vec{e})\,\hat{\varphi}(\vec{v})=0\implies\vec{n}\in\mathcal{N}\\
+\implies0=\langle\vec{e}\vert\vec{n}\rangle=\langle\vec{e}\vert\hat{\varphi}(\vec{v})\,\vec{e}-\hat{\varphi}(\vec{e})\,\vec{v}\rangle=\hat{\varphi}(\vec{v})\cancelto{1}{\langle\vec{e}\vert\vec{e}\rangle}-\hat{\varphi}(\vec{e})\langle\vec{e}\vert\vec{v}\rangle
+\end{gathered}
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\vec{\varphi}\coloneqq\overline{\hat{\varphi}(\vec{e})}\,\vec{e}$
+\end_inset
+
+ 即得 
+\begin_inset Formula $\hat{\varphi}(\vec{v})=\langle\vec{\varphi}\vert\vec{v}\rangle$
+\end_inset
+
+，这样就证明了 
+\begin_inset Formula $\vec{\varphi}$
+\end_inset
+
+ 的存在性。
+\end_layout
+
+\begin_layout Description
+唯一性 假设 
+\begin_inset Formula $\exists\vec{\varphi}_{0}\in V$
+\end_inset
+
+ 使得 
+\begin_inset Formula $\forall\vec{v}\in V$
+\end_inset
+
+ 都有 
+\begin_inset Formula $\hat{\varphi}(\vec{v})=\langle\vec{\varphi}_{0}\vert\vec{v}\rangle$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\langle\vec{\varphi}_{0}-\vec{\varphi}\vert\vec{v}\rangle=\langle\vec{\varphi}_{0}\vert\vec{v}\rangle-\langle\vec{\varphi}\vert\vec{v}\rangle=\hat{\varphi}(\vec{v})-\hat{\varphi}(\vec{v})=0\qquad\forall\vec{v}\in V
+\]
+
+\end_inset
+
+取 
+\begin_inset Formula $\vec{v}=\vec{\varphi}_{0}-\vec{\varphi}$
+\end_inset
+
+ 即得
+\begin_inset Formula 
+\[
+\langle\vec{\varphi}_{0}-\vec{\varphi}\vert\vec{\varphi}_{0}-\vec{\varphi}\rangle=0\implies\vec{\varphi}_{0}-\vec{\varphi}=\vec{o}\implies\vec{\varphi}_{0}=\vec{\varphi}
+\]
+
+\end_inset
+
+这样就证明了 
+\begin_inset Formula $\vec{\varphi}$
+\end_inset
+
+ 的唯一性。
+\end_layout
+
+\begin_layout Description
+范数相等 参见引理的证明过程。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[代表]
+\end_layout
+
+\end_inset
+
+上述定理中的 
+\begin_inset Formula $\vec{\varphi}\in V$
+\end_inset
+
+ 称作“
+\begin_inset Formula $\hat{\varphi}\in V^{*}$
+\end_inset
+
+ 在 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的
+\bar under
+代表 (representer)
+\bar default
+”。
 \end_layout
 
 \begin_layout Standard
