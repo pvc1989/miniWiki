@@ -73,9 +73,9 @@ brew install hdf5-mpi # macOS
 安装完成后，即可在构建 CGNS/MLL 时，开启并行相关选项：
 
 ```shell
-cmake -DCMAKE_BUILD_TYPE=Debug \
-      -DCGNS_ENABLE_HDF5=ON \ # 并行版本必须启用 HDF5
-      -DHDF5_NEED_MPI=ON -DCGNS_ENABLE_PARALLEL=ON \ # 启用并行版本
+cmake -D CMAKE_BUILD_TYPE=Debug \
+      -D CGNS_ENABLE_HDF5=ON \ # 并行版本必须启用 HDF5
+      -D HDF5_NEED_MPI=ON -D CGNS_ENABLE_PARALLEL=ON \ # 启用并行版本
       -G Ninja -B ${BUILD_DIR} -S ${SOURCE_DIR}
 ```
 

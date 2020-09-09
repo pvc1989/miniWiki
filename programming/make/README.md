@@ -296,9 +296,9 @@ mkdir _build
 mkdir _build/Debug
 cd _build/Debug
 cmake -S ../.. -B . \
-      -DCMAKE_BUILD_TYPE=Debug \
-      -DCMAKE_C_COMPILER=/usr/local/bin/gcc \
-      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++
+      -D CMAKE_BUILD_TYPE=Debug \
+      -D CMAKE_C_COMPILER=/usr/local/bin/gcc \
+      -D CMAKE_CXX_COMPILER=/usr/local/bin/g++
 ```
 
 ## `CMakeLists.txt` 文件<a name="CMakeLists"></a>
@@ -491,9 +491,9 @@ mkdir _build/Debug
 cd _build/Debug
 cmake -G Ninja \
       -S ../.. -B . \
-      -DCMAKE_BUILD_TYPE=Debug \
-      -DCMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
-      -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-9
+      -D CMAKE_BUILD_TYPE=Debug \
+      -D CMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
+      -D CMAKE_CXX_COMPILER=/usr/local/bin/g++-9
 ninja
 ninja clean
 ```
