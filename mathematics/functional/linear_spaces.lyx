@@ -109,133 +109,45 @@ theorems-chap
 \end_layout
 
 \begin_layout Subsection
-群、环、域
+二元运算
 \end_layout
 
-\begin_layout Definition
+\begin_layout Notation
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[群]
+[定义了一种二元运算的集合]
 \end_layout
 
 \end_inset
 
 给定集合 
-\begin_inset Formula $G$
+\begin_inset Formula $S$
 \end_inset
 
  及定义在其上的一个“封闭的”二元运算
 \begin_inset Formula 
 \[
-\varphi\colon G\times G\to G
+\phi\colon S\times S\to S
 \]
 
 \end_inset
 
 用 
-\begin_inset Formula $(G,\varphi)$
+\begin_inset Formula $(S,\phi)$
 \end_inset
 
- 表示“定义了运算 
-\begin_inset Formula $\varphi$
+ 表示“定义了二元运算 
+\begin_inset Formula $\phi$
 \end_inset
 
  的集合 
-\begin_inset Formula $G$
+\begin_inset Formula $S$
 \end_inset
 
-”。若 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-结合律 
-\begin_inset Formula $\left(\forall(a,b,c)\in G^{3}\right)\left(\varphi(\varphi(a,b),c)=\varphi(a,\varphi(b,c))\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 是一个“半群 (semi-group)”。若半群 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 还满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-存在基准元 
-\begin_inset Formula $\left(\forall a\in G\right)\left(\exists i\in G\right)\left(\varphi(a,i)=a=\varphi(i,a)\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 是一个“幺半群 (monoid)”。若幺半群 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 还满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-任意元可逆 
-\begin_inset Formula $\left(\forall a\in G\right)\left(\exists b\in G\right)\left(\varphi(a,b)=i=\varphi(b,a)\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 是一个“群 (group)”。若群 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 还满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-交换律 
-\begin_inset Formula $\left(\forall(a,b)\in G^{2}\right)\left(\varphi(a,b)=\varphi(a,b)\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $(G,\varphi)$
-\end_inset
-
- 是一个“交换群”或“Abelian 群”。
+”。
 \end_layout
 
 \begin_layout Standard
@@ -256,18 +168,22 @@ status open
 
 \end_inset
 
-“加法 (addition)”与“乘法 (multiplication)”是两种最常见的二元运算，习惯上分别用二元运算符 
-\begin_inset Formula $+$
-\end_inset
-
- 与 
-\begin_inset Formula $\times$
-\end_inset
-
+“加法 (addition)”与“乘法 (multiplication)”是两种最常见的二元运算，习惯上分别用
+\bar under
+二元运算符 (binary operator)
+\bar default
  表示，即
 \begin_inset Formula 
 \[
 \mathrm{add}(a,b)\equiv a+b\qquad\mathrm{multiply}(a,b)\equiv a\times b
+\]
+
+\end_inset
+
+更一般地，可将“函数名”用作“运算符”，即
+\begin_inset Formula 
+\[
+\phi(a,b)\equiv a\mathbin{\phi}b
 \]
 
 \end_inset
@@ -282,15 +198,271 @@ status open
 
 \end_layout
 
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[定义了多种二元运算的集合]
+\end_layout
+
+\end_inset
+
+给定集合 
+\begin_inset Formula $S$
+\end_inset
+
+ 及定义在其上的 
+\begin_inset Formula $n$
+\end_inset
+
+ 种二元运算
+\begin_inset Formula 
+\[
+\phi_{k}\colon S\times S\to S\qquad k=1,\dots,n
+\]
+
+\end_inset
+
+用 
+\begin_inset Formula $(S,\phi_{1},\dots,\phi_{n})$
+\end_inset
+
+ 表示“定义了 
+\begin_inset Formula $\phi_{1},\dots,\phi_{n}$
+\end_inset
+
+ 这 
+\begin_inset Formula $n$
+\end_inset
+
+ 种二元运算的集合 
+\begin_inset Formula $S$
+\end_inset
+
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+群
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[半群]
+\end_layout
+
+\end_inset
+
+若二元运算 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 是“结合的 (associative)”，即
+\begin_inset Formula 
+\[
+\phi(\phi(a,b),c)=\phi(a,\phi(b,c))\qquad\forall(a,b,c)\in G^{3}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 是一个“半群 (semi-group)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[幺半群]
+\end_layout
+
+\end_inset
+
+若半群 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 还满足
+\begin_inset Formula 
+\[
+\left(\forall a\in G\right)\left(\exists i\in G\right)\left(\phi(a,i)=a=\phi(i,a)\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 是一个“幺半群 (monoid)”，并称 
+\begin_inset Formula $i$
+\end_inset
+
+ 是 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 的“幺元 (identity element)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[群]
+\end_layout
+
+\end_inset
+
+若幺半群 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 还满足
+\begin_inset Formula 
+\[
+\left(\forall a\in G\right)\left(\exists b\in G\right)\left(\phi(a,b)=i=\phi(b,a)\right)
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 是一个“群 (group)”，并称“
+\begin_inset Formula $a$
+\end_inset
+
+ 与 
+\begin_inset Formula $b$
+\end_inset
+
+ 互为
+\bar under
+逆元 (inverse element)
+\bar default
+”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[交换群]
+\end_layout
+
+\end_inset
+
+若群 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 还满足
+\begin_inset Formula 
+\[
+\phi(a,b)=\phi(a,b)\qquad\forall(a,b)\in G^{2}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $(G,\phi)$
+\end_inset
+
+ 是一个“交换群”或“Abelian 群”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[幺元]
+\end_layout
+
+\end_inset
+
+幺元的具体名称取决于相应的二元运算：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+乘法群的幺元通常被称为“单位元 (identity element)”或“一 (one)”。
+\end_layout
+
+\begin_layout Itemize
+加法群的幺元通常被称为“零元 (nil element)”或“零 (zero)”。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
-表 
+表-
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "tab:群示例"
 
 \end_inset
 
- 列出了几个常见的〔加法|乘法〕群及其运算符、基准元、互逆元。
+ 列出了几个常见的〔加法|乘法〕群及其运算符、幺元、互逆元。
 \begin_inset Float table
 wide false
 sideways false
@@ -348,7 +520,7 @@ name "tab:群示例"
 \begin_inset Text
 
 \begin_layout Plain Layout
-基准元
+幺元
 \end_layout
 
 \end_inset
@@ -492,7 +664,7 @@ name "tab:群示例"
 \end_inset
 
  与 
-\begin_inset Formula $-\Mat{a}$
+\begin_inset Formula $\mathopen{-}\Mat{a}$
 \end_inset
 
 
@@ -681,24 +853,132 @@ status open
 
 \begin_layout Plain Layout
 
-[环]
+[子群]
 \end_layout
 
 \end_inset
 
-给定集合 
-\begin_inset Formula $R$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- 及定义在其上的“加法”（用 
-\begin_inset Formula $+$
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[陪集]
+\end_layout
+
 \end_inset
 
- 表示）与“乘法”（用 
-\begin_inset Formula $\times$
+给定（半）群 
+\begin_inset Formula $(X,\phi)$
 \end_inset
 
- 表示）。若 
+ 及元素 
+\begin_inset Formula $x\in X$
+\end_inset
+
+ 与子集 
+\begin_inset Formula $Y\subset X$
+\end_inset
+
+，则
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+称集合 
+\begin_inset Formula $\left\{ x\mathbin{\phi}y:y\in Y\right\} $
+\end_inset
+
+ 为“
+\begin_inset Formula $Y$
+\end_inset
+
+ 关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的
+\bar under
+左陪集 (left coset)
+\bar default
+”，用 
+\begin_inset Formula $x\mathbin{\phi}Y$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Itemize
+称集合 
+\begin_inset Formula $\left\{ y\mathbin{\phi}x:y\in Y\right\} $
+\end_inset
+
+ 为“
+\begin_inset Formula $Y$
+\end_inset
+
+ 关于 
+\begin_inset Formula $x$
+\end_inset
+
+ 的
+\bar under
+右陪集 (right coset)
+\bar default
+”，用 
+\begin_inset Formula $Y\mathbin{\phi}x$
+\end_inset
+
+ 表示。
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+若二元运算 
+\begin_inset Formula $\mathbin{\phi}$
+\end_inset
+
+ 满足交换律，则 
+\begin_inset Formula $x\mathbin{\phi}Y=Y\mathbin{\phi}x$
+\end_inset
+
+，二者可统称为“陪集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+环
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[结合环]
+\end_layout
+
+\end_inset
+
+若 
 \begin_inset Formula $(R,+)$
 \end_inset
 
@@ -716,7 +996,7 @@ status open
 \begin_deeper
 \begin_layout Description
 左分配律 
-\begin_inset Formula $\left(\forall(a,b,c)\in R\times R\times R\right)\left(a\times(b+c)=a\times b+a\times c\right)$
+\begin_inset Formula $\left(\forall(a,b,c)\in R^{3}\right)\left(a\times(b+c)=a\times b+a\times c\right)$
 \end_inset
 
 
@@ -724,7 +1004,7 @@ status open
 
 \begin_layout Description
 右分配律 
-\begin_inset Formula $\left(\forall(a,b,c)\in R\times R\times R\right)\left((a+b)\times c=a\times c+b\times c\right)$
+\begin_inset Formula $\left(\forall(a,b,c)\in R^{3}\right)\left((a+b)\times c=a\times c+b\times c\right)$
 \end_inset
 
 
@@ -736,51 +1016,81 @@ status open
 \begin_inset Formula $(R,+,\times)$
 \end_inset
 
- 是一个“（结合）环 ((associative) ring)”。若环 
+ 是一个“结合环 (associative ring)”，简称“环”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[交换环]
+\end_layout
+
+\end_inset
+
+若环 
+\begin_inset Formula $(R,+,\times)$
+\end_inset
+
+ 还满足乘法交换律
+\begin_inset Formula 
+\[
+a\times b=b\times a\qquad\forall(a,b)\in R^{2}
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $(R,+,\times)$
+\end_inset
+
+ 是一个“交换环”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有单位元的环]
+\end_layout
+
+\end_inset
+
+若环 
 \begin_inset Formula $(R,+,\times)$
 \end_inset
 
  还满足
-\end_layout
+\begin_inset Formula 
+\[
+\left(\forall a\in R\right)\left(\exists i\in R\right)\left(a\times i=a=i\times a\right)
+\]
 
-\begin_deeper
-\begin_layout Description
-乘法交换律 
-\begin_inset Formula $\left(\forall(a,b)\in R\times R\right)\left(a\times b=b\times a\right)$
 \end_inset
 
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
 则称 
 \begin_inset Formula $(R,+,\times)$
 \end_inset
 
- 是一个“交换环”。若环 
-\begin_inset Formula $(R,+,\times)$
-\end_inset
-
- 还满足
-\end_layout
-
-\begin_deeper
-\begin_layout Description
-存在单位元 
-\begin_inset Formula $\left(\forall a\in R\right)\left(\exists i\in V\right)\left(a\times i=a=i\times a\right)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $(R,+,\times)$
-\end_inset
-
- 是一个“存在单位元的环”。
+ 是一个“有单位元的环”。
 \end_layout
 
 \begin_layout Standard
@@ -791,7 +1101,23 @@ status open
 \end_layout
 
 \begin_layout Remark*
-环的定语（交换、存在单位元的）都是对其乘法而言的。
+“
+\begin_inset Formula $(R,+)$
+\end_inset
+
+ 是交换群”已经隐含了“
+\begin_inset Formula $+$
+\end_inset
+
+ 是交换的”且“
+\begin_inset Formula $(R,+)$
+\end_inset
+
+ 有幺元”，因此“环”前面的定语（“交换”、“有单位元的”）都是对 
+\begin_inset Formula $\times$
+\end_inset
+
+ 而言的。
 \end_layout
 
 \begin_layout Standard
@@ -799,6 +1125,10 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+域
 \end_layout
 
 \begin_layout Definition
@@ -816,7 +1146,7 @@ status open
 \begin_inset Formula $(F,+,\times)$
 \end_inset
 
- 是一个“存在单位元的交换环”（即 
+ 是一个“有单位元的交换环”（即 
 \begin_inset Formula $(F,+)$
 \end_inset
 
@@ -832,11 +1162,11 @@ status open
 \begin_inset Formula $(F,+)$
 \end_inset
 
- 的基准元 —— 用 
+ 的幺元 
 \begin_inset Formula $0$
 \end_inset
 
- 表示 —— 外的任意元素）均有乘法逆元，则称 
+ 外的任意元素）均有乘法逆元，则称 
 \begin_inset Formula $(F,+,\times)$
 \end_inset
 
@@ -914,12 +1244,12 @@ m\colon\mathbb{F}\times V\to V\qquad\left(\forall(\alpha,\vec{v})\in\mathbb{F}\t
 \begin_inset Formula $(\mathbb{F},\times)$
 \end_inset
 
- 的基准元）
+ 的幺元）
 \end_layout
 
 \begin_layout Description
 数量结合律 
-\begin_inset Formula $\left(\forall(\alpha,\beta,\vec{v})\in\mathbb{F}\times\mathbb{F}\times V\right)\left(\alpha*(\beta*\vec{v})=(\alpha\times\beta)*\vec{v}\right)$
+\begin_inset Formula $\left(\forall(\alpha,\beta,\vec{v})\in\mathbb{F}^{2}\times V\right)\left(\alpha*(\beta*\vec{v})=(\alpha\times\beta)*\vec{v}\right)$
 \end_inset
 
 
@@ -927,7 +1257,7 @@ m\colon\mathbb{F}\times V\to V\qquad\left(\forall(\alpha,\vec{v})\in\mathbb{F}\t
 
 \begin_layout Description
 数量分配律 
-\begin_inset Formula $\left(\forall(\alpha,\beta,\vec{v})\in\mathbb{F}\times\mathbb{F}\times V\right)\left((\alpha+\beta)*\vec{v}=\alpha*\vec{v}+\beta*\vec{v}\right)$
+\begin_inset Formula $\left(\forall(\alpha,\beta,\vec{v})\in\mathbb{F}^{2}\times V\right)\left((\alpha+\beta)*\vec{v}=\alpha*\vec{v}+\beta*\vec{v}\right)$
 \end_inset
 
 
@@ -935,7 +1265,7 @@ m\colon\mathbb{F}\times V\to V\qquad\left(\forall(\alpha,\vec{v})\in\mathbb{F}\t
 
 \begin_layout Description
 向量分配律 
-\begin_inset Formula $\left(\forall(\alpha,\vec{u},\vec{v})\in\mathbb{F}\times V\times V\right)\left(\alpha*(\vec{u}+\vec{v})=\alpha*\vec{u}+\alpha*\vec{v}\right)$
+\begin_inset Formula $\left(\forall(\alpha,\vec{u},\vec{v})\in\mathbb{F}\times V^{2}\right)\left(\alpha*(\vec{u}+\vec{v})=\alpha*\vec{u}+\alpha*\vec{v}\right)$
 \end_inset
 
 
@@ -980,7 +1310,7 @@ status open
 \begin_inset Formula $(\mathbb{F},+)$
 \end_inset
 
- 的基准元 
+ 的幺元 
 \begin_inset Formula $0$
 \end_inset
 
@@ -992,7 +1322,7 @@ status open
 \begin_inset Formula $(V,+)$
 \end_inset
 
- 的基准元，用 
+ 的幺元，用 
 \begin_inset Formula $\vec{o}$
 \end_inset
 
@@ -1162,7 +1492,7 @@ status open
 \end_layout
 
 \begin_layout Section
-空间的子集
+线性空间的子集
 \end_layout
 
 \begin_layout Subsection
@@ -1550,6 +1880,167 @@ status open
 \end_layout
 
 \begin_layout Subsection
+子集的凸包
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[凸子集]
+\end_layout
+
+\end_inset
+
+若线性空间 
+\begin_inset Formula $(V,+,\mathbb{F},*)$
+\end_inset
+
+ 的子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+(\alpha\vec{x}+(1-\alpha)\vec{y})\in X\qquad\forall(\alpha,\vec{x},\vec{y})\in(\mathbb{F}\cap[0,1])\times X\times X
+\]
+
+\end_inset
+
+则称“
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的
+\bar under
+凸 (convex)
+\bar default
+ 子集”。若凸子集 
+\begin_inset Formula $X$
+\end_inset
+
+ 还满足
+\begin_inset Formula 
+\[
+\alpha\vec{x}\in X\qquad\forall(\alpha,\vec{x})\in(\mathbb{F}\cap[-1,1])\times X
+\]
+
+\end_inset
+
+则称“
+\begin_inset Formula $X$
+\end_inset
+
+ 是 
+\begin_inset Formula $V$
+\end_inset
+
+ 的
+\bar under
+绝对凸 (absolutely convex)
+\bar default
+ 子集”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[凸包]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $(V,+,\mathbb{F},*)$
+\end_inset
+
+ 的子集，则称“所有包含 
+\begin_inset Formula $X$
+\end_inset
+
+ 的那些 
+\begin_inset Formula $V$
+\end_inset
+
+ 的凸子集的交集”为“
+\begin_inset Formula $X$
+\end_inset
+
+ 的
+\bar under
+凸包 (convex hull)
+\bar default
+”，用 
+\begin_inset Formula $X_{\mathrm{CH}}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $X$
+\end_inset
+
+ 是线性空间 
+\begin_inset Formula $(V,+,\mathbb{F},*)$
+\end_inset
+
+ 的子集，则其凸包可以表示成
+\begin_inset Formula 
+\[
+X_{\mathrm{CH}}=\left\{ \sum_{i=1}^{n}\alpha_{i}\vec{u}_{i}:\left(n\in\mathbb{N}\right)\land\left(\left\{ \vec{x}_{i}\right\} _{i=1}^{n}\subset X\right)\land\left(\left\{ \alpha_{i}\right\} _{i=1}^{n}\subset\mathbb{F}\cap[0,1]\right)\land\left(\sum_{i=1}^{n}\alpha_{i}=1\right)\right\} 
+\]
+
+\end_inset
+
+即 
+\begin_inset Formula $X$
+\end_inset
+
+ 中向量的有限凸组合之集。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+线性空间的四则运算
+\end_layout
+
+\begin_layout Subsection
 空间的直和
 \end_layout
 
@@ -1746,163 +2237,6 @@ status open
 \end_layout
 
 \begin_layout Subsection
-子集的凸包
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[凸子集]
-\end_layout
-
-\end_inset
-
-若线性空间 
-\begin_inset Formula $(V,+,\mathbb{F},*)$
-\end_inset
-
- 的子集 
-\begin_inset Formula $X$
-\end_inset
-
- 满足
-\begin_inset Formula 
-\[
-(\alpha\vec{x}+(1-\alpha)\vec{y})\in X\qquad\forall(\alpha,\vec{x},\vec{y})\in(\mathbb{F}\cap[0,1])\times X\times X
-\]
-
-\end_inset
-
-则称“
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的
-\bar under
-凸 (convex)
-\bar default
- 子集”。若凸子集 
-\begin_inset Formula $X$
-\end_inset
-
- 还满足
-\begin_inset Formula 
-\[
-\alpha\vec{x}\in X\qquad\forall(\alpha,\vec{x})\in(\mathbb{F}\cap[-1,1])\times X
-\]
-
-\end_inset
-
-则称“
-\begin_inset Formula $X$
-\end_inset
-
- 是 
-\begin_inset Formula $V$
-\end_inset
-
- 的
-\bar under
-绝对凸 (absolutely convex)
-\bar default
- 子集”。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[凸包]
-\end_layout
-
-\end_inset
-
-若 
-\begin_inset Formula $X$
-\end_inset
-
- 是线性空间 
-\begin_inset Formula $(V,+,\mathbb{F},*)$
-\end_inset
-
- 的子集，则称“所有包含 
-\begin_inset Formula $X$
-\end_inset
-
- 的那些 
-\begin_inset Formula $V$
-\end_inset
-
- 的凸子集的交集”为“
-\begin_inset Formula $X$
-\end_inset
-
- 的
-\bar under
-凸包 (convex hull)
-\bar default
-”，用 
-\begin_inset Formula $X_{\mathrm{CH}}$
-\end_inset
-
- 表示。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-若 
-\begin_inset Formula $X$
-\end_inset
-
- 是线性空间 
-\begin_inset Formula $(V,+,\mathbb{F},*)$
-\end_inset
-
- 的子集，则其凸包可以表示成
-\begin_inset Formula 
-\[
-X_{\mathrm{CH}}=\left\{ \sum_{i=1}^{n}\alpha_{i}\vec{u}_{i}:\left(n\in\mathbb{N}\right)\land\left(\left\{ \vec{x}_{i}\right\} _{i=1}^{n}\subset X\right)\land\left(\left\{ \alpha_{i}\right\} _{i=1}^{n}\subset\mathbb{F}\cap[0,1]\right)\land\left(\sum_{i=1}^{n}\alpha_{i}=1\right)\right\} 
-\]
-
-\end_inset
-
-即 
-\begin_inset Formula $X$
-\end_inset
-
- 中向量的有限凸组合之集。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 商〔集|空间〕
 \end_layout
 
@@ -1912,7 +2246,7 @@ status open
 
 \begin_layout Plain Layout
 
-[陪集]
+[商集]
 \end_layout
 
 \end_inset
