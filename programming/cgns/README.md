@@ -256,8 +256,9 @@ Element_t
 │   ├── Name: ElementRange
 │   └── Data: int[2] = {first, last}  // 单个 Element_t 内的单元需连续编号
 ├── ElementType_t
-│   └── Data: NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 |
-│             PENTA_6 | HEXA_8 | ... | NGON_n | NFACE_n | MIXED
+│   └── Data: NODE = 2 | BAR_2 = 3 | TRI_3 = 5 | QUAD_4 = 7 |
+│             TETRA_4 = 10 | PYRA_5 = 12 | PENTA_6 = 14 | HEXA_8 = 17 |
+│             NGON_n = 22 | NFACE_n = 23 | MIXED = 20
 └── DataArray_t
 │   ├── Name: ElementConnectivity
 │   └── Data: int[ElementDataSize]  // ElementDataSize :=
@@ -312,7 +313,7 @@ cgp_elements_read_data(// Read element data in parallel:
 
 - `cg_section_write()` 在给定的 `Zone_t` 结点下新建一个 *单元片段 (element section)*，即 `Elements_t` 结点。
 - 一个 `Zone_t` 结点下可以有多个 `Elements_t` 结点：
-  - 同一个 `Elements_t` 结点下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一，常用的有 `NODE | BAR_2 | TRI_3 | QUAD_4 | TETRA_4 | PYRA_5 | PENTA_6 | HEXA_8`。
+  - 同一个 `Elements_t` 结点下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有 *连续* 且 *互异* 的编号。
 - `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
 - `n_boundary` 为当前 `Elements_t` 对象的 *边界单元数*：若 `n_boundary > 0`，则单元已被排序，且前  `n_boundary` 个单元为边界单元。
