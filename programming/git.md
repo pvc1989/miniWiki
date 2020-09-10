@@ -55,6 +55,8 @@ git clone --recurse-submodules[=<pathspec] <repository> [<directory>]
 # 相当于
 git clone <repository> [<directory>]
 git submodule update --init --recursive
+# 更新所有子模块
+git submodule update --remote
 ```
 
 ### 提交修改

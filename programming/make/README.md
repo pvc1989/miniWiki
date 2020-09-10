@@ -363,6 +363,17 @@ set(ENV{<variable>} [<value>])
 ### 变量
 完整的 CMake 变量列表参见 [`cmake-variables(7)`](https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html)。
 
+### 查找
+
+```cmake
+# 将含有 name1 的文件夹的完整路径存入 VAR 中：
+find_path (<VAR> name1 [path1 path2 ...])
+# 将名为 name1 的库文件的完整路径存入 VAR 中：
+find_library (<VAR> name1 [path1 path2 ...])
+```
+
+
+
 ### 目标
 
 添加构建可执行文件的目标：
@@ -389,6 +400,9 @@ set_target_properties(test_algebra_matrix PROPERTIES OUTPUT_NAME matrix)
 ### 链接
 一般形式：
 ```cmake
+# 为当前 CMakeLists.txt 剩余部分及子目录中的所有目标设置链接项目：
+link_libraries([item1 [item2 [...]]] [[debug|optimized|general] <item>] ...)
+# 为特定目标设置链接项目：
 target_link_libraries(<target> ... <item>... ...)
 ```
 其中
