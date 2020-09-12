@@ -50,6 +50,9 @@ git init [project-name]
 ```shell
 # 从指定远程服务器获取仓库，创建本地副本
 git clone <repository> [<directory>]
+```
+
+```shell
 # 克隆含有子模块的项目
 git clone --recurse-submodules[=<pathspec] <repository> [<directory>]
 # 相当于
@@ -78,14 +81,6 @@ git diff --staged
 ```
 
 ```shell
-# 撤销对某文件的修改（如果文件已暂存，撤销无效）
-# （注：需要 Git v2.23+）
-git restore [file]
-# 从暂存区中撤回某文件，但保留对其所做的修改
-git restore --staged [file]
-```
-
-```shell
 # 将暂存的内容提交
 git commit -m "[descriptive message]"
 # 将所有修改暂存并提交
@@ -98,7 +93,15 @@ git add [forgotten file]
 git commit --amend
 ```
 
-### 撤销提交
+### 撤销修改
+```shell
+# 撤销对某文件的修改（如果文件已暂存，撤销无效）
+# （注：需要 Git v2.23+）
+git restore [file]
+# 从暂存区中撤回某文件，但保留对其所做的修改
+git restore --staged [file]
+```
+
 ```shell
 # 撤销自某次提交以后的所有提交，但保留对文件所做的修改
 git reset [commit]
@@ -129,14 +132,8 @@ git branch
 git branch [branch-name]
 # 删除指定分支
 git branch -d [branch-name]
-```
-
-```shell
-# 切换到指定分支
+# 签出到指定分支
 git checkout [branch-name]
-```
-
-```shell
 # 将指定分支上的历史合并到当前分支
 git merge [branch]
 ```
@@ -147,6 +144,18 @@ git merge [branch]
 # 查看现有标签
 git tag --list
 git tag --list v4.1*
+# 为最近一次提交添加轻量标签（不含其他信息）
+git tag v4.1.2
+# 为最近一次提交添加附注标签
+git tag -a v4.1.3 -m "my version 4.1.3"
+# 为某次历史提交添加标签
+git tag -a <tagname> <commit>
+# 将标签推送到远程仓库
+git push origin <tagname>
+git push origin --tags
+# 删除标签
+git tag -d <tagname>
+git push origin --delete <tagname>
 # 签出到指定标签
 git checkout v4.1.1
 ```
@@ -156,24 +165,19 @@ git checkout v4.1.1
 ```shell
 # 查看当前分支的版本历史
 git log
-# 或
 git log -p -2
 git log --oneline --decorate --graph --all
-```
-
-```shell
 # 查看指定文件的版本历史
 git log --follow [file]
-```
-
-```shell
-# 查看两个分支之间的差异
-git diff [first-branch]...[second-branch]
-```
-
-```shell
 # 查看某次提交的内容
 git show [commit]
+# 查看两次提交之间的差异
+git diff [<options>] <commit> <commit> [--] [<path>]
+# 查看两个分支之间当前的差异
+git diff develop master
+git diff develop..master
+# 查看 master 在分出 develop 以后的提交
+git diff develop...master
 ```
 
 ### 远程同步
