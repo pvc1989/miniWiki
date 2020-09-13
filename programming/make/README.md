@@ -13,6 +13,8 @@ title: 批量构建
   - [`CMakeLists.txt` 文件](#CMakeLists)
   - [CMake Tools](#CMake-Tools)
 - [Ninja](#Ninja)
+  - [`ninja` 命令](#ninja-cmd)
+  - [`build.ninja` 文件](#build.ninja)
 
 # 手动构建
 ## 手动构建过程
@@ -230,7 +232,7 @@ library.o : library.c
 ### 示例
 以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./Makefile)。
 
-# CMake
+# CMake<a name="CMake"></a>
 
 ## 参考资料
 ### 官方文档
@@ -241,7 +243,7 @@ library.o : library.c
 
 ### 入门教程
 - [***CMake Tutorial***](https://cmake.org/cmake/help/latest/guide/tutorial) provides a step-by-step tutorial covering common build system use cases that CMake helps to address.
-- [Programming in C++](https://www.ece.uvic.ca/~frodo/cppbook/) by Michael Adams from University of Victoria
+- [***Programming in C++***](https://www.ece.uvic.ca/~frodo/cppbook/) by Michael Adams from University of Victoria
   - Lecture Slides [(Version 2019-02-04)](https://www.ece.uvic.ca/~frodo/cppbook/downloads/lecture_slides_for_programming_in_c++-2019-02-04.pdf)
   - Video Presentations (YouTube)
     - Build Tools (Make and CMake)
@@ -447,7 +449,7 @@ target_link_libraries(<target> ... <item>... ...)
 1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此方法不依赖于本节介绍的 VS Code 及 CMake Tools。
 
-# Ninja
+# Ninja<a name="Ninja"/>
 
 ## 参考资料
 
@@ -512,7 +514,7 @@ ninja
 ninja clean
 ```
 
-## `build.ninja` 文件
+## `build.ninja` 文件<a name="build.ninja"></a>
 
 用于驱动 [`ninja` 命令](#ninja-cmd) 运行的脚本文件，类似于 [`Makefile` 文件](#Makefile)。
 
