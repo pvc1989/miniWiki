@@ -53,6 +53,8 @@ git clone <repository> [<directory>]
 ```
 
 ```shell
+# 克隆远程仓库作为当前仓库的子模块
+git submodule add <repository> [<path>]
 # 克隆含有子模块的项目
 git clone --recurse-submodules[=<pathspec] <repository> [<directory>]
 # 相当于
