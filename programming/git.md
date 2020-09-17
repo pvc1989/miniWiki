@@ -239,3 +239,64 @@ git push [remote] [branch]
 
 ### 合并修改
 经过验证后，主分支维护者就可以将子分支中的修改合并到主分支上。在 GitHub 上，可以在 PR 里嵌入一些关键词，用以关联一些 ***问题 (issue)***。当 PR 被合并后，相关的 issue 也随之而被关闭。关键词使用方法参见《[Closing issues using keywords](https://help.github.com/articles/closing-issues-using-keywords/)》。
+
+## GitHub Actions
+
+### 基本概念
+
+- [About continuous integration](https://docs.github.com/en/articles/about-continuous-integration)
+- [Introduction to GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions)
+- [Core concepts for GitHub Actions](https://docs.github.com/en/github/automating-your-workflow-with-github-actions/core-concepts-for-github-actions)
+
+|       概念        |         含义         |                             示例                             |
+| :---------------: | :------------------: | :----------------------------------------------------------: |
+|   事件 (event)    | 触发工作流的某次提交 |             推送 (push)、拉取请求 (pull request)             |
+|   行动 (action)   |       单个命令       |           编译 (compile)、链接 (link)、运行 (run)            |
+|    步骤 (step)    |       一组行动       |         配置 (configure)、构建 (build)、测试 (test)          |
+|    任务 (job)     |       一组步骤       |                 在 Linux 系统下构建整个仓库                  |
+| 工作流 (workflow) |       一组任务       |                 在多个系统下分别构建整个仓库                 |
+|  运行器 (runner)  |  运行工作流的服务器  | [GitHub 提供的虚拟环境](https://docs.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners) |
+
+### 简单示例
+
+对于用主流语言编写的项目，GitHub Actions 提供了预制的 `.yml` 文件。更一般的：
+
+1. 在仓库根目录中创建 `.github/workflows` 子目录（只需做一次）。
+2. 在该子目录中创建 `WORKFLOW_NAME.yml` 文件，例如
+
+   ```yaml
+   name: learn-github-actions  # 当前 workflow 的名称
+   on: [push]  # 触发当前 workflow 的事件
+   jobs:
+     check-bats-version:  # 当前 job 的名称
+       runs-on: ubuntu-latest  # 指定 runner 的操作系统
+       steps:
+         - uses: actions/checkout@v2    # 在 runner 中下载当前仓库
+         - uses: actions/setup-node@v1  # 在 runner 中安装 node
+         - run: npm install -g bats     # 在 runner 中用 npm 安装 bats
+         - run: bats -v                 # 在 runner 中运行 bats
+   ```
+
+3. 在 GitHub Actions 页面[查看任务完成情况](https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions#viewing-the-jobs-activity)。
+
+### 常用语法
+
+
+- [Learn YAML in five minutes](https://www.codeproject.com/Articles/1214409/Learn-YAML-in-five-minutes)
+  - 缩进全部用空格实现，不要用制表符！
+- [Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions)
+
+```yaml
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        node: [6, 8, 10]
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+```
+
