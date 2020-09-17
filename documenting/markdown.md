@@ -10,7 +10,7 @@ title: Markdown
 
 ## [kramdown](https://kramdown.gettalong.org/)
 
-# Typora 编辑器<a name="Typore"></a>
+# Typora 编辑器<a name="Typora"></a>
 [Typora](https://typora.io/) 是一款支持 *所见即所得* 的 GFM 编辑器。
 
 ## 数学公式渲染

@@ -3,7 +3,7 @@ title: 书签编辑器
 ---
 
 # PDF 书签编辑器
-## [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)
+## [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)<a name="PDFBookmarker"></a>
 ### 用法示例
 ```bash
 # 将 toc.txt 中的目录添加到 book.pdf，另存为 new-book.pdf
@@ -35,7 +35,7 @@ python3 pdfbookmarker.py book.pdf toc.txt
 ```
 
 # DjVu 书签编辑器
-## [DJVUSED](http://djvu.sourceforge.net/doc/man/djvused.html)
+## [DJVUSED](http://djvu.sourceforge.net/doc/man/djvused.html)<a name="DJVUSED"></a>
 ### 常用选项
 - `-e <script>` 从命令行获取命令
 - `-s` 执行完命令后保存文件

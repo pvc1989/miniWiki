@@ -2,7 +2,7 @@
 title: LaTeX
 ---
 
-# LaTeX
+# LaTeX<a name="LaTeX"></a>
 ## 参考资料
 ### 链接
 - [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
@@ -166,7 +166,7 @@ $ pip3 install pygments
 
 ### tikz
 
-# LyX
+# LyX<a name="LyX"></a>
 
 [LyX](https://lyx.org) 是一款开源、支持“所见即所思”的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word “所及即所得”的优势。
 
@@ -215,7 +215,7 @@ $ pip3 install pygments
 3. 【包含类别】选择【程序列表】。
 4. 【更多参数】右侧的空白处添加语言，例如  `language=python`。
 
-# MathJax
+# MathJax<a name="MathJax"></a>
 
 ## 常用链接
 
