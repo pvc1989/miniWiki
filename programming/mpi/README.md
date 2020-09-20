@@ -10,7 +10,7 @@ title: Message Passing Interface (MPI)
 
 ## 静态分配
 
-前提：事先知道 任务总量、计算资源分布情况。
+适用场景：事先知道任务总量及计算资源分布。
 
 ### Kernighan--Lin
 
@@ -29,26 +29,59 @@ title: Message Passing Interface (MPI)
 
 ### [METIS](http://glaros.dtc.umn.edu/gkhome/views/metis)
 
+公共接口：
+
 ```c
-index_t FindCommonElements(
-    index_t i_curr_elem,
-    index_t n_nodes_in_curr_elem,
-    index_t *nodes_in_curr_elem,
-    index_t *range_of_each_node,
-    index_t *elems_in_each_node,
-    index_t *range_of_each_elem,
-    index_t n_common_nodes,
-    index_t *n_visits_of_each_elem,
-    index_t *neighbors_of_curr_elem) {
-  index_t n_neighbors = 0;
+
+```
+
+实现细节：
+
+```c++
+int METIS_PartMeshDual(
+    size_t *n_elems,
+    size_t *n_nodes,
+    size_t *range_of_each_elem,
+    size_t *nodes_in_each_elem,
+    size_t *cost_of_each_elem = NULL,  /* computational cost */
+    size_t *size_of_each_elem = NULL,  /* communication size */
+    size_t *n_common_nodes,
+    size_t *n_parts,
+     real_t *weight_of_each_part = NULL,  /* sum must be 1.0 */
+    size_t *options = NULL,
+    size_t *edge_cut_or_comm_vol,
+    size_t *elem_parts,
+    size_t *node_parts
+);
+int METIS_MeshToDual(
+    size_t *n_elems,
+    size_t *n_nodes,
+    size_t *range_of_each_elem,
+    size_t *nodes_in_each_elem,
+    size_t *n_common_nodes,
+    size_t *index_base,  /* 0 or 1 */
+    size_t **range_of_each_dual_vertex,
+    size_t **neighbors_of_each_dual_vertex
+);
+size_t FindCommonElements(
+    size_t i_curr_elem,
+    size_t n_nodes_in_curr_elem,
+    size_t *nodes_in_curr_elem,
+    size_t *range_of_each_node,
+    size_t *elems_in_each_node,
+    size_t *range_of_each_elem,
+    size_t n_common_nodes,
+    size_t *n_visits_of_each_elem,
+    size_t *neighbors_of_curr_elem) {
+  size_t n_neighbors = 0;
   /* find all elements that share at least one node with i_curr_elem */
-  for (index_t i_node_local = 0;
+  for (size_t i_node_local = 0;
       i_node_local < n_nodes_in_curr_elem; i_node_local++) {
     // for each nodes in curr elem
-    index_t i_node_global = nodes_in_curr_elem[i_node_local];
-    index_t i_elem_begin = range_of_each_node[i_node_global];
-    index_t i_elem_end = range_of_each_node[i_node_global+1];
-    for (index_t i_elem_curr = i_elem_begin;
+    size_t i_node_global = nodes_in_curr_elem[i_node_local];
+    size_t i_elem_begin = range_of_each_node[i_node_global];
+    size_t i_elem_end = range_of_each_node[i_node_global+1];
+    for (size_t i_elem_curr = i_elem_begin;
         i_elem_curr < i_elem_end; i_elem_curr++) {
       // for each elems in curr node
       i_elem_global = elems_in_each_node[i_elem_curr];
@@ -65,12 +98,12 @@ index_t FindCommonElements(
     neighbors_of_curr_elem[n_neighbors++] = i_curr_elem;
   n_visits_of_each_elem[i_curr_elem] = 0;
   /* compact the list to contain only those with at least n_common_nodes nodes */
-  index_t n_real_neighbors = 0;
-  for (index_t i_neighbor_local = 0;
+  size_t n_real_neighbors = 0;
+  for (size_t i_neighbor_local = 0;
       i_neighbor_local < n_neighbors;
       i_neighbor_local++) {  // for each (possibly trivial) neighbor (elem)
-    index_t i_neighbor_global = neighbors_of_curr_elem[i_neighbor_local];
-    index_t n_visits_of_curr_elem = n_visits_of_each_elem[i_neighbor_global];
+    size_t i_neighbor_global = neighbors_of_curr_elem[i_neighbor_local];
+    size_t n_visits_of_curr_elem = n_visits_of_each_elem[i_neighbor_global];
     if (/* trivial case */n_visits_of_curr_elem >= n_common_nodes ||
         /* In case when (n_common_nodes >= n_nodes_in_curr_elem). */
         n_visits_of_curr_elem >= (n_nodes_in_curr_elem - 1) ||
