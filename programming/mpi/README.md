@@ -27,17 +27,13 @@ title: Message Passing Interface (MPI)
 - Graph Laplacian：$ \Mat{C}^{\mathsf{T}}\Mat{C}=\Mat{D}-\Mat{W} $
 - 质量弹簧系统：$ \Mat{M}\ket{\ddot{U}}+\Mat{K}\ket{U}=\ket{0} $
 
-### [METIS](http://glaros.dtc.umn.edu/gkhome/views/metis)
+### [METIS](https://github.com/pvcStillInGradSchool/METIS)
+
+⚠️ 为突出高亮效果，本节用 `size_t` 替换源代码中的 `idx_t`，后者是一种长度由预定义宏 `IDXTYPEWIDTH` 确定的整数类型。
 
 公共接口：
 
 ```c
-
-```
-
-实现细节：
-
-```c++
 int METIS_PartMeshDual(
     size_t *n_elems,
     size_t *n_nodes,
@@ -47,7 +43,7 @@ int METIS_PartMeshDual(
     size_t *size_of_each_elem = NULL,  /* communication size */
     size_t *n_common_nodes,
     size_t *n_parts,
-     real_t *weight_of_each_part = NULL,  /* sum must be 1.0 */
+    real_t *weight_of_each_part = NULL,  /* sum must be 1.0 */
     size_t *options = NULL,
     size_t *edge_cut_or_comm_vol,
     size_t *elem_parts,
@@ -60,6 +56,20 @@ int METIS_MeshToDual(
     size_t *nodes_in_each_elem,
     size_t *n_common_nodes,
     size_t *index_base,  /* 0 or 1 */
+    size_t **range_of_each_dual_vertex,
+    size_t **neighbors_of_each_dual_vertex
+);
+```
+
+实现细节：
+
+```c++
+void CreateGraphDual(
+    size_t n_elems,
+    size_t n_nodes,
+    size_t *range_of_each_elem,
+    size_t *nodes_in_each_elem,
+    size_t n_common_nodes,
     size_t **range_of_each_dual_vertex,
     size_t **neighbors_of_each_dual_vertex
 );
