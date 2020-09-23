@@ -43,8 +43,8 @@ man git-<command>
 
 ### 创建仓库
 ```shell
-# 在本地新建名为 project-name 的仓库
-git init [project-name]
+# 在本地新建名为 directory 的仓库
+git init [directory]
 ```
 
 ```shell
@@ -56,12 +56,12 @@ git clone <repository> [<directory>]
 # 克隆远程仓库作为当前仓库的子模块
 git submodule add <repository> [<path>]
 # 克隆含有子模块的项目
-git clone --recurse-submodules[=<pathspec] <repository> [<directory>]
+git clone --recurse-submodules[=<pathspec>] <repository> [<directory>]
 # 相当于
 git clone <repository> [<directory>]
 git submodule update --init --recursive
-# 更新所有子模块
-git submodule update --remote
+# 更新所有 submodule
+git submodule update --remote --recursive
 ```
 
 ### 提交修改
@@ -136,9 +136,20 @@ git branch [branch-name]
 git branch -d [branch-name]
 # 签出到指定分支
 git checkout [branch-name]
+```
+
+```shell 
 # 将指定分支上的历史合并到当前分支
 git merge [branch]
+# 以“变基 (rebase)”代替“合并 (merge)”
+# 将 topic-branch 上的提交追加到 base-branch 上的最新提交之后
+git checkout <topic-branch>
+git rebase <base-branch>
+git checkout <base-branch>
+git merge <topic-branch>
 ```
+
+
 
 ### 版本标签
 
