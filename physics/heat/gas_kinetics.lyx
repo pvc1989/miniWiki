@@ -136,7 +136,7 @@ name "sec:气体动理学：气体压强"
  充分大、且任其自由碰撞的时间充分长，就可以假设活塞受到的撞击对时间和空间而言都是均匀的。在上述假设下，作用力的面密度 
 \begin_inset Formula 
 \[
-p\coloneqq F/A
+p\coloneqq F\mathbin{/}A
 \]
 
 \end_inset
@@ -149,7 +149,7 @@ p\coloneqq F/A
 \begin_inset Formula $m$
 \end_inset
 
-，（与活塞撞击前）沿管道轴向的速度分量为 
+、（与活塞撞击前）沿管道轴向的速度分量为 
 \begin_inset Formula $v_{x}$
 \end_inset
 
@@ -188,16 +188,12 @@ p\coloneqq F/A
  就得到气压
 \begin_inset Formula 
 \[
-p(v_{x})=2nmv_{x}^{2}
+p(v_{x})=\frac{F}{A}=\frac{2mv_{x}\cdot nAv_{x}\dd{t}}{A\dd{t}}=2nmv_{x}^{2}
 \]
 
 \end_inset
 
-下面来修正“所有分子以相同的速度运动”这一假设，为此只需按 
-\begin_inset Formula $v_{x}$
-\end_inset
-
- 的分布对 
+下面来修正“所有分子以相同的速度运动”这一假设，为此只需对 
 \begin_inset Formula $p(v_{x})$
 \end_inset
 
@@ -213,30 +209,30 @@ p=\int_{0}^{+\infty}p(v_{x})\,\mu(v_{x})\dd{v_{x}}=2nm\int_{0}^{+\infty}v_{x}^{2
 \begin_inset Formula $\mu(v_{x})$
 \end_inset
 
- 为描述 
+ 为 
 \begin_inset Formula $v_{x}$
 \end_inset
 
- 分布的概率密度，这里暂不细究其具体形式。若管道内的分子已经过充分长时间的碰撞，则 
+ 的概率密度，这里暂不细究其具体形式。若管道内的分子已经过充分长时间的碰撞，则 
 \begin_inset Formula $\mu(v_{x})$
 \end_inset
 
  应具有对称性 
-\begin_inset Formula $\mu(v_{x})=\mu(-v_{x})$
+\begin_inset Formula $\mu(+v_{x})=\mu(-v_{x})$
 \end_inset
 
 ，由此可得
 \begin_inset Formula 
 \[
-\int_{0}^{+\infty}v_{x}^{2}\,\mu(v_{x})\dd{v_{x}}=\int_{-\infty}^{+\infty}(v_{x}^{2}/2)\,\mu(v_{x})\dd{v_{x}}\eqqcolon\expval{v_{x}^{2}/2}
+\int_{0}^{+\infty}v_{x}^{2}\,\mu(v_{x})\dd{v_{x}}=\int_{-\infty}^{+\infty}(v_{x}^{2}/2)\,\mu(v_{x})\dd{v_{x}}\eqqcolon\langle v_{x}^{2}/2\rangle
 \]
 
 \end_inset
 
-从而有修正后的气压
+从而有
 \begin_inset Formula 
 \begin{equation}
-p=2nm\expval{v_{x}^{2}/2}\label{eq:气体动理学：气压：v_x}
+p=2nm\langle v_{x}^{2}/2\rangle\label{eq:气体动理学：气压：v_x}
 \end{equation}
 
 \end_inset
@@ -248,14 +244,14 @@ p=2nm\expval{v_{x}^{2}/2}\label{eq:气体动理学：气压：v_x}
 在三维空间中，速度的三个分量不应有偏重，故有
 \begin_inset Formula 
 \[
-\expval{v_{x}^{2}/2}=\expval{v_{y}^{2}/2}=\expval{v_{z}^{2}/2}=\expval{v^{2}/2}/3
+\langle v_{x}^{2}/2\rangle=\langle v_{y}^{2}/2\rangle=\langle v_{z}^{2}/2\rangle=(1/3)\langle v^{2}/2\rangle
 \]
 
 \end_inset
 
 代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：气压：v_x"
 
 \end_inset
@@ -263,13 +259,13 @@ reference "eq:气体动理学：气压：v_x"
  式即得
 \begin_inset Formula 
 \begin{equation}
-p=(2/3)\,nm\expval{v^{2}/2}=(2/3)\,n\expval{mv^{2}/2}\label{eq:气体动理学：气压：单个分子动能}
+p=(2/3)nm\langle v^{2}/2\rangle=(2/3)n\langle mv^{2}/2\rangle\label{eq:气体动理学：气压：单个分子动能}
 \end{equation}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\expval{mv^{2}/2}$
+\begin_inset Formula $\langle mv^{2}/2\rangle$
 \end_inset
 
  为单个分子（质心）动能的平均值。若气体所占空间的体积为 
@@ -282,7 +278,7 @@ p=(2/3)\,nm\expval{v^{2}/2}=(2/3)\,n\expval{mv^{2}/2}\label{eq:气体动理学�
 
 ，代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：气压：单个分子动能"
 
 \end_inset
@@ -290,20 +286,33 @@ reference "eq:气体动理学：气压：单个分子动能"
  式即得
 \begin_inset Formula 
 \begin{equation}
-pV=(2/3)\,N\expval{mv^{2}/2}=(\gamma-1)U\label{eq:气体动理学：气压：内能}
+pV=(2/3)N\langle mv^{2}/2\rangle\eqqcolon(\gamma-1)U\label{eq:气体动理学：气压：内能}
 \end{equation}
 
 \end_inset
 
-其中 
-\begin_inset Formula $U\coloneqq N\expval{mv^{2}/2}$
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $U\coloneqq N\langle mv^{2}/2\rangle$
 \end_inset
 
  是所有分子动能之和，历史上被称为“内能 (internal energy)”；
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\gamma=5/3$
 \end_inset
 
  是单原子分子的“绝热指数”，其含义将在下一节给出。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -330,7 +339,7 @@ pV=(2/3)\,N\expval{mv^{2}/2}=(\gamma-1)U\label{eq:气体动理学：气压：内
 
 将其代入 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：气压：内能"
 
 \end_inset
@@ -386,8 +395,8 @@ pV^{\gamma}=C\label{eq:气体动理学：绝热条件}
 p(v_{x})=2nmv_{x}^{2}\\
 p_{x}\coloneqq mv_{x}
 \end{cases}\\
-p=n\expval{p_{x}v_{x}} & \impliedby p=2n\expval{mv_{x}^{2}/2}\\
-p=(1/3)\,n\expval{\vec{p}\vdot\vec{v}} & \impliedby p=(2/3)\,n\expval{mv^{2}/2}
+p=n\langle p_{x}v_{x}\rangle & \impliedby p=2n\langle mv_{x}^{2}/2\rangle\\
+p=(1/3)n\langle\vec{p}\vdot\vec{v}\rangle & \impliedby p=(2/3)n\langle mv^{2}/2\rangle
 \end{aligned}
 \]
 
@@ -398,7 +407,7 @@ p=(1/3)\,n\expval{\vec{p}\vdot\vec{v}} & \impliedby p=(2/3)\,n\expval{mv^{2}/2}
 \end_inset
 
  为单个光子的能量。若定义光子气体的“内能”为所有光子的能量之和，即 
-\begin_inset Formula $U\coloneqq nV\expval{\vec{p}\vdot\vec{v}}$
+\begin_inset Formula $U\coloneqq nV\langle\vec{p}\vdot\vec{v}\rangle$
 \end_inset
 
 ，则有
@@ -443,7 +452,7 @@ reference "sec:气体动理学：气体压强"
 》一节可知，活塞保持平衡首先意味着两侧“压强平衡”，即
 \begin_inset Formula 
 \begin{equation}
-p_{1}=p_{2}\iff n_{1}\expval{m_{1}v_{1}^{2}/2}=n_{2}\expval{m_{2}v_{2}^{2}/2}\label{eq:气体动理学：压强平衡}
+p_{1}=p_{2}\iff n_{1}\langle m_{1}v_{1}^{2}/2\rangle=n_{2}\langle m_{2}v_{2}^{2}/2\rangle\label{eq:气体动理学：压强平衡}
 \end{equation}
 
 \end_inset
@@ -453,12 +462,12 @@ p_{1}=p_{2}\iff n_{1}\expval{m_{1}v_{1}^{2}/2}=n_{2}\expval{m_{2}v_{2}^{2}/2}\la
 \end_inset
 
 ，则 
-\begin_inset Formula $\expval{m_{1}v_{1}^{2}/2}\ll\expval{m_{2}v_{2}^{2}/2}$
+\begin_inset Formula $\langle m_{1}v_{1}^{2}/2\rangle\ll\langle m_{2}v_{2}^{2}/2\rangle$
 \end_inset
 
  依然使 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：压强平衡"
 
 \end_inset
@@ -466,7 +475,7 @@ reference "eq:气体动理学：压强平衡"
  式成立，但这种状态不会长期维持。下面将证明：经过较长时间的撞击，活塞两侧的气体分子动能将趋于一致，即
 \begin_inset Formula 
 \[
-\expval{m_{1}v_{1}^{2}/2}=\expval{m_{2}v_{2}^{2}/2}
+\langle m_{1}v_{1}^{2}/2\rangle=\langle m_{2}v_{2}^{2}/2\rangle
 \]
 
 \end_inset
@@ -506,11 +515,11 @@ reference "eq:气体动理学：压强平衡"
 \end_inset
 
 对于含有大量分子的气体，充分长时间的碰撞会使 
-\begin_inset Formula $\expval{\vec{w}\vdot\vec{v}_{\mathrm{CM}}}$
+\begin_inset Formula $\langle\vec{w}\vdot\vec{v}_{\mathrm{CM}}\rangle$
 \end_inset
 
  与 
-\begin_inset Formula $\expval{\vec{v}_{1}\vdot\vec{v}_{2}}$
+\begin_inset Formula $\langle\vec{v}_{1}\vdot\vec{v}_{2}\rangle$
 \end_inset
 
  均趋于 
@@ -520,7 +529,7 @@ reference "eq:气体动理学：压强平衡"
 ，从而有
 \begin_inset Formula 
 \begin{equation}
-\expval{m_{1}v_{1}^{2}/2}=\expval{m_{2}v_{2}^{2}/2}\label{eq:气体动理学：动能平衡}
+\langle m_{1}v_{1}^{2}/2\rangle=\langle m_{2}v_{2}^{2}/2\rangle\label{eq:气体动理学：动能平衡}
 \end{equation}
 
 \end_inset
@@ -534,27 +543,27 @@ reference "eq:气体动理学：压强平衡"
 
 \begin_layout Standard
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：动能平衡"
 
 \end_inset
 
  式是一种独立于 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：压强平衡"
 
 \end_inset
 
  式的新的平衡条件，因此可以用来定义一种新的物理量，称为“气体温度 (temperature of gas)”，简称“气温”。温度平衡是通过“大量气体分子经过充
-分长时间的自由碰撞”达到、并由 
-\begin_inset Formula $\expval{mv^{2}/2}$
+分长时间的自由碰撞”达到、并由标量 
+\begin_inset Formula $\langle mv^{2}/2\rangle$
 \end_inset
 
- 表征的，故可将“气温”定义为
+ 描述的一种状态，故可将“气温”定义为
 \begin_inset Formula 
 \begin{equation}
-\expval{mv^{2}/2}\eqqcolon(3/2)\,kT\label{eq:气体动理学：温度定义}
+\langle mv^{2}/2\rangle\eqqcolon(3/2)kT\label{eq:气体动理学：温度定义}
 \end{equation}
 
 \end_inset
@@ -563,14 +572,14 @@ reference "eq:气体动理学：压强平衡"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\expval{mv^{2}/2}$
+\begin_inset Formula $\langle mv^{2}/2\rangle$
 \end_inset
 
  是大量气体分子经过充分长时间的自由碰撞后单个分子的平均动能。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $k=\si{1.38\times10^{-23}}{J/K}$
+\begin_inset Formula $k=\SI{1.38e-23}{\joule\per\kelvin}$
 \end_inset
 
  称为 Boltzmann 常量。
@@ -599,24 +608,24 @@ reference "eq:气体动理学：压强平衡"
 \end_layout
 
 \begin_layout Standard
-将温度定义 
+将“温度”定义（
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：温度定义"
 
 \end_inset
 
- 代入 
+ 式）代入“内能”定义（
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：气压：内能"
 
 \end_inset
 
- 式可得
+ 式）可得
 \begin_inset Formula 
 \[
-pV=(2/3)\,N\expval{mv^{2}/2}=NkT
+pV=(2/3)N\langle mv^{2}/2\rangle=NkT
 \]
 
 \end_inset
@@ -624,7 +633,7 @@ pV=(2/3)\,N\expval{mv^{2}/2}=NkT
 此式被称为单原子分子气体的“状态方程”。化学和工程中通常用“物质的量 (amount of substance)”
 \begin_inset Formula 
 \[
-n\coloneqq N/N_{\mathrm{A}}
+n\coloneqq N\mathbin{/}N_{\mathrm{A}}
 \]
 
 \end_inset
@@ -653,14 +662,14 @@ pV=(NkT=nN_{\mathrm{A}}kT)=nRT
 \end_layout
 
 \begin_layout Standard
-温度定义 
+温度定义（
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:气体动理学：温度定义"
 
 \end_inset
 
- 中的 
+ 式）中的 
 \begin_inset Formula $3kT/2$
 \end_inset
 
