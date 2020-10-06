@@ -64,9 +64,10 @@ title: 首页
 
 ## [物理](./physics/README.md)
 
-- [热力学](./physics/heat/README.lyx)
+- [热学](./physics/heat/README.lyx)
 - [流体力学](./physics/fluid/README.md)
-- [量子力学](./physics/quantum/README.lyx)
+- [电磁学](./physics/electromagnetism/README.md)
+- [量子力学](./physics/quantum/README.md)
 
 ## [算法](./algorithms/README.md)
 
