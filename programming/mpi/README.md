@@ -45,7 +45,7 @@ int METIS_PartMeshDual(
     size_t *n_parts,
     real_t *weight_of_each_part = NULL,  /* sum must be 1.0 */
     size_t *options = NULL,
-    size_t *edge_cut_or_comm_vol,
+    size_t *objective_value,  /* edge cut or communication volume */
     size_t *elem_parts,
     size_t *node_parts
 );
@@ -58,6 +58,21 @@ int METIS_MeshToDual(
     size_t *index_base,  /* 0 or 1 */
     size_t **range_of_each_dual_vertex,
     size_t **neighbors_of_each_dual_vertex
+);
+int METIS_PartGraphKway(  // or METIS_PartGraphRecursive
+    size_t *n_nodes,
+    size_t *n_constraints,  /* number of balancing constraints, >= 1 */
+    size_t *range_of_each_node,
+    size_t *neighbors_of_each_node,
+    size_t *cost_of_each_node = NULL,  /* computational cost */
+    size_t *size_of_each_node = NULL,  /* communication size */
+    size_t *cost_of_each_edge = NULL,  /* weight of each edge */
+    size_t *n_parts,
+    real_t *weight_of_each_part = NULL,  /* sum must be 1.0 for each constraint */
+    real_t *unbalances = NULL,  /* unbalance tolerance, 1.001 for NULL */
+    size_t *options = NULL,
+    size_t *objective_value,  /* edge cut or communication volume */
+    size_t *parts
 );
 ```
 
