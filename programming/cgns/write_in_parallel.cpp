@@ -10,6 +10,7 @@
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
 
 #include "pcgnslib.h"
 #include "mpi.h"
@@ -71,12 +72,18 @@ int main(int argc, char *argv[]) {
   if (last > n_nodes_total) last = n_nodes_total;
   
   /* create the coordinate data for this process */
-  auto x_head = (float *) malloc(n_nodes_local * sizeof(float));
-  auto y_head = (float *) malloc(n_nodes_local * sizeof(float));
-  auto z_head = (float *) malloc(n_nodes_local * sizeof(float));
-  auto x_curr = x_head;
-  auto y_curr = y_head;
-  auto z_curr = z_head;
+  std::unique_ptr<float[]> x_head{
+      (float*) malloc(n_nodes_local * sizeof(float))
+  };
+  std::unique_ptr<float[]> y_head{
+      (float*) malloc(n_nodes_local * sizeof(float))
+  };
+  std::unique_ptr<float[]> z_head{
+      (float*) malloc(n_nodes_local * sizeof(float))
+  };
+  auto x_curr = x_head.get();
+  auto y_curr = y_head.get();
+  auto z_curr = z_head.get();
   int i_node_total = 0;
   for (int k = 0; k < n_nodes_per_side; k++) {
     for (int j = 0; j < n_nodes_per_side; j++) {
@@ -93,11 +100,11 @@ int main(int argc, char *argv[]) {
 
   /* write the coordinate data in parallel */
   if (cgp_coord_write_data(i_file, i_base, i_zone, i_coord_x,
-                           &first, &last, x_head) ||
+                           &first, &last, x_head.get()) ||
       cgp_coord_write_data(i_file, i_base, i_zone, i_coord_y,
-                           &first, &last, y_head) ||
+                           &first, &last, y_head.get()) ||
       cgp_coord_write_data(i_file, i_base, i_zone, i_coord_z,
-                           &first, &last, z_head))
+                           &first, &last, z_head.get()))
     cgp_error_exit();
 }
 
@@ -116,8 +123,10 @@ int main(int argc, char *argv[]) {
   if (last > n_elems_total) last = n_elems_total;
 
   /* create the hex element data for this process */
-  auto elem_head = (cgsize_t *) malloc(8 * n_elems_local * sizeof(cgsize_t));
-  auto elem_curr = elem_head;
+  std::unique_ptr<cgsize_t[]> elem_head{
+      (cgsize_t *) malloc(8 * n_elems_local * sizeof(cgsize_t))
+  };
+  auto elem_curr = elem_head.get();
   int i_elem_total = 0;
   for (int k = 1; k < n_nodes_per_side; k++) {
     for (int j = 1; j < n_nodes_per_side; j++) {
@@ -141,7 +150,7 @@ int main(int argc, char *argv[]) {
 
   /* write the element connectivity in parallel */
   if (cgp_elements_write_data(i_file, i_base, i_zone, i_elem,
-                              first, last, elem_head))
+                              first, last, elem_head.get()))
     cgp_error_exit();
 
   /* Solution and Fields */
@@ -152,8 +161,10 @@ int main(int argc, char *argv[]) {
     cgp_error_exit();
 
   /* create the field data for this process */
-  auto cell_index_head = (float *) malloc(n_elems_local * sizeof(float));
-  auto cell_index_curr = cell_index_head;
+  std::unique_ptr<float[]> cell_index_head{
+      (float *) malloc(n_elems_local * sizeof(float))
+  };
+  auto cell_index_curr = cell_index_head.get();
   for (int i_elem_total = 1; i_elem_total <= n_elems_total; i_elem_total++) {
     if (first <= i_elem_total && i_elem_total <= last) {
       *cell_index_curr++ = (float) i_elem_total;
@@ -165,7 +176,7 @@ int main(int argc, char *argv[]) {
   if (cgp_field_write(i_file, i_base, i_zone, i_sol, RealSingle,
                       "CellIndex", &i_field) ||
       cgp_field_write_data(i_file, i_base, i_zone, i_sol, i_field,
-                           &first, &last, cell_index_head))
+                           &first, &last, cell_index_head.get()))
     cgp_error_exit();
 }
 
