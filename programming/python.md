@@ -500,6 +500,15 @@ python3 randomseq.py 1000 | python3 average.py
 - [`randomseq.py`](https://introcs.cs.princeton.edu/python/15inout/randomseq.py) : 生成给定数量的随机数, 输出为序列.
 - [`average.py`](https://introcs.cs.princeton.edu/python/15inout/average.py): 计算给定序列的平均值.
 
+# 图形界面
+
+## [`PyQt5`](https://pypi.org/project/PyQt5/)
+
+- [Learn PyQt](https://www.learnpyqt.com/)
+  - [15-minute-apps](https://github.com/learnpyqt/15-minute-apps)
+  - [Getting started with PyQt5](https://www.learnpyqt.com/courses/start/)
+  - [Creating applications with Qt Designer](https://www.learnpyqt.com/courses/qt-creator/)
+
 # 软件开发
 
 ## `profile` --- [函数调用分析](https://docs.python.org/3/library/profile.html)
