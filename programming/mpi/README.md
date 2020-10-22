@@ -144,9 +144,97 @@ size_t FindCommonElements(
 
 ## 动态分配
 
-所有闲置进程也排成一个 Queue：当一个 进程完成现有的工作，从工作状态中转入闲置状态时，就将该进程 从工作进程的队列中删除，放到闲置进程的队列中，并将它请求任 务的申请排上日程。这样，所有进程在工作和空闲状态之间转换，轮 流获取任务。
+所有闲置进程也排成一个 Queue：当一个进程完成现有的工作，从工作状态中转入闲置状态时，就将该进程 从工作进程的队列中删除，放到闲置进程的队列中，并将它请求任务的申请排上日程。这样，所有进程在工作和空闲状态之间转换，轮流获取任务。
 
 ### [Slurm](https://slurm.schedmd.com/)
+
+# 稀疏矩阵
+
+## 存储格式
+
+### CSR: Compressed Sparse Row
+
+### CSC: Compressed Sparse Column
+
+### DOK: Dictionary Of Keys
+
+## [`scipy.sparse`](https://docs.scipy.org/doc/scipy/reference/sparse.html)
+
+## PETSc
+
+### 功能模块
+
+![](https://docs.petsc.org/en/latest/_images/library_structure.svg)
+
+### `IS`: Index Sets
+### `Vec`: Vectors
+### `Mat`: Matrices
+
+#### Partitioning
+
+```c
+MatCreateMPIAdj(/*
+  Creates a sparse matrix representing an adjacency list. */
+    MPI_Comm comm,
+    int n_rows_local,
+    PetscInt n_cols_global,
+    const PetscInt ia[]/* row pointers in CSR format */,
+    const PetscInt ja[]/* col pointers in CSR format */,
+    PetscInt *weights/* [optional] edge weights */,
+  /* output: */
+    Mat *adj/*  */
+);
+MatPartitioningCreate(/*
+  Creates a partitioning context. */
+    MPI_Comm comm,
+  /* output: */
+    MatPartitioning *part
+);
+MatPartitioningSetAdjacency(/*
+  Sets the adjacency graph (matrix) of the thing to be partitioned. */
+    MatPartitioning part,
+    Mat Adj
+);
+MatPartitioningSetFromOptions(
+    MatPartitioning part
+);
+MatPartitioningApply(/*
+  Gets a partitioning for a graph (matrix). */
+    MatPartitioning part,
+  /* output: */
+    IS *is/* rank for each local vertex */
+);
+MatPartitioningDestroy(
+    MatPartitioning *part
+);
+MatDestroy(
+    Mat *Adj
+);
+ISPartitioningToNumbering(/*
+  Gets an IS that contains a new global number for each local vertex. */
+    IS is/* rank for each local vertex */,
+  /* output: */
+    IS *isg/* new global id for each local vertex */
+);
+AOCreateBasicIS(
+    isg,
+    NULL,
+    &ao
+);
+AOPetscToApplication(
+);
+AOApplicationToPetsc(
+);
+```
+
+
+
+### `KSP`: Linear System Solvers
+### `SNES`: Nonlinear Solvers
+
+### `TS`: Time Steppers
+
+### `DM`: Domain Management
 
 # 参考资料
 
