@@ -92,7 +92,8 @@ title: 首页
 - 网格离散
   - [CGNS](./programming/cgns/README.md)
   - [Gmsh](./programming/gmsh/README.md)
-  - [VTK](./programming/vtk/README.md)
+  - [数据可视化](./programming/vtk/README.md)
+    - [VTK](./programming/vtk/README.md#VTK)
     - [ParaView](./programming/vtk/README.md#ParaView)
 - 构建工具
   - [版本控制](./programming/git.md)

@@ -4,10 +4,57 @@ title: 基于 VTK 的数据显示工具
 
 # VTK
 
-在不同的语境下，[***VTK (Visualization ToolKit)***](https://www.vtk.org) 可能表示：
-- 用于 ***数据显示 (Data Visualization)*** 的 C++ 程序库。
+在不同的语境下，[VTK (Visualization ToolKit)](https://www.vtk.org) 可能表示：
+- 用于“数据显示 (Data Visualization)” 的 C++ 程序库（或 Python wrapper）。
 - 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md)和[现代 XML 格式](#XML)。
 - [传统 VTK 格式](./legacy_vtk_format.md)文件的默认扩展名。
+
+## 数据可视化
+
+### 计算机图形学基础
+
+计算机图形学借用了一些电影行业的术语。“场景 (scene)”由以下要素构成：
+
+- 表示被显示的数据或对象的“演员 (actor)”。
+- 发出光线照亮演员的“光源 (light source)”。
+- 摄取演员在底片上投影的“镜头 (camera)”。
+
+在 VTK 中，上述概念由以下类实现：
+
+- `vtkRenderWindow` 对象负责管理“render window (渲染窗口)”及“渲染器 (renderer)”。
+  - 不同操作系统有不同的视窗实现方式。
+  - VTK 隐藏了这些与具体系统相关的细节。
+- `vtkRender` 对象负责协调演员、光源、镜头以生成图像。
+  - 每个 `vtkRender` 对象都必须关联到一个 `vtkRenderWindow` 对象，且对应于其中的一个由“归一化坐标”定义的长方形“视窗 (viewport)”。
+  - 若某个 `vtkRenderWindow` 对象只关联了一个 `vtkRender` 对象，则相应视窗的归一化坐标为 `(0,0,1,1)`，即占据整个渲染窗口。
+- `vtkLight` 对象用于照亮其所处的场景。
+  - 可调参数包括位置、方向、颜色、亮度、开关状态。
+- `vtkCamera` 对象用于摄取场景。
+  - 可调参数包括位置、方向、焦点、前（后）剪切平面、视场。
+- `vtkActor` 对象表示场景中的演员，即被显示的数据或对象。
+- `vtkMapper` 对象是数据的内部表示与显示模块之间的接口。
+
+示例：
+
+- [`${VTK_EXAMPLES}/src/GeometricObjects/Cone.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/GeometricObjects/Cone.py)：几何源、渲染器、互动器。
+- [`${VTK_EXAMPLES}/src/Interaction/CallBack.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/Interaction/CallBack.py)：坐标轴、事件、观察者、回调函数。
+- [`${VTK_EXAMPLES}/src/Renderings/Cone3.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/Rendering/Cone3.py)：在一个 `vtkRenderWindow` 对象中并排显式两个 `vtkRender` 对象。
+- [`${VTK_EXAMPLES}/src/Renderings/Cone4.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/Rendering/Cone4.py)：属性对象、变换。
+
+### 可视化管道
+
+“数据可视化 (data visualization)”包括以下两部分：
+
+- “数据变换 (data transformation)”是指由“原始数据 (original data)”获得“图形基元 (graphics primitives)”乃至“计算机图像 (computer images)”的过程。描述数据变换过程的模型称为“功能模型 (functional models)”。
+- “数据表示 (data representation)”包括用于存储数据的“数据结构 (data structures)”及用于显示数据的“图形基元 (graphics primitives)”。描述数据表示的模型称为“对象模型 (object models)”。
+
+“可视化管道 (visualization pipeline)”或“可视化网络 (visualization network)”由以下对象构成：
+
+- “数据对象 (data objects)”用于表示信息。
+- “操作对象 (operation objects)”或“处理对象 (process objects)”用于操作数据，可分为
+  - “源 (source)”：无输入、有输出。
+  - “汇 (sink)”或“映射器 (mapper)”：有输入、无输出。
+  - “滤镜 (filter)”：有输入、有输出，以“端口 (port)”与其他操作对象交互。
 
 ## 文件格式
 
