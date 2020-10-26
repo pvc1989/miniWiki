@@ -5,13 +5,46 @@ title: 基于 VTK 的数据显示工具
 # VTK
 
 在不同的语境下，[VTK (Visualization ToolKit)](https://www.vtk.org) 可能表示：
-- 用于“数据显示 (Data Visualization)” 的 C++ 程序库（或 Python wrapper）。
+- 用于“数据显示 (Data Visualization)”的 C++ 程序库（或 Python wrapper）。
 - 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md)和[现代 XML 格式](#XML)。
 - [传统 VTK 格式](./legacy_vtk_format.md)文件的默认扩展名。
 
-## 数据可视化
+## 面向对象设计
 
-### 计算机图形学基础
+### VTK 类名
+
+VTK 中的所有类名都是以 `vtk` 起始的。为节省空间以突出继承关系，下图中省去了该字段（例如 `DataSet` 应补全为 `vtkDataSet`）。
+
+[![](./classes.svg)](./classes.txt)
+
+### 对象模型
+
+在 VTK 中，几乎所有的类都是 `vtkObject` 的派生类。
+
+所有“对象 (object)”都是动态的，在 C++ 中，它们都必须由所属类的 `New()` 方法创建，并由所属类的 ` Delete()` 方法销毁：
+
+```cpp
+vtkObjectBase* obj = vtkExampleClass::New();  // 创建
+otherObject->SetExample(obj);                 // 使用
+obj->Delete();                                // 销毁
+```
+
+`New()` 方法返回指向动态数据的“原始指针 (raw pointer)”。
+如果（在离开创建它的作用域前）忘记调用 `Delete()`，则会造成“内存泄漏 (memory leak)”。
+VTK 提供了一种基于“引用计数 (reference count)”的“智能指针 (smart pointer)”来管理动态对象：
+
+```cpp
+auto obj = vtkSmartPointer<vtkExampleClass>::New();  // 创建
+otherObject->SetExample(obj);                        // 使用
+// obj->Delete();                                    // 销毁（自动完成）
+```
+
+### API
+
+[在线文档](https://vtk.org/doc/nightly/html)只给出了 C++ 版的 API。
+“解释型 (interpreted)”语言（如 Python）的语法机制没有 C++ 丰 (fan) 富 (suo)，获 (cai) 得 (ce) 相应的 API 需要对 C++ 版作适当的“压缩”。
+
+## 计算机图形学基础
 
 计算机图形学借用了一些电影行业的术语。“场景 (scene)”由以下要素构成：
 
@@ -41,7 +74,7 @@ title: 基于 VTK 的数据显示工具
 - [`${VTK_EXAMPLES}/src/Renderings/Cone3.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/Rendering/Cone3.py)：在一个 `vtkRenderWindow` 对象中并排显式两个 `vtkRender` 对象。
 - [`${VTK_EXAMPLES}/src/Renderings/Cone4.py`](https://gitlab.kitware.com/vtk/vtk-examples/-/tree/master/src/Python/Rendering/Cone4.py)：属性对象、变换。
 
-### 可视化管道
+## 可视化管道
 
 “数据可视化 (data visualization)”包括以下两部分：
 
@@ -56,22 +89,16 @@ title: 基于 VTK 的数据显示工具
   - “汇 (sink)”或“映射器 (mapper)”：有输入、无输出。
   - “滤镜 (filter)”：有输入、有输出，以“端口 (port)”与其他操作对象交互。
 
-## 文件格式
+## 数据表示（文件格式）
 
-详细定义见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《VTK File Formats》一节。
-
-### VTK 类名
-
-VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中省去了该字段（即 `DataSet` 应理解为 `vtkDataSet`）。
-
-[![](./classes.svg)](./classes.txt)
+详见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《VTK File Formats》一节，及《[The Visualization Toolkit](https://gitlab.kitware.com/vtk/textbook)》的《Basic Data Representation》一章。
 
 ### 传统 VTK 格式
 
 这种格式的[定义](./legacy_vtk_format.md)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
 
 ### 现代 XML 格式<a name="XML"></a>
-这是一种支持 ***随机访问 (random access)*** 和 ***并行读写 (parallel IO)*** 的文件格式，以 `.vt[irsupm]` 为扩展名：
+这是一种支持“随机访问 (random access)”和“并行读写 (parallel IO)”的文件格式，以 `.vt[irsupm]` 为扩展名：
 
 | 扩展名 | 数据集类型              |
 | ----- | --------------------- |
@@ -87,30 +114,6 @@ VTK 中的所有类名都是以 `vtk` 起始的，为突出继承关系，图中
 如果在本地部署 VTK 程序库有困难（无网络、无权限），可以考虑使用 [PyEVTK](https://bitbucket.org/pauloh/pyevtk)。
 它完全用 Python & Cython 实现，因此不依赖于 VTK 程序库。
 安装后即可在本地 Python 程序中 `import` 该模块，具体用法可以参照 `src/examples` 目录下的示例。
-
-## API
-[在线文档](https://vtk.org/doc/nightly/html)只给出了 C++ 版的 API。
-其他 ***解释型 (interpreted)*** 语言的语法机制没有 C++ 丰 (fan) 富 (suo)，获 (cai) 得 (ce) 相应的 API 需要对 C++ 版作适当的 *压缩*。
-
-### 对象模型
-在 VTK 中，几乎所有的类都是 `vtkObject` 的派生类。
-
-所有 ***对象 (object)*** 都是动态的，在 C++ 中，它们都必须由所属类的 `New()` 方法创建，并由所属类的 ` Delete()` 方法销毁：
-```cpp
-vtkObjectBase* obj = vtkExampleClass::New();  // 创建
-otherObject->SetExample(obj);                 // 使用
-obj->Delete();                                // 销毁
-```
-
-`New()` 方法返回指向动态数据的 ***原始指针 (raw pointer)***。
-如果（在离开创建它的作用域前）忘记调用 `Delete()`，则会造成 ***内存泄漏 (memory leak)***。
-VTK 提供了一种基于 ***引用计数 (reference count)*** 的 ***智能指针 (smart pointer)*** 来管理动态对象：
-
-```cpp
-auto obj = vtkSmartPointer<vtkExampleClass>::New();  // 创建
-otherObject->SetExample(obj);                        // 使用
-// obj->Delete();                                    // 销毁（自动完成）
-```
 
 ### Python 示例
 [`read.py`](./read.py) 和 [`write.py`](./write.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
@@ -160,11 +163,15 @@ cmake --build .
 ./read *.vtk *.vtu  # 读取在《Python 示例》中生成的文件
 ```
 
+## 可视化算法
+
+## 图像处理
+
 # ParaView
 
 [ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
 
-启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》适合于系统学习。
+启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》用于系统学习。
 
 ## 可执行程序
 
@@ -182,6 +189,8 @@ from paraview.simple import *
 
 在 `paraview` (GUI) 中的所有操作，几乎都可以在 `pvpython` (CLI) 中以 Python 指令的形式来完成。这些指令可以被同步记录到 `.py` 文件中，只需在 `paraview` (GUI) 中以 Tools → Start Trace 开启记录、以 Tools → Stop Trace 停止记录。
 
+完整 API 列表参见《[ParaView's Python documentation](https://kitware.github.io/paraview-docs/latest/python/)》。
+
 ### `pvbatch`
 
 `pvbatch` 是由 `.py` 文件驱动的 CLI 程序。
@@ -194,15 +203,15 @@ from paraview.simple import *
 
 使用 ParaView 主要分三个基本步骤：
 
-1. 从数据文件中 ***读取 (read)*** 原始数据。
-2. 对原始数据进行 ***过滤 (filter)***，提取出感兴趣的信息。
-3. 将提取得到的信息在图形界面上进行 ***渲染 (render)***。
+1. 从数据文件中“读取 (read)”原始数据。
+2. 对原始数据进行“过滤 (filter)”，提取出感兴趣的信息。
+3. 将提取得到的信息在图形界面上进行“渲染 (render)”。
 
 对于同一个数据文件，第 1 步只需执行 1 次，而第 2、3 步可以执行多次。
 
 ## 动态数据显示
 
-最简单（最通用）的动态数据显示方式，是将每一时间步的数据写入一个对应于该时刻的文件，这样的一个文件对应于动画中的一帧。ParaView 在加载按以下任意一种风格命名的一 ***组 (group)*** 文件时，会自动将它们识别为一个 ***文件序列 (file series)***：
+最简单（最通用）的动态数据显示方式，是将每一时间步的数据写入一个对应于该时刻的文件，这样的一个文件对应于动画中的一帧。ParaView 在加载按以下任意一种风格命名的一“组 (group)”文件时，会自动将它们识别为一个“文件序列 (file series)”：
 
 ```txt
 fooN.vtk
