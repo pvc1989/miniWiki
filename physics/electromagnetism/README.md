@@ -6,9 +6,9 @@ title: 电磁学
 
 ## 电荷的相互作用力
 
-### Coulomb's 扭秤实验 (1785)
+### Coulomb 扭秤实验 (1785)
 
-### Coulomb's 定律<a href name="coulomb"></a>
+### Coulomb 定律<a href name="coulomb"></a>
 
 点电荷 $(q_2,\Vec{r}_2)$ 对点电荷 $(q_1,\Vec{r}_1)$ 的作用力为
 
@@ -20,15 +20,15 @@ $$
 
 ## 持续的电流
 
-### Volta's 电池 (1800)
+### Volta 电池 (1800)
 
-### Ohm's 定律 (1826)
+### Ohm 定律 (1826)
 
 $$
 I=U\mathbin{/}R
 $$
 
-### Joule--Lenz's 定律 (1841--1842)
+### Joule--Lenz 定律 (1841--1842)
 
 $$
 P = I^2 R
@@ -38,9 +38,9 @@ $$
 
 ## 电动生磁
 
-### Oersted's 电磁感应实验 (1819)
+### Oersted 电磁感应实验 (1819)
 
-### Biot--Savart's 定律 (1820)
+### Biot--Savart 定律 (1820)
 
 电流元 $(I_2\dd{\Vec{l}_2}, \Vec{r}_2)$ 在 $\Vec{r}_1$ 处所诱导出的磁场的磁感应强度为
 
@@ -52,7 +52,7 @@ $$
 
 ## 磁场对运动电荷的作用力
 
-### Ampere's 定律 (1820)
+### Ampere 定律 (1820)
 
 磁场 $\Vec{B}$ 对电流元 $I\dd{\Vec{l}}$ 的作用力为
 
@@ -71,7 +71,7 @@ $$
 
 ## 磁动生电
 
-### Faraday's 定律 (1831)
+### Faraday 定律 (1831)
 
 $$
 \mathcal{E}=-\dv{\varPhi_B}{t}
@@ -79,15 +79,15 @@ $$
 
 其中
 - $\mathcal{E}\coloneqq\oint_{C} \Vec{E}\vdot\dd{\Vec{l}}$ 为感生电场 $\Vec{E}$ 沿回路 $C$ 形成的感生电动势。
-- $\varPhi_B\coloneqq\iint_S\Vec{B}\vdot\dd{\Vec{S}}$ 为穿过以 $C$ 为边界的任意曲面 $S$ 的磁通量。
+- $\varPhi_B\coloneqq\int_S\Vec{B}\vdot\dd{\Vec{S}}$ 为穿过以 $C$ 为边界的任意曲面 $S$ 的磁通量。
 
-# Maxwell's 方程组
+# Maxwell 方程组
 
 ## 静止电荷产生的电场
 
 ### 点电荷
 
-[Coulomb's 定律](#coulomb)可以被改写为
+[Coulomb 定律](#coulomb)可以被改写为
 $$
 \Vec{F}_{2\to 1}=q_1 \Vec{E}_{2\to 1}
 $$
@@ -116,25 +116,68 @@ $$
 
 $$
 \Vec{E}(\Vec{r};\rho,V)
-=\iiint_{V(\Vec{r}')}\frac{\rho(\Vec{r}')}{4\pi\varepsilon_0}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^3}
+=\int_{V(\Vec{r}')}\frac{\rho(\Vec{r}')}{4\pi\varepsilon_0}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^3}
 $$
 
-### Gauss' 电通量定律
+### Gauss 电通量定律
 
-按 $\rho(\Vec{r})$ 分布的电荷所产生的电场 $\Vec{E}(\Vec{r})$ 对任意闭合曲面 $S$ 的通量，等于 $S$ 所围区域 $V$ 内的电荷量 $Q$ 除以 $\varepsilon_0$，此即“积分形式的 Gauss' 电通量定律”：
+按 $\rho(\Vec{r})$ 分布的电荷所产生的电场 $\Vec{E}(\Vec{r})$ 对任意闭合曲面 $S$ 的通量，等于 $S$ 所围区域 $V$ 内的电荷量 $Q$ 除以 $\varepsilon_0$，此即“积分形式的 Gauss 电通量定律”：
 
 $$
-\oiint_{S=\partial V} \Vec{\nu}\vdot\Vec{E}
-= \iiint_V\frac{\rho}{\varepsilon_0}
+\oint_{S=\partial V} \Vec{\nu}\vdot\Vec{E}
+= \int_V\frac{\rho}{\varepsilon_0}
 = \frac{Q}{\varepsilon_0}
 $$
 
-在圆球上应用该定理并对圆球半径取极限，即得其“微分形式”：
+在圆球上应用该式及 Gauss 散度定理，并令圆球半径趋于零，即得其“微分形式”：
 
 $$
 \divg\Vec{E}=\frac{\rho}{\varepsilon_0}
 $$
 
+此即真空中的 Maxwell 方程组的第一式。
+
+### 静电场无旋有势
+
+静电场 $\Vec{E}(\Vec{r})$ 沿任意闭合曲线 $C$ 的环量为零，即
+
+$$
+\oint_C \Vec{\tau}\vdot\Vec{E} = 0
+$$
+
+在圆环上应用该式及 Stokes 环量公式，并令圆环半径趋于零，即得
+
+$$
+\curl\Vec{E}=\Vec{0}
+$$
+
+此即真空中的 Maxwell 方程组的第二式。
+
+静电场无旋的一个推论是：存在标量场 $\phi(\Vec{r})$ 使得 $\Vec{E}(\Vec{r})=-\grad\phi(\Vec{r})$ 对 $\Vec{r}$ 都成立。
+这样的标量场 $\phi(\Vec{r})$ 被定义为静电场 $\Vec{E}(\Vec{r})$ 的“静电势”，其中负号是根据 George Green 的建议引入的。
+于是，Gauss 电通量定律可以被改写为
+$$
+\divg\grad\phi\equiv\nabla^2\phi=-\frac{\rho}{\varepsilon_0}
+$$
+
+它被称为“Poisson 方程”，其中 $\nabla^2$ 为“Laplace 算符” ，在直角坐标系和球坐标系下的表达式分别为
+
+$$
+\nabla^2
+=\frac{\partial^2}{\partial x^2}
++\frac{\partial^2}{\partial y^2}
++\frac{\partial^2}{\partial z^2}
+=\frac{1}{r^2}\pdv{}{r}\left(r^2\pdv{}{r}\right)
++\frac{1}{r^2\sin\theta}\pdv{}{r}\left(\sin\theta\pdv{}{\theta}\right)
++\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial\phi^2}
+$$
+
+例如：一般电荷分布 $(\rho,V)$ 产生的静电势为
+
+$$
+\phi(\Vec{r})
+= \frac{1}{4\pi\varepsilon_0}\int_{V(\Vec{r}')}\frac{\rho(\Vec{r}')}{\vert\Vec{r}-\Vec{r}'\vert}
+$$
 
 # 狭义相对论
 
