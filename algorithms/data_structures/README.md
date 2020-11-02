@@ -1,144 +1,272 @@
 ---
-title: 数据结构
+title: 数据结构与算法
 ---
 
-# Sedgewick's *Algorithms*
+# 学习资源
 
-## Textbook
+## 教程
 
-###[Algorithms, 4th Edition](https://algs4.cs.princeton.edu/home/)
+### Princeton
 
-#### 1. Fundamentals
+- Textbooks:
+  - [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/home/)
+  - [An Introduction to the Analysis of Algorithms, 2nd Edition](https://aofa.cs.princeton.edu/home/)
+- Courses:
+  - [Algorithms, Part 1](https://www.coursera.org/learn/algorithms-part1)
+  - [Algorithms, Part 2](https://www.coursera.org/learn/algorithms-part2)
+  - [Analysis of Algorithms](https://www.coursera.org/learn/analysis-of-algorithms)
 
-#### 2. Sorting
+### MIT
 
-#### 3. Searching
+- Textbook:
+  - [Introduction to Algorithms, Third Edition](https://mitpress.mit.edu/books/introduction-algorithms-third-edition)
+- Courses:
+  - [Introduction to Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/) taught by *Prof. Erik Demaine* and *Prof. Srini Devadas* in Fall 2011.
+  - [Design and Analysis of Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/) taught by *Prof. Erik Demaine* and *Prof. Srini Devadas* and *Prof. Nancy Lynch* in Spring 2015.
 
-#### 4. Graphs
+## 网站
 
-#### 5. Strings
+### 学习
 
-#### 6. Context
+- [VisuAlgo](https://visualgo.net/en): visualising data structures and algorithms through animation.
 
-##### 6.1  Event Driven Simulation
+### 刷题
 
-##### 6.2  B-trees
+- [LeetCode](https://leetcode.com/): the world's leading online programming learning platform.
+- [PAT](https://www.patest.cn/): Programming Ability Test.
 
-##### 6.3  Suffix Arrays
+# Computational Complexity
 
-##### 6.4  Maxflow
+## Mathematical (Theoretical) Method
 
-##### 6.5  Reductions
+- MIT
+  - Text:
+    - Chap-3  Growth of Functions
+    - Chap-5  Probabilistic Analysis and Randomized Algorithms
 
-##### 6.6  Intractability
+## Scientific (Experimental) Method
 
-## Coursera Courses
+- Princeton
+  - Text: [Sect-1.4  Analysis of Algorithms](https://algs4.cs.princeton.edu/14analysis/)
+  - Video: [Analysis of Algorithms](https://www.coursera.org/learn/algorithms-part1/supplement/mpK20/lecture-slides)
 
-### [Part 1](https://www.coursera.org/learn/algorithms-part1)
+> 1. *Observe* some feature of the natural world, generally with precise measurements.
+> 2. *Hypothesize* a model that is consistent with the observations.
+> 3. *Predict* events using the hypothesis.
+> 4. *Verify* the predictions by making further observations.
+> 5. *Validate* by repeating until the hypothesis and observations agree.
 
-#### Week 1
+# Arrays & Vectors
 
-##### Course Introduction
+## Sorting
 
-##### Union--Find
+- VisuAlgo
+  - [Sorting](https://visualgo.net/en/sorting)
 
-###### Programming Assignment: [Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
+### Quadratic Sorts
 
-##### Analysis of Algorithms
+- Princeton
+  - Text: [Sect-2.1  Elementary Sorts](https://algs4.cs.princeton.edu/21elementary)
+  - Video: [Elementary Sorts](https://www.coursera.org/learn/algorithms-part1/supplement/erHuw/lecture-slides)
 
-#### Week 2
+#### Bubble Sort
 
-##### Stacks and Queues
+#### Selection Sort
 
-###### Programming Assignment: [Deques and Randomized Queues](https://www.coursera.org/learn/algorithms-part1/programming/zamjZ/deques-and-randomized-queues)
+#### Insertion Sort
 
-##### Elementary Sorts
+### Shellsort
 
-#### Week 3
+### Mergesort
 
-##### Mergesort
+- Princeton
+  - Text: [Sect-2.2  Mergesort](https://algs4.cs.princeton.edu/22mergesort)
+  - Video: [Mergesort](https://www.coursera.org/learn/algorithms-part1/supplement/4E9fa/lecture-slides)
 
-###### Programming Assignment: [Collinear Points](https://www.coursera.org/learn/algorithms-part1/programming/prXiW/collinear-points)
+#### [Timsort](https://en.wikipedia.org/wiki/Timsort)
 
-##### Quicksort
+- Libraries
+  - C++: [`std::stable_sort`](https://en.cppreference.com/w/cpp/algorithm/stable_sort) in `<algorithm>`
+  - Java8: [`java.util.Arrays.sort(Object[] a)`](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#sort-java.lang.Object:A-)
+  - Python:
+    - [`list.sort(*, key=None, reverse=False)`](https://docs.python.org/3/library/stdtypes.html#list.sort) stably sorts the list in place.
+    - [`sorted(iterable, *, key=None, reverse=False)`](https://docs.python.org/3/library/functions.html#sorted) returns a new stably sorted list from the items in `iterable`.
 
-#### Week 4
+### Quicksort
 
-##### Priority Queues
+- Princeton
+  - Text: [Sect-2.3  Quicksort](https://algs4.cs.princeton.edu/23quicksort)
+  - Video: [Quicksort](https://www.coursera.org/learn/algorithms-part1/supplement/efbDN/lecture-slides)
+- Libraries
+  - C: [`qsort`](https://en.cppreference.com/w/c/algorithm/qsort) in `<stdlib.h>`
+  - C++: [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort) in `<algorithm>`
+  - Java8: [`java.util.Arrays.sort(int[] a)`](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#sort-int:A-)
 
-###### Programming Assignment: [8 Puzzle](https://www.coursera.org/learn/algorithms-part1/programming/iqOQi/8-puzzle)
+### Application: [Convex Hull](https://www.coursera.org/learn/algorithms-part1/lecture/KHJ1t/convex-hull)
 
-##### Elementary Symbol Tables
+### Application: [Collinear Points](https://www.coursera.org/learn/algorithms-part1/programming/prXiW/collinear-points)
 
-#### Week 5
+## Searching
 
-##### Balanced Search Trees
+### Binary Search
 
-##### Geometric Applications of BSTs
+## Union--Find
 
-###### Programming Assignment: [Kd-Trees](https://www.coursera.org/learn/algorithms-part1/programming/wuF0a/kd-trees)
+- VisuAlgo
+  - [Union--Find DS](https://visualgo.net/en/ufds)
+- Princeton
+  - Text: [Sect-1.5  Union--Find](https://algs4.cs.princeton.edu/15uf/)
+  - Video: [Union--Find](https://www.coursera.org/learn/algorithms-part1/supplement/bcelg/lecture-slides)
+  - Assignment: [Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
 
-#### Week 6
+## Vectors (Resizing Arrays)
 
-##### Hash Tables
+- Princeton
+  - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Resizing Arrays](https://www.coursera.org/learn/algorithms-part1/lecture/WTFO7/resizing-arrays)
 
-##### Symbol Table Applications
+# Lists, Stacks & Queues
 
-### [Part 2](https://www.coursera.org/learn/algorithms-part2)
+## Linked Lists
 
-#### Week 1
+- VisuAlgo
+  - [Linked List](https://visualgo.net/en/list)
+    - Linked List
+    - Doubly Linked List
+- Princeton
+  - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Stacks](https://algs4.cs.princeton.edu/13stacks/)
 
-##### Introduction
+## Stacks
 
-##### Undirected Graphs
+- VisuAlgo
+  - [Linked List](https://visualgo.net/en/list)
+    - Stack
+- Princeton
+  - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Stacks](https://algs4.cs.princeton.edu/13stacks/)
 
-##### Directed Graphs
+## Queues
 
-###### Programming Assignment: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
+- VisuAlgo
+  - [Linked List](https://visualgo.net/en/list)
+    - Queue
+    - Deque
+- Princeton
+  - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Queues](https://www.coursera.org/learn/algorithms-part1/lecture/5vgrm/queues)
+  - Programming Assignment: [Deques and Randomized Queues](https://www.coursera.org/learn/algorithms-part1/programming/zamjZ/deques-and-randomized-queues)
 
-#### Week 2
+# Priority Queues
 
-##### Minimum Spanning Trees
+## Binary Heap
 
-##### Shortest Paths
+- Princeton
+  - Section: [Sect-2.4 Priority Queues](https://algs4.cs.princeton.edu/24pq)
+  - Video: [Priority Queues](https://www.coursera.org/learn/algorithms-part1/supplement/eHe3d/lecture-slides)
+  - Programming Assignment: [8 Puzzle](https://www.coursera.org/learn/algorithms-part1/programming/iqOQi/8-puzzle)
 
-###### Programming Assignment: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
+### Event-Driven Simulation
 
-#### Week 3
+- Princeton
+  - Text: [Sect-6.1  Event Driven Simulation](https://algs4.cs.princeton.edu/61event)
+  - Video: [Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
 
-##### Maximum Flow and Minimum Cut
+## Fibonacci Heap
 
-###### Programming Assignment: [Baseball Elimination](https://www.coursera.org/learn/algorithms-part2/programming/hmYRI/baseball-elimination)
+## Van Emde Boas Tree
 
-##### Radix Sorts
+# Hash Tables
 
-#### Week 4
+- VisuAlgo
+  - [Hash Table](https://visualgo.net/en/hashtable)
 
-##### Tries
+## Open Addressing
 
-##### Substring Search
+## Seperate Chaining
 
-###### Programming Assignment: [Boggle](https://www.coursera.org/learn/algorithms-part2/programming/9GqJs/boggle)
+## Universal Hashing
 
-#### Week 5
+# Trees
 
-##### Regular Expressions
+## Binary Search Trees
 
-##### Data Compression
+- Princeton
+  - Text: [Sect-3.2 Elementary Symbol Tables](https://algs4.cs.princeton.edu/33balanced)
+  - Video: [Elementary Symbol Tables](https://www.coursera.org/learn/algorithms-part1/supplement/2kwpU/lecture-slides)
 
-###### Programming Assignment: [Burrows Wheeler](https://www.coursera.org/learn/algorithms-part2/programming/3nmSB/burrows-wheeler)
+## Balanced Search Trees
 
-#### Week 6
+- Princeton
+  - Text: [Sect-3.3 Balanced Search Trees](https://algs4.cs.princeton.edu/33balanced), [Sect-6.2 B-trees](https://algs4.cs.princeton.edu/62btree)
+  - Video: [Balanced Search Trees](https://www.coursera.org/learn/algorithms-part1/supplement/zQXMd/lecture-slides)
 
-##### Reductions
+## Geometric Search Trees
 
-##### Linear Programming
+### Kd-Trees
 
-##### Intractability
+- Princeton
+  - Video: [Geometric Applications of BSTs](https://www.coursera.org/learn/algorithms-part1/supplement/yelcJ/lecture-slides)
+  - Programming Assignment: [Kd-Trees](https://www.coursera.org/learn/algorithms-part1/programming/wuF0a/kd-trees)
 
+### Range Trees
 
-# CLRS's *Introduction to Algorithms*
+# Graphs
 
-## Textbook
+## Undirected Graphs
 
-## Courses
+## Directed Graphs
+
+### Application: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
+
+## Minimum Spanning Trees
+
+## Shortest Paths
+
+### Application: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
+
+## Maximum Flow and Minimum Cut
+
+### Application: [Baseball Elimination](https://www.coursera.org/learn/algorithms-part2/programming/hmYRI/baseball-elimination)
+
+# Strings
+
+## String Implementations
+
+## Radix Sorts
+
+### LSD Radix Sort
+
+### MSD Radix Sort
+
+### 3-way Radix Quicksort
+
+## Suffix Arrays
+
+## Tries
+
+## Substring Search
+
+### Brute-Force
+
+### Knuth--Morris--Pratt
+
+### Boyer--More
+
+### Rabin--Karp
+
+### Application: [Boggle](https://www.coursera.org/learn/algorithms-part2/programming/9GqJs/boggle)
+
+## Regular Expressions
+
+## Data Compression
+
+### Application: [Burrows Wheeler](https://www.coursera.org/learn/algorithms-part2/programming/3nmSB/burrows-wheeler)
+
+# Computation Theory
+
+## Reductions
+
+## Linear Programming
+
+## Intractability

@@ -71,7 +71,7 @@ title: 首页
 
 ## [算法](./algorithms/README.md)
 
-- [数据结构](./algorithms/data_structures/README.md)
+- [数据结构与算法](./algorithms/data_structures/README.md)
 - [数值分析](./algorithms/numerical_analysis/README.lyx)
 - [优化](./algorithms/optimization/README.lyx)
 - [有限元](./algorithms/finite_element/README.lyx)
