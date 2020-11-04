@@ -1,0 +1,781 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+从经典到量子
+\end_layout
+
+\begin_layout Section
+黑体辐射
+\end_layout
+
+\begin_layout Subsection
+Wien's 公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E_{\nu}=\frac{C_{1}\nu^{3}}{\exp(C_{2}\nu/T)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Jeans–Rayleigh's 公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E_{\nu}=\frac{8\pi}{c^{3}}kT\nu^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Planck's 公式
+\end_layout
+
+\begin_layout Standard
+Planck (1900) 基于 Wien's 公式“猜”出以下（正确的）公式：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E_{\nu}=\frac{C_{1}\nu^{3}}{\exp(C_{2}\nu/T)-1}=\frac{C_{2}k\nu}{\exp(C_{2}k\nu/kT)-1}\frac{C_{1}\nu^{2}}{C_{2}k}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\bar{\varepsilon}_{\nu}\coloneqq\frac{C_{2}k\nu}{\exp(C_{2}k\nu/kT)-1}\qquad N_{\nu}\coloneqq\frac{C_{1}\nu^{2}}{C_{2}k}
+\]
+
+\end_inset
+
+分别表示频率介于 
+\begin_inset Formula $(\nu,\nu+\dd{\nu})$
+\end_inset
+
+ 之间的“允许模式”的“平均能量”与“个数”。
+\end_layout
+
+\begin_layout Standard
+设温度为 
+\begin_inset Formula $T$
+\end_inset
+
+ 的热库中，有一个能量为 
+\begin_inset Formula $E$
+\end_inset
+
+ 的小物体。统计力学（Gibbs 分布）给出这种状态的几率：
+\begin_inset Formula 
+\[
+\Pr(E)=\alpha\exp(-E/kT)\equiv\alpha\exp(-\beta E)\qquad\beta\coloneqq\frac{1}{kT}
+\]
+
+\end_inset
+
+对所有能量值求和应有 
+\begin_inset Formula $\sum_{E}\Pr(E)=1$
+\end_inset
+
+，由此得“配分函数 (partition function)”：
+\begin_inset Formula 
+\[
+\alpha=\frac{1}{\sum_{E}\exp(-\beta E)}\eqqcolon Z(\beta)
+\]
+
+\end_inset
+
+因此所有允许能量的“平均值”为
+\begin_inset Formula 
+\[
+\bar{E}=\sum_{E}E\Pr(E)=\sum_{E}Z(\beta)\exp(-\beta E)=-\dv{\beta}\ln Z(\beta)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\bar{\varepsilon}_{\nu}\coloneqq\frac{C_{2}k\nu}{\exp(C_{2}k\nu/kT)-1}=\frac{C_{2}k\nu}{\exp(C_{2}k\nu\beta)-1}=-\dv{\beta}\ln\frac{1}{1-\exp(-C_{2}k\nu\beta)}
+\]
+
+\end_inset
+
+比较二式可知黑体系统的配分函数为
+\begin_inset Formula 
+\[
+\sum_{E}\exp(-\beta E)=Z(\beta)=\frac{1}{1-\exp(-C_{2}k\nu\beta)}=\sum_{n=0}^{\infty}\exp(-nC_{2}k\nu\beta)
+\]
+
+\end_inset
+
+比较两端可知：能量 
+\begin_inset Formula $E$
+\end_inset
+
+ 仅可取以下离散值：
+\begin_inset Formula 
+\[
+E_{n}=n\underbrace{C_{2}k}_{h}\nu\qquad n\in\mathbb{N}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+按现在的记法，Planck's 公式可写为
+\begin_inset Formula 
+\[
+E_{\nu}=\frac{1}{\exp(h\nu/kT)-1}\frac{8\pi h\nu^{3}}{c^{3}}
+\]
+
+\end_inset
+
+可见“Wien's 公式”与“Jeans–Rayleigh's 公式”分别为“Planck's 公式”在 
+\begin_inset Formula $\nu\to\infty$
+\end_inset
+
+ 与 
+\begin_inset Formula $\nu\to0$
+\end_inset
+
+ 时的近似表达式。
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Wien's 位移律]
+\end_layout
+
+\end_inset
+
+由极值条件
+\begin_inset Formula 
+\[
+\dv{E_{\nu}}{\nu}=\frac{}{}=0
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+T\lambda_{\max}=\frac{ch}{3k}
+\]
+
+\end_inset
+
+此即“Wien's 位移律”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+光电效应
+\end_layout
+
+\begin_layout Subsection
+Hertz's 电磁波速实验
+\end_layout
+
+\begin_layout Standard
+Hertz (1886) 发现：电磁波的传播速度等于光速。
+\end_layout
+
+\begin_layout Subsection
+Hertz's 光电效应实验
+\end_layout
+
+\begin_layout Standard
+Hertz (1888) 发现：能否打出电子只取决于入射光的频率，不取决于入射光的强度。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{E}-A=\frac{1}{2}mv^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Einstein's 光量子
+\end_layout
+
+\begin_layout Standard
+Einstein (1905) 提出：频率为 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 的光由大量能量为 
+\begin_inset Formula $h\nu$
+\end_inset
+
+ 的“光量子 (quanta of light)”组成。由“能量守恒”及“动能非负”
+\begin_inset Formula 
+\[
+h\nu-A=\frac{1}{2}mv^{2}\ge0
+\]
+
+\end_inset
+
+可得“临界频率”
+\begin_inset Formula 
+\[
+\nu_{0}\coloneqq A/h\le\nu
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由狭义相对论中的“动量”与“能量”表达式
+\begin_inset Formula 
+\[
+\vec{p}=\frac{m_{0}\vec{v}}{\sqrt{1-v^{2}/c^{2}}}\qquad E=\frac{m_{0}c^{2}}{\sqrt{1-v^{2}/c^{2}}}
+\]
+
+\end_inset
+
+及“能量–动量关系”
+\begin_inset Formula 
+\[
+E^{2}=p^{2}c^{2}+m_{0}^{2}c^{4}
+\]
+
+\end_inset
+
+Einstein (1915) 提出：光量子的静止质量为零，从而有
+\begin_inset Formula 
+\[
+\vert\vec{p}\vert=p=\frac{E}{c}=\frac{h\nu}{c}=\frac{h}{2\pi}\frac{2\pi}{\lambda}=\hbar k=\hbar\vert\vec{k}\vert
+\]
+
+\end_inset
+
+后世称这种粒子为“光子 (photon)”。
+\end_layout
+
+\begin_layout Subsection
+Compton's 散射实验
+\end_layout
+
+\begin_layout Section
+原子线状光谱
+\end_layout
+
+\begin_layout Subsection
+光栅
+\end_layout
+
+\begin_layout Subsection
+光谱
+\end_layout
+
+\begin_layout Subsection
+Balmer's 光谱公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1}{\lambda_{2,n}}=R\cdot\left(\frac{1}{2^{2}}-\frac{1}{n^{2}}\right)\qquad n=3,4,\dots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+原子稳定性
+\end_layout
+
+\begin_layout Subsection
+Thomson's 原子模型
+\end_layout
+
+\begin_layout Subsection
+Rutherford's 散射实验
+\end_layout
+
+\begin_layout Section
+Bohr's 量子论
+\end_layout
+
+\begin_layout Subsection
+基本假设
+\end_layout
+
+\begin_layout Standard
+氢原子由带电量为 
+\begin_inset Formula $-e$
+\end_inset
+
+ 的电子与带电量为 
+\begin_inset Formula $+e$
+\end_inset
+
+ 的原子核组成。当二者的距离为 
+\begin_inset Formula $r$
+\end_inset
+
+ 时，该系统的 Comlomb 势能为
+\begin_inset Formula 
+\[
+V(r)=-\frac{e^{2}}{r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bohr (1912) 假设：
+\end_layout
+
+\begin_layout Itemize
+电子沿一系列分立的椭圆轨道绕原子核运动。每一条这样的轨道对应于该系统的一个“定态”。氢原子状态在两个定态之间发生“跃迁”时，吸收或放出的电磁波满足
+ Planck–Einstein 条件：
+\begin_inset Formula 
+\[
+h\nu_{m\to n}=E_{m}-E_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+当量子数 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+ 时，应当接近经典物理给出的数值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+椭圆轨道
+\end_layout
+
+\begin_layout Standard
+氢原子系统接近天体力学中的地月系统，故可照搬后者的以下结论
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E=-\frac{\kappa}{2a}<0\qquad\frac{T^{2}}{a^{3}}=\frac{4\pi^{2}m}{\kappa}
+\]
+
+\end_inset
+
+二者推导如下（约定：“近地点”下标为 
+\begin_inset Formula $1$
+\end_inset
+
+，“远地点”下标为 
+\begin_inset Formula $2$
+\end_inset
+
+）：由“机械能守恒”
+\begin_inset Formula 
+\[
+\frac{1}{2}mv_{1}^{2}-\frac{\kappa}{r_{1}}=E=\frac{1}{2}mv_{2}^{2}-\frac{\kappa}{r_{2}}
+\]
+
+\end_inset
+
+及“角动量守恒”
+\begin_inset Formula 
+\[
+mv_{1}r_{1}=L=mv_{2}r_{2}
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+r_{i}^{2}E=\frac{L^{2}}{2m}-r_{i}\kappa\qquad i=1,2
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+两式相减即得
+\begin_inset Formula 
+\[
+(r_{2}-r_{1})(r_{2}+r_{1})E=(r_{1}-r_{2})\kappa
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $r_{1}=a-c$
+\end_inset
+
+ 与 
+\begin_inset Formula $r_{2}=a+c$
+\end_inset
+
+ 即得第一式。
+\end_layout
+
+\begin_layout Itemize
+两式相加即得
+\begin_inset Formula 
+\[
+(r_{2}^{2}+r_{1}^{2})E=\frac{L^{2}}{m}-(r_{1}+r_{2})\kappa=\frac{L^{2}}{m}-2a\kappa
+\]
+
+\end_inset
+
+移项并配方，可得
+\begin_inset Formula 
+\[
+L^{2}=\left((r_{1}+r_{2})^{2}E-2r_{1}r_{2}E+2a\kappa\right)m=-2b^{2}Em
+\]
+
+\end_inset
+
+将第一式代入其中，可得
+\begin_inset Formula 
+\[
+L=\sqrt{\frac{\kappa m}{a}}b
+\]
+
+\end_inset
+
+代入“Kepler's 第二定律”
+\begin_inset Formula 
+\[
+L=mv\underbrace{r\sin\theta}_{h}=m\dv{s}{t}h=2m\dv{S}{t}
+\]
+
+\end_inset
+
+即得
+\begin_inset Formula 
+\[
+\pi ab=\int_{0}^{\pi ab}\dd{S}=\int_{0}^{T}\frac{L}{2m}\dd{t}=\frac{L}{2m}T
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+消去 
+\begin_inset Formula $a$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+T^{2}=\frac{4\pi^{2}m}{\kappa}\left(\frac{-\kappa}{2E}\right)^{3}=\frac{\pi^{2}m\kappa^{2}}{2\vert E\vert^{3}}
+\]
+
+\end_inset
+
+由此得频率
+\begin_inset Formula 
+\[
+\nu=\frac{1}{T}=\frac{\sqrt{2\vert E\vert^{3}/m}}{\pi\kappa}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+氢原子能级
+\end_layout
+
+\begin_layout Standard
+根据 Bohr's 假设，能量 
+\begin_inset Formula $E$
+\end_inset
+
+ 只能取分立值；Bohr's 进一步假设：存在无量纲函数 
+\begin_inset Formula $f(n)$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+E_{n}=h\nu_{n}\cdot f(n)
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+ 时，
+\begin_inset Formula 
+\[
+h\nu_{n\to n-1}\to h\nu_{n}\qquad E_{n}-E_{n-1}\to\dv{E_{n}}{n}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{n}=-\frac{1}{2}n+D
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E_{n}=-\frac{\pi^{2}\kappa^{2}m}{2h^{2}\left(-n/2+D\right)^{2}}\qquad n=1,2,3,\dots
+\]
+
+\end_inset
+
+代入 
+\begin_inset Formula $\kappa=e^{2}$
+\end_inset
+
+ 并取 
+\begin_inset Formula $D=0$
+\end_inset
+
+ 则有
+\begin_inset Formula 
+\[
+E_{n}=-\frac{2\pi^{2}e^{4}m}{h^{2}n^{2}}\qquad n=1,2,3,\dots
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+h\nu_{n\to2}=\frac{2\pi^{2}e^{4}m}{h^{2}n^{2}}\left(\frac{1}{2^{2}}-\frac{1}{n^{2}}\right)\qquad n=3,4,5,\dots
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+角动量量子化
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+E_{n}=\frac{mv^{2}}{2}-\frac{e^{2}}{r}=\frac{m}{2}\left(\dv{r}{t}\right)^{2}+\frac{m}{2}\left(r\dv{\theta}{t}\right)^{2}-\frac{e^{2}}{r}
+\]
+
+\end_inset
+
+考虑 
+\begin_inset Formula $r=R$
+\end_inset
+
+ 的圆轨道，并引入角动量
+\begin_inset Formula 
+\[
+\vec{L}=\vec{r}\times m\vec{v}\implies L=R\cdot mR\dv{\theta}{t}=mR^{2}\dv{\theta}{t}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E_{n}=\frac{mR^{2}}{2}\left(\dv{\theta}{t}\right)^{2}-\frac{e^{2}}{R}=\frac{L^{2}}{2mR^{2}}-\frac{e^{2}}{R}
+\]
+
+\end_inset
+
+再将 
+\begin_inset Formula $E_{n}=e^{2}/(2R)$
+\end_inset
+
+ 代入，可得
+\begin_inset Formula 
+\[
+L=\frac{nh}{2\pi}=n\hbar\qquad n=1,2,3,\dots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sommerfeld 量子化条件：
+\begin_inset Formula 
+\[
+\oint p\dd{q}=n\hbar\qquad n=1,2,3,\dots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Heisenburg & Dirac
+\end_layout
+
+\end_body
+\end_document
