@@ -48,7 +48,7 @@ title: 数据结构与算法
 
 - Princeton
   - Text: [Sect-1.4  Analysis of Algorithms](https://algs4.cs.princeton.edu/14analysis/)
-  - Video: [Analysis of Algorithms](https://www.coursera.org/learn/algorithms-part1/supplement/mpK20/lecture-slides)
+  - Video: [Part-1/Week-1  Analysis of Algorithms](https://www.coursera.org/learn/algorithms-part1/supplement/mpK20/lecture-slides)
 
 > 1. *Observe* some feature of the natural world, generally with precise measurements.
 > 2. *Hypothesize* a model that is consistent with the observations.
@@ -67,7 +67,7 @@ title: 数据结构与算法
 
 - Princeton
   - Text: [Sect-2.1  Elementary Sorts](https://algs4.cs.princeton.edu/21elementary)
-  - Video: [Elementary Sorts](https://www.coursera.org/learn/algorithms-part1/supplement/erHuw/lecture-slides)
+  - Video: [Part-1/Week-2  Elementary Sorts](https://www.coursera.org/learn/algorithms-part1/supplement/erHuw/lecture-slides)
 
 #### Bubble Sort
 
@@ -79,13 +79,13 @@ title: 数据结构与算法
 
 - Princeton
   - Text: *Shellsort* in [Sect-2.1  Elementary Sorts](https://algs4.cs.princeton.edu/21elementary)
-  - Video: [Shellsort](https://www.coursera.org/learn/algorithms-part1/lecture/zPYhF/shellsort)
+  - Video: [Part-1/Week-2  Shellsort](https://www.coursera.org/learn/algorithms-part1/lecture/zPYhF/shellsort)
 
 ### Mergesort
 
 - Princeton
   - Text: [Sect-2.2  Mergesort](https://algs4.cs.princeton.edu/22mergesort)
-  - Video: [Mergesort](https://www.coursera.org/learn/algorithms-part1/supplement/4E9fa/lecture-slides)
+  - Video: [Part-1/Week-3  Mergesort](https://www.coursera.org/learn/algorithms-part1/supplement/4E9fa/lecture-slides)
 
 #### [Timsort](https://en.wikipedia.org/wiki/Timsort)
 
@@ -100,17 +100,28 @@ title: 数据结构与算法
 
 - Princeton
   - Text: [Sect-2.3  Quicksort](https://algs4.cs.princeton.edu/23quicksort)
-  - Video: [Quicksort](https://www.coursera.org/learn/algorithms-part1/supplement/efbDN/lecture-slides)
+  - Video: [Part-1/Week-3  Quicksort](https://www.coursera.org/learn/algorithms-part1/supplement/efbDN/lecture-slides)
 - Libraries
   - C: [`qsort`](https://en.cppreference.com/w/c/algorithm/qsort) in `<stdlib.h>`
   - C++: [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort) in `<algorithm>`
   - Java8: [`java.util.Arrays.sort(int[] a)`](https://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#sort-int:A-)
 
-### Application: [Convex Hull](https://www.coursera.org/learn/algorithms-part1/lecture/KHJ1t/convex-hull)
+### Application: Convex Hull
 
-### Application: [Collinear Points](https://www.coursera.org/learn/algorithms-part1/programming/prXiW/collinear-points)
+- VisuAlgo
+  - [Convex Hull](https://visualgo.net/en/convexhull)
+- Princeton
+  - Video: [Part-1/Week-2  Convex Hull](https://www.coursera.org/learn/algorithms-part1/lecture/KHJ1t/convex-hull)
+
+### Application: Collinear Points
+
+- Princeton
+  - Text: [Sect-2.5  Sorting Applications](https://algs4.cs.princeton.edu/25applications)
+  - Programming Assignment: [Part-1/Week-3  Collinear Points](https://www.coursera.org/learn/algorithms-part1/programming/prXiW/collinear-points)
 
 ## Searching
+
+### Sequential Search
 
 ### Binary Search
 
@@ -120,14 +131,14 @@ title: 数据结构与算法
   - [Union--Find DS](https://visualgo.net/en/ufds)
 - Princeton
   - Text: [Sect-1.5  Union--Find](https://algs4.cs.princeton.edu/15uf/)
-  - Video: [Union--Find](https://www.coursera.org/learn/algorithms-part1/supplement/bcelg/lecture-slides)
-  - Programming Assignment: [Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
+  - Video: [Part-1/Week-1  Union--Find](https://www.coursera.org/learn/algorithms-part1/supplement/bcelg/lecture-slides)
+  - Programming Assignment: [Part-1/Week-1  Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
 
 ## Vectors (Resizing Arrays)
 
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
-  - Video: [Resizing Arrays](https://www.coursera.org/learn/algorithms-part1/lecture/WTFO7/resizing-arrays)
+  - Video: [Part-1/Week-2  Resizing Arrays](https://www.coursera.org/learn/algorithms-part1/lecture/WTFO7/resizing-arrays)
 
 # Lists, Stacks & Queues
 
@@ -139,7 +150,7 @@ title: 数据结构与算法
     - Doubly Linked List
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
-  - Video: [Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Part-1/Week-2  Stacks](https://algs4.cs.princeton.edu/13stacks/)
 
 ## Stacks
 
@@ -148,7 +159,7 @@ title: 数据结构与算法
     - Stack
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
-  - Video: [Stacks](https://algs4.cs.princeton.edu/13stacks/)
+  - Video: [Part-1/Week-2  Stacks](https://algs4.cs.princeton.edu/13stacks/)
 
 ## Queues
 
@@ -158,8 +169,8 @@ title: 数据结构与算法
     - Deque
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
-  - Video: [Queues](https://www.coursera.org/learn/algorithms-part1/lecture/5vgrm/queues)
-  - Programming Assignment: [Deques and Randomized Queues](https://www.coursera.org/learn/algorithms-part1/programming/zamjZ/deques-and-randomized-queues)
+  - Video: [Part-1/Week-2  Queues](https://www.coursera.org/learn/algorithms-part1/lecture/5vgrm/queues)
+  - Programming Assignment: [Part-1/Week-2  Deques and Randomized Queues](https://www.coursera.org/learn/algorithms-part1/programming/zamjZ/deques-and-randomized-queues)
 
 # Priority Queues
 
@@ -167,14 +178,14 @@ title: 数据结构与算法
 
 - Princeton
   - Section: [Sect-2.4 Priority Queues](https://algs4.cs.princeton.edu/24pq)
-  - Video: [Priority Queues](https://www.coursera.org/learn/algorithms-part1/supplement/eHe3d/lecture-slides)
-  - Programming Assignment: [8 Puzzle](https://www.coursera.org/learn/algorithms-part1/programming/iqOQi/8-puzzle)
+  - Video: [Part-1/Week-4  Priority Queues](https://www.coursera.org/learn/algorithms-part1/supplement/eHe3d/lecture-slides)
+  - Programming Assignment: [Part-1/Week-4  8-Puzzle](https://www.coursera.org/learn/algorithms-part1/programming/iqOQi/8-puzzle)
 
 ### Event-Driven Simulation
 
 - Princeton
   - Text: [Sect-6.1  Event Driven Simulation](https://algs4.cs.princeton.edu/61event)
-  - Video: [Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
+  - Video: [Part-1/Week-4  Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
   - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
 
 ## Fibonacci Heap
@@ -185,6 +196,9 @@ title: 数据结构与算法
 
 - VisuAlgo
   - [Hash Table](https://visualgo.net/en/hashtable)
+- Princeton
+  - Text: [Sect-3.4  Hash Tables](https://algs4.cs.princeton.edu/34hash/)
+  - Video: [Part-1/Week-6  Hash Tables](https://www.coursera.org/learn/algorithms-part1/supplement/py6zN/lecture-slides) and [Part-1/Week-6  Symbol Table Applications](https://www.coursera.org/learn/algorithms-part1/supplement/eVEjz/lecture-slides)
 
 ## Hash Functions
 
@@ -242,23 +256,31 @@ If you want to make `K` a hashable type, then do the following:
 
 ## Binary Search Trees
 
+- VisuAlgo
+  - [Binary Search Tree](https://visualgo.net/en/bst)
 - Princeton
-  - Text: [Sect-3.2 Elementary Symbol Tables](https://algs4.cs.princeton.edu/33balanced)
-  - Video: [Elementary Symbol Tables](https://www.coursera.org/learn/algorithms-part1/supplement/2kwpU/lecture-slides)
+  - Text: [Sect-3.1  Symbol Tables](https://algs4.cs.princeton.edu/31elementary) and [Sect-3.2  Binary Search Trees](https://algs4.cs.princeton.edu/32bst)
+  - Video: [Part-1/Week-4  Elementary Symbol Tables](https://www.coursera.org/learn/algorithms-part1/supplement/2kwpU/lecture-slides)
 
 ## Balanced Search Trees
 
 - Princeton
-  - Text: [Sect-3.3 Balanced Search Trees](https://algs4.cs.princeton.edu/33balanced), [Sect-6.2 B-trees](https://algs4.cs.princeton.edu/62btree)
-  - Video: [Balanced Search Trees](https://www.coursera.org/learn/algorithms-part1/supplement/zQXMd/lecture-slides)
+  - Text: [Sect-3.3 Balanced Search Trees](https://algs4.cs.princeton.edu/33balanced) and [Sect-6.2 B-trees](https://algs4.cs.princeton.edu/62btree)
+  - Video: [Part-1/Week-5  Balanced Search Trees](https://www.coursera.org/learn/algorithms-part1/supplement/zQXMd/lecture-slides)
+
+### AVL Trees
+
+### Red-Black Trees
+
+### B-trees
 
 ## Geometric Search Trees
 
 ### Kd-Trees
 
 - Princeton
-  - Video: [Geometric Applications of BSTs](https://www.coursera.org/learn/algorithms-part1/supplement/yelcJ/lecture-slides)
-  - Programming Assignment: [Kd-Trees](https://www.coursera.org/learn/algorithms-part1/programming/wuF0a/kd-trees)
+  - Video: [Part-1/Week-5  Geometric Applications of BSTs](https://www.coursera.org/learn/algorithms-part1/supplement/yelcJ/lecture-slides)
+  - Programming Assignment: [Part-1/Week-5  Kd-Trees](https://www.coursera.org/learn/algorithms-part1/programming/wuF0a/kd-trees)
 
 ### Range Trees
 
