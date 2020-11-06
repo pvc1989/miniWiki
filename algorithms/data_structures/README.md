@@ -77,6 +77,10 @@ title: 数据结构与算法
 
 ### Shellsort
 
+- Princeton
+  - Text: *Shellsort* in [Sect-2.1  Elementary Sorts](https://algs4.cs.princeton.edu/21elementary)
+  - Video: [Shellsort](https://www.coursera.org/learn/algorithms-part1/lecture/zPYhF/shellsort)
+
 ### Mergesort
 
 - Princeton
@@ -117,7 +121,7 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-1.5  Union--Find](https://algs4.cs.princeton.edu/15uf/)
   - Video: [Union--Find](https://www.coursera.org/learn/algorithms-part1/supplement/bcelg/lecture-slides)
-  - Assignment: [Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
+  - Programming Assignment: [Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
 
 ## Vectors (Resizing Arrays)
 
@@ -127,7 +131,7 @@ title: 数据结构与算法
 
 # Lists, Stacks & Queues
 
-## Linked Lists
+## Lists
 
 - VisuAlgo
   - [Linked List](https://visualgo.net/en/list)
@@ -171,6 +175,7 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-6.1  Event Driven Simulation](https://algs4.cs.princeton.edu/61event)
   - Video: [Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
+  - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
 
 ## Fibonacci Heap
 
@@ -181,9 +186,55 @@ title: 数据结构与算法
 - VisuAlgo
   - [Hash Table](https://visualgo.net/en/hashtable)
 
-## Open Addressing
+## Hash Functions
 
-## Seperate Chaining
+### Requirements
+
+A good hash function should
+
+- be *deterministic*, i.e. equal keys must produce the same hash value.
+- be *efficient* to compute.
+- *uniformly* distribute the keys among the index range `[0, M)`.
+
+### Modular Hashing
+
+- `int`s: choose a prime `M` close to the table size and use `(key % M)` as index.
+- `float`s: use modular hashing on `key`'s binary representation.
+- `string`s: choose a small prime `R` (e.g. `31`) and do modular hashing repeatedly, i.e.
+  
+  ```java
+  int hash = 0;
+  for (int i = 0; i < key.length(); i++)
+    hash = (R * hash + key.charAt(i)) % M;
+  ```
+
+### Programming
+
+If you want to make `K` a hashable type, then do the following:
+
+- Java: implement a method called [`hashCode()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--), which returns a 32-bit `int`.
+- Python: implement a method called  [`__hash__()`](https://docs.python.org/3/reference/datamodel.html#object.__hash__), so that the [`hash()`](https://docs.python.org/3/library/functions.html?highlight=hash%20function#hash) built-in function can be called on `K`'s objects.
+- C++: specialize the [`std::hash`](https://en.cppreference.com/w/cpp/utility/hash) template for  `K`, so that `K` can be used as in `std::unordered_set<K>` or `std::unordered_map<K, V>`.
+
+## Collision Resolution
+
+### Seperate Chaining
+
+- Structure: build a linked list for each array index.
+- Searching: *hash to find the list* that could contain the key, then *sequentially search through that list* for the key.
+- Performance: in a separate-chaining hash table with $M$ lists and $N$ keys,
+  - $\Pr(\text{number ot keys in a list} \approx N/M)\approx 1$, given $N/M \approx 1$.
+  - $\Pr(\text{number of compares for search and insert})\propto N/M$.
+
+### Open Addressing
+
+- Structure: use an array of size $M$, which is larger than $N$ --- the number of keys to be inserted.
+- Searching: when there is a collision, do any of the following:
+  - Linear Probing: check the next entry in the table (by incrementing the index) until search hit.
+  - Double Probing:
+- Performance: the average number of probes is
+  - $\frac12\left(1 + (1 - N/M)^{-1}\right)$ for search hits.
+  - $\frac12\left(1 +(1 - N/M)^{-2}\right)$ for search misses or inserts.
 
 ## Universal Hashing
 
