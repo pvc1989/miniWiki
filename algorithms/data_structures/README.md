@@ -40,9 +40,22 @@ title: 数据结构与算法
 ## Mathematical (Theoretical) Method
 
 - MIT
-  - Text:
-    - Chap-3  Growth of Functions
-    - Chap-5  Probabilistic Analysis and Randomized Algorithms
+  - Text: Chap-3  Growth of Functions
+
+### Divide-and-Conquer
+
+- MIT
+  - Text: Chap-4  Divide-and-Conquer
+
+### Probabilitic Analysis
+
+- MIT
+  - Text: Chap-5  Probabilistic Analysis and Randomized Algorithms
+
+### Amortized Analysis
+
+- MIT
+  - Text: Chap-17  Amortized Analysis
 
 ## Scientific (Experimental) Method
 
@@ -55,6 +68,30 @@ title: 数据结构与算法
 > 3. *Predict* events using the hypothesis.
 > 4. *Verify* the predictions by making further observations.
 > 5. *Validate* by repeating until the hypothesis and observations agree.
+
+## NP-Completeness
+
+- MIT
+  - Text: Chap-34  NP-Completeness
+
+### Reductions
+
+- Princeton
+  - Text: [Sect-6.5  Reductions](https://algs4.cs.princeton.edu/65reductions)
+  - Video: [Part-2/Week-6  Reductions](https://www.coursera.org/learn/algorithms-part2/supplement/OD01e/lecture-slides)
+
+### Linear Programming
+
+- Princeton
+  - Video: [Part-2/Week-6  Linear Programming](https://www.coursera.org/learn/algorithms-part2/supplement/9wPqe/lecture-slides)
+- MIT
+  - Text: Chap-29  Linear Programming
+
+### Intractability
+
+- Princeton
+  - Text: [Sect-6.6  Intractability](https://algs4.cs.princeton.edu/66intractability)
+  - Video: [Part-2/Week-6  Intractability](https://www.coursera.org/learn/algorithms-part2/supplement/Nc2PX/lecture-slides)
 
 # Arrays & Vectors
 
@@ -75,6 +112,9 @@ title: 数据结构与算法
 
 #### Insertion Sort
 
+- MIT
+  - Text: Sect-2.1  Insertion sort
+
 ### Shellsort
 
 - Princeton
@@ -86,6 +126,8 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-2.2  Mergesort](https://algs4.cs.princeton.edu/22mergesort)
   - Video: [Part-1/Week-3  Mergesort](https://www.coursera.org/learn/algorithms-part1/supplement/4E9fa/lecture-slides)
+- MIT
+  - Text: Sect-2.3.1  The divide-and-conquer approach
 
 #### [Timsort](https://en.wikipedia.org/wiki/Timsort)
 
@@ -101,6 +143,8 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-2.3  Quicksort](https://algs4.cs.princeton.edu/23quicksort)
   - Video: [Part-1/Week-3  Quicksort](https://www.coursera.org/learn/algorithms-part1/supplement/efbDN/lecture-slides)
+- MIT
+  - Text: Chap-7  Quicksort
 - Libraries
   - C: [`qsort`](https://en.cppreference.com/w/c/algorithm/qsort) in `<stdlib.h>`
   - C++: [`std::sort`](https://en.cppreference.com/w/cpp/algorithm/sort) in `<algorithm>`
@@ -112,6 +156,8 @@ title: 数据结构与算法
   - [Convex Hull](https://visualgo.net/en/convexhull)
 - Princeton
   - Video: [Part-1/Week-2  Convex Hull](https://www.coursera.org/learn/algorithms-part1/lecture/KHJ1t/convex-hull)
+- MIT
+  - Text: Sect-33.3  Finding the convex hull
 
 ### Application: Collinear Points
 
@@ -139,10 +185,12 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
   - Video: [Part-1/Week-2  Resizing Arrays](https://www.coursera.org/learn/algorithms-part1/lecture/WTFO7/resizing-arrays)
+- MIT
+  - Text: Sect-17.4  Dynamic tables
 
 # Lists, Stacks & Queues
 
-## Lists
+## Linked Lists
 
 - VisuAlgo
   - [Linked List](https://visualgo.net/en/list)
@@ -151,6 +199,8 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
   - Video: [Part-1/Week-2  Stacks](https://algs4.cs.princeton.edu/13stacks/)
+- MIT
+  - Text: Sect-10.2  Linked lists
 
 ## Stacks
 
@@ -160,6 +210,8 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
   - Video: [Part-1/Week-2  Stacks](https://algs4.cs.princeton.edu/13stacks/)
+- MIT
+  - Text: Sect-10.1  Stacks and queues
 
 ## Queues
 
@@ -171,15 +223,21 @@ title: 数据结构与算法
   - Text: [Sect-1.3  Bags, Queues, and Stacks](https://algs4.cs.princeton.edu/13stacks/)
   - Video: [Part-1/Week-2  Queues](https://www.coursera.org/learn/algorithms-part1/lecture/5vgrm/queues)
   - Programming Assignment: [Part-1/Week-2  Deques and Randomized Queues](https://www.coursera.org/learn/algorithms-part1/programming/zamjZ/deques-and-randomized-queues)
+- MIT
+  - Text: Sect-10.1  Stacks and queues
 
 # Priority Queues
 
-## Binary Heap
+## Binary Heaps
 
+- VisuAlgo
+  - [Binary Heap](https://visualgo.net/en/heap)
 - Princeton
   - Section: [Sect-2.4 Priority Queues](https://algs4.cs.princeton.edu/24pq)
   - Video: [Part-1/Week-4  Priority Queues](https://www.coursera.org/learn/algorithms-part1/supplement/eHe3d/lecture-slides)
   - Programming Assignment: [Part-1/Week-4  8-Puzzle](https://www.coursera.org/learn/algorithms-part1/programming/iqOQi/8-puzzle)
+- MIT
+  - Text: Chap-6  Heapsort
 
 ### Event-Driven Simulation
 
@@ -188,9 +246,15 @@ title: 数据结构与算法
   - Video: [Part-1/Week-4  Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
   - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
 
-## Fibonacci Heap
+## Fibonacci Heaps
 
-## Van Emde Boas Tree
+- MIT
+  - Text: Chap-19  Fibonacci Heaps
+
+## van Emde Boas Trees
+
+- MIT
+  - Text: Chap-20  van Emde Boas Trees
 
 # Hash Tables
 
@@ -199,6 +263,8 @@ title: 数据结构与算法
 - Princeton
   - Text: [Sect-3.4  Hash Tables](https://algs4.cs.princeton.edu/34hash/)
   - Video: [Part-1/Week-6  Hash Tables](https://www.coursera.org/learn/algorithms-part1/supplement/py6zN/lecture-slides) and [Part-1/Week-6  Symbol Table Applications](https://www.coursera.org/learn/algorithms-part1/supplement/eVEjz/lecture-slides)
+- MIT
+  - Text: Chap-11  Hash Tables
 
 ## Hash Functions
 
@@ -237,7 +303,7 @@ If you want to make `K` a hashable type, then do the following:
 - Structure: build a linked list for each array index.
 - Searching: *hash to find the list* that could contain the key, then *sequentially search through that list* for the key.
 - Performance: in a separate-chaining hash table with $M$ lists and $N$ keys,
-  - $\Pr(\text{number ot keys in a list} \approx N/M)\approx 1$, given $N/M \approx 1$.
+  - $\Pr(\text{number of keys in a list} \approx N/M)\approx 1$, given $N/M \approx 1$.
   - $\Pr(\text{number of compares for search and insert})\propto N/M$.
 
 ### Open Addressing
@@ -252,7 +318,18 @@ If you want to make `K` a hashable type, then do the following:
 
 ## Universal Hashing
 
+- MIT
+  - Text: Sect-11.3.3  Universal hashing
+
+## Perfect Hashing
+
+- MIT
+  - Text: Sect-11.5  Perfect hashing
+
 # Trees
+
+- MIT
+  - Text: Sect-B.5  Trees
 
 ## Binary Search Trees
 
@@ -261,6 +338,8 @@ If you want to make `K` a hashable type, then do the following:
 - Princeton
   - Text: [Sect-3.1  Symbol Tables](https://algs4.cs.princeton.edu/31elementary) and [Sect-3.2  Binary Search Trees](https://algs4.cs.princeton.edu/32bst)
   - Video: [Part-1/Week-4  Elementary Symbol Tables](https://www.coursera.org/learn/algorithms-part1/supplement/2kwpU/lecture-slides)
+- MIT
+  - Text: Chap-12  Binary Search Trees
 
 ## Balanced Search Trees
 
@@ -272,7 +351,13 @@ If you want to make `K` a hashable type, then do the following:
 
 ### Red-Black Trees
 
+- MIT
+  - Text: Chap-13  Red-Black Trees
+
 ### B-trees
+
+- MIT
+  - Text: Chap-18  B-Trees
 
 ## Geometric Search Trees
 
@@ -286,27 +371,82 @@ If you want to make `K` a hashable type, then do the following:
 
 # Graphs
 
-## Undirected Graphs
+- MIT
+  - Text: Sect-B.4  Graphs
 
-## Directed Graphs
+## Graph Structures
 
-### Application: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
+- VisuAlgo: [Graph Structures](https://visualgo.net/en/graphds) and [Graph Traversal](https://visualgo.net/en/dfsbfs)
+- Princeton
+  - Text: [Sect-4.1  Undirected Graphs](https://algs4.cs.princeton.edu/41graph) and [Sect-4.2  Directed Graphs](https://algs4.cs.princeton.edu/42digraph)
+  - Video: [Part-2/Week-1  Undirected Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/NlsQF/lecture-slides) and [Part-2/Week-1  Directed Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/qRjk3/lecture-slides)
+  - Programming Assignment: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
+
+### Breadth-First Search
+
+### Depth-First Search
+
+### Topological Sort
+
+- Libraries
+  - Python3: [`graphlib.TopologicalSorter`](https://docs.python.org/3/library/graphlib.html#graphlib.TopologicalSorter) provides functionality to topologically sort a graph of hashable nodes.
 
 ## Minimum Spanning Trees
 
+- VisuAlgo
+  - [Min Spanning Tree](https://visualgo.net/en/mst)
+- Princeton
+  - Text: [Sect-4.3  Minimum Spanning Trees](https://algs4.cs.princeton.edu/43mst)
+  - Video: [Part-2/Week-2  Minimun Spanning Trees](https://www.coursera.org/learn/algorithms-part2/supplement/tda2O/lecture-slides)
+
+### Kruskal's Algorithm
+
+### Prim's Algorithm
+
 ## Shortest Paths
 
-### Application: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
+- VisuAlgo
+  - [Single-Source Shortest Paths](https://visualgo.net/en/sssp)
+- Princeton
+  - Text: [Sect-4.4  Shortest Paths](https://algs4.cs.princeton.edu/44sp)
+  - Video: [Part-2/Week-2  Shortest Paths](https://www.coursera.org/learn/algorithms-part2/supplement/BZTAt/lecture-slides)
+  - Programming Assignment: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
+
+### Dijkstra's Algorithm
 
 ## Maximum Flow and Minimum Cut
 
-### Application: [Baseball Elimination](https://www.coursera.org/learn/algorithms-part2/programming/hmYRI/baseball-elimination)
+- VisuAlgo
+  - [Network Flow](https://visualgo.net/en/maxflow)
+- Princeton
+  - Text: [Sect-6.4  Maxflow](https://algs4.cs.princeton.edu/64maxflow)
+  - Video: [Part-2/Week-3  Maximum Flow and Minimum Cut](https://www.coursera.org/learn/algorithms-part2/supplement/qKIDx/lecture-slides)
+  - Programming Assignment: [Baseball Elimination](https://www.coursera.org/learn/algorithms-part2/programming/hmYRI/baseball-elimination)
+
+### Ford--Fulkerson Algorithm
+
+### Maxflow--Mincut Theorem
 
 # Strings
 
 ## String Implementations
 
+- Princeton
+  - Text: [Sect-5.0  Overview](https://algs4.cs.princeton.edu/50strings)
+  - Video: [Part-2/Week-3  Strings in Java](https://www.coursera.org/learn/algorithms-part2/lecture/vGHvb/strings-in-java)
+- Libraries
+  - Java8: [`java.lang.String`](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) and [`java.lang.StringBuilder`](https://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html)
+  - Python3: [`str`](https://docs.python.org/3/library/stdtypes.html#str) (Python class, in Built-in Types) and [`string`](https://docs.python.org/3/library/string.html#module-string) (Python module, in `string` — Common string operations)
+  - C++: [`std::string`](https://en.cppreference.com/w/cpp/string/basic_string) in [`<string>`](https://en.cppreference.com/w/cpp/header/string)
+  - C: [Null-terminated byte strings](https://en.cppreference.com/w/c/string/byte) in `<string.h>`
+
 ## Radix Sorts
+
+- Princeton
+  - Text: [Sect-5.1  String Sorts](https://algs4.cs.princeton.edu/51radix)
+  - Video: [Part-2/Week-3  Radix Sorts](https://www.coursera.org/learn/algorithms-part2/supplement/v5gBy/lecture-slides)
+- MIT
+  - Text: Sect-8.3  Radix sort
 
 ### LSD Radix Sort
 
@@ -316,30 +456,56 @@ If you want to make `K` a hashable type, then do the following:
 
 ## Suffix Arrays
 
+- VisuAlgo
+  - [Suffix Array](https://visualgo.net/en/suffixarray)
+- Princeton
+  - Text: [Sect-6.3  Suffix Arrays](https://algs4.cs.princeton.edu/63suffix)
+  - Video: [Part-2/Week-3  Suffix Arrays](https://www.coursera.org/learn/algorithms-part2/lecture/TH18W/suffix-arrays)
+
 ## Tries
+
+- Princeton
+  - Text: [Sect-5.2  Tries](https://algs4.cs.princeton.edu/52trie)
+  - Video: [Part-2/Week-4  Tries](https://www.coursera.org/learn/algorithms-part2/supplement/LW7HJ/lecture-slides)
+
+### R-way Tries
+
+### Ternary Search Tries
 
 ## Substring Search
 
-### Brute-Force
+- Princeton
+  - Text: [Sect-5.3  Substring Search](https://algs4.cs.princeton.edu/53substring)
+  - Video: [Part-2/Week-4  Substring Search](https://www.coursera.org/learn/algorithms-part2/supplement/CrTCF/lecture-slides)
+  - Programming Assignment: [Boggle](https://www.coursera.org/learn/algorithms-part2/programming/9GqJs/boggle)
+- MIT
+  - Text: Chap-32  String Matching
 
-### Knuth--Morris--Pratt
+### Knuth--Morris--Pratt (KMP)
+
+#### Deterministic Finite-state Automaton (DFA)
 
 ### Boyer--More
 
 ### Rabin--Karp
 
-### Application: [Boggle](https://www.coursera.org/learn/algorithms-part2/programming/9GqJs/boggle)
-
 ## Regular Expressions
+
+- Princeton
+  - Text: [Sect-5.4  Regular Expressions](https://algs4.cs.princeton.edu/54regexp)
+  - Video: [Part-2/Week-5  Regular Expressions](https://www.coursera.org/learn/algorithms-part2/supplement/dBpZD/lecture-slides)
+- Libraries
+  - Java8: [`java.util.regex`](https://docs.oracle.com/javase/8/docs/api/java/util/regex/package-summary.html)
+  - Python3: [`re`](https://docs.python.org/3/library/re.html) (Regular expression operations) and [Regular Expression HOWTO](https://docs.python.org/3/howto/regex.html)
+  - C++: [`std::regex`](https://en.cppreference.com/w/cpp/regex/basic_regex) in [`<regex>`](https://en.cppreference.com/w/cpp/header/regex)
+  - Visual Studio: [Use regular expressions in Visual Studio](https://docs.microsoft.com/en-us/visualstudio/ide/using-regular-expressions-in-visual-studio)
+  - Shell: [正規表示法與文件格式化處理](http://linux.vbird.org/linux_basic/0330regularex.php) and [Regular Expressions](https://www.gnu.org/software/grep/manual/html_node/Regular-Expressions.html)
+
+### Nondeterministic Finite-state Automaton (NFA)
 
 ## Data Compression
 
-### Application: [Burrows Wheeler](https://www.coursera.org/learn/algorithms-part2/programming/3nmSB/burrows-wheeler)
-
-# Computation Theory
-
-## Reductions
-
-## Linear Programming
-
-## Intractability
+- Princeton
+  - Text: [Sect-5.5  Data Compression](https://algs4.cs.princeton.edu/55compression)
+  - Video: [Part-2/Week-5  Data Compression](https://www.coursera.org/learn/algorithms-part2/supplement/gRhgE/lecture-slides)
+  - Programming Assignment: [Burrows Wheeler](https://www.coursera.org/learn/algorithms-part2/programming/3nmSB/burrows-wheeler)
