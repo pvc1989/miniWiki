@@ -37,6 +37,7 @@ $$
 $$					
 ```
 效果如下（只在 Typora 中可见）：
+
 $$
 \def\RR{\mathbb{R}}
 \def\Differential#1{\mathrm{d}#1}
@@ -86,6 +87,7 @@ $$
 1. 在[前一节](#全局宏)已提到的 `/Applications/Typora.app/Contents/Resources/TypeMark/index.html` 文件中，找到 `TeX` 字段，将 `"physics.js"` 追加到 `extensions` 的尾部。
 
 设置完成后，在数学环境中可以直接使用 `physics.js` 中定义过的命令（效果在重启 Typora 后可见）：
+
 $$
 \ket{\psi} = \sum_i\ket{e_i}\bra{e_i}\ket{\psi}
 $$
