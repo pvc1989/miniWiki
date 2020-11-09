@@ -16,9 +16,9 @@ title: 理论力学
 
 ### 广义坐标（速度）
 
-### Lagrangian 作用量
+### Lagrangian 函数
 
-### Lagrange's 方程
+### Lagrange's 方程<a href name="lagrange-eqn"></a>
 
 ## 对称性 $\Rightarrow$ 守恒律
 
@@ -34,7 +34,7 @@ title: 理论力学
 
 ### Legendre's 变换
 
-Lagrangian 作用量 $L(\Mat{q},\Mat{\dot{q}},t)$ 关于“广义速度”的导数被称为“广义动量”，即
+Lagrangian 函数 $L(\Mat{q},\Mat{\dot{q}},t)$ 关于“广义速度”的导数被称为“广义动量”，即
 
 $$
 \Mat{p}
@@ -50,7 +50,7 @@ $$
 \tilde{L}(\Mat{q},\Mat{p},t)\coloneqq \mathopen{L}\left(\Mat{q},\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t),t\right)
 $$
 
-利用 Legendre's 变换，可定义“Hamiltonian 作用量”
+利用 Legendre's 变换，可定义“Hamiltonian 函数”
 
 $$
 \boxed{H(\Mat{q},\Mat{p},t)\coloneqq \Mat{p}\cdot\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t)- \tilde{L}(\Mat{q},\Mat{p},t)}
@@ -95,7 +95,7 @@ $$
 
 此方程只含一阶导数，且具有很好的对称性，在分析力学中居于核心地位，故又名“正则方程 (canonical equations)”。
 
-### 能量守恒
+### 能量守恒<a href name="const-H"></a>
 
 比较 $\dd{t}$ 两侧的系数，可得
 
@@ -167,9 +167,138 @@ $$
 \left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
 $$
 
-## Maupertuis' 原理
+## 作用量的 Hamiltonian 形式
 
-## Liouville's 定理
+### 边界条件的作用
+
+作用量 $S=\int_{t_1}^{t_2} L(\Mat{q},\Mat{\dot{q}},t)\dd{t}$ 可以被视为由端点 $\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2)$ 及连接二者的真实轨道所确定的量，即
+
+$$
+S=\mathopen{S}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)
+$$
+
+若固定 $t_1,t_2$ 但允许 $\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2)$ 变化，则
+
+$$
+\delta{S}
+=\pdv{S}{\mathopen{\Mat{q}}(t_2)}\cdot\mathopen{\delta}\mathopen{\Mat{q}}(t_2)
++\pdv{S}{\mathopen{\Mat{q}}(t_1)}\cdot\mathopen{\delta}\mathopen{\Mat{q}}(t_1)
+=\int_{t_1}^{t_2}\left(\pdv{L}{\Mat{q}}-\dv{}{t}\pdv{L}{\Mat{\dot{q}}}\right)\cdot\mathopen{\delta}\Mat{q}\dd{t}
++\left(\pdv{L}{\Mat{\dot{q}}}\cdot\mathopen{\delta}\Mat{q}\right)_{t_1}^{t_2}
+$$
+
+真实轨道应满足 [Lagrange's 方程](#lagrange-eqn)，故被积函数为零；边界项中的偏导数可以用广义动量替换，因此有
+
+$$
+\delta{S}
+=\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\delta}\mathopen{\Mat{q}}(t_2)
+-\mathopen{\Mat{p}}(t_1)\cdot\mathopen{\delta}\mathopen{\Mat{q}}(t_1)
+$$
+
+比较系数，即得
+
+$$
+\mathopen{\Mat{p}}(t_2)=+\pdv{S}{\mathopen{\Mat{q}}(t_2)}\qquad
+\mathopen{\Mat{p}}(t_1)=-\pdv{S}{\mathopen{\Mat{q}}(t_1)}
+$$
+
+将上式代入“全导数”（依次固定 $t_1,t_2$ 并利用变上、下限积分的导数公式）
+
+$$
+\dv{S}{t_2}=+L(t_2)=\pdv{S}{t_2}+\pdv{S}{\mathopen{\Mat{q}}(t_2)}\cdot\mathopen{\Mat{\dot{q}}}(t_2)\qquad
+\dv{S}{t_1}=-L(t_1)=\pdv{S}{t_1}+\pdv{S}{\mathopen{\Mat{q}}(t_1)}\cdot\mathopen{\Mat{\dot{q}}}(t_1)
+$$
+
+并利用 $H=\Mat{p}\cdot\Mat{\dot{q}}-L$，可得
+
+$$
+\pdv{S}{t_2}=-H(t_2)\qquad\pdv{S}{t_1}=+H(t_1)
+$$
+
+将它们代回“全导数”，即得
+
+$$
+\dv{S}{t_2}=+\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\Mat{\dot{q}}}(t_2)-H(t_2)\qquad
+\dv{S}{t_1}=-\mathopen{\Mat{p}}(t_1)\cdot\mathopen{\Mat{\dot{q}}}(t_1)+H(t_1)
+$$
+
+作用量 $\mathopen{S}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)$ 的全微分（允许 $t_1,t_2$ 一起变化），应当是这两个微商与各自时间微元的乘积之和，即
+
+$$
+\boxed{\dd{S}
+=\left(\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\dd{\Mat{q}}}(t_2)-H(t_2)\dd{t_2}\right)
+-\left(\mathopen{\Mat{p}}(t_1)\cdot\mathopen{\dd{\Mat{q}}}(t_1)-H(t_1)\dd{t_1}\right)}
+$$
+
+该式表明：右端表达式为全微分的轨道才有可能对应真实运动。
+
+### 微分与积分形式
+
+特别地，若取定初始状态（即 $\mathopen{\delta}\mathopen{\Mat{q}}(t_1)=0$）并省略 $t_2$ 的下标，则有
+
+$$
+\dd{S}=\Mat{p}\cdot\dd{\Mat{q}}-H\dd{t}\implies
+\boxed{S=\int\left(\Mat{p}\cdot\dd{\Mat{q}}-H\dd{t}\right)}
+$$
+
+将 $\Mat{p},\Mat{q}$ 视为 $S$ 的独立变量，利用最小作用量原理 $\delta S=0$，可重新导出 Hamilton's 方程。
+
+### Maupertuis' 原理
+
+只考虑满足[能量守恒](#const-H) $ H(\Mat{p},\Mat{q})=E=\text{const} $ 的系统。
+若取定初始时刻 $t_0$ 及始末位置 $\mathopen{\Mat{q}}(t_0),\mathopen{\Mat{q}}(t)$，且允许终止时刻 $t$ 变化，则有
+$$
+\delta{S}=-H(\Mat{p},\Mat{q})\,\delta{t}=-E\,\delta{t}
+$$
+
+另一方面，对作用量的 Hamiltonian 形式
+
+$$
+S=-E(t-t_0)+\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
+$$
+
+作变分，可得
+
+$$
+\delta{S}=-E\,\delta{t}+\delta{S_0}\qquad S_0\coloneqq\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
+$$
+
+其中 $S_0$ 被称为“简约作用量”。消去相等的项，就得到“Maupertuis' 原理”
+
+$$
+\delta{S_0}\equiv\boxed{\delta{\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}}=0}
+$$
+
+基于该原理，可以解出“轨道”，即不含时间的曲线方程。具体做法如下：
+
+1. 由 $E=E(\Mat{q},\Mat{\dot{q}})$ 解出 $\dd{t}$，将 $\dd{t}$ 表示成以 $\Mat{q},\dd{\Mat{q}}$ 为自变量的函数。
+2. 将上述 $\dd{t}$ 代入 $\Mat{p}=\partial L/\mathopen{\partial}\Mat{\dot{q}}$，将 $\Mat{p}$ 也表示成以 $\Mat{q},\dd{\Mat{q}}$ 为自变量的函数。
+3. 将上述 $\Mat{p}$ 代入 $\delta{S_0}=0$，即得 $\Mat{q},\dd{\Mat{q}}$ 所应满足的方程，此即“轨道方程”。
+
+例：对于典型系统
+
+$$
+L=\tfrac12\Mat{\dot{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\Mat{\dot{q}}-U(\Mat{q})\qquad
+\Mat{p}=\Mat{\dot{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\qquad
+E=\tfrac12\Mat{\dot{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\Mat{\dot{q}}+U(\Mat{q})
+$$
+
+上述步骤给出
+
+$$
+\begin{aligned}
+\dd{t}=\sqrt{\frac{\Mat{q}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\Mat{q}}{2(E-U(\Mat{q}))}}
+&\implies
+\Mat{p}\cdot\dd{\Mat{q}}
+=\frac{\dd{\Mat{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\dd{\Mat{q}}}{\dd{t}}
+=\sqrt{2(E-U(\Mat{q}))\dd{\Mat{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\dd{\Mat{q}}}\\
+&\implies\boxed{\delta\int_{t_0}^t\sqrt{2(E-U(\Mat{q}))\dd{\Mat{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\dd{\Mat{q}}}=0}
+\end{aligned}
+$$
+
+## 正则变换
+
+### Liouville's 定理
 
 ## Hamilton--Jacobi 方程
 
