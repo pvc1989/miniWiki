@@ -922,7 +922,8 @@ reference "sec:Biot–Savart-定律"
 分部积分得
 \begin_inset Formula 
 \[
-\begin{aligned}-\iiint_{V(\vec{r}')}\left(\vec{\jmath}(\vec{r}')\vdot\grad\!_{\vec{r}'}\right)\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}} & =\iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}'}\vdot\vec{\jmath}(\vec{r}')\right)\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}-\iiint_{V(\vec{r}')}\grad\!_{\vec{r}'}\vdot\left(\vec{\jmath}(\vec{r}')\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\\
+\begin{aligned} & -\iiint_{V(\vec{r}')}\left(\vec{\jmath}(\vec{r}')\vdot\grad\!_{\vec{r}'}\right)\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\\
+ & =\iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}'}\vdot\vec{\jmath}(\vec{r}')\right)\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}-\iiint_{V(\vec{r}')}\grad\!_{\vec{r}'}\vdot\left(\vec{\jmath}(\vec{r}')\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\\
  & =\iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}'}\vdot\vec{\jmath}(\vec{r}')\right)\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}-\oiint_{\partial V(\vec{r}')}\vec{\nu}(\vec{r}')\vdot\vec{\jmath}(\vec{r}')\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}
 \end{aligned}
 \]
@@ -1021,8 +1022,8 @@ reference "sec:电荷守恒"
 ，从而有
 \begin_inset Formula 
 \[
-\begin{aligned}\iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\vec{\jmath}(\vec{r}') & =\iiint_{B(\vec{r}',\delta)}\left(\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\vec{\jmath}(\vec{r}')\approx\vec{\jmath}(\vec{r})\iiint_{B(\vec{r}',\delta)}\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\\
- & =\vec{\jmath}(\vec{r})\oiint_{\partial B(\vec{r}',\delta)}\vec{\nu}(\vec{r}')\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}
+\begin{aligned} & \iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\vec{\jmath}(\vec{r}')=\iiint_{B(\vec{r}',\delta)}\left(\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}\right)\vec{\jmath}(\vec{r}')\\
+ & \approx\vec{\jmath}(\vec{r})\iiint_{B(\vec{r}',\delta)}\grad\!_{\vec{r}}\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}=\vec{\jmath}(\vec{r})\oiint_{\partial B(\vec{r}',\delta)}\vec{\nu}(\vec{r}')\vdot\frac{\vec{r}-\vec{r}'}{\vert\vec{r}-\vec{r}'\vert^{3}}
 \end{aligned}
 \]
 
@@ -1041,6 +1042,319 @@ reference "sec:电荷守恒"
 \end_inset
 
 此即“真空中的 Maxwell 方程组”的第四式。
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[静磁场的环量]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset Formula 
+\[
+\oint_{\partial S}\vec{\tau}\vdot\vec{B}=\iint_{S}\vec{\nu}\vdot(\curl\vec{B})=\iint_{S}\vec{\nu}\vdot\mu_{0}\vec{\jmath}=\mu_{0}I
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+规范变换
+\end_layout
+
+\begin_layout Standard
+势函数不唯一。
+\end_layout
+
+\begin_layout Example
+给定被称为“规范函数 (gauge function)”的 
+\begin_inset Formula $\varLambda(\vec{r})$
+\end_inset
+
+，可定义如下“规范变换 (gauge transformation)”：
+\begin_inset Formula 
+\[
+\vec{A}'(\vec{r})\coloneqq\vec{A}(\vec{r})+\grad\varLambda(\vec{r})
+\]
+
+\end_inset
+
+所得的新矢量势 
+\begin_inset Formula $\vec{A}'$
+\end_inset
+
+ 的旋度仍给出同一磁感应强度：
+\begin_inset Formula 
+\[
+\curl\vec{A}'(\vec{r})=\curl\vec{A}(\vec{r})+\cancel{\curl\grad\varLambda(\vec{r})}=\vec{B}(\vec{r})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+对称矢量势 
+\begin_inset Formula $\vec{A}_{1}=\frac{1}{2}B\vec{k}\cross\vec{r}$
+\end_inset
+
+ 与 Landau's 矢量势 
+\begin_inset Formula $\vec{A}_{2}\coloneqq-By\vec{i}$
+\end_inset
+
+ 给出同一个磁感应强度，即
+\begin_inset Formula 
+\[
+\vec{B}\coloneqq B\vec{k}=\curl\vec{A}_{1}=\curl\vec{A}_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+含时间的 Maxwell 方程组
+\end_layout
+
+\begin_layout Subsection
+简单推广
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\divg\vec{E}(\vec{r},t) & =\frac{\rho(\vec{r},t)}{\varepsilon_{0}} & \curl\vec{E}(\vec{r},t) & =0\\
+\divg\vec{B}(\vec{r},t) & =0 & \curl\vec{B}(\vec{r},t) & =\mu_{0}\vec{\jmath}(\vec{r},t)
+\end{aligned}
+\]
+
+\end_inset
+
+以及电荷守恒定律
+\begin_inset Formula 
+\[
+\pdv{\rho(\vec{r},t)}{t}+\divg\vec{\jmath}(\vec{r},t)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电场旋度
+\end_layout
+
+\begin_layout Standard
+Faraday's 电磁感应定律
+\begin_inset Formula 
+\[
+\underbrace{\oint_{\partial S(\vec{r},t)}\vec{\tau}(\vec{r},t)\vdot\vec{E}(\vec{r},t)}_{\mathcal{E}(t)}=-\dv{}{t}\underbrace{\iint_{S(\vec{r},t)}\vec{\nu}(\vec{r},t)\vdot\vec{B}(\vec{r},t)}_{\varPhi(t)}
+\]
+
+\end_inset
+
+Stokes' 环量定理
+\begin_inset Formula 
+\[
+\oint_{\partial S(\vec{r},t)}\vec{\tau}(\vec{r},t)\vdot\vec{E}(\vec{r},t)=\iint_{S(\vec{r},t)}\vec{\nu}(\vec{r},t)\vdot(\curl\vec{E}(\vec{r},t))
+\]
+
+\end_inset
+
+取定 
+\begin_inset Formula $S=S(\vec{r})$
+\end_inset
+
+，则关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的导数可移入积分号内
+\begin_inset Formula 
+\[
+-\dv{}{t}\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\vec{B}(\vec{r},t)=-\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\pdv{\vec{B}(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+比较两端，即得
+\begin_inset Formula 
+\[
+\boxed{\curl\vec{E}(\vec{r},t)=-\pdv{\vec{B}(\vec{r},t)}{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+磁场旋度
+\end_layout
+
+\begin_layout Standard
+为避免如下矛盾：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+0=\divg\curl\vec{B}(\vec{r},t)=\mu_{0}\divg\vec{\jmath}(\vec{r},t)=-\mu_{0}\pdv{\rho(\vec{r},t)}{t}\ne0
+\]
+
+\end_inset
+
+Maxwell 根据
+\begin_inset Formula 
+\[
+\pdv{}{t}\varepsilon_{0}\divg\vec{E}(\vec{r},t)=\pdv{\rho(\vec{r},t)}{t}=-\divg\vec{\jmath}(\vec{r},t)
+\]
+
+\end_inset
+
+在第四式右端加入一项，得到
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\curl\vec{B}(\vec{r},t)=\mu_{0}\vec{\jmath}(\vec{r},t)+\mu_{0}\varepsilon_{0}\pdv{\vec{E}(\vec{r},t)}{t}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\varepsilon_{0}\pdv{\vec{E}(\vec{r},t)}{t}$
+\end_inset
+
+ 被 Maxwell 称为“位移电流密度 (displacement current density)”。
+\end_layout
+
+\begin_layout Subsection
+真空中的电磁波
+\end_layout
+
+\begin_layout Standard
+对 M-2（电场旋度）取旋度：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\curl(\curl\vec{E})=\curl(-\pdv{\vec{B}}{t})=-\pdv{}{t}\curl\vec{B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+左端可用微分恒等式及 M-1（电场散度）
+\begin_inset Formula 
+\[
+\curl(\curl\vec{E})=\grad(\divg\vec{E})-\nabla^{2}\vec{E}\qquad\divg\vec{E}=\frac{\cancel{\rho}}{\varepsilon}
+\]
+
+\end_inset
+
+化为
+\begin_inset Formula 
+\[
+\curl(\curl\vec{E})=-\nabla^{2}\vec{E}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+右端可用 M-4（磁场旋度）
+\begin_inset Formula 
+\[
+\curl\vec{B}=\mu_{0}\cancel{\vec{\jmath}}+\mu_{0}\varepsilon_{0}\pdv{\vec{E}}{t}
+\]
+
+\end_inset
+
+化为
+\begin_inset Formula 
+\[
+\pdv{}{t}\curl\vec{B}=\pdv{}{t}\cancel{\mu_{0}\vec{\jmath}}+\mu_{0}\varepsilon_{0}\pdv[2]{\vec{E}}{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+比较两端，即得
+\begin_inset Formula 
+\[
+\pdv[2]{\vec{E}}{t}=c^{2}\nabla^{2}\vec{E}\qquad c^{2}=\frac{1}{\mu_{0}\varepsilon_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Maxwell]
+\end_layout
+
+\end_inset
+
+光是一种电磁波。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
