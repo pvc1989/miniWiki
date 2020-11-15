@@ -165,6 +165,41 @@ cmake --build .
 
 ## 可视化算法
 
+VTK 中的“算法 (algorithm)”是指对数据作变换（以改变数据的表示形式或生成其他数据）的对象。
+
+算法可以按被处理的数据类型来分类：
+
+- 标量算法，如：用等值线图显式标量场。
+- 向量算法，如：用有向箭头显式向量场。
+- 张量算法，如：提取二阶张量的主分量。
+- 建模算法，其他无法归入以上各类的算法。
+
+### 标量算法
+
+“颜色映射 (color mapping)”是一种常用的标量算法。它将标量值（如：温度值、压力值）映射为颜色值（如：RGB 数组）。该映射通常由以下方式实现：
+
+- “查询表 (lookup table)”：选定被显示标量值的有效区间 `[s_min, s_max]` 及 RGB 数组的长度 `n`，则标量值 `s` 映射到 `(r[i], g[i], b[i])`，其中 `i` 由以下“线性分布”关系确定
+  ```python
+  i = 0
+  if s_min < s:
+      if s_max < s:
+          i = n - 1
+      else:
+          i = n * (s - s_min) // (s - s_max)
+  ```
+
+- “变换函数 (transfer function)”：只需保证任意 `s` 都可以被唯一地映射到某个 `i`，可视为查询表的推广。
+
+```python
+from vtk import *
+# 创建默认查询表（由红到蓝）
+lookup_table = vtkLookupTable()
+lookup_table.SetHueRange(0.6667, 0.0)
+lookup_table.Build()
+```
+
+
+
 ## 图像处理
 
 # ParaView
