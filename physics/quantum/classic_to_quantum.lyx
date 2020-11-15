@@ -918,14 +918,6 @@ Dirac's 正则量子化方法
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Subsection
-氢原子光谱
-\end_layout
-
-\begin_layout Standard
 Dirac 回忆起，分析力学中的 Poisson's 括号
 \end_layout
 
@@ -937,7 +929,7 @@ Dirac 回忆起，分析力学中的 Poisson's 括号
 
 \end_inset
 
-亦满足七条恒等式，其中 
+亦满足类似的七条恒等式，其中 
 \begin_inset Formula $u,v$
 \end_inset
 
@@ -949,21 +941,32 @@ Dirac 回忆起，分析力学中的 Poisson's 括号
 \begin_inset Formula $p_{1},\dots,p_{n}$
 \end_inset
 
- 的函数。Dirac 提出
+ 的函数。根据这种相似性，Dirac 提出了如下关系
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-[\hat{u},\hat{v}]=\{u,v\}D\hat{1}
+[\hat{u},\hat{v}]=\{u,v\}\hat{D}
 \]
 
 \end_inset
 
-
+该式被称为“Dirac's 方程”。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[单个粒子]
+\end_layout
+
+\end_inset
+
+取
 \begin_inset Formula 
 \[
 (\hat{u},\hat{v})=(\hat{x},\hat{p}_{x})\qquad(q_{1},q_{2},q_{3})=(x,y,z)\qquad(p_{1},p_{2},p_{3})=(p_{x},p_{y},p_{z})
@@ -971,7 +974,7 @@ Dirac 回忆起，分析力学中的 Poisson's 括号
 
 \end_inset
 
-
+则
 \begin_inset Formula 
 \[
 \{x,p_{x}\}=\frac{\partial x}{\partial x}\frac{\partial p_{x}}{\partial p_{x}}\cancel{-\frac{\partial x}{\partial p_{x}}\frac{\partial p_{x}}{\partial x}+\frac{\partial x}{\partial y}\frac{\partial p_{x}}{\partial p_{y}}-\frac{\partial x}{\partial p_{y}}\frac{\partial p_{x}}{\partial y}+\frac{\partial x}{\partial z}\frac{\partial p_{x}}{\partial p_{z}}-\frac{\partial x}{\partial p_{z}}\frac{\partial p_{x}}{\partial z}}=1
@@ -979,10 +982,256 @@ Dirac 回忆起，分析力学中的 Poisson's 括号
 
 \end_inset
 
-量子力学基本关系式：
+因此有
 \begin_inset Formula 
 \[
-[\hat{x},\hat{p}_{x}]=\{x,p_{x}\}D\hat{1}=D\hat{1}
+[\hat{x},\hat{p}_{x}]=\{x,p_{x}\}\hat{D}=\hat{D}
+\]
+
+\end_inset
+
+更一般地，有
+\begin_inset Formula 
+\[
+[\hat{q}_{i},\hat{q}_{k}]=\halfnote\hat{0}\qquad[\hat{p}_{i},\hat{p}_{k}]=\hat{0}\qquad[\hat{q}_{i},\hat{p}_{k}]=\updelta_{ik}\hat{D}
+\]
+
+\end_inset
+
+它们被称为“量子力学基本关系式”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Pauli 恒等式
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+[\hat{\vec{p}}\vdot\hat{\vec{r}},\hat{p}^{2}]=[\hat{\vec{p}}\vdot\hat{\vec{r}},\hat{\vec{p}}\vdot\vec{p}]=[\hat{p}_{x}\hat{x}+\hat{p}_{y}\hat{y}+\hat{p}_{z}\hat{z},\hat{p}_{x}^{2}+\hat{p}_{y}^{2}+\hat{p}_{z}^{2}]
+\]
+
+\end_inset
+
+先对左侧应用线性性质，再对右侧应用线性性质：
+\begin_inset Formula 
+\[
+[\hat{p}_{x}\hat{x},\hat{p}_{x}^{2}+\hat{p}_{y}^{2}+\hat{p}_{z}^{2}]=[\hat{p}_{x}\hat{x},\hat{p}_{x}^{2}]+[\hat{p}_{x}\hat{x},\hat{p}_{y}^{2}]+[\hat{p}_{x}\hat{x},\hat{p}_{z}^{2}]
+\]
+
+\end_inset
+
+逐项计算：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula 
+\[
+\begin{aligned}[][\hat{p}_{x}\hat{x},\hat{p}_{x}^{2}] & =\hat{p}_{x}[\hat{x},\hat{p}_{x}\hat{p}_{x}]+[\hat{p}_{x},\hat{p}_{x}\hat{p}_{x}]\hat{x}\\
+ & =\hat{p}_{x}\hat{p}_{x}[\hat{x},\hat{p}_{x}]+\hat{p}_{x}[\hat{x},\hat{p}_{x}]\hat{p}_{x}+\hat{p}_{x}[\hat{p}_{x},\hat{p}_{x}]\hat{x}+[\hat{p}_{x},\hat{p}_{x}]\hat{p}_{x}\hat{x}\\
+ & =\hat{p}_{x}\hat{p}_{x}\hat{D}+\hat{p}_{x}\hat{D}\hat{p}_{x}+\hat{p}_{x}\hat{0}\hat{x}+\hat{0}\hat{p}_{x}\hat{x}=2\hat{D}\hat{p}_{x}^{2}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula 
+\[
+\begin{aligned}[][\hat{p}_{x}\hat{x},\hat{p}_{y}^{2}] & =\hat{p}_{x}[\hat{x},\hat{p}_{y}\hat{p}_{y}]+[\hat{p}_{x},\hat{p}_{y}\hat{p}_{y}]\hat{x}\\
+ & =\hat{p}_{x}\hat{p}_{y}[\hat{x},\hat{p}_{y}]+\hat{p}_{x}[\hat{x},\hat{p}_{y}]\hat{p}_{y}+\hat{p}_{y}[\hat{p}_{x},\hat{p}_{y}]\hat{x}+[\hat{p}_{x},\hat{p}_{y}]\hat{p}_{y}\hat{x}\\
+ & =\hat{p}_{x}\hat{p}_{y}\hat{0}+\hat{p}_{x}\hat{0}\hat{p}_{y}+\hat{p}_{y}\hat{0}\hat{x}+\hat{0}\hat{p}_{y}\hat{x}=\hat{0}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula 
+\[
+[\hat{p}_{z}\hat{z},\hat{p}_{z}^{2}]=\hat{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+[\hat{\vec{p}},r^{-1}]=[\vec{e}_{x}\hat{p}_{x}+\vec{e}_{y}\hat{p}_{y}+\vec{e}_{z}\hat{p}_{z},r^{-1}]=\vec{e}_{x}[\hat{p}_{x},r^{-1}]+\vec{e}_{x}[\hat{p}_{y},r^{-1}]+\vec{e}_{x}[\hat{p}_{z},r^{-1}]
+\]
+
+\end_inset
+
+逐项计算：
+\begin_inset Formula 
+\[
+\begin{aligned}[][\hat{p}_{x},r^{-1}] & =\{p_{x},\frac{1}{r}\}\hat{D}=\left(\pdv{p_{x}}{x}\pdv{}{p_{x}}\frac{1}{r}-\pdv{p_{x}}{p_{x}}\pdv{}{x}\frac{1}{r}+\cdots\right)\hat{D}\\
+ & =\left(-\pdv{p_{x}}{p_{x}}\pdv{}{x}\frac{1}{r}\right)\hat{D}=\frac{x}{r^{3}}\hat{D}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+[\hat{\vec{p}},r^{-1}]=\vec{e}_{x}\frac{x}{r^{3}}\hat{D}+\vec{e}_{y}\frac{y}{r^{3}}\hat{D}+\vec{e}_{z}\frac{z}{r^{3}}\hat{D}=+\frac{\vec{r}}{r^{3}}\hat{D}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+根据角动量定义 
+\begin_inset Formula $\vec{L}\coloneqq\vec{r}\cross\vec{p}$
+\end_inset
+
+ 及矢量恒等式
+\begin_inset Formula 
+\[
+\vec{a}\cross(\vec{b}\cross\vec{c})=
+\]
+
+\end_inset
+
+可得（保持矩阵顺序）
+\begin_inset Formula 
+\[
+\hat{\vec{p}}\cross\hat{\vec{L}}=\hat{\vec{p}}\cross(\hat{\vec{r}}\cross\hat{\vec{p}})=\hat{p}_{x}\hat{\vec{r}}\hat{p}_{x}+\hat{p}_{y}\hat{\vec{r}}\hat{p}_{y}+\hat{p}_{z}\hat{\vec{r}}\hat{p}_{z}-(\hat{\vec{p}}\vdot\hat{\vec{r}})\hat{\vec{p}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{p}_{x}\hat{\vec{r}}\hat{p}_{x} & =\hat{p}_{x}(\vec{e}_{x}\hat{x}+\vec{e}_{y}\hat{y}+\vec{e}_{z}\hat{z})\hat{p}_{x}=\vec{e}_{x}\hat{p}_{x}\hat{x}\hat{p}_{x}+\vec{e}_{y}\hat{p}_{x}\hat{y}\hat{p}_{x}+\vec{e}_{z}\hat{p}_{x}\hat{z}\hat{p}_{x}\\
+ & =\vec{e}_{x}\hat{p}_{x}(\halfnote\hat{D}+\hat{p}_{x}\hat{x})+\vec{e}_{y}\hat{p}_{x}(\hat{0}-\hat{p}_{x}\hat{y})+\vec{e}_{z}\hat{p}_{x}(\hat{0}-\hat{p}_{x}\hat{z})\\
+ & =\vec{e}_{x}\hat{p}_{x}\hat{D}+\hat{p}_{x}^{2}(\vec{e}_{x}\hat{x}+\vec{e}_{y}\hat{y}+\vec{e}_{z}\hat{z})\halfnote\hat{D}=\vec{e}_{x}\hat{p}_{x}\hat{D}+\hat{p}_{x}^{2}\hat{\vec{r}}\halfnote\hat{D}
+\end{aligned}
+\]
+
+\end_inset
+
+类似地有
+\begin_inset Formula 
+\[
+\hat{p}_{y}\hat{\vec{r}}\hat{p}_{y}=\vec{e}_{y}\hat{p}_{y}\hat{D}+\hat{p}_{y}^{2}\hat{\vec{r}}\halfnote\hat{D}\qquad\hat{p}_{z}\hat{\vec{r}}\hat{p}_{z}=\vec{e}_{z}\hat{p}_{z}\hat{D}+\hat{p}_{z}^{2}\hat{\vec{r}}\halfnote\hat{D}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{\vec{p}}\cross\hat{\vec{L}}=\hat{\vec{p}}\hat{D}+\hat{p}^{2}\hat{\vec{r}}\halfnote\hat{D}-(\hat{\vec{p}}\vdot\hat{\vec{r}})\hat{\vec{p}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+氢原子光谱
+\end_layout
+
+\begin_layout Standard
+Runge–Lenz 向量：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{A}\coloneqq\frac{\vec{r}}{r}-\frac{1}{2}(\vec{p}\cross\vec{L}-\vec{L}\cross\vec{p})
+\]
+
+\end_inset
+
+可以证明：对于 Coulomb 势，它是守恒量，即
+\begin_inset Formula 
+\[
+\dv{\vec{A}}{t}=\vec{0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+[\hat{L}_{i},\hat{L}_{j}]=\epsilon_{ijk}\hat{L}_{k}\hat{D}\qquad[\hat{L}_{i},\hat{A}_{j}]=\epsilon_{ijk}\hat{A}_{k}\hat{D}\qquad[\hat{A}_{i},\hat{A}_{j}]=\frac{-2E}{me^{4}}\epsilon_{ijk}\hat{L}_{k}\hat{D}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+E=\frac{p^{2}}{2m}-\frac{e^{2}}{r}
+\]
+
+\end_inset
+
+Pauli 定义
+\begin_inset Formula 
+\[
+\hat{u}_{i}=\sqrt{\frac{me^{4}}{-2E}}\halfnote\hat{A}_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+……
+\begin_inset Formula 
+\[
+E(n)=\frac{me^{4}}{2n^{2}D^{2}}=\frac{2\pi^{2}me^{4}}{-n^{2}h^{2}}\implies\boxed{D=\pm\sqrt{-1}\hbar}=\sqrt{\frac{-h^{2}}{4\pi^{2}}}
 \]
 
 \end_inset
@@ -992,6 +1241,85 @@ Dirac 回忆起，分析力学中的 Poisson's 括号
 
 \begin_layout Subsection
 正则量子化
+\end_layout
+
+\begin_layout Itemize
+写出系统的 Lagranian 函数
+\begin_inset Formula 
+\[
+L(q_{1},\dots,q_{n},\dot{q}_{1},\dots,\dot{q}_{n})=T(q_{1},\dots,q_{n},\dot{q}_{1},\dots,\dot{q}_{n})-V(q_{1},\dots,q_{n})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+定义广义动量
+\begin_inset Formula 
+\[
+p_{i}=\pdv{L}{\dot{q}_{i}}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+并将 
+\begin_inset Formula $\dot{q}_{1},\dots,\dot{q}_{n}$
+\end_inset
+
+ 用 
+\begin_inset Formula $q_{1},\dots,q_{n},p_{1},\dots,p_{n}$
+\end_inset
+
+ 表示
+\end_layout
+
+\begin_layout Itemize
+定义 Hamiltonian 函数
+\begin_inset Formula 
+\[
+H(q_{1},\dots,q_{n},p_{1},\dots,p_{n},t)=\sum_{i=1}^{n}p_{i}q_{i}-L(q_{1},\dots,q_{n},\dot{q}_{1},\dots,\dot{q}_{n})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+将 
+\begin_inset Formula $H,q_{1},\dots,q_{n},p_{1},\dots,p_{n}$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $\hat{H},\hat{q}_{1},\dots,\hat{q}_{n},\hat{p}_{1},\dots,\hat{p}_{n}$
+\end_inset
+
+，并要求
+\begin_inset Formula 
+\[
+[\hat{p}_{i},\hat{q}_{k}]=\sqrt{-1}\hbar\updelta_{ik}\hat{1}
+\]
+
+\end_inset
+
+就得到该系统的 Hamiltonian，从而可以写出其 Schrödinger 方程
+\begin_inset Formula 
+\[
+\sqrt{-1}\hbar\pdv{\psi}{t}=\hat{H}(\hat{q}_{1},\dots,\hat{q}_{n},\hat{p}_{1},\dots,\hat{p}_{n})\,\psi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
