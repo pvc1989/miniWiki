@@ -16,9 +16,40 @@ title: 理论力学
 
 ### 广义坐标（速度）
 
-### Lagrangian 函数
+$$
+\Mat{q}\coloneqq\begin{bmatrix}q_1 & \dots & q_n\end{bmatrix}
+$$
+
+$$
+\Mat{\dot{q}}
+\coloneqq\begin{bmatrix}\dot{q}_1&\dots&\dot{q}_n\end{bmatrix}
+\coloneqq\begin{bmatrix}\dfrac{\dd{q}_1}{\dd{t}}&\dots&\dfrac{\dd{q}_n}{\dd{t}}\end{bmatrix}
+\eqqcolon\dv{}{t}\Mat{q}
+$$
+
+### 作用量的 Lagrangian 形式
+
+$$
+\boxed{S\coloneqq\int_{t_1}^{t_2}L(\Mat{q},\Mat{\dot{q}},t)\dd{t}}
+$$
+
+$$
+\delta{S}=\int_{t_1}^{t_2}\delta{L}(\Mat{q},\Mat{\dot{q}},t)\dd{t}
+=\int_{t_1}^{t_2}\left(\pdv{L}{\Mat{q}}\cdot\delta{\Mat{q}}+\pdv{L}{\Mat{\dot{q}}}\cdot\delta{\Mat{\dot{q}}}\right)\dd{t}
+$$
 
 ### Lagrange's 方程<a href name="lagrange-eqn"></a>
+
+$$
+\int_{t_1}^{t_2}\pdv{L}{\Mat{\dot{q}}}\cdot\delta{\Mat{\dot{q}}}\dd{t}
+=\left(\pdv{L}{\Mat{\dot{q}}}\cdot\delta{\Mat{q}}\right)_{t_1}^{t_2}
+-\int_{t_1}^{t_2}\left(\dv{}{t}\pdv{L}{\Mat{\dot{q}}}\right)\cdot\delta{\Mat{q}}\dd{t}
+$$
+
+$$
+\boxed{\dv{}{t}\pdv{L}{\Mat{\dot{q}}}=\pdv{L}{\Mat{q}}}
+$$
+
 
 ## 对称性 $\Rightarrow$ 守恒律
 
@@ -39,24 +70,25 @@ Lagrangian 函数 $L(\Mat{q},\Mat{\dot{q}},t)$ 关于“广义速度”的导数
 $$
 \Mat{p}
 \coloneqq\begin{bmatrix}p_1&\dots&p_n\end{bmatrix}
-\coloneqq\begin{bmatrix}\dfrac{\partial L}{\partial q_1}&\dots&\dfrac{\partial L}{\partial q_n}\end{bmatrix}
+\coloneqq\begin{bmatrix}\dfrac{\partial L}{\partial\dot{q}_1}&\dots&\dfrac{\partial L}{\partial\dot{q}_n}\end{bmatrix}
 \eqqcolon\pdv{}{\Mat{\dot{q}}}L(\Mat{q},\Mat{\dot{q}},t)
 $$
 
 上述定义式右端是以 $(\Mat{q},\Mat{\dot{q}},t)$ 为自变量的（代数）表达式。
 若将 $(\Mat{q},t)$ 及左端的 $\Mat{p}$ 视为已知量，而将 $\Mat{\dot{q}}$ 视为未知量，则该定义式可视为关于 $\Mat{\dot{q}}$ 的（代数）方程。
 从中解得 $ \Mat{\dot{q}}=\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t) $，便可将 $L(\Mat{q},\Mat{\dot{q}},t)$ 也化作以 $(\Mat{q},\Mat{p},t)$ 为自变量的表达式，即
+
 $$
 \tilde{L}(\Mat{q},\Mat{p},t)\coloneqq \mathopen{L}\left(\Mat{q},\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t),t\right)
 $$
 
-利用 Legendre's 变换，可定义“Hamiltonian 函数”
+由此可定义“Hamiltonian 函数”
 
 $$
 \boxed{H(\Mat{q},\Mat{p},t)\coloneqq \Mat{p}\cdot\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t)- \tilde{L}(\Mat{q},\Mat{p},t)}
 $$
 
-其物理意义为系统的能量。
+其物理意义为系统的能量。上述由 $L(\Mat{q},\Mat{\dot{q}},t)$ 导出 $H(\Mat{q},\Mat{p},t)$ 的过程在数学上被称为 Legendre's 变换，
 
 ### Hamilton's 方程
 
@@ -69,13 +101,7 @@ $$
 -\pdv{L}{\Mat{q}}\cdot\dd{\Mat{q}}-\pdv{L}{\Mat{\dot{q}}}\cdot\dd{\Mat{\dot{q}}}-\pdv{L}{t}\dd{t}
 $$
 
-利用 $\Mat{p}$ 的定义及 Lagrange's 方程
-
-$$
-\Mat{\dot{p}}\equiv\dv{}{t}\pdv{L}{\Mat{\dot{q}}}=\pdv{L}{\Mat{q}}
-$$
-
-可得
+利用 $\Mat{p}$ 的定义及 [Lagrange's 方程](#lagrange-eqn)，可得
 
 $$
 \dd{H}
@@ -84,10 +110,10 @@ $$
 +\pdv{H}{t}\dd{t}
 =\Mat{\dot{q}}\cdot\dd{\Mat{p}}
 -\Mat{\dot{p}}\cdot\dd{\Mat{q}}
--\pdv{L}{t}
+-\pdv{L}{t}\dd{t}
 $$
 
-比较后一个等号两侧 $\dd{\Mat{p}},\dd{\Mat{q}}$ 系数，即得“Hamilton's 方程”
+比较后一个等号两侧 $\dd{\Mat{p}},\dd{\Mat{q}}$ 系数，即得“Hamilton's 方程”<a href name="hamilton-eqn"></a>
 
 $$
 \boxed{\Mat{\dot{q}}=+\pdv{H}{\Mat{p}}\qquad\Mat{\dot{p}}=-\pdv{H}{\Mat{q}}}
@@ -103,9 +129,9 @@ $$
 \boxed{\pdv{H}{t}=-\pdv{L}{t}}
 $$
 
-其中表示“时间”的变量 $t$ 可以推广为除 $p,q$ 以外的决定 $L,H$ 的参数。
+其中表示“时间”的变量 $t$ 可以推广为除了 $p,q$ 以外的任何决定 $L,H$ 的参数。
 
-利用 Hamilton's 方程，可以将“能量守恒”条件化为
+利用 [Hamilton's 方程](#hamilton-eqn)，可以将“能量守恒”条件化为
 
 $$
 \dv{H}{t}
@@ -122,15 +148,15 @@ $$
 给定两个依赖于 $(\Mat{p},\Mat{q})$ 的函数 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$，它们的“Poisson 括号”是指
 
 $$
-\boxed{\{f,g\}\coloneqq\pdv{f}{\Mat{p}}\pdv{g}{\Mat{q}}-\pdv{f}{\Mat{q}}\pdv{g}{\Mat{p}}}
+\boxed{\{f,g\}\coloneqq\pdv{f}{\Mat{p}}\cdot\pdv{g}{\Mat{q}}-\pdv{f}{\Mat{q}}\cdot\pdv{g}{\Mat{p}}}
 $$
 
 于是 $f(\Mat{p},\Mat{q})$ 关于 $t$ 的全导数可以被改写为
 
 $$
 \dv{f}{t}
-=\pdv{f}{t}+\pdv{f}{\Mat{p}}\Mat{\dot{p}}+\pdv{f}{\Mat{q}}\Mat{\dot{q}}
-=\pdv{f}{t}-\pdv{f}{\Mat{p}}\pdv{H}{\Mat{q}}+\pdv{f}{\Mat{q}}\pdv{H}{\Mat{p}}
+=\pdv{f}{t}+\pdv{f}{\Mat{p}}\cdot\Mat{\dot{p}}+\pdv{f}{\Mat{q}}\cdot\Mat{\dot{q}}
+=\pdv{f}{t}-\pdv{f}{\Mat{p}}\cdot\pdv{H}{\Mat{q}}+\pdv{f}{\Mat{q}}\cdot\pdv{H}{\Mat{p}}
 =\pdv{f}{t}+\{H,f\}
 $$
 
@@ -161,7 +187,7 @@ $$
 
 ### 运动积分
 
-定理：若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
+【定理】若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
 
 $$
 \left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
@@ -171,7 +197,7 @@ $$
 
 ### 边界条件的作用
 
-作用量 $S=\int_{t_1}^{t_2} L(\Mat{q},\Mat{\dot{q}},t)\dd{t}$ 可以被视为由端点 $\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2)$ 及连接二者的真实轨道所确定的量，即
+真实运动所对应的作用量 $S=\int_{t_1}^{t_2} L(\Mat{q},\Mat{\dot{q}},t)\dd{t}$ 可以被视为由始末时刻 $t_1,t_2$ 及位置 $\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2)$ 所确定的量，即
 
 $$
 S=\mathopen{S}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)
@@ -202,7 +228,7 @@ $$
 \mathopen{\Mat{p}}(t_1)=-\pdv{S}{\mathopen{\Mat{q}}(t_1)}
 $$
 
-将上式代入“全导数”（依次固定 $t_1,t_2$ 并利用变上、下限积分的导数公式）
+将上式代入“关于 $t_2,t_1$ 全导数”（依次固定 $t_1,t_2$ 并利用变上、下限积分的导数公式）
 
 $$
 \dv{S}{t_2}=+L(t_2)=\pdv{S}{t_2}+\pdv{S}{\mathopen{\Mat{q}}(t_2)}\cdot\mathopen{\Mat{\dot{q}}}(t_2)\qquad
@@ -215,38 +241,38 @@ $$
 \pdv{S}{t_2}=-H(t_2)\qquad\pdv{S}{t_1}=+H(t_1)
 $$
 
-将它们代回“全导数”，即得
+将它们代回“关于 $t_2,t_1$ 全导数”，即得
 
 $$
 \dv{S}{t_2}=+\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\Mat{\dot{q}}}(t_2)-H(t_2)\qquad
 \dv{S}{t_1}=-\mathopen{\Mat{p}}(t_1)\cdot\mathopen{\Mat{\dot{q}}}(t_1)+H(t_1)
 $$
 
-作用量 $\mathopen{S}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)$ 的全微分（允许 $t_1,t_2$ 一起变化），应当是这两个微商与各自时间微元的乘积之和，即
+作用量 $\mathopen{S}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)$ 的全微分（允许 $t_1,t_2$ 一起变化）应当是这两个微商与各自时间微元的乘积之和，即
 
 $$
-\boxed{\dd{S}
-=\left(\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\dd{\Mat{q}}}(t_2)-H(t_2)\dd{t_2}\right)
--\left(\mathopen{\Mat{p}}(t_1)\cdot\mathopen{\dd{\Mat{q}}}(t_1)-H(t_1)\dd{t_1}\right)}
+\boxed{\mathopen{\dd{S}}\left(\mathopen{\Mat{q}}(t_1),\mathopen{\Mat{q}}(t_2),t_1,t_2\right)
+=\left(\mathopen{\Mat{p}}(t)\cdot\mathopen{\dd{\Mat{q}}}(t)-H(t)\dd{t}\right)_{t_1}^{t_2}}
 $$
 
-该式表明：右端表达式为全微分的轨道才有可能对应真实运动。
+该式表明：真实轨道必须使右端表达式为全微分。
 
 ### 微分与积分形式
 
-特别地，若取定初始状态（即 $\mathopen{\delta}\mathopen{\Mat{q}}(t_1)=0$）并省略 $t_2$ 的下标，则有
+特别地，若取定初始位置（即 $\mathopen{\delta}\mathopen{\Mat{q}}(t_1)=0$）并省略 $t_2$ 的下标，则有
 
 $$
 \dd{S}=\Mat{p}\cdot\dd{\Mat{q}}-H\dd{t}\implies
 \boxed{S=\int\left(\Mat{p}\cdot\dd{\Mat{q}}-H\dd{t}\right)}
 $$
 
-将 $\Mat{p},\Mat{q}$ 视为 $S$ 的独立变量，利用最小作用量原理 $\delta S=0$，可重新导出 Hamilton's 方程。
+将 $\Mat{p},\Mat{q}$ 视为 $S$ 的独立变量，利用最小作用量原理 $\delta S=0$，可重新导出 [Hamilton's 方程](#hamilton-eqn)。
 
 ### Maupertuis' 原理
 
-只考虑满足[能量守恒](#const-H) $ H(\Mat{p},\Mat{q})=E=\text{const} $ 的系统。
-若取定初始时刻 $t_0$ 及始末位置 $\mathopen{\Mat{q}}(t_0),\mathopen{\Mat{q}}(t)$，且允许终止时刻 $t$ 变化，则有
+只考虑满足[能量守恒](#const-H) $ H(\Mat{p},\Mat{q})=E $ 的系统。
+若取定初始时刻 $t_0$ 及始末位置 $\mathopen{\Mat{q}}(t_0),\mathopen{\Mat{q}}(t)$ 且允许终止时刻 $t$ 变化，则有
+
 $$
 \delta{S}=-H(\Mat{p},\Mat{q})\,\delta{t}=-E\,\delta{t}
 $$
@@ -254,7 +280,7 @@ $$
 另一方面，对作用量的 Hamiltonian 形式
 
 $$
-S=-E(t-t_0)+\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
+S=-(t-t_0)E+\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
 $$
 
 作变分，可得
@@ -263,7 +289,7 @@ $$
 \delta{S}=-E\,\delta{t}+\delta{S_0}\qquad S_0\coloneqq\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
 $$
 
-其中 $S_0$ 被称为“简约作用量”。消去相等的项，就得到“Maupertuis' 原理”
+其中 $S_0$ 被称为“简约作用量”。消去 $\delta{S}=-E\,\delta{t}$，就得到“Maupertuis' 原理”
 
 $$
 \delta{S_0}\equiv\boxed{\delta{\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}}=0}
@@ -275,7 +301,7 @@ $$
 2. 将上述 $\dd{t}$ 代入 $\Mat{p}=\partial L/\mathopen{\partial}\Mat{\dot{q}}$，将 $\Mat{p}$ 也表示成以 $\Mat{q},\dd{\Mat{q}}$ 为自变量的函数。
 3. 将上述 $\Mat{p}$ 代入 $\delta{S_0}=0$，即得 $\Mat{q},\dd{\Mat{q}}$ 所应满足的方程，此即“轨道方程”。
 
-例：对于典型系统
+【例】对于典型系统
 
 $$
 L=\tfrac12\Mat{\dot{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\Mat{\dot{q}}-U(\Mat{q})\qquad
@@ -297,6 +323,90 @@ $$
 $$
 
 ## 正则变换
+
+### 正则变换条件
+
+一般的变量替换
+
+$$
+\Mat{\tilde{q}}=\mathopen{\Mat{\tilde{q}}}(\Mat{q},\Mat{p},t)\qquad
+\Mat{\tilde{p}}=\mathopen{\Mat{\tilde{p}}}(\Mat{q},\Mat{p},t)
+$$
+
+不能保证新的运动方程仍具有正则形式，即
+
+$$
+\Mat{\dot{\tilde{q}}}=+\pdv{\tilde{H}}{\Mat{\tilde{p}}}\qquad\Mat{\dot{\tilde{p}}}=-\pdv{\tilde{H}}{\Mat{\tilde{q}}}
+$$
+
+但满足如下条件
+
+$$
+\boxed{(\exists F)\left(\dd{F}=\dd{S}-\dd{\tilde{S}}\right)}\qquad
+\begin{cases}
+\dd{S}=\Mat{p}\cdot\dd{\Mat{q}}-H\dd{t}\\
+\dd{\tilde{S}}=\Mat{\tilde{p}}\cdot\dd{\Mat{\tilde{q}}}-\tilde{H}\dd{t}
+\end{cases}
+$$
+
+的变换能够保持方程的正则性，因此被称为“正则变换”，其中 $F=F(\Mat{q},\Mat{p},\Mat{\tilde{q}},\Mat{\tilde{p}},t)$ 称为该变换的“生成函数”。
+这是因为，变换前后的作用量 $S,\tilde{S}$ 能分别导出 Hamilton's 方程，并且二者之差 $S-\tilde{S}=\left.F\right|_{t_1}^{t_2}$ 为不影响变分的常数。
+
+### 正则变换公式
+
+将正则变换条件
+
+$$
+\dd{F}
+=\Mat{p}\cdot\dd{\Mat{q}}
+-\Mat{\tilde{p}}\cdot\dd{\Mat{\tilde{q}}}
++(\tilde{H}-H)\dd{t}
+$$
+
+与全微分
+
+$$
+\dd{F}
+=\pdv{F}{\Mat{q}}\cdot\dd{\Mat{q}}
++\pdv{F}{\Mat{\tilde{q}}}\cdot\dd{\Mat{\tilde{q}}}
++\pdv{F}{t}\dd{t}
+$$
+
+比较系数，可得第一种正则变换公式：
+
+$$
+\boxed{\Mat{p}=\pdv{F}{\Mat{q}}\qquad
+\Mat{\tilde{p}}=-\pdv{F}{\Mat{\tilde{q}}}\qquad
+\tilde{H}-H=\pdv{F}{t}}
+$$
+
+其中生成函数 $F$ 只依赖于 $\Mat{q},\Mat{p},t$；若要获得只依赖于 $\Mat{q},\Mat{\tilde{p}},t$ 的生成函数，则需对正则变换条件作 Legendre's 变换：
+
+$$
+\dd{\varPhi}\coloneqq\dd{(F+\Mat{\tilde{p}}\cdot\Mat{\tilde{q}})}
+=\Mat{p}\cdot\dd{\Mat{q}}
++\Mat{\tilde{q}}\cdot\dd{\Mat{\tilde{p}}}
++(\tilde{H}-H)\dd{t}
+$$
+
+并与全微分
+
+$$
+\dd{\varPhi}
+=\pdv{\varPhi}{\Mat{q}}\cdot\dd{\Mat{q}}
++\pdv{\varPhi}{\Mat{\tilde{p}}}\cdot\dd{\Mat{\tilde{p}}}
++\pdv{\varPhi}{t}\dd{t}
+$$
+
+比较系数，由此得第二种正则变换公式：
+
+$$
+\boxed{\Mat{p}=\pdv{\varPhi}{\Mat{q}}\qquad
+\Mat{\tilde{q}}=\pdv{\varPhi}{\Mat{\tilde{p}}}\qquad
+\tilde{H}-H=\pdv{\varPhi}{t}}
+$$
+
+类似地，可得第三、第四种正则变换公式：
 
 ### Liouville's 定理
 
