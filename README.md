@@ -65,10 +65,10 @@ title: 首页
 ## [物理](./physics/README.md)
 
 - [理论力学](./physics/mechanics/README.md)
-- [电动力学](./physics/electromagnetism/README.md)
+- [电磁学与电动力学](./physics/electromagnetism/README.md)
 - [量子力学](./physics/quantum/README.md)
-- [热力学](./physics/heat/README.lyx)
-- [流体力学](./physics/fluid/README.md)
+- [热力学与统计物理](./physics/heat/README.lyx)
+- [流体力学（理论与计算）](./physics/fluid/README.md)
 
 ## [算法](./algorithms/README.md)
 
