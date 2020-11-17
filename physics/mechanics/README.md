@@ -6,9 +6,25 @@ title: 理论力学
 
 ## 实验事实
 
+### 惯性参考系
+
 ### Galileo's 相对性原理
 
+【Galileo's 变换】若惯性参考系 $K'$ 以速度 $\Vec{V}$ 相对于另一个惯性参考系 $K$ 运动，则同一质点在这两个参考系中的位置与时间满足如下关系
+
+$$
+\Vec{r}=\Vec{r}'+\Vec{V}t\qquad t=t'
+$$
+
+【Galileo's 相对性原理】力学方程在“Galileo's 变换”作用下具有不变性。
+
 ## 运动方程
+
+### 质点
+
+### 质点系
+
+### 刚体
 
 # Lagrangian 力学
 
@@ -50,14 +66,89 @@ $$
 \boxed{\dv{}{t}\pdv{L}{\Mat{\dot{q}}}=\pdv{L}{\Mat{q}}}
 $$
 
+【定理】若 $L_{*}(\underline{q},\underline{\dot{q}},t)$ 与 $L(\underline{q},\underline{\dot{q}},t)$ 只相差一个以 $\underline{q},t$ 为自变量的函数 $f(\underline{q},t)$ 关于 $t$ 的全导数，即 
+
+$$
+L_{*}(\underline{q},\underline{\dot{q}},t)=L(\underline{q},\underline{\dot{q}},t)+\dv{}{t}f(\underline{q},t)
+$$
+
+则它们给出相同的 Lagrange's 方程，从而在力学上完全等价。
+
+## $L$ 的具体形式
+
+### 自由质点
+
+$$
+L(\underline{q},\underline{\dot{q}},t)=L(v^{2})\qquad v^{2}\coloneqq\Vec{v}\vdot\Vec{v}
+$$
+
+$$
+\boxed{L(\Vec{v})=\frac{m}{2}v^{2}}
+$$
+
+### 封闭质点系
+
+$$
+L(\Vec{r}_{1},\dots,\Vec{r}_{n},\Vec{v}_{1},\dots,\Vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\Vec{v}_{i}^{2}-V(\Vec{r}_{1},\dots,\Vec{r}_{n})
+$$
+
+$$
+\boxed{L(\underline{q},\underline{\dot{q}},t)=\tfrac{1}{2}\underline{\dot{q}}\cdot\underline{A}(\underline{q})\cdot\underline{\dot{q}}-V(\underline{q})}
+$$
+
+### 外场的影响
+
+单个质点：
+
+$$
+m\dv{v}{t}=-\pdv{V}{\Vec{r}}\impliedby L=\frac{1}{2}mv^{2}-V(\Vec{r},t)
+$$
+
+质点系：
+
+$$
+L(\Vec{r}_{1},\dots,\Vec{r}_{n},\Vec{v}_{1},\dots,\Vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\Vec{v}_{i}^{2}-V(\Vec{r}_{1},\dots,\Vec{r}_{n},t)
+$$
 
 ## 对称性 $\Rightarrow$ 守恒律
 
 ### 时间均匀性 $\Rightarrow$ 能量守恒
 
+$$
+\dv{L(\underline{q},\underline{\dot{q}})}{t}=\pdv{L}{\underline{q}}\cdot\dv{\underline{q}}{t}+\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{\dot{q}}}{t}
+=\dv{}{t}\left(\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{q}}{t}\right)
+$$
+
+$$
+\boxed{E\coloneqq\pdv{L}{\underline{\dot{q}}}\cdot\underline{\dot{q}}-L=\text{const}}
+$$
+
 ### 空间均匀性 $\Rightarrow$ 动量守恒
 
+全空间的任意无穷小平移 $\delta\Vec{r}\eqqcolon\Vec{\epsilon}$ 不改变系统的力学行为，即
+
+$$
+0=\delta L=\sum_{i=1}^{n}\pdv{L}{\Vec{r}_{i}}\vdot\delta\Vec{r}_{i}=\Vec{\epsilon}\vdot\sum_{i=1}^{n}\pdv{L}{\Vec{r}_{i}}=\Vec{\epsilon}\vdot\dv{}{t}\sum_{i=1}^{n}\pdv{L}{\Vec{v}_{i}}
+$$
+
+$$
+\boxed{\Vec{p}\coloneqq\sum_{i=1}^{n}\Vec{p}_{i}\coloneqq\sum_{i=1}^{n}\pdv{L}{\Vec{v}_{i}}=\sum_{i=1}^{n}m_{i}\Vec{v}_{i}=\text{const}}
+$$
+
 ### 空间各向同性 $\Rightarrow$ 角动量守恒
+
+全空间的任意无穷小旋转 $\delta\Vec{\varphi}$ 不改变系统的力学行为，即
+
+$$
+\begin{aligned}0=\delta L & =\sum_{i=1}^{n}\pdv{L}{\Vec{r}_{i}}\vdot\delta\Vec{r}_{i}+\sum_{i=1}^{n}\pdv{L}{\Vec{v}_{i}}\vdot\delta\Vec{v}_{i}\\
+ & =\sum_{i=1}^{n}\dot{\Vec{p}}_{i}\vdot\left(\delta\Vec{\varphi}\cross\Vec{r}_{i}\right)+\sum_{i=1}^{n}\Vec{p}_{i}\vdot\left(\delta\Vec{\varphi}\cross\Vec{v}_{i}\right)\\
+ & =\delta\Vec{\varphi}\vdot\sum_{i=1}^{n}\dv{}{t}\left(\Vec{r}_{i}\cross\Vec{p}_{i}\right)\eqqcolon\delta\Vec{\varphi}\vdot\dv{}{t}\sum_{i=1}^{n}\Vec{L}_{i}
+\end{aligned}
+$$
+
+$$
+\boxed{\Vec{L}\coloneqq\sum_{i=1}^{n}\Vec{L}_{i}\coloneqq\sum_{i=1}^{n}\Vec{r}_{i}\cross\Vec{p}_{i}=\text{const}}
+$$
 
 # Hamiltonian 力学
 
@@ -140,58 +231,6 @@ $$
 $$
 
 即“$H$ 不显含时间”。
-
-## Poisson 括号
-
-### 定义
-
-给定两个依赖于 $(\Mat{p},\Mat{q})$ 的函数 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$，它们的“Poisson 括号”是指
-
-$$
-\boxed{\{f,g\}\coloneqq\pdv{f}{\Mat{p}}\cdot\pdv{g}{\Mat{q}}-\pdv{f}{\Mat{q}}\cdot\pdv{g}{\Mat{p}}}
-$$
-
-于是 $f(\Mat{p},\Mat{q})$ 关于 $t$ 的全导数可以被改写为
-
-$$
-\dv{f}{t}
-=\pdv{f}{t}+\pdv{f}{\Mat{p}}\cdot\Mat{\dot{p}}+\pdv{f}{\Mat{q}}\cdot\Mat{\dot{q}}
-=\pdv{f}{t}-\pdv{f}{\Mat{p}}\cdot\pdv{H}{\Mat{q}}+\pdv{f}{\Mat{q}}\cdot\pdv{H}{\Mat{p}}
-=\pdv{f}{t}+\{H,f\}
-$$
-
-⚠️ 某些文献将上述定义中的 $p,q$ 互换，所得结果与这里正好相差一个负号。这种差别不是实质性的，只要上下文保持一致即可。
-
-### 恒等式
-
-$$
-\{f,g\}=\{g,f\}\qquad\{f,1\}=0
-$$
-
-$$
-\{f_1+f_2,g\}=\{f_1,g\}+\{f_2,g\}\qquad\{f,g_1+g_2\}=\{f,g_1\}+\{f,g_2\}
-$$
-
-$$
-\{f_1f_2,g\}=f_1\{f_2,g\}+\{f_1,g\}f_2\qquad\{f,g_1g_2\}=g_1\{f,g_2\}+\{f,g_1\}g_2
-$$
-
-$$
-\{f,\{g,h\}\}+\{g,\{h,f\}\}+\{h,\{f,g\}\}=0
-$$
-
-$$
-\{f,q_i\}=\pdv{f}{p_i}\qquad\{p_i,f\}=\pdv{f}{q_i}\qquad
-\{q_i,q_k\}=0\qquad\{p_i,p_k\}=0\qquad\{p_i,q_k\}=\delta_{ik}
-$$
-
-### 运动积分
-
-【定理】若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
-
-$$
-\left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
-$$
 
 ## 作用量的 Hamiltonian 形式
 
@@ -349,7 +388,7 @@ $$
 \end{cases}
 $$
 
-的变换能够保持方程的正则性，因此被称为“正则变换”，其中 $F=F(\Mat{q},\Mat{p},\Mat{\tilde{q}},\Mat{\tilde{p}},t)$ 称为该变换的“生成函数”。
+的变换能够保持方程的正则性，因此该条件被称为“正则变换条件”，其中 $F=F(\Mat{q},\Mat{p},\Mat{\tilde{q}},\Mat{\tilde{p}},t)$ 被称为该变换的“生成函数”。
 这是因为，变换前后的作用量 $S,\tilde{S}$ 能分别导出 Hamilton's 方程，并且二者之差 $S-\tilde{S}=\left.F\right|_{t_1}^{t_2}$ 为不影响变分的常数。
 
 ### 正则变换公式
@@ -406,9 +445,97 @@ $$
 \tilde{H}-H=\pdv{\varPhi}{t}}
 $$
 
-类似地，可得第三、第四种正则变换公式：
+类似地，可得另外两种母函数及相应的正则变换公式：
+
+$$
+\dd{G}\coloneqq\dd{(F-\underline{p}\cdot\underline{q})}=-\underline{q}\cdot\dd{\underline{p}}-\underline{\tilde{p}}\cdot\dd{\underline{\tilde{q}}}+(\tilde{H}-H)\dd{t}
+$$
+
+$$
+\boxed{\underline{q}=-\pdv{G}{\underline{p}}\qquad\underline{\tilde{p}}=-\pdv{G}{\underline{\tilde{q}}}\qquad\tilde{H}-H=\pdv{G}{t}}
+$$
+
+$$
+\dd{\varPsi}\coloneqq\dd{(\varPhi-\underline{p}\cdot\underline{q})}=-\underline{q}\cdot\dd{\underline{p}}+\underline{\tilde{q}}\cdot\dd{\underline{\tilde{p}}}+(\tilde{H}-H)\dd{t}
+$$
+
+$$
+\boxed{\underline{q}=-\pdv{\varPsi}{\underline{p}}\qquad\underline{\tilde{q}}=\pdv{\varPsi}{\underline{\tilde{p}}}\qquad\tilde{H}-H=\pdv{\varPsi}{t}}
+$$
+
+
+### 正则共轭变量
 
 ### Liouville's 定理
 
+【引理】真实运动所引起的正则共轭变量 $\underline{q},\underline{p}$ 的变化，可以看作一系列正则变换累加的结果。
+
+【Liouville's 定理】相空间中任意点集的测度不随这些点的（满足力学定律的真实）运动而变化。
+
+## Poisson 括号
+
+### 定义
+
+给定两个依赖于 $(\Mat{p},\Mat{q})$ 的函数 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$，它们的“Poisson 括号”是指
+
+$$
+\boxed{\{f,g\}\coloneqq\pdv{f}{\Mat{p}}\cdot\pdv{g}{\Mat{q}}-\pdv{f}{\Mat{q}}\cdot\pdv{g}{\Mat{p}}}
+$$
+
+于是 $f(\Mat{p},\Mat{q})$ 关于 $t$ 的全导数可以被改写为
+
+$$
+\dv{f}{t}
+=\pdv{f}{t}+\pdv{f}{\Mat{p}}\cdot\Mat{\dot{p}}+\pdv{f}{\Mat{q}}\cdot\Mat{\dot{q}}
+=\pdv{f}{t}-\pdv{f}{\Mat{p}}\cdot\pdv{H}{\Mat{q}}+\pdv{f}{\Mat{q}}\cdot\pdv{H}{\Mat{p}}
+=\pdv{f}{t}+\{H,f\}
+$$
+
+⚠️ 某些文献将上述定义中的 $p,q$ 互换，所得结果与这里正好相差一个负号。这种差别不是实质性的，只要上下文保持一致即可。
+
+### 恒等式
+
+$$
+\{f,g\}=\{g,f\}\qquad\{f,1\}=0
+$$
+
+$$
+\{f_1+f_2,g\}=\{f_1,g\}+\{f_2,g\}\qquad\{f,g_1+g_2\}=\{f,g_1\}+\{f,g_2\}
+$$
+
+$$
+\{f_1f_2,g\}=f_1\{f_2,g\}+\{f_1,g\}f_2\qquad\{f,g_1g_2\}=g_1\{f,g_2\}+\{f,g_1\}g_2
+$$
+
+$$
+\{f,\{g,h\}\}+\{g,\{h,f\}\}+\{h,\{f,g\}\}=0
+$$
+
+$$
+\{f,q_i\}=\pdv{f}{p_i}\qquad\{p_i,f\}=\pdv{f}{q_i}\qquad
+\{q_i,q_k\}=0\qquad\{p_i,p_k\}=0\qquad\{p_i,q_k\}=\delta_{ik}
+$$
+
+### 运动积分
+
+【定理】若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
+
+$$
+\left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
+$$
+
+### 正则变换条件
+
+$$
+\{f,g\}_{\underline{p},\underline{q}}=\{f,g\}_{\underline{\tilde{p}},\underline{\tilde{q}}}
+$$
+
+$$
+\{\tilde{q}_{i},\tilde{q}_{k}\}_{\underline{p},\underline{q}}=0\qquad\{\tilde{p}_{i},\tilde{p}_{k}\}_{\underline{p},\underline{q}}=0\qquad\{\tilde{p}_{i},\tilde{q}_{k}\}_{\underline{p},\underline{q}}=\delta_{ik}
+$$
+
 ## Hamilton--Jacobi 方程
 
+$$
+\boxed{\frac{\partial S}{\partial t}+\mathopen{H}\left(\underline{q},\frac{\partial S}{\partial\underline{q}},t\right)=0}
+$$
