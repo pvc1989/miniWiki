@@ -1357,5 +1357,292 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+电磁场的能量
+\end_layout
+
+\begin_layout Standard
+John Poynting (1884) 从 Maxwell 方程组出发，导出了如下方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}+\divg\vec{S}+\vec{\jmath}\vdot\vec{E}=0
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+U(\vec{r},t)\coloneqq\frac{\varepsilon_{0}}{2}\vec{E}^{2}(\vec{r},t)+\frac{1}{2\mu_{0}}\vec{B}^{2}(\vec{r},t)\qquad\vec{S}(\vec{r},t)\coloneqq\frac{1}{\mu_{0}}\vec{E}(\vec{r},t)\cross\vec{B}(\vec{r},t)
+\]
+
+\end_inset
+
+下面分别解释这两个量的物理意义。
+\end_layout
+
+\begin_layout Description
+能量密度 可以验证：
+\begin_inset Formula $n$
+\end_inset
+
+ 个点电荷 
+\begin_inset Formula $(q_{i},\vec{r}_{i}),\dots,(q_{n},\vec{r}_{n})$
+\end_inset
+
+ 的总静电能为
+\begin_inset Formula 
+\[
+W=\frac{1}{2}\sum_{i=1}^{n}q_{i}\sum_{\begin{subarray}{c}
+k=1\\
+k\ne i
+\end{subarray}}^{n}\phi_{k}(\vec{r}_{i})
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi_{k}(\vec{r}_{i})$
+\end_inset
+
+ 为第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个点电荷在 
+\begin_inset Formula $\vec{r}_{i}$
+\end_inset
+
+ 处的静电势。更一般的，按 
+\begin_inset Formula $\rho(\vec{r})$
+\end_inset
+
+ 分布的电荷的总静电能为
+\begin_inset Formula 
+\[
+W=\frac{1}{2}\iiint_{\mathbb{R}^{3}(\vec{r})}\rho(\vec{r})\,\phi(\vec{r})
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\phi(\vec{r})$
+\end_inset
+
+ 为 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ 处的静电势。将 M-1 代入其中，可得
+\begin_inset Formula 
+\[
+W=\frac{1}{2}\iiint_{\mathbb{R}^{3}}\left(-\varepsilon_{0}\nabla^{2}\phi\right)\phi=-\frac{\varepsilon_{0}}{2}\iiint_{\mathbb{R}^{3}}\left(\divg((\grad\phi)\phi)-(\grad\phi)^{2}\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\iiint_{\mathbb{R}^{3}}\divg((\grad\phi)\phi)=\oiint_{\partial\mathbb{R}^{3}}\vec{\nu}\vdot((\grad\phi)\phi)=0\qquad\grad\phi=-\vec{E}
+\]
+
+\end_inset
+
+因此，静电能可简化为
+\begin_inset Formula 
+\[
+W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\frac{1}{2}\varepsilon_{0}\vec{E}^{2}$
+\end_inset
+
+ 被称为“静电场的能量密度”。
+\end_layout
+
+\begin_layout Description
+能流密度 若 
+\begin_inset Formula $\vec{\jmath}=\vec{0}$
+\end_inset
+
+，则有“能量的连续性方程”
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}+\divg\vec{S}=0
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\vec{S}$
+\end_inset
+
+ 的物理意义为“电磁场的能流密度”，名为“Poynting 矢量”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+电磁场的动量
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\pdv{(\varepsilon_{0}\vec{E}\cross\vec{B})}{t}+(\rho\vec{E}+\vec{\jmath}\cross\vec{B})=\begin{bmatrix}\mu_{0}^{-1} & \varepsilon_{0}\end{bmatrix}\begin{bmatrix}(\divg\vec{B})\vec{B}-\vec{B}\cross(\curl\vec{B})\\
+(\divg\vec{E})\vec{E}-\vec{E}\cross(\curl\vec{E})
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+含时的规范变换
+\end_layout
+
+\begin_layout Standard
+由于 
+\begin_inset Formula $\curl\vec{B}(\vec{r},t)=\vec{0}$
+\end_inset
+
+，故只需引入含时的矢量势 
+\begin_inset Formula $\vec{A}(\vec{r},t)$
+\end_inset
+
+，即
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{B}(\vec{r},t)=\curl\vec{A}(\vec{r},t)
+\]
+
+\end_inset
+
+代入 M-2，得
+\begin_inset Formula 
+\[
+\curl\vec{E}(\vec{r},t)=-\pdv{\vec{B}(\vec{r},t)}{t}=-\pdv{}{t}\curl\vec{A}(\vec{r},t)=-\curl\pdv{\vec{A}(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\vec{E}(\vec{r},t)=-\grad\phi(\vec{r},t)-\pdv{\vec{A}(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+规范变换
+\begin_inset Formula 
+\[
+\vec{A}'(\vec{r},t)=\vec{A}(\vec{r},t)+\grad\varLambda(\vec{r},t)\qquad\phi'(\vec{r},t)=\phi(\vec{r},t)-\pdv{\varLambda(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+不改变 
+\begin_inset Formula $\vec{E},\vec{B}$
+\end_inset
+
+，从而有可能简化计算。
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Coulomb's 规范]
+\end_layout
+
+\end_inset
+
+方程
+\begin_inset Formula 
+\[
+\nabla^{2}\varLambda(\vec{r},t)=-\divg\vec{A}(\vec{r},t)
+\]
+
+\end_inset
+
+的解可以使
+\begin_inset Formula 
+\[
+\divg\vec{A}'(\vec{r},t)=0\qquad\nabla^{2}\phi'(\vec{r},t)=-\frac{\rho(\vec{r},t)}{\varepsilon_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lorentz's 规范]
+\end_layout
+
+\end_inset
+
+方程
+\begin_inset Formula 
+\[
+\nabla^{2}\varLambda(\vec{r},t)-\mu_{0}\varepsilon_{0}\frac{\partial^{2}\varLambda(\vec{r},t)}{\partial t^{2}}=-\divg\vec{A}(\vec{r},t)-\mu_{0}\varepsilon_{0}\pdv{\phi(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+的解可以使
+\begin_inset Formula 
+\[
+\mu_{0}\varepsilon_{0}\pdv{\phi'(\vec{r},t)}{t}+\divg\vec{A}'(\vec{r},t)=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
