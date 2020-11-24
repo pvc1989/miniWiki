@@ -1,140 +1,142 @@
-# Design Patterns
+---
+title: Design Patterns
+---
 
-## Creational Patterns
+# Creational Patterns
 
-### Abstract Factory
+## [Abstract Factory](./abstract_factory/README.md)
 > Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
 
-[![](./abstract_factory/class.svg)](./abstract_factory/README.md)
+![](./abstract_factory/class.svg)
 
-### Builder
+## [Builder](./builder/README.md)
 > Separate the construction of a complex object from its representation so that the same construction process can create different representations.
 
-[![](./builder/class.svg)](./builder/README.md)
+![](./builder/class.svg)
 
-### Factory Method
+## [Factory Method](./factory_method/README.md)
 > Define an interface for creating an object, but let subclasses decide which class to instantiate.
 
-[![](./factory_method/class.svg)](./factory_method/README.md)
+![](./factory_method/class.svg)
 
-### Prototype
+## [Prototype](./prototype/README.md)
 > Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
 
-[![](./prototype/class.svg)](./prototype/README.md)
+![](./prototype/class.svg)
 
-### Singleton
+## [Singleton](./singleton/README.md)
 > Ensure a class only has one instance, and provide a global point of access to it.
 
-[![](./singleton/class.svg)](./singleton/README.md)
+![](./singleton/class.svg)
 
-## Structural Patterns
+# Structural Patterns
 
-### Adapter
+## [Adapter](./adapter/README.md)
 > Convert the interface of a class into another interface clients expect.
 
-[![](./adapter/class.svg)](./adapter/README.md)
+![](./adapter/class.svg)
 
-### Bridge
+## [Bridge](./bridge/README.md)
 > Decouple an abstraction from its implementation so that the two can vary independently.
 
-[![](./bridge/class.svg)](./bridge/README.md)
+![](./bridge/class.svg)
 
-### Composite
+## [Composite](./composite/README.md)
 > Compose objects into tree structures to represent part-whole hierarchies.
 > Composite lets clients treat individual objects and compositions of objects uniformly.
 
-[![](./composite/class.svg)](./composite/README.md)
+![](./composite/class.svg)
 
-### Decorator
+## [Decorator](./decorator/README.md)
 > Attach additional responsibilities to an object dynamically.
 > Decorators provide a flexible alternative to subclassing for extending functionality.
 
-[![](./decorator/class.svg)](./decorator/README.md)
+![](./decorator/class.svg)
 
-### Facade
+## [Facade](./facade/README.md)
 > Provide a unified interface to a set of interfaces in a subsystem.
 > Facade defines a higher-level interface that makes the subsystem easier to use.
 
-[![](./facade/class.svg)](./facade/README.md)
+![](./facade/class.svg)
 
-### Flyweight
+## [Flyweight](./flyweight/README.md)
 > Use sharing to support large numbers of fine-grained objects efficiently.
 
-[![](./flyweight/class.svg)](./flyweight/README.md)
+![](./flyweight/class.svg)
 
-### Proxy
+## [Proxy](./proxy/README.md)
 > Provide a surrogate or placeholder for another object to control access to it.
 
-[![](./proxy/class.svg)](./proxy/README.md)
+![](./proxy/class.svg)
 
-## Behavioral Patterns
+# Behavioral Patterns
 
-### Chain of Responsibility
+## [Chain of Responsibility](./chain_of_responsibility/README.md)
 > Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request.
 > Chain the receiving objects and pass the request along the chain until an object handles it.
 
-[![](./chain_of_responsibility/class.svg)](./chain_of_responsibility/README.md)
+![](./chain_of_responsibility/class.svg)
 
-### Command
+## [Command](./command/README.md)
 > Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
 
-[![](./command/class.svg)](./command/README.md)
+![](./command/class.svg)
 
-### Interpreter
+## [Interpreter](./interpreter/README.md)
 > Given a language, define a represention for its grammar along with an interpreter that uses the representation to interpret sentences in the language.
 
-[![](./interpreter/class.svg)](./interpreter/README.md)
+![](./interpreter/class.svg)
 
-### Iterator
+## [Iterator](./iterator/README.md)
 > Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.
 
-[![](./iterator/class.svg)](./iterator/README.md)
+![](./iterator/class.svg)
 
-### Mediator
+## [Mediator](./mediator/README.md)
 > Define an object that encapsulates how a set of objects interact.
 > Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.
 
-[![](./mediator/class.svg)](./mediator/README.md)
+![](./mediator/class.svg)
 
-### Memento
+## [Memento](./memento/README.md)
 > Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
 
-[![](./memento/class.svg)](./memento/README.md)
+![](./memento/class.svg)
 
-### Observer
+## [Observer](./observer/README.md)
 > Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
 
-[![](./observer/class.svg)](./observer/README.md)
+![](./observer/class.svg)
 
-### State
+## [State](./state/README.md)
 > Allow an object to alter its behavior when its internal state changes.
 > The object will appear to change its class.
 
-[![](./state/class.svg)](./state/README.md)
+![](./state/class.svg)
 
-### Strategy
+## [Strategy](./strategy/README.md)
 > Define a family of algorithms, encapsulate each one, and make them interchangeable.
 > Strategy lets the algorithm vary independently from clients that use it.
 
-[![](./strategy/class.svg)](./strategy/README.md)
+![](./strategy/class.svg)
 
-### Template Method
+## [Template Method](./template_method/README.md)
 > Define the skeleton of an algorithm in an operation, deferring some steps to subclasses.
 > Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
 
-[![](./template_method/class.svg)](./template_method/README.md)
+![](./template_method/class.svg)
 
-### Visitor
+## [Visitor](./visitor/README.md)
 > Represent an operation to be performed on the elements of an object structure.
 > Visitor lets you define a new operation without changing the classes of the elements on which it operates.
 
-[![](./visitor/class.svg)](./visitor/README.md)
+![](./visitor/class.svg)
 
-## Language Support
+# Language Support
 
-### Java
+## Java
 
-#### `implements` an `interface`
+### `implements` an `interface`
 
 ```java
 public interface Comparable<T> {
@@ -161,7 +163,7 @@ public class Point implements Comparable<Point> {
 }
 ```
 
-#### `extends` a `class`
+### `extends` a `class`
 
 所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
 
@@ -195,9 +197,9 @@ public class Point extends Object {
 }
 ```
 
-### C++
+## C++
 
-#### Inheritance
+### Inheritance
 
 ```c++
 #include <iostream>
@@ -226,7 +228,7 @@ int main() {
 }
 ```
 
-#### Inheritance + `template`
+### Inheritance + `template`
 
 ```cpp
 #include <iostream>
