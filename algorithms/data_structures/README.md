@@ -38,7 +38,7 @@ title: 数据结构与算法
 - [LeetCode](https://leetcode.com/): the world's leading online programming learning platform.
 - [PAT](https://www.patest.cn/): Programming Ability Test.
 
-# Computational Complexity
+# 复杂度
 
 ## Mathematical (Theoretical) Method
 
@@ -96,7 +96,7 @@ title: 数据结构与算法
   - Text: [Sect-6.6  Intractability](https://algs4.cs.princeton.edu/66intractability)
   - Video: [Part-2/Week-6  Intractability](https://www.coursera.org/learn/algorithms-part2/supplement/Nc2PX/lecture-slides)
 
-# Arrays & Vectors
+# 数组、向量
 
 ## Sorting
 
@@ -191,7 +191,7 @@ title: 数据结构与算法
 - MIT
   - Text: Sect-17.4  Dynamic tables
 
-# Lists, Stacks & Queues
+# 表、栈、队
 
 ## Linked Lists
 
@@ -259,7 +259,7 @@ title: 数据结构与算法
 - MIT
   - Text: Chap-20  van Emde Boas Trees
 
-# Hash Tables
+# 散列表
 
 - VisuAlgo
   - [Hash Table](https://visualgo.net/en/hashtable)
@@ -332,7 +332,7 @@ If you want to make `Key` a hashable type, then do the following:
 - MIT
   - Text: Sect-11.5  Perfect hashing
 
-# Trees
+# 树
 
 - MIT
   - Text: Sect-B.5  Trees
@@ -375,7 +375,7 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Range Trees
 
-# Graphs
+# 图
 
 - MIT
   - Text: Sect-B.4  Graphs
@@ -433,7 +433,7 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Maxflow--Mincut Theorem
 
-# Strings
+# 串
 
 ## String Implementations
 
