@@ -15,6 +15,9 @@ title: 数据结构与算法
   - [Algorithms, Part 1](https://www.coursera.org/learn/algorithms-part1)
   - [Algorithms, Part 2](https://www.coursera.org/learn/algorithms-part2)
   - [Analysis of Algorithms](https://www.coursera.org/learn/analysis-of-algorithms)
+- Libraries:
+  - [Java Algorithms and Clients](https://algs4.cs.princeton.edu/code/)
+  - [kevin-wayne/algs4](https://github.com/kevin-wayne/algs4) on GitHub
 
 ### MIT
 
@@ -265,6 +268,7 @@ title: 数据结构与算法
   - Video: [Part-1/Week-6  Hash Tables](https://www.coursera.org/learn/algorithms-part1/supplement/py6zN/lecture-slides) and [Part-1/Week-6  Symbol Table Applications](https://www.coursera.org/learn/algorithms-part1/supplement/eVEjz/lecture-slides)
 - MIT
   - Text: Chap-11  Hash Tables
+  - Video: [6.006/Lecture 8: Hashing with Chaining](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-8-hashing-with-chaining) and [6.006/Lecture 10: Open Addressing, Cryptographic Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-10-open-addressing-cryptographic-hashing) and [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing)
 
 ## Hash Functions
 
@@ -288,13 +292,15 @@ A good hash function should
     hash = (R * hash + key.charAt(i)) % M;
   ```
 
+### Multiplication Hashing
+
 ### Programming
 
-If you want to make `K` a hashable type, then do the following:
+If you want to make `Key` a hashable type, then do the following:
 
 - Java: implement a method called [`hashCode()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--), which returns a 32-bit `int`.
-- Python: implement a method called  [`__hash__()`](https://docs.python.org/3/reference/datamodel.html#object.__hash__), so that the [`hash()`](https://docs.python.org/3/library/functions.html?highlight=hash%20function#hash) built-in function can be called on `K`'s objects.
-- C++: specialize the [`std::hash`](https://en.cppreference.com/w/cpp/utility/hash) template for  `K`, so that `K` can be used as in `std::unordered_set<K>` or `std::unordered_map<K, V>`.
+- Python: implement a method called  [`__hash__()`](https://docs.python.org/3/reference/datamodel.html#object.__hash__), so that the [`hash()`](https://docs.python.org/3/library/functions.html?highlight=hash%20function#hash) built-in function can be called on `Key`'s objects.
+- C++: specialize the [`std::hash`](https://en.cppreference.com/w/cpp/utility/hash) template for  `Key`, so that `Key` can be used as in `std::unordered_set<Key>` or `std::unordered_map<Key, Value>`.
 
 ## Collision Resolution
 
