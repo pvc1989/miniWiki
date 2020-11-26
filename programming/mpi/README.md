@@ -24,55 +24,59 @@ title: Message Passing Interface (MPI)
 
 ### Spectral Partitioning
 
-- Graph Laplacian：$ \Mat{C}^{\mathsf{T}}\Mat{C}=\Mat{D}-\Mat{W} $
-- 质量弹簧系统：$ \Mat{M}\ket{\ddot{U}}+\Mat{K}\ket{U}=\ket{0} $
+- Graph Laplacian：$ \Mat{C}^{\mathsf{T}}\cdot\Mat{C}=\Mat{D}-\Mat{W} $
+- 质量弹簧系统：$ \Mat{M}\cdot\Mat{\ddot{U}}+\Mat{K}\cdot\Mat{U}=\Mat{0} $
 
 ### [METIS](https://github.com/pvcStillInGradSchool/METIS)
 
-⚠️ 为突出高亮效果，本节用 `size_t` 替换源代码中的 `idx_t`，后者是一种长度由预定义宏 `IDXTYPEWIDTH` 确定的整数类型。
+本节代码中的
+- `idx_t` 是一种长度由预定义宏 `IDXTYPEWIDTH` 确定的整数类型。
+- `real_t` 是一种长度由预定义宏 `REALTYPEWIDTH` 确定的浮点类型。
+
+⚠️ 使用时，应确保上述类型与业务代码中的相应类型保持一致。
 
 公共接口：
 
 ```c
 int METIS_PartMeshDual(
-    size_t *n_elems,
-    size_t *n_nodes,
-    size_t *range_of_each_elem,
-    size_t *nodes_in_each_elem,
-    size_t *cost_of_each_elem = NULL,  /* computational cost */
-    size_t *size_of_each_elem = NULL,  /* communication size */
-    size_t *n_common_nodes,
-    size_t *n_parts,
+    idx_t *n_elems,
+    idx_t *n_nodes,
+    idx_t *range_of_each_elem,
+    idx_t *nodes_in_each_elem,
+    idx_t *cost_of_each_elem = NULL,  /* computational cost */
+    idx_t *size_of_each_elem = NULL,  /* communication size */
+    idx_t *n_common_nodes,
+    idx_t *n_parts,
     real_t *weight_of_each_part = NULL,  /* sum must be 1.0 */
-    size_t *options = NULL,
-    size_t *objective_value,  /* edge cut or communication volume */
-    size_t *elem_parts,
-    size_t *node_parts
+    idx_t *options = NULL,
+    idx_t *objective_value,  /* edge cut or communication volume */
+    idx_t *elem_parts,
+    idx_t *node_parts
 );
 int METIS_MeshToDual(
-    size_t *n_elems,
-    size_t *n_nodes,
-    size_t *range_of_each_elem,
-    size_t *nodes_in_each_elem,
-    size_t *n_common_nodes,
-    size_t *index_base,  /* 0 or 1 */
-    size_t **range_of_each_dual_vertex,
-    size_t **neighbors_of_each_dual_vertex
+    idx_t *n_elems,
+    idx_t *n_nodes,
+    idx_t *range_of_each_elem,
+    idx_t *nodes_in_each_elem,
+    idx_t *n_common_nodes,
+    idx_t *index_base,  /* 0 or 1 */
+    idx_t **range_of_each_dual_vertex,
+    idx_t **neighbors_of_each_dual_vertex
 );
 int METIS_PartGraphKway(  // or METIS_PartGraphRecursive
-    size_t *n_nodes,
-    size_t *n_constraints,  /* number of balancing constraints, >= 1 */
-    size_t *range_of_each_node,
-    size_t *neighbors_of_each_node,
-    size_t *cost_of_each_node = NULL,  /* computational cost */
-    size_t *size_of_each_node = NULL,  /* communication size */
-    size_t *cost_of_each_edge = NULL,  /* weight of each edge */
-    size_t *n_parts,
+    idx_t *n_nodes,
+    idx_t *n_constraints,  /* number of balancing constraints, >= 1 */
+    idx_t *range_of_each_node,
+    idx_t *neighbors_of_each_node,
+    idx_t *cost_of_each_node = NULL,  /* computational cost */
+    idx_t *size_of_each_node = NULL,  /* communication size */
+    idx_t *cost_of_each_edge = NULL,  /* weight of each edge */
+    idx_t *n_parts,
     real_t *weight_of_each_part = NULL,  /* sum must be 1.0 for each constraint */
     real_t *unbalances = NULL,  /* unbalance tolerance, 1.001 for NULL */
-    size_t *options = NULL,
-    size_t *objective_value,  /* edge cut or communication volume */
-    size_t *parts
+    idx_t *options = NULL,
+    idx_t *objective_value,  /* edge cut or communication volume */
+    idx_t *parts
 );
 ```
 
@@ -80,33 +84,33 @@ int METIS_PartGraphKway(  // or METIS_PartGraphRecursive
 
 ```c++
 void CreateGraphDual(
-    size_t n_elems,
-    size_t n_nodes,
-    size_t *range_of_each_elem,
-    size_t *nodes_in_each_elem,
-    size_t n_common_nodes,
-    size_t **range_of_each_dual_vertex,
-    size_t **neighbors_of_each_dual_vertex
+    idx_t n_elems,
+    idx_t n_nodes,
+    idx_t *range_of_each_elem,
+    idx_t *nodes_in_each_elem,
+    idx_t n_common_nodes,
+    idx_t **range_of_each_dual_vertex,
+    idx_t **neighbors_of_each_dual_vertex
 );
-size_t FindCommonElements(
-    size_t i_curr_elem,
-    size_t n_nodes_in_curr_elem,
-    size_t *nodes_in_curr_elem,
-    size_t *range_of_each_node,
-    size_t *elems_in_each_node,
-    size_t *range_of_each_elem,
-    size_t n_common_nodes,
-    size_t *n_visits_of_each_elem,
-    size_t *neighbors_of_curr_elem) {
-  size_t n_neighbors = 0;
+idx_t FindCommonElements(
+    idx_t i_curr_elem,
+    idx_t n_nodes_in_curr_elem,
+    idx_t *nodes_in_curr_elem,
+    idx_t *range_of_each_node,
+    idx_t *elems_in_each_node,
+    idx_t *range_of_each_elem,
+    idx_t n_common_nodes,
+    idx_t *n_visits_of_each_elem,
+    idx_t *neighbors_of_curr_elem) {
+    idx_t n_neighbors = 0;
   /* find all elements that share at least one node with i_curr_elem */
-  for (size_t i_node_local = 0;
+  for (idx_t i_node_local = 0;
       i_node_local < n_nodes_in_curr_elem; i_node_local++) {
     // for each nodes in curr elem
-    size_t i_node_global = nodes_in_curr_elem[i_node_local];
-    size_t i_elem_begin = range_of_each_node[i_node_global];
-    size_t i_elem_end = range_of_each_node[i_node_global+1];
-    for (size_t i_elem_curr = i_elem_begin;
+    idx_t i_node_global = nodes_in_curr_elem[i_node_local];
+    idx_t i_elem_begin = range_of_each_node[i_node_global];
+    idx_t i_elem_end = range_of_each_node[i_node_global+1];
+    for (idx_t i_elem_curr = i_elem_begin;
         i_elem_curr < i_elem_end; i_elem_curr++) {
       // for each elems in curr node
       i_elem_global = elems_in_each_node[i_elem_curr];
@@ -123,12 +127,12 @@ size_t FindCommonElements(
     neighbors_of_curr_elem[n_neighbors++] = i_curr_elem;
   n_visits_of_each_elem[i_curr_elem] = 0;
   /* compact the list to contain only those with at least n_common_nodes nodes */
-  size_t n_real_neighbors = 0;
-  for (size_t i_neighbor_local = 0;
+    idx_t n_real_neighbors = 0;
+  for (idx_t i_neighbor_local = 0;
       i_neighbor_local < n_neighbors;
       i_neighbor_local++) {  // for each (possibly trivial) neighbor (elem)
-    size_t i_neighbor_global = neighbors_of_curr_elem[i_neighbor_local];
-    size_t n_visits_of_curr_elem = n_visits_of_each_elem[i_neighbor_global];
+    idx_t i_neighbor_global = neighbors_of_curr_elem[i_neighbor_local];
+    idx_t n_visits_of_curr_elem = n_visits_of_each_elem[i_neighbor_global];
     if (/* trivial case */n_visits_of_curr_elem >= n_common_nodes ||
         /* In case when (n_common_nodes >= n_nodes_in_curr_elem). */
         n_visits_of_curr_elem >= (n_nodes_in_curr_elem - 1) ||
