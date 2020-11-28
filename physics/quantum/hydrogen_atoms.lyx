@@ -108,15 +108,23 @@ theorems-chap
 氢原子
 \end_layout
 
+\begin_layout Subsection
+分离变量
+\end_layout
+
+\begin_layout Standard
+对氢原子系统的 Schrödinger 方程
+\end_layout
+
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ii\hbar\frac{\partial}{\partial t}\psi=\frac{-\hbar^{2}}{2M}\nabla^{2}\psi-\frac{e^{2}}{r}\psi
+\ii\hbar\frac{\partial}{\partial t}\psi(\vec{r},t)=\left(\frac{-\hbar^{2}}{2M}\nabla^{2}-\frac{e^{2}}{r}\right)\psi(\vec{r},t)
 \]
 
 \end_inset
 
-分离变量
+按坐标与时间分离变量：
 \begin_inset Formula 
 \[
 \psi(\vec{r},t)=\phi(\vec{r})\,f(t)
@@ -132,18 +140,50 @@ theorems-chap
 
 \end_inset
 
-在球坐标系中
+前者是简单的常微分方程，可通过直接积分求解。后者是 Hamiltonian 算符
 \begin_inset Formula 
 \[
-\nabla^{2}=\frac{1}{r^{2}}\left[\frac{\partial}{\partial r}\left(r^{2}\frac{\partial}{\partial r}\right)+\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\right]
+\hat{H}\coloneqq\frac{-\hbar^{2}}{2M}\nabla^{2}-\frac{e^{2}}{r}
 \]
 
 \end_inset
 
-球谐函数
+的本征方程，故其解可展开为该算符的本征函数。考虑到该问题具有球对称性，在球坐标系中对该方程进一步分离变量：
 \begin_inset Formula 
 \[
-\mathrm{Y}_{lm}(\theta,\varphi)=(-1)^{m}\sqrt{\frac{(2l+1)(l-m)!}{4\pi(l+m)!}}\mathrm{P}_{l}^{m}(\cos\theta)\exp(im\varphi)\qquad\begin{cases}
+\phi(\vec{r})=R(r)\,Y(\theta,\varphi)
+\]
+
+\end_inset
+
+得到
+\begin_inset Formula 
+\[
+\frac{-1}{Y}\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial Y}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}Y}{\partial\varphi^{2}}\right)=\frac{2M}{\hbar^{2}}\left(E+\frac{e^{2}}{r}\right)r^{2}+\frac{1}{R}\frac{\partial}{\partial r}\left(r^{2}\frac{\partial R}{\partial r}\right)
+\]
+
+\end_inset
+
+这里利用了 Laplacian 算符的球坐标形式：
+\begin_inset Formula 
+\[
+\nabla^{2}\phi(r,\theta,\varphi)=\frac{1}{r^{2}}\left[\frac{\partial}{\partial r}\left(r^{2}\frac{\partial\phi}{\partial r}\right)+\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial\phi}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}\phi}{\partial\varphi^{2}}\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+角向解：球谐函数
+\end_layout
+
+\begin_layout Standard
+在量子力学诞生以前，数学家已给出：“球谐函数”
+\begin_inset Formula 
+\[
+\mathrm{Y}_{lm}(\theta,\varphi)=(-1)^{m}\sqrt{\frac{2l+1}{4\pi}\cdot\frac{(l-m)!}{(l+m)!}}\mathrm{P}_{l}^{m}(\cos\theta)\exp(\ii m\varphi)\qquad\begin{cases}
 l=0,1,2,\dots\\
 m=0,1,\dots,\pm l
 \end{cases}
@@ -151,10 +191,32 @@ m=0,1,\dots,\pm l
 
 \end_inset
 
-满足
+是“角向本征方程”
 \begin_inset Formula 
 \[
-\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\right]\mathrm{Y}_{lm}(\theta,\varphi)=-l(l+1)\,\mathrm{Y}_{lm}(\theta,\varphi)
+\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\right)Y(\theta,\varphi)=-l(l+1)\,Y(\theta,\varphi)\qquad\begin{cases}
+\theta\in[0,\pi]\\
+\varphi\in[0,2\pi)
+\end{cases}
+\]
+
+\end_inset
+
+的正交归一化的本征函数，即
+\begin_inset Formula 
+\[
+\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\right)\mathrm{Y}_{lm}(\theta,\varphi)=-l(l+1)\,\mathrm{Y}_{lm}(\theta,\varphi)\qquad\begin{cases}
+l=0,1,2,\dots\\
+m=0,1,\dots,\pm l
+\end{cases}
+\]
+
+\end_inset
+
+且
+\begin_inset Formula 
+\[
+\langle\mathrm{Y}_{l'm'}\vert\mathrm{Y}_{lm}\rangle=\int_{0}^{\pi}\left(\int_{0}^{2\pi}\mathrm{Y}_{l'm'}^{*}\,\mathrm{Y}_{lm}\dd{\varphi}\right)\sin\theta\dd{\theta}=\updelta_{l'l}\,\updelta_{m'm}
 \]
 
 \end_inset
@@ -167,100 +229,91 @@ m=0,1,\dots,\pm l
 
 \end_inset
 
-即 
-\begin_inset Formula $\mathrm{Y}_{lm}$
+分别为“连带 Legendre 多项式”与“Legendre 多项式”，整数 
+\begin_inset Formula $l,m$
 \end_inset
 
- 是微分算符
+ 分别被称为“角向量子数”、“磁量子数”。
+\end_layout
+
+\begin_layout Subsection
+径向解 
+\begin_inset Formula $\to$
+\end_inset
+
+ 量子化条件
+\end_layout
+
+\begin_layout Standard
+引入
 \begin_inset Formula 
 \[
-\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\qquad\begin{cases}
-\theta\in[0,\pi]\\
-\varphi\in[0,2\pi)
-\end{cases}
+R(r)=\frac{X_{l}(r)}{r}\implies\frac{1}{r^{2}}\frac{\mathrm{d}}{\mathrm{d}r}\left(r^{2}\frac{\mathrm{d}R(r)}{\mathrm{d}r}\right)=\frac{1}{r}\frac{\mathrm{d}^{2}X_{l}(r)}{\mathrm{d}r^{2}}
 \]
 
 \end_inset
 
-的本征函数（特征向量）
+可将“径向方程”
 \begin_inset Formula 
 \[
-\langle\mathrm{Y}_{l'm'}\vert\mathrm{Y}_{lm}\rangle=\int_{0}^{\pi}\sin\theta\dd{\theta}\int_{0}^{2\pi}\dd{\varphi}\mathrm{Y}_{l'm'}^{*}\,\mathrm{Y}_{lm}=\delta_{l'l}\delta_{m'm}
+\frac{2M}{\hbar^{2}}\left(E+\frac{e^{2}}{r}\right)r^{2}+\frac{1}{R}\frac{\mathrm{d}}{\mathrm{d}r}\left(r^{2}\frac{\mathrm{d}R(r)}{\mathrm{d}r}\right)=(l+1)l
 \]
 
 \end_inset
 
-进一步分离变量
+简化为
 \begin_inset Formula 
 \[
-\phi(\vec{r})=R_{l}(r)\,\mathrm{Y}_{lm}(\theta,\varphi)
+\left(\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}+\frac{2M}{\hbar^{2}}\left(E+\frac{e^{2}}{r}\right)-\frac{(l+1)l}{r^{2}}\right)X_{l}(r)=0
 \]
 
 \end_inset
 
-得到
-\begin_inset Formula 
-\[
-E\,R_{l}(r)=\left[-\frac{\hbar^{2}}{2M}\frac{1}{r^{2}}\frac{\mathrm{d}}{\mathrm{d}r}\left(r^{2}\frac{\mathrm{d}}{\mathrm{d}r}\right)+\frac{\hbar^{2}}{2M}\frac{l(l+1)}{r^{2}}-\frac{e^{2}}{r}\right]R_{l}(r)
-\]
-
-\end_inset
-
-为简化第一个求导，引入
-\begin_inset Formula 
-\[
-R_{l}(r)=\frac{X_{l}(r)}{r}\implies\frac{1}{r^{2}}\frac{\mathrm{d}}{\mathrm{d}r}\left(r^{2}\frac{\mathrm{d}}{\mathrm{d}r}\right)R_{l}(r)=\frac{1}{r}\frac{\mathrm{d}^{2}X_{l}(r)}{\mathrm{d}r^{2}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left[\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}+\frac{2M}{\hbar^{2}}\left(E+\frac{e^{2}}{r}\right)-\frac{l(l+1)}{r^{2}}\right]X_{l}(r)=0
-\]
-
-\end_inset
-
-奇点渐进分析：
+下面作奇点渐进分析：
 \end_layout
 
 \begin_layout Itemize
+在 
 \begin_inset Formula $r\to\infty$
 \end_inset
 
- 时，
+ 处，方程近似为
 \begin_inset Formula 
 \[
-\left[\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}+\frac{2ME}{\hbar^{2}}\right]X_{l}(r)=0\qquad E<0
+\left(\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}+\frac{2ME}{\hbar^{2}}\right)X_{l}(r)=0\qquad E<0
 \]
 
 \end_inset
 
-
+它的两个线性独立解分别为
 \begin_inset Formula 
 \[
-X_{l}^{+}(r)=\exp(+\sqrt{-2ME/\hbar^{2}}r)\qquad X_{l}^{-}(r)=\exp(-\sqrt{-2ME/\hbar^{2}}r)
+X_{l}^{+}(r)=\exp(+Kr)\qquad X_{l}^{-}(r)=\exp(-Kr)\qquad K\coloneqq\sqrt{-2ME/\hbar^{2}}
 \]
 
 \end_inset
 
-舍去前者。
+前者在 
+\begin_inset Formula $r\to\infty$
+\end_inset
+
+ 处发散，故舍去。
 \end_layout
 
 \begin_layout Itemize
+在 
 \begin_inset Formula $r\to0$
 \end_inset
 
- 时，
+ 处，方程近似为
 \begin_inset Formula 
 \[
-\left[\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}-\frac{l(l+1)}{r^{2}}\right]X_{l}(r)=0\qquad E<0
+\left(\frac{\mathrm{d}^{2}}{\mathrm{d}r^{2}}-\frac{l(l+1)}{r^{2}}\right)X_{l}(r)=0\qquad E<0
 \]
 
 \end_inset
 
-
+它的两个线性独立解分别为
 \begin_inset Formula 
 \[
 X_{l}^{+}(r)=r^{l+1}\qquad X_{l}^{-}(r)=r^{-l}
@@ -268,37 +321,53 @@ X_{l}^{+}(r)=r^{l+1}\qquad X_{l}^{-}(r)=r^{-l}
 
 \end_inset
 
-舍去后者。
+后者在 
+\begin_inset Formula $r\to0$
+\end_inset
+
+ 处发散，故舍去。
 \end_layout
 
 \begin_layout Standard
-将最终的解写成上述两个渐进解与待定因子 
+将径向解 
+\begin_inset Formula $X_{l}(r)$
+\end_inset
+
+ 写成上述两个渐进解与待定因子 
 \begin_inset Formula $u_{l}(r)$
 \end_inset
 
- 的乘积：
+ 的乘积，即
 \begin_inset Formula 
 \[
-X_{l}(r)=u_{l}(r)\,r^{l+1}\exp(-\sqrt{-2ME/\hbar^{2}}r)
+X_{l}(r)=u_{l}(r)\,r^{l+1}\exp(-Kr)
 \]
 
 \end_inset
 
-合流超几何方程
+并引入变量 
+\begin_inset Formula $\xi\coloneqq2Kr$
+\end_inset
+
+，“则径向方程”可化为“合流超几何方程”
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left(r\frac{\mathrm{d}^{2}}{\mathrm{d}\xi^{2}}+\left(c-\xi\right)\frac{\mathrm{d}}{\mathrm{d}\xi}-a\right)u_{l}(\xi)=0\qquad a=(l+1)-\frac{Me^{2}/\hbar^{2}}{\sqrt{-2ME/\hbar^{2}}}\qquad c=2(l+1)
+\left(\xi\frac{\mathrm{d}^{2}}{\mathrm{d}\xi^{2}}+\left(c-\xi\right)\frac{\mathrm{d}}{\mathrm{d}\xi}-a\right)u_{l}(\xi)=0\qquad a=(l+1)-\frac{Me^{2}}{K\hbar^{2}}\qquad c=2(l+1)
 \]
 
 \end_inset
 
-它的解
+它在 
+\begin_inset Formula $\xi=0$
+\end_inset
+
+ 处有界的解（至多相差一个常数因子）为“合流超几何函数”
 \begin_inset Formula 
 \[
-F(a,c,\xi)=\sum_{n=0}^{\infty}\frac{a(a+1)\cdots(a+n)}{c(c+1)\cdots(c+n)}\frac{\xi^{n}}{n!}
+\mathrm{F}(a,c,\xi)=\sum_{n=0}^{\infty}\frac{a(a+1)\cdots(a+n)}{c(c+1)\cdots(c+n)}\frac{\xi^{n}}{n!}
 \]
 
 \end_inset
@@ -307,47 +376,127 @@ F(a,c,\xi)=\sum_{n=0}^{\infty}\frac{a(a+1)\cdots(a+n)}{c(c+1)\cdots(c+n)}\frac{\
 \begin_inset Formula $\xi\to\infty$
 \end_inset
 
- 时
+ 处，该函数与相应的径向解一般而言是发散的，即
 \begin_inset Formula 
 \[
-X_{l}(r)\to\exp(2\sqrt{-2ME/\hbar^{2}}r)\,r^{l+1}\exp(-\sqrt{-2ME/\hbar^{2}}r)=r^{l+1}\exp(\sqrt{-2ME/\hbar^{2}}r)\to\infty
+X_{l}(r)\to\exp(2Kr)\,r^{l+1}\exp(-kr)=r^{l+1}\exp(Kr)\to\infty
 \]
 
 \end_inset
 
-若 
+为避免这种发散，需将 
+\begin_inset Formula $\mathrm{F}(a,c,\xi)$
+\end_inset
+
+ 截断为多项式，为此应确保 
+\begin_inset Formula $\exists n_{r}\in\mathbb{N}$
+\end_inset
+
+ 使得 
 \begin_inset Formula $a+n_{r}=0$
 \end_inset
 
-，则 
-\begin_inset Formula $F(a,c,\xi)$
-\end_inset
-
- 截断为多项式，从而避免发散。为此
+，即
 \begin_inset Formula 
 \[
-(l+1)-\frac{Me^{2}/\hbar^{2}}{\sqrt{-2ME/\hbar^{2}}}+n_{r}=0\qquad n_{r}=0,1,2,\dots
+(l+1)-\frac{Me^{2}}{K\hbar^{2}}+n_{r}=0\qquad n_{r}=0,1,2,\dots
 \]
 
 \end_inset
 
-或
+或等价的
 \begin_inset Formula 
 \[
-\frac{Me^{2}/\hbar^{2}}{\sqrt{-2ME/\hbar^{2}}}=l+1+n_{r}\equiv n\qquad n=0,1,2,\dots
+\frac{Me^{2}}{K\hbar^{2}}=l+1+n_{r}\eqqcolon n\qquad n=1,2,\dots
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $n_{r},n$
+\end_inset
 
+ 分别被称为“径向量子数”、“主量子数”。将 
+\begin_inset Formula $K\coloneqq\sqrt{-2ME/\hbar^{2}}$
+\end_inset
+
+ 代入，可解出“能级”
 \begin_inset Formula 
 \[
-E=\frac{Me^{4}}{-2n^{2}\hbar^{2}}=\frac{2\pi^{2}Me^{4}}{-n^{2}h^{2}}\qquad n=0,1,2,\dots
+\boxed{E(n)=\frac{2\pi^{2}Me^{4}}{-n^{2}h^{2}}\qquad n=1,2,\dots}
 \]
 
 \end_inset
 
+这与 Bohr 给出的结果完全一致。
+\end_layout
 
+\begin_layout Subsection
+能级简并
+\end_layout
+
+\begin_layout Standard
+对于给定的主量子数 
+\begin_inset Formula $n\in\mathbb{N}_{+}$
+\end_inset
+
+，角量子数 
+\begin_inset Formula $l$
+\end_inset
+
+ 可取 
+\begin_inset Formula $0,1,2,\dots,n-1$
+\end_inset
+
+，相应的磁量子数 
+\begin_inset Formula $m$
+\end_inset
+
+ 可取 
+\begin_inset Formula $0,\pm1,\pm2,\dots,\pm l$
+\end_inset
+
+，故对于能级 
+\begin_inset Formula $E_{n}$
+\end_inset
+
+，线性独立的波函数共有 
+\begin_inset Formula $N_{n}$
+\end_inset
+
+ 个，其中
+\begin_inset Formula 
+\[
+N_{n}=\sum_{l=0}^{n-1}(2l+1)=n^{2}
+\]
+
+\end_inset
+
+这种现象被称为能级的“简并 (degeneration)”，可以用数学语言描述如下：能量算符 
+\begin_inset Formula $\hat{H}$
+\end_inset
+
+ 的本征值 
+\begin_inset Formula $E_{n}$
+\end_inset
+
+ 拥有一个 
+\begin_inset Formula $n^{2}$
+\end_inset
+
+-维的特征子空间，该子空间是由满足能量本征方程
+\begin_inset Formula 
+\[
+\hat{H}\,\phi_{n}(\vec{x})=E_{n}\,\phi_{n}(\vec{x})\qquad n=1,2,\dots
+\]
+
+\end_inset
+
+的本征函数 
+\begin_inset Formula $\phi_{n}(\vec{x})$
+\end_inset
+
+ 所张成的线性空间。
 \end_layout
 
 \begin_layout Section
