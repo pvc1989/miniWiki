@@ -101,7 +101,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-量子态
+用波函数描述量子态
 \end_layout
 
 \begin_layout Section
@@ -183,7 +183,7 @@ De Broglie's 物质波
  的单个“自由粒子”的状态可以由“平面波”
 \begin_inset Formula 
 \begin{equation}
-\psi(\vec{x},t)=A\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}\label{eq:量子态：平面波}
+\psi(\vec{x},t)=A\,\ee^{\ii\omega t-\ii\vec{k}\vdot\vec{x}}\label{eq:量子态：平面波}
 \end{equation}
 
 \end_inset
@@ -243,7 +243,67 @@ E=\hbar\omega\qquad\vec{p}=\hbar\vec{k}
 \end_layout
 
 \begin_layout Section
-波函数
+几率振幅
+\end_layout
+
+\begin_layout Subsection
+Schrödinger 方程
+\end_layout
+
+\begin_layout Standard
+Erwin Schrödinger (1927) 从平面波 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:量子态：平面波"
+
+\end_inset
+
+ 这一特例出发，导出了如下“Schrödinger 方程”：
+\begin_inset Formula 
+\begin{equation}
+\ii\hbar\pdv{}{t}\psi(\vec{x},t)=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V\right)\psi(\vec{x},t)\label{eq:量子态：Schrodinger 方程}
+\end{equation}
+
+\end_inset
+
+满足此方程的波函数 
+\begin_inset Formula $\psi(\vec{x},t)$
+\end_inset
+
+ 描述了单个粒子的一种“许可状态”。
+\end_layout
+
+\begin_layout Remark
+尽管 Schrödinger 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:量子态：Schrodinger 方程"
+
+\end_inset
+
+ 在历史上是从平面波 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:量子态：平面波"
+
+\end_inset
+
+ 推导出来的，但这种“推导 (induction)”在逻辑上并不严格，而是依赖于很多物理直觉。如果把量子力学（非相对性理论）视为一种纯数学理论，那么
+ Schrödinger 方程 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:量子态：Schrodinger 方程"
+
+\end_inset
+
+ 应当被视为该理论的一条“公理 (axiom)”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -264,7 +324,7 @@ E=\hbar\omega\qquad\vec{p}=\hbar\vec{k}
 \end_inset
 
  处的模平方，即 
-\begin_inset Formula $\abs{\psi(\vec{x},t)}^{2}$
+\begin_inset Formula $\vert\psi(\vec{x},t)\vert^{2}$
 \end_inset
 
 ，正比于 
@@ -286,7 +346,7 @@ E=\hbar\omega\qquad\vec{p}=\hbar\vec{k}
  所描述的那个粒子不发生湮灭，则“该粒子位于全空间”是一个“必然事件”：
 \begin_inset Formula 
 \[
-\Pr(\vec{x}\in\mathbb{R}^{3}(\vec{x}))=\int_{\mathbb{R}^{3}(\vec{x})}\abs{\psi(\vec{x},t)}^{2}=1
+\Pr(\vec{x}\in\mathbb{R}^{3}(\vec{x}))=\int_{\mathbb{R}^{3}(\vec{x})}\vert\psi(\vec{x},t)\vert^{2}=1
 \]
 
 \end_inset
@@ -302,7 +362,7 @@ noprefix "false"
 \end_inset
 
 ，此时 
-\begin_inset Formula $\abs{\psi(\vec{x},t)}^{2}$
+\begin_inset Formula $\vert\psi(\vec{x},t)\vert^{2}$
 \end_inset
 
  应理解为相对概率密度。
@@ -329,7 +389,7 @@ noprefix "false"
 
 \begin_layout Itemize
 它的模平方 
-\begin_inset Formula $\abs{\psi(\vec{x}_{1},\dots,\vec{x}_{n},t)}^{2}$
+\begin_inset Formula $\vert\psi(\vec{x}_{1},\dots,\vec{x}_{n},t)\vert^{2}$
 \end_inset
 
  表示 
@@ -351,7 +411,7 @@ noprefix "false"
 归一化条件为
 \begin_inset Formula 
 \[
-\Pr(i=1,\dots,n:\vec{x}_{i}\in\mathbb{R}^{3}(\vec{x}_{i}))=\int_{\prod_{i=1}^{n}\mathbb{R}^{3}(\vec{x}_{i})}\abs{\psi(\vec{x}_{1},\dots,\vec{x}_{n},t)}^{2}=1
+\Pr(i=1,\dots,n:\vec{x}_{i}\in\mathbb{R}^{3}(\vec{x}_{i}))=\int_{\prod_{i=1}^{n}\mathbb{R}^{3}(\vec{x}_{i})}\vert\psi(\vec{x}_{1},\dots,\vec{x}_{n},t)\vert^{2}=1
 \]
 
 \end_inset
@@ -367,30 +427,30 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-波包
-\end_layout
-
-\begin_layout Subsection
-Schrödinger 方程
+几率守恒
 \end_layout
 
 \begin_layout Standard
-波函数描述方式在经典物理学中早已屡见不鲜：
+几率在全空间守恒：
 \end_layout
 
 \begin_layout Itemize
-在连续介质力学中，密度 
-\begin_inset Formula $\rho(\vec{x},t)$
+以 
+\begin_inset Formula $\psi^{*}(\vec{x},t)$
 \end_inset
 
- 被用来描述机械波。当振幅很小时，标量函数 
-\begin_inset Formula $\rho$
-\end_inset
-
- 应满足“微扰波动方程”：
+ 左乘 Schrödinger 方程
 \begin_inset Formula 
 \[
-\pdv[2]{\rho}{t}=c^{2}\laplacian\rho
+\ii\hbar\frac{\partial}{\partial t}\psi=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V\right)\psi
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\ii\hbar\psi^{*}\frac{\partial}{\partial t}\psi=\frac{-\hbar^{2}}{2m}\psi^{*}\nabla^{2}\psi+\psi^{*}V\psi
 \]
 
 \end_inset
@@ -399,81 +459,55 @@ Schrödinger 方程
 \end_layout
 
 \begin_layout Itemize
-在电磁学中，电场强度 
-\begin_inset Formula $\vec{E}(\vec{x},t)$
-\end_inset
-
-、磁场强度 
-\begin_inset Formula $\vec{H}(\vec{x},t)$
-\end_inset
-
- 被用来描述电磁波。在真空中，矢量函数 
-\begin_inset Formula $\vec{E}$
-\end_inset
-
-、
-\begin_inset Formula $\vec{H}$
-\end_inset
-
- 应满足“Maxwell 方程组”：
+对 Schrödinger 方程取复共轭，得
 \begin_inset Formula 
 \[
-\divg\vec{E}=0\qquad\divg\vec{H}=0\qquad\curl\vec{E}=-\frac{1}{\mu_{0}}\pdv{\vec{H}}{t}\qquad\curl\vec{H}=\epsilon_{0}\pdv{\vec{E}}{t}
+-\ii\hbar\frac{\partial}{\partial t}\psi^{*}=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V\right)\psi^{*}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-这些经典波函数都满足某种微分方程，那么量子波函数应当满足什么样的微分方程？Erwin Schrödinger (1927) 首先回答了这一问题。他从平面波
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:量子态：平面波"
-
-\end_inset
-
- 这一特例出发，导出了如下“Schrödinger 方程”：
-\begin_inset Formula 
-\begin{equation}
-\ii\hbar\pdv{\psi}{t}=\frac{-\hbar^{2}}{2m}\laplacian\psi+V\psi\label{eq:量子态：Schrodinger 方程}
-\end{equation}
-
-\end_inset
-
-满足此方程的波函数 
+再以 
 \begin_inset Formula $\psi(\vec{x},t)$
 \end_inset
 
- 描述了单个粒子的一种“许可状态”。
+ 左乘之，得
+\begin_inset Formula 
+\[
+-\ii\hbar\psi\frac{\partial}{\partial t}\psi^{*}=\frac{-\hbar^{2}}{2m}\psi\nabla^{2}\psi^{*}+\psi V\psi^{*}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Remark
-尽管 Schrödinger 方程 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:量子态：Schrodinger 方程"
+\begin_layout Itemize
+两式相减得
+\begin_inset Formula 
+\[
+\ii\hbar\frac{\partial}{\partial t}(\psi^{*}\psi)=\frac{-\hbar^{2}}{2m}(\psi^{*}\nabla^{2}\psi-\psi\nabla^{2}\psi^{*})=\frac{-\hbar^{2}}{2m}\grad(\psi^{*}\grad\psi-\psi\grad\psi^{*})
+\]
 
 \end_inset
 
- 在历史上的确是从平面波 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:量子态：平面波"
+定义
+\begin_inset Formula 
+\[
+\rho\coloneqq\psi^{*}\psi\equiv\vert\psi\vert^{2}\qquad\vec{\jmath}\coloneqq\frac{-\ii\hbar}{2m}(\psi^{*}\grad\psi-\psi\grad\psi^{*})
+\]
 
 \end_inset
 
- 推导出来的，但这种“推导 (induction)”在逻辑上并不严格，而是依赖于很多物理直觉。如果把量子力学（非相对性理论）视为一种纯数学理论，那么
- Schrödinger 方程 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:量子态：Schrodinger 方程"
+从而有“连续性方程”
+\begin_inset Formula 
+\[
+\frac{\partial\rho}{\partial t}+\divg\vec{\jmath}=0
+\]
 
 \end_inset
 
- 应当被视为该理论的一条“公理 (axiom)”。
+
 \end_layout
 
 \begin_layout Standard
@@ -549,8 +583,8 @@ status open
 一般而言，概率密度不满足叠加原理，而是遵循以下法则：
 \begin_inset Formula 
 \[
-\begin{aligned}\abs{C_{1}\psi_{1}+C_{2}\psi_{2}}^{2} & =\Conj{(C_{1}\psi_{1}+C_{2}\psi_{2})}(C_{1}\psi_{1}+C_{2}\psi_{2})\\
- & =\underbrace{\Conj{(C_{1}\psi_{1})}(C_{1}\psi_{1})}_{\rho_{1}}+\underbrace{\Conj{(C_{2}\psi_{2})}(C_{2}\psi_{2})}_{\rho_{1}}+\underbrace{\Conj{(C_{1}\psi_{1})}(C_{2}\psi_{2})+\Conj{(C_{2}\psi_{2})}(C_{1}\psi_{1})}_{\rho_{1,2}}
+\begin{aligned}\vert C_{1}\psi_{1}+C_{2}\psi_{2}\vert^{2} & =(C_{1}\psi_{1}+C_{2}\psi_{2})^{*}\,(C_{1}\psi_{1}+C_{2}\psi_{2})\\
+ & =\underbrace{(C_{1}\psi_{1})^{*}\,(C_{1}\psi_{1})}_{\rho_{1}}+\underbrace{(C_{2}\psi_{2})^{*}\,(C_{2}\psi_{2})}_{\rho_{1}}+\underbrace{(C_{1}\psi_{1})^{*}\,(C_{2}\psi_{2})+(C_{2}\psi_{2})^{*}\,(C_{1}\psi_{1})}_{\rho_{1,2}}
 \end{aligned}
 \]
 
@@ -584,14 +618,14 @@ Hilbert 空间
 \end_inset
 
  上的线性空间 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
 ：
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
  中的每一个状态 
@@ -599,11 +633,11 @@ Hilbert 空间
 \end_inset
 
  都是一个矢量，记作 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
 ，称为“态矢量 (state vector)”。目前只需将 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  理解为波函数 
@@ -615,42 +649,42 @@ Hilbert 空间
 
 \begin_layout Itemize
 若存在 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
  中的一组线性无关的状态 
-\begin_inset Formula $\left\{ \ket{\psi_{\alpha}}\right\} _{\alpha\in A}$
+\begin_inset Formula $\left\{ \vert\psi_{\alpha}\rangle\right\} _{\alpha\in A}$
 \end_inset
 
 ，使得 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
  中的任何一个矢量 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  都可以表示成它们的线性组合，即
 \begin_inset Formula 
 \begin{equation}
-\ket{\psi}=\begin{cases}
-\sum_{\alpha\in A}C_{\alpha}\ket{\psi_{\alpha}} & A\sim\mathbb{N}\\
-\int_{A}C_{\alpha}\ket{\psi_{\alpha}}\dd{\alpha} & A\sim\mathbb{R}
+\vert\psi\rangle=\begin{cases}
+\sum_{\alpha\in A}C_{\alpha}\mathinner{\vert\psi_{\alpha}\rangle} & A\sim\mathbb{N}\\
+\int_{A}C_{\alpha}\mathinner{\vert\psi_{\alpha}\rangle}\dd{\alpha} & A\sim\mathbb{R}
 \end{cases}\label{eq:量子态：线性展开}
 \end{equation}
 
 \end_inset
 
 则称 
-\begin_inset Formula $\left\{ \ket{\psi_{\alpha}}\right\} _{\alpha\in A}$
+\begin_inset Formula $\left\{ \vert\psi_{\alpha}\rangle\right\} _{\alpha\in A}$
 \end_inset
 
  为 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
  的一组“基底 (basis)”，其中每一个 
-\begin_inset Formula $\ket{\psi_{\alpha}}$
+\begin_inset Formula $\vert\psi_{\alpha}\rangle$
 \end_inset
 
  称为一个“基矢量 (basis vector)”。一般而言，指标集 
@@ -658,7 +692,7 @@ Hilbert 空间
 \end_inset
 
  含有无穷多个成员，因此 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $X$
 \end_inset
 
  通常是无穷维的。
@@ -680,11 +714,11 @@ reference "eq:量子态：线性展开"
 \end_inset
 
 ，一个很自然的疑问便是：基矢量 
-\begin_inset Formula $\ket{\psi_{\alpha}}$
+\begin_inset Formula $\vert\psi_{\alpha}\rangle$
 \end_inset
 
  在矢量 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  中占多大比重？为了回答这一问题，需要引入以下概念。
@@ -791,7 +825,7 @@ status open
 \end_inset
 
  为态矢量 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  的“坐标表象 (coordinate representation)”。
@@ -801,7 +835,7 @@ status open
 引入“内积 (inner product)”
 \begin_inset Formula 
 \[
-\ip{u}{v}\coloneqq\int_{-\infty}^{+\infty}\Conj{u(x)}v(x)\dd{x}
+\langle u\vert v\rangle\coloneqq\int_{-\infty}^{+\infty}u^{*}(x)\,v(x)\dd{x}
 \]
 
 \end_inset
@@ -811,15 +845,15 @@ status open
 \end_inset
 
  可以理解为矢量 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  在基矢量 
-\begin_inset Formula $\ket{\psi_{\alpha}}$
+\begin_inset Formula $\vert\psi_{\alpha}\rangle$
 \end_inset
 
  上的“投影 (projection)”，故可记作 
-\begin_inset Formula $\ip{\psi_{\alpha}}{\psi}$
+\begin_inset Formula $\langle\psi_{\alpha}\vert\psi\rangle$
 \end_inset
 
 。
@@ -837,7 +871,7 @@ status open
  一一对应，故可引入简化记号
 \begin_inset Formula 
 \[
-\ket{\alpha}\coloneqq\ket{\psi_{\alpha}}\qquad\bra{\alpha}\coloneqq\bra{\psi_{\alpha}}
+\vert\alpha\rangle\coloneqq\vert\psi_{\alpha}\rangle\qquad\langle\alpha\vert\coloneqq\langle\psi_{\alpha}\vert
 \]
 
 \end_inset
@@ -845,7 +879,7 @@ status open
 从而有
 \begin_inset Formula 
 \[
-\psi(\alpha)=\ip{\psi_{\alpha}}{\psi}=\ip{\alpha}{\psi}\qquad\updelta(x-\alpha)=\psi_{\alpha}(x)=\ip{x}{\psi_{\alpha}}=\ip{x}{\alpha}
+\psi(\alpha)=\langle\psi_{\alpha}\vert\psi\rangle=\langle\alpha\vert\psi\rangle\qquad\updelta(x-\alpha)=\psi_{\alpha}(x)=\langle x\vert\psi_{\alpha}\rangle=\langle x\vert\alpha\rangle
 \]
 
 \end_inset
@@ -864,7 +898,7 @@ reference "eq:量子态：一维驻波：坐标分解"
  改写为
 \begin_inset Formula 
 \[
-\ip{x}{\psi}=\int_{-\infty}^{+\infty}\ip{\alpha}{\psi}\ip{x}{\alpha}\dd{\alpha}=\bra{x}\left(\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}\right)\ket{\psi}
+\langle x\vert\psi\rangle=\int_{-\infty}^{+\infty}\langle\alpha\vert\psi\rangle\langle x\vert\alpha\rangle\dd{\alpha}=\langle\alpha\vert\left(\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}\right)\vert\psi\rangle
 \]
 
 \end_inset
@@ -935,7 +969,7 @@ reference "sec:Fourier：变换"
 \end_inset
 
  可以被看作同一个对象 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  的两种几乎等价的“表象 (representation)”。
@@ -947,22 +981,22 @@ reference "sec:Fourier：变换"
 
 \begin_layout Itemize
 所谓“对象”在量子力学中就是“态矢量”。于是可以称 
-\begin_inset Formula $\psi(x)=\ip{x}{\psi}$
+\begin_inset Formula $\psi(x)=\langle x\vert\psi\rangle$
 \end_inset
 
  为态矢量 
-\begin_inset Formula $\ket{\psi}$
+\begin_inset Formula $\vert\psi\rangle$
 \end_inset
 
  的“坐标表象”，而称 
-\begin_inset Formula $\tilde{\psi}(k)=\ip{k}{\psi}$
+\begin_inset Formula $\tilde{\psi}(k)=\langle k\vert\psi\rangle$
 \end_inset
 
- 为与之对应地“波数表象”。利用 Dirac 记号，上述“Fourier 变换对”可改写为
+ 为与之对应地“波数表象”。利用 Dirac 记号，上述“Fourier 变换对”可改写
 \begin_inset Formula 
 \[
-\begin{gathered}\tilde{\psi}(k)=\ip{k}{\psi}=\int_{\mathbb{R}(x)}\ip{k}{x}\ip{x}{\psi}\qquad\psi(x)=\ip{x}{\psi}=\int_{\mathbb{R}(k)}\ip{x}{k}\ip{k}{\psi}\\
-\ip{k}{x}\coloneqq(2\pi)^{-1/2}\exp(-\ii kx)\qquad\ip{x}{k}\coloneqq(2\pi)^{-1/2}\exp(+\ii kx)
+\begin{gathered}\tilde{\psi}(k)=\langle k\vert\psi\rangle=\int_{\mathbb{R}(x)}\langle k\vert x\rangle\langle x\vert\psi\rangle\qquad\psi(x)=\langle x\vert\psi\rangle=\int_{\mathbb{R}(k)}\langle x\vert k\rangle\langle k\vert\psi\rangle\\
+\langle k\vert x\rangle\coloneqq(2\pi)^{-1/2}\exp(-\ii kx)\qquad\langle x\vert k\rangle\coloneqq(2\pi)^{-1/2}\exp(+\ii kx)
 \end{gathered}
 \]
 
@@ -979,8 +1013,8 @@ reference "sec:Fourier：变换"
  代入“Fourier 变换对”得到：
 \begin_inset Formula 
 \[
-\begin{gathered}\tilde{\psi}(\vec{p})=\ip{\vec{p}}{\psi}=\int_{\mathbb{R}^{n}(\vec{x})}\ip{\vec{p}}{\vec{x}}\ip{\vec{x}}{\psi}\qquad\psi(\vec{x})=\ip{\vec{x}}{\psi}=\int_{\mathbb{R}^{n}(\vec{p})}\ip{\vec{x}}{\vec{p}}\ip{\vec{p}}{\psi}\\
-\ip{\vec{p}}{\vec{x}}\coloneqq(2\pi\hbar)^{-n/2}\exp(-(\ii/\hbar)\,\vec{p}\vdot\vec{x})\qquad\ip{\vec{x}}{\vec{p}}\coloneqq(2\pi\hbar)^{-n/2}\exp(+(\ii/\hbar)\,\vec{p}\vdot\vec{x})
+\begin{gathered}\tilde{\psi}(\vec{p})=\langle\vec{p}\vert\psi\rangle=\int_{\mathbb{R}^{n}(\vec{x})}\langle\vec{p}\vert\vec{x}\rangle\langle\vec{x}\vert\psi\rangle\qquad\psi(\vec{x})=\langle\vec{x}\vert\psi\rangle=\int_{\mathbb{R}^{n}(\vec{p})}\langle\vec{x}\vert\vec{p}\rangle\langle\vec{p}\vert\psi\rangle\\
+\langle\vec{p}\vert\vec{x}\rangle\coloneqq(2\pi\hbar)^{-n/2}\exp(-(\ii/\hbar)\,\vec{p}\vdot\vec{x})\qquad\langle\vec{x}\vert\vec{p}\rangle\coloneqq(2\pi\hbar)^{-n/2}\exp(+(\ii/\hbar)\,\vec{p}\vdot\vec{x})
 \end{gathered}
 \]
 
@@ -995,15 +1029,15 @@ reference "sec:Fourier：变换"
 \end_inset
 
  的对称性 
-\begin_inset Formula $\ip{\vec{p}}{\vec{x}}=\Conj{\ip{\vec{x}}{\vec{p}}}$
+\begin_inset Formula $\langle\vec{p}\vert\vec{x}\rangle=\langle\vec{x}\vert\vec{p}\rangle^{*}$
 \end_inset
 
 ，在 
-\begin_inset Formula $\ip{\vec{p}}{\vec{x}}$
+\begin_inset Formula $\langle\vec{p}\vert\vec{x}\rangle$
 \end_inset
 
  与 
-\begin_inset Formula $\ip{\vec{x}}{\vec{p}}$
+\begin_inset Formula $\langle\vec{x}\vert\vec{p}\rangle$
 \end_inset
 
  之间重新分配了系数。
