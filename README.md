@@ -18,7 +18,7 @@ title: 首页
 
 - 在任意路径下创建本仓库的副本。
 - 编译 LyX 文档（生成 PDF 文件）：
-  1. 安装 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启 [中文支持](./documenting/latex/README.md#LyX-中文支持) 及 [代码高亮](./documenting/latex/README.md#LyX-代码高亮)。
+  1. 安装最新版的 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启 [中文支持](./documenting/latex/README.md#LyX-中文支持) 及 [代码高亮](./documenting/latex/README.md#LyX-代码高亮)。
   1. 安装 [STIX](https://github.com/stipub/stixfonts) 字体。
   1. 如果要编译除 [顶层 `README.lyx`](./README.lyx) 以外的其他 LyX 或 TeX 文档，则需在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的 ***符号链接 (symbolic link)***：
     

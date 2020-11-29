@@ -165,7 +165,7 @@ public class Point implements Comparable<Point> {
 
 ### `extends` a `class`
 
-所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的 <子类::subclass> (或 <派生类::derived classs>).
+所有用 `class` 定义的类都是 [`java.lang.Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html) 的“子类 (subclass)”或“派生类 (derived classs)”。
 
 ```java
 public class Object {
