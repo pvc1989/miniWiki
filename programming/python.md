@@ -54,7 +54,7 @@ print(1 + 1 == 3)  # False
 
 ### [`set`, `frozenset` --- 集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 
-`set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
+`set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
 
 ```python
 a = {i*2 for i in range(9)}
@@ -167,7 +167,7 @@ print(b)  # [[1, 2], [3, 0], [5, 6]]
 print(c)  # [[1, 2], [3, 0], [5, 6]]
 ```
 
-`range` 只提供容器的借口，并不需要实际存储所有数据。因此下面的代码段实际只消耗了十几个字节的内存：
+`range` 只提供容器的接口，并不需要实际存储所有数据。因此下面的代码段实际只消耗了十几个字节的内存：
 
 ```python
 for i in range(1000000):
