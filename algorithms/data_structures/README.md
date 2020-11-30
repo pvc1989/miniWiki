@@ -2,9 +2,9 @@
 title: 数据结构与算法
 ---
 
-# 学习资源
+# Resources
 
-## 教程
+## Courses
 
 ### Princeton
 
@@ -27,18 +27,18 @@ title: 数据结构与算法
   - [Introduction to Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/) taught by *Prof. Erik Demaine* and *Prof. Srini Devadas* in Fall 2011.
   - [Design and Analysis of Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/) taught by *Prof. Erik Demaine* and *Prof. Srini Devadas* and *Prof. Nancy Lynch* in Spring 2015.
 
-## 网站
+## Websites
 
-### 学习
+### Study
 
 - [VisuAlgo](https://visualgo.net/en): visualising data structures and algorithms through animation.
 
-### 刷题
+### Practice
 
 - [LeetCode](https://leetcode.com/): the world's leading online programming learning platform.
 - [PAT](https://www.patest.cn/): Programming Ability Test.
 
-# 复杂度
+# Computational Complexity
 
 ## Mathematical (Theoretical) Method
 
@@ -96,7 +96,7 @@ title: 数据结构与算法
   - Text: [Sect-6.6  Intractability](https://algs4.cs.princeton.edu/66intractability)
   - Video: [Part-2/Week-6  Intractability](https://www.coursera.org/learn/algorithms-part2/supplement/Nc2PX/lecture-slides)
 
-# 数组、向量
+# Arrays & Vectors
 
 ## Sorting
 
@@ -190,8 +190,9 @@ title: 数据结构与算法
   - Video: [Part-1/Week-2  Resizing Arrays](https://www.coursera.org/learn/algorithms-part1/lecture/WTFO7/resizing-arrays)
 - MIT
   - Text: Sect-17.4  Dynamic tables
+  - Video: [6.006/Lecture 9: Table Doubling, <del>Karp-Rabin</del>](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-9-table-doubling-karp-rabin)
 
-# 表、栈、队
+# Lists, Stacks & Queues
 
 ## Linked Lists
 
@@ -259,7 +260,7 @@ title: 数据结构与算法
 - MIT
   - Text: Chap-20  van Emde Boas Trees
 
-# 散列表
+# Hash Tables
 
 - VisuAlgo
   - [Hash Table](https://visualgo.net/en/hashtable)
@@ -282,9 +283,9 @@ A good hash function should
 
 ### Modular Hashing
 
-- `int`s: choose a prime `M` close to the table size and use `(key % M)` as index.
-- `float`s: use modular hashing on `key`'s binary representation.
-- `string`s: choose a small prime `R` (e.g. `31`) and do modular hashing repeatedly, i.e.
+- `int`: choose a prime `M` close to the table size and use `(key % M)` as index.
+- `float`: use modular hashing on `key`'s binary representation.
+- `string`: choose a small prime `R` (e.g. `31`) and do modular hashing repeatedly, i.e.
   
   ```java
   int hash = 0;
@@ -293,6 +294,12 @@ A good hash function should
   ```
 
 ### Multiplication Hashing
+
+Suppose the `key` is a `w`-bit integer, the hash value could be obtained by the following steps:
+
+1. Choose an integer `s` randomly from `[0, 1 << w)`.
+2. Multiply the `key` by `s` to get a `2w`-bit integer, whose value is `(high << w + low)`.
+3. Use the value of `low >> (w - p)`, i.e. the integer represented by the highest `p` bits of the (unsigned) `w`-bit integer `low`, as the hash value of `key`.
 
 ### Programming
 
@@ -306,6 +313,10 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Seperate Chaining
 
+- MIT
+  - Text: Sect-11.2 Hash tables
+  - Video: [6.006/Lecture 8: Hashing with Chaining](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-8-hashing-with-chaining)
+
 - Structure: build a linked list for each array index.
 - Searching: *hash to find the list* that could contain the key, then *sequentially search through that list* for the key.
 - Performance: in a separate-chaining hash table with $M$ lists and $N$ keys,
@@ -314,25 +325,31 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Open Addressing
 
+- MIT
+  - Text: Sect-11.4  Open addressing
+  - Video:  [6.006/Lecture 10: Open Addressing, Cryptographic Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-10-open-addressing-cryptographic-hashing)
+
 - Structure: use an array of size $M$, which is larger than $N$ --- the number of keys to be inserted.
 - Searching: when there is a collision, do any of the following:
-  - Linear Probing: check the next entry in the table (by incrementing the index) until search hit.
-  - Double Probing:
+  - Linear Probing:
+    - $h(k, i) = (h_1(k) + i) \mod M$
+    - i.e. check the next entry in the table (by incrementing the index) until search hit.
+  - Double Hashing:
+    - $h(k, i) = (h_1(k) + i \cdot h_2(k)) \mod M$
+    - The value $h_2(k)$ must be *relatively prime* to the hash-table size $M$ for the entire hash table to be searched. A convenient way to ensure this condition is
+      - to let $M=2^m$ for some integer $m$, and
+      - to design $h_2$ to be an odd-valued function.
 - Performance: the average number of probes is
   - $\frac12\left(1 + (1 - N/M)^{-1}\right)$ for search hits.
   - $\frac12\left(1 +(1 - N/M)^{-2}\right)$ for search misses or inserts.
 
-## Universal Hashing
+## Universal & Perfect Hashing
 
 - MIT
-  - Text: Sect-11.3.3  Universal hashing
+  - Text: Sect-11.3.3  Universal hashing and Sect-11.5  Perfect hashing
+  - Video: [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing)
 
-## Perfect Hashing
-
-- MIT
-  - Text: Sect-11.5  Perfect hashing
-
-# 树
+# Trees
 
 - MIT
   - Text: Sect-B.5  Trees
@@ -375,7 +392,7 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Range Trees
 
-# 图
+# Graphs
 
 - MIT
   - Text: Sect-B.4  Graphs
@@ -433,7 +450,7 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Maxflow--Mincut Theorem
 
-# 串
+# Strings
 
 ## String Implementations
 
@@ -494,6 +511,9 @@ If you want to make `Key` a hashable type, then do the following:
 ### Boyer--More
 
 ### Rabin--Karp
+
+- MIT
+  - Video: [6.006/Lecture 9: <del>Table Doubling</del>, Karp-Rabin](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-9-table-doubling-karp-rabin)
 
 ## Regular Expressions
 
