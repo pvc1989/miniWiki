@@ -54,7 +54,7 @@ print(1 + 1 == 3)  # False
 
 ### [`set`, `frozenset` --- 集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 
-`set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
+`set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
 
 ```python
 a = {i*2 for i in range(9)}
