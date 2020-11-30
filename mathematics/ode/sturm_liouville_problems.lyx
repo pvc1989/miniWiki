@@ -101,69 +101,23 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-Sturm–Liouville 问题
+特征函数展开法
 \end_layout
 
 \begin_layout Section
-自伴随算符
+一般的自伴随算子
 \end_layout
 
 \begin_layout Subsection
-抽象的自伴随算符
+符号及名称约定
 \end_layout
 
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[伴随算符]
-\end_layout
-
+\begin_layout Claim*
+本章出现的“向量空间”默认定义在复数域 
+\begin_inset Formula $\mathbb{C}$
 \end_inset
 
-对于内积空间 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 上的算符 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
- 和 
-\begin_inset Formula $\hat{B}$
-\end_inset
-
-，如果它们满足
-\begin_inset Formula 
-\[
-\ip*{u}{\hat{A}v}=\ip*{\hat{B}u}{v}\quad\forall\ket{u},\ket{v}\in V
-\]
-
-\end_inset
-
-或等价的
-\begin_inset Formula 
-\[
-\mel{u}{\hat{A}}{v}=\Conj{\mel{v}{\hat{B}}{u}}\quad\forall\ket{u},\ket{v}\in V
-\]
-
-\end_inset
-
-则称它们互为
-\emph on
-伴随
-\emph default
- (adjoint) 算符，记作 
-\begin_inset Formula $\hat{A}^{\dagger}=\hat{B}$
-\end_inset
-
-，
-\begin_inset Formula $\hat{B}^{\dagger}=\hat{A}$
-\end_inset
-
-。
+ 上。
 \end_layout
 
 \begin_layout Standard
@@ -173,16 +127,228 @@ status open
 
 \end_layout
 
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[向量]
+\end_layout
+
+\end_inset
+
+本章用 
+\begin_inset Formula $\vert v\rangle$
+\end_inset
+
+ 表示名为 
+\begin_inset Formula $v$
+\end_inset
+
+ 的“向量 (vector)”，用 
+\begin_inset Formula $\langle v\vert$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\vert v\rangle$
+\end_inset
+
+ 的“共轭转置 (conjugate transpose)”，并定义 
+\begin_inset Formula $\langle v\vert$
+\end_inset
+
+ 的共轭转置为 
+\begin_inset Formula $\vert v\rangle$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\langle v\vert\coloneqq\vert v\rangle^{\dagger}\qquad\langle v\vert^{\dagger}\coloneqq\vert v\rangle
+\]
+
+\end_inset
+
+为强调这种对应关系，称 
+\begin_inset Formula $\langle v\vert$
+\end_inset
+
+ 为“左矢 (bra)”，称 
+\begin_inset Formula $\vert v\rangle$
+\end_inset
+
+ 为“右矢 (ket)”。
+\end_layout
+
 \begin_layout Standard
-对于任意算符 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[算子]
+\end_layout
+
+\end_inset
+
+本章用 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
-，显然有 
-\begin_inset Formula $(\hat{A}^{\dagger})^{\dagger}\equiv\hat{A}$
+ 表示名为 
+\begin_inset Formula $A$
 \end_inset
 
-。
+ 的“算子 (operator)”，用 
+\begin_inset Formula $\hat{A}\vert v\rangle$
+\end_inset
+
+ 表示“算子 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+ 作用于右矢 
+\begin_inset Formula $\vert v\rangle$
+\end_inset
+
+”，并将所得的右矢用 
+\begin_inset Formula $\vert\hat{A}v\rangle$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[内积]
+\end_layout
+
+\end_inset
+
+本章用 
+\begin_inset Formula $\langle u\vert v\rangle$
+\end_inset
+
+ 表示一对（有序）向量 
+\begin_inset Formula $\vert u\rangle,\vert v\rangle$
+\end_inset
+
+ 的“内积 (inner product)”，并且（有时）将 
+\begin_inset Formula $\langle u\vert\hat{A}v\rangle$
+\end_inset
+
+ 用更对称的 
+\begin_inset Formula $\langle u\vert\hat{A}\vert v\rangle$
+\end_inset
+
+ 来表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数]
+\end_layout
+
+\end_inset
+
+本章用 
+\begin_inset Formula $f\colon A\to B$
+\end_inset
+
+ 表示名为 
+\begin_inset Formula $f$
+\end_inset
+
+ 的函数，用 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ 或 
+\begin_inset Formula $\langle x\vert f\rangle$
+\end_inset
+
+ 表示此函数在 
+\begin_inset Formula $x\in A$
+\end_inset
+
+ 处的取值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+伴随与自伴随条件
+\end_layout
+
+\begin_layout Standard
+根据内积的“共轭对称性”，显然有
+\begin_inset Formula 
+\[
+\langle u\vert v\rangle=(\langle v\vert u\rangle)^{*}\eqqcolon\langle v\vert u\rangle^{*}\qquad\langle u\vert\hat{A}\vert v\rangle=\langle u\vert\hat{A}v\rangle=\langle\hat{A}v\vert u\rangle{}^{*}
+\]
+
+\end_inset
+
+但一般而言
+\begin_inset Formula 
+\[
+\langle u\vert\hat{A}v\rangle=\langle\hat{A}v\vert u\rangle{}^{*}\ne\langle v\vert\hat{A}u\rangle{}^{*}=\langle\hat{A}u\vert v\rangle
+\]
+
+\end_inset
+
+为了让 
+\begin_inset Formula $\langle u\vert\hat{A}\vert v\rangle$
+\end_inset
+
+ 对左矢和右矢具有对称性，即使得
+\begin_inset Formula 
+\[
+\langle\hat{A}u\vert v\rangle=\langle u\vert\hat{A}\vert v\rangle=\langle u\vert\hat{A}v\rangle
+\]
+
+\end_inset
+
+需令 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+ 满足某些条件。
 \end_layout
 
 \begin_layout Definition
@@ -191,24 +357,32 @@ status open
 
 \begin_layout Plain Layout
 
-[自伴随算符]
+[伴随算子]
 \end_layout
 
 \end_inset
 
-如果算符 
-\begin_inset Formula $\hat{A}$
+若算子 
+\begin_inset Formula $\hat{A},\hat{B}$
 \end_inset
 
- 的伴随算符就是它自身，即 
-\begin_inset Formula $\hat{A}^{\dagger}=\hat{A}$
+ 满足
+\begin_inset Formula 
+\[
+\langle u\vert\hat{A}v\rangle=\langle\hat{B}u\vert v\rangle\qquad\forall(\vert u\rangle,\vert v\rangle)\in V\times V
+\]
+
 \end_inset
 
-，则称它为
-\emph on
-自伴随
-\emph default
- (self-adjoint) 算符。
+则称它们互为“伴随 (adjoint)”算子，用 
+\begin_inset Formula $\hat{A}^{\dagger}=\hat{B}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\hat{B}^{\dagger}=\hat{A}$
+\end_inset
+
+ 表示。
 \end_layout
 
 \begin_layout Standard
@@ -219,11 +393,66 @@ status open
 \end_layout
 
 \begin_layout Remark*
-伴随和自伴随的概念总是与一定的内积定义绑定在一起的。改变内积的定义，可能使（在原有内积定义下）自伴随的算符变为（在新的内积定义下）非自伴随的，反之亦然。
+对于任意算子 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+，显然有 
+\begin_inset Formula $(\hat{A}^{\dagger})^{\dagger}\equiv\hat{A}$
+\end_inset
+
+ 恒成立。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[自伴随算子]
+\end_layout
+
+\end_inset
+
+若算子 
+\begin_inset Formula $\hat{A}$
+\end_inset
+
+ 是它自身的伴随算子，即 
+\begin_inset Formula $\hat{A}^{\dagger}=\hat{A}$
+\end_inset
+
+，则称它为“自伴随 (self-adjoint)”算子。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+“伴随”与“自伴随”总是与一定的“内积”绑定在一起的。改变内积的定义，可能使（在原内积定义下）自伴随的算子变为（在新内积定义下）非自伴随的，反之亦然。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-抽象的特征值问题
+特征值问题
 \end_layout
 
 \begin_layout Definition
@@ -242,26 +471,26 @@ status open
 \end_inset
 
  上的）向量空间 
-\begin_inset Formula $\mathcal{V}$
+\begin_inset Formula $V$
 \end_inset
 
- 上的算符 
+ 上的算子 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
-，如果有
+，若有
 \begin_inset Formula 
 \[
-\hat{A}\ket{g}=\lambda\ket{g}\qquad\lambda\in\mathbb{C}\qquad\ket{g}\in\mathcal{V}
+\hat{A}\vert g\rangle=\lambda\vert g\rangle\qquad\lambda\in\mathbb{C}\qquad\vert g\rangle\in V
 \]
 
 \end_inset
 
-则称：
+则称
 \end_layout
 
-\begin_layout Definition
-(1) 
+\begin_deeper
+\begin_layout Itemize
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -269,43 +498,63 @@ status open
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的一个
-\emph on
-特征值
-\emph default
- (eigenvalue)。
+ 的一个“特征值 (eigenvalue)”。
 \end_layout
 
-\begin_layout Definition
-(2) 
-\begin_inset Formula $\ket{g}$
+\begin_layout Itemize
+\begin_inset Formula $\vert g\rangle$
 \end_inset
 
  为 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的对应于 
+ 的一个属于特征值 
 \begin_inset Formula $\lambda$
 \end_inset
 
- 的
-\emph on
-特征向量
-\emph default
- (eigenvector)。
+ 的“特征向量 (eigenvector)”。
 \end_layout
 
-\begin_layout Definition
-(3) “寻找 
+\begin_layout Itemize
+\begin_inset Formula $\mathopen{\mathrm{span}}\left\{ \vert g\rangle:\hat{A}\vert g\rangle=\lambda\vert g\rangle\right\} $
+\end_inset
+
+ 为属于 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的“特征子空间 (eigen-subspace)”。
+\end_layout
+
+\begin_layout Itemize
+“寻找 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的所有特征值及与之对应的特征向量”为
-\emph on
-特征值问题
-\emph default
- (eigenvalue problem)。
+ 的所有特征值、特征向量、特征子空间”为“特征值问题 (eigenvalue problem)”。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+中文译法]
+\end_layout
+
+\end_inset
+
+通常，vector, operator, eigen- 在数学文献中分别被译作“向量”“算子”“特征~”，而在物理文献分别被译作“矢量”“算符”“本征~”。
 \end_layout
 
 \begin_layout Standard
@@ -318,129 +567,115 @@ status open
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:自伴随算符的特征值问题"
+name "thm:self-adj-eigen"
 
 \end_inset
 
-关于（完备的）内积空间 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 上的自伴随算符 
+若 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的特征值问题，有以下结论成立：
-\end_layout
+ 是内积空间 
+\begin_inset Formula $V$
+\end_inset
 
-\begin_layout Theorem
-(1) 算符 
+ 上的自伴随算子，则 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的所有特征值构成一个可数集，并且每一个 
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
- 都是实数。
+ 的
 \end_layout
 
-\begin_layout Theorem
-(2) 每一个特征值 
+\begin_deeper
+\begin_layout Enumerate
+所有特征值构成一个可数集，并且每个特征值都是实数。
+\end_layout
+
+\begin_layout Enumerate
+每个特征值 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
  都至少有一个特征向量 
-\begin_inset Formula $\ket{g_{i}}$
+\begin_inset Formula $\vert g_{i}\rangle$
 \end_inset
 
  与之对应。
 \end_layout
 
-\begin_layout Theorem
-(3) 对应于不同特征值 
-\begin_inset Formula $\lambda_{i}$
+\begin_layout Enumerate
+分属不同特征值 
+\begin_inset Formula $\lambda_{i},\lambda_{k}$
 \end_inset
 
-、
-\begin_inset Formula $\lambda_{k}$
+ 的特征向量 
+\begin_inset Formula $\vert g_{i}\rangle,\vert g_{k}\rangle$
 \end_inset
 
- 的任意两个特征向量 
-\begin_inset Formula $\ket{g_{i}}$
-\end_inset
-
-、 
-\begin_inset Formula $\ket{g_{k}}$
-\end_inset
-
- 线性无关，并且关于 
-\begin_inset Formula $\mathcal{V}$
-\end_inset
-
- 的内积正交。
+ 线性独立，且两两正交。
 \end_layout
 
-\begin_layout Theorem
-(4) 如果特征值两两互异，则它们所对应的特征向量的全体构成 
-\begin_inset Formula $\mathcal{V}$
+\begin_layout Enumerate
+所有线性独立的特征向量构成 
+\begin_inset Formula $V$
 \end_inset
 
  的一个完备正交基。
 \end_layout
 
-\begin_layout Subsection
-线性微分算符的自伴随条件
-\end_layout
-
-\begin_layout Theorem
-在区间 
-\begin_inset Formula $(a,b)$
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- 上定义二阶线性微分算符
+
+\end_layout
+
+\begin_layout Section
+二阶线性常微商算子
+\end_layout
+
+\begin_layout Subsection
+自伴随条件
+\end_layout
+
+\begin_layout Lemma
+给定二阶线性常微商算子
 \begin_inset Formula 
 \begin{equation}
-\hat{L}=\dv{x}\left(p_{0}(x)\dv{x}\right)+p_{2}(x)\label{eq:自伴随的二阶线性微分算符}
+\hat{D}\coloneqq\frac{\mathrm{d}}{\mathrm{d}x}\left(p_{0}\frac{\mathrm{d}}{\mathrm{d}x}\right)+p_{2}=p_{0}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+\frac{\mathrm{d}p_{0}}{\mathrm{d}x}\frac{\mathrm{d}}{\mathrm{d}x}+p_{2}\qquad x\in(a,b)\label{eq:self-adj-ord-diff-op}
 \end{equation}
 
 \end_inset
 
 其中 
-\begin_inset Formula $p_{0}$
-\end_inset
-
-、
-\begin_inset Formula $p_{0}'$
-\end_inset
-
- 和 
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{0},p_{0}'\coloneqq\dv*{p_{0}}{x},p_{2}$
 \end_inset
 
  都是定义在 
 \begin_inset Formula $[a,b]$
 \end_inset
 
- 上的连续实函数。如果有
-\end_layout
+ 上的连续实函数。若取函数空间 
+\begin_inset Formula $V\subset L^{2}(a,b)$
+\end_inset
 
-\begin_layout Theorem
+ 使得
 \begin_inset Formula 
 \[
-\left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}\right]_{a}^{b}=0\qquad\forall u,v
+\left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)p_{0}\right]_{a}^{b}=0\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
 
-则算符 
-\begin_inset Formula $\hat{L}$
+则算子 
+\begin_inset Formula $\hat{D}$
 \end_inset
 
  关于内积
 \begin_inset Formula 
 \[
-\ip{u}{v}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}
+\langle u\vert v\rangle\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
@@ -456,26 +691,29 @@ name "thm:自伴随算符的特征值问题"
 \end_layout
 
 \begin_layout Proof
-将算符 
-\begin_inset Formula $\hat{L}$
+将算子 
+\begin_inset Formula $\hat{D}$
 \end_inset
 
  代入自伴随条件
 \begin_inset Formula 
 \[
-\ip{u}{\hat{L}v}=\ip{\hat{L}u}{v}
+\langle u\vert\hat{D}v\rangle=\langle\hat{D}u\vert v\rangle\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
 
-对左端项分部积分两次，即得（必须为零的）边界项和右端项
+的左端，并对其分部积分两次，即得右端项与（已知为 
+\begin_inset Formula $0$
+\end_inset
+
+ 的）边界项：
 \begin_inset Formula 
 \[
-\begin{aligned}\ip{u}{\hat{L}v}= & \int_{a}^{b}\Conj{u}\left[(p_{0}v')'+p_{2}v\right]\dd{x}\\
-= & \left(\Conj{u}p_{0}v'\right)_{a}^{b}-\int_{a}^{b}\Conj{u}'p_{0}v'\dd{x}+\int_{a}^{b}\Conj{u}p_{2}v\dd{x}\\
-= & \left(\Conj{u}p_{0}v'\right)_{a}^{b}-\left(\Conj{u}'p_{0}v\right)_{a}^{b}+\int_{a}^{b}\left[\left(\Conj{u}'p_{0}\right)'v+\Conj{u}p_{2}v\right]\dd{x}\\
-= & \left(\Conj{u}p_{0}v'-\Conj{u}'p_{0}v\right)_{a}^{b}+\int_{a}^{b}\Conj{\left[(p_{0}u')'+p_{2}u\right]}v\dd{x}\\
-= & \left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}\right]_{a}^{b}+\ip{\hat{L}u}{v}
+\begin{aligned}\langle u\vert\hat{D}v\rangle= & \int_{a}^{b}u^{*}\left[\frac{\mathrm{d}}{\mathrm{d}x}\left(p_{0}\frac{\mathrm{d}v}{\mathrm{d}x}\right)+p_{2}v\right]\dd{x}\\
+= & \left(u^{*}p_{0}\frac{\mathrm{d}v}{\mathrm{d}x}\right)_{a}^{b}-\int_{a}^{b}\frac{\mathrm{d}u^{*}}{\mathrm{d}x}p_{0}\frac{\mathrm{d}v}{\mathrm{d}x}\dd{x}+\int_{a}^{b}u^{*}p_{2}v\dd{x}\\
+= & \left(u^{*}p_{0}\frac{\mathrm{d}v}{\mathrm{d}x}\right)_{a}^{b}-\left(\frac{\mathrm{d}u^{*}}{\mathrm{d}x}p_{0}v\right)_{a}^{b}+\int_{a}^{b}\left[\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{\mathrm{d}u^{*}}{\mathrm{d}x}p_{0}\right)+u^{*}p_{2}\right]v\dd{x}\\
+= & \left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)p_{0}\right]_{a}^{b}+\langle\hat{D}u\vert v\rangle
 \end{aligned}
 \]
 
@@ -492,27 +730,37 @@ name "thm:自伴随算符的特征值问题"
 \end_layout
 
 \begin_layout Standard
-对于更一般的二阶线性微分算符
+对于更一般的二阶线性常微商算子
 \begin_inset Formula 
-\begin{equation}
-\hat{L}=p_{0}(x)\dv[2]{x}+p_{1}(x)\dv{x}+p_{2}(x)\label{eq:一般的二阶线性微分算符}
-\end{equation}
+\[
+\hat{D}=p_{0}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+p_{1}\frac{\mathrm{d}}{\mathrm{d}x}+p_{2}\qquad x\in(a,b)
+\]
 
 \end_inset
 
-假设 
+其中 
+\begin_inset Formula $p_{0},p_{1},p_{2}$
+\end_inset
+
+ 都是定义在 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+ 上的连续实函数，可假设 
 \begin_inset Formula $p_{0}$
 \end_inset
 
- 的零点只可能是区间端点（如果 
-\begin_inset Formula $p$
+ 的零点只可能是区间端点
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+否则，总可以在这些零点所分割出的子区间上逐段分析。
+\end_layout
+
 \end_inset
 
- 在 
-\begin_inset Formula $(a,b)$
-\end_inset
-
- 内有孤立零点，总可以在这些零点所分割出的子区间上逐个进行分析），即
+，即
 \begin_inset Formula 
 \[
 p_{0}(x)\ne0\qquad\forall x\in(a,b)
@@ -520,28 +768,26 @@ p_{0}(x)\ne0\qquad\forall x\in(a,b)
 
 \end_inset
 
-可以引入 
+引入 
 \begin_inset Formula $[a,b]$
 \end_inset
 
  上的正值函数 
 \begin_inset Formula 
 \[
-w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
+w(x)=\frac{1}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 \]
 
 \end_inset
 
-它能够使算符 
-\begin_inset Formula $w\hat{L}$
+即可使算子 
+\begin_inset Formula $w\hat{D}$
 \end_inset
 
- 具有定理中所要求的形式
+ 具有上述引理所需要的形式：
 \begin_inset Formula 
 \[
-\begin{aligned}w\hat{L}= & P_{0}(x)\dv[2]{x}+P_{1}(x)\dv{x}+P_{2}(x)\\
-= & \dv{x}\left(P_{0}(x)\dv{x}\right)+P_{2}(x)
-\end{aligned}
+w\hat{D}=P_{0}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+P_{1}\frac{\mathrm{d}}{\mathrm{d}x}+P_{2}=\frac{\mathrm{d}}{\mathrm{d}x}\left(P_{0}\frac{\mathrm{d}}{\mathrm{d}x}\right)+P_{2}\qquad x\in(a,b)
 \]
 
 \end_inset
@@ -549,40 +795,28 @@ w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 其中
 \begin_inset Formula 
 \[
-\begin{aligned}P_{0}(x)= & w(x)p_{0}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{0}(x)}{\abs{p_{0}(x)}}\\
-P_{1}(x)= & w(x)p_{1}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{1}(x)}{\abs{p_{0}(x)}}=P_{0}'(x)\\
-P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\frac{p_{2}(x)}{\abs{p_{0}(x)}}
+\begin{aligned}P_{0}(x) & \coloneqq w(x)\,p_{0}(x)=\frac{p_{0}(x)}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\\
+P_{1}(x) & \coloneqq w(x)\,p_{1}(x)=\frac{p_{1}(x)}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})=P_{0}'(x)\\
+P_{2}(x) & \coloneqq w(x)\,p_{2}(x)=\frac{p_{2}(x)}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 \end{aligned}
 \]
 
 \end_inset
 
-于是，该定理可以重新叙述为如下更一般的形式：
+于是，上述引理可以推广为如下更一般的定理：
 \end_layout
 
 \begin_layout Theorem
-在区间 
-\begin_inset Formula $(a,b)$
-\end_inset
-
- 上定义二阶线性微分算符
+给定二阶线性常微商算子
 \begin_inset Formula 
-\[
-\hat{L}=p_{0}(x)\dv[2]{x}+p_{1}(x)\dv{x}+p_{2}(x)
-\]
+\begin{equation}
+\hat{D}=p_{0}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+p_{1}\frac{\mathrm{d}}{\mathrm{d}x}+p_{2}\qquad x\in(a,b)\label{eq:general-2nd-ord-diff-op}
+\end{equation}
 
 \end_inset
 
 其中 
-\begin_inset Formula $p_{0}$
-\end_inset
-
-、
-\begin_inset Formula $p_{1}$
-\end_inset
-
-、
-\begin_inset Formula $p_{2}$
+\begin_inset Formula $p_{0},p_{1},p_{2}$
 \end_inset
 
  都是定义在 
@@ -593,13 +827,14 @@ P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\fra
 \begin_inset Formula $p_{0}$
 \end_inset
 
- 的零点只可能是区间端点。如果有
-\end_layout
+ 的零点只可能是区间端点。若取函数空间 
+\begin_inset Formula $V\subset L_{w}^{2}(a,b)$
+\end_inset
 
-\begin_layout Theorem
+ 使得
 \begin_inset Formula 
 \[
-\left[\left(\Conj{u}v'-\Conj{u}'v\right)p_{0}w\right]_{a}^{b}=0\qquad\forall u,v
+\left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)wp_{0}\right]_{a}^{b}=0\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
@@ -615,96 +850,54 @@ P_{2}(x)= & w(x)p_{2}(x)=\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})\fra
  上的正值函数
 \begin_inset Formula 
 \[
-w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
+w(x)=\frac{1}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 \]
 
 \end_inset
 
-则算符 
-\begin_inset Formula $w\hat{L}$
+则
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+算子 
+\begin_inset Formula $w\hat{D}$
 \end_inset
 
- 关于内积
+ 关于（标准）内积
 \begin_inset Formula 
 \[
-\ip{u}{v}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)\dd{x}
+\langle u\vert v\rangle\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
 
-是自伴随的，而算符 
-\begin_inset Formula $\hat{L}$
+
+\end_layout
+
+\begin_layout Itemize
+算子 
+\begin_inset Formula $\hat{D}$
 \end_inset
 
- 关于内积
+ 关于（以 
+\begin_inset Formula $w$
+\end_inset
+
+ 为权重的）内积
 \begin_inset Formula 
 \[
-\ip{u}{v}_{w}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)w(x)\dd{x}
+\langle u\vert v\rangle_{w}\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\,w(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
 
+
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
 是自伴随的。
-\end_layout
-
-\begin_layout Section
-Sturm–Liouville 型方程
-\end_layout
-
-\begin_layout Subsection
-视作特征值问题
-\end_layout
-
-\begin_layout Definition
-Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方程
-\begin_inset Formula 
-\begin{equation}
-\dv{x}\left(p(x)\dv{u}{x}\right)+\left[\lambda\rho(x)-q(x)\right]u=0\qquad x\in(a,b)\label{eq:Sturm–LiouvilleODE}
-\end{equation}
-
-\end_inset
-
-其中 
-\begin_inset Formula $\lambda$
-\end_inset
-
- 是待定常数，
-\begin_inset Formula $p$
-\end_inset
-
-、
-\begin_inset Formula $p'$
-\end_inset
-
-、
-\begin_inset Formula $q$
-\end_inset
-
-、
-\begin_inset Formula $\rho$
-\end_inset
-
- 都是定义在 
-\begin_inset Formula $[a,b]$
-\end_inset
-
- 上的连续实函数，并且 
-\begin_inset Formula $p$
-\end_inset
-
- 的零点只能位于端点，
-\begin_inset Formula $p$
-\end_inset
-
-、
-\begin_inset Formula $\rho$
-\end_inset
-
- 在 
-\begin_inset Formula $(a,b)$
-\end_inset
-
- 内恒为正。
 \end_layout
 
 \begin_layout Standard
@@ -714,67 +907,76 @@ Sturm–Liouville 型方程是指具有以下形式的二阶线性常微分方�
 
 \end_layout
 
-\begin_layout Standard
-如果 
-\begin_inset Formula $\rho(x)\equiv1$
-\end_inset
+\begin_layout Subsection
+Sturm–Liouville 型方程
+\end_layout
 
-，则方程
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Sturm–LiouvilleODE"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-直接具有特征值问题的形式：
+\begin_layout Definition
+“Sturm–Liouville 型方程”是指具有以下形式的二阶线性常微分方程
 \begin_inset Formula 
-\[
-\hat{L}\ket{u}=\lambda\ket{u}\qquad\hat{L}=\dv{x}\left(-p\dv{x}\right)+q
-\]
+\begin{equation}
+\left(\frac{\mathrm{d}}{\mathrm{d}x}\left(p\frac{\mathrm{d}}{\mathrm{d}x}\right)+\lambda w-q\right)u=0\qquad x\in(a,b)\label{eq:Sturm–LiouvilleODE}
+\end{equation}
 
 \end_inset
 
-这里的 
-\begin_inset Formula $-p$
+其中 
+\begin_inset Formula $u$
 \end_inset
 
- 和 
-\begin_inset Formula $q$
+ 是未知函数；
+\begin_inset Formula $p,p',q,w$
 \end_inset
 
- 分别相当于算符
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:自伴随的二阶线性微分算符"
-
+ 都是已知的定义在 
+\begin_inset Formula $[a,b]$
 \end_inset
 
-中的 
-\begin_inset Formula $p_{0}$
+ 上的连续实函数，并且 
+\begin_inset Formula $p$
 \end_inset
 
- 和 
-\begin_inset Formula $p_{2}$
+ 的零点只能位于端点，而 
+\begin_inset Formula $p,w$
 \end_inset
 
-。
+ 在 
+\begin_inset Formula $(a,b)$
+\end_inset
+
+ 内恒为正；参数 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 是由边界条件决定的常数。
 \end_layout
 
 \begin_layout Standard
-如果 
-\begin_inset Formula $\rho$
+\begin_inset Separator plain
 \end_inset
 
- 是更一般的正值函数（包括 
-\begin_inset Formula $\rho(x)\equiv1$
+
+\end_layout
+
+\begin_layout Lemma
+任何“Sturm–Liouville 型方程”都可以化为“二阶线性常微商算子的特征值问题”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
- 的情形），则用它除方程
+
+\end_layout
+
+\begin_layout Proof
+用 
+\begin_inset Formula $w$
+\end_inset
+
+ 除方程-
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:Sturm–LiouvilleODE"
 plural "false"
 caps "false"
@@ -782,67 +984,55 @@ noprefix "false"
 
 \end_inset
 
-，仍然可以得到特征值问题：
+ 并移项，即得关于如下二阶线性常微商算子的特征值问题：
 \begin_inset Formula 
 \[
-\hat{L}\ket{u}=\lambda\ket{u}\qquad\hat{L}=\frac{-p}{\rho}\dv[2]{x}+\frac{-p'}{\rho}\dv{x}+\frac{q}{\rho}
+\hat{D}=\frac{-p}{w}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+\frac{-p'}{w}\frac{\mathrm{d}}{\mathrm{d}x}+\frac{q}{w}
 \]
 
 \end_inset
 
-这里的 
-\begin_inset Formula $\frac{-p}{\rho}$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
-、
-\begin_inset Formula $\frac{-p'}{\rho}$
-\end_inset
 
-、
-\begin_inset Formula $\frac{q}{\rho}$
-\end_inset
+\end_layout
 
- 分别相当于算符
+\begin_layout Lemma
+任何“二阶线性常微商算子-
 \begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:一般的二阶线性微分算符"
+LatexCommand ref
+reference "eq:general-2nd-ord-diff-op"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-中的 
-\begin_inset Formula $p_{0}$
+ 的特征值问题”都可以化为“Sturm–Liouville 型方程”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
-、
-\begin_inset Formula $p_{1}$
-\end_inset
 
-、
-\begin_inset Formula $p_{2}$
-\end_inset
+\end_layout
 
-。反之，任何二阶线性微分算符
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:一般的二阶线性微分算符"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-的本征值问题也都可以化为 Sturm–Liouville 型方程，只要取
+\begin_layout Proof
+只需取
 \begin_inset Formula 
 \[
-p(x)=\exp(\int\frac{p_{1}(x)}{p_{0}(x)}\dd{x})\qquad\rho(x)=\frac{p(x)}{-p_{0}(x)}\qquad q(x)=p_{2}(x)\rho(x)
+p(x)\coloneqq\exp(\int\frac{p_{1}(x)}{p_{0}(x)}\dd{x})\qquad w(x)\coloneqq\frac{p(x)}{-p_{0}(x)}\qquad q(x)\coloneqq p_{2}(x)\,w(x)
 \]
 
 \end_inset
 
-不失一般性，这里假定了 
+不失一般性，这里假定 
 \begin_inset Formula $p_{0}$
 \end_inset
 
@@ -850,64 +1040,59 @@ p(x)=\exp(\int\frac{p_{1}(x)}{p_{0}(x)}\dd{x})\qquad\rho(x)=\frac{p(x)}{-p_{0}(x
 \begin_inset Formula $(a,b)$
 \end_inset
 
- 上恒为负（反之，总可以在本征值问题两边同时取负号，再将负号吸收进 
+ 上恒为负
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+反之，在特征值问题两边同时取负号，再将负号吸收进 
 \begin_inset Formula $\lambda$
 \end_inset
 
-）。
+ 即可。
 \end_layout
 
-\begin_layout Subsection
-自伴随条件
-\end_layout
-
-\begin_layout Theorem
-带有（第一、二、三类齐次或周期、有界）边界条件的 Sturm--Liouville 型方程
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Sturm–LiouvilleODE"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-可以被视为特征值问题：
-\begin_inset Formula 
-\[
-\hat{L}\ket{u}=\lambda\ket{u}\qquad\hat{L}=\frac{-p}{\rho}\dv[2]{x}+\frac{-p'}{\rho}\dv{x}+\frac{q}{\rho}
-\]
-
-\end_inset
-
-将该问题对应于 
-\begin_inset Formula $\lambda$
-\end_inset
-
- 的所有可能值的解所张成的函数空间记为 
-\begin_inset Formula $\mathcal{V}$
 \end_inset
 
 。
 \end_layout
 
-\begin_layout Theorem
-如果有
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Sturm--Liouville 型方程（改写为特征值问题的形式）
 \begin_inset Formula 
 \[
-\left[\left(\Conj{u}v'-\Conj{u}'v\right)p\right]_{a}^{b}=0\qquad\forall u,v\in\mathcal{V}
+\hat{D}u=\lambda u\qquad\hat{D}=\frac{-p}{w}\frac{\mathrm{d}^{2}}{\mathrm{d}x^{2}}+\frac{-p'}{w}\frac{\mathrm{d}}{\mathrm{d}x}+\frac{q}{w}
 \]
 
 \end_inset
 
-则算符 
-\begin_inset Formula $\hat{L}$
+的满足（第一、二、三类齐次或周期、有界）边界条件的解所张成的线性空间 
+\begin_inset Formula $V$
+\end_inset
+
+ 满足
+\begin_inset Formula 
+\[
+\left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)p\right]_{a}^{b}=0\qquad\forall(u,v)\in V^{2}
+\]
+
+\end_inset
+
+且算子 
+\begin_inset Formula $\hat{D}$
 \end_inset
 
  关于内积
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\rho}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\langle u\vert v\rangle_{w}\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\,w(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
@@ -926,19 +1111,19 @@ noprefix "false"
 可以验证
 \begin_inset Formula 
 \[
-w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})=\frac{\rho(x)}{p(x)}\exp(\int^{x}\frac{p'(\xi)}{p(\xi)}\dd{\xi})=\rho(x)
+w(x)=\frac{1}{\vert p_{0}(x)\vert}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})=\frac{w(x)}{p(x)}\exp(\int^{x}\frac{p'(\xi)}{p(\xi)}\dd{\xi})=w(x)
 \]
 
 \end_inset
 
-则算符 
-\begin_inset Formula $\hat{L}$
+故算子 
+\begin_inset Formula $\hat{D}$
 \end_inset
 
  关于内积
 \begin_inset Formula 
 \[
-\ip{u}{v}_{w}\equiv\ip{u}{v}_{\rho}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\langle u\vert v\rangle_{w}\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\,w(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
@@ -946,7 +1131,7 @@ w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 的自伴随条件为
 \begin_inset Formula 
 \[
-\left[\left(\Conj{u}v'-\Conj{u}'v\right)(p_{0}w)\right]_{a}^{b}=\left[\left(\Conj{u}v'-\Conj{u}'v\right)(-p)\right]_{a}^{b}=0\qquad\forall u,v
+\left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)wp_{0}\right]_{a}^{b}=\left[\left(u^{*}\frac{\mathrm{d}v}{\mathrm{d}x}-\frac{\mathrm{d}u^{*}}{\mathrm{d}x}v\right)(-p)\right]_{a}^{b}=0\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
@@ -961,12 +1146,13 @@ w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 
 \end_layout
 
-\begin_layout Corollary
-在上述定理的条件得到满足的情况下，有以下结论成立：
+\begin_layout Theorem
+在上述引理的条件成立的情况下，有以下结论成立：
 \end_layout
 
-\begin_layout Corollary
-(1) 
+\begin_deeper
+\begin_layout Enumerate
+参数 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -974,33 +1160,29 @@ w(x)=\frac{1}{\abs{p_{0}(x)}}\exp(\int^{x}\frac{p_{1}(\xi)}{p_{0}(\xi)}\dd{\xi})
 \begin_inset Formula $\left\{ \lambda_{i}\right\} _{i=1}^{\infty}$
 \end_inset
 
-，每一个 
+，并且每个 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
- 都是实数，因而可以按大小排序，称排序后的 
+ 都是实数，从而可以按大小排序，称排序后的 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
- 为原问题的第 
+ 为原问题的“第 
 \begin_inset Formula $i$
 \end_inset
 
- 个
-\emph on
-特征值
-\emph default
- (eigenvalue)。
+ 个特征值”。
 \end_layout
 
-\begin_layout Corollary
-(2) 对应于每一个特征值 
+\begin_layout Enumerate
+每个特征值 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
-，都至少存在一个满足边界条件和方程
+ 都至少存在一个满足方程-
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "eq:Sturm–LiouvilleODE"
 plural "false"
 caps "false"
@@ -1008,67 +1190,66 @@ noprefix "false"
 
 \end_inset
 
-的解 
+ 和（第一、二、三类齐次或周期、有界）边界条件的解 
 \begin_inset Formula $g_{i}$
 \end_inset
 
-，称为与 
+，称为属于 
 \begin_inset Formula $\lambda_{i}$
 \end_inset
 
- 对应的
-\emph on
-特征函数
-\emph default
- (eigenfunction)。
+ 的“特征函数 (eigen-function)”。
 \end_layout
 
-\begin_layout Corollary
-(3) 
-\begin_inset Formula $\mathcal{V}$
+\begin_layout Enumerate
+分属不同特征值 
+\begin_inset Formula $\lambda_{i},\lambda_{k}$
 \end_inset
 
- 是一个以
+ 的特征函数 
+\begin_inset Formula $g_{i},g_{k}$
+\end_inset
+
+ 线性独立，且关于内积
 \begin_inset Formula 
 \[
-\ip{u}{v}_{\rho}\coloneqq\int_{a}^{b}\Conj{u(x)}v(x)\rho(x)\dd{x}
+\langle u\vert v\rangle_{w}\coloneqq\int_{a}^{b}u^{*}(x)\,v(x)\,w(x)\dd{x}\qquad\forall(u,v)\in V^{2}
 \]
 
 \end_inset
 
-为内积的 Hilbert 空间。
+正交。
 \end_layout
 
-\begin_layout Corollary
-(4) 对应于不同特征值 
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
-、
-\begin_inset Formula $\lambda_{k}$
-\end_inset
-
- 的任意两个特征函数 
-\begin_inset Formula $g_{i}$
-\end_inset
-
-、
-\begin_inset Formula $g_{k}$
-\end_inset
-
- 线性无关，并且关于上述内积正交。
-\end_layout
-
-\begin_layout Corollary
-(5) 如果特征值两两互异，则所有特征函数的全体 
+\begin_layout Enumerate
+所有线性独立的特征函数 
 \begin_inset Formula $\left\{ g_{i}\right\} _{i=1}^{\infty}$
 \end_inset
 
- 构成 
-\begin_inset Formula $\mathcal{V}$
+ 构成解空间 
+\begin_inset Formula $V$
 \end_inset
 
  的一个完备正交基。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+该定理可视为关于“自伴随算子的特征值问题”的定理-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:self-adj-eigen"
+
+\end_inset
+
+ 的特殊版本（推论）。
 \end_layout
 
 \begin_layout Standard
@@ -1078,19 +1259,95 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Subsection
+特征函数展开（正交分解）法
+\end_layout
+
 \begin_layout Standard
-该推论其实是定理
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "thm:自伴随算符的特征值问题"
+自伴随算符 
+\begin_inset Formula $\hat{D}$
+\end_inset
+
+ 的特征值问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\hat{D}\vert u\rangle=\lambda\vert u\rangle\qquad\text{即}\qquad(\hat{D}u)(x)=\lambda u(x)\qquad x\in(a,b)
+\]
 
 \end_inset
 
-的特殊版本。
+的解可以被分解为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vert u\rangle=\sum_{i=1}^{\infty}\vert e_{i}\rangle\langle e_{i}\vert u\rangle\qquad\text{即}\qquad u(x)=\sum_{i=1}^{\infty}e_{i}(x)\,\langle e_{i}\vert u\rangle
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vert e_{i}\rangle$
+\end_inset
+
+ 是属于特征值 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的归一化的特征向量，即
+\begin_inset Formula 
+\[
+\hat{D}\vert e_{i}\rangle=\lambda_{i}\vert e_{i}\rangle\qquad\langle e_{i}\vert e_{i}\rangle=1\qquad\forall i\in\mathbb{N}_{+}
+\]
+
+\end_inset
+
+且两两正交，即
+\begin_inset Formula 
+\[
+\langle e_{i}\vert e_{i+k}\rangle=0\qquad\forall(i,k)\in\mathbb{N}_{+}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\sum_{i=1}^{\infty}\vert e_{i}\rangle\langle e_{i}\vert u\rangle$
+\end_inset
+
+ 被称为“广义 Fourier 级数”，其中 
+\begin_inset Formula $u_{i}\coloneqq\langle e_{i}\vert u\rangle$
+\end_inset
+
+ 被称为 
+\begin_inset Formula $\vert u\rangle$
+\end_inset
+
+ 在 
+\begin_inset Formula $\left\{ \vert e_{i}\rangle\right\} _{i=1}^{\infty}$
+\end_inset
+
+ 这组基下的“广义 Fourier 系数”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-常见的正交函数族
+常用的正交函数族
 \end_layout
 
 \begin_layout Subsection
@@ -1138,7 +1395,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=1\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(0,2L)
+p(x)=1\qquad q(x)=0\qquad w(x)=1\qquad(a,b)=(0,2L)
 \]
 
 \end_inset
@@ -1188,7 +1445,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=1-x^{2}\qquad q(x)=0\qquad\rho(x)=1\qquad(a,b)=(-1,1)
+p(x)=1-x^{2}\qquad q(x)=0\qquad w(x)=1\qquad(a,b)=(-1,1)
 \]
 
 \end_inset
@@ -1208,7 +1465,7 @@ reference "sec:Legendre方程的幂级数解"
 
 \end_inset
 
-节中，已经由 Frobenius 方法求得了它的两个线性无关解
+节中，已经由 Frobenius 方法求得了它的两个线性独立解
 \begin_inset Formula 
 \[
 u_{s=1}(x)=\sum_{k=0}^{\infty}f_{2k}x^{2k+1}\qquad u_{s=0}(x)=\sum_{k=0}^{\infty}g_{2k}x^{2k}
@@ -1293,7 +1550,7 @@ g_{2k+2} & =\frac{(2k)(2k+1)-n(n+1)}{(2k+2)(2k+1)}g_{2k}=\frac{(2k-n)(2k+1+n)}{(
 \end_layout
 
 \begin_layout Standard
-如果将截断后的 
+若将截断后的 
 \begin_inset Formula $n$
 \end_inset
 
@@ -1324,11 +1581,7 @@ C_{k-2}=\frac{(k-1)(k)}{(k-2-n)(k-1+n)}C_{k}\qquad k=n,n-2,\dots,n-2\lfloor n/2\
 
 \end_inset
 
-最后一个分式中的
-\emph on
-跳阶乘
-\emph default
-可以用恒等式
+最后一个分式中的“跳阶乘”可以用恒等式
 \begin_inset Formula 
 \[
 (2n)!!=2^{n}n!\qquad(2n-1)!!=\frac{(2n)!}{(2n)!!}
@@ -1376,7 +1629,7 @@ C_{n-2k}=\frac{(-1)^{k}(2n-2k)!}{k!(n-k)!(n-2k)!}\cdot\frac{(n!)^{2}}{(2n)!}C_{n
 \begin_inset Formula $n$
 \end_inset
 
- 次多项式。如果最高次项系数取为 
+ 次多项式。若最高次项系数取为 
 \begin_inset Formula $\frac{(2n)!}{2^{n}(n!)^{2}}$
 \end_inset
 
@@ -1421,7 +1674,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=\sqrt{1-x^{2}}\qquad q(x)=0\qquad\rho(x)=\frac{1}{\sqrt{1-x^{2}}}\qquad(a,b)=(-1,1)
+p(x)=\sqrt{1-x^{2}}\qquad q(x)=0\qquad w(x)=\frac{1}{\sqrt{1-x^{2}}}\qquad(a,b)=(-1,1)
 \]
 
 \end_inset
@@ -1582,7 +1835,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=x\qquad q(x)=\frac{\nu^{2}}{x}\qquad\rho(x)=x\qquad(a,b)=(0,\infty)
+p(x)=x\qquad q(x)=\frac{\nu^{2}}{x}\qquad w(x)=x\qquad(a,b)=(0,\infty)
 \]
 
 \end_inset
@@ -1711,7 +1964,7 @@ Neumann 函数
 \begin_inset Formula $\Bessel{\nu}$
 \end_inset
 
- 线性无关。
+ 线性独立。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1762,7 +2015,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=x\exp(-x)\qquad q(x)=0\qquad\rho(x)=\exp(-x)\qquad(a,b)=(0,\infty)
+p(x)=x\exp(-x)\qquad q(x)=0\qquad w(x)=\exp(-x)\qquad(a,b)=(0,\infty)
 \]
 
 \end_inset
@@ -1900,7 +2153,7 @@ u_{s=0}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}\qquad\lambda=n\in\math
 \begin_inset Formula $n$
 \end_inset
 
- 次多项式。如果最低次项系数取为 
+ 次多项式。若最低次项系数取为 
 \begin_inset Formula $1$
 \end_inset
 
@@ -1949,7 +2202,7 @@ reference "eq:Sturm–LiouvilleODE"
 中取
 \begin_inset Formula 
 \[
-p(x)=\exp(-x^{2})\qquad q(x)=0\qquad\rho(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,+\infty)
+p(x)=\exp(-x^{2})\qquad q(x)=0\qquad w(x)=\exp(-x^{2})\qquad(a,b)=(-\infty,+\infty)
 \]
 
 \end_inset
@@ -1972,7 +2225,7 @@ reference "sec:Hermite方程的幂级数解"
 
 \end_inset
 
-节中，已经由 Frobenius 方法求得了它的两个线性无关解
+节中，已经由 Frobenius 方法求得了它的两个线性独立解
 \begin_inset Formula 
 \[
 \begin{aligned}u_{s=1}(x) & =\sum_{k=0}^{\infty}\binom{k-\frac{1}{2}-\frac{\lambda}{4}}{k}2^{2k}k!\frac{x^{2k+1}}{(2k+1)!}\\
@@ -2176,7 +2429,7 @@ u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
 \begin_inset Formula $m$
 \end_inset
 
- 次多项式。如果最高次项系数取为 
+ 次多项式。若最高次项系数取为 
 \begin_inset Formula $2^{m}$
 \end_inset
 
@@ -2188,7 +2441,7 @@ u_{s=0}(x)=a_{0}+a_{2}x^{2}+\cdots+a_{2k}x^{2k}\qquad\lambda=2(2k)
 \end_layout
 
 \begin_layout Itemize
-如果 
+若 
 \begin_inset Formula $\lambda=2(2n)$
 \end_inset
 
@@ -2211,7 +2464,7 @@ C_{k-2} & =\frac{(k)(k-1)}{2(k-2)-\lambda}C_{k} & k & =2n,2n-2,\dots,4,2
 \end_layout
 
 \begin_layout Itemize
-如果 
+若 
 \begin_inset Formula $\lambda=2(2n+1)$
 \end_inset
 
@@ -2257,11 +2510,7 @@ C_{k-2} & =\frac{(k+1)(k)}{2(k-1)-\lambda}C_{k} & k & =2n+1,2n-1,\dots,5,3
 \end_layout
 
 \begin_layout Standard
-
-\emph on
-超几何
-\emph default
- (hypergeometric) 函数是超几何方程
+“超几何” (hypergeometric) 函数是超几何方程
 \end_layout
 
 \begin_layout Standard
@@ -2389,11 +2638,7 @@ end{listing}
 \begin_inset Formula $b\to\infty$
 \end_inset
 
-，即得到
-\emph on
-合流
-\emph default
- (confluent) 超几何方程
+，即得到“合流” (confluent) 超几何方程
 \begin_inset Formula 
 \[
 xu''+(c-x)u'-au=0
