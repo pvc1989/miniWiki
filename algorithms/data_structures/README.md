@@ -343,11 +343,54 @@ If you want to make `Key` a hashable type, then do the following:
   - $\frac12\left(1 + (1 - N/M)^{-1}\right)$ for search hits.
   - $\frac12\left(1 +(1 - N/M)^{-2}\right)$ for search misses or inserts.
 
-## Universal & Perfect Hashing
+## Universal Hashing
 
 - MIT
-  - Text: Sect-11.3.3  Universal hashing and Sect-11.5  Perfect hashing
-  - Video: [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing)
+  - Text: Sect-11.3.3  Universal hashing
+  - Video: [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing) (until 55:38)
+
+### Universality
+
+The collection of hash functions $H\coloneqq\{h:U\to[0,M)\cap\mathbb{N}\}$ is said to be ***universal*** if
+
+$$
+\Pr_{h\in H}\{h(k)=h(l)\} < 1/M\qquad \forall(k,l)\in U\times (U\setminus\{k\})
+$$
+
+### Dot-product Universal Hashing
+
+Given the number of slots $M$, which is a prime, a hash function could be defined as
+
+$$
+h_{a}(k)\coloneqq\langle a\vert k\rangle\bmod M\coloneqq\left(\sum_{i=0}^{r-1}a_i k_i\right)\bmod M
+$$
+
+in which,
+- $(k_0,k_1,\dots,k_{r-1})$ is the $r$-element array representation of the $k$, i.e. $k=\sum_{i=0}^{r-1} k_i m^{i}$ and
+- $(a_0,a_1,\dots,a_{r-1})$ is a fixed $r$-element array, whose elements are (randomly) chosen from $\mathbb{Z}\cap[0,M)$.
+
+Then, the collection of all such hash functions is universal.
+
+### Double-mod Universal Hashing
+
+Given the number of slots $M$, which *need not* be a prime, a hash function could be defined as
+
+$$
+h_{ab}(k)\coloneqq((ak+b)\bmod p)\bmod M
+$$
+
+in which,
+- $p$ is a prime larger than $M$, and
+- $a$ is an integer (randomly) chosen from $[1,p)$, and
+- $b$ is an integer (randomly) chosen from $[0,p)$.
+
+Then, the collection of all such hash functions is universal.
+
+## Perfect Hashing
+
+- MIT
+  - Text: Sect-11.5  Perfect hashing
+  - Video: [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing) (from 55:38)
 
 # Trees
 
