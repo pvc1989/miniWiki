@@ -271,15 +271,26 @@ title: 数据结构与算法
   - Text: Chap-11  Hash Tables
   - Video: [6.006/Lecture 8: Hashing with Chaining](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-8-hashing-with-chaining) and [6.006/Lecture 10: Open Addressing, Cryptographic Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-10-open-addressing-cryptographic-hashing) and [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing)
 
+According to [MIT/6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-notes/MIT6_046JS15_lec08.pdf),
+
+> the English `hash` (1650s) means *cut into small pieces*,
+> which comes from the French `hacher` which means *chop up*,
+> which comes from the Old French `hache` which means *axe* (cf. English `hatchet`).
+
 ## Hash Functions
 
 ### Requirements
 
 A good hash function should
 
-- be *deterministic*, i.e. equal keys must produce the same hash value.
+- be *deterministic*, i.e. (after choosing the hash function,) equal keys must produce the same hash value.
 - be *efficient* to compute.
-- *uniformly* distribute the keys among the index range `[0, M)`.
+- *uniformly* distribute the keys among the index range $\mathbb{Z}\cap[0, M)$.
+
+|       Assumption       |            Given            |        Expected to be $\le1/M$        |
+| :--------------------: | :-------------------------: | :-----------------------------------: |
+| simple uniform hashing |    the hash function $h$    | $ \Pr_{k_1\ne k_2}\{h(k_1)=h(k_2)\} $ |
+|   universal hashing    | two distinct keys $k_1,k_2$ |    $\Pr_{h\in H}\{h(k_1)=h(k_2)\}$    |
 
 ### Modular Hashing
 
@@ -332,10 +343,10 @@ If you want to make `Key` a hashable type, then do the following:
 - Structure: use an array of size $M$, which is larger than $N$ --- the number of keys to be inserted.
 - Searching: when there is a collision, do any of the following:
   - Linear Probing:
-    - $h(k, i) = (h_1(k) + i) \mod M$
+    - $h(k, i) = (h_1(k) + i) \bmod M$
     - i.e. check the next entry in the table (by incrementing the index) until search hit.
   - Double Hashing:
-    - $h(k, i) = (h_1(k) + i \cdot h_2(k)) \mod M$
+    - $h(k, i) = (h_1(k) + i \cdot h_2(k)) \bmod M$
     - The value $h_2(k)$ must be *relatively prime* to the hash-table size $M$ for the entire hash table to be searched. A convenient way to ensure this condition is
       - to let $M=2^m$ for some integer $m$, and
       - to design $h_2$ to be an odd-valued function.
@@ -343,7 +354,7 @@ If you want to make `Key` a hashable type, then do the following:
   - $\frac12\left(1 + (1 - N/M)^{-1}\right)$ for search hits.
   - $\frac12\left(1 +(1 - N/M)^{-2}\right)$ for search misses or inserts.
 
-## Universal Hashing
+## Universal Hashing<a href name="uni-hash"></a>
 
 - MIT
   - Text: Sect-11.3.3  Universal hashing
@@ -351,27 +362,29 @@ If you want to make `Key` a hashable type, then do the following:
 
 ### Universality
 
-The collection of hash functions $H\coloneqq\{h:U\to[0,M)\cap\mathbb{N}\}$ is said to be ***universal*** if
+The collection of hash functions $H\coloneqq\{h:U\to\mathbb{Z}\cap[0,M)\}$ is said to be ***universal*** if
 
 $$
-\Pr_{h\in H}\{h(k)=h(l)\} < 1/M\qquad \forall(k,l)\in U\times (U\setminus\{k\})
+\Pr_{h\in H}\{h(k_1)=h(k_2)\} < 1/M\qquad \forall(k_1,k_2)\in U\times (U\setminus\{k_1\})
 $$
 
-### Dot-product Universal Hashing
+(Theorem) For $N$ arbitrary distinct keys, $M$ slots, and a random $h ∈ H$, where $H$ is a universal hashing family, there are
+- $ \langle\text{#keys colliding in a slot}\rangle \le 1 + N/M $.
+- $O(1+N/M)$ expected time for `Search()`, `Insert()` and `Delete()` operations.
+
+### The Dot-product Family
 
 Given the number of slots $M$, which is a prime, a hash function could be defined as
 
 $$
-h_{a}(k)\coloneqq\langle a\vert k\rangle\bmod M\coloneqq\left(\sum_{i=0}^{r-1}a_i k_i\right)\bmod M
+h_{a}(k)\coloneqq(\underline{a}\cdot\underline{k})\bmod M=\left(\sum_{i=0}^{r-1}a_i k_i\right)\bmod M
 $$
 
 in which,
-- $(k_0,k_1,\dots,k_{r-1})$ is the $r$-element array representation of the $k$, i.e. $k=\sum_{i=0}^{r-1} k_i m^{i}$ and
-- $(a_0,a_1,\dots,a_{r-1})$ is a fixed $r$-element array, whose elements are (randomly) chosen from $\mathbb{Z}\cap[0,M)$.
+- $\underline{k}\coloneqq(k_0,k_1,\dots,k_{r-1})$ is the $r$-element array representation of the $k$, i.e. $k=\sum_{i=0}^{r-1} k_i M^{i}$ and
+- $\underline{a}\coloneqq(a_0,a_1,\dots,a_{r-1})$ is a fixed $r$-element array, whose elements are (randomly) chosen from $\mathbb{Z}\cap[0,M)$.
 
-Then, the collection of all such hash functions is universal.
-
-### Double-mod Universal Hashing
+### The Double-mod Family
 
 Given the number of slots $M$, which *need not* be a prime, a hash function could be defined as
 
@@ -380,17 +393,34 @@ h_{ab}(k)\coloneqq((ak+b)\bmod p)\bmod M
 $$
 
 in which,
-- $p$ is a prime larger than $M$, and
+- $p$ is a prime larger than $|U|$, and
 - $a$ is an integer (randomly) chosen from $[1,p)$, and
 - $b$ is an integer (randomly) chosen from $[0,p)$.
-
-Then, the collection of all such hash functions is universal.
 
 ## Perfect Hashing
 
 - MIT
   - Text: Sect-11.5  Perfect hashing
   - Video: [6.046/Lecture 8: Randomization: Universal & Perfect Hashing](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-videos/lecture-8-randomization-universal-perfect-hashing) (from 55:38)
+
+### Static Dictionary
+
+Given $N$ keys to be stored in the table, only the `Search()` operation is needed.
+
+Requirements:
+
+- $O(N\lg N)$ time to build with high probability.
+- $O(1)$ time for `Search()` in worst case.
+- $O(N)$ space in worst case.
+
+### Two-Level Hashing
+
+1. Hash all items with chaining using $h'$, which is randomly chosen from a [universal hashing](#uni-hash) family.
+  - If $\sum_{j=0}^{M-1}l_j^2>cN$ for a pre-chosen constant $c$, then redo Step-1. 
+2. For each $j \in \{0,1,\dots,M − 1\}$, let $l_j$ be the number of items in slot $j$.
+  - Pick $h''_j\colon U \to \{0,1,\dots,M_j\}$ from a [universal hashing](#uni-hash) family for $l_j^2 ≤ M_j ≤ O(l_j^2)$.
+  - Replace the chain in slot $j$ with a hash table using $h''_j$.
+  - If $h''_j(k_i)=h''_j(k_{i'})$ for any $i\ne i'$, then repick $h''_j$ and rehash thoese $l_j$.
 
 # Trees
 
