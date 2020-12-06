@@ -393,7 +393,7 @@ h_{ab}(k)\coloneqq((ak+b)\bmod p)\bmod M
 $$
 
 in which,
-- $p$ is a prime larger than $|U|$, and
+- $p$ is a prime larger than $\vert U\vert$, and
 - $a$ is an integer (randomly) chosen from $[1,p)$, and
 - $b$ is an integer (randomly) chosen from $[0,p)$.
 
@@ -415,12 +415,12 @@ Requirements:
 
 ### Two-Level Hashing
 
-1. Hash all items with chaining using $h'$, which is randomly chosen from a [universal hashing](#uni-hash) family.
-  - If $\sum_{j=0}^{M-1}l_j^2>cN$ for a pre-chosen constant $c$, then redo Step-1. 
-2. For each $j \in \{0,1,\dots,M − 1\}$, let $l_j$ be the number of items in slot $j$.
-  - Pick $h''_j\colon U \to \{0,1,\dots,M_j\}$ from a [universal hashing](#uni-hash) family for $l_j^2 ≤ M_j ≤ O(l_j^2)$.
-  - Replace the chain in slot $j$ with a hash table using $h''_j$.
-  - If $h''_j(k_i)=h''_j(k_{i'})$ for any $i\ne i'$, then repick $h''_j$ and rehash thoese $l_j$.
+1. Hash all items with chaining using $\tilde{h}$, which is randomly chosen from a [universal hashing](#uni-hash) family.
+  - If $\sum_{j=0}^{M-1}l_j^2>cN$ for a pre-chosen constant $c$, then re-choose $\tilde{h}$. 
+2. For each $j \in \mathbb{Z}\cap[0,M)$, let $l_j$ be the number of items in slot $j$.
+  - Pick $\tilde{\tilde{h}}_j\colon U \to \mathbb{Z}\cap[0,M_j)$ from a [universal hashing](#uni-hash) family for $M_j \in[l_j^2, O(l_j^2)]$.
+  - Replace the chain in slot $j$ with a hash table using $\tilde{\tilde{h}}_j$.
+  - If $\tilde{\tilde{h}}_j(k_r)=\tilde{\tilde{h}}_j(k_s)$ for any $r\ne s$, then repick $\tilde{\tilde{h}}_j$ and rehash those $l_j$ items.
 
 # Trees
 
