@@ -70,7 +70,7 @@ theorems-chap
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_minted 0
+\use_minted 1
 \index Index
 \shortcut idx
 \color #008000
@@ -90,6 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -1574,7 +1575,7 @@ a_{2k}=\frac{(-1)^{k}\omega^{2k+1}}{(2k+1)!}\frac{a_{0}}{\omega}\qquad a_{2k+1}=
 于是方程的解可以表示为
 \begin_inset Formula 
 \[
-u_{s=1}(x)=\sum_{k=0}^{\infty}a_{2k}x^{2k+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k+1}}{(2k+1)!}=\frac{a_{0}}{\omega}\sin(\omega x)
+u_{s=1}(x)=\sum_{k=0}^{\infty}a_{2k}\,x^{2k+1}=\frac{a_{0}}{\omega}\sum_{n=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k+1}}{(2k+1)!}=\frac{a_{0}}{\omega}\sin(\omega x)
 \]
 
 \end_inset
@@ -1650,7 +1651,7 @@ a_{2k}=\frac{(-1)^{k}\omega^{2k}}{(2k)!}a_{0}\qquad a_{2k+1}=\frac{(-1)^{k}\omeg
 于是方程的解可以表示为
 \begin_inset Formula 
 \[
-\begin{aligned}u_{s=0}(x) & =\sum_{k=0}^{\infty}a_{2k}x^{2k}+\sum_{k=0}^{\infty}a_{2k+1}x^{2k+1}\\
+\begin{aligned}u_{s=0}(x) & =\sum_{k=0}^{\infty}a_{2k}\,x^{2k}+\sum_{k=0}^{\infty}a_{2k+1}\,x^{2k+1}\\
  & =a_{0}\sum_{k=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k}}{(2k)!}+\frac{a_{1}}{\omega}\sum_{k=0}^{\infty}\frac{(-1)^{k}(\omega x)^{2k+1}}{(2k+1)!}\\
  & =a_{0}\cos(\omega x)+\frac{a_{1}}{\omega}\sin(\omega x)
 \end{aligned}
@@ -2584,6 +2585,173 @@ a_{n}=\binom{n-1-m^{2}}{n}\frac{a_{0}}{n!}\qquad n=0,1,2,\dots
 
 \end_layout
 
+\begin_layout Subsection
+超几何函数
+\end_layout
+
+\begin_layout Standard
+“超几何 (hypergeometric)”函数是超几何方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left((1-x)x\frac{\dd^{2}}{\dd{x^{2}}}+\left(c-(1+a+b)x\right)\frac{\dd}{\dd{x}}-ab\right)u=0\qquad\forall x\in[0,1]
+\]
+
+\end_inset
+
+的解，通常只能通过幂级数来表示，级数中各项的系数可以通过 Gamma 函数来表示：
+\begin_inset Formula 
+\[
+\HypGeo(x;a,b;c)=\frac{\Gamma(c)}{\Gamma(a)\,\Gamma(b)}\sum_{n=0}^{\infty}\frac{\Gamma(a+n)\,\Gamma(b+n)}{\Gamma(c+n)}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}\,b^{(n)}}{c^{(n)}}\frac{x^{n}}{n!}
+\]
+
+\end_inset
+
+这里为了方便记忆，引入了记号
+\begin_inset Formula 
+\[
+\alpha^{(n)}=\frac{\Gamma(\alpha+n)}{\Gamma(\alpha)}=\prod_{k=0}^{n-1}(\alpha+n-k)\qquad\forall\alpha\ne0,-1,-2,\dots
+\]
+
+\end_inset
+
+显然，此函数关于参数 
+\begin_inset Formula $a$
+\end_inset
+
+ 和 
+\begin_inset Formula $b$
+\end_inset
+
+ 是对称的，而参数 
+\begin_inset Formula $c$
+\end_inset
+
+ 是独立的，因此在函数名下标和参数列表中将它们区分为两组。
+\end_layout
+
+\begin_layout Subsubsection
+积分表示
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\HypGeo(x;a,b;c)= & \frac{\Gamma(c)}{\Gamma(b)\,\Gamma(c-b)}\int_{0}^{1}(1-t)^{c-b-1}\,t^{b-1}\,(1-tx)^{-a}\dd{t}\\
+= & \frac{\Gamma(c)}{\Gamma(a)\,\Gamma(c-a)}\int_{0}^{1}(1-t)^{c-a-1}\,t^{a-1}\,(1-tx)^{-b}\dd{t}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+用于表示其他函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\ln(1+x)= & \HypGeo(-x;1,1;2)\cdot x\\
+(1+x)^{\alpha}= & \HypGeo(-x;-\alpha,b;b)\\
+\mathrm{K}(k)= & \HypGeo\qty(k^{2};\frac{1}{2},\frac{1}{2};1)\cdot\frac{\pi}{2}\\
+\mathrm{E}(k)= & \HypGeo\qty(k^{2};\frac{1}{2},-\frac{1}{2};1)\cdot\frac{\pi}{2}
+\end{aligned}
+\]
+
+\end_inset
+
+最后两个等式可以通过代码来验证。
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{listing}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand inputminted
+filename "ellip_vs_hyp2f1.py"
+lstparams "language=Python,caption={椭圆函数与超几何函数},label={code:ODE：椭圆函数与超几何函数}"
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{listing}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+合流超几何函数
+\end_layout
+
+\begin_layout Standard
+将 
+\begin_inset Formula $x=x/b$
+\end_inset
+
+ 代入超几何方程，同时令 
+\begin_inset Formula $b\to\infty$
+\end_inset
+
+，即即得“合流 (confluent)”超几何方程
+\begin_inset Formula 
+\[
+\left(x\frac{\dd^{2}}{\dd{x^{2}}}+(c-x)\frac{\dd}{\dd{x}}-a\right)u(x)=0
+\]
+
+\end_inset
+
+该方程的解被称为合流超几何函数，可以视作是超几何函数的极限情形：
+\begin_inset Formula 
+\[
+\ConHypGeo(x;a;c)=\lim\limits _{b\to\infty}\HypGeo(x/b;a,b;c)=\frac{\Gamma(c)}{\Gamma(a)}\sum_{n=0}^{\infty}\frac{\Gamma(a+n)}{\Gamma(c+n)}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}}{c^{(n)}}\frac{x^{n}}{n!}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+用于表示其他函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\exp(x)=\sum_{n=0}^{\infty}\frac{x^{n}}{n!}=\sum_{n=0}^{\infty}\frac{a^{(n)}}{a^{(n)}}\frac{x^{n}}{n!}=\ConHypGeo(x;a;a)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 线性独立的第二解
 \end_layout
@@ -3097,7 +3265,7 @@ u_{2}(x)=u_{1}(x)\cdot\int_{b}^{x}\frac{\exp(-\int_{a}^{\eta}\sum_{j=-1}^{\infty
 这里利用了幂函数的 Taylor 展开式 
 \begin_inset Formula 
 \[
-(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}x^{k}=\sum_{k=0}^{\infty}\frac{\alpha\cdot(\alpha-1)\cdot\cdots\cdot(\alpha-k+1)}{k!}x^{k}
+(1+x)^{\alpha}=\sum_{k=0}^{\infty}\binom{\alpha}{k}\,x^{k}=\sum_{k=0}^{\infty}\frac{\alpha\cdot(\alpha-1)\cdot\cdots\cdot(\alpha-k+1)}{k!}x^{k}
 \]
 
 \end_inset
