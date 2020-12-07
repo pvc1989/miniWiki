@@ -12,7 +12,9 @@
 % Options for Fonts
 %
 \newif\if@euler\@eulerfalse\DeclareOption{euler}{\@eulertrue}
-\newif\if@latin\@latinfalse\DeclareOption{latin}{\@latintrue}
+\newif\if@stix\@stixfalse\DeclareOption{stix}{\@stixtrue}
+\newif\if@newcm\@newcmfalse\DeclareOption{newcm}{\@newcmtrue}
+\ExecuteOptions{newcm}
 %
 % Options for Code Highlighting
 %
@@ -41,28 +43,109 @@
 %
 % Fonts for Mathematics and Western Languages
 %
-\ifthenelse{\boolean{@latin}}{  % `then` branch of `latin`
-  % mathematical symbols
-}{  % `else` branch of `latin`
-\ifthenelse{\boolean{@euler}}{  % `then` branch of `euler`
+\RequirePackage{unicode-math}
+\ifthenelse{\boolean{@euler}}{  % `then`-branch of `euler`
+  % font for english text
+  \setmainfont{Palatino}
+  % font for mathematical symbols
+  \setmathfont{Latin Modern Math}[
+    math-style = upright,
+    bold-style = upright,
+  ]
+  \setmathfont{Neo Euler}[
+    math-style = upright,
+    bold-style = upright,
+    range = {\mathalpha, \infty}
+  ]
   %% mathematical symbols
-}{  % `else` branch of `euler`
-  % i.e. the default branch
-  \RequirePackage{unicode-math}
-  % https://github.com/stipub/stixfonts
+}{  % `else`-branch of `euler`
+\ifthenelse{\boolean{@stix}}{  % `then`-branch of `stix`
   % font for english text
   \setmainfont{STIX Two Text}
   % font for mathematical symbols
+  \setmathfont{NewComputerModern Math}[
+    math-style = ISO,
+    bold-style = ISO,
+  ]
   \setmathfont{STIX Two Math}
   [
     math-style = ISO,
     bold-style = ISO,
+    StylisticSet = {3},
+    range = {\mathalpha, \vysmblkcircle, \infty}
   ]
   % mathematical symbols
   \if@bold
     \renewcommand{\vdot}{\vysmblkcircle}
   \fi
+}{  % `else`-branch of `stix`
+\ifthenelse{\boolean{@newcm}}{  % `then`-branch of `newcm`
+  \RequirePackage{unicode-math}
+  \setmainfont[
+    ItalicFont=NewCM10-BookItalic,
+    BoldFont=NewCM10-Bold,
+    BoldItalicFont=NewCM10-BoldItalic,
+    SmallCapsFeatures={Numbers=OldStyle}
+  ]{NewCM10-Book}
+  \setsansfont[
+    ItalicFont=NewCMSans10-BookOblique,
+    BoldFont=NewCMSans10-Bold,
+    BoldItalicFont=NewCMSans10-BoldOblique,
+    SmallCapsFeatures={Numbers=OldStyle}
+  ]{NewCMSans10-Book}
+  \setmonofont[
+    ItalicFont=NewCMMono10-BookItalic,
+    BoldFont=NewCMMono10-Bold,
+    BoldItalicFont=NewCMMono10-BoldOblique,
+    SmallCapsFeatures={Numbers=OldStyle}
+  ]{NewCMMono10-Book}
+  \setmathfont{NewCMMath-Book}[
+    math-style = ISO,
+    bold-style = ISO,
+  ]
+  \setmathfont{STIX Two Math}
+  [
+    math-style = ISO,
+    bold-style = ISO,
+    StylisticSet = {3},
+    range = {up/{greek}}
+  ]
+  \if@bold
+    \renewcommand{\vdot}{\mathbin{\mdsmblkcircle}}
+  \fi
+}{  % `else`-branch of `newcm`
+}  % end of `newcm`
+}  % end of `stix`
+}  % end of `euler`
+\AtBeginDocument{
+  \if@bold
+    \renewcommand{\cross}{\vectimes}
+  \fi
+  \renewcommand{\emptyset}{\varnothing}
   %% italic versions of the capital Greek letters
+  \let\oldGamma\Gamma
+  \let\oldGamma\Gamma
+  \let\oldDelta\Delta
+  \let\oldTheta\Theta
+  \let\oldLambda\Lambda
+  \let\oldXi\Xi
+  \let\oldPi\Pi
+  \let\oldSigma\Sigma
+  \let\oldUpsilon\Upsilon
+  \let\oldPhi\Phi
+  \let\oldPsi\Psi
+  \let\oldOmega\Omega
+  \renewcommand{\Gamma}{\symup{\oldGamma}}
+  \renewcommand{\Delta}{\symup{\oldDelta}}
+  \renewcommand{\Theta}{\symup{\oldTheta}}
+  \renewcommand{\Lambda}{\symup{\oldLambda}}
+  \renewcommand{\Xi}{\symup{\oldXi}}
+  \renewcommand{\Pi}{\symup{\oldPi}}
+  \renewcommand{\Sigma}{\symup{\oldSigma}}
+  \renewcommand{\Upsilon}{\symup{\oldUpsilon}}
+  \renewcommand{\Phi}{\symup{\oldPhi}}
+  \renewcommand{\Psi}{\symup{\oldPsi}}
+  \renewcommand{\Omega}{\symup{\oldOmega}}
   \renewcommand{\varGamma}{\mitGamma}
   \renewcommand{\varDelta}{\mitDelta}
   \renewcommand{\varTheta}{\mitTheta}
@@ -74,16 +157,8 @@
   \renewcommand{\varPhi}{\mitPhi}
   \renewcommand{\varPsi}{\mitPsi}
   \renewcommand{\varOmega}{\mitOmega}
-}}
-%
-% Commands for Slashes
-%
-\ifx\fracslash\undefined
-\newcommand{\fracslash}{/}
-\fi
-\ifx\divslash\undefined
-\newcommand{\divslash}{\mathbin{/}}
-\fi
+  \renewcommand{\mathrm}[1]{\symup{#1}}
+}
 %
 % Commands for Boldness
 %
@@ -157,20 +232,14 @@
 \DeclareMathOperator{\Span}{span}
 \DeclareMathOperator{\Card}{card}  % cardinality of a set
 \DeclareMathOperator{\TV}{TV}  % total variation of a function
-\newcommand\Bessel[1]{\operatorname{J}_{#1}}
-\newcommand\ChebyshevI[1]{\operatorname{T}_{#1}}
 \newcommand\ConHypGeo{\sideset{_{1}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
-\newcommand\Hermite[1]{\operatorname{H}_{#1}}
 \newcommand\HypGeo{\sideset{_{2}^{}}{_{1}^{}}{\mathop{\operatorname{F}}}}
-\newcommand\Laguerre[1]{\operatorname{L}_{#1}}
-\newcommand\Legendre[1]{\operatorname{P}_{#1}}
-\newcommand\Neumann[1]{\operatorname{N}_{#1}}
 %
 % Settings for Chinese
 %
 \RequirePackage[heading]{ctex}
 \ctexset{
-  punct = kaiming,
+  punct = quanjiao,
   part/format += \sffamily,
   chapter/format += \sffamily,
   section/format += \sffamily,
