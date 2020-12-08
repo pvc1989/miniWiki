@@ -101,14 +101,14 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-Frobenius 方法
+Frobenius' 幂级数法
 \end_layout
 
 \begin_layout Standard
 最一般的二阶线性齐次常微分方程具有以下形式
 \begin_inset Formula 
 \[
-\boxed{\left(p_{0}\dv[2]{x}+p_{1}\dv{x}+p_{2}\right)u=0}
+\boxed{\left(p_{0}(x)\dv[2]{x}+p_{1}(x)\dv{x}+p_{2}(x)\right)u(x)=0}
 \]
 
 \end_inset
@@ -163,7 +163,7 @@ reference "tab:常用二阶线性齐次ODE的奇点"
  的“标准形式”
 \begin_inset Formula 
 \begin{equation}
-\boxed{\left(\dv[2]{x}+P\dv{x}+Q\right)u=0}\label{eq:二阶线性齐次ODE的标准形式}
+\boxed{\left(\dv[2]{x}+P(x)\dv{x}+Q(x)\right)u(x)=0}\label{eq:二阶线性齐次ODE的标准形式}
 \end{equation}
 
 \end_inset
@@ -308,7 +308,7 @@ reference "eq:二阶线性齐次ODE的标准形式"
  变为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\left(\dv[2]{z}+\frac{2z-P(1/z)}{z^{2}}\dv{z}+\frac{Q(1/z)}{z^{4}}\right)w=0}\label{eq:接近无穷远点的二阶线性齐次ODE}
+\boxed{\left(\dv[2]{z}+\frac{2z-P(1/z)}{z^{2}}\dv{z}+\frac{Q(1/z)}{z^{4}}\right)w(z)=0}\label{eq:接近无穷远点的二阶线性齐次ODE}
 \end{equation}
 
 \end_inset
@@ -1468,7 +1468,7 @@ u(x)=\sum_{n=0}^{\infty}a_{n}\cdot(x-0)^{n+s}\qquad a_{0}\ne0
 代入简谐方程
 \begin_inset Formula 
 \[
-\boxed{u''+\omega^{2}\,u=0\qquad\omega\ne0}
+\boxed{\left(\frac{\dd^{2}}{\dd{x^{2}}}+\omega^{2}\right)u(x)=0\qquad\omega\ne0}
 \]
 
 \end_inset
@@ -1693,7 +1693,7 @@ name "sec:Legendre方程在原点附近的解"
 Legendre 方程
 \begin_inset Formula 
 \[
-\boxed{(1-x^{2})\,u''-2x\,u'+(l+1)l\,u=0}
+\boxed{\left((1-x^{2})\frac{\dd^{2}}{\dd{x^{2}}}-2x\frac{\dd}{\dd{x}}+(l+1)l\right)u(x)=0}
 \]
 
 \end_inset
@@ -1706,7 +1706,11 @@ Legendre 方程
 
 \end_inset
 
-分离变量。将幂级数形式解
+分离变量，且最终的解具有轴对称性（与 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 无关）。将幂级数形式解
 \begin_inset Formula 
 \[
 u(x)=\sum_{n=0}^{\infty}a_{n}\cdot(x-0)^{n+s}\qquad a_{0}\ne0
@@ -1940,7 +1944,7 @@ name "sec:Hermite方程在原点附近的解"
 Hermite 方程
 \begin_inset Formula 
 \[
-\boxed{u''-2x\,u'+2\alpha\,u=0}
+\boxed{\left(\frac{\dd^{2}}{\dd{x^{2}}}-2x\frac{\dd}{\dd{x}}+2\alpha\right)u(x)=0}
 \]
 
 \end_inset
@@ -2170,7 +2174,7 @@ Bessel 方程在正半轴上的解
 Bessel 方程
 \begin_inset Formula 
 \[
-\boxed{x^{2}\,u''+x\,u'+(x^{2}-\nu^{2})\,u=0\qquad\nu\ge0}
+\boxed{\left(x^{2}\frac{\dd^{2}}{\dd{x^{2}}}+x\frac{\dd}{\dd{x}}+(x^{2}-\nu^{2})\right)u(x)=0\qquad\nu\ge0}
 \]
 
 \end_inset
@@ -2300,7 +2304,15 @@ u_{s=\nu}(x)=\sum_{k=0}^{\infty}a_{2k}\,x^{2k+\nu}=2^{\nu}\,\Gamma(1+\nu)\,a_{0}
 \begin_inset Formula $a_{0}$
 \end_inset
 
- 中，而
+ 中（从而使 
+\begin_inset Formula $x$
+\end_inset
+
+ 与 
+\begin_inset Formula $1/2$
+\end_inset
+
+ 有相同的幂次），而
 \begin_inset Formula 
 \[
 \mathrm{J}_{\nu}(x)=\sum_{k=0}^{\infty}\frac{(-1)^{k}/k!}{\Gamma(k+1+\nu)}\left(\frac{x}{2}\right)^{2k+\nu}
@@ -2514,7 +2526,7 @@ name "sec:Laguerre方程在原点附近的解"
 Laguerre 方程
 \begin_inset Formula 
 \[
-\boxed{x\,u''+(1-x)\,u'+m^{2}\,u=0}
+\boxed{\left(x\frac{\dd^{2}}{\dd{x^{2}}}+(1-x)\frac{\dd}{\dd{x}}+m^{2}\right)u(x)=0}
 \]
 
 \end_inset
@@ -2596,7 +2608,7 @@ a_{n}=\binom{n-1-m^{2}}{n}\frac{a_{0}}{n!}\qquad n=0,1,2,\dots
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left((1-x)x\frac{\dd^{2}}{\dd{x^{2}}}+\left(c-(1+a+b)x\right)\frac{\dd}{\dd{x}}-ab\right)u=0\qquad\forall x\in[0,1]
+\left((1-x)x\frac{\dd^{2}}{\dd{x^{2}}}+(c-(1+a+b)x)\frac{\dd}{\dd{x}}-ab\right)u(x)=0\qquad\forall x\in[0,1]
 \]
 
 \end_inset

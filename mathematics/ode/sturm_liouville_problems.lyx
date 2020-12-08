@@ -1732,6 +1732,29 @@ u(x(\theta))=\cos(n\theta)=\cos(n\arccos x)\qquad x\in[-1,1]
 
 \end_layout
 
+\begin_layout Subsubsection
+生成函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1-t^{2}}{1-2tx+t^{2}}=\mathrm{T}_{0}(x)+\sum_{n=1}^{\infty}2\mathrm{T}_{n}(x)\,t^{n}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{1-2tx+t^{2}}=\sum_{n=0}^{\infty}\mathrm{U}_{n}(x)\,t^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 有界边界条件导出的特征函数族
 \end_layout
@@ -1947,6 +1970,243 @@ C_{n-2k}=\frac{(-1)^{k}\,(2n-2k)!}{k!\,(n-k)!\,(n-2k)!}\cdot\frac{(n!)^{2}}{(2n)
 
 \end_layout
 
+\begin_layout Subsubsection
+生成函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\frac{1}{\sqrt{1-2tx+t^{2}}}=\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,t^{l}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+由静电学可知
+\begin_inset Formula 
+\[
+\frac{1}{4\mathrm{\pi}\varepsilon_{0}}\nabla^{2}\frac{1}{\vert\vec{r}-\vec{a}\vert}=-\frac{\mathrm{\delta}(\vec{r}-\vec{a})}{\varepsilon_{0}}
+\]
+
+\end_inset
+
+若源点 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ 位于 
+\begin_inset Formula $+z$
+\end_inset
+
+-轴上，即 
+\begin_inset Formula $\vec{a}=a\vec{e}_{z}$
+\end_inset
+
+，则 
+\begin_inset Formula $1/\vert\vec{r}-\vec{a}\vert=1/\sqrt{r^{2}+a^{2}-2ra\cos\theta}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 无关（关于 
+\begin_inset Formula $z$
+\end_inset
+
+-轴对称），故可展开为
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{r^{2}+a^{2}-2ra\cos\theta}}=\sum_{l=0}^{\infty}\left(A_{l}\,r^{l}+\frac{B_{l}}{r^{l+1}}\right)\mathrm{P}_{l}(\cos\theta)
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $r<a$
+\end_inset
+
+ 的区域，应舍去 
+\begin_inset Formula $r$
+\end_inset
+
+ 的负幂次项；为确定 
+\begin_inset Formula $A_{l}$
+\end_inset
+
+，可取 
+\begin_inset Formula $\cos\theta=1$
+\end_inset
+
+ 的特殊情形：
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{r^{2}+a^{2}-2ra}}=\frac{1}{a-r}=\sum_{l=0}^{\infty}A_{l}\,r^{l}\,\mathrm{P}_{l}(1)
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula 
+\[
+\frac{1}{a-r}=\frac{1}{a}\sum_{l=0}^{\infty}\left(\frac{r}{a}\right)^{l}=\sum_{l=0}^{\infty}\frac{1}{a^{l+1}}r^{l}\qquad(\forall l\in\mathbb{N})\left(\mathrm{P}_{l}(1)=1\right)
+\]
+
+\end_inset
+
+即得 
+\begin_inset Formula $(\forall l\in\mathbb{N})\left(A_{l}=1/a^{l+1}\right)$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{r^{2}+a^{2}-2ra\cos\theta}}=\sum_{l=0}^{\infty}\frac{1}{a^{l+1}}r^{l}\,\mathrm{P}_{l}(\cos\theta)=\frac{1}{a}\sum_{l=0}^{\infty}\mathrm{P}_{l}(\cos\theta)\left(\frac{r}{a}\right)^{l}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{1-2tx+t^{2}}}=\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,t^{l}\qquad\begin{cases}
+t\coloneqq r/a\\
+x\coloneqq\cos\theta
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+归一化系数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\langle\mathrm{P}_{l}\vert\mathrm{P}_{l}\rangle=\int_{-1}^{1}\mathrm{P}_{l}(x)\,\mathrm{P}_{l}(x)\dd{x}=\frac{2}{2l+1}\qquad\forall l\in\mathbb{N}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+正交性由一般理论保证。下面利用正交性及生成函数导出 
+\begin_inset Formula $\mathrm{P}_{l}$
+\end_inset
+
+ 的模：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-1}^{1}\frac{1}{1-2tx+t^{2}}\dd{x} & =\int_{-1}^{1}\frac{1}{1-2tx+t^{2}}\frac{\dd(-2tx)}{-2t}=\frac{1}{t}\ln\frac{1+t}{1-t}=\sum_{l=0}^{\infty}t^{2l}\frac{2}{2l+1}\\
+ & =\int_{-1}^{1}\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,\mathrm{P}_{l}(x)\,t^{2l}\dd{x}=\sum_{l=0}^{\infty}t^{2l}\cdot\langle\mathrm{P}_{l}\vert\mathrm{P}_{l}\rangle
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+系数递推关系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{(l+1)\cdot\mathrm{P}_{l+1}(x)=(2l+1)x\cdot\mathrm{P}_{l}(x)-l\cdot\mathrm{P}_{l-1}(x)\qquad\forall l\in\mathbb{N}_{+}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对生成函数定义式两端关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 求导，得
+\begin_inset Formula 
+\[
+\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l-1}=\frac{-1}{1-2tx+t^{2}}\frac{t-x}{\sqrt{1-2tx+t^{2}}}=\frac{x-t}{1-2tx+t^{2}}\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,t^{l}
+\]
+
+\end_inset
+
+两端同乘 
+\begin_inset Formula $(1-2tx+t^{2})$
+\end_inset
+
+ 可得
+\begin_inset Formula 
+\[
+\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l-1}-2x\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l}+\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l+1}=x\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,t^{l}-\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,t^{l+1}
+\]
+
+\end_inset
+
+左端第二、三项的求和指标可以扩充到 
+\begin_inset Formula $0$
+\end_inset
+
+；移项即得
+\begin_inset Formula 
+\[
+\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l-1}+\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,(l+1)\,t^{l+1}=x\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,(2l+1)\,t^{l}
+\]
+
+\end_inset
+
+对左端替换求和指标：
+\begin_inset Formula 
+\[
+\begin{gathered}\sum_{l=1}^{\infty}\mathrm{P}_{l}(x)\,l\,t^{l-1}=\sum_{k=0}^{\infty}\mathrm{P}_{k+1}(x)\,(k+1)\,t^{k}=\sum_{l=0}^{\infty}\mathrm{P}_{l+1}(x)\,(l+1)\,t^{l}\\
+\sum_{l=0}^{\infty}\mathrm{P}_{l}(x)\,(l+1)\,t^{l+1}=\sum_{k=1}^{\infty}\mathrm{P}_{k-1}(x)\,k\,t^{k}=\sum_{l=1}^{\infty}\mathrm{P}_{l-1}(x)\,l\,t^{l}
+\end{gathered}
+\]
+
+\end_inset
+
+比较 
+\begin_inset Formula $t^{l}$
+\end_inset
+
+ 的系数，即得所需结果。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Bessel 函数
 \end_layout
@@ -2110,6 +2370,21 @@ Neumann 函数
 \end_layout
 
 \begin_layout Subsubsection
+生成函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\exp(\frac{xt}{2}-\frac{x}{2t})=\sum_{n=-\infty}^{\infty}\mathrm{J}_{n}(x)\,t^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 递推关系
 \end_layout
 
@@ -2120,6 +2395,21 @@ Neumann 函数
 \mathrm{J}_{\nu}'(x)= & \mathrm{J}_{\nu-1}(x)-\frac{\nu}{x}\mathrm{J}_{\nu}(x)\\
 = & \frac{\nu}{x}\mathrm{J}_{\nu}(x)-\mathrm{J}_{\nu+1}(x)
 \end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+渐进公式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{J}_{n}(x)\approx\sqrt{\frac{2}{\mathrm{\pi}x}}\cos(x-\frac{2n+1}{4}\mathrm{\pi})\qquad n\in\mathbb{N}
 \]
 
 \end_inset
@@ -2313,6 +2603,21 @@ u_{s=0}(x)=\sum_{k=0}^{n}\binom{k-1-n}{k}\frac{x^{k}}{k!}\qquad\lambda=n\in\math
 \mathrm{L}_{4}(x) & =(4!-96x+72x^{2}-16x^{3}+x^{4})/4!\\
 \mathrm{L}_{5}(x) & =(5!-600x+600x^{2}-200x^{3}+25x^{4}-x^{5})/5!
 \end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+生成函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{1}{1-t}\exp(\frac{-tx}{1-t})=\sum_{n=0}^{\infty}\mathrm{L}_{n}(x)\,t^{n}
 \]
 
 \end_inset
@@ -2637,6 +2942,21 @@ C_{k-2} & =\frac{(k+1)(k)}{2(k-1)-\lambda}C_{k} & k & =2n+1,2n-1,\dots,5,3
 \begin{aligned}\mathrm{H}_{0}(x) & =1 & \mathrm{H}_{2}(x) & =4x^{2}-2 & \mathrm{H}_{4}(x) & =16x^{4}-48x^{2}+12\\
 \mathrm{H}_{1}(x) & =2x & \mathrm{H}_{3}(x) & =8x^{3}-12x & \mathrm{H}_{5}(x) & =32x^{5}-160x^{3}+120x
 \end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+生成函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\exp(2tx-t^{2})=\sum_{n=0}^{\infty}\frac{\mathrm{H}_{n}(x)}{n!}t^{n}
 \]
 
 \end_inset
