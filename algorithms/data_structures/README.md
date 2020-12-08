@@ -243,13 +243,6 @@ title: 数据结构与算法
 - MIT
   - Text: Chap-6  Heapsort
 
-### Event-Driven Simulation
-
-- Princeton
-  - Text: [Sect-6.1  Event Driven Simulation](https://algs4.cs.princeton.edu/61event)
-  - Video: [Part-1/Week-4  Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
-  - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
-
 ## Fibonacci Heaps
 
 - MIT
@@ -259,6 +252,15 @@ title: 数据结构与算法
 
 - MIT
   - Text: Chap-20  van Emde Boas Trees
+
+## Application: Event-Driven Simulation
+
+- Princeton
+  - Text: [Sect-6.1  Event Driven Simulation](https://algs4.cs.princeton.edu/61event)
+  - Video: [Part-1/Week-4  Event-Driven Simulation](https://www.coursera.org/learn/algorithms-part1/lecture/QVhGs/event-driven-simulation-optional)
+  - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
+
+## Application: A* Seach for 8-Puzzle
 
 # Hash Tables
 
