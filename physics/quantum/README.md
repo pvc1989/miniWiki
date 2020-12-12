@@ -200,6 +200,11 @@ $$
 
 ### 正则量子化
 
+- 写出系统的 Lagranian 函数 $\boxed{L(\underline{q},\underline{\dot{q}})=T(\underline{q},\underline{\dot{q}},t)-V(\underline{q},t)}$，其中 $T,V$ 分别为系统的“动能”与“势能”。
+- 定义广义动量 $\boxed{\underline{p}=\partial L/\partial\underline{\dot{q}}}$，并将 $\underline{\dot{q}}$ 用 $\underline{q},\underline{p}$ 表示。
+- 定义 Hamiltonian 函数 $\boxed{H(\underline{q},\underline{p},t)=\underline{p}\cdot\underline{q}-L(\underline{q},\underline{\dot{q}},t)}$，其中 $\underline{p}\cdot\underline{q}=\sum_{i=1}^np_iq_i$ 表示逐项相乘。
+- 将物理量 $ H,\underline{q},\underline{p} $ 替换为相应的算符 $\hat{H},\underline{\hat{q}},\underline{\hat{p}}$，并要求 $[\hat{p}_{i},\hat{q}_{k}]=\mathrm{\delta}_{ik}\sqrt{-1}\hbar\hat{1}$，即可写出 $\boxed{\sqrt{-1}\hbar\partial_t\,\psi(\underline{q},\underline{p},t)=\hat{H}(\underline{\hat{q}},\underline{\hat{p}},t)\,\psi(\underline{q},\underline{p},t)}$，即该系统的 Schrödinger 方程。
+
 # 用波函数描述量子态
 
 # 用算符描述可观测量
