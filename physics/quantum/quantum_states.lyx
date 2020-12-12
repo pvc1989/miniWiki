@@ -202,19 +202,19 @@ reference "eq:量子态：平面波"
 
 \end_inset
 
- 式中，描述粒子性的“能量” 
+ 式中，描述粒子性的能量 
 \begin_inset Formula $E$
 \end_inset
 
-、“动量” 
+、动量 
 \begin_inset Formula $\vec{p}$
 \end_inset
 
- 与描述波动性的“圆频率” 
+ 与描述波动性的圆频率 
 \begin_inset Formula $\omega$
 \end_inset
 
-、“波矢” 
+、波矢 
 \begin_inset Formula $\vec{k}$
 \end_inset
 
@@ -261,7 +261,7 @@ reference "eq:量子态：平面波"
  这一特例出发，导出了如下“Schrödinger 方程”：
 \begin_inset Formula 
 \begin{equation}
-\ii\hbar\pdv{}{t}\psi(\vec{x},t)=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V\right)\psi(\vec{x},t)\label{eq:量子态：Schrodinger 方程}
+\ii\hbar\pdv{}{t}\psi(\vec{x},t)=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{x})\right)\psi(\vec{x},t)\label{eq:量子态：Schrodinger 方程}
 \end{equation}
 
 \end_inset
@@ -311,7 +311,7 @@ reference "eq:量子态：Schrodinger 方程"
 \end_layout
 
 \begin_layout Standard
-波函数物理意义至今仍无定论。目前最主流的观点是 Max Born (1926) 提出的“统计解释 (statistical interpretation)”：
+波函数的物理意义至今仍无定论。目前最主流的观点是 Max Born (1926) 提出的“统计解释 (statistical interpretation)”：
 \end_layout
 
 \begin_layout Itemize
@@ -319,7 +319,7 @@ reference "eq:量子态：Schrodinger 方程"
 \begin_inset Formula $\psi$
 \end_inset
 
- 又被称为其“概率振幅 (probability amplitude)”，它在 
+ 又被称为其“几率振幅 (probability amplitude)”，它在 
 \begin_inset Formula $(\vec{x},t)$
 \end_inset
 
@@ -331,11 +331,11 @@ reference "eq:量子态：Schrodinger 方程"
 \begin_inset Formula $t$
 \end_inset
 
- 时刻该粒子位于 
+ 时刻在 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处的概率密度。
+ 处发现该粒子的几率密度。
 \end_layout
 
 \begin_layout Itemize
@@ -351,7 +351,11 @@ reference "eq:量子态：Schrodinger 方程"
 
 \end_inset
 
-该式称为波函数的“归一化条件”。然而，并不是所有波函数都可以被归一化，例如平面波 
+该式称为波函数的“归一化条件”。
+\end_layout
+
+\begin_layout Itemize
+然而，并不是所有波函数都可以被归一化，例如平面波 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:量子态：平面波"
@@ -365,7 +369,7 @@ noprefix "false"
 \begin_inset Formula $\vert\psi(\vec{x},t)\vert^{2}$
 \end_inset
 
- 应理解为相对概率密度。
+ 应理解为相对几率密度。
 \end_layout
 
 \begin_layout Standard
@@ -404,7 +408,7 @@ noprefix "false"
 \begin_inset Formula $\vec{x}_{1},\dots,\vec{x}_{n}$
 \end_inset
 
- 处的概率密度
+ 处的几率密度
 \end_layout
 
 \begin_layout Itemize
@@ -580,7 +584,11 @@ status open
 
 \end_inset
 
-一般而言，概率密度不满足叠加原理，而是遵循以下法则：
+一般而言，几率密度 
+\begin_inset Formula $\psi^{*}\psi$
+\end_inset
+
+ 不满足叠加原理，而是遵循以下法则：
 \begin_inset Formula 
 \[
 \begin{aligned}\vert C_{1}\psi_{1}+C_{2}\psi_{2}\vert^{2} & =(C_{1}\psi_{1}+C_{2}\psi_{2})^{*}\,(C_{1}\psi_{1}+C_{2}\psi_{2})\\
@@ -803,6 +811,14 @@ status open
 \end_inset
 
 
+\begin_inset Formula 
+\[
+\langle u\vert v\rangle\coloneqq\int_{-\infty}^{+\infty}u^{*}(x)\,v(x)\dd{x}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -965,7 +981,7 @@ reference "eq:量子态：一维驻波：坐标分解"
  改写为
 \begin_inset Formula 
 \[
-\langle x\vert\psi\rangle=\int_{-\infty}^{+\infty}\langle\alpha\vert\psi\rangle\langle x\vert\alpha\rangle\dd{\alpha}=\langle\alpha\vert\left(\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}\right)\vert\psi\rangle
+\langle x\vert\psi\rangle=\int_{-\infty}^{+\infty}\langle\alpha\vert\psi\rangle\langle x\vert\alpha\rangle\dd{\alpha}=\langle x\vert\left(\int_{-\infty}^{+\infty}\dyad{\alpha}\dd{\alpha}\right)\vert\psi\rangle
 \]
 
 \end_inset
@@ -1081,7 +1097,7 @@ reference "sec:Fourier：变换"
 \begin_inset Formula 
 \[
 \begin{gathered}\tilde{\psi}(\vec{p})=\langle\vec{p}\vert\psi\rangle=\int_{\mathbb{R}^{n}(\vec{x})}\langle\vec{p}\vert\vec{x}\rangle\langle\vec{x}\vert\psi\rangle\qquad\psi(\vec{x})=\langle\vec{x}\vert\psi\rangle=\int_{\mathbb{R}^{n}(\vec{p})}\langle\vec{x}\vert\vec{p}\rangle\langle\vec{p}\vert\psi\rangle\\
-\langle\vec{p}\vert\vec{x}\rangle\coloneqq(2\mathrm{\pi}\hbar)^{-n/2}\exp(-(\ii/\hbar)\,\vec{p}\vdot\vec{x})\qquad\langle\vec{x}\vert\vec{p}\rangle\coloneqq(2\mathrm{\pi}\hbar)^{-n/2}\exp(+(\ii/\hbar)\,\vec{p}\vdot\vec{x})
+\langle\vec{p}\vert\vec{x}\rangle\coloneqq\frac{\exp(-(\ii/\hbar)\,\vec{p}\vdot\vec{x})}{(2\mathrm{\pi}\hbar)^{n/2}}\qquad\langle\vec{x}\vert\vec{p}\rangle\coloneqq\frac{\exp(+(\ii/\hbar)\,\vec{p}\vdot\vec{x})}{(2\mathrm{\pi}\hbar)^{n/2}}
 \end{gathered}
 \]
 
