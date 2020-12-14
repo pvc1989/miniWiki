@@ -201,6 +201,210 @@ status open
 刚体
 \end_layout
 
+\begin_layout Section
+弹性碰撞
+\end_layout
+
+\begin_layout Subsection
+平面碰撞发生的几何条件
+\end_layout
+
+\begin_layout Standard
+在碰撞前相对于圆盘-
+\begin_inset Formula $1$
+\end_inset
+
+ 静止的惯性系中，有如下矢量关系
+\begin_inset Formula 
+\[
+\Delta\vec{r}'=\Delta\vec{r}+\Delta\vec{v}\,\Delta t
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Delta\vec{r}'\coloneqq\vec{r}_{2}'-\vec{r}_{1}'\qquad\Delta\vec{r}\coloneqq\vec{r}_{2}-\vec{r}_{1}\qquad\Delta\vec{v}\coloneqq\vec{v}_{2}-\vec{v}_{1}
+\]
+
+\end_inset
+
+将 
+\begin_inset Formula $-\Delta\vec{r}',\Delta\vec{r},\Delta\vec{v}\,\Delta t$
+\end_inset
+
+ 首尾相连画成三角形，代入余弦定理
+\begin_inset Formula 
+\[
+\vert\Delta\vec{r}'\vert^{2}=\vert\Delta\vec{r}\vert^{2}+\vert\Delta\vec{v}\,\Delta t\vert^{2}-2\underbrace{\vert\Delta\vec{r}\vert\vert\Delta\vec{v}\,\Delta t\vert\cos\theta}_{-\Delta\vec{r}\vdot\Delta\vec{v}\,\Delta t}
+\]
+
+\end_inset
+
+即得关于 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ 的一元二次方程
+\begin_inset Formula 
+\[
+A\,(\Delta t)^{2}+B\,\Delta t+C=0
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+A\coloneqq\Delta\vec{v}\vdot\Delta\vec{v}\qquad B\coloneqq2\Delta\vec{r}'\vdot\Delta\vec{v}\qquad C\coloneqq\Delta\vec{r}'\vdot\Delta\vec{r}'-\Delta\vec{r}\vdot\Delta\vec{r}
+\]
+
+\end_inset
+
+故方程有正实根的条件为
+\begin_inset Formula 
+\[
+B^{2}-4AC>0
+\]
+
+\end_inset
+
+此条件满足时，方程有两个正根，应取较小值：
+\begin_inset Formula 
+\[
+\boxed{\Delta t=\frac{-\Delta\vec{r}'\vdot\Delta\vec{v}-\sqrt{D}}{\Delta\vec{v}\vdot\Delta\vec{v}}\qquad D\coloneqq(\Delta\vec{r}'\vdot\Delta\vec{v})^{2}-(\Delta\vec{v}\vdot\Delta\vec{v})(\Delta\vec{r}'\vdot\Delta\vec{r}'-\Delta\vec{r}\vdot\Delta\vec{r})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+动量在质心系中只改变方向
+\end_layout
+
+\begin_layout Standard
+在任何惯性系中，“动量守恒”可写作
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+m_{1}\vec{v}_{1}+m_{2}\vec{v}_{2}=m_{1}\vec{v}_{1}'+m_{2}\vec{v}_{2}'
+\]
+
+\end_inset
+
+特别地，在质心系中
+\begin_inset Formula 
+\[
+m_{1}\vec{v}_{1,0}+m_{2}\vec{v}_{2,0}=m_{1}\vec{v}_{1,0}'+m_{2}\vec{v}_{2,0}'
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\vec{v}_{0}\coloneqq\frac{m_{1}\vec{v}_{1}+m_{2}\vec{v}_{2}}{m_{1}+m_{2}}=\frac{m_{1}\vec{v}_{1}'+m_{2}\vec{v}_{2}'}{m_{1}+m_{2}}\qquad\begin{cases}
+\vec{v}_{i,0}\coloneqq\vec{v}_{i}-\vec{v}_{0} & i=1,2\\
+\vec{v}_{j,0}'\coloneqq\vec{v}_{j}'-\vec{v}_{0} & j=1,2
+\end{cases}
+\]
+
+\end_inset
+
+另由“动能守恒”可得
+\begin_inset Formula 
+\[
+\vert\vec{p}_{1,0}\vert=\vert\vec{p}_{2,0}\vert=\vert\vec{p}_{1,0}'\vert=\vert\vec{p}_{2,0}'\vert\qquad\begin{cases}
+\vec{p}_{i,0}\coloneqq m_{i}\vec{v}_{i} & i=1,2\\
+\vec{p}_{j,0}'\coloneqq m_{j}\vec{v}_{j}' & j=1,2
+\end{cases}
+\]
+
+\end_inset
+
+即，完全弹性碰撞只改变动量在质心系中的方向。代回质心速度 
+\begin_inset Formula $\vec{v}_{0}$
+\end_inset
+
+ 的定义式，即得
+\begin_inset Formula 
+\[
+\vec{p}_{2,0}=m_{2}\vec{v}_{2}-m_{2}\frac{m_{1}\vec{v}_{1}+m_{2}\vec{v}_{2}}{m_{1}+m_{2}}=\frac{m_{1}m_{2}}{m_{1}+m_{2}}(\vec{v}_{2}-\vec{v}_{1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+动量在任意惯性系中的变化值
+\end_layout
+
+\begin_layout Standard
+另一方面，完全弹性碰撞所造成的动量改变值
+\begin_inset Formula 
+\[
+\Delta\vec{p}\coloneqq\vec{p}_{1,0}-\vec{p}_{1,0}'=-(\vec{p}_{2,0}-\vec{p}_{2,0}')
+\]
+
+\end_inset
+
+应垂直于碰撞瞬间两圆之切线，亦即平行于碰撞瞬间两圆之连心线。故 
+\begin_inset Formula $\vec{p}_{2,0},\Delta\vec{p},-\vec{p}_{2,0}'$
+\end_inset
+
+ 首尾相连即构成等腰三角形，且 
+\begin_inset Formula $\Delta\vec{p}$
+\end_inset
+
+ 的长度为 
+\begin_inset Formula $\vec{p}_{2,0}$
+\end_inset
+
+ 在碰撞瞬间两圆之连心线 
+\begin_inset Formula $\Delta\vec{r}\coloneqq\vec{r}_{2}-\vec{r}_{1}$
+\end_inset
+
+ 上投影之二倍：
+\begin_inset Formula 
+\[
+\vert\Delta\vec{p}\vert=\vert2\vec{p}_{2,0}\vdot\vec{e}_{\Delta\vec{r}}\vert\qquad\vec{e}_{\Delta\vec{r}}\coloneqq\frac{\Delta\vec{r}}{\vert\Delta\vec{r}\vert}
+\]
+
+\end_inset
+
+另据 
+\begin_inset Formula $\Delta\vec{p},\Delta\vec{r}$
+\end_inset
+
+ 之定义，二者应同向，故
+\begin_inset Formula 
+\[
+\Delta\vec{p}=\vert\Delta\vec{p}\vert\vec{e}_{\Delta\vec{r}}=\left|2\vec{p}_{2,0}\vdot\frac{\Delta\vec{r}}{\vert\Delta\vec{r}\vert}\right|\frac{\Delta\vec{r}}{\vert\Delta\vec{r}\vert}
+\]
+
+\end_inset
+
+综上可得
+\begin_inset Formula 
+\[
+\boxed{\Delta\vec{p}=\frac{2m_{1}m_{2}}{m_{1}+m_{2}}\vert\Delta\vec{v}\vdot\Delta\vec{r}\vert\frac{\Delta\vec{r}}{\vert\Delta\vec{r}\vert^{2}}\qquad\begin{cases}
+\Delta\vec{r}\coloneqq\vec{r}_{2}-\vec{r}_{1}\\
+\Delta\vec{v}\coloneqq\vec{v}_{2}-\vec{v}_{1}
+\end{cases}}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Lagrangian 力学
 \end_layout
