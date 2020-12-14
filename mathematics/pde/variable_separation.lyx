@@ -104,7 +104,231 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
+时空变量分离
+\end_layout
+
+\begin_layout Subsection
+线性波方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{\partial^{2}}{\partial t^{2}}-c^{2}\nabla^{2}\right)\psi(\vec{r},t)=0
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $\psi(\vec{r},t)=T(t)\,\phi(\vec{r})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\phi(\vec{r})\frac{\partial^{2}T(t)}{\partial t^{2}}=T(t)\,c^{2}\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{T(t)}\frac{\partial^{2}T(t)}{\partial t^{2}}=-\omega^{2}=\frac{c^{2}}{\phi(\vec{r})}\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{\partial^{2}}{\partial t^{2}}+\omega^{2}\right)T(t)=0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\nabla^{2}+k^{2}\right)\phi(\vec{r})=0}\qquad k^{2}\coloneqq\omega^{2}/c^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+热传导方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}-\kappa\nabla^{2}\right)\psi(\vec{r},t)=0
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $\psi(\vec{r},t)=T(t)\,\phi(\vec{r})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\phi(\vec{r})\frac{\partial T(t)}{\partial t}=T(t)\,\kappa\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{1}{T(t)}\frac{\partial T(t)}{\partial t}=-\sigma=\frac{\kappa}{\phi(\vec{r})}\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{\partial}{\partial t}+\sigma\right)T(t)=0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\nabla^{2}+k^{2}\right)\phi(\vec{r})=0}\qquad k^{2}\coloneqq\sigma/\kappa
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Schrödinger 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\ii\hbar\frac{\partial}{\partial t}+\frac{\hbar^{2}}{2m}\nabla^{2}-V(\vec{r})\right)\psi(\vec{r},t)=0
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $\psi(\vec{r},t)=T(t)\,\phi(\vec{r})$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\phi(\vec{r})\,\ii\hbar\frac{\partial T(t)}{\partial t}=T(t)\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{r})\right)\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\ii\hbar}{T(t)}\frac{\partial T(t)}{\partial t}=E=\frac{1}{\phi(\vec{r})}\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{r})\right)\nabla^{2}\phi(\vec{r})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\ii\hbar\frac{\partial}{\partial t}-E\right)T(t)=0}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\left(\hat{H}-E\right)\phi(\vec{r})=0}\qquad\hat{H}\coloneqq\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{r})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Laplacian 算子
+\end_layout
+
+\begin_layout Subsection
+正交曲线坐标系
+\end_layout
+
+\begin_layout Standard
+直角坐标系
+\begin_inset Formula 
+\[
+\vec{r}=\vec{r}(x_{1},\dots,x_{n})=\sum_{i=1}^{n}\vec{e}_{i}x_{i}
+\]
+
+\end_inset
+
+曲线坐标系
+\begin_inset Formula 
+\[
+\vec{r}=\vec{r}(x_{1}(\theta^{1},\dots,\theta^{n}),\dots,x_{n}(\theta^{1},\dots,\theta^{n}))
+\]
+
+\end_inset
+
+协变基向量
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vec{b}_{i}\coloneqq\frac{\partial\vec{r}}{\partial\theta^{i}}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+度量张量
+\begin_inset Formula 
+\[
+g_{ik}\coloneqq\vec{b}_{i}\vdot\vec{b}_{k}=\frac{\partial\vec{r}}{\partial\theta^{i}}\vdot\frac{\partial\vec{r}}{\partial\theta^{k}}\qquad i,k=1,\dots,n
+\]
+
+\end_inset
+
+ Lame 系数
+\begin_inset Formula 
+\[
+h_{i}\coloneqq\sqrt{g_{ii}}\equiv\sqrt{\frac{\partial\vec{r}}{\partial\theta^{i}}\vdot\frac{\partial\vec{r}}{\partial\theta^{i}}}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+Jacobian 行列式
+\begin_inset Formula 
+\[
+\sqrt{\det(g_{ik})}\eqqcolon\sqrt{g}=h_{1}\cdot\cdots\cdot h_{n}
+\]
+
+\end_inset
+
+Laplacian 算子
+\begin_inset Formula 
+\[
+\nabla^{2}u=\sum_{i=1}^{n}\frac{1}{\sqrt{g}}\frac{\partial}{\partial\theta^{i}}\left(\frac{\sqrt{g}}{g_{ii}}\frac{\partial u}{\partial\theta^{i}}\right)=\sum_{i=1}^{n}\frac{1}{h_{1}\cdot\cdots\cdot h_{n}}\frac{\partial}{\partial\theta^{i}}\left(\frac{h_{1}\cdot\cdots\cdot h_{n}}{h_{i}^{2}}\frac{\partial u}{\partial\theta^{i}}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -204,6 +428,10 @@ r\sin\theta
 在柱坐标系下分离变量
 \end_layout
 
+\begin_layout Subsection
+Laplace 方程
+\end_layout
+
 \begin_layout Standard
 令 
 \begin_inset Formula $u(r,\theta,z)=R(r)\,\varTheta(\theta)\,Z(z)$
@@ -287,8 +515,75 @@ r\sin\theta
 
 \end_layout
 
+\begin_layout Subsection
+Helmholtz 方程
+\end_layout
+
+\begin_layout Standard
+令 
+\begin_inset Formula $u(r,\theta,z)=R(r)\,\varTheta(\theta)\,Z(z)$
+\end_inset
+
+，则
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{1}{r}\frac{\partial}{\partial r}\left(r\frac{\partial}{\partial r}\right)+\frac{1}{r^{2}}\frac{\partial^{2}}{\partial\theta^{2}}+\frac{\partial^{2}}{\partial z^{2}}+k^{2}\right)R(r)\,\varTheta(\theta)\,Z(z)=0
+\]
+
+\end_inset
+
+可按类似步骤分离变量，所得的角向方程
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{\dd^{2}}{\dd\theta^{2}}+m^{2}\right)\varTheta(\theta)=0}
+\]
+
+\end_inset
+
+及轴向方程
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{\dd^{2}}{\dd z^{2}}-\mu^{2}\right)Z(z)=0}
+\]
+
+\end_inset
+
+与 Laplace 方程的结果完全一致，而径向方程为
+\begin_inset Formula 
+\[
+\left(r\frac{\dd}{\dd r}\left(r\frac{\dd}{\dd r}\right)+(\mu^{2}+k^{2})r^{2}-m^{2}\right)R(r)=0
+\]
+
+\end_inset
+
+令 
+\begin_inset Formula $x=\sqrt{\mu^{2}+k^{2}}r$
+\end_inset
+
+ 且 
+\begin_inset Formula $y(x)=R(r)$
+\end_inset
+
+，依然得到“Bessel 方程”
+\begin_inset Formula 
+\[
+\boxed{\left(x^{2}\frac{\dd^{2}}{\dd x^{2}}+x\frac{\dd}{\dd x}+x^{2}-m^{2}\right)y(x)=0}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 在球坐标系下分离变量
+\end_layout
+
+\begin_layout Subsection
+Laplace 方程
 \end_layout
 
 \begin_layout Standard
@@ -383,6 +678,45 @@ r\sin\theta
 \begin_inset Formula 
 \[
 \boxed{\left(\frac{\dd}{\dd x}\left((1-x^{2})\frac{\dd}{\dd x}\right)+(l+1)l-\frac{m^{2}}{1-x^{2}}\right)P(x)=0}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Helmholtz 方程
+\end_layout
+
+\begin_layout Standard
+令 
+\begin_inset Formula $u(r,\theta,\varphi)=R(r)\,Y(\theta,\varphi)$
+\end_inset
+
+，则球坐标系下的 Helmholtz 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{1}{r^{2}}\frac{\partial}{\partial r}\left(r^{2}\frac{\partial}{\partial r}\right)+\frac{1}{r^{2}\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^{2}\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}+k^{2}\right)R(r)\,Y(\theta,\varphi)=0
+\]
+
+\end_inset
+
+可按类似步骤分离变量，所得的角向方程
+\begin_inset Formula 
+\[
+\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^{2}\theta}\frac{\partial^{2}}{\partial\varphi^{2}}\right)Y(\theta,\varphi)=-(l+1)l\,Y(\theta,\varphi)
+\]
+
+\end_inset
+
+与 Laplace 方程的结果完全一致，而径向方程为更一般的“球 Bessel 方程”
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{\dd}{\dd r}\left(r^{2}\frac{\dd}{\dd r}\right)+(kr)^{2}-(l+1)l\right)R(r)=0}
 \]
 
 \end_inset
