@@ -81,7 +81,7 @@ $$
 
 # 真空中的 Maxwell 方程组
 
-## 静止电荷产生的电场
+## 静止电荷产生的静电场
 
 ### 静电场的强度
 
@@ -131,7 +131,7 @@ $$
 \boxed{\divg\Vec{E}=\frac{\rho}{\varepsilon_0}}
 $$
 
-此即“真空中的 Maxwell 方程组”的第一式。
+此即“真空中的稳态 Maxwell 方程组”的第一式。
 
 ### 静电场的旋度
 
@@ -147,7 +147,7 @@ $$
 \boxed{\curl\Vec{E}=\Vec{0}}
 $$
 
-此即真空中的 Maxwell 方程组的第二式。
+此即真空中的稳态 Maxwell 方程组的第二式。
 
 ### 静电场的标量势
 
@@ -178,7 +178,7 @@ $$
 = \frac{1}{4\pi\varepsilon_0}\int_{V(\Vec{r}')}\frac{\rho(\Vec{r}')}{\vert\Vec{r}-\Vec{r}'\vert}
 $$
 
-## 运动电荷产生的磁场
+## 恒定电流产生的静磁场
 
 ### 电荷守恒定律
 
@@ -215,7 +215,7 @@ $$
 利用微分恒等式
 
 $$
-\grad\frac{-1}{\vert\Vec{r}-\Vec{r}'\vert}
+\grad\!_{\Vec{r}}\frac{-1}{\vert\Vec{r}-\Vec{r}'\vert}
 =\frac{\Vec{r} - \Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^3}
 \qquad
 \curl(\alpha\Vec{A})=(\grad\alpha)\cross\Vec{A}+\alpha\curl{\Vec{A}}
@@ -225,7 +225,7 @@ $$
 
 $$
 \Vec{B}(\Vec{r})
-= \frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\left(\grad_{\Vec{r}}\frac{1}{\vert\Vec{r}-\Vec{r}'\vert}\right)\cross\Vec{\jmath}(\Vec{r}')
+= \frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\left(\grad\!_{\Vec{r}}\frac{1}{\vert\Vec{r}-\Vec{r}'\vert}\right)\cross\Vec{\jmath}(\Vec{r}')
 = \curl\frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\frac{\Vec{\jmath}(\Vec{r}')}{\vert\Vec{r}-\Vec{r}'\vert} \eqqcolon \curl\Vec{A}(\Vec{r})
 $$
 
@@ -245,7 +245,7 @@ $$
 \divg(\curl\Vec{A})=\boxed{\divg\Vec{B}=0}
 $$
 
-此即“真空中的 Maxwell 方程组”的第三式。
+此即“真空中的稳态 Maxwell 方程组”的第三式。
 
 ### 静磁场的旋度
 
@@ -258,7 +258,7 @@ $$
 将其展开为四项，再利用
 
 $$
-\partial_{\Vec{r}}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}=-\partial_{\Vec{r}'}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}\impliedby(\forall f)\left(\partial_{\Vec{r}}f(\Vec{r}-\Vec{r}')=-\partial_{\Vec{r}'}f(\Vec{r}-\Vec{r}')\right)
+\grad\!_{\Vec{r}}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}=-\grad\!_{\Vec{r}'}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}\impliedby(\forall f)\left(\grad\!_{\Vec{r}}f(\Vec{r}-\Vec{r}')=-\grad\!_{\Vec{r}'}f(\Vec{r}-\Vec{r}')\right)
 $$
 
 化简为
@@ -281,7 +281,7 @@ $$
 \boxed{\curl\Vec{B}=\mu_0\Vec{\jmath}}
 $$
 
-此即“真空中的 Maxwell 方程组”的第四式。
+此即“真空中的稳态 Maxwell 方程组”的第四式。
 
 # 静电磁场
 

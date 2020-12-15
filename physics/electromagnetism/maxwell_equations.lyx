@@ -297,7 +297,7 @@ Faraday 定律 (1831)
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathcal{E}=-\dv{\varPhi_{B}}{t}
+\mathcal{E}=-\frac{\partial\varPhi_{B}}{\partial t}
 \]
 
 \end_inset
@@ -395,7 +395,7 @@ name "sec:Stokes-环量定理"
 \end_layout
 
 \begin_layout Section
-静止电荷产生的电场
+静止电荷产生的静电场
 \end_layout
 
 \begin_layout Subsection
@@ -530,7 +530,7 @@ reference "sec:Gauss-散度定理"
 
 \end_inset
 
-此即“真空中的 Maxwell 方程组”的第一式。
+此即“真空中的稳态 Maxwell 方程组”的第一式。
 \end_layout
 
 \begin_layout Subsection
@@ -572,7 +572,7 @@ reference "sec:Stokes-环量定理"
 
 \end_inset
 
-此即“真空中的 Maxwell 方程组”的第二式。
+此即“真空中的稳态 Maxwell 方程组”的第二式。
 \end_layout
 
 \begin_layout Subsection
@@ -656,7 +656,7 @@ reference "sec:Stokes-环量定理"
 \end_layout
 
 \begin_layout Section
-运动电荷产生的磁场
+恒定电流产生的静磁场
 \end_layout
 
 \begin_layout Subsection
@@ -689,7 +689,7 @@ name "sec:电荷守恒"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\iiint_{V}\pdv{\rho(\vec{r},t)}{t}+\oiint_{\partial V}\vec{\nu}(\vec{r},t)\vdot\vec{\jmath}(\vec{r},t)=0
+\iiint_{V}\frac{\partial\rho(\vec{r},t)}{\partial t}+\oiint_{\partial V}\vec{\nu}(\vec{r},t)\vdot\vec{\jmath}(\vec{r},t)=0
 \]
 
 \end_inset
@@ -714,7 +714,7 @@ noprefix "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\pdv{\rho(\vec{r},t)}{t}+\divg\vec{\jmath}(\vec{r},t)=0
+\frac{\partial\rho(\vec{r},t)}{\partial t}+\divg\vec{\jmath}(\vec{r},t)=0
 \]
 
 \end_inset
@@ -723,7 +723,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-电流产生的静磁场
+恒定电流产生的静磁场
 \end_layout
 
 \begin_layout Standard
@@ -846,7 +846,7 @@ reference "sec:Biot–Savart-定律"
 
 \end_inset
 
-后者即“真空中的 Maxwell 方程组”的第三式。
+后者即“真空中的稳态 Maxwell 方程组”的第三式。
 \end_layout
 
 \begin_layout Subsection
@@ -1041,7 +1041,7 @@ reference "sec:电荷守恒"
 
 \end_inset
 
-此即“真空中的 Maxwell 方程组”的第四式。
+此即“真空中的稳态 Maxwell 方程组”的第四式。
 \end_layout
 
 \begin_layout Corollary
@@ -1150,8 +1150,8 @@ status open
 含时间的 Maxwell 方程组
 \end_layout
 
-\begin_layout Subsection
-简单推广
+\begin_layout Standard
+“稳态 Maxwell 方程组”应当是“含时间的 Maxwell 方程组”的特例，将其推广到后者，首先需要令各物理量依赖于时间，由此得（有待修正的）
 \end_layout
 
 \begin_layout Standard
@@ -1164,10 +1164,10 @@ status open
 
 \end_inset
 
-以及电荷守恒定律
+对“电荷守恒定律”也可以做类似推广：
 \begin_inset Formula 
 \[
-\pdv{\rho(\vec{r},t)}{t}+\divg\vec{\jmath}(\vec{r},t)=0
+\frac{\partial\rho(\vec{r},t)}{\partial t}+\divg\vec{\jmath}(\vec{r},t)=0
 \]
 
 \end_inset
@@ -1176,14 +1176,14 @@ status open
 \end_layout
 
 \begin_layout Subsection
-电场旋度
+对电场旋度的修正
 \end_layout
 
 \begin_layout Standard
 Faraday's 电磁感应定律
 \begin_inset Formula 
 \[
-\underbrace{\oint_{\partial S(\vec{r},t)}\vec{\tau}(\vec{r},t)\vdot\vec{E}(\vec{r},t)}_{\mathcal{E}(t)}=-\dv{}{t}\underbrace{\iint_{S(\vec{r},t)}\vec{\nu}(\vec{r},t)\vdot\vec{B}(\vec{r},t)}_{\varPhi(t)}
+\underbrace{\oint_{\partial S(\vec{r},t)}\vec{\tau}(\vec{r},t)\vdot\vec{E}(\vec{r},t)}_{\mathcal{E}(t)}=-\frac{\dd}{\dd t}\underbrace{\iint_{S(\vec{r},t)}\vec{\nu}(\vec{r},t)\vdot\vec{B}(\vec{r},t)}_{\varPhi(t)}
 \]
 
 \end_inset
@@ -1207,7 +1207,7 @@ Stokes' 环量定理
  的导数可移入积分号内
 \begin_inset Formula 
 \[
--\dv{}{t}\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\vec{B}(\vec{r},t)=-\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\pdv{\vec{B}(\vec{r},t)}{t}
+-\frac{\dd}{\dd t}\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\vec{B}(\vec{r},t)=-\iint_{S(\vec{r})}\vec{\nu}(\vec{r})\vdot\frac{\partial\vec{B}(\vec{r},t)}{\partial t}
 \]
 
 \end_inset
@@ -1215,7 +1215,7 @@ Stokes' 环量定理
 比较两端，即得
 \begin_inset Formula 
 \[
-\boxed{\curl\vec{E}(\vec{r},t)=-\pdv{\vec{B}(\vec{r},t)}{t}}
+\boxed{\curl\vec{E}(\vec{r},t)=-\frac{\partial\vec{B}(\vec{r},t)}{\partial t}}
 \]
 
 \end_inset
@@ -1224,7 +1224,7 @@ Stokes' 环量定理
 \end_layout
 
 \begin_layout Subsection
-磁场旋度
+对磁场旋度的修正
 \end_layout
 
 \begin_layout Standard
@@ -1234,7 +1234,7 @@ Stokes' 环量定理
 \begin_layout Standard
 \begin_inset Formula 
 \[
-0=\divg\curl\vec{B}(\vec{r},t)=\mu_{0}\divg\vec{\jmath}(\vec{r},t)=-\mu_{0}\pdv{\rho(\vec{r},t)}{t}\ne0
+0=\divg\curl\vec{B}(\vec{r},t)=\mu_{0}\divg\vec{\jmath}(\vec{r},t)=-\mu_{0}\frac{\partial\rho(\vec{r},t)}{\partial t}\ne0
 \]
 
 \end_inset
@@ -1242,7 +1242,7 @@ Stokes' 环量定理
 Maxwell 根据
 \begin_inset Formula 
 \[
-\pdv{}{t}\varepsilon_{0}\divg\vec{E}(\vec{r},t)=\pdv{\rho(\vec{r},t)}{t}=-\divg\vec{\jmath}(\vec{r},t)
+\frac{\partial}{\partial t}\varepsilon_{0}\divg\vec{E}(\vec{r},t)=\frac{\partial\rho(\vec{r},t)}{\partial t}=-\divg\vec{\jmath}(\vec{r},t)
 \]
 
 \end_inset
@@ -1253,13 +1253,13 @@ Maxwell 根据
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\curl\vec{B}(\vec{r},t)=\mu_{0}\vec{\jmath}(\vec{r},t)+\mu_{0}\varepsilon_{0}\pdv{\vec{E}(\vec{r},t)}{t}}
+\boxed{\curl\vec{B}(\vec{r},t)=\mu_{0}\vec{\jmath}(\vec{r},t)+\mu_{0}\varepsilon_{0}\frac{\partial\vec{E}(\vec{r},t)}{\partial t}}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\varepsilon_{0}\pdv{\vec{E}(\vec{r},t)}{t}$
+\begin_inset Formula $\varepsilon_{0}\frac{\partial}{\partial t}\vec{E}(\vec{r},t)$
 \end_inset
 
  被 Maxwell 称为“位移电流密度 (displacement current density)”。
@@ -1276,7 +1276,7 @@ Maxwell 根据
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\curl(\curl\vec{E})=\curl(-\pdv{\vec{B}}{t})=-\pdv{}{t}\curl\vec{B}
+\curl(\curl\vec{E})=\curl(-\frac{\partial\vec{B}}{\partial t})=-\frac{\partial}{\partial t}\curl\vec{B}
 \]
 
 \end_inset
@@ -1308,7 +1308,7 @@ Maxwell 根据
 右端可用 M-4（磁场旋度）
 \begin_inset Formula 
 \[
-\curl\vec{B}=\mu_{0}\cancel{\vec{\jmath}}+\mu_{0}\varepsilon_{0}\pdv{\vec{E}}{t}
+\curl\vec{B}=\mu_{0}\cancel{\vec{\jmath}}+\mu_{0}\varepsilon_{0}\frac{\partial\vec{E}}{\partial t}
 \]
 
 \end_inset
@@ -1316,7 +1316,7 @@ Maxwell 根据
 化为
 \begin_inset Formula 
 \[
-\pdv{}{t}\curl\vec{B}=\pdv{}{t}\cancel{\mu_{0}\vec{\jmath}}+\mu_{0}\varepsilon_{0}\pdv[2]{\vec{E}}{t}
+\frac{\partial}{\partial t}\curl\vec{B}=\frac{\partial}{\partial t}\cancel{\mu_{0}\vec{\jmath}}+\mu_{0}\varepsilon_{0}\frac{\partial^{2}\vec{E}}{\partial t^{2}}
 \]
 
 \end_inset
@@ -1328,7 +1328,7 @@ Maxwell 根据
 比较两端，即得
 \begin_inset Formula 
 \[
-\pdv[2]{\vec{E}}{t}=c^{2}\nabla^{2}\vec{E}\qquad c^{2}=\frac{1}{\mu_{0}\varepsilon_{0}}
+\frac{\partial^{2}\vec{E}}{\partial t^{2}}=c^{2}\nabla^{2}\vec{E}\qquad c^{2}=\frac{1}{\mu_{0}\varepsilon_{0}}
 \]
 
 \end_inset
@@ -1501,7 +1501,7 @@ W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\pdv{(\varepsilon_{0}\vec{E}\cross\vec{B})}{t}+(\rho\vec{E}+\vec{\jmath}\cross\vec{B})=\begin{bmatrix}\mu_{0}^{-1} & \varepsilon_{0}\end{bmatrix}\begin{bmatrix}(\divg\vec{B})\vec{B}-\vec{B}\cross(\curl\vec{B})\\
+\frac{\partial(\varepsilon_{0}\vec{E}\cross\vec{B})}{\partial t}+(\rho\vec{E}+\vec{\jmath}\cross\vec{B})=\begin{bmatrix}\mu_{0}^{-1} & \varepsilon_{0}\end{bmatrix}\begin{bmatrix}(\divg\vec{B})\vec{B}-\vec{B}\cross(\curl\vec{B})\\
 (\divg\vec{E})\vec{E}-\vec{E}\cross(\curl\vec{E})
 \end{bmatrix}
 \]
@@ -1512,7 +1512,7 @@ W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
 \end_layout
 
 \begin_layout Subsection
-含时的规范变换
+含时间的规范变换
 \end_layout
 
 \begin_layout Standard
@@ -1538,7 +1538,7 @@ W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
 代入 M-2，得
 \begin_inset Formula 
 \[
-\curl\vec{E}(\vec{r},t)=-\pdv{\vec{B}(\vec{r},t)}{t}=-\pdv{}{t}\curl\vec{A}(\vec{r},t)=-\curl\pdv{\vec{A}(\vec{r},t)}{t}
+\curl\vec{E}(\vec{r},t)=-\frac{\partial\vec{B}(\vec{r},t)}{\partial t}=-\frac{\partial}{\partial t}\curl\vec{A}(\vec{r},t)=-\curl\frac{\partial\vec{A}(\vec{r},t)}{\partial t}
 \]
 
 \end_inset
@@ -1546,7 +1546,7 @@ W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
 从而有
 \begin_inset Formula 
 \[
-\vec{E}(\vec{r},t)=-\grad\phi(\vec{r},t)-\pdv{\vec{A}(\vec{r},t)}{t}
+\vec{E}(\vec{r},t)=-\grad\phi(\vec{r},t)-\frac{\partial\vec{A}(\vec{r},t)}{\partial t}
 \]
 
 \end_inset
@@ -1558,7 +1558,7 @@ W=\iiint_{\mathbb{R}^{3}}\frac{\varepsilon_{0}}{2}\vec{E}^{2}
 规范变换
 \begin_inset Formula 
 \[
-\vec{A}'(\vec{r},t)=\vec{A}(\vec{r},t)+\grad\varLambda(\vec{r},t)\qquad\phi'(\vec{r},t)=\phi(\vec{r},t)-\pdv{\varLambda(\vec{r},t)}{t}
+\vec{A}'(\vec{r},t)=\vec{A}(\vec{r},t)+\grad\varLambda(\vec{r},t)\qquad\phi'(\vec{r},t)=\phi(\vec{r},t)-\frac{\partial\varLambda(\vec{r},t)}{\partial t}
 \]
 
 \end_inset
@@ -1621,7 +1621,7 @@ status open
 方程
 \begin_inset Formula 
 \[
-\nabla^{2}\varLambda(\vec{r},t)-\mu_{0}\varepsilon_{0}\frac{\partial^{2}\varLambda(\vec{r},t)}{\partial t^{2}}=-\divg\vec{A}(\vec{r},t)-\mu_{0}\varepsilon_{0}\pdv{\phi(\vec{r},t)}{t}
+\nabla^{2}\varLambda(\vec{r},t)-\mu_{0}\varepsilon_{0}\frac{\partial^{2}\varLambda(\vec{r},t)}{\partial t^{2}}=-\divg\vec{A}(\vec{r},t)-\mu_{0}\varepsilon_{0}\frac{\partial\phi(\vec{r},t)}{\partial t}
 \]
 
 \end_inset
@@ -1629,7 +1629,7 @@ status open
 的解可以使
 \begin_inset Formula 
 \[
-\mu_{0}\varepsilon_{0}\pdv{\phi'(\vec{r},t)}{t}+\divg\vec{A}'(\vec{r},t)=0
+\mu_{0}\varepsilon_{0}\frac{\partial\phi'(\vec{r},t)}{\partial t}+\divg\vec{A}'(\vec{r},t)=0
 \]
 
 \end_inset
@@ -1706,7 +1706,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-Lorentz 变换
+运动学
 \end_layout
 
 \begin_layout Subsection
@@ -1726,11 +1726,11 @@ Lorentz 变换
 \begin_inset Formula $S\coloneqq(O,x,y,z,t)$
 \end_inset
 
- 运动，并且在 
+ 运动。若在 
 \begin_inset Formula $t'=t=0$
 \end_inset
 
- 时刻，由重合的原点 
+ 时刻由重合的原点 
 \begin_inset Formula $O'=O$
 \end_inset
 
@@ -1750,7 +1750,7 @@ L=\sqrt{x^{2}+y^{2}+z^{2}}=ct
 
 \end_inset
 
-同理，它在 
+在 
 \begin_inset Formula $S'$
 \end_inset
 
@@ -1777,7 +1777,7 @@ x'^{2}+y'^{2}+z'^{2}-(ct')^{2}=0=x^{2}+y^{2}+z^{2}-(ct)^{2}
 受此启发，定义
 \begin_inset Formula 
 \[
-\begin{bmatrix}x_{1} & x_{2} & x_{3} & x_{4}\end{bmatrix}\coloneqq\begin{bmatrix}x & y & z & \ii ct\end{bmatrix}
+\begin{bmatrix}x_{1} & x_{2} & x_{3} & x_{4}\end{bmatrix}\coloneqq\begin{bmatrix}x & y & z & \sqrt{-1}ct\end{bmatrix}
 \]
 
 \end_inset
@@ -1810,11 +1810,11 @@ x_{4}
 \begin_inset Formula 
 \[
 \begin{bmatrix}0\\
-\ii ct'
+\sqrt{-1}ct'
 \end{bmatrix}=\begin{bmatrix}\cos\theta & +\sin\theta\\
 -\sin\theta & \cos\theta
 \end{bmatrix}\begin{bmatrix}Vt\\
-\ii ct
+\sqrt{-1}ct
 \end{bmatrix}
 \]
 
@@ -1823,7 +1823,7 @@ x_{4}
 由此得
 \begin_inset Formula 
 \[
-\tan\theta=-\frac{V}{\ii c}\impliedby0=Vt\cos\theta+\ii ct\sin\theta
+\tan\theta=-\frac{V}{\sqrt{-1}c}\impliedby0=Vt\cos\theta+\sqrt{-1}ct\sin\theta
 \]
 
 \end_inset
@@ -1832,11 +1832,11 @@ x_{4}
 \begin_inset Formula 
 \[
 \begin{bmatrix}x'\\
-\ii ct'
-\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & +\ii V/c\\
--\ii V/c & 1
+\sqrt{-1}ct'
+\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & +\sqrt{-1}V/c\\
+-\sqrt{-1}V/c & 1
 \end{bmatrix}\begin{bmatrix}x\\
-\ii ct
+\sqrt{-1}ct
 \end{bmatrix}
 \]
 
@@ -1872,7 +1872,7 @@ t-xV/c^{2}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-v_{x}\coloneqq\dv{x}{t}\qquad v'_{x}\coloneqq\dv{x'}{t'}
+v_{x}\coloneqq\frac{\dd x}{\dd t}\qquad v'_{x}\coloneqq\frac{\dd x'}{\dd t'}
 \]
 
 \end_inset
@@ -1883,7 +1883,7 @@ v_{x}\coloneqq\dv{x}{t}\qquad v'_{x}\coloneqq\dv{x'}{t'}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\dv{t'}{t}=\dv{}{t}\frac{t-xV/c^{2}}{\sqrt{1-(V/c)^{2}}}=\frac{1-v_{x}V/c^{2}}{\sqrt{1-(V/c)^{2}}}
+\frac{\dd t'}{\dd t}=\frac{\dd}{\dd t}\frac{t-xV/c^{2}}{\sqrt{1-(V/c)^{2}}}=\frac{1-v_{x}V/c^{2}}{\sqrt{1-(V/c)^{2}}}
 \]
 
 \end_inset
@@ -1891,7 +1891,7 @@ v_{x}\coloneqq\dv{x}{t}\qquad v'_{x}\coloneqq\dv{x'}{t'}
 
 \begin_inset Formula 
 \[
-v'_{x}=\dv{x'}{t'}=\dv{x'}{t}\dv{t}{t'}=\frac{v_{x}-V}{1-v_{x}V/c^{2}}
+v'_{x}=\frac{\dd x'}{\dd t'}=\frac{\dd x'}{\dd t}\frac{\dd t}{\dd t'}=\frac{v_{x}-V}{1-v_{x}V/c^{2}}
 \]
 
 \end_inset
@@ -1978,7 +1978,7 @@ Dopler 效应
 \end_layout
 
 \begin_layout Section
-相对论动力学
+动力学
 \end_layout
 
 \begin_layout Subsection
@@ -2068,24 +2068,28 @@ p^{2}c^{2}+m_{0}^{2}c^{4}=E^{2}
 \end_layout
 
 \begin_layout Subsection
-Lorentz 变换
+动量变换
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
 \begin{bmatrix}p'\\
-\ii E/c
-\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & +\ii V/c\\
--\ii V/c & 1
+\sqrt{-1}E/c
+\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & +\sqrt{-1}V/c\\
+-\sqrt{-1}V/c & 1
 \end{bmatrix}\begin{bmatrix}p\\
-\ii E/c
+\sqrt{-1}E/c
 \end{bmatrix}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+电磁学
 \end_layout
 
 \end_body
