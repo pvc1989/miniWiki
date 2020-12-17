@@ -480,14 +480,91 @@ Requirements:
   - Video: [Part-2/Week-1  Undirected Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/NlsQF/lecture-slides) and [Part-2/Week-1  Directed Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/qRjk3/lecture-slides)
   - Programming Assignment: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
 
+### Adjacency Lists
+
+```cpp
+template <class Vertex>
+struct StaticGraph {
+  List<List<Vertex>> neighbors;
+};
+template <class Vertex>
+struct DynamicGraph {
+  Map<Vertex, Set<Vertex>> neighbors;
+};
+template <class Vertex>
+struct ImplicitGraph {
+  List<Vertex> const& GetNeighbors(Vertex const&);
+};
+```
+
 ### Breadth-First Search
+
+```python
+def BreadthFirstSearch(source):
+  vertex_to_parent = {source: None}
+  vertex_to_level  = {source: 0}
+  current_level = 0
+  this_level = [source]
+  while len(this_level):
+    next_level = []
+    for u in this_level:
+      for v in u.neighbors:
+        if v not in vertex_to_level:
+          vertex_to_level[v] = current_level
+          vertex_to_parent[v] = u
+          next_level.add(v)
+    this_level = next_level
+    current_level += 1
+  return vertex_to_parent, vertex_to_level
+```
+
+Complexity:
+- $\Theta(V+E)$ time
+- $\Theta(V+E)$ space
 
 ### Depth-First Search
 
+```python
+def DepthFirstSearch(graph):
+  vertex_to_parent = dict()
+  for s in graph.vertices:
+    if s not in vertex_to_parent:
+      vertex_to_parent[s] = None
+      _DepthFirstVisit(s, vertex_to_parent)
+  return vertex_to_parent
+
+def _DepthFirstVisit(source, vertex_to_parent):
+  for v in source.neighbors:
+    if v not in vertex_to_parent:
+      vertex_to_parent[v] = source
+      _DepthFirstVisit(v, vertex_to_parent)
+```
+
+Complexity:
+- $\Theta(V+E)$ time
+- $\Theta(V+E)$ space
+
+### Cycle Detection
+
+Edge Classification:
+- tree edges (formed by parent)
+- nontree edges
+  - forward edge: to descendant
+  - back edge: to ancestor
+  - cross edge: to another subtree
+
+Graph has a cycle, iff DFS has a back edge.
+
+DAG: Directed Acylic Graph.
+
 ### Topological Sort
+
+Sort vertices by the reverse of DFS finishing times, i.e. time at which `_DepthFirstVisit()` finishes.
 
 - Libraries
   - Python3: [`graphlib.TopologicalSorter`](https://docs.python.org/3/library/graphlib.html#graphlib.TopologicalSorter) provides functionality to topologically sort a graph of hashable nodes.
+- Applications:
+  - Job scheduling.
 
 ## Minimum Spanning Trees
 
