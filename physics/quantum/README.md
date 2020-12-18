@@ -368,4 +368,77 @@ $$
 
 # 一维势场中的粒子
 
+## 一维谐振子
+
+### 渐进行为
+
+定态 Schrödinger 方程
+
+$$
+\left(\frac{-\hbar^{2}}{2m}\frac{\dd{}^{2}}{\dd{x}^{2}}+\frac{m\omega_{0}^{2}}{2}x^{2}\right)\phi(x)=E\,\phi(x)\qquad\omega_{0}\coloneqq\sqrt{\frac{k}{m}}
+$$
+
+在 $x\to\infty$ 处的渐进解为
+
+$$
+\tilde{\phi}_{+}(x)=\exp\left(+\frac{m\omega_{0}}{2\hbar}x^{2}\right)\qquad\tilde{\phi}_{-}(x)=\exp\left(-\frac{m\omega_{0}}{2\hbar}x^{2}\right)
+$$
+
+只有 $\tilde{\phi}_{-}$ 满足 $\lim_{x\to\infty}\phi(x)=0$ 的条件。
+
+### Hermite 方程
+
+令 $\phi(x)=X(x)\,\tilde{\phi}_{-}(x)$ 即 $\phi(x)=X(x)\,\exp\left(-\frac{m\omega_{0}}{2\hbar}x^{2}\right)$，代入定态 Schrödinger 方程，可得
+
+$$
+\left(\frac{\hbar}{m\omega_{0}}\frac{\dd{}^{2}}{\dd{x}^{2}}-2x\frac{\dd{}}{\dd{x}}+2\alpha\right)X(x)=0\qquad\alpha\coloneqq\frac{E}{\hbar\omega_{0}}-\frac{1}{2}
+$$
+
+利用 $\tilde{x}\coloneqq\sqrt{m\omega_{0}/\hbar}\,x$ 及 $u(\tilde{x})\coloneqq X(x(\tilde{x}))$ 可将导数的系数可归一化，即
+
+$$
+\left(\frac{\dd{}^{2}}{\dd{\tilde{x}}^{2}}-2\tilde{x}\frac{\dd{}}{\dd{\tilde{x}}}+2\alpha\right)u(\tilde{x})=0
+$$
+
+此即“Hermite 方程”，它有两个线性独立的幂级数形式解：
+
+$$
+\begin{aligned}u_{s=1}(\tilde{x}) & =\sum_{k=0}^{\infty}\binom{k-(1+\alpha)/2}{k}\frac{4^{k}\,k!}{(2k+1)!}\tilde{x}^{2k+1}\\
+u_{s=0}(\tilde{x}) & =\sum_{k=0}^{\infty}\binom{k-(1+\alpha/2)}{k}\frac{4^{k}\,k!}{(2k+0)!}\tilde{x}^{2k+0}
+\end{aligned}
+$$
+
+### 平方可积 $\to$ 能级
+
+根据几率解释，波函数 $\phi(x)=X(x)\exp\left(-\frac{m\omega_{0}}{2\hbar}x^{2}\right)$ 应满足平方可积条件，即
+
+$$
+\begin{aligned}\langle\phi\vert\phi\rangle & =\int_{-\infty}^{\infty}X^{*}(x)\,X(x)\exp\left(-\frac{m\omega_{0}}{\hbar}x^{2}\right)\dd{x}\\
+ & =\frac{\dd{x}}{\dd{\tilde{x}}}\int_{-\infty}^{\infty}u^{*}(\tilde{x})\,u(\tilde{x})\exp(-\tilde{x}^{2})\dd{\tilde{x}}\\
+ & =\frac{\langle u\vert u\rangle_{w}}{\sqrt{m\omega_{0}/\hbar}}<+\infty\qquad w(\tilde{x})\coloneqq\exp(-\tilde{x}^{2})
+\end{aligned}
+$$
+
+故 Hermite 方程的解 $u(\tilde{x})$ 应满足（以 $w(\tilde{x})$ 为权的）平方可积条件，由此得：本征值 $2\alpha$ 只能取非负偶数，这使得能量 $E$ 只能取分立值：
+
+$$
+\boxed{E_{n}=\left(n+\frac{1}{2}\right)\hbar\omega_{0}\qquad n\in\mathbb{N}}
+$$
+
+此时 $u(\tilde{x})$ 被截断为 $n$ 次 Hermite 多项式 $\mathrm{H}_{n}(\tilde{x})$，相应的波函数为
+
+$$
+\phi_{n}(x)=\mathopen{\mathrm{H}_{n}}\left(\sqrt{\frac{m\omega_{0}}{\hbar}}x\right)\exp\left(-\frac{m\omega_{0}}{2\hbar}x^{2}\right)\qquad n\in\mathbb{N}
+$$
+
+### 测不准 $\to$ 零点能
+
+$$
+\langle x\rangle^{2}\langle p_{x}\rangle^{2}\approx\langle(\Delta x)^{2}\rangle\langle(\Delta p_{x})^{2}\rangle\approx(\hbar/2)^{2}
+$$
+
+$$
+E_{0}\approx\frac{\langle p_{x}\rangle^{2}}{2m}+\frac{m\omega_{0}^{2}\langle x\rangle^{2}}{2}\ge2\sqrt{\frac{\langle p_{x}\rangle^{2}}{2m}\cdot\frac{m\omega_{0}^{2}\langle x\rangle^{2}}{2}}\approx\frac{\hbar\omega_{0}}{2}
+$$
+
 # 中心力场中的粒子

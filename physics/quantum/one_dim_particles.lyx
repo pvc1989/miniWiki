@@ -122,13 +122,13 @@ theorems-chap
 \end_inset
 
  无关，则将分离变量的波函数 
-\begin_inset Formula $\psi(\vec{x},t)=\phi(\vec{x})\,f(t)$
+\begin_inset Formula $\psi(\vec{r},t)=\phi(\vec{r})\,f(t)$
 \end_inset
 
  代入 Schrödinger 方程
 \begin_inset Formula 
 \begin{equation}
-\ii\hbar\pdv{\psi(\vec{x},t)}{t}=\frac{-\hbar^{2}}{2m}\laplacian\psi(\vec{x},t)+V(\vec{x})\,\psi(\vec{x},t)\label{eq:一维粒子：Schrodinger 方程}
+\ii\hbar\frac{\partial\psi(\vec{r},t)}{\partial t}=\frac{-\hbar^{2}}{2m}\nabla^{2}\psi(\vec{r},t)+V(\vec{r})\,\psi(\vec{r},t)\label{eq:一维粒子：Schrodinger 方程}
 \end{equation}
 
 \end_inset
@@ -136,7 +136,7 @@ theorems-chap
 可得
 \begin_inset Formula 
 \[
-\frac{\ii\hbar}{f(t)}\dv{f(t)}{t}=\frac{1}{\phi(\vec{x})}\left(\frac{-\hbar^{2}}{2m}\laplacian\phi(\vec{x})+V(\vec{x})\,\phi(\vec{x})\right)
+\frac{\ii\hbar}{f(t)}\frac{\dd f(t)}{\dd t}=\frac{1}{\phi(\vec{r})}\left(\frac{-\hbar^{2}}{2m}\nabla^{2}\phi(\vec{r})+V(\vec{r})\,\phi(\vec{r})\right)
 \]
 
 \end_inset
@@ -146,7 +146,7 @@ theorems-chap
 \end_inset
 
 ，右端只依赖于位置 
-\begin_inset Formula $\vec{x}$
+\begin_inset Formula $\vec{r}$
 \end_inset
 
 ，故二者只能等于某常数 
@@ -156,7 +156,7 @@ theorems-chap
 ，于是得到两个独立的方程
 \begin_inset Formula 
 \[
-\ii\hbar\dv{f(t)}{t}=E\,f(t)\qquad\left(\frac{-\hbar^{2}}{2m}\laplacian+V(\vec{x})\right)\phi(\vec{x})=E\,\phi(\vec{x})
+\ii\hbar\frac{\dd f(t)}{\dd t}=E\,f(t)\qquad\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{r})\right)\phi(\vec{r})=E\,\phi(\vec{r})
 \]
 
 \end_inset
@@ -188,7 +188,7 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\exp(-\ii\omega_{E}t)\qquad\omega_{E}\col
 第二式不依赖于时间，因此被称为“定态 Schrödinger 方程”；又因为左端的微分算符对应于（总）能量
 \begin_inset Formula 
 \[
-\hat{H}=\hat{T}+\hat{V}=\frac{-\hbar^{2}}{2m}\laplacian+V(\vec{x})
+\hat{H}=\hat{T}+\hat{V}\qquad\langle\vec{r},t\vert\hat{H}\vert\psi\rangle=\left(\frac{-\hbar^{2}}{2m}\nabla^{2}+V(\vec{r})\right)\psi(\vec{r},t)
 \]
 
 \end_inset
@@ -198,7 +198,7 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\exp(-\ii\omega_{E}t)\qquad\omega_{E}\col
 \end_inset
 
  与函数 
-\begin_inset Formula $\phi(\vec{x})$
+\begin_inset Formula $\phi(\vec{r})$
 \end_inset
 
  分别为算符 
@@ -218,18 +218,18 @@ f(t)=A\exp(\frac{Et}{\ii\hbar})\equiv A\exp(-\ii\omega_{E}t)\qquad\omega_{E}\col
 \end_inset
 
  都至少有一个本征函数 
-\begin_inset Formula $\phi_{E}(\vec{x})$
+\begin_inset Formula $\phi_{E}(\vec{r})$
 \end_inset
 
 ，相应的解
 \begin_inset Formula 
 \begin{equation}
-\psi_{E}(\vec{x},t)=\phi_{E}(\vec{x})\exp(-\ii\omega_{E}t)\label{eq:一维粒子：本征态}
+\psi_{E}(\vec{r},t)=\phi_{E}(\vec{r})\exp(-\ii\omega_{E}t)\label{eq:一维粒子：本征态}
 \end{equation}
 
 \end_inset
 
-表示一个驻波：空间概率分布不随时间变化。
+表示一个驻波：空间几率分布不随时间变化。
 \end_layout
 
 \begin_layout Standard
@@ -265,7 +265,7 @@ E_{0}\le E_{1}\le E_{2}\le\cdots\le E_{n-1}\le E_{n}\le E_{n+1}\le\cdots
 \end_inset
 
  的函数 
-\begin_inset Formula $\phi_{n}(\vec{x})$
+\begin_inset Formula $\phi_{n}(\vec{r})$
 \end_inset
 
  来表示。
@@ -289,7 +289,7 @@ reference "eq:一维粒子：本征态"
  的驻波（本征态）的线性组合
 \begin_inset Formula 
 \[
-\psi(\vec{x},t)=\sum_{n\in\mathbb{N}}c_{n}\,\phi_{n}(\vec{x})\exp(-\ii\omega_{n}t)
+\psi(\vec{r},t)=\sum_{n\in\mathbb{N}}c_{n}\,\phi_{n}(\vec{r})\exp(-\ii\omega_{n}t)
 \]
 
 \end_inset
@@ -299,7 +299,7 @@ reference "eq:一维粒子：本征态"
 \end_inset
 
  为常系数，由初始条件决定；若本征函数族 
-\begin_inset Formula $\left\{ \phi_{n}(\vec{x})\right\} _{n\in\mathbb{N}}$
+\begin_inset Formula $\left\{ \phi_{n}(\vec{r})\right\} _{n\in\mathbb{N}}$
 \end_inset
 
  已正交归一化，则 
@@ -310,9 +310,9 @@ reference "eq:一维粒子：本征态"
 \begin_inset Formula 
 \[
 c_{n}=\ip{\phi_{n}}{\psi_{t=0}}\impliedby\begin{cases}
-\ip{u}{v}\coloneqq\int_{\mathbb{R}^{3}(\vec{x})}\Conj{u(\vec{x})}v(\vec{x})\\
+\ip{u}{v}\coloneqq\int_{\mathbb{R}^{3}(\vec{r})}u(\vec{r})\,v(\vec{r})\\
 \ip{\phi_{m}}{\phi_{n}}=\mathrm{\delta}_{m}^{n}\\
-\psi_{t=0}(\vec{x})\coloneqq\psi(\vec{x},t=0)
+\psi_{t=0}(\vec{r})\coloneqq\psi(\vec{r},t=0)
 \end{cases}
 \]
 
@@ -333,12 +333,229 @@ c_{n}=\ip{\phi_{n}}{\psi_{t=0}}\impliedby\begin{cases}
 渐进行为
 \end_layout
 
-\begin_layout Subsection
-Hermite 多项式
+\begin_layout Standard
+对一维谐振子的 Schrödinger 方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ii\frac{\partial}{\partial t}\psi(x,t)=\left(\frac{-\hbar^{2}}{2m}\frac{\dd^{2}}{\dd x^{2}}+\frac{kx^{2}}{2}\right)\psi(x,t)
+\]
+
+\end_inset
+
+分离变量 
+\begin_inset Formula $\psi(x,t)=\phi(x)\,T(t)$
+\end_inset
+
+，得定态 Schrödinger 方程
+\begin_inset Formula 
+\[
+\boxed{\left(\frac{-\hbar^{2}}{2m}\frac{\dd^{2}}{\dd x^{2}}+\frac{m\omega_{0}^{2}}{2}x^{2}\right)\phi(x)=E\,\phi(x)\qquad\omega_{0}\coloneqq\sqrt{\frac{k}{m}}}
+\]
+
+\end_inset
+
+此方程在 
+\begin_inset Formula $x\to\infty$
+\end_inset
+
+ 处退化为
+\begin_inset Formula 
+\[
+\left(\frac{-\hbar^{2}}{2m}\frac{\dd^{2}}{\dd x^{2}}+\frac{m\omega_{0}^{2}x^{2}}{2}\right)\tilde{\phi}(x)=0
+\]
+
+\end_inset
+
+它有两个线性独立的解
+\begin_inset Formula 
+\[
+\tilde{\phi}_{+}(x)=\exp(+\frac{m\omega_{0}}{2\hbar}x^{2})\qquad\tilde{\phi}_{-}(x)=\exp(-\frac{m\omega_{0}}{2\hbar}x^{2})
+\]
+
+\end_inset
+
+只有 
+\begin_inset Formula $\tilde{\phi}_{-}$
+\end_inset
+
+ 满足 
+\begin_inset Formula $\lim_{x\to\infty}\phi(x)=0$
+\end_inset
+
+ 的条件。
 \end_layout
 
 \begin_layout Subsection
-能级
+Hermite 方程
+\end_layout
+
+\begin_layout Standard
+令 
+\begin_inset Formula $\phi(x)=X(x)\,\tilde{\phi}_{-}(x)$
+\end_inset
+
+ 即 
+\begin_inset Formula $\phi(x)=X(x)\,\exp(-\frac{m\omega_{0}}{2\hbar}x^{2})$
+\end_inset
+
+，代入定态 Schrödinger 方程，得
+\begin_inset Formula 
+\[
+\left(\frac{\hbar^{2}}{2m}\frac{\dd^{2}}{\dd x^{2}}-\hbar\omega_{0}x\frac{\dd}{\dd x}+E-\frac{\hbar\omega_{0}}{2}\right)X(x)=0
+\]
+
+\end_inset
+
+此方程可整理为
+\begin_inset Formula 
+\[
+\left(\frac{\hbar}{m\omega_{0}}\frac{\dd^{2}}{\dd x^{2}}-2x\frac{\dd}{\dd x}+2\alpha\right)X(x)=0\qquad\alpha\coloneqq\frac{E}{\hbar\omega_{0}}-\frac{1}{2}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $\tilde{x}\coloneqq\sqrt{m\omega_{0}/\hbar}\,x$
+\end_inset
+
+ 及 
+\begin_inset Formula $u(\tilde{x})\coloneqq X(x(\tilde{x}))$
+\end_inset
+
+ 可将导数的系数可归一化，即
+\begin_inset Formula 
+\[
+\left(\frac{\dd^{2}}{\dd\tilde{x}^{2}}-2\tilde{x}\frac{\dd}{\dd\tilde{x}}+2\alpha\right)u(\tilde{x})=0
+\]
+
+\end_inset
+
+此即“Hermite 方程”，它有两个线性独立的幂级数形式解（详见节-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Hermite方程在原点附近的解"
+
+\end_inset
+
+）：
+\begin_inset Formula 
+\[
+\begin{aligned}u_{s=1}(\tilde{x}) & =\sum_{k=0}^{\infty}\binom{k-(1+\alpha)/2}{k}\frac{4^{k}\,k!}{(2k+1)!}\tilde{x}^{2k+1}\\
+u_{s=0}(\tilde{x}) & =\sum_{k=0}^{\infty}\binom{k-(1+\alpha/2)}{k}\frac{4^{k}\,k!}{(2k+0)!}\tilde{x}^{2k+0}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+平方可积 
+\begin_inset Formula $\to$
+\end_inset
+
+ 能级
+\end_layout
+
+\begin_layout Standard
+根据几率解释，波函数 
+\begin_inset Formula $\phi(x)=X(x)\exp(-\frac{m\omega_{0}}{2\hbar}x^{2})$
+\end_inset
+
+ 应满足平方可积条件，即
+\begin_inset Formula 
+\[
+\begin{aligned}\langle\phi\vert\phi\rangle & =\int_{-\infty}^{\infty}X^{*}(x)\,X(x)\exp(-\frac{m\omega_{0}}{\hbar}x^{2})\dd x\\
+ & =\frac{\dd x}{\dd\tilde{x}}\int_{-\infty}^{\infty}u^{*}(\tilde{x})\,u(\tilde{x})\exp(-\tilde{x}^{2})\dd\tilde{x}\\
+ & =\frac{\langle u\vert u\rangle_{w}}{\sqrt{m\omega_{0}/\hbar}}<+\infty\qquad w(\tilde{x})\coloneqq\exp(-\tilde{x}^{2})
+\end{aligned}
+\]
+
+\end_inset
+
+故 Hermite 方程的解 
+\begin_inset Formula $u(\tilde{x})$
+\end_inset
+
+ 应满足（以 
+\begin_inset Formula $w(\tilde{x})$
+\end_inset
+
+ 为权的）平方可积条件，由此得：本征值 
+\begin_inset Formula $2\alpha$
+\end_inset
+
+ 只能取非负偶数（详见节-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Hermite-多项式"
+
+\end_inset
+
+），这使得能量 
+\begin_inset Formula $E$
+\end_inset
+
+ 只能取分立值：
+\begin_inset Formula 
+\[
+\boxed{E_{n}=\left(n+\frac{1}{2}\right)\hbar\omega_{0}\qquad n\in\mathbb{N}}
+\]
+
+\end_inset
+
+此时 
+\begin_inset Formula $u(\tilde{x})$
+\end_inset
+
+ 被截断为 
+\begin_inset Formula $n$
+\end_inset
+
+ 次 Hermite 多项式 
+\begin_inset Formula $\mathrm{H}_{n}(\tilde{x})$
+\end_inset
+
+， 相应的波函数为
+\begin_inset Formula 
+\[
+\boxed{\phi_{n}(x)=\mathopen{\mathrm{H}_{n}}\left(\sqrt{\frac{m\omega_{0}}{\hbar}}x\right)\exp(-\frac{m\omega_{0}}{2\hbar}x^{2})\qquad n\in\mathbb{N}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+测不准 
+\begin_inset Formula $\to$
+\end_inset
+
+ 零点能
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle x\rangle^{2}\langle p_{x}\rangle^{2}\approx\langle(\Delta x)^{2}\rangle\langle(\Delta p_{x})^{2}\rangle\approx(\hbar/2)^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+E_{0}\approx\frac{\langle p_{x}\rangle^{2}}{2m}+\frac{m\omega_{0}^{2}\langle x\rangle^{2}}{2}\ge2\sqrt{\frac{\langle p_{x}\rangle^{2}}{2m}\cdot\frac{m\omega_{0}^{2}\langle x\rangle^{2}}{2}}\approx\frac{\hbar\omega_{0}}{2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
