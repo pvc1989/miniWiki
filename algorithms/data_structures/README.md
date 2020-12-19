@@ -500,7 +500,7 @@ struct ImplicitGraph {
 ### Breadth-First Search
 
 ```python
-def BreadthFirstSearch(source):
+def breadth_first_search(source):
   vertex_to_parent = {source: None}
   vertex_to_level  = {source: 0}
   current_level = 0
@@ -525,19 +525,19 @@ Complexity:
 ### Depth-First Search
 
 ```python
-def DepthFirstSearch(graph):
+def depth_first_search(graph):
   vertex_to_parent = dict()
   for s in graph.vertices:
     if s not in vertex_to_parent:
       vertex_to_parent[s] = None
-      _DepthFirstVisit(s, vertex_to_parent)
+      _depth_first_visit(s, vertex_to_parent)
   return vertex_to_parent
 
-def _DepthFirstVisit(source, vertex_to_parent):
+def _depth_first_visit(source, vertex_to_parent):
   for v in source.neighbors:
     if v not in vertex_to_parent:
       vertex_to_parent[v] = source
-      _DepthFirstVisit(v, vertex_to_parent)
+      _depth_first_visit(v, vertex_to_parent)
 ```
 
 Complexity:
@@ -547,20 +547,18 @@ Complexity:
 ### Cycle Detection
 
 Edge Classification:
-- tree edges (formed by parent)
-- nontree edges
-  - forward edge: to descendant
-  - back edge: to ancestor
-  - cross edge: to another subtree
+- tree edge: to child
+- forward edge: to descendant (only in digraph)
+- back edge: to ancestor
+- cross edge: to another subtree (only in digraph)
 
-Graph has a cycle, iff DFS has a back edge.
+[Theorem] Graph has a cycle $\iff$ DFS has a back edge.
 
 DAG: Directed Acylic Graph.
 
 ### Topological Sort
 
-Sort vertices by the reverse of DFS finishing times, i.e. time at which `_DepthFirstVisit()` finishes.
-
+- Idea: sort vertices by the reverse of DFS finishing times, i.e. time at which `_depth_first_visit()` finishes.
 - Libraries
   - Python3: [`graphlib.TopologicalSorter`](https://docs.python.org/3/library/graphlib.html#graphlib.TopologicalSorter) provides functionality to topologically sort a graph of hashable nodes.
 - Applications:
@@ -587,7 +585,78 @@ Sort vertices by the reverse of DFS finishing times, i.e. time at which `_DepthF
   - Video: [Part-2/Week-2  Shortest Paths](https://www.coursera.org/learn/algorithms-part2/supplement/BZTAt/lecture-slides)
   - Programming Assignment: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
 
+### Weighted Edges
+
+- $W\colon E\to\mathbb{R}$ or $W\colon V\times V\to\mathbb{R}$ for an edge.
+- $W(v_0,\dots,v_{k})\coloneqq\sum_{i=0}^{k-1}W(v_i,v_{i+1})$ for a path.
+
+If negative weight edges are present, the algorithm should find negative weight cycles.
+
+### Generic Algorithm
+
+```python
+def find_shortest_path(source, graph):
+  # Initialization:
+  vertex_to_distance    = dict()
+  vertex_to_predecessor = dict()
+  for v in graph.vertices:
+    vertex_to_distance[v]    = float('inf')
+    vertex_to_predecessor[v] = None
+  vertex_to_distance[source] = 0
+  # Relaxation:
+  while True:
+    u, v = _select_edge(graph) # return (None, None) if
+    # for all (u, v), there is d[v] <= d[u] + w(u, v).
+    if u is None:
+      break # go to the termination step
+    d = vertex_to_distance[u] + graph.get_weight(u, v)
+    if vertex_to_distance[v] > d: # need relaxation
+      vertex_to_distance[v]    = d
+      vertex_to_predecessor[v] = u
+  # Termination:
+  return vertex_to_distance, vertex_to_predecessor
+```
+
 ### Dijkstra's Algorithm
+
+- Assumption: non-negative edge weights.
+- Idea:
+  - Maintain a set `S` of vertices whose final shortest path weights have been determined.
+  - *Greedily* choose the closest vertex in set `(V - S)` to add to set `S`.
+- Correctness:
+  - Relaxation is safe.
+  - Each time a vertex `u` is added to `S`, there is `d[u] = δ(s, u)`.
+- Complexity:
+  - $Θ(V)$ calls of `MinPQ.insert(Vertex, Key)`
+  - $Θ(V)$ calls of `MinPQ.pop_min()`
+  - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`
+
+```python
+def find_shortest_path(source, graph):
+  # Initialization:
+  undetermined_vertices = MinPQ()
+  vertex_to_distance    = dict()
+  vertex_to_predecessor = dict()
+  for v in graph.vertices:
+    undetermined_vertices.insert(v, float('inf'))
+    vertex_to_distance[v]    = float('inf')
+    vertex_to_predecessor[v] = None
+  undetermined_vertices.decrease(source, 0)
+  vertex_to_distance[source] = 0
+  # Relaxation:
+  while len(undetermined_vertices):
+    u = pq.pop_min()
+    for v in u.neighbors:
+      d = vertex_to_distance[u] + graph.get_weight(u, v)
+      if vertex_to_distance[v] > d: # need relaxation
+        undetermined_vertices.decrease(v, d)
+        vertex_to_distance[v]    = d
+        vertex_to_predecessor[v] = u
+  # Termination:
+  return vertex_to_distance, vertex_to_predecessor
+```
+
+### Bellman--Ford algorithm
 
 ## Maximum Flow and Minimum Cut
 
