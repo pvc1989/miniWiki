@@ -478,7 +478,6 @@ Requirements:
 - Princeton
   - Text: [Sect-4.1  Undirected Graphs](https://algs4.cs.princeton.edu/41graph) and [Sect-4.2  Directed Graphs](https://algs4.cs.princeton.edu/42digraph)
   - Video: [Part-2/Week-1  Undirected Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/NlsQF/lecture-slides) and [Part-2/Week-1  Directed Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/qRjk3/lecture-slides)
-  - Programming Assignment: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
 
 ### Adjacency Lists
 
@@ -487,17 +486,29 @@ template <class Vertex>
 struct StaticGraph {
   List<List<Vertex>> neighbors;
 };
+```
+
+### Adjacency Sets
+
+```cpp
 template <class Vertex>
 struct DynamicGraph {
   Map<Vertex, Set<Vertex>> neighbors;
 };
+```
+
+### Implicit Representation
+
+```cpp
 template <class Vertex>
 struct ImplicitGraph {
   List<Vertex> const& GetNeighbors(Vertex const&);
 };
 ```
 
-### Breadth-First Search
+## Breadth-First Search
+
+### Implementation
 
 ```python
 def breadth_first_search(source):
@@ -522,7 +533,36 @@ Complexity:
 - $\Theta(V+E)$ time
 - $\Theta(V+E)$ space
 
-### Depth-First Search
+### Shortest Ancestral Path
+
+- Princeton
+  - Programming Assignment: [WordNet](https://www.coursera.org/learn/algorithms-part2/programming/BCNsp/wordnet)
+
+![](https://coursera.cs.princeton.edu/algs4/assignments/wordnet/wordnet-sca.png)
+
+```python
+def find_shortest_ancestral_path(graph, u, v):
+  u_tree = build_bfs_tree(graph, u) # Θ(V + E)
+  v_tree = build_bfs_tree(graph, v) # Θ(V + E)
+  d_min = int('inf')
+  ancestor = None
+  for x in u_tree: # at most V steps
+    if x not in v_tree: # Θ(1)
+      continue
+    d = u_tree.get_depth(x) + v_tree.get_depth(x): # Θ(1)
+    if d_min > d: # Θ(1)
+      d_min = d
+      ancestor = x
+  return d_min, ancestor
+```
+
+Complexity:
+- $\Theta(V+E)$ time
+- $\Theta(V+E)$ space
+
+## Depth-First Search
+
+### Implementation
 
 ```python
 def depth_first_search(graph):
