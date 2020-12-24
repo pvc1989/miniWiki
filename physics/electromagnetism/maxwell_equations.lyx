@@ -1774,10 +1774,18 @@ x'^{2}+y'^{2}+z'^{2}-(ct')^{2}=0=x^{2}+y^{2}+z^{2}-(ct)^{2}
 
 \end_inset
 
-受此启发，定义
+受此启发，定义“四维坐标”
 \begin_inset Formula 
 \[
-\begin{bmatrix}x_{1} & x_{2} & x_{3} & x_{4}\end{bmatrix}\coloneqq\begin{bmatrix}x & y & z & \sqrt{-1}ct\end{bmatrix}
+\begin{bmatrix}x_{1} & x_{2} & x_{3} & x_{4}\end{bmatrix}\coloneqq\begin{bmatrix}x & y & z & \ii ct\end{bmatrix}
+\]
+
+\end_inset
+
+及“四维距离”
+\begin_inset Formula 
+\[
+(\dd{s})^{2}\coloneqq(\dd{x_{1}})^{2}+(\dd{x_{2}})^{2}+(\dd{x_{3}})^{2}+(\dd{x_{4}})^{2}
 \]
 
 \end_inset
@@ -1823,7 +1831,7 @@ x_{4}
 由此得
 \begin_inset Formula 
 \[
-\tan\theta=-\frac{V}{\sqrt{-1}c}\impliedby0=Vt\cos\theta+\sqrt{-1}ct\sin\theta
+\tan\theta=\sqrt{-1}V/c\impliedby0=Vt\cos\theta+\sqrt{-1}ct\sin\theta
 \]
 
 \end_inset
@@ -1842,17 +1850,21 @@ x_{4}
 
 \end_inset
 
-或等价的
+或（等价的）不含 
+\begin_inset Formula $\sqrt{-1}$
+\end_inset
+
+ 的
 \begin_inset Formula 
 \[
 \begin{bmatrix}x'\\
-t'
-\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & -V\\
--V/c^{2} & 1
+ct'
+\end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}1 & -V/c\\
+-V/c & 1
 \end{bmatrix}\begin{bmatrix}x\\
-t
+ct
 \end{bmatrix}=\frac{1}{\sqrt{1-(V/c)^{2}}}\begin{bmatrix}x-Vt\\
-t-xV/c^{2}
+ct-xV/c
 \end{bmatrix}
 \]
 
@@ -2090,6 +2102,241 @@ p^{2}c^{2}+m_{0}^{2}c^{4}=E^{2}
 
 \begin_layout Section
 电磁学
+\end_layout
+
+\begin_layout Chapter
+介质中的 Maxwell 方程组
+\end_layout
+
+\begin_layout Section
+连续介质
+\end_layout
+
+\begin_layout Standard
+“原子 (atom)”由带正电的“原子核 (nucleus)”与带负电的“电子 (electron)”组成。电子按一定规律
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+量子力学是目前描述核外电子绕核运动规律最精确的理论。
+\end_layout
+
+\end_inset
+
+围绕原子核运动，因此从电磁学的角度来看，这是一个在微观尺度上剧烈变化的电磁系统。该系统的电磁性质，可以由真空中的 Maxwell 方程组描述：
+\begin_inset Formula 
+\[
+\begin{aligned}\divg\vec{e}(\vec{r},t) & =\rho(\vec{r},t)/\varepsilon_{0} & \curl\vec{e}(\vec{r},t) & =-\partial_{t}\vec{b}(\vec{r},t)\\
+\divg\vec{b}(\vec{r},t) & =0 & \curl\vec{b}(\vec{r},t) & =\mu_{0}\vec{\jmath}(\vec{r},t)+\mu_{0}\varepsilon_{0}\partial_{t}\vec{e}(\vec{r},t)
+\end{aligned}
+\]
+
+\end_inset
+
+其中小写字母 
+\begin_inset Formula $\vec{e},\vec{b}$
+\end_inset
+
+ 用于表示微观物理量，以区别于下面将要推出的宏观物理量。
+\end_layout
+
+\begin_layout Standard
+然而，日常生活所涉及的电磁波（如：可见光、无线电波），其波长通常远大于原子半径。在该尺度下，任何体积（或面积）微元内都含有大量原子，追踪其中每个原子（甚至电子）
+的物理状态，既不可行、又无必要。通常的做法是：研究各物理量在体积微元上的空间平均值（对应的名称前冠以“宏观”二字），例如“宏观电场强度”就被定义为
+\begin_inset Formula 
+\[
+\vec{E}(\vec{r},t)\coloneqq\langle\vec{e}(\vec{r}',t)\rangle\coloneqq\lim_{|V|\to0}\langle\vec{e}(\vec{r}',t)\rangle_{V}\qquad\langle\vec{e}(\vec{r}',t)\rangle_{V}\coloneqq\frac{\iiint_{V(\vec{r}')}\vec{e}(\vec{r}',t)}{|V|\coloneqq\iiint_{V(\vec{r}')}1}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $|V|\to0$
+\end_inset
+
+ 应读作：宏观上小到可以作微积分运算，但微观上仍含有大量原子。类似地，可定义“宏观磁感应强度”、“宏观电荷密度”、“宏观电流密度”如下
+\begin_inset Formula 
+\[
+\begin{bmatrix}\langle\vec{b}\rangle & \langle\rho\rangle & \langle\vec{\jmath}\rangle\end{bmatrix}\coloneqq\lim_{|V|\to0}\frac{1}{|V|}\iiint_{V(\vec{r}')}\begin{bmatrix}\vec{b}(\vec{r}',t) & \rho(\vec{r}',t) & \vec{\jmath}(\vec{r}',t)\end{bmatrix}
+\]
+
+\end_inset
+
+对以 
+\begin_inset Formula $\vec{e},\vec{b}$
+\end_inset
+
+ 为未知量的 Maxwell 方程组取这种空间平均，即得描述介质中的宏观电磁场的 Maxwell 方程组：
+\begin_inset Formula 
+\[
+\begin{aligned}\divg\langle\vec{e}\rangle & =\langle\rho\rangle/\varepsilon_{0} & \curl\langle\vec{e}\rangle & =-\partial_{t}\langle\vec{b}\rangle\\
+\divg\langle\vec{b}\rangle & =0 & \curl\langle\vec{b}\rangle & =\mu_{0}\langle\vec{\jmath}\rangle+\mu_{0}\varepsilon_{0}\partial_{t}\langle\vec{e}\rangle
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+极化电荷
+\end_layout
+
+\begin_layout Standard
+构成物质的分子，可以按无外加电场时分子内部正负电荷分布的中心是否重合，分为两类：
+\end_layout
+
+\begin_layout Itemize
+“有极性分子 (polar molecule)”的正负电荷分布中心不重合（用 
+\begin_inset Formula $\vec{d}$
+\end_inset
+
+ 表示由正电中心指向负电中心的位移矢量），故单个分子即带有非零的电偶极矩（用 
+\begin_inset Formula $\vec{p}\coloneqq q\vec{d}$
+\end_inset
+
+ 表示）。由这种分子构成的物质，在没有外加电场时仍呈现电中性。这是因为热运动使得不同分子的电偶极矩取向杂乱无章，从而使这些电偶极矩的空间平均值为零。
+\end_layout
+
+\begin_layout Itemize
+“无极性分子 (non-polar molecule)”的正负电荷分布中心重合，故单个分子即呈现电中性。
+\end_layout
+
+\begin_layout Standard
+有外加电场时，由这两种分子构成的物质都会形成“宏观电偶极矩”：
+\begin_inset Formula 
+\[
+\boxed{\vec{P}(\vec{r},t)=\lim_{|V|\to0}\frac{1}{|V|}\sum_{\vec{r}_{i}(t)\in V}\vec{p}_{i}(t)}
+\]
+
+\end_inset
+
+它描述了分子电偶极矩的平均值在空间中的分布情况，故又名“（平均）极化密度 (polarization density)”。
+\end_layout
+
+\begin_layout Standard
+宏观电荷密度 
+\begin_inset Formula $\langle\rho\rangle$
+\end_inset
+
+ 可分为“自由 (free)”与“束缚 (bounded)”两部分，即
+\begin_inset Formula 
+\[
+\langle\rho\rangle(\vec{r},t)=\rho_{\mathrm{f}}(\vec{r},t)+\rho_{\mathrm{b}}(\vec{r},t)
+\]
+
+\end_inset
+
+下面推导 
+\begin_inset Formula $\rho_{\mathrm{b}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+ 的关系：
+\end_layout
+
+\begin_layout Itemize
+一般而言，体密度为 
+\begin_inset Formula $\rho_{\mathrm{b}}$
+\end_inset
+
+、面密度为 
+\begin_inset Formula $\sigma_{\mathrm{b}}$
+\end_inset
+
+ 的束缚电荷，在 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ 处产生的静电势为
+\begin_inset Formula 
+\[
+\phi_{1}(\vec{r})+C_{1}=k_{1}\iiint_{V(\vec{r}')}\frac{\rho_{\mathrm{b}}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}+k_{1}\oiint_{\partial V(\vec{r}')}\frac{\sigma_{\mathrm{b}}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+另一方面，位于 
+\begin_inset Formula $\vec{r}'$
+\end_inset
+
+ 的电偶极矩 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\vec{r}$
+\end_inset
+
+ 处产生的静电势为
+\begin_inset Formula 
+\[
+\lim_{\substack{\vec{d}\to\vec{0}\\
+q\vec{d}=\vec{p}
+}
+}\left(\frac{+k_{1}q}{\vert\vec{r}-\vec{r}'+\vec{d}/2\vert}+\frac{-k_{1}q}{\vert\vec{r}-\vec{r}'-\vec{d}/2\vert}\right)=\lim_{\substack{\vec{d}\to\vec{0}\\
+q\vec{d}=\vec{p}
+}
+}k_{1}q\frac{\vec{d}\vdot(\vec{r}-\vec{r}')}{\vert\vec{r}-\vec{r}'\vert^{3}}=\boxed{k_{1}\vec{p}\vdot\grad\!_{\vec{r}'}\frac{1}{\vert\vec{r}-\vec{r}'\vert}}
+\]
+
+\end_inset
+
+故分布于 
+\begin_inset Formula $V$
+\end_inset
+
+ 中的极化电荷 
+\begin_inset Formula $\vec{P}$
+\end_inset
+
+ 所产生的静电势又可以写成
+\begin_inset Formula 
+\[
+\begin{aligned}\phi_{2}(\vec{r})+C_{2} & =k_{1}\iiint_{V(\vec{r}')}\vec{P}(\vec{r}')\vdot\grad\!_{\vec{r}'}\frac{1}{\vert\vec{r}-\vec{r}'\vert}\\
+ & =k_{1}\iiint_{V(\vec{r}')}\left(\grad\!_{\vec{r}'}\vdot\frac{\vec{P}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}-\frac{\grad\!_{\vec{r}'}\vdot\vec{P}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}\right)\\
+ & =k_{1}\oiint_{\partial V(\vec{r}')}\frac{\vec{\nu}(\vec{r}')\vdot\vec{P}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}+k_{1}\iiint_{V(\vec{r}')}\frac{-\grad\!_{\vec{r}'}\vdot\vec{P}(\vec{r}')}{\vert\vec{r}-\vec{r}'\vert}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+比较两种表达式，即得
+\begin_inset Formula 
+\[
+\boxed{\rho_{\mathrm{b}}=-\divg\vec{P}\qquad\sigma_{\mathrm{b}}=\vec{\nu}\vdot\vec{P}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+磁化电流
+\end_layout
+
+\begin_layout Section
+介质中的 Maxwell 方程组
 \end_layout
 
 \end_body
