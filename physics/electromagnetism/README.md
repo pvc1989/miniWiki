@@ -215,7 +215,7 @@ $$
 利用微分恒等式
 
 $$
-\grad\!_{\Vec{r}}\frac{-1}{\vert\Vec{r}-\Vec{r}'\vert}
+\grad\frac{-1}{\vert\Vec{r}-\Vec{r}'\vert}
 =\frac{\Vec{r} - \Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^3}
 \qquad
 \curl(\alpha\Vec{A})=(\grad\alpha)\cross\Vec{A}+\alpha\curl{\Vec{A}}
@@ -225,7 +225,7 @@ $$
 
 $$
 \Vec{B}(\Vec{r})
-= \frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\left(\grad\!_{\Vec{r}}\frac{1}{\vert\Vec{r}-\Vec{r}'\vert}\right)\cross\Vec{\jmath}(\Vec{r}')
+= \frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\left(\grad\frac{1}{\vert\Vec{r}-\Vec{r}'\vert}\right)\cross\Vec{\jmath}(\Vec{r}')
 = \curl\frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\frac{\Vec{\jmath}(\Vec{r}')}{\vert\Vec{r}-\Vec{r}'\vert} \eqqcolon \curl\Vec{A}(\Vec{r})
 $$
 
@@ -258,7 +258,7 @@ $$
 将其展开为四项，再利用
 
 $$
-\grad\!_{\Vec{r}}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}=-\grad\!_{\Vec{r}'}\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}\impliedby(\forall f)\left(\grad\!_{\Vec{r}}f(\Vec{r}-\Vec{r}')=-\grad\!_{\Vec{r}'}f(\Vec{r}-\Vec{r}')\right)
+\grad\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}=-\grad'\frac{\Vec{r}-\Vec{r}'}{\vert\Vec{r}-\Vec{r}'\vert^{3}}\impliedby(\forall f)\left(\grad f(\Vec{r}-\Vec{r}')=-\grad' f(\Vec{r}-\Vec{r}')\right)
 $$
 
 化简为
