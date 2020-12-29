@@ -174,7 +174,7 @@ title: 数据结构与算法
 
 ### Binary Search
 
-## Union--Find
+## Union--Find<a href id="union-find"></a>
 
 - VisuAlgo
   - [Union--Find DS](https://visualgo.net/en/ufds)
@@ -243,7 +243,7 @@ title: 数据结构与算法
 - MIT
   - Text: Chap-6  Heapsort
 
-## Fibonacci Heaps
+## Fibonacci Heaps<a href id="fib-heap"></a>
 
 - MIT
   - Text: Chap-19  Fibonacci Heaps
@@ -612,9 +612,77 @@ DAG: Directed Acylic Graph.
   - Text: [Sect-4.3  Minimum Spanning Trees](https://algs4.cs.princeton.edu/43mst)
   - Video: [Part-2/Week-2  Minimun Spanning Trees](https://www.coursera.org/learn/algorithms-part2/supplement/tda2O/lecture-slides)
 
+[Problem] Given an undirected graph $G = (V,E)$ and edge weights $W\colon E\to \mathbb{R}$, find a spanning tree $T$ that minimizes $\sum_{e\in T}W(e)$.
+
+[Definition] The *contraction* of an edge $e\coloneqq\{u,v\}$ in a graph $G$ is to merge the vertices connected by $e$ and create a new vertex. The new graph is denoted as $G/e$.
+
+[Lemma on Optimal Substructure] Suppose $e\coloneqq\{u,v\}$ is an edge of some MST of $G$. If $T'$ is an MST of $G/e$, then $T'\cup\{e\}$ is an MST of $G$.
+
+[Lemma on Greedy-Choice] For any cut $(S,V\setminus S)$ in a weighted graph $G=(V,E,W)$, any least-weight crossing edge $e\coloneqq\{u\in S,v\in V\setminus S\}$ is in some MST of $G$.
+
 ### Kruskal's Algorithm
 
+- Idea:
+  - Maintain connected components by a [Union--Find DS](#union-find).
+  - Greedily choose the globally lowest-weight edge that connect two components.
+- Complexity:
+  - $\Theta(V)$ for building the `UnionFind` DS of vertices.
+  - $\Theta(E)$ for `sort()` if $W$ is `int`-valued and using [Radix Sort](#radix-sort).
+  - $\Theta(E)$ calls of `UnionFind.connected()` and `UnionFind.union()`, which can be amortized $\Theta(\alpha(V))$.
+
+```python
+def GetMinSpanTreeByKruskal(Vertices, Edges, Weight):
+  # Initialization:
+  mst = set() # edges
+  uf = UnionFind(Vertices) # one component for each vertex
+  sort(Edges, Weight) # may be linear
+  # Greedily choose the lowest-weight edge:
+  for (u, v) in Edges:
+    if not uf.connected(u, v):
+      uf.union(u, v)
+      mst.add((u, v))
+  # Termination:
+  return mst
+```
+
 ### Prim's Algorithm
+
+- Idea (like [Dijkstra's algorithm for Shortest Path](#DijkstraSP)):
+  - Maintain a `MinPQ` on $V\setminus S$, where $d(S, v)\coloneqq\min_{u\in S}\{W(u, v)\}$ is used as $v$'s `key`.
+  - Greedily choose the closest vertex from set $V\setminus S$ and add it to set $S$.
+- Complexity:
+  - $\Theta(V)$ calls of `MinPQ.pop_min()`
+  - $\Theta(E)$ calls of `MinPQ.change_key()`, which can be amortized $\Theta(1)$ if using [Fibonacci Heap](#fib-heap).
+  - $\Theta(V+E)$ space
+
+```python
+def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
+  # Initialization:
+  mst = dict() # vertex to parent
+  pq = MinPQ() # v.key := d(S, v)
+  for v in Vertices:
+    v.parent = None
+    v.key = float('inf')
+    pq.add(v)
+  # Choose the root (arbitrarily):
+  u = pq.pop_min()
+  mst[u] = None
+  for v in u.neighbors:
+    v.key = Weight(u, v) # float up in the MinPQ
+    v.parent = u
+  # Greedily choose the next (V-1) vertices:
+  while len(pq):
+    u = pq.pop_min()
+    mst[u] = u.parent
+    for v in u.neighbors:
+      if (v not in mst) and (Weight(u, v) < v.key):
+        pq.change_key(v, key=Weight(u, v))
+        v.parent = u
+  # Termination:
+  return mst
+```
+
+
 
 ## Shortest Paths
 
@@ -657,19 +725,19 @@ def find_shortest_path(source, graph):
   return vertex_to_distance, vertex_to_predecessor
 ```
 
-### Dijkstra's Algorithm
+### Dijkstra's Algorithm<a href id="DijkstraSP"></a>
 
 - Assumption: non-negative edge weights.
-- Idea:
-  - Maintain a set `S` of vertices whose final shortest path weights have been determined.
-  - *Greedily* choose the closest vertex in set `(V - S)` to add to set `S`.
+- Idea (like [Prim's algorithm for Minimum Spanning Tree](#PrimMST)):
+  - Maintain a set $S$ of vertices whose final shortest path weights have been determined.
+  - *Greedily* choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Correctness:
   - Relaxation is safe.
   - Each time a vertex `u` is added to `S`, there is `d[u] = δ(s, u)`.
 - Complexity:
   - $Θ(V)$ calls of `MinPQ.insert(Vertex, Key)`
   - $Θ(V)$ calls of `MinPQ.pop_min()`
-  - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`
+  - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`, which can be amortized $\Theta(1)$ if using [Fibonacci Heap](#fib-heap).
 
 ```python
 def find_shortest_path(source, graph):
@@ -724,7 +792,7 @@ def find_shortest_path(source, graph):
   - C++: [`std::string`](https://en.cppreference.com/w/cpp/string/basic_string) in [`<string>`](https://en.cppreference.com/w/cpp/header/string)
   - C: [Null-terminated byte strings](https://en.cppreference.com/w/c/string/byte) in `<string.h>`
 
-## Radix Sorts
+## Radix Sorts<a href id="radix-sort"></a>
 
 - Princeton
   - Text: [Sect-5.1  String Sorts](https://algs4.cs.princeton.edu/51radix)
