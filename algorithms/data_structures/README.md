@@ -592,7 +592,7 @@ Edge Classification:
 - back edge: to ancestor
 - cross edge: to another subtree (only in digraph)
 
-[Theorem] Graph has a cycle $\iff$ DFS has a back edge.
+**Theorem.** Graph has a cycle $\iff$ DFS has a back edge.
 
 DAG: Directed Acylic Graph.
 
@@ -612,13 +612,20 @@ DAG: Directed Acylic Graph.
   - Text: [Sect-4.3  Minimum Spanning Trees](https://algs4.cs.princeton.edu/43mst)
   - Video: [Part-2/Week-2  Minimun Spanning Trees](https://www.coursera.org/learn/algorithms-part2/supplement/tda2O/lecture-slides)
 
-[Problem] Given an undirected graph $G = (V,E)$ and edge weights $W\colon E\to \mathbb{R}$, find a spanning tree $T$ that minimizes $\sum_{e\in T}W(e)$.
+### Weighted Edges
 
-[Definition] The *contraction* of an edge $e\coloneqq\{u,v\}$ in a graph $G$ is to merge the vertices connected by $e$ and create a new vertex. The new graph is denoted as $G/e$.
+- $W\colon E\to\mathbb{R}$ or $W\colon V\times V\to\mathbb{R}$ for an edge.
+- $W(v_0,\dots,v_{k})\coloneqq\sum_{i=0}^{k-1}W(v_i,v_{i+1})$ for a path.
 
-[Lemma on Optimal Substructure] Suppose $e\coloneqq\{u,v\}$ is an edge of some MST of $G$. If $T'$ is an MST of $G/e$, then $T'\cup\{e\}$ is an MST of $G$.
+If negative weight edges are present, the algorithm should find negative weight cycles.
 
-[Lemma on Greedy-Choice] For any cut $(S,V\setminus S)$ in a weighted graph $G=(V,E,W)$, any least-weight crossing edge $e\coloneqq\{u\in S,v\in V\setminus S\}$ is in some MST of $G$.
+**Problem.** Given an undirected graph $G = (V,E)$ and edge weights $W\colon E\to \mathbb{R}$, find a spanning tree $T$ that minimizes $\sum_{e\in T}W(e)$.
+
+**Definition.** The *contraction* of an edge $e\coloneqq\{u,v\}$ in a graph $G$ is to merge the vertices connected by $e$ and create a new vertex. The new graph is denoted as $G/e$.
+
+**Lemma (Optimal Substructure).** Suppose $e\coloneqq\{u,v\}$ is an edge of some MST of $G$. If $T'$ is an MST of $G/e$, then $T'\cup\{e\}$ is an MST of $G$.
+
+**Lemma (Greedy Choice).** For any cut $(S,V\setminus S)$ in a weighted graph $G=(V,E,W)$, any least-weight crossing edge $e\coloneqq\{u\in S,v\in V\setminus S\}$ is in some MST of $G$.
 
 ### Kruskal's Algorithm
 
@@ -682,8 +689,6 @@ def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
   return mst
 ```
 
-
-
 ## Shortest Paths
 
 - VisuAlgo
@@ -692,13 +697,6 @@ def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
   - Text: [Sect-4.4  Shortest Paths](https://algs4.cs.princeton.edu/44sp)
   - Video: [Part-2/Week-2  Shortest Paths](https://www.coursera.org/learn/algorithms-part2/supplement/BZTAt/lecture-slides)
   - Programming Assignment: [Seam Carving](https://www.coursera.org/learn/algorithms-part2/programming/cOdkz/seam-carving)
-
-### Weighted Edges
-
-- $W\colon E\to\mathbb{R}$ or $W\colon V\times V\to\mathbb{R}$ for an edge.
-- $W(v_0,\dots,v_{k})\coloneqq\sum_{i=0}^{k-1}W(v_i,v_{i+1})$ for a path.
-
-If negative weight edges are present, the algorithm should find negative weight cycles.
 
 ### Generic Algorithm
 
