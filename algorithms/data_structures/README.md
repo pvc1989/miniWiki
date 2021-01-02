@@ -701,26 +701,26 @@ def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
 ### Generic Algorithm
 
 ```python
-def find_shortest_path(source, graph):
+def find_shortest_path(source, graph, weight):
   # Initialization:
-  vertex_to_distance    = dict()
-  vertex_to_predecessor = dict()
+  vertex_to_length = dict()
+  vertex_to_parent = dict()
   for v in graph.vertices:
-    vertex_to_distance[v]    = float('inf')
-    vertex_to_predecessor[v] = None
-  vertex_to_distance[source] = 0
+    vertex_to_length[v] = float('inf')
+    vertex_to_parent[v] = None
+  vertex_to_length[source] = 0
   # Relaxation:
   while True:
     u, v = _select_edge(graph) # return (None, None) if
     # for all (u, v), there is d[v] <= d[u] + w(u, v).
     if u is None:
       break # go to the termination step
-    d = vertex_to_distance[u] + graph.get_weight(u, v)
-    if vertex_to_distance[v] > d: # need relaxation
-      vertex_to_distance[v]    = d
-      vertex_to_predecessor[v] = u
+    d = vertex_to_length[u] + weight(u, v)
+    if vertex_to_length[v] > d: # need relaxation
+      vertex_to_length[v] = d
+      vertex_to_parent[v] = u
   # Termination:
-  return vertex_to_distance, vertex_to_predecessor
+  return vertex_to_length, vertex_to_parent
 ```
 
 ### Dijkstra's Algorithm<a href id="DijkstraSP"></a>
@@ -738,31 +738,50 @@ def find_shortest_path(source, graph):
   - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`, which can be amortized $\Theta(1)$ if using [Fibonacci Heap](#fib-heap).
 
 ```python
-def find_shortest_path(source, graph):
+def find_shortest_path(source, graph, weight):
   # Initialization:
-  undetermined_vertices = MinPQ()
-  vertex_to_distance    = dict()
-  vertex_to_predecessor = dict()
+  unfinished_vertices = MinPQ()
+  vertex_to_length = dict()
+  vertex_to_parent = dict()
   for v in graph.vertices:
-    undetermined_vertices.insert(v, float('inf'))
-    vertex_to_distance[v]    = float('inf')
-    vertex_to_predecessor[v] = None
-  undetermined_vertices.decrease(source, 0)
-  vertex_to_distance[source] = 0
+    unfinished_vertices.insert(v, float('inf'))
+    vertex_to_length[v] = float('inf')
+    vertex_to_parent[v] = None
+  unfinished_vertices.decrease(source, 0)
+  vertex_to_length[source] = 0
   # Relaxation:
-  while len(undetermined_vertices):
+  while len(unfinished_vertices):
     u = pq.pop_min()
     for v in u.neighbors:
-      d = vertex_to_distance[u] + graph.get_weight(u, v)
-      if vertex_to_distance[v] > d: # need relaxation
-        undetermined_vertices.decrease(v, d)
-        vertex_to_distance[v]    = d
-        vertex_to_predecessor[v] = u
+      d = vertex_to_length[u] + weight(u, v)
+      if vertex_to_length[v] > d: # need relaxation
+        unfinished_vertices.decrease(v, d)
+        vertex_to_length[v] = d
+        vertex_to_parent[v] = u
   # Termination:
-  return vertex_to_distance, vertex_to_predecessor
+  return vertex_to_length, vertex_to_parent
 ```
 
-### Bellman--Ford algorithm
+### Bellman--Ford's Algorithm
+
+- MIT:
+  - Video: [6.006/Lecture 17: Bellmen--Ford](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-17-bellman-ford)
+- Assumption:
+  - Allow negative edge weights.
+  - Report cycles with negetive weights.
+- Complexity:
+  - $Θ(VE)$ calls of `relax()`.
+
+```python
+def find_shortest_path(source, graph, weight):
+  for i in range(len(graph.vertices) - 1):
+    for u, v in graph.edges:
+      relax(u, v, weight(u, v))
+  # One more pass to find negative cycles:
+  for u, v in graph.edges:
+    if relaxable(u, v, weight(u, v)):
+      raise Exception("There exists a negative cycle!")
+```
 
 ## Maximum Flow and Minimum Cut
 
