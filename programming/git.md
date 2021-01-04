@@ -319,3 +319,26 @@ jobs:
 
 - [Caching and storing workflow data](https://docs.github.com/en/free-pro-team@latest/actions/guides#caching-and-storing-workflow-data)
 - [`actions/cache`](https://github.com/actions/cache) on GitHub
+
+## SSH 免密连接
+
+### [Error: Permission denied (publickey)](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/error-permission-denied-publickey)
+
+可能原因及修复办法：
+
+1. 使用 `sudo` 连接。
+2. 服务端无可用公钥。可按《[Add the SSH key to your GitHub account](https://docs.github.com/en/free-pro-team@latest/articles/adding-a-new-ssh-key-to-your-github-account)》修复。
+3. 本地 `ssh-agent` 进程未启动或无相应私钥（常见于重启系统后）。可按《[Adding your SSH key to the ssh-agent](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent)》修复。
+
+命令概要：
+
+```shell
+# 检查连接：
+$ ssh -T git@github.com
+# 启动 ssh-agent 进程（在后台运行）：
+$ eval "$(ssh-agent -s)"
+# 检查已加载的私钥：
+$ ssh-add -l
+# 加载指定私钥：
+$ ssh-add -K ~/.ssh/<filename>
+```
