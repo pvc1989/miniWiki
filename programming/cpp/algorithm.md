@@ -1,7 +1,7 @@
 # 算法
 
 ## `<algorithm>`
-标准库以[模板函数](./generic#模板函数)的形式在头文件 [`<algorithm>`](https://en.cppreference.com/w/cpp/algorithm) 中定义了一系列 **泛型算法 (generic algorithms)**。
+标准库以[函数模板](./template/generic.md#函数模板)的形式在头文件 [`<algorithm>`](https://en.cppreference.com/w/cpp/algorithm) 中定义了一系列 **泛型算法 (generic algorithms)**。
 
 ### 只读 (Non-modifying)
 
