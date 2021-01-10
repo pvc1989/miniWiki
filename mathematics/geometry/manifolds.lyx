@@ -105,105 +105,11 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-流形
+流形的概念
 \end_layout
 
-\begin_layout Definition*
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[拓扑流形]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[可微流形]
-\end_layout
-
-\end_inset
-
-给定拓扑空间 
-\begin_inset Formula $(M,\mathscr{T})$
-\end_inset
-
-，若存在开覆盖 
-\begin_inset Formula $\bigcup_{\alpha\in A}O_{\alpha}=M$
-\end_inset
-
- 满足
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $\forall\alpha\in A$
-\end_inset
-
-，存在同胚映射 
-\begin_inset Formula $\psi_{\alpha}\colon O_{\alpha}\to V_{\alpha}\subset\mathbb{R}^{n}$
-\end_inset
-
-，且这些映射满足
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\forall(\alpha_{1},\alpha_{2})\in A^{2}$
-\end_inset
-
-，映射 
-\begin_inset Formula $\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}$
-\end_inset
-
- 是 
-\begin_inset Formula $C^{\infty}$
-\end_inset
-
- 的 
-\begin_inset Formula $n$
-\end_inset
-
--元、
-\begin_inset Formula $n$
-\end_inset
-
--分量函数组，
-\end_layout
-
-\end_deeper
-\begin_layout Definition
-则称 
-\begin_inset Formula $M$
-\end_inset
-
- 是一个『
-\begin_inset Formula $n$
-\end_inset
-
--维〔可微 (differentiable)|微分 (differential)|光滑 (smooth)〕「流形 (manifold)」』。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+\begin_layout Subsection
+局部坐标
 \end_layout
 
 \begin_layout Definition
@@ -241,7 +147,11 @@ status open
 \begin_inset Formula $\psi_{\alpha}$
 \end_inset
 
- 作用下的（局部）「坐标 (coordinate)」』。
+ 作用下的（局部）「坐标 (coordinate)」』。开集 
+\begin_inset Formula $O_{\alpha}$
+\end_inset
+
+ 被称为（局部）『坐标域 (coordinate patch)』。
 \end_layout
 
 \begin_layout Standard
@@ -266,6 +176,14 @@ status open
 \begin_inset Formula 
 \[
 \psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}\colon\underbrace{\psi_{\alpha_{1}}(\overbrace{O_{\alpha_{1}}\cap O_{\alpha_{2}}}^{\subset M})}_{\subset\mathbb{R}^{n}}\to\underbrace{\psi_{\alpha_{2}}(\overbrace{O_{\alpha_{1}}\cap O_{\alpha_{2}}}^{\subset M})}_{\subset\mathbb{R}^{n}}
+\]
+
+\end_inset
+
+定义了同一个点的两种坐标之间的变换法则，即
+\begin_inset Formula 
+\[
+\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}\colon\psi_{\alpha_{1}}(p)\mapsto\psi_{\alpha_{2}}(p)\qquad\forall p\in O_{\alpha_{1}}\cap O_{\alpha_{2}}
 \]
 
 \end_inset
@@ -315,6 +233,51 @@ status open
 
 \begin_layout Plain Layout
 
+[坐标相容性]
+\end_layout
+
+\end_inset
+
+若复合映射 
+\begin_inset Formula $\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}$
+\end_inset
+
+ 所表示的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个 
+\begin_inset Formula $n$
+\end_inset
+
+-元函数是 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+ 的，则称 
+\begin_inset Formula $(O_{\alpha_{1}},\psi_{\alpha_{1}})$
+\end_inset
+
+ 与 
+\begin_inset Formula $(O_{\alpha_{2}},\psi_{\alpha_{2}})$
+\end_inset
+
+ 是『相容的 (consistent)』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 [图册]
 \end_layout
 
@@ -340,6 +303,164 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+光滑流形
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拓扑流形]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[光滑流形]
+\end_layout
+
+\end_inset
+
+给定拓扑空间 
+\begin_inset Formula $(M,\mathscr{T})$
+\end_inset
+
+，若存在 
+\begin_inset Formula $M$
+\end_inset
+
+ 的开覆盖 
+\begin_inset Formula $\left\{ O_{\alpha}\right\} _{\alpha\in A}$
+\end_inset
+
+ 满足
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+局部像 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+，即 
+\begin_inset Formula $\forall\alpha\in A$
+\end_inset
+
+，存在同胚映射 
+\begin_inset Formula $\psi_{\alpha}\colon O_{\alpha}\to V_{\alpha}\subset\mathbb{R}^{n}$
+\end_inset
+
+，且这些映射满足
+\end_layout
+
+\begin_layout Itemize
+相容性条件，即 
+\begin_inset Formula $\forall(\alpha_{1},\alpha_{2})\in A^{2}$
+\end_inset
+
+，复合映射 
+\begin_inset Formula $\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}$
+\end_inset
+
+ 所表示的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个 
+\begin_inset Formula $n$
+\end_inset
+
+-元函数是 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+ 的，
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $M$
+\end_inset
+
+ 是一个『
+\begin_inset Formula $n$
+\end_inset
+
+-维〔可微 (differentiable)|微分 (differential)|光滑 (smooth)〕「流形 (manifold)」』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$C^{r}$ 流形]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[平凡流形]
+\end_layout
+
+\end_inset
+
+能被一个坐标域覆盖的流形被称为『「平凡 (trivial)」流形』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+光滑映射
 \end_layout
 
 \begin_layout Definition
@@ -373,11 +494,11 @@ status open
 \begin_inset Formula $f\colon M_{1}\to M_{2}$
 \end_inset
 
-，及 
+，对于 
 \begin_inset Formula $M_{1}$
 \end_inset
 
- 中一点 
+ 中某点 
 \begin_inset Formula $p$
 \end_inset
 
@@ -401,7 +522,15 @@ status open
 \begin_inset Formula $\psi_{2}\circ f\circ\psi_{1}^{-1}$
 \end_inset
 
- 在 
+ 所表示的 
+\begin_inset Formula $n_{2}$
+\end_inset
+
+ 个 
+\begin_inset Formula $n_{1}$
+\end_inset
+
+-元函数在 
 \begin_inset Formula $\psi_{1}(p)$
 \end_inset
 
@@ -409,15 +538,7 @@ status open
 \begin_inset Formula $r$
 \end_inset
 
--阶光滑的 
-\begin_inset Formula $n_{1}$
-\end_inset
-
--元、
-\begin_inset Formula $n_{2}$
-\end_inset
-
--分量函数组，则称『
+-阶光滑的，则称『
 \begin_inset Formula $f$
 \end_inset
 
@@ -534,7 +655,11 @@ status open
 \end_layout
 
 \begin_layout Section
-切向量
+流形上的场
+\end_layout
+
+\begin_layout Subsection
+标量场
 \end_layout
 
 \begin_layout Definition
@@ -543,7 +668,67 @@ status open
 
 \begin_layout Plain Layout
 
-[标量场]
+[流形上的标量场]
+\end_layout
+
+\end_inset
+
+映射 
+\begin_inset Formula $f\colon M\to\mathbb{R}$
+\end_inset
+
+ 被称为『流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 上的「标量场 (scalar field)」』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+利用局部坐标系 
+\begin_inset Formula $(O_{\alpha},\psi_{\alpha})$
+\end_inset
+
+ 可以将标量场 
+\begin_inset Formula $f\colon M\to\mathbb{R}$
+\end_inset
+
+ 表示为多元函数
+\begin_inset Formula 
+\[
+F_{\alpha}(\underbrace{\psi_{\alpha}(p)}_{\subset\mathbb{R}^{n}})=\underbrace{f(p)}_{\subset\mathbb{R}}\qquad\forall p\in O_{\alpha}\subset M
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+切向量场
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[向量空间]
 \end_layout
 
 \end_inset
@@ -558,7 +743,28 @@ status open
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[始于同一点的箭头]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
 \begin_inset ERT
 status open
 
@@ -566,6 +772,66 @@ status open
 
 [方向导数]
 \end_layout
+
+\end_inset
+
+给定向量 
+\begin_inset Formula $\vec{v}\in\mathbb{R}^{3}$
+\end_inset
+
+，函数 
+\begin_inset Formula $f\in C^{\infty}(\mathbb{R}^{3},\mathbb{R})$
+\end_inset
+
+ 在点 
+\begin_inset Formula $\vec{x}\in\mathbb{R}^{3}$
+\end_inset
+
+ 处沿 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的『方向导』数被定义为
+\begin_inset Formula 
+\[
+\left.\frac{\partial f}{\partial v}\right|_{\vec{x}}\coloneqq\lim_{t\to0}\frac{f(\vec{x}+t\vec{v})-f(\vec{x})}{t}
+\]
+
+\end_inset
+
+若固定 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 并将 
+\begin_inset Formula $f$
+\end_inset
+
+ 视为自变量，则 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 可被视为 
+\begin_inset Formula $C^{\infty}(\mathbb{R}^{3},\mathbb{R})$
+\end_inset
+
+ 到 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ 的映射，即
+\begin_inset Formula 
+\[
+\vec{v}\colon f\mapsto\left.\frac{\partial f}{\partial v}\right|_{\vec{x}}
+\]
+
+\end_inset
+
+该映射满足『线性律』及『Lebnitz 律』：
+\begin_inset Formula 
+\[
+\vec{v}(\lambda f+\mu g)=\lambda\vec{v}(f)+\mu\vec{v}(g)\qquad\vec{v}(fg)=f(\vec{x})\,\vec{v}(g)+\vec{v}(f)\,g(\vec{x})
+\]
 
 \end_inset
 
@@ -587,6 +853,256 @@ status open
 
 [切向量]
 \end_layout
+
+\end_inset
+
+若映射 
+\begin_inset Formula $v\colon C^{\infty}(M,\mathbb{R})\to\mathbb{R}$
+\end_inset
+
+ 在点 
+\begin_inset Formula $p\in M$
+\end_inset
+
+ 处满足
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+线性律，即 
+\begin_inset Formula $v(\lambda f+\mu g)=\lambda v(f)+\mu v(g)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Lebnitz 律，即 
+\begin_inset Formula $v(fg)=f(p)\,v(g)+v(f)\,g(p)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+则称 
+\begin_inset Formula $v$
+\end_inset
+
+ 为『点 
+\begin_inset Formula $p$
+\end_inset
+
+ 的「向量 (vector)」』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[偏导数]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $n$
+\end_inset
+
+-维流形 
+\begin_inset Formula $M$
+\end_inset
+
+、坐标系 
+\begin_inset Formula $(O,\psi)$
+\end_inset
+
+，则基于光滑函数 
+\begin_inset Formula $f\in C^{\infty}(M,\mathbb{R})$
+\end_inset
+
+ 的坐标表示 —— 即 
+\begin_inset Formula $n$
+\end_inset
+
+-元函数 
+\begin_inset Formula $F(x^{1},\dots,x^{n})$
+\end_inset
+
+ —— 的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个偏导数
+\begin_inset Formula 
+\[
+X_{\mu}(f)\coloneqq\left.\frac{\partial F}{\partial x^{\mu}}\right|_{\psi(p)}\qquad\begin{cases}
+\forall f\in C^{\infty}(M,\mathbb{R})\\
+\mu=1,\dots,n
+\end{cases}
+\]
+
+\end_inset
+
+可定义点 
+\begin_inset Formula $p\in M$
+\end_inset
+
+ 的 
+\begin_inset Formula $n$
+\end_inset
+
+ 个线性独立的向量，有时也将它们简记作
+\begin_inset Formula 
+\[
+X_{\mu}(f)\eqqcolon\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\begin{cases}
+\forall f\in C^{\infty}(M,\mathbb{R})\\
+\mu=1,\dots,n
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$
+\backslash
+dim(M)=
+\backslash
+dim(V_{p})$]
+\end_layout
+
+\end_inset
+
+给定 
+\begin_inset Formula $n$
+\end_inset
+
+-维流形 
+\begin_inset Formula $M$
+\end_inset
+
+，则点 
+\begin_inset Formula $p\in M$
+\end_inset
+
+ 的所有向量（用 
+\begin_inset Formula $V_{p}$
+\end_inset
+
+ 表示它们的集合）构成一个 
+\begin_inset Formula $n$
+\end_inset
+
+-维向量空间。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+点 
+\begin_inset Formula $p$
+\end_inset
+
+ 的向量组 
+\begin_inset Formula $(X_{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 是 
+\begin_inset Formula $V_{p}$
+\end_inset
+
+ 的一个基底，即 
+\begin_inset Formula $\forall v\in V_{p}$
+\end_inset
+
+，存在唯一的一组系数 
+\begin_inset Formula $(v^{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+v(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)=\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分量变换]
+\end_layout
+
+\end_inset
+
+给定两组（局部）坐标 
+\begin_inset Formula $(x^{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 与 
+\begin_inset Formula $(\tilde{x}^{\nu})_{\nu=1}^{n}$
+\end_inset
+
+，在二者坐标域重叠区域，
+\begin_inset Formula $\forall v\in V_{p}$
+\end_inset
+
+ 的分量 
+\begin_inset Formula $(v^{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 与 
+\begin_inset Formula $(\tilde{v}^{\nu})_{\nu=1}^{n}$
+\end_inset
+
+ 按如下公式变换：
+\begin_inset Formula 
+\[
+\tilde{v}^{\nu}=\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\qquad\nu=1,\dots,n
+\]
 
 \end_inset
 
