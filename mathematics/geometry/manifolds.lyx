@@ -851,13 +851,13 @@ status open
 
 \begin_layout Plain Layout
 
-[切向量]
+[一点的向量]
 \end_layout
 
 \end_inset
 
 若映射 
-\begin_inset Formula $v\colon C^{\infty}(M,\mathbb{R})\to\mathbb{R}$
+\begin_inset Formula $\psi\colon C^{\infty}(M,\mathbb{R})\to\mathbb{R}$
 \end_inset
 
  在点 
@@ -870,7 +870,7 @@ status open
 \begin_deeper
 \begin_layout Itemize
 线性律，即 
-\begin_inset Formula $v(\lambda f+\mu g)=\lambda v(f)+\mu v(g)$
+\begin_inset Formula $\psi(\lambda f+\mu g)=\lambda\psi(f)+\mu\psi(g)$
 \end_inset
 
 
@@ -878,7 +878,7 @@ status open
 
 \begin_layout Itemize
 Lebnitz 律，即 
-\begin_inset Formula $v(fg)=f(p)\,v(g)+v(f)\,g(p)$
+\begin_inset Formula $\psi(fg)=f(p)\,\psi(g)+\psi(f)\,g(p)$
 \end_inset
 
 
@@ -887,7 +887,7 @@ Lebnitz 律，即
 \end_deeper
 \begin_layout Definition
 则称 
-\begin_inset Formula $v$
+\begin_inset Formula $\psi$
 \end_inset
 
  为『点 
@@ -904,14 +904,44 @@ Lebnitz 律，即
 
 \end_layout
 
+\begin_layout Notation
+上述『向量』定义已不再强调『方向』属性。但为了区别于标量（如：坐标 
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+），下文一般仍以箭头记号表示向量（如：向量 
+\begin_inset Formula $\vec{x}_{\mu}$
+\end_inset
+
+），而在需要强调『映射』本质时以大写字母表示（如：映射 
+\begin_inset Formula $X_{\mu}$
+\end_inset
+
+）。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Example
 \begin_inset ERT
 status open
 
 \begin_layout Plain Layout
 
-[偏导数]
+[偏导映射]
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:流形.切向量.偏导数"
 
 \end_inset
 
@@ -962,10 +992,14 @@ X_{\mu}(f)\coloneqq\left.\frac{\partial F}{\partial x^{\mu}}\right|_{\psi(p)}\qq
 \begin_inset Formula $n$
 \end_inset
 
- 个线性独立的向量，有时也将它们简记作
+ 个线性独立的向量，用 
+\begin_inset Formula $(\vec{x}_{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 表示。有时也将它们简记作
 \begin_inset Formula 
 \[
-X_{\mu}(f)\eqqcolon\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\begin{cases}
+\vec{x}_{\mu}(f)\coloneqq X_{\mu}(f)\eqqcolon\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\begin{cases}
 \forall f\in C^{\infty}(M,\mathbb{R})\\
 \mu=1,\dots,n
 \end{cases}
@@ -1029,11 +1063,14 @@ dim(V_{p})$]
 \end_layout
 
 \begin_layout Example
-点 
-\begin_inset Formula $p$
+例-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:流形.切向量.偏导数"
+
 \end_inset
 
- 的向量组 
+ 定义的向量组 
 \begin_inset Formula $(X_{\mu})_{\mu=1}^{n}$
 \end_inset
 
@@ -1042,22 +1079,63 @@ dim(V_{p})$]
 \end_inset
 
  的一个基底，即 
-\begin_inset Formula $\forall v\in V_{p}$
+\begin_inset Formula $\forall\vec{v}\in V_{p}$
 \end_inset
 
 ，存在唯一的一组系数 
 \begin_inset Formula $(v^{\mu})_{\mu=1}^{n}$
 \end_inset
 
- 使得
+，使得
 \begin_inset Formula 
 \[
-v(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)=\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)\equiv\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{p}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[坐标基底]
+\end_layout
+
+\end_inset
+
+上述向量组 
+\begin_inset Formula $(X_{\mu})_{\mu=1}^{n}$
+\end_inset
+
+ 被称为 
+\begin_inset Formula $V_{p}$
+\end_inset
+
+ 的一个『坐标基底 (coordinate basis)』，其中的每一个向量 
+\begin_inset Formula $X_{\mu}$
+\end_inset
+
+ 被称为『坐标基矢 (coordinate basis vector)』，相应的系数 
+\begin_inset Formula $v^{\mu}$
+\end_inset
+
+ 被称为向量 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的『坐标分量 (coordinate component)』。
 \end_layout
 
 \begin_layout Standard
@@ -1087,7 +1165,7 @@ status open
 \end_inset
 
 ，在二者坐标域重叠区域，
-\begin_inset Formula $\forall v\in V_{p}$
+\begin_inset Formula $\forall\vec{v}\in V_{p}$
 \end_inset
 
  的分量 
@@ -1102,6 +1180,49 @@ status open
 \begin_inset Formula 
 \[
 \tilde{v}^{\nu}=\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\qquad\nu=1,\dots,n
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+利用
+\begin_inset Formula 
+\[
+f(p)=F(x^{1},\dots,x^{n})=\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\underbrace{\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{p}}_{X_{\mu}(f)}=\left.\frac{\partial\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})}{\partial x^{\mu}}\right|_{p}=\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\underbrace{\left.\frac{\partial\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})}{\partial\tilde{x}^{\nu}}\right|_{p}}_{\tilde{X}_{\nu}(f)}
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula 
+\[
+\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)=\sum_{\nu=1}^{n}\tilde{v}^{\nu}\,\tilde{X}_{\nu}(f)
+\]
+
+\end_inset
+
+并交换求和顺序，即得
+\begin_inset Formula 
+\[
+\sum_{\mu=1}^{n}v^{\mu}\underbrace{\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\tilde{X}_{\nu}(f)}_{X_{\mu}(f)}=\sum_{\nu=1}^{n}\underbrace{\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}}_{\tilde{v}^{\nu}}\tilde{X}_{\nu}(f)
 \]
 
 \end_inset
