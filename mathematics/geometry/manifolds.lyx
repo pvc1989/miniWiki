@@ -108,6 +108,26 @@ theorems-chap
 流形的概念
 \end_layout
 
+\begin_layout Standard
+在本节中，记号 
+\begin_inset Formula $(M,\mathscr{T})$
+\end_inset
+
+ 表示『具有拓扑结构 
+\begin_inset Formula $\mathscr{T}$
+\end_inset
+
+ 的点集 
+\begin_inset Formula $M$
+\end_inset
+
+』，简称『拓扑空间 
+\begin_inset Formula $(M,\mathscr{T})$
+\end_inset
+
+』。
+\end_layout
+
 \begin_layout Subsection
 局部坐标
 \end_layout
@@ -123,35 +143,51 @@ status open
 
 \end_inset
 
-映射 
-\begin_inset Formula $\psi_{\alpha}$
+若存在开集 
+\begin_inset Formula $O\subset M$
+\end_inset
+
+ 到开集 
+\begin_inset Formula $V\subset\mathbb{R}^{n}$
+\end_inset
+
+ 的同胚映射 
+\begin_inset Formula $\psi\colon O\to V$
+\end_inset
+
+，则称映射 
+\begin_inset Formula $\psi$
 \end_inset
 
  作用于点 
-\begin_inset Formula $p\in O_{\alpha}$
+\begin_inset Formula $p\in O$
 \end_inset
 
  得到的 
-\begin_inset Formula $\psi_{\alpha}(p)$
+\begin_inset Formula $n$
 \end_inset
 
- 属于 
-\begin_inset Formula $\mathbb{R}^{n}$
+-元数组 
+\begin_inset Formula $\psi(p)$
 \end_inset
 
-，它被称为『点 
+ 为『点 
 \begin_inset Formula $p$
 \end_inset
 
  在映射 
-\begin_inset Formula $\psi_{\alpha}$
+\begin_inset Formula $\psi$
 \end_inset
 
- 作用下的（局部）「坐标 (coordinate)」』。开集 
-\begin_inset Formula $O_{\alpha}$
+ 作用下的（局部）「坐标 (coordinate)」』，并称开集 
+\begin_inset Formula $O$
 \end_inset
 
- 被称为（局部）『坐标域 (coordinate patch)』。
+ 为 
+\begin_inset Formula $M$
+\end_inset
+
+ 的一个（局部）『坐标域 (coordinate patch)』。
 \end_layout
 
 \begin_layout Standard
@@ -175,7 +211,7 @@ status open
 复合映射
 \begin_inset Formula 
 \[
-\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}\colon\underbrace{\psi_{\alpha_{1}}(\overbrace{O_{\alpha_{1}}\cap O_{\alpha_{2}}}^{\subset M})}_{\subset\mathbb{R}^{n}}\to\underbrace{\psi_{\alpha_{2}}(\overbrace{O_{\alpha_{1}}\cap O_{\alpha_{2}}}^{\subset M})}_{\subset\mathbb{R}^{n}}
+\psi_{2}\circ\psi_{1}^{-1}\colon\underbrace{\psi_{1}(\overbrace{O_{1}\cap O_{2}}^{\subset M})}_{\subset\mathbb{R}^{n}}\to\underbrace{\psi_{2}(\overbrace{O_{1}\cap O_{2}}^{\subset M})}_{\subset\mathbb{R}^{n}}
 \]
 
 \end_inset
@@ -183,7 +219,7 @@ status open
 定义了同一个点的两种坐标之间的变换法则，即
 \begin_inset Formula 
 \[
-\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}\colon\psi_{\alpha_{1}}(p)\mapsto\psi_{\alpha_{2}}(p)\qquad\forall p\in O_{\alpha_{1}}\cap O_{\alpha_{2}}
+\psi_{2}\circ\psi_{1}^{-1}\colon\psi_{1}(p)\mapsto\psi_{2}(p)\qquad\forall p\in O_{1}\cap O_{2}
 \]
 
 \end_inset
@@ -210,7 +246,7 @@ status open
 \end_inset
 
 每一对 
-\begin_inset Formula $(O_{\alpha},\psi_{\alpha})$
+\begin_inset Formula $(O,\psi)$
 \end_inset
 
  都被称为 
@@ -239,7 +275,7 @@ status open
 \end_inset
 
 若复合映射 
-\begin_inset Formula $\psi_{\alpha_{2}}\circ\psi_{\alpha_{1}}^{-1}$
+\begin_inset Formula $\psi_{2}\circ\psi_{1}^{-1}$
 \end_inset
 
  所表示的 
@@ -255,11 +291,11 @@ status open
 \end_inset
 
  的，则称 
-\begin_inset Formula $(O_{\alpha_{1}},\psi_{\alpha_{1}})$
+\begin_inset Formula $(O_{1},\psi_{1})$
 \end_inset
 
  与 
-\begin_inset Formula $(O_{\alpha_{2}},\psi_{\alpha_{2}})$
+\begin_inset Formula $(O_{2},\psi_{2})$
 \end_inset
 
  是『相容的 (consistent)』。
@@ -341,16 +377,12 @@ status open
 
 \end_inset
 
-给定拓扑空间 
-\begin_inset Formula $(M,\mathscr{T})$
-\end_inset
-
-，若存在 
+若存在 
 \begin_inset Formula $M$
 \end_inset
 
  的开覆盖 
-\begin_inset Formula $\left\{ O_{\alpha}\right\} _{\alpha\in A}$
+\begin_inset Formula $\left\{ O_{\alpha}\subset\mathscr{T}\right\} _{\alpha\in A}$
 \end_inset
 
  满足
@@ -518,11 +550,15 @@ status open
 \begin_inset Formula $(O_{2},\psi_{2})$
 \end_inset
 
-，使得复合映射 
-\begin_inset Formula $\psi_{2}\circ f\circ\psi_{1}^{-1}$
+，使得复合映射
+\begin_inset Formula 
+\[
+\psi_{2}\circ f\circ\psi_{1}^{-1}\colon\underbrace{\psi_{1}(\overbrace{O_{1}\cap O_{2}}^{\subset M})}_{\subset\mathbb{R}^{n}}\to\underbrace{\psi_{2}(\overbrace{O_{1}\cap O_{2}}^{\subset M})}_{\subset\mathbb{R}^{n}}
+\]
+
 \end_inset
 
- 所表示的 
+所表示的 
 \begin_inset Formula $n_{2}$
 \end_inset
 
@@ -693,7 +729,7 @@ status open
 
 \begin_layout Notation
 利用局部坐标系 
-\begin_inset Formula $(O_{\alpha},\psi_{\alpha})$
+\begin_inset Formula $(O,\psi)$
 \end_inset
 
  可以将标量场 
@@ -703,7 +739,7 @@ status open
  表示为多元函数
 \begin_inset Formula 
 \[
-F_{\alpha}(\underbrace{\psi_{\alpha}(p)}_{\subset\mathbb{R}^{n}})=\underbrace{f(p)}_{\subset\mathbb{R}}\qquad\forall p\in O_{\alpha}\subset M
+F(\underbrace{\psi(p)}_{\subset\mathbb{R}^{n}})=\underbrace{f(p)}_{\subset\mathbb{R}}\qquad\forall p\in O\subset M
 \]
 
 \end_inset
@@ -719,7 +755,7 @@ F_{\alpha}(\underbrace{\psi_{\alpha}(p)}_{\subset\mathbb{R}^{n}})=\underbrace{f(
 \end_layout
 
 \begin_layout Subsection
-切向量场
+一点的向量
 \end_layout
 
 \begin_layout Definition
@@ -894,7 +930,19 @@ Lebnitz 律，即
 \begin_inset Formula $p$
 \end_inset
 
- 的「向量 (vector)」』。
+ 的「向量 (vector)」』，有时用 
+\begin_inset Formula $\psi|_{p}$
+\end_inset
+
+ 强调『向量 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 属于点 
+\begin_inset Formula $p$
+\end_inset
+
+』。
 \end_layout
 
 \begin_layout Standard
@@ -909,12 +957,20 @@ Lebnitz 律，即
 \begin_inset Formula $x^{\mu}$
 \end_inset
 
-），下文一般仍以箭头记号表示向量（如：向量 
-\begin_inset Formula $\vec{x}_{\mu}$
+），下文一般仍以箭头记号表示向量（如：点 
+\begin_inset Formula $p$
 \end_inset
 
-），而在需要强调『映射』本质时以大写字母表示（如：映射 
-\begin_inset Formula $X_{\mu}$
+ 处的坐标基矢 
+\begin_inset Formula $\vec{x}_{\mu}|_{p}$
+\end_inset
+
+），而在需要强调『映射』本质时以大写字母表示（如：点 
+\begin_inset Formula $p$
+\end_inset
+
+ 处的偏导数映射 
+\begin_inset Formula $X_{\mu}|_{p}$
 \end_inset
 
 ）。
@@ -933,7 +989,7 @@ status open
 
 \begin_layout Plain Layout
 
-[偏导映射]
+[偏导数]
 \end_layout
 
 \end_inset
@@ -957,11 +1013,11 @@ name "exa:流形.切向量.偏导数"
 \begin_inset Formula $(O,\psi)$
 \end_inset
 
-，则基于光滑函数 
+，则可定义光滑函数 
 \begin_inset Formula $f\in C^{\infty}(M,\mathbb{R})$
 \end_inset
 
- 的坐标表示 —— 即 
+ 到其坐标表示 —— 即 
 \begin_inset Formula $n$
 \end_inset
 
@@ -973,10 +1029,10 @@ name "exa:流形.切向量.偏导数"
 \begin_inset Formula $n$
 \end_inset
 
- 个偏导数
+ 个偏导数的映射
 \begin_inset Formula 
 \[
-X_{\mu}(f)\coloneqq\left.\frac{\partial F}{\partial x^{\mu}}\right|_{\psi(p)}\qquad\begin{cases}
+X_{\mu}|_{p}\colon f\mapsto\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{\psi(p)}\qquad\begin{cases}
 \forall f\in C^{\infty}(M,\mathbb{R})\\
 \mu=1,\dots,n
 \end{cases}
@@ -984,7 +1040,18 @@ X_{\mu}(f)\coloneqq\left.\frac{\partial F}{\partial x^{\mu}}\right|_{\psi(p)}\qq
 
 \end_inset
 
-可定义点 
+有时也将它们简记作
+\begin_inset Formula 
+\[
+X_{\mu}|_{p}(f)\equiv\frac{\partial f(p)}{\partial x^{\mu}}\qquad\begin{cases}
+\forall f\in C^{\infty}(M,\mathbb{R})\\
+\mu=1,\dots,n
+\end{cases}
+\]
+
+\end_inset
+
+可以证明：它们时点 
 \begin_inset Formula $p\in M$
 \end_inset
 
@@ -992,22 +1059,7 @@ X_{\mu}(f)\coloneqq\left.\frac{\partial F}{\partial x^{\mu}}\right|_{\psi(p)}\qq
 \begin_inset Formula $n$
 \end_inset
 
- 个线性独立的向量，用 
-\begin_inset Formula $(\vec{x}_{\mu})_{\mu=1}^{n}$
-\end_inset
-
- 表示。有时也将它们简记作
-\begin_inset Formula 
-\[
-\vec{x}_{\mu}(f)\coloneqq X_{\mu}(f)\eqqcolon\left.\frac{\partial f}{\partial x^{\mu}}\right|_{p}\qquad\begin{cases}
-\forall f\in C^{\infty}(M,\mathbb{R})\\
-\mu=1,\dots,n
-\end{cases}
-\]
-
-\end_inset
-
-
+ 个线性独立的向量。
 \end_layout
 
 \begin_layout Standard
@@ -1071,7 +1123,7 @@ reference "exa:流形.切向量.偏导数"
 \end_inset
 
  定义的向量组 
-\begin_inset Formula $(X_{\mu})_{\mu=1}^{n}$
+\begin_inset Formula $(X_{\mu}|_{p})_{\mu=1}^{n}$
 \end_inset
 
  是 
@@ -1089,7 +1141,7 @@ reference "exa:流形.切向量.偏导数"
 ，使得
 \begin_inset Formula 
 \[
-\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)\equiv\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{p}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}|_{p}(f)\equiv\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{p}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
 \]
 
 \end_inset
@@ -1116,7 +1168,7 @@ status open
 \end_inset
 
 上述向量组 
-\begin_inset Formula $(X_{\mu})_{\mu=1}^{n}$
+\begin_inset Formula $(X_{\mu}|_{p})_{\mu=1}^{n}$
 \end_inset
 
  被称为 
@@ -1124,7 +1176,7 @@ status open
 \end_inset
 
  的一个『坐标基底 (coordinate basis)』，其中的每一个向量 
-\begin_inset Formula $X_{\mu}$
+\begin_inset Formula $X_{\mu}|_{p}$
 \end_inset
 
  被称为『坐标基矢 (coordinate basis vector)』，相应的系数 
@@ -1156,7 +1208,7 @@ status open
 
 \end_inset
 
-给定两组（局部）坐标 
+在两组（局部）坐标 
 \begin_inset Formula $(x^{\mu})_{\mu=1}^{n}$
 \end_inset
 
@@ -1164,7 +1216,7 @@ status open
 \begin_inset Formula $(\tilde{x}^{\nu})_{\nu=1}^{n}$
 \end_inset
 
-，在二者坐标域重叠区域，
+ 的公共坐标域内，
 \begin_inset Formula $\forall\vec{v}\in V_{p}$
 \end_inset
 
@@ -1195,7 +1247,7 @@ status open
 \end_layout
 
 \begin_layout Proof
-利用
+利用恒等式
 \begin_inset Formula 
 \[
 f(p)=F(x^{1},\dots,x^{n})=\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})
@@ -1206,15 +1258,17 @@ f(p)=F(x^{1},\dots,x^{n})=\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})
 可得
 \begin_inset Formula 
 \[
-\underbrace{\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{p}}_{X_{\mu}(f)}=\left.\frac{\partial\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})}{\partial x^{\mu}}\right|_{p}=\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\underbrace{\left.\frac{\partial\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})}{\partial\tilde{x}^{\nu}}\right|_{p}}_{\tilde{X}_{\nu}(f)}
+\begin{aligned}\underbrace{\left.\frac{\partial F(x^{1},\dots,x^{n})}{\partial x^{\mu}}\right|_{\psi(p)}}_{X_{\mu}|_{p}(f)} & =\left.\frac{\partial\tilde{F}(\tilde{x}^{1}(x^{1},\dots,x^{n}),\dots,\tilde{x}^{n}(x^{1},\dots,x^{n}))}{\partial x^{\mu}}\right|_{\psi(p)}\\
+ & =\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\underbrace{\left.\frac{\partial\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})}{\partial\tilde{x}^{\nu}}\right|_{\tilde{\psi}(p)}}_{\tilde{X}_{\nu}|_{p}(f)}
+\end{aligned}
 \]
 
 \end_inset
 
-代入
+代入展开式
 \begin_inset Formula 
 \[
-\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}(f)=\sum_{\nu=1}^{n}\tilde{v}^{\nu}\,\tilde{X}_{\nu}(f)
+\vec{v}(f)=\sum_{\mu=1}^{n}v^{\mu}\,X_{\mu}|_{p}(f)=\sum_{\nu=1}^{n}\tilde{v}^{\nu}\,\tilde{X}_{\nu}|_{p}(f)
 \]
 
 \end_inset
@@ -1222,12 +1276,225 @@ f(p)=F(x^{1},\dots,x^{n})=\tilde{F}(\tilde{x}^{1},\dots,\tilde{x}^{n})
 并交换求和顺序，即得
 \begin_inset Formula 
 \[
-\sum_{\mu=1}^{n}v^{\mu}\underbrace{\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\tilde{X}_{\nu}(f)}_{X_{\mu}(f)}=\sum_{\nu=1}^{n}\underbrace{\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}}_{\tilde{v}^{\nu}}\tilde{X}_{\nu}(f)
+\sum_{\mu=1}^{n}v^{\mu}\underbrace{\sum_{\nu=1}^{n}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}\tilde{X}_{\nu}|_{p}(f)}_{X_{\mu}(f)}=\sum_{\nu=1}^{n}\underbrace{\sum_{\mu=1}^{n}v^{\mu}\left.\frac{\partial\tilde{x}^{\nu}}{\partial x^{\mu}}\right|_{p}}_{\tilde{v}^{\nu}}\tilde{X}_{\nu}|_{p}(f)
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+参数化曲线
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[参数化曲线]
+\end_layout
+
+\end_inset
+
+区间 
+\begin_inset Formula $I\subset\mathbb{R}$
+\end_inset
+
+ 到流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 上的映射 
+\begin_inset Formula $\varGamma\in C^{r}(I,M)$
+\end_inset
+
+ 被称为『
+\begin_inset Formula $M$
+\end_inset
+
+ 上的 
+\begin_inset Formula $r$
+\end_inset
+
+-阶光滑「参数化曲线 (parameterized curve)」』，简称『曲线』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[重参数化]
+\end_layout
+
+\end_inset
+
+若另一映射 
+\begin_inset Formula $\varGamma_{*}\in C^{r}(I_{*},M)$
+\end_inset
+
+ 将另一开区间 
+\begin_inset Formula $I_{*}\subset\mathbb{R}$
+\end_inset
+
+ 映射到 
+\begin_inset Formula $\varGamma(I)$
+\end_inset
+
+，则称 
+\begin_inset Formula $\varGamma_{*}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\varGamma$
+\end_inset
+
+ 的『重参数化 (reparametrization)』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[参数方程]
+\end_layout
+
+\end_inset
+
+给定流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 的（局部）坐标系 
+\begin_inset Formula $(O,\psi)$
+\end_inset
+
+ 及（参数化）曲线 
+\begin_inset Formula $\varGamma\colon I\to M$
+\end_inset
+
+，则复合映射
+\begin_inset Formula 
+\[
+\psi\circ\varGamma\colon t\mapsto(x^{1}(t),\dots,x^{n}(t))\qquad t\in I\subset\mathbb{R}
+\]
+
+\end_inset
+
+被称为（参数化）曲线 
+\begin_inset Formula $\varGamma$
+\end_inset
+
+ 的『参数方程 (parametric equation)』或『参数表示 (parameter representation)』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[坐标线]
+\end_layout
+
+\end_inset
+
+给定流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 的（局部）坐标系 
+\begin_inset Formula $(O,\psi)$
+\end_inset
+
+ 及 
+\begin_inset Formula $n-1$
+\end_inset
+
+ 个常数 
+\begin_inset Formula $(a^{\nu})_{\nu\ne\mu}$
+\end_inset
+
+，则 
+\begin_inset Formula $O$
+\end_inset
+
+ 的子集
+\begin_inset Formula 
+\[
+\left\{ p\in O\subset M\mid\left(\forall\nu\ne\mu\right)\left(x^{\nu}(p)=a^{\nu}\right)\right\} 
+\]
+
+\end_inset
+
+被称为 
+\begin_inset Formula $(O,\psi)$
+\end_inset
+
+ 的一条『第 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 坐标线』。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[切向量]
+\end_layout
+
+\end_inset
+
+给定曲线 
+\begin_inset Formula $\varGamma\in C^{1}(I,M)$
+\end_inset
+
+ 及其上一点
 \end_layout
 
 \begin_layout Standard
