@@ -74,7 +74,7 @@ cd ${BUILD_DIR}
 cc -o test_math_o test_math.o lib_math.o
 # 将 目标文件 test_math.o 及 动态库 libmath.so 链接进 test_math_so
 cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
-# 将 目标文件 math.o 及静态库 libmath.a 链接进 test_math_a
+# 将 目标文件 test_math.o 及静态库 libmath.a 链接进 test_math_a
 cc -static -o test_math_a test_math.o -L${BUILD_DIR} -lmath
 ```
 
