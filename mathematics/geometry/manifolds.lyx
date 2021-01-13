@@ -997,7 +997,7 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "exa:流形.切向量.偏导数"
+name "exa:流形/偏导数"
 
 \end_inset
 
@@ -1115,10 +1115,27 @@ dim(V_{p})$]
 \end_layout
 
 \begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[坐标基底]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:流形/坐标基矢"
+
+\end_inset
+
 例-
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "exa:流形.切向量.偏导数"
+reference "exa:流形/偏导数"
 
 \end_inset
 
@@ -1146,28 +1163,7 @@ reference "exa:流形.切向量.偏导数"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[坐标基底]
-\end_layout
-
-\end_inset
-
-上述向量组 
+故向量组 
 \begin_inset Formula $(X_{\mu}|_{p})_{\mu=1}^{n}$
 \end_inset
 
@@ -1479,6 +1475,10 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+切向量空间
+\end_layout
+
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1490,11 +1490,212 @@ status open
 
 \end_inset
 
-给定曲线 
+给定以 
+\begin_inset Formula $t$
+\end_inset
+
+ 为参数的曲线 
 \begin_inset Formula $\varGamma\in C^{1}(I,M)$
 \end_inset
 
- 及其上一点
+ 及其上一点 
+\begin_inset Formula $\varGamma(t_{0})\in M$
+\end_inset
+
+，映射
+\begin_inset Formula 
+\[
+T|_{\varGamma(t_{0})}\colon f\mapsto\left.\dv{(f\circ\varGamma)}{t}\right|_{t_{0}}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\]
+
+\end_inset
+
+被称为该点处的『切向量 (tangent vector)』，简称『切矢』，有时也采用以下等价的记号
+\begin_inset Formula 
+\[
+T|_{p}(f)\equiv\left.\frac{\partial}{\partial t}\right|_{p}(f)\equiv\partial_{t}|_{p}(f)\equiv\grad\!_{t}|_{p}(f)\qquad\begin{cases}
+\forall p\in M\\
+\forall f\in C^{\infty}(M,\mathbb{R})
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[参数化曲线的切矢具有唯一性]
+\end_layout
+
+\end_inset
+
+借用质点运动学里的概念，可以有效地区分『作为点集的曲线』与『参数化曲线』：前者可以理解为质点的运动轨迹，其上任意一点可以有 
+\begin_inset Formula $\infty$
+\end_inset
+
+ 个彼此平行的切矢；后者在前者的基础上，还包含了『时间』信息，其上一点切矢的物理意义为质点位于该处时的『速度』，因此是唯一的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[坐标基矢]
+\end_layout
+
+\end_inset
+
+例-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:流形/坐标基矢"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 定义的『第 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 坐标基矢』
+\begin_inset Formula 
+\[
+X_{\mu}|_{p}\colon f\mapsto\left.\frac{\partial F(x^{1},\dots,x^{m})}{\partial x^{\mu}}\right|_{\psi(p)}\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\]
+
+\end_inset
+
+正是以 
+\begin_inset Formula $x^{\mu}$
+\end_inset
+
+ 为参数的曲线『第 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 坐标线』的切矢，即
+\begin_inset Formula 
+\[
+X_{\mu}|_{p}(f)=\left.\frac{\partial}{\partial x^{\mu}}\right|_{p}(f)\qquad\forall f\in C^{\infty}(M,\mathbb{R})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[切矢展开]
+\end_layout
+
+\end_inset
+
+若以 
+\begin_inset Formula $t$
+\end_inset
+
+ 为参数的曲线 
+\begin_inset Formula $\varGamma\colon I\to M$
+\end_inset
+
+ 在 
+\begin_inset Formula $m$
+\end_inset
+
+-维流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 的（局部）坐标系 
+\begin_inset Formula $(x^{1},\dots,x^{m})$
+\end_inset
+
+ 中的参数表达式为
+\begin_inset Formula 
+\[
+x^{\mu}=x^{\mu}(t)\qquad\mu=1,\dots,m
+\]
+
+\end_inset
+
+则其上任意一点 
+\begin_inset Formula $\varGamma(t_{0})\in M$
+\end_inset
+
+ 处的切矢在相应的坐标基底上可以展开为
+\begin_inset Formula 
+\[
+\left.\frac{\partial}{\partial t}\right|_{\varGamma(t_{0})}=\sum_{\mu=1}^{m}\left.\dv{x^{\mu}}{t}\right|_{t_{0}}\left.\frac{\partial}{\partial x^{\mu}}\right|_{\varGamma(t_{0})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[重参数化不改变切矢方向]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left.\frac{\partial}{\partial t}\right|_{\varGamma(t_{0})}=\left.\dv{\tilde{t}}{t}\right|_{t_{0}}\left.\frac{\partial}{\partial\tilde{t}}\right|_{\tilde{\varGamma}(\tilde{t}_{0})}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1512,6 +1713,66 @@ status open
 
 [切空间]
 \end_layout
+
+\end_inset
+
+流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 上某点 
+\begin_inset Formula $p$
+\end_inset
+
+ 的所有切向量所构成线性空间，被称为『流形 
+\begin_inset Formula $M$
+\end_inset
+
+ 在点 
+\begin_inset Formula $p$
+\end_inset
+
+ 的「切空间 (tangent space)」』，用 
+\begin_inset Formula $T_{p}M$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[$V_{p} = T_{p}M$]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+参数方程
+\begin_inset Formula 
+\[
+x^{\mu}(t)=x^{\mu}|_{p}+v^{\mu}t\qquad\mu=1,\dots,m
+\]
 
 \end_inset
 
