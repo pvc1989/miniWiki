@@ -50,6 +50,18 @@ title: 数据结构与算法
 - MIT
   - Text: Chap-4  Divide-and-Conquer
 
+#### Master Theorem
+
+$$
+\begin{aligned}T(N) & =a\cdot T(N/b)+f(N)=\mathopen{\Theta}\left(N^{\log_{b}a}\right)+\sum_{i=0}^{k-1}a^{i}\cdot f(N/b^{i}),\quad k\coloneqq\log_bN\\
+ & =\begin{cases}
+\mathopen{\Theta}\left(N^{\log_{b}a}\right) & f(N)=\mathopen{O}\left(N^{\log_{b}a}\div N^{\epsilon}\right)\\
+\mathopen{\Theta}\left(N^{\log_{b}a}\cdot\lg N\right) & f(N)=\mathopen{\Theta}\left(N^{\log_{b}a}\right)\\
+\mathopen{\Theta}\left(f(N)\right) & f(N)=\mathopen{\Omega}\left(N^{\log_{b}a}\times N^{\epsilon}\right)\land\exists c\in(0,1)\big(a\cdot f(N/b)\le c\cdot f(N)\big)
+\end{cases}
+\end{aligned}
+$$
+
 ### Probabilitic Analysis
 
 - MIT
