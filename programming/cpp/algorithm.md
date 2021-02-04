@@ -1,30 +1,32 @@
-# 算法
+---
+title: 算法
+---
 
-## `<algorithm>`
-标准库以[函数模板](./template/generic.md#函数模板)的形式在头文件 [`<algorithm>`](https://en.cppreference.com/w/cpp/algorithm) 中定义了一系列 **泛型算法 (generic algorithms)**。
+# `<algorithm>`
+标准库以[函数模板](./template/generic.md#函数模板)的形式在头文件 [`<algorithm>`](https://en.cppreference.com/w/cpp/algorithm) 中定义了一系列『泛型算法 (generic algorithms)』。
 
-### 只读 (Non-modifying)
+## 只读 (Non-modifying)
 
-### 修改 (Modifying)
+## 修改 (Modifying)
 
-### 分割 (Partition)
+## 分割 (Partition)
 
-### 排序 (Sort)
+## 排序 (Sort)
 
-#### 二分查找 (Binary Search)
+### 二分查找 (Binary Search)
 
-#### 合并 (Merge)
+### 合并 (Merge)
 
-#### 集合 (Set)
+### 集合 (Set)
 
-### 堆 (Heap)
+## 堆 (Heap)
 
-### 最值 (Minimum/Maximum)
+## 最值 (Minimum/Maximum)
 
-### 比较 (Comparison)
+## 比较 (Comparison)
 
-### 排列 (Permutation)
+## 排列 (Permutation)
 
-## `<numeric>`
+# `<numeric>`
 
-## `<memory>`
+# `<memory>`

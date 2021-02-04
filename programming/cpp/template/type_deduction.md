@@ -9,9 +9,9 @@ ArguType argument;  // argument 的类型为 ArguType
 func(argument);     // 根据 ArguType 推断 ParaType
 ```
 其中
-- `T` 为留待编译器推断的 ***模板形参 (template parameter)***。
-- `parameter` 为 ***函数形参 (function parameter)***，`ParaType` 是它的类型。`ParaType` 既可以是 `T`，也可以是  `T*`、`T&`、`T&&` 等 *复合类型*，还可以是 `std::vector<T>`、`std::set<T>` 等 *容器类型*。
-- `argument` 为 ***函数实参 (function argument)***，`ArguType` 是它的类型。`argument` 既可以是 ***右值 (rvalue) 表达式***（例如 `1 + 1`），也可以是 ***左值 (lvalue) 表达式***（例如由变量名构成的表达式，变量本身可以是任何类型）。
+- `T` 为留待编译器推断的『模板形参 (template parameter)』。
+- `parameter` 为『函数形参 (function parameter)』，`ParaType` 是它的类型。`ParaType` 既可以是 `T`，也可以是  `T*`、`T&`、`T&&` 等 *复合类型*，还可以是 `std::vector<T>`、`std::set<T>` 等 *容器类型*。
+- `argument` 为『函数实参 (function argument)』，`ArguType` 是它的类型。`argument` 既可以是『右值 (rvalue) 表达式』（例如 `1 + 1`），也可以是『左值 (lvalue) 表达式』（例如由变量名构成的表达式，变量本身可以是任何类型）。
 
 编译器通过比较 `ParaType` 与 `ArguType` 来推断 `T`：
 > 基本推断规则：
@@ -32,7 +32,7 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 ```
 
 ## `ParaType` 不是指针或引用
-这条情况对应于 ***传值 (pass-by-value) 调用*** ：
+这条情况对应于『传值 (pass-by-value) 调用』：
 函数内部所使用的对象是 `argument` 的 *独立副本*，因此 `argument` 的 *顶层 `const` 属性* 及 *顶层 `volatile`* 属性对这个 *独立副本* 没有影响。
 
 ### `ParaType = T`
@@ -125,14 +125,14 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 | `cpi` | `int * const` | `int * const &`       | `int *`     |
 
 ### `ParaType = T &&`
-[Scott Meyers](https://www.aristeia.com/) 在其所著 [***Effective Modern C++***](http://shop.oreilly.com/product/0636920033707.do) 中，将形如 `T &&` 并且 `T` 需要被推断的引用（例如 `ParaType = T &&` 或 `auto &&`）称为 ***万能  (universal) 引用***。
+在 [Scott Meyers](https://www.aristeia.com/) 所著的《[Effective Modern C++](http://shop.oreilly.com/product/0636920033707.do)》中，形如 `T &&` 且 `T` 需要被推断的引用（例如 `ParaType = T &&` 或 `auto &&`）被称为『万能  (universal) 引用』。
 
 形如 `T &&` 的 *万能引用* 中的待定类型按以下规则推断：
 
 > 1. 如果 `argument` 是 *左值表达式*，则 `T` 为 *左值引用*，否则 `T` 不含引用。
 > 2. 如果推断结果出现了多重引用，则按 *引用折叠* 规则处理。
 
-***引用折叠 (reference collapsing)*** 规则：
+引用折叠 (reference collapsing)』规则：
 
 > 假设 `X` 是不含引用的类型，则
 > - `X && &&` 折叠为 `X &&`。
@@ -154,16 +154,16 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 | `cpci` | `int const * const` | L | `int const * const &` |
 | `std::move(i)` | `int &&` | R | `int` |
 
-万能引用几乎总是与 `std::forward<T>()` 配合使用，以达到 ***完美转发 (perfect forward)*** 函数实参的目的。
+万能引用几乎总是与 `std::forward<T>()` 配合使用，以达到『完美转发 (perfect forward)』函数实参的目的。
 这里的 *完美* 是指：避免不必要的拷贝或移动，并且保留函数实参的所有类型信息（包括 RCV 属性）。
-它的实现需要借助于 [***模板元编程 (template metaprogramming)***](./metaprogramming.md#`std::forward<T>()`-的实现) 技术。
+它的实现需要借助于『[模板元编程 (template metaprogramming)](./metaprogramming.md#`std::forward<T>()`-的实现)』技术。
 典型应用场景为 *向构造函数完美转发实参*：
 
 ```cpp
 #include <utility>
 #include <vector>
 template <class T>
-std::vector<T> build(T&& x) {  // T&& 是一个 ***万能引用*** 
+std::vector<T> build(T&& x) {  // T&& 是一个『万能引用』
   auto v =  std::vector<T>(std::forward<T>(x));
   // decorate v
   return v;
@@ -171,7 +171,7 @@ std::vector<T> build(T&& x) {  // T&& 是一个 ***万能引用***
 ```
 
 ### 数组或函数
-如果 `argument` 是 *数组* 或 *函数*（或对它们的引用），则 `ParaType` 必须含引用，否则 `argument` 会 ***退化 (decay)*** 为指针：
+如果 `argument` 是 *数组* 或 *函数*（或对它们的引用），则 `ParaType` 必须含引用，否则 `argument` 会『退化 (decay)』为指针：
 ```cpp
 template <typename T, typename U>
 void f(T, U&) { /* ... */ }
@@ -245,7 +245,7 @@ int main() {
 ```
 
 ##  `decltype` 类型推断
-`decltype` 是一种 ***修饰符 (specifier)***，它作用在表达式 `expr` 上得到其类型 `ExprType`：
+`decltype` 是一种『修饰符 (specifier)』，它作用在表达式 `expr` 上得到其类型 `ExprType`：
 
 - 一般情况下，`ExprType` 是 `expr` 的类型（含 RCV 属性）。
 - 如果 `expr` 是一个 *左值表达式* 但不是 *变量名*，则 `ExprType` 还需附加一个 *左值引用*。

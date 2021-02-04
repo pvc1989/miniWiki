@@ -1,10 +1,12 @@
-# 原始指针（慎用）
+---
+title: 原始指针（慎用）
+---
 
-## `new`
+# `new`
 
-### 分配内存 + 默认初始化
+## 分配内存 + 默认初始化
 
-置于 *类型名* 之前的 ***`new` 运算符*** 用于创建 *单个动态对象*。
+置于 *类型名* 之前的『`new` 运算符』用于创建 *单个动态对象*。
 如果分配成功，则返回一个 *指向动态对象的指针*，否则 *抛出异常*：
 
 ```cpp
@@ -13,13 +15,13 @@ int* p = new int;
 
 `new` 语句依次完成三个任务:
 
-1. 动态 ***分配 (allocate)*** 所需内存；
-2. 默认 ***初始化 (initialize)*** 对象；
-3. 返回指向该对象的 ***原始 (raw) 指针***。
+1. 动态『分配 (allocate)』所需内存；
+2. 默认『初始化 (initialize)』对象；
+3. 返回指向该对象的『原始 (raw) 指针』。
 
-### 分配内存 + 值初始化
+## 分配内存 + 值初始化
 
-若要进行 ***值 (value) 初始化***，需要在 *类型名* 后面紧跟 `()` 或 `{}`，例如
+若要进行『值 (value) 初始化』，需要在 *类型名* 后面紧跟 `()` 或 `{}`，例如
 
 ```cpp
 std::string* ps1 = new std::string;    // 默认初始化 为 空字符串
@@ -28,7 +30,7 @@ int* pi1 = new int;    // 默认初始化 为 不确定值
 int* pi2 = new int();  // 值初始化 为 0
 ```
 
-### 常值对象
+## 常值对象
 
 动态分配的常值对象必须由 *指向常量的指针* 接管，并且在创建时被初始化：
 
@@ -46,7 +48,7 @@ auto pci = new const int(1024);
 auto pcs = new const std::string("hello");
 ```
 
-### 内存耗尽
+## 内存耗尽
 
 内存空间在运行期有可能被耗尽，此时 *分配内存* 的任务无法完成。
 
@@ -60,9 +62,9 @@ int* p1 = new int;                 // 如果分配失败, 将抛出 std::bad_all
 int* p2 = new (std::nothrow) int;  // 如果分配失败, 将返回 nullptr
 ```
 
-## `delete`
+# `delete`
 
-### 析构对象 + 释放内存
+## 析构对象 + 释放内存
 
 传递给 `delete` 的指针必须是 *指向动态对象的指针* 或 `nullptr`：
 
@@ -72,7 +74,7 @@ delete p;     // 析构并释放 (单个) 动态对象
 
 ⚠️ 编译器无法判断一个指针所指的 *对象是否是动态的*，也无法判断一个指针所指的 *内存是否已经被释放*。
 
-### 内存泄漏
+## 内存泄漏
 
 ```cpp
 Foo* factory(T arg) { return new Foo(arg); }
@@ -83,11 +85,11 @@ void use_factory(T arg) {
 }
 ```
 
-如果 `use_factory` 在返回前没有释放 `p` 所指向的动态内存，则 `use_factory` 的调用者将不再有机会将其释放，可用的动态内存空间将会变小。这种现象被称为 ***内存泄漏 (memory leak)***。
+如果 `use_factory` 在返回前没有释放 `p` 所指向的动态内存，则 `use_factory` 的调用者将不再有机会将其释放，可用的动态内存空间将会变小。这种现象被称为『内存泄漏 (memory leak)』。
 
-### 空悬指针
+## 空悬指针
 
-执行完 `delete p` 之后，`p` 将成为一个 ***空悬 (dangling) 指针***，对其进行
+执行完 `delete p` 之后，`p` 将成为一个『空悬 (dangling) 指针』，对其进行
 
 - 解引用，并进行
   - 读：返回无意义的值。
@@ -108,9 +110,9 @@ p = nullptr;  // p 不再指向该地址
               // q 仍然指向该地址, 对其进行 解引用 或 再次释放 都有可能造成破坏
 ```
 
-## 动态数组
+# 动态数组
 
-### `new T[]` + `delete[]`
+## `new T[]` + `delete[]`
 
 大多数情况下应当优先选用标准库提供的 *容器* 而不是 *动态数组*。
 如果要显式创建动态数组，则需要在 *类型名称* 后面紧跟 *对象个数*。
@@ -129,9 +131,9 @@ typedef int Array[42];  // 等价于 using Array = int[42];
 auto pa = new Array;
 ```
 
-### 在给定位置构造对象
+## 在给定位置构造对象
 
-与单个对象类似，数组版本的 `new` 会依次完成 ***分配 (allocate) 内存*** 和 ***构造 (construct) 对象*** 两个操作。对于动态数组，通常希望将这两个操作拆分开，前者可以通过分量 `char` 数组或 [`std::malloc`](#`std::malloc`) 完成，后者可以通过 ***placement new*** 完成：
+与单个对象类似，数组版本的 `new` 会依次完成『分配 (allocate) 内存』和『构造 (construct) 对象』两个操作。对于动态数组，通常希望将这两个操作拆分开，前者可以通过分量 `char` 数组或 [`std::malloc`](#`std::malloc`) 完成，后者可以通过『placement new』完成：
 
 ```cpp
 int count = 5;
@@ -148,9 +150,9 @@ delete[] char_ptr;  // 释放整块内存
 - `char_ptr` 与 `foo_ptr` 的 *值* 相同，但 *类型* 不同，因此指针加减运算的 *步长* 也不同。
 - `new (foo_ptr + 3) Foo(args)` 不能用 `foo_ptr[3] = Foo(args)` 代替，因为赋值操作会析构左侧对象，而 `foo_ptr[3]` 还没有被构造过。
 
-### `std::allocator`
+## `std::allocator`
 
-标准库定义的 `std::allocator` 类模板将以上操作（*分配*、*构造*、*析构*、*释放*）封装为其成员函数，使用时更加安全：
+标准库定义的 `std::allocator` 类模板将以上操作（分配、构造、析构、释放）封装为其成员函数，使用时更加安全：
 
 ```cpp
 #include <memory>
@@ -161,7 +163,7 @@ a.construct(p, args);     // 构造 单个对象，p 不必是首元地址，存
 a.destroy(p);             // 析构 单个对象，p 不必是首元地址
 ```
 
-### `std::malloc`
+## `std::malloc`
 
 C 标准库的 `<stdlib.h>` 提供了一组动态内存管理函数，也可以用来管理动态数组：
 
@@ -184,9 +186,9 @@ std::free(p);
 std::free(q);
 ```
 
-### `std::uninitialized_*`
+## `std::uninitialized_*`
 
-`<memory>` 提供了一组名为 `std::uninitialized_*` 的算法，用于在由 `std::allocator` 或 `std::malloc` 获得的 ***未初始化的 (uninitialized) 内存*** 中填入对象：
+`<memory>` 提供了一组名为 `std::uninitialized_*` 的算法，用于在由 `std::allocator` 或 `std::malloc` 获得的『未初始化的 (uninitialized) 内存』中填入对象：
 
 ```cpp
 #include <memory>

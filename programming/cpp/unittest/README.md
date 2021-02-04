@@ -1,14 +1,14 @@
 # 单元测试
 
 好的测试代码应当满足：
-- 每个 *功能点* 的测试应当是 ***独立的 (independent)*** 和 ***可重复的 (repeatable)*** 。
-- ***测试代码 (tester)*** 应当被妥善组织，以反映 ***被测试代码 (testee)*** 的结构。
-- 测试代码应当是 ***可移植的 (portable)*** 和 ***可复用的 (reusable)***。
-- 测试代码 ***编译 (compile)*** 或 ***运行 (execute)*** 失败时，测试系统应当给出 *恰好能反映关键问题* 的信息。
+- 每个 *功能点* 的测试应当是『独立的 (independent)』和『可重复的 (repeatable)』。
+- 『测试代码 (tester)』应当被妥善组织，以反映『被测试代码 (testee)』的结构。
+- 测试代码应当是『可移植的 (portable)』和『可复用的 (reusable)』。
+- 测试代码『编译 (compile)』或『运行 (execute)』失败时，测试系统应当给出 *恰好能反映关键问题* 的信息。
 - 测试应当能够 *快速* 编译和运行。
 
 ## Google Test
-[Google Test](https://github.com/google/googletest) 是一个开源的 C++ 测试 ***框架 (framework)***，主要用来做单元测试。
+[Google Test](https://github.com/google/googletest) 是一个开源的 C++ 测试『框架 (framework)』，主要用来做单元测试。
 
 ### 文档
 必读：
@@ -33,8 +33,9 @@
 目前 (2019/03)，Google Test 正在进行一轮较大规模的重构，新的版本将使用与通用术语一致的 API。因此，建议在新代码中使用 `TestSuite` 取代 `TestCase`。
 
 ### 断言
-***断言 (assertion)*** 是所有测试的基础。
-在 Google Test 中，断言是用 ***宏 (macro)*** 机制实现的，形式上与 ***函数 (function)*** 类似。
+
+『断言 (assertion)』是所有测试的基础。
+在 Google Test 中，断言是用『宏 (macro)』机制实现的，形式上与『函数 (function)』类似。
 每一种断言都有 `ASSERT_*` 和 `EXPECT_*` 两个版本：
 
 |         |    `ASSERT_*`    |     `EXPECT_*`      |
@@ -53,7 +54,7 @@
 
 #### 通用比较
 
-常用的二元比较断言有以下六种（只写 `EXPECT` 版本），其中 `a` 表示 ***实际 (actual) 值***，`e` 表示 ***期望 (expected) 值***：
+常用的二元比较断言有以下六种（只写 `EXPECT` 版本），其中 `a` 表示『实际 (actual) 值』，`e` 表示『期望 (expected) 值』：
 
 | 断言形式           | 成立条件 | 缩写含义                 |
 | ------------------ | -------- | ------------------------ |
@@ -215,7 +216,7 @@ int main(int argc, char **argv) {
 
 ### 构建
 #### 获取源代码
-首先，将托管在 [GitHub](https://github.com/google/googletest) 上的源代码仓库 ***克隆 (clone)*** 到本地：
+首先，将托管在 [GitHub](https://github.com/google/googletest) 上的源代码仓库『克隆 (clone)』到本地：
 ```shell
 git clone https://github.com/google/googletest.git
 ```
@@ -244,7 +245,7 @@ googletest
 其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../../make/README.md#CMake)，这是目前最简单、最通用的自动构建方式。
 
 #### 构建为独立的库
-假设含有顶层 `CMakeLists.txt` 的 ***源文件目录 (source directory)*** 为 `source-dir`，***构建目录 (build directory)*** 为 `build-dir`，则构建过程如下：
+假设含有顶层 `CMakeLists.txt` 的『源文件目录 (source directory)』为 `source-dir`，『构建目录 (build directory)』为 `build-dir`，则构建过程如下：
 ```shell
 # 生成本地构建文件，例如 Makefile：
 cmake [options] -S source-dir -B build-dir
@@ -277,7 +278,7 @@ cmake --build build-dir
 1. 创建 `CMakeLists.txt.in` 文件，设置 Google Test 仓库地址，本地 *源文件目录* 和 *构建目录*。
 2. 在本地项目的 `CMakeLists.txt` 中添加命令，构建 Google Test 和本地测试。
 
-官方文档的 [***Incorporating Into An Existing CMake Project***](https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project) 一节给出了这两个文件的模板。
+官方文档的《[Incorporating Into An Existing CMake Project](https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project)》一节给出了这两个文件的模板。
 这里给出一个简单的 C++ 项目示例，[源文件目录](./googletest/)结构如下
 
 ```
@@ -325,4 +326,4 @@ ctest -V   # 运行测试 并 显示详细信息
 ctest      # 运行测试 并 显示简略信息
 ```
 
-更多 CTest 用法参见 [***Testing Support***](https://cmake.org/cmake/help/latest/guide/tutorial/index.html#testing-support) in [***CMake Tutorial***](https://cmake.org/cmake/help/latest/guide/tutorial)。
+更多 CTest 用法参见《[CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial)》中的《[Testing Support](https://cmake.org/cmake/help/latest/guide/tutorial/index.html#testing-support)》一节。
