@@ -18,7 +18,7 @@ title: 批量构建
 
 # 手动构建
 ## 手动构建过程
-对于用静态语言（例如 [C++](../cpp/README.md)）编写的程序，必须经过「构建 (build)」才能得到「可运行的 (runnable)」软件。
+对于用静态语言（例如 [C++](../cpp/README.md)）编写的程序，必须经过『构建 (build)』才能得到『可运行的 (runnable)』软件。
 下面用一个简单的例子来说明构建的主要步骤。
 
 ### 源文件 (Source Files)
@@ -99,7 +99,7 @@ factorial(21) == -4249290049419214848 (overflowed)
 factorial(20) / factorial(19) == 20
 factorial(21) / factorial(20) == -1 (overflowed)
 ```
-其中 `factorial(21)` 超出了 `long` 可容纳的范围，发生了 ***上溢 (overflow)***。
+其中 `factorial(21)` 超出了 `long` 可容纳的范围，发生了『上溢 (overflow)』。
 
 ### 清理 (Clean)
 ```shell
@@ -136,15 +136,15 @@ make [options] [targets]
 |     `-k`      |   即使部分目标失败，仍继续构建其他目标   |
 
 ### 目标
-一个「目标 (target)」表示一个定义在 [`Makefile`](#Makefile) 中的构建任务，通常为「可执行(executable) 文件」或「库 (library)」的文件名，也可以只是一个「标签 (tag)」。
+一个『目标 (target)』表示一个定义在 [`Makefile`](#Makefile) 中的构建任务，通常为『可执行(executable) 文件』或『库 (library)』的文件名，也可以只是一个『标签 (tag)』。
 如果没有为 `make` 指定目标，则以 `Makefile` 中的第一个目标为默认目标。
 
 一个目标可以被重复构建多次。
-每次构建前，`make` 会自动检查该目标的「依赖项 (prerequisite)」。只有依赖项需要被更新时，才会在依赖项全部被更新后，重新构建该目标。
+每次构建前，`make` 会自动检查该目标的『依赖项 (prerequisite)』。只有依赖项需要被更新时，才会在依赖项全部被更新后，重新构建该目标。
 这项检查是递归的，因此最终将传递到被更新过的源文件上。
 
 ## `Makefile` 文件<a name="Makefile"></a>
-`Makefile` 是驱动 [`make` 命令](#make-cmd)的「脚本 (script) 文件」：
+`Makefile` 是驱动 [`make` 命令](#make-cmd)的『脚本 (script) 文件』：
 
 - 默认文件名为 `Makefile` 或 `makefile`。
 - 也可以用其他文件名，但必须在 `make` 后面用 `-f filename` 来指定。
@@ -174,7 +174,7 @@ targets : prerequisites
 ```Makefile
 .PHONY: all clean
 ```
-虽然 `all` 和 `clean` 在「语法 (syntax)」上没有特殊含义，但几乎所有项目都是按如下「语义 (semantics)」来使用的：
+虽然 `all` 和 `clean` 在『语法 (syntax)』上没有特殊含义，但几乎所有项目都是按如下『语义 (semantics)』来使用的：
 - `all` 用于构建所有当前 `Makefile` 中的所有目标。
 - `clean` 用于删除构建过程中生成的所有目标文件和可执行文件。
 
@@ -253,21 +253,21 @@ library.o : library.c
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
 ## 术语
-- 「源文件目录 (source dir)」或「源文件树 (source tree)」：项目根目录，必须含有一个 `CMakeLists.txt` 文件。
-- 「构建目录 (build dir)」或「构建树 (build tree)」或「二进制树 (binary tree)」：存放构建产物（目标文件、库文件、可执行文件）的目录。
-- 「内部构建 (in-source build)」：在源文件目录下构建（⚠️ 会污染源文件目录）。
-- 「外部构建 (out-of-source build)」：在源文件目录外构建 👍。
-- 「构建配置 (build configuration)」：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
+- 『源文件目录 (source dir)』或『源文件树 (source tree)』：项目根目录，必须含有一个 `CMakeLists.txt` 文件。
+- 『构建目录 (build dir)』或『构建树 (build tree)』或『二进制树 (binary tree)』：存放构建产物（目标文件、库文件、可执行文件）的目录。
+- 『内部构建 (in-source build)』：在源文件目录下构建（⚠️ 会污染源文件目录）。
+- 『外部构建 (out-of-source build)』：在源文件目录外构建 👍。
+- 『构建配置 (build configuration)』：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
 
 ## `cmake` 命令<a name="cmake-cmd"></a>
 CMake 参与的构建过程可以分为以下两个阶段：
-1. CMake 读取 `CMakeLists.txt` 文件，生成「本地构建工具 (native build tool)」(e.g. [`make`](#make-cmd)）所需的「本地构建文件 (native build file)」(e.g. [`Makefile`](#Makefile))：
+1. CMake 读取 `CMakeLists.txt` 文件，生成『本地构建工具 (native build tool)』(e.g. [`make`](#make-cmd)）所需的『本地构建文件 (native build file)』(e.g. [`Makefile`](#Makefile))：
 ```shell
 cmake [<options>] <source-dir>
 cmake [<options>] <existing-build-dir>
 cmake [<options>] -S <source-dir> -B <build-dir>
 ```
-2. *本地构建工具* 读取 *本地构建文件*，调用「本地工具链 (native tool chain)」进行构建。
+2. *本地构建工具* 读取 *本地构建文件*，调用『本地工具链 (native tool chain)』进行构建。
 这一步可借助 CMake 以跨平台的方式来完成：
 ```shell
 cmake --build <build-dir> [<options>] [-- <build-tool-options>]
@@ -287,7 +287,7 @@ cmake --build <build-dir> [<options>] [-- <build-tool-options>]
 -E <command> [<options>]
 # 查找包
 --find-package [<options>]
-# 指定「源文件目录」和「构建目录」，需要 cmake 3.13.5+
+# 指定『源文件目录』和『构建目录』，需要 cmake 3.13.5+
 -S <source-dir> -B <build-dir>
 ```
 
@@ -304,10 +304,10 @@ cmake -S ../.. -B . \
 ```
 
 ## `CMakeLists.txt` 文件<a name="CMakeLists"></a>
-`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件，它由「命令 (command)」和「注释 (comment)」组成：
+`CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件，它由『命令 (command)』和『注释 (comment)』组成：
 
 - 命令的名称 *不区分大小写*，形式上与函数调用类似。
-- 命令的操作对象称为「变量 (variable)」，变量的名称 *区分大小写*。
+- 命令的操作对象称为『变量 (variable)』，变量的名称 *区分大小写*。
 - 注释一般以 `#` 开始，至行尾结束。
 
 完整的语法定义参见 [cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)。
@@ -392,7 +392,7 @@ add_library(<name> [STATIC | SHARED | MODULE]
             [source1] [source2 ...])
 ```
 
-以上命令的第一个参数 `<name>` 表示被创建目标的「逻辑名」，必须全局唯一；实际被构建的文件名为「物理名」或「输出名」，不必全局唯一。默认情况下，*输出名* 等于 *逻辑名*，但可以通过设置 `OUTPUT_NAME` 来改变：
+以上命令的第一个参数 `<name>` 表示被创建目标的『逻辑名』，必须全局唯一；实际被构建的文件名为『物理名』或『输出名』，不必全局唯一。默认情况下，*输出名* 等于 *逻辑名*，但可以通过设置 `OUTPUT_NAME` 来改变：
 
 ```cmake
 add_executable(test_algebra_matrix matrix.cpp)
@@ -425,7 +425,7 @@ target_link_libraries(<target> ... <item>... ...)
 
 ## CMake Tools<a name="CMake-Tools"></a>
 
-微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有 *体量轻、易扩展、多语言、跨平台* 等优点，利用各种 [***扩展 (extensions)***](https://marketplace.visualstudio.com/) 很容易将其改造为多语言共用的 ***集成开发环境 (Integrated Development Environment, IDE)***。
+微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有『体量轻、易扩展、多语言、跨平台』等优点，利用各种『[扩展 (extensions)](https://marketplace.visualstudio.com/)』很容易将其改造为多语言共用的『集成开发环境 (Integrated Development Environment, IDE)』。
 
 本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 构建及调试 C/C++ 项目的方法。
 
@@ -435,16 +435,16 @@ target_link_libraries(<target> ... <item>... ...)
 1. 平行于顶层 `CMakeLists.txt` 创建名为 `.vscode` 的目录（注意 `vscode` 前面的 `.` 不能遗漏），并在其中创建名为 `settings.json` 的文件，用于设定构建目录等全局配置项。
    - 本节示例 [`./.vscode/settings.json`](./.vscode/settings.json) 设置了 `cmake.buildDirectory`（构建目录）及  `cmake.generator`（构建工具）两个变量。
    - 完整变量及选项列表参见官方文档《[Configuring CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/settings.html)》。
-1. 在 VS Code 底部的 ***状态栏 (status bar)*** 中：
-   - 单击 `CMake`，从顶部弹出的四种 ***构建类型 (build type)*** 中任选一种，单击之以完成 ***配置 (configure)***。若对某些 CMake 选项的默认值不满意，可在生成的 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
-   - 单击 `Build`，完成 ***构建 (build)***。默认构建目标为 `Build` 右侧的 `all`，可单击之以选择其他目标。
+1. 在 VS Code 底部的『状态栏 (status bar)』中：
+   - 单击 `CMake`，从顶部弹出的四种『构建类型 (build type)』中任选一种，单击之以完成『配置 (configure)』。若对某些 CMake 选项的默认值不满意，可在生成的 `${BUILD_DIR}/CMakeCache.txt` 文件中作相应修改。
+   - 单击 `Build`，完成『构建 (build)』。默认构建目标为 `Build` 右侧的 `all`，可单击之以选择其他目标。
 
 
 ### 调试
 
 1. 在 `.vscode` 中创建名为 `launch.json` 的文件，用于控制可执行文件的运行及调试。
    - 本节示例 [`./.vscode/launch.json`](./.vscode/launch.json) 基本照搬了官方文档《[Target Debugging and Launching](https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html)》中的示例，只修改了个别选项的值。
-1. 在 VS Code 中打开源文件。单击行号左侧以设置 ***断点 (breakpoint)***。按功能键 `F5` 启动调试。
+1. 在 VS Code 中打开源文件。单击行号左侧以设置『断点 (breakpoint)』。按功能键 `F5` 启动调试。
    - ⚠️ [用状态栏中的 🐞 键启动调试可能出错。](https://github.com/microsoft/vscode-cmake-tools/issues/506#issuecomment-410021984)
 1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此方法不依赖于本节介绍的 VS Code 及 CMake Tools。

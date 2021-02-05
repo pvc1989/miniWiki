@@ -4,8 +4,8 @@
 
 | 名称 | 同义词 | 任务 |
 | ---- | ---- | ---- |
-| 基 (base) 类 | 超 (super) 类 | 定义自己和派生类「共有的 (common)」成员 |
-| 派生 (derived) 类 | 子 (sub) 类 | 定义自己「特有的 (specific)」成员 |
+| 基 (base) 类 | 超 (super) 类 | 定义自己和派生类『共有的 (common)』成员 |
+| 派生 (derived) 类 | 子 (sub) 类 | 定义自己『特有的 (specific)』成员 |
 
 ### 声明 v. 定义
 一个类只有被 *定义* 过（而不仅仅被 *声明* 过）才能被用作基类：
@@ -34,7 +34,7 @@ class Particle : public Point {
   double mass_;
  public:
   Particle(double x, double y, double mass)
-      : Point(x, y) /* 用「基类构造函数」初始化「基类部分」*/, mass_(mass) { }
+      : Point(x, y) /* 用『基类构造函数』初始化『基类部分』*/, mass_(mass) { }
 };
 ```
 
@@ -71,16 +71,16 @@ class Derived : public Base {
   friend void visit(Base& b);
   int private_;  // 派生类的 private 成员
 };
-// ✅ 可以通过「派生类对象」访问「基类的 protected 成员」:
+// ✅ 可以通过『派生类对象』访问『基类的 protected 成员』:
 void visit(Derived &d) { d.private_ = d.protected_ = 0; }
-// ❌ 不能通过「基类对象」访问「基类的 protected 成员」:
+// ❌ 不能通过『基类对象』访问『基类的 protected 成员』:
 visit(Base &b) { b.protected_ = 0; }
 ```
 
 ⚠️ 尽管在派生类中可以直接访问基类的 `protected` 成员，还是应该尽量使用基类的 `public` 接口。
 
 ### 继承保护级别
-「派生访问修饰符 (derivation access specifier)」用于规定「继承保护级别 (inheritance protection level)」，即规定派生类的「使用者 (client)」（包括 *下一级派生类*）对 *继承自基类的成员* 的访问权限：
+『派生访问修饰符 (derivation access specifier)』用于规定『继承保护级别 (inheritance protection level)』，即规定派生类的『使用者 (client)』（包括 *下一级派生类*）对 *继承自基类的成员* 的访问权限：
 
 - 基类的 `private` 成员无法被派生类访问，不受继承级别的影响。
 - 基类的 `public` 和 `protected` 成员可以被派生类访问，受继承级别的影响：
@@ -119,8 +119,8 @@ class Derived : private Base {
 ## 自动类型转换
 
 ### 静态类型与动态类型
-- 「静态 (static) 类型」是指一个变量在 *声明* 时所使用的类型，或者一个表达式的计算结果的类型，在「编译期 (compile-time)」就可以确定。
-- 「动态 (dynamic) 类型」是指一个变量或表达式所代表的内存中的实际对象的类型，可能要到「运行期 (run-time)」才能够确定。
+- 『静态 (static) 类型』是指一个变量在 *声明* 时所使用的类型，或者一个表达式的计算结果的类型，在『编译期 (compile-time)』就可以确定。
+- 『动态 (dynamic) 类型』是指一个变量或表达式所代表的内存中的实际对象的类型，可能要到『运行期 (run-time)』才能够确定。
 
 只有 *指针* 或 *引用* 的动态类型 *可能* 与静态类型不同。
 
@@ -130,7 +130,7 @@ class Derived : private Base {
 - 继承自基类的非静态数据成员。
 
 可以用指向 *基类对象* 的指针（包括智能指针）或引用来指向 *派生类对象*。
-这种转换仅适用于指针或引用，并且这种转换的「可访问性 (accessibility)」与基类的 `public` 成员相同。
+这种转换仅适用于指针或引用，并且这种转换的『可访问性 (accessibility)』与基类的 `public` 成员相同。
 
 用容器管理 *派生类对象* 时，几乎总是以 *基类指针* 为容器元素类型，然后将 *派生类指针* 存储到的容器中：
 ```cpp
@@ -140,7 +140,7 @@ vec.push_back(pd);  // std::shared_ptr<Derived> 自动转换为 std::shared_ptr<
 ```
 
 *基类对象* 可以用 *派生类对象* 来 *初始化* 或 *赋值*。
-此时，派生类对象中的 *基类部分* 将被「拷贝 (copy)」或「移动 (move)」，而派生类自己定义的非静态数据成员将被忽略。
+此时，派生类对象中的 *基类部分* 将被『拷贝 (copy)』或『移动 (move)』，而派生类自己定义的非静态数据成员将被忽略。
 
 ### 基类到派生类的转换
 一个基类指针或引用，可能指向一个 *基类对象*，也可能指向一个 *派生类对象*，
@@ -159,13 +159,13 @@ Derived* pd = pb;  // ❌ 无法从 Base* 转换到 Derived*
 ```
 
 尽管不存在 *自动* 转换，但还是可以 *手动* 实现从基类到派生类的转换：
-- 一般情况下，可以用 `static_cast<Derived>()` 来执行「静态类型转换 (static cast)」，该转换将在 *编译期* 发生。
-- 如果基类定义了[虚函数](#虚函数)，则可以用 `dynamic_cast<Derived>()` 来执行 *基类指针或引用* 到 *派生类指针或引用* 的「动态类型转换 (dynamic cast)」，该转换将在 *运行期* 发生。
+- 一般情况下，可以用 `static_cast<Derived>()` 来执行『静态类型转换 (static cast)』，该转换将在 *编译期* 发生。
+- 如果基类定义了[虚函数](#虚函数)，则可以用 `dynamic_cast<Derived>()` 来执行 *基类指针或引用* 到 *派生类指针或引用* 的『动态类型转换 (dynamic cast)』，该转换将在 *运行期* 发生。
 - ⚠️ 尽管存在以上语言支持，但其目的是为了兼容 C-style API。在 Modern C++ 中使用这些机制往往意味着设计存在缺陷。
 
 ## 虚函数
 ### 声明与定义
-如果基类期望某个成员函数被派生类「重写 (override)」，则需要在 *声明的前端* 加上关键词 `virtual`。
+如果基类期望某个成员函数被派生类『重写 (override)』，则需要在 *声明的前端* 加上关键词 `virtual`。
 关键词 `virtual` 只在类的内部 *声明* 虚函数时使用，在类的外部 *定义* 虚函数时用不到 `virtual`。
 如果一个成员函数在基类中被声明为虚的，那么它在派生类中也将是虚的（即使在派生类中没有用 `virtual` 声明）。
 
@@ -215,7 +215,7 @@ class Circle : public Shape {
 抽象基类无法创建对象。
 
 ### 动态绑定
-「动态绑定 (dynamic binding)」是指：
+『动态绑定 (dynamic binding)』是指：
 如果一个 *基类 (`Base`) 的指针或引用* 实际指向的是一个 *派生类 (`Derived`) 对象*，
 那么 *用 `Base` 的指针或引用调用虚函数*，将会在 *运行期* 被解析为 *调用 `Derived` 实现的版本*。
 ```cpp
@@ -246,7 +246,7 @@ int main() {
 为支持[动态资源管理](../memory/README.md)，基类的析构函数应当被声明为 `virtual`，这样编译器才能够知道应该调用哪个版本的析构函数。
 
 ### 绕开动态绑定 ⚠️
-可以用「作用域 (scope) 运算符」显式指定虚函数版本：
+可以用『作用域 (scope) 运算符』显式指定虚函数版本：
 ```cpp
 int main() {
   auto pShape = std::make_unique<Shape>();
@@ -267,14 +267,14 @@ int main() {
 
 ### `override`
 在派生类中定义一个与基类中的虚函数 *同名* 但 *形参列表不同* 的成员函数是合法的。
-编译器会将其视作与虚函数无关的一个新的成员，这属于函数「重载 (overload)」。
+编译器会将其视作与虚函数无关的一个新的成员，这属于函数『重载 (overload)』。
 
 自 C++11 起，在形参列表（包括形参列表后的 `const` 修饰符）后加上关键词 `override`，
-可以让编译器检查被「重写 (override)」的虚函数是否与基类的版本具有相同的形参列表。
+可以让编译器检查被『重写 (override)』的虚函数是否与基类的版本具有相同的形参列表。
 
 ### `final`
 自 C++11 起，在基类中的虚函数形参列表（包括形参列表后的 `const` 修饰符）后加上关键词 `final`，
-表示禁止派生类「重写 (override)」该虚函数：
+表示禁止派生类『重写 (override)』该虚函数：
 ```cpp
 class Shape {
  public:

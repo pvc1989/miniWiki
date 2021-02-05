@@ -132,7 +132,7 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 > 1. 如果 `argument` 是 *左值表达式*，则 `T` 为 *左值引用*，否则 `T` 不含引用。
 > 2. 如果推断结果出现了多重引用，则按 *引用折叠* 规则处理。
 
-引用折叠 (reference collapsing)』规则：
+『引用折叠 (reference collapsing)』规则：
 
 > 假设 `X` 是不含引用的类型，则
 > - `X && &&` 折叠为 `X &&`。

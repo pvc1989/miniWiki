@@ -1,12 +1,12 @@
 # 元编程
 
-以 *类* 或 *函数* 等程序「实体 (entity)」为运算对象的编程方式称为「元编程 (metaprogramming)」。
+以 *类* 或 *函数* 等程序『实体 (entity)』为运算对象的编程方式称为『元编程 (metaprogramming)』。
 
 在 C++ 中，元编程主要通过以下语言机制来实现：
 - 利用 `template` 生成 *类* 或 *函数*。
 - 利用 `constexpr` 完成一些 *编译期常量* 的计算。
 
-[元编程](#元编程)这种编程「技巧 (technique)」（强调编译期计算）为实现[泛型编程](./generic.md#泛型编程)这种编程「范式 (paradigm)」（强调算法和数据类型的抽象）提供了技术支持。
+[元编程](#元编程)这种编程『技巧 (technique)』（强调编译期计算）为实现[泛型编程](./generic.md#泛型编程)这种编程『范式 (paradigm)』（强调算法和数据类型的抽象）提供了技术支持。
 
 ⚠️过度使用元编程会使得代码可读性差、编译时间长、测试和维护难度大。
 
@@ -14,7 +14,7 @@
 类型函数不是[普通函数](./function.md)，而是借助于[类模板](./generic.md)实现的（以 *类型* 或 *编译期常量* 为运算对象的）编译期运算机制。
 
 ### `std::remove_reference`
-定义在 `<type_traits>` 中的类模板 `std::remove_reference` 用于「移除 (remove)」类型实参的「引用 (reference)」：
+定义在 `<type_traits>` 中的类模板 `std::remove_reference` 用于『移除 (remove)』类型实参的『引用 (reference)』：
 ```cpp
 namespace std{
 template <class T> struct remove_reference      { typedef T type; };
@@ -32,7 +32,7 @@ int main() {
   typename std::remove_reference<int&&>::type z{0};  // 等价于 int z{0};
 }
 ```
-自 C++14 起，标准库为它提供了以 `_t` 为后缀的「别名 (alias)」：
+自 C++14 起，标准库为它提供了以 `_t` 为后缀的『别名 (alias)』：
 ```cpp
 namespace std{
 template <class T>
@@ -58,7 +58,7 @@ namespace std{
 template <class T>
 remove_reference_t<T>&& move(T&& t) {
   // T 可能含有引用属性，先用 remove_reference_t 将其去除，
-  // 再用 static_cast 将所得类型强制转换为「右值引用」：
+  // 再用 static_cast 将所得类型强制转换为『右值引用』：
   return static_cast<remove_reference_t<T>&&>(t);
 }
 }
@@ -80,9 +80,9 @@ T&& forward(remove_reference_t<T>&& t) { return static_cast<T&&>(t); }
 ```
 
 ### 编译期谓词
-定义在 [`<type_traits>`](https://en.cppreference.com/w/cpp/header/type_traits) 中的「编译期谓词 (compile-time predicate)」都是形如 `std::is_*<T>` 的类模板。
+定义在 [`<type_traits>`](https://en.cppreference.com/w/cpp/header/type_traits) 中的『编译期谓词 (compile-time predicate)』都是形如 `std::is_*<T>` 的类模板。
 它们都含有一个 `bool` 型静态数据成员 `value`，可以用于对 *类型实参* 作 *编译期判断*。
-自 C++17 起，标准库为它们的 `value` 成员提供了以 `_v` 为后缀的「别名 (alias)」，可以用于简化代码。
+自 C++17 起，标准库为它们的 `value` 成员提供了以 `_v` 为后缀的『别名 (alias)』，可以用于简化代码。
 
 例如 `std::is_empty` 用于判断一个 *类的对象是否不占存储空间*：
 ```cpp
@@ -191,7 +191,7 @@ using select_t = typename select<N, Cases...>::type;
 ```
 
 ## 递归
-元编程（编译期计算）中没有「变量 (variable)」的概念，也没有「循环 (loop)」机制，因此算法中用到的「迭代 (iteration)」语义都必须通过「递归 (recursion)」来实现的。
+元编程（编译期计算）中没有『变量 (variable)』的概念，也没有『循环 (loop)』机制，因此算法中用到的『迭代 (iteration)』语义都必须通过『递归 (recursion)』来实现的。
 
 ### 普通函数的递归
 ```cpp
@@ -211,7 +211,7 @@ int main() {
 // 通用版本：
 template <int I>
 constexpr int factorial() { return I * factorial<I-1>(); }
-// 特化版本，用作「递归基」：
+// 特化版本，用作『递归基』：
 template <>
 constexpr int factorial<0>() { return 1; }
 // 测试：
@@ -230,7 +230,7 @@ template <int I>
 struct factorial {
   static constexpr int value = I * factorial<I-1>::value;
 };
-// 特化版本，用作「递归基」：
+// 特化版本，用作『递归基』：
 template <>
 struct factorial<0> {
   static constexpr int value = 1;
@@ -253,13 +253,13 @@ int main() {
 
 ## 变参模板
 
-C++11 引入了「变参 (variadic) 模板」，这种模板可以含有「模板形参包 (template parameter pack)」，它是一种可以接受零个或多个 「模板实参 (template argument)」的特殊的「模板形参 (template parameter)」。
+C++11 引入了『变参 (variadic) 模板』，这种模板可以含有『模板形参包 (template parameter pack)』，它是一种可以接受零个或多个『模板实参 (template argument)』的特殊的『模板形参 (template parameter)』。
 
 ### 形参包
 ```cpp
-// Args 是一个「模板形参包」，可以接受零个或多个「模板实参」：
+// Args 是一个『模板形参包』，可以接受零个或多个『模板实参』：
 template <typename T, typename... Args>
-// rest 是一个「函数形参包」，可以接受零个或多个「函数实参」：
+// rest 是一个『函数形参包』，可以接受零个或多个『函数实参』：
 void foo(const T& t, const Args&... rest);
 ```
 在如下调用中
@@ -275,9 +275,9 @@ foo("hi");         // 接受 0 个实参
 编译器会实例化出以下 `4` 个版本的 `foo`：
 ```cpp
 void foo(const int&, const string&, const int&, const double&);
-void foo(const string&, const int&, const char(&)[3)」);
+void foo(const string&, const int&, const char(&)[3]);
 void foo(const double&, const string&);
-void foo(const char(&)[3)」);
+void foo(const char(&)[3]);
 ```
 
 ### 包的大小
@@ -292,17 +292,17 @@ void g(Args... args) {
 该表达式是 `constexpr，`因此不会对实参求值。
 
 ### 递归的变参模板
-*变参函数模板* 通常是「递归的 (recursive)」。
-作为 *递归基* 的 *非变参* 版本必须在 *变参* 版本之前给出「声明 (declaration)」：
+*变参函数模板* 通常是『递归的 (recursive)』。
+作为 *递归基* 的 *非变参* 版本必须在 *变参* 版本之前给出『声明 (declaration)』：
 
 ```cpp
 #include <iostream>
-// 「非变参」版本，用作「递归终止条件」
+// 『非变参』版本，用作『递归终止条件』
 template<typename T>
 std::ostream& print(std::ostream& os, const T& t) {
   return os << t;
 }
-// 「变参」版本
+// 『变参』版本
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   os << t << ", ";
@@ -315,7 +315,7 @@ int main() {
 ```
 
 ### 包的展开
-位于 *形参包* 右侧的 `...` 表示对这个 *包* 按相应的「模式 (pattern)」作展开。在上面的 *变参* 版本中：
+位于 *形参包* 右侧的 `...` 表示对这个 *包* 按相应的『模式 (pattern)』作展开。在上面的 *变参* 版本中：
 - `const Args&...` 对类型形参包 `Args` 按模式 `const Args&` 作展开。
 - `rest...` 对函数形参包 `rest` 按模式 `rest` 作展开。
 
@@ -336,12 +336,12 @@ std::ostream& printDebug(std::ostream& os, const Args&... rest) {
 ```cpp
 #include <iostream>
 #include <utility>
-// 「非变参」版本，用作「递归终止条件」
+// 『非变参』版本，用作『递归终止条件』
 template<typename T>
 std::ostream& print(std::ostream& os, const T& t) {
   return os << t;
 }
-// 「变参」版本
+// 『变参』版本
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   os << t << ", ";
