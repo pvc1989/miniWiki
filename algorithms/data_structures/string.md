@@ -86,6 +86,8 @@ Nondeterministic Finite-state Automaton (NFA)
 
 ### 动态规划
 
+[LeetCode-10](./leetcode/10.RegularExpressionMatching.md)
+
 # 数据压缩
 
 - Princeton

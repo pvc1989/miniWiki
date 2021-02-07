@@ -87,3 +87,8 @@ title: 数据结构及通用算法
 ## [数学（理论）分析](./complexity.md#mathematic)
 ## [科学（实验）测量](./complexity.md#scientific)
 ## [NP-完备性](./complexity.md#NPC)
+
+# [常用策略](./strategy.md)
+## [分而治之](./strategy.md#分而治之)
+## [动态规划](./strategy.md#动态规划)
+## [贪心选择](./strategy.md#贪心选择)

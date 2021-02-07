@@ -142,6 +142,10 @@ DAG: Directed Acylic Graph.
 - Applications:
   - Job scheduling.
 
+### 数独求解器
+
+[LeetCode-37](./leetcode/37.SudokuSolver.md)
+
 # 最小展开树
 
 - VisuAlgo
