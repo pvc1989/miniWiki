@@ -144,7 +144,7 @@ DAG: Directed Acylic Graph.
 
 ### 数独求解器
 
-[LeetCode-37](./leetcode/37.SudokuSolver.md)
+[LeetCode-37](./leetcode/37.sudoku-solver.md)
 
 # 最小展开树
 

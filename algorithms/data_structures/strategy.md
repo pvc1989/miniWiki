@@ -10,7 +10,7 @@ title: 常用策略
 
 ### 正则表达式
 
-[LeetCode-10](./leetcode/10.RegularExpressionMatching.md)
+[LeetCode-10](./leetcode/10.regular-expression-matching.md)
 
 # 贪心选择
 
@@ -25,4 +25,4 @@ title: 常用策略
    1. 选出右端最小的区间。
    1. 忽略与之不相容的区间。
 
-[LeetCode-435](./leetcode/435.Non-overlappingIntervals.md)
+[LeetCode-435](./leetcode/435.non-overlapping-intervals.md)

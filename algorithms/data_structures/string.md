@@ -86,7 +86,7 @@ Nondeterministic Finite-state Automaton (NFA)
 
 ### 动态规划
 
-[LeetCode-10](./leetcode/10.RegularExpressionMatching.md)
+[LeetCode-10](./leetcode/10.regular-expression-matching.md)
 
 # 数据压缩
 
