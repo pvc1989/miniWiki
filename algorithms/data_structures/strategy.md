@@ -26,3 +26,22 @@ title: 常用策略
    1. 忽略与之不相容的区间。
 
 [LeetCode-435](./leetcode/435.non-overlapping-intervals.md)
+
+### 最大股票收益
+
+#### 允许单次交易
+
+#### 允许多次交易
+
+#### 引入冷却机制
+
+```cpp
+int max_profit_if_sell_next = max(
+    max_profit_if_sell_curr,
+    max_profit_if_hold_curr + price_next);
+int max_profit_if_hold_next = max(
+    max_profit_if_hold_curr,
+    max_profit_if_sell_prev - price_next);
+```
+
+[LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.md)
