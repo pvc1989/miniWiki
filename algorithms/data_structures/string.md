@@ -1,6 +1,6 @@
----
+–-
 title: 串 (Strings)
----
+–-
 
 # 串的实现
 
@@ -54,15 +54,14 @@ title: 串 (Strings)
 - MIT
   - Text: Chap-32  String Matching
 
-## KMP 算法
-Knuth--Morris--Pratt (KMP)
+## Knuth–Morris–Pratt
 
 ### DFA
 Deterministic Finite-state Automaton (DFA)
 
-## Boyer--More 算法
+## Boyer–Moore
 
-## Rabin--Karp 算法
+## Rabin–Karp
 
 - MIT
   - Video: [6.006/Lecture 9: <del>Table Doubling</del>, Karp-Rabin](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-9-table-doubling-karp-rabin)
@@ -84,7 +83,7 @@ Deterministic Finite-state Automaton (DFA)
 ### NFA
 Nondeterministic Finite-state Automaton (NFA)
 
-### 动态规划
+### 动态规划<a href id="re-dp"></a>
 
 [LeetCode-10](./leetcode/10.regular-expression-matching.md)
 

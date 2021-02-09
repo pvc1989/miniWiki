@@ -19,7 +19,7 @@ According to [MIT/6.046/Lecture 8: Randomization: Universal & Perfect Hashing](h
 
 # 散列函数
 
-## 需求
+## 必要条件
 
 A good hash function should
 

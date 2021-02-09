@@ -23,7 +23,7 @@ title: 树 (Trees)
   - Text: [Sect-3.3 Balanced Search Trees](https://algs4.cs.princeton.edu/33balanced) and [Sect-6.2 B-trees](https://algs4.cs.princeton.edu/62btree)
   - Video: [Part-1/Week-5  Balanced Search Trees](https://www.coursera.org/learn/algorithms-part1/supplement/zQXMd/lecture-slides)
 
-## AVL 树
+## AVL 树<a href id="AVL"></a>
 
 ## 红黑树
 

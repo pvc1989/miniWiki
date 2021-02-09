@@ -1,6 +1,6 @@
----
+–-
 title: 图 (Graphs)
----
+–-
 
 # 图的实现
 
@@ -10,6 +10,8 @@ title: 图 (Graphs)
   - Video: [Part-2/Week-1  Undirected Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/NlsQF/lecture-slides) and [Part-2/Week-1  Directed Graphs](https://www.coursera.org/learn/algorithms-part2/supplement/qRjk3/lecture-slides)
 - MIT
   - Text: Sect-B.4  Graphs
+
+## 邻接矩阵
 
 ## 邻接链表
 
@@ -40,9 +42,9 @@ struct ImplicitGraph {
 
 # 广度优先搜索
 
-## 递归实现
+## 递归实现<a href id="BFS-Recursive"></a>
 
-## 循环实现
+## 循环实现<a href id="BFS-Iterative"></a>
 
 ```python
 def breadth_first_search(source):
@@ -67,7 +69,7 @@ Complexity:
 - $\Theta(V+E)$ time
 - $\Theta(V+E)$ space
 
-## 应用
+## 应用<a href id="BFS-应用"></a>
 
 ### 最短祖先路径
 
@@ -98,7 +100,7 @@ Complexity:
 
 # 深度优先搜索
 
-## 递归实现
+## 递归实现<a href id="DFS-Recursive"></a>
 
 ```python
 def depth_first_search(graph):
@@ -120,7 +122,7 @@ Complexity:
 - $\Theta(V+E)$ time
 - $\Theta(V+E)$ space
 
-## 应用
+## 应用<a href id="DFS-应用"></a>
 
 ### 环路检测
 
@@ -169,10 +171,10 @@ If negative weight edges are present, the algorithm should find negative weight 
 
 **Lemma (Greedy Choice).** For any cut $(S,V\setminus S)$ in a weighted graph $G=(V,E,W)$, any least-weight crossing edge $e\coloneqq\{u\in S,v\in V\setminus S\}$ is in some MST of $G$.
 
-## Kruskal 算法
+## Kruskal
 
 - Idea:
-  - Maintain connected components by a [Union--Find DS](./array.md#并查集).
+  - Maintain connected components by a [Union–Find DS](./array.md#并查集).
   - Greedily choose the globally lowest-weight edge that connect two components.
 - Complexity:
   - $\Theta(V)$ for building the `UnionFind` DS of vertices.
@@ -194,7 +196,7 @@ def GetMinSpanTreeByKruskal(Vertices, Edges, Weight):
   return mst
 ```
 
-## Prim 算法
+## Prim
 
 - Idea (like [Dijkstra's algorithm for Shortest Path](#DijkstraSP)):
   - Maintain a `MinPQ` on $V\setminus S$, where $d(S, v)\coloneqq\min_{u\in S}\{W(u, v)\}$ is used as $v$'s `key`.
@@ -265,7 +267,7 @@ def find_shortest_path(source, graph, weight):
   return vertex_to_length, vertex_to_parent
 ```
 
-## Dijkstra 算法<a href id="DijkstraSP"></a>
+## Dijkstra
 
 - Assumption: non-negative edge weights.
 - Idea (like [Prim's algorithm for Minimum Spanning Tree](#PrimMST)):
@@ -304,10 +306,10 @@ def find_shortest_path(source, graph, weight):
   return vertex_to_length, vertex_to_parent
 ```
 
-## Bellman--Ford 算法
+## Bellman–Ford
 
 - MIT:
-  - Video: [6.006/Lecture 17: Bellmen--Ford](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-17-bellman-ford)
+  - Video: [6.006/Lecture 17: Bellmen–Ford](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/lecture-17-bellman-ford)
 - Assumption:
   - Allow negative edge weights.
   - Report cycles with negetive weights.
@@ -334,6 +336,6 @@ def find_shortest_path(source, graph, weight):
   - Video: [Part-2/Week-3  Maximum Flow and Minimum Cut](https://www.coursera.org/learn/algorithms-part2/supplement/qKIDx/lecture-slides)
   - Programming Assignment: [Baseball Elimination](https://www.coursera.org/learn/algorithms-part2/programming/hmYRI/baseball-elimination)
 
-## Ford--Fulkerson 算法
+## Ford–Fulkerson
 
-## 最大流--最小割定理
+## 最大流–最小割定理
