@@ -6,7 +6,48 @@ title: 常用策略
 
 # 动态规划
 
+## 算法框架
+
 ## 应用
+
+### 矩阵乘法
+
+### 编辑距离
+
+- 原问题：将 `x[0:m)` 变为 `y[0:n)` 的最小代价。
+- 子问题：将 `x[i:m)` 变为 `y[j:n)` 的最小代价。
+
+```cpp
+dp[i][j] = min(
+  dp[i+1][j  ] + min(del(x[i]), add(x[i])),
+  dp[i  ][j+1] + min(del(y[j]), add(y[j])),
+  dp[i+1][j+1] + min(del(x[i], y[j]), replace(x[i], y[j]))
+);
+```
+
+[LeetCode-72](./leetcode/72.edit-distance.md)
+
+#### 最长公共子列
+
+[LeetCode-1143](https://leetcode.com/problems/longest-common-subsequence/)
+
+### 0-1 背包
+
+```cpp
+dp[i][rest] = max(dp[i+1][rest], dp[i+1][rest - size[i]] + value[i]);
+```
+
+#### 硬币找零
+
+目标：用最少数量的硬币达到目标面值。
+
+[LeetCode-322](https://leetcode.com/problems/coin-change)
+
+#### 等分集合
+
+目标：将集合划分为若干子集，使各子集元素之和相等。
+
+[LeetCode-416](https://leetcode.com/problems/partition-equal-subset-sum/)
 
 ### 正则表达式
 
@@ -15,6 +56,8 @@ title: 常用策略
 # 贪心选择
 
 ## 应用
+
+### 连续背包
 
 ### 最多相容区间
 
