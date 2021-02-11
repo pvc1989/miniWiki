@@ -8,9 +8,41 @@ title: 常用策略
 
 ## 算法框架
 
+『动态规划 (Dynamic Programming, DP)』
+- ≈ 小心的暴力枚举
+  - DP 通常具有多项式复杂度。
+  - 一般的暴力枚举通常具有指数复杂度。
+- ≈『猜测 (guessing)』+『递归 (recursion)』+『备忘 (memoization)』
+  - 若按子问题的拓扑顺序，则可（自动）改写为『自底向上 (bottom-up)』的非递归形式。
+
+基本步骤：
+1. 定义子问题（关键步）。
+1. 猜测搜索方向（通常直接枚举可用路径）。
+1. 利用子问题的解（获得当前子问题的局部最优解）。
+1. 递归 + 备忘（或『自底向上』建表，以避免递归）。
+1. 返回原问题的解（直接返回最后一个子问题的解，或组合某几个子问题的解）。
+
 ## 应用
 
+### 最短路径
+
+[Bellman–Ford](./graph.md#Bellman–Ford)
+
+### 段落分行
+
+在某些单词前换行，使整段文字的 `badness` 值最小。
+
+```python
+# h := head, l := length, s := size
+dp[h] = min(badness(h, l) + dp[h + l] for length in range(1, s - h))
+```
+
 ### 矩阵乘法
+
+```python
+# h := head, t := tail, l := length
+dp[h][t] = min(dp[h][h+l] + cost(h+l, h+l+1) + dp[h+l+1][t] for l in range(1, t-l-2))
+```
 
 ### 编辑距离
 
@@ -33,9 +65,25 @@ dp[i][j] = min(
 
 ### 0-1 背包
 
+给定 `n` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(real) value[i]`），求容量为 `(Int) room` 的『背包 (knapsack)』所能装下的总价最大的货物。
+
 ```cpp
-dp[i][rest] = max(dp[i+1][rest], dp[i+1][rest - size[i]] + value[i]);
+for (int i = value.size(); i >= 0; --i) {
+  for (int rest = room; rest > 0; --rest) {
+    dp[i][rest] = dp[i+1][rest];
+    if (rest > size[i]) {
+      dp[i][rest] = max(dp[i][rest], dp[i+1][rest - size[i]] + value[i]);
+    }
+  }
+}
 ```
+
+- 时间复杂度 `Θ(n * room)` 是『伪多项式的 (pseudopolynomial)』：
+  - 若 `Int` 为可变字长的整数类型，则每个 `size[i]` 需要 `lg(room)`『位 (bit)』来表示，故输入规模为 `O(n * lg(room))`，此时复杂度 `Θ(n * room)` 是『指数的』。
+  - 若 `Int` 为固定字长的整数类型，则 `lg(room)` 可视为常数，此时复杂度 `Θ(n * room)` 是『多项式的』。
+- 空间复杂度『伪多项式的』：
+  - 二维表格 `dp[][]` 需要 `Θ(n * room)` 存储空间。
+  - 实际建表时，只用到两个长度为 `Θ(room)` 的一维数组。
 
 #### 硬币找零
 
