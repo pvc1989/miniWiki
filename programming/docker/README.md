@@ -8,7 +8,7 @@ title: Docker
 
 ## Daemon
 
-名为 `dockerd` 的可执行程序，启动后为寄生在宿主机上的后台进程，提供对 ***镜像 (image)***、***容器 (container)*** 等 Docker 对象的管理服务。
+名为 `dockerd` 的可执行程序，启动后为寄生在宿主机上的后台进程，提供对『镜像 (image)』、『容器 (container)』等 Docker 对象的管理服务。
 
 ## Client
 
@@ -29,7 +29,6 @@ title: Docker
 |                          容器                          |                     虚拟机                      |
 | :----------------------------------------------------: | :---------------------------------------------: |
 | ![](https://docs.docker.com/images/Container%402x.png) | ![](https://docs.docker.com/images/VM%402x.png) |
-
 
 
 # 常用命令
@@ -86,7 +85,7 @@ docker rm [OPTIONS] CONTAINER [CONTAINER...]
 docker rm --force $(docker ps -qa)  # ⚠️ 强制删除所有容器
 ```
 
-每个 `CONTAINER` 都可以通过其 *`ID` 的前几位* 或 *`NAME`* 来指明。
+每个 `CONTAINER` 都可以通过其『`ID` 的前几位』或『`NAME`』来指明。
 
 ## Run
 
@@ -101,7 +100,7 @@ docker run -it IMAGE
 docker run -w WORK_DIR IMAGE
 docker run -v HOST_DIR:WORK_DIR IMAGE
 ```
-所谓 ***挂载 (mount)*** 是指 *容器读写 `WORK_DIR`* 等效于 *宿主读写 `HOST_DIR`*。
+所谓『挂载 (mount)』是指『容器读写 `WORK_DIR`』等效于『宿主读写 `HOST_DIR`』。
 【常用场景】将宿主的当前目录挂载到容器的同名目录：
 
 ```shell

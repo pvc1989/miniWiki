@@ -6,9 +6,9 @@ title: Secure SHell (SSH)
 
 # SSH 加密通信原理
 
-SSH (**S**ecure **SH**ell) 是一种用于远程访问 Linux 主机的 CLI 软件。它通过对通信数据进行加密与解密，使得本地主机可以 *安全地* 访问远程主机上的 shell，从而使用其资源。
+SSH (**S**ecure **SH**ell) 是一种用于远程访问 Linux 主机的 CLI 软件。它通过对通信数据进行加密与解密，使得本地主机可以『安全地』访问远程主机上的 shell，从而使用其资源。
 
-SSH 对数据的加密与解密主要是依靠成对的“公钥 (public key)”和“私钥 (private key)”来实现的：
+SSH 对数据的加密与解密主要是依靠成对的『公钥 (public key)』和『私钥 (private key)』来实现的：
 
 - A 将自己的公钥提供给 B。
 - B 利用 A 的公钥对数据进行加密，再将加密过的数据发送给 A。
