@@ -52,7 +52,7 @@ print(1 + 1 == 3)  # False
 
 ## 无序容器
 
-### [`set`, `frozenset` --- 集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
+### [`set`, `frozenset`：集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 
 `set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
 
@@ -68,7 +68,7 @@ print(b.union(c) == b)         # True
 print(b.difference(c))  # {9, 3, 15}
 ```
 
-### [`dict` --- 字典 (dictionary)](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+### [`dict`：字典 (dictionary)](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 
 `dict` 是以『键-值对 (key-value pair)』 为元素的容器，并且支持按键查值。
 
@@ -174,7 +174,7 @@ for i in range(1000000):
     print(i)
 ```
 
-### [`str` --- 字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+### [`str`：字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
 
 `str` 是一种由（按 Unicode 编码的）字符构成的不可变序列。
 
@@ -235,7 +235,7 @@ Python 中允许使用成对的单引号 `'...'` 或成对的双引号 `"..."` �
 
 ## [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
 
-### [`array` --- 数组](https://docs.python.org/3/library/array.html#module-array)
+### [`array`：数组](https://docs.python.org/3/library/array.html#module-array)
 
 `list` 和 `tuple` 都属于『异质 (heterogeneous)』容器：其中的元素可以属于不同类型。
 这种便利是通过牺牲效率而获得的。
@@ -251,7 +251,7 @@ print(a[0], a[-1])
 然而，`array` 仅仅是一种容器，并不支持加减乘除等算术运算。
 如果有这类需求，应该考虑改用 `numpy` 提供的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html) 类型。
 
-### [`heapq` --- 最小二叉堆算法](https://docs.python.org/3/library/heapq.html)
+### [`heapq`：最小二叉堆算法](https://docs.python.org/3/library/heapq.html)
 
 `heapq` 只提供了[最小二叉堆『算法 (algorithm)』](https://visualgo.net/en/heap)，被操纵的数据需要存储在一个 `list` 里：
 
@@ -410,7 +410,7 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 # 数值计算
 
-## [`numpy`, `scipy` --- 数值与科学计算](https://www.scipy.org)
+## [`numpy`, `scipy`：数值与科学计算](https://www.scipy.org)
 
 最完整最准确的参考资料是
 - [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 
@@ -423,12 +423,12 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
-## [`matplotlib` --- 数据显示](https://matplotlib.org)
+## [`matplotlib`：数据显示](https://matplotlib.org)
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
 # 文件读写
-## [`io` --- 用于数据流的工具](https://docs.python.org/3/library/io.html)
+## [`io`：用于数据流的工具](https://docs.python.org/3/library/io.html)
 在 Python 中，文件被抽象成数据『流 (stream)』，所有文件『读写 (IO)』操作都是在流对象上进行的。
 除此之外，还有一种『内存中的流 (in-memory stream)』，它支持所有流上的抽象操作，但不与某个文件绑定。
 
@@ -467,7 +467,7 @@ s = f.readline()  # '\n' included
 f.write('hello, world\n')
 ```
 
-## [`sys.stdin`, `sys.stdout`, `sys.stderr` --- 标准输入输出](https://docs.python.org/3/library/sys.html#sys.stdin)
+## [`sys.stdin`, `sys.stdout`, `sys.stderr`：标准输入输出](https://docs.python.org/3/library/sys.html#sys.stdin)
 从『标准输入 (`stdin`)』中逐行读取信息并进行处理：
 ```python
 import sys
@@ -537,9 +537,9 @@ python3 randomseq.py 1000 | python3 average.py
 
 # 软件开发
 
-## [`profile` --- 函数调用分析](https://docs.python.org/3/library/profile.html)
+## [`profile`：函数调用分析](https://docs.python.org/3/library/profile.html)
 
-## [`timeit` --- 测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
+## [`timeit`：测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
 
 ```python
 timeit.default_timer()
@@ -555,9 +555,9 @@ end = timer()
 print(end - start)
 ```
 
-## [`unittest` --- 单元测试框架](https://docs.python.org/3/library/unittest.html)
+## [`unittest`：单元测试框架](https://docs.python.org/3/library/unittest.html)
 
-清华大学的《[软件工程](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/info)》课程介绍了『[单元测试 (unit test)](http://www.xuetangx.com/courses/course-v1:TsinghuaX+34100325_X+sp/courseware/1714014c1c1949cf84074431dc7d6a99/8623fff7bc7c4c69bced4a88620b73db/)』的概念。
+『单元测试 (unit test)』是『测试驱动开发 (Test Driven Development, TDD)』的基础。
 
 典型用法：
 ```python
@@ -579,7 +579,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-## [`abc` --- 抽象基类](https://docs.python.org/3/library/abc.html)
+## [`abc`：抽象基类](https://docs.python.org/3/library/abc.html)
 
 ```python
 import abc
@@ -603,9 +603,9 @@ if __name__ == '__main__':
     print(c.area())
 ```
 
-## [PEP 8 --- 代码规范](https://www.python.org/dev/peps/pep-0008/)
+## [PEP 8：代码规范](https://www.python.org/dev/peps/pep-0008/)
 
-## [PyCharm --- 集成开发环境](https://www.jetbrains.com/pycharm/)
+## [PyCharm：集成开发环境](https://www.jetbrains.com/pycharm/)
 
 - [Download](https://www.jetbrains.com/pycharm/download/)
 - [Tutorials](https://confluence.jetbrains.com/display/PYH/PyCharm+Tutorials)
