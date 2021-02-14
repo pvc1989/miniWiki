@@ -1,22 +1,65 @@
----
-title: 72. Edit Distance
----
+/*
+ * @lc app=leetcode id=72 lang=cpp
+ *
+ * [72] Edit Distance
+ *
+ * https://leetcode.com/problems/edit-distance/description/
+ *
+ * algorithms
+ * Hard (46.64%)
+ * Likes:    5166
+ * Dislikes: 66
+ * Total Accepted:    334.6K
+ * Total Submissions: 717.5K
+ * Testcase Example:  '"horse"\n"ros"'
+ *
+ * Given two strings word1 and word2, return the minimum number of operations
+ * required to convert word1 to word2.
+ * 
+ * You have the following three operations permitted on a word:
+ * 
+ * 
+ * Insert a character
+ * Delete a character
+ * Replace a character
+ * 
+ * 
+ * 
+ * Example 1:
+ * 
+ * 
+ * Input: word1 = "horse", word2 = "ros"
+ * Output: 3
+ * Explanation: 
+ * horse -> rorse (replace 'h' with 'r')
+ * rorse -> rose (remove 'r')
+ * rose -> ros (remove 'e')
+ * 
+ * 
+ * Example 2:
+ * 
+ * 
+ * Input: word1 = "intention", word2 = "execution"
+ * Output: 5
+ * Explanation: 
+ * intention -> inention (remove 't')
+ * inention -> enention (replace 'i' with 'e')
+ * enention -> exention (replace 'n' with 'x')
+ * exention -> exection (replace 'n' with 'c')
+ * exection -> execution (insert 'u')
+ * 
+ * 
+ * 
+ * Constraints:
+ * 
+ * 
+ * 0 <= word1.length, word2.length <= 500
+ * word1 and word2 consist of lowercase English letters.
+ * 
+ * 
+ */
 
-This is [a hard problem on LeetCode](https://leetcode.com/problems/edit-distance/).
-
-# Description
-
-Given two strings `x` and `y`, return the minimum number of operations required to convert `x` to `y`.
-
-You have the following three operations permitted on a word:
-
-- Insert a character
-- Delete a character
-- Replace a character
-
-# C++ Solution
-
-```cpp
+// @lc code=start
 class Solution {
  public:
   int minDistance(string x, string y) {
@@ -57,4 +100,5 @@ class Solution {
     return curr_row.front();
   }
 };
-```
+// @lc code=end
+

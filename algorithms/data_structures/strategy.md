@@ -60,7 +60,7 @@ dp[i][j] = min(
 );
 ```
 
-[LeetCode-72](./leetcode/72.edit-distance.md)
+[LeetCode-72](./leetcode/72.edit-distance.cpp)
 
 #### 最长公共子列
 
@@ -102,7 +102,7 @@ for (int i = value.size(); i >= 0; --i) {
 
 ### 正则表达式
 
-[LeetCode-10](./leetcode/10.regular-expression-matching.md)
+[LeetCode-10](./leetcode/10.regular-expression-matching.cpp)
 
 # 贪心选择
 
@@ -119,7 +119,7 @@ for (int i = value.size(); i >= 0; --i) {
    1. 选出右端最小的区间。
    1. 忽略与之不相容的区间。
 
-[LeetCode-435](./leetcode/435.non-overlapping-intervals.md)
+[LeetCode-435](./leetcode/435.non-overlapping-intervals.cpp)
 
 ### 最大股票收益
 
@@ -138,4 +138,4 @@ int max_profit_if_hold_next = max(
     max_profit_if_sell_prev - price_next);
 ```
 
-[LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.md)
+[LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.cpp)
