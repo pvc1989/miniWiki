@@ -77,3 +77,10 @@ title: 队列 (Queues)
   - Code: [`CollisionSystem.java`](https://algs4.cs.princeton.edu/61event/CollisionSystem.java.html)
 
 ### 华容道
+
+### 跳跃游戏
+
+允许从 `i` 跳到 `[i + 1, min(n - 1, i + k)]` 中的任意位置，
+求：从 `0` 跳到 `n - 1` 的过程中，所触 `a[k]` 之和（得分）的最大值。
+
+[LeetCode-1696](./leetcode/1696.jump-game-vi.cpp)

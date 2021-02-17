@@ -98,6 +98,13 @@ Complexity:
 - $\Theta(V+E)$ time
 - $\Theta(V+E)$ space
 
+### 跳跃游戏
+
+允许从 `i` 跳到合法的 `i + 1`、`i - 1` 及 `a[k] == a[i]` 的 `k`，
+求：从 `0` 到 `n - 1` 至少需要跳几次？
+
+[LeetCode-1345](./leetcode/1345.jump-game-iv.cpp)
+
 # 深度优先搜索
 
 ## 递归实现<a href id="DFS-Recursive"></a>
@@ -147,6 +154,13 @@ DAG: Directed Acylic Graph.
 ### 数独求解器
 
 [LeetCode-37](./leetcode/37.sudoku-solver.cpp)
+
+### 跳跃游戏
+
+允许从 `i` 跳到合法的 `i + a[i]` 或 `i - a[i]`，
+求：是否能从 `0` 跳到某个 `a[k] == 0` 的 `k`？
+
+[LeetCode-1306](./leetcode/1306.jump-game-iii.cpp)
 
 # 最小展开树
 
