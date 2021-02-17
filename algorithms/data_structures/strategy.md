@@ -104,6 +104,25 @@ for (int i = value.size(); i >= 0; --i) {
 
 [LeetCode-10](./leetcode/10.regular-expression-matching.cpp)
 
+### 最大股票收益
+
+#### 至多两次交易
+
+[LeetCode-123](./123.best-time-to-buy-and-sell-stock-iii.cpp)
+$$
+P_{[0, n)}^{2} = \min_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
+$$
+
+#### 至多 $k$ 次交易
+
+[LeetCode-188](./188.best-time-to-buy-and-sell-stock-iv.cpp)
+
+$$
+P_{[0, j)}^{t} = \min_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
+$$
+
+其中 $P_{[i,j)}^{t}$ 表示『最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益』。
+
 # 贪心选择
 
 ## 应用
@@ -123,11 +142,17 @@ for (int i = value.size(); i >= 0; --i) {
 
 ### 最大股票收益
 
-#### 允许单次交易
+#### 至多一次交易
 
-#### 允许多次交易
+[LeetCode-121](./121.best-time-to-buy-and-sell-stock.cpp)
+
+#### 不限交易次数
+
+[LeetCode-122](./122.best-time-to-buy-and-sell-stock-ii.cpp)
 
 #### 引入冷却机制
+
+[LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.cpp)
 
 ```cpp
 int max_profit_if_sell_next = max(
@@ -138,4 +163,15 @@ int max_profit_if_hold_next = max(
     max_profit_if_sell_prev - price_next);
 ```
 
-[LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.cpp)
+#### 引入交易成本
+
+[LeetCode-714](./leetcode/714.best-time-to-buy-and-sell-stock-with-transaction-fee.cpp)
+
+```cpp
+int max_profit_if_sell_next = max(
+    max_profit_if_sell_curr,
+    max_profit_if_hold_curr + price_next - fee);
+int max_profit_if_hold_next = max(
+    max_profit_if_hold_curr,
+    max_profit_if_sell_curr - price_next);
+```
