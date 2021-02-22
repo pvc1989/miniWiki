@@ -56,36 +56,23 @@
 // @lc code=start
 class Solution {
  public:
-  int maxProfit(int max_transactions, vector<int>& prices) {
-    int n = prices.size();
-    if (max_transactions == 0 || n == 0) return 0;
-    // [b, s) -> max profit of buying at/after `b` and selling before `s`
-    auto max_profit_in_range = vector<vector<int>>(n, vector<int>(n+1));
-    for (int buy = 0; buy != n; ++buy) {
-      auto min_price_in_prefix = prices[buy];
-      for (int sell = buy + 1; sell != n;/* all ready incremented */) {
-        auto new_price = prices[sell];
-        max_profit_in_range[buy][++sell] = max(
-            new_price - min_price_in_prefix/* sell at `sell` */,
-            max_profit_in_range[buy][sell]/* or already sold */);
-        min_price_in_prefix = min(min_price_in_prefix, new_price);
+  int maxProfit(int n_transactions, vector<int>& prices) {
+    int n_days = prices.size();
+    if (n_transactions == 0 || n_days == 0) return 0;
+    auto profit_if_sell = vector<int>(n_days);
+    auto profit_if_hold = vector<int>(n_days);
+    profit_if_hold[0] = -prices[0];
+    for (int transaction = 0; transaction < n_transactions; ++transaction) {
+      for (int day = 1; day < n_days; ++day) {
+        profit_if_hold[day] =
+            max(profit_if_hold[day - 1], profit_if_sell[day - 1] - prices[day]);
+      }
+      for (int day = 1; day < n_days; ++day) {
+        profit_if_sell[day] =
+            max(profit_if_sell[day - 1], profit_if_hold[day - 1] + prices[day]);
       }
     }
-    // k -> max profit in [0, k) with at most `t` transactions
-    auto max_profit_in_prefix = max_profit_in_range.front();
-    for (int t = min(max_transactions, n/2); 2 <= t; --t) {
-      for (int last_sell = n; 0 < last_sell; --last_sell) {
-        auto max_profit = max_profit_in_prefix[last_sell];
-        for (int last_buy = last_sell - 1; 0 <= last_buy; --last_buy) {
-          auto one_more_transaction_max_profit =
-              max_profit_in_range[last_buy][last_sell] +
-              max_profit_in_prefix[last_buy];
-          max_profit = max(max_profit, one_more_transaction_max_profit);
-        }
-        max_profit_in_prefix[last_sell] = max_profit;
-      }
-    }
-    return max_profit_in_prefix.back();
+    return profit_if_sell.back();
   }
 };
 // @lc code=end

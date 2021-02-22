@@ -109,16 +109,19 @@ for (int i = value.size(); i >= 0; --i) {
 #### 至多两次交易
 
 [LeetCode-123](./123.best-time-to-buy-and-sell-stock-iii.cpp)
+
 $$
-P_{[0, n)}^{2} = \min_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
+P_{[0, n)}^{2} = \max_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
 $$
 
 #### 至多 $k$ 次交易
 
 [LeetCode-188](./188.best-time-to-buy-and-sell-stock-iv.cpp)
 
+仿照上题，有复杂度为 $O(kn^2)$ 的 DP 解法（另有复杂度为 $O(kn)$ 的[贪心](#k-transactions)解法）：
+
 $$
-P_{[0, j)}^{t} = \min_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
+P_{[0, j)}^{t} = \max_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
 $$
 
 其中 $P_{[i,j)}^{t}$ 表示『最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益』。
@@ -154,24 +157,34 @@ $$
 
 [LeetCode-309](./leetcode/309.best-time-to-buy-and-sell-stock-with-cooldown.cpp)
 
-```cpp
-int max_profit_if_sell_next = max(
-    max_profit_if_sell_curr,
-    max_profit_if_hold_curr + price_next);
-int max_profit_if_hold_next = max(
-    max_profit_if_hold_curr,
-    max_profit_if_sell_prev - price_next);
-```
+$$
+H_{d+1} = \mathopen{\max}\left(H_{d}, S_{\boxed{d-1}}-P_{d+1}\right)
+\qquad
+S_{d+1} = \mathopen{\max}\left(S_{d}, H_{\boxed{d}}+P_{d+1}\right)
+$$
 
 #### 引入交易成本
 
 [LeetCode-714](./leetcode/714.best-time-to-buy-and-sell-stock-with-transaction-fee.cpp)
 
-```cpp
-int max_profit_if_sell_next = max(
-    max_profit_if_sell_curr,
-    max_profit_if_hold_curr + price_next - fee);
-int max_profit_if_hold_next = max(
-    max_profit_if_hold_curr,
-    max_profit_if_sell_curr - price_next);
-```
+$$
+H_{d} = \mathopen{\max}\left(H_{d-1}, S_{d-1}-P_d\right)
+\qquad
+S_{d} = \mathopen{\max}\left(S_{d-1}, H_{d-1}+P_d-F\right)
+$$
+
+#### 至多 $k$ 次交易<a href id="k-transactions"></a>
+
+[LeetCode-188](./188.best-time-to-buy-and-sell-stock-iv.cpp)
+
+$$
+H_{d}^{t} = \mathopen{\max}\left(H_{d-1}^{t-1}, S_{d-1}^{\boxed{t-1}}-P_d\right)
+\qquad
+S_{d}^{t} = \mathopen{\max}\left(S_{d-1}^{t-1}, H_{d-1}^{\boxed{t}}+P_d\right)
+$$
+
+其中
+- $P_d$ 表示『第 $d$ 天的股价』。
+- $S_{d}^{t}$ 表示『第 $d$ 天为卖出状态、前 $d$ 天至多卖出 $t$ 次的最大收益』。
+- $H_{d}^{t}$ 表示『第 $d$ 天为持有状态、前 $d$ 天至多买入 $t$ 次的最大收益』。
+
