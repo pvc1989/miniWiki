@@ -6,16 +6,27 @@ title: 常用策略
 
 # 动态规划
 
-## 算法框架
+## 框架
 
 ### 等价描述
 
 『动态规划 (Dynamic Programming, DP)』
-- ≈ 小心的暴力枚举
-  - DP 通常具有多项式复杂度。
-  - 一般的暴力枚举通常具有指数复杂度。
-- ≈『猜测 (guessing)』+『递归 (recursion)』+『备忘 (memoization)』
-  - 若按子问题的拓扑顺序，则可（自动）改写为『自底向上 (bottom-up)』的非递归形式。
+- ≈ 省力的暴力枚举
+  - 简单的暴力枚举，通常具有指数复杂度。
+  - 利用动态规划，可降到（伪）多项式复杂度。
+- ≈『递归 (recursion)』+『备忘 (memoization)』
+  - 『自顶向下 (top-down)』的递归代码，会因递归函数调用消耗一定的计算资源，但
+    - 是描述『子问题 (subproblem)』的最佳方式，通常比相应的非递归版本直观。
+    - 子问题的依赖关系隐含在递归调用中，无需刻意维护。
+    - 不被原问题所依赖的子问题，不会被求解，可节约计算资源。
+  - 『自底向上 (bottom-up)』的非递归代码，通常具有更高的运行效率，但
+    - 通常不如相应的递归版本直观。
+    - 需按子问题的『拓扑顺序 (topological order)』逐层求解。
+    - 不被原问题所依赖的子问题，也会被求解，会浪费计算资源。
+- ≈ 『有向无环图 (Directed Acyclic Graph, DAG)』上的最短路径搜索
+  - 以子问题为结点
+  - 以依赖关系为邻边
+  - 以优化目标为路径开销
 
 ### 基本步骤
 
@@ -49,8 +60,9 @@ dp[h][t] = min(dp[h][h+l] + cost(h+l, h+l+1) + dp[h+l+1][t] for l in range(1, t-
 
 ### 编辑距离
 
-- 原问题：将 `x[0:m)` 变为 `y[0:n)` 的最小代价。
-- 子问题：将 `x[i:m)` 变为 `y[j:n)` 的最小代价。
+[LeetCode-72](./leetcode/72.edit-distance.cpp)
+
+子问题：将 `x[i:m)` 变为 `y[j:n)` 的最小代价。
 
 ```cpp
 dp[i][j] = min(
@@ -60,25 +72,26 @@ dp[i][j] = min(
 );
 ```
 
-[LeetCode-72](./leetcode/72.edit-distance.cpp)
-
 #### 最长公共子列
 
 [LeetCode-1143](https://leetcode.com/problems/longest-common-subsequence/)
 
 ### 0-1 背包
 
-给定 `n` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(real) value[i]`），求容量为 `(Int) room` 的『背包 (knapsack)』所能装下的总价最大的货物。
+给定 `n` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(Real) value[i]`），求容量为 `(Int) max_room` 的『背包 (knapsack)』所能装下的总价最大的货物。
 
 ```cpp
-for (int i = value.size(); i >= 0; --i) {
-  for (int rest = room; rest > 0; --rest) {
-    dp[i][rest] = dp[i+1][rest];
-    if (rest > size[i]) {
-      dp[i][rest] = max(dp[i][rest], dp[i+1][rest - size[i]] + value[i]);
+// `dp[i][r]` := max value of items in range `[i, n)` with `r` remaining room
+for (int item = value.size() - 1; 0 <= item; --item) {
+  for (int room = max_room; 0 < room; --room) {
+    dp[item][room] = dp[item + 1][room];
+    if (size[item] < room) {
+      auto new_value = dp[item + 1][room - size[item]] + value[item];
+      dp[item][room] = max(dp[item][room], new_value);
     }
   }
 }
+return dp[0][max_room];
 ```
 
 - 时间复杂度 `Θ(n * room)` 是『伪多项式的 (pseudopolynomial)』：
@@ -90,19 +103,25 @@ for (int i = value.size(); i >= 0; --i) {
 
 #### 硬币找零
 
-目标：用最少数量的硬币达到目标面值。
-
 [LeetCode-322](https://leetcode.com/problems/coin-change)
+
+目标：用最少数量的硬币达到目标面值。
 
 #### 等分集合
 
-目标：将集合划分为若干子集，使各子集元素之和相等。
-
 [LeetCode-416](https://leetcode.com/problems/partition-equal-subset-sum/)
+
+目标：将集合划分为若干子集，使各子集元素之和相等。
 
 ### 正则表达式
 
+#### `.` 表示任意字符、`*` 表示重复前一字符
+
 [LeetCode-10](./leetcode/10.regular-expression-matching.cpp)
+
+#### `?` 表示任意字符、`*` 表示任意字符子串
+
+[LeetCode-44](./leetcode/44.wildcard-matching.cpp)
 
 ### 最大股票收益
 
@@ -128,11 +147,21 @@ $$
 
 # 贪心选择
 
+## 框架
+
 ## 应用
 
 ### 连续背包
 
+### 任务调度
+
+#### 限制同种任务间隔
+
+[LeetCode-621](./leetcode/621.task-scheduler.cpp)
+
 ### 最多相容区间
+
+[LeetCode-435](./leetcode/435.non-overlapping-intervals.cpp)
 
 从一组端点固定的区间中，选出尽可能多的相容区间：
 
@@ -140,8 +169,6 @@ $$
 1. 有剩余区间待选：
    1. 选出右端最小的区间。
    1. 忽略与之不相容的区间。
-
-[LeetCode-435](./leetcode/435.non-overlapping-intervals.cpp)
 
 ### 最大股票收益
 
