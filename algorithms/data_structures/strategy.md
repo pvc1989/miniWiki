@@ -74,7 +74,7 @@ dp[i][j] = min(
 
 #### 最长公共子列
 
-[LeetCode-1143](https://leetcode.com/problems/longest-common-subsequence/)
+[LeetCode-1143](./leetcode/1143.longest-common-subsequence.cpp)
 
 ### 0-1 背包
 
@@ -103,13 +103,13 @@ return dp[0][max_room];
 
 #### 硬币找零
 
-[LeetCode-322](https://leetcode.com/problems/coin-change)
+[LeetCode-322](./leetcode/322.coin-change.cpp)
 
 目标：用最少数量的硬币达到目标面值。
 
 #### 等分集合
 
-[LeetCode-416](https://leetcode.com/problems/partition-equal-subset-sum/)
+[LeetCode-416](./leetcode/416.partition-equal-subset-sum.cpp)
 
 目标：将集合划分为若干子集，使各子集元素之和相等。
 
@@ -127,7 +127,7 @@ return dp[0][max_room];
 
 #### 至多两次交易
 
-[LeetCode-123](./123.best-time-to-buy-and-sell-stock-iii.cpp)
+[LeetCode-123](./leetcode/123.best-time-to-buy-and-sell-stock-iii.cpp)
 
 $$
 P_{[0, n)}^{2} = \max_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
@@ -135,7 +135,7 @@ $$
 
 #### 至多 $k$ 次交易
 
-[LeetCode-188](./188.best-time-to-buy-and-sell-stock-iv.cpp)
+[LeetCode-188](./leetcode/188.best-time-to-buy-and-sell-stock-iv.cpp)
 
 仿照上题，有复杂度为 $O(kn^2)$ 的 DP 解法（另有复杂度为 $O(kn)$ 的[贪心](#k-transactions)解法）：
 
@@ -155,11 +155,11 @@ $$
 
 ### 任务调度
 
-#### 限制同种任务间隔
+#### 限制任务间隔
 
 [LeetCode-621](./leetcode/621.task-scheduler.cpp)
 
-### 最多相容区间
+#### 最多相容区间
 
 [LeetCode-435](./leetcode/435.non-overlapping-intervals.cpp)
 
@@ -170,15 +170,25 @@ $$
    1. 选出右端最小的区间。
    1. 忽略与之不相容的区间。
 
+### 重构队列
+
+`h` 由低到高、`k` 由大到小，在剩余空位中顺序查找相应位置。
+
+[LeetCode-406](./leetcode/406.queue-reconstruction-by-height.cpp)
+
+### 糖果分发
+
+[LeetCode-135](./leetcode/135.candy.cpp)
+
 ### 最大股票收益
 
 #### 至多一次交易
 
-[LeetCode-121](./121.best-time-to-buy-and-sell-stock.cpp)
+[LeetCode-121](./leetcode/121.best-time-to-buy-and-sell-stock.cpp)
 
 #### 不限交易次数
 
-[LeetCode-122](./122.best-time-to-buy-and-sell-stock-ii.cpp)
+[LeetCode-122](./leetcode/122.best-time-to-buy-and-sell-stock-ii.cpp)
 
 #### 引入冷却机制
 
@@ -202,7 +212,7 @@ $$
 
 #### 至多 $k$ 次交易<a href id="k-transactions"></a>
 
-[LeetCode-188](./188.best-time-to-buy-and-sell-stock-iv.cpp)
+[LeetCode-188](./leetcode/188.best-time-to-buy-and-sell-stock-iv.cpp)
 
 $$
 H_{d}^{t} = \mathopen{\max}\left(H_{d-1}^{t-1}, S_{d-1}^{\boxed{t-1}}-P_d\right)
