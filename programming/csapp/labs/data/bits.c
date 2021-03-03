@@ -143,7 +143,8 @@ NOTES:
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-  return 2;
+  /*  ~(~(~x & y) & ~(x & ~y));  // 8 ops */
+  return ~(x & y) & ~(~x & ~y);  /* 7 ops */
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -152,9 +153,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
-
-  return 2;
-
+  return 1 << 31;
 }
 //2
 /*
@@ -165,7 +164,9 @@ int tmin(void) {
  *   Rating: 1
  */
 int isTmax(int x) {
-  return 2;
+  int c1 = !((x + 1) ^ (~x));  /* main cases: (x + 1) == ~x */
+  int c2 = !(!(~x));  /* corner case: x != -1 */
+  return c1 & c2;
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -176,7 +177,10 @@ int isTmax(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  return 2;
+  int mask = 0xAA;  /* bit pattern == 10101010, filter out even-numbered bits */
+  x &= (x >> 16);
+  x &= (x >>  8);
+  return !((x & mask) ^ mask);  /* masked == mask */
 }
 /* 
  * negate - return -x 
@@ -186,7 +190,7 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  return ~x + 1;
 }
 //3
 /* 
@@ -199,7 +203,10 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  int c0 = x & (~0xFF);  /* should be 0, if (x & 0xFFFFFF00) == 0 */
+  int c1 = (x & 0xF0) ^ 0x30;     /* should be 0, if (x & 0xF0) == 0x30 */
+  int c2 = ((x & 0xF) + 6) & 16;  /* should be 0, if (x & 0xF) + 6 < 16 */
+  return !(c0 | c1 | c2);
 }
 /* 
  * conditional - same as x ? y : z 
@@ -209,7 +216,10 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  int x_is_0 = !x ;  /* x == 0 ? 0x00000001 : 0x00000000 */
+  x_is_0 = ~x_is_0;  /* x == 0 ? 0xFFFFFFFE : 0xFFFFFFFF */
+  x_is_0 += 1;       /* x == 0 ? 0xFFFFFFFF : 0x00000000 */
+  return (y & (~x_is_0)) | (z & x_is_0);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -219,7 +229,19 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+  int int_min = 1 << 31;
+  /* case 1: x == int_min */
+  int x_eq_int_min = !(x ^ int_min);
+  /* case 2: x < 0 && 0 <= y */
+  int x_sign_bit = x & int_min;
+  int y_sign_bit = y & int_min;
+  int x_lt_zero_le_y = !(x_sign_bit ^ int_min) & !(y_sign_bit ^ 0);
+  /* case 3: y - x >= 0 (no overflow) */
+  int d = y + (~x + 1);  /* y - x */
+  int d_ge_zero = ((~d) >> 31) & 1;
+  int x_y_same_sign = !(x_sign_bit ^ y_sign_bit);
+  /* return 1 iff any of them is 1 */
+  return  x_eq_int_min | x_lt_zero_le_y | x_y_same_sign & d_ge_zero;
 }
 //4
 /* 
@@ -231,7 +253,12 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 4 
  */
 int logicalNeg(int x) {
-  return 2;
+  x |= (x >> 16);  // x & 0xFFFF != 0
+  x |= (x >> 8);   // x & 0x00FF != 0
+  x |= (x >> 4);   // x & 0x000F != 0
+  x |= (x >> 2);   // x & 0x0002 != 0
+  x |= (x >> 1);   // x & 0x0001 != 0
+  return (x & 1) ^ 1;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -246,7 +273,43 @@ int logicalNeg(int x) {
  *  Rating: 4
  */
 int howManyBits(int x) {
-  return 0;
+  int x_lt_0_mask = (x & (1 << 31)) >> 31;  /* x < 0 ? -1 : 0 */
+  int y = (x & x_lt_0_mask) | (~x & ~x_lt_0_mask);  /* y = (x < 0 ? x : ~x) */
+  /* find the highest `0` for `y` */
+  int count = 1;  /* always has the leading sign bit */
+  /* choose which 16 bits to go */
+  int y_left = y >> 16;
+  int y_left_has_0 = !(!(y_left + 1));  /* (y.left has 0) ? 1 : 0 */
+  int y_left_has_0_mask = (y_left_has_0 << 31) >> 31;
+  count += (y_left_has_0 << 4);  /* at least 16 trailing bits */
+  y = (y_left & y_left_has_0_mask) | (y & ~y_left_has_0_mask);
+  /* choose which 8 bits to go */
+  y_left = y >> 8;
+  y_left_has_0 = !(!(y_left + 1));  /* (y.left has 0) ? 1 : 0 */
+  y_left_has_0_mask = (y_left_has_0 << 31) >> 31;
+  count += (y_left_has_0 << 3);  /* at least 8 trailing bits */
+  y = (y_left & y_left_has_0_mask) | (y & ~y_left_has_0_mask);
+  /* choose which 4 bits to go */
+  y_left = y >> 4;
+  y_left_has_0 = !(!(y_left + 1));  /* (y.left has 0) ? 1 : 0 */
+  y_left_has_0_mask = (y_left_has_0 << 31) >> 31;
+  count += (y_left_has_0 << 2);  /* at least 4 trailing bits */
+  y = (y_left & y_left_has_0_mask) | (y & ~y_left_has_0_mask);
+  /* choose which 2 bits to go */
+  y_left = y >> 2;
+  y_left_has_0 = !(!(y_left + 1));  /* (y.left has 0) ? 1 : 0 */
+  y_left_has_0_mask = (y_left_has_0 << 31) >> 31;
+  count += (y_left_has_0 << 1);  /* at least 2 trailing bits */
+  y = (y_left & y_left_has_0_mask) | (y & ~y_left_has_0_mask);
+  /* choose which 1 bits to go */
+  y_left = y >> 1;
+  y_left_has_0 = !(!(y_left + 1));  /* (y.left has 0) ? 1 : 0 */
+  y_left_has_0_mask = (y_left_has_0 << 31) >> 31;
+  count += (y_left_has_0);  /* at least 1 trailing bit */
+  y = (y_left & y_left_has_0_mask) | (y & ~y_left_has_0_mask);
+  /* one more bit, if the last bit of y is 0 */
+  count += !(y & 1);
+  return count;
 }
 //float
 /* 
