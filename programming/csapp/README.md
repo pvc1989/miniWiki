@@ -21,7 +21,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 ## 第一部分：程序的结构与执行
 
-- 二：表示及操纵信息
+- [二：表示及操纵信息](./2_bits_bytes_ints_floats.md)
 - [三：程序的机器级表示](./3_machine_level_programming.md)
 - 四：处理器架构
 - 五：优化程序性能

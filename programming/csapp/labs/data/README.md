@@ -122,3 +122,16 @@ Compress all bits to the least significant one.
 ## `howManyBits`
 
 If `x < 0`, find the first `0`. Else, find the first `0` in `~x`.
+
+## `floatScale2`
+
+If `expotent == 0`, a single operation `fraction << 1` will handle both cases:
+
+- if the highest bit of `fraction` is `0`, the last bit of `expotent` will still be `0`.
+- if the highest bit of `fraction` is `1`, it will naturally be the last bit of `expotent`.
+
+## `floatFloat2Int`
+
+
+
+## `floatPower2`

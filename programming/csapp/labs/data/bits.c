@@ -315,25 +315,50 @@ int howManyBits(int x) {
 /* 
  * floatScale2 - Return bit-level equivalent of expression 2*f for
  *   floating point argument f.
+ * 
  *   Both the argument and result are passed as unsigned int's, but
  *   they are to be interpreted as the bit-level representation of
  *   single-precision floating point values.
  *   When argument is NaN, return argument
+ * 
  *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
  *   Max ops: 30
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  return 2;
+  unsigned sign_bit = uf & 0x80000000;
+  unsigned fraction = uf & 0x007FFFFF;
+  unsigned exponent_mask = 0x7F800000;
+  unsigned exponent = uf & exponent_mask;
+  unsigned result;
+  if (exponent == exponent_mask && fraction) {  /* `f` is `NaN` */
+    result = uf;
+  } else {
+    if (exponent) {  /* `f` is normalized */
+      if (exponent < exponent_mask) {  /* `2*f` does not overflow */
+        result = (exponent + 0x00800000) | fraction;
+      } else {  /* `2*f` overflows, return `inf` */
+        result = exponent_mask;
+      }
+    } else {  /* `f` is denormalized */
+     /* If the first bit of `fraction` is `1`,
+        it will naturally become the last bit of `expotent`. */
+      result = fraction << 1;
+    }
+    result |= sign_bit;
+  }
+  return result;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
  *   for floating point argument f.
+ * 
  *   Argument is passed as unsigned int, but
  *   it is to be interpreted as the bit-level representation of a
  *   single-precision floating point value.
  *   Anything out of range (including NaN and infinity) should return
  *   0x80000000u.
+ * 
  *   Legal ops: Any integer/unsigned operations incl. ||, &&. also if, while
  *   Max ops: 30
  *   Rating: 4
