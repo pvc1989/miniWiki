@@ -364,7 +364,41 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  return 2;
+  unsigned result;
+  unsigned sign_bit = uf & 0x80000000;
+  unsigned fraction = uf & 0x007FFFFF;
+  unsigned exponent_mask = 0x7F800000;
+  unsigned expotent = uf & exponent_mask;
+  int n_shifts = (expotent ? expotent >> 23 : 1) - 150/* 127 + 23 */;
+  int n_bits = 24;
+  int n_shifts_plus_n_bits = n_shifts + n_bits;
+  unsigned x = fraction;
+  if (expotent) {
+    fraction += 0x00800000;  /* also for NaN or Inf */
+  } else {
+    n_bits = 0;
+    while (x) {
+      ++n_bits;
+      x >>= 1;
+    }
+  }
+  if (n_shifts_plus_n_bits <= 0) {  /* underflow */
+    result = 0;
+  } else if (31 < n_shifts_plus_n_bits) {  /* overflow */
+    result = 0x80000000;
+  } else {  /* ordinary case */
+    if (n_shifts <= 0) {  /* -24 <= -n_bits < n_shifts <= 0 */
+      n_shifts = -n_shifts;
+      result = fraction >> n_shifts;
+    } else if (n_shifts_plus_n_bits < 32) {  /* no overflow */
+      /* assert(expotent && fraction); */
+      result = fraction << n_shifts;
+    }
+    if (sign_bit) {
+      result = -result;
+    }
+  }
+  return result;
 }
 /* 
  * floatPower2 - Return bit-level equivalent of the expression 2.0^x
