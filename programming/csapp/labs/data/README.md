@@ -135,3 +135,10 @@ If `expotent == 0`, a single operation `fraction << 1` will handle both cases:
 
 
 ## `floatPower2`
+
+|       `int x`        |   `float(pow(2, x))`   |
+| :--------------: | :-------: |
+| `(INT_MIN, -149)` |    `0`    |
+|  `[-149, -127]`   | `1 << (x + 149)` |
+|  `(-127, +127]`   | `(x + 127) << 23` |
+| `[+128, INT_MAX)` | `0x7F800000` |

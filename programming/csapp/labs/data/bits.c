@@ -241,7 +241,7 @@ int isLessOrEqual(int x, int y) {
   int d_ge_zero = ((~d) >> 31) & 1;
   int x_y_same_sign = !(x_sign_bit ^ y_sign_bit);
   /* return 1 iff any of them is 1 */
-  return  x_eq_int_min | x_lt_zero_le_y | x_y_same_sign & d_ge_zero;
+  return  x_eq_int_min | x_lt_zero_le_y | (x_y_same_sign & d_ge_zero);
 }
 //4
 /* 
@@ -414,5 +414,17 @@ int floatFloat2Int(unsigned uf) {
  *   Rating: 4
  */
 unsigned floatPower2(int x) {
-    return 2;
+  int result = 0;
+  int x_plus_149 = x + 149;  /* x - (1 - 127 - 23) */
+  if (0 <= x_plus_149/* non-underflowed */) {
+    result = x + 127;
+    if (result <= 0/* denormalized */) {
+      result = 1 << x_plus_149;
+    } else if (x < 128) {  /* normalized (non-overflowed) */
+      result = result << 23;
+    } else {  /* overflowed */
+      result = 0x7F800000;
+    }
+  }
+  return result;
 }
