@@ -41,7 +41,7 @@ $ c++ -g hello.cpp -o hello
 
 ## 在 [Docker](../docker/README.md) 容器中使用 GDB
 
-按一般流程创建容器、启动 GDB 环境后，运行 ***被调试程序 (debugee)*** 时会出错：
+按一般流程创建容器、启动 GDB 环境后，运行『被调试程序 (debugee)』时会出错：
 
 ```shell
 # 非 Linux 主机：
@@ -73,6 +73,8 @@ $ exit
 - `--cap-add=SYS_PTRACE` [add Linux capabilities](https://docs.docker.com/engine/reference/commandline/run/#options)
 - `--security-opt seccomp=unconfined` [run a container without the default seccomp profile](https://docs.docker.com/engine/security/seccomp/#run-without-the-default-seccomp-profile)
 
+即
+
 ```shell
 $ docker run --mount type=bind,src="$(pwd)",dst="/root/code" -w "/root/code" --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it ubuntu
 ```
@@ -99,10 +101,10 @@ LLDB 命令具有以下结构：
 
 *调试器环境* 是以 `(gdb)` 或 `(lldb)` 为行首提示符的命令行环境。
 
-- 进入调试器环境：在命令行终端中输入 `gdb` 或 `lldb` 命令（通常附上 ***被调试程序 (debugee)*** 的文件名）。
+- 进入调试器环境：在命令行终端中输入 `gdb` 或 `lldb` 命令（通常附上『被调试程序』的文件名）。
 - 退出调试器环境：在 `(gdb/lldb)` 后输入 `quit` 或 `q` 或按 `Ctrl + D` 组合键。
 
-本节剩余部分所述 *命令* 均为调试器环境中的命令。
+本节剩余部分所述『命令 (command)』均为调试器环境中的命令。
 在没有歧义的情况下，这些命令（及选项）通常都支持（首字母、首二字母）简写：
 
 ```shell

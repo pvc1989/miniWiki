@@ -2,11 +2,14 @@
 title: Secure SHell (SSH)
 ---
 
-本文参考了[鳥哥](http://linux.vbird.org/vbird/)的《[文字介面連線伺服器：SSH 伺服器](http://linux.vbird.org/linux_server/0310telnetssh.php#ssh_server)》。原文以 CentOS 6 为例进行讲解的，本文根据 Ubuntu 16.04 LTS 的特点做了一些修改。对于不同的 Linux 发行版，大多数命令是一致的，只在软件包管理命令等细节上略有区别。
+本文参考了[鳥哥](http://linux.vbird.org/vbird/)的《[文字介面連線伺服器：SSH 伺服器](http://linux.vbird.org/linux_server/0310telnetssh.php#ssh_server)》。
+原文以 CentOS 6 为例讲解，本文根据 Ubuntu 16.04 LTS 的特点做了一些修改。
+对于不同的 Linux 发行版，大多数命令是一致的，只在『软件包管理命令』等细节上略有区别。
 
 # SSH 加密通信原理
 
-SSH (**S**ecure **SH**ell) 是一种用于远程访问 Linux 主机的 CLI 软件。它通过对通信数据进行加密与解密，使得本地主机可以『安全地』访问远程主机上的 shell，从而使用其资源。
+『SSH (**S**ecure **SH**ell)』是一种用于远程访问 Linux 主机的 CLI 软件。
+它通过对通信数据加密与解密，使得本地主机可以『安全地 (securely)』访问远程主机上的『终端 (shell)』，从而使用其资源。
 
 SSH 对数据的加密与解密主要是依靠成对的『公钥 (public key)』和『私钥 (private key)』来实现的：
 
@@ -65,7 +68,9 @@ ssh -f user@address do_something
 
 ## 从 Windows 主机访问远程 Linux 主机
 
-首先需要在 Windows 主机上安装 SSH 客户端软件，例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)。启动后，在地址栏输入远程 Linux 主机的 IP 地址和端口号（默认为 `22`），然后会弹出一个虚拟终端，在以下提示信息后面输入用户名，并按提示输入密码，即可建立 SSH 连接：
+首先需要在 Windows 主机上安装 SSH 客户端软件，例如 [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/)。
+启动后，在地址栏输入远程 Linux 主机的『IP 地址』和『端口号（默认为 `22`）』，然后会弹出一个虚拟终端，在以下提示信息后面输入用户名，并按提示输入密码，即可建立 SSH 连接：
+
 ``` shell
 login as:
 ```
@@ -73,9 +78,11 @@ login as:
 ## 修改远程 Linux 主机上当前用户的密码
 
 建立远程连接后，在终端中输入以下命令：
+
 ```shell
 passwd
 ```
+
 然后根据提示输入原密码和新密码，这样在下次连接时就需要使用新密码了。
 
 # 传输文件

@@ -161,9 +161,9 @@ sudo apt install vim
 其中 `apt` 是 Debian/Ubuntu 下的软件包管理命令。
 在 CentOS/Fedora 下用 `yum` 替换。
 
-### 调整终端配置
+### 终端配置
 
-Ubuntu 默认的终端提示格式为
+Ubuntu 默认的终端（`/bin/bash`）提示格式为
 
 ```
 username@hostname:~$ 
@@ -217,4 +217,14 @@ alias ll='ls -lF'
 
 ```shell
 source ~/.bashrc
+```
+
+若可以安装 `zsh`，则建议用它替换 `bash`：
+
+```shell
+sudo apt install zsh
+# 下载好看的画风：
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+# 修改配置：
+vim ~/.zshrc
 ```
