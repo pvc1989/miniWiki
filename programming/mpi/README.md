@@ -27,7 +27,17 @@ title: Message Passing Interface (MPI)
 - Graph Laplacian：$ \Mat{C}^{\mathsf{T}}\cdot\Mat{C}=\Mat{D}-\Mat{W} $
 - 质量弹簧系统：$ \Mat{M}\cdot\Mat{\ddot{U}}+\Mat{K}\cdot\Mat{U}=\Mat{0} $
 
-### [METIS](https://github.com/pvcStillInGradSchool/METIS)
+### METIS
+
+[Karypis/METIS](https://github.com/KarypisLab/METIS) 是由 [George Karypis](http://glaros.dtc.umn.edu) 开发的网格分区工具包。
+为便于导入 CMake 项目，[pvcStillinGradSchool/METIS](https://github.com/pvcStillinGradSchool/METIS) 在其基础上对 `CMakeLists.txt` 做了部分修改。
+
+某些编译器会将『指针与数据格式不一致』视为错误，此时可在 `CMakeCache.txt` 中开启如下编译选项：
+
+```cmake
+//Flags used by the C compiler during all build types.
+CMAKE_C_FLAGS:STRING=-Wno-error=format
+```
 
 本节代码中的
 - `idx_t` 是一种长度由预定义宏 `IDXTYPEWIDTH` 确定的整数类型。
@@ -102,7 +112,7 @@ idx_t FindCommonElements(
     idx_t n_common_nodes,
     idx_t *n_visits_of_each_elem,
     idx_t *neighbors_of_curr_elem) {
-    idx_t n_neighbors = 0;
+  idx_t n_neighbors = 0;
   /* find all elements that share at least one node with i_curr_elem */
   for (idx_t i_node_local = 0;
       i_node_local < n_nodes_in_curr_elem; i_node_local++) {
@@ -127,7 +137,7 @@ idx_t FindCommonElements(
     neighbors_of_curr_elem[n_neighbors++] = i_curr_elem;
   n_visits_of_each_elem[i_curr_elem] = 0;
   /* compact the list to contain only those with at least n_common_nodes nodes */
-    idx_t n_real_neighbors = 0;
+  idx_t n_real_neighbors = 0;
   for (idx_t i_neighbor_local = 0;
       i_neighbor_local < n_neighbors;
       i_neighbor_local++) {  // for each (possibly trivial) neighbor (elem)

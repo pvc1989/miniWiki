@@ -63,6 +63,10 @@ title: C++
 - Google Test
 - CTest
 
+## [性能检测](./profile.md)
+
+- GNU `gprof`
+
 ## [断点调试](../debug/README.md)
 
 - GDB
