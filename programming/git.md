@@ -200,6 +200,17 @@ git diff develop...master
 ### 远程同步
 
 ```shell
+# 列举远程仓库
+git remote -v
+# 追踪远程仓库
+git remote add <name> <url>
+# 获取远程仓库地址
+git remote get-url <name>
+# 更新远程仓库地址
+git remote set-url <name> <url>
+```
+
+```shell
 # 创建并签出到远程分支 <remote>/<branch> 的本地追踪分支 <branch>
 # <remote>/<branch> 称作 <branch> 的『上游 (upstream)』分支
 git checkout -b <branch> <remote>/<branch>
@@ -343,4 +354,13 @@ $ ssh -T git@github.com
 $ ssh-add -l
 # 加载指定私钥：
 $ ssh-add -K ~/.ssh/<filename>
+```
+
+# Gitee
+
+GitHub 在墙内的替代品。
+
+在网页端讲 GitHub 上的仓库导入后，需在本地新建对 Gitee 上同名仓库的追踪：
+```shell
+git remote add gitee git@gitee.com:<user>/<repo>.git
 ```
