@@ -3,7 +3,7 @@ title: 断点调试
 ---
 
 ```shell
-$ cc -g hello.c -o hello
+$ cc  -g hello.c   -o hello
 $ c++ -g hello.cpp -o hello
 ```
 
@@ -16,10 +16,6 @@ $ c++ -g hello.cpp -o hello
 
 - [Beej's Quick Guide to GDB](http://beej.us/guide/bggdb/)
 - [Debugging Under Unix: `gdb` Tutorial](https://www.cs.cmu.edu/~gilpin/tutorial/)
-
-## 图形界面
-- GDB 自带的 GUI 模式：以 `gdb -tui` 启动。
-- [DDD：Data Display Debugger](http://www.gnu.org/software/ddd/)
 
 ## 在 macOS 上使用 GDB
 
@@ -99,7 +95,7 @@ LLDB 命令具有以下结构：
 
 ## 进入、退出 调试器环境
 
-*调试器环境* 是以 `(gdb)` 或 `(lldb)` 为行首提示符的命令行环境。
+『调试器环境 (debugger environment)』是以 `(gdb)` 或 `(lldb)` 为行首提示符的命令行环境。
 
 - 进入调试器环境：在命令行终端中输入 `gdb` 或 `lldb` 命令（通常附上『被调试程序』的文件名）。
 - 退出调试器环境：在 `(gdb/lldb)` 后输入 `quit` 或 `q` 或按 `Ctrl + D` 组合键。
@@ -120,7 +116,8 @@ LLDB 命令具有以下结构：
 
 ## 选择 汇编代码格式
 
-常用的 [汇编代码格式](../csapp/3_machine_level_programming.md#汇编代码格式) 有 ATT 和 Intel 两种。GDB/LLDB 均默认选用 ATT 格式；以下命令可用于更改此设定：
+常用的 [汇编代码格式](../csapp/3_machine_level_programming.md#汇编代码格式) 有 ATT 与 Intel 两种。
+GDB、LLDB 均默认选用 ATT 格式；以下命令可用于更改此设定：
 
 ```shell
 (gdb)           set            disassembly-flavor intel
@@ -266,6 +263,9 @@ list -[<count>]      # List previous <count> lines
 (gdb/lldb) print *(int *) 0x100d33  # 查看 `0x100d33`  处的整数值
 (gdb/lldb) print *(int *) ($rsp+8)  # 查看 `R[%rsp]+8` 处的整数值
 (gdb/lldb) print (char *) 0x100d33  # 查看 `0x100d33`  处的字符串
+```
+
+```shell
 # x/[N][S][F] address
   # x = eXamine
   # N = Number of objects to display
@@ -280,6 +280,9 @@ list -[<count>]      # List previous <count> lines
 (gdb/lldb) x/s   0x100d33  # 查看 始于 `0x100d33` 的字符串
 (gdb/lldb) x/20b main      # 查看 始于 `main` 的前 `20` 个字节
 (gdb/lldb) x/10i main      # 查看 始于 `main` 的前 `10` 条指令
+```
+
+```shell
 # 查看 局部变量的值
 (gdb)  info args
 (gdb)  info locals
