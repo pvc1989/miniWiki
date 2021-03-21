@@ -136,3 +136,63 @@ void combine4(vec_ptr v, data_t *dest) {
   *dest = result;
 }
 ```
+
+# 理解现代处理器
+
+以 Intel 为代表的现代处理器能够同时执行多条指令，并且保证所得结果与顺序执行机器码的结果一致。
+这种『乱序 (out-of-order)』执行指令的加速机制被称为『指令级并行 (instruction-level parallelism)』。
+
+## 基本操作
+
+『指令控制单元 (instruction control unit, ICU)』从『指令缓存 (instruction cache)』中读取将要被执行的指令（通常大大超前于当前指令），将其『解码 (decode)』为若干『初等操作 (primitive operation)』并交由『执行单元 (execution unit, EU)』去执行。
+
+遇到[条件跳转](./3_machine_level_programming.md#跳转指令)指令时，ICU 会做出『分支预测 (branch prediction)』，即令 EU 在所预测的分支上提前执行一些指令。
+若预测错误，则 EU 会丢弃所得结果，并在正确的分支上重新计算。
+
+EU 由『功能单元 (functional unit, FU)』和『数据缓存 (data cache)』组成。
+其中，一个 FU 可兼容多种功能，一种功能也可由多个 FU 完成。
+
+ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的结果与顺序执行这些指令的结果一致。
+只有当分支预测正确时，才会更新寄存器。
+
+在 EU 中，一条（初等）操作的结果，可以直接转发给后续操作，而不需要读写寄存器。
+该机制被称为『寄存器重命名 (register renaming)』。
+
+## 功能单元性能
+
+性能指标：
+- 【延迟 (latency)】执行该操作所需的总时间。
+- 【发起时间 (issue time)】同种操作之间的最短间隔。
+- 【容量 (capacity)】可用于该操作的功能单元数量。
+- 【吞吐量 (throughput)】单位时间内可发起的同种操作的数量。
+
+常用算术运算：
+- `+` 及 `*` 可被『管道』加速，故『发起时间』只需一个时钟周期。
+- `/` 不能被管道加速，故『发起时间』等于『延迟』。
+
+## 处理器操作的抽象模型
+
+```gas
+# Inner loop of combine4. data_t = double, OP = *
+# acc in %xmm0, data+i in %rdx, data+length in %rax
+.L25: loop:
+  vmulsd (%rdx), %xmm0, %xmm0  # Multiply acc by data[i]
+  addq $8, %rdx                # Increment data+i
+  cmpq %rax, %rdx              # Compare to data+length
+  jne .L25                     # If !=, goto loop
+```
+
+四类寄存器：
+- 【只读】`%rax`
+- 【只写】
+- 【局部】条件码寄存器
+- 【循环】`%rdx`、`%xmm0`
+
+指令 `vmulsd` 被解码为 `load` 与 `mul` 两步操作，后者依赖于前者的结果。
+
+在所有操作中，计算浮点数乘积的 `mul` 操作耗时最长，且其他操作（如更新计数器 `%rdx` 的 `add`）可以同步（并行）执行，故由 `mul` 串联所得的『关键路径 (critical path)』决定了该循环耗时的『下界』。
+
+# 下一节
+
+『偷出』
+
