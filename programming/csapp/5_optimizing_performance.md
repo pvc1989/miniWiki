@@ -23,7 +23,7 @@ void twiddle2(long *xp, long *yp) {
 后者是度量指令运行时间的基本单位。
 
 『CPE (Cycles Per Element)』比『Cycles Per Iteration』更适合用来度量『循环 (loop)』的性能。
-这是因为『循环展开 (loop unrolling)』技术会在一次『迭代 (iteration)』中安排多个计算『单元 (element)』。
+这是因为[循环展开](#循环展开)技术会在一次『迭代 (iteration)』中安排多个计算『单元 (element)』。
 
 # 程序示例
 
@@ -146,14 +146,14 @@ void combine4(vec_ptr v, data_t *dest) {
 
 『指令控制单元 (instruction control unit, ICU)』从『指令缓存 (instruction cache)』中读取将要被执行的指令（通常大大超前于当前指令），将其『解码 (decode)』为若干『初等操作 (primitive operation)』并交由『执行单元 (execution unit, EU)』去执行。
 
-遇到[条件跳转](./3_machine_level_programming.md#跳转指令)指令时，ICU 会做出『分支预测 (branch prediction)』，即令 EU 在所预测的分支上提前执行一些指令。
-若预测错误，则 EU 会丢弃所得结果，并在正确的分支上重新计算。
+遇到[条件跳转](./3_machine_level_programming.md#跳转指令)指令时，ICU 会做出『分支预判 (branch prediction)』，即令 EU 在所预判的分支上提前执行一些指令。
+若预判错误，则 EU 会丢弃所得结果，并在正确的分支上重新计算。
 
 EU 由『功能单元 (functional unit, FU)』和『数据缓存 (data cache)』组成。
 其中，一个 FU 可兼容多种功能，一种功能也可由多个 FU 完成。
 
 ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的结果与顺序执行这些指令的结果一致。
-只有当分支预测正确时，才会更新寄存器。
+只有当分支预判正确时，才会更新寄存器。
 
 在 EU 中，一条（初等）操作的结果，可以直接转发给后续操作，而不需要读写寄存器。
 该机制被称为『寄存器重命名 (register renaming)』。
@@ -161,10 +161,13 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 ## 功能单元性能
 
 性能指标：
-- 【延迟 (latency)】执行该操作所需的总时间。
-- 【发起时间 (issue time)】同种操作之间的最短间隔。
-- 【容量 (capacity)】可用于该操作的功能单元数量。
-- 【吞吐量 (throughput)】单位时间内可发起的同种操作的数量。
+
+|         名称          |               定义               | 符号  |
+| :-------------------: | :------------------------------: | :---: |
+|    延迟 (latency)     |      执行该操作所需的总时间      |  $L$  |
+| 发起时间 (issue time) |      同种操作之间的最短间隔      |  $I$  |
+|    容量 (capacity)    |    可用于该操作的功能单元数量    |  $C$  |
+|  吞吐量 (throughput)  | 单位时间内可发起的同种操作的数量 | $C/I$ |
 
 常用算术运算：
 - `+` 及 `*` 可被『管道』加速，故『发起时间』只需一个时钟周期。
@@ -174,9 +177,9 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 
 ```gas
 # Inner loop of combine4. data_t = double, OP = *
-# acc in %xmm0, data+i in %rdx, data+length in %rax
+# result in %xmm0, data+i in %rdx, data+length in %rax
 .L25: loop:
-  vmulsd (%rdx), %xmm0, %xmm0  # Multiply acc by data[i]
+  vmulsd (%rdx), %xmm0, %xmm0  # Multiply result by data[i]
   addq $8, %rdx                # Increment data+i
   cmpq %rax, %rdx              # Compare to data+length
   jne .L25                     # If !=, goto loop
@@ -191,8 +194,165 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 指令 `vmulsd` 被解码为 `load` 与 `mul` 两步操作，后者依赖于前者的结果。
 
 在所有操作中，计算浮点数乘积的 `mul` 操作耗时最长，且其他操作（如更新计数器 `%rdx` 的 `add`）可以同步（并行）执行，故由 `mul` 串联所得的『关键路径 (critical path)』决定了该循环耗时的『下界』。
+循环的 CPE 不小于 `mul` 的延迟 $L$，故称该下界为『延迟下界 (latency bound)』。
 
-# 下一节
+# 循环展开
 
-『偷出』
+『循环展开 (loop unrolling)』可以节省计数器开销、充分利用指令级并行。
+GCC 在 `-O3` 或更高优化等级下，可自动完成循环展开。
+
+若每次迭代步完成 $k$ 次基本操作，则其称为『$k\times 1$ 循环展开』。
+⚠️ 当 $k$ 大到一定程度后，循环性能达到『延迟下界』，无法进一步提升。
+
+```c
+/* 2 x 1 loop unrolling */
+void combine5(vec_ptr v, data_t *dest) {
+  long i, n = vec_length(v);
+  long i_max = n - 1;
+  data_t *data = get_vec_start(v);
+  data_t result = IDENT;
+  for (i = 0; i < i_max; i+=2) {  /* 一次算两步 */
+    result = (result OP data[i]) OP data[i+1];
+  }
+  for (; i < n; i++) {  /* 完成剩余步 */
+    result = result OP data[i];
+  }
+  *dest = result;
+}
+```
+
+# 增强并行
+
+## 多个累加器
+
+若关键路径上的基本操作相互独立，则（利用管道）可将其分解为并联的 $k$ 条关键路径，其中每一条路径的长度均为原长的 $1/k$，从而有望进一步提升性能。
+该优化技术被称为『$k\times k$ 循环展开』，理论上可以在 $k \ge L\times C$ 时，达到循环的『吞吐下界』。
+
+```c
+/* 2 x 2 loop unrolling */
+void combine6(vec_ptr v, data_t *dest) {
+  long i, length = vec_length(v);
+  long limit = length-1;
+  data_t *data = get_vec_start(v);
+  data_t acc0 = IDENT, acc1 = IDENT;  /* 两个累加器 */
+  for (i = 0; i < limit; i+=2) {
+    acc0 = acc0 OP data[i];
+    acc1 = acc1 OP data[i+1];
+  }
+  for (; i < length; i++) {
+    acc0 = acc0 OP data[i];
+  }
+  *dest = acc0 OP acc1;
+}
+```
+
+- 整数加法、乘法（即使溢出，也）满足交换律、结合律，故上述优化不改变计算结果，可由编译器自动完成。
+- 浮点数加法、乘法可能溢出，且不满足结合律，故上述优化可能改变计算结果，因此不会由编译器自动完成。
+
+## 改变结合顺序
+
+不依赖于前一步结果的中间值，可并行地算出：
+
+```c
+/* 2 x 1a loop unrolling */
+void combine7(vec_ptr v, data_t *dest) {
+  long i, n = vec_length(v);
+  long i_max = n - 1;
+  data_t *data = get_vec_start(v);
+  data_t result = IDENT;
+  for (i = 0; i < i_max; i+=2) {
+    result = result OP (data[i] OP data[i+1]);  /* 改变结合顺序 */
+  }
+  for (; i < n; i++) {
+    result = result OP data[i];
+  }
+  *dest = result;
+}
+```
+
+该方法类似于『$k\times 1$ 循环展开』，故名为『$k\times 1a$ 循环展开』。
+其加速效果通常不如前一节的『$k\times k$ 循环展开』可靠。
+
+# 一些限制因素
+
+## 寄存器溢出
+
+若用于循环展开的累加器数量，超过了可用的寄存器数量，则部分累加器将被存储到内存中。
+这种现象被称为『寄存器溢出 (register spilling)』。
+
+```gas
+# Updating of accumulator acc0 in 10 x 10 urolling
+vmulsd (%rdx), %xmm0, %xmm0 acc0 *= data[i]
+# Updating of accumulator acc0 in 20 x 20 unrolling
+vmovsd 40(%rsp), %xmm0
+vmulsd (%rdx), %xmm0, %xmm0
+vmovsd %xmm0, 40(%rsp)
+```
+
+## 分支误判开销
+
+分支误判会引起较大时间损失（在课程所用参考机器上约为 19 个时钟周期）。
+
+『条件移动 (conditional move)』会在确保安全的前提下，同时完成两个分支的计算，再根据条件值选用其一。
+该机制避免了分支预判，因此没有误判开销。
+
+### 不必过度担心分支误判
+
+现代处理器很擅长预判典型分支情形，例如：
+- 循环终止检查，通常（正确地）预判为不终止。
+- 数组越界检查，通常（正确地）预判为不越界。
+
+### 代码尽量支持条件移动
+
+```c
+/* Rearrange two vectors so that for each i, b[i] >= a[i] */
+void minmax1(long a[], long b[], long n) {
+  long i;
+  for (i = 0; i < n; i++) {
+    if (a[i] > b[i]) {  /* 误判开销很大 */
+      long t = a[i];
+      a[i] = b[i];
+      b[i] = t;
+    }
+  }
+}
+void minmax2(long a[], long b[], long n) {
+  long i;
+  for (i = 0; i < n; i++) {
+    long min = a[i] < b[i] ? a[i] : b[i];  /* 支持条件移动 */
+    long max = a[i] < b[i] ? b[i] : a[i];  /* 没有误判开销 */
+    a[i] = min;
+    b[i] = max;
+  }
+}
+```
+
+# 理解内存性能
+
+课程所用参考机器
+- 有 2 个读取单元，每个可缓存 72 个读取请求。
+- 有 1 个存储单元，每个可缓存 42 个存储请求。
+
+## 载入性能
+
+若某机器有 $r$ 个读取单元，且循环中每个 E 需读取 $k$ 个值，则 CPE 以 $k/r$ 为下界。
+
+读取性能可由以下实验来测量：
+- 下一次读取的地址，依赖于当前读取所得的值。
+- 典型实现：链表长度测量。
+
+```gas
+# Inner loop of list_len
+# ls in %rdi, len in %rax
+.L3:  # loop:
+  addq $1, %rax      # Increment len
+  movq (%rdi), %rdi  # ls = ls->next
+  testq %rdi, %rdi   # Test ls
+  jne .L3            # If nonnull, goto loop
+```
+
+其中 `movq` 指令有数据依赖性，是本段循环的性能瓶颈，其 $L$ 值是 CPE 的下界。
+
+## 存储性能
+
 
