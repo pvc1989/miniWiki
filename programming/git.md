@@ -349,11 +349,13 @@ jobs:
 
 ```shell
 # 检查连接：
-$ ssh -T git@github.com
-# 检查已加载的私钥：
-$ ssh-add -l
-# 加载指定私钥：
-$ ssh-add -K ~/.ssh/<filename>
+ssh -T git@github.com
+# 若 "git@github.com: Permission denied (publickey)"，则检查已加载的私钥：
+ssh-add -l
+# 若 "Could not open a connection to your authentication agent."，则启动 `ssh-agent`：
+eval `ssh-agent -s`
+# 加载与服务端公钥匹配的本地私钥：
+ssh-add -K ~/.ssh/<filename>
 ```
 
 # Gitee
