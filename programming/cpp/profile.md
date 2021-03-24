@@ -2,7 +2,7 @@
 title: 性能检测
 ---
 
-# GNU `gprof`
+# GNU `gprof`<a href name="gprof"></a>
 
 ⚠️ 仅在 Linux 系统中可用。
 
