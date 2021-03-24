@@ -1535,3 +1535,93 @@ movq %r8, %rcx       # R[rcx] = &p[0]
 
 
 # 11. 浮点代码
+
+SIMD (Single Instruction Multiple Data)
+
+|                   ISA                   |          Years         |  Register   |
+| :-------------------------------------: | :--------------------: | :---------: |
+|       MMX (MultiMedia eXtensions)       |    1997 (Pentium P5)   |  64-bit MM  |
+|     SSE (Streaming Simd Extensions)     |    1999 (Pentium 3)    | 128-bit XMM |
+|                  SSE2                   |    2000 (Pentium 4)    | 128-bit XMM |
+|    AVX (Advanced Vector Extensions)     |  2008 (Sandy Bridge)   | 256-bit YMM |
+|                  AVX2                   | 2013 (Core i7 Haswell) | 256-bit YMM |
+
+GCC 生成 AVX2 代码需开启 `-mavx2` 选项。
+
+## 浮点移动及转换
+
+后缀中的 `s` 与 `d` 分别表示『单精度 (Single-precision)』与『双精度 (Double-precision)』。
+
+移动：
+- `vmovs[sd]` 用于内存与寄存器之间的移动，其中紧跟在 `mov` 后面的 `s` 表示『标量 (scalar)』操作。
+- `vmovap[sd]` 用于寄存器之间的移动，其中 `a` 与 `p` 分别表示『对齐 (aligned)』与『打包 (Packed)』。
+
+整型与浮点型的转换：
+- `vcvtts[sd]2si(q?)` ConVerT with Truncation \[Single|Double\] precision float to (Quad word) Integer.
+- `vcvtsi2s[sd](q?)` ConVerT with Truncation (Quad word) Integer to \[Single|Double\] precision float.
+  - 这是一组三元指令，e.g. `vcvtsi2sdq %rax, %xmm1, %xmm1`
+
+浮点型之间的转换：
+```
+# single to double
+vunpcklps  %xmm0, %xmm0, %xmm0  # Replicate first vector element
+vcvtps2pd  %xmm0, %xmm0         # Convert two vector elements to double
+# double to single
+vmovddup   %xmm0, %xmm0  # Replicate first vector element
+vcvtpd2psx %xmm0, %xmm0  # Convert two vector elements to single
+```
+
+## 函数中的浮点代码
+
+XMM 寄存器是同名 YMM 寄存器的低 128 位。
+
+XMM 寄存器分工：
+- 浮点型返回值由 `%xmm0` 传递。
+- `%xmm0` 到 `%xmm7` 负责传递前 8 个浮点型实参。
+- 所有 XMM 寄存器都是主调函数保存的，被调函数可直接使用。
+
+## 浮点算术运算
+
+```
+vOPs[sd]  S1, S2, D  # OP = add|sub|mul|div|max|min
+sqrts[sd] S1,     D
+```
+
+## 浮点型常量
+
+AVX 指令不支持浮点型『即时数 (immediate)』，故浮点型常量需借由寄存器间接表示：
+
+```gas
+# double cel2fahr(double cel) { return 1.8 * cel + 32.0; }
+# cel in %xmm0
+cel2fahr:
+  vmulsd .LC2(%rip), %xmm0, %xmm0  # * 1.8
+  vaddsd .LC3(%rip), %xmm0, %xmm0  # + 32.0
+  ret
+.LC2:
+  .long 3435973837  #  Low-order 4 bytes of 1.8
+  .long 1073532108  # High-order 4 bytes of 1.8
+.LC3:
+  .long 0           #  Low-order 4 bytes of 32.0
+  .long 1077936128  # High-order 4 bytes of 32.0
+```
+
+## 浮点按位运算
+
+```gas
+vOPp[sd] S1, S2, D  # OP = xor|and
+```
+
+## 浮点比较运算
+
+```gas
+vucomis[sd] S1, S2  # S2 - S1
+```
+
+- 若二者皆非 `NaN`，则与无符号整型的比较指令类似。
+- 若存在一个 `NaN`，则 `CF = ZF = PF = 0`，其中最后一个符号名为『Parity Flag』，相应地有 `jp` 指令。
+
+## 浮点代码小结
+
+AVX2 可以在『打包的 (packed)』数据上完成并行计算。
+GCC 提供了一些 C 语言扩展，用于支持向量数据运算。
