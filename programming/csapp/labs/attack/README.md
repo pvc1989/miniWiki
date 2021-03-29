@@ -6,10 +6,10 @@ title: Attack Lab
 
 ## 设定
 
-现有两个存在 ***缓冲区溢出 (buffer overflow)*** 风险的 x86-64 可执行文件：
+现有两个存在『缓冲区溢出 (buffer overflow)』风险的 x86-64 可执行文件：
 
-- `ctarget` 可能遭受 ***代码注入 (code injection)*** 攻击（对应第 1~3 关）。
-- `rtarget` 可能遭受 ***ROP (return-oriented programming)*** 攻击（对应第 4~5 关）。
+- `ctarget` 可能遭受『CI (code injection)』攻击（对应第 1~3 关）。
+- `rtarget` 可能遭受『ROP (return-oriented programming)』攻击（对应第 4~5 关）。
 - [此处](http://csapp.cs.cmu.edu/3e/target1.tar)可下载这两个文件。本地运行时应开启 `-q` 选项，以避免连接评分服务器。
 
 ## 任务
