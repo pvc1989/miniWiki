@@ -25,7 +25,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 - [三：程序的机器级表示](./3_machine_level_programming.md)
 - 四：处理器架构
 - [五：优化程序性能](./5_optimizing_performance.md)
-- [六：存储层次](./6_memory_hierarchy.md)
+- [六：存储器等级体系](./6_memory_hierarchy.md)
 
 ## 第二部分：在系统上运行程序
 
