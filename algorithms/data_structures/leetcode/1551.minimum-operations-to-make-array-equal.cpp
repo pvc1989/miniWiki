@@ -56,8 +56,7 @@
 class Solution {
  public:
   int minOperations(int n) {
-    auto k = n / 2;
-    return k * k + (n % 2 ? k : 0);
+    return (n * n - n % 2) / 4;
   }
 };
 // @lc code=end
