@@ -13,23 +13,6 @@
 int is_transpose(int M, int N, int A[N][M], int B[M][N]);
 
 /* 
- * transpose_submit - This is the solution transpose function that you
- *     will be graded on for Part B of the assignment. Do not change
- *     the description string "Transpose submission", as the driver
- *     searches for that string to identify the transpose function to
- *     be graded. 
- */
-char transpose_submit_desc[] = "Transpose submission";
-void transpose_submit(int M, int N, int A[N][M], int B[M][N])
-{
-}
-
-/* 
- * You can define additional transpose functions below. We've defined
- * a simple one below to help you get started. 
- */ 
-
-/* 
  * trans - A simple baseline transpose function, not optimized for the cache.
  */
 char trans_desc[] = "Simple row-wise scan transpose";
@@ -46,6 +29,61 @@ void trans(int M, int N, int A[N][M], int B[M][N])
 
 }
 
+/* 
+ * You can define additional transpose functions below. We've defined
+ * a simple one below to help you get started. 
+ */ 
+
+char transpose_32x32_desc[] = "Transpose 32x32";
+void transpose_32x32(int M, int N, int A[N][M], int B[M][N])
+{
+    int i, j, i_min, j_min, stride = 8;
+    for (i_min = 0; i_min != M; i_min += stride)
+    {
+        j_min = i_min;  /* only on diagonal blocks */
+        {
+            /* buffer them one-block right in B */
+            for (i = i_min; i != i_min + stride; ++i)
+                for (j = j_min; j != j_min + stride; ++j)
+                    B[j][(i + 8) % M] = A[i][j];
+            /* shift them back (one-block left) */
+            for (i = i_min; i != i_min + stride; ++i)
+                for (j = j_min; j != j_min + stride; ++j)
+                    B[j][i] = B[j][(i + 8) % M];
+        }
+    }
+    for (i_min = 0; i_min != M; i_min += stride)
+    {
+        for (j_min = 0; j_min != N; j_min += stride)
+        {
+            if (i_min == j_min) continue;  /* diagonal blocks already done */
+            for (i = i_min; i != i_min + stride; ++i)
+                for (j = j_min; j != j_min + stride; ++j)
+                    B[j][i] = A[i][j];
+        }
+    }
+}
+
+/* 
+ * transpose_submit - This is the solution transpose function that you
+ *     will be graded on for Part B of the assignment. Do not change
+ *     the description string "Transpose submission", as the driver
+ *     searches for that string to identify the transpose function to
+ *     be graded. 
+ */
+char transpose_submit_desc[] = "Transpose submission";
+void transpose_submit(int M, int N, int A[N][M], int B[M][N])
+{
+    switch (M)
+    {
+    case 32:
+      transpose_32x32(M, N, A, B);
+      break;
+    default:
+      trans(M, N, A, B);
+    }
+}
+
 /*
  * registerFunctions - This function registers your transpose
  *     functions with the driver.  At runtime, the driver will
@@ -60,6 +98,7 @@ void registerFunctions()
 
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc); 
+    registerTransFunction(transpose_32x32, transpose_32x32_desc);
 
 }
 
