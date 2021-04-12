@@ -64,6 +64,120 @@ void transpose_32x32(int M, int N, int A[N][M], int B[M][N])
     }
 }
 
+void copy_1x8(int* src, int* dst)
+{
+    int x0, x1, x2, x3, x4, x5, x6, x7;
+    // (possibly) 1 miss
+    x0 = src[0]; x1 = src[1]; x2 = src[2]; x3 = src[3];
+    x4 = src[4]; x5 = src[5]; x6 = src[6]; x7 = src[7];
+    // (possibly) 1 miss
+    dst[0] = x0; dst[1] = x1; dst[2] = x2; dst[3] = x3;
+    dst[4] = x4; dst[5] = x5; dst[6] = x6; dst[7] = x7;
+}
+
+void swap(int* x, int* y)
+{
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+void transpose_4x4(int* row0, int* row1, int* row2, int* row3)
+{
+    swap(row0 + 1, row1 + 0);
+    swap(row0 + 2, row2 + 0);
+    swap(row0 + 3, row3 + 0);
+    swap(row1 + 2, row2 + 1);
+    swap(row1 + 3, row3 + 1);
+    swap(row2 + 3, row3 + 2);
+}
+void swap_1x4(int* x, int* y) {
+    int x0 = x[0], x1 = x[1], x2 = x[2], x3 = x[3];
+    int y0 = y[0], y1 = y[1], y2 = y[2], y3 = y[3];  // (possibly) 1 miss
+    y[0] = x0, y[1] = x1, y[2] = x2, y[3] = x3;
+    x[0] = y0, x[1] = y1, x[2] = y2, x[3] = y3;      // (possibly) 1 miss
+}
+
+char transpose_64x64_desc[] = "Transpose 64x64";
+void transpose_64x64(int M, int N, int A[N][M], int B[M][N])
+{
+    int i_min, j_min, k;
+    for (j_min = 0; j_min != 64; j_min += 8)
+    {
+        for (i_min = 0; i_min != 56; i_min += 8)
+        {
+            // copy A[4:8)[0:8) to B[0:4)[8:16)
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k + 4][j_min], &B[j_min + k][i_min + 8]);
+            // copy A[0:4)[0:8) to B[0:4)[0:8)
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
+            // transpose each 4x4 block in B[0:4)[0:16)
+            for (k = 0; k != 16; k += 4)  // 0 miss / iteration
+                transpose_4x4(
+                    &B[j_min + 0][i_min + k],
+                    &B[j_min + 1][i_min + k],
+                    &B[j_min + 2][i_min + k],
+                    &B[j_min + 3][i_min + k]);
+            // swap the off-diagonal 4x4 blocks
+            for (k = 0; k != 4; ++k)  // 0 miss / iteration
+                swap_1x4(&B[j_min + k][i_min + 4], &B[j_min + k][i_min + 8]);
+            // copy B[0:4)[8:16) to B[4:8)[0:8)
+            for (k = 0; k != 4; ++k)  // 1 miss / iteration
+                copy_1x8(&B[j_min + k][i_min + 8], &B[j_min + k + 4][i_min]);
+        }
+        i_min = 56;
+        if (j_min < 56)
+        {
+            // copy A[4:8)[0:8) to B[0:4)[8:16)
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k + 4][j_min], &B[j_min + k + 8][0]);
+            // copy A[0:4)[0:8) to B[0:4)[0:8)
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
+            // transpose each 4x4 block in B[0:4)[0:16)
+            for (k = 0; k != 8; k += 4)  // 0 miss / iteration
+            {
+                transpose_4x4(
+                    &B[j_min + 0][i_min + k],
+                    &B[j_min + 1][i_min + k],
+                    &B[j_min + 2][i_min + k],
+                    &B[j_min + 3][i_min + k]);
+                transpose_4x4(
+                    &B[j_min +  8][k],
+                    &B[j_min +  9][k],
+                    &B[j_min + 10][k],
+                    &B[j_min + 11][k]);
+            }
+            // swap the off-diagonal 4x4 blocks
+            for (k = 0; k != 4; ++k)  // 0 miss / iteration
+                swap_1x4(&B[j_min + k][i_min + 4], &B[j_min + k + 8][0]);
+            // copy B[0:4)[8:16) to B[4:8)[0:8)
+            for (k = 0; k != 4; ++k)  // 1 miss / iteration
+                copy_1x8(&B[j_min + k + 8][0], &B[j_min + k + 4][i_min]);
+        } else {
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
+            transpose_4x4(
+                &B[j_min + 0][i_min + 0], &B[j_min + 1][i_min + 0],
+                &B[j_min + 2][i_min + 0], &B[j_min + 3][i_min + 0]);
+            transpose_4x4(
+                &B[j_min + 0][i_min + 4], &B[j_min + 1][i_min + 4],
+                &B[j_min + 2][i_min + 4], &B[j_min + 3][i_min + 4]);
+            for (k = 4; k != 8; ++k)  // 2 misses / iteration
+                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
+            transpose_4x4(
+                &B[j_min + 4][i_min + 0], &B[j_min + 5][i_min + 0],
+                &B[j_min + 6][i_min + 0], &B[j_min + 7][i_min + 0]);
+            transpose_4x4(
+                &B[j_min + 4][i_min + 4], &B[j_min + 5][i_min + 4],
+                &B[j_min + 6][i_min + 4], &B[j_min + 7][i_min + 4]);
+            for (k = 0; k != 4; ++k)  // 2 misses / iteration
+                swap_1x4(&B[j_min + k + 4][i_min], &B[j_min + k][i_min + 4]);
+        }
+    }
+}
+
 /* 
  * transpose_submit - This is the solution transpose function that you
  *     will be graded on for Part B of the assignment. Do not change
@@ -78,6 +192,9 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
     {
     case 32:
       transpose_32x32(M, N, A, B);
+      break;
+    case 64:
+      transpose_64x64(M, N, A, B);
       break;
     default:
       trans(M, N, A, B);
@@ -99,6 +216,7 @@ void registerFunctions()
     /* Register any additional transpose functions */
     registerTransFunction(trans, trans_desc); 
     registerTransFunction(transpose_32x32, transpose_32x32_desc);
+    registerTransFunction(transpose_64x64, transpose_64x64_desc);
 
 }
 
