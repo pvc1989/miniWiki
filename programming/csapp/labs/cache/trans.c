@@ -178,6 +178,75 @@ void transpose_64x64(int M, int N, int A[N][M], int B[M][N])
     }
 }
 
+void transpose_8x8(
+    int* row0, int* row1, int* row2, int* row3,
+    int* row4, int* row5, int* row6, int* row7)
+{
+    swap(row0 + 1, row1 + 0);
+    swap(row0 + 2, row2 + 0);
+    swap(row0 + 3, row3 + 0);
+    swap(row0 + 4, row4 + 0);
+    swap(row0 + 5, row5 + 0);
+    swap(row0 + 6, row6 + 0);
+    swap(row0 + 7, row7 + 0);
+
+    swap(row1 + 2, row2 + 1);
+    swap(row1 + 3, row3 + 1);
+    swap(row1 + 4, row4 + 1);
+    swap(row1 + 5, row5 + 1);
+    swap(row1 + 6, row6 + 1);
+    swap(row1 + 7, row7 + 1);
+
+    swap(row2 + 3, row3 + 2);
+    swap(row2 + 4, row4 + 2);
+    swap(row2 + 5, row5 + 2);
+    swap(row2 + 6, row6 + 2);
+    swap(row2 + 7, row7 + 2);
+
+    swap(row3 + 4, row4 + 3);
+    swap(row3 + 5, row5 + 3);
+    swap(row3 + 6, row6 + 3);
+    swap(row3 + 7, row7 + 3);
+
+    swap(row4 + 5, row5 + 4);
+    swap(row4 + 6, row6 + 4);
+    swap(row4 + 7, row7 + 4);
+
+    swap(row5 + 6, row6 + 5);
+    swap(row5 + 7, row7 + 5);
+
+    swap(row6 + 7, row7 + 6);
+}
+
+char transpose_61x67_desc[] = "Transpose 61x67";
+void transpose_61x67(int M, int N, int A[N][M], int B[M][N])
+{
+    int i_min, j_min, k;
+    for (i_min = 0; i_min < 64; i_min += 8)
+    {
+        for (j_min = 0; j_min < 56; j_min += 8)
+        {
+            for (k = 0; k != 8; ++k)
+                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
+            transpose_8x8(
+                &B[j_min + 0][i_min], &B[j_min + 1][i_min],
+                &B[j_min + 2][i_min], &B[j_min + 3][i_min],
+                &B[j_min + 4][i_min], &B[j_min + 5][i_min],
+                &B[j_min + 6][i_min], &B[j_min + 7][i_min]);
+        }
+        for (j_min = 56; j_min < 61; ++j_min)
+            for (k = 0; k != 8; ++k)
+                B[j_min][i_min + k] = A[i_min + k][j_min];
+    }
+    for (i_min = 64; i_min < 67; ++i_min)
+        for (j_min = 0; j_min < 56; j_min += 8)
+            for (k = 0; k != 8; ++k)
+                B[j_min + k][i_min] = A[i_min][j_min + k];
+    for (i_min = 64; i_min < 67; ++i_min)
+        for (j_min = 56; j_min < 61; ++j_min)
+            B[j_min][i_min] = A[i_min][j_min];
+}
+
 /* 
  * transpose_submit - This is the solution transpose function that you
  *     will be graded on for Part B of the assignment. Do not change
@@ -195,6 +264,9 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
       break;
     case 64:
       transpose_64x64(M, N, A, B);
+      break;
+    case 61:
+      transpose_61x67(M, N, A, B);
       break;
     default:
       trans(M, N, A, B);
@@ -217,7 +289,7 @@ void registerFunctions()
     registerTransFunction(trans, trans_desc); 
     registerTransFunction(transpose_32x32, transpose_32x32_desc);
     registerTransFunction(transpose_64x64, transpose_64x64_desc);
-
+    registerTransFunction(transpose_61x67, transpose_61x67_desc);
 }
 
 /* 
