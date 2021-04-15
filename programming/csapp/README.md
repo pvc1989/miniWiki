@@ -30,7 +30,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 ## 第二部分：在系统上运行程序
 
 - 七：链接
-- 八：异常控制流
+- [八：异常控制流](./8_exceptional_control_flow.md)
 - 九：虚拟存储
 
 ## 第三部分：程序间互动及通信
