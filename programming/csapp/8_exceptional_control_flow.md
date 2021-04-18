@@ -177,7 +177,354 @@ Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据�
 
 # 3. 系统调用错误处理
 
+系统调用发生错误时，通常返回 `-1` 并将全局整型变量 `errno` 设为错误编号。
+
+原则上，系统调用返回时都应检查是否发生了错误。
+
+```c
+if ((pid = fork()) < 0) {
+  fprintf(stderr, "fork error: %s\n", strerror(errno));
+  exit(0);
+}
+```
+
+函数 `stderror` 返回 `errno` 的字符串描述。
+
+利用“错误报告函数 (error-reporting function)”
+
+```c
+void unix_error(char *msg) {  /* Unix-style error */
+  fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+  exit(0);
+}
+```
+
+可将上述系统调用及错误检查简化为
+
+```c
+if ((pid = fork()) < 0)
+  unix_error("fork error");
+```
+
+更进一步，本书作者提供了一组“错误处理封装 (error-handling wrapper)”。
+其中每个封装的形参类型、返回类型与相应的原始函数一致，只不过将函数名的首字母改为大写：
+
+```c
+/* csapp.c */
+pid_t Fork(void) {
+  pid_t pid;
+  if ((pid = fork()) < 0)
+    unix_error("Fork error");
+  return pid;
+}
+```
+
+使用时只需一行代码：
+
+```c
+#include "csapp.h"
+pid = Fork();
+```
+
 # 4. 进程控制
+
+## 获取 PID
+
+每个进程都有一个唯一的由正整数表示的“进程号 (process ID, PID)”。
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+pid_t getpid(void);   // 当前进程的 PID
+pid_t getppid(void);  // parent's PID
+```
+
+其中 `pid_t` 为定义在 `sys/types.h` 中的整数类型 —— Linux 将其定义为 `int`。
+
+## 创建、结束进程
+
+进程可能处于“运行 (running)”、“暂停 (stopped)”、“结束 (terminated)”三种状态之一。
+
+```c
+#include <stdlib.h>
+void exit(int status);
+```
+
+“亲进程 (parent process)”利用 `fork` 创建“子进程 (child process)”：
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+pid_t fork(void);
+```
+
+子进程刚被创建时，几乎与亲进程有相同的上下文（用户级虚拟内存空间、已打开文件的描述符）。
+
+该函数返回两次：在子进程中返回 `0`，在亲进程中返回子进程的 PID。
+
+【进程图 (process graph)】
+
+- 每个结点表示一条语句，结点之间的依赖关系 $a\to b$ 表示“语句 $a$ 在语句 $b$ 之前运行”。
+- 构成 DAG，表示（有从属关系的）不同进程的语句之间的偏序关系。
+- 实际执行顺序可能是所有结点的任何有效的“拓扑排序 (topological sort)”。
+
+## 收割子进程
+
+【僵尸 (zombie)】“结束 (terminated)”但未“被收割 (reaped)”的进程。
+
+`init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程停止时，收割其僵尸子进程。
+
+```c
+#include <sys/types.h>
+#include <sys/wait.h>
+pid_t waitpid(pid_t pid, int *statusp, int options);
+```
+
+默认（即 `options == 0` 时）行为：暂停当前进程，直到“等待集 (wait set)”中的某个子进程结束。
+
+### 确定等待集的成员
+
+- 若 `pid > 0` ，则等待集只含以 `pid` 为 ID 的子进程。
+- 若 `pid == -1` ，则等待集含该亲进程的所有子进程。
+
+### 修改默认行为
+
+`options` 可设为以下值或它们的“位或”值：
+
+- `WNOHANG` 立即返回（若被等待的子进程未结束，则返回 `0`）。
+- `WUNTRACED` 等待某个子进程结束或暂停。
+- `WCONTINUED` 等待某个子进程结束，或某个暂停的子进程被 `SIGCONT` 信号恢复。
+
+### 检查被收割子进程的退出状态
+
+若 `statusp != NULL`，则会向其写入 `status` 的值。
+
+### 错误条件
+
+- 若当前进程没有子进程，则将 `errno` 设为 `ECHILD` 并返回 `-1`。
+- 若等待时收到中断信号，则将 `errno` 设为 `EINTR` 并返回 `-1`。
+
+### `wait` 函数
+
+`waitpid(-1, &status, 0)` 的简化版本：
+
+```c
+#include <sys/types.h>
+#include <sys/wait.h>
+pid_t wait(int *statusp);
+```
+
+### `waitpid` 实例
+
+乱序版本：
+
+```c
+#include "csapp.h"
+#define N 2
+
+int main() {
+  int status, i;
+  pid_t pid;
+  
+  /* parent 创建 N 个 children */
+  for (i = 0; i < N; i++)
+    if ((pid = Fork()) == 0)
+      exit(100+i);  /* child 立即结束 */
+
+  /* parent 乱序收割这 N 个 children */
+  while ((pid = waitpid(-1, &status, 0)) > 0) {
+    if (WIFEXITED(status))
+      printf("child %d terminated normally with exit status=%d\n",
+             pid, WEXITSTATUS(status));
+    else
+      printf("child %d terminated abnormally\n", pid);
+  }
+
+  if (errno != ECHILD)
+    unix_error("waitpid error");
+
+  exit(0);
+}
+```
+
+有序版本：
+
+```c
+#include "csapp.h"
+#define N 2
+
+int main() {
+  int status, i;
+  pid_t pid[N], retpid;
+  
+  for (i = 0; i < N; i++)
+    if ((/* 存入数组 */pid[i] = Fork()) == 0)
+      exit(100+i);
+
+  while ((retpid = waitpid(pid[i++]/* 遍历数组 */, &status, 0)) > 0) {
+    if (WIFEXITED(status))
+      printf("child %d terminated normally with exit status=%d\n",
+             retpid, WEXITSTATUS(status));
+    else
+      printf("child %d terminated abnormally\n", retpid);
+  }
+
+  if (errno != ECHILD)
+    unix_error("waitpid error");
+
+  exit(0);
+}
+```
+
+## 暂停进程
+
+```c
+#include <unistd.h>
+unsigned int sleep(unsigned int secs);
+int pause(void);
+```
+
+- 前者让当前进程暂停几秒。若暂停时间已到，则返回 `0`；否则（收到中断信号），返回剩余秒数。
+- 后者暂停至收到中断信号，且总是返回 `-1`。
+
+## 加载、运行程序
+
+```c
+#include <unistd.h>
+int execve(const char *filename, const char *argv[], const char *envp[]);
+```
+
+该函数将 `filename` 所表示的程序加载到当前进程的上下文中，再运行之（将  `argv` 与 `envp` 转发给该程序的 `main` 函数，再移交控制权）。
+
+其中 `argv` 与 `envp` 都是以 `NULL` 结尾的（字符串）指针数组。
+
+- `argv` 为命令行参数列表，`argv[0]` 为可执行文件的名称（可以含路径）。
+- `envp` 为环境变量列表，每个元素具有 `name=value` 的形式。
+- 全局变量 `environ` 指向 `envp[0]` ，亦即 `&argv[argc] + 8` 。
+
+
+环境变量操纵函数：
+
+```c
+#include <stdlib.h>
+char *getenv(const char *name);  // 返回 value
+int setenv(const char *name, const char *newvalue, int overwrite);
+void unsetenv(const char *name);
+```
+
+## 用 `fork` 与 `execve` 运行程序
+
+【shell】交互式的命令行终端，代表用户运行其他程序。
+
+shell 运行其他程序分两步完成：
+1. 读取用户输入的命令行。
+2. 解析读入的命令行，代表用户运行之。
+   - 先在 shell 进程中 `fork` 出一个子进程。
+   - 再在其中用 `execve` 运行 `argv[0]` 所指向的程序。
+
+若命令行以 `&` 结尾，则在“后台 (background)”运行（shell 不等其结束）；否则，在“前台 (foreground)”运行（shell 等待其结束）。
+
+### `main`
+
+```c
+#include "csapp.h"
+#define MAXARGS 128
+
+void eval(char *cmdline);
+int parseline(char *buf, char **argv);
+int builtin_command(char **argv);
+
+int main() {
+  char cmdline[MAXLINE];
+
+  while (1) {  /* 读入命令行 */
+    printf("> ");  /* 提示符 */
+    Fgets(cmdline, MAXLINE, stdin);
+    if (feof(stdin))
+      exit(0);
+    eval(cmdline);  /* 解析命令行 */
+  }
+}
+```
+
+### `eval`
+
+```c
+void eval(char *cmdline) {
+  char *argv[MAXARGS];
+  char buf[MAXLINE];
+  int bg; /* 是否在后台运行 */
+  pid_t pid;
+
+  strcpy(buf, cmdline);
+  bg = parseline(buf, argv);  /* 将 buf 解析为 argv */
+  if (argv[0] == NULL)
+    return; /* 忽略空行 */
+
+  if (!builtin_command(argv)) {
+    if ((pid = Fork()) == 0) { /* 创建子进程 */
+      if (execve(argv[0], argv, environ) < 0) { /* 在子进程中运行 */
+        printf("%s: Command not found.\n", argv[0]);
+        exit(0);
+      }
+    }
+    if (!bg) {
+      int status;
+      if (waitpid(pid, &status, 0) < 0)  /* 收割前台子进程 */
+        unix_error("waitfg: waitpid error");
+    }
+    else
+      printf("%d %s", pid, cmdline);
+  }
+  return;
+}
+```
+
+### `builtin_command`
+
+```c
+int builtin_command(char **argv) {
+  if (!strcmp(argv[0], "quit")) /* 支持 quit 命令 */
+    exit(0);
+  if (!strcmp(argv[0], "&")) /* 忽略行首的 & */
+    return 1;
+  return 0; /* 非内置命令 */
+}
+```
+
+### `parseline`
+
+```c
+int parseline(char *buf, char **argv) {
+  char *delim;
+  int argc;
+  int bg;
+
+  buf[strlen(buf)-1] = ' '; /* 将换行符替换为空格 */
+  while (*buf && (*buf == ' ')) /* 忽略行首空格 */
+    buf++;
+
+  /* 构造 argv */
+  argc = 0;
+  while ((delim = strchr(buf, ' ')/* 找到第一个空格 */)) {
+    argv[argc++] = buf;
+    *delim = '\0';
+    buf = delim + 1;
+    while (*buf && (*buf == ' '))
+      buf++;
+  }
+  argv[argc] = NULL;
+
+  if (argc == 0) /* 忽略空行 */
+    return 1;
+
+  /* 是否在后台运行 */
+  if ((bg = (*argv[argc-1] == '&')) != 0)
+    argv[--argc] = NULL;
+
+  return bg;
+}
+```
 
 # 5. 信号
 
