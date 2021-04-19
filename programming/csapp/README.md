@@ -8,12 +8,15 @@ title: CSAPP
 
 [Computer Systems: A Programmer's Perspective, 3/E (CS:APP3e)](https://csapp.cs.cmu.edu/3e/home.html)
 - [勘误表](https://csapp.cs.cmu.edu/3e/errata.html)
+- [代码](http://csapp.cs.cmu.edu/3e/code.tar)
 
 ## 课程
 
 CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.edu/~213/)
 
-- [Fall 2015](https://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/) 有二位作者按照第三版内容授课的[视频](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22)。
+- [Fall 2015](https://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/) 由二位作者按照教材第三版授课
+  - [视频](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22)
+  - [代码](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/code.tar)
 
 # 全书目录
 
@@ -42,11 +45,11 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 # [Lab Assignments](https://csapp.cs.cmu.edu/3e/labs.html)
 
-  1. [Data Lab](./labs/data/README.md)
-  2. [Bomb Lab](./labs/bomb/README.md)
-  3. [Attack Lab](./labs/attack/README.md) 或 Buffer Lab (IA32)
-  4. Architecture Lab 或 Architecture Lab (Y86)
-  5. [Cache Lab](./labs/cache/README.md) 或 Performance Lab
-  6. [Shell Lab](./labs/shell/README.md)
-  7. [Malloc Lab](./labs/malloc/README.md)
-  8. [Proxy Lab](./labs/proxy/README.md)
+1. [Data Lab](./labs/data/README.md)
+2. [Bomb Lab](./labs/bomb/README.md)
+3. [Attack Lab](./labs/attack/README.md) 或 Buffer Lab (IA32)
+4. Architecture Lab 或 Architecture Lab (Y86)
+5. [Cache Lab](./labs/cache/README.md) 或 Performance Lab
+6. [Shell Lab](./labs/shell/README.md)
+7. [Malloc Lab](./labs/malloc/README.md)
+8. [Proxy Lab](./labs/proxy/README.md)

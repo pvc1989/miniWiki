@@ -1,6 +1,4 @@
----
-title: 异常控制流
----
+
 
 - 【控制转移 (control transfer)】“程序计数器 (program counter)”的值由一条指令的地址变为下一条指令的地址的过程。
 - 【控制流 (control flow)】由控制转移构成的序列。
@@ -22,7 +20,7 @@ title: 异常控制流
   - 也可能与当前指令无关，如：读写请求完成。
 
 当处理器检测到某个事件发生时，它会将 PC 设为存储在“异常表 (exception table)”中的某个地址。
-该地址指向用于响应该事件的某个系统子程序，即“异常处理者 (exception handler)”。
+该地址指向用于响应该事件的某个系统子程序，即“异常处置器 (exception handler)”。
 此机制被称为“间接过程调用 (indirect procedure call)”。
 
 ## 异常处理
@@ -33,7 +31,7 @@ title: 异常控制流
   - 其余由操作系统内核设计者定义，如：系统调用、读写信号。
 - 【异常表 (exception table)】
   - 在系统启动时，由操作系统分配并初始化，表头地址存于特定寄存器中。
-  - 其中第 $k$ 项为“事件 $k$”的异常处理者（的地址）。
+  - 其中第 $k$ 项为“事件 $k$”的异常处置器（的地址）。
 
 |          |       异常（间接过程调用）       |  函数（普通过程调用）  |
 | :------: | :------------------------------: | :--------------------: |
@@ -54,25 +52,25 @@ title: 异常控制流
 ### 中断
 
 1. 执行指令 $I_\text{curr}$ 时，处理器收到读写设备（网络适配器、硬盘控制器、计时器）发来的信号。
-2. 待 $I_\text{curr}$ 执行完后，控制权转移到“中断处理者 (interrupt handler)”，并运行之。
+2. 待 $I_\text{curr}$ 执行完后，控制权转移到“中断处置器 (interrupt handler)”，并运行之。
 4. 返回到紧随 $I_\text{curr}$ 的下一条指令 $I_\text{next}$。
 
 ### 陷阱
 
 1. 应用程序通过 `syscall` 指令调用系统子程序。
-2. 控制权转移到“陷阱处理者 (trap handler)”，并运行之。
+2. 控制权转移到“陷阱处置器 (trap handler)”，并运行之。
 3. 返回到紧随 `syscall` 的下一条指令 $I_\text{next}$。
 
 ### 故障
 
 1. 执行指令 $I_\text{curr}$ 时，发生“故障 (fault)”。
-2. 控制权转移到“故障处理者 (fault handler)”，并运行之。
+2. 控制权转移到“故障处置器 (fault handler)”，并运行之。
 3. 若成功排除故障，则返回到引起故障的 $I_\text{curr}$ 并重新执行；否则终止该程序。
 
 ### 终止
 
 1. 执行指令 $I_\text{curr}$ 时，发生不可修复的“致命错误 (fatal error)”。
-2. 控制权转移到“终止处理者 (abort handler)”，并运行之。
+2. 控制权转移到“终止处置器 (abort handler)”，并运行之。
 3. 返回到 `abort` 以终止当前程序的执行。
 
 ## Linux/x86-64 系统的异常
@@ -94,24 +92,24 @@ title: 异常控制流
   - 寄存器 `rax` 存储系统调用编号。
   - 寄存器 `rdi`, `rsi`, `rdx`, `r10`, `r8`, `r9` 依次存储第一到六个实参。
 
-| 编号 |   名称   |         描述          |
-| :--: | :------: | :-------------------: |
-|  0   |  `read`  |                       |
-|  1   | `write`  |                       |
-|  2   |  `open`  |                       |
-|  3   | `close`  |                       |
-|  4   |  `stat`  |     获取文件信息      |
-|  9   |  `mmap`  | 将内存页面映射到文件  |
-|  12  |  `brk`   |       重设堆顶        |
-|  32  |  `dup2`  |    复制文件描述符     |
-|  33  | `pause`  |  暂停进程，等待信号   |
-|  37  | `alarm`  | 安排 alarm 信号的发送 |
-|  39  | `getpid` |                       |
-|  57  |  `fork`  |                       |
-|  59  | `execve` |                       |
-|  60  | `_exit`  |       终止进程        |
-|  61  | `wait4`  |   等待某个进程终止    |
-|  62  |  `kill`  |  向某个进程发送信号   |
+| 编号 |   名称   |         描述         |
+| :--: | :------: | :------------------: |
+|  0   |  `read`  |                      |
+|  1   | `write`  |                      |
+|  2   |  `open`  |                      |
+|  3   | `close`  |                      |
+|  4   |  `stat`  |     获取文件信息     |
+|  9   |  `mmap`  | 将内存页面映射到文件 |
+|  12  |  `brk`   |       重设堆顶       |
+|  32  |  `dup2`  |    复制文件描述符    |
+|  33  | `pause`  |  暂停进程，等待信号  |
+|  37  | `alarm`  |  安排闹钟信号的发送  |
+|  39  | `getpid` |                      |
+|  57  |  `fork`  |                      |
+|  59  | `execve` |                      |
+|  60  | `_exit`  |       终止进程       |
+|  61  | `wait4`  |   等待某个进程终止   |
+|  62  |  `kill`  |  向某个进程发送信号  |
 
 # 2. 进程
 
@@ -270,7 +268,7 @@ pid_t fork(void);
 
 ## 收割子进程
 
-【僵尸 (zombie)】“结束 (terminated)”但未“被收割 (reaped)”的进程。
+【僵尸 (zombie)】“结束 (terminated)”但未“被收割 (reaped)”的进程。<a href id="zombie"></a>
 
 `init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程停止时，收割其僵尸子进程。
 
@@ -412,7 +410,7 @@ int setenv(const char *name, const char *newvalue, int overwrite);
 void unsetenv(const char *name);
 ```
 
-## 用 `fork` 与 `execve` 运行程序
+## 用 `fork` 与 `execve` 运行程序（简易 shell 实现）
 
 【shell】交互式的命令行终端，代表用户运行其他程序。
 
@@ -528,6 +526,313 @@ int parseline(char *buf, char **argv) {
 
 # 5. 信号
 
-# 6. 非局部跳转
+【信号 (signal)】
+
+- 是由操作系统提供的一种软件形式的 ECF。
+- 是由内核向进程发送的一条短“消息 (message)”，以告知其系统内发生了某种“事件 (event)”。
+- 在 Linux 系统下，可以用 `man 7 signal` 命令查阅完整信号列表。
+
+## 信号术语
+
+- 【发送 (send)】内核在目标进程的上下文中修改某个位。
+  - 可能的原因：系统事件、调用 `kill` 函数。
+- 【接收 (receive)】目标进程收到信号后对其进行“处置 (handle)”。
+  - 可能的方式：“忽略 (ignore)”、“结束 (terminate)”、“捕获 (catch)”
+- 【待决的 (pending)】已被发送、尚未被接收的信号。
+  - 所有信号的待决状态，由名为 `pending` 的“位向量 (bit vector)”表示。
+  - 同类信号由 `pending` 中的同一个位表示，故同类信号至多有一个待决。
+- 【屏蔽的 (blocked)】可被发送、但不被接收的信号。
+  - 所有信号的屏蔽状态，由名为 `blocked` 的“位向量 (bit vector)”表示。
+
+## 发送信号
+
+### 进程组
+
+每个进程归属于且仅归属于一个“进程组 (process group)”，该进程组有唯一的正整数“身份 (ID)”，用 GID 表示。
+
+进程被创建时，继承其 parent 的 GID。
+
+```c
+#include <unistd.h>
+pid_t getpgrp(void);  /* 返回：当前进程的 GID */
+int setpgid(pid_t pid, pid_t gid/* gid ? gid : getpgrp() */);
+```
+
+### `/bin/kill` 命令
+
+```shell
+kill -signal_name   pid ...  # e.g. /bin/kill -KILL 15213
+kill -signal_number pid ...  # e.g. /bin/kill -9    15213
+```
+
+- 若 `pid > 0`，则向 PID 为 `pid` 的单一进程发送信号。
+- 若 `pid < 0`，则向 GID 为 `-pid` 的所有进程发送信号。
+
+### 键盘组合键
+
+【任务 (job)】执行某一行命令所产生的一组进程。
+
+- 【前台 (foreground)】一个 shell 至多可以同时运行一个前台任务。
+- 【后台 (background)】一个 shell 可以同时运行多个后台任务。
+
+组合键
+
+- `Ctrl + C` 向前台任务发送 `SIGINT` 信号。
+- `Ctrl + Z` 向前台任务发送 `SIGTSTP` 信号。
+
+### `kill` 函数
+
+委托内核向其他（一个或多个）进程发送信号：
+
+```c
+#include <sys/types.h>
+#include <signal.h>
+int kill(pid_t pid, int sig/* 可以用 SIGKILL 等信号名称 */);
+```
+
+- 若 `pid > 0`，则向 PID 为 `pid` 的单一进程发送信号。
+- 若 `pid < 0`，则向 GID 为 `-pid` 的所有进程发送信号。
+- 若 `pid == 0`，则向 GID 为 `getpgrp()` 的所有进程发送信号。
+
+### `alarm` 函数
+
+【闹钟 (alarm)】委托内核在若干秒后向当前进程发送 `SIGALARM` 信号。
+
+```c
+#include <unistd.h>
+unsigned int alarm(unsigned int secs);
+```
+
+若有尚未走完的闹钟，则返回剩余秒数并取消之；否则返回零。
+
+## 接收信号
+
+内核在将某进程从内核模式切换为用户模式时，会检查位向量 `pending & ~blocked` 所表示的信号
+
+- 若无待决且未屏蔽的信号，则直接执行 $I_\text{next}$。
+- 若有待决且未屏蔽的信号，则从中任选（通常是编号最小的）一个。
+  - 运行该信号的处置器。
+  - 从处置器返回后，再执行 $I_\text{next}$。
+
+各种信号都有“默认的 (default)”处置器，完成以下行为之一：
+
+- 结束进程。
+- 结束进程，并“倾倒核心 (dump core)”。
+- 暂停进程，直到 `SIGCONT` 信号到达。
+- 忽略信号。
+
+某种信号当前使用的处置器，可以被系统自带的（用 `SIG_IGN` 忽略信号、用 `SIG_DFL` 恢复默认行为）或用户编写的处置器（函数指针）替换：
+
+```c
+#include <signal.h>
+typedef void (*sighandler_t)(int);
+sighandler_t signal(int signum, sighandler_t handler);
+```
+
+- 【安装 (install)】设置处置器。
+- 【捕获 (catch)】调用处置器。
+- 【处置 (handle)】运行处置器。
+  - 处置信号 $s$（即运行相应的处置器 $S$）时，可以捕获另一种信号 $t$（即运行相应的处置器 $T$）。
+
+## 屏蔽信号
+
+- 【隐式屏蔽】处置某种信号时，会自动屏蔽同种信号。
+- 【显式屏蔽】用 `sigprocmask(how, set, oldset)` 设置，其中 `how` 可以是
+  - `SIG_BLOCK`，效果为 `blocked |= set `
+  - `SIG_UNBLOCK`，效果为 `blocked &= ~set `
+  - `SIG_SETMASK`，效果为 `blocked = set `
+
+```c
+#include <signal.h>
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+int sigemptyset(sigset_t *set);
+int sigfillset(sigset_t *set);
+int sigaddset(sigset_t *set, int signum);
+int sigdelset(sigset_t *set, int signum);
+int sigismember(const sigset_t *set, int signum);
+```
+
+## 信号处置器编写指南
+
+信号处置器编写困难的主要原因：
+
+- 处置器与主程序并发，可能有竞争。
+- 信号接收的时间及方式有些反直觉。
+- 处置器语义在不同系统下可能不同。
+
+### 安全性
+
+0. 处置器尽可能简单（只修改全局“旗标 (flag)”）
+1. 在处置器内只调用“异步信号安全 (async-signal-safe)”的函数。
+   - 只访问局部变量，或不可能被其他信号处置器中断。
+   - 只能用 `write(file_id, char_ptr, size)` 写出。
+   - `csapp.h` 提供了一组基于 `write` 的封装：
+     - `ssize_t Sio_puts(char s[]);`
+     - `ssize_t Sio_putl(long v);`
+     - `void Sio_error(char s[]);`
+2. 若处置器可返回，则应保护全局变量 `errno`（入口处备份、出口处恢复）。
+3. 在处置器内访问（与主程序共享的）全局数据结构时，屏蔽所有信号。
+4. 用关键词 `volatile` 声明全局变量。
+   - 迫使对该变量的每次访问都需要访问内存，从而避免编译器将其缓存于寄存器内。
+5. 用类型 `sio_atomic_t` 声明全局旗标（第 0 条）。
+   - 【原子性 (atomicity)】读写只需一条指令，不会被其他信号中断，故不必屏蔽信号（第 3 条）。
+
+### 正确性
+
+同类信号不排成队列，因此可能被遗漏。
+
+```c
+void handler1(int sig) {
+  int olderrno = errno;
+  if ((waitpid(-1, NULL, 0)) < 0)  /* ⚠️ 只收割一个 */
+    Sio_error("waitpid error");
+  Sio_puts("Handler reaped child\n");
+  errno = olderrno;
+}
+void handler2(int sig) {
+  int olderrno = errno;
+  while (waitpid(-1, NULL, 0) > 0)  /* ✅ 收割所有 */
+		Sio_puts("Handler reaped child\n");
+  if (errno != ECHILD)
+    Sio_error("waitpid error");
+  errno = olderrno;
+}
+```
+
+### 兼容性
+
+```c
+#include <signal.h>
+#include "csapp.h"
+
+handler_t *Signal(int signum, handler_t *handler) {
+  struct sigaction action, old_action;
+  
+  action.sa_handler = handler;  /* 安装并固定处置器 */
+  sigemptyset(&action.sa_mask); /* 只屏蔽同一类信号 */
+  action.sa_flags = SA_RESTART; /* 尽量重启系统调用 */
+
+  if (sigaction(signum, &action, &old_action) < 0)
+    unix_error("Signal error");
+  return (old_action.sa_handler);
+}
+```
+
+## 同步并发流以避免竞争
+
+【竞争 (race)】处置器与主函数读写同一变量的顺序不确定。
+
+## 显式等待信号
+
+```c
+volatile sig_atomic_t pid;
+
+int chld_handler(int s) {
+  int olderrno = errno;
+  pid = Waitpid(-1, NULL, 0);
+  errno = olderrno;
+}
+
+int main () {
+  sigset_t mask, prev;
+
+  Signal(SIGCHLD, sigchld_handler);
+  Signal(SIGINT, sigint_handler);
+  Sigemptyset(&mask);
+  Sigaddset(&mask, SIGCHLD);
+
+  while (1) {
+    Sigprocmask(SIG_BLOCK, &mask, &prev); /* Block SIGCHLD */
+    if (Fork() == 0) /* Child */
+      exit(0);
+
+    /* Parent */
+    pid = 0;
+    Sigprocmask(SIG_SETMASK, &prev, NULL); /* Unblock SIGCHLD */
+
+    /* Wait for SIGCHLD to be received */
+    while (!pid)
+      Sigsuspend(&mask);
+    /* 错误一：消耗资源
+    while (!pid)
+      ;
+     */
+    /* 错误二：可能在检查 pid 后、运行 Pause 前收到 SIGCHILD
+    while (!pid)
+      Pause();
+     */
+    /* 错误三：等待时间太长 
+    while (!pid)
+      sleep(1);
+     */
+
+    /* Do some work after receiving SIGCHLD */
+    printf(".");
+  }
+  exit(0);
+}
+```
+
+其中 `Sigsuspend(&mask)` 相当于以下三条语句的“原子化”版本：
+```c
+sigprocmask(SIG_BLOCK, &mask, &prev);
+pause();
+sigprocmask(SIG_SETMASK, &prev, NULL);
+```
+
+# 6. 非局部跳转（用户级 ECF）
+
+## C
+
+```c
+
+```
+
+## C++
+
+```cpp
+void foo() {
+  if (...)
+    throw std::out_of_range("...");
+}
+
+void bar() {
+  try {
+    ...
+  } catch (std::out_of_range& e) {
+    ...
+  } catch {
+    throw;
+  }
+}
+  
+```
 
 # 7. 进程管理工具
+
+## `strace`
+
+## `ps`
+
+打印当前所有（含[僵尸](#zombie)）进程的信息（PID、TTY、TIME、CMD），并返回。
+
+```shell
+ps -l # 显示更多信息
+```
+
+## `top`
+
+动态打印各进程的资源（CPU、内存）消耗，按 `q` 返回。
+
+```shell
+top -o [cpu|mem|pid] # 按 CPU（默认）、内存、PID 排序
+```
+
+## `pmap`
+
+打印某进程的内存映射。
+
+## `/proc`
+
+Linux 系统供用户读取内核信息的虚拟文件系统。
+
