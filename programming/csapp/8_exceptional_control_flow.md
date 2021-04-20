@@ -1,27 +1,47 @@
+---
+title: 异常控制流
+---
+
+推荐译法：
+
+|         英文          |           中文           |
+| :-------------------: | :----------------------: |
+|        exception        |     异常     |
+|   interrupt   |     中断     |
+|     fault     |     故障     |
+| error | 错误 |
+|    handle, handler    |     处置、处置器     |
+|       reap       |     收割     |
+|      concurrent      | 并发的 |
+| parallel |     并行的     |
+| abort | 终止 |
+| exit | 退出 |
+| stop, suspend | 停止、暂停 |
+|   terminate   |    结束    |
 
 
-- 【控制转移 (control transfer)】“程序计数器 (program counter)”的值由一条指令的地址变为下一条指令的地址的过程。
+- 【控制转移 (control transfer)】『程序计数器 (program counter, PC)』的值由一条指令的地址变为下一条指令的地址的过程。
 - 【控制流 (control flow)】由控制转移构成的序列。
-  - 【常规控制流】除依次执行相邻指令的光滑控制流外，只含有由“跳转”“调用”“返回”等指令引起的控制流突变。
+  - 【常规控制流】除依次执行相邻指令的光滑控制流外，只含有由『跳转』『调用』『返回』等指令引起的控制流突变。
   - 【异常控制流 (exceptional control flow, ECF)】含有由不能被程序内部变量捕捉的（甚至与程序执行无关的）系统状态变化引起的控制流突变。
 
 理解 ECF 有助于
 - 理解重要系统概念（读写、进程、虚拟内存）
 - 理解应用程序与操作系统的交互
 - 编写应用程序（shell、网络服务器）
-- 理解“并发 (concurrency)”
-- 理解“软件异常 (software exceptions)”的工作原理
+- 理解『并发 (concurrency)』
+- 理解『软件异常 (software exceptions)』的工作原理
 
 # 1. 异常
 
-- 【异常 (exception)】由某个“事件”引起的控制流突变。
-- 【事件 (exception)】处理器状态的某种显著的变化。
-  - 可能由当前指令有关，如：访存发生“页面故障 (page fault)”。
+- 【异常 (exception)】由某个『事件』引起的控制流突变。
+- 【事件 (event)】处理器状态的某种显著的变化。
+  - 可能由当前指令有关，如：访存发生『页面故障 (page fault)』。
   - 也可能与当前指令无关，如：读写请求完成。
 
-当处理器检测到某个事件发生时，它会将 PC 设为存储在“异常表 (exception table)”中的某个地址。
-该地址指向用于响应该事件的某个系统子程序，即“异常处置器 (exception handler)”。
-此机制被称为“间接过程调用 (indirect procedure call)”。
+当处理器检测到某个事件发生时，它会将 PC 设为存储在『异常表 (exception table)』中的某个地址。
+该地址指向用于响应该事件的某个系统子程序，即『异常处置器 (exception handler)』。
+此机制被称为『间接过程调用 (indirect procedure call)』。
 
 ## 异常处理
 
@@ -31,7 +51,7 @@
   - 其余由操作系统内核设计者定义，如：系统调用、读写信号。
 - 【异常表 (exception table)】
   - 在系统启动时，由操作系统分配并初始化，表头地址存于特定寄存器中。
-  - 其中第 $k$ 项为“事件 $k$”的异常处置器（的地址）。
+  - 其中第 $k$ 项为『事件 $k$』的异常处置器（的地址）。
 
 |          |       异常（间接过程调用）       |  函数（普通过程调用）  |
 | :------: | :------------------------------: | :--------------------: |
@@ -52,25 +72,25 @@
 ### 中断
 
 1. 执行指令 $I_\text{curr}$ 时，处理器收到读写设备（网络适配器、硬盘控制器、计时器）发来的信号。
-2. 待 $I_\text{curr}$ 执行完后，控制权转移到“中断处置器 (interrupt handler)”，并运行之。
+2. 待 $I_\text{curr}$ 执行完后，控制权转移到『中断处置器 (interrupt handler)』，并运行之。
 4. 返回到紧随 $I_\text{curr}$ 的下一条指令 $I_\text{next}$。
 
 ### 陷阱
 
 1. 应用程序通过 `syscall` 指令调用系统子程序。
-2. 控制权转移到“陷阱处置器 (trap handler)”，并运行之。
+2. 控制权转移到『陷阱处置器 (trap handler)』，并运行之。
 3. 返回到紧随 `syscall` 的下一条指令 $I_\text{next}$。
 
 ### 故障
 
-1. 执行指令 $I_\text{curr}$ 时，发生“故障 (fault)”。
-2. 控制权转移到“故障处置器 (fault handler)”，并运行之。
+1. 执行指令 $I_\text{curr}$ 时，发生『故障 (fault)』。
+2. 控制权转移到『故障处置器 (fault handler)』，并运行之。
 3. 若成功排除故障，则返回到引起故障的 $I_\text{curr}$ 并重新执行；否则终止该程序。
 
 ### 终止
 
-1. 执行指令 $I_\text{curr}$ 时，发生不可修复的“致命错误 (fatal error)”。
-2. 控制权转移到“终止处置器 (abort handler)”，并运行之。
+1. 执行指令 $I_\text{curr}$ 时，发生不可修复的『致命错误 (fatal error)』。
+2. 控制权转移到『终止处置器 (abort handler)』，并运行之。
 3. 返回到 `abort` 以终止当前程序的执行。
 
 ## Linux/x86-64 系统的异常
@@ -124,14 +144,14 @@
 
 ## 逻辑控制流
 
-“逻辑控制流 (logical control flow)”，简称“逻辑流”，是指由程序计数器的值构成的序列。
+『逻辑控制流 (logical control flow)』，简称『逻辑流』，是指由程序计数器的值构成的序列。
 
 该机制使得当前程序看上去像是独占了处理器。
 
 ## 并发流
 
 【并发流 (concurrent flow)】运行时间有重叠的多个逻辑流。
-- 【多任务 (multitasking)】多个进程轮流执行片段，又名“时间分割 (time slicing)”。
+- 【多任务 (multitasking)】多个进程轮流执行片段，又名『时间分割 (time slicing)』。
 - 【并行流 (parallel flow)】运行在多个核心或计算机上的并发流。
 
 ## 私有地址空间
@@ -188,7 +208,7 @@ if ((pid = fork()) < 0) {
 
 函数 `stderror` 返回 `errno` 的字符串描述。
 
-利用“错误报告函数 (error-reporting function)”
+利用『错误报告函数 (error-reporting function)』
 
 ```c
 void unix_error(char *msg) {  /* Unix-style error */
@@ -204,7 +224,7 @@ if ((pid = fork()) < 0)
   unix_error("fork error");
 ```
 
-更进一步，本书作者提供了一组“错误处理封装 (error-handling wrapper)”。
+更进一步，本书作者提供了一组『错误处理封装 (error-handling wrapper)』。
 其中每个封装的形参类型、返回类型与相应的原始函数一致，只不过将函数名的首字母改为大写：
 
 ```c
@@ -228,7 +248,7 @@ pid = Fork();
 
 ## 获取 PID
 
-每个进程都有一个唯一的由正整数表示的“进程号 (process ID, PID)”。
+每个进程都有一个唯一的由正整数表示的『进程号 (process ID, PID)』。
 
 ```c
 #include <sys/types.h>
@@ -241,14 +261,14 @@ pid_t getppid(void);  // parent's PID
 
 ## 创建、结束进程
 
-进程可能处于“运行 (running)”、“暂停 (stopped)”、“结束 (terminated)”三种状态之一。
+进程可能处于『运行 (running)』、『暂停 (stopped)』、『结束 (terminated)』三种状态之一。
 
 ```c
 #include <stdlib.h>
 void exit(int status);
 ```
 
-“亲进程 (parent process)”利用 `fork` 创建“子进程 (child process)”：
+『亲进程 (parent process)』利用 `fork` 创建『子进程 (child process)』：
 
 ```c
 #include <sys/types.h>
@@ -262,15 +282,17 @@ pid_t fork(void);
 
 【进程图 (process graph)】
 
-- 每个结点表示一条语句，结点之间的依赖关系 $a\to b$ 表示“语句 $a$ 在语句 $b$ 之前运行”。
+- 每个结点表示一条语句，结点之间的依赖关系 $a\to b$ 表示『语句 $a$ 在语句 $b$ 之前运行』。
 - 构成 DAG，表示（有从属关系的）不同进程的语句之间的偏序关系。
-- 实际执行顺序可能是所有结点的任何有效的“拓扑排序 (topological sort)”。
+- 实际执行顺序可能是所有结点的任何有效的『拓扑排序 (topological sort)』。
 
 ## 收割子进程
 
-【僵尸 (zombie)】“结束 (terminated)”但未“被收割 (reaped)”的进程。<a href id="zombie"></a>
+【僵尸 (zombie)】『结束 (terminated)』但未『被收割 (reaped)』的进程。<a href id="zombie"></a>
 
 `init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程停止时，收割其僵尸子进程。
+
+⚠️ shell 等生存期较长的进程，应当主动收割其子进程。
 
 ```c
 #include <sys/types.h>
@@ -278,7 +300,7 @@ pid_t fork(void);
 pid_t waitpid(pid_t pid, int *statusp, int options);
 ```
 
-默认（即 `options == 0` 时）行为：暂停当前进程，直到“等待集 (wait set)”中的某个子进程结束。
+默认（即 `options == 0` 时）行为：暂停当前进程，直到『等待集 (wait set)』中的某个子进程结束。
 
 ### 确定等待集的成员
 
@@ -287,7 +309,7 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 
 ### 修改默认行为
 
-`options` 可设为以下值或它们的“位或”值：
+`options` 可设为以下值或它们的『位或』值：
 
 - `WNOHANG` 立即返回（若被等待的子进程未结束，则返回 `0`）。
 - `WUNTRACED` 等待某个子进程结束或暂停。
@@ -414,13 +436,18 @@ void unsetenv(const char *name);
 
 【shell】交互式的命令行终端，代表用户运行其他程序。
 
+- `sh` = (Bourne) SHell
+- `csh` = (Berkeley UNIX) C SHell
+- `bash` = (GNU) Bourne-Again SHell
+- `zsh` = Z SHell
+
 shell 运行其他程序分两步完成：
 1. 读取用户输入的命令行。
 2. 解析读入的命令行，代表用户运行之。
    - 先在 shell 进程中 `fork` 出一个子进程。
    - 再在其中用 `execve` 运行 `argv[0]` 所指向的程序。
 
-若命令行以 `&` 结尾，则在“后台 (background)”运行（shell 不等其结束）；否则，在“前台 (foreground)”运行（shell 等待其结束）。
+若命令行以 `&` 结尾，则在『后台 (background)』运行（shell 不等其结束）；否则，在『前台 (foreground)』运行（shell 等待其结束）。
 
 ### `main`
 
@@ -529,26 +556,26 @@ int parseline(char *buf, char **argv) {
 【信号 (signal)】
 
 - 是由操作系统提供的一种软件形式的 ECF。
-- 是由内核向进程发送的一条短“消息 (message)”，以告知其系统内发生了某种“事件 (event)”。
+- 是由内核向进程发送的一条短『消息 (message)』，以告知其系统内发生了某种『事件 (event)』。
 - 在 Linux 系统下，可以用 `man 7 signal` 命令查阅完整信号列表。
 
 ## 信号术语
 
 - 【发送 (send)】内核在目标进程的上下文中修改某个位。
   - 可能的原因：系统事件、调用 `kill` 函数。
-- 【接收 (receive)】目标进程收到信号后对其进行“处置 (handle)”。
-  - 可能的方式：“忽略 (ignore)”、“结束 (terminate)”、“捕获 (catch)”
+- 【接收 (receive)】目标进程收到信号后对其进行『处置 (handle)』。
+  - 可能的方式：『忽略 (ignore)』、『结束 (terminate)』、『捕获 (catch)』
 - 【待决的 (pending)】已被发送、尚未被接收的信号。
-  - 所有信号的待决状态，由名为 `pending` 的“位向量 (bit vector)”表示。
+  - 所有信号的待决状态，由名为 `pending` 的『位向量 (bit vector)』表示。
   - 同类信号由 `pending` 中的同一个位表示，故同类信号至多有一个待决。
 - 【屏蔽的 (blocked)】可被发送、但不被接收的信号。
-  - 所有信号的屏蔽状态，由名为 `blocked` 的“位向量 (bit vector)”表示。
+  - 所有信号的屏蔽状态，由名为 `blocked` 的『位向量 (bit vector)』表示。
 
 ## 发送信号
 
 ### 进程组
 
-每个进程归属于且仅归属于一个“进程组 (process group)”，该进程组有唯一的正整数“身份 (ID)”，用 GID 表示。
+每个进程归属于且仅归属于一个『进程组 (process group)』，该进程组有唯一的正整数『身份 (ID)』，用 GID 表示。
 
 进程被创建时，继承其 parent 的 GID。
 
@@ -614,10 +641,10 @@ unsigned int alarm(unsigned int secs);
   - 运行该信号的处置器。
   - 从处置器返回后，再执行 $I_\text{next}$。
 
-各种信号都有“默认的 (default)”处置器，完成以下行为之一：
+各种信号都有『默认的 (default)』处置器，完成以下行为之一：
 
 - 结束进程。
-- 结束进程，并“倾倒核心 (dump core)”。
+- 结束进程，并『倾倒核心 (dump core)』。
 - 暂停进程，直到 `SIGCONT` 信号到达。
 - 忽略信号。
 
@@ -662,8 +689,8 @@ int sigismember(const sigset_t *set, int signum);
 
 ### 安全性
 
-0. 处置器尽可能简单（只修改全局“旗标 (flag)”）
-1. 在处置器内只调用“异步信号安全 (async-signal-safe)”的函数。
+0. 处置器尽可能简单（只修改全局『旗标 (flag)』）
+1. 在处置器内只调用『异步信号安全 (async-signal-safe)』的函数。
    - 只访问局部变量，或不可能被其他信号处置器中断。
    - 只能用 `write(file_id, char_ptr, size)` 写出。
    - `csapp.h` 提供了一组基于 `write` 的封装：
@@ -773,11 +800,11 @@ int main () {
 }
 ```
 
-其中 `Sigsuspend(&mask)` 相当于以下三条语句的“原子化”版本：
+其中 `Sigsuspend(&mask)` 相当于以下三条语句的『原子化』版本：
 ```c
-sigprocmask(SIG_BLOCK, &mask, &prev);
-pause();
-sigprocmask(SIG_SETMASK, &prev, NULL);
+Sigprocmask(SIG_BLOCK, &mask, &prev);
+Pause();
+Sigprocmask(SIG_SETMASK, &prev, NULL);
 ```
 
 # 6. 非局部跳转（用户级 ECF）
@@ -785,7 +812,37 @@ sigprocmask(SIG_SETMASK, &prev, NULL);
 ## C
 
 ```c
+#include <stdio.h>
+#include <setjmp.h>
+#include <stdnoreturn.h>
+ 
+jmp_buf buffer;
+ 
+noreturn void a(int count) {
+  printf("a(%d) called\n", count);
+  longjmp(buffer, count+1/* setjmp 的返回值 */);
+}
 
+int main(void) {
+  volatile int count = 0; // 在 setjmp 中被修改的变量必须是 volatile
+  if (setjmp(buffer) != 5)
+    a(++count);
+}
+```
+
+运行过程：
+
+- ⚠️ `setjmp(buffer)` 返回多次，且返回值不能存储于变量中。
+- `setjmp(buffer)` 将当前进程的上下文存储于 `buffer` 中，以 `0` 为其第一次返回的值。
+- `longjmp(buffer, count+1)` 根据 `buffer` 恢复上下文，以 `count+1` 为 `setjmp` 的（第二至五次）返回值。
+
+运行结果：
+
+```shell
+a(1) called
+a(2) called
+a(3) called
+a(4) called
 ```
 
 ## C++
