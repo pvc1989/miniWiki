@@ -43,7 +43,7 @@ title: 异常控制流
 该地址指向用于响应该事件的某个系统子程序，即『异常处置器 (exception handler)』。
 此机制被称为『间接过程调用 (indirect procedure call)』。
 
-## 异常处理
+## 异常处置
 
 - 【异常编号 (exception number)】
   - 用于标识异常的非负整数
@@ -309,7 +309,7 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 
 ### 修改默认行为
 
-`options` 可设为以下值或它们的『位或』值：
+`options` 可设为以下值或它们的『位或 (bitwise OR)』值：
 
 - `WNOHANG` 立即返回（若被等待的子进程未结束，则返回 `0`）。
 - `WUNTRACED` 等待某个子进程结束或暂停。
@@ -511,7 +511,7 @@ void eval(char *cmdline) {
 int builtin_command(char **argv) {
   if (!strcmp(argv[0], "quit")) /* 支持 quit 命令 */
     exit(0);
-  if (!strcmp(argv[0], "&")) /* 忽略行首的 & */
+  if (!strcmp(argv[0], "&")) /* 忽略只含 & 的命令行 */
     return 1;
   return 0; /* 非内置命令 */
 }
@@ -557,7 +557,25 @@ int parseline(char *buf, char **argv) {
 
 - 是由操作系统提供的一种软件形式的 ECF。
 - 是由内核向进程发送的一条短『消息 (message)』，以告知其系统内发生了某种『事件 (event)』。
-- 在 Linux 系统下，可以用 `man 7 signal` 命令查阅完整信号列表。
+
+在 Linux 系统下，可以用 `man 7 signal` 命令查阅完整信号列表，其中最常用的信号如下：
+
+| 编号 |   名称    |             含义              |
+| :--: | :-------: | :---------------------------: |
+|  2   | `SIGINT`  |    INTerrupt from keyboard    |
+|  3   | `SIGQUIT` |      QUIT from keyboard       |
+|  4   | `SIGILL`  |      ILLegal instruction      |
+|  6   | `SIGABRT` |  ABoRT signal from `abort()`  |
+|  8   | `SIGFPE`  |   Floating-Point Exception    |
+|  9   | `SIGKILL` |         KILL program          |
+|  11  | `SIGSEGV` |      SEGmentation fault       |
+|  14  | `SIGALRM` |             ALaRM             |
+|  17  | `SIGCHLD` |  CHiLD terminated or stopped  |
+|  18  | `SIGCONT` |      CONTinue if stopped      |
+|  19  | `SIGSTOP` | STOP signal not from terminal |
+|  20  | `SIGTSTP` | SToP signal not from Terminal |
+
+⚠️ `SIGKILL` 既不能被捕获，又不能被忽略。
 
 ## 信号术语
 
@@ -599,13 +617,14 @@ kill -signal_number pid ...  # e.g. /bin/kill -9    15213
 
 【任务 (job)】执行某一行命令所产生的一组进程。
 
+- shell 为每个任务分配独立的正整数编号，记作 JID，在命令行中以 `%` 前缀。
 - 【前台 (foreground)】一个 shell 至多可以同时运行一个前台任务。
 - 【后台 (background)】一个 shell 可以同时运行多个后台任务。
 
 组合键
 
-- `Ctrl + C` 向前台任务发送 `SIGINT` 信号。
-- `Ctrl + Z` 向前台任务发送 `SIGTSTP` 信号。
+- `Ctrl + C` 向前台任务（进程组）发送 `SIGINT` 信号，默认使其结束。
+- `Ctrl + Z` 向前台任务（进程组）发送 `SIGTSTP` 信号，默认使其暂停。
 
 ### `kill` 函数
 
@@ -698,7 +717,7 @@ int sigismember(const sigset_t *set, int signum);
      - `ssize_t Sio_putl(long v);`
      - `void Sio_error(char s[]);`
 2. 若处置器可返回，则应保护全局变量 `errno`（入口处备份、出口处恢复）。
-3. 在处置器内访问（与主程序共享的）全局数据结构时，屏蔽所有信号。
+3. 访问处置器与主程序（或其他处置器）共享的全局数据结构时，屏蔽所有信号。
 4. 用关键词 `volatile` 声明全局变量。
    - 迫使对该变量的每次访问都需要访问内存，从而避免编译器将其缓存于寄存器内。
 5. 用类型 `sio_atomic_t` 声明全局旗标（第 0 条）。
@@ -748,6 +767,73 @@ handler_t *Signal(int signum, handler_t *handler) {
 ## 同步并发流以避免竞争
 
 【竞争 (race)】处置器与主函数读写同一变量的顺序不确定。
+
+### 原始版本
+
+```c
+void handler(int sig) {
+  int olderrno = errno;
+  sigset_t mask_all, prev_all;
+  pid_t pid;
+
+  Sigfillset(&mask_all);
+  while ((pid = Waitpid(-1, NULL, 0)) > 0) {
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    deletejob(pid); /* It may be called BEFORE the corresponding `addjob`. */
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+  }
+  if (errno != ECHILD)
+    Sio_error("waitpid error");
+  errno = olderrno;
+}
+int main(int argc, char **argv) {
+  int pid;
+  sigset_t mask_all, prev_all;
+
+  Sigfillset(&mask_all);
+  Signal(SIGCHLD, handler);
+  initjobs();
+
+  while (1) {
+    if ((pid = Fork()) == 0) {
+      Execve("/bin/date", argv, NULL);
+    }
+    /* SIGCHLD may arrive here */
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    addjob(pid); /* It may be called AFTER the corresponding `deletejob`. */
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);    
+  }
+  exit(0);
+}
+```
+
+⚠️ 亲进程执行 `Sigprocmask()` 前，子进程可能已经结束，从而可能导致 `handler()` 中的 `deletejob(pid)` 早于 `addjob(pid)` 被执行，这将破坏数据结构。
+
+### 改进版本
+
+```c
+int main(int argc, char **argv) {
+  int pid;
+  sigset_t mask_all, mask_one, prev_one;
+
+  Sigfillset(&mask_all);
+  Sigemptyset(&mask_one); Sigaddset(&mask_one, SIGCHLD); /* only SIGCHLD */
+  Signal(SIGCHLD, handler);
+  initjobs();
+
+  while (1) {
+    Sigprocmask(SIG_BLOCK, &mask_one, &prev_one); /* Block SIGCHLD */
+    if ((pid = Fork()) == 0) {
+      Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* Unblock SIGCHLD in child */
+      Execve("/bin/date", argv, NULL);
+    }
+    Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Block all */
+    addjob(pid); /* Add the child to the job list */
+    Sigprocmask(SIG_SETMASK, &prev_one, NULL);  /* Unblock SIGCHLD in parent */
+  }
+  exit(0);
+}
+```
 
 ## 显式等待信号
 
@@ -833,7 +919,7 @@ int main(void) {
 运行过程：
 
 - ⚠️ `setjmp(buffer)` 返回多次，且返回值不能存储于变量中。
-- `setjmp(buffer)` 将当前进程的上下文存储于 `buffer` 中，以 `0` 为其第一次返回的值。
+- `setjmp(buffer)` 将当前进程的上下文存储于 `buffer` 中，以 `0` 为其（第一次）返回值。
 - `longjmp(buffer, count+1)` 根据 `buffer` 恢复上下文，以 `count+1` 为 `setjmp` 的（第二至五次）返回值。
 
 运行结果：
