@@ -21,7 +21,7 @@ title: 异常控制流
 
 
 - 【控制转移 (control transfer)】『程序计数器 (program counter, PC)』的值由一条指令的地址变为下一条指令的地址的过程。
-- 【控制流 (control flow)】由控制转移构成的序列。
+- 【控制流 (control flow)】由『控制转移』构成的序列。
   - 【常规控制流】除依次执行相邻指令的光滑控制流外，只含有由『跳转』『调用』『返回』等指令引起的控制流突变。
   - 【异常控制流 (exceptional control flow, ECF)】含有由不能被程序内部变量捕捉的（甚至与程序执行无关的）系统状态变化引起的控制流突变。
 
@@ -34,10 +34,10 @@ title: 异常控制流
 
 # 1. 异常
 
-- 【异常 (exception)】由某个『事件』引起的控制流突变。
 - 【事件 (event)】处理器状态的某种显著的变化。
   - 可能由当前指令有关，如：访存发生『页面故障 (page fault)』。
   - 也可能与当前指令无关，如：读写请求完成。
+- 【异常 (exception)】由某个『事件』引起的控制流突变。
 
 当处理器检测到某个事件发生时，它会将 PC 设为存储在『异常表 (exception table)』中的某个地址。
 该地址指向用于响应该事件的某个系统子程序，即『异常处置器 (exception handler)』。
@@ -133,7 +133,7 @@ title: 异常控制流
 
 # 2. 进程
 
-- 【进程 (process)】执行中的程序实例。
+- 【进程 (process)】运行中的程序实例。
 - 【上下文 (context)】程序正确运行所需的状态，包括
   - 内存中的代码及数据
   - 运行期栈
@@ -156,9 +156,11 @@ title: 异常控制流
 
 ## 私有地址空间
 
-- 【地址空间 (address space)】由 $0$ 到 $2^n-1$ 共 $2^n$ 个地址构成的集合
-- 【私有 (private)】每个进程只能读写自己的地址空间
+- 【地址空间 (address space)】由 $0$ 到 $(2^n-1)$ 共 $2^n$ 个地址构成的集合。
+- 【私有 (private)】每个进程只能读写自己的地址空间。
 - 不同进程的私有地址空间，有相同的组织（结构）。
+
+该机制使得当前程序看上去像是独占了存储器。
 
 ## 用户与内核模式
 
@@ -171,13 +173,13 @@ title: 异常控制流
 Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据结构的内容，如
 
 - `/proc/cpuinfo` 表示处理器信息
-- `/proc/PID/maps` 表示内存映射
+- `/proc/PID/maps` 表示某个进程的内存映射
 
 ## 上下文切换
 
-【抢占 (preempt)】
+【抢占 (preempt)】暂停
 
-【调度 (scheduling)】操作系统内核决定是否暂存当前进程、恢复之前被抢占的进程。
+【调度 (scheduling)】操作系统内核决定是否暂停当前进程、恢复之前被抢占的进程。
 
 【上下文切换 (context switch)】
 
@@ -191,13 +193,13 @@ Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据�
   - `read`
   - `sleep`
 - 周期性的计时器中断之后
-- 中断处理之后
+- 中断处置器返回之后
 
 # 3. 系统调用错误处理
 
-系统调用发生错误时，通常返回 `-1` 并将全局整型变量 `errno` 设为错误编号。
+系统调用发生错误时，通常返回 `-1` 并将整型全局变量 `errno` 设为错误编号。
 
-原则上，系统调用返回时都应检查是否发生了错误。
+原则上，系统调用返回时都应检查是否发生了错误：
 
 ```c
 if ((pid = fork()) < 0) {
@@ -206,7 +208,7 @@ if ((pid = fork()) < 0) {
 }
 ```
 
-函数 `stderror` 返回 `errno` 的字符串描述。
+其中 `strerror(errno)` 返回 `errno` 的字符串描述。
 
 利用『错误报告函数 (error-reporting function)』
 
@@ -224,8 +226,8 @@ if ((pid = fork()) < 0)
   unix_error("fork error");
 ```
 
-更进一步，本书作者提供了一组『错误处理封装 (error-handling wrapper)』。
-其中每个封装的形参类型、返回类型与相应的原始函数一致，只不过将函数名的首字母改为大写：
+更进一步，本书作者提供了一组『错误处置封装 (error-handling wrapper)』。
+其中每个封装的形参类型与相应的原始函数一致，只不过将函数名的首字母改为大写：
 
 ```c
 /* csapp.c */
@@ -248,7 +250,7 @@ pid = Fork();
 
 ## 获取 PID
 
-每个进程都有一个唯一的由正整数表示的『进程号 (process ID, PID)』。
+每个进程都有一个唯一的由正整数表示的『进程身份 (process ID, PID)』。
 
 ```c
 #include <sys/types.h>
@@ -257,18 +259,20 @@ pid_t getpid(void);   // 当前进程的 PID
 pid_t getppid(void);  // parent's PID
 ```
 
-其中 `pid_t` 为定义在 `sys/types.h` 中的整数类型 —— Linux 将其定义为 `int`。
+其中 `pid_t` 为定义在 `sys/types.h` 中的整数类型，Linux 将其定义为 `int`。
 
 ## 创建、结束进程
 
 进程可能处于『运行 (running)』、『暂停 (stopped)』、『结束 (terminated)』三种状态之一。
+
+结束进程：
 
 ```c
 #include <stdlib.h>
 void exit(int status);
 ```
 
-『亲进程 (parent process)』利用 `fork` 创建『子进程 (child process)』：
+在『亲进程 (parent process)』中创建『子进程 (child process)』：
 
 ```c
 #include <sys/types.h>
@@ -278,7 +282,7 @@ pid_t fork(void);
 
 子进程刚被创建时，几乎与亲进程有相同的上下文（用户级虚拟内存空间、已打开文件的描述符）。
 
-该函数返回两次：在子进程中返回 `0`，在亲进程中返回子进程的 PID。
+函数 `fork()` 有两个返回值：在子进程中返回 `0`，在亲进程中返回子进程的 PID。
 
 【进程图 (process graph)】
 
@@ -288,9 +292,9 @@ pid_t fork(void);
 
 ## 收割子进程
 
-【僵尸 (zombie)】『结束 (terminated)』但未『被收割 (reaped)』的进程。<a href id="zombie"></a>
+【僵尸 (zombie)】已『结束 (terminated)』但未『被收割 (reaped)』的进程。<a href id="zombie"></a>
 
-`init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程停止时，收割其僵尸子进程。
+`init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程结束时，收割其僵尸子进程。
 
 ⚠️ shell 等生存期较长的进程，应当主动收割其子进程。
 
@@ -300,12 +304,12 @@ pid_t fork(void);
 pid_t waitpid(pid_t pid, int *statusp, int options);
 ```
 
-默认（即 `options == 0` 时）行为：暂停当前进程，直到『等待集 (wait set)』中的某个子进程结束。
+默认（即 `options == 0` 时）行为：暂停当前进程，直到『等待集 (wait set)』中的某个子进程结束，返回该子进程的 PID。
 
 ### 确定等待集的成员
 
-- 若 `pid > 0` ，则等待集只含以 `pid` 为 ID 的子进程。
-- 若 `pid == -1` ，则等待集含该亲进程的所有子进程。
+- 若 `pid > 0` ，则等待集只含以 `pid` 为 PID 的子进程。
+- 若 `pid == -1` ，则等待集由该亲进程的所有子进程组成。
 
 ### 修改默认行为
 
@@ -401,11 +405,14 @@ int main() {
 ```c
 #include <unistd.h>
 unsigned int sleep(unsigned int secs);
+```
+该函数让当前进程暂停几秒。若暂停时间已到，则返回 `0`；否则（收到中断信号），返回剩余秒数。
+
+```c
+#include <unistd.h>
 int pause(void);
 ```
-
-- 前者让当前进程暂停几秒。若暂停时间已到，则返回 `0`；否则（收到中断信号），返回剩余秒数。
-- 后者暂停至收到中断信号，且总是返回 `-1`。
+该函数让当前进程暂停至收到中断信号，总是返回 `-1`。
 
 ## 加载、运行程序
 
@@ -420,7 +427,7 @@ int execve(const char *filename, const char *argv[], const char *envp[]);
 
 - `argv` 为命令行参数列表，`argv[0]` 为可执行文件的名称（可以含路径）。
 - `envp` 为环境变量列表，每个元素具有 `name=value` 的形式。
-- 全局变量 `environ` 指向 `envp[0]` ，亦即 `&argv[argc] + 8` 。
+- 全局变量 `environ` 指向 `envp[0]` ；因 `envp` 紧跟在 `argv` 后面，故 `&argv[argc] + 8 == envp[0]` 。
 
 
 环境变量操纵函数：
@@ -441,13 +448,13 @@ void unsetenv(const char *name);
 - `bash` = (GNU) Bourne-Again SHell
 - `zsh` = Z SHell
 
-shell 运行其他程序分两步完成：
+Shell 运行其他程序分两步完成：
 1. 读取用户输入的命令行。
 2. 解析读入的命令行，代表用户运行之。
-   - 先在 shell 进程中 `fork` 出一个子进程。
-   - 再在其中用 `execve` 运行 `argv[0]` 所指向的程序。
+   - 若为内置命令，则在当前进程内运行之。
+   - 若非内置命令，则先从 shell 进程中 `fork` 出一个子进程，再在其中用 `execve` 运行 `argv[0]` 所指向的程序。
 
-若命令行以 `&` 结尾，则在『后台 (background)』运行（shell 不等其结束）；否则，在『前台 (foreground)』运行（shell 等待其结束）。
+若命令行以 `&` 结尾，则在『后台 (background)』运行（shell 不等其结束）；否则，在『前台 (foreground)』运行（shell 等待其结束或暂停）。
 
 ### `main`
 
@@ -575,12 +582,12 @@ int parseline(char *buf, char **argv) {
 |  19  | `SIGSTOP` | STOP signal not from terminal |
 |  20  | `SIGTSTP` | SToP signal not from Terminal |
 
-⚠️ `SIGKILL` 既不能被捕获，又不能被忽略。
+⚠️ `SIGKILL` 既不能被捕获，又不能被忽略，可用于强制结束进程。
 
 ## 信号术语
 
 - 【发送 (send)】内核在目标进程的上下文中修改某个位。
-  - 可能的原因：系统事件、调用 `kill` 函数。
+  - 可能的原因：系统事件、调用 `kill()` 函数。
 - 【接收 (receive)】目标进程收到信号后对其进行『处置 (handle)』。
   - 可能的方式：『忽略 (ignore)』、『结束 (terminate)』、『捕获 (catch)』
 - 【待决的 (pending)】已被发送、尚未被接收的信号。
@@ -593,7 +600,7 @@ int parseline(char *buf, char **argv) {
 
 ### 进程组
 
-每个进程归属于且仅归属于一个『进程组 (process group)』，该进程组有唯一的正整数『身份 (ID)』，用 GID 表示。
+每个进程归属于且仅归属于一个『进程组 (process group)』，后者由一个唯一的正整数『进程组身份 (group ID, GID)』来标识。
 
 进程被创建时，继承其 parent 的 GID。
 
@@ -615,10 +622,10 @@ kill -signal_number pid ...  # e.g. /bin/kill -9    15213
 
 ### 键盘组合键
 
-【任务 (job)】执行某一行命令所产生的一组进程。
+【任务 (job)】执行某一行命令所产生的一个或多个进程。
 
-- shell 为每个任务分配独立的正整数编号，记作 JID，在命令行中以 `%` 前缀。
-- 【前台 (foreground)】一个 shell 至多可以同时运行一个前台任务。
+- Shell 为每个任务分配独立的正整数『任务身份 (job ID, JID)』，在命令行中以 `%` 作为前缀。
+- 【前台 (foreground)】一个 shell 至多同时运行一个前台任务。
 - 【后台 (background)】一个 shell 可以同时运行多个后台任务。
 
 组合键
@@ -653,14 +660,14 @@ unsigned int alarm(unsigned int secs);
 
 ## 接收信号
 
-内核在将某进程从内核模式切换为用户模式时，会检查位向量 `pending & ~blocked` 所表示的信号
+内核在将某进程从内核模式切换为用户模式时，会检查位向量 `pending & ~blocked` 所表示的信号集。
 
 - 若无待决且未屏蔽的信号，则直接执行 $I_\text{next}$。
 - 若有待决且未屏蔽的信号，则从中任选（通常是编号最小的）一个。
   - 运行该信号的处置器。
   - 从处置器返回后，再执行 $I_\text{next}$。
 
-各种信号都有『默认的 (default)』处置器，完成以下行为之一：
+各种信号都有默认处置器，完成以下行为之一：
 
 - 结束进程。
 - 结束进程，并『倾倒核心 (dump core)』。
@@ -718,7 +725,7 @@ int sigismember(const sigset_t *set, int signum);
      - `void Sio_error(char s[]);`
 2. 若处置器可返回，则应保护全局变量 `errno`（入口处备份、出口处恢复）。
 3. 访问处置器与主程序（或其他处置器）共享的全局数据结构时，屏蔽所有信号。
-4. 用关键词 `volatile` 声明全局变量。
+4. 用关键词 `volatile` 声明可能被改变的全局变量。
    - 迫使对该变量的每次访问都需要访问内存，从而避免编译器将其缓存于寄存器内。
 5. 用类型 `sio_atomic_t` 声明全局旗标（第 0 条）。
    - 【原子性 (atomicity)】读写只需一条指令，不会被其他信号中断，故不必屏蔽信号（第 3 条）。
@@ -738,12 +745,14 @@ void handler1(int sig) {
 void handler2(int sig) {
   int olderrno = errno;
   while (waitpid(-1, NULL, 0) > 0)  /* ✅ 收割所有 */
-		Sio_puts("Handler reaped child\n");
+    Sio_puts("Handler reaped child\n");
   if (errno != ECHILD)
     Sio_error("waitpid error");
   errno = olderrno;
 }
 ```
+
+⚠️ `while` 中的 `waitpid()` 不能用本书作者提供的封装 `Waitpid()` 替换。
 
 ### 兼容性
 

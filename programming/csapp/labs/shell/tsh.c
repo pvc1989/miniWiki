@@ -139,14 +139,80 @@ void Sigaddset(sigset_t *set, int signum)
         unix_error("Sigaddset error");
     return;
 }
+/*************************************************************
+ * The Sio (Signal-safe I/O) package - simple reentrant output
+ * functions that are safe for signal handlers.
+ *************************************************************/
+static void sio_reverse(char s[])
+{
+    int c, i, j;
+
+    for (i = 0, j = strlen(s)-1; i < j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+static void sio_ltoa(long v, char s[], int b) 
+{
+    int c, i = 0;
+    int neg = v < 0;
+
+    if (neg)
+        v = -v;
+
+    do {  
+        s[i++] = ((c = (v % b)) < 10)  ?  c + '0' : c - 10 + 'a';
+    } while ((v /= b) > 0);
+
+    if (neg)
+        s[i++] = '-';
+
+    s[i] = '\0';
+    sio_reverse(s);
+}
+static size_t sio_strlen(char s[])
+{
+    int i = 0;
+
+    while (s[i] != '\0')
+        ++i;
+    return i;
+}
 ssize_t sio_puts(char s[])
 {
-    return write(STDOUT_FILENO, s, strlen(s));
+    return write(STDOUT_FILENO, s, sio_strlen(s));
+}
+ssize_t sio_putl(long v) /* Put long */
+{
+    char s[128];
+    
+    sio_ltoa(v, s, 10); /* Based on K&R itoa() */  //line:csapp:sioltoa
+    return sio_puts(s);
 }
 void sio_error(char s[])
 {
     sio_puts(s);
     _exit(1);
+}
+/*******************************
+ * Wrappers for the SIO routines
+ ******************************/
+ssize_t Sio_puts(char s[])
+{
+    ssize_t n;
+  
+    if ((n = sio_puts(s)) < 0)
+        sio_error("Sio_puts error");
+    return n;
+}
+ssize_t Sio_putl(long v)
+{
+    ssize_t n;
+  
+    if ((n = sio_putl(v)) < 0)
+        sio_error("Sio_putl error");
+    return n;
 }
 void Sio_error(char s[])
 {
@@ -251,24 +317,18 @@ void eval(char *cmdline)
     Sigaddset(&mask_one, SIGCHLD);
     Sigprocmask(SIG_BLOCK, &mask_one, &prev_one);
     if ((pid = Fork()) == 0) { /* Child Process */
-        Setpgid(0, 0); /* Put the child in a new process group whose ID
-                            == the child's PID. */
         Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* Unblock SIGCHLD */
+        Setpgid(0, 0); /* Put the child in a new process group whose ID
+                           == the child's PID. */
         Execve(argv[0], argv, environ);
     }
-    else { /* Parent Process */
-        Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Block all */
-        addjob(jobs, pid, 1+bg, cmdline);
-        if (bg) {
-            printf("[%d] (%d) %s", pid2jid(pid), pid, cmdline);
-            fflush(stdout);
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* recover */
-        }
-        else {
-            Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* recover */
-            waitfg(pid);
-        }
-    }
+    Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Block all */
+    addjob(jobs, pid, 1+bg, cmdline);
+    if (bg)
+        printf("[%d] (%d) %s", pid2jid(pid), pid, cmdline);
+    Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* recover */
+    if (!bg)
+        waitfg(pid);
 }
 
 /* 
@@ -360,7 +420,24 @@ void do_bgfg(char **argv)
  */
 void waitfg(pid_t pid)
 {
-    Waitpid(pid, NULL, WUNTRACED);
+    sigset_t mask_all, prev_all;
+    int state = FG;
+
+    Sigfillset(&mask_all);
+    while (state == FG) {
+        sleep(1);
+        Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        if (getjobpid(jobs, pid))
+            state = getjobpid(jobs, pid)->state;
+        else
+            state = UNDEF;
+        Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    }
+
+    if (verbose) {
+        printf("waitfg: Process (%d) no longer the fg process\n", pid);
+        fflush(stdout);
+    }
 }
 
 /*****************
@@ -379,15 +456,25 @@ void sigchld_handler(int sig)
     int olderrno = errno;
     sigset_t mask_all, prev_all;
     pid_t pid;
+    int jid;
 
+    if (verbose)
+        printf("sigchld_handler: entering\n");
     Sigfillset(&mask_all);
     while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) { /* reap all zombies */
         Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        jid = pid2jid(pid);
         deletejob(jobs, pid);
+        if (verbose) {
+            printf("sigchld_handler: Job [%d] (%d) deleted\n", jid, pid);
+            printf("sigchld_handler: Job [%d] (%d) terminates OK (status 0)\n", jid, pid);
+        }
         Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
     if (errno != ECHILD)
         Sio_error("waitpid error");
+    if (verbose)
+        printf("sigchld_handler: exiting\n");
     errno = olderrno;
 }
 
@@ -398,7 +485,12 @@ void sigchld_handler(int sig)
  */
 void sigint_handler(int sig) 
 {
-    return;
+    int olderrno = errno;
+    if (verbose)
+        Sio_puts("sigint_handler: entering\n");
+    if (verbose)
+        Sio_puts("sigint_handler: exiting\n");
+    errno = olderrno;
 }
 
 /*
@@ -408,7 +500,12 @@ void sigint_handler(int sig)
  */
 void sigtstp_handler(int sig) 
 {
-    return;
+    int olderrno = errno;
+    if (verbose)
+        Sio_puts("sigtstp_handler: entering\n");
+    if (verbose)
+        Sio_puts("sigtstp_handler: exiting\n");
+    errno = olderrno;
 }
 
 /*********************
