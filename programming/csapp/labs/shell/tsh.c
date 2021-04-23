@@ -394,10 +394,17 @@ int parseline(const char *cmdline, char **argv)
  */
 int builtin_cmd(char **argv) 
 {
+    sigset_t mask_all, prev_all;
+
     if (!strcmp(argv[0], "quit"))
         exit(0);
-    if (!strcmp(argv[0], "jobs"))
+    if (!strcmp(argv[0], "jobs")) {
+        Sigfillset(&mask_all);
+        Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        listjobs(jobs);
+        Sigprocmask(SIG_SETMASK, &prev_all, NULL);
         return 1;
+    }
     if (!strcmp(argv[0], "bg"))
         return 1;
     if (!strcmp(argv[0], "fg"))
@@ -471,7 +478,7 @@ void sigchld_handler(int sig)
         }
         Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
-    if (errno != ECHILD)
+    if (pid && errno != ECHILD)
         Sio_error("waitpid error");
     if (verbose)
         printf("sigchld_handler: exiting\n");
