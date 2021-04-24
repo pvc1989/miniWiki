@@ -139,6 +139,13 @@ void Sigaddset(sigset_t *set, int signum)
         unix_error("Sigaddset error");
     return;
 }
+void Kill(pid_t pid, int signum) 
+{
+    int rc;
+
+    if ((rc = kill(pid, signum)) < 0)
+        unix_error("Kill error");
+}
 /*************************************************************
  * The Sio (Signal-safe I/O) package - simple reentrant output
  * functions that are safe for signal handlers.
@@ -324,8 +331,10 @@ void eval(char *cmdline)
     }
     Sigprocmask(SIG_BLOCK, &mask_all, NULL); /* Block all */
     addjob(jobs, pid, 1+bg, cmdline);
-    if (bg)
+    if (bg) {
         printf("[%d] (%d) %s", pid2jid(pid), pid, cmdline);
+        fflush(stdout);
+    }
     Sigprocmask(SIG_SETMASK, &prev_one, NULL); /* recover */
     if (!bg)
         waitfg(pid);
@@ -463,25 +472,40 @@ void sigchld_handler(int sig)
     int olderrno = errno;
     sigset_t mask_all, prev_all;
     pid_t pid;
-    int jid;
+    int jid, status;
 
-    if (verbose)
-        printf("sigchld_handler: entering\n");
     Sigfillset(&mask_all);
-    while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) { /* reap all zombies */
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    if (verbose) {
+        printf("sigchld_handler: entering\n");
+        fflush(stdout);
+    }
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    while ((pid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0) {
         Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-        jid = pid2jid(pid);
-        deletejob(jobs, pid);
-        if (verbose) {
-            printf("sigchld_handler: Job [%d] (%d) deleted\n", jid, pid);
-            printf("sigchld_handler: Job [%d] (%d) terminates OK (status 0)\n", jid, pid);
+        jid = getjobpid(jobs, pid)->jid;
+        if (WIFSTOPPED(status)) {
+            if (verbose)
+                printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
+        }
+        else {
+            deletejob(jobs, pid); /* reap all zombies */
+            if (verbose) {
+                printf("sigchld_handler: Job [%d] (%d) deleted\n", jid, pid);
+                if (WIFEXITED(status))
+                    printf("sigchld_handler: Job [%d] (%d) terminates OK (status %d)\n", jid, pid, WEXITSTATUS(status));
+                else
+                    printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
+            }
         }
         Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
     if (pid && errno != ECHILD)
         Sio_error("waitpid error");
-    if (verbose)
+    if (verbose) {
         printf("sigchld_handler: exiting\n");
+        fflush(stdout);
+    }
     errno = olderrno;
 }
 
@@ -493,10 +517,25 @@ void sigchld_handler(int sig)
 void sigint_handler(int sig) 
 {
     int olderrno = errno;
-    if (verbose)
-        Sio_puts("sigint_handler: entering\n");
-    if (verbose)
-        Sio_puts("sigint_handler: exiting\n");
+    sigset_t mask_all, prev_all;
+    pid_t pid;
+
+    Sigfillset(&mask_all);
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    if (verbose) {
+        printf("sigint_handler: entering\n");
+        fflush(stdout);
+    }
+    pid = fgpid(jobs);
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    Kill(pid, SIGINT);
+    Kill(getpid(), SIGCHLD);
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    if (verbose) {
+        printf("sigint_handler: Job (%d) killed\n", pid);
+        printf("sigint_handler: exiting\n");
+    }
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     errno = olderrno;
 }
 
@@ -508,10 +547,23 @@ void sigint_handler(int sig)
 void sigtstp_handler(int sig) 
 {
     int olderrno = errno;
-    if (verbose)
-        Sio_puts("sigtstp_handler: entering\n");
-    if (verbose)
-        Sio_puts("sigtstp_handler: exiting\n");
+    sigset_t mask_all, prev_all;
+    pid_t pid;
+    struct job_t* job;
+
+    Sigfillset(&mask_all);
+    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+    pid = fgpid(jobs);
+    job = getjobpid(jobs, pid);
+    job->state = ST;
+    if (verbose) {
+        printf("sigtstp_handler: entering\n");
+        printf("sigtstp_handler: Job [%d] (%d) stopped\n", job->jid, pid);
+        printf("sigtstp_handler: exiting\n");
+    }
+    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+    Kill(pid, SIGTSTP);
+    Kill(getpid(), SIGCHLD);
     errno = olderrno;
 }
 
