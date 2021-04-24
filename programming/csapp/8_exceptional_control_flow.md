@@ -322,6 +322,14 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 ### 检查被收割子进程的退出状态
 
 若 `statusp != NULL`，则会向其写入 `status` 的值。
+`status` 的值不应直接使用，而应当用以下『宏 (macro)』解读之：
+
+- `WIFEXITED(status)` 返回：被等待子进程是否结束
+- `WIFSTOPPED(status)` 返回：被等待子进程是否暂停
+- `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#信号)
+- `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#信号)
+
+更多宏可用 `man waitpid` 命令查询。
 
 ### 错误条件
 
@@ -421,7 +429,7 @@ int pause(void);
 int execve(const char *filename, const char *argv[], const char *envp[]);
 ```
 
-该函数将 `filename` 所表示的程序加载到当前进程的上下文中，再运行之（将  `argv` 与 `envp` 转发给该程序的 `main` 函数，再移交控制权）。
+该函数将 `filename` 所表示的程序加载到当前进程的上下文中，再运行之（将  `argv` 与 `envp` 转发给该程序的 `main()` 函数，再移交控制权）。若未出错，则不返回（由被加载的 `main()` 结束进程）；否则，返回 `-1`。
 
 其中 `argv` 与 `envp` 都是以 `NULL` 结尾的（字符串）指针数组。
 
@@ -580,7 +588,7 @@ int parseline(char *buf, char **argv) {
 |  17  | `SIGCHLD` |  CHiLD terminated or stopped  |
 |  18  | `SIGCONT` |      CONTinue if stopped      |
 |  19  | `SIGSTOP` | STOP signal not from terminal |
-|  20  | `SIGTSTP` | SToP signal not from Terminal |
+|  20  | `SIGTSTP` |   SToP signal from Terminal   |
 
 ⚠️ `SIGKILL` 既不能被捕获，又不能被忽略，可用于强制结束进程。
 
