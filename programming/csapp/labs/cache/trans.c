@@ -178,72 +178,43 @@ void transpose_64x64(int M, int N, int A[N][M], int B[M][N])
     }
 }
 
-void transpose_8x8(
-    int* row0, int* row1, int* row2, int* row3,
-    int* row4, int* row5, int* row6, int* row7)
-{
-    swap(row0 + 1, row1 + 0);
-    swap(row0 + 2, row2 + 0);
-    swap(row0 + 3, row3 + 0);
-    swap(row0 + 4, row4 + 0);
-    swap(row0 + 5, row5 + 0);
-    swap(row0 + 6, row6 + 0);
-    swap(row0 + 7, row7 + 0);
-
-    swap(row1 + 2, row2 + 1);
-    swap(row1 + 3, row3 + 1);
-    swap(row1 + 4, row4 + 1);
-    swap(row1 + 5, row5 + 1);
-    swap(row1 + 6, row6 + 1);
-    swap(row1 + 7, row7 + 1);
-
-    swap(row2 + 3, row3 + 2);
-    swap(row2 + 4, row4 + 2);
-    swap(row2 + 5, row5 + 2);
-    swap(row2 + 6, row6 + 2);
-    swap(row2 + 7, row7 + 2);
-
-    swap(row3 + 4, row4 + 3);
-    swap(row3 + 5, row5 + 3);
-    swap(row3 + 6, row6 + 3);
-    swap(row3 + 7, row7 + 3);
-
-    swap(row4 + 5, row5 + 4);
-    swap(row4 + 6, row6 + 4);
-    swap(row4 + 7, row7 + 4);
-
-    swap(row5 + 6, row6 + 5);
-    swap(row5 + 7, row7 + 5);
-
-    swap(row6 + 7, row7 + 6);
-}
-
 char transpose_61x67_desc[] = "Transpose 61x67";
 void transpose_61x67(int M, int N, int A[N][M], int B[M][N])
 {
     int i_min, j_min, k;
-    for (i_min = 0; i_min < 64; i_min += 8)
+    int x0, x1, x2, x3, x4, x5, x6, x7;
+    for (j_min = 0; j_min < 56; j_min += 8)
     {
-        for (j_min = 0; j_min < 56; j_min += 8)
+        for (i_min = 0; i_min < 64; i_min += 8)
         {
-            for (k = 0; k != 8; ++k)
-                copy_1x8(&A[i_min + k][j_min], &B[j_min + k][i_min]);
-            transpose_8x8(
-                &B[j_min + 0][i_min], &B[j_min + 1][i_min],
-                &B[j_min + 2][i_min], &B[j_min + 3][i_min],
-                &B[j_min + 4][i_min], &B[j_min + 5][i_min],
-                &B[j_min + 6][i_min], &B[j_min + 7][i_min]);
+            for (k = 0; k != 8; ++k) {
+                x0 = A[i_min + k][j_min + 0];
+                x1 = A[i_min + k][j_min + 1];
+                x2 = A[i_min + k][j_min + 2];
+                x3 = A[i_min + k][j_min + 3];
+                x4 = A[i_min + k][j_min + 4];
+                x5 = A[i_min + k][j_min + 5];
+                x6 = A[i_min + k][j_min + 6];
+                x7 = A[i_min + k][j_min + 7];
+                B[j_min + 0][i_min + k] = x0;
+                B[j_min + 1][i_min + k] = x1;
+                B[j_min + 2][i_min + k] = x2;
+                B[j_min + 3][i_min + k] = x3;
+                B[j_min + 4][i_min + k] = x4;
+                B[j_min + 5][i_min + k] = x5;
+                B[j_min + 6][i_min + k] = x6;
+                B[j_min + 7][i_min + k] = x7;
+            }
         }
-        for (j_min = 56; j_min < 61; ++j_min)
-            for (k = 0; k != 8; ++k)
-                B[j_min][i_min + k] = A[i_min + k][j_min];
     }
-    for (i_min = 64; i_min < 67; ++i_min)
-        for (j_min = 0; j_min < 56; j_min += 8)
-            for (k = 0; k != 8; ++k)
-                B[j_min + k][i_min] = A[i_min][j_min + k];
-    for (i_min = 64; i_min < 67; ++i_min)
+    for (i_min = 0; i_min < 64; ++i_min)
         for (j_min = 56; j_min < 61; ++j_min)
+            B[j_min][i_min] = A[i_min][j_min];
+    for (j_min = 0; j_min < 56; ++j_min)
+        for (i_min = 64; i_min < 67; ++i_min)
+            B[j_min][i_min] = A[i_min][j_min];
+    for (j_min = 56; j_min < 61; ++j_min)
+        for (i_min = 64; i_min < 67; ++i_min)
             B[j_min][i_min] = A[i_min][j_min];
 }
 
