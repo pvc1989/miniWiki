@@ -102,14 +102,6 @@ void Setpgid(pid_t pid, pid_t pgid) {
         unix_error("Setpgid error");
     return;
 }
-pid_t Waitpid(pid_t pid, int *iptr, int options) 
-{
-    pid_t retpid;
-
-    if ((retpid  = waitpid(pid, iptr, options)) < 0) 
-        unix_error("Waitpid error");
-    return(retpid);
-}
 void Sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
 {
     if (sigprocmask(how, set, oldset) < 0)
@@ -520,43 +512,39 @@ void sigchld_handler(int sig)
 {
     int olderrno = errno;
     sigset_t mask_all, prev_all;
-    pid_t pid;
-    int jid, status;
+    pid_t pid; int jid, status;
+    char buf[MAXLINE]; int pos = 0; /* local buffer for sprintf() */
+
+    if (verbose)
+        Sio_puts("sigchld_handler: entering\n");
 
     Sigfillset(&mask_all);
-    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-    if (verbose) {
-        printf("sigchld_handler: entering\n");
-        fflush(stdout);
-    }
-    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     while ((pid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0) {
         Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
         jid = getjobpid(jobs, pid)->jid;
-        if (WIFSTOPPED(status)) {
-            printf("Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
-            fflush(stdout);
-        }
+        if (WIFSTOPPED(status))
+            pos += sprintf(buf + pos, "Job [%d] (%d) stopped by signal %d\n", jid, pid, WSTOPSIG(status));
         else {
             deletejob(jobs, pid); /* reap all zombies */
             if (verbose)
-                printf("sigchld_handler: Job [%d] (%d) deleted\n", jid, pid);
+                pos += sprintf(buf + pos, "sigchld_handler: Job [%d] (%d) deleted\n", jid, pid);
             if (WIFEXITED(status)) {
                 if (verbose)
-                    printf("sigchld_handler: Job [%d] (%d) terminates OK (status %d)\n", jid, pid, WEXITSTATUS(status));
+                    pos += sprintf(buf + pos, "sigchld_handler: Job [%d] (%d) terminates OK (status %d)\n", jid, pid, WEXITSTATUS(status));
             }
-            else {
-                printf("Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
-            }
+            else
+                pos += sprintf(buf + pos, "Job [%d] (%d) terminated by signal %d\n", jid, pid, WTERMSIG(status));
         }
+        // buf[pos] = '\0';
+        Sio_puts(buf);
         Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     }
     if (pid && errno != ECHILD)
         Sio_error("waitpid error");
-    if (verbose) {
-        printf("sigchld_handler: exiting\n");
-        fflush(stdout);
-    }
+
+    if (verbose)
+        Sio_puts("sigchld_handler: exiting\n");
+
     errno = olderrno;
 }
 
@@ -570,23 +558,23 @@ void sigint_handler(int sig)
     int olderrno = errno;
     sigset_t mask_all, prev_all;
     pid_t pid;
+    char buf[MAXLINE]; int pos = 0; /* local buffer for sprintf() */
+
+    if (verbose)
+        Sio_puts("sigint_handler: entering\n");
 
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-    if (verbose) {
-        printf("sigint_handler: entering\n");
-        fflush(stdout);
-    }
     pid = fgpid(jobs);
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
     Kill(-pid, SIGINT);
-    Kill(getpid(), SIGCHLD);
-    Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+
     if (verbose) {
-        printf("sigint_handler: Job (%d) killed\n", pid);
-        printf("sigint_handler: exiting\n");
+        pos += sprintf(buf + pos, "sigint_handler: Job (%d) killed\n", pid);
+        pos += sprintf(buf + pos, "sigint_handler: exiting\n");
+        Sio_puts(buf);
     }
-    Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+
     errno = olderrno;
 }
 
@@ -599,22 +587,29 @@ void sigtstp_handler(int sig)
 {
     int olderrno = errno;
     sigset_t mask_all, prev_all;
-    pid_t pid;
-    struct job_t* job;
+    pid_t pid; int jid; struct job_t* job;  /* job info */
+    char buf[MAXLINE]; int pos = 0; /* local buffer for sprintf() */
+
+    if (verbose)
+        Sio_puts("sigtstp_handler: entering\n");
 
     Sigfillset(&mask_all);
     Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
     pid = fgpid(jobs);
     job = getjobpid(jobs, pid);
     job->state = ST;
-    if (verbose) {
-        printf("sigtstp_handler: entering\n");
-        printf("sigtstp_handler: Job [%d] (%d) stopped\n", job->jid, pid);
-        printf("sigtstp_handler: exiting\n");
-    }
+    jid = job->jid;
     Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+
     Kill(-pid, SIGTSTP);
     Kill(getpid(), SIGCHLD);
+
+    if (verbose) {
+        pos += sprintf(buf + pos, "sigtstp_handler: Job [%d] (%d) stopped\n", jid, pid);
+        pos += sprintf(buf + pos, "sigtstp_handler: exiting\n");
+        Sio_puts(buf);
+    }
+
     errno = olderrno;
 }
 
