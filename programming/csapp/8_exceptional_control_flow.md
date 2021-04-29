@@ -324,10 +324,12 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 若 `statusp != NULL`，则会向其写入 `status` 的值。
 `status` 的值不应直接使用，而应当用以下『宏 (macro)』解读之：
 
-- `WIFEXITED(status)` 返回：被等待子进程是否结束
-- `WIFSTOPPED(status)` 返回：被等待子进程是否暂停
-- `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#信号)
-- `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#信号)
+- `WIFEXITED(status)` 返回：被等待子进程是否正常结束
+  - `WEXITSTATUS(status)` 返回：被等待子进程的退出状态
+- `WIFSIGNALED(status)` 返回：被等待子进程是否因信号而结束
+  - `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#信号)
+- `WIFSTOPPED(status)` 返回：被等待子进程是否因信号而暂停
+  - `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#信号)
 
 更多宏可用 `man waitpid` 命令查询。
 
