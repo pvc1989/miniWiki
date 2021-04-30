@@ -34,14 +34,14 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 - 七：链接
 - [八：异常控制流](./8_exceptional_control_flow.md)
-- 九：虚拟存储
+- [九：虚拟内存](./9_virtual_memory.md)
 
 ## 第三部分：程序间互动及通信
 
 - 十：系统级读写
 - 十一：网络编程
 - 十二：并发编程
-- 附录：异常处理
+- 附录：异常处置 ([`csapp.h`](http://csapp.cs.cmu.edu/3e/ics3/code/include/csapp.h), [`csapp.c`](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c))
 
 # [Lab Assignments](https://csapp.cs.cmu.edu/3e/labs.html)
 

@@ -26,7 +26,7 @@ title: 异常控制流
   - 【异常控制流 (exceptional control flow, ECF)】含有由不能被程序内部变量捕捉的（甚至与程序执行无关的）系统状态变化引起的控制流突变。
 
 理解 ECF 有助于
-- 理解重要系统概念（读写、进程、虚拟内存）
+- 理解重要系统概念（读写、进程、[虚拟内存](./9_virtual_memory.md)）
 - 理解应用程序与操作系统的交互
 - 编写应用程序（shell、网络服务器）
 - 理解『并发 (concurrency)』
@@ -280,7 +280,7 @@ void exit(int status);
 pid_t fork(void);
 ```
 
-子进程刚被创建时，几乎与亲进程有相同的上下文（用户级虚拟内存空间、已打开文件的描述符）。
+子进程刚被创建时，几乎与亲进程有相同的上下文（用户级[虚拟内存](./9_virtual_memory.md)空间、已打开文件的描述符）。
 
 函数 `fork()` 有两个返回值：在子进程中返回 `0`，在亲进程中返回子进程的 PID。
 
@@ -974,12 +974,26 @@ void bar() {
 
 ## `strace`
 
+打印某进程的[系统调用](#系统调用)及[信号](#信号)。
+
+```shell
+# options
+-e trace=syscall_set
+ --trace=syscall_set
+-e signal=set
+ --signal=set
+# e.g.
+strace --trace=read,write --signal=SIGINT,SIGTSTP /bin/ls ~
+```
+
 ## `ps`
 
 打印当前所有（含[僵尸](#zombie)）进程的信息（PID、TTY、TIME、CMD），并返回。
 
 ```shell
-ps -l # 显示更多信息
+ps -l  # 列出与当前 shell 有关的进程
+ps aux # 列出系统内所有用户的所有进程
+pstree -u PID # 以树的形式列出各用户的进程
 ```
 
 ## `top`
@@ -992,7 +1006,7 @@ top -o [cpu|mem|pid] # 按 CPU（默认）、内存、PID 排序
 
 ## `pmap`
 
-打印某进程的内存映射。
+打印某进程的[存储映射](./9_virtual_memory.md#memory-map)。
 
 ## `/proc`
 
