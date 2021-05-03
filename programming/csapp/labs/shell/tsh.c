@@ -126,6 +126,19 @@ void Sigaddset(sigset_t *set, int signum)
         unix_error("Sigaddset error");
     return;
 }
+void Sigdelset(sigset_t *set, int signum)
+{
+    if (sigdelset(set, signum) < 0)
+        unix_error("Sigdelset error");
+    return;
+}
+int Sigsuspend(sigset_t *set)
+{
+    int rc = sigsuspend(set); /* always returns -1 */
+    if (rc != -1 || errno != EINTR)
+        unix_error("Sigsuspend error");
+    return rc;
+}
 void Kill(pid_t pid, int signum) 
 {
     int rc;
@@ -478,17 +491,21 @@ void do_bgfg(char **argv)
 void waitfg(pid_t pid)
 {
     sigset_t mask_all, prev_all;
-    int state = FG;
+    pid_t fg_pid;
 
     Sigfillset(&mask_all);
-    while (state == FG) {
-        sleep(1);
+
+    while (1) {
         Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
-        if (getjobpid(jobs, pid))
-            state = getjobpid(jobs, pid)->state;
-        else
-            state = UNDEF;
-        Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+        fg_pid = fgpid(jobs);
+        if (fg_pid == pid) {
+            Sigsuspend(&prev_all);
+            Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+        }
+        else {
+            Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+            break;
+        }
     }
 
     if (verbose) {

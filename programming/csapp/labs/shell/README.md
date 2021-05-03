@@ -67,6 +67,36 @@ void eval(char *cmdline)
 }
 ```
 
+In `waitfg()`, use `sigsuspend()` to wait:
+
+```c
+void waitfg(pid_t pid)
+{
+    sigset_t mask_all, prev_all;
+    pid_t fg_pid;
+
+    Sigfillset(&mask_all);
+
+    while (1) {
+        Sigprocmask(SIG_BLOCK, &mask_all, &prev_all);
+        fg_pid = fgpid(jobs);
+        if (fg_pid == pid) {
+            Sigsuspend(&prev_all);
+            Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+        }
+        else {
+            Sigprocmask(SIG_SETMASK, &prev_all, NULL);
+            break;
+        }
+    }
+
+    if (verbose) {
+        printf("waitfg: Process (%d) no longer the fg process\n", pid);
+        fflush(stdout);
+    }
+}
+```
+
 ## 4. Run a BG job.
 
 ```c

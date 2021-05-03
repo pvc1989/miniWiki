@@ -880,20 +880,22 @@ int main () {
 
     /* Parent */
     pid = 0;
-    Sigprocmask(SIG_SETMASK, &prev, NULL); /* Unblock SIGCHLD */
-
     /* Wait for SIGCHLD to be received */
     while (!pid)
-      Sigsuspend(&mask);
+      Sigsuspend(&prev); /* Temporarily unblock SIGCHLD */
+    Sigprocmask(SIG_SETMASK, &prev, NULL); /* Optinally unblock SIGCHLD */
     /* 错误一：消耗资源
+    Sigprocmask(SIG_SETMASK, &prev, NULL);
     while (!pid)
       ;
      */
     /* 错误二：可能在检查 pid 后、运行 Pause 前收到 SIGCHILD
+    Sigprocmask(SIG_SETMASK, &prev, NULL);
     while (!pid)
       Pause();
      */
     /* 错误三：等待时间太长 
+    Sigprocmask(SIG_SETMASK, &prev, NULL);
     while (!pid)
       sleep(1);
      */
@@ -905,11 +907,23 @@ int main () {
 }
 ```
 
-其中 `Sigsuspend(&mask)` 相当于以下三条语句的『原子化』版本：
+其中 `Sigsuspend(&prev)` 是对系统调用 `sigsuspend(&prev)` 的封装：
+
 ```c
-Sigprocmask(SIG_BLOCK, &mask, &prev);
+int Sigsuspend(const sigset_t *set) {
+    int rc = sigsuspend(set); /* always returns -1 */
+    if (errno != EINTR)
+        unix_error("Sigsuspend error");
+    return rc;
+}
+```
+
+其效果相当于以下三条语句的『原子化』版本：
+
+```c
+Sigprocmask(SIG_BLOCK, &prev, &mask);
 Pause();
-Sigprocmask(SIG_SETMASK, &prev, NULL);
+Sigprocmask(SIG_SETMASK, &mask, NULL);
 ```
 
 # 6. 非局部跳转（用户级 ECF）
