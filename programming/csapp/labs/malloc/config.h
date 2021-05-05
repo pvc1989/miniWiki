@@ -9,64 +9,97 @@
  */
 
 /*
+ * Config variables for submitting autoresults to the Autolab server
+ * Note: The COURSE and LAB variables must match the directory names
+ * on the Autolab server.
+ */
+
+/*
  * This is the default path where the driver will look for the
  * default tracefiles. You can override it at runtime with the -t flag.
  */
-#define TRACEDIR "/afs/cs/project/ics2/im/labs/malloclab/traces/"
+#define TRACEDIR "./traces/"
 
 /*
  * This is the list of default tracefiles in TRACEDIR that the driver
  * will use for testing. Modify this if you want to add or delete
- * traces from the driver's test suite. For example, if you don't want
- * your students to implement realloc, you can delete the last two
- * traces.
+ * traces from the driver's test suite.
+ *
+ * The first four test correctness.  The last several test utilization
+ * and performance.
  */
 #define DEFAULT_TRACEFILES \
-  "amptjp-bal.rep",\
-  "cccp-bal.rep",\
-  "cp-decl-bal.rep",\
-  "expr-bal.rep",\
-  "coalescing-bal.rep",\
-  "random-bal.rep",\
-  "random2-bal.rep",\
-  "binary-bal.rep",\
-  "binary2-bal.rep",\
-  "realloc-bal.rep",\
-  "realloc2-bal.rep"
+	"amptjp.rep", \
+	"cccp.rep", \
+	"coalescing-bal.rep", \
+	"corners.rep", \
+	"cp-decl.rep", \
+	"hostname.rep", \
+	"login.rep", \
+	"ls.rep", \
+	"malloc-free.rep", \
+	"malloc.rep", \
+	"perl.rep", \
+	"random.rep", \
+	"rm.rep", \
+	"short2.rep", \
+	"boat.rep",\
+	"lrucd.rep", \
+	"alaska.rep", \
+	"nlydf.rep", \
+	"qyqyc.rep", \
+	"rulsr.rep"
+
+
 
 /*
- * This constant gives the estimated performance of the libc malloc
- * package using our traces on some reference system, typically the
- * same kind of system the students use. Its purpose is to cap the
- * contribution of throughput to the performance index. Once the
- * students surpass the AVG_LIBC_THRUPUT, they get no further benefit
- * to their score.  This deters students from building extremely fast,
- * but extremely stupid malloc packages.
+ * Students get 0 points for this point or below (ops / sec)
  */
-#define AVG_LIBC_THRUPUT      600E3  /* 600 Kops/sec */
+#define MIN_SPEED       0E3
 
- /* 
+
+/*
+ * Students get 0 points for this allocation fraction or below
+ */
+#define MIN_SPACE       0.60
+
+
+
+/* 
+ * Students can get more points for building faster allocators, up to
+ * this point (in ops / sec)
+ */
+#define MAX_SPEED       25000E3
+
+/* 
+ * Students can get more points for building more efficient allocators,
+ * up to this point (1 is perfect).
+ */
+#define MAX_SPACE       0.93
+
+ /*
   * This constant determines the contributions of space utilization
   * (UTIL_WEIGHT) and throughput (1 - UTIL_WEIGHT) to the performance
-  * index.  
+  * index.
   */
-#define UTIL_WEIGHT .60
 
-/* 
- * Alignment requirement in bytes (either 4 or 8) 
- */
-#define ALIGNMENT 8  
+#define UTIL_WEIGHT .63
 
-/* 
- * Maximum heap size in bytes 
+/*
+ * Alignment requirement in bytes (either 4 or 8)
  */
-#define MAX_HEAP (20*(1<<20))  /* 20 MB */
+#define ALIGNMENT 8
+
+/*
+ * Maximum heap size in bytes
+ */
+#define MAX_HEAP (100*(1<<20))  /* 100 MB */
 
 /*****************************************************************************
  * Set exactly one of these USE_xxx constants to "1" to select a timing method
  *****************************************************************************/
-#define USE_FCYC   0   /* cycle counter w/K-best scheme (x86 & Alpha only) */
+#define USE_FCYC   1   /* cycle counter w/K-best scheme (x86 & Alpha only) */
 #define USE_ITIMER 0   /* interval timer (any Unix box) */
-#define USE_GETTOD 1   /* gettimeofday (any Unix box) */
+#define USE_GETTOD 0   /* gettimeofday (any Unix box) */
 
 #endif /* __CONFIG_H */
