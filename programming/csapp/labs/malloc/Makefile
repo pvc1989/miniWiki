@@ -12,6 +12,7 @@ mdriver: $(OBJS)
 	$(CC) $(CFLAGS) -o mdriver $(OBJS)
 
 mdriver.o: mdriver.c fsecs.h fcyc.h clock.h memlib.h config.h mm.h driverlib.h
+	$(CC) $(CFLAGS) -c $< -Wno-error=unused-result -Wno-error=unused-but-set-variable
 memlib.o: memlib.c memlib.h
 mm.o: mm.c mm.h memlib.h
 fsecs.o: fsecs.c fsecs.h config.h
