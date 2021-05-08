@@ -7,9 +7,14 @@ title: Malloc Lab
 # Build & Run
 
 ```shell
-make && ./mdriver -V
-make && ./mdriver -f <tracefile> # Run a particular tracefile (12 times).
-make && ./mdriver -c <tracefile> # Run a particular tracefile only once.
+# Get the final score (might be slow):
+make clean && make && ./mdriver -V
+# Run a particular tracefile (12 times):
+make clean && make && ./mdriver -V -f <tracefile>
+# Run a particular tracefile only once:
+make clean && make && ./mdriver -V -c <tracefile>
+# If only mm.c and/or its dependencies have been modified, run this:
+touch mm.o && rm mm.o && make && ./mdriver -V -c <tracefile>
 ```
 
 The `-Werror` option in `$(CFLAGS)` made the compiler treat warnings as errors. To build the project, we need to relax such errors back to warnings. This can be done by adding a single line in the `Makefile`, i.e.
@@ -19,14 +24,91 @@ mdriver.o: mdriver.c fsecs.h fcyc.h clock.h memlib.h config.h mm.h driverlib.h
 	$(CC) $(CFLAGS) -c $< -Wno-error=unused-result -Wno-error=unused-but-set-variable
 ```
 
-# `mm-naive.c`
+# Trace File Format
+
+A trace file is an ASCII file. It begins with a 4-line header:
+
+```
+<weight>          /* weight for this trace (0 or 1) */
+<num_ids>         /* number of request id's */
+<num_ops>         /* number of requests (operations) */
+<sugg_heapsize>   /* suggested heap size (unused) */
+```
+
+The header is followed by `num_ops` text lines. Each line denotes either an allocate `[a]`, reallocate `[r]`, or free `[f]` request.
+There is no support for `calloc`.
+The `<alloc_id>` is an integer that uniquely identifies an allocate or reallocate request.  
+
+```
+a <id> <bytes>  /* ptr_<id> = malloc(<bytes>) */
+r <id> <bytes>  /* realloc(ptr_<id>, <bytes>) */ 
+f <id>          /* free(ptr_<id>) */
+```
+
+# `mm_naive.c`
 
 - A block is allocated by simply incrementing the `brk` pointer.
 - Blocks are never coalesced or reused, i.e. do nothing in `free()`.
 
-# `mm-implicit.c`
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    23%    4805  0.000051 94653 ./traces/amptjp.rep
+ * yes    19%    5032  0.000063 80269 ./traces/cccp.rep
+ * yes     0%   14400  0.000214 67351 ./traces/coalescing-bal.rep
+   yes   100%      15  0.000000 99906 ./traces/corners.rep
+ * yes    30%    5683  0.000067 84602 ./traces/cp-decl.rep
+ * yes    68%     118  0.000001180750 ./traces/hostname.rep
+ * yes    65%   19405  0.000116167961 ./traces/login.rep
+ * yes    75%     372  0.000002149859 ./traces/ls.rep
+   yes    77%      17  0.000000138960 ./traces/malloc-free.rep
+   yes    94%      10  0.000000 77513 ./traces/malloc.rep
+ * yes    71%    1494  0.000020 75126 ./traces/perl.rep
+ * yes    36%    4800  0.000043111876 ./traces/random.rep
+ * yes    83%     147  0.000001138840 ./traces/rm.rep
+   yes   100%      12  0.000000 33509 ./traces/short2.rep
+ * yes    44%   57716  0.000310186211 ./traces/boat.rep
+ * yes    25%     200  0.000001168223 ./traces/lrucd.rep
+ * yes     0%  100000  0.001144 87405 ./traces/alaska.rep
+ * yes    34%     200  0.000001235381 ./traces/nlydf.rep
+ * yes    32%     200  0.000001206228 ./traces/qyqyc.rep
+ * yes    28%     200  0.000001227634 ./traces/rulsr.rep
+16        40%  214772  0.002035105545
 
-# `mm-explicit.c`
+Perf index = 0 (util) + 37 (thru) = 37/100
+```
 
-# `mm-segregated.c`
+# `mm_implicit.c`
+
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    99%    4805  0.012170   395 ./traces/amptjp.rep
+ * yes    99%    5032  0.010735   469 ./traces/cccp.rep
+ * yes    66%   14400  0.000110130843 ./traces/coalescing-bal.rep
+   yes    96%      15  0.000000 46831 ./traces/corners.rep
+ * yes    99%    5683  0.020750   274 ./traces/cp-decl.rep
+ * yes    75%     118  0.000012  9967 ./traces/hostname.rep
+ * yes    90%   19405  0.271233    72 ./traces/login.rep
+ * yes    88%     372  0.000071  5263 ./traces/ls.rep
+   yes    28%      17  0.000000 86359 ./traces/malloc-free.rep
+   yes    34%      10  0.000000 48342 ./traces/malloc.rep
+ * yes    86%    1494  0.001550   964 ./traces/perl.rep
+ * yes    92%    4800  0.008296   579 ./traces/random.rep
+ * yes    79%     147  0.000017  8858 ./traces/rm.rep
+   yes    89%      12  0.000000 42148 ./traces/short2.rep
+ * yes    56%   57716  2.628879    22 ./traces/boat.rep
+ * yes    63%     200  0.000004 46040 ./traces/lrucd.rep
+ * yes    86%  100000  0.005283 18928 ./traces/alaska.rep
+ * yes    89%     200  0.000007 27735 ./traces/nlydf.rep
+ * yes    57%     200  0.000005 38156 ./traces/qyqyc.rep
+ * yes    68%     200  0.000004 53665 ./traces/rulsr.rep
+16        81%  214772  2.959125    73
+
+Perf index = 40 (util) + 0 (thru) = 40/100
+```
+
+# `mm_explicit.c`
+
+# `mm_segregated.c`
 

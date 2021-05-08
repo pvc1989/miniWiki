@@ -105,11 +105,11 @@ extern void mm_free(void *ptr);
 #define GET_SIZE(p)   (GET(p) & ~0x7)
 #define GET_ALLOC(p)  (GET(p) &  0x1)
 
-/* Given block ptr block, compute address of its HeaDeR and FooTeR */
+/* Given block ptr block, compute address of its HEADER and FOOTER */
 #define HEADER(block)  ((char *)(block) - WSIZE)
 #define FOOTER(block)  ((char *)(block) + GET_SIZE(HEADER(block)) - DSIZE)
 
-/* Given block ptr block, compute address of NEXT and PREVious BLocKs */
+/* Given block ptr block, compute address of NEXT and PREVious blocks */
 #define NEXT(block)  ((char *)(block) + GET_SIZE(((char *)(block) - WSIZE)))
 #define PREV(block)  ((char *)(block) - GET_SIZE(((char *)(block) - DSIZE)))
 
@@ -151,7 +151,7 @@ static void *extend_heap(size_t words) {
     /* Initialize free block header/footer and the epilogue header */
     PUT(HEADER(block), PACK(size, 0));         /* Free block header */
     PUT(FOOTER(block), PACK(size, 0));         /* Free block footer */
-    PUT(HEADER(NEXT(block)), PACK(0, 1)); /* New epilogue header */
+    PUT(HEADER(NEXT(block)), PACK(0, 1));    /* New epilogue header */
 
     /* Coalesce if the previous block was free */
     return coalesce(block);
@@ -226,7 +226,7 @@ void *mm_malloc(size_t size) {
         alloc_size = DSIZE * (((size + DSIZE) + (DSIZE-1)) / DSIZE);
 
     /* Search the free list for a fit */
-    if (block = find_fit(alloc_size) == NULL) {
+    if ((block = find_fit(alloc_size)) == NULL) {
         /* No fit found. Get more memory. */
         chunk_size = MAX(alloc_size, CHUNK);
         if ((block = extend_heap(chunk_size/WSIZE)) == NULL)  
@@ -242,27 +242,29 @@ static void *find_fit(size_t alloc_size) {
 
     do { /* First-hit */
         block = NEXT(block);
-        block_size = GET_SIZE(block);
+        block_size = GET_SIZE(HEADER(block));
         if (block_size == 0) {
             block = NULL;
             break;
         }
-    } while (block_size < alloc_size || GET_ALLOC(block));
+    } while (block_size < alloc_size || GET_ALLOC(HEADER(block)));
 
     return block;
 }
 
 static void place(void *block, size_t alloc_size) {
-    size_t block_size = GET_SIZE(block);
-    
-    if (block_size - alloc_size > DSIZE + DSIZE/* min block size */) {
+    size_t block_size = GET_SIZE(HEADER(block));
+    int split = (block_size > alloc_size + QSIZE);
+
+    if (split) {
+        /* The remaining of current block can hold a min-sized block. */
         PUT(HEADER(block), PACK(alloc_size, 1));
         PUT(FOOTER(block), PACK(alloc_size, 1));
         block = NEXT(block);
         block_size -= alloc_size;
     }
-    PUT(HEADER(block), PACK(block_size, 1));
-    PUT(FOOTER(block), PACK(block_size, 1));
+    PUT(HEADER(block), PACK(block_size, !split));
+    PUT(FOOTER(block), PACK(block_size, !split));
 }
 ```
 

@@ -1,5 +1,5 @@
 /*
- * mm-naive.c - The fastest, least memory-efficient malloc package.
+ * mm_naive.c - The fastest, least memory-efficient malloc package.
  *
  * In this naive approach, a block is allocated by simply incrementing
  * the brk pointer.  Blocks are never coalesced or reused.  The size of
@@ -20,7 +20,6 @@
 
 /* If you want debugging output, use the following macro.  When you hand
  * in, remove the #define DEBUG line. */
-#define DEBUG
 #ifdef DEBUG
 # define dbg_printf(...) printf(__VA_ARGS__)
 #else
