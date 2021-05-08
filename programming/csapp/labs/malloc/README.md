@@ -80,6 +80,8 @@ Perf index = 0 (util) + 37 (thru) = 37/100
 
 # `mm_implicit.c`
 
+## First Fit: 40 (util) + 0 (thru)
+
 ```
 Results for mm malloc:
    valid  util   ops    secs     Kops  trace
@@ -108,7 +110,39 @@ Results for mm malloc:
 Perf index = 40 (util) + 0 (thru) = 40/100
 ```
 
+## Next Fit: 34 (util) + 6 (thru)
+
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    90%    4805  0.003272  1469 ./traces/amptjp.rep
+ * yes    92%    5032  0.002005  2509 ./traces/cccp.rep
+ * yes    66%   14400  0.000118121641 ./traces/coalescing-bal.rep
+   yes    96%      15  0.000000 60481 ./traces/corners.rep
+ * yes    94%    5683  0.007933   716 ./traces/cp-decl.rep
+ * yes    75%     118  0.000002 77276 ./traces/hostname.rep
+ * yes    90%   19405  0.006772  2866 ./traces/login.rep
+ * yes    88%     372  0.000006 65355 ./traces/ls.rep
+   yes    28%      17  0.000000 61636 ./traces/malloc-free.rep
+   yes    34%      10 -0.000054  -186 ./traces/malloc.rep
+ * yes    81%    1494  0.000076 19741 ./traces/perl.rep
+ * yes    90%    4800  0.005117   938 ./traces/random.rep
+ * yes    79%     147  0.000003 46167 ./traces/rm.rep
+   yes    89%      12  0.000000 33509 ./traces/short2.rep
+ * yes    56%   57716  0.024308  2374 ./traces/boat.rep
+ * yes    63%     200  0.000003 77147 ./traces/lrucd.rep
+ * yes    77%  100000  0.002351 42534 ./traces/alaska.rep
+ * yes    76%     200  0.000004 51944 ./traces/nlydf.rep
+ * yes    57%     200  0.000003 73822 ./traces/qyqyc.rep
+ * yes    68%     200  0.000003 68795 ./traces/rulsr.rep
+16        78%  214772  0.051974  4132
+
+Perf index = 34 (util) + 6 (thru) = 40/100
+```
+
 # `mm_explicit.c`
+
+
 
 # `mm_segregated.c`
 

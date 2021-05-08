@@ -70,7 +70,10 @@
 #define PREV(block)  ((char *)(block) - GET_SIZE(((char *)(block) - DSIZE)))
 
 /* Global variables */
-static char *first_block = NULL; /* Pointer to first block */
+static char *prolog_block = NULL; /* Pointer to the prologue block */
+#ifdef NEXT_FIT
+static char *latest_block = NULL; /* Pointer to the latest touched block */
+#endif
 
 /* Private methods */
 
@@ -135,16 +138,30 @@ static void *find_fit(size_t alloc_size)
 {
     dbg_printf("find_fit(0x%lx) is ready to start.\n", alloc_size);
 
-    char *block = first_block;
+#ifdef NEXT_FIT
+    char *block = latest_block;
+#else
+    char *block = prolog_block;
+#endif
     size_t block_size; /* Size of current block */
 
     do { /* First-hit */
         block = NEXT(block);
         block_size = GET_SIZE(HEADER(block));
+#ifdef NEXT_FIT
+        if (block_size == 0) {    /* reach the epilogue block */
+            block = prolog_block; /* go to the prologue block */
+        }
+        if (block == latest_block) { /* reach the latest touched block */
+            block = NULL;
+            break;
+        }
+#else
         if (block_size == 0) {
             block = NULL;
             break;
         }
+#endif
     } while (block_size < alloc_size || GET_ALLOC(HEADER(block)));
 
     dbg_printf("%p = find_fit(0x%lx) is ready to exit.\n", block, alloc_size);
@@ -182,13 +199,16 @@ int mm_init(void)
     /* Create the initial empty heap */
     mem_reset_brk();
     assert(mem_heap_lo() == mem_heap_hi() + 1);
-    if ((first_block = mem_sbrk(4*WSIZE)) == (void *)-1)
+    if ((prolog_block = mem_sbrk(4*WSIZE)) == (void *)-1)
         return -1;
-    PUT(first_block, 0);                          /* Padding on head */
-    PUT(first_block + (1*WSIZE), PACK(DSIZE, 1)); /* Prologue header */ 
-    PUT(first_block + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */ 
-    PUT(first_block + (3*WSIZE), PACK(0, 1));     /* Epilogue header */
-    first_block += (2*WSIZE);
+    PUT(prolog_block, 0);                          /* Padding on head */
+    PUT(prolog_block + (1*WSIZE), PACK(DSIZE, 1)); /* Prologue header */ 
+    PUT(prolog_block + (2*WSIZE), PACK(DSIZE, 1)); /* Prologue footer */ 
+    PUT(prolog_block + (3*WSIZE), PACK(0, 1));     /* Epilogue header */
+    prolog_block += (2*WSIZE);
+#ifdef NEXT_FIT
+    latest_block = prolog_block;
+#endif
     assert(mem_heapsize() == 4*WSIZE);
     dbg_checkheap();
 
@@ -213,7 +233,7 @@ void *malloc(size_t size)
     size_t chunk_size; /* Amount to extend heap if no fit */
     void *block;
 
-    if (first_block == NULL)
+    if (prolog_block == NULL)
         mm_init();
 
     /* Ignore spurious requests */
@@ -236,6 +256,9 @@ void *malloc(size_t size)
     dbg_checkheap();
     place(block, alloc_size);
     dbg_printf("malloc(0x%lx) is ready to exit.\n", size);
+#ifdef NEXT_FIT
+    latest_block = block;
+#endif
     return block;
 }
 
@@ -251,12 +274,15 @@ void free(void *block)
         return;
 
     size_t size = GET_SIZE(HEADER(block));
-    if (first_block == NULL)
+    if (prolog_block == NULL)
         mm_init();
 
     PUT(HEADER(block), PACK(size, 0));
     PUT(FOOTER(block), PACK(size, 0));
-    coalesce(block);
+    block = coalesce(block);
+#ifdef NEXT_FIT
+    latest_block = PREV(block);
+#endif
     dbg_printf("free() is ready to exit.\n");
 }
 
@@ -318,7 +344,7 @@ void *calloc (size_t nmemb, size_t size)
  *      ...
  */
 void mm_checkheap(int verbose){
-    void *block = first_block;
+    void *block = prolog_block;
     int curr_alloc = 1, next_alloc;
 
     while (GET_SIZE(HEADER(block))) {

@@ -1,4 +1,5 @@
 // #define DEBUG
+// #define NEXT_FIT
 
 // #define NAIVE
 #ifdef NAIVE
