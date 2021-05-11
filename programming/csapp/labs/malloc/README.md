@@ -14,7 +14,7 @@ make clean && make && ./mdriver -V -f <tracefile>
 # Run a particular tracefile only once:
 make clean && make && ./mdriver -V -c <tracefile>
 # If only mm.c and/or its dependencies have been modified, run this:
-touch mm.o && rm mm.o && make && ./mdriver -V -c <tracefile>
+touch mm.c && make && ./mdriver -V -c <tracefile>
 ```
 
 The `-Werror` option in `$(CFLAGS)` made the compiler treat warnings as errors. To build the project, we need to relax such errors back to warnings. This can be done by adding a single line in the `Makefile`, i.e.
@@ -142,7 +142,35 @@ Perf index = 34 (util) + 6 (thru) = 40/100
 
 # `mm_explicit.c`
 
+## First Fit: 32 (util) + 37 (thru)
 
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    89%    4805  0.000167 28700 ./traces/amptjp.rep
+ * yes    92%    5032  0.000114 44019 ./traces/cccp.rep
+ * yes    67%   14400  0.000125115161 ./traces/coalescing-bal.rep
+   yes    94%      15  0.000000 43790 ./traces/corners.rep
+ * yes    94%    5683  0.000261 21743 ./traces/cp-decl.rep
+ * yes    75%     118  0.000001 99066 ./traces/hostname.rep
+ * yes    88%   19405  0.000216 90016 ./traces/login.rep
+ * yes    76%     372  0.000005 76787 ./traces/ls.rep
+   yes    28%      17  0.000000 63957 ./traces/malloc-free.rep
+   yes    34%      10  0.000000 68118 ./traces/malloc.rep
+ * yes    81%    1494  0.000016 91321 ./traces/perl.rep
+ * yes    88%    4800  0.000382 12562 ./traces/random.rep
+ * yes    79%     147  0.000002 74549 ./traces/rm.rep
+   yes    89%      12  0.000000 58323 ./traces/short2.rep
+ * yes    56%   57716  0.000813 70948 ./traces/boat.rep
+ * yes    63%     200  0.000002113386 ./traces/lrucd.rep
+ * yes    77%  100000  0.002149 46533 ./traces/alaska.rep
+ * yes    76%     200  0.000003 76199 ./traces/nlydf.rep
+ * yes    57%     200  0.000002111075 ./traces/qyqyc.rep
+ * yes    68%     200  0.000002115055 ./traces/rulsr.rep
+16        77%  214772  0.004261 50409
+
+Perf index = 32 (util) + 37 (thru) = 69/100
+```
 
 # `mm_segregated.c`
 

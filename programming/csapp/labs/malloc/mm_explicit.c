@@ -37,8 +37,9 @@
 
 #define WORD_1X     4                /* single word size (bytes) */
 #define WORD_2X     8                /* double word size (bytes) */
-#define WORD_4X    16                /*  quad  word size (bytes) */
-#define PAGE_SIZE  (1<<12) /* extend heap by this amount (bytes) */
+#define WORD_4X     16               /*  quad  word size (bytes) */
+#define MIN_BLOCK_SIZE (WORD_4X + WORD_2X)     /* payload + tags */
+#define PAGE       (1<<12) /* extend heap by this amount (bytes) */
 
 /* single word (4) or double word (8) alignment */
 #define ALIGNMENT WORD_2X
@@ -84,6 +85,7 @@ int aloc_block_count = 0;
  */
 static void put_before_head(void *block)
 {
+    assert(block != first_free_block);
     assert(IS_FREE(block));
     FL_NEXT(block) = first_free_block;
     if (first_free_block) {
@@ -94,30 +96,72 @@ static void put_before_head(void *block)
     FL_PREV(first_free_block) = NULL;
 }
 
+static inline void link_together(void *fl_prev, void* fl_next) {
+    if (fl_prev)
+        FL_NEXT(fl_prev) = fl_next;
+    else
+        first_free_block = fl_next;
+
+    if (fl_next)
+        FL_PREV(fl_next) = fl_prev;
+}
+
 static void *coalesce(void *block)
 {
     dbg_printf("coalesce(%p) is ready to start.\n", block);
 
-    int prev_free = IS_FREE(VM_PREV(block));
-    int next_free = IS_FREE(VM_NEXT(block));
-    size_t size = GET_SIZE(HEADER(block));
+    char *vm_prev = VM_PREV(block);
+    char *fl_prev_of_vm_prev;
+    char *fl_next_of_vm_prev;
+    char *vm_next = VM_NEXT(block);
+    char *fl_prev_of_vm_next;
+    char *fl_next_of_vm_next;
+
+    int prev_free = IS_FREE(vm_prev);
+    int next_free = IS_FREE(vm_next);
+    size_t size = GET_SIZE(HEADER(block))
+        + (prev_free ? GET_SIZE(HEADER(vm_prev)) : 0)
+        + (next_free ? GET_SIZE(HEADER(vm_next)) : 0);
+    free_block_count -= (prev_free + next_free);
 
     if (prev_free && next_free) {            /* Case 4 */
-        --free_block_count;
-        --free_block_count;
-        size += GET_SIZE(HEADER(VM_PREV(block)))
-              + GET_SIZE(FOOTER(VM_NEXT(block)));
+        fl_prev_of_vm_prev = FL_PREV(vm_prev);
+        fl_next_of_vm_prev = FL_NEXT(vm_prev);
+        fl_prev_of_vm_next = FL_PREV(vm_next);
+        fl_next_of_vm_next = FL_NEXT(vm_next);
+        block = vm_prev;
+        if (fl_next_of_vm_prev == vm_next) {
+            assert(fl_prev_of_vm_next == vm_prev);
+            link_together(fl_prev_of_vm_prev, fl_next_of_vm_next);
+        }
+        else if (fl_prev_of_vm_prev == vm_next) {
+            assert(fl_next_of_vm_next == vm_prev);
+            link_together(fl_prev_of_vm_next, fl_next_of_vm_prev);
+        }
+        else {
+            assert(fl_prev_of_vm_next != vm_prev);
+            assert(fl_next_of_vm_next != vm_prev);
+            link_together(fl_prev_of_vm_prev, fl_next_of_vm_prev);
+            link_together(fl_prev_of_vm_next, fl_next_of_vm_next);
+        }
     }
     else if (prev_free && !next_free) {      /* Case 3 */
-        --free_block_count;
+        fl_prev_of_vm_prev = FL_PREV(vm_prev);
+        fl_next_of_vm_prev = FL_NEXT(vm_prev);
+        link_together(fl_prev_of_vm_prev, fl_next_of_vm_prev);
+        block = vm_prev;
     }
     else if (!prev_free && next_free) {      /* Case 2 */
-        --free_block_count;
+        fl_prev_of_vm_next = FL_PREV(vm_next);
+        fl_next_of_vm_next = FL_NEXT(vm_next);
+        link_together(fl_prev_of_vm_next, fl_next_of_vm_next);
     }
     else {                                   /* Case 1 */
     }
-
+    PUT_WORD(HEADER(block), PACK(size, 0));
+    PUT_WORD(FOOTER(block), PACK(size, 0));
     put_before_head(block);
+
     dbg_printf("coalesce() -> %p is ready to exit.\n", block);
     return block;
 }
@@ -166,7 +210,7 @@ static void place(void *block, size_t alloc_size)
     char *fl_prev = FL_PREV(block);
     char *fl_next = FL_NEXT(block);
     size_t block_size = GET_SIZE(HEADER(block));
-    int split = (block_size > alloc_size + WORD_4X);
+    int split = (block_size >= alloc_size + MIN_BLOCK_SIZE);
 
     if (split) {
         /* The remaining of current block can hold a min-sized block. */
@@ -183,21 +227,12 @@ static void place(void *block, size_t alloc_size)
     PUT_WORD(FOOTER(block), PACK(block_size, !split));
 
     /* fix links */
-    if (fl_prev) {
-        FL_NEXT(fl_prev) = fl_next;
-    }
-    else {
-        first_free_block = fl_next;
-        if (fl_next)
-            FL_PREV(fl_next) = NULL;
-    }
-    if (fl_next)
-        FL_NEXT(fl_next) = fl_prev;
+    link_together(fl_prev, fl_next);
     if (split)
         put_before_head(block);
 
     dbg_checkheap();
-    dbg_printf("place(%p) is ready to exit.\n", block - split * alloc_size);
+    dbg_printf("place(%p) is ready to exit.\n", block - (split ? alloc_size : 0));
 }
 
 /*
@@ -212,7 +247,7 @@ int mm_init(void)
     mem_reset_brk();
     assert(mem_heap_lo() == mem_heap_hi() + 1);
 
-    /* Extend the empty heap with a free block of PAGE_SIZE bytes */
+    /* Extend the empty heap with a free block of PAGE bytes */
     assert(WORD_1X <= ALIGNMENT && ALIGNMENT <= WORD_4X);
     block = mem_sbrk(WORD_4X);
     assert(block == mem_heap_lo());
@@ -223,7 +258,8 @@ int mm_init(void)
     free_block_count = 0;
     aloc_block_count = 2;
 
-    block = extend_heap(PAGE_SIZE - WORD_4X);
+    first_free_block = NULL;
+    block = extend_heap(PAGE - WORD_4X);
     if (block == NULL)
         return -1;
     assert(block == first_free_block);
@@ -244,8 +280,8 @@ void *malloc(size_t size)
 
     void *block;
 
-    if (first_free_block == NULL)
-        mm_init();
+    // if (first_free_block == NULL)
+    //     mm_init();
 
     /* Ignore spurious requests */
     if (size == 0)
@@ -257,7 +293,7 @@ void *malloc(size_t size)
     /* Search the free list for a fit */
     if ((block = find_fit(size)) == NULL) {
         /* No fit found. Get more memory. */
-        block = extend_heap(MAX(size, PAGE_SIZE));
+        block = extend_heap(((size + PAGE - 1) / PAGE) * PAGE);
         if (block == NULL)  
             return NULL;
     }
@@ -274,9 +310,10 @@ void free(void *block)
 {
     dbg_printf("free(%p) is ready to start.\n", block);
 
-    if (block == NULL) 
+    if (block == NULL)
         return;
 
+    dbg_printf("GET_WORD(HEADER(%p)) == 0x%x\n", block, *((unsigned int*)block-1));
     assert(IS_ALOC(block));
     size_t size = GET_SIZE(HEADER(block));
     PUT_WORD(HEADER(block), PACK(size, 0));
@@ -285,7 +322,8 @@ void free(void *block)
     ++free_block_count;
     block = coalesce(block);
 
-    dbg_printf("free(%p) is ready to exit.\n\n", block);
+    dbg_printf("     0x%lx bytes have been freed.\n", size);
+    dbg_printf("free(%p) is ready to exit.\n", block);
 }
 
 /*
@@ -347,14 +385,21 @@ void *calloc (size_t nmemb, size_t size)
  */
 void mm_checkheap(int verbose)
 {
-
     int n_free_blocks = 0, n_aloc_blocks = 0;
-    char *block = mem_heap_lo() + ALIGNMENT;
     char *fl_prev, *fl_next;
 
-    while ((size_t)block < (size_t)mem_heap_hi()) {
+    /* start from prologue block */
+    char *block = mem_heap_lo() + ALIGNMENT;
+    char *header = HEADER(block);
+    size_t size = GET_SIZE(header);
+
+    while (size > 0) {
         /* check each block */
-        assert(GET_WORD(HEADER(block)) == GET_WORD(FOOTER(block)));
+        assert((size_t)mem_heap_lo() <= (size_t)header);
+        assert((size_t)FOOTER(block) <= (size_t)mem_heap_hi());
+        assert((size_t)block % ALIGNMENT == 0); /* alignment */
+        assert(GET_WORD(header) == GET_WORD(FOOTER(block))); /* tag matching */
+        assert(MIN_BLOCK_SIZE <= size || size == WORD_2X);
         if (IS_FREE(block)) {
             ++n_free_blocks;
             fl_prev = FL_PREV(block);
@@ -379,6 +424,8 @@ void mm_checkheap(int verbose)
             ++n_aloc_blocks;
         }
         block = VM_NEXT(block);
+        header = HEADER(block);
+        size = GET_SIZE(header);
     }
     ++n_aloc_blocks; /* epilogue block is allocated */
     assert(n_aloc_blocks == aloc_block_count);
@@ -388,7 +435,11 @@ void mm_checkheap(int verbose)
     n_free_blocks = 0;
     block = first_free_block;
     while (block) {
+        /* no consecutive free blocks */
+        assert(IS_ALOC(VM_PREV(block)));
         assert(IS_FREE(block));
+        assert(IS_ALOC(VM_NEXT(block)));
+        /* update counter and pointer */
         ++n_free_blocks;
         block = FL_NEXT(block);
     }
