@@ -1,7 +1,4 @@
-// #define DEBUG
-#ifndef DEBUG
 #define NDEBUG
-#endif
 // #define NEXT_FIT
 
 // #define NAIVE

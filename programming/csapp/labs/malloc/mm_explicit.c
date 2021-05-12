@@ -16,7 +16,7 @@
 
 /* If you want debugging output, use the following macro.  When you hand
  * in, remove the #define DEBUG line. */
-#ifdef DEBUG
+#ifndef NDEBUG
 #define dbg_printf(...) printf(__VA_ARGS__)
 #define dbg_checkheap() mm_checkheap(1)
 #else
@@ -75,8 +75,19 @@
 
 /* Global variables */
 static char *first_free_block = NULL; /* Pointer to the first free block */
+#ifndef NDEBUG
 int free_block_count = 0;
 int aloc_block_count = 0;
+#define INCR(val) (++(val))
+#define DECR(val) (--(val))
+#define SET(x, n) ((x) = (n))
+#define GET(x)    ((x))
+#else
+#define INCR(val)
+#define DECR(val)
+#define SET(x, n)
+#define GET(x)    (0)
+#endif
 
 /* Private methods */
 
@@ -119,10 +130,15 @@ static void *coalesce(void *block)
 
     int prev_free = IS_FREE(vm_prev);
     int next_free = IS_FREE(vm_next);
-    size_t size = GET_SIZE(HEADER(block))
-        + (prev_free ? GET_SIZE(HEADER(vm_prev)) : 0)
-        + (next_free ? GET_SIZE(HEADER(vm_next)) : 0);
-    free_block_count -= (prev_free + next_free);
+    size_t size = GET_SIZE(HEADER(block));
+    if (prev_free) {
+      size += GET_SIZE(HEADER(vm_prev));
+      DECR(free_block_count);
+    }
+    if (next_free) {
+      size += GET_SIZE(HEADER(vm_next));
+      DECR(free_block_count);
+    }
 
     if (prev_free && next_free) {            /* Case 4 */
         fl_prev_of_vm_prev = FL_PREV(vm_prev);
@@ -165,7 +181,7 @@ static void *coalesce(void *block)
     dbg_printf("coalesce() -> %p is ready to exit.\n", block);
     return block;
 }
-
+ 
 static void *extend_heap(size_t size)
 {
     dbg_printf("extend_heap(%ld=0x%lx) is ready to start.\n", size, size);
@@ -181,7 +197,7 @@ static void *extend_heap(size_t size)
     PUT_WORD(FOOTER(block), PACK(size, 0));         /* Free block footer */
     PUT_WORD(HEADER(VM_NEXT(block)), PACK(0, 1)); /* New epilogue header */
 
-    ++free_block_count;
+    INCR(free_block_count);
     block = coalesce(block);
 
     dbg_printf("extend_heap(%ld=0x%lx) -> %p is ready to exit.\n", size, size, block);
@@ -220,9 +236,9 @@ static void place(void *block, size_t alloc_size)
         block_size -= alloc_size;
     }
     else {
-        --free_block_count;
+        DECR(free_block_count);
     }
-    ++aloc_block_count;
+    INCR(aloc_block_count);
     PUT_WORD(HEADER(block), PACK(block_size, !split));
     PUT_WORD(FOOTER(block), PACK(block_size, !split));
 
@@ -255,8 +271,8 @@ int mm_init(void)
     PUT_WORD(block + (WORD_1X), PACK(WORD_2X, 1));     /* Prologue header */
     PUT_WORD(block + (WORD_2X), PACK(WORD_2X, 1));     /* Prologue footer */
     PUT_WORD(block + (WORD_2X + WORD_1X), PACK(0, 1)); /* Epilogue header */
-    free_block_count = 0;
-    aloc_block_count = 2;
+    SET(free_block_count, 0);
+    SET(aloc_block_count, 2);
 
     first_free_block = NULL;
     block = extend_heap(PAGE - WORD_4X);
@@ -279,9 +295,6 @@ void *malloc(size_t size)
     dbg_printf("malloc(%ld=0x%lx) is ready to start.\n", size, size);
 
     void *block;
-
-    // if (first_free_block == NULL)
-    //     mm_init();
 
     /* Ignore spurious requests */
     if (size == 0)
@@ -318,8 +331,8 @@ void free(void *block)
     size_t size = GET_SIZE(HEADER(block));
     PUT_WORD(HEADER(block), PACK(size, 0));
     PUT_WORD(FOOTER(block), PACK(size, 0));
-    --aloc_block_count;
-    ++free_block_count;
+    DECR(aloc_block_count);
+    INCR(free_block_count);
     block = coalesce(block);
 
     dbg_printf("     0x%lx bytes have been freed.\n", size);
@@ -428,8 +441,8 @@ void mm_checkheap(int verbose)
         size = GET_SIZE(header);
     }
     ++n_aloc_blocks; /* epilogue block is allocated */
-    assert(n_aloc_blocks == aloc_block_count);
-    assert(n_free_blocks == free_block_count);
+    assert(n_aloc_blocks == GET(aloc_block_count));
+    assert(n_free_blocks == GET(free_block_count));
 
     /* traverse the free list */
     n_free_blocks = 0;
@@ -443,7 +456,7 @@ void mm_checkheap(int verbose)
         ++n_free_blocks;
         block = FL_NEXT(block);
     }
-    assert(n_free_blocks == free_block_count);
+    assert(n_free_blocks == GET(free_block_count));
 
     if (verbose) {
         dbg_printf("mm_checkheap() succeeds.\n");
