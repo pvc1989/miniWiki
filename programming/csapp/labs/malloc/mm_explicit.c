@@ -211,9 +211,29 @@ static void *find_fit(size_t alloc_size)
     char *block = first_free_block;
     size_t size; /* size of current block */
 
+#ifndef BEST_FIT
     while (block && (size = GET_SIZE(HEADER(block))) < alloc_size)
         block = FL_NEXT(block);
-
+#else
+    size_t best_size = alloc_size + WORD_2X + WORD_4X;
+    char *best_block = NULL;
+    while (block) {
+        size = GET_SIZE(HEADER(block));
+        if (size == alloc_size) {
+            best_block = block;
+            break;
+        }
+        else if (alloc_size < size && (size <= best_size || !best_block)) {
+            best_size = size;
+            best_block = block;
+        }
+        else {
+            assert(size < alloc_size || (best_size < size && best_block));
+        }
+        block = FL_NEXT(block);
+    }
+    block = best_block;
+#endif
     dbg_printf("find_fit(%ld=0x%lx) -> %p is ready to exit.\n", alloc_size, alloc_size, block);
     return block;
 }

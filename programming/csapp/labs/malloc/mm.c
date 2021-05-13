@@ -1,5 +1,6 @@
 #define NDEBUG
 // #define NEXT_FIT
+#define BEST_FIT
 
 // #define NAIVE
 #ifdef NAIVE

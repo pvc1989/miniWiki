@@ -172,5 +172,35 @@ Results for mm malloc:
 Perf index = 32 (util) + 37 (thru) = 69/100
 ```
 
+## Best Fit: 41 (util) + 34 (thru)
+
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    99%    4805  0.000115 41916 ./traces/amptjp.rep
+ * yes   100%    5032  0.000145 34806 ./traces/cccp.rep
+ * yes    67%   14400  0.000127113242 ./traces/coalescing-bal.rep
+   yes    94%      15  0.000000 61868 ./traces/corners.rep
+ * yes    99%    5683  0.000243 23419 ./traces/cp-decl.rep
+ * yes    75%     118  0.000002 64735 ./traces/hostname.rep
+ * yes    89%   19405  0.000257 75548 ./traces/login.rep
+ * yes    76%     372  0.000005 71213 ./traces/ls.rep
+   yes    28%      17  0.000000 60899 ./traces/malloc-free.rep
+   yes    34%      10  0.000000 47827 ./traces/malloc.rep
+ * yes    81%    1494  0.000030 50335 ./traces/perl.rep
+ * yes    96%    4800  0.002769  1734 ./traces/random.rep
+ * yes    79%     147  0.000002 62881 ./traces/rm.rep
+   yes    89%      12  0.000000 47324 ./traces/short2.rep
+ * yes    56%   57716  0.001791 32231 ./traces/boat.rep
+ * yes    63%     200  0.000003 74464 ./traces/lrucd.rep
+ * yes    86%  100000  0.003953 25300 ./traces/alaska.rep
+ * yes    89%     200  0.000003 66827 ./traces/nlydf.rep
+ * yes    86%     200  0.000002101199 ./traces/qyqyc.rep
+ * yes    68%     200  0.000002 83448 ./traces/rulsr.rep
+16        82%  214772  0.009447 22734
+
+Perf index = 41 (util) + 34 (thru) = 75/100
+```
+
 # `mm_segregated.c`
 
