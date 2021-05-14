@@ -71,3 +71,7 @@ title: C++
 
 - GDB
 - LLDB
+
+## [内存检查](./memory/check.md)
+
+- Valgrind
