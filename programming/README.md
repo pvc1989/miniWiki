@@ -10,7 +10,7 @@ title: 编程
 ## [设计模式](./patterns/README.md)
 
 # 编程语言
-## [C++](./cpp/README.md)
+## [C/C++](./cpp/README.md)
 ## [Octave/MATLAB](./octave.md)
 ## [Python](./python.md)
 ## [UML](./uml/README.md)
@@ -24,17 +24,15 @@ title: 编程
 ## [VTK](./vtk/README.md)
 ### [ParaView](./vtk/README.md#ParaView)
 
-# 构建工具
+# 开发工具
 ## [版本控制](./git.md)
 ### [Git](./git.md#Git)
 ### [GitHub](./git.md#GitHub)
-## [批量构建](./make/README.md)
-### [GNU Make](./make/README.md#GNU-Make)
-### [CMake](./make/README.md#CMake)
-### [Ninja](./make/README.md#Ninja)
-## [断点调试](./debug/README.md)
-### [GDB](./debug/README.md#GDB)
-### [LLDB](./debug/README.md#LLDB)
+## C/C++ 工具
+### [批量构建](./cpp/make/README.md)
+### [断点调试](./cpp/debug.md)
+### [性能检测](./cpp/profile.md)
+### [内存检查](./cpp/memory/check.md)
 
 # 开发环境
 ## [Linux](./linux/README.md)

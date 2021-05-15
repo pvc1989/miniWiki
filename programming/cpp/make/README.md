@@ -115,11 +115,11 @@ rm -rf *
 |  编译及链接选项  | 依赖于环境（操作系统、编译器） |           不依赖于环境            |
 |     （同上）     |       无法体现在源代码中       |         是源代码的一部分          |
 
-# GNU Make<a name="GNU-Make"></a>
+# GNU Make<a href id="GNU-Make"></a>
 ## 参考资料
 - [官方文档](https://www.gnu.org/software/make)
 
-## `make` 命令<a name="make-cmd"></a>
+## `make` 命令<a href id="make-cmd"></a>
 一般形式：
 ```shell
 make [options] [targets]
@@ -143,7 +143,7 @@ make [options] [targets]
 每次构建前，`make` 会自动检查该目标的『依赖项 (prerequisite)』。只有依赖项需要被更新时，才会在依赖项全部被更新后，重新构建该目标。
 这项检查是递归的，因此最终将传递到被更新过的源文件上。
 
-## `Makefile` 文件<a name="Makefile"></a>
+## `Makefile` 文件<a href id="Makefile"></a>
 `Makefile` 是驱动 [`make` 命令](#make-cmd)的『脚本 (script) 文件』：
 
 - 默认文件名为 `Makefile` 或 `makefile`。
@@ -232,7 +232,7 @@ library.o : library.c
 ### 示例
 以《[手动构建](#手动构建)》中的项目为例，其构建过程可以写进 [`Makefile`](./Makefile)。
 
-# CMake<a name="CMake"></a>
+# CMake<a href id="CMake"></a>
 
 ## 参考资料
 ### 官方文档
@@ -259,7 +259,7 @@ library.o : library.c
 - 『外部构建 (out-of-source build)』：在源文件目录外构建 👍。
 - 『构建配置 (build configuration)』：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
 
-## `cmake` 命令<a name="cmake-cmd"></a>
+## `cmake` 命令<a href id="cmake-cmd"></a>
 CMake 参与的构建过程可以分为以下两个阶段：
 1. CMake 读取 `CMakeLists.txt` 文件，生成『本地构建工具 (native build tool)』(e.g. [`make`](#make-cmd)）所需的『本地构建文件 (native build file)』(e.g. [`Makefile`](#Makefile))：
 ```shell
@@ -303,7 +303,7 @@ cmake -S ../.. -B . \
       -D CMAKE_CXX_COMPILER=/usr/local/bin/g++
 ```
 
-## `CMakeLists.txt` 文件<a name="CMakeLists"></a>
+## `CMakeLists.txt` 文件<a href id="CMakeLists"></a>
 `CMakeLists.txt` 是驱动 CMake 程序运行的脚本文件，它由『命令 (command)』和『注释 (comment)』组成：
 
 - 命令的名称 *不区分大小写*，形式上与函数调用类似。
@@ -423,7 +423,7 @@ target_link_libraries(<target> ... <item>... ...)
 - [`./src/CMakeLists.txt`](./src/CMakeLists.txt) 用于构建 `lib_math`。
 - [`./test/CMakeLists.txt`](./test/CMakeLists.txt) 用于构建 `test_math`。
 
-## CMake Tools<a name="CMake-Tools"></a>
+## CMake Tools<a href id="CMake-Tools"></a>
 
 微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有『体量轻、易扩展、多语言、跨平台』等优点，利用各种『[扩展 (extensions)](https://marketplace.visualstudio.com/)』很容易将其改造为多语言共用的『集成开发环境 (Integrated Development Environment, IDE)』。
 
@@ -449,7 +449,7 @@ target_link_libraries(<target> ... <item>... ...)
 1. 在命令行环境中，亦可用《[断点调试](../debug/README.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此方法不依赖于本节介绍的 VS Code 及 CMake Tools。
 
-# Ninja<a name="Ninja"/>
+# Ninja<a href id="Ninja"/>
 
 ## 参考资料
 
@@ -471,7 +471,7 @@ target_link_libraries(<target> ... <item>... ...)
   ninja --version
   ```
 
-## `ninja` 命令<a name="ninja-cmd"></a>
+## `ninja` 命令<a href id="ninja-cmd"></a>
 
 ### 选项
 
@@ -514,7 +514,7 @@ ninja
 ninja clean
 ```
 
-## `build.ninja` 文件<a name="build.ninja"></a>
+## `build.ninja` 文件<a href id="build.ninja"></a>
 
 用于驱动 [`ninja` 命令](#ninja-cmd) 运行的脚本文件，类似于 [`Makefile` 文件](#Makefile)。
 

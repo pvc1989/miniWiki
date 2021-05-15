@@ -1,5 +1,5 @@
 ---
-title: C++
+title: C/C++
 ---
 
 # [cppreference.com](https://en.cppreference.com/w/cpp)
@@ -53,7 +53,7 @@ title: C++
 ## 代码规范
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)（非官方中文版：[Google C++ 风格指南](https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/contents/)）
 
-## [构建工具](../make/README.md)
+## [批量构建](./make/README.md)
 
 - GNU Make
 - CMake
@@ -67,7 +67,7 @@ title: C++
 
 - GNU `gprof`
 
-## [断点调试](../debug/README.md)
+## [断点调试](./debug.md)
 
 - GDB
 - LLDB
