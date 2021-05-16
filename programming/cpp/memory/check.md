@@ -88,8 +88,8 @@ I  100094f5b,3
  S 104925ba8,8
 ```
 
-其中（含空格）
-- `I ` 表示 Instruction load
-- ` L` 表示 data Load
-- ` M` 表示 data Modify
-- ` S` 表示 data Store
+其中
+- `I` 表示 Instruction load
+- `L` 表示 data Load
+- `M` 表示 data Modify
+- `S` 表示 data Store

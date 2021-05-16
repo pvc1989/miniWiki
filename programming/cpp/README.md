@@ -32,6 +32,7 @@ title: C/C++
 
 - [原始指针](./memory/raw_pointers.md)
 - [智能指针](./memory/smart_pointers.md)
+- [内存检查](./memory/check.md)
 
 # 抽象机制
 
