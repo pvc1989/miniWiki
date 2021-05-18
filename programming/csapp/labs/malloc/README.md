@@ -17,7 +17,17 @@ make clean && make && ./mdriver -V -c <tracefile>
 touch mm.c && make && ./mdriver -V -c <tracefile>
 ```
 
-The `-Werror` option in `$(CFLAGS)` made the compiler treat warnings as errors. To build the project, we need to relax such errors back to warnings. This can be done by adding a single line in the `Makefile`, i.e.
+The output begins with a measure of processor:
+
+```
+Using default tracefiles in ./traces/
+Measuring performance with a cycle counter.
+Processor clock rate ~= 1636.5 MHz
+```
+
+Generally, the higher the MHz value, the higher the throughput score.
+
+⚠️ The `-Werror` option in `$(CFLAGS)` made the compiler treat warnings as errors. To build the project, we need to relax such errors back to warnings. This can be done by adding a single line in the `Makefile`, i.e.
 
 ```make
 mdriver.o: mdriver.c fsecs.h fcyc.h clock.h memlib.h config.h mm.h driverlib.h
@@ -200,6 +210,36 @@ Results for mm malloc:
 16        82%  214772  0.009447 22734
 
 Perf index = 41 (util) + 34 (thru) = 75/100
+```
+
+## Good Fit: 41 (util) + 37 (thru)
+
+```
+Results for mm malloc:
+   valid  util   ops    secs     Kops  trace
+ * yes    99%    4805  0.000113 42706 ./traces/amptjp.rep
+ * yes   100%    5032  0.000070 72017 ./traces/cccp.rep
+ * yes    67%   14400  0.000121119024 ./traces/coalescing-bal.rep
+   yes    94%      15  0.000000 51283 ./traces/corners.rep
+ * yes    99%    5683  0.000154 36789 ./traces/cp-decl.rep
+ * yes    75%     118  0.000002 54494 ./traces/hostname.rep
+ * yes    89%   19405  0.000256 75753 ./traces/login.rep
+ * yes    76%     372  0.000006 65202 ./traces/ls.rep
+   yes    28%      17  0.000000 54204 ./traces/malloc-free.rep
+   yes    34%      10  0.000000 45412 ./traces/malloc.rep
+ * yes    81%    1494  0.000018 82439 ./traces/perl.rep
+ * yes    91%    4800  0.000368 13042 ./traces/random.rep
+ * yes    79%     147  0.000002 84674 ./traces/rm.rep
+   yes    89%      12  0.000000 65393 ./traces/short2.rep
+ * yes    56%   57716  0.001604 35979 ./traces/boat.rep
+ * yes    63%     200  0.000003 74712 ./traces/lrucd.rep
+ * yes    86%  100000  0.003782 26441 ./traces/alaska.rep
+ * yes    89%     200  0.000003 71446 ./traces/nlydf.rep
+ * yes    86%     200  0.000003 73611 ./traces/qyqyc.rep
+ * yes    68%     200  0.000002 81519 ./traces/rulsr.rep
+16        81%  214772  0.006507 33009
+
+Perf index = 41 (util) + 37 (thru) = 78/100
 ```
 
 # `mm_segregated.c`

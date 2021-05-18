@@ -211,10 +211,10 @@ static void *find_fit(size_t alloc_size)
     char *block = first_free_block;
     size_t size; /* size of current block */
 
-#ifndef BEST_FIT
+#ifdef FIRST_FIT
     while (block && (size = GET_SIZE(HEADER(block))) < alloc_size)
         block = FL_NEXT(block);
-#else
+#elif defined BEST_FIT
     size_t best_size = alloc_size + WORD_2X + WORD_4X;
     char *best_block = NULL;
     while (block) {
@@ -233,6 +233,26 @@ static void *find_fit(size_t alloc_size)
         block = FL_NEXT(block);
     }
     block = best_block;
+#elif defined GOOD_FIT
+    size_t alloc_size_x2 = alloc_size * 2;
+    size_t good_size = 0;
+    char *good_block = NULL;
+    while (block) {
+        size = GET_SIZE(HEADER(block));
+        if (alloc_size <= size && size <= alloc_size_x2) {
+            good_block = block;
+            break;
+        }
+        else if (alloc_size_x2 < size && (size < good_size || !good_block)) {
+            good_size = size;
+            good_block = block;
+        }
+        else {
+            assert(size < alloc_size || (alloc_size_x2 < size && good_block));
+        }
+        block = FL_NEXT(block);
+    }
+    block = good_block;
 #endif
     dbg_printf("find_fit(%ld=0x%lx) -> %p is ready to exit.\n", alloc_size, alloc_size, block);
     return block;
