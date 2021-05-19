@@ -56,3 +56,15 @@ ULLONG_MAX // maximum value of `unsigned long long`
 #define debug_printf(...)
 #endif
 ```
+
+多个（预处理期）条件分支：
+
+```c
+#ifdef A /* same as `#if defined A` */
+    /* code for A */
+#elif defined B
+    /* code for B */
+#elif defined C
+    /* code for C */
+#endif
+```
