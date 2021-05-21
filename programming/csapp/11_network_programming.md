@@ -114,3 +114,353 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 
 - 客户端的端口号不固定，由操作系统内核自动分配。
 - 常用服务的端口号相对固定，列于 `/etc/services` 中。
+
+# 4. 套接字接口
+
+## 4.1. 套接字地址结构
+
+- 对于系统内核，套接字是通信的一个端点。
+- 对于应用程序，套接字是一个打开的文件。
+
+```c
+/* IPv4 套接字地址结构 */
+struct sockaddr_in {
+    uint16_t        sin_family;  /* 协议族，总是取 `AF_INET` */
+    uint16_t        sin_port;    /* 端口号，大端字节顺序 */
+    struct in_addr  sin_addr;    /* IPv4 地址，大端字节顺序 */
+    unsigned char   sin_zero[8]; /* 对齐至 sizeof(struct sockaddr) */
+};
+
+/* 范型套接字地址结构，用于 connect, bind, accept 等函数 */
+struct sockaddr {
+    uint16_t  sa_family;    /* Protocol family */
+    char      sa_data[14];  /* Address data  */
+};
+
+typedef struct sockaddr SA;
+```
+
+## 4.2. `socket()`
+
+客户端及服务器用此函数获得（部分打开的）套接字。若成功则返回“套接字描述符 (socket descriptor)”，否则返回 `-1`。
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+int socket(int domain, int type, int protocol);
+
+/* 建议用 getaddrinfo() 获得实参 */
+socket_fd = Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 为连接一端 */, 0);
+```
+
+## 4.3. `connect()`
+
+客户端用此函数向服务器发送连接请求并等待。若成功则返回 `0`，否则返回 `-1`。
+
+```c
+#include <sys/socket.h>
+int connect(int client_fd, const SA *server_addr,
+            socklen_t addr_len/* sizeof(sockaddr_in) */);
+```
+
+至此，客户端可通过在 `client_fd` 上读写数据，实现与服务器通信。
+
+## 4.4. `bind()`
+
+服务器用此函数将套接字描述符 `server_fd` 与套接字地址 `server_addr` 关联。
+若成功则返回 `0`，否则返回 `-1`。
+
+```c
+#include <sys/socket.h>
+int bind(int server_fd, const SA *server_addr,
+         socklen_t server_addr_len/* sizeof(sockaddr_in) */);
+```
+
+## 4.5. `listen()`
+
+服务器用此函数将“活跃套接字 (active socket)”转变为“监听套接字 (listening socket)”。若成功则返回 `0`，否则返回 `-1`。
+- 【活跃套接字】`socket()` 返回的默认是这种，供客户端所使用。
+- 【监听套接字】供服务器接收连接请求，记作 `listen_fd`。
+
+```c
+#include <sys/socket.h>
+int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
+```
+
+## 4.6. `accept()`
+
+服务器用此函数等待客户端发来的连接请求。
+若成功，则返回异于 `listen_fd` 的 `connect_fd`，并获取客户端地址；否则返回 `-1`。
+
+```c
+#include <sys/socket.h>
+int accept(int listen_fd, SA *client_addr, int *client_addr);
+```
+
+至此，服务器可通过在 `connect_fd` 上读写数据，实现与客户端通信。
+
+## 4.7. 信息提取
+
+### `getaddrinfo()`
+
+```c
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+int getaddrinfo(
+    const char *host/* 域名 或 十进制地址*/,
+    const char *service/* 服务名 或 端口号 */,
+    const struct addrinfo *hints/* NULL 或 只含前四项的 addrinfo */,
+    struct addrinfo **result/* 输出链表 */
+);
+void freeaddrinfo(struct addrinfo *result);
+const char *gai_strerror(int errcode);
+
+struct addrinfo {
+    int ai_flags; /* AI_ADDRCONFIG | AI_CANONNAME | AI_NUMERICSERV | AI_PASSIVE */
+    int ai_family; /* AF_INET or AF_INET6 */
+    int ai_socktype; /* SOCK_STREAM */
+    int ai_protocol; /* Third arg to socket function */
+    char *ai_canonname; /* Canonical hostname */
+    size_t ai_addrlen; /* Size of ai_addr struct */
+    struct sockaddr *ai_addr; /* Ptr to socket address structure */
+    struct addrinfo *ai_next; /* Ptr to next item in linked list */
+};
+```
+
+`getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），其中每个结点为 `struct addrinfo` 类型。
+- 客户端依次用每个结点提供的信息尝试 `socket()` 及 `connect()`，直到成功返回。
+- 服务器依次用每个结点提供的信息尝试 `socket()` 及 `bind()`，直到成功返回。
+
+### `getnameinfo()`
+
+`getnameinfo()` 与 `getaddrinfo()` 的功能相反。
+
+```c
+#include <sys/socket.h>
+#include <netdb.h>
+int getnameinfo(const struct sockaddr *sa, socklen_t salen,
+                char *host, size_t hostlen,    /* 可以为空，即 NULL, 0 */
+                char *service, size_t servlen, /* 同上，但至多一行为空 */
+                int flags/* NI_NUMERICHOST | NI_NUMERICSERV */);
+```
+
+### 示例：模仿 `nslookup`
+
+```c
+#include "csapp.h"
+
+int main(int argc, char **argv) {
+  struct addrinfo *p, *listp, hints;
+  char buf[MAXLINE];
+  int rc, flags;
+
+  if (argc != 2) {
+    fprintf(stderr, "usage: %s <domain name>\n", argv[0]);
+    exit(0);
+  }
+
+  memset(&hints, 0, sizeof(struct addrinfo));                         
+  hints.ai_family = AF_INET;       /* IPv4 only */
+  hints.ai_socktype = SOCK_STREAM; /* 只关注连接 */
+  if ((rc = getaddrinfo(argv[1], NULL, &hints, &listp)) != 0) {
+    fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
+    exit(1);
+  }
+
+  flags = NI_NUMERICHOST; /* 以十进制 IP 地址表示 host */
+  for (p = listp; p; p = p->ai_next) { /* 遍历链表 */
+    Getnameinfo(p->ai_addr, p->ai_addrlen, buf, MAXLINE, NULL, 0, flags);
+    printf("%s\n", buf);
+  }
+
+  Freeaddrinfo(listp);
+  exit(0);
+}
+```
+
+## 4.8. 辅助函数
+
+### `open_clientfd()`
+
+此函数提供了对客户端调用 `getaddrinfo()`、`socket()`、`connect()` 的封装。
+
+```c
+#include "csapp.h"
+int open_clientfd(char *hostname, char *port/* 端口号 */) {
+  int clientfd, rc;
+  struct addrinfo hints, *listp, *p;
+
+  /* Get a list of potential server addresses */
+  memset(&hints, 0, sizeof(struct addrinfo));
+  hints.ai_socktype = SOCK_STREAM;  /* Open a connection */
+  hints.ai_flags = AI_NUMERICSERV;  /* ... using a numeric port arg. */
+  hints.ai_flags |= AI_ADDRCONFIG;  /* Recommended for connections */
+  if ((rc = getaddrinfo(hostname, port, &hints, &listp)) != 0) {
+    fprintf(stderr, "getaddrinfo failed (%s:%s): %s\n", hostname, port, gai_strerror(rc));
+    return -2;
+  }
+
+  for (p = listp; p; p = p->ai_next) {
+    if ((clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) 
+      continue;
+    if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1) 
+      break; /* 连接成功，则终止遍历 */
+    if (close(clientfd) < 0) { /* 连接失败，则关闭文件，再尝试下一个 */
+      fprintf(stderr, "open_clientfd: close failed: %s\n", strerror(errno));
+      return -1;
+    }
+  }
+
+  freeaddrinfo(listp);
+  return p ? clientfd : -1;
+}
+```
+
+### `open_listenfd()`
+
+此函数提供了对服务器调用 `getaddrinfo()`、`socket()`、`bind()`、`listen()` 的封装。
+
+```c
+#include "csapp.h"
+int open_listenfd(char *port) {
+  struct addrinfo hints, *listp, *p;
+  int listenfd, rc, optval=1;
+
+  memset(&hints, 0, sizeof(struct addrinfo));
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICSERV
+      | AI_PASSIVE/* host=NULL, all ai_addr=*.*.*.* */;
+  if ((rc = getaddrinfo(NULL, port, &hints, &listp)) != 0) {
+    fprintf(stderr, "getaddrinfo failed (port %s): %s\n", port, gai_strerror(rc));
+    return -2;
+  }
+
+  for (p = listp; p; p = p->ai_next) {
+    if ((listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) 
+      continue;
+
+    /* Eliminates "Address already in use" error from bind() */
+    setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,
+               (const void *)&optval , sizeof(int));
+
+    if (bind(listenfd, p->ai_addr, p->ai_addrlen) == 0)
+      break;
+    if (close(listenfd) < 0) {
+      fprintf(stderr, "open_listenfd close failed: %s\n", strerror(errno));
+      return -1;
+    }
+  }
+
+  freeaddrinfo(listp);
+  if (!p)
+    return -1;
+
+  if (listen(listenfd, LISTENQ) < 0) {
+    close(listenfd);
+    return -1;
+  }
+  return listenfd;
+}
+```
+
+## 4.9. 示例：回音系统
+
+### 客户端
+
+```c
+#include "csapp.h"
+
+int main(int argc, char **argv) {
+  int clientfd;
+  char *host, *port, buf[MAXLINE];
+  rio_t rio;
+
+  if (argc != 3) {
+    fprintf(stderr, "usage: %s <host> <port>\n", argv[0]);
+    exit(0);
+  }
+  host = argv[1];
+  port = argv[2];
+
+  clientfd = Open_clientfd(host, port);
+  Rio_readinitb(&rio, clientfd);
+
+  while (Fgets(buf, MAXLINE, stdin) != NULL) {
+    Rio_writen(clientfd, buf, strlen(buf)); // 向服务器发送
+    Rio_readlineb(&rio, buf, MAXLINE);      // 从服务器读取
+    Fputs(buf, stdout);                     // 在客户端打印
+  }
+  Close(clientfd);  // 客户端关闭套接字描述符，服务器会检测到 EOF
+  exit(0);
+}
+```
+
+### 服务器
+
+```c
+#include "csapp.h"
+
+void echo(int connfd);
+
+int main(int argc, char **argv) {
+  int listenfd, connect_fd;
+  socklen_t client_len;
+  struct sockaddr_storage client_addr;  /* Enough space for any address */
+  char client_hostname[MAXLINE], client_port[MAXLINE];
+
+  if (argc != 2) {
+    fprintf(stderr, "usage: %s <port>\n", argv[0]);
+    exit(0);
+  }
+
+  listenfd = Open_listenfd(argv[1]);
+  while (1) {
+    client_len = sizeof(struct sockaddr_storage); 
+    connect_fd = Accept(listenfd, (SA *)&client_addr, &client_len);
+    Getnameinfo((SA *)&client_addr, client_len,
+                client_hostname, MAXLINE, 
+                client_port, MAXLINE, 0);
+    printf("Connected to (%s, %s)\n", client_hostname, client_port);
+    echo(connect_fd);
+    Close(connect_fd);
+  }
+  exit(0);
+}
+
+void echo(int connect_fd) {
+  size_t n; 
+  char buf[MAXLINE]; 
+  rio_t rio;
+
+  Rio_readinitb(&rio, connect_fd);
+  while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+    printf("server received %d bytes\n", (int)n);
+    Rio_writen(connect_fd, buf, n);
+  }
+}
+```
+
+【迭代型服务器 (iterative server)】同一时间只能服务一个客户端，不同客户端要排成队列依次接受服务。
+
+### 演示
+
+```shell
+# server:
+$ sudo ./echoserveri 23333
+[sudo] password for user:
+# client:
+$ ./echoclient localhost 23333
+# server:
+Connected to (localhost, 44250)
+# client:
+hello, world
+# server:
+server received 13 bytes
+# client:
+hello, world
+Ctrl+D
+# server:
+# wait for the next request
+Ctrl+C
+```
