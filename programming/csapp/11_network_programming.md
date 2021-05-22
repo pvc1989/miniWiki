@@ -464,3 +464,114 @@ Ctrl+D
 # wait for the next request
 Ctrl+C
 ```
+
+# 5. 网页服务器
+
+## 5.1. 网页基础
+
+【超文本传输协议 (HyperText Transfer Protocol, HTTP)】“网页 (Web)”服务的协议
+- 【浏览器 (browser)】HTTP 的客户端
+- 【内容 (content)】HTTP 的客户端向服务器请求的数据
+
+【[超文本标记语言 (HyperText Markup Language, HTML)](../../documenting/web/html.md)】
+- 【页面 (page)】HTML 的程序
+- 【标签 (tag)】HTML 的指令
+
+## 5.2. 网页内容
+
+MIME (Multipurpose Internet Mail Extensions)
+
+网页内容分类
+- 【静态内容 (static content)】服务器传送给客户端的文件
+- 【动态内容 (dynamic content)】先在服务器上计算得到、再传输给客户端的数据
+
+URL (universal resource locator)
+- `http://www.google.com:80/index.html`，其中
+  - `www.google.com` 为域名，`80` 为端口号（`http` 服务的默认端口号为 `80`，可省略）。
+  - `/index.html` 为服务器上的静态内容文件，其中 `/` 表示服务器上用于存放静态内容的目录（如 `/usr/httpd/html/`）。
+- `http://bluefish.ics.cs.cmu.edu:8000/cgi-bin/adder?15000&213`，其中
+  - `bluefish.ics.cs.cmu.edu` 为域名，`8000` 为端口号。
+  - `/cgi-bin/adder` 为服务器上的可执行文件（功能为加法），其中 `/cgi-bin/` 表示服务器上用于存放动态内容的目录（如 `/usr/httpd/cgi-bin/`）。
+  - `?` 之后为 `adder` 的实参列表，`&` 用于分隔实参。
+
+## 5.3. HTTP 交易
+
+### `telnet`
+
+在客户端（命令行终端）内输入以下内容，以发起连接：
+
+```shell
+$ telnet csapp.cs.cmu.edu 80
+```
+
+服务器返回以下三行，显示在客户端：
+
+```
+Trying 128.2.100.230...
+Connected to csapptest.cs.cmu.edu.
+Escape character is '^]'.
+```
+
+### HTTP 请求
+
+在客户端输入以下内容（含空行）：
+
+```
+GET / HTTP/1.1
+Host: csapp.cs.cmu.edu
+
+```
+
+其中
+
+- 第一行称作“请求行 (request line)”，格式为 `method URI version`
+- 第二行开始为“请求页眉 (request header)”，格式为 `header_name: header_data`
+- 最后的空行表示页眉结尾。
+
+### HTTP 响应
+
+服务器返回以下内容，打印在客户端：
+
+```
+HTTP/1.1 200 OK
+Date: Sat, 22 May 2021 16:43:27 GMT
+Server: Apache/2.2.15 (Red Hat)
+Last-Modified: Mon, 20 Jan 2020 21:53:54 GMT
+ETag: "8440768-1882-59c9953d5c080"
+Accept-Ranges: bytes
+Content-Length: 6274
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+```
+
+其中
+
+- 第一行称作“响应行 (response line)”，格式为 `version status_code status_message`
+- 第二行开始为“响应页眉 (response header)”
+- 最后的空行表示页眉结尾。
+
+接下来，客户端显示网页的 HTML 源代码：
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<title>CS:APP3e, Bryant and O'Hallaron</title>
+<link href="http://csapp.cs.cmu.edu/3e/css/csapp.css" rel="stylesheet" type="text/css">
+</head>
+...
+</body>
+</html>
+
+```
+
+几秒钟后，客户端显示以下内容，并退出 `telnet`：
+```
+Connection closed by foreign host.
+```
+
+## 5.4. 提供动态内容
+
+# 6. 示例：微型网页服务器
