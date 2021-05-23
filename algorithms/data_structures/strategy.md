@@ -113,6 +113,20 @@ return dp[0][max_room];
 
 目标：将集合划分为若干子集，使各子集元素之和相等。
 
+### 旅行商问题
+
+【旅行商问题 (Travelling Salesman Problem, TSP)】给定 $V$ 座城市及 $E$ 条（连接其中任意两市的）道路，求一条访问每座城市各一次的最短路径。
+
+#### 最短超字符串
+
+[LeetCode-943](./leetcode/943.find-the-shortest-superstring.cpp)
+
+给定 $N$ 个最长为 $W$ 字符且互不覆盖的字符串，求一个能够覆盖每个词的最短“超字符串 (superstring)”。
+
+复杂度
+- 时间 $Θ(N^2\cdot(2^N+W))$
+- 空间 $Θ(N\cdot(2^N+W))$
+
 ### 正则表达式
 
 #### `.` 表示任意字符、`*` 表示重复前一字符
