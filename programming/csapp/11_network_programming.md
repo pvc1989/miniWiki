@@ -4,30 +4,30 @@ title: 网络编程
 
 # 1. 客户端-服务器模型
 
-“客户端-服务器模型 (client-server model)”是所有网络应用的基础。
+『客户端-服务器模型 (client-server model)』是所有网络应用的基础。
 
 - 【服务器 (server)】管理资源、提供服务的进程。
 - 【客户端 (client)】请求资源、使用服务的进程。
 
-“交易 (transaction)”是客户端与服务器交互的基本操作，含以下四步：
+『交易 (transaction)』是客户端与服务器交互的基本操作，含以下四步：
 
-1. 客户端向服务器发送“请求 (request)”。
+1. 客户端向服务器发送『请求 (request)』。
 2. 服务器接收该请求，并根据需要操纵其管理的资源。
-3. 服务器向客户端发送“响应 (response)”，并等待下一个请求。
+3. 服务器向客户端发送『响应 (response)』，并等待下一个请求。
 4. 客户端接收该响应，并根据需要处理之。
 
 # 2. 网络
 
-对一台主机而言，“网络 (newwork)”相当于另一种读写设备。
+对一台主机而言，『网络 (newwork)』相当于另一种读写设备。
 
 网络分类：
 
-- 【局域网 (local area network, LAN)】目前最流行的局域网技术为“以太网 (Ethernet)”
+- 【局域网 (local area network, LAN)】目前最流行的局域网技术为『以太网 (Ethernet)』
   - 【以太网段 (Ethernet segment)】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的小型网络，可覆盖一间或一层房屋。
-    - 【以太网线 (Ethernet wire)】一端连接到主机上的“以太网适配器 (Ethernet adapter)”，另一端连接到集线器上的“端口 (port)”。
+    - 【以太网线 (Ethernet wire)】一端连接到主机上的『以太网适配器 (Ethernet adapter)』，另一端连接到集线器上的『端口 (port)』。
     - 【集线器 (hub)】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
     - 每个以太网适配器都拥有一个长度为 48-bit 的物理地址，以区别于其他适配器。
-    - 一台主机向其他主机发送的最小数据块称作“帧 (frame)”，其内容除“有效载荷 (payload)”外，还包括来源地址、目标地址、帧长度的“头标  (header)”。
+    - 一台主机向其他主机发送的最小数据块称作『帧 (frame)』，其内容除『有效载荷 (payload)』外，还包括来源地址、目标地址、帧长度的『头标  (header)』。
   - 【桥接的以太网 (bridged Ethernet)】由多个以太网段连接到多个网桥所形成的中型网络，可覆盖整栋建筑或整个校园。
     - 【网桥 (bridge)】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
     - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
@@ -42,19 +42,19 @@ title: 网络编程
 
 # 3. 全局 IP 因特网
 
-“全局 IP 因特网 (global IP Internet)”，简称“因特网 (Internet)”是所有“互联网 (internet)”中最著名、最成功的一个。
+『全局 IP 因特网 (global IP Internet)』，简称『因特网 (Internet)』是所有『互联网 (internet)』中最著名、最成功的一个。
 
-因特网中的每台主机都运行着实现了“TCP/IP 协议”的软件。
+因特网中的每台主机都运行着实现了『TCP/IP 协议』的软件。
 
-- 【IP = Internet Protocol】提供最基本的命名格式，以及主机到主机的“不可靠 (unreliable)”传输机制。
+- 【IP = Internet Protocol】提供最基本的命名格式，以及主机到主机的『不可靠 (unreliable)』传输机制。
 - 【UDP = Unreliable Datagram Protocol】基于 IP 的简单扩展，提供进程到进程的不可靠传输。
 - 【TCP = Transmission Control Protocol】基于 IP 的复杂扩展，提供进程到进程的双向可靠传输。
 
 对于普通程序员，因特网可以理解为由世界上所有具备以下性质的主机所构成的互联网：
 
-- 主机之集被映射到“IP 地址 (IP address)”之集。
-- IP 地址之集被映射到“因特网域名 (Internet domain name)”之集。
-- 一台主机上的进程可通过“连接 (connection)”与另一台主机上的进程“通信 (communicate)”。
+- 主机之集被映射到『IP 地址 (IP address)』之集。
+- IP 地址之集被映射到『因特网域名 (Internet domain name)』之集。
+- 一台主机上的进程可通过『连接 (connection)』与另一台主机上的进程『通信 (communicate)』。
 
 ## 3.1. IP 地址
 
@@ -67,7 +67,7 @@ struct in_addr {
 };
 ```
 
-TCP/IP 规定所有整数都采用“大端 (big-endian)”字节顺序。以下函数用于主机与网络字节顺序的转换：
+TCP/IP 规定所有整数都采用『大端 (big-endian)』字节顺序。以下函数用于主机与网络字节顺序的转换：
 
 ```c
 #include <arpa/inet.h>
@@ -110,7 +110,7 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 【全双工 (full duplex)】可以在同一时间双向传输。
 - 【可靠 (reliable)】字节流的接收顺序与发送顺序一致。
 
-【套接字 (socket)】连接的一端，用形如 `ip_address:port` 的“套接字地址”表示，其中 `port` 为 16-bit 的“端口号”。
+【套接字 (socket)】连接的一端，用形如 `ip_address:port` 的『套接字地址』表示，其中 `port` 为 16-bit 的『端口号』。
 
 - 客户端的端口号不固定，由操作系统内核自动分配。
 - 常用服务的端口号相对固定，列于 `/etc/services` 中。
@@ -142,7 +142,7 @@ typedef struct sockaddr SA;
 
 ## 4.2. `socket()`
 
-客户端及服务器用此函数获得（部分打开的）套接字。若成功则返回“套接字描述符 (socket descriptor)”，否则返回 `-1`。
+客户端及服务器用此函数获得（部分打开的）套接字。若成功则返回『套接字描述符 (socket descriptor)』，否则返回 `-1`。
 
 ```c
 #include <sys/types.h>
@@ -178,7 +178,7 @@ int bind(int server_fd, const SA *server_addr,
 
 ## 4.5. `listen()`
 
-服务器用此函数将“活跃套接字 (active socket)”转变为“监听套接字 (listening socket)”。若成功则返回 `0`，否则返回 `-1`。
+服务器用此函数将『活跃套接字 (active socket)』转变为『监听套接字 (listening socket)』。若成功则返回 `0`，否则返回 `-1`。<a href id="listen"></a>
 - 【活跃套接字】`socket()` 返回的默认是这种，供客户端所使用。
 - 【监听套接字】供服务器接收连接请求，记作 `listen_fd`。
 
@@ -245,7 +245,7 @@ int getnameinfo(const struct sockaddr *sa, socklen_t salen,
                 int flags/* NI_NUMERICHOST | NI_NUMERICSERV */);
 ```
 
-### 示例：模仿 `nslookup`
+### 示例：`hostname.c`
 
 ```c
 #include "csapp.h"
@@ -366,7 +366,7 @@ int open_listenfd(char *port) {
 
 ## 4.9. 示例：回音系统
 
-### 客户端
+### `echoclient.c`
 
 ```c
 #include "csapp.h"
@@ -396,7 +396,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-### 服务器
+### `echoserveri.c`
 
 ```c
 #include "csapp.h"
@@ -469,7 +469,7 @@ Ctrl+C
 
 ## 5.1. 网页基础
 
-【超文本传输协议 (HyperText Transfer Protocol, HTTP)】“网页 (Web)”服务的协议
+【超文本传输协议 (HyperText Transfer Protocol, HTTP)】『网页 (Web)』服务的协议
 - 【浏览器 (browser)】HTTP 的客户端
 - 【内容 (content)】HTTP 的客户端向服务器请求的数据
 
@@ -479,7 +479,7 @@ Ctrl+C
 
 ## 5.2. 网页内容
 
-MIME (Multipurpose Internet Mail Extensions)
+MIME (Multipurpose Internet Mail Extensions)<a href id="mime"></a>
 
 网页内容分类
 - 【静态内容 (static content)】服务器传送给客户端的文件
@@ -524,8 +524,10 @@ Host: csapp.cs.cmu.edu
 
 其中
 
-- 第一行称作“请求行 (request line)”，格式为 `method URI version`
-- 第二行开始为“请求页眉 (request header)”，格式为 `header_name: header_data`
+- 第一行称作『请求行 (request line)』，格式为 `method URI version`
+  - 若客户端为浏览器，则 URI 为 URL 的后缀（位于域名、端口号之后的部分）。
+  - 若客户端为代理服务器，则 URI 为整个 URL。
+- 第二行开始为『请求页眉 (request header)』，格式为 `header_name: header_data`
 - 最后的空行表示页眉结尾。
 
 ### HTTP 响应
@@ -547,8 +549,8 @@ Content-Type: text/html; charset=UTF-8
 
 其中
 
-- 第一行称作“响应行 (response line)”，格式为 `version status_code status_message`
-- 第二行开始为“响应页眉 (response header)”
+- 第一行称作『响应行 (response line)』，格式为 `version status_code status_message`
+- 第二行开始为『响应页眉 (response header)』
 - 最后的空行表示页眉结尾。
 
 接下来，客户端显示网页的 HTML 源代码：
@@ -574,4 +576,277 @@ Connection closed by foreign host.
 
 ## 5.4. 提供动态内容
 
-# 6. 示例：微型网页服务器
+CGI (common gateway interface)
+
+### 客户端向服务器传递实参
+
+`GET` 将 URI 中的实参传送给服务器，其中
+
+- `?` 分隔文件名与实参。
+- `&` 分割实参列表（实参列表中不能含空格）。
+- 实参本身含空格的，用特殊字符 `%20` 表示。
+
+### 服务器向子进程传递实参
+
+服务器收到 `GET /cgi-bin/adder?15000&213 HTTP/1.1` 后，会依次
+
+- 用 `fork` 创建一个子进程。
+- 将 CGI 环境变量 `QUERY_STRING` 设为 `15000&213`。 
+- 用 `execve` 加载 `/cgi-bin/adder` 程序。
+
+详见 [`serve_dynamic()`](#`serve_dynamic()`)。
+
+### 服务器向子进程传递其他信息
+
+CGI 标准定义了一些环境变量，用于传递信息：
+
+- `QUERY_STRING` 程序实参
+- `SERVER_PORT` 服务器的[监听端口](#listen)
+- `REQUEST_METHOD` 可以为 `GET` 或 `POST`
+- `REMOTE_HOST` 客户端域名
+- `REMOTE_ADDR` 客户端 IP 地址
+- `CONTENT_TYPE` 仅供 `POST`，表示所请求对象的 [MIME](#mime) 类型
+- `CONTENT_LENGTH` 仅供 `POST`，表示所请求对象的字节数
+
+### 子进程向客户端发送结果
+
+加载 CGI 程序前，子进程会用 `dup2` 将 `stdout` 重定向到 `connect_fd`，从而传递给客户端。
+
+详见 [`serve_dynamic()`](#`serve_dynamic()`)。
+
+
+### `adder.c`
+
+```c
+#include "csapp.h"
+
+int main(void) {
+  char *buf, *p;
+  char arg1[MAXLINE], arg2[MAXLINE], content[MAXLINE];
+  int n1=0, n2=0;
+
+  /* Extract the two arguments */
+  if ((buf = getenv("QUERY_STRING")) != NULL) {
+    p = strchr(buf, '&');
+    *p = '\0';
+    strcpy(arg1, buf);
+    strcpy(arg2, p+1);
+    n1 = atoi(arg1);
+    n2 = atoi(arg2);
+  }
+
+  /* Make the response body */
+  sprintf(content, "Welcome to add.com: ");
+  sprintf(content, "%sTHE Internet addition portal.\r\n<p>", content);
+  sprintf(content, "%sThe answer is: %d + %d = %d\r\n<p>", 
+          content, n1, n2, n1 + n2);
+  sprintf(content, "%sThanks for visiting!\r\n", content);
+
+  /* Generate the HTTP response */
+  printf("Connection: close\r\n");
+  printf("Content-length: %d\r\n", (int)strlen(content));
+  printf("Content-type: text/html\r\n\r\n");
+  printf("%s", content);
+  fflush(stdout);
+
+  exit(0);
+}
+```
+
+# 6. 示例：`tiny.c`
+
+## `main()`
+
+```c
+int main(int argc, char **argv) {
+  int listen_fd, connect_fd;
+  char hostname[MAXLINE], port[MAXLINE];
+  socklen_t client_len;
+  struct sockaddr_storage client_addr;
+
+  if (argc != 2) {
+    fprintf(stderr, "usage: %s <port>\n", argv[0]);
+    exit(1);
+  }
+
+  listen_fd = Open_listenfd(argv[1]);
+  while (1) { // 迭代型服务器
+    client_len = sizeof(client_addr);
+    connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
+    Getnameinfo((SA *)&client_addr, client_len,
+                hostname, MAXLINE,
+                port, MAXLINE, 0);
+    printf("Accepted connection from (%s, %s)\n", hostname, port);
+    doit(connect_fd); // 处置请求
+    Close(connect_fd);
+  }
+}
+```
+
+## `doit()`
+
+```c
+void doit(int fd) {
+  int is_static;
+  struct stat sbuf;
+  char buf[MAXLINE], method[MAXLINE], uri[MAXLINE], version[MAXLINE];
+  char filename[MAXLINE], cgiargs[MAXLINE];
+  rio_t rio;
+
+  Rio_readinitb(&rio, fd);
+  if (!Rio_readlineb(&rio, buf, MAXLINE))
+    return;
+  printf("%s", buf);
+  sscanf(buf, "%s %s %s", method, uri, version);
+  if (strcasecmp(method, "GET")) { // 只支持 GET
+    clienterror(fd, method, "501", "Not Implemented",
+                "Tiny does not implement this method");
+    return;
+  }
+  read_requesthdrs(&rio); // 忽略请求页眉
+
+  is_static = parse_uri(uri, filename, cgiargs);
+  if (stat(filename, &sbuf) < 0) {
+    clienterror(fd, filename, "404", "Not found",
+                "Tiny couldn't find this file");
+    return;
+  }
+
+  if (is_static) {
+    if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
+      clienterror(fd, filename, "403", "Forbidden",
+                  "Tiny couldn't read the file");
+      return;
+    }
+    serve_static(fd, filename, sbuf.st_size);
+  }
+  else {
+    if (!(S_ISREG(sbuf.st_mode)) || !(S_IXUSR & sbuf.st_mode)) {
+      clienterror(fd, filename, "403", "Forbidden",
+                  "Tiny couldn't run the CGI program");
+      return;
+    }
+    serve_dynamic(fd, filename, cgiargs);
+  }
+}
+```
+
+## `clienterror()`
+
+```c
+void clienterror(int fd, char *cause, char *errnum, 
+                 char *shortmsg, char *longmsg) {
+  char buf[MAXLINE];
+
+  /* Print the HTTP response headers */
+  sprintf(buf, "HTTP/1.0 %s %s\r\n", errnum, shortmsg);
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "Content-type: text/html\r\n\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+
+  /* Print the HTTP response body */
+  sprintf(buf, "<html><title>Tiny Error</title>");
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "<body bgcolor=""ffffff"">\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "%s: %s\r\n", errnum, shortmsg);
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "<p>%s: %s\r\n", longmsg, cause);
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "<hr><em>The Tiny Web server</em>\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+}
+```
+
+## `read_requesthdrs()`
+
+```c
+void read_requesthdrs(rio_t *rp) {
+  char buf[MAXLINE];
+
+  Rio_readlineb(rp, buf, MAXLINE);
+  printf("%s", buf);
+  while(strcmp(buf, "\r\n")) {
+    Rio_readlineb(rp, buf, MAXLINE);
+    printf("%s", buf);
+  }
+  return;
+}
+```
+
+## `parse_uri()`
+
+```c
+int parse_uri(char *uri, char *filename, char *cgiargs) {
+  char *ptr;
+
+  if (!strstr(uri, "cgi-bin")) {  /* Static content */
+    strcpy(cgiargs, "");
+    strcpy(filename, "."); strcat(filename, uri);
+    if (uri[strlen(uri)-1] == '/')   /* use the default filename */
+      strcat(filename, "home.html"); /* which is `./home.html`   */
+    return 1;
+  }
+  else {  /* Dynamic content */
+    ptr = index(uri, '?');
+    if (ptr) {
+      strcpy(cgiargs, ptr+1);
+      *ptr = '\0';
+    }
+    else 
+      strcpy(cgiargs, "");
+    strcpy(filename, "."); strcat(filename, uri);
+    return 0;
+  }
+}
+```
+
+## `serve_static()`
+
+```c
+void serve_static(int fd, char *filename, int filesize) {
+  int srcfd;
+  char *srcp, filetype[MAXLINE], buf[MAXBUF];
+
+  /* Send response headers to client */
+  get_filetype(filename, filetype);
+  sprintf(buf, "HTTP/1.0 200 OK\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "Server: Tiny Web Server\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "Content-length: %d\r\n", filesize);
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "Content-type: %s\r\n\r\n", filetype);
+  Rio_writen(fd, buf, strlen(buf));
+
+  /* Send response body to client */
+  srcfd = Open(filename, O_RDONLY, 0);
+  srcp = Mmap(0, filesize, PROT_READ, MAP_PRIVATE, srcfd, 0); // Section 9.8
+  Close(srcfd);
+  Rio_writen(fd, srcp, filesize);
+  Munmap(srcp, filesize);
+}
+```
+
+## `serve_dynamic()`
+
+```c
+void serve_dynamic(int fd, char *filename, char *cgiargs) {
+  char buf[MAXLINE], *emptylist[] = { NULL };
+
+  /* Return first part of HTTP response */
+  sprintf(buf, "HTTP/1.0 200 OK\r\n"); 
+  Rio_writen(fd, buf, strlen(buf));
+  sprintf(buf, "Server: Tiny Web Server\r\n");
+  Rio_writen(fd, buf, strlen(buf));
+
+  if (Fork() == 0) { /* Child */
+    /* Real server would set all CGI vars here */
+    setenv("QUERY_STRING", cgiargs, 1);
+    Dup2(fd, STDOUT_FILENO);         /* Redirect stdout to client */
+    Execve(filename, emptylist, environ); /* Run CGI program */
+  }
+  Wait(NULL); /* Parent waits for and reaps child */
+}
+```
+
