@@ -40,7 +40,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 - 十：系统级读写
 - [十一：网络编程](./11_network_programming.md)
-- 十二：并发编程
+- [十二：并发编程](./12_concurrent_programming.md)
 - 附录：异常处置 ([`csapp.h`](http://csapp.cs.cmu.edu/3e/ics3/code/include/csapp.h), [`csapp.c`](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c))
 
 # [Lab Assignments](https://csapp.cs.cmu.edu/3e/labs.html)
