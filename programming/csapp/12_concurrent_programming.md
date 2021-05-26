@@ -309,7 +309,7 @@ pthread_t pthread_self(void); /* 返回当前线程的 TID */
 结束线程的几种方式：
 
 - 【隐式结束】传给 `pthread_create()` 的 `f()` 运行完毕并返回。
-- 【显式结束】调用 `pthread_exit()` 结束当前线程，主线程会等待同伴线程结束。
+- 【显式结束】调用 `pthread_exit()` 结束当前线程及进程。
 - 【结束进程】某个同伴线程调用 `exit()` 结束整个进程。
 - 【取消线程】因另一个进程调用 `pthread_cancel()` 而结束。
 
@@ -344,7 +344,7 @@ int pthread_detach(pthread_t tid);
 pthread_detach(pthread_self());
 ```
 
-## 3.7. 初始化线程
+## 3.7. 初始化线程<a href id="pthread_once"></a>
 
 ```c
 #include <pthread.h>
@@ -356,7 +356,7 @@ int pthread_once(pthread_once_t *once_control,
 - 首次调用 `pthread_once()` 会运行 `init_routine()` 以初始化全局变量。
 - 用相同的 `once_control` 再次调用 `pthread_once()` 不会做任何事。
 
-## 3.8. `echoservert.c`
+## 3.8. `echoservert.c`<a href id="echoserver-thread"></a>
 
 ```c
 #include "csapp.h"
@@ -395,11 +395,322 @@ int main(int argc, char **argv) {
 
 # 4. 多线程共享变量
 
-# 5. 多线程同步
+【共享变量】被多个线程（直接或间接）访问的变量。
+
+- 寄存器中的数据始终独享，虚拟内存中的数据可以共享。
+- 各线程通常不访问其他线程的栈区，但栈区属于虚拟内存，故仍可共享。
+
+```c
+#include "csapp.h"
+#define N 2
+void *thread(void *vargp);
+
+char **ptr;  /* 全局变量 in 数据读写区，直接共享 */
+
+int main() {
+  int i;  
+  pthread_t tid;
+  char *msgs[N] = { /* 局部自动变量 in 主线程栈区，间接共享 */
+    "Hello from foo", "Hello from bar"
+  };
+
+  ptr = msgs;
+  for (i = 0; i < N; i++)
+    Pthread_create(&tid, NULL, thread, (void *)i);
+  Pthread_exit(NULL);
+}
+
+void *thread(void *vargp) {
+  int myid = (int)vargp; /* 局部自动变量 in 该线程栈区，不被共享 */
+  static int count = 0;  /* 局部静态变量 in 数据读写区，直接共享 */
+  printf("[%d]: %s (count=%d)\n", myid, ptr[myid], ++count);
+  return NULL;
+}
+```
+
+# 5. 用旗语同步线程
+
+一般而言，无法预知各线程被操作系统选中的执行顺序。
+
+## 5.1. 进程图
+
+【进程图 (progress graph)】
+- $n$ 个线程的执行过程对应于 $n$ 维空间中的轨迹。
+- 第 $k$ 坐标轴对应于第 $k$ 线程。
+- 点 $(I_1,I_2,\dots,I_n)$ 表示第 $k$ 线程完成指令 $I_k$ 后的状态，其中 $k=1,\dots,n$。
+- （单核处理器）同一时间只能执行一条指令，故轨迹的生长始终平行于某一坐标轴。
+
+进程图有助于理解以下概念：
+- 【关键段 (critical section)】操纵共享变量的指令序列。<a href id="critical"></a>
+- 【互斥 (mutual exclusion)】任一线程执行关键段时，应当暂时独享对共享变量访问。
+- 【不安全区域 (unsafe region)】$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$ 线程的关键段。<a href id="unsafe"></a>
+- 【不安全轨迹 (unsafe trajectory)】经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
+
+## 5.2. 旗语
+
+【旗语 (semaphore)】用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
+
+- 【`P(s)​`】🇳🇱proberen🇨🇳检测
+  - 若 `s != 0`，则 `return --s`，此过程不可被中断。
+  - 若 `s == 0`，则暂停当前线程，直到被 `V(s)​` 重启，再 `return --s`。
+- 【`V(s)​`】🇳🇱verhogen🇨🇳增加
+  - 读取 `s`、`++s​`、存储 `s`，此过程不可被中断。
+  - 若某些线程在 `P(s)​` 中等待，则重启其中任意一个。
+- 【不变量】`s >= 0` 始终成立。
+
+POSIX  标准定义了以下接口：
+
+```c
+#include <semaphore.h>
+int sem_init(sem_t *sem, int pshared/* 通常为 0 */, unsigned int v/* 通常为 1 */);
+int sem_wait(sem_t *s); /* P(s) */
+int sem_post(sem_t *s); /* V(s) */
+#include "csapp.h"
+void P(sem_t *s); /* Wrapper function for sem_wait */
+void V(sem_t *s); /* Wrapper function for sem_post */
+```
+
+## 5.3. 用旗语实现互斥
+
+【二项旗语 (binary semaphore)】为每个共享变量关联一个初值为 `1` 的旗语 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
+
+- 【互斥 (mutex)】用于支持对共享变量“互斥 (MUTually EXclusive)”访问的二项旗语。
+- 【上锁 (lock)】在关键段头部调用 `P(s)`
+- 【开锁 (unlock)】在关键段尾部调用 `V(s)`
+- 【禁止区域 (forbidden region)】`s < 0` 的区域，亦即[不安全区域](#unsafe)。
+
+```c
+#include "csapp.h"
+
+volatile long count = 0; /* Counter */
+sem_t mutex; /* Semaphore that protects `count` */
+
+void *thread(void *vargp) {
+  long n_iters = *((long *)vargp);
+  for (long i = 0; i < n_iters; i++) {
+    P(&mutex);
+    count++;
+    V(&mutex);
+  }
+  return NULL;
+}
+
+int main(int argc, char **argv) {
+  long n_iters;
+  pthread_t tid1, tid2;
+
+  /* Check input argument */
+  if (argc != 2) { 
+    printf("usage: %s <niters>\n", argv[0]);
+    exit(0);
+  }
+  n_iters = atoi(argv[1]);
+
+  Sem_init(&mutex, 0, 1);
+  /* Create threads and wait for them to finish */
+  Pthread_create(&tid1, NULL, thread, &n_iters);
+  Pthread_create(&tid2, NULL, thread, &n_iters);
+  Pthread_join(tid1, NULL);
+  Pthread_join(tid2, NULL);
+  /* Check result */
+  if (count != (2 * n_iters))
+    printf("BOOM! count=%ld\n", count);
+  else
+    printf("OK count=%ld\n", count);
+  exit(0);
+}
+```
+
+## 5.4. 用旗语调度共享资源
+
+【计数旗语 (counting semaphore)】
+
+### 生产者--消费者
+
+【有界缓冲区 (bounded buffer)】<a href id="bounded-buffer"></a>
+
+- 【生产者 (producer)】
+  - 若缓冲区有空，则向其中填入新“项目 (item)”；否则等待有空。
+  - 实例：视频编码器、GUI 事件检测。
+- 【消费者 (consumer)】
+  - 若缓冲区非空，则从其中移出项目；否则等待非空。
+  - 实例：视频解码器、GUI 事件响应。
+
+```c
+typedef struct {
+  int *buf;          /* Buffer array */         
+  int n;             /* Maximum number of slots */
+  int front;         /* buf[(front+1)%n] is first item */
+  int rear;          /* buf[rear%n] is last item */
+  sem_t mutex;       /* Protects accesses to buf */
+  sem_t slots;       /* Counts available slots */
+  sem_t items;       /* Counts available items */
+} sbuf_t;
+
+/* Create an empty, bounded, shared FIFO buffer with n slots */
+void sbuf_init(sbuf_t *sp, int n) {
+  sp->buf = Calloc(n, sizeof(int)); 
+  sp->n = n;                       /* Buffer holds max of n items */
+  sp->front = sp->rear = 0;        /* Empty buffer iff front == rear */
+  Sem_init(&sp->mutex, 0, 1);      /* Binary semaphore for locking */
+  Sem_init(&sp->slots, 0, n);      /* Initially, buf has n empty slots */
+  Sem_init(&sp->items, 0, 0);      /* Initially, buf has zero data items */
+}
+
+/* Clean up buffer sp */
+void sbuf_deinit(sbuf_t *sp) {
+  Free(sp->buf);
+}
+
+/* Insert item onto the rear of shared buffer sp */
+void sbuf_insert(sbuf_t *sp, int item) {
+  P(&sp->slots);                          /* Wait for available slot */
+  P(&sp->mutex);                          /* Lock the buffer */
+  sp->buf[(++sp->rear)%(sp->n)] = item;   /* Insert the item */
+  V(&sp->mutex);                          /* Unlock the buffer */
+  V(&sp->items);                          /* Announce available item */
+}
+
+/* Remove and return the first item from buffer sp */
+int sbuf_remove(sbuf_t *sp) {
+  int item;
+  P(&sp->items);                          /* Wait for available item */
+  P(&sp->mutex);                          /* Lock the buffer */
+  item = sp->buf[(++sp->front)%(sp->n)];  /* Remove the item */
+  V(&sp->mutex);                          /* Unlock the buffer */
+  V(&sp->slots);                          /* Announce available slot */
+  return item;
+}
+```
+
+### 读者--作者
+
+- 【读者 (reader)】
+  - 只对共享资源进行读取的线程，可以与不限数量的读者共享资源。
+  - 实例：网购时查看库存的用户、读取网页缓存的线程。
+  - 第一类读写问题：偏向读者，读者无需等待作者写完。
+- 【作者 (writer)】
+  - 可对共享资源进行修改的线程，修改时只能独享对资源的访问权。
+  - 实例：网购时正在下单的用户、更新网页缓存的线程。
+  - 第二类读写问题：偏向作者，作者应尽快写出，读者需等待作者写完。
+
+```c
+/* 第一类读写问题解决方案 */
+int readcnt;    /* 初值为 0 */
+sem_t mutex, w; /* 初值为 1 */
+
+void reader(void) {
+  while (1) {
+    P(&mutex);
+    readcnt++;
+    if (readcnt == 1)
+    	P(&w); /* 第一个 reader 负责上锁 */
+    V(&mutex);
+    /* 关键段：多个线程可以并发读取 */
+    P(&mutex);
+    readcnt--;
+    if (readcnt == 0)
+    	V(&w); /* 最后一个 reader 负责开锁 */
+    V(&mutex);
+  }
+}
+
+void writer(void) {
+  while (1) {
+    P(&w);
+    /* 关键段：至多一个 writer 在写 */
+    V(&w);
+  }
+}
+```
+
+## 5.5. `echoservert-pre.c`
+
+[`echoservert.c`](#echoserver-thread) 为每个客户端创建一个线程。为减少创建线程的开销，可采用以下方案：
+
+- “主管线程 (master thread)”接收客户端发来的连接请求，再作为生产者向[有界缓冲区](#bounded-buffer)填入（套接字）描述符。
+- “工人线程 (worker thread)”作为消费者从上述缓冲区移出（套接字）描述符，再响应客户端发来的文字信息。
+- 工人线程数量 $\ll$ 缓冲区容量
+
+```c
+#include "csapp.h"
+#include "sbuf.h"
+#define NTHREADS  4
+#define SBUFSIZE  16
+
+void echo_cnt(int connfd);
+void *thread(void *vargp);
+
+sbuf_t sbuf; /* Shared buffer of connected descriptors */
+
+int main(int argc, char **argv) {
+  int i, listen_fd, connect_fd;
+  socklen_t client_len;
+  struct sockaddr_storage client_addr;
+  pthread_t tid; 
+
+  if (argc != 2) {
+    fprintf(stderr, "usage: %s <port>\n", argv[0]);
+    exit(0);
+  }
+  listen_fd = Open_listenfd(argv[1]);
+
+  sbuf_init(&sbuf, SBUFSIZE);
+  for (i = 0; i < NTHREADS; i++)  /* Create worker threads */
+    Pthread_create(&tid, NULL, thread, NULL);
+
+  while (1) { 
+    client_len = sizeof(struct sockaddr_storage);
+    connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
+    sbuf_insert(&sbuf, connect_fd); /* Insert connect_fd in buffer */
+  }
+}
+
+void *thread(void *vargp) {
+  Pthread_detach(pthread_self());
+  while (1) {
+    int connect_fd = sbuf_remove(&sbuf); /* Remove connect_fd from buffer */
+    echo_cnt(connect_fd);                /* Service client */
+    Close(connect_fd);
+  }
+}
+```
+
+### `echo_cnt.c`
+
+`echo_cnt()`  用到了 [`pthread_once()`](#pthread_once)：
+
+```c
+#include "csapp.h"
+
+static int byte_cnt;  /* Byte counter ... */
+static sem_t mutex;   /* and the mutex that protects it */
+
+static void init_echo_cnt(void) {
+  Sem_init(&mutex, 0, 1);
+  byte_cnt = 0;
+}
+
+void echo_cnt(int connect_fd) {
+  int n; 
+  char buf[MAXLINE]; 
+  rio_t rio;
+  static pthread_once_t once = PTHREAD_ONCE_INIT;
+
+  Pthread_once(&once, init_echo_cnt); /* 初始化，只运行一次 */
+  Rio_readinitb(&rio, connect_fd);
+  while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+    P(&mutex);
+    byte_cnt += n;
+    printf("server received %d (%d total) bytes on fd %d\n", 
+           n, byte_cnt, connect_fd);
+    V(&mutex);
+    Rio_writen(connect_fd, buf, n);
+  }
+}
+```
 
 # 6. 多线程并行
 
 # 7. 其他并发问题
-
-
 
