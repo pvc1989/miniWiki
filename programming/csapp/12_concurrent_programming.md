@@ -712,5 +712,132 @@ void echo_cnt(int connect_fd) {
 
 # 6. 多线程并行
 
+【并行程序 (parallel program)】运行在“多核处理器 (multi-core processor)”上的“并发程序 (concurrent program)”。
+
+【通用技巧】将原问题划分为若干子问题，各线程依据其 TID 计算相应的子问题。
+
+$$
+\sum_{i=0}^{mn-1}f(i)=\sum_{k=0}^{m-1}\left(\sum_{i=kn+0}^{kn+n-1}f(i)\right)
+$$
+
+## `psum-mutex.c`
+
+```c
+#include "csapp.h"
+#define MAXTHREADS 32
+
+long gsum = 0;           /* Global sum */
+long nelems_per_thread;  /* Number of elements to sum */
+sem_t mutex;             /* Mutex to protect global sum */
+
+void *sum_mutex(void *vargp) {
+  long myid = *((long *)vargp);          /* Extract the thread ID */
+  long start = myid * nelems_per_thread; /* Start element index */
+  long end = start + nelems_per_thread;  /* End element index */
+
+  for (long i = start; i < end; i++) {
+    P(&mutex); gsum += i; V(&mutex); /* 同步次数太多 ⚠️ */
+  }
+  return NULL;
+}
+
+int main(int argc, char **argv) {
+  long i, nelems, log_nelems, nthreads, myid[MAXTHREADS];
+  pthread_t tid[MAXTHREADS];
+  nelems_per_thread = /* ... */
+    sem_init(&mutex, 0, 1);
+
+  /* Create peer threads and wait for them to finish */
+  for (i = 0; i < nthreads; i++) {
+    myid[i] = i;
+    Pthread_create(&tid[i], NULL, sum_mutex, &myid[i]);
+  }
+  for (i = 0; i < nthreads; i++)
+    Pthread_join(tid[i], NULL);
+  
+  /* ... */
+}
+```
+
+【重要结论】同步开销很昂贵，应当尽量避免；若不能避免，则单次同步应当“分摊 (amortize)”尽可能多的计算量。
+
+## `psum-array.c`
+
+```c
+#include "csapp.h"
+#define MAXTHREADS 32
+
+long psum[MAXTHREADS];  /* Partial sum computed by each thread */
+long nelems_per_thread; /* Number of elements summed by each thread */
+
+void *sum_array(void *vargp) {
+  long myid = *((long *)vargp);          /* Extract the thread ID */
+  long start = myid * nelems_per_thread; /* Start element index */
+  long end = start + nelems_per_thread;  /* End element index */
+
+  for (long i = start; i < end; i++)
+    psum[myid] += i; /* 不必同步，但访存太多 ⚠️ */
+  return NULL;
+}
+
+int main(int argc, char **argv) {
+  long i, nelems, log_nelems, nthreads, myid[MAXTHREADS];
+  pthread_t tid[MAXTHREADS];
+
+  nelems_per_thread = /* ... */
+
+  /* Create peer threads and wait for them to finish */
+  for (i = 0; i < nthreads; i++) {
+    myid[i] = i;
+    Pthread_create(&tid[i], NULL, sum_array, &myid[i]);
+  }
+  for (i = 0; i < nthreads; i++)
+    Pthread_join(tid[i], NULL);
+
+  /* Add up the partial sums computed by each thread */
+  for (i = 0; i < nthreads; i++)
+    result += psum[i];
+
+  /* ... */
+}
+
+```
+
+## `psum-local.c`
+
+```c
+/* 同 psum-array.c */
+
+void *sum_array(void *vargp) {
+  /* 同 psum-array.c */
+
+  long sum = 0; /* 寄存器变量 */
+  for (long i = start; i < end; i++)
+    sum += i; /* 不必同步，且不必访存 */
+  psum[myid] = sum; /* 只访问一次 */
+  return NULL;
+}
+
+/* 同 psum-array.c */
+```
+
+【实验现象】核心数量 `n_cores` 等于线程数量 `n_threads` 时，加速效果最好。
+
+## 并行程序性能
+
+性能指标
+
+- 【加速 (speedup)】$S_p=T_1/T_p$
+  - 【绝对加速 (absolute speedup)】若 $T_1$ 为串行版本（在单核上）的运行时间
+  - 【相对加速 (relative speedup)】若 $T_1$ 为并行版本在单核上的运行时间
+- 【效率 (efficiency)】$E_p=S_p/p\equiv T_1/(pT_p)$
+
+可扩展性
+
+- 【强可扩展 (strong scalable)】问题规模不变，加速正比于核心数量。
+  - 例：处理固定数量的传感器传回的信号。
+- 【弱可扩展 (weak scalable)】耗时基本不变，问题规模正比于核心数量。
+  - 例：科学计算程序。
+
 # 7. 其他并发问题
 
