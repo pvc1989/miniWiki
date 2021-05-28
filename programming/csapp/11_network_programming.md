@@ -16,29 +16,39 @@ title: 网络编程
 3. 服务器向客户端发送『响应 (response)』，并等待下一个请求。
 4. 客户端接收该响应，并根据需要处理之。
 
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/cliservsteps.pdf)
+
 # 2. 网络
 
 对一台主机而言，『网络 (newwork)』相当于另一种读写设备。
 
-网络分类：
+## 局域网
 
-- 【局域网 (local area network, LAN)】目前最流行的局域网技术为『以太网 (Ethernet)』
-  - 【以太网段 (Ethernet segment)】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的小型网络，可覆盖一间或一层房屋。
-    - 【以太网线 (Ethernet wire)】一端连接到主机上的『以太网适配器 (Ethernet adapter)』，另一端连接到集线器上的『端口 (port)』。
-    - 【集线器 (hub)】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
-    - 每个以太网适配器都拥有一个长度为 48-bit 的物理地址，以区别于其他适配器。
-    - 一台主机向其他主机发送的最小数据块称作『帧 (frame)』，其内容除『有效载荷 (payload)』外，还包括来源地址、目标地址、帧长度的『头标  (header)』。
-  - 【桥接的以太网 (bridged Ethernet)】由多个以太网段连接到多个网桥所形成的中型网络，可覆盖整栋建筑或整个校园。
-    - 【网桥 (bridge)】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
-    - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
-- 【广域网 (wide area network, WAN)】
-- 【互联网 (interconnected network, internet)】由多个局域网及广域网连接到多个路由器所形成的大型网络，可覆盖全球。
-  - 【路由器 (router)】在多个局域网及广域网之间转发数据的设备。
-  - 【协议 (protocol)】运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
-    - 【命名格式 (naming scheme)】定义格式统一的主机地址。
-    - 【发送机制 (delivery mechanism)】定义数据打包的方式。
-      - 局域网帧 = 局域网头标 + 有效载荷（互联网包）
-      - 互联网包 = 互联网头标 + 有效载荷（用户数据）
+【局域网 (local area network, LAN)】目前最流行的局域网技术为『以太网 (Ethernet)』
+- 【以太网段 (Ethernet segment)】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的小型网络，可覆盖一间或一层房屋。
+  - 【以太网线 (Ethernet wire)】一端连接到主机上的『以太网适配器 (Ethernet adapter)』，另一端连接到集线器上的『端口 (port)』。
+  - 【集线器 (hub)】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
+  - 每个以太网适配器都拥有一个长度为 48-bit 的物理地址，以区别于其他适配器。
+  - 一台主机向其他主机发送的最小数据块称作『帧 (frame)』，其内容除『有效载荷 (payload)』外，还包括来源地址、目标地址、帧长度的『头标  (header)』。
+- 【桥接的以太网 (bridged Ethernet)】由多个以太网段连接到多个网桥所形成的中型网络，可覆盖整栋建筑或整个校园。
+  - 【网桥 (bridge)】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
+  - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
+
+## 广域网
+
+【广域网 (wide area network, WAN)】
+
+## 互联网
+
+【互联网 (interconnected network, internet)】由多个局域网及广域网连接到多个路由器所形成的大型网络，可覆盖全球。
+- 【路由器 (router)】在多个局域网及广域网之间转发数据的设备。
+- 【协议 (protocol)】运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
+  - 【命名格式 (naming scheme)】定义格式统一的主机地址。
+  - 【发送机制 (delivery mechanism)】定义数据打包的方式。
+    - 局域网帧 = 局域网头标 + 有效载荷（互联网包）
+    - 互联网包 = 互联网头标 + 有效载荷（用户数据）
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/intertrans.pdf)
 
 # 3. 全局 IP 因特网
 
@@ -116,6 +126,8 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 常用服务的端口号相对固定，列于 `/etc/services` 中。
 
 # 4. 套接字接口
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/sockoverview.pdf)
 
 ## 4.1. 套接字地址结构
 
@@ -207,14 +219,6 @@ int accept(int listen_fd, SA *client_addr, int *client_addr);
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
-int getaddrinfo(
-    const char *host/* 域名 或 十进制地址*/,
-    const char *service/* 服务名 或 端口号 */,
-    const struct addrinfo *hints/* NULL 或 只含前四项的 addrinfo */,
-    struct addrinfo **result/* 输出链表 */
-);
-void freeaddrinfo(struct addrinfo *result);
-const char *gai_strerror(int errcode);
 
 struct addrinfo {
     int ai_flags; /* AI_ADDRCONFIG | AI_CANONNAME | AI_NUMERICSERV | AI_PASSIVE */
@@ -226,7 +230,18 @@ struct addrinfo {
     struct sockaddr *ai_addr; /* Ptr to socket address structure */
     struct addrinfo *ai_next; /* Ptr to next item in linked list */
 };
+
+int getaddrinfo(
+    const char *host/* 域名 或 十进制地址*/,
+    const char *service/* 服务名 或 端口号 */,
+    const struct addrinfo *hints/* NULL 或 只含前四项的 addrinfo */,
+    struct addrinfo **result/* 输出链表 */
+);
+void freeaddrinfo(struct addrinfo *result);
+const char *gai_strerror(int errcode);
 ```
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/addrinfolist.pdf)
 
 `getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），其中每个结点为 `struct addrinfo` 类型。
 - 客户端依次用每个结点提供的信息尝试 `socket()` 及 `connect()`，直到成功返回。

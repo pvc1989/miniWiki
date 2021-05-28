@@ -7,7 +7,9 @@ title: CSAPP
 ## 教材
 
 [Computer Systems: A Programmer's Perspective, 3/E (CS:APP3e)](https://csapp.cs.cmu.edu/3e/home.html)
+
 - [勘误表](https://csapp.cs.cmu.edu/3e/errata.html)
+- [配图](https://csapp.cs.cmu.edu/3e/figures.html)
 - [代码](http://csapp.cs.cmu.edu/3e/code.tar)
 
 ## 课程
@@ -38,7 +40,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 ## 第三部分：程序间互动及通信
 
-- 十：系统级读写
+- [十：系统级读写](./10_system_level_io.md)
 - [十一：网络编程](./11_network_programming.md)
 - [十二：并发编程](./12_concurrent_programming.md)
 - 附录：异常处置 ([`csapp.h`](http://csapp.cs.cmu.edu/3e/ics3/code/include/csapp.h), [`csapp.c`](http://csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c))
