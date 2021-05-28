@@ -432,9 +432,10 @@ void *thread(void *vargp) {
 
 一般而言，无法预知各线程被操作系统选中的执行顺序。
 
-## 5.1. 进程图
+## 5.1. 进程图<a href id="graph"></a>
 
 【进程图 (progress graph)】
+
 - $n$ 个线程的执行过程对应于 $n$ 维空间中的轨迹。
 - 第 $k$ 坐标轴对应于第 $k$ 线程。
 - 点 $(I_1,I_2,\dots,I_n)$ 表示第 $k$ 线程完成指令 $I_k$ 后的状态，其中 $k=1,\dots,n$。
@@ -446,7 +447,9 @@ void *thread(void *vargp) {
 - 【不安全区域 (unsafe region)】$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$ 线程的关键段。<a href id="unsafe"></a>
 - 【不安全轨迹 (unsafe trajectory)】经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
 
-## 5.2. 旗语
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/safetraj.pdf)
+
+## 5.2. 旗语<a href id="semaphore"></a>
 
 【旗语 (semaphore)】用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
 
@@ -457,6 +460,8 @@ void *thread(void *vargp) {
   - 读取 `s`、`++s​`、存储 `s`，此过程不可被中断。
   - 若某些线程在 `P(s)​` 中等待，则重启其中任意一个。
 - 【不变量】`s >= 0` 始终成立。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/pgsem.pdf)
 
 POSIX  标准定义了以下接口：
 
@@ -631,6 +636,8 @@ void writer(void) {
 - “主管线程 (master thread)”接收客户端发来的连接请求，再作为生产者向[有界缓冲区](#bounded-buffer)填入（套接字）描述符。
 - “工人线程 (worker thread)”作为消费者从上述缓冲区移出（套接字）描述符，再响应客户端发来的文字信息。
 - 工人线程数量 $\ll$ 缓冲区容量
+
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/prethreaded.pdf)
 
 ```c
 #include "csapp.h"
@@ -840,4 +847,63 @@ void *sum_array(void *vargp) {
   - 例：科学计算程序。
 
 # 7. 其他并发问题
+
+## 7.1. 线程安全
+
+【线程安全 (thread-safe)】反复运行并发的多线程函数总是给出相同结果。
+
+以下函数不是线程安全的：
+
+1. 没有保护共享变量
+   - 解决：用[旗语](#semaphore)加锁
+   - 优点：调用侧无需改动
+   - 缺点：性能下降
+2. 有依赖于调用历史的状态（全局或静态变量）
+   - 实例：伪随机数
+   - 解决：改写为[再入函数](#reentrant)
+3. 返回指向静态变量的指针
+   - 实例：`ctime()`, `gethostname()`
+   - 解决：由调用侧传入指向私有变量的指针；【锁后复制 (lock-and-copy)】将不安全函数封装在 `P/V` 对内，在其中将结果（深）复制到私有内存。
+4. 调用了第 2 类不安全函数
+   - 解决：锁后复制
+
+## 7.2. 再入函数<a href id="reentrant"></a>
+
+【再入函数 (reentrant function)】被多个线程调用时，不访问共享变量。
+
+- 一定是线程安全的
+- 比加锁的函数更高效
+- 若传入指针，则需指向调用侧的私有数据
+
+```c
+/* rand_r - return a pseudorandom integer on 0..32767 */
+int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
+  *nextp = *nextp * 1103515245 + 12345;
+  return (unsigned int)(*nextp / 65536) % 32768;
+}
+```
+
+## 7.3. 标准库函数
+
+大多数 C 标准库函数是线程安全的。部分不安全的有[再入](#reentrant)版本（以 `_r` 为后缀）：
+
+- 第 2 类（必须用改写版本）
+  - `rand()`
+  - `strtok()`
+- 第 3 类（可用锁后复制，但低效）
+  - `asctime()`, `ctime()`, `localtime()`
+  - `gethostbyaddr()`, `gethostbyname()`
+  - `inet_ntoa()` ⚠️ 无再入版本
+
+## 7.4. 竞争
+
+【竞争 (race)】结果依赖于[进程图](#graph)中的路径。
+
+## 7.5. 死锁
+
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/deadlock.pdf)
+
+【死锁 (deadlock)】某些被暂停的进程等待着不可能发生的事件。
+
+- 解决：确保各线程对各锁的上锁顺序一致。
 
