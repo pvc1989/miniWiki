@@ -1,5 +1,5 @@
 ---
-title: 表示及操纵信息
+title: 信息的表示及运算
 ---
 
 # 1. 信息存储
@@ -17,12 +17,16 @@ b \coloneqq (b_{m}\,b_{m-1}\cdots b_{1}\,b_{0}\,.\,b_{-1}\,b_{-2}\cdots b_{1-n}\
 = \sum_{k=-n}^m 2^k \times b_k
 $$
 
+![](https://csapp.cs.cmu.edu/3e/ics3/data/fractional-binary.pdf)
+
 ## IEEE 754
 
 $$
 V \coloneqq \left(s\,\underbrace{e_{k-1}\cdots e_{1}\,e_{0}}_{e}\,\overbrace{f_{-1}\,f_{-2}\cdots f_{-n}}^{f}\right)_2
 = (-1)^s \times 2^{E(e)} \times M(f)
 $$
+
+![](https://csapp.cs.cmu.edu/3e/ics3/data/fp-cases.pdf)
 
 |            |        退化情形         |       常规情形       | 特殊值 |
 | :--------: | :---------------------: | :------------------: | :------: |
@@ -35,3 +39,4 @@ $$
 - 双精度 $k+n=11+52$
 - $b \coloneqq 2^{k-1} - 1$
 
+![](https://csapp.cs.cmu.edu/3e/ics3/data/fp-formats.pdf)

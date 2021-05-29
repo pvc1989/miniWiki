@@ -43,7 +43,7 @@ title: 异常控制流
 该地址指向用于响应该事件的某个系统子程序，即『异常处置器 (exception handler)』。
 此机制被称为『间接过程调用 (indirect procedure call)』。
 
-## 异常处置
+## 1.1. 异常处置
 
 - 【异常编号 (exception number)】
   - 用于标识异常的非负整数
@@ -60,7 +60,7 @@ title: 异常控制流
 | 栈所有者 |             系统内核             |        用户程序        |
 | 执行模式 |       内核模式（访问无限）       |  用户模式（访问受限）  |
 
-## 异常分类
+## 1.2. 异常分类
 
 - 【异步 (asynchronous)】并非由正在执行的指令引起
   - 【中断 (interrupt)】处理器收到读写设备发出的信号
@@ -71,11 +71,15 @@ title: 异常控制流
 
 ### 中断
 
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/interrupt.pdf)
+
 1. 执行指令 $I_\text{curr}$ 时，处理器收到读写设备（网络适配器、硬盘控制器、计时器）发来的信号。
 2. 待 $I_\text{curr}$ 执行完后，控制权转移到『中断处置器 (interrupt handler)』，并运行之。
 4. 返回到紧随 $I_\text{curr}$ 的下一条指令 $I_\text{next}$。
 
 ### 陷阱
+
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/trap.pdf)
 
 1. 应用程序通过 `syscall` 指令调用系统子程序。
 2. 控制权转移到『陷阱处置器 (trap handler)』，并运行之。
@@ -83,17 +87,21 @@ title: 异常控制流
 
 ### 故障
 
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fault.pdf)
+
 1. 执行指令 $I_\text{curr}$ 时，发生『故障 (fault)』。
 2. 控制权转移到『故障处置器 (fault handler)』，并运行之。
 3. 若成功排除故障，则返回到引起故障的 $I_\text{curr}$ 并重新执行；否则终止该程序。
 
 ### 终止
 
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/abort.pdf)
+
 1. 执行指令 $I_\text{curr}$ 时，发生不可修复的『致命错误 (fatal error)』。
 2. 控制权转移到『终止处置器 (abort handler)』，并运行之。
 3. 返回到 `abort` 以终止当前程序的执行。
 
-## Linux/x86-64 系统的异常
+## 1.3. Linux/x86-64 系统的异常
 
 ### 故障及终止
 
@@ -105,7 +113,7 @@ title: 异常控制流
 |   18    |      硬件错误      |    终止    |
 | 32～255 | 操作系统定义的异常 | 中断、陷阱 |
 
-### 系统调用
+### 系统调用<a href id="syscall"></a>
 
 - 【系统级函数 (system-level functions)】形如函数的系统调用（或其封装）。
 - 【陷阱指令 (trap instruction)】名为 `syscall` 的 x86-64 指令。
@@ -142,19 +150,19 @@ title: 异常控制流
   - 环境变量
   - 已打开文件的描述符
 
-## 逻辑控制流
+## 2.1. 逻辑控制流
 
 『逻辑控制流 (logical control flow)』，简称『逻辑流』，是指由程序计数器的值构成的序列。
 
 该机制使得当前程序看上去像是独占了处理器。
 
-## 并发流
+## 2.2. 并发流
 
 【并发流 (concurrent flow)】运行时间有重叠的多个逻辑流。
 - 【多任务 (multitasking)】多个进程轮流执行片段，又名『时间分割 (time slicing)』。
 - 【并行流 (parallel flow)】运行在多个核心或计算机上的并发流。
 
-## 私有地址空间
+## 2.3. 私有地址空间
 
 - 【地址空间 (address space)】由 $0$ 到 $(2^n-1)$ 共 $2^n$ 个地址构成的集合。
 - 【私有 (private)】每个进程只能读写自己的地址空间。
@@ -162,7 +170,7 @@ title: 异常控制流
 
 该机制使得当前程序看上去像是独占了存储器。
 
-## 用户与内核模式
+## 2.4. 用户与内核模式
 
 - 【模式位 (mode bit)】存于特定寄存器中，表示当前进程的权限。
 - 【内核模式 (kernel mode)】模式位非空，可以执行任何指令、访问任何地址。
@@ -175,7 +183,7 @@ Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据�
 - `/proc/cpuinfo` 表示处理器信息
 - `/proc/PID/maps` 表示某个进程的内存映射
 
-## 上下文切换
+## 2.5. 上下文切换
 
 【抢占 (preempt)】暂停
 
@@ -186,6 +194,8 @@ Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据�
 1. 保存当前进程的上下文
 2. 恢复之前被抢占的进程的上下文
 3. 移交控制权
+
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/switch.pdf)
 
 可能发生于
 
@@ -248,7 +258,7 @@ pid = Fork();
 
 # 4. 进程控制
 
-## 获取 PID
+## 4.1. 获取 PID
 
 每个进程都有一个唯一的由正整数表示的『进程身份 (process ID, PID)』。
 
@@ -261,7 +271,7 @@ pid_t getppid(void);  // parent's PID
 
 其中 `pid_t` 为定义在 `sys/types.h` 中的整数类型，Linux 将其定义为 `int`。
 
-## 创建、结束进程
+## 4.2. 创建、结束进程<a href id="fork"></a>
 
 进程可能处于『运行 (running)』、『暂停 (stopped)』、『结束 (terminated)』三种状态之一。
 
@@ -290,7 +300,14 @@ pid_t fork(void);
 - 构成 DAG，表示（有从属关系的）不同进程的语句之间的偏序关系。
 - 实际执行顺序可能是所有结点的任何有效的『拓扑排序 (topological sort)』。
 
-## 收割子进程
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fork2pgraph.pdf)
+
+```c
+#include "csapp.h"
+int main() { Fork(); Fork(); printf("hello\n"); exit(0); }
+```
+
+## 4.3. 收割子进程
 
 【僵尸 (zombie)】已『结束 (terminated)』但未『被收割 (reaped)』的进程。<a href id="zombie"></a>
 
@@ -327,9 +344,9 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 - `WIFEXITED(status)` 返回：被等待子进程是否正常结束
   - `WEXITSTATUS(status)` 返回：被等待子进程的退出状态
 - `WIFSIGNALED(status)` 返回：被等待子进程是否因信号而结束
-  - `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#信号)
+  - `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#signal)
 - `WIFSTOPPED(status)` 返回：被等待子进程是否因信号而暂停
-  - `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#信号)
+  - `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#signal)
 
 更多宏可用 `man waitpid` 命令查询。
 
@@ -410,7 +427,7 @@ int main() {
 }
 ```
 
-## 暂停进程
+## 4.4. 暂停进程
 
 ```c
 #include <unistd.h>
@@ -424,7 +441,7 @@ int pause(void);
 ```
 该函数让当前进程暂停至收到中断信号，总是返回 `-1`。
 
-## 加载、运行程序
+## 4.5. 加载、运行程序<a href id="execve"></a>
 
 ```c
 #include <unistd.h>
@@ -432,6 +449,8 @@ int execve(const char *filename, const char *argv[], const char *envp[]);
 ```
 
 该函数将 `filename` 所表示的程序加载到当前进程的上下文中，再运行之（将  `argv` 与 `envp` 转发给该程序的 `main()` 函数，再移交控制权）。若未出错，则不返回（由被加载的 `main()` 结束进程）；否则，返回 `-1`。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/stackinit.pdf)
 
 其中 `argv` 与 `envp` 都是以 `NULL` 结尾的（字符串）指针数组。
 
@@ -449,7 +468,7 @@ int setenv(const char *name, const char *newvalue, int overwrite);
 void unsetenv(const char *name);
 ```
 
-## 用 `fork` 与 `execve` 运行程序（简易 shell 实现）
+## 4.6. 实例：简易 shell
 
 【shell】交互式的命令行终端，代表用户运行其他程序。
 
@@ -570,7 +589,7 @@ int parseline(char *buf, char **argv) {
 
 # 5. 信号
 
-【信号 (signal)】
+【信号 (signal)】<a href id="signal"></a>
 
 - 是由操作系统提供的一种软件形式的 ECF。
 - 是由内核向进程发送的一条短『消息 (message)』，以告知其系统内发生了某种『事件 (event)』。
@@ -594,7 +613,7 @@ int parseline(char *buf, char **argv) {
 
 ⚠️ `SIGKILL` 既不能被捕获，又不能被忽略，可用于强制结束进程。
 
-## 信号术语
+## 5.1. 信号术语
 
 - 【发送 (send)】内核在目标进程的上下文中修改某个位。
   - 可能的原因：系统事件、调用 `kill()` 函数。
@@ -606,7 +625,7 @@ int parseline(char *buf, char **argv) {
 - 【屏蔽的 (blocked)】可被发送、但不被接收的信号。
   - 所有信号的屏蔽状态，由名为 `blocked` 的『位向量 (bit vector)』表示。
 
-## 发送信号
+## 5.2. 发送信号
 
 ### 进程组
 
@@ -668,7 +687,7 @@ unsigned int alarm(unsigned int secs);
 
 若有尚未走完的闹钟，则返回剩余秒数并取消之；否则返回零。
 
-## 接收信号
+## 5.3. 接收信号
 
 内核在将某进程从内核模式切换为用户模式时，会检查位向量 `pending & ~blocked` 所表示的信号集。
 
@@ -694,10 +713,11 @@ sighandler_t signal(int signum, sighandler_t handler);
 
 - 【安装 (install)】设置处置器。
 - 【捕获 (catch)】调用处置器。
-- 【处置 (handle)】运行处置器。
-  - 处置信号 $s$（即运行相应的处置器 $S$）时，可以捕获另一种信号 $t$（即运行相应的处置器 $T$）。
+- 【处置 (handle)】运行处置器（可以嵌套）。
 
-## 屏蔽信号
+![](https://csapp.cs.cmu.edu/3e/ics3/ecf/nestedhandlers.pdf)
+
+## 5.4. 屏蔽信号
 
 - 【隐式屏蔽】处置某种信号时，会自动屏蔽同种信号。
 - 【显式屏蔽】用 `sigprocmask(how, set, oldset)` 设置，其中 `how` 可以是
@@ -715,7 +735,7 @@ int sigdelset(sigset_t *set, int signum);
 int sigismember(const sigset_t *set, int signum);
 ```
 
-## 信号处置器编写指南
+## 5.5. 信号处置器编写指南
 
 信号处置器编写困难的主要原因：
 
@@ -783,7 +803,7 @@ handler_t *Signal(int signum, handler_t *handler) {
 }
 ```
 
-## 同步并发流以避免竞争
+## 5.6. 同步并发流以避免竞争
 
 【竞争 (race)】处置器与主函数读写同一变量的顺序不确定。
 
@@ -854,7 +874,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-## 显式等待信号
+## 5.7. 显式等待信号
 
 ```c
 volatile sig_atomic_t pid;
@@ -988,7 +1008,7 @@ void bar() {
 
 ## `strace`
 
-打印某进程的[系统调用](#系统调用)及[信号](#信号)。
+打印某进程的[系统调用](#syscall)及[信号](#signal)。
 
 ```shell
 # options

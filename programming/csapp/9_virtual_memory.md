@@ -4,21 +4,121 @@ title: 虚拟内存
 
 # 1. 物理与虚拟地址
 
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/virtualoverview.pdf)
+
 # 2. 地址空间
 
 # 3. 虚拟内存的缓存功能
 
+## 3.1. DRAM 缓存器组织
+
+## 3.2. 页面表
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/pt.pdf)
+
+## 3.3. 页面命中
+
+## 3.4. 页面故障
+
+|                           之前                            |                           之后                           |
+| :-------------------------------------------------------: | :------------------------------------------------------: |
+| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissbefore.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissafter.pdf) |
+
+【页面故障 (page fault)】`VP[3]` 不在物理内存中，需从硬盘读取。步骤如下：
+
+1. 在物理内存中选择 `VP[4]` 作为“受害者 (victim)”。
+2. 若 `VP[4]` 被修改过，则将其写入硬盘。
+3. 从硬盘读取 `VP[3]`，写入 `PP[3]`，即替换 `VP[4]`。
+
+## 3.5. 分配页面
+
+## 3.6. 利用局部性
+
 # 4. 虚拟内存的管理功能
 
-# 5. 虚拟内存的保护功能
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/separatespaces.pdf)
 
-# 6. 地址转换
+# 5. 虚拟内存的保护功能<a href id="protect"></a>
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmprotect.pdf)
+
+其中 `SUP` 表示以“监管者模式 (SUPervisor mode)”即“内核模式”运行。
+
+# 6. 地址翻译
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/addrtrans.pdf)
+
+## 6.1. 集成缓存器与虚拟内存
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmcache.pdf)
+
+- VA (Virtual Address)
+- MMU (Memory Management Unit)
+- PTE (Page Table Entry)
+- PTEA (Page Table Entry Address)
+- PA (Physical Address)
+
+## 6.2. 用 TLB 加速地址翻译
+
+## 6.3. 多级页面表
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/multiaddr.pdf)
+
+## 6.4. 地址翻译实例
 
 # 7. 实例：Intel Core i7 / Linux 内存系统
 
+## 7.1. Core i7 地址翻译
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/corei7addrtrans.pdf)
+
+## 7.2. Linux 虚拟内存系统
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxrtimage.pdf) 
+
+### Linux 虚拟内存区段
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxvm.pdf)
+
+### Linux 页面故障处置
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxfault.pdf)
+
 # 8. 内存映射<a href id="memory-map"></a>
 
+## 8.1. 共享对象再探
+
+【COW (Copy-On-Write)】写时复制
+
+|                    两个进程共享数据                     |              进程 2 在私有 COW 页面写入数据              |
+| :-----------------------------------------------------: | :------------------------------------------------------: |
+| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/sharedobj2.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/privateobj2.pdf) |
+
+## 8.2. `fork()` 再探
+
+## 8.3. `evecve()` 再探
+
+## 8.4. `mmap()`
+
+```c
+#include <unistd.h>
+#include <sys/mman.h>
+void *mmap(void *start/* 建议起始位置，可以是 NULL */, size_t length/* 读取长度 */,
+           int prot/* 权限：PROT_EXEC | PROT_READ | PROT_WRITE | PROT_NONE */,
+           int flags/* 映射类型：MAP_ANON | MAP_PRIVATE | MAP_SHARED */,
+           int fd/* 文件描述符 */, off_t offset/* 文件偏移量 */);
+    // Returns: pointer to mapped area if OK, MAP_FAILED (−1) on error
+int munmap(void *start, size_t length);
+    // Returns: 0 if OK, −1 on error
+```
+
+此函数从文件 `fd` 读取始于 `offset` 字节、长 `length` 字节的数据块，映射到（可能）始于 `start` 的虚拟内存空间。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmapargs.pdf)
+
 # 9. 动态内存分配
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/heapmap.pdf)
 
 【堆 (heap)】虚拟内存中紧跟在“未初始化数据”后面的一块连续区域
 
@@ -111,6 +211,8 @@ void* sbrk(intptr_t incr);
 
 ## 9.6. 隐式的空闲块链表
 
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/implicitsplit.pdf)
+
 ### 9.7. 查找足够大的块
 
 ```c
@@ -173,6 +275,14 @@ static void *extend_heap(size_t words) {
 ```
 
 ### 9.10. 合并相邻的空闲块
+
+|                         Case 1                         |                         Case 2                         |
+| :----------------------------------------------------: | :----------------------------------------------------: |
+| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce1.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce2.pdf) |
+
+|                         Case 3                         |                         Case 4                         |
+| :----------------------------------------------------: | :----------------------------------------------------: |
+| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce3.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce4.pdf) |
 
 ### 9.11. 利用边界标签合并
 
@@ -249,6 +359,8 @@ extern void mm_free(void *ptr);
 为简化“合并相邻的空闲块”，在链表两端引入一对辅助块：
 - 【起始块 (prologue block)】长度为 8 B，只含“头标”及“脚标”。
 - 【结尾块 (epilogue block)】长度为 4 B，只含“头标”，并标记为“已分配的”。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmimplicitlist.pdf)
 
 #### 尺寸常量、块操作宏
 
@@ -396,5 +508,54 @@ void *mm_malloc(size_t size) {
 
 # 10. 垃圾回收
 
-# 11. 与内存相关的代码缺陷
+## 10.1. 垃圾回收器基础
 
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/gcmem.pdf)
+
+## 10.2. 标记-清扫
+
+![](https://csapp.cs.cmu.edu/3e/ics3/vm/marksweepex.pdf)
+
+# 11. 与内存相关的 Bugs
+
+## 11.1. 解引用无效指针
+
+## 11.2. 读取未初始化的内存
+
+## 11.3. 允许缓冲区溢出
+
+例如《[3.10.3. 越界访问与缓冲区溢出](./3_machine_level_programming.md#buffer-overflow)》
+
+## 11.4. 依赖指针大小
+
+```c
+/* Create an nxm array */
+int **makeArray1(int n, int m) {
+  int i;
+  int **A = (int **)Malloc(n * sizeof(int/* 应为 `int*` */));
+  for (i = 0; i < n; i++)
+    A[i] = (int *)Malloc(m * sizeof(int));
+  return A;
+}
+```
+
+## 11.5. 数组越界
+
+## 11.6. 优先级错误
+
+```c
+*(p++);
+(*p)++;
+```
+
+## 11.7. 指针算数错误
+
+## 11.8. 返回局部变量的地址
+
+## 11.9. 访问已释放的动态对象
+
+## 11.10. 内存泄漏（未及时释放）
+
+## 内存检查工具
+
+### [Valgrind](../cpp/memory/check.md#Valgrind)

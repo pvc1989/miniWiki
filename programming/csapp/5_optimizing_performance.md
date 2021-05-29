@@ -2,7 +2,7 @@
 title: 优化程序性能
 ---
 
-# 编译器的优化能力及限制
+# 1. 编译器的优化能力及限制
 
 ```c
 void twiddle1(long *xp, long *yp) {
@@ -17,7 +17,7 @@ void twiddle2(long *xp, long *yp) {
 当 `xp == yp` 时，这两个函数并不等价 —— 此时称它们互为『内存别名 (memory alias)』。
 编译器无法判断程序意图，故不会将 `twiddle1` 优化为 `twiddle2`。
 
-# 表达程序性能
+# 2. 表达程序性能
 
 现代处理器的『主频』通常达到 GHz，其倒数被称为『时钟周期 (clock cycle)』。
 后者是度量指令运行时间的基本单位。
@@ -25,7 +25,7 @@ void twiddle2(long *xp, long *yp) {
 『CPE (Cycles Per Element)』比『Cycles Per Iteration』更适合用来度量『循环 (loop)』的性能。
 这是因为[循环展开](#循环展开)技术会在一次『迭代 (iteration)』中安排多个计算『单元 (element)』。
 
-# 程序示例
+# 3. 程序示例
 
 ```c
 /* Create abstract data type for vector */
@@ -58,7 +58,7 @@ void combine1(vec_ptr v, data_t *dest) {
 }
 ```
 
-# 移出重复操作
+# 4. 移出重复操作
 
 尽管 `vec_length(v)` 具有 $O(1)$ 复杂度，在循环条件中反复调用仍是浪费：
 
@@ -98,7 +98,7 @@ void lower1(char *s) {
 }
 ```
 
-# 减少函数调用
+# 5. 减少函数调用
 
 `combine2()` 的循环体中调用了 `get_vec_element(v, i, &val)`，它会检查 `i` 是否越界。
 将数组的首地址『偷出』，可避开不必要的越界检查：
@@ -120,7 +120,7 @@ void combine3(vec_ptr v, data_t *dest) {
 
 ⚠️ 此优化并没有显著提升性能，因为循环体内还有其他低效操作。
 
-# 减少内存访问
+# 6. 减少内存访问
 
 将中间结果缓存于寄存器中，而不是反复读写内存，可显著提高性能：
 
@@ -137,12 +137,14 @@ void combine4(vec_ptr v, data_t *dest) {
 }
 ```
 
-# 理解现代处理器
+# 7. 理解现代处理器
 
 以 Intel 为代表的现代处理器能够同时执行多条指令，并且保证所得结果与顺序执行机器码的结果一致。
 这种『乱序 (out-of-order)』执行指令的加速机制被称为『指令级并行 (instruction-level parallelism)』。
 
-## 基本操作
+## 7.1. 基本操作
+
+![](https://csapp.cs.cmu.edu/3e/ics3/opt/processor.pdf)
 
 『指令控制单元 (instruction control unit, ICU)』从『指令缓存 (instruction cache)』中读取将要被执行的指令（通常大大超前于当前指令），将其『解码 (decode)』为若干『初等操作 (primitive operation)』并交由『执行单元 (execution unit, EU)』去执行。
 
@@ -158,7 +160,7 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 在 EU 中，一条（初等）操作的结果，可以直接转发给后续操作，而不需要读写寄存器。
 该机制被称为『寄存器重命名 (register renaming)』。
 
-## 功能单元性能
+## 7.2. 功能单元性能
 
 性能指标：
 
@@ -173,7 +175,7 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 - `+` 及 `*` 可被『管道』加速，故『发起时间』只需一个时钟周期。
 - `/` 不能被管道加速，故『发起时间』等于『延迟』。
 
-## 处理器操作的抽象模型
+## 7.3. 处理器操作的抽象模型
 
 ```gas
 # Inner loop of combine4. data_t = double, OP = *
@@ -193,10 +195,15 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 
 指令 `vmulsd` 被解码为 `load` 与 `mul` 两步操作，后者依赖于前者的结果。
 
+![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb-flow.pdf)
+
 在所有操作中，计算浮点数乘积的 `mul` 操作耗时最长，且其他操作（如更新计数器 `%rdx` 的 `add`）可以同步（并行）执行，故由 `mul` 串联所得的『关键路径 (critical path)』决定了该循环耗时的『下界』。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb-flow-multiple.pdf)
+
 循环的 CPE 不小于 `mul` 的延迟 $L$，故称该下界为『延迟下界 (latency bound)』。
 
-# 循环展开
+# 8. 循环展开
 
 『循环展开 (loop unrolling)』可以节省计数器开销、充分利用指令级并行。
 GCC 在 `-O3` 或更高优化等级下，可自动完成循环展开。
@@ -221,9 +228,11 @@ void combine5(vec_ptr v, data_t *dest) {
 }
 ```
 
-# 增强并行
+![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2-flow-multiple.pdf)
 
-## 多组累加
+# 9. 增强并行
+
+## 9.1. 多组累加
 
 若关键路径上的基本操作相互独立，则（利用管道）可将其分解为并联的 $k$ 条关键路径，其中每一条路径的长度均为原长的 $1/k$，从而有望进一步提升性能。
 该优化技术被称为『$k\times k$ 循环展开』，理论上可以在 $k \ge L\times C$ 时，达到循环的『吞吐下界』。
@@ -246,10 +255,14 @@ void combine6(vec_ptr v, data_t *dest) {
 }
 ```
 
+|单步示意图|关键路径示意图|
+|:---:|:---:|
+| ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow.pdf) ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow-abstract.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow-multiple.pdf) |
+
 - 整数加法、乘法（即使溢出，也）满足交换律、结合律，故上述优化不改变计算结果，可由编译器自动完成。
 - 浮点数加法、乘法可能溢出，且不满足结合律，故上述优化可能改变计算结果，因此不会由编译器自动完成。
 
-## 重新结合
+## 9.2. 重新结合
 
 不依赖于前一步结果的中间值，可并行地算出：
 
@@ -270,12 +283,16 @@ void combine7(vec_ptr v, data_t *dest) {
 }
 ```
 
+|单步示意图|关键路径示意图|
+|:---:|:---:|
+| ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2a-flow.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2a-flow-multiple.pdf) |
+
 该方法类似于『$k\times 1$ 循环展开』，故名为『$k\times 1a$ 循环展开』。
 其加速效果通常不如前一节的『$k\times k$ 循环展开』可靠。
 
-# 一些限制因素
+# 11. 一些限制因素
 
-## 寄存器溢出
+## 11.1. 寄存器溢出
 
 若用于循环展开的累加器数量，超过了可用的寄存器数量，则部分累加器将被存储到内存中。
 这种现象被称为『寄存器溢出 (register spilling)』。
@@ -289,7 +306,7 @@ vmulsd (%rdx), %xmm0, %xmm0
 vmovsd %xmm0, 40(%rsp)
 ```
 
-## 分支误判开销
+## 11.2. 分支误判开销
 
 分支误判会引起较大时间损失（在课程所用参考机器上约为 19 个时钟周期）。
 
@@ -327,13 +344,13 @@ void minmax2(long a[], long b[], long n) {
 }
 ```
 
-# 理解内存性能
+# 12. 理解内存性能
 
 课程所用参考机器
 - 有 2 个读取单元，每个可缓存 72 个读取请求。
 - 有 1 个存储单元，每个可缓存 42 个存储请求。
 
-## 载入性能
+## 12.1. 读取性能
 
 若某机器有 $r$ 个读取单元，且循环中每个 E 需读取 $k$ 个值，则 CPE 以 $k/r$ 为下界。
 
@@ -353,7 +370,7 @@ void minmax2(long a[], long b[], long n) {
 
 其中 `movq` 指令有数据依赖性，是本段循环的性能瓶颈，其 $L$ 值是 CPE 的下界。
 
-## 存储性能
+## 12.2. 存储性能
 
 单一的存储操作没有数据依赖，不会构成关键路径：
 
@@ -381,10 +398,12 @@ void write_read(long *src, long *dst, long n) {
 }
 ```
 
+![](https://csapp.cs.cmu.edu/3e/ics3/opt/load-store.pdf)
+
 存储单元中的『存储缓冲区 (store buffer)』用于保存将要被写入内存的数据及相应的地址。
 为避免不必要的内存访问，载入操作会先在该缓冲区内查找地址，因此有可能形成数据依赖（从而构成关键路径）。
 
-# 性能提升技巧
+# 13. 性能提升技巧
 
 - 选用正确的算法及数据结构，避免复杂度层面的低效。
 - 基本编程原则：
@@ -398,15 +417,14 @@ void write_read(long *src, long *dst, long n) {
   - 增强并行：多组累加、重新结合。
   - 条件移动：用条件表达式代替选择语句。
 
-# 定位并消除性能瓶颈
+# 14. 定位并消除性能瓶颈
 
-## 程序测速
+## 14.1. 程序测速
 
 - [GNU `gprof`](../cpp/profile.md#gprof)
 - [Intel VTune](https://software.intel.com/content/www/us/en/develop/tools/oneapi/components/vtune-profiler.html)
-- [Valgrind](https://www.valgrind.org)
 
-## 基于测速的优化
+## 14.2. 基于测速的优化
 
 词频统计示例：
 - 【排序算法】插入排序 (3.5 m) >> 快速排序 (5.4 s)

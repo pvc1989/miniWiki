@@ -25,14 +25,24 @@ title: 网络编程
 ## 局域网
 
 【局域网 (local area network, LAN)】目前最流行的局域网技术为『以太网 (Ethernet)』
-- 【以太网段 (Ethernet segment)】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的小型网络，可覆盖一间或一层房屋。
-  - 【以太网线 (Ethernet wire)】一端连接到主机上的『以太网适配器 (Ethernet adapter)』，另一端连接到集线器上的『端口 (port)』。
-  - 【集线器 (hub)】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
-  - 每个以太网适配器都拥有一个长度为 48-bit 的物理地址，以区别于其他适配器。
-  - 一台主机向其他主机发送的最小数据块称作『帧 (frame)』，其内容除『有效载荷 (payload)』外，还包括来源地址、目标地址、帧长度的『头标  (header)』。
-- 【桥接的以太网 (bridged Ethernet)】由多个以太网段连接到多个网桥所形成的中型网络，可覆盖整栋建筑或整个校园。
-  - 【网桥 (bridge)】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
-  - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
+
+### 以太网段
+
+【以太网段 (Ethernet segment)】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的小型网络，可覆盖一间或一层房屋。
+
+- 【以太网线 (Ethernet wire)】一端连接到主机上的『以太网适配器 (Ethernet adapter)』，另一端连接到集线器上的『端口 (port)』。
+- 【集线器 (hub)】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
+- 每个以太网适配器都拥有一个长度为 48-bit 的物理地址，以区别于其他适配器。
+- 一台主机向其他主机发送的最小数据块称作『帧 (frame)』，其内容除『有效载荷 (payload)』外，还包括来源地址、目标地址、帧长度的『头标  (header)』。
+
+### 桥接的以太网
+
+【桥接的以太网 (bridged Ethernet)】由多个以太网段连接到多个网桥所形成的中型网络，可覆盖整栋建筑或整个校园。
+
+- 【网桥 (bridge)】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
+- 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/bridge.pdf)
 
 ## 广域网
 
@@ -41,6 +51,9 @@ title: 网络编程
 ## 互联网
 
 【互联网 (interconnected network, internet)】由多个局域网及广域网连接到多个路由器所形成的大型网络，可覆盖全球。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/internet.pdf)
+
 - 【路由器 (router)】在多个局域网及广域网之间转发数据的设备。
 - 【协议 (protocol)】运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
   - 【命名格式 (naming scheme)】定义格式统一的主机地址。
@@ -50,7 +63,7 @@ title: 网络编程
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/intertrans.pdf)
 
-# 3. 全局 IP 因特网
+# 3. 因特网
 
 『全局 IP 因特网 (global IP Internet)』，简称『因特网 (Internet)』是所有『互联网 (internet)』中最著名、最成功的一个。
 
@@ -119,6 +132,8 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 【点到点 (point-to-point)】建立在一对进程之间。
 - 【全双工 (full duplex)】可以在同一时间双向传输。
 - 【可靠 (reliable)】字节流的接收顺序与发送顺序一致。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/netp/connection.pdf)
 
 【套接字 (socket)】连接的一端，用形如 `ip_address:port` 的『套接字地址』表示，其中 `port` 为 16-bit 的『端口号』。
 

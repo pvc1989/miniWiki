@@ -17,6 +17,8 @@ title: 并发编程
    - 子进程 `Child_2` 关闭 `listen_fd`
    - 主进程 `Parent` 关闭 `connect_fd_2`
 
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/conc4.pdf)
+
 ## 1.1. `echoserverp.c`
 
 ```c
@@ -138,6 +140,8 @@ void command(void) {
 - 【状态 (state)】服务器等待描述符 `fd_k` 可用。
 - 【事件 (event)】描述符 `fd_k` 可用，服务器通过 `select()` 检测。
 - 【迁移 (transition)】服务器从 `fd_k` 读取一行，通过 `check_clients()` 实现。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/state.pdf)
 
 ```c
 #include "csapp.h"
@@ -265,6 +269,10 @@ void check_clients(pool_t *p) {
 - 各线程共享其所属的“进程上下文 (process context)”（代码、数据、堆、共享库、打开的文件）。
 
 ## 3.1. 线程执行模型
+
+|                    进程上下文切换                    |                       线程上下文切换                       |
+| :--------------------------------------------------: | :--------------------------------------------------------: |
+| ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/switch.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/conc/concthreads.pdf) |
 
 线程执行模型与进程执行模型类似，但有以下区别：
 
@@ -431,6 +439,8 @@ void *thread(void *vargp) {
 # 5. 用旗语同步线程
 
 一般而言，无法预知各线程被操作系统选中的执行顺序。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/conc/badcntasm.pdf)
 
 ## 5.1. 进程图<a href id="graph"></a>
 
