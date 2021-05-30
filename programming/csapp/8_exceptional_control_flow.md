@@ -749,7 +749,7 @@ int sigismember(const sigset_t *set, int signum);
 1. 在处置器内只调用『异步信号安全 (async-signal-safe)』的函数。
    - 只访问局部变量，或不可能被其他信号处置器中断。
    - 只能用 `write(file_id, char_ptr, size)` 写出。
-   - `csapp.h` 提供了一组基于 `write` 的封装：
+   - `csapp.h` 提供了一组基于 `write()` 的封装：<a href id="signal-io"></a>
      - `ssize_t Sio_puts(char s[]);`
      - `ssize_t Sio_putl(long v);`
      - `void Sio_error(char s[]);`

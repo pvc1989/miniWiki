@@ -140,7 +140,7 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 客户端的端口号不固定，由操作系统内核自动分配。
 - 常用服务的端口号相对固定，列于 `/etc/services` 中。
 
-# 4. 套接字接口
+# 4. 套接字接口<a href id="socket"></a>
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/sockoverview.pdf)
 

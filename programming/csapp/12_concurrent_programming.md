@@ -858,7 +858,7 @@ void *sum_array(void *vargp) {
 
 # 7. 其他并发问题
 
-## 7.1. 线程安全
+## 7.1. 线程安全<a href id="thread-safe"></a>
 
 【线程安全 (thread-safe)】反复运行并发的多线程函数总是给出相同结果。
 

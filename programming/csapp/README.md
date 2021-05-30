@@ -22,7 +22,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 # 全书目录
 
-- 一：计算机系统之旅
+- 一：计算机系统速览
 
 ## 第一部分：程序的结构与执行
 
@@ -38,7 +38,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 ## 第二部分：在系统上运行程序
 
-### 七：链接
+### [七：链接](./7_linking.md)
 
 ### [八：异常控制流](./8_exceptional_control_flow.md)
 

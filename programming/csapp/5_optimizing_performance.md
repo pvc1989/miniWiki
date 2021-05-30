@@ -23,7 +23,7 @@ void twiddle2(long *xp, long *yp) {
 后者是度量指令运行时间的基本单位。
 
 『CPE (Cycles Per Element)』比『Cycles Per Iteration』更适合用来度量『循环 (loop)』的性能。
-这是因为[循环展开](#循环展开)技术会在一次『迭代 (iteration)』中安排多个计算『单元 (element)』。
+这是因为[循环展开](#unroll)技术会在一次『迭代 (iteration)』中安排多个计算『单元 (element)』。
 
 # 3. 程序示例
 
@@ -203,7 +203,7 @@ ICU 中的『退休单元 (retirement unit)』用于确保乱序执行指令的�
 
 循环的 CPE 不小于 `mul` 的延迟 $L$，故称该下界为『延迟下界 (latency bound)』。
 
-# 8. 循环展开
+# 8. 循环展开<a href id="unroll"></a>
 
 『循环展开 (loop unrolling)』可以节省计数器开销、充分利用指令级并行。
 GCC 在 `-O3` 或更高优化等级下，可自动完成循环展开。
