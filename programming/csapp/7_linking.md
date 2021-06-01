@@ -31,11 +31,11 @@ title: 链接
 
 # 3. 目标文件
 
-【目标文件 (object file)】存储在硬盘上的文件，内部含若干连续字节区块。
+【目标文件 (object file)】存储在硬盘上的“目标模块 (object module)”，后者泛指一段字节序列。
 
-- 【可搬迁的 (relocatable)】
-- 【可执行的 (executable)】
-- 【共享的 (shared)】
+- 【[可搬迁的 (relocatable)](#relocatable)】
+- 【[可执行的 (executable)](#executable)】
+- 【[共享的 (shared)](#pic)】
 
 【目标文件格式】
 
@@ -44,7 +44,7 @@ title: 链接
 - 【Mac OS X】Mach-O format
 - 【现代 x86-64 Linux/Unix】Executable and Linkable Format (ELF)
 
-# 4. 可搬迁目标文件
+# 4. 可搬迁目标文件<a href id="relocatable"></a>
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/elfrelo.pdf)
 
@@ -153,21 +153,187 @@ gcc foo.c        liby.a libx.a # Error: g undefined
 
 # 7. 搬迁<a href id="relocate"></a>
 
+“搬迁 (relocation)”分两步：
 
+1. 搬迁字段及符号定义：将分散在各目标文件中的同类字段合并，并计算所有符号的运行期地址。
+2. 搬迁符号引用：将所有符号引用替换为运行期地址。
 
-# 8. 可执行目标文件
+## 7.1. 搬迁条目
+
+汇编器为每个符号引用创建一个“搬迁条目 (relocation entry)”，结构如下：
+
+```c
+typedef struct {
+  long offset;  /* Offset of the reference to relocate */
+  long type:32, /* Relocation type */
+     symbol:32; /* Symbol table index */
+  long addend;  /* Constant part of relocation expression */
+} Elf64_Rela;
+```
+
+其中 `type` 多达 32 种，常用的有：
+
+- 【`R_X86_64_PC32`】用相对于 [PC](./3_machine_level_programming.md#PC) 的 32-bit 地址搬迁
+- 【`R_X86_64_32`】用 32-bit 绝对地址搬迁
+
+⚠️ 以上两种 `type` 只支持不超过 2 GB 的可执行文件。
+
+## 7.2. 搬迁符号引用
+
+```c
+foreach section s {
+  foreach relocation_entry r {
+    ref_ptr = ADDR(s) + r.offset;
+    if (r.type == R_X86_64_PC32) { /* PC-relative reference */
+      pc_value = ref_ptr - r.addend; /* %rip */
+      *ref_ptr = (unsigned) (ADDR(r.symbol) - pc_value);
+    }
+    if (r.type == R_X86_64_32) { /* absolute reference */
+      *ref_ptr = (unsigned) (ADDR(r.symbol) + r.addend);
+    }
+  }
+}
+```
+
+# 8. 可执行目标文件<a href id="executable"></a>
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/elfexec.pdf)
 
+可执行目标文件的格式与[可搬迁目标文件](#relocatable)类似，但有以下区别：
+
+- ELF header 还包括当前程序第一条指令的地址。
+- 多一个 `.init` 字段，内含 `_init()` 的定义，用于启动程序。
+- 已完全链接，故无需 `.rel` 字段。
+
 # 9. 加载可执行目标文件
+
+【加载 (loading)】分以下几步：
+
+1. Shell 用 [`fork()`](./8_exceptional_control_flow.md#fork) 创建子进程，在其中用 [`execve()`](./8_exceptional_control_flow.md#execve) 启动加载器。
+2. 加载器从硬盘读取可执行文件，创建下图所示[虚拟内存](./9_virtual_memory.md)空间（只分配空间，不读取数据）。
+3. 运行系统文件 `crt1.o` 中 `_start()`，在其中调用标准库 `libc.so` 中的 `__libc_start_main()`，后者最终将控制权移交给应用程序的 `main()`。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/link/rtimage.pdf)
 
 # 10. 动态链接共享库
 
+|            |        静态链接        |        动态链接        |
+| :--------: | :--------------------: | :--------------------: |
+| 库函数代码 | 每个可执行文件独享一份 | 所有可执行文件共享一份 |
+| 可执行文件 |   链接后独立于库文件   |  链接后仍依赖于库文件  |
+| 库函数更新 |   必须重新编译、链接   |     支持运行时更新     |
+
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/sharedlibs.pdf)
 
-# 11. 加载及链接共享库
+```shell
+gcc -shared -fpic -o libvector.so addvec.c multvec.c
+gcc -o prog2l main2.c ./libvector.so
+```
 
-# 12. 位置无关代码
+- 【`-fpic`】生成[位置无关代码](#pic)
+- 【`-shared`】生成共享的目标文件
+
+【基本思想】
+
+- 创建可执行文件时，静态地完成部分链接（搬迁条目、符号列表）。
+- 启动（加载）程序时，动态地完成剩余链接（搬迁代码、数据）。
+
+# 11. 运行期加载并链接共享库
+
+共享库的加载和链接，甚至可以推迟到应用程序启动后（运行时）。
+
+```c
+#include <dlfcn.h>
+void *dlopen(const char *filename/* so */,
+             int flag/* RTLD_GLOBAL | RTLD_NOW | RTLD_LAZY */);
+    // Returns: pointer to handle if OK, NULL on error
+void *dlsym(void *handle/* opened so */, char *symbol);
+    // Returns: pointer to symbol if OK, NULL on error
+int dlclose (void *handle);
+    // Returns: 0 if OK, −1 on error
+const char *dlerror(void);
+    // Returns: error message if previous call to 
+    // dlopen, dlsym, or dlclose failed; NULL if previous call was OK
+```
+
+- 以 `dlopen()` 加载的共享库中的外部符号，用之前以 `RTLD_GLOBAL` 加载的库进行解析。
+- 若编译可执行文件时开启 `-rdynamic`，则可执行文件中的全局符号也可用于符号解析。
+
+```c
+/* dll.c
+ * gcc -rdynamic -o prog2r dll.c -ldl
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
+
+int x[2] = {1, 2}; int y[2] = {3, 4};
+int z[2];
+
+int main() {
+  void *handle;
+  void (*addvec)(int *, int *, int *, int);
+  char *error; 
+
+  /* Dynamically load the shared library that contains addvec() */
+  handle = dlopen("./libvector.so", RTLD_LAZY);
+  if (!handle) {
+    fprintf(stderr, "%s\n", dlerror()); exit(1);
+  }
+
+  /* Get a pointer to the addvec() function we just loaded */
+  addvec = dlsym(handle, "addvec");
+  if ((error = dlerror()) != NULL) {
+    fprintf(stderr, "%s\n", error); exit(1);
+  }
+
+  /* Now we can call addvec() just like any other function */
+  addvec(x, y, z, 2);
+  printf("z = [%d %d]\n", z[0], z[1]);
+
+  /* Unload the shared library */
+  if (dlclose(handle) < 0) {
+    fprintf(stderr, "%s\n", dlerror()); exit(1);
+  }
+  return 0;
+}
+```
+
+# 12. 位置无关代码<a href id="pic"></a>
+
+【位置无关代码 (Position-Independent Code, PIC)】为节约[物理内存](./9_virtual_memory.md#memory-map)，共享库中的 `.text` 字段应当能够被所有使用它的进程共享，故代码段中不能显式含有全局符号的地址。
+
+- 用 `gcc` 生成共享库时，必须开启 `-shared -fpic` 选项。
+
+## PIC 数据访问
+
+无论目标模块被加载到何处，其（当前进程私有的）数据段与（所有进程共享的）代码段之间的距离是一个常量。利用此性质，编译器在该模块的数据段开头创建一个 GOT (Global Offset Table)：
+
+- 表中各项长 8 字节，分别对应一个全局数据（如 `GOT[3]` 对应（可能定义在其他模块中的）全局变量 `addcnt`）。
+- 加载时，动态链接器会将 `GOT[i]` 修改为其对应的全局数据的绝对地址（如 `GOT[3]` 被修改为 `&addcnt`）。
+- 运行时，通过解引用 `GOT[i]` 中的地址，间接访问全局数据（如 `addcnt++` 由 `(**GOT[3])++` 实现）。
+
+![](https://csapp.cs.cmu.edu/3e/ics3/link/got.pdf)
+
+## PIC 函数调用
+
+若某个目标模块调用了共享库里的函数，则该模块同时拥有以下两个列表：
+
+- 【PLT (Procedure Linkage Table)】位于代码段，每项长 16 字节。
+  - `PLT[0]` 为调用动态链接器的指令。
+  - `PLT[1]` 为调用 `__libc_start_main()` 的指令。
+  - `PLT[2]` 起为借助 `GOT[]` 跳转到用户代码的指令。
+- 【GOT (Global Offset Table)】位于数据段，每项长 8 字节。
+  - `GOT[0], GOT[1]` 用于解析被调函数的地址。
+  - `GOT[2]` 为动态链接器的入口（位于 `ld-linux.so` 中）。
+  - `GOT[4]` 起为被调函数的地址，与 `PLT[]` 的成员一一对应。
+
+【lazy binding】将函数地址绑定延迟到首次调用该函数时：
+
+1. 首次调用前，`GOT[4]` 指向 `PLT[2]` 的第二条指令。
+2. 首次调用时，`GOT[4]` 被动态链接器修改为 `addvec()` 的入口。
+3. 后续调用时，`PLT[2]` 只执行第一条指令，即跳转至  `addvec()` 的入口。
 
 |                      首次调用                       |                      后续调用                       |
 | :-------------------------------------------------: | :-------------------------------------------------: |
