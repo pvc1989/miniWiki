@@ -727,7 +727,7 @@ void echo_cnt(int connect_fd) {
 }
 ```
 
-# 6. 多线程并行
+# 6. 多线程并行<a href id="parallel"></a>
 
 【并行程序 (parallel program)】运行在“多核处理器 (multi-core processor)”上的“并发程序 (concurrent program)”。
 

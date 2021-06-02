@@ -16,7 +16,11 @@ title: 编程
 ## [UML](./uml/README.md)
 
 # 并行计算
-## [MPI](./mpi/README.md)
+
+## 共享内存
+### [Pthread](./csapp/12_concurrent_programming.md#parallel)
+## 消息传递
+### [MPI](./mpi/README.md)
 
 # 网格离散
 ## [CGNS](./cgns/README.md)

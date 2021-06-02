@@ -19,6 +19,8 @@ title: 批量构建
 # 手动构建
 ## 手动构建过程
 对于用静态语言（例如 [C++](../cpp/README.md)）编写的程序，必须经过『构建 (build)』才能得到『可运行的 (runnable)』软件。
+《[链接](../../csapp/7_linking.md)》小结了构建所涉及的目标文件、静态库、静态链接、共享库、动态链接等概念。
+
 下面用一个简单的例子来说明构建的主要步骤。
 
 ### 源文件 (Source Files)
@@ -68,6 +70,7 @@ cc -shared -fpic -o libmath.so ${SOURCE_DIR}/src/math.c
 ```
 
 ### 链接 (Link)
+
 ```shell
 cd ${BUILD_DIR}
 # 将 目标文件 test_math.o 及 lib_math.o 链接进可执行文件 test_math_o
