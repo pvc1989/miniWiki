@@ -257,6 +257,9 @@ const char *dlerror(void);
 ```
 
 - 以 `dlopen()` 加载的共享库中的外部符号，用之前以 `RTLD_GLOBAL` 加载的库进行解析。
+- 传给 `dlsym()` 的第一个实参可以是以下两个预设的 pseudo-handles 之一
+  - 【`RTLD_DEFAULT`】按默认库搜索顺序，找到 `symbol` 第一次出现的位置。
+  - 【`RTLD_NEXT`】在当前库之后按搜索顺序，找到 `symbol` 下一次出现的位置。
 - 若编译可执行文件时开启 `-rdynamic`，则可执行文件中的全局符号也可用于符号解析。
 
 ```c
@@ -340,6 +343,155 @@ int main() {
 | ![](https://csapp.cs.cmu.edu/3e/ics3/link/plt1.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/link/plt2.pdf) |
 
 # 13. 库打桩
+
+【库打桩 (library interpositioning)】将对“目标函数”的调用，替换为对“封装函数”的调用。
+
+- 【目标函数 (target function)】被换出的函数（如标准库中的 `malloc(), free()`）。
+- 【封装函数 (wrapper function)】被换入的函数（如 `malloc.h` 中的 `mymalloc(), myfree()`），与目标函数有相同的函数原型，通常在调用目标函数前后做一些处理。
+
+```c
+/* int.c */
+#include <stdio.h>
+#include <malloc.h>
+
+int main() {
+  int *p = malloc(32);
+  free(p);
+  return(0);
+}
+
+/* malloc.h */
+#define malloc(size) mymalloc(size)
+#define free(ptr) myfree(ptr)
+
+void *mymalloc(size_t size);
+void myfree(void *ptr);
+```
+
+## 13.1. 编译期替换
+
+```c
+/* mymalloc.c */
+#ifdef COMPILETIME
+#include <stdio.h>
+#include <malloc.h>
+
+void *mymalloc(size_t size) {
+  void *ptr = malloc(size); 
+  printf("malloc(%d)=%p\n", (int)size, ptr); 
+  return ptr;
+}
+
+void myfree(void *ptr) {
+  free(ptr);
+  printf("free(%p)\n", ptr); 
+}
+#endif
+```
+
+```shell
+$ gcc -DCOMPILETIME -c mymalloc.c
+$ gcc -I. -o intc int.c mymalloc.o
+$ ./intc
+malloc(32)=0x9ee010
+free(0x9ee010)
+```
+
+其中
+
+- 【`-DCOMPILETIME`】表示定义预处理宏 `COMPILETIME`。
+- 【`-I.`】表示先在当前目录内寻找头文件 `malloc.h`。
+
+## 13.2. 链接期替换
+
+```c
+/* mymalloc.c */
+#ifdef LINKTIME
+#include <stdio.h>
+
+void *__real_malloc(size_t size);
+void __real_free(void *ptr);
+
+void *__wrap_malloc(size_t size) {
+  void *ptr = __real_malloc(size); /* Call libc malloc */
+  printf("malloc(%d) = %p\n", (int)size, ptr);
+  return ptr;
+}
+
+void __wrap_free(void *ptr) {
+  __real_free(ptr); /* Call libc free */
+  printf("free(%p)\n", ptr);
+}
+#endif
+```
+
+```shell
+$ gcc -DLINKTIME -c mymalloc.c
+$ gcc -c int.c
+$ gcc -Wl,--wrap,malloc -Wl,--wrap,free -o intl int.o mymalloc.o
+$ ./intl
+malloc(32) = 0x18cf010
+free(0x18cf010)
+```
+
+其中
+
+- 【`-Wl,option`】表示向静态链接器传递 `option`（`option` 中的 `,` 被替换为空格）。
+- 【`-Wl,--wrap,func`】表示在静态链接时，将
+  - 对 `func()` 的引用解析为 `__wrap_func()`。
+  - 对 `__real_func()` 的引用解析为 `func()`。
+
+## 13.3. 运行期替换
+
+```c
+#ifdef RUNTIME
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
+
+void *malloc(size_t size) {
+  void *(*mallocp)(size_t size);
+  char *error;
+
+  mallocp = dlsym(RTLD_NEXT, "malloc"); /* Get address of libc malloc */
+  if ((error = dlerror()) != NULL) {
+    fputs(error, stderr); exit(1);
+  }
+  char *ptr = mallocp(size); /* Call libc malloc */
+  printf("malloc(%d) = %p\n", (int)size, ptr);
+  return ptr;
+}
+
+void free(void *ptr) {
+  void (*freep)(void *) = NULL;
+  char *error;
+
+  if (!ptr)
+    return;
+
+  freep = dlsym(RTLD_NEXT, "free"); /* Get address of libc free */
+  if ((error = dlerror()) != NULL) {
+    fputs(error, stderr); exit(1);
+  }
+  freep(ptr); /* Call libc free */
+  printf("free(%p)\n", ptr);
+}
+#endif
+```
+
+```shell
+$ gcc -DRUNTIME -shared -fpic -o mymalloc.so mymalloc.c -ldl
+$ gcc -o intr int.c
+$ LD_PRELOAD="./mymalloc.so" ./intr
+malloc(32) = 0x1bf7010
+free(0x1bf7010)
+```
+
+其中
+
+- 【`LD_PRELOAD="./mymalloc.so"`】表示在动态链接时，优先用 `./mymalloc.so` 来解析符号。
+- 【`./intr`】可以替换为任何动态链接的可执行文件。
 
 # 14. 操作目标文件的工具
 
