@@ -84,7 +84,7 @@ FD_SET(int fd, fd_set *fdset);   /* Turn on bit `fd` in `fdset` */
 FD_ISSET(int fd, fd_set *fdset); /* Is bit `fd` in `fdset` on? */
 ```
 
-此函数令内核暂停当前进程，直到“读取集 (read set)” `fdset` 中的至少一个（文件或套接字）描述符可以被读取，返回“可用集 (ready set)”的“基数 (cardinality)”，并将“读取集”修改为“可用集”。
+此函数令内核暂停当前进程，直到“读取集 (read set)” `fdset` 中的至少一个（文件或套接字）描述符可以被读取（读取操作会立即返回），返回“可用集 (ready set)”的“基数 (cardinality)”，并将“读取集”修改为“可用集”。
 
 ```c
 #include "csapp.h"
@@ -317,7 +317,7 @@ pthread_t pthread_self(void); /* 返回当前线程的 TID */
 结束线程的几种方式：
 
 - 【隐式结束】传给 `pthread_create()` 的 `f()` 运行完毕并返回。
-- 【显式结束】调用 `pthread_exit()` 结束当前线程及进程。
+- 【显式结束】调用 `pthread_exit()` 结束当前线程。
 - 【结束进程】某个同伴线程调用 `exit()` 结束整个进程。
 - 【取消线程】因另一个进程调用 `pthread_cancel()` 而结束。
 
@@ -490,15 +490,15 @@ void V(sem_t *s); /* Wrapper function for sem_post */
 【二项旗语 (binary semaphore)】为每个共享变量关联一个初值为 `1` 的旗语 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
 
 - 【互斥 (mutex)】用于支持对共享变量“互斥 (MUTually EXclusive)”访问的二项旗语。
-- 【上锁 (lock)】在关键段头部调用 `P(s)`
-- 【开锁 (unlock)】在关键段尾部调用 `V(s)`
+- 【上锁 (lock)】在关键段头部调用 `P(s)` 或 `sem_wait()`
+- 【开锁 (unlock)】在关键段尾部调用 `V(s)` 或 `sem_post()`
 - 【禁止区域 (forbidden region)】`s < 0` 的区域，亦即[不安全区域](#unsafe)。
 
 ```c
 #include "csapp.h"
 
-volatile long count = 0; /* Counter */
-sem_t mutex; /* Semaphore that protects `count` */
+volatile long count = 0; /* global counter */
+sem_t mutex; /* semaphore that protects `count` */
 
 void *thread(void *vargp) {
   long n_iters = *((long *)vargp);
@@ -533,6 +533,38 @@ int main(int argc, char **argv) {
   else
     printf("OK count=%ld\n", count);
   exit(0);
+}
+```
+
+### `pthread_mutex_t`
+
+```c
+#include <pthread.h>
+
+// Without static initialization
+static pthread_once_t foo_once = PTHREAD_ONCE_INIT;
+static pthread_mutex_t foo_mutex;
+void foo_init() {
+  pthread_mutex_init(&foo_mutex, NULL);
+}
+void foo() {
+  pthread_once(&foo_once, foo_init);
+  pthread_mutex_lock(&foo_mutex);
+  /* critical section */
+  pthread_mutex_unlock(&foo_mutex);
+}
+
+// With static initialization, the same routine could be coded as
+static pthread_mutex_t foo_mutex = PTHREAD_MUTEX_INITIALIZER;
+void foo() {
+  pthread_mutex_lock(&foo_mutex);
+  /* critical section */
+  pthread_mutex_unlock(&foo_mutex);
+}
+
+int main() {
+  /* use foo() */
+  pthread_mutex_destroy(&foo_mutex);
 }
 ```
 
@@ -601,13 +633,13 @@ int sbuf_remove(sbuf_t *sp) {
 ### 读者--作者
 
 - 【读者 (reader)】
-  - 只对共享资源进行读取的线程，可以与不限数量的读者共享资源。
+  - 只能读取共享资源的线程，可以与不限数量的读者共享资源。
   - 实例：网购时查看库存的用户、读取网页缓存的线程。
-  - 第一类读写问题：偏向读者，读者无需等待作者写完。
+  - 第一类读写问题：偏向读者，读者一般无需等待，除非有作者在写（上锁）。
 - 【作者 (writer)】
-  - 可对共享资源进行修改的线程，修改时只能独享对资源的访问权。
+  - 可以修改共享资源的线程，修改时只能独享对资源的访问权。
   - 实例：网购时正在下单的用户、更新网页缓存的线程。
-  - 第二类读写问题：偏向作者，作者应尽快写出，读者需等待作者写完。
+  - 第二类读写问题：偏向作者，读者需等待所有（正在写或等待的）作者写完。
 
 ```c
 /* 第一类读写问题解决方案 */
@@ -645,7 +677,7 @@ void writer(void) {
 
 - “主管线程 (master thread)”接收客户端发来的连接请求，再作为生产者向[有界缓冲区](#bounded-buffer)填入（套接字）描述符。
 - “工人线程 (worker thread)”作为消费者从上述缓冲区移出（套接字）描述符，再响应客户端发来的文字信息。
-- 工人线程数量 $\ll$ 缓冲区容量
+- 通常，工人线程数量 $\ll$ 缓冲区容量
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/prethreaded.pdf)
 
@@ -710,7 +742,7 @@ static void init_echo_cnt(void) {
 
 void echo_cnt(int connect_fd) {
   int n; 
-  char buf[MAXLINE]; 
+  char buf[MAXLINE];
   rio_t rio;
   static pthread_once_t once = PTHREAD_ONCE_INIT;
 
@@ -762,7 +794,7 @@ int main(int argc, char **argv) {
   long i, nelems, log_nelems, nthreads, myid[MAXTHREADS];
   pthread_t tid[MAXTHREADS];
   nelems_per_thread = /* ... */
-    sem_init(&mutex, 0, 1);
+  sem_init(&mutex, 0, 1);
 
   /* Create peer threads and wait for them to finish */
   for (i = 0; i < nthreads; i++) {
@@ -771,7 +803,7 @@ int main(int argc, char **argv) {
   }
   for (i = 0; i < nthreads; i++)
     Pthread_join(tid[i], NULL);
-  
+
   /* ... */
 }
 ```
@@ -830,8 +862,8 @@ void *sum_array(void *vargp) {
 
   long sum = 0; /* 寄存器变量 */
   for (long i = start; i < end; i++)
-    sum += i; /* 不必同步，且不必访存 */
-  psum[myid] = sum; /* 只访问一次 */
+    sum += i; /* 不必同步，不必访存 */
+  psum[myid] = sum; /* 只访存一次 */
   return NULL;
 }
 
@@ -873,7 +905,7 @@ void *sum_array(void *vargp) {
    - 解决：改写为[再入函数](#reentrant)
 3. 返回指向静态变量的指针
    - 实例：`ctime()`, `gethostname()`
-   - 解决：由调用侧传入指向私有变量的指针；【锁后复制 (lock-and-copy)】将不安全函数封装在 `P/V` 对内，在其中将结果（深）复制到私有内存。
+   - 解决：由调用侧传入指向私有变量的指针，或【锁后复制 (lock-and-copy)】将不安全函数封装在锁内，在其中将结果（深）复制到私有内存。
 4. 调用了第 2 类不安全函数
    - 解决：锁后复制
 
@@ -897,7 +929,7 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 
 大多数 C 标准库函数是线程安全的。部分不安全的有[再入](#reentrant)版本（以 `_r` 为后缀）：
 
-- 第 2 类（必须用改写版本）
+- 第 2 类（必须用再入版本）
   - `rand()`
   - `strtok()`
 - 第 3 类（可用锁后复制，但低效）
