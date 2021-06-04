@@ -20,6 +20,11 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
   - [视频](https://scs.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%22b96d90ae-9871-4fae-91e2-b1627b43e25e%22)
   - [代码](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/code.tar)
 
+## 参考
+
+- [The Linux Programming Interface](https://man7.org/tlpi/index.html)
+- [Linux man pages online](https://man7.org/linux/man-pages/dir_all_alphabetic.html)
+
 # 全书目录
 
 ## 1. 计算机系统速览
