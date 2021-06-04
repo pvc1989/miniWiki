@@ -110,7 +110,7 @@ title: 首页
     - [LLDB](./programming/debug/README.md#LLDB)
 - 开发环境
   - [Linux](./programming/linux/README.md)
-    - [安装与配置](./programming/linux/install/README.md)
+    - [安装](./programming/linux/install/README.md)
     - [SSH](./programming/linux/ssh.md)
     - [Vim](./programming/linux/vim.md)
   - [Docker](./programming/docker/README.md)

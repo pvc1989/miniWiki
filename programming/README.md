@@ -40,7 +40,7 @@ title: 编程
 
 # 开发环境
 ## [Linux](./linux/README.md)
-### [安装与配置](./linux/install/README.md)
+### [安装](./linux/install/README.md)
 ### [SSH](./linux/ssh.md)
 ### [Vim](./linux/vim.md)
 ## [Docker](./docker/README.md)
