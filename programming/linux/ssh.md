@@ -33,15 +33,33 @@ SSH 对数据的加密与解密主要是依靠成对的『公钥 (public key)』
 # 在服务端开启 SSH 服务
 
 ```shell
-# 检查 SSH 服务的状态:
+# 检查 SSH 服务的状态：
 systemctl status ssh
-# 如果需要, 安装 SSH 服务端软件:
+# 如果需要, 安装 SSH 服务端软件：
 sudo apt install openssh-server
-# 开启 SSH 服务:
+# 开启 SSH 服务：
 sudo systemctl start ssh
 sudo systemctl enable ssh
-# 再次检查 SSH 服务的状态:
+# 再次检查 SSH 服务的状态：
 systemctl status ssh
+```
+
+应当返回如下内容（其中 `active (running)` 为绿色）：
+
+```
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; vendor preset: enabled)
+     Active: active (running) since Mon 2021-06-05 12:12:06 CST; 22h ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+   Main PID: 841 (sshd)
+      Tasks: 1 (limit: 19009)
+     Memory: 6.2M
+     CGroup: /system.slice/ssh.service
+             └─841 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+
+Warning: some journal files were not opened due to insufficient permissions.
+
 ```
 
 # 从客户端登入远程主机
@@ -101,51 +119,65 @@ sftp>
 在 `sftp>` 后，可以输入一般的 shell 命令：
 
 ```shell
-sftp> pwd   # 在远程主机上执行
+sftp>  pwd  # 在远程主机上执行
 sftp> lpwd  # 在本地主机上执行
 ```
 
 传输文件需用以下命令：
 
 ```bash
-# 上传到指定远程目录
+# 上传到指定远程目录：
 sftp> put local_file remote_dir
-# 上传到当前远程目录
+# 上传到当前远程目录：
 sftp> put local_file
-# 下载到指定本地目录
+# 下载到指定本地目录：
 sftp> get remote_file local_dir
-# 上传到当前本地目录
+# 上传到当前本地目录：
 sftp> get local_file
 ```
 
 ## Secure Copy Program (SCP)
 
 ```shell
-# 上传
-scp local_file user@address:dir
-scp -r local_dir user@address:dir
-# 下载
-scp user@address:file local_dir
-scp -r user@address:dir local_dir
+# 上传：
+scp    local_file user@address:dir
+scp -r local_dir  user@address:dir
+# 下载：
+scp    user@address:file local_dir
+scp -r user@address:dir  local_dir
 ```
 
 # 免密访问
 
-默认情况下，每次建立 SSH 连接都需要输入远程主机上指定用户的密码。当需要频繁建立连接时，我们希望免去这一步骤。这一需求可以通过 *将客户端公钥写入服务端的 `~/.ssh/authorized_keys` 文件中* 来实现。
+默认情况下，每次建立 SSH 连接都需要输入远程主机上指定用户的密码。
+当需要频繁建立连接时，我们希望免去这一步骤。
+这一需求可以通过『将客户端公钥写入服务端的 `~/.ssh/authorized_keys` 文件中』来实现。
 
+## 客户端
 首先，在客户端制作密钥：
 
 ```shell
-# 切换到 ~ 目录
+# 切换到 ~ 目录：
 cd ~
-# 生成 SSH 密钥
-ssh-keygen
-# 连按三次 [Enter] 以接受默认设置
-# 切换到 ~/.ssh 目录
+# 生成 SSH 密钥：
+ssh-keygen  # 根据提示
+    # 先输入文件名（可按一次 [Enter] 以接受默认设置）
+    # 再输入通行码（可按两次 [Enter] 以接受默认设置）
+# 切换到 ~/.ssh 目录：
 cd .ssh
-# 将公钥文件 id_rsa.pub 传送给服务端指定用户
-scp id_rsa.pub user@address:~  # 需要输入密码
+# 将公钥文件 id_rsa.pub 传送给服务端指定用户：
+scp id_rsa.pub user@address:~  # 需要输入服务端密码
 ```
+
+⚠️ 每次启动 Shell 时，需手动启动密钥『认证代理 (authentication agent)』：
+
+```shell
+eval `ssh-agent`       # 启动认证代理
+ssh-add ~/.ssh/id_rsa  # 加入私钥
+ssh-add -l             # 列出已加入的私钥
+```
+
+## 服务端
 
 然后，在服务端添加授权信息：
 
@@ -154,7 +186,7 @@ scp id_rsa.pub user@address:~  # 需要输入密码
 cd ~
 # 检查 ~/.ssh 是否存在
 ls .ssh
-# 如果不存在, 建立该目录
+# 如果不存在，建立该目录，并设置权限
 mkdir .ssh
 chmod 700 .ssh
 # 将客户端公钥添加进 authorized_keys
@@ -171,6 +203,7 @@ chmod 644 .ssh/authorized_keys
 # 在远程主机运行任务
 
 ```shell
-$ nohup command [options]    # 在远程主机的前台运行任务
-$ nohup command [options] &  # 在远程主机的后台运行任务
+nohup command [options]    # 在远程主机的前台运行任务
+nohup command [options] &  # 在远程主机的后台运行任务
 ```
+
