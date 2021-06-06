@@ -198,6 +198,10 @@ $$
 
 [LeetCode-135](./leetcode/135.candy.cpp)
 
+### 最大性能
+
+[LeetCode-1383](./leetcode/1383.maximum-performance-of-a-team.cpp)
+
 ### 最大股票收益
 
 #### 至多一次交易
