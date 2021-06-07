@@ -2,9 +2,172 @@
 title: Message Passing Interface (MPI)
 ---
 
-# 文件读写
+# 平台搭建
 
-## [Hadoop](https://hadoop.apache.org/)
+## 操作系统
+
+假设有 `3` 台计算机，分别在其上[安装 Linux 发行版](../linux/install/README.md)，例如 [Ubuntu 20.04+](https://ubuntu.com/download/desktop)。
+
+### 局域网
+
+搭建如下局域网：
+
+| 编号 | 主机名  | 管理员  | 静态 IP 地址  |
+| :--: | :-----: | :-----: | :-----------: |
+| `1`  | `host1` | `admin` | `192.168.5.1` |
+| `2`  | `host2` | `admin` | `192.168.5.2` |
+| `3`  | `host3` | `admin` | `192.168.5.3` |
+
+为方便后续操作，在各台主机的 `/etc/hosts` 文件中（用 `sudo` 权限）加入以下三行：
+
+```
+192.168.5.1    host1
+192.168.5.2    host2
+192.168.5.3    host3
+```
+
+完成后，可在各台主机上运行以下三行，以验证两两连通：
+
+```shell
+ping -c 4 host1
+ping -c 4 host2
+ping -c 4 host3
+```
+
+### 同名账户
+
+在各台主机上分别创建名为 `common` 的用户，并赋予其 `root` 权限（加入 `sudo` 用户组）：
+
+```shell
+sudo adduser common  # 根据提示，先输入 admin 的密码，
+                     # 再创建 common 的密码，并输入个人信息（可选）
+sudo usermod -aG sudo common
+```
+
+完成后，切换到 `common` 用户，并验证权限设置正确：
+
+```shell
+su - common  # 需输入 common 的密码
+sudo whoami  # 需输入 common 的密码，应返回 root
+```
+
+## 免密互访
+
+### 服务端
+
+在各台主机上分别安装并开启 [SSH](../linux/ssh.md) 服务：
+
+```shell
+sudo apt install openssh-server
+# 开启 SSH 服务：
+sudo systemctl start  ssh
+sudo systemctl enable ssh
+# 检查 SSH 服务的状态：
+systemctl status ssh
+```
+
+### 客户端
+
+在各台主机上分别生成一对密钥（以 `common@host1` 为例）：
+
+```shell
+cd ~
+ssh-keygen  # 根据提示，输入密钥的文件名 key1
+```
+
+在各台主机上分别用 [`ssh-copy-id`](https://www.ssh.com/academy/ssh/copy-id) 将其公钥写到 `~/.ssh/authorized_keys` 中：
+
+```shell
+ssh-copy-id -i ~/.ssh/key1.pub host1  # 根据提示，输入 common@host1 的密码
+ssh-copy-id -i ~/.ssh/key1.pub host2  # 根据提示，输入 common@host2 的密码
+ssh-copy-id -i ~/.ssh/key1.pub host3  # 根据提示，输入 common@host3 的密码
+```
+
+在各台主机上分别开启 SSH 认证代理（以 `common@host1` 为例，每次开启 shell 时均需重做）：
+
+```shell
+eval `ssh-agent`
+ssh-add ~/.ssh/key1  # 加入私钥（不带 .pub）
+```
+
+在各台主机上分别验证免密互访：
+
+```shell
+ssh host1 hostname
+ssh host2 hostname
+ssh host3 hostname
+```
+
+若设置成功，则以上三行应分别返回：
+
+```
+host1
+host2
+host3
+```
+
+## 公共目录
+
+### 服务端
+
+在 `host1` 上安装并开启 NFS 服务：
+
+```shell
+sudo apt install nfs-kernel-server
+```
+
+在 `common@host1:~` 中创建并共享 `shared` 目录：
+
+```shell
+cd ~
+mkdir shared
+sudo vim /etc/exports
+```
+
+在 `/etc/exports` 文件中（用 `sudo` 权限）加入如下一行：
+
+```
+/home/common/shared *(rw,sync,no_root_squash,no_subtree_check)
+```
+
+保存后“输出文件系统 (**export** **f**ile **s**ystem)”，并重启 NFS 服务：
+
+```shell
+sudo exportfs -a
+sudo service nfs-kernel-server restart
+```
+
+### 客户端
+
+在 `host2` 上安装 NFS 客户端：
+
+```shell
+sudo apt install nfs-common
+```
+
+在 `common@host2:~` 中创建同名目录并进行“挂载 (mount)”：
+
+```shell
+cd 
+sudo mount -t nfs host1:/home/common/shared ~/shared
+df -h
+```
+
+此后，在 `common@host2:~/shared` 中读写，相当于在 `common@host1:~/shared` 中读写。
+
+为避免重启后手动挂载，可在 `/etc/fstab` 文件中（用 `sudo` 权限）加入如下一行：
+
+```
+host1:/home/common/shared /home/common/shared nfs
+```
+
+在 `host3` 中重复以上步骤。至此，三台主机共享了 `common@host1:~/shared` 这个目录。
+
+## 编译运行
+
+```shell
+
+```
 
 # 负载平衡
 

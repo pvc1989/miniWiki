@@ -17,10 +17,8 @@ title: 编程
 
 # 并行计算
 
-## 共享内存
-### [Pthread](./csapp/12_concurrent_programming.md#parallel)
-## 消息传递
-### [MPI](./mpi/README.md)
+## [Pthread](./csapp/12_concurrent_programming.md#parallel)
+## [MPI](./mpi/README.md)
 
 # 网格离散
 ## [CGNS](./cgns/README.md)
