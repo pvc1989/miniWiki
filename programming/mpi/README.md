@@ -165,8 +165,77 @@ host1:/home/common/shared /home/common/shared nfs
 
 ## 编译运行
 
-```shell
+本节所有操作均在 `common@host1` 上完成。
 
+### 下载、配置
+
+在 `common@host1:~/shared` 下创建如下目录树： 
+
+```shell
+mkdir -r ~/shared/mpich
+cd ~/shared/mpich
+# 代码目录：
+wget https://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz
+tar xfz mpich-3.4.2.tar.gz
+mv mpich-3.4.2 source
+# 安装目录：
+mkdir install
+# 构建目录：
+mkdir build
+```
+
+进入 `build` 中完成配置：
+
+```shell
+# 安装编译器：
+sudo apt install build-essential
+# 配置构建选项：
+cd ~/shared/mpich/build
+../source/configure --prefix=/home/common/shared/mpich/install --with-device=ch3 --disable-fortran 2>&1 | tee c.txt
+```
+
+若配置成功，会显示以下信息：
+
+```
+...
+config.status: executing libtool commands
+***
+*** device configuration: ch3:nemesis
+*** nemesis networks: tcp
+***
+Configuration completed.
+```
+
+### 编译、安装
+
+```
+make 2>&1 | tee m.txt
+make install 2>&1 | tee mi.txt
+```
+
+修改环境变量（每次启动 shell 时要重做）：
+
+```shell
+PATH=/home/common/mpich/install/bin:$PATH
+export PATH
+which mpiexec
+```
+
+若设置成功，应返回以下路径：
+
+```
+/home/common/mpich/install/bin/mpiexec
+```
+
+### 运行、测试
+
+```shell
+# host1、host2、host3 分别可以承担 10、20、30 个进程：
+echo "host1:10\nhost2:20\nhost3:30\n" >> hostlist
+# 启动一个需要 60 个进程的任务：
+mpiexec -n 60 -f hostlist ./examples/cpi
+# 运行测试：
+make testing
 ```
 
 # 负载平衡
