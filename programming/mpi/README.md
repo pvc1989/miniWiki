@@ -6,7 +6,8 @@ title: Message Passing Interface (MPI)
 
 ## 操作系统
 
-假设有 `3` 台计算机，分别在其上[安装 Linux 发行版](../linux/install/README.md)，例如 [Ubuntu 20.04+](https://ubuntu.com/download/desktop)。
+假设有 `3` 台可以组网的计算机，分别在其上[安装 Linux 发行版](../linux/install/README.md)（例如 [Ubuntu](https://ubuntu.com/download/desktop)）。
+⚠️ 为避免版本不一致带来的麻烦，建议所有主机安装同一版本。
 
 ### 局域网
 
@@ -68,10 +69,10 @@ systemctl status ssh
 
 ### 客户端
 
-在各台主机上分别生成一对密钥（以 `common@host1` 为例）：
+在各台主机的同名账户（以 `common@host1` 为例）内分别生成一对密钥：
 
 ```shell
-cd ~
+cd ~/.ssh   # 若不存在，则以 mkdir ~/.ssh 创建之
 ssh-keygen  # 根据提示，输入密钥的文件名 key1
 ```
 
@@ -81,13 +82,6 @@ ssh-keygen  # 根据提示，输入密钥的文件名 key1
 ssh-copy-id -i ~/.ssh/key1.pub host1  # 根据提示，输入 common@host1 的密码
 ssh-copy-id -i ~/.ssh/key1.pub host2  # 根据提示，输入 common@host2 的密码
 ssh-copy-id -i ~/.ssh/key1.pub host3  # 根据提示，输入 common@host3 的密码
-```
-
-在各台主机上分别开启 SSH 认证代理（以 `common@host1` 为例，每次开启 shell 时均需重做）：
-
-```shell
-eval `ssh-agent`
-ssh-add ~/.ssh/key1  # 加入私钥（不带 .pub）
 ```
 
 在各台主机上分别验证免密互访：
@@ -119,8 +113,7 @@ sudo apt install nfs-kernel-server
 在 `common@host1:~` 中创建并共享 `shared` 目录：
 
 ```shell
-cd ~
-mkdir shared
+mkdir ~/shared
 sudo vim /etc/exports
 ```
 
@@ -148,7 +141,7 @@ sudo apt install nfs-common
 在 `common@host2:~` 中创建同名目录并进行“挂载 (mount)”：
 
 ```shell
-cd 
+mkdir ~/shared
 sudo mount -t nfs host1:/home/common/shared ~/shared
 df -h
 ```
@@ -172,7 +165,7 @@ host1:/home/common/shared /home/common/shared nfs
 在 `common@host1:~/shared` 下创建如下目录树： 
 
 ```shell
-mkdir -r ~/shared/mpich
+mkdir ~/shared/mpich
 cd ~/shared/mpich
 # 代码目录：
 wget https://www.mpich.org/static/downloads/3.4.2/mpich-3.4.2.tar.gz
@@ -194,7 +187,7 @@ cd ~/shared/mpich/build
 ../source/configure --prefix=/home/common/shared/mpich/install --with-device=ch3 --disable-fortran 2>&1 | tee c.txt
 ```
 
-若配置成功，会显示以下信息：
+若配置成功，则应当显示以下信息：
 
 ```
 ...
@@ -221,7 +214,7 @@ export PATH
 which mpiexec
 ```
 
-若设置成功，应返回以下路径：
+若设置成功，则应当返回以下路径：
 
 ```
 /home/common/mpich/install/bin/mpiexec
@@ -231,7 +224,9 @@ which mpiexec
 
 ```shell
 # host1、host2、host3 分别可以承担 10、20、30 个进程：
-echo "host1:10\nhost2:20\nhost3:30\n" >> hostlist
+echo "host1:10" >> hostlist
+echo "host2:20" >> hostlist
+echo "host3:30" >> hostlist
 # 启动一个需要 60 个进程的任务：
 mpiexec -n 60 -f hostlist ./examples/cpi
 # 运行测试：
