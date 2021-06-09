@@ -7,7 +7,12 @@ title: Message Passing Interface (MPI)
 ## 操作系统
 
 假设有 `3` 台可以组网的计算机，分别在其上[安装 Linux 发行版](../linux/install/README.md)（例如 [Ubuntu](https://ubuntu.com/download/desktop)）。
-⚠️ 为避免版本不一致带来的麻烦，建议所有主机安装同一版本。
+
+- 为避免版本不一致带来的麻烦，建议所有主机安装同一版本。
+- 由于绝大多数操作可在命令行中完成，建议首次安装后执行以下命令：
+  ```shell
+  sudo systemctl set-default multi-user.target  # 重启后，以命令行界面启动
+  ```
 
 ### 局域网
 
@@ -37,12 +42,12 @@ ping -c 4 host3
 
 ### 同名账户
 
-在各台主机上分别创建名为 `common` 的用户，并赋予其 `root` 权限（加入 `sudo` 用户组）：
+在各台主机上分别创建名同名账户（为确保读写权限一致，建议 UID 也相同），并赋予其 `root` 权限（加入 `sudo` 用户组）：
 
 ```shell
-sudo adduser common  # 根据提示，先输入 admin 的密码，
-                     # 再创建 common 的密码，并输入个人信息（可选）
-sudo usermod -aG sudo common
+sudo adduser --uid 2000 common  # 根据提示，先输入 admin 的密码，
+                                # 再创建 common 的密码，并输入个人信息（可选）
+sudo usermod -aG sudo common    # 加入 sudo 用户组
 ```
 
 完成后，切换到 `common` 用户，并验证权限设置正确：
