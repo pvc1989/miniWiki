@@ -76,6 +76,7 @@ title: 首页
 - [数值分析](./algorithms/numerical_analysis/README.lyx)
 - [优化方法](./algorithms/optimization/README.lyx)
 - [有限单元](./algorithms/finite_element/README.lyx)
+- [OpenFOAM](algorithms/openfoam/README.md)
 
 ## [编程](./programming/README.md)
 - 计算机系统
