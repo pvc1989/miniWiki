@@ -1,5 +1,5 @@
 ---
-title: Secure SHell (SSH)
+title: SSH (Secure SHell)
 ---
 
 本文参考了[鳥哥](http://linux.vbird.org/vbird/)的《[文字介面連線伺服器：SSH 伺服器](http://linux.vbird.org/linux_server/0310telnetssh.php#ssh_server)》。
@@ -169,14 +169,6 @@ cd .ssh
 scp id_rsa.pub user@address:~  # 需要输入服务端密码
 ```
 
-⚠️ 每次启动 Shell 时，需手动启动密钥『认证代理 (authentication agent)』：
-
-```shell
-eval `ssh-agent`       # 启动认证代理
-ssh-add ~/.ssh/id_rsa  # 加入私钥
-ssh-add -l             # 列出已加入的私钥
-```
-
 ## 服务端
 
 然后，在服务端添加授权信息：
@@ -196,9 +188,21 @@ rm id_rsa.pub
 chmod 644 .ssh/authorized_keys 
 ```
 
+作为特例，如果希望能够通过 SSH 免密访问本地主机上的当前用户，只需在本地主机上开启 SSH 服务，并将当前用户的公钥写入自己的 `~/.ssh/authorized_keys` 文件。
+
+## 测试
+
 至此，应当可以从客户端通过 `ssh` 命令免密登入远程主机上的该用户，或者通过 `scp` 命令免密上传或下载数据。
 
-作为特例，如果希望能够通过 SSH 免密访问本地主机上的当前用户，只需在本地主机上开启 SSH 服务，并将当前用户的公钥写入自己的 `~/.ssh/authorized_keys` 文件。
+⚠️ 若不成功，则需要在每次启动客户端 shell 时开启『认证代理 (authentication agent)』：
+
+```shell
+eval `ssh-agent`       # 启动认证代理
+ssh-add ~/.ssh/id_rsa  # 加入私钥
+ssh-add -l             # 列出已加入的私钥
+```
+
+上述命令可置于 `~/.bashrc` 或 `~/.zshrc` 中，以便每次启动 shell 时自动加载。
 
 # 在远程主机运行任务
 

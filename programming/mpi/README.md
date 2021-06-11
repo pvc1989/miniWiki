@@ -1,5 +1,5 @@
 ---
-title: Message Passing Interface (MPI)
+title: MPI (Message Passing Interface)
 ---
 
 # 平台搭建
@@ -104,6 +104,15 @@ host1
 host2
 host3
 ```
+
+⚠️ 若不成功，则需开启“认证代理 (authentication agent)”：
+
+```shell
+eval `ssh-agent`     # 启动认证代理
+ssh-add ~/.ssh/key1  # 加入私钥
+```
+
+上述命令可置于 `~/.bashrc` 或 `~/.zshrc` 中，以便每次启动 shell 时自动加载。
 
 ## 公共目录
 
