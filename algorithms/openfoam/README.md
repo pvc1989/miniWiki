@@ -77,6 +77,8 @@ source etc/bashrc WM_MPLIB=USERMPI WM_PROJECT_USER_DIR=$WM_PROJECT_DIR/../$WM_PR
 ```shell
 PATH=$HOME/shared/mpich/install/bin:$PATH
 export PATH
+LD_LIBRARY_PATH=$HOME/shared/mpich/install/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
 source $HOME/shared/openfoam.com/source/etc/bashrc WM_MPLIB=USERMPI
 source $WM_PROJECT_DIR/etc/bashrc WM_MPLIB=USERMPI WM_PROJECT_USER_DIR=$WM_PROJECT_DIR/../$WM_PROJECT_VERSION
 ```
@@ -159,34 +161,152 @@ touch result.foam  # 用 ParaView 查看结果
 ```shell
 cp -r $FOAM_TUTORIALS/compressible/sonicFoam/laminar/forwardStep forwardStep_1x4
 cd forwardStep_1x4
-vim system decomposeDict
 ```
 
-
-
-```cpp
-/* system/decomposeDict */
-```
-
-
-
-```
-decomposePar
-mpiexec -n 4 sonicFoam
-reconstructPar
-```
-
-## 分布式
-
-在 `2` 台机器上分别运行 `20` 个进程：
+### 前处理
 
 ```shell
-cp -r $FOAM_TUTORIALS/compressible/sonicFoam/laminar/forwardStep forwardStep_2x40
+vim system/decomposeParDict
+```
+
+设置分块参数：
+
+```cpp
+/* system/decomposeParDict */
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+numberOfSubdomains 4;
+method          simple;
+coeffs {
+    n           (2 2 1);
+}
+```
+
+其中 `n (2 2 1);` 表示沿 X-轴分为 `2` 块、沿 Y-轴分为 `2` 块、沿 Z-轴分为 `1` 块。详见《[`method`](#`method`)》。
+
+```shell
+decomposePar
+```
+
+### 计算
+
+```shell
+mpiexec -n 4 sonicFoam -parallel
+```
+
+### 后处理
+
+```shell
+reconstructPar
+touch result.foam
+```
+
+其中 `reconstructPar` 默认重构所有时间步（可能较慢），以下选项可以节省时间：
+
+- 【`-latestTime`】只处理最后一步
+- 【`-time N`】只处理时刻 `N`
+- 【`-newTimes`】只处理新增的时间步
+
+## 机群
+
+在 `2` 台机器上分别运行 `20` 个进程，基本流程与单机版本类似：
+
+```shell
+cp -r $FOAM_TUTORIALS/compressible/sonicFoam/laminar/forwardStep forwardStep_2x20
 cd forwardStep_2x20
-vim system decomposeDict
+vim system/decomposeDict
+```
+
+```cpp
+/* system/decomposeParDict */
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+numberOfSubdomains 40;
+method          simple;
+coeffs {
+    n           (10 4 1);
+}
+```
+
+但需指定各台主机可以分担的进程数量：
+
+```shell
 echo "host1:20"  > hostlist
 echo "host2:20" >> hostlist
-mpiexec -n 40 -f hostlist sonicFoam
+mpiexec -n 40 -f hostlist sonicFoam -parallel
 reconstructPar
+touch result.foam
+```
+
+## `decomposeParDict`
+
+位于 `system` 中的 `decomposeParDict` 文件描述分块方案，基本格式如下：
+
+```cpp
+FoamFile {
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+numberOfSubdomains 40;
+method  /* 五选一 */;  // simple ｜ hierarchical | scotch | metis | manual
+coeffs { /* 具体内容取决于 method */ }
+```
+
+### `simple`
+
+依次沿 X、Y、Z 方向分割。
+
+```cpp
+coeffs {
+  n           (10 4 1);  // #subdomains in X, Y, Z
+  delta           1e-3;  // (optional) cell skew factor
+}
+```
+
+### `hierarchical`
+
+与 `simple` 类似，但需给出分割的顺序。
+
+```cpp
+coeffs {
+  n           (10 4 1);  // #subdomains in X, Y, Z
+  delta           1e-3;  // (optional) cell skew factor
+  order            xyz;  // or xzy | yxz | yzx | zxy | zyx
+}
+```
+
+### `scotch`
+
+用 Scotch 自动分块。
+
+```cpp
+coeffs {
+  processorWeights (1 2 3);  // 各处理器的权重因子
+  strategy               b;  // (optional)
+}
+```
+
+### `metis`
+
+用 METIS 自动分块。
+
+### `manual`
+
+用户显式地为各个单元分配处理器。
+
+```cpp
+coeffs {
+  dataFile "FileName";  // (optional) 描述单元与处理器对应关系的文件
+}
 ```
 
