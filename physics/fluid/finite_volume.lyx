@@ -957,7 +957,7 @@ Element
 s 之间没有（除公共边界以外的）实质性的重叠，即
 \begin_inset Formula 
 \[
-\underbrace{\int_{E_{i}\cap E_{k}}1}_{\abs{E_{i}\cap E_{k}}}=\mathrm{\delta}_{ik}\underbrace{\int_{E_{k}}1}_{\abs{E_{k}}}\qquad\forall(i,k)\in I(E)\times I(E)
+\underbrace{\vert E_{i}\cap E_{k}\vert}_{\int_{E_{i}\cap E_{k}}1}=\mathrm{\delta}_{ik}\underbrace{\vert E_{k}\vert}_{\int_{E_{k}}1}\qquad\forall(i,k)\in I(E)\times I(E)
 \]
 
 \end_inset
@@ -1073,7 +1073,7 @@ s 的
 
 \begin_layout Remark
 对于一维问题，最简单的网格方案是：用 
-\begin_inset Formula $N_{P}+1$
+\begin_inset Formula $N_{P}$
 \end_inset
 
  个 
@@ -1118,10 +1118,6 @@ s 的公共端点为 CS，因此
 \end_inset
 
  且 
-\begin_inset Formula $E_{i}\coloneqq(x_{i-1},x_{i})$
-\end_inset
-
- 需放宽为 
 \begin_inset Formula $E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})$
 \end_inset
 
@@ -1129,14 +1125,18 @@ s 的公共端点为 CS，因此
 \begin_inset Formula $x_{i\pm1/2}$
 \end_inset
 
- 表示“单元两端点的坐标值”。按此记法，
+ 表示“单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 两端点的坐标值”。按此记法，
 \begin_inset Formula $E_{i}$
 \end_inset
 
  的长度（一维体积）可以记为
 \begin_inset Formula 
 \[
-h_{i}\coloneqq\abs{E_{i}}\coloneqq\int_{E_{i}}1=\int_{x_{i-1/2}}^{x_{i+1/2}}1\dd{x}=x_{i+1/2}-x_{i-1/2}\qquad\forall i\in I(E)
+h_{i}\coloneqq\vert E_{i}\vert\coloneqq\int_{E_{i}}1=\int_{x_{i-1/2}}^{x_{i+1/2}}1\dd{x}=x_{i+1/2}-x_{i-1/2}\qquad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1667,7 +1667,7 @@ noprefix "false"
 \end_inset
 
 》中的步骤，可以在 
-\begin_inset Formula $\order{\lg\abs{\varepsilon_{0}/\varepsilon_{*}}}$
+\begin_inset Formula $\order{\lg\vert\varepsilon_{0}/\varepsilon_{*}\vert}$
 \end_inset
 
  时间内获得精确解，其中 
@@ -1772,7 +1772,7 @@ reference "sec:有限体积：近似 Riemann 解"
  上积分，从而得到离散形式的守恒律
 \begin_inset Formula 
 \begin{equation}
-\eval[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}+\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\check{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
 \end{equation}
 
 \end_inset
@@ -1811,7 +1811,7 @@ reference "eq:有限体积：Godunov：离散"
  的第一个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\check{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
 \]
 
 \end_inset
@@ -1823,7 +1823,7 @@ reference "eq:有限体积：Godunov：离散"
 为了化简第二个积分，引入“数值通量 (numerical flux)”
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x_{i+1/2},t)\right)\dd{t}
+F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\check{U}^{n}(x_{i+1/2},t)\right)\dd{t}
 \]
 
 \end_inset
@@ -1839,7 +1839,7 @@ F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}F\mathopen{}\
  为常量，因此这里的积分可以直接得到：
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}=F\mathopen{}\left(\check{U}_{i+1/2}^{n}(0)\right)
+F_{i+1/2}^{n}=\mathopen{F}\left(\check{U}_{i+1/2}^{n}(0)\right)
 \]
 
 \end_inset
@@ -1854,7 +1854,7 @@ reference "eq:有限体积：Godunov：离散"
  的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\eval[\int_{t_{n}}^{t_{n+1}}F\mathopen{}\left(\check{U}^{n}(x,t)\right)\dd{t}|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\check{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
 \]
 
 \end_inset
@@ -1873,7 +1873,7 @@ reference "eq:有限体积：Godunov：离散"
  就得到了显式迭代格式
 \begin_inset Formula 
 \begin{equation}
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+1/2}-x_{i-1/2}}\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)\qquad F_{i\pm1/2}^{n}=F\mathopen{}\left(\check{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{x_{i+1/2}-x_{i-1/2}}\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)\qquad F_{i\pm1/2}^{n}=\mathopen{F}\left(\check{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
 \end{equation}
 
 \end_inset
@@ -1906,7 +1906,7 @@ reference "eq:有限体积：守恒型格式：一维"
 \end_inset
 
 ，并用局部 Riemann 问题的“精确解”计算近似通量 
-\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq F\mathopen{}\left(\check{U}_{i\pm1/2}^{n}(0)\right)$
+\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq\mathopen{F}\left(\check{U}_{i\pm1/2}^{n}(0)\right)$
 \end_inset
 
 ，即得 
@@ -1998,7 +1998,7 @@ reference "sec:间断有限元"
  在每个控制体（单元）内按常数分布：
 \begin_inset Formula 
 \[
-U(\vec{x},t_{n})=\bar{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U}{\abs{E_{i}}\coloneqq\int_{E_{i}}1}\qquad\forall\vec{x}\in E_{i}
+U(\vec{x},t_{n})=\bar{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U}{\vert E_{i}\vert\coloneqq\int_{E_{i}}1}\qquad\forall\vec{x}\in E_{i}
 \]
 
 \end_inset
@@ -2016,7 +2016,7 @@ reference "eq:有限体积：Godunov：推进"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\abs{E_{i}}}\oint_{\partial E_{i}}F_{\nu}^{n}}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\vert E_{i}\vert}\oint_{\partial E_{i}}F_{\nu}^{n}}
 \]
 
 \end_inset
@@ -2030,11 +2030,11 @@ reference "eq:有限体积：Godunov：推进"
 
 \begin_layout Itemize
 在控制面 
-\begin_inset Formula $S_{k}\subset\partial E_{i}$
+\begin_inset Formula $A_{k}\subset\partial E_{i}$
 \end_inset
 
  上任取一点 
-\begin_inset Formula $\vec{s}$
+\begin_inset Formula $\vec{a}$
 \end_inset
 
 ，该点处的单位外法向量为 
@@ -2051,7 +2051,7 @@ reference "eq:有限体积：Godunov：推进"
 \begin_deeper
 \begin_layout Itemize
 该问题以 
-\begin_inset Formula $\nu\coloneqq\vec{\nu}\vdot(\vec{x}-\vec{s})$
+\begin_inset Formula $\nu\coloneqq\vec{\nu}\vdot(\vec{x}-\vec{a})$
 \end_inset
 
  及 
@@ -2071,30 +2071,30 @@ reference "eq:有限体积：Godunov：推进"
 
 \begin_layout Itemize
 调用 Riemann 求解器，得到自相似解 
-\begin_inset Formula $\check{U}_{\vec{s}}^{n}(\nu/\tau)$
+\begin_inset Formula $\check{U}_{\vec{a}}^{n}(\nu/\tau)$
 \end_inset
 
  及法向通量 
-\begin_inset Formula $F_{\nu}^{n}(\vec{s})=F_{\nu}\mathopen{}\left(\check{U}_{\vec{s}}^{n}(\pm0)\right)$
+\begin_inset Formula $F_{\nu}^{n}(\vec{a})=\mathopen{F_{\nu}}\left(\check{U}_{\vec{a}}^{n}(\pm0)\right)$
 \end_inset
 
 。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $S_{k}$
+\begin_inset Formula $A_{k}$
 \end_inset
 
- 两侧的状态均为常值，故 
-\begin_inset Formula $\vec{s}$
+ 为平面且两侧的状态均为常值，故 
+\begin_inset Formula $\vec{a}$
 \end_inset
 
  可以用 
-\begin_inset Formula $S_{k}$
+\begin_inset Formula $A_{k}$
 \end_inset
 
  代替，即 
-\begin_inset Formula $F_{\nu}^{n}\qty(S_{k})=F_{\nu}\mathopen{}\left(\check{U}_{S_{k}}^{n}(\pm0)\right)$
+\begin_inset Formula $F_{\nu}^{n}\qty(A_{k})=\mathopen{F_{\nu}}\left(\check{U}_{A_{k}}^{n}(\pm0)\right)$
 \end_inset
 
 。
@@ -2264,13 +2264,13 @@ status open
 \end_inset
 
 ，则 
-\begin_inset Formula $\vec{\mathrm{\pi}}\coloneqq\vec{\nu}\times\vec{\sigma}$
+\begin_inset Formula $\vec{\pi}\coloneqq\vec{\nu}\times\vec{\sigma}$
 \end_inset
 
  亦为单位切向量，于是可作向量分解
 \begin_inset Formula 
 \[
-\vec{u}=\vec{\nu}u_{\nu}+\vec{\sigma}u_{\sigma}+\vec{\mathrm{\pi}}u_{\mathrm{\pi}}\qquad u_{\nu}\coloneqq\vec{\nu}\vdot\vec{u}\qquad u_{\sigma}\coloneqq\vec{\sigma}\vdot\vec{u}\qquad u_{\mathrm{\pi}}\coloneqq\vec{\mathrm{\pi}}\vdot\vec{u}
+\vec{u}=\vec{\nu}u_{\nu}+\vec{\sigma}u_{\sigma}+\vec{\pi}u_{\pi}\qquad u_{\nu}\coloneqq\vec{\nu}\vdot\vec{u}\qquad u_{\sigma}\coloneqq\vec{\sigma}\vdot\vec{u}\qquad u_{\pi}\coloneqq\vec{\pi}\vdot\vec{u}
 \]
 
 \end_inset
@@ -2281,12 +2281,12 @@ status open
 \partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{U}\coloneqq\begin{bmatrix}\rho\\
 \rho u_{\nu}\\
 \rho u_{\sigma}\\
-\rho u_{\mathrm{\pi}}\\
+\rho u_{\pi}\\
 \rho e_{0}
 \end{bmatrix}\qquad\ket{F_{\nu}}\coloneqq\begin{bmatrix}\rho u_{\nu}\\
 \rho u_{\nu}u_{\nu}+p\\
 \rho u_{\sigma}u_{\nu}\\
-\rho u_{\mathrm{\pi}}u_{\nu}\\
+\rho u_{\pi}u_{\nu}\\
 \rho h_{0}u_{\nu}
 \end{bmatrix}
 \]
@@ -2295,12 +2295,12 @@ status open
 
 这正是三维 Euler 方程的“法向分裂形式”，故可调用三维 Euler–Riemann 求解器，详见《
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand nameref
 reference "sec:激波管：高维版本"
 
 \end_inset
 
-》一节。
+》一节。列矩阵 
 \begin_inset Formula $\ket{U}$
 \end_inset
 
@@ -2326,10 +2326,10 @@ reference "sec:激波管：高维版本"
 \[
 \begin{bmatrix}\ip{\nu}{U_{\pm}^{n}}\\
 \ip{\sigma}{U_{\pm}^{n}}\\
-\ip{\mathrm{\pi}}{U_{\pm}^{n}}
+\ip{\pi}{U_{\pm}^{n}}
 \end{bmatrix}=\begin{bmatrix}\ip{\nu}{x} & \ip{\nu}{y} & \ip{\nu}{z}\\
 \ip{\sigma}{x} & \ip{\sigma}{y} & \ip{\sigma}{z}\\
-\ip{\mathrm{\pi}}{x} & \ip{\mathrm{\pi}}{y} & \ip{\mathrm{\pi}}{z}
+\ip{\pi}{x} & \ip{\pi}{y} & \ip{\pi}{z}
 \end{bmatrix}\begin{bmatrix}\ip{x}{U_{\pm}^{n}}\\
 \ip{y}{U_{\pm}^{n}}\\
 \ip{z}{U_{\pm}^{n}}
@@ -2356,12 +2356,12 @@ Riemann 求解器输出的
 \begin{bmatrix}\ip{x}{F_{\nu}^{n}}\\
 \ip{y}{F_{\nu}^{n}}\\
 \ip{z}{F_{\nu}^{n}}
-\end{bmatrix}=\begin{bmatrix}\ip{x}{\nu} & \ip{x}{\sigma} & \ip{x}{\mathrm{\pi}}\\
-\ip{y}{\nu} & \ip{y}{\sigma} & \ip{y}{\mathrm{\pi}}\\
-\ip{z}{\nu} & \ip{z}{\sigma} & \ip{z}{\mathrm{\pi}}
+\end{bmatrix}=\begin{bmatrix}\ip{x}{\nu} & \ip{x}{\sigma} & \ip{x}{\pi}\\
+\ip{y}{\nu} & \ip{y}{\sigma} & \ip{y}{\pi}\\
+\ip{z}{\nu} & \ip{z}{\sigma} & \ip{z}{\pi}
 \end{bmatrix}\begin{bmatrix}\ip{\nu}{F_{\nu}^{n}}\\
 \ip{\sigma}{F_{\nu}^{n}}\\
-\ip{\mathrm{\pi}}{F_{\nu}^{n}}
+\ip{\pi}{F_{\nu}^{n}}
 \end{bmatrix}
 \]
 
@@ -2506,8 +2506,8 @@ reference "eq:间断有限元：积分方程"
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\varOmega}V\,\partial_{t}U\approx\int_{\varOmega}V^{h}\,\partial_{t}U^{h} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\varOmega}\psi_{l}\phi_{k}\right)\dv{\hat{U}_{k}}{t}\\
-\int_{\varOmega}\vec{F}\vdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\vdot\vec{F}\mathopen{}\left(U^{h}\right)\\
-\oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)
+\int_{\varOmega}\vec{F}\vdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\vdot\mathopen{\vec{F}}\left(U^{h}\right)\\
+\oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{aligned}
 \]
 
@@ -2529,7 +2529,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_inset
 
  
-\begin_inset Formula $F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)$
+\begin_inset Formula $\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)$
 \end_inset
 
 。借助内积符号
@@ -2559,7 +2559,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)-\oint_{\partial\varOmega}\begin{bmatrix}\psi_{1}\\
 \vdots\\
 \psi_{L}
-\end{bmatrix}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)}_{\ket{B(U)}}
+\end{bmatrix}\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)}_{\ket{B(U)}}
 \]
 
 \end_inset
@@ -2639,7 +2639,7 @@ name "eq:间断有限元：矩阵方程"
 \end{bmatrix}\vdot\vec{F}\mathopen{}\left(U^{h}\right)-\oint_{\partial E_{i}}\begin{bmatrix}\phi_{1}\\
 \vdots\\
 \phi_{L}
-\end{bmatrix}F_{\nu}\mathopen{}\left(U_{-}^{h},U_{+}^{h}\right)
+\end{bmatrix}\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{gathered}
 \end{equation}
 
@@ -2831,7 +2831,7 @@ reference "eq:间断有限元：矩阵方程"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{A}^{B}\phi(\vec{x})\dd(AB)=\int_{-1}^{+1}\phi(\xi)\,\abs{J_{x\to\xi}}\dd{\xi}
+\int_{A}^{B}\phi(\vec{x})\dd(AB)=\int_{-1}^{+1}\phi(\xi)\,\vert J_{x\to\xi}\vert\dd{\xi}
 \]
 
 \end_inset
@@ -2843,7 +2843,7 @@ reference "eq:间断有限元：矩阵方程"
 微元伸缩系数
 \begin_inset Formula 
 \[
-\abs{J_{x\to\xi}}=\abs{\dv{\vec{x}}{\xi}}=\abs{\frac{\vec{x}_{B}-\vec{x}_{A}}{2}}\coloneqq\frac{\abs{AB}}{2}
+\vert J_{x\to\xi}\vert=\left\vert \dv{\vec{x}}{\xi}\right\vert =\left\vert \frac{\vec{x}_{B}-\vec{x}_{A}}{2}\right\vert \coloneqq\frac{\vert AB\vert}{2}
 \]
 
 \end_inset
@@ -2860,7 +2860,7 @@ reference "eq:间断有限元：矩阵方程"
 
 \begin_layout Standard
 于是，微元伸缩系数 
-\begin_inset Formula $\abs{J_{x\to\xi}}$
+\begin_inset Formula $\vert J_{x\to\xi}\vert$
 \end_inset
 
  可以被提到积分号外，剩下的积分由标准区间上的“Gauss–Legendre 
@@ -2870,7 +2870,7 @@ reference "eq:间断有限元：矩阵方程"
 ”程序给出近似：
 \begin_inset Formula 
 \[
-\int_{A}^{B}\phi(\vec{x})\dd(AB)=\frac{\abs{AB}}{2}\int_{-1}^{+1}\phi(\xi)\dd{\xi}\approx\frac{\abs{AB}}{2}\sum_{q=1}^{Q}\phi\qty(\xi_{q})\,w_{q}
+\int_{A}^{B}\phi(\vec{x})\dd(AB)=\frac{\vert AB\vert}{2}\int_{-1}^{+1}\phi(\xi)\dd{\xi}\approx\frac{\vert AB\vert}{2}\sum_{q=1}^{Q}\phi\qty(\xi_{q})\,w_{q}
 \]
 
 \end_inset
@@ -3284,7 +3284,7 @@ name "tab:间断有限元：数值积分：直线段"
  上的“面积分 (surface integral)”可以化为“标准三角形”上的“二重积分 (double integral)”：
 \begin_inset Formula 
 \[
-\iint_{\triangle ABC}\phi(\vec{x})=\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\lambda_{A},\lambda_{B})\,\abs{J_{x\to\lambda}}\dd{\lambda_{A}}\dd{\lambda_{B}}
+\iint_{\triangle ABC}\phi(\vec{x})=\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\lambda_{A},\lambda_{B})\,\vert J_{x\to\lambda}\vert\dd{\lambda_{A}}\dd{\lambda_{B}}
 \]
 
 \end_inset
@@ -3296,7 +3296,7 @@ name "tab:间断有限元：数值积分：直线段"
 微元伸缩系数
 \begin_inset Formula 
 \[
-\abs{J_{x\to\lambda}}\coloneqq\sqrt{\det(\Mat{J_{x\to\lambda}}^{\dagger}\Mat{J_{x\to\lambda}})}=2\abs{\triangle ABC}
+\vert J_{x\to\lambda}\vert\coloneqq\sqrt{\det(\Mat{J_{x\to\lambda}}^{\dagger}\Mat{J_{x\to\lambda}})}=2\vert\triangle ABC\vert
 \]
 
 \end_inset
@@ -3349,7 +3349,7 @@ y_{A}-y_{C} & y_{B}-y_{C}
 
 \begin_layout Standard
 于是，微元伸缩系数 
-\begin_inset Formula $\abs{J_{x\to\lambda}}$
+\begin_inset Formula $\vert J_{x\to\lambda}\vert$
 \end_inset
 
  可以被提到积分号外，剩下的积分由三角形上的“Gauss–Legendre 
@@ -3359,7 +3359,7 @@ y_{A}-y_{C} & y_{B}-y_{C}
 ”程序给出近似：
 \begin_inset Formula 
 \[
-\iint_{\triangle ABC}\phi(\vec{x})=\abs{J_{x\to\lambda}}\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\vec{\lambda}_{q})\dd{\lambda_{A}}\dd{\lambda_{B}}\approx2\abs{\triangle ABC}\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,w_{q}
+\iint_{\triangle ABC}\phi(\vec{x})=\vert J_{x\to\lambda}\vert\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\vec{\lambda}_{q})\dd{\lambda_{A}}\dd{\lambda_{B}}\approx2\vert\triangle ABC\vert\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,w_{q}
 \]
 
 \end_inset
@@ -3849,7 +3849,7 @@ noprefix "false"
 ，是为了方便与其他文献对照，后者通常将“三角形上的 Gauss–Legendre 求积”定义为
 \begin_inset Formula 
 \[
-\iint_{\triangle ABC}\phi(\vec{x})\approx\abs{\triangle ABC}\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,W_{q}
+\iint_{\triangle ABC}\phi(\vec{x})\approx\vert\triangle ABC\vert\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,W_{q}
 \]
 
 \end_inset
