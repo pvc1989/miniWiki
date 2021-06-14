@@ -29,13 +29,13 @@ title: LaTeX
 ## 发行版 + 编辑器
 
 ### TeX Live<a name="TeX-Live"></a>
-[TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX ***发行版 (distribution)***。
+[TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX <u>发行版 (distribution)</u>。
 
-1. 下载并 *完整* 安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
+1. 下载并<u>完整</u>安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
 2. 安装完成后，应当可以用 `texdoc ctex` 命令打开《[CTeX 宏集手册](https://ctan.org/pkg/ctex)》。
 
 ### TeXstudio
-[TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX ***编辑器 (editor)***。
+[TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX <u>编辑器 (editor)</u>。
 
 ## 中文支持
 
@@ -56,7 +56,7 @@ title: LaTeX
 ## 字体设置
 
 ### fontspec
-[fontspec 宏包](https://ctan.org/pkg/fontspec) 用于设置文档 *正文* 字体，默认情况下会影响到 `\mathrm` 等 *数学* 字体（宏包选项 `no-math` 可以消除对数学字体的影响）：
+[fontspec 宏包](https://ctan.org/pkg/fontspec)用于设置文档<u>正文</u>字体，默认情况下会影响到 `\mathrm` 等<u>数学</u>字体（宏包选项 `no-math` 可以消除对数学字体的影响）：
 
 ```latex
 \usepackage[no-math 宏包]{fontspec}
@@ -64,7 +64,7 @@ title: LaTeX
 ```
 
 ### mathspec
-[mathspec 宏包](https://ctan.org/pkg/fontspec) 用于设置（数学环境中）*阿拉伯数字*、*拉丁字母*、*希腊字母* 的字体，默认情况下以 `no-math` 选项加载 [fontspec 宏包](#fontspec)：
+[mathspec 宏包](https://ctan.org/pkg/fontspec)用于设置（数学环境中）<u>阿拉伯数字、拉丁字母、希腊字母</u>的字体，默认情况下以 `no-math` 选项加载 [fontspec 宏包](#fontspec)：
 
 ```latex
 \usepackage{mathspec}
@@ -73,15 +73,16 @@ title: LaTeX
 \setmathrm{Optima}
 ```
 
-[CTeX 文档类](https://ctan.org/pkg/ctex) 会自动加载 [fontspec 宏包](#fontspec)。
+[CTeX 文档类](https://ctan.org/pkg/ctex)会自动加载 [fontspec 宏包](#fontspec)。
 如果要使用 [mathspec 宏包](#mathspec)，则应
+
 - 在 `\documentclass` 之前将 `no-math` 选项传入 [fontspec 宏包](#fontspec)：
   ```latex
   \PassOptionsToPackage{no-math}{fontspec}
   \documentclass{ctexart}
   \usepackage{mathspec}
   ```
-- 或者选择其他（不自动加载 [fontspec 宏包](#fontspec) 的）文档类，而在 [mathspec 宏包](#mathspec) 之后加载 ctex：
+- 或者选择其他（不自动加载 [fontspec 宏包](#fontspec)的）文档类，而在 [mathspec 宏包](#mathspec)之后加载 ctex：
   ```latex
   \documentclass{article}
   \usepackage{mathspec}
@@ -89,14 +90,15 @@ title: LaTeX
   ```
 
 ### unicode-math
-[unicode-math 宏包](https://ctan.org/pkg/unicode-math) 用于设置 *数学符号* 字体：
+[unicode-math 宏包](https://ctan.org/pkg/unicode-math)用于设置<u>数学符号</u>字体：
+
 ```latex
 \usepackage{unicode-math}
 \unimathsetup{math-style=TeX}
 \setmathfont{texgyrepagella-math.otf}
 \setmathfont{Neo-Euler}[range=\mathalpha]
 ```
-*完整* 安装 [TeX Live](#TeX-Live) 后，应当可以用 `texdoc unimath` 命令打开《Every symbol (most symbols) defined by `unicode-math`》。
+完整安装 [TeX Live](#TeX-Live) 后，应当可以用 `texdoc unimath` 命令打开《Every symbol (most symbols) defined by `unicode-math`》。
 
 ## 数学物理符号
 
@@ -149,7 +151,7 @@ $ R = \SI{8.3144598(48)}{\joule\per\kelvin\per\mole} $
 
 ### minted + pygments
 
-- [minted 宏包](https://ctan.org/pkg/minted) 是 LaTeX 宏包，若完整安装了 [TeX Live](#TeX-Live)，则无需单独安装。
+- [minted 宏包](https://ctan.org/pkg/minted)是 LaTeX 宏包，若完整安装了 [TeX Live](#TeX-Live)，则无需单独安装。
 - pygments 是 Python 第三方包，一般需要单独安装：
 
 ```shell
@@ -158,8 +160,8 @@ $ pip3 install pygments
 ```
 
 ### 插入外部代码文件
-- [import 宏包](https://ctan.org/pkg/import) 用于插入文件。
-- [minted 宏包](https://ctan.org/pkg/minted) 用于代码高亮。
+- [import 宏包](https://ctan.org/pkg/import)用于插入文件。
+- [minted 宏包](https://ctan.org/pkg/minted)用于代码高亮。
 - 二者混用可能会引发路径错误，修复方案可参考《[宏包 import 对 minted 无效](https://zhuanlan.zhihu.com/p/39117864)》。
 
 ## 绘图
@@ -168,7 +170,7 @@ $ pip3 install pygments
 
 # LyX<a name="LyX"></a>
 
-[LyX](https://lyx.org) 是一款开源、支持“所见即所思”的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word “所及即所得”的优势。
+[LyX](https://lyx.org) 是一款开源、支持<u>所见即所思</u>的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word <u>所及即所得</u>的优势。
 
 先完整安装 [TeX Live](#TeX-Live)，再安装 [LyX](https://www.lyx.org/Download)。二者都安装好后，在 LyX【首选项】中设置环境变量 `PATH` 以确保 `xelatex` 等命令能够被 LyX 搜索到。
 
@@ -183,7 +185,7 @@ $ pip3 install pygments
 
 ## 字体设置<a name="LyX-字体设置"></a>
 
-[CTeX 系列文档类](https://ctan.org/pkg/ctex) 及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
+[CTeX 系列文档类](https://ctan.org/pkg/ctex)及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
 如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [unicode-math 宏包](#unicode-math)。
 
 如果要进行更精细的字体设置，则不应勾选【使用非 TeX 字体】，而是在【LaTeX 导言区】中手动加载[字体设置](#字体设置)宏包。
@@ -308,3 +310,4 @@ window.MathJax = {
   }
 };
 ```
+

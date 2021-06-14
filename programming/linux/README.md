@@ -26,6 +26,14 @@ sudo apt install vim
 
 # Shell
 
+## Login Shell
+
+```shell
+echo $SHELL           # 查看 login shell
+chsh -s $(which zsh)  # 更换 login shell
+# 退出当前 shell 并重新打开
+```
+
 ## Bash
 
 Ubuntu 默认的终端（`/bin/bash`）提示格式为
@@ -98,7 +106,7 @@ vim ~/.zshrc
 
 ## [SSH](./ssh.md)
 
-## 数据流重定向
+## 文件重定向
 
 |   名称   |   覆盖   |   追加    |
 | :------: | :------: | :-------: |
