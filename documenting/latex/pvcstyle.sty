@@ -11,7 +11,6 @@
 %
 % Options for Fonts
 %
-\newif\if@euler\@eulerfalse\DeclareOption{euler}{\@eulertrue}
 \newif\if@stix\@stixfalse\DeclareOption{stix}{\@stixtrue}
 \newif\if@newcm\@newcmfalse\DeclareOption{newcm}{\@newcmtrue}
 \ExecuteOptions{newcm}
@@ -32,7 +31,6 @@
 %
 \RequirePackage{amsmath}
 \RequirePackage{amsopn}
-\RequirePackage{amssymb}
 \RequirePackage{mathtools}
 % \RequirePackage{esint}  % more integrals
 \RequirePackage{physics}
@@ -44,26 +42,11 @@
 % Fonts for Mathematics and Western Languages
 %
 \RequirePackage{unicode-math}
-\ifthenelse{\boolean{@euler}}{  % `then`-branch of `euler`
-  % font for english text
-  \setmainfont{Palatino}
-  % font for mathematical symbols
-  \setmathfont{Latin Modern Math}[
-    math-style = upright,
-    bold-style = upright,
-  ]
-  \setmathfont{Neo Euler}[
-    math-style = upright,
-    bold-style = upright,
-    range = {\mathalpha, \infty}
-  ]
-  %% mathematical symbols
-}{  % `else`-branch of `euler`
 \ifthenelse{\boolean{@stix}}{  % `then`-branch of `stix`
   % font for english text
   \setmainfont{STIX Two Text}
   % font for mathematical symbols
-  \setmathfont{NewComputerModern Math}[
+  \setmathfont{NewCMMath-Book}[
     math-style = ISO,
     bold-style = ISO,
   ]
@@ -71,7 +54,7 @@
   [
     math-style = ISO,
     bold-style = ISO,
-    StylisticSet = {3},
+    StylisticSet = {3}, % see stixfonts/docs/charts/StixTwoMath.pdf
     range = {\mathalpha, \vysmblkcircle, \infty}
   ]
   % mathematical symbols
@@ -80,7 +63,6 @@
   \fi
 }{  % `else`-branch of `stix`
 \ifthenelse{\boolean{@newcm}}{  % `then`-branch of `newcm`
-  \RequirePackage{unicode-math}
   \setmainfont[
     ItalicFont=NewCM10-BookItalic,
     BoldFont=NewCM10-Bold,
@@ -107,8 +89,8 @@
   [
     math-style = ISO,
     bold-style = ISO,
-    StylisticSet = {3},
-    range = {up/{greek}}
+    StylisticSet = {3}, % see stixfonts/docs/charts/StixTwoMath.pdf
+    range = {up/{greek}, \hslash}
   ]
   \if@bold
     \renewcommand{\vdot}{\mathbin{\mdsmblkcircle}}
@@ -116,12 +98,12 @@
 }{  % `else`-branch of `newcm`
 }  % end of `newcm`
 }  % end of `stix`
-}  % end of `euler`
 \AtBeginDocument{
   \if@bold
     \renewcommand{\cross}{\vectimes}
   \fi
-  \renewcommand{\emptyset}{\varnothing}
+  \renewcommand{\emptyset}{\diameter}
+  \renewcommand{\varnothing}{\diameter}
   %% italic versions of the capital Greek letters
   \let\oldGamma\Gamma
   \let\oldGamma\Gamma
