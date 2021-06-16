@@ -395,6 +395,37 @@ Intel Core i7 处理器的三级缓存性能如下（三者的 $B$ 值均为 64 
 | L2 统一缓存 | 单核独享 | 256 KB |  8   | 512  |
 | L3 统一缓存 | 多核共享 |  8 MB  |  16  | 8192 |
 
+在 Linux 系统中，可以用 `lscpu` 命令查看上述信息：
+
+```
+Architecture:                    x86_64
+CPU op-mode(s):                  32-bit, 64-bit
+Byte Order:                      Little Endian
+Address sizes:                   39 bits physical, 48 bits virtual
+CPU(s):                          8
+On-line CPU(s) list:             0-7
+Thread(s) per core:              2
+Core(s) per socket:              4
+Socket(s):                       1
+NUMA node(s):                    1
+Vendor ID:                       GenuineIntel
+CPU family:                      6
+Model:                           60
+Model name:                      Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+Stepping:                        3
+CPU MHz:                         800.000
+CPU max MHz:                     4000.0000
+CPU min MHz:                     800.0000
+BogoMIPS:                        7183.69
+Virtualization:                  VT-x
+L1d cache:                       128 KiB
+L1i cache:                       128 KiB
+L2 cache:                        1 MiB
+L3 cache:                        8 MiB
+NUMA node0 CPU(s):               0-7
+Vulnerability ...
+```
+
 ## 4.7. 缓存器参数对性能的影响
 
 性能参数

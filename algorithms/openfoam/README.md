@@ -38,6 +38,8 @@ sudo apt install libscotch-dev libptscotch-dev libfftw3-dev libboost-system-dev 
 - `orterun --version` 应返回 Open MPI 的版本号。
 - `mpicc --show` 应返回编译命令，OpenFOAM 将用它完成编译、链接。
 
+以上第三方库也可以手动安装（参见 [`scotch`](#`scotch`)），好处是安装路径可控、易在机群内共享。
+
 ### 配置环境
 
 加载默认配置：
@@ -154,6 +156,10 @@ touch result.foam  # 用 ParaView 查看结果
 
 演示算例：[Supersonic flow over a forward-facing step](https://www.openfoam.com/documentation/tutorial-guide/3-compressible-flow/3.2-supersonic-flow-over-a-forward-facing-step)
 
+⚠️ OpenFOAM 的并行，在算法层面基于[区域分解](../../programming/mpi/README.md#decomposition)，在软件层面基于[消息传递](../../programming/mpi/README.md)：
+- 以 Intel(R) Core(TM) i7-4790 CPU 为例，该处理器有 4 个“物理核心 (physical cores)”，利用“超线程 (hyperthreading)”技术最多可以同时运行 8 个“线程 (threads)”。
+- 但 OpenFOAM 未用到<u>超线程</u>，故<u>分块数量</u>（亦即<u>进程数量</u>）不应超过<u>物理核心数量</u>。
+
 ## 单机
 
 在 `1` 台机器上运行 `4` 个进程：
@@ -189,7 +195,7 @@ coeffs {
 其中 `n (2 2 1);` 表示沿 X-轴分为 `2` 块、沿 Y-轴分为 `2` 块、沿 Z-轴分为 `1` 块。详见《[`method`](#`method`)》。
 
 ```shell
-decomposePar
+decomposePar  # 每 1,000,000 单元 大约需要 1 GB 内存。
 ```
 
 ### 计算
@@ -200,9 +206,18 @@ mpiexec -n 4 sonicFoam -parallel
 
 ### 后处理
 
+#### 直接显示
+
 ```shell
+paraFoam -builtin
+```
+
+#### 先重构后显示
+
+```shell
+reconstructParMesh  # 仅用于可变网格
 reconstructPar
-touch result.foam
+paraFoam -touch  # Create the file (eg, .blockMesh, .OpenFOAM, .foam, ...)
 ```
 
 其中 `reconstructPar` 默认重构所有时间步（可能较慢），以下选项可以节省时间：
@@ -210,6 +225,13 @@ touch result.foam
 - 【`-latestTime`】只处理最后一步
 - 【`-time N`】只处理时刻 `N`
 - 【`-newTimes`】只处理新增的时间步
+
+#### 只显示某一块
+
+```shell
+touch processorK.OpenFOAM
+paraFoam processorK.OpenFOAM
+```
 
 ## 机群
 
@@ -258,7 +280,7 @@ FoamFile {
     object      decomposeParDict;
 }
 numberOfSubdomains 40;
-method  /* 五选一 */;  // simple ｜ hierarchical | scotch | metis | manual
+method  /* simple ｜ hierarchical | scotch | metis | manual 五选一 */;
 coeffs { /* 具体内容取决于 method */ }
 ```
 
@@ -287,13 +309,24 @@ coeffs {
 
 ### `scotch`
 
-用 Scotch 自动分块。
+【推荐】自动分块。
 
 ```cpp
 coeffs {
-  processorWeights (1 2 3);  // 各处理器的权重因子
+  processorWeights (1 2 3);  // (optional) 各处理器的权重因子
   strategy               b;  // (optional)
 }
+```
+
+⚠️ 使用此方法需安装有 `libscotch.so`，OpenFOAM 提供了安装脚本，具体过程如下： 
+
+```shell
+foam
+git clone https://develop.openfoam.com/Development/ThirdParty-common.git ThirdParty
+cd ThirdParty
+git clone https://gitlab.inria.fr/scotch/scotch.git $SCOTCH_VERSION
+source $WM_PROJECT_DIR/etc/bashrc WM_MPLIB=USERMPI WM_PROJECT_USER_DIR=$WM_PROJECT_DIR/../$WM_PROJECT_VERSION
+./Allwmake -j -s -q -l
 ```
 
 ### `metis`
