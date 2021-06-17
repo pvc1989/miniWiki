@@ -343,3 +343,104 @@ coeffs {
 }
 ```
 
+# 网格
+
+## `polyMesh`
+
+OpenFOAM 所使用的网格，由位于 `constant/polyMesh` 中的一组文件来描述：
+
+- 【`points`】共 `nPoints` 项，第 `i` 项形如 `(3 1 0.05)`，表示第 `i` 号 `Point` 的坐标。
+- 【`faces`】共 `nFaces` 项，第 `i` 项形如 `4(21 53 604 25)`，表示第 `i` 号 `Face` 所含 `Point`s 的数量及编号。
+- 【`owner`】共 `nFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `Face` 的 ***所有者 (owner)***。
+- 【`neighbour`】共 `nInternalFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `InternalFace` 的 ***邻居 (neighbour)***。
+- 【`boundary`】共 `nPatches` 项，第 `i` 项形如 `movingWall { type patch; nFaces 20; startFace 760; }`，表示第 `i` 号 `Patch` 的名称。
+
+## `blockMesh`
+
+![](https://www.openfoam.com/documentation/userguide/img/user55x.png)
+
+```cpp
+FoamFile {
+  version     2.0;
+  format      ascii;
+  class       dictionary;
+  object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+scale   0.001;  // scales to mm (0.001 m)
+
+vertices
+(
+  ( 0    0    0  )    // vertex number 0
+  ( 1    0    0.1)    // vertex number 1
+  ( 1.1  1    0.1)    // vertex number 2
+  ( 0    1    0.1)    // vertex number 3 
+  (-0.1 -0.1  1  )    // vertex number 4 
+  ( 1.3  0    1.2)    // vertex number 5 
+  ( 1.4  1.1  1.3)    // vertex number 6
+  ( 0    1    1.1)    // vertex number 7
+);
+
+edges // (optional) interpolation point(s) for curved edges
+(
+  arc 1 5 (1.1 0.0 0.5)
+);
+
+blocks
+(
+  hex (0 1 2 3 4 5 6 7)    // vertex numbers
+  (10 10 10)               // numbers of cells in each direction
+  simpleGrading (1 2 3)    // cell expansion ratios, width(end) / width(start)
+);
+
+boundary
+(
+  inlet            // patch name
+  {
+    type patch;    // patch type for patch 0
+    faces
+    (
+      (0 4 7 3)    // block face in this patch
+    ); 
+  }                // end of 0th patch definition
+  outlet
+  { 
+    type patch;
+    faces 
+    ( 
+      (1 2 6 5) 
+    ); 
+  }
+  walls 
+  { 
+    type wall; 
+    faces 
+    ( 
+      (0 1 5 4) 
+      (0 3 2 1) 
+      (3 7 6 2) 
+      (4 5 6 7) 
+    ); 
+  }
+/*
+  defaultFaces
+  {
+    type empty;
+    faces
+    (
+      any face omitted from the boundary list
+    );
+  }
+ */
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
+```
+
+## `snappyMesh`
+
