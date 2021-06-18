@@ -13,7 +13,7 @@ title: CSS
 三种方式：
 - 外部样式：在 `<head>` 中，引入外部 CSS 文件（推荐），例如
   ```html
-  <link rel="stylesheet" type="text/css" href="mystyle.css">
+  <link rel="stylesheet" type="text/css" href="mystyle.css"/>
   ```
 - 内部样式：在 `<head>` 中，加入 `<style>` 字段，例如
   ```html
@@ -28,7 +28,12 @@ title: CSS
 
 ## 入门教程
 
-[翁恺《CSS3》](https://study.163.com/course/courseMain.htm?courseId=190001)
+- [翁恺《CSS3》](https://study.163.com/course/courseMain.htm?courseId=190001)
+- 《[Learn to style HTML using CSS](https://developer.mozilla.org/en-US/docs/Learn/CSS)》
+
+## 参考资料
+
+- 《[CSS reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)》
 
 # 背景
 
