@@ -54,7 +54,7 @@ source <source_dir>/etc/bashrc  # 首次运行后，会设置 WM_PROJECT_DIR=<so
 gcc: error: unrecognized command-line option '--showme:link'
 ```
 
-或者要修改部分选项，可以在 `source $WM_PROJECT_DIR/etc/bashrc` 后面“追加 (append)”所要修改的选项（详见 `$WM_PROJECT_DIR/etc/bashrc` 中的注释），常用的有：
+或者要修改部分选项，可以在 `source $WM_PROJECT_DIR/etc/bashrc` 后面*追加 (append)* 所要修改的选项（详见 `$WM_PROJECT_DIR/etc/bashrc` 中的注释），常用的有：
 
 - 【`WM_PROJECT_USER_DIR=<user_dir>`】将默认的 `/home/<user>/OpenFOAM/<user>-<version>`  替换为用户指定的 `<user_dir>`。
 - 【`WM_MPLIB=USERMPI`】用[本地搭建的 MPI 环境](../../programming/mpi/README.md)替换[系统自带的 Open MPI](#open-mpi)。根据 `$WM_PROJECT_DIR/etc/config.sh/mpi` 中的注释，用户需要在加载此项前设置好 `$WM_PROJECT_DIR/wmake/rules/General/mplibUSERMPI ` 文件。
@@ -157,8 +157,8 @@ touch result.foam  # 用 ParaView 查看结果
 演示算例：[Supersonic flow over a forward-facing step](https://www.openfoam.com/documentation/tutorial-guide/3-compressible-flow/3.2-supersonic-flow-over-a-forward-facing-step)
 
 ⚠️ OpenFOAM 的并行，在算法层面基于[区域分解](../../programming/mpi/README.md#decomposition)，在软件层面基于[消息传递](../../programming/mpi/README.md)：
-- 以 Intel(R) Core(TM) i7-4790 CPU 为例，该处理器有 4 个“物理核心 (physical cores)”，利用“超线程 (hyperthreading)”技术最多可以同时运行 8 个“线程 (threads)”。
-- 但 OpenFOAM 未用到<u>超线程</u>，故<u>分块数量</u>（亦即<u>进程数量</u>）不应超过<u>物理核心数量</u>。
+- 以 Intel(R) Core(TM) i7-4790 CPU 为例，该处理器有 `4` 个**物理核心 (physical cores)**，利用**超线程 (hyperthreading)** 技术最多可以同时运行 `8` 个[线程](../../programming/csapp/12_concurrent_programming.md#thread)。
+- 但 OpenFOAM 未用到*超线程*，故*分块数量*（亦即*进程数量*）不应超过*物理核心数量*。
 
 ## 单机
 
@@ -351,8 +351,8 @@ OpenFOAM 所使用的网格，由位于 `constant/polyMesh` 中的一组文件�
 
 - 【`points`】共 `nPoints` 项，第 `i` 项形如 `(3 1 0.05)`，表示第 `i` 号 `Point` 的坐标。
 - 【`faces`】共 `nFaces` 项，第 `i` 项形如 `4(21 53 604 25)`，表示第 `i` 号 `Face` 所含 `Point`s 的数量及编号。
-- 【`owner`】共 `nFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `Face` 的 ***所有者 (owner)***。
-- 【`neighbour`】共 `nInternalFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `InternalFace` 的 ***邻居 (neighbour)***。
+- 【`owner`】共 `nFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `Face` 的**所有者 (owner)**。
+- 【`neighbour`】共 `nInternalFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `InternalFace` 的**邻居 (neighbour)**。
 - 【`boundary`】共 `nPatches` 项，第 `i` 项形如 `movingWall { type patch; nFaces 20; startFace 760; }`，表示第 `i` 号 `Patch` 的名称。
 
 ## `blockMesh`
