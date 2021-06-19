@@ -2,7 +2,7 @@
 title: 系统级读写
 ---
 
-【读写 (Input/Output, I/O)】在主存储器与外部设备之间转移数据。
+【**读写 (Input/Output, I/O)**】在*主存储器*与*外部设备*之间转移数据。
 
 - [Unix I/O](#unix-io)
 - [Standard I/O](#standard-io)
@@ -11,25 +11,25 @@ title: 系统级读写
 
 # 1. Unix I/O<a href id="unix-io"></a>
 
-【文件 (file)】在 Linux 系统中所有读写设备（网卡、硬盘、终端）被统称为文件。
+【**文件 (file)**】在 Linux 系统中所有读写设备（网卡、硬盘、终端）被统称为文件。
 
-- 【描述符 (descriptor)】内核分配的非负（小）整数，其中前三个为系统预留：
+- 【**描述符 (descriptor)**】内核分配的非负（小）整数，其中前三个为系统预留：
   - `0 == STDIN_FILENO` 
   - `1 == STDOUT_FILENO`
   - `2 == STDERR_FILENO`
-- 【文件位置 (file position)】内核维护的非负整数（字节数）
-  - 【查找 (seek)】跳至指定位置
-  - 【文件末尾 (end-of-file, EOF)】读取字节数大于等于剩余字节数所触发的事件
-- 【关闭文件 (close file)】释放数据结构、返还描述符
+- 【**文件位置 (file position)**】内核维护的非负整数（字节数）
+  - 【**查找 (seek)**】跳至指定位置
+  - 【**文件末尾 (end-of-file, EOF)**】*读取字节数*大于等于*剩余字节数*所触发的*事件*
+- 【**关闭文件 (close file)**】释放数据结构、返还描述符
 
 # 2. 文件
 
 ## 常规文件 (regular file)
 
-- 【文本文件 (text file)】只含 ASCII 或 Unicode 字符
+- 【**文本文件 (text file)**】只含 ASCII 或 Unicode 字符
   - 【`\n`】LF (line feed)
   - 【`\r`】CR (carriage return)
-- 【二进制文件 (binary file)】
+- 【**二进制文件 (binary file)**】
 
 ## 目录 (directory)
 
@@ -38,10 +38,10 @@ title: 系统级读写
   - 【`..`】
   - 【`/`】
 - 常用命令
-  - 【`pwd`】**P**rint **W**orking **D**irectory
-  - 【`cd`】**C**hange **D**irectory
-  - 【`mkdir`】**M**a**K**e **DIR**ectory
-  - 【`rmdir`】**R**e**M**ove **DIR**ectory
+  - 【`pwd`】**p**rint **w**orking **d**irectory
+  - 【`cd`】**c**hange **d**irectory
+  - 【`mkdir`】**m**a**k**e **dir**ectory
+  - 【`rmdir`】**r**e**m**ove **dir**ectory
 - 路径
   - 绝对路径
   - 相对路径
@@ -73,9 +73,9 @@ int open(char *filename, int flags, mode_t mode);
 
 ### `mode`
 
-- `S_IRUSR, S_IWUSR, S_IXUSR` can be **R**ead/**W**rite/e**X**ecute by current **US**e**R**
-- `S_IRGRP, S_IWGRP, S_IXGRP` can be **R**ead/**W**rite/e**X**ecute by current **GR**ou**P**
-- `S_IROTH, S_IWOTH, S_IXOTH` can be **R**ead/**W**rite/e**X**ecute by **OTH**ers
+- `S_IRUSR, S_IWUSR, S_IXUSR` can be **r**ead/**w**rite/e**x**ecute by current **us**e**r**
+- `S_IRGRP, S_IWGRP, S_IXGRP` can be **r**ead/**w**rite/e**x**ecute by current **gr**ou**p**
+- `S_IROTH, S_IWOTH, S_IXOTH` can be **r**ead/**w**rite/e**x**ecute by **oth**ers
 
 ```c
 #define DEF_MODE  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH/* rw-r--r-- */
@@ -102,7 +102,7 @@ ssize_t write(int fd, const void *buf, size_t n);
     // Returns: number of bytes written if OK, −1 on error
 ```
 
-【不足计数 (short count)】`read()` 及 `write()` 返回值小于传入的 `n`，可能发生于
+【**不足计数 (short count)**】`read()` 及 `write()` 返回值小于传入的 `n`，可能发生于
 
 - 读到文件末尾（检测到 EOF）
 - 从终端读入文本行
@@ -360,7 +360,7 @@ struct dirent {
 };
 struct dirent *readdir(DIR *dirp);
     /* Returns: pointer to next directory entry if OK,
-       					      NULL if no more entries or error */
+                NULL if no more entries or error */
 ```
 
 ⚠️ 只能通过检查 `errno` 是否被修改，来判断是出错，还是到达列表末尾。
@@ -407,7 +407,7 @@ int dup2(int oldfd, int newfd/* close if already open */);
     /* Returns: nonnegative descriptor if OK, −1 on error */
 ```
 
-`dup2(4, 1)` **DUP**licate `fd[4]` **TO** `fd[1]`，结果如下：
+`dup2(4, 1)` **dup**licate `fd[4]` **to** `fd[1]`，结果如下：
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/io/dupafter.pdf)
 
