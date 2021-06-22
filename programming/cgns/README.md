@@ -545,17 +545,17 @@ cg_units_write(CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter),
 
 ```c
 /* Write first five dimensional exponents of coordinates: */
-float exponents[5] = {0., 1., 0., 0., 0.};
+float dimensional_exponents[5] = {0., 1., 0., 0., 0.};
 cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
         "DataArray_t", coord_id, "end");
-cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
 /* Write first five dimensional exponents of pressure: */
 dimensional_exponents[0] = +1.0;
 dimensional_exponents[1] = -1.0;
 dimensional_exponents[2] = -2.0;
 cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
         "DataArray_t", field_id, "end");
-cg_exponents_write(CGNS_ENUMV(RealSingle), exponents);
+cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
 ```
 
 # 边界条件
