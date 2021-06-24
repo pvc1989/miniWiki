@@ -1,5 +1,4 @@
 ---
-layout: page
 title: 函数
 ---
 
@@ -8,17 +7,18 @@ title: 函数
 # 函数指针
 
 # 可调用对象
-『可调用对象 (callable objects)』是对函数的进一步抽象，包括[普通函数](#普通函数)、[函数指针](#函数指针)、[函数对象](#函数对象)、[lambda](#lambda)。
+**可调用对象 (callable objects)** 是对函数的进一步抽象，包括[普通函数](#普通函数)、[函数指针](#函数指针)、[函数对象](#函数对象)、[lambda](#lambda)。
 
 ## 函数对象
-支持 [`operator()`](./operator#函数调用运算符) 的对象被称为『函数对象 (function object)』或『函子 (functor)』。
+支持 [`operator()`](./operator#函数调用运算符) 的对象被称为**函数对象 (function object)** 或**函子 (functor)**。
 
 ### `std::greater`
 
 标准库以[模板类](./generic#模板类)的形式在头文件 [`<functional>`](https://en.cppreference.com/w/cpp/utility/functional) 中为[算术运算符](./operator.md#算术运算符)、[关系运算符](./operator.md#关系运算符)、逻辑运算符、[位运算符](./operator.md#位运算符)定义了相应的函数对象类型。
 
-`std::sort()` 默认按『升序』排列对象，即用 `operator<` 比较对象。
+`std::sort()` 默认按*升序*排列对象，即用 `operator<` 比较对象。
 如果要按『降序』排列对象，可以为其提供一个相当于 `operator>` 的 `std::greater<T>` 对象：
+
 ```cpp
 #include <cassert>
 #include <algorithm>
@@ -55,7 +55,7 @@ auto min_pq = priority_queue<Point, vector<Point>, decltype(cmp)>(cmp);
 
 ## `std::function`
 
-定义在头文件 [`<functional>`](https://en.cppreference.com/w/cpp/utility/functional) 中的模板类 `std::function` 为各种[可调用对象](#可调用对象)提供了统一的『包装 (wrapper)』：
+定义在头文件 [`<functional>`](https://en.cppreference.com/w/cpp/utility/functional) 中的模板类 `std::function` 为各种[可调用对象](#可调用对象)提供了统一的**包装 (wrapper)**：
 
 ```cpp
 #include <functional>
@@ -85,3 +85,4 @@ int main() {
   binops['%'](10, 5);
 }
 ```
+
