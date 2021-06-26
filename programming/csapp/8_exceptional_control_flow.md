@@ -20,38 +20,38 @@ title: 异常控制流
 |   terminate   |    结束    |
 
 
-- 【控制转移 (control transfer)】『程序计数器 (program counter, PC)』的值由一条指令的地址变为下一条指令的地址的过程。
-- 【控制流 (control flow)】由『控制转移』构成的序列。
-  - 【常规控制流】除依次执行相邻指令的光滑控制流外，只含有由『跳转』『调用』『返回』等指令引起的控制流突变。
-  - 【异常控制流 (exceptional control flow, ECF)】含有由不能被程序内部变量捕捉的（甚至与程序执行无关的）系统状态变化引起的控制流突变。
+- 【**控制转移 (control transfer)**】**程序计数器 (program counter, PC)** 的值由一条指令的地址变为下一条指令的地址的过程。
+- 【**控制流 (control flow)**】由*控制转移*构成的序列。
+  - 【常规控制流】除依次执行相邻指令的光滑控制流外，只含有由*跳转*、*调用*、*返回*等指令引起的控制流突变。
+  - 【**异常控制流 (exceptional control flow, ECF)**】含有由不能被程序内部变量捕捉的（甚至与程序执行无关的）系统状态变化引起的控制流突变。
 
 理解 ECF 有助于
-- 理解重要系统概念（读写、进程、[虚拟内存](./9_virtual_memory.md)）
+- 理解重要系统概念（[读写](./10_system_level_io.md)、[进程](#process)、[虚拟内存](./9_virtual_memory.md)）
 - 理解应用程序与操作系统的交互
 - 编写应用程序（shell、网络服务器）
-- 理解『并发 (concurrency)』
-- 理解『软件异常 (software exceptions)』的工作原理
+- 理解**并发 (concurrency)**
+- 理解**软件异常 (software exceptions)** 的工作原理
 
 # 1. 异常
 
-- 【事件 (event)】处理器状态的某种显著的变化。
-  - 可能由当前指令有关，如：访存发生『页面故障 (page fault)』。
+- 【**事件 (event)**】处理器状态的某种显著的变化。
+  - 可能由当前指令有关，如：访存发生**页面故障 (page fault)**。
   - 也可能与当前指令无关，如：读写请求完成。
-- 【异常 (exception)】由某个『事件』引起的控制流突变。
+- 【**异常 (exception)**】由某个*事件*引起的控制流突变。
 
-当处理器检测到某个事件发生时，它会将 PC 设为存储在『异常表 (exception table)』中的某个地址。
-该地址指向用于响应该事件的某个系统子程序，即『异常处置器 (exception handler)』。
-此机制被称为『间接过程调用 (indirect procedure call)』。
+当处理器检测到某个事件发生时，它会将 PC 设为存储在**异常表 (exception table)** 中的某个地址。
+该地址指向用于响应该事件的某个系统子程序，即**异常处置器 (exception handler)**。
+此机制被称为**间接过程调用 (indirect procedure call)**。
 
 ## 1.1. 异常处置
 
-- 【异常编号 (exception number)】
+- 【**异常编号 (exception number)**】
   - 用于标识异常的非负整数
   - 其中一些由处理器设计者定义，如：浮点错误（除以零）、页面故障、非法访存。
   - 其余由操作系统内核设计者定义，如：系统调用、读写信号。
-- 【异常表 (exception table)】
+- 【**异常表 (exception table)**】
   - 在系统启动时，由操作系统分配并初始化，表头地址存于特定寄存器中。
-  - 其中第 $k$ 项为『事件 $k$』的异常处置器（的地址）。
+  - 其中第 $k$ 项为*事件 $k$* 的异常处置器（的地址）。
 
 |          |       异常（间接过程调用）       |  函数（普通过程调用）  |
 | :------: | :------------------------------: | :--------------------: |
@@ -62,19 +62,19 @@ title: 异常控制流
 
 ## 1.2. 异常分类
 
-- 【异步 (asynchronous)】并非由正在执行的指令引起
-  - 【中断 (interrupt)】处理器收到读写设备发出的信号
-- 【同步 (synchronous)】由正在执行的指令引起
-  - 【陷阱 (trap)】应用程序调用系统子程序
-  - 【故障 (fault)】发生可以被修复的错误
-  - 【终止 (abort)】发生不可被修复的错误
+- 【**异步 (asynchronous)**】并非由正在执行的指令引起
+  - 【**中断 (interrupt)**】处理器收到读写设备发出的信号
+- 【**同步 (synchronous)**】由正在执行的指令引起
+  - 【**陷阱 (trap)**】应用程序调用系统子程序
+  - 【**故障 (fault)**】发生可以被修复的错误
+  - 【**终止 (abort)**】发生不可被修复的错误
 
 ### 中断
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/interrupt.pdf)
 
 1. 执行指令 $I_\text{curr}$ 时，处理器收到读写设备（网络适配器、硬盘控制器、计时器）发来的信号。
-2. 待 $I_\text{curr}$ 执行完后，控制权转移到『中断处置器 (interrupt handler)』，并运行之。
+2. 待 $I_\text{curr}$ 执行完后，控制权转移到**中断处置器 (interrupt handler)**，并运行之。
 4. 返回到紧随 $I_\text{curr}$ 的下一条指令 $I_\text{next}$。
 
 ### 陷阱
@@ -82,23 +82,23 @@ title: 异常控制流
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/trap.pdf)
 
 1. 应用程序通过 `syscall` 指令调用系统子程序。
-2. 控制权转移到『陷阱处置器 (trap handler)』，并运行之。
+2. 控制权转移到**陷阱处置器 (trap handler)**，并运行之。
 3. 返回到紧随 `syscall` 的下一条指令 $I_\text{next}$。
 
 ### 故障
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fault.pdf)
 
-1. 执行指令 $I_\text{curr}$ 时，发生『故障 (fault)』。
-2. 控制权转移到『故障处置器 (fault handler)』，并运行之。
+1. 执行指令 $I_\text{curr}$ 时，发生**故障 (fault)**。
+2. 控制权转移到**故障处置器 (fault handler)**，并运行之。
 3. 若成功排除故障，则返回到引起故障的 $I_\text{curr}$ 并重新执行；否则终止该程序。
 
 ### 终止
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/abort.pdf)
 
-1. 执行指令 $I_\text{curr}$ 时，发生不可修复的『致命错误 (fatal error)』。
-2. 控制权转移到『终止处置器 (abort handler)』，并运行之。
+1. 执行指令 $I_\text{curr}$ 时，发生不可修复的**致命错误 (fatal error)**。
+2. 控制权转移到**终止处置器 (abort handler)**，并运行之。
 3. 返回到 `abort` 以终止当前程序的执行。
 
 ## 1.3. Linux/x86-64 系统的异常
@@ -115,8 +115,8 @@ title: 异常控制流
 
 ### 系统调用<a href id="syscall"></a>
 
-- 【系统级函数 (system-level functions)】形如函数的系统调用（或其封装）。
-- 【陷阱指令 (trap instruction)】名为 `syscall` 的 x86-64 指令。
+- 【**系统级函数 (system-level functions)**】形如函数的系统调用（或其封装）。
+- 【**陷阱指令 (trap instruction)**】名为 `syscall` 的 x86-64 指令。
   - 寄存器 `rax` 存储系统调用编号。
   - 寄存器 `rdi`, `rsi`, `rdx`, `r10`, `r8`, `r9` 依次存储第一到六个实参。
 
@@ -139,10 +139,10 @@ title: 异常控制流
 |  61  | `wait4`  |   等待某个进程终止   |
 |  62  |  `kill`  |  向某个进程发送信号  |
 
-# 2. 进程
+# 2. 进程<a href id="process"></a>
 
-- 【进程 (process)】运行中的程序实例。
-- 【上下文 (context)】程序正确运行所需的状态，包括
+- 【**进程 (process)**】运行中的程序实例。
+- 【**上下文 (context)**】程序正确运行所需的状态，包括
   - 内存中的代码及数据
   - 运行期栈
   - 通用寄存器的内容
@@ -152,44 +152,44 @@ title: 异常控制流
 
 ## 2.1. 逻辑控制流
 
-『逻辑控制流 (logical control flow)』，简称『逻辑流』，是指由程序计数器的值构成的序列。
+【**逻辑控制流 (logical control flow)**】简称*逻辑流*，是指由程序计数器的值构成的序列。
 
-该机制使得当前程序看上去像是独占了处理器。
+该机制使得当前程序看上去像是*独占了处理器*。
 
 ## 2.2. 并发流
 
-【并发流 (concurrent flow)】运行时间有重叠的多个逻辑流。
-- 【多任务 (multitasking)】多个进程轮流执行片段，又名『时间分割 (time slicing)』。
-- 【并行流 (parallel flow)】运行在多个核心或计算机上的并发流。
+【**并发流 (concurrent flow)**】运行时间有重叠的多个逻辑流。
+- 【**多任务 (multitasking)**】多个进程轮流执行片段，又名**时间分割 (time slicing)**。
+- 【**并行流 (parallel flow)**】运行在多个核心或计算机上的并发流。
 
 ## 2.3. 私有地址空间
 
-- 【地址空间 (address space)】由 $0$ 到 $(2^n-1)$ 共 $2^n$ 个地址构成的集合。
-- 【私有 (private)】每个进程只能读写自己的地址空间。
+- 【**地址空间 (address space)**】由 $0$ 到 $(2^n-1)$ 共 $2^n$ 个地址构成的集合。
+- 【**私有 (private)**】每个进程只能读写自己的地址空间。
 - 不同进程的私有地址空间，有相同的组织（结构）。
 
-该机制使得当前程序看上去像是独占了存储器。
+该机制使得当前程序看上去像是*独占了存储器*。
 
 ## 2.4. 用户与内核模式
 
-- 【模式位 (mode bit)】存于特定寄存器中，表示当前进程的权限。
-- 【内核模式 (kernel mode)】模式位非空，可以执行任何指令、访问任何地址。
-- 【用户模式 (user mode)】模式位为空，只能执行部分指令、访问部分地址。
+- 【**模式位 (mode bit)**】存于特定寄存器中，表示当前进程的权限。
+- 【**内核模式 (kernel mode)**】模式位非空，可以执行任何指令、访问任何地址。
+- 【**用户模式 (user mode)**】模式位为空，只能执行部分指令、访问部分地址。
 
 应用程序的进程，启动时处于用户模式；要变为内核模式，只能通过异常。
 
 Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据结构的内容，如
 
 - `/proc/cpuinfo` 表示处理器信息
-- `/proc/PID/maps` 表示某个进程的内存映射
+- `/proc/PID/maps` 表示某个进程的[内存映射](./9_virtual_memory.md#memory-map)
 
 ## 2.5. 上下文切换
 
-【抢占 (preempt)】暂停
+【**抢占 (preempt)**】暂停
 
-【调度 (scheduling)】操作系统内核决定是否暂停当前进程、恢复之前被抢占的进程。
+【**调度 (scheduling)**】操作系统内核决定是否暂停当前进程、恢复之前被抢占的进程。
 
-【上下文切换 (context switch)】
+【**上下文切换 (context switch)**】
 
 1. 保存当前进程的上下文
 2. 恢复之前被抢占的进程的上下文
@@ -220,7 +220,7 @@ if ((pid = fork()) < 0) {
 
 其中 `strerror(errno)` 返回 `errno` 的字符串描述。
 
-利用『错误报告函数 (error-reporting function)』
+利用**错误报告函数 (error-reporting function)**
 
 ```c
 void unix_error(char *msg) {  /* Unix-style error */
@@ -236,7 +236,7 @@ if ((pid = fork()) < 0)
   unix_error("fork error");
 ```
 
-更进一步，本书作者提供了一组『错误处置封装 (error-handling wrapper)』。
+更进一步，本书作者提供了一组**错误处置封装 (error-handling wrapper)**。
 其中每个封装的形参类型与相应的原始函数一致，只不过将函数名的首字母改为大写：
 
 ```c
@@ -260,7 +260,7 @@ pid = Fork();
 
 ## 4.1. 获取 PID
 
-每个进程都有一个唯一的由正整数表示的『进程身份 (process ID, PID)』。
+每个进程都有一个唯一的由正整数表示的**进程身份 (process ID, PID)**。
 
 ```c
 #include <sys/types.h>
@@ -273,7 +273,7 @@ pid_t getppid(void);  // parent's PID
 
 ## 4.2. 创建、结束进程<a href id="fork"></a>
 
-进程可能处于『运行 (running)』、『暂停 (stopped)』、『结束 (terminated)』三种状态之一。
+进程可能处于**运行 (running)**、**暂停 (stopped)**、**结束 (terminated)** 三种状态之一。
 
 结束进程：
 
@@ -282,7 +282,7 @@ pid_t getppid(void);  // parent's PID
 void exit(int status);
 ```
 
-在『亲进程 (parent process)』中创建『子进程 (child process)』：
+在**亲进程 (parent process)** 中创建**子进程 (child process)**：
 
 ```c
 #include <sys/types.h>
@@ -294,11 +294,11 @@ pid_t fork(void);
 
 函数 `fork()` 有两个返回值：在子进程中返回 `0`，在亲进程中返回子进程的 PID。
 
-【进程图 (process graph)】
+【**进程图 (process graph)**】
 
-- 每个结点表示一条语句，结点之间的依赖关系 $a\to b$ 表示『语句 $a$ 在语句 $b$ 之前运行』。
-- 构成 DAG，表示（有从属关系的）不同进程的语句之间的偏序关系。
-- 实际执行顺序可能是所有结点的任何有效的『拓扑排序 (topological sort)』。
+- 每个**结点 (vertex)** 表示一条语句，结点之间的依赖关系 $a\to b$ 表示*语句 $a$ 在语句 $b$ 之前运行*。
+- 构成 **DAG (Directed Acyclic Graph)**，表示（有从属关系的）不同进程的语句之间的偏序关系。
+- 实际执行顺序可能是所有结点的任何有效的**拓扑排序 (topological sort)**。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fork2pgraph.pdf)
 
@@ -309,7 +309,7 @@ int main() { Fork(); Fork(); printf("hello\n"); exit(0); }
 
 ## 4.3. 收割子进程
 
-【僵尸 (zombie)】已『结束 (terminated)』但未『被收割 (reaped)』的进程。<a href id="zombie"></a>
+【**僵尸 (zombie)**】已**结束 (terminated)** 但未被**收割 (reap)** 的进程。<a href id="zombie"></a>
 
 `init` 的 PID 为 `1`，是所有进程的祖先。它负责在亲进程结束时，收割其僵尸子进程。
 
@@ -321,7 +321,7 @@ int main() { Fork(); Fork(); printf("hello\n"); exit(0); }
 pid_t waitpid(pid_t pid, int *statusp, int options);
 ```
 
-默认（即 `options == 0` 时）行为：暂停当前进程，直到『等待集 (wait set)』中的某个子进程结束，返回该子进程的 PID。
+默认（即 `options == 0` 时）行为：暂停当前进程，直到**等待集 (wait set)** 中的某个子进程结束，返回该子进程的 PID。
 
 ### 确定等待集的成员
 
@@ -330,22 +330,22 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 
 ### 修改默认行为
 
-`options` 可设为以下值或它们的『位或 (bitwise OR)』值：
+`options` 可设为以下值或它们的**位或 (bitwise OR)** 值：
 
 - `WNOHANG` 立即返回（若被等待的子进程未结束，则返回 `0`）。
-- `WUNTRACED` 等待某个子进程结束或暂停。
-- `WCONTINUED` 等待某个子进程结束，或某个暂停的子进程被 `SIGCONT` 信号恢复。
+- `WUNTRACED` 等待某个子进程*结束*或*暂停*。
+- `WCONTINUED` 等待某个子进程*结束*，或某个暂停的子进程被 `SIGCONT` 信号*恢复*。
 
 ### 检查被收割子进程的退出状态
 
 若 `statusp != NULL`，则会向其写入 `status` 的值。
-`status` 的值不应直接使用，而应当用以下『宏 (macro)』解读之：
+`status` 的值不应直接使用，而应当用以下**宏 (macro)** 解读：
 
 - `WIFEXITED(status)` 返回：被等待子进程是否正常结束
   - `WEXITSTATUS(status)` 返回：被等待子进程的退出状态
-- `WIFSIGNALED(status)` 返回：被等待子进程是否因信号而结束
+- `WIFSIGNALED(status)` 返回：被等待子进程是否因[信号](#signal)而*结束*
   - `WTERMSIG(status)` 返回：导致被等待子进程结束的[信号](#signal)
-- `WIFSTOPPED(status)` 返回：被等待子进程是否因信号而暂停
+- `WIFSTOPPED(status)` 返回：被等待子进程是否因[信号](#signal)而*暂停*
   - `WSTOPSIG(status)` 返回：导致被等待子进程暂停的[信号](#signal)
 
 更多宏可用 `man waitpid` 命令查询。
@@ -456,7 +456,7 @@ int execve(const char *filename, const char *argv[], const char *envp[]);
 
 - `argv` 为命令行参数列表，`argv[0]` 为可执行文件的名称（可以含路径）。
 - `envp` 为环境变量列表，每个元素具有 `name=value` 的形式。
-- 全局变量 `environ` 指向 `envp[0]` ；因 `envp` 紧跟在 `argv` 后面，故 `&argv[argc] + 8 == envp[0]` 。
+- 全局变量 `environ` 指向 `envp[0]`，又因 `envp` 紧跟在 `argv` 后面，故 `&argv[argc] + 8 == &envp[0] == environ`。
 
 
 环境变量操纵函数：
@@ -472,10 +472,10 @@ void unsetenv(const char *name);
 
 【shell】交互式的命令行终端，代表用户运行其他程序。
 
-- `sh` = (Bourne) SHell
-- `csh` = (Berkeley UNIX) C SHell
-- `bash` = (GNU) Bourne-Again SHell
-- `zsh` = Z SHell
+- `sh` = (Bourne) **SH**ell
+- `csh` = (Berkeley UNIX) **C** **SH**ell
+- `bash` = (GNU) **B**ourne-**A**gain **SH**ell
+- `zsh` = **Z** **SH**ell
 
 Shell 运行其他程序分两步完成：
 1. 读取用户输入的命令行。
@@ -483,7 +483,7 @@ Shell 运行其他程序分两步完成：
    - 若为内置命令，则在当前进程内运行之。
    - 若非内置命令，则先从 shell 进程中 `fork` 出一个子进程，再在其中用 `execve` 运行 `argv[0]` 所指向的程序。
 
-若命令行以 `&` 结尾，则在『后台 (background)』运行（shell 不等其结束）；否则，在『前台 (foreground)』运行（shell 等待其结束或暂停）。
+若命令行以 `&` 结尾，则在**后台 (background)** 运行（shell 不等其结束）；否则，在**前台 (foreground)** 运行（shell 等待其结束或暂停）。
 
 ### `main`
 
@@ -587,49 +587,49 @@ int parseline(char *buf, char **argv) {
 }
 ```
 
-# 5. 信号
+# 5. 信号<a href id="signal"></a>
 
-【信号 (signal)】<a href id="signal"></a>
+【**信号 (signal)**】
 
 - 是由操作系统提供的一种软件形式的 ECF。
-- 是由内核向进程发送的一条短『消息 (message)』，以告知其系统内发生了某种『事件 (event)』。
+- 是由内核向进程发送的一条**消息 (message)**，以告知其系统内发生了某种**事件 (event)**。
 
 在 Linux 系统下，可以用 `man 7 signal` 命令查阅完整信号列表，其中最常用的信号如下：
 
-| 编号 |   名称    |             含义              |
-| :--: | :-------: | :---------------------------: |
-|  2   | `SIGINT`  |    INTerrupt from keyboard    |
-|  3   | `SIGQUIT` |      QUIT from keyboard       |
-|  4   | `SIGILL`  |      ILLegal instruction      |
-|  6   | `SIGABRT` |  ABoRT signal from `abort()`  |
-|  8   | `SIGFPE`  |   Floating-Point Exception    |
-|  9   | `SIGKILL` |         KILL program          |
-|  11  | `SIGSEGV` |      SEGmentation fault       |
-|  14  | `SIGALRM` |             ALaRM             |
-|  17  | `SIGCHLD` |  CHiLD terminated or stopped  |
-|  18  | `SIGCONT` |      CONTinue if stopped      |
-|  19  | `SIGSTOP` | STOP signal not from terminal |
-|  20  | `SIGTSTP` |   SToP signal from Terminal   |
+| 编号 |   名称    |                 含义                  |
+| :--: | :-------: | :-----------------------------------: |
+|  2   | `SIGINT`  |      **INT**errupt from keyboard      |
+|  3   | `SIGQUIT` |        **QUIT** from keyboard         |
+|  4   | `SIGILL`  |        **ILL**egal instruction        |
+|  6   | `SIGABRT` |  **AB**o**RT** signal from `abort()`  |
+|  8   | `SIGFPE`  | **F**loating-**P**oint **E**xception  |
+|  9   | `SIGKILL` |           **KILL** program            |
+|  11  | `SIGSEGV` |        **SEG**mentation fault         |
+|  14  | `SIGALRM` |             **AL**a**RM**             |
+|  17  | `SIGCHLD` |  **CH**i**LD** terminated or stopped  |
+|  18  | `SIGCONT` |        **CONT**inue if stopped        |
+|  19  | `SIGSTOP` |   **STOP** signal not from terminal   |
+|  20  | `SIGTSTP` | **ST**o**P** signal from **T**erminal |
 
 ⚠️ `SIGKILL` 既不能被捕获，又不能被忽略，可用于强制结束进程。
 
 ## 5.1. 信号术语
 
-- 【发送 (send)】内核在目标进程的上下文中修改某个位。
+- 【**发送 (send)**】内核在目标进程的上下文中修改某个位。
   - 可能的原因：系统事件、调用 `kill()` 函数。
-- 【接收 (receive)】目标进程收到信号后对其进行『处置 (handle)』。
-  - 可能的方式：『忽略 (ignore)』、『结束 (terminate)』、『捕获 (catch)』
-- 【待决的 (pending)】已被发送、尚未被接收的信号。
-  - 所有信号的待决状态，由名为 `pending` 的『位向量 (bit vector)』表示。
+- 【**接收 (receive)**】目标进程收到信号后对其进行**处置 (handle)**。
+  - 可能的方式：**忽略 (ignore)**、**结束 (terminate)**、**捕获 (catch)**
+- 【**待决的 (pending)**】已被发送、尚未被接收的信号。
+  - 所有信号的待决状态，由名为 `pending` 的**位向量 (bit vector)** 表示。
   - 同类信号由 `pending` 中的同一个位表示，故同类信号至多有一个待决。
-- 【屏蔽的 (blocked)】可被发送、但不被接收的信号。
-  - 所有信号的屏蔽状态，由名为 `blocked` 的『位向量 (bit vector)』表示。
+- 【**屏蔽的 (blocked)**】可被发送、但不被接收的信号。
+  - 所有信号的屏蔽状态，由名为 `blocked` 的**位向量 (bit vector)** 表示。
 
 ## 5.2. 发送信号
 
 ### 进程组
 
-每个进程归属于且仅归属于一个『进程组 (process group)』，后者由一个唯一的正整数『进程组身份 (group ID, GID)』来标识。
+每个进程归属于且仅归属于一个**进程组 (process group)**，后者由一个名为**组身份 (group ID, GID)** 的正整数来标识。
 
 进程被创建时，继承其 parent 的 GID。
 
@@ -651,11 +651,11 @@ kill -signal_number pid ...  # e.g. /bin/kill -9    15213
 
 ### 键盘组合键
 
-【任务 (job)】执行某一行命令所产生的一个或多个进程。
+【**任务 (job)**】执行某一行命令所产生的一个或多个进程。
 
-- Shell 为每个任务分配独立的正整数『任务身份 (job ID, JID)』，在命令行中以 `%` 作为前缀。
-- 【前台 (foreground)】一个 shell 至多同时运行一个前台任务。
-- 【后台 (background)】一个 shell 可以同时运行多个后台任务。
+- Shell 为每个任务分配独立的正整数**任务身份 (job ID, JID)**，在命令行中以 `%` 作为前缀。
+- 【**前台 (foreground)**】一个 shell 至多同时运行一个前台任务。
+- 【**后台 (background)**】一个 shell 可以同时运行多个后台任务。
 
 组合键
 
@@ -678,7 +678,7 @@ int kill(pid_t pid, int sig/* 可以用 SIGKILL 等信号名称 */);
 
 ### `alarm` 函数
 
-【闹钟 (alarm)】委托内核在若干秒后向当前进程发送 `SIGALARM` 信号。
+委托内核在若干秒后向当前进程发送 `SIGALARM` 信号。
 
 ```c
 #include <unistd.h>
@@ -699,7 +699,7 @@ unsigned int alarm(unsigned int secs);
 各种信号都有默认处置器，完成以下行为之一：
 
 - 结束进程。
-- 结束进程，并『倾倒核心 (dump core)』。
+- 结束进程，并**倾倒核心 (dump core)**。
 - 暂停进程，直到 `SIGCONT` 信号到达。
 - 忽略信号。
 
@@ -711,9 +711,9 @@ typedef void (*sighandler_t)(int);
 sighandler_t signal(int signum, sighandler_t handler);
 ```
 
-- 【安装 (install)】设置处置器。
-- 【捕获 (catch)】调用处置器。
-- 【处置 (handle)】运行处置器（可以嵌套）。
+- 【**安装 (install)**】设置处置器。
+- 【**捕获 (catch)**】调用处置器。
+- 【**处置 (handle)**】运行处置器（可以嵌套）。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/nestedhandlers.pdf)
 
@@ -745,8 +745,8 @@ int sigismember(const sigset_t *set, int signum);
 
 ### 安全性
 
-0. 处置器尽可能简单（只修改全局『旗标 (flag)』）
-1. 在处置器内只调用『异步信号安全 (async-signal-safe)』的函数。
+0. 处置器尽可能简单（只修改全局**标签 (flag)**）
+1. 在处置器内只调用**异步信号安全的 (async-signal-safe)** 函数。
    - 只访问局部变量，或不可能被其他信号处置器中断。
    - 只能用 `write(file_id, char_ptr, size)` 写出。
    - `csapp.h` 提供了一组基于 `write()` 的封装：<a href id="signal-io"></a>
@@ -757,8 +757,8 @@ int sigismember(const sigset_t *set, int signum);
 3. 访问处置器与主程序（或其他处置器）共享的全局数据结构时，屏蔽所有信号。
 4. 用关键词 `volatile` 声明可能被改变的全局变量。
    - 迫使对该变量的每次访问都需要访问内存，从而避免编译器将其缓存于寄存器内。
-5. 用类型 `sio_atomic_t` 声明全局旗标（第 0 条）。
-   - 【原子性 (atomicity)】读写只需一条指令，不会被其他信号中断，故不必屏蔽信号（第 3 条）。
+5. 用类型 `sio_atomic_t` 声明全局标签（第 0 条）。
+   - 【**原子性 (atomicity)**】读写只需一条指令，不会被其他信号中断，故不必屏蔽信号（第 3 条）。
 
 ### 正确性
 
@@ -805,7 +805,7 @@ handler_t *Signal(int signum, handler_t *handler) {
 
 ## 5.6. 同步并发流以避免竞争
 
-【竞争 (race)】处置器与主函数读写同一变量的顺序不确定。
+【**竞争 (race)**】处置器与主函数读写同一变量的顺序不确定。
 
 ### 原始版本
 
@@ -938,7 +938,7 @@ int Sigsuspend(const sigset_t *set) {
 }
 ```
 
-其效果相当于以下三条语句的『原子化』版本：
+其效果相当于以下三条语句的*原子化* 版本：
 
 ```c
 Sigprocmask(SIG_BLOCK, &prev, &mask);
@@ -1001,7 +1001,6 @@ void bar() {
     throw;
   }
 }
-  
 ```
 
 # 7. 进程管理工具
@@ -1040,7 +1039,7 @@ top -o [cpu|mem|pid] # 按 CPU（默认）、内存、PID 排序
 
 ## `pmap`
 
-打印某进程的[存储映射](./9_virtual_memory.md#memory-map)。
+打印某进程的[内存映射](./9_virtual_memory.md#memory-map)。
 
 ## `/proc`
 
