@@ -7,7 +7,9 @@ title: 树 (Trees)
 - MIT
   - Text: Sect-B.5  Trees
 
-# 二叉搜索树
+# 二叉树
+
+## 二叉搜索树
 
 - VisuAlgo
   - [Binary Search Tree](https://visualgo.net/en/bst)
@@ -16,6 +18,16 @@ title: 树 (Trees)
   - Video: [Part-1/Week-4  Elementary Symbol Tables](https://www.coursera.org/learn/algorithms-part1/supplement/2kwpU/lecture-slides)
 - MIT
   - Text: Chap-12  Binary Search Trees
+
+## 二叉索引树
+
+- VisuAlgo
+  - [Fenwick Tree](https://visualgo.net/en/fenwicktree)
+- Hint
+  - `index & -index` sets all bits of `index` to `0`, except the right most nonzero one.
+- LeetCode
+  - [Range Sum Query - Mutable](./leetcode/307.range-sum-query-mutable.cpp)
+  - [Count of Smaller Numbers After Self](./leetcode/315.count-of-smaller-numbers-after-self.cpp)
 
 # 平衡搜索树
 
@@ -44,3 +56,4 @@ title: 树 (Trees)
   - Programming Assignment: [Part-1/Week-5  Kd-Trees](https://www.coursera.org/learn/algorithms-part1/programming/wuF0a/kd-trees)
 
 ## 区间树
+
