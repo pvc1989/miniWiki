@@ -4,14 +4,14 @@ title: 链接
 
 # 1. 编译器驱动器
 
-【编译器驱动器 (compiler driver)】`gcc -v -Og -o prog main.c sum.c`
+**编译器驱动器 (compiler driver)**：`gcc -v -Og -o prog main.c sum.c`
 
-- 【预处理器 (preprocessor)】`cpp [other args] main.c /tmp/main.i`
-- 【编译器 (compiler)】`cc1 /tmp/main.i -Og [other args] -o /tmp/main.s`
-- 【汇编器 (assembler)】`as [other args] -o /tmp/main.o /tmp/main.s`
-- 【链接器 (linker)】`ld -o prog [system object files and args] /tmp/main.o /tmp/sum.o`
+- **预处理器 (preprocessor)**：`cpp [other args] main.c /tmp/main.i`
+- **编译器 (compiler)**：`cc1 /tmp/main.i -Og [other args] -o /tmp/main.s`
+- **汇编器 (assembler)**：`as [other args] -o /tmp/main.o /tmp/main.s`
+- **链接器 (linker)**：`ld -o prog [system object files and args] /tmp/main.o /tmp/sum.o`
 
-【加载器 (loader)】`./prog`
+**加载器 (loader)**：`./prog`
 
 - 先将可执行文件中的代码及数据复制到内存中。
 - 再将控制权转移到该程序 `main()` 头部。
@@ -20,51 +20,51 @@ title: 链接
 
 # 2. 静态链接
 
-【静态链接器 (static linker)】
+**静态链接器 (static linker)**：
 
-- 【符号解析 (symbol resolution)】
-  - 【符号】函数、全局变量、静态变量
-  - 【解析】为每个符号“引用 (symbol reference)”关联唯一的符号“定义 (definition)”
-- 【[搬迁 (relocation)](#relocate)】为每个符号定义关联唯一的内存地址，将所有对该符号的引用修改为此地址。
+- **符号解析 (symbol resolution)**：
+  - **符号**：函数、全局变量、静态变量
+  - **解析**：为每个符号**引用 (reference)** 关联唯一的符号**定义 (definition)**
+- **[搬迁 (relocation)](#relocate)**：为每个符号*定义*关联唯一的内存地址，将所有对该符号的*引用*修改为此地址。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/staticlibs.pdf)
 
 # 3. 目标文件
 
-【目标文件 (object file)】存储在硬盘上的“目标模块 (object module)”，后者泛指一段字节序列。
+**目标文件 (object file)**：存储在硬盘上的**目标模块 (object module)**，后者泛指一段字节序列。
 
-- 【[可搬迁的 (relocatable)](#relocatable)】
-- 【[可执行的 (executable)](#executable)】
-- 【[共享的 (shared)](#pic)】
+- **[可搬迁的 (relocatable)](#relocatable)**：
+- **[可执行的 (executable)](#executable)**：
+- **[共享的 (shared)](#pic)**：
 
-【目标文件格式】
+**目标文件格式**：
 
-- 【Unix】`a.out` format
-- 【Windows】Portable Executable (PE) format
-- 【Mac OS X】Mach-O format
-- 【现代 x86-64 Linux/Unix】Executable and Linkable Format (ELF)
+- **Unix**：`a.out` format
+- **Windows**：PE (Portable Executable) format
+- **macOS**：Mach-O format
+- **x86-64 Linux**：ELF (Executable and Linkable Format)
 
 # 4. 可搬迁目标文件<a href id="relocatable"></a>
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/elfrelo.pdf)
 
-- 【ELF header】词长 (word size)、字节顺序 (byte ordering)、ELF header 长度、目标文件类型、机器类型、section header table 的位置及所含 sections 的数量。
-- 【`.text`】可执行程序的机器码
-- 【`.rodata`】只读数据（字符串常量、`switch` 跳转表）
-- 【`.data`】初值非零的全局变量
-- 【`.bss`】未初始化的静态变量或初值为零的全局或静态变量（不占实际空间）
+- **ELF header**：词长 (word size)、字节顺序 (byte ordering)、ELF header 长度、目标文件类型、机器类型、section header table 的位置及所含 sections 的数量。
+- **`.text`**：可执行程序的机器码
+- **`.rodata`**：只读数据（字符串常量、`switch` 跳转表）
+- **`.data`**：初值非零的全局变量
+- **`.bss`**：未初始化的静态变量或初值为零的全局或静态变量（不占实际空间）
   - Block Started by Symbol
   - Better Save Space
-- 【`.symtab`】函数、全局变量的符号列表，不含局部变量
-- 【`.rel.text`】`.text` 中有待链接器修改的位置（外部函数、全局变量）的列表
-- 【`.rel.data`】初值（如：外部函数或全局变量的地址）待定的全局变量
-- 【`.debug`】调试信息（编译时开启 `-g` 才有）
-- 【`.line`】源代码位置与指令位置的映射（编译时开启 `-g` 才有）
-- 【`.strtab`】用于 `.symtab` 及 `.debug` 中符号表的字符串列表
-- 【section header table】除以上 sections 外，（可搬迁的目标文件）还有三个预留 sections：
-  - 【`ABS`】本地全局符号
-  - 【`UNDEF`】外部全局符号
-  - 【`COMMON`】未初始化的全局变量（区别于 `.bss`），即[弱符号](#weak-symbol)
+- **`.symtab`**：函数、全局变量的符号列表，不含局部变量
+- **`.rel.text`**：`.text` 中有待链接器修改的位置（外部函数、全局变量）的列表
+- **`.rel.data`**：初值（如：外部函数或全局变量的地址）待定的全局变量
+- **`.debug`**：调试信息（编译时开启 `-g` 才有）
+- **`.line`**：源代码位置与指令位置的映射（编译时开启 `-g` 才有）
+- **`.strtab`**：用于 `.symtab` 及 `.debug` 中符号表的字符串列表
+- **section header table**：除以上 sections 外，（可搬迁的目标文件）还有三个预留 sections：
+  - **`ABS`**：本地全局符号
+  - **`UNDEF`**：外部全局符号
+  - **`COMMON`**：未初始化的全局变量（区别于 `.bss`），即[弱符号](#weak-symbol)
 
 # 5. 符号、符号列表
 
@@ -103,10 +103,10 @@ typedef struct {
 
 ## 6.1. 同名符号的解析
 
-- 【强符号 (strong symbol)】函数、有初值的全局变量
-- 【弱符号 (weak symbol)】无初值的全局变量<a href id="weak-symbol"></a>
+- **强符号 (strong symbol)**：函数、有初值的全局变量
+- **弱符号 (weak symbol)**：无初值的全局变量<a href id="weak-symbol"></a>
 
-⚠️ C++ 中类的重载方法有不同的符号名，例如 `Foo::bar(int, long)` 的符号名为 `bar__3Fooil`。
+⚠️ C++ 中 `class` 的重载方法有不同的符号名，例如 `Foo::bar(int, long)` 的符号名为 `bar__3Fooil`。
 
 链接规则：
 
@@ -116,9 +116,9 @@ typedef struct {
 
 ## 6.2. 静态库的链接
 
-【静态库 (static library)】打包一组目标文件所得的输出文件。
+**静态库 (static library)**：打包一组目标文件所得的输出文件。
 
-- 【Linux】文件名后缀为 `.a`，意为 **a**rchive
+- **Linux**：文件名后缀为 `.a`，意为 **a**rchive
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/link/staticlibs.pdf)
 
@@ -132,7 +132,7 @@ gcc -static -o prog2c main2.o ./libvector.a
 gcc -static -o prog2c main2.o -L. -lvector
 ```
 
-其中 `-static` 表示生成“完全链接的 (fully linked)”可执行文件。
+其中 `-static` 表示生成**完全链接的 (fully linked)** 可执行文件，该文件在当前文件系统的任何位置都能运行。
 
 ## 6.3. 用静态库解析引用
 
@@ -153,7 +153,7 @@ gcc foo.c        liby.a libx.a # Error: g undefined
 
 # 7. 搬迁<a href id="relocate"></a>
 
-“搬迁 (relocation)”分两步：
+**搬迁 (relocation)** 分两步：
 
 1. 搬迁字段及符号定义：将分散在各目标文件中的同类字段合并，并计算所有符号的运行期地址。
 2. 搬迁符号引用：将所有符号引用替换为运行期地址。
@@ -173,8 +173,8 @@ typedef struct {
 
 其中 `type` 多达 32 种，常用的有：
 
-- 【`R_X86_64_PC32`】用相对于 [PC](./3_machine_level_programming.md#PC) 的 32-bit 地址搬迁
-- 【`R_X86_64_32`】用 32-bit 绝对地址搬迁
+- **`R_X86_64_PC32`**：用相对于 [PC](./3_machine_level_programming.md#PC) 的 32-bit 地址搬迁
+- **`R_X86_64_32`**：用 32-bit 绝对地址搬迁
 
 ⚠️ 以上两种 `type` 只支持不超过 2 GB 的可执行文件。
 
@@ -207,7 +207,7 @@ foreach section s {
 
 # 9. 加载可执行目标文件
 
-【加载 (loading)】分以下几步：
+**加载 (loading)**：分以下几步：
 
 1. Shell 用 [`fork()`](./8_exceptional_control_flow.md#fork) 创建子进程，在其中用 [`execve()`](./8_exceptional_control_flow.md#execve) 启动加载器。
 2. 加载器从硬盘读取可执行文件，创建下图所示[虚拟内存](./9_virtual_memory.md)空间（只分配空间，不读取数据）。
@@ -230,10 +230,10 @@ gcc -shared -fpic -o libvector.so addvec.c multvec.c
 gcc -o prog2l main2.c ./libvector.so
 ```
 
-- 【`-fpic`】生成[位置无关代码](#pic)
-- 【`-shared`】生成共享的目标文件
+- **`-fpic`**：生成[位置无关代码](#pic)
+- **`-shared`**：生成共享的目标文件
 
-【基本思想】
+**基本思想**：
 
 - 创建可执行文件时，静态地完成部分链接（搬迁条目、符号列表）。
 - 启动（加载）程序时，动态地完成剩余链接（搬迁代码、数据）。
@@ -258,8 +258,8 @@ const char *dlerror(void);
 
 - 以 `dlopen()` 加载的共享库中的外部符号，用之前以 `RTLD_GLOBAL` 加载的库进行解析。
 - 传给 `dlsym()` 的第一个实参可以是以下两个预设的 pseudo-handles 之一
-  - 【`RTLD_DEFAULT`】按默认库搜索顺序，找到 `symbol` 第一次出现的位置。
-  - 【`RTLD_NEXT`】在当前库之后按搜索顺序，找到 `symbol` 下一次出现的位置。
+  - **`RTLD_DEFAULT`**：按默认库搜索顺序，找到 `symbol` 第一次出现的位置。
+  - **`RTLD_NEXT`**：在当前库之后按搜索顺序，找到 `symbol` 下一次出现的位置。
 - 若编译可执行文件时开启 `-rdynamic`，则可执行文件中的全局符号也可用于符号解析。
 
 ```c
@@ -305,13 +305,14 @@ int main() {
 
 # 12. 位置无关代码<a href id="pic"></a>
 
-【位置无关代码 (Position-Independent Code, PIC)】为节约[物理内存](./9_virtual_memory.md#memory-map)，共享库中的 `.text` 字段应当能够被所有使用它的进程共享，故代码段中不能显式含有全局符号的地址。
+**位置无关代码 (Position-Independent Code, PIC)**：为节约[物理内存](./9_virtual_memory.md#memory-map)，共享库中的 `.text` 字段应当能够被所有使用它的进程共享，故代码段中不能显式含有全局符号的地址。
 
-- 用 `gcc` 生成共享库时，必须开启 `-shared -fpic` 选项。
+- 用 `gcc` 生成 PIC 时，必须开启 `-fpic` 选项。
+- 用 `gcc` 生成共享库时，必须开启 `-shared` 选项。
 
 ## PIC 数据访问
 
-无论目标模块被加载到何处，其（当前进程私有的）数据段与（所有进程共享的）代码段之间的距离是一个常量。利用此性质，编译器在该模块的数据段开头创建一个 GOT (Global Offset Table)：
+无论目标模块被加载到何处，其（当前进程私有的）数据段与（所有进程共享的）代码段之间的距离是一个常量。利用此性质，编译器在该模块的数据段开头创建一个 **GOT (Global Offset Table)**：
 
 - 表中各项长 8 字节，分别对应一个全局数据（如 `GOT[3]` 对应（可能定义在其他模块中的）全局变量 `addcnt`）。
 - 加载时，动态链接器会将 `GOT[i]` 修改为其对应的全局数据的绝对地址（如 `GOT[3]` 被修改为 `&addcnt`）。
@@ -323,16 +324,16 @@ int main() {
 
 若某个目标模块调用了共享库里的函数，则该模块同时拥有以下两个列表：
 
-- 【PLT (Procedure Linkage Table)】位于代码段，每项长 16 字节。
+- **PLT (Procedure Linkage Table)**：位于代码段，每项长 16 字节。
   - `PLT[0]` 为调用动态链接器的指令。
   - `PLT[1]` 为调用 `__libc_start_main()` 的指令。
   - `PLT[2]` 起为借助 `GOT[]` 跳转到用户代码的指令。
-- 【GOT (Global Offset Table)】位于数据段，每项长 8 字节。
+- **GOT (Global Offset Table)**：位于数据段，每项长 8 字节。
   - `GOT[0], GOT[1]` 用于解析被调函数的地址。
   - `GOT[2]` 为动态链接器的入口（位于 `ld-linux.so` 中）。
   - `GOT[4]` 起为被调函数的地址，与 `PLT[]` 的成员一一对应。
 
-【lazy binding】将函数地址绑定延迟到首次调用该函数时：
+**lazy binding**：将函数地址绑定延迟到首次调用该函数时：
 
 1. 首次调用前，`GOT[4]` 指向 `PLT[2]` 的第二条指令。
 2. 首次调用时，`GOT[4]` 被动态链接器修改为 `addvec()` 的入口。
@@ -344,10 +345,10 @@ int main() {
 
 # 13. 库打桩
 
-【库打桩 (library interpositioning)】将对“目标函数”的调用，替换为对“封装函数”的调用。
+**库打桩 (library interpositioning)**：将对“目标函数”的调用，替换为对“封装函数”的调用。
 
-- 【目标函数 (target function)】被换出的函数（如标准库中的 `malloc(), free()`）。
-- 【封装函数 (wrapper function)】被换入的函数（如 `malloc.h` 中的 `mymalloc(), myfree()`），与目标函数有相同的函数原型，通常在调用目标函数前后做一些处理。
+- **目标函数 (target function)**：被换出的函数（如标准库中的 `malloc(), free()`）。
+- **封装函数 (wrapper function)**：被换入的函数（如 `malloc.h` 中的 `mymalloc(), myfree()`），与目标函数有相同的函数原型，通常在调用目标函数前后做一些处理。
 
 ```c
 /* int.c */
@@ -399,8 +400,8 @@ free(0x9ee010)
 
 其中
 
-- 【`-DCOMPILETIME`】表示定义预处理宏 `COMPILETIME`。
-- 【`-I.`】表示先在当前目录内寻找头文件 `malloc.h`。
+- **`-DCOMPILETIME`**：表示定义预处理宏 `COMPILETIME`。
+- **`-I.`**：表示先在当前目录内寻找头文件 `malloc.h`。
 
 ## 13.2. 链接期替换
 
@@ -436,8 +437,8 @@ free(0x18cf010)
 
 其中
 
-- 【`-Wl,option`】表示向静态链接器传递 `option`（`option` 中的 `,` 被替换为空格）。
-- 【`-Wl,--wrap,func`】表示在静态链接时，将
+- **`-Wl,option`**：表示向静态链接器传递 `option`（`option` 中的 `,` 被替换为空格）。
+- **`-Wl,--wrap,func`**：表示在静态链接时，将
   - 对 `func()` 的引用解析为 `__wrap_func()`。
   - 对 `__real_func()` 的引用解析为 `func()`。
 
@@ -490,8 +491,8 @@ free(0x1bf7010)
 
 其中
 
-- 【`LD_PRELOAD="./mymalloc.so"`】表示在动态链接时，优先用 `./mymalloc.so` 来解析符号。
-- 【`./intr`】可以替换为任何动态链接的可执行文件。
+- **`LD_PRELOAD="./mymalloc.so"`**：表示在动态链接时，优先用 `./mymalloc.so` 来解析符号。
+- **`./intr`**：可以替换为任何动态链接的可执行文件。
 
 # 14. 操作目标文件的工具
 

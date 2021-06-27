@@ -11,23 +11,18 @@ title: 批量构建
 
 ### 源文件 (Source Files)
 假设有如下简单的 C 语言项目：
-```
+```shell
 .
 ├── include
-│   └── math.h
+│   └── math.h  # 声明函数 `factorial`，用于计算正整数的阶乘。
 ├── src
-│   └── math.c
+│   └── math.c  # 实现 `factorial` 的功能。
 └── test
-    └── math.c
+    └── math.c  # 测试 `factorial` 的功能。
 ```
-各文件大致内容如下：
-- [`include/math.h`](./include/math.h) 声明函数 `factorial`，用于计算正整数的阶乘。
-- [`src/math.c`](./src/math.c) 实现 `factorial` 的功能。
-- [`test/math.c`](./test/math.c) 测试 `factorial` 的功能。
-
 创建环境变量：
 - 为叙述方便，下面用环境变量 `SOURCE_DIR` 表示源文件根目录 `./` 的完整路径。
-- 为避免污染 `SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
+- 为避免污染 `$SOURCE_DIR`，应当在一个（用环境变量 `BUILD_DIR` 表示的）空目录里构建。
 
 ```shell
 SOURCE_DIR=$(pwd)
@@ -39,28 +34,31 @@ BUILD_DIR=$SOURCE_DIR/_build
 
 ```shell
 cd ${BUILD_DIR}
-# 将 源文件 src/math.c 编译为 目标文件 lib_math.o
-cc -I${SOURCE_DIR}/include -o lib_math.o  -c ${SOURCE_DIR}/src/math.c
+# 将 源文件 src/math.c 编译为 目标文件 src_math[.pic].o
+cc -o src_math.o           -c ${SOURCE_DIR}/src/math.c
+cc -o src_math.pic.o -fpic -c ${SOURCE_DIR}/src/math.c
 # 将 源文件 test/math.c 编译为 目标文件 test_math.o
 cc -I${SOURCE_DIR}/include -o test_math.o -c ${SOURCE_DIR}/test/math.c
 ```
+
+其中 `-fpic` 表示生成**[位置无关代码 (position-independent code)](../../csapp/7_linking.md#pic)**。
 
 ### 打包 (Package)
 
 ```shell
 cd ${BUILD_DIR}
-# 将 目标文件 lib_math.o 打包为 静态库 libmath.a
-ar -rcs libmath.a lib_math.o
-# 将 源文件 src/math.c 编译并打包为 动态库 libmath.so
-cc -shared -fpic -o libmath.so ${SOURCE_DIR}/src/math.c
+# 将 目标文件 src_math.o     打包为 静态库 libmath.a
+ar -rcs libmath.a src_math.o
+# 将 目标文件 src_math.pic.o 打包为 动态库 libmath.so
+cc -shared -o libmath.so src_math.pic.o
 ```
 
 ### 链接 (Link)
 
 ```shell
 cd ${BUILD_DIR}
-# 将 目标文件 test_math.o 及 lib_math.o 链接进可执行文件 test_math_o
-cc -o test_math_o test_math.o lib_math.o
+# 将 目标文件 test_math.o 及 src_math.o 链接进可执行文件 test_math_o
+cc -o test_math_o test_math.o src_math.o
 # 将 目标文件 test_math.o 及 动态库 libmath.so 链接进 test_math_so
 cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
 # 将 目标文件 test_math.o 及静态库 libmath.a 链接进 test_math_a
@@ -88,7 +86,7 @@ factorial(21) == -4249290049419214848 (overflowed)
 factorial(20) / factorial(19) == 20
 factorial(21) / factorial(20) == -1 (overflowed)
 ```
-其中 `factorial(21)` 超出了 `long` 可容纳的范围，发生了**上溢 (overflow)**。
+其中 `factorial(21)` 的值超出了 `long` 可容纳的范围，发生**上溢 (overflow)**。
 
 ### 清理 (Clean)
 ```shell
@@ -125,7 +123,7 @@ make [options] [targets]
 |     `-k`      |   即使部分目标失败，仍继续构建其他目标   |
 
 ### 目标
-一个**目标 (target)** 表示一个定义在 [`Makefile`](#Makefile) 中的构建任务，通常为**可执行文件(executable file)**或**库 (library)** 的文件名，也可以只是一个**标签 (tag)**。
+一个**目标 (target)** 表示一个定义在 [`Makefile`](#Makefile) 中的构建任务，通常为**可执行文件(executable file)** 或**库 (library)** 的文件名，也可以只是一个**标签 (tag)**。
 如果没有为 `make` 指定目标，则以 `Makefile` 中的第一个目标为默认目标。
 
 一个目标可以被重复构建多次。
@@ -133,7 +131,7 @@ make [options] [targets]
 这项检查是递归的，因此最终将传递到被更新过的源文件上。
 
 ## `Makefile` 文件<a href id="Makefile"></a>
-`Makefile` 是驱动 [`make` 命令](#make-cmd)的**脚本 (script) 文件**：
+`Makefile` 是驱动 [`make` 命令](#make-cmd)的**脚本 (script)**：
 
 - 默认文件名为 `Makefile` 或 `makefile`。
 - 也可以用其他文件名，但必须在 `make` 后面用 `-f filename` 来指定。
@@ -226,9 +224,9 @@ library.o : library.c
 ## 参考资料
 ### 官方文档
 - [帮助文档](https://cmake.org/cmake/help/latest/)
-  - 【[cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html)】命令行界面程序
-  - 【[ccmake(1)](https://cmake.org/cmake/help/latest/manual/ccmake.1.html)】文字形式的“图形界面”程序
-  - 【[cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html)】系统配置
+  - [cmake(1)](https://cmake.org/cmake/help/latest/manual/cmake.1.html)：命令行界面程序
+  - [ccmake(1)](https://cmake.org/cmake/help/latest/manual/ccmake.1.html)：文字形式的“图形界面”程序
+  - [cmake-buildsystem(7)](https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html)：系统配置
 
 ### 入门教程
 - 《[CMake Tutorial](https://cmake.org/cmake/help/latest/guide/tutorial)》provides a step-by-step tutorial covering common build system use cases that CMake helps to address.
@@ -242,21 +240,22 @@ library.o : library.c
       - [CMake --- Examples](https://youtu.be/cDWOECgupDg)
 
 ## 术语
-- 【**源文件目录 (source dir)**】或【**源文件树 (source tree)**】项目根目录，必须含有一个 `CMakeLists.txt` 文件。
-- 【**构建目录 (build dir)**】或【**构建树 (build tree)**】或【**二进制树 (binary tree)** 】存放构建产物（目标文件、库文件、可执行文件）的目录。
-- 【**内部构建 (in-source build)**】在源文件目录下构建（⚠️ 会污染源文件目录）。
-- 【**外部构建 (out-of-source build)**】在源文件目录外构建 👍。
-- 【**构建配置 (build configuration)**】由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
+- **源文件目录 (source dir)**、**源文件树 (source tree)**：项目根目录，必须含有一个 `CMakeLists.txt` 文件。
+- **构建目录 (build dir)**、**构建树 (build tree)**、**二进制树 (binary tree)**：存放构建产物（目标文件、库文件、可执行文件）的目录。
+- **内部构建 (in-source build)**：在源文件目录下构建（⚠️ 会污染源文件目录）。
+- **外部构建 (out-of-source build)**：在源文件目录外构建 👍。
+- **构建配置 (build configuration)**：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
 
 ## `cmake` 命令<a href id="cmake-cmd"></a>
 CMake 参与的构建过程可以分为以下两个阶段：
 1. CMake 读取 `CMakeLists.txt` 文件，生成**本地构建工具 (native build tool)** (e.g. [`make`](#make-cmd)) 所需的**本地构建文件 (native build file)** (e.g. [`Makefile`](#Makefile))：
    ```shell
-   cmake [<options>] <source-dir>
-   cmake [<options>] <existing-build-dir>
-   cmake [<options>] -S <source-dir> -B <build-dir>
+   cmake [<options>] -S <source-dir> -B <build-dir> # cmake 3.13.5+ 推荐用法
+   cmake [<options>] <source-dir>         # 建议用 -S <source-dir>
+   cmake [<options>] <existing-build-dir> # 建议用 -B <existing-build-dir>
    ```
 2. *本地构建工具*读取*本地构建文件*，调用**本地工具链 (native tool chain)** 进行构建。这一步可借助 CMake 以跨平台的方式来完成：
+   
    ```shell
    cmake --build <build-dir> [<options>] [-- <build-tool-options>]
    ```
@@ -264,38 +263,36 @@ CMake 参与的构建过程可以分为以下两个阶段：
 ### 选项
 ```shell
 # 查看帮助
---help[-<topic>]
+cmake --help[-<topic>]
 # 查看版本号
---version
+cmake --version
 # 打开项目
---open <dir>
+cmake --open <dir>
 # 将 CMake 变量 var 的值设为 value
-[{-D <var>=<value>}...] -P <cmake-script-file>
+cmake [{-D <var>=<value>}...] -P <cmake-script-file>
 # 运行外部程序
--E <command> [<options>]
+cmake -E <command> [<options>]
 # 查找包
---find-package [<options>]
+cmake --find-package [<options>]
 # 指定 source-dir 和 build-dir，需要 cmake 3.13.5+
--S <source-dir> -B <build-dir>
+cmake -S <source-dir> -B <build-dir>
 ```
 
 ### 示例
 ```shell
 cd ${SOURCE_DIR} # ./
-mkdir _build
-mkdir _build/Debug
-cd _build/Debug
-cmake -S ../.. -B . \
-      -D CMAKE_BUILD_TYPE=Debug \
-      -D CMAKE_C_COMPILER=/usr/local/bin/gcc \
-      -D CMAKE_CXX_COMPILER=/usr/local/bin/g++
+BUILD_TYPE=Debug  # 或 Release、RelWithDebInfo、MinSizeRel
+mkdir -p _build/$BUILD_TYPE
+cd _build/$BUILD_TYPE
+cmake -S ../.. -B . -D CMAKE_BUILD_TYPE=$BUILD_TYPE \
+      -D CMAKE_C_COMPILER=$(which gcc) -D CMAKE_CXX_COMPILER=$(which g++)
 ```
 
 ## `CMakeLists.txt` 文件<a href id="CMakeLists"></a>
 `CMakeLists.txt` 是驱动 CMake 程序运行的*脚本文件*，它由**命令 (command)** 和**注释 (comment)** 组成：
 
 - 命令的名称*不区分大小写*，形式上与函数调用类似。
-- 命令的操作对象称为**变量 (variable)**，变量的名称*区分大小写*。
+- 命令的操作对象称为 **CMake 变量 (CMake variable)**，其名称*区分大小写*。
 - 注释一般以 `#` 开始，至行尾结束。
 
 完整的语法定义参见《[cmake-language(7)](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)》。
@@ -356,10 +353,10 @@ set(ENV{<variable>} [<value>])
 ### 查找
 
 ```cmake
-# 将含有 name1 的文件夹的完整路径存入 VAR 中：
-find_path (<VAR> name1 [path1 path2 ...])
-# 将名为 name1 的库文件的完整路径存入 VAR 中：
-find_library (<VAR> name1 [path1 path2 ...])
+# 将头文件 name.h 所在文件夹的完整路径存入 VAR 中：
+find_path (<VAR> name.h [path1 path2 ...])
+# 将库文件 libname.[a|so|dylib] 的完整路径存入 VAR 中：
+find_library (<VAR> name [path1 path2 ...])
 ```
 
 ### 目标
@@ -378,7 +375,7 @@ add_library(<name> [STATIC | SHARED | MODULE]
             [source1] [source2 ...])
 ```
 
-以上命令的第一个参数 `<name>` 表示被创建目标的*逻辑名*，必须全局唯一；实际被构建的文件名为*物理名*或*输出名*，不必全局唯一。默认情况下，*输出名*等于*逻辑名*，但可以通过设置 `OUTPUT_NAME` 来改变：
+以上命令的第一个参数 `<name>` 表示被创建目标的*逻辑名*，必须（在整个 CMake 项目内）全局唯一；实际被构建的文件名为*物理名*或*输出名*，不必全局唯一。默认情况下，输出名*等于*逻辑名，但可以通过设置 `OUTPUT_NAME` 来改变：
 
 ```cmake
 add_executable(test_algebra_matrix matrix.cpp)  # 逻辑名为 test_algebra_matrix
@@ -405,13 +402,22 @@ target_link_libraries(<target> ... <item>... ...)
 依然以《[手动构建](#手动构建)》中的项目为例。
 创建三个 `CMakeLists.txt` 文件：
 
-- [`./CMakeLists.txt`](./CMakeLists.txt) 用于管理整个项目。
-- [`./src/CMakeLists.txt`](./src/CMakeLists.txt) 用于构建 `lib_math`。
-- [`./test/CMakeLists.txt`](./test/CMakeLists.txt) 用于构建 `test_math`。
+```shell
+.
+├── CMakeLists.txt  # 用于构建整个项目
+├── include
+│   └── math.h
+├── src
+│   ├── CMakeLists.txt  # 用于构建 `lib_math`
+│   └── math.c
+└── test
+    ├── CMakeLists.txt  # 用于构建 `test_math`
+    └── math.c
+```
 
 ## CMake Tools<a href id="CMake-Tools"></a>
 
-微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有*体量轻*、*易扩展*、*多语言*、*跨平台*等优点，利用各种[**扩展 (extensions)**](https://marketplace.visualstudio.com/) 很容易将其改造为多语言共用的**集成开发环境 (Integrated Development Environment, IDE)**。
+微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有*体量轻*、*易扩展*、*多语言*、*跨平台*等优点，利用各种[扩展](https://marketplace.visualstudio.com/)，很容易将其改造为多语言共用的**集成开发环境 (Integrated Development Environment, IDE)**。
 
 本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 构建及调试 C/C++ 项目的方法。
 
@@ -488,14 +494,11 @@ options:
 
 ```shell
 cd ${SOURCE_DIR} # ./
-mkdir _build
-mkdir _build/Debug
-cd _build/Debug
-cmake -G Ninja \
-      -S ../.. -B . \
-      -D CMAKE_BUILD_TYPE=Debug \
-      -D CMAKE_C_COMPILER=/usr/local/bin/gcc-9 \
-      -D CMAKE_CXX_COMPILER=/usr/local/bin/g++-9
+BUILD_TYPE=Debug  # 或 Release、RelWithDebInfo、MinSizeRel
+mkdir -p _build/${BUILD_TYPE}
+cd _build/${BUILD_TYPE}
+cmake -G Ninja -S ../.. -B . -D CMAKE_BUILD_TYPE=${BUILD_TYPE} \
+      -D CMAKE_C_COMPILER=$(which gcc-9) -D CMAKE_CXX_COMPILER=$(which g++-9)
 ninja
 ninja install
 ninja clean
