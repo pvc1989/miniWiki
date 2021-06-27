@@ -2,7 +2,10 @@
 title: 虚拟内存
 ---
 
-# 1. 物理与虚拟地址
+# 1. 物理地址与虚拟地址
+
+- **物理地址 (physical address, PA)**：
+- **虚拟地址 (virtual memory, VA)**：
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/virtualoverview.pdf)
 
@@ -24,9 +27,9 @@ title: 虚拟内存
 | :-------------------------------------------------------: | :------------------------------------------------------: |
 | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissbefore.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissafter.pdf) |
 
-【页面故障 (page fault)】`VP[3]` 不在物理内存中，需从硬盘读取。步骤如下：
+**页面故障 (page fault)**：假设 `VP[3]` 不在物理内存中，需从硬盘读取。步骤如下：
 
-1. 在物理内存中选择 `VP[4]` 作为“受害者 (victim)”。
+1. 在物理内存中选择 `VP[4]` 作为**受害者 (victim)**。
 2. 若 `VP[4]` 被修改过，则将其写入硬盘。
 3. 从硬盘读取 `VP[3]`，写入 `PP[3]`，即替换 `VP[4]`。
 
@@ -42,7 +45,7 @@ title: 虚拟内存
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmprotect.pdf)
 
-其中 `SUP` 表示以“监管者模式 (SUPervisor mode)”即“内核模式”运行。
+其中 `SUP` 表示以**监管者模式 (SUPervisor mode)** 即**内核模式 (kernel mode)** 运行。
 
 # 6. 地址翻译
 
@@ -52,11 +55,9 @@ title: 虚拟内存
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmcache.pdf)
 
-- VA (Virtual Address)
 - MMU (Memory Management Unit)
 - PTE (Page Table Entry)
 - PTEA (Page Table Entry Address)
-- PA (Physical Address)
 
 ## 6.2. 用 TLB 加速地址翻译
 
@@ -76,7 +77,7 @@ title: 虚拟内存
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxrtimage.pdf) 
 
-### Linux 虚拟内存区段
+### Linux 虚拟内存管理
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxvm.pdf)
 
@@ -88,7 +89,7 @@ title: 虚拟内存
 
 ## 8.1. 共享对象再探
 
-【COW (Copy-On-Write)】写时复制
+【**写时复制 (Copy-On-Write, COW)**】
 
 |                    两个进程共享数据                     |              进程 2 在私有 COW 页面写入数据              |
 | :-----------------------------------------------------: | :------------------------------------------------------: |
@@ -112,7 +113,7 @@ int munmap(void *start, size_t length);
     // Returns: 0 if OK, −1 on error
 ```
 
-此函数从文件 `fd` 读取始于 `offset` 字节、长 `length` 字节的数据块，映射到（可能）始于 `start` 的虚拟内存空间。
+此函数从文件 `fd` 读取始于 `offset` 字节、长 `length` 字节的数据区块，映射到（可能）始于 `start` 的虚拟内存空间。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmapargs.pdf)
 
@@ -120,19 +121,19 @@ int munmap(void *start, size_t length);
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/heapmap.pdf)
 
-【堆 (heap)】虚拟内存中紧跟在“未初始化数据”后面的一块连续区域
+**堆 (heap)**：虚拟内存中紧跟在“未初始化数据”后面的一区块连续区域
 
-- 【`brk`】指向堆顶（堆内最后一个字节的下一子节）
-- 【块 (block)】堆内一段连续的区域
-  - 【分配的 (allocated)】
-  - 【空闲的 (free)】
+- `brk`：指向堆顶（堆内最后一个字节的下一子节）
+- **区块 (block)**：堆内一段连续的区域
+  - **分配的 (allocated)**：
+  - **空闲的 (free)**：
 
-【动态内存分配器 (dynamic memory allocator)】维护堆内存的软件接口
+**动态内存分配器 (dynamic memory allocator)**：维护堆内存的软件接口
 
-- 【显式分配器 (explicit allocator)】已分配的动态内存需由应用程序主动释放。本节剩余部分详细介绍显式分配器的实现。
-- 【隐式分配器 (implicit allocator) 】自动检测并释放不再被使用的动态内存，又名“垃圾回收器 (garbage collector, GC)”。第 9.10 节简要介绍隐式分配器的实现。
-- 【标准分配器 (standard allocator)】
-- 【应用指定分配器 (application-specific allocator)】
+- **显式分配器 (explicit allocator)**：已分配的动态内存需由应用程序主动释放。本节剩余部分详细介绍显式分配器的实现。
+- **隐式分配器 (implicit allocator)**：自动检测并释放不再被使用的动态内存，又名**垃圾回收器 (garbage collector, GC)**。[第 9.10 节](#gc)简要介绍隐式分配器的实现。
+- **标准分配器 (standard allocator)**：
+- **应用指定分配器 (application-specific allocator)**：
 
 ## 9.1. `malloc()` 与 `free()`
 
@@ -142,10 +143,10 @@ C 语言标准库提供了以下动态内存接口：
 #include <stdlib.h>
 void* malloc(size_t n);  // 不初始化
 void* calloc(size_t k, size_t s);  // 初始化为零
-void* realloc(void* p, size_t n);  // 改变已分配块的大小
+void* realloc(void* p, size_t n);  // 改变已分配区块的大小
 ```
 
-这组函数请求动态内存。若成功，则返回长度至少为 `n` 或 `k*s` 字节、满足对齐要求的可用块的地址；否则，返回 `NULL`。
+这组函数请求动态内存。若成功，则返回长度至少为 `n` 或 `k*s` 字节、满足对齐要求的可用区块的地址；否则，返回 `NULL`。
 
 ```c
 #include <stdlib.h>
@@ -176,44 +177,44 @@ void* sbrk(intptr_t incr);
 - 能够处置任意请求序列
 - 能够立即响应请求
 - 只能使用堆内存
-- 块的地址要对齐
-- 不能改动已分配的块
+- 区块的地址要对齐
+- 不能改动已分配的区块
 
 目标：使以下指标最大化
 
-- 【吞吐量 (throughput)】单位时间内完成的请求数量
-- 【利用率 (utilization)】$U_k=(\max_{i\le k}P_i)/H_k$，其中
-  - $U_k$ 为前 $k$ 个请求的“峰值利用率 (peak utilitization)”
-  - $P_k$ 为前 $k$ 个请求的“总有效载荷 (aggregated payload)”
-  - $H_k$ 为第 $k$ 个请求完成后的“堆大小 (heap size)”，假设为单调递增。
+- **吞吐量 (throughput)**：单位时间内完成的请求数量
+- **利用率 (utilization)**：$U_k=(\max_{i\le k}P_i)/H_k$，其中
+  - $U_k$ 为前 $k$ 个请求的**峰值利用率 (peak utilitization)**
+  - $P_k$ 为前 $k$ 个请求的**总有效载荷 (aggregated payload)**
+  - $H_k$ 为第 $k$ 个请求完成后的**堆大小 (heap size)**，假设其单调递增。
 
 ## 9.4. 碎片化
 
-- 【内部碎片化 (internal fragmentation)】块内除有效载荷外，还有不能被正常使用的占位字节。
-- 【外部碎片化 (external fragmentation)】堆内有足够多的空闲字节，但没有一个空闲块足够大。
+- **内部碎片化 (internal fragmentation)**：区块内除有效载荷外，还有不能被正常使用的占位字节。
+- **外部碎片化 (external fragmentation)**：堆内有足够多的空闲字节，但没有一个空闲区块足够大。
 
 ## 9.5. 实现策略
 
-- 【空闲块组织 (free block organization)】
+- **空闲区块组织 (free block organization)**：
   - 隐式链表
   - 显式链表
   - 分离链表
-- 【放置 (place)】
+- **放置 (place)**：
   - 首个匹配
   - 下个匹配
   - 最佳匹配
-- 【分裂 (split)】
+- **分裂 (split)**：
   - 置于原处
   - 置于表头
-- 【合并 (coalesce)】
+- **合并 (coalesce)**：
   - 立即合并
   - 延迟合并
 
-## 9.6. 隐式的空闲块链表
+## 9.6. 隐式的空闲区块链表
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/implicitsplit.pdf)
 
-### 9.7. 查找足够大的块
+### 9.7. 查找足够大的区块
 
 ```c
 static void *find_fit(size_t alloc_size) {
@@ -233,7 +234,7 @@ static void *find_fit(size_t alloc_size) {
 }
 ```
 
-### 9.8. 分裂过大的空闲块
+### 9.8. 分裂过大的空闲区块
 
 ```c
 static void place(void *block, size_t alloc_size) {
@@ -252,7 +253,7 @@ static void place(void *block, size_t alloc_size) {
 }
 ```
 
-### 9.9. 获取更多的堆内存
+### 9.9. 获取更多的动态内存
 
 ```c
 static void *extend_heap(size_t words) {
@@ -274,7 +275,7 @@ static void *extend_heap(size_t words) {
 }
 ```
 
-### 9.10. 合并相邻的空闲块
+### 9.10. 合并相邻的空闲区块
 
 |                         Case 1                         |                         Case 2                         |
 | :----------------------------------------------------: | :----------------------------------------------------: |
@@ -356,13 +357,13 @@ extern void *mm_malloc(size_t size);
 extern void mm_free(void *ptr);
 ```
 
-为简化“合并相邻的空闲块”，在链表两端引入一对辅助块：
-- 【起始块 (prologue block)】长度为 8 B，只含“头标”及“脚标”。
-- 【结尾块 (epilogue block)】长度为 4 B，只含“头标”，并标记为“已分配的”。
+为简化*合并相邻的空闲区块*，在链表两端引入一对辅助区块：
+- **起始区块 (prologue block)**：长度为 8 B，只含*区块首*及*区块尾*。
+- **结尾区块 (epilogue block)**：长度为 4 B，只含*区块首*，并标记为*已分配的*。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmimplicitlist.pdf)
 
-#### 尺寸常量、块操作宏
+#### 尺寸常量、区块操作
 
 ```c
 #define WSIZE       4   /* word size (bytes) */
@@ -417,7 +418,7 @@ int mm_init(void) {
 }
 ```
 
-#### 块的释放
+#### 区块的释放
 
 ```c
 void mm_free(void *block) {
@@ -434,7 +435,7 @@ void mm_free(void *block) {
 }
 ```
 
-#### 块的分配
+#### 区块的分配
 
 ```c
 void *mm_malloc(size_t size) {
@@ -467,46 +468,46 @@ void *mm_malloc(size_t size) {
 }
 ```
 
-## 9.13. 显式的空闲块链表
+## 9.13. 显式的空闲区块链表
 
-空闲块的“有效载荷”部分可用于存储指针，以便构造出“链表”等数据结构。
+空闲区块的*有效载荷*部分可用于存储指针，以便构造出*链表*等数据结构。
 
-新空闲块安置策略
+新空闲区块安置策略
 
-- 【后进先出 (LIFO)】刚被释放的块总是被置于链表头部。
-- 【地址顺序】链表中的（自由）块总是按地址升序排列。
+- **后进先出 (LIFO)**：刚被释放的区块总是被置于链表头部。
+- **地址顺序 (address order)**：链表中的（自由）区块总是按地址升序排列。
 
 [Malloc Lab](./labs/malloc/README.md) 中的 [`mm_explicit.c`](./labs/malloc/mm_explicit.c) 给出了一种实现基于 LIFO 的实现。
 
-## 9.14. 分离的空闲块链表
+## 9.14. 分离的空闲区块链表
 
-【分离链表 (segregated lists)】
+**分离链表 (segregated lists)**：
 
-- 【尺寸类 (size class)】由具有（大致）相同尺寸的空闲块组成的集合。常用的划分有
+- **尺寸类 (size class)**：由具有（大致）相同尺寸的空闲区块组成的集合。常用的划分有
   - $(0,1],(1,2],(2,4],\dots,(512,1024],(1024,2048],(2048,4096],(4096,\infty)$
   - $(0,1],\dots,(1022,1023],(1023,1024],(1024,2048],(2048,4096],(4096,\infty)$
-- 将每个尺寸类中的空闲块，组织为一条显式链表。
+- 将每个尺寸类中的空闲区块，组织为一条显式链表。
 
 ### 简易分离存储
 
-【简易分离存储 (simple segregated storage)】每条链表中的空闲块具有相同的尺寸；不分裂或合并空闲块。
+**简易分离存储 (simple segregated storage)**：每条链表中的空闲区块具有相同的尺寸；不分裂或合并空闲区块。
 
-- 【优点】分配、释放均可在常数时间内完成（调用 `sbrk()` 除外）；无需头标、脚标；用单向链表即可实现。
+- 【优点】分配、释放均可在常数时间内完成（调用 `sbrk()` 除外）；无需区块首、区块尾；用单向链表即可实现。
 - 【缺点】空间利用率低。
 
 ### 分离匹配
 
-【分离匹配 (segregated fits)】GCC 的实现方案。
+**分离匹配 (segregated fits)**：GCC 的实现方案。
 
 - 【分配】
-  - 根据所需块的尺寸，确定最匹配的链表，在其中查找首个可用的空闲块；若找不到，则进入空闲块尺寸更大的链表查找。
-  - 若所有链表均无可用空闲块，则向操作系统请求更多堆内存。
-  - 分割找到的空闲块，将剩余部分插入合适的链表。
+  - 根据所需区块的尺寸，确定最匹配的链表，在其中查找首个可用的空闲区块；若找不到，则进入空闲区块尺寸更大的链表查找。
+  - 若所有链表均无可用空闲区块，则向操作系统请求更多堆内存。
+  - 分割找到的空闲区块，将剩余部分插入合适的链表。
 - 【释放】
-  - 若可能，合并相邻空闲块（四种情形）。
-  - 将所得（可能更大的）空闲块插入合适的链表。
+  - 若可能，合并相邻空闲区块（四种情形）。
+  - 将所得（可能更大的）空闲区块插入合适的链表。
 
-# 10. 垃圾回收
+# 10. 垃圾回收<a href id="gc"></a>
 
 ## 10.1. 垃圾回收器基础
 
@@ -556,6 +557,5 @@ int **makeArray1(int n, int m) {
 
 ## 11.10. 内存泄漏（未及时释放）
 
-## 内存检查工具
+## [内存检查工具](../cpp/memory/check.md)
 
-### [Valgrind](../cpp/memory/check.md#Valgrind)
