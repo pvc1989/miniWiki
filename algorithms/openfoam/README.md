@@ -1,6 +1,15 @@
 ---
-Title: OpenFOAM
+title: OpenFOAM
 ---
+
+# 参考资料
+
+## 教程
+
+### `wiki.openfoam.com`
+
+- ["First glimpse" series](https://wiki.openfoam.com/%22first_glimpse%22_series)
+- ["3 weeks" series](https://wiki.openfoam.com/index.php?title=%223_weeks%22_series)
 
 # 构建
 
@@ -57,7 +66,7 @@ gcc: error: unrecognized command-line option '--showme:link'
 或者要修改部分选项，可以在 `source $WM_PROJECT_DIR/etc/bashrc` 后面*追加 (append)* 所要修改的选项（详见 `$WM_PROJECT_DIR/etc/bashrc` 中的注释），常用的有：
 
 - 【`WM_PROJECT_USER_DIR=<user_dir>`】将默认的 `/home/<user>/OpenFOAM/<user>-<version>`  替换为用户指定的 `<user_dir>`。
-- 【`WM_MPLIB=USERMPI`】用[本地搭建的 MPI 环境](../../programming/mpi/README.md)替换[系统自带的 Open MPI](#open-mpi)。根据 `$WM_PROJECT_DIR/etc/config.sh/mpi` 中的注释，用户需要在加载此项前设置好 `$WM_PROJECT_DIR/wmake/rules/General/mplibUSERMPI ` 文件。
+- 【`WM_MPLIB=USERMPI`】用[本地搭建的 MPI 环境](../../programming/mpi/README.md)替换[系统自带的 Open MPI](#open-mpi)。根据 `$WM_PROJECT_DIR/etc/config.sh/mpi` 中的注释，用户需要在加载此项前设置好 `$WM_PROJECT_DIR/wmake/rules/General/mplibUSERMPI` 文件。
 
 示例：
 
@@ -345,7 +354,7 @@ coeffs {
 
 # 网格
 
-## `polyMesh`
+## `polyMesh` 格式
 
 OpenFOAM 所使用的网格，由位于 `constant/polyMesh` 中的一组文件来描述：
 
@@ -356,6 +365,8 @@ OpenFOAM 所使用的网格，由位于 `constant/polyMesh` 中的一组文件�
 - 【`boundary`】共 `nPatches` 项，第 `i` 项形如 `movingWall { type patch; nFaces 20; startFace 760; }`，表示第 `i` 号 `Patch` 的名称。
 
 ## `blockMesh`
+
+只适用于简单几何外形。
 
 ![](https://www.openfoam.com/documentation/userguide/img/user55x.png)
 
@@ -442,5 +453,192 @@ mergePatchPairs
 // ************************************************************************* //
 ```
 
-## `snappyMesh`
+## `snappyHexMesh`
+
+适用于复杂几何外形的网格自动生成工具。
+
+- 几何外形由位于 `constant/triSurface` 的 **STL (*st*ereo*l*ithography)** 文件表示。
+- 网格参数由 `system/snappyHexMeshDict` 文件描述。
+
+### `snappyHexMeshDict`
+
+```cpp
+castellatedMesh true;  // or false
+snap            true;  // or false
+addLayers       true;  // or false
+
+geometry {
+  // 几何外形
+}
+castellatedMeshControls {
+  // 网格细化
+}
+snapControls {
+  // 网格捕捉
+}
+addLayersControls {
+  // 边界层网格
+}
+meshQualityControls {
+  // 网格质量
+}
+```
+
+#### `geometry`
+
+```cpp
+geometry {
+  wolfExtruded.stl/* STL file name */ {
+    type triSurfaceMesh;
+    name wolf;
+    regions/* (optional) for STL file with multiple patches */ {
+      wolflocal/* patch name in STL file */ {
+        name wolf_wall/* patch name in SnappyHexMesh */;
+      }
+    }
+  }
+  box {
+    type searchableBox;
+    min (-100.0 -120.0 -50.0);
+    max (+100.0 +120.0 +150.0);
+  }
+  sphere {
+    type searchableSphere;
+    centre (+120.0 -100.0 +50.0);
+    radius 40.0;
+  }
+}
+```
+
+#### `castellatedMeshControls`
+
+```cpp
+castellatedMeshControls {
+  /* refinement parameters */
+  maxLocalCells   100000;
+  maxGlobalCells 2000000;
+  minRefinementCells   0;
+  maxLoadUnbalance   0.1;
+  nCellsBetweenLevels  1;
+  
+  resolveFeatureAngle 30/* 若相邻面元的夹角大于此值，则细化之 */;
+  planarAngle         30;
+  allowFreeStandingZoneFaces true;
+
+  features /* explicit feature edge refinement */ {
+    {
+      file "wolfExtruded.eMesh"/* 由 surfaceFeatureExtract 生成 */;
+      level 2;
+    }
+  }
+  refinementSurfaces /* surface-based refinement */ {
+    wolf/* 在 geometry 中定义 */ {
+      level (1 1)/* 全局细化 */;
+      regions {
+        wolflocal/* 在 geometry 中定义 */ {
+          level (2 4)/* 局部细化 */;
+          patchInfo {
+            type wall/* or `patch` */;
+          }
+        }
+      }
+    }
+    sphere/* 在 geometry 中定义 */ {
+      level (1 1);
+      faceZone   face_inner;
+      cellZone   cell_inner;
+      cellZoneInside inside;
+      faceType internal/* or baffle | boundary */;
+    }
+  }
+  refinementRegions /* region-wise refinement */  {
+    box/* 在 geometry 中定义 */ {
+      mode inside;
+      levels ((1 1));
+    }
+  }
+  locationInMesh(-100.0 0.0 50.0/* in_solid_body ? internal_mesh : external_mesh */);
+}
+```
+
+#### `snapControls`
+
+#### `addLayersControls`
+
+#### `meshQualityControls`
+
+## `cfMesh` 模块
+
+### 可执行程序
+
+```shell
+cartesianMesh  # predominantly hexahedral cells
+tetMesh        # only tetrahedral cells
+pMesh          # arbitrary polyhedral cells
+generateBoundaryLayers
+```
+
+### `meshDict`
+
+```cpp
+/* cfMesh requires only two mandatory settings: */
+surfaceFile "surfaceMeshes/surf.fms";  // path to the geometry file
+maxCellSize 0.1;  // default cell size (metres)
+
+/* (optional) global refinement settings: */
+boundaryCellSize 0.001;
+boundaryCellSizeRefinementThickness 0.1;  // thickness of the refinement region away from the surface
+minCellSize 0.01;
+```
+
+#### `localRefinement`
+
+```cpp
+/* (optional) boundary refinement settings: */
+localRefinement {
+  "patch15.*"/* patch name, could be regex */ {
+    cellSize 0.02;  // (or) additionalRefinementLevels 2;
+    refinementThickness 0.2;
+  }
+  subset1 {
+    cellSize 0.05;
+  }
+}
+```
+
+#### `objectRefinements`
+
+```cpp
+/* (optional) refinement in primitive geometric objects: */
+objectRefinements {
+  boxExample/* object name */ {
+    type box/* (or) line, sphere, cone, hollowCone */;
+    cellSize 0.02;  // (or) additionalRefinementLevels 2;
+    centre (3.0, 4.0, 5.0);
+    lengthX 10.0; lengthY 10.0; lengthZ 10.0;
+    refinementThickness 0.1; // optional
+  }
+}
+```
+
+#### `boundaryLayers`
+
+```cpp
+/* settings for boundary layers */
+boundaryLayers {
+  nLayers 10;  // (optional) 0 or 1 by default
+  thicknessRatio 1.2;  // (optional) 1 by default
+  maxFirstLayerThickness 0.02;  // (optional)
+  
+  /* local settings for individual patches */
+  patchBoundaryLayers {  
+    "patch20.*"/* patch name, could be regex */ {
+      nLayers 20;
+      thicknessRatio 1.2;
+      maxFirstLayerThickness 0.01;
+      allowDiscontinuity 0/* #layers for this patch shall NOT spread to other patches in the same layer */;
+    }
+  }
+}
+```
 
