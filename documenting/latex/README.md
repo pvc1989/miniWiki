@@ -2,7 +2,7 @@
 title: LaTeX
 ---
 
-# LaTeX<a name="LaTeX"></a>
+# LaTeX<a href id="LaTeX"></a>
 ## 参考资料
 ### 链接
 - [CTAN (The Comprehensive TeX Archive Network)](https://ctan.org/)
@@ -28,7 +28,7 @@ title: LaTeX
 
 ## 发行版 + 编辑器
 
-### TeX Live<a name="TeX-Live"></a>
+### TeX Live<a href id="TeX-Live"></a>
 [TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX **发行版 (distribution)**。
 
 1. 下载并*完整*安装 [TeX Live](https://tug.org/texlive/acquire-mirror.html)，大约需要 5 GB 硬盘空间。
@@ -39,13 +39,13 @@ title: LaTeX
 
 ## 中文支持
 
-### CTeX
+### [`ctex` 宏包](https://ctan.org/pkg/ctex)<a href id="ctex"></a>
 
 1. 卸载 [CTeX 套装](#http://www.ctex.org/CTeX)，原因参见《[2018年，为什么不推荐使用 CTeX 套装了](https://zhuanlan.zhihu.com/p/45174503)》。
 1. 完整安装 [TeX Live](#TeX-Live)。
 1. 从以下两种方式中任选一种，创建中文文档 [`hello.tex`](./hello.tex)：
   - CTeX 文档类，例如 `ctexart`、`ctexbook` 等。
-  - 其他文档类 + [CTeX 宏包](https://ctan.org/pkg/ctex)。
+  - 其他文档类 + [CTeX 宏包](#ctex)。
 1. 用 `xelatex` 命令编译：
    ```shell
    mkdir build
@@ -55,16 +55,16 @@ title: LaTeX
 
 ## 字体设置
 
-### fontspec
-[fontspec 宏包](https://ctan.org/pkg/fontspec)用于设置文档*正文*字体，默认情况下会影响到 `\mathrm` 等*数学*字体（宏包选项 `no-math` 可以消除对数学字体的影响）：
+### [`fontspec` 宏包](https://ctan.org/pkg/fontspec)<a href id="fontspec"></a>
+此宏包用于设置文档*正文*字体，默认情况下会影响到 `\mathrm` 等*数学*字体（宏包选项 `no-math` 可以消除对数学字体的影响）：
 
 ```latex
-\usepackage[no-math 宏包]{fontspec}
+\usepackage[no-math]{fontspec}
 \setmainfont{Courier}
 ```
 
-### mathspec
-[mathspec 宏包](https://ctan.org/pkg/fontspec)用于设置（数学环境中）*阿拉伯数字*、*拉丁字母*、*希腊字母*的字体，默认情况下以 `no-math` 选项加载 [fontspec 宏包](#fontspec)：
+### [`mathspec` 宏包](https://ctan.org/pkg/fontspec)<a href id="mathspec"></a>
+此宏包用于设置（数学环境中）*阿拉伯数字*、*拉丁字母*、*希腊字母*的字体，默认情况下以 `no-math` 选项加载 [`fontspec` 宏包](#fontspec)：
 
 ```latex
 \usepackage{mathspec}
@@ -73,24 +73,25 @@ title: LaTeX
 \setmathrm{Optima}
 ```
 
-[CTeX 文档类](https://ctan.org/pkg/ctex)会自动加载 [fontspec 宏包](#fontspec)。
-如果要使用 [mathspec 宏包](#mathspec)，则应
+[CTeX 文档类](#ctex)会自动加载 [`fontspec` 宏包](#fontspec)。
+如果要使用 [`mathspec` 宏包](#mathspec)。
+如果要使用 [`mathspec` 宏包](#mathspec)，则应
 
-- 在 `\documentclass` 之前将 `no-math` 选项传入 [fontspec 宏包](#fontspec)：
+- 在 `\documentclass` 之前将 `no-math` 选项传入 [`fontspec` 宏包](#fontspec)：
   ```latex
   \PassOptionsToPackage{no-math}{fontspec}
   \documentclass{ctexart}
   \usepackage{mathspec}
   ```
-- 或者选择其他（不自动加载 [fontspec 宏包](#fontspec)的）文档类，而在 [mathspec 宏包](#mathspec)之后加载 ctex：
+- 或者选择其他（不自动加载 [`fontspec` 宏包](#fontspec)的）文档类，而在 [`mathspec` 宏包](#mathspec)的）文档类，而在 [`mathspec` 宏包](#mathspec)之后加载 ctex：
   ```latex
   \documentclass{article}
   \usepackage{mathspec}
   \usepackagep[heading]{ctex}
   ```
 
-### unicode-math
-[unicode-math 宏包](https://ctan.org/pkg/unicode-math)用于设置*数学符号*字体：
+### [`unicode-math` 宏包](https://ctan.org/pkg/unicode-math)<a href id="unicode-math"></a>
+此宏包用于设置*数学符号*字体：
 
 ```latex
 \usepackage{unicode-math}
@@ -138,9 +139,10 @@ TeX 将数学符号分为以下几类：
 |     $f \biggl( \dfrac{x^2}{2} \biggr) \, dx$     |     `f \biggl( \dfrac{x^2}{2} \biggr) \, dx`     |      括号尺寸需手动调整      |
 | $f \mathopen{} \left( \dfrac{x^2}{2} \right) dx$ | `f \mathopen{} \left( \dfrac{x^2}{2} \right) dx` |   需手动插入 `\mathopen{}`   |
 
-### physics
+### [`physics` 宏包](https://ctan.org/pkg/physics)<a href id="physics"></a>
 
-### siunitx
+### [`siunitx` 宏包](https://ctan.org/pkg/siunitx)<a href id="siunitx"></a>
+
 ```latex
 $ \SI[<options>]{<number>}[<preunit>]{<unit>} $
 $ R = \SI{8.3144598(48)}{J.mol^{-1}.K^{-1}} $
@@ -149,32 +151,31 @@ $ R = \SI{8.3144598(48)}{\joule\per\kelvin\per\mole} $
 
 ## 代码高亮
 
-### minted + pygments
+### [`minted` 宏包](https://ctan.org/pkg/minted)<a href id="minted"></a>
 
-- [minted](https://ctan.org/pkg/minted) 是 LaTeX 宏包，若完整安装了 [TeX Live](#TeX-Live)，则无需单独安装。
-- pygments 是 Python 第三方包，一般需要单独安装：
+使用此宏包需安装 [`pygments`](https://pygments.org/)：
 
 ```shell
 pip  install pygments  # for python2
 pip3 install pygments  # for python3
 ```
 
-### 插入外部代码文件
-- [import 宏包](https://ctan.org/pkg/import)用于插入文件。
-- [minted 宏包](https://ctan.org/pkg/minted)用于代码高亮。
-- 二者混用可能会引发路径错误，修复方案可参考《[宏包 import 对 minted 无效](https://zhuanlan.zhihu.com/p/39117864)》。
+### [`import` 宏包](https://ctan.org/pkg/import)<a href id="import"></a>
+- [`import` 宏包](#import)用于插入文件。
+- [`minted` 宏包](#minted)用于代码高亮。
+- 二者混用可能会引发路径错误，修复方案可参考《[`import` 对 `minted` 无效](https://zhuanlan.zhihu.com/p/39117864)》。
 
 ## 绘图
 
-### tikz
+### [`tikz` 宏包](https://ctan.org/pkg/tikz)
 
-# LyX<a name="LyX"></a>
+# LyX<a href id="LyX"></a>
 
 [LyX](https://lyx.org) 是一款开源、支持*所见即所思*的 LaTeX 前端，兼具 LaTeX 排版效果优美和 Word *所及即所得*的优势。
 
 先完整安装 [TeX Live](#TeX-Live)，再安装 [LyX](https://www.lyx.org/Download)。二者都安装好后，在 LyX【首选项】中设置环境变量 `PATH` 以确保 `xelatex` 等命令能够被 LyX 搜索到。
 
-## 中文支持<a name="LyX-中文支持"></a>
+## 中文支持<a href id="LyX-中文支持"></a>
 
 新建一个 LyX 文档，其【文档类】可任选，然后进入【文档】→【首选项】进行如下设置：
 
@@ -183,20 +184,20 @@ pip3 install pygments  # for python3
 3. 【语言】→【文件编码】→【其他】→【Unicode (XeTeX) (utf8)】
 4. 【字体】→【使用非 TeX 字体（通过 XeTeX/LuaTeX）】
 
-## 字体设置<a name="LyX-字体设置"></a>
+## 字体设置<a href id="LyX-字体设置"></a>
 
-[CTeX 系列文档类](https://ctan.org/pkg/ctex)及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [fontspec 宏包](#fontspec)。
-如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [unicode-math 宏包](#unicode-math)。
+[CTeX 文档类](#ctex)及《[LyX 中文支持](#LyX-中文支持)》一节第 4 步的【使用非 TeX 字体】都会自动加载 [`fontspec` 宏包](#fontspec)。
+如果进一步勾选【数学：非 TeX 字体默认值】，则还会自动加载 [`unicode-math` 宏包](#unicode-math)。
 
 如果要进行更精细的字体设置，则不应勾选【使用非 TeX 字体】，而是在【LaTeX 导言区】中手动加载[字体设置](#字体设置)宏包。
 
-## 代码高亮<a name="LyX-代码高亮"></a>
+## 代码高亮<a href id="LyX-代码高亮"></a>
 
 进入【文档】→【首选项】进行如下设置：
 
 1. 【程序列表】→【语法高亮支持包】→【Minted】。
 
-2. 【程序列表】→【空白处】可以设置 minted 宏包参数，例如：
+2. 【程序列表】→【空白处】可以设置 [`minted` 宏包](#minted)参数，例如：
 
    ```latex
    style=xcode
@@ -217,7 +218,7 @@ pip3 install pygments  # for python3
 3. 【包含类别】选择【程序列表】。
 4. 【更多参数】右侧的空白处添加语言，例如  `language=python`。
 
-# MathJax<a name="MathJax"></a>
+# MathJax<a href id="MathJax"></a>
 
 ## 常用链接
 
@@ -310,4 +311,11 @@ window.MathJax = {
   }
 };
 ```
+
+## 特殊字符转义
+
+- 在 [Markdown](../markdown.md) 中，同一行里成对的 `_` 或 `*` 均表示**强调 (emphasize)**。
+- 在 TeX 中，单个字符 `_` 的语义为**下标 (subscript)**。
+
+某些 Markdown 解析器不能正确地将*行内公式*中的上述字符按 TeX 语义解析，此时应以转义字符 `\_` 及 `\*` 代替之。
 
