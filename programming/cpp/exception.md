@@ -105,7 +105,7 @@ C++ 语言提供的**异常 (exception)** 机制是一种应用级[异常控制�
 
 template <int N>
 class Array {
-  int _a[N];
+  int a_[N];
  public:
   int size() const noexcept {  // 不会抛出异常的操作应当用 noexcept 标识
     return N;
@@ -115,7 +115,7 @@ class Array {
       // 如果发生下标越界，则抛出一个 std::out_of_range 对象
       throw std::out_of_range("The given index is out of range.");
     }
-    return _a[i];
+    return a_[i];
   }
 };
 ```
@@ -199,35 +199,43 @@ struct Points {
 
 ```cpp
 #include <cassert>
-#include <iostream>
+#include <cstdlib>
 
 void Use(int* a, int n) {
   for (int i = 0; i != n; ++i) {
     a[i] = i;
-    std::cout << a[i] << ' ';
   }
-  std::cout << std::endl;
 }
 
 int main(int argc, const char* argv[]) {
   assert(argc > 1);
-  int n = atoi(argv[1]);
+  int n = std::atoi(argv[1]);
   auto a = new int[n];  // 获取资源
   Use(a, n);            // 使用资源
   delete[] a;           // 释放资源
 }
 ```
-如果在 `Use()` 中增加越界检查，则它抛出的异常可能使 `main()` 中的 `delete` 语句无法被执行，从而造成内存泄露：
+
+如果在 `Use()` 中增加可能抛出异常的操作，则它抛出的异常可能使 `main()` 中的 `delete[]` 语句无法被执行，从而造成内存泄露：
+
 ```cpp
+#include <cassert>
+#include <cstdlib>
+#include <stdexcept>
+
 void Use(int* a, int n) {
-  for (int i = 0; i != n; ++i) {
-    if (i < 0 or i >= n) {
-      throw std::out_of_range("The given index is out of range.");
-    }
+  for (int i = 0; i != n; ++i)
     a[i] = i;
-    std::cout << a[i] << ' ';
-  }
-  std::cout << std::endl;
+  if (std::rand() % 2)
+    throw std::runtime_error("Bad Luck!");
+}
+
+int main(int argc, const char* argv[]) {
+  assert(argc > 1);
+  int n = std::atoi(argv[1]);
+  auto a = new int[n];  // 获取资源
+  Use(a, n);            // 使用资源，可能抛出异常
+  delete[] a;           // 释放资源，可能不被执行
 }
 ```
 
@@ -238,43 +246,45 @@ void Use(int* a, int n) {
 标准库设施（容器、[智能指针](./memory/smart_pointers.md)）普遍采用 RAII 来管理动态资源。
 
 利用 RAII，[上面](#资源泄露)的例子可以改写为以下形式：
+
 ```cpp
 #include <cassert>
-#include <iostream>
+#include <cstdlib>
 #include <stdexcept>
 
 template <class T>
 class Array {
-  T* _a;
-  const int _n;
+  T* a_;
+  const int n_;
  public: 
-  explicit Array(int n) : _a(new T[n]), _n(n) { }
-  ~Array() noexcept { delete[] _a; }
-  int size() const noexcept { return _n; }
+  explicit Array(int n)
+      : a_(new T[n]), n_(n) {
+  }
+  ~Array() noexcept {
+    delete[] a_;
+  }
+  int size() const noexcept {
+    return n_;
+  }
   int& operator[](int i) {
-    if (i < 0 or i >= _n) {
+    if (i < 0 or i >= n_) {
       throw std::out_of_range("The given index is out of range.");
     }
-    return _a[i];
+    return a_[i];
   }
 };
 
-void Use(Array<int>& a) {
-  for (int i = 0; i != a.size(); ++i) {
-    if (i < 0 or i >= a.size()) {
-      throw std::out_of_range("The given index is out of range.");
-    }
-    a[i] = i;
-    std::cout << a[i] << ' ';
+void Use(Array<int>& a, int n) {
+  for (int i = 0; i != n; ++i) {
+    a[i] = i;  // 若 n >= n_，则 operator[] 抛出异常
   }
-  std::cout << std::endl;
 }
 
 int main(int argc, const char* argv[]) {
   assert(argc > 1);
   int n = atoi(argv[1]);
   auto a = Array<int>(n);  // 创建对象时获取资源
-  Use(a);  // 使用资源，可能会抛出异常
+  Use(a, n + std::rand() % 2);  // 使用资源，可能会抛出异常
   // 无论是否抛出异常，离开作用域前都会析构对象，释放资源
 }
 ```
