@@ -25,7 +25,7 @@ func(argument);     // 根据 ArguType 推断 ParaType
   - 也可以是**左值表达式 (lvalue expression)**，例如由变量名构成的表达式，变量本身可以是任何类型。
 
 编译器通过比较 `ParaType` 与 `ArguType` 来推断 `T`：
-> 1. 忽略 `ArguType` 的 RCV 属性，其中 R、C、V 分别表示：左值或*右值引用*、*顶层 `const`*、*顶层 `volatile`*。
+> 1. 忽略 `ArguType` 的 RCV 属性，其中 R、C、V 分别表示：*引用属性*、*顶层 `const` 属性*、*顶层 `volatile` 属性*。
 > 2. 将上一步所得类型与 `ParaType` 比较，以所需修饰符最少的类型作为 `T`。
 
 为方便讨论，这里先定义一组变量，变量名的含义在注释中用大写字母给出：
@@ -43,7 +43,7 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 
 ## `ParaType` 不是指针或引用
 这条情况对应于**传值调用 (pass-by-value)**：
-函数内部所使用的对象是 `argument` 的*独立副本*，因此 `argument` 的*顶层 `const`* 及*顶层 `volatile`* 属性对这个*独立副本*没有影响。
+函数内部所使用的对象是 `argument` 的*独立副本*，因此 `argument` 的*顶层 `const` 属性* 及*顶层 `volatile` 属性* 对这个*独立副本*没有影响。
 
 ### `ParaType = T`
 推断过程及结果如下：
@@ -59,12 +59,12 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 | `pi`  | `int *`      |         |          | `int *`      |
 | `pci` | `int const *` |             |                  | `int const *` |
 | `cpi` | `int * const` |  | `int *`      | `int *`      |
-| `cpci` | `int const * const` | | `int const *` | `int *` |
+| `cpci` | `int const * const` | | `int const *` | `int const *` |
 
 ### `ParaType = const T`
 （这里的 `const T` 也可以写成 `T const`）
 
-推断过程及 `T` 的推断结果与上一种情形相同，只是 `ParaType` 多出一个*顶层 `const`* 属性。
+推断过程及 `T` 的推断结果与上一种情形相同，只是 `ParaType` 多出一个*顶层 `const` 属性*。
 
 ## `ParaType` 为指针
 此时 `ArguType` 必须是指针（或对指针的引用）。 
@@ -80,12 +80,12 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 | `cpci` | `int const * const` | `int const *` | `int const *` | `int const` |
 
 ### `ParaType = T * const`
-推断过程及 `T` 的推断结果与 `ParaType = T *` 的情形相同，只是 `ParaType` 多出一个 *顶层 `const`* 属性。
+推断过程及 `T` 的推断结果与 `ParaType = T *` 的情形相同，只是 `ParaType` 多出一个*顶层 `const` 属性*。
 
 ### `ParaType = T const *`
 （这里的 `T const *` 也可以写成 `const T *`）
 
-此时，`ArguType` 的 *底层 `const`* 属性已体现在 `ParaType` 中，因此 `T` 的推断结果不含这个 *底层 `const`* 属性：
+此时，`ArguType` 的*底层 `const` 属性*已体现在 `ParaType` 中，因此 `T` 的推断结果不含这个*底层 `const` 属性*：
 
 | `argument` | `ArguType`    | 忽略 RCV | `T const *`   | `T`   |
 | ----: | ------------ | --------------- | -------------- | ----- |
@@ -97,14 +97,14 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 ### `ParaType = T const * const`
 （这里的 `T const * const` 有可以写成 `const T * const`）
 
-推断过程及 `T` 的推断结果与 `ParaType = T const *` 或 `ParaType = const T *` 的的情形相同，只是 `ParaType` 多出一个*顶层 `const`* 属性。
+推断过程及 `T` 的推断结果与 `ParaType = T const *` 或 `ParaType = const T *` 的的情形相同，只是 `ParaType` 多出一个*顶层 `const` 属性*。
 
 ## `ParaType` 为引用
 
 此时 `ArguType` 可以是任意类型。 
 
 ### `ParaType = T &`
-此时 `argument` 必须是*左值表达式*。如果它含有 *顶层 `const`* 或 *底层 `const`* 属性，则会被推断为 `T` 的一部分：
+此时 `argument` 必须是*左值表达式*。如果它含有*顶层或底层 `const` 属性*，则会被推断为 `T` 的一部分：
 
 | `argument` | `ArguType`    | `ParaType` | `T`          |
 | ----: | ------------ | ------------- | ------------ |
@@ -115,15 +115,15 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 | `cpi` | `int * const` | `int * const &` | `int * const` |
 | `cpci` | `int const * const` | `int const * const &` | `int const * const` |
 
-最后两行是推断结果含*顶层 `const`* 属性的例子：
-- `argument` 是带有*顶层 `const`* 属性的指针，即这个指针*本身*是 `const`。
-- `parameter` 是对 *`const` 指针的引用*，这个 `const` 成为了*底层 `const`* 属性。
-- 因此 `T` 的推断结果中含有 `argument` 的*顶层 `const`* 属性。
+最后两行是推断结果含*顶层 `const` 属性*的例子：
+- `argument` 是带有*顶层 `const` 属性*的指针，即这个指针*本身*是 `const`。
+- `parameter` 是对 *`const` 指针的引用*，这个 `const` 成为了*底层 `const` 属性*。
+- 因此 `T` 的推断结果中含有 `argument` 的*顶层 `const` 属性*。
 
 ### `ParaType = T const &`
 （这里的 `T const &` 也可以写成 `const T &`）
 
-此时 `argument` 可以是任意表达式。如果它含有*底层 `const`* 属性，则会被推断为 `T` 的一部分，而*顶层 `const`* 属性则会被忽略：
+此时 `argument` 可以是任意表达式。如果它含有*底层 `const` 属性*，则会被推断为 `T` 的一部分，而*顶层 `const` 属性*则会被忽略：
 
 | `argument` | `ArguType`    | `T const &`          | `T`          |
 | ----- | ------------ | ------------------- | ------------ |
@@ -150,19 +150,19 @@ const int * const cpci = &i;  // Const Ptr to Const Int
 
 根据以上规则，`argument` 可以是任意类型：
 
-| `argument` | `ArguType`    | 表达式类型 | `T`           |
-| ----: | ------------ | :-----------: | ----- |
-| `0`   | `int`        | R  | `int`         |
-| `i`   | `int`        | L | `int &`        |
-| `ci`  | `int const`  | L | `int const &`  |
-| `ri` | `int &` | L | `int &` |
-| `rci` | `int const &` | L | `int const &` |
-| `rri` | `int &&` | L | `int &` |
-| `pi`  | `int *`       | L | `int * &`       |
-| `pci` | `int const *` | L | `int const * &` |
-| `cpi` | `int * const` | L | `int * const &` |
-| `cpci` | `int const * const` | L | `int const * const &` |
-| `std::move(i)` | `int &&` | R | `int` |
+| `argument` | `ArguType`    | 表达式类型 | `T`           | `T &&` |
+| ----: | ------------ | :-----------: | ----- | ----- |
+| `0`   | `int`        | R  | `int`         | `int &&` |
+| `std::move(i)` | `int &&` | R | `int` | `int &&` |
+| `i`   | `int`        | L | `int &`        | `int &` |
+| `ci`  | `int const`  | L | `int const &`  | `int const &` |
+| `ri` | `int &` | L | `int &` | `int &` |
+| `rci` | `int const &` | L | `int const &` | `int const &` |
+| `rri` | `int &&` | L | `int &` | `int &` |
+| `pi`  | `int *`       | L | `int * &`       | `int * &` |
+| `pci` | `int const *` | L | `int const * &` | `int const * &` |
+| `cpi` | `int * const` | L | `int * const &` | `int * const &` |
+| `cpci` | `int const * const` | L | `int const * const &` | `int const * const &` |
 
 万能引用几乎总是与 `std::forward<T>()` 配合使用，以达到**完美转发 (perfect forward)** 函数实参的目的。
 这里的*完美*是指：避免不必要的拷贝或移动，并且保留函数实参的所有类型信息（包括 RCV 属性）。

@@ -69,6 +69,16 @@ remove_reference_t<T>&& move(T&& t) {
 
 ## `std::forward` 的实现
 定义在 `<utility>` 中的函数模板 `std::forward` 用于*完美转发实参*，即*保留函数实参的所有类型信息（含引用属性）*。
+
+```cpp
+#include <utility>
+
+template<class T>
+void foo_wrapper(T&& argu/* always lvalue */) {
+  foo(std::forward<T>(argu)); // Forward as lvalue or as rvalue, depending on T
+}
+```
+
 借助于 [`std::remove_reference`](#remove_reference) 和[引用折叠](./type_deduction.md#collapse)机制可以给出它的一种实现：
 
 ```cpp
@@ -315,7 +325,7 @@ template<typename T>
 std::ostream& print(std::ostream& os, const T& t) {
   return os << t;
 }
-// 『变参』版本
+// 『变参』版本，置于『非变参』版本之后：
 template <typename T, typename... Args>
 std::ostream& print(std::ostream& os, const T& t, const Args&... rest) {
   os << t << ", ";

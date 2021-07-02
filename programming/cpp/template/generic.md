@@ -1,5 +1,5 @@
 ---
-title: 泛型编程
+ssttitle: 泛型编程
 ---
 
 # 函数模板
@@ -48,7 +48,9 @@ inline T min(const T&, const T&);
 ## 显式模板实参
 ```cpp
 template <typename T1, typename T2, typename T3>
-T1 sum(T2, T3);
+T1 sum(T2 x, T3 y) {
+  return x + y;
+}
 ```
 这里的 `T2` 和 `T3` 可以由*函数实参*推断，而 `T1` 必须*显式*给出：
 ```cpp
@@ -76,30 +78,31 @@ func(compare);       // 错误：T 无法被唯一地确定
 # 类模板
 
 ```cpp
-template <typename T> class Blob {
+template <typename T>
+class Blob {
  public:
   typedef T value_type;
   typedef typename std::vector<T>::size_type size_type;
   Blob();
   Blob(std::initializer_list<T> il);
   size_type size() const {
-    return data->size();
+    return data_->size();
   }
   bool empty() const {
-    return data->empty();
+    return data_->empty();
   }
   void push_back(const T& t) {
-    data->push_back(t);
+    data_->push_back(t);
   }
   void push_back(T&& t) {
-    data->emplace_back(std::move(t));
+    data_->emplace_back(std::move(t));
   }
   void pop_back();
   T& back();
   T& operator[](size_type i);
  private:
-  std::shared_ptr<std::vector<T>> data;
-  // throws msg if data[i] is not valid:
+  std::shared_ptr<std::vector<T>> data_;
+  // throws msg if data_->at(i) is not valid:
   void check(size_type i, const std::string& msg) const;
 };
 ```
@@ -113,34 +116,35 @@ template <typename T> class Blob {
 ```cpp
 template <typename T>
 void Blob<T>::check(size_type i, const std::string& msg) const {
-  if (i >= data->size())
+  if (i >= data_->size())
     throw std::out_of_range(msg);
 }
 template <typename T>
 T& Blob<T>::back() {
   check(0, "back on empty Blob");
-  return data->back();
+  return data_->back();
 }
 template <typename T>
 T& Blob<T>::operator[](size_type i) {
   check(i, "subscript out of range");
-  return (*data)[i];
+  return (*data_)[i];
 }
 template <typename T>
 void Blob<T>::pop_back() {
   check(0, "pop_back on empty Blob");
-  data->pop_back();
+  data_->pop_back();
 }
 ```
 
 ### 在外部定义构造函数
 ```cpp
 template <typename T>
-Blob<T>::Blob() : data(std::make_shared<std::vector<T>>()) {
+Blob<T>::Blob()
+    : data_(std::make_shared<std::vector<T>>()) {
 }
 template <typename T>
 Blob<T>::Blob(std::initializer_list<T> il)
-    : data(std::make_shared<std::vector<T>>(il)) {
+    : data_(std::make_shared<std::vector<T>>(il)) {
 }
 ```
 使用第二个构造函数时，*初始化列表的元素类型*必须与*模板类型实参*兼容：
@@ -157,16 +161,16 @@ template <typename T>
 class Foo {
  public:
   static std::size_t count() {
-    return ctr;
+    return count_;
   }
  private:
-  static std::size_t ctr;
+  static std::size_t count_;
 };
 ```
 而每个*静态数据成员*都有且仅有一个*定义*。因此，类模板的*静态数据成员*应当像*成员函数*一样，在类的外部给出唯一的定义：
 ```cpp
 template <typename T>
-size_t Foo<T>::ctr = 0;  // 定义并初始化 ctr
+std::size_t Foo<T>::count_ = 0;  // 定义并初始化 count_
 ```
 
 ## 使用类模板名
@@ -178,28 +182,33 @@ size_t Foo<T>::ctr = 0;  // 定义并初始化 ctr
 template <typename T>
 class BlobPtr/* BlobPtr 是类模板名，BlobPtr<T> 才是类型名 */ {
  public:
-  BlobPtr() : curr(0) {}
-  BlobPtr(Blob<T>& a, size_t sz = 0) : wptr(a.data), curr(sz) {}
+  BlobPtr()
+      : curr_(0) {
+  }
+  BlobPtr(Blob<T>& a, std::size_t sz = 0)
+      : wptr_(a.data_), curr_(sz) {
+  }
   T& operator*() const {
-    auto p = check(curr, "dereference past end");
-    return (*p)[curr];  // (*p) is the vector to which this object points
+    auto sptr = check(curr_, "dereference past end");
+    return (*sptr)[curr_];  // (*sptr) is the vector to which this object points
   }
   // 返回值类型写为 BlobPtr& 而不是 BlobPtr<T>&
-  BlobPtr& operator++();
-  BlobPtr& operator--();
+  BlobPtr& operator++(int);
+  BlobPtr& operator--(int);
+
  private:
   // check returns a shared_ptr to the vector if the check succeeds 
   std::shared_ptr<std::vector<T>> check(std::size_t, const std::string&) const;
   // store a weak_ptr, which means the underlying vector might be destroyed 
-  std::weak_ptr<std::vector<T>> wptr;
-  std::size_t curr;  // current position within the array
+  std::weak_ptr<std::vector<T>> wptr_;
+  std::size_t curr_;  // current position within the array
 };
 ```
 其中，自增自减运算符的返回值类型可以写为 `BlobPtr&` 而不是 `BlobPtr<T>&`，这是因为在类模板作用域内，编译器将*类模板名*视为带有模板实参的*类型名*：
 ```cpp
 // 相当于
-BlobPtr<T>& operator++();
-BlobPtr<T>& operator--();
+BlobPtr<T>& operator++(int);
+BlobPtr<T>& operator--(int);
 ```
 
 ### 在外部引用类名
@@ -250,8 +259,11 @@ partNo<string> books;
 ### 一一对应的模板友元
 ```cpp
 // 前置声明:
-template <typename T> class BlobPtr;
-template <typename T> class Blob;
+template <typename T>
+class BlobPtr;
+
+template <typename T>
+class Blob;
 
 template <typename T>
 bool operator==(const Blob<T>&, const Blob<T>&);
@@ -311,28 +323,28 @@ class Bar {
 为*普通类*定义*函数成员模板*：
 
 ```cpp
-class DebugDelete {
+#include <cstdio>
+class MyDeleter {
  public:
-  DebugDelete(std::ostream& s = std::cerr)
+  MyDeleter(std::ostream& s = std::cerr)
       : os(s) {
   }
   template <typename T> void operator()(T* p) const {
-    os << "deleting unique_ptr" << std::endl;
+    printf("deleting %p\n", p);
     delete p; 
   }
  private:
   std::ostream& os;
 };
 ```
-`DebugDelete` 型的对象可以用于替代 `delete` 运算符：
+`MyDeleter` 型的对象可以用于替代 `delete` 运算符：
 
 ```cpp
 int* ip = new int;
-DebugDelete()(ip);  // 临时对象
+MyDeleter()(ip);  // 临时对象
 
-DebugDelete del;
-double* dp = new double;
-std::unique_ptr<int, DebugDelete> dp(new int, del);
+MyDeleter del;
+std::unique_ptr<int, MyDeleter> dp(new int, del);
 ```
 
 ## 类模板的成员模板
@@ -353,7 +365,7 @@ class Blob {
 template <typename T>
 template <typename Iter>
 Blob<T>::Blob(Iter b, Iter e)
-    : data(std::make_shared<std::vector<T>>(b, e)) {
+    : data_(std::make_shared<std::vector<T>>(b, e)) {
 }
 ```
 
@@ -462,8 +474,8 @@ C++ 程序的[构建](../make/README.md)过程可以笼统分为以下两步：
    - 对于*类模板*，必须显式地指定模板实参。
 2. 用*模板实参*替换*模板形参*，定义出具体的类或函数。
 3. 将其编译为目标码：
-   - 编译器（通常）会为源文件中的每一种模板实参（组合）生成一个独立的**实例 (instance)**，对应于目标文件中的一段目标码。
-   - 编译器（通常）只会为那些被使用了的成员函数生成实例。
+   - 对于函数模板，编译器（通常）会为源文件中的每一种模板实参组合生成一个独立的**实例 (instance)**，对应于目标文件中的一段目标码。
+   - 对于类模板，编译器（通常）只会为那些被使用了的成员函数生成实例。
 
 ## 显式实例化 (C++11)
 对于一个模板，必须知道其*定义*才能进行实例化。
@@ -519,7 +531,7 @@ template int compare(const int&, const int&);
 template <typename T>
 int compare(const T&, const T&);
 // 【版本二】用于比较两个 字符串字面值 或 字符数组：
-template <size_t N, size_t M>
+template <std::size_t N, std::size_t M>
 int compare(const char (&)[N], const char (&)[M]);
 ```
 在第二个例子中，模板形参 `T` 被推断为 `const char*`，因此比较的是两个*地址*：
@@ -557,26 +569,26 @@ struct hash;
 定义 `std::hash` 的特例 `std::hash<Key>`，必须提供：
 
 - 重载的*调用运算符*：`std::size_t operator()(const Key&) const noexcept`
-- 两个类型成员：`argment_type` 和 `result_type`，自 C++17 起淘汰。
+- 两个类型成员：`argument_type` 和 `result_type`，自 C++17 起淘汰。
 - 默认构造函数：`std::hash<Key>()`，可以采用隐式定义的版本。
 - 拷贝构造函数：`std::hash<Key>(std::hash<Key> const&)`，可以采用隐式定义的版本。
 
-假设有一个自定义类型 `Key`：
+假设有一个自定义类型 `MyKey`：
 ```cpp
-class Key {
+class MyKey {
  public:
   std::size_t hash() const noexcept;
 }
-bool operator==(const Key& lhs, const Key& rhs);  // Key 必须支持 == 运算符
+bool operator==(const MyKey& lhs, const MyKey& rhs);  // MyKey 必须支持 == 运算符
 ```
 则 `std::hash<Key>` 可以定义为
 ```cpp
 namespace std {
 template <>
-struct hash<Key> {
-  typedef Key argment_type;
+struct hash<MyKey> {
+  typedef Key argument_type;
   typedef size_t result_type;
-  size_t operator()(const Key& key) const noexcept {
+  size_t operator()(const MyKey& key) const noexcept {
     return key.hash();
   }
   // 默认构造函数 和 拷贝构造函数 采用隐式定义的版本
@@ -587,7 +599,7 @@ struct hash<Key> {
 ### 部分特例化
 **部分特例化 (Partial Specialization)** 又译作**偏特化**：为类模板指定*部分模板实参*或*模板形参的部分属性*，所得结果依然是类模板。
 
-[模板元编程](./metaprogramming.md)中常用的 [`std::remove_reference`](./metaprogramming.md#remove_reference) 就是通过一系列偏特化（只指定`模板形参的一部分属性`）来实现*消除引用*语义的：
+[模板元编程](./metaprogramming.md)中常用的 [`std::remove_reference`](./metaprogramming.md#remove_reference) 就是通过一系列偏特化（只指定*模板形参的部分属性*）来实现*消除引用*语义的：
 
 ```cpp
 // 原始版本：
