@@ -74,7 +74,6 @@ class Base {
 };
 class Derived : public Base {
   friend void visit(Derived& d);
-  friend void visit(Base& b);
   int private_;  // 派生类的 private 成员
 };
 // ✅ 可以通过『派生类对象』访问『基类的 protected 成员』:
@@ -132,7 +131,7 @@ class Derived : private Base {
 
 ## 静态类型与动态类型
 - **静态 (static)** 类型：一个变量在*声明*时所使用的类型，或者一个表达式的计算结果的类型，在**编译期 (compile-time)** 就可以确定。
-- **动态 (dynamic)** 类型：是指一个变量或表达式所代表的内存中的实际对象的类型，可能要到**运行期 (run-time)** 才能够确定。
+- **动态 (dynamic)** 类型：一个变量或表达式所代表的内存中的实际对象的类型，可能要到**运行期 (run-time)** 才能够确定。
 
 只有*指针*或*引用*的动态类型*可能*与静态类型不同。
 
@@ -296,7 +295,7 @@ int main() {
 
 ## `final`
 自 C++11 起，在基类中的虚函数形参列表（包括形参列表后的 `const` 修饰符）后加上关键词 `final`，
-表示禁止派生类**重写 (override)** 该虚函数：
+表示*禁止派生类重写*该虚函数：
 
 ```cpp
 class Shape {

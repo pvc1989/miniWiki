@@ -11,37 +11,40 @@ title: 运算符重载
 程序员只能对已有的运算符进行**重载 (overload)**，而不能创造新的运算符；在重载时，只能修改形参类型，而不能改变形参个数。
 
 下面以 `Point` 为例，为其重载运算符：
+
 ```cpp
 // point.h
 #include <iostream>
 class Point {
-  friend bool operator==(const Point& lhs, const Point& rhs);
-  friend bool operator< (const Point& lhs, const Point& rhs);
+  friend std::istream& operator>>(std::istream& is, Point& point);
  public:
-  Point(double x = 0.0, double y = 0.0)
-      : _x(x), _y(y) {
+  explicit Point(double x = 0.0, double y = 0.0)
+      : x_(x), y_(y) {
   }
   // 赋值运算符
-  Point& Point::operator=(double const (array&) [2]);
+  Point& operator=(double const (array&) [2]);
+  // 复合赋值运算符
+  Point& operator+=(const Point& rhs);
   // 下标运算符
-  double& operator[](int i);
+        double& operator[](int i);
   const double& operator[](int i) const;
   // 类型转换运算符
   explicit operator bool() const;
   // 普通方法
   const double& x() const {
-    return _x;
+    return x_;
   }
   const double& y() const {
-    return _y;
+    return y_;
   }
  private:
-  double _x;
-  double _y;
+  double x_;
+  double y_;
+  static constexpr Point kOrigin;
 };
 // 读写运算符
 std::ostream& operator<<(std::ostream& os, const Point& point);
-std::istream& operator>>(std::istream& is, Point& point);
+std::istream& operator>>(std::istream& is,       Point& point);
 // 算术运算符
 Point operator+(const Point& lhs, const Point& rhs);
 // 关系运算符
@@ -49,6 +52,7 @@ bool operator==(const Point& lhs, const Point& rhs);
 bool operator!=(const Point& lhs, const Point& rhs);
 bool operator< (const Point& lhs, const Point& rhs);
 ```
+
 ```cpp
 // point.cpp
 #include "point.h"
@@ -66,7 +70,7 @@ constexpr Point Point::kOrigin;
 #include "point.h"
 #include <iostream>
 std::ostream& operator<<(std::ostream& os, const Point& point) {
-  os << '(' << point.x_ << ", " << point.y_ << ')';
+  os << '(' << point.x() << ", " << point.y() << ')';
   return os;
 }
 ```
@@ -77,7 +81,7 @@ std::ostream& operator<<(std::ostream& os, const Point& point) {
 #include "point.h"
 #include <iostream>
 std::istream& operator>>(std::istream& is, Point& point) {
-  is >> point.x_ >> point._y;
+  is >> point.x_ >> point.y_;
   if (!is)
     point = Point();  // 输入失败，恢复到默认状态
   return is;
@@ -90,13 +94,14 @@ std::istream& operator>>(std::istream& is, Point& point) {
 ## 算术运算符
 **算术 (arithmetic)** 运算符通常返回一个新的对象（或代理）。
 
-对于定义了[算术运算符](#算术运算符)和相应的[复合赋值运算符](复合赋值运算符)的类，应当将算术运算委托给[复合赋值运算符](复合赋值运算符)，这样可以避免将非成员的[算术运算符](#算术运算符)声明为 `friend`：
+对于定义了[复合赋值运算符](#复合赋值运算符)的类，应当将算术运算委托给[复合赋值运算符](#复合赋值运算符)，这样可以避免将非成员的[算术运算符](#算术运算符)声明为 `friend`：
+
 ```cpp
 // point.cpp
 #include "point.h"
 Point operator+(const Point& lhs, const Point& rhs) {
   Point sum = lhs;
-  sum += rhs;
+  sum += rhs;  // 调用 Point& Point::operator+=(const Point& rhs);
   return sum;
 }
 ```
@@ -115,13 +120,13 @@ Point operator+(const Point& lhs, const Point& rhs) {
 // point.cpp
 #include "point.h"
 bool operator==(const Point& lhs, const Point& rhs) {
-  return lhs.x_ == rhs.x_ && lhs.y_ == rhs._y;
+  return lhs.x() == rhs.x() && lhs.y() == rhs.y();
 }
 bool operator!=(const Point& lhs, const Point& rhs) {
   return !(lhs == rhs);
 }
 bool operator<(const Point& lhs, const Point& rhs) {
-  return lhs.x_ < rhs.x_ || lhs.x_ == rhs.x_ && lhs.y_ < rhs._y;
+  return lhs.x() < rhs.x() || lhs.x() == rhs.x() && lhs.y() < rhs.y();
 }
 ```
 
@@ -141,6 +146,7 @@ Point& Point::operator=(double const (array&) [2]) {
   return *this;
 }
 ```
+
 ```cpp
 // client.cpp
 #include "point.h"
@@ -159,16 +165,16 @@ point = array;
 #include <cassert>
 double& Point::operator[](int i) {
   if (i == 0)
-    return _x;
+    return x();
   if (i == 1)
-    return _y;
+    return y();
   assert(false);
 }
 const double& Point::operator[](int i) const {
   if (i == 0)
-    return _x;
+    return x();
   if (i == 1)
-    return _y;
+    return y();
   assert(false);
 }
 ```
@@ -184,13 +190,14 @@ class PointBuilder {
   PointBuilder(double x, double y)
       : base_point_(x, y) {
   }
-  Point operato()(double x, double y) {
+  Point operator()(double x, double y) {
     return Point(x + base_point_.x(), y + base_point_.y());
   }
  private:
   Point base_point_;
 }
 ```
+
 ```cpp
 // client.cpp
 #include "point.h"
@@ -225,6 +232,7 @@ class PointHandle {
   Point* point_;
 };
 ```
+
 ```cpp
 // client.cpp
 #include "point.h"
@@ -239,7 +247,7 @@ assert(point_handle->x() == (*point_handle)[0]);
 // point.cpp
 #include "point.h"
 Point::operator bool() const {
-  return x_ != 0.0 || y_ != 0.0;
+  return x() != 0.0 || y() != 0.0;
 }
 ```
 
@@ -262,6 +270,13 @@ assert(point == true);
 # 通常重载为方法成员
 
 ## 复合赋值运算符
+
+```cpp
+Point& Point::operator+=(const Point& that) {
+  this->x_ += that.x();
+  this->y_ += that.y();
+}
+```
 
 ## 自增自减运算符
 如果要自增运算符 `operator++`（或自减运算符 `operator--`），通常定义两个版本：
