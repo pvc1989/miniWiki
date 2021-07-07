@@ -381,7 +381,7 @@ float dotprod(float x[8], float y[8]) {
 
 ## 4.6. 实际缓存器体系
 
-- **指令缓存 (i-cache)**：只缓存指令，通常只读，故更简单。
+- **指令缓存 (i-cache)**：只缓存指令，通常只读，故更简单。<a href id="i-cache"></a>
 - **数据缓存 (d-cache)**：只缓存数据。
 - **统一缓存 (unified-cache)**：二者兼顾。
 
