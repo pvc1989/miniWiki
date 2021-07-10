@@ -235,7 +235,7 @@ $$
 注意到守恒项 $\Mat{U}$ 中的 $\rho$ 可以被提出：
 
 $$
-\Mat{U}=\rho\Mat{W} \impliedby \Mat{W}\coloneqq\begin{bmatrix}1 \\ \vec{u} \\ e_{0}\end{bmatrix}
+\Mat{U}=\rho\Mat{W} \impliedby \Mat{W}\coloneqq\begin{bmatrix}1 \\ \Vec{u} \\ e_{0}\end{bmatrix}
 $$
 
 故[守恒型积分方程组](#守恒型)中的[物质导数](#物质导数)可移入积分号内，由此即得**非守恒型积分方程组**：
