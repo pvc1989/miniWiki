@@ -358,11 +358,15 @@ coeffs {
 
 OpenFOAM 所使用的网格，由位于 `constant/polyMesh` 中的一组文件来描述：
 
-- 【`points`】共 `nPoints` 项，第 `i` 项形如 `(3 1 0.05)`，表示第 `i` 号 `Point` 的坐标。
+- 【`points`】共 `nPoints` 项，第 `i` 项形如 `(3.2 1.5 0.05)`，表示第 `i` 号 `Point` 的坐标。
 - 【`faces`】共 `nFaces` 项，第 `i` 项形如 `4(21 53 604 25)`，表示第 `i` 号 `Face` 所含 `Point`s 的数量及编号。
 - 【`owner`】共 `nFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `Face` 的**所有者 (owner)**。
-- 【`neighbour`】共 `nInternalFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `InternalFace` 的**邻居 (neighbour)**。
-- 【`boundary`】共 `nPatches` 项，第 `i` 项形如 `movingWall { type patch; nFaces 20; startFace 760; }`，表示第 `i` 号 `Patch` 的名称。
+- 【`neighbour`】共 `nInternalFaces` 项，第 `i` 项为某个 `Cell` 的编号，它是第 `i` 号 `InternalFace` 的**邻居 (neighbour)**，即与 owner 相对的另一侧 `Cell`。
+- 【`boundary`】共 `nPatches` 项，第 `i` 项形如 `movingWall { type patch; nFaces 20; startFace 761; }`，表示第 `i` 号 `Patch` 的
+  - 名称，此处为 `movingWall`；
+  - 类型，此处为 `patch`（还可以是 `symmetryPlane`、`empty`、`wedge`、`cyclic`、`wall`、`processor` 之一）；
+  - 所含 `Face`s 的数量，此处为 `20`；
+  - 第一个 `Face` 的编号，此处为 `761`（其后 `Face`s 的编号依次为  `762, 763, ..., 780`）。
 
 ## `blockMesh`
 
