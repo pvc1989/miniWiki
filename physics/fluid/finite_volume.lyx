@@ -1749,7 +1749,7 @@ U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})
  为自变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
 \begin_inset Formula 
 \[
-\tilde{U}_{i+1/2}^{n}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近\,}(0,0)
+\widetilde{U}^{n}_{i+1/2}(\xi/\tau)\qquad\forall(\xi,\tau)\,\text{充分接近}\,(0,0)
 \]
 
 \end_inset
@@ -1775,11 +1775,11 @@ U(x,t_{n})=\bar{U}_{i}^{n}\qquad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})
 \end_inset
 
  内的全局解，记为 
-\begin_inset Formula $\tilde{U}^{n}(x,t)$
+\begin_inset Formula $\widetilde{U}^{n}(x,t)$
 \end_inset
 
 。除了极简单的情况，通常 
-\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
 \end_inset
 
  在各个控制体内已不再是常数。
@@ -1880,17 +1880,17 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_inset
 
 ，Godunov 引入的第一个方案是对精确解 
-\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
 \end_inset
 
  在控制体 
-\begin_inset Formula $(x_{i+1/2},x_{i+1/2})$
+\begin_inset Formula $(x_{i-1/2},x_{i+1/2})$
 \end_inset
 
  内取平均，即引入定义（并直接计算）
 \begin_inset Formula 
 \[
-\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{U}^{n}(x,t_{n+1})\dd{x}
+\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1904,7 +1904,7 @@ reference "sec:有限体积：近似 Riemann 解"
 
 \begin_layout Standard
 这种方法有一个显著缺点：积分的计算需根据 
-\begin_inset Formula $\tilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
 \end_inset
 
  的具体形式（函数图象通常为折线）分段完成。
@@ -1932,7 +1932,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_inset
 
  时刻各局部 Riemann 问题的解构成的）全局解 
-\begin_inset Formula $\tilde{U}^{n}$
+\begin_inset Formula $\widetilde{U}^{n}$
 \end_inset
 
  替换，并在时段 
@@ -1942,7 +1942,7 @@ reference "sec:有限体积：近似 Riemann 解"
  上积分，从而得到离散形式的守恒律
 \begin_inset Formula 
 \begin{equation}
-\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\tilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
 \end{equation}
 
 \end_inset
@@ -1952,7 +1952,7 @@ reference "sec:有限体积：近似 Riemann 解"
 
 \begin_layout Itemize
 注意到 
-\begin_inset Formula $\tilde{U}^{n}$
+\begin_inset Formula $\widetilde{U}^{n}$
 \end_inset
 
  在 
@@ -1962,7 +1962,7 @@ reference "sec:有限体积：近似 Riemann 解"
  时刻的初始条件是分段常值函数：
 \begin_inset Formula 
 \[
-\tilde{U}^{n}(x,t_{n})\coloneqq\bar{U}_{i}^{n}\qquad\forall x\in E_{i}
+\widetilde{U}^{n}(x,t_{n})\coloneqq\bar{U}_{i}^{n}\qquad\forall x\in E_{i}
 \]
 
 \end_inset
@@ -1974,7 +1974,7 @@ reference "sec:有限体积：近似 Riemann 解"
  时刻的均值
 \begin_inset Formula 
 \[
-\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{U}^{n}(x,t_{n+1})\dd{x}
+\bar{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1989,7 +1989,7 @@ reference "eq:有限体积：Godunov：离散"
  的第一个积分可以化简为
 \begin_inset Formula 
 \[
-\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\tilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}=\left(\bar{U}_{i}^{n+1}-\bar{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
 \]
 
 \end_inset
@@ -2005,7 +2005,7 @@ reference "eq:有限体积：Godunov：离散"
  为控制面处通量的时间平均值：
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\tilde{U}^{n}(x_{i+1/2},t)\right)\dd{t}
+F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x_{i+1/2},t)\right)\dd{t}
 \]
 
 \end_inset
@@ -2022,13 +2022,13 @@ reference "sec:有限体积：Riemann"
 \end_inset
 
 的解不发生干涉），被积函数中的 
-\begin_inset Formula $\tilde{U}^{n}(x_{i+1/2},t)\coloneqq\tilde{U}_{i+1/2}^{n}(0/(t-t_{n}))$
+\begin_inset Formula $\widetilde{U}^{n}(x_{i+1/2},t)\coloneqq\widetilde{U}^{n}_{i+1/2}(0/(t-t_{n}))$
 \end_inset
 
  为常量，因此该积分平均值就是
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}=\mathopen{F}\left(\tilde{U}_{i+1/2}^{n}(0)\right)
+F_{i+1/2}^{n}=\mathopen{F}\left(\widetilde{U}^{n}_{i+1/2}(0)\right)
 \]
 
 \end_inset
@@ -2043,7 +2043,7 @@ reference "eq:有限体积：Godunov：离散"
  的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\tilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
 \]
 
 \end_inset
@@ -2062,7 +2062,7 @@ reference "eq:有限体积：Godunov：离散"
 ，即得改进的 Godunov 格式：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{F_{i+1/2}^{n}-F_{i-1/2}^{n}}{x_{i+1/2}-x_{i-1/2}}\left(t_{n+1}-t_{n}\right)\qquad F_{i\pm1/2}^{n}=\mathopen{F}\left(\tilde{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
+\boxed{\bar{U}_{i}^{n+1}=\bar{U}_{i}^{n}-\frac{F_{i+1/2}^{n}-F_{i-1/2}^{n}}{x_{i+1/2}-x_{i-1/2}}\left(t_{n+1}-t_{n}\right)\qquad F_{i\pm1/2}^{n}=\mathopen{F}\left(\widetilde{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
 \end{equation}
 
 \end_inset
@@ -2106,7 +2106,7 @@ reference "eq:有限体积：守恒型格式：一维"
 精确解
 \color inherit
 计算近似通量 
-\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq\mathopen{F}\left(\tilde{U}_{i\pm1/2}^{n}(0)\right)$
+\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq\mathopen{F}\left(\widetilde{U}_{i\pm1/2}^{n}(0)\right)$
 \end_inset
 
 ，即得式-
@@ -2308,11 +2308,11 @@ status open
 
 \begin_layout Itemize
 调用 Riemann 求解器，得到自相似解 
-\begin_inset Formula $\tilde{U}_{\vec{a}}^{n}(\nu/\tau)$
+\begin_inset Formula $\widetilde{U}_{\vec{a}}^{n}(\nu/\tau)$
 \end_inset
 
  及法向通量 
-\begin_inset Formula $F_{\nu}^{n}(\vec{a})=\mathopen{F_{\nu}}\left(\tilde{U}_{\vec{a}}^{n}(\pm0)\right)$
+\begin_inset Formula $F_{\nu}^{n}(\vec{a})=\mathopen{F_{\nu}}\left(\widetilde{U}_{\vec{a}}^{n}(\pm0)\right)$
 \end_inset
 
 。
@@ -2331,7 +2331,7 @@ status open
 \end_inset
 
  代替，即 
-\begin_inset Formula $F_{\nu}^{n}\qty(A_{k})=\mathopen{F_{\nu}}\left(\tilde{U}_{A_{k}}^{n}(\pm0)\right)$
+\begin_inset Formula $F_{\nu}^{n}\qty(A_{k})=\mathopen{F_{\nu}}\left(\widetilde{U}_{A_{k}}^{n}(\pm0)\right)$
 \end_inset
 
 。
