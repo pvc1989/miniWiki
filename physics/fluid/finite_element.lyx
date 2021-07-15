@@ -1,0 +1,1573 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize b5paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+有限单元
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:有限单元"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+直线段 (
+\family typewriter
+Line
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Standard
+利用坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\xi)=\frac{1-\xi}{2}\vec{x}_{A}+\frac{1+\xi}{2}\vec{x}_{B}\coloneqq\frac{\vec{x}_{A}+\vec{x}_{B}}{2}+\frac{\vec{x}_{B}-\vec{x}_{A}}{2}\xi\qquad\xi\in[-1,+1]
+\]
+
+\end_inset
+
+可以将任意直线段 
+\begin_inset Formula $AB$
+\end_inset
+
+ 上的
+\color blue
+线积分 (line integral)
+\color inherit
+ 化为
+\color blue
+标准区间
+\color inherit
+上的
+\color blue
+定积分 (definite integral)
+\color inherit
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{A}^{B}\phi(\vec{x})\,\vert\dd{\vec{x}}\vert=\int_{-1}^{+1}\phi(\xi)\,\vert\underline{J}_{\vec{x}\to\xi}\vert\dd{\xi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+长度缩放系数
+\begin_inset Formula 
+\[
+\vert\underline{J}\vert=\left\vert \dv{\vec{x}}{\xi}\right\vert =\left\vert \frac{\vec{x}_{B}-\vec{x}_{A}}{2}\right\vert \coloneqq\frac{\vert AB\vert}{2}
+\]
+
+\end_inset
+
+为常量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+于是，长度缩放系数 
+\begin_inset Formula $\vert\underline{J}\vert$
+\end_inset
+
+ 可以被提到积分号外，剩下的积分由
+\color blue
+标准区间上的 Gauss–Legendre 求积 (quadrature)
+\color inherit
+ 公式给出近似：
+\begin_inset Formula 
+\[
+\int_{A}^{B}\phi(\vec{x})\dd(AB)=\frac{\vert AB\vert}{2}\int_{-1}^{+1}\phi(\xi)\dd{\xi}\approx\frac{\vert AB\vert}{2}\sum_{q=1}^{Q}\phi\qty(\xi_{q})\,w_{q}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\xi_{q}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+ 分别为第 
+\begin_inset Formula $q$
+\end_inset
+
+ 个
+\color blue
+积分点 (quadrature point)
+\color inherit
+ 的
+\color blue
+局部坐标 (local coordinate)
+\color inherit
+ 与相应的
+\color blue
+权重 (weight)
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:间断有限元：数值积分：直线段"
+
+\end_inset
+
+。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:间断有限元：数值积分：直线段"
+
+\end_inset
+
+标准区间上的 Gauss–Legendre 积分
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+精度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+积分点个数 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+局部坐标 
+\begin_inset Formula $\xi_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+权重 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\pm\sqrt{1/3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+0\\
+\pm\sqrt{3/5}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+8/9\\
+5/9
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\pm\sqrt{\left(3-2\sqrt{6/5}\right)/7}\\
+\pm\sqrt{\left(3+2\sqrt{6/5}\right)/7}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(18+\sqrt{30}\right)/36\\
+\left(18-\sqrt{30}\right)/36
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+0\\
+\pm\sqrt{\left(5-2\sqrt{10/7}\right)/9}\\
+\pm\sqrt{\left(5+2\sqrt{10/7}\right)/9}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+128/225\\
+\left(322+13\sqrt{70}\right)/900\\
+\left(322-13\sqrt{70}\right)/900
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\begin_layout Section
+三角形 (
+\family typewriter
+Trig
+\family default
+)
+\end_layout
+
+\begin_layout Standard
+利用坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\lambda_{A},\lambda_{B})=\lambda_{A}\vec{x}_{A}+\lambda_{B}\vec{x}_{B}+\lambda_{C}\vec{x}_{C}\qquad\begin{cases}
+\vec{\lambda}\coloneqq(\lambda_{A},\lambda_{B})\in[0,1]^{2}\\
+\lambda_{A}+\lambda_{B}+\lambda_{C}=1
+\end{cases}
+\]
+
+\end_inset
+
+可以将任意三角形 
+\begin_inset Formula $\triangle ABC$
+\end_inset
+
+ 上的
+\color blue
+面积分 (surface integral)
+\color inherit
+ 可以化为
+\color blue
+标准三角形
+\color inherit
+上的
+\color blue
+二重积分 (double integral)
+\color inherit
+：
+\begin_inset Formula 
+\[
+\iint_{\triangle ABC}\phi(\vec{x})=\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\vec{x}(\lambda_{A},\lambda_{B}))\,\vert\underline{J}\vert\dd{\lambda_{A}}\dd{\lambda_{B}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+面积缩放系数
+\begin_inset Formula 
+\[
+\vert\underline{J}\vert\coloneqq\sqrt{\det(\underline{J}^{\dagger}\cdot\underline{J})}=2\vert\triangle ABC\vert
+\]
+
+\end_inset
+
+为常量，其中 Jacobian 矩阵
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在三维问题中定义为
+\begin_inset Formula 
+\[
+\underline{J}\coloneqq\begin{bmatrix}\pdv*{x}{\lambda_{A}} & \pdv*{x}{\lambda_{B}}\\
+\pdv*{y}{\lambda_{A}} & \pdv*{y}{\lambda_{B}}\\
+\pdv*{z}{\lambda_{A}} & \pdv*{z}{\lambda_{B}}
+\end{bmatrix}=\begin{bmatrix}x_{A}-x_{C} & x_{B}-x_{C}\\
+y_{A}-y_{C} & y_{B}-y_{C}\\
+z_{A}-z_{C} & z_{B}-z_{C}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在二维问题中定义为
+\begin_inset Formula 
+\[
+\underline{J}\coloneqq\begin{bmatrix}\pdv*{x}{\lambda_{A}} & \pdv*{x}{\lambda_{B}}\\
+\pdv*{y}{\lambda_{A}} & \pdv*{y}{\lambda_{B}}
+\end{bmatrix}=\begin{bmatrix}x_{A}-x_{C} & x_{B}-x_{C}\\
+y_{A}-y_{C} & y_{B}-y_{C}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+于是，面积缩放系数 
+\begin_inset Formula $\vert\underline{J}\vert$
+\end_inset
+
+ 可以被提到积分号外，剩下的积分由
+\color blue
+三角形上的 Gauss–Legendre 求积
+\color inherit
+公式给出近似：
+\begin_inset Formula 
+\[
+\iint_{\triangle ABC}\phi(\vec{x})=\vert\underline{J}\vert\int_{0}^{1}\int_{0}^{1-\lambda_{B}}\phi(\vec{\lambda}_{q})\dd{\lambda_{A}}\dd{\lambda_{B}}\approx2\vert\triangle ABC\vert\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,w_{q}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vec{\lambda}_{q}\coloneqq(\lambda_{A},\lambda_{B})_{q}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+ 分别为第 
+\begin_inset Formula $q$
+\end_inset
+
+ 个
+\color blue
+积分点 (quadrature point)
+\color inherit
+ 的
+\color blue
+局部坐标 (local coordinates)
+\color inherit
+ 与相应的
+\color blue
+权重 (weight)
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:间断有限元：数值积分：三角形"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:间断有限元：数值积分：三角形"
+
+\end_inset
+
+标准三角形上的 Gauss–Legendre 积分
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+精度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+局部坐标 
+\begin_inset Formula $(\lambda_{A})_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+权重 
+\begin_inset Formula $2w_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+1/6\\
+1/2
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+3/10\\
+1/30
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(8-\sqrt{10}+\sqrt{38-44\sqrt{2/5}}\right)/18\\
+\left(8-\sqrt{10}-\sqrt{38-44\sqrt{2/5}}\right)/18
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(620+\sqrt{213125-53320\sqrt{10}}\right)/3720\\
+\left(620-\sqrt{213125-53320\sqrt{10}}\right)/3720
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+1/3\\
+\left(6-\sqrt{15}\right)/21\\
+\left(6+\sqrt{15}\right)/21
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+9/40\\
+\left(155-\sqrt{15}\right)/1200\\
+\left(155+\sqrt{15}\right)/1200
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+局部坐标
+\end_layout
+
+\end_inset
+
+表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:间断有限元：数值积分：三角形"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的局部坐标只给出了一个分量 
+\begin_inset Formula $\lambda_{A}$
+\end_inset
+
+，其他分量可由 
+\begin_inset Formula $\lambda_{A}+\lambda_{B}+\lambda_{C}=1$
+\end_inset
+
+ 及对称性
+\begin_inset Formula 
+\[
+(\lambda_{A}=\lambda_{B})\lor(\lambda_{B}=\lambda_{C})\lor(\lambda_{A}=\lambda_{C})
+\]
+
+\end_inset
+
+得到。例如：七点公式的完整形式为
+\begin_inset Formula 
+\[
+\begin{array}{ccccccc}
+q &  & \lambda_{A} & \lambda_{B} & \lambda_{C} &  & w\\
+1 &  & 1/3 & 1/3 & 1/3 &  & 9/40\\
+2 &  & a & a & 1-2a &  & c\\
+3 &  & a & 1-2a & a &  & c\\
+4 &  & 1-2a & a & a &  & c\\
+5 &  & b & b & 1-2b &  & d\\
+6 &  & b & 1-2b & b &  & d\\
+7 &  & 1-2b & b & b &  & d
+\end{array}\qquad\begin{array}{c}
+a=\left(6-\sqrt{15}\right)/21\\
+b=\left(6+\sqrt{15}\right)/21\\
+c=\left(155-\sqrt{15}\right)/1200\\
+d=\left(155+\sqrt{15}\right)/1200
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+权重
+\end_layout
+
+\end_inset
+
+表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:间断有限元：数值积分：三角形"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 将权重写成 
+\begin_inset Formula $2w_{q}$
+\end_inset
+
+，是为了方便与其他文献对照，后者通常将
+\color blue
+三角形上的 Gauss–Legendre 求积
+\color inherit
+公式定义为
+\begin_inset Formula 
+\[
+\iint_{\triangle ABC}\phi(\vec{x})\approx\vert\triangle ABC\vert\sum_{q=1}^{Q}\phi(\vec{\lambda}_{q})\,W_{q}
+\]
+
+\end_inset
+
+两种定义以 
+\begin_inset Formula $W_{q}=2w_{q}$
+\end_inset
+
+ 相联系。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+四边形 (
+\family typewriter
+Quad
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Standard
+利用坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\xi,\eta)=\vec{x}_{1}N_{1}(\xi,\eta)+\vec{x}_{2}N_{2}(\xi,\eta)+\vec{x}_{3}N_{3}(\xi,\eta)+\vec{x}_{4}N_{4}(\xi,\eta)\qquad(\xi,\eta)\in[-1,+1]^{2}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{bmatrix}N_{1}\\
+N_{2}\\
+N_{3}\\
+N_{4}
+\end{bmatrix}=\frac{1}{4}\begin{bmatrix}(1-\xi)(1-\eta)\\
+(1+\xi)(1-\eta)\\
+(1+\xi)(1+\eta)\\
+(1-\xi)(1+\eta)
+\end{bmatrix}
+\]
+
+\end_inset
+
+可以将任意四边形 
+\begin_inset Formula $S_{ABCD}$
+\end_inset
+
+ 上的
+\color blue
+面积分 (surface integral)
+\color inherit
+ 化为
+\color blue
+标准二维区间
+\color inherit
+上的
+\color blue
+二重积分 (double integral)
+\color inherit
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{S_{ABCD}}f(\vec{x})=\int_{-1}^{+1}\int_{-1}^{+1}f(\vec{x}(\xi,\eta))\,\vert\underline{J}\vert\dd{\xi}\dd{\eta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+在二维空间中，以上坐标变换的面积缩放系数是一次多项式，即
+\begin_inset Formula 
+\[
+\vert\underline{J}\vert=\left\vert \frac{\partial(x,y)}{\partial(\xi,\eta)}\right\vert \coloneqq a\xi+b\eta+c
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{bmatrix}a\\
+b\\
+c
+\end{bmatrix}=\begin{bmatrix}\\
+\\
+\\
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+先计算 Jacobian 矩阵：
+\begin_inset Formula 
+\[
+\frac{\partial(x,y)}{\partial(\xi,\eta)}=\begin{bmatrix}\\
+\\
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\begin_layout Section
+三棱锥 (
+\family typewriter
+Tetra
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\begin_layout Section
+三棱柱 (
+\family typewriter
+Prism
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\begin_layout Section
+六面体 (
+\family typewriter
+Hexa
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Standard
+利用坐标变换
+\begin_inset Formula 
+\[
+\begin{bmatrix}x(\xi,\eta,\zeta)\\
+y(\xi,\eta,\zeta)\\
+z(\xi,\eta,\zeta)
+\end{bmatrix}=\sum_{i=1}^{8}\begin{bmatrix}x_{i}\\
+y_{i}\\
+z_{i}
+\end{bmatrix}N_{i}(\xi,\eta,\zeta)\qquad(\xi,\eta,\zeta)\in[-1,+1]^{3}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+N_{i}(\xi,\eta,\zeta)=\frac{1}{8}(1+\xi_{i}\xi)(1+\eta_{i}\eta)(1+\zeta_{i}\zeta)
+\]
+
+\end_inset
+
+即
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}N_{1}\\
+N_{2}\\
+N_{3}\\
+N_{4}\\
+N_{5}\\
+N_{6}\\
+N_{7}\\
+N_{8}
+\end{bmatrix}=\frac{1}{8}\begin{bmatrix}(1-\xi)(1-\eta)(1-\ensuremath{\zeta)}\\
+(1+\xi)(1-\eta)(1-\ensuremath{\zeta)}\\
+(1+\xi)(1+\eta)(1-\ensuremath{\zeta)}\\
+(1-\xi)(1+\eta)(1-\ensuremath{\zeta)}\\
+(1-\xi)(1-\eta)(1+\ensuremath{\zeta)}\\
+(1+\xi)(1-\eta)(1+\ensuremath{\zeta)}\\
+(1+\xi)(1+\eta)(1+\ensuremath{\zeta)}\\
+(1-\xi)(1+\eta)(1+\ensuremath{\zeta)}
+\end{bmatrix}
+\]
+
+\end_inset
+
+可以将任意六面体 
+\begin_inset Formula $V$
+\end_inset
+
+ 上的
+\color blue
+体积分
+\color inherit
+化为
+\color blue
+标准三维区间
+\color inherit
+上的
+\color blue
+三重积分
+\color inherit
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\iiint_{V}f(x,y,z)\dd{x}\dd{y}\dd{z}=\int_{-1}^{+1}\int_{-1}^{+1}\int_{-1}^{+1}f(x,y,z)\,\vert\underline{J}\vert\dd{\xi}\dd{\eta}\dd{\zeta}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+以上坐标变换的体积缩放系数是 
+\begin_inset Formula $\xi,\eta,\zeta$
+\end_inset
+
+ 的至多六次多项式，即
+\begin_inset Formula 
+\[
+\det\underline{J}=\left\vert \frac{\partial(x,y,z)}{\partial(\xi,\eta,\zeta)}\right\vert =\sum_{r,s,t=0,0,0}^{2,2,2}A_{r,s,t}\xi^{r}\eta^{s}\zeta^{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+先计算 Jacobian 矩阵：
+\begin_inset Formula 
+\[
+\underline{J}^{\dagger}\coloneqq\begin{bmatrix}\partial x/\partial\xi & \partial y/\partial\xi & \partial z/\partial\xi\\
+\partial x/\partial\eta & \partial y/\partial\eta & \partial z/\partial\eta\\
+\partial x/\partial\zeta & \partial y/\partial\zeta & \partial z/\partial\zeta
+\end{bmatrix}=\sum_{i=1}^{8}\begin{bmatrix}\partial N_{i}/\partial\xi\\
+\partial N_{i}/\partial\eta\\
+\partial N_{i}/\partial\zeta
+\end{bmatrix}\frac{\begin{bmatrix}x_{i} & y_{i} & z_{i}\end{bmatrix}}{8}=\sum_{i=1}^{8}\begin{bmatrix}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta)\\
+\eta_{i}(1+\xi_{i}\xi)(1+\zeta_{i}\zeta)\\
+\zeta_{i}(1+\xi_{i}\xi)(1+\eta_{i}\eta)
+\end{bmatrix}\frac{\begin{bmatrix}x_{i} & y_{i} & z_{i}\end{bmatrix}}{8}
+\]
+
+\end_inset
+
+各项均为 
+\begin_inset Formula $\xi,\eta,\zeta$
+\end_inset
+
+ 的二次多项式，故 
+\begin_inset Formula $\det\underline{J}=\det\underline{J}^{\dagger}$
+\end_inset
+
+ 至多为 
+\begin_inset Formula $\xi,\eta,\zeta$
+\end_inset
+
+ 的六次多项式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\begin_layout Section
+四棱锥 (
+\family typewriter
+Pyramid
+\family default
+)
+\end_layout
+
+\begin_layout Subsection
+数值积分
+\end_layout
+
+\begin_layout Subsection
+正交投影
+\end_layout
+
+\end_body
+\end_document
