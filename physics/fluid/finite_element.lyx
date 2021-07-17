@@ -1513,16 +1513,18 @@ N_{8}
 先计算 Jacobian 矩阵：
 \begin_inset Formula 
 \[
-\underline{J}^{\dagger}\coloneqq\begin{bmatrix}\partial x/\partial\xi & \partial y/\partial\xi & \partial z/\partial\xi\\
+\begin{aligned}\underline{J}^{\dagger} & =\begin{bmatrix}\partial x/\partial\xi & \partial y/\partial\xi & \partial z/\partial\xi\\
 \partial x/\partial\eta & \partial y/\partial\eta & \partial z/\partial\eta\\
 \partial x/\partial\zeta & \partial y/\partial\zeta & \partial z/\partial\zeta
 \end{bmatrix}=\sum_{i=1}^{8}\begin{bmatrix}\partial N_{i}/\partial\xi\\
 \partial N_{i}/\partial\eta\\
 \partial N_{i}/\partial\zeta
-\end{bmatrix}\frac{\begin{bmatrix}x_{i} & y_{i} & z_{i}\end{bmatrix}}{8}=\sum_{i=1}^{8}\begin{bmatrix}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta)\\
+\end{bmatrix}\frac{\begin{bmatrix}x_{i} & y_{i} & z_{i}\end{bmatrix}}{8}\\
+ & =\sum_{i=1}^{8}\begin{bmatrix}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta)\\
 \eta_{i}(1+\xi_{i}\xi)(1+\zeta_{i}\zeta)\\
 \zeta_{i}(1+\xi_{i}\xi)(1+\eta_{i}\eta)
 \end{bmatrix}\frac{\begin{bmatrix}x_{i} & y_{i} & z_{i}\end{bmatrix}}{8}
+\end{aligned}
 \]
 
 \end_inset
@@ -1551,6 +1553,160 @@ N_{8}
 
 \begin_layout Subsection
 正交投影
+\end_layout
+
+\begin_layout Standard
+将原始基函数的两两内积结果记为
+\begin_inset Formula 
+\[
+\underline{A}\coloneqq\begin{bmatrix}\langle\phi_{1}\vert\phi_{1}\rangle & \langle\phi_{1}\vert\phi_{2}\rangle & \cdots & \langle\phi_{1}\vert\phi_{n}\rangle\\
+ & \langle\phi_{2}\vert\phi_{2}\rangle & \cdots & \langle\phi_{2}\vert\phi_{n}\rangle\\
+ &  & \ddots & \vdots\\
+\mathrm{sym.} &  &  & \langle\phi_{n}\vert\phi_{n}\rangle
+\end{bmatrix}
+\]
+
+\end_inset
+
+将原始基函数与规范正交基函数之间的变换记为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{1}^{\mathrm{no}}\\
+\phi_{2}^{\mathrm{no}}\\
+\vdots\\
+\phi_{n}^{\mathrm{no}}
+\end{bmatrix}=\underbrace{\begin{bmatrix}S_{11}\\
+S_{21} & S_{22}\\
+\vdots &  & \ddots\\
+S_{n1} & S_{n2} & \cdots & S_{nn}
+\end{bmatrix}}_{\underline{S}}\begin{bmatrix}\phi_{1}\\
+\phi_{2}\\
+\vdots\\
+\phi_{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 为 
+\color blue
+Schmdit 矩阵
+\color inherit
+，计算过程如下（上标 o 表示
+\color blue
+正交化的 (orthogonalized)
+\color inherit
+，no 表示
+\color blue
+规范正交化的 (orthonormalized)
+\color inherit
+）：
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\phi_{1}^{\mathrm{no}}$
+\end_inset
+
+ 只含 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ 成分，故只需归一化：
+\begin_inset Formula 
+\[
+\phi_{1}^{\mathrm{no}}=\frac{\phi_{1}}{\Vert\phi_{1}\Vert}\qquad S_{11}=\frac{1}{\Vert\phi_{1}\Vert}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+获得 
+\begin_inset Formula $\left\{ \phi_{i}^{\mathrm{no}}\right\} _{i=1}^{k-1}$
+\end_inset
+
+（即 即 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 的前 
+\begin_inset Formula $k$
+\end_inset
+
+ 行）后，计算 
+\begin_inset Formula $\phi_{k}^{\mathrm{no}}$
+\end_inset
+
+ 需先作正交化：
+\begin_inset Formula 
+\[
+\phi_{k}^{\mathrm{o}}=\phi_{k}-\sum_{i=1}^{k-1}\phi_{i}^{\mathrm{no}}\langle\phi_{i}^{\mathrm{no}}\vert\phi_{k}\rangle
+\]
+
+\end_inset
+
+代入已知的 
+\begin_inset Formula $\phi_{i}^{\mathrm{no}}=\sum_{j=1}^{i}S_{ij}\phi_{j}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\begin{aligned}\phi_{k}^{\mathrm{o}}\coloneqq\sum_{l=1}^{i}S_{kl}^{\mathrm{o}}\phi_{l} & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\ip{\sum_{j=1}^{i}S_{ij}\phi_{j}}{\phi_{k}}\\
+ & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+S_{kl}^{\mathrm{o}}=\begin{cases}
+-\sum_{i=1}^{k-1}\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)S_{il} & l<k\\
+1 & l=k
+\end{cases}
+\]
+
+\end_inset
+
+再作用 
+\begin_inset Formula $\Vert\phi_{k}^{\mathrm{o}}\Vert$
+\end_inset
+
+ 除 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行，即归一化：
+\begin_inset Formula 
+\[
+S_{kl}=\frac{S_{kl}^{\mathrm{o}}}{\Vert\phi_{k}^{\mathrm{o}}\Vert}=\frac{S_{kl}^{\mathrm{o}}}{\sqrt{\sum_{i=1}^{k}\left(\sum_{j=1}^{i-1}2S_{jk}A_{ji}+S_{ik}A_{ii}\right)S_{ik}}}\qquad l=1,\dots,k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
