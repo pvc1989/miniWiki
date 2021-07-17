@@ -1574,10 +1574,10 @@ N_{8}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{bmatrix}\phi_{1}^{\mathrm{no}}\\
-\phi_{2}^{\mathrm{no}}\\
+\begin{bmatrix}\phi_{1}^{\mathrm{o.n.}}\\
+\phi_{2}^{\mathrm{o.n.}}\\
 \vdots\\
-\phi_{n}^{\mathrm{no}}
+\phi_{n}^{\mathrm{o.n.}}
 \end{bmatrix}=\underbrace{\begin{bmatrix}S_{11}\\
 S_{21} & S_{22}\\
 \vdots &  & \ddots\\
@@ -1599,19 +1599,21 @@ S_{n1} & S_{n2} & \cdots & S_{nn}
 \color blue
 Schmdit 矩阵
 \color inherit
-，计算过程如下（上标 o 表示
+，计算过程如下（上标 o.
+ 与 o.n.
+ 分别表示
 \color blue
-正交化的 (orthogonalized)
+正交化的 (Orthogonalized)
 \color inherit
-，no 表示
+ 与
 \color blue
-规范正交化的 (orthonormalized)
+正交归一化的 (OrthoNormalized)
 \color inherit
 ）：
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\phi_{1}^{\mathrm{no}}$
+\begin_inset Formula $\phi_{1}^{\mathrm{o.n.}}$
 \end_inset
 
  只含 
@@ -1621,7 +1623,7 @@ Schmdit 矩阵
  成分，故只需归一化：
 \begin_inset Formula 
 \[
-\phi_{1}^{\mathrm{no}}=\frac{\phi_{1}}{\Vert\phi_{1}\Vert}\qquad S_{11}=\frac{1}{\Vert\phi_{1}\Vert}
+\phi_{1}^{\mathrm{o.n.}}=\frac{\phi_{1}}{\Vert\phi_{1}\Vert}\qquad S_{11}=\frac{1}{\Vert\phi_{1}\Vert}
 \]
 
 \end_inset
@@ -1631,7 +1633,7 @@ Schmdit 矩阵
 
 \begin_layout Itemize
 获得 
-\begin_inset Formula $\left\{ \phi_{i}^{\mathrm{no}}\right\} _{i=1}^{k-1}$
+\begin_inset Formula $\left\{ \phi_{i}^{\mathrm{o.n.}}\right\} _{i=1}^{k-1}$
 \end_inset
 
 （即 即 
@@ -1643,25 +1645,25 @@ Schmdit 矩阵
 \end_inset
 
  行）后，计算 
-\begin_inset Formula $\phi_{k}^{\mathrm{no}}$
+\begin_inset Formula $\phi_{k}^{\mathrm{o.n.}}$
 \end_inset
 
  需先作正交化：
 \begin_inset Formula 
 \[
-\phi_{k}^{\mathrm{o}}=\phi_{k}-\sum_{i=1}^{k-1}\phi_{i}^{\mathrm{no}}\langle\phi_{i}^{\mathrm{no}}\vert\phi_{k}\rangle
+\phi_{k}^{\mathrm{o.}}=\phi_{k}-\sum_{i=1}^{k-1}\phi_{i}^{\mathrm{o.n.}}\langle\phi_{i}^{\mathrm{o.n.}}\vert\phi_{k}\rangle
 \]
 
 \end_inset
 
 代入已知的 
-\begin_inset Formula $\phi_{i}^{\mathrm{no}}=\sum_{j=1}^{i}S_{ij}\phi_{j}$
+\begin_inset Formula $\phi_{i}^{\mathrm{o.n.}}=\sum_{j=1}^{i}S_{ij}\phi_{j}$
 \end_inset
 
  得
 \begin_inset Formula 
 \[
-\begin{aligned}\phi_{k}^{\mathrm{o}}\coloneqq\sum_{l=1}^{i}S_{kl}^{\mathrm{o}}\phi_{l} & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\ip{\sum_{j=1}^{i}S_{ij}\phi_{j}}{\phi_{k}}\\
+\begin{aligned}\phi_{k}^{\mathrm{o.}}\coloneqq\sum_{l=1}^{i}S_{kl}^{\mathrm{o.}}\phi_{l} & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\ip{\sum_{j=1}^{i}S_{ij}\phi_{j}}{\phi_{k}}\\
  & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)
 \end{aligned}
 \]
@@ -1671,7 +1673,7 @@ Schmdit 矩阵
 因此
 \begin_inset Formula 
 \[
-S_{kl}^{\mathrm{o}}=\begin{cases}
+S_{kl}^{\mathrm{o.}}=\begin{cases}
 -\sum_{i=1}^{k-1}\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)S_{il} & l<k\\
 1 & l=k
 \end{cases}
@@ -1680,7 +1682,7 @@ S_{kl}^{\mathrm{o}}=\begin{cases}
 \end_inset
 
 再作用 
-\begin_inset Formula $\Vert\phi_{k}^{\mathrm{o}}\Vert$
+\begin_inset Formula $\Vert\phi_{k}^{\mathrm{o.}}\Vert$
 \end_inset
 
  除 
@@ -1694,7 +1696,7 @@ S_{kl}^{\mathrm{o}}=\begin{cases}
  行，即归一化：
 \begin_inset Formula 
 \[
-S_{kl}=\frac{S_{kl}^{\mathrm{o}}}{\Vert\phi_{k}^{\mathrm{o}}\Vert}=\frac{S_{kl}^{\mathrm{o}}}{\sqrt{\sum_{i=1}^{k}\left(\sum_{j=1}^{i-1}2S_{jk}A_{ji}+S_{ik}A_{ii}\right)S_{ik}}}\qquad l=1,\dots,k
+S_{kl}=\frac{S_{kl}^{\mathrm{o.}}}{\Vert\phi_{k}^{\mathrm{o.}}\Vert}=\frac{S_{kl}^{\mathrm{o.}}}{\sqrt{\sum_{i=1}^{k}\left(\sum_{j=1}^{i-1}2S_{jk}A_{ji}+S_{ik}A_{ii}\right)S_{ik}}}\qquad l=1,\dots,k
 \]
 
 \end_inset
