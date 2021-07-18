@@ -64,10 +64,10 @@ title: 首页
 ## [物理](./physics/README.md)
 
 - [理论力学](./physics/mechanics/README.md)
-- [电磁学与电动力学](./physics/electromagnetism/README.md)
+- [电动力学](./physics/electromagnetism/README.md)
 - [量子力学](./physics/quantum/README.md)
-- [热力学与统计物理](./physics/heat/README.lyx)
-- [流体力学（理论与计算）](./physics/fluid/README.md)
+- [统计力学](./physics/heat/README.lyx)
+- [流体力学](./physics/fluid/README.md)
 
 ## [算法](./algorithms/README.md)
 
@@ -90,10 +90,6 @@ title: 首页
 - 并行计算
   - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel)
   - [MPI](./programming/mpi/README.md)
-- 网格离散
-  - [CGNS](./programming/cgns/README.md)
-  - [Gmsh](./programming/gmsh/README.md)
-  - [VTK](./programming/vtk/README.md)
 - 构建工具
   - [Git](./programming/git.md)
   - [批量构建](./programming/cpp/make/README.md)
@@ -101,6 +97,13 @@ title: 首页
 - 开发环境
   - [Linux](./programming/linux/README.md)
   - [Docker](./programming/docker/README.md)
+- 网格表示
+  - [CGNS](./programming/cgns/README.md)
+  - [Gmsh](./programming/gmsh/README.md)
+  - [VTK](./programming/vtk/README.md)
+- 工程建模
+  - [SALOME](www.salome-platform.org)
+  - [Open CASCADE](https://www.opencascade.com)
 
 ## [文档](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
