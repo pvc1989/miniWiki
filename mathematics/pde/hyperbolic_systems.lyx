@@ -101,7 +101,7 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-双曲型系统的光滑解
+双曲型系统
 \end_layout
 
 \begin_layout Section
@@ -116,7 +116,7 @@ name "sec:微分方程：双曲型：单波：线性"
 \end_layout
 
 \begin_layout Subsection
-常系数线性平流
+线性平流
 \end_layout
 
 \begin_layout Question
@@ -138,7 +138,7 @@ name "prob:微分方程：双曲型：单波：线性"
 \end_inset
 
 寻找一阶可微的函数 
-\begin_inset Formula $u\colon\mathbb{R}(x)\times\mathbb{R}(t)\to\mathbb{R}(\underline{U})$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
 ，使其满足常系数
@@ -1118,7 +1118,7 @@ name "prob:微分方程：双曲型：单波：拟线性"
 \end_inset
 
 寻找一阶可微的函数 
-\begin_inset Formula $u\colon\mathbb{R}(x)\times\mathbb{R}(t)\to\mathbb{R}(\underline{U})$
+\begin_inset Formula $u(x,t)$
 \end_inset
 
 ，使其满足
@@ -4759,6 +4759,3717 @@ reference "thm:微分方程：双曲型：换元：特征向量"
 \begin_inset Formula 
 \[
 0=\ip{\grad\!_{\underline{U}}\phi(\underline{U})}{R_{i}(\underline{U})}=\overbrace{\underbrace{\begin{bmatrix}\pdv*{\phi}{U_{1}} & \cdots & \pdv*{\phi}{U_{n}}\end{bmatrix}}_{\langle\grad\!_{U}\phi\vert}\,\underline{J}_{\underline{U}\to\underline{U'}}}^{\langle\grad\!_{U'}\phi'\vert}\,\vert R'_{i}(\underline{U'})\rangle=\ip{\grad\!_{\underline{U'}}\phi'(\underline{U'})}{R'_{i}(\underline{U})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+守恒律系统
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:微分方程：守恒律"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：双曲型：光滑解的破裂"
+
+\end_inset
+
+》一节已指出：即使定解条件光滑，双曲型方程的光滑解也有可能
+\color blue
+破裂 (break)
+\color inherit
+，其实质是数学工具不足以描述物理过程。为了研究
+\color blue
+光滑解破裂后，物理过程如何发展
+\color inherit
+，必须将
+\color blue
+双曲型系统
+\color inherit
+收窄为
+\color blue
+守恒律系统
+\color inherit
+，并将
+\color blue
+光滑解
+\color inherit
+放宽为
+\color blue
+广义解
+\color inherit
+。
+\end_layout
+
+\begin_layout Subsection
+积分形式
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!~ law!~ in integral form
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+关于单个未知函数的守恒律称作
+\color blue
+标量守恒律 (scalar conservation law)
+\color inherit
+。最一般的
+\color blue
+标量守恒律
+\color inherit
+可以写成以下两种形式之一：
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\dv{t}\int_{\varOmega}U\dd{\varOmega}+\oint_{\partial\varOmega}\vec{\nu}\vdot\left(\vec{F}-\vec{u}_{\mathrm{CS}}U\right)\dd(\partial\varOmega)=0\\
+\int_{\varOmega}\partial_{t}U\dd{\varOmega}+\oint_{\partial\varOmega}\vec{\nu}\vdot\vec{F}\dd(\partial\varOmega)=0
+\end{gathered}
+\label{eq:微分方程：守恒律：标量：积分型}
+\end{equation}
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 表示空间中的某个（开）区域，称作
+\color blue
+控制体 (Control Volume, CV)
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ volume
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\partial\varOmega$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 的边界，称作
+\color blue
+控制面 (Control Surface, CS)
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+control!~ surface
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 表示控制面的外法线方向
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+希腊字母 
+\begin_inset Formula $\nu$
+\end_inset
+
+ 读作 nu，对应于英文字母 
+\begin_inset Formula $n$
+\end_inset
+
+，不要与英文字母 
+\begin_inset Formula $v$
+\end_inset
+
+ 混淆。
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{u}_{\mathrm{CS}}$
+\end_inset
+
+ 表示控制面 
+\begin_inset Formula $\partial\varOmega$
+\end_inset
+
+ 上某点的速度。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $U$
+\end_inset
+
+ 表示
+\color blue
+守恒变量 (conservation variable)
+\color inherit
+，通常为单位体积内某物理量的总和。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ 表示
+\color blue
+通量 (flux)
+\color inherit
+，通常为单位时间内穿过单位面积（固定）控制面的某物理量的总和。它可以分解为 
+\begin_inset Formula $\vec{F}=\sum_{k=1}^{n}\vec{e}_{k}F_{k}$
+\end_inset
+
+，其中 
+\begin_inset Formula $F_{k}$
+\end_inset
+
+ 具有向量分量属性。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+关于单个向量的守恒律称作
+\color blue
+向量守恒律 (vector conservation law)
+\color inherit
+。更一般的，有
+\color blue
+守恒律系统 (system of conservation laws)
+\color inherit
+，它含有若干个（标量或向量）守恒律。为了强调方程组属性：
+\end_layout
+
+\begin_layout Description
+守恒变量 可以用
+\color blue
+列矩阵 (column matrix) 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+
+\color inherit
+ 表示，其第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个（标量或向量）分量可以用 
+\begin_inset Formula $U_{i}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\ip{i}{U}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Description
+通量 可以用
+\color blue
+列矩阵向量 (vector of column matrices) 
+\begin_inset Formula $\vec{\vert F\rangle}\coloneqq\sum_{k=1}^{n}\vec{e}_{k}\vert F_{k}\rangle$
+\end_inset
+
+
+\color inherit
+ 表示，其中 
+\begin_inset Formula $\vert F_{k}\rangle$
+\end_inset
+
+ 是由若干标量或向量构成的列矩阵，其第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个（标量或向量）分量用 
+\begin_inset Formula $\ip{i}{F_{k}}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+按此记法，最一般的守恒律系统可以写成以下形式之一：
+\begin_inset Formula 
+\begin{equation}
+\dv{t}\int_{\varOmega}\vert U\rangle\dd{\varOmega}+\oint_{\partial\varOmega}\vec{\nu}\vdot\left(\vec{\vert F\rangle}-\vec{u}_{\mathrm{CS}}\vert U\rangle\right)\dd(\partial\varOmega)=\vert0\rangle\label{eq:微分方程：守恒律：系统：动体}
+\end{equation}
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\begin{gathered}\int_{\varOmega}\partial_{t}\vert U\rangle\dd{\varOmega}+\oint_{\partial\varOmega}\vec{\nu}\vdot\vec{\vert F\rangle}\dd(\partial\varOmega)=\vert0\rangle\\
+\partial_{t}\vert U\rangle+\divg\vec{\vert F\rangle}=\vert0\rangle
+\end{gathered}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+微分形式
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\vec{F}$
+\end_inset
+
+ 对空间变量 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 可微，则
+\color blue
+积分型守恒律
+\color inherit
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：积分型"
+
+\end_inset
+
+ 可借助 
+\color blue
+Gauss's 散度定理
+\color inherit
+化为
+\color blue
+微分型守恒律
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+conservation!~ law!~ in differential form
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}U+\divg\vec{F}=0\label{eq:微分方程：守恒律：标量：微分型}
+\end{equation}
+
+\end_inset
+
+实际上，数学文献通常不给出积分形式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：积分型"
+
+\end_inset
+
+，而是将上述微分方程
+\color blue
+定义
+\color inherit
+为守恒律；在光滑性要求无法被满足的地方，需将导数理解为广义导数。
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[守恒律系统]
+\end_layout
+
+\end_inset
+
+在三维空间中，微分型守恒律系统的直角坐标形式为
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\vert U\rangle+\partial_{x}\vert F_{x}\rangle+\partial_{y}\vert F_{y}\rangle+\partial_{z}\vert F_{z}\rangle=\vert0\rangle\label{eq:微分方程：守恒律：系统：三维}
+\end{equation}
+
+\end_inset
+
+在一维空间中，只有一个 
+\begin_inset Formula $\vert F_{k}\rangle$
+\end_inset
+
+ 非零，故可以省略其下标，
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：系统：三维"
+
+\end_inset
+
+ 退化为
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}\vert U\rangle+\partial_{x}\vert F\rangle=\vert0\rangle\label{eq:微分方程：守恒律：系统：一维}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[标量守恒律]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型"
+
+\end_inset
+
+ 是守恒律方程组 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：系统：三维"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的特殊情形，可以省略矩阵符号，从而有
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}U+\partial_{x}F_{x}+\partial_{y}F_{y}+\partial_{z}F_{z}=0
+\end{equation}
+
+\end_inset
+
+在一维空间中，可以进一步简化为
+\begin_inset Formula 
+\begin{equation}
+\partial_{t}U+\partial_{x}F=0\label{eq:微分方程：守恒律：标量：微分型：一维}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+跳跃条件
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:微分方程：守恒律：跳跃条件"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{subequations}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:微分方程：守恒律：跳跃条件"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+设间断面 
+\begin_inset Formula $S$
+\end_inset
+
+ 上任意一点的运动速度为
+\begin_inset Formula 
+\[
+\vec{s}=\vec{e}_{\nu}s_{\nu}+\vec{e}_{\tau}s_{\tau}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vec{e}_{\nu}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vec{e}_{\tau}$
+\end_inset
+
+ 分别为该点处的
+\color blue
+单位法向量
+\color inherit
+与
+\color blue
+单位切向量
+\color inherit
+，则满足守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：系统：动体"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 的守恒变量 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 及通量 
+\begin_inset Formula $\vec{\vert F\rangle}$
+\end_inset
+
+ 在间断面 
+\begin_inset Formula $S$
+\end_inset
+
+ 两侧的值满足如下
+\color blue
+跳跃条件 (jump condition)
+\color inherit
+（又名 
+\color blue
+Rankine–Hugoniot 条件
+\color inherit
+）
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+condition!jump ~!RankineHugoniot@Rankine–Hugoniot's ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\begin{equation}
+\left(\vert U_{+}\rangle-\vert U_{-}\rangle\right)s_{\nu}=\ket{F_{\nu+}}-\ket{F_{\nu-}}\qquad s_{\nu}\coloneqq\vec{e}_{\nu}\vdot\vec{s}\qquad\ket{F_{\nu\pm}}\coloneqq\vec{e}_{\nu}\vdot\vec{\vert F\rangle}_{\pm}\label{eq:微分方程：守恒律：跳跃条件：三维：方程组}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+取如下跟随 
+\begin_inset Formula $S$
+\end_inset
+
+ 移动的控制体 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+厚度 
+\begin_inset Formula $h$
+\end_inset
+
+ 为无穷小量，即
+\begin_inset Formula 
+\[
+\lim_{h\to0}\vec{u}_{\mathrm{CS}}=\vec{s}\qquad\lim_{h\to0}\int_{\varOmega}\vert U\rangle\dd{\varOmega}=\vert0\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+控制体壁面与 
+\begin_inset Formula $S$
+\end_inset
+
+ 垂直。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ 夹在顶面 
+\begin_inset Formula $S_{+}$
+\end_inset
+
+（其上有 
+\begin_inset Formula $\vec{\nu}=+\vec{e}_{\nu}$
+\end_inset
+
+）与底面 
+\begin_inset Formula $S_{-}$
+\end_inset
+
+（其上有 
+\begin_inset Formula $\vec{\nu}=-\vec{e}_{\nu}$
+\end_inset
+
+）之间，三者相互平行。
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+于是移动控制体 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 上的守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：系统：动体"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 退化为
+\begin_inset Formula 
+\[
+\int_{S_{+}\cup S_{-}}\vec{\nu}\vdot\left(\vec{\vert F\rangle}-\vec{s}\vert U\rangle\right)\dd(S_{+}\cup S_{-})=0
+\]
+
+\end_inset
+
+用 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 替换 
+\begin_inset Formula $\pm\vec{e}_{\nu}$
+\end_inset
+
+，并将积分区域收缩为一点，则以上积分式退化为 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维形式]
+\end_layout
+
+\end_inset
+
+在一维问题中，只有一个方向的向量分量非零，故可省略下标：
+\begin_inset Formula 
+\[
+\vec{e}_{\nu}=\vec{e}_{1}\qquad\vec{s}=\vec{e}_{1}s\qquad\vec{\vert F\rangle}=\vec{e}_{1}\vert F\rangle
+\]
+
+\end_inset
+
+跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：三维：方程组"
+
+\end_inset
+
+ 退化为
+\begin_inset Formula 
+\begin{equation}
+\left(\vert U_{+}\rangle-\vert U_{-}\rangle\right)s=\ket{F_{+}}-\ket{F_{-}}\label{eq:微分方程：守恒律：跳跃条件：一维：方程组}
+\end{equation}
+
+\end_inset
+
+对于一维标量守恒律，还可以进一步省略上式中的矩阵符号：
+\begin_inset Formula 
+\begin{equation}
+\left(U_{+}-U_{-}\right)s=\left(F_{+}-F_{-}\right)\label{eq:微分方程：守恒律：跳跃条件：一维：标量}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{subequations}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+广义解（弱解）
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:微分方程：守恒律：弱解"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[弱解]
+\end_layout
+
+\end_inset
+
+给定守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型：一维"
+
+\end_inset
+
+ 及
+\color blue
+分段光滑的 (piecewise smooth)
+\color inherit
+ 初始条件
+\begin_inset Formula 
+\[
+U(x_{0},t_{0})=U_{0}(x_{0})\qquad x_{0}\in(-\infty,\infty)
+\]
+
+\end_inset
+
+若存在 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ 可积的函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 对任意
+\color blue
+紧支的 (compact supported)
+\color inherit
+ 光滑函数 
+\begin_inset Formula $\phi(x,t)$
+\end_inset
+
+ 都满足
+\begin_inset Formula 
+\[
+\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U+\pdv{\phi}{x}F\right)\dd{x}\dd{t}+\int_{-\infty}^{+\infty}\phi(x_{0},t_{0})\,U_{0}(x_{0})\dd{x_{0}}=0
+\]
+
+\end_inset
+
+则称 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 为该初值问题的一个
+\color blue
+弱解 (weak solution)
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+solution!weak ~
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+所有光滑解都是弱解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于光滑解，可以利用分部积分，将 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的时间导数移动到 
+\begin_inset Formula $U$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{t}U\right)\dd{x}\dd{t} & =\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\left(\pdv{\phi U}{t}-\phi\pdv{U}{t}\right)\dd{t}\dd{x}\\
+\int_{-\infty}^{+\infty}\left(\int_{t_{0}}^{+\infty}\pdv{\phi U}{t}\dd{t}\right)\dd{x} & =\int_{-\infty}^{+\infty}\eval{(\phi U)}_{t=t_{0}}^{t=+\infty}\dd{x}=\int_{-\infty}^{+\infty}-\phi(x_{0},t_{0})\,U_{0}(x_{0})\dd{x_{0}}
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个等号忽略 
+\begin_inset Formula $t=+\infty$
+\end_inset
+
+ 所对应的项，是因为 
+\begin_inset Formula $\phi(t=+\infty,x)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+类似地，可以将 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的空间导数移动到 
+\begin_inset Formula $F$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi}{x}F\right)\dd{x}\dd{t} & =\int_{t_{0}}^{+\infty}\int_{-\infty}^{+\infty}\left(\pdv{\phi F}{x}-\phi\pdv{F}{x}\right)\dd{x}\dd{t}\\
+\int_{t_{0}}^{+\infty}\left(\int_{-\infty}^{+\infty}\pdv{\phi F}{x}\dd{x}\right)\dd{t} & =\int_{t_{0}}^{+\infty}\eval{(\phi F)}_{x=-\infty}^{x=+\infty}\dd{t}=0
+\end{aligned}
+\]
+
+\end_inset
+
+最后一个等号忽略 
+\begin_inset Formula $x=\pm\infty$
+\end_inset
+
+ 所对应的项，是因为 
+\begin_inset Formula $\phi(t,x=\pm\infty)=0$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Proof
+将以上结果代回弱解定义，即得
+\begin_inset Formula 
+\[
+\int_{-\infty}^{+\infty}\int_{t_{0}}^{+\infty}\phi\cdot\left(\partial_{t}U+\partial_{x}F\right)\dd{t}\dd{x}=0
+\]
+
+\end_inset
+
+由 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 的任意性可知 
+\begin_inset Formula $U$
+\end_inset
+
+ 的确是守恒律 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型：一维"
+
+\end_inset
+
+ 的解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+分段光滑且间断处满足跳跃条件的解都是弱解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+对于一维守恒律方程组，有类似的定义和结论：只需将 
+\begin_inset Formula $U$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+，将 
+\begin_inset Formula $F$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $\vert F\rangle$
+\end_inset
+
+。对于三维问题，也有类似的定义和结论：只需将 
+\begin_inset Formula $\partial_{x}F$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $\divg\vec{F}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\divg\vec{\vert F\rangle}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+熵条件
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Burgers]
+\end_layout
+
+\end_inset
+
+考虑以下 PDE
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+U\frac{\partial}{\partial x}\right)U=0\qquad(x,t)\in(-\infty,\infty)\times(0,\infty)
+\]
+
+\end_inset
+
+及 IC
+\begin_inset Formula 
+\[
+U(x,t=0)=\begin{cases}
+-1 & x<0\\
+0 & x=0\\
++1 & x>0
+\end{cases}
+\]
+
+\end_inset
+
+可以验证：
+\begin_inset Formula 
+\[
+U_{1}(x,t>0)=\begin{cases}
+-1 & x/t<-1\\
+x/t & x/t\in[-1,1]\\
++1 & x/t>+1
+\end{cases}\qquad U_{2}(x,t>0)=\begin{cases}
+-1 & x/t<-1\\
+0 & x/t\in[-1,1]\\
++1 & x/t>+1
+\end{cases}
+\]
+
+\end_inset
+
+都满足
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：守恒律：弱解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+的定义，且都满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
+
+\end_inset
+
+，但只有 
+\begin_inset Formula $U_{1}$
+\end_inset
+
+ 是合理的：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+将 PDE 修改为
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+U\frac{\partial}{\partial x}\right)U=\epsilon\frac{\partial^{2}U}{\partial x^{2}}\qquad\epsilon>0
+\]
+
+\end_inset
+
+IC 保持不变，则新初值问题有唯一的光滑解。
+\end_layout
+
+\begin_layout Itemize
+将 IC 修改为
+\begin_inset Formula 
+\[
+U(x,t=0)=\begin{cases}
+-1 & x<-\epsilon\\
+x/\epsilon & x\in[-\epsilon,\epsilon]\\
++1 & x>+\epsilon
+\end{cases}\qquad\epsilon>0
+\]
+
+\end_inset
+
+PDE 保持不变，则新初值问题可以由特征线法得到唯一的（分段光滑）解。
+\end_layout
+
+\begin_layout Itemize
+当 
+\begin_inset Formula $\epsilon\to0$
+\end_inset
+
+ 时，以上两个初值问题都回到原初值问题，并且它们的解都趋向于 
+\begin_inset Formula $U_{1}$
+\end_inset
+
+，因此 
+\begin_inset Formula $U_{1}$
+\end_inset
+
+ 是原初值问题唯一合理的解。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lax]
+\end_layout
+
+\end_inset
+
+一般的守恒律初值问题可能有多个
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：守恒律：弱解"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。为了从众多弱解中挑出真实的
+\color blue
+物理解
+\color inherit
+，Peter Lax 给出了以下
+\color blue
+几何熵条件
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+condition!entropy ~!Lax's ~
+\end_layout
+
+\end_inset
+
+：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+对于一维标量守恒律
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}+\frac{\partial F}{\partial x}=0\qquad\lambda(U)\coloneqq\frac{\partial F}{\partial U}
+\]
+
+\end_inset
+
+间断左右两侧的极限值 
+\begin_inset Formula $U_{-}$
+\end_inset
+
+ 与 
+\begin_inset Formula $U_{+}$
+\end_inset
+
+ 总是使特征线
+\color blue
+汇入 (run into)
+\color inherit
+ 或平行于间断轨迹：
+\begin_inset Formula 
+\[
+\lambda(U_{-})\ge s\ge\lambda(U_{+})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+对于一维守恒律系统
+\begin_inset Formula 
+\[
+\frac{\partial\vert U\rangle}{\partial t}+\frac{\partial\vert F\rangle}{\partial x}=\vert0\rangle\qquad\underline{A}(\underline{U})\coloneqq\frac{\partial\vert F\rangle}{\partial\vert U\rangle}
+\]
+
+\end_inset
+
+可以将 
+\begin_inset Formula $\underline{A}(\underline{U})$
+\end_inset
+
+ 的特征值按升序排列为
+\begin_inset Formula 
+\[
+\lambda_{1}(\underline{U})\le\cdots\le\lambda_{n}(\underline{U})
+\]
+
+\end_inset
+
+间断左右两侧的极限值总是使某一族特征线汇入或平行于间断轨迹：
+\begin_inset Formula 
+\[
+\lambda_{k}(\vert U_{-}\rangle)\ge s\ge\lambda_{k}(\vert U_{+}\rangle)\qquad k\in\left\{ 1,\dots,n\right\} 
+\]
+
+\end_inset
+
+例如第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族特征线
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\lambda_{1}(\vert U_{+}\rangle)\le\cdots\le\lambda_{k-1}(\vert U_{+}\rangle)\le\lambda_{k}(\vert U_{+}\rangle)\le s & \le\lambda_{k+1}(\vert U_{+}\rangle)\le\cdots\le\lambda_{n}(\vert U_{+}\rangle)\\
+\lambda_{1}(\vert U_{-}\rangle)\le\cdots\le\lambda_{k-1}(\vert U_{-}\rangle)\le s\le\lambda_{k}(\vert U_{-}\rangle) & \le\lambda_{k+1}(\vert U_{-}\rangle)\le\cdots\le\lambda_{n}(\vert U_{-}\rangle)
+\end{aligned}
+\label{eq:微分方程：守恒律：熵条件：方程组}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+借用气体动力学的术语，可以将弱解中的
+\color blue
+强间断
+\color inherit
+分类为
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+激波
+\begin_inset space \space{}
+\end_inset
+
+(shock
+\begin_inset space \space{}
+\end_inset
+
+wave) 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!shock wave
+\end_layout
+
+\end_inset
+
+几何上表现为特征线
+\color blue
+汇入
+\color inherit
+间断轨迹，物理上有物质（质量、动量、能量）穿过间断面，并伴有熵增。
+\end_layout
+
+\begin_layout Description
+接触间断
+\begin_inset space \space{}
+\end_inset
+
+(contact
+\begin_inset space \space{}
+\end_inset
+
+discontinuity) 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+几何上表现为特征线（微元）
+\color blue
+平行
+\color inherit
+于间断轨迹（微元），物理上没有物质（质量、动量、能量）穿过间断面。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Riemann 问题
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:微分方程：守恒律：Riemann 问题"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset nomenclature
+LatexCommand nomenclature
+symbol "RP"
+description "Riemann Problem"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Riemann!~ problem
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+一般形式
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\color blue
+Riemann 问题 (Riemann Problem, RP)
+\color inherit
+ 是一类特殊的守恒律系统
+\color blue
+初值问题 (Initial Value Problem, IVP)
+\color inherit
+：守恒变量的初始分布是分段光滑函数。特别地，若
+\color blue
+初始条件 (Initial Condition, IC)
+\color inherit
+ 只依赖于一个空间自变量、只含有一个间断点、在间断点两侧为常值，则称这样的 RP 为
+\color blue
+经典 (classical)
+\color inherit
+ RP。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+不失一般性，本节只讨论初始间断位于原点 
+\begin_inset Formula $(x_{0},t_{0})\coloneqq(0,0)$
+\end_inset
+
+ 的经典 Riemann 问题。守恒变量在 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ 处的值可以是未定义的，这种不确定性不会影响解析解，但可能会导致数值计算程序的 bug，为此可以将 
+\begin_inset Formula $U(0,0)$
+\end_inset
+
+ 取为 
+\begin_inset Formula $U_{-}$
+\end_inset
+
+ 与 
+\begin_inset Formula $U_{+}$
+\end_inset
+
+ 的均值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[标量守恒律 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：标量守恒律 Riemann 问题"
+
+\end_inset
+
+求分段光滑的函数 
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 满足 PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：标量：微分型：一维"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及 IC
+\begin_inset Formula 
+\[
+U(x,t=0)=\begin{cases}
+U_{-} & x<0\\
+U_{+} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $U_{-}$
+\end_inset
+
+ 与 
+\begin_inset Formula $U_{+}$
+\end_inset
+
+ 为常值标量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[守恒律系统 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：守恒律系统 Riemann 问题"
+
+\end_inset
+
+求分段光滑的函数矩阵 
+\begin_inset Formula $\vert U(x,t)\rangle$
+\end_inset
+
+ 满足 PDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：系统：一维"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及 IC
+\begin_inset Formula 
+\[
+\ket{U(x,t=0)}=\begin{cases}
+\vert U_{-}\rangle & x<0\\
+\vert U_{+}\rangle & x>0
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vert U_{-}\rangle$
+\end_inset
+
+ 与 
+\begin_inset Formula $\vert U_{+}\rangle$
+\end_inset
+
+ 为常值矩阵。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[自相似]
+\end_layout
+
+\end_inset
+
+若 PDE 及 IC 不随以下坐标变换
+\begin_inset Formula 
+\[
+(x,t)\to(\alpha x,\alpha t)\qquad\forall\alpha\ne0
+\]
+
+\end_inset
+
+而变化，则称该 IVP 是
+\color blue
+自相似的 (self-similar)
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+若 IVP 是自相似的，则它的解也是自相似的（不随以上坐标变换而变化）。
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+solution!self-similar ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+经典 Riemann 问题及其解都是自相似的。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Subsection
+线性单波
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性单波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!~ for linear advection equation
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：标量守恒律 Riemann 问题"
+
+\end_inset
+
+中，取 PDE 为
+\color blue
+线性单波方程
+\color inherit
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+PDE!linear advection equation
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+\lambda\frac{\partial}{\partial x}\right)U=0\qquad\lambda\in\mathbb{R}
+\]
+
+\end_inset
+
+即以 
+\begin_inset Formula $F(U)\coloneqq\lambda U$
+\end_inset
+
+ 为通量。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+分段应用
+\color blue
+特征线法
+\color inherit
+即得
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<\lambda\\
+U_{+} & x/t>\lambda
+\end{cases}
+\]
+
+\end_inset
+
+这个解在特征线 
+\begin_inset Formula $x/t=\lambda$
+\end_inset
+
+ 上不满足 PDE，但满足
+\color blue
+跳跃关系
+\color inherit
+及
+\color blue
+临界熵条件
+\color inherit
+：
+\begin_inset Formula 
+\[
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}=\lambda\qquad\lambda(U_{-})=s=\lambda(U_{+})
+\]
+
+\end_inset
+
+因此该间断属于接触间断
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+线性多波
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[线性多波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!~ for a linear hyperbolic system
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律系统 Riemann 问题"
+
+\end_inset
+
+中，取 PDE 为
+\color blue
+一阶线性方程组
+\color inherit
+
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+\underline{A}\frac{\partial}{\partial x}\right)\vert U\rangle=0\qquad\underline{A}\in\mathbb{R}^{n\times n}
+\]
+
+\end_inset
+
+即以 
+\begin_inset Formula $\vert F\rangle\coloneqq\underline{A}\,\vert U\rangle$
+\end_inset
+
+ 为通量，其中 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个实特征值及 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的特征向量：
+\begin_inset Formula 
+\[
+\underline{A}\,\underline{R}=\underline{R}\,\underline{\varLambda}\qquad\underline{R}\coloneqq\begin{bmatrix}\underbrace{\underline{R}\,\vert1\rangle}_{\vert R_{1}\rangle} & \cdots & \underbrace{\underline{R}\,\vert n\rangle}_{\vert R_{n}\rangle}\end{bmatrix}\qquad\underline{\varLambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+ & \ddots\\
+ &  & \lambda_{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中特征值按升序排列：
+\begin_inset Formula 
+\[
+\lambda_{1}\le\lambda_{2}\le\cdots\le\lambda_{n-1}\le\lambda_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+定义特征变量
+\begin_inset Formula 
+\[
+\vert V(x,t)\rangle\coloneqq\underline{L}\,\vert U(x,t)\rangle\qquad\underline{R}^{-1}\eqqcolon\underline{L}=\begin{bmatrix}\langle1\vert\,\underline{L}\eqqcolon\langle L_{1}\vert\\
+\vdots\\
+\langle n\vert\,\underline{L}\eqqcolon\langle L_{n}\vert
+\end{bmatrix}
+\]
+
+\end_inset
+
+并将 IC 投影到 
+\begin_inset Formula $\left\{ \ket{R_{i}}\right\} _{i=1}^{n}$
+\end_inset
+
+ 所张成的空间：
+\begin_inset Formula 
+\[
+\vert U_{-}\rangle=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U_{-}}\qquad\vert U_{+}\rangle=\sum_{i=1}^{n}\ket{R_{i}}\ip{L_{i}}{U_{+}}
+\]
+
+\end_inset
+
+则此 RP 分解为 
+\begin_inset Formula $n$
+\end_inset
+
+ 个
+\color blue
+线性单波 RP
+\color inherit
+：
+\begin_inset Formula 
+\[
+\pdv{V_{i}}{t}+\lambda_{i}\pdv{V_{i}}{x}=0\qquad V_{i}(x,t=0)=\begin{cases}
+\ip{L_{i}}{U_{-}} & x<0\\
+\ip{L_{i}}{U_{+}} & x>0
+\end{cases}
+\]
+
+\end_inset
+
+它们的解为
+\begin_inset Formula 
+\[
+V_{i}(x,t)=\begin{cases}
+\ip{L_{i}}{U_{-}} & x/t<\lambda_{i}\\
+\ip{L_{i}}{U_{+}} & x/t>\lambda_{i}
+\end{cases}\qquad i=1,\dots,n
+\]
+
+\end_inset
+
+原 RP 的解是这 
+\begin_inset Formula $n$
+\end_inset
+
+ 个单波的
+\color blue
+线性叠加 (linear superposition)
+\color inherit
+。注意到第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个波对应于始于原点、斜率为 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的特征线，它是初始间断的轨迹，故 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 平面被这些射线划分为 
+\begin_inset Formula $(n+1)$
+\end_inset
+
+ 个扇形区域：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个扇形区域中：
+\begin_inset Formula 
+\[
+\lambda_{1}\le\cdots\le\lambda_{k}<x/t<\lambda_{k+1}\le\cdots\le\lambda_{n}\qquad k=1,\dots,n-1
+\]
+
+\end_inset
+
+这说明
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+前 
+\begin_inset Formula $k$
+\end_inset
+
+ 条射线位于点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 左侧，故前 
+\begin_inset Formula $k$
+\end_inset
+
+ 个单波在点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 处取右值 
+\begin_inset Formula $\left\{ \ip{L_{i}}{U_{+}}\right\} _{i=1}^{k}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+后 
+\begin_inset Formula $(m-k)$
+\end_inset
+
+ 条射线位于点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 右侧，故后 
+\begin_inset Formula $(m-k)$
+\end_inset
+
+ 个单波在点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 处取左值 
+\begin_inset Formula $\left\{ \ip{L_{i}}{U_{-}}\right\} _{i=k+1}^{n}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Itemize
+原变量 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 在（除特征线外的）点 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 处的取值为
+\begin_inset Formula 
+\[
+\vert U(x,t)\rangle=\underline{R}\,\vert V(x,t)\rangle=\begin{bmatrix}\vert R_{1}\rangle & \cdots & \vert R_{n}\rangle\end{bmatrix}\begin{bmatrix}V_{1}(x,t)\\
+\vdots\\
+V_{n}(x,t)
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+在第 
+\begin_inset Formula $0$
+\end_inset
+
+ 个扇形区域中有 
+\begin_inset Formula $x/t<\lambda_{1}$
+\end_inset
+
+，故未受到右侧扰动，所有单波都取左值。
+\end_layout
+
+\begin_layout Itemize
+在第 
+\begin_inset Formula $n$
+\end_inset
+
+ 个扇形区域中有 
+\begin_inset Formula $x/t>\lambda_{n}$
+\end_inset
+
+，故未受到左侧扰动，所有单波都取右值。
+\end_layout
+
+\end_deeper
+\begin_layout Solution*
+最终得到完整解为
+\begin_inset Formula 
+\[
+\vert U(x,t)\rangle=\begin{cases}
+\vert U_{-}\rangle & x/t<\lambda_{1}\\
+\vert U_{*k}\rangle & x/t\in(\lambda_{k},\lambda_{k+1})\\
+\vert U_{+}\rangle & x/t>\lambda_{n}
+\end{cases}\qquad k=1,\dots,n-1
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\vert U_{*k}\rangle=\left(\sum_{i=1}^{k}\dyad{R_{i}}{L_{i}}\right)\vert U_{+}\rangle+\left(\sum_{i=k+1}^{n}\dyad{R_{i}}{L_{i}}\right)\vert U_{-}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[接触间断]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ 即是第 
+\begin_inset Formula $k$
+\end_inset
+
+ 条特征线 
+\begin_inset Formula $x/t=\lambda_{k}$
+\end_inset
+
+ 的斜率，又是第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个单波的相速度，因此也是初始间断被第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个单波传递的速度，即 
+\begin_inset Formula $s_{k}=\lambda_{k}$
+\end_inset
+
+。在特征线 
+\begin_inset Formula $x/t=\lambda_{k}$
+\end_inset
+
+ 上，守恒变量及通量不满足 PDE，但满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：方程组"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\eval{\vert U\rangle}_{x/t=\lambda_{k}-0}^{x/t=\lambda_{k}+0}s_{k}=\eval{\vert F\rangle}_{x/t=\lambda_{k}-0}^{x/t=\lambda_{k}+0}
+\]
+
+\end_inset
+
+及临界熵条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：熵条件：方程组"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\lambda_{k}(x/t=\lambda_{k}-0)=s_{k}=\lambda_{k}(x/t=\lambda_{k}+0)
+\]
+
+\end_inset
+
+因此它们都是接触间断
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+拟线性单波
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拟线性单波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：守恒律：拟线性单波 Riemann 问题"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!~ for a single conservation law
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：标量守恒律 Riemann 问题"
+
+\end_inset
+
+中，将 PDE 改写为拟线性单波方程：
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+\lambda(U)\frac{\partial}{\partial x}\right)U=0\qquad\lambda(U)\coloneqq\frac{\partial F}{\partial U}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution*
+初始间断以有限的速度传播，故左右两端必有未受扰动的常值区域。由解的自相似性可知：这两个常值区域之间是扇形的受扰动区域。因此解的一般结构为：
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<\lambda_{-}\\
+U_{*} & x/t\in(\lambda_{-},\lambda_{+})\\
+U_{+} & x/t>\lambda_{+}
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lambda_{\pm}\coloneqq\lambda(U_{\pm})$
+\end_inset
+
+。实际求解任务是确定依赖于 
+\begin_inset Formula $x/t$
+\end_inset
+
+ 的函数 
+\begin_inset Formula $U_{*}$
+\end_inset
+
+，有以下三种情况：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+膨胀波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!expansion wave
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\lambda_{-}<\lambda_{+}$
+\end_inset
+
+，即始于原点两侧的特征线相互
+\color blue
+发散 (diverge)
+\color inherit
+，则受扰动区域会形成一道
+\color blue
+扇形膨胀波 (fan-shaped expansion wave)
+\color inherit
+ 或
+\color blue
+中心稀疏波 (centered rarefraction)
+\color inherit
+。此扇形的右侧与左侧边界分别是
+\color blue
+波头 (wave head)
+\color inherit
+ 与
+\color blue
+波尾 (wave tail)
+\color inherit
+ 的轨迹，其斜率 
+\begin_inset Formula $\lambda_{+}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\lambda_{-}$
+\end_inset
+
+ 分别为
+\color blue
+波头速度
+\color inherit
+与
+\color blue
+波尾速度
+\color inherit
+。在扇形区域内，
+\begin_inset Formula $U(x,t)$
+\end_inset
+
+ 依然光滑（满足 PDE），其值可由特征线方程 
+\begin_inset Formula $x/t=\lambda(U)$
+\end_inset
+
+ 解出：
+\begin_inset Formula 
+\[
+U(x,t)=\lambda^{-1}(x/t)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lambda^{-1}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ 的反函数。这种情况下的特征线分布如图
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5,0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (left)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-0.6,-1.2,...,-3.6}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x-1,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (right)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {+0.6,+1.2,...,+3.0}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x+2,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% the expansion region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-1,-0.4,...,+2}   
+\backslash
+draw[->, very thick] (O) -- (
+\backslash
+x,4); 
+\end_layout
+
+\begin_layout Plain Layout
+
+% wave head and tail
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (-1,4) node[above]{$
+\backslash
+lambda_{-}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (+2,4) node[above]{$
+\backslash
+lambda_{+}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：膨胀波"
+
+\end_inset
+
+膨胀波
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：膨胀波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<\lambda_{-}\\
+\text{expansion} & x/t\in(\lambda_{-},\lambda_{+})\\
+U_{+} & x/t>\lambda_{+}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+激波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!shock wave
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\lambda_{-}>\lambda_{+}$
+\end_inset
+
+，即始于原点两侧的特征线相互
+\color blue
+汇聚 (converge)
+\color inherit
+，则两族特征线汇聚的地方会形成一道
+\color blue
+激波 (shock wave)
+\color inherit
+，它的轨迹也是始于原点的射线其斜率满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及严格熵条件：
+\begin_inset Formula 
+\[
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}>s>\lambda_{+}
+\]
+
+\end_inset
+
+这种情况下的特征线分布如图
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5, 0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5, 0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0, 5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% the shock wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (1, 4) node[above]{$
+\backslash
+lambda_{-}>s>
+\backslash
+lambda_{+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (left)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {0.7, 1.4, ..., 3.5}  
+\backslash
+draw[->] (-
+\backslash
+y, 0) -- (
+\backslash
+y/4, 
+\backslash
+y);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {4.2, 4.9}   
+\backslash
+draw[->] (-
+\backslash
+y, 0) -- (-
+\backslash
+y+5, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region (right)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {0.6, 1.2, ..., 3.6}   
+\backslash
+draw[->] (+
+\backslash
+y, 0) -- (
+\backslash
+y/4, 
+\backslash
+y);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+y in {4.2, 4.8}   
+\backslash
+draw[->] (+
+\backslash
+y, 0) -- (+
+\backslash
+y-3, 4); 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：激波"
+
+\end_inset
+
+激波
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：激波"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<s\\
+\text{shock} & x/t=s\\
+U_{+} & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+接触间断 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+在 
+\begin_inset Formula $F(\underline{U})$
+\end_inset
+
+ 既非
+\color blue
+严格凸函数
+\color inherit
+又非
+\color blue
+严格凹函数
+\color inherit
+的情况下，可能在 
+\begin_inset Formula $U_{-}\ne U_{+}$
+\end_inset
+
+ 时出现 
+\begin_inset Formula $\lambda_{-}=\lambda_{+}$
+\end_inset
+
+，这对应于
+\color blue
+接触间断 (contact discontinuity)
+\color inherit
+，即没有物质穿透的间断，其传播速度满足跳跃条件 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 及临界熵条件：
+\begin_inset Formula 
+\[
+s=\frac{F_{+}-F_{-}}{U_{+}-U_{-}}\qquad\lambda_{-}=s=\lambda_{+}
+\]
+
+\end_inset
+
+这种情况下的特征线分布如
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[>=Stealth]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (O) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray] (-5,0) -- (O);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (5,0) node[above]{$x$}; % x-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[gray,->] (O) -- (0,5) node[left ]{$t$}; % t-axis
+\end_layout
+
+\begin_layout Plain Layout
+
+% constant region
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+foreach 
+\backslash
+x in {-4.5, -3.6, ..., +3.6}   
+\backslash
+draw[->] (
+\backslash
+x,0) -- (
+\backslash
+x+1, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+% the contact wave
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[->, very thick] (O) -- (1, 4) node[above]{$
+\backslash
+lambda_{-}=s=
+\backslash
+lambda_{+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:微分方程：守恒律：接触间断"
+
+\end_inset
+
+接触间断
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+图 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "fig:微分方程：守恒律：接触间断"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，相应的完整解为
+\begin_inset Formula 
+\[
+U(x,t)=\begin{cases}
+U_{-} & x/t<s\\
+\text{contact} & x/t=s\\
+U_{+} & x/t>s
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+接触间断兼具激波与膨胀波的特性：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+两侧状态及通量满足跳跃条件及临界熵条件，因此是退化的激波。
+\end_layout
+
+\begin_layout Itemize
+轨迹是一条射线，可以看做顶角为 
+\begin_inset Formula $0^{\circ}$
+\end_inset
+
+ 的扇形，因此是退化的膨胀波。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
+\end_inset
+
+上述三种波是
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律：拟线性单波 Riemann 问题"
+
+\end_inset
+
+的初始间断所有可能的传播形式。在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律：拟线性多波 Riemann 问题"
+
+\end_inset
+
+中，初始间断同样只能以这三种形式传播，因此可以将它们统称为
+\color blue
+基本波 (elementary waves)
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+拟线性多波
+\end_layout
+
+\begin_layout Question
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[拟线性多波 Riemann 问题]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:微分方程：守恒律：拟线性多波 Riemann 问题"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+Riemann!~ problem!~ for a conservation law system
+\end_layout
+
+\end_inset
+
+在
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "prob:微分方程：守恒律系统 Riemann 问题"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+中，将 PDE 改写为拟线性多波方程组：
+\begin_inset Formula 
+\[
+\left(\frac{\partial}{\partial t}+\underline{A}(\underline{U})\frac{\partial}{\partial x}\right)\vert U\rangle=\vert0\rangle\qquad\underline{A}(\underline{U})\coloneqq\frac{\partial\vert F\rangle}{\partial\vert U\rangle}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{A}(\underline{U})$
+\end_inset
+
+ 对任意 
+\begin_inset Formula $U$
+\end_inset
+
+ 都有 
+\begin_inset Formula $n$
+\end_inset
+
+ 个实特征值及 
+\begin_inset Formula $n$
+\end_inset
+
+ 个独立的特征向量：
+\begin_inset Formula 
+\[
+\underline{A}\,\underline{R}=\underline{R}\,\underline{\varLambda}\qquad\underline{R}\coloneqq\begin{bmatrix}\vert R_{1}\rangle & \cdots & \vert R_{n}\rangle\end{bmatrix}\qquad\underline{\varLambda}\coloneqq\begin{bmatrix}\lambda_{1}\\
+ & \ddots\\
+ &  & \lambda_{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中特征值按从小到大顺序排列：
+\begin_inset Formula 
+\[
+\lambda_{1}\le\lambda_{2}\le\cdots\le\lambda_{n-1}\le\lambda_{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
+\end_inset
+
+该问题的解具有自相似结构：守恒变量 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 是斜率 
+\begin_inset Formula $\alpha\coloneqq x/t$
+\end_inset
+
+ 的函数。因此
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+只依赖于 
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 的 
+\begin_inset Formula $\underline{A}(\underline{U})\text{、}\underline{R}(\underline{U})\text{、}\underline{\varLambda}(\underline{U})$
+\end_inset
+
+ 也都是 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的函数。
+\end_layout
+
+\begin_layout Itemize
+解的光滑部分只有两种可能：
+\color blue
+
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 为常值
+\color inherit
+或 
+\color blue
+
+\begin_inset Formula $\vert\dv*{U}{\alpha}\rangle$
+\end_inset
+
+ 是 
+\begin_inset Formula $\underline{A}(\underline{U})$
+\end_inset
+
+ 的右特征向量
+\color inherit
+。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 取作新的独立变量，即有如下微分关系：
+\begin_inset Formula 
+\[
+\alpha\coloneqq x/t\implies\begin{cases}
+\pdv*{t}=\left(\pdv*{\alpha}{t}\right)\left(\dv*{\alpha}\right)\\
+\pdv*{x}=\left(\pdv*{\alpha}{x}\right)\left(\dv*{\alpha}\right)
+\end{cases}
+\]
+
+\end_inset
+
+于是
+\color blue
+偏微分方程组
+\color inherit
+可以被改写为
+\color blue
+特征值问题
+\color inherit
+的形式：
+\begin_inset Formula 
+\[
+\left(\underline{A}-\alpha\underline{1}\right)\dv{\vert U\rangle}{\alpha}=\vert0\rangle
+\]
+
+\end_inset
+
+因此解的光滑部分必为命题所述的两种可能之一。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+所有间断均以恒定的速度沿 
+\begin_inset Formula $x$
+\end_inset
+
+ 轴传播，它们在 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ 平面中的轨迹是由原点 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ 发出的射线。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Notation
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 道基本波的
+\color blue
+右边界
+\color inherit
+与
+\color blue
+左边界
+\color inherit
+的
+\color blue
+传播速度
+\color inherit
+（同时也是各自轨迹的
+\color blue
+斜率
+\color inherit
+）分别用 
+\begin_inset Formula $\alpha_{k+}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\alpha_{k-}$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[基本波]
+\end_layout
+
+\end_inset
+
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 道基本波对应于第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个
+\color blue
+特征场 (characteristic fields)
+\color inherit
+，即第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个特征值函数 
+\begin_inset Formula $\lambda_{k}(\underline{U})$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}^{n}(\underline{U})$
+\end_inset
+
+ 中定义的标量场，并且
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\color blue
+激波
+\color inherit
+或
+\color blue
+膨胀波
+\color inherit
+对应于
+\color blue
+真正非线性的 (genuinely nonlinear)
+\color inherit
+ 特征场
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+characteristic!~ field!genuinely nonlinear ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{k}}{R_{k}}\ne0\qquad\forall\underline{U}\in\varOmega\subset\mathbb{R}^{n}(\underline{U})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\color blue
+接触间断
+\color inherit
+对应于
+\color blue
+线性退化的 (linearly degenerate)
+\color inherit
+ 特征场
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+characteristic!~ field!linearly degenerate ~
+\end_layout
+
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\ip{\grad\lambda_{k}}{R_{k}}=0\qquad\forall\underline{U}\in\varOmega\subset\mathbb{R}^{n}(\underline{U})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+与单波情形类似，基本波的性质依赖于特征线方向，只是这里讨论的是第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族特征线：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+膨胀波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!expansion wave
+\end_layout
+
+\end_inset
+
+波头、波尾之间为一扇形光滑区域，在其中 
+\begin_inset Formula $\ket{\dv*{U}{\alpha}}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\underline{A}(\underline{U})$
+\end_inset
+
+ 的右特征向量：
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{\dv{U}{\alpha}}=\ip{\grad\lambda_{k}}{R_{k}}
+\]
+
+\end_inset
+
+且波头、波尾的速度 
+\begin_inset Formula $\alpha_{k\pm}$
+\end_inset
+
+ 分别与各自外侧的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 相等：
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(\underline{U}(\alpha_{k-}))=\alpha_{k-}\qquad\lambda_{k+}\coloneqq\lambda_{k}(\underline{U}(\alpha_{k+}))=\alpha_{k+}
+\]
+
+\end_inset
+
+且 
+\begin_inset Formula $\lambda_{k}$
+\end_inset
+
+ 对 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 单调递增：
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}(\underline{U}(\alpha))}{\alpha}>0\qquad\alpha\in[\lambda_{k-},\lambda_{k+}]
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 由 
+\begin_inset Formula $\lambda_{k-}$
+\end_inset
+
+ 连续地增大到 
+\begin_inset Formula $\lambda_{k+}$
+\end_inset
+
+ 的过程中，
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}^{n}(\underline{U})$
+\end_inset
+
+ 中的轨迹是一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 中有
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}>0\qquad\forall\underline{U}\in\varOmega\subset\mathbb{R}^{n}(\underline{U})
+\]
+
+\end_inset
+
+故此基本波对应于真正非线性的特征场。
+\end_layout
+
+\begin_layout Description
+激波 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!shock wave
+\end_layout
+
+\end_inset
+
+波头紧贴波尾，二者速度分别为
+\begin_inset Formula 
+\[
+\alpha_{k-}=s_{k}-0\qquad\alpha_{k+}=s_{k}+0
+\]
+
+\end_inset
+
+其中激波速度 
+\begin_inset Formula $s_{k}$
+\end_inset
+
+ 必须满足跳跃条件
+\begin_inset Formula 
+\[
+\eval{\underline{U}}_{\alpha_{k-}}^{\alpha_{k+}}s_{k}=\eval{\underline{F}}_{\alpha_{k-}}^{\alpha_{k+}}
+\]
+
+\end_inset
+
+且满足与激波两侧的特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 所构成的严格熵条件
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(\underline{U}(\alpha_{k-}))>s_{k}>\lambda_{k}(\underline{U}(\alpha_{k+}))\eqqcolon\lambda_{k+}
+\]
+
+\end_inset
+
+尽管激波两侧的状态只对应于 
+\begin_inset Formula $\mathbb{R}^{n}(\underline{U})$
+\end_inset
+
+ 中的两个孤立点，但只要将二者对调，就依然可以像膨胀波一样分析：在 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 由 
+\begin_inset Formula $\lambda_{k+}$
+\end_inset
+
+ 连续地增大到 
+\begin_inset Formula $\lambda_{k-}$
+\end_inset
+
+ 的过程中，
+\begin_inset Formula $\vert U\rangle$
+\end_inset
+
+ 在 
+\begin_inset Formula $\mathbb{R}^{n}(\underline{U})$
+\end_inset
+
+ 中的轨迹是一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 中有
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}>0\qquad\forall\underline{U}\in\varOmega\subset\mathbb{R}^{n}(\underline{U})
+\]
+
+\end_inset
+
+故此基本波对应于真正非线性的特征场。
+\end_layout
+
+\begin_layout Description
+接触间断 
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+discontinuity!contact ~
+\end_layout
+
+\end_inset
+
+与单波情形类似，接触间断兼具激波与膨胀波的特性：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+与激波类似 波头紧贴波尾，二者速度分别为
+\begin_inset Formula 
+\[
+\alpha_{k-}=s_{k}-0\qquad\alpha_{k+}=s_{k}+0
+\]
+
+\end_inset
+
+其中激波速度 
+\begin_inset Formula $s_{k}$
+\end_inset
+
+ 必须满足跳跃条件
+\begin_inset Formula 
+\[
+\eval{\underline{U}}_{\alpha_{k-}}^{\alpha_{k+}}s_{k}=\eval{\underline{U}}_{\alpha_{k-}}^{\alpha_{k+}}
+\]
+
+\end_inset
+
+且满足与激波两侧的特征线斜率 
+\begin_inset Formula $\lambda_{k\pm}$
+\end_inset
+
+ 所构成的临界熵条件
+\begin_inset Formula 
+\[
+\lambda_{k-}\coloneqq\lambda_{k}(\underline{U}(\alpha_{k-}))=s_{k}=\lambda_{k}(\underline{U}(\alpha_{k+}))\eqqcolon\lambda_{k+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+与膨胀波类似 可以在 
+\begin_inset Formula $\mathbb{R}^{n}(\underline{U})$
+\end_inset
+
+ 中找到一条光滑曲线，在其充分小邻域 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 中有
+\begin_inset Formula 
+\[
+\dv{\lambda_{k}}{\alpha}=\ip{\grad\lambda_{k}}{R_{k}}=0\qquad\forall\underline{U}\in\varOmega\subset\mathbb{R}^{n}(\underline{U})
+\]
+
+\end_inset
+
+故此基本波只可能对应于线性退化的特征场。
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Riemann 不变量]
+\end_layout
+
+\end_inset
+
+若第 
+\begin_inset Formula $k$
+\end_inset
+
+ 道基本波为膨胀波或接触间断，则有 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+ 个
+\color blue
+第 
+\begin_inset Formula $k$
+\end_inset
+
+ 族广义 Riemann 不变量
+\color inherit
+：
+\begin_inset Formula 
+\[
+\dv{\phi}{\alpha}=\ip{\grad{\phi}}{\dv{U}{\alpha}}=\ip{\grad{\phi}}{R_{k}}=0
+\]
+
+\end_inset
+
+它们可以用来连接波头、波尾外侧的状态，并用来确定内部光滑区域的状态：
+\begin_inset Formula 
+\[
+\phi(\alpha_{k-})=\phi(\alpha)=\phi(\alpha_{k+})\qquad\alpha\in[\alpha_{k-},\alpha_{k+}]
 \]
 
 \end_inset
