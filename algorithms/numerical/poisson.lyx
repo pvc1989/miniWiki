@@ -100,13 +100,15 @@ theorems-chap
 
 \begin_body
 
-\begin_layout Section
+\begin_layout Chapter
+微分方程
+\end_layout
 
+\begin_layout Section
 Poisson 方程
 \end_layout
 
 \begin_layout Problem
-
 \begin_inset ERT
 status open
 
@@ -138,7 +140,6 @@ literal "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 BVP!~ for Poisson's Equation
 \end_layout
 
@@ -149,7 +150,6 @@ Solve the Poisson's equation
 status collapsed
 
 \begin_layout Plain Layout
-
 PDE!Poisson's equation
 \end_layout
 
@@ -190,7 +190,6 @@ literal "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 BC!natural ~
 \end_layout
 
@@ -200,7 +199,6 @@ BC!natural ~
 \end_layout
 
 \begin_layout Problem
-
 \begin_inset Formula 
 \begin{equation}
 \vec{n}\cdot\grad u=\bar{q}\qquad\vec{x}\in\Gamma_{q}\label{eq:PoissonNaturalBC}
@@ -213,7 +211,6 @@ and the essential BC
 status collapsed
 
 \begin_layout Plain Layout
-
 BC!essential ~
 \end_layout
 
@@ -271,12 +268,10 @@ almost equal to
 \end_layout
 
 \begin_layout Subsection
-
 Analytic Solutions
 \end_layout
 
 \begin_layout Standard
-
 The degree of matching with analytic solutions (i.e.
  solutions obtained from analytic methods, e.g.
  separation of variables, integral transforms) is an important criterion
@@ -284,12 +279,10 @@ The degree of matching with analytic solutions (i.e.
 \end_layout
 
 \begin_layout Subsection
-
 Weak Form
 \end_layout
 
 \begin_layout Standard
-
 The highest order of derivatives in 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -350,7 +343,6 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-
 The first step is multiplying the LHS
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
@@ -380,7 +372,6 @@ test function
 status collapsed
 
 \begin_layout Plain Layout
-
 function!test ~
 \end_layout
 
@@ -417,7 +408,6 @@ reference "eq:PoissonPDE"
 \end_layout
 
 \begin_layout Standard
-
 We can split the first integral into two parts:
 \begin_inset Formula 
 \[
@@ -438,14 +428,12 @@ by using the differential identity
 \end_layout
 
 \begin_layout Standard
-
 Using Gauss's divergence theorem, the divergence integral can be turned
  into a boundary integral
 \begin_inset Index idx
 status collapsed
 
 \begin_layout Plain Layout
-
 integral!~ on boundary
 \end_layout
 
@@ -503,7 +491,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-
 Finally, we obtain the 
 \noun on
 symmetric weak form
@@ -523,7 +510,6 @@ noprefix "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 weak form!~ of Poisson's equation
 \end_layout
 
@@ -574,7 +560,6 @@ v\in C^{1}(\varOmega)\qquad v(\vec{x}\in\Gamma_{u})=0
 \end_layout
 
 \begin_layout Standard
-
 Note that in WF 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -619,12 +604,10 @@ symmetric
 \end_layout
 
 \begin_layout Subsection
-
 Discretization
 \end_layout
 
 \begin_layout Standard
-
 The main goal of FEM
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
@@ -666,7 +649,6 @@ s with
 status open
 
 \begin_layout Plain Layout
-
 function!trial ~
 \end_layout
 
@@ -692,7 +674,6 @@ is a row matrix of coefficients left to be determined.
 \end_layout
 
 \begin_layout Standard
-
 The test function 
 \begin_inset Formula $v(\vec{x})$
 \end_inset
@@ -711,7 +692,6 @@ s
 status collapsed
 
 \begin_layout Plain Layout
-
 function!test ~
 \end_layout
 
@@ -750,7 +730,6 @@ is a row matrix of arbitrary coefficients.
 \end_layout
 
 \begin_layout Standard
-
 The derivatives of 
 \begin_inset Formula $u(\vec{x})$
 \end_inset
@@ -771,7 +750,6 @@ The derivatives of
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \pdv{u^{h}(\vec{x})}{x_{\alpha}}=\ip{\hat{u}}{\pdv{\phi(\vec{x})}{x_{\alpha}}}\qquad\pdv{v^{h}(\vec{x})}{x_{\alpha}}=\ip{\hat{v}}{\pdv{\psi(\vec{x})}{x_{\alpha}}}
@@ -787,7 +765,6 @@ Here we use a Greek letter
 \end_layout
 
 \begin_layout Standard
-
 Substitute 
 \begin_inset Formula $u^{h},v^{h}$
 \end_inset
@@ -803,12 +780,10 @@ reference "eq:PoissonSymmetricWeakForm"
 \end_layout
 
 \begin_layout Subsubsection
-
 Global Stiffness Matrix
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\varOmega}\grad v\cdot\grad u\dd{\varOmega} & =\int_{\varOmega}\sum_{\alpha}\pdv{v}{x_{\alpha}}\pdv{u}{x_{\alpha}}\dd{\varOmega}\approx\int_{\varOmega}\sum_{\alpha}\pdv{v^{h}}{x_{\alpha}}\pdv{u^{h}}{x_{\alpha}}\dd{\varOmega}\\
@@ -836,7 +811,6 @@ global stiffness matrix
 status collapsed
 
 \begin_layout Plain Layout
-
 matrix!stiffness ~!global ~
 \end_layout
 
@@ -846,17 +820,14 @@ matrix!stiffness ~!global ~
 \end_layout
 
 \begin_layout Subsubsection
-
 Global Load Vectors
 \end_layout
 
 \begin_layout Standard
-
 Similarily,
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\varOmega}v\bar{s}\dd{\varOmega} & \approx\int_{\varOmega}v^{h}\bar{s}\dd{\varOmega}=\int_{\varOmega}\ip{\hat{v}}{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\varOmega}\\
@@ -891,7 +862,6 @@ global boundary load vector
 status collapsed
 
 \begin_layout Plain Layout
-
 vector!load ~!global ~
 \end_layout
 
@@ -932,7 +902,6 @@ then
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Formula 
 \[
 \begin{aligned}\ket{F_{s}} & =\int_{\varOmega}\ket{\psi(\vec{x})}\bar{s}(\vec{x})\dd{\varOmega}\approx\int_{\varOmega}\ket{\psi(\vec{x})}\ip{\phi(\vec{x})}{\hat{s}}\dd{\varOmega}\\
@@ -956,12 +925,10 @@ in which
 \end_layout
 
 \begin_layout Subsubsection
-
 System of Linear Algebraic Equations
 \end_layout
 
 \begin_layout Standard
-
 Substitute all these matrix multiplications into WF 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1005,7 +972,6 @@ since
 \end_layout
 
 \begin_layout Standard
-
 By intentionally choosing 
 \begin_inset Formula $M=N$
 \end_inset
@@ -1066,7 +1032,6 @@ reference "subsec:PoissonImposeEssentialBC"
 \end_layout
 
 \begin_layout Subsection
-
 Galerkin FEM
 \begin_inset CommandInset label
 LatexCommand label
@@ -1078,7 +1043,6 @@ name "subsec:PoissonGalerkinFEM"
 \end_layout
 
 \begin_layout Standard
-
 Generally, the workflow of an FE
 \begin_inset CommandInset nomenclature
 LatexCommand nomenclature
@@ -1093,7 +1057,6 @@ literal "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 finite element!~ analysis
 \end_layout
 
@@ -1122,7 +1085,6 @@ noprefix "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 query!~ step
 \end_layout
 
@@ -1137,7 +1099,6 @@ query!~ step
 status collapsed
 
 \begin_layout Plain Layout
-
 query!~ point
 \end_layout
 
@@ -1182,7 +1143,6 @@ efficienct
 status collapsed
 
 \begin_layout Plain Layout
-
 finite element!~ method!Galerkin ~
 \end_layout
 
@@ -1201,7 +1161,6 @@ finite element!~ method!Galerkin ~
 status collapsed
 
 \begin_layout Plain Layout
-
 \begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
 \end_inset
 
@@ -1222,12 +1181,10 @@ status collapsed
 \end_layout
 
 \begin_layout Subsubsection
-
 Mesh — Elements and Nodes
 \end_layout
 
 \begin_layout Standard
-
 A 
 \noun on
 mesh
@@ -1237,7 +1194,6 @@ mesh
 status collapsed
 
 \begin_layout Plain Layout
-
 mesh
 \end_layout
 
@@ -1260,7 +1216,6 @@ s
 status collapsed
 
 \begin_layout Plain Layout
-
 element
 \end_layout
 
@@ -1303,7 +1258,6 @@ almost equal to
 \end_layout
 
 \begin_layout Standard
-
 Each element is a polygon formed by connecting a set of 
 \noun on
 node
@@ -1313,7 +1267,6 @@ s
 status collapsed
 
 \begin_layout Plain Layout
-
 node
 \end_layout
 
@@ -1326,19 +1279,16 @@ node
 \end_layout
 
 \begin_layout Standard
-
 Typically, an FE mesh is a sparse graph, which means the number of nodes
  owned by an element, or the number of elements owning a node, is significantly
  smaller than the total number of nodes or elements.
 \end_layout
 
 \begin_layout Subsubsection
-
 Nodal Shape Functions
 \end_layout
 
 \begin_layout Standard
-
 To exploit such sparsity, we shall define each 
 \begin_inset Formula $\phi_{K}$
 \end_inset
@@ -1360,7 +1310,6 @@ literal "false"
 status open
 
 \begin_layout Plain Layout
-
 polynomial!Lagrange ~!element-wise ~
 \end_layout
 
@@ -1412,7 +1361,6 @@ Under such choice, coefficients (e.g.
 status open
 
 \begin_layout Plain Layout
-
 interpolation!Lagrange ~!local ~
 \end_layout
 
@@ -1422,7 +1370,6 @@ interpolation!Lagrange ~!local ~
 \end_layout
 
 \begin_layout Standard
-
 Within the 
 \begin_inset Formula $e$
 \end_inset
@@ -1445,7 +1392,6 @@ s
 status collapsed
 
 \begin_layout Plain Layout
-
 function!trial ~!nodal shape function
 \end_layout
 
@@ -1456,7 +1402,6 @@ function!trial ~!nodal shape function
 status collapsed
 
 \begin_layout Plain Layout
-
 node!nodal shape function
 \end_layout
 
@@ -1495,7 +1440,6 @@ local
 status collapsed
 
 \begin_layout Plain Layout
-
 node!~ index!local ~
 \end_layout
 
@@ -1510,7 +1454,6 @@ global
 status collapsed
 
 \begin_layout Plain Layout
-
 node!~ index!global ~
 \end_layout
 
@@ -1520,12 +1463,10 @@ node!~ index!global ~
 \end_layout
 
 \begin_layout Subsubsection
-
 Evaluating Matrices on Elements
 \end_layout
 
 \begin_layout Standard
-
 The evaluation of 
 \begin_inset Formula $\Mat{K}$
 \end_inset
@@ -1555,7 +1496,6 @@ element stiffness matrix
 status collapsed
 
 \begin_layout Plain Layout
-
 matrix!stiffness ~!element ~
 \end_layout
 
@@ -1571,7 +1511,6 @@ s
 status collapsed
 
 \begin_layout Plain Layout
-
 vector!load ~!element ~
 \end_layout
 
@@ -1605,13 +1544,11 @@ in which
 \end_layout
 
 \begin_layout Standard
-
 In general, integrals on elements
 \begin_inset Index idx
 status collapsed
 
 \begin_layout Plain Layout
-
 integral!~ on element
 \end_layout
 
@@ -1631,7 +1568,6 @@ literal "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 quadrature!Gauss--Legendre ~
 \end_layout
 
@@ -1641,12 +1577,10 @@ quadrature!Gauss--Legendre ~
 \end_layout
 
 \begin_layout Subsubsection
-
 Assembly
 \end_layout
 
 \begin_layout Standard
-
 The summation sign 
 \begin_inset Formula $\sum_{e}$
 \end_inset
@@ -1660,7 +1594,6 @@ assembly
 status collapsed
 
 \begin_layout Plain Layout
-
 matrix!~ assembly
 \end_layout
 
@@ -1670,7 +1603,6 @@ matrix!~ assembly
 \end_layout
 
 \begin_layout Standard
-
 Recall that 
 \begin_inset Formula $N_{i}^{e}\equiv\phi_{I_{e}(i)}$
 \end_inset
@@ -1705,7 +1637,6 @@ th column of
 status collapsed
 
 \begin_layout Plain Layout
-
 matrix!sparse ~
 \end_layout
 
@@ -1716,7 +1647,6 @@ matrix!sparse ~
 status collapsed
 
 \begin_layout Plain Layout
-
 hash table
 \end_layout
 
@@ -1727,7 +1657,6 @@ hash table
 status open
 
 \begin_layout Plain Layout
-
 such as 
 \family typewriter
 
@@ -1777,7 +1706,6 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-
 Load vectors can be assembled in the same way with 
 \begin_inset Formula $\order{nE}$
 \end_inset
@@ -1790,7 +1718,6 @@ Load vectors can be assembled in the same way with
 \end_layout
 
 \begin_layout Subsection
-
 Imposing Essential BC
 \begin_inset CommandInset label
 LatexCommand label
@@ -1802,7 +1729,6 @@ name "subsec:PoissonImposeEssentialBC"
 \end_layout
 
 \begin_layout Standard
-
 The 
 \emph on
 natural
@@ -1819,7 +1745,6 @@ reference "eq:PoissonNaturalBC"
 status collapsed
 
 \begin_layout Plain Layout
-
 BC!natural ~
 \end_layout
 
@@ -1873,7 +1798,6 @@ noprefix "false"
 status collapsed
 
 \begin_layout Plain Layout
-
 BC!essential ~
 \end_layout
 
@@ -1883,7 +1807,6 @@ BC!essential ~
 \end_layout
 
 \begin_layout Standard
-
 Recall that in the derivation of weak form 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -1924,7 +1847,6 @@ th node, locating in
 \end_layout
 
 \begin_layout Subsubsection
-
 Deleting Row and Column
 \begin_inset CommandInset label
 LatexCommand label
@@ -1936,7 +1858,6 @@ name "subsec:PoissonBCbyDeletingRowAndColumn"
 \end_layout
 
 \begin_layout Standard
-
 The 
 \begin_inset Formula $I$
 \end_inset
@@ -1978,7 +1899,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Example*
-
 Apply 
 \begin_inset Formula $\hat{u}_{2}=2$
 \end_inset
@@ -2005,7 +1925,6 @@ Apply
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2013,7 +1932,6 @@ Apply
 \end_layout
 
 \begin_layout Solution*
-
 Substract 
 \begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
 \end_inset
@@ -2077,7 +1995,6 @@ nd column of
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2085,7 +2002,6 @@ nd column of
 \end_layout
 
 \begin_layout Remark*
-
 Substitute the solution back into the LAE:
 \begin_inset Formula 
 \[
@@ -2145,12 +2061,10 @@ s on
 \end_layout
 
 \begin_layout Subsubsection
-
 Multiplying Large Number
 \end_layout
 
 \begin_layout Standard
-
 Deleting rows and columns has some side effects, such as reindexing (indices
  greater than 
 \begin_inset Formula $I$
@@ -2212,7 +2126,6 @@ reference "subsec:PoissonBCbyDeletingRowAndColumn"
 \end_layout
 
 \begin_layout Example*
-
 Apply 
 \begin_inset Formula $\hat{u}_{2}=2$
 \end_inset
@@ -2239,7 +2152,6 @@ Apply
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2247,7 +2159,6 @@ Apply
 \end_layout
 
 \begin_layout Solution*
-
 Substitute 
 \begin_inset Formula $\mel{2}{K}{2}$
 \end_inset
@@ -2286,7 +2197,6 @@ Substitute
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2294,7 +2204,6 @@ Substitute
 \end_layout
 
 \begin_layout Remark*
-
 The solution is
 \begin_inset Formula 
 \[
@@ -2321,12 +2230,10 @@ which is almost accurate, however, the condition number of
 \end_layout
 
 \begin_layout Subsubsection
-
 Modifying Row and Column
 \end_layout
 
 \begin_layout Standard
-
 The previous two methods can be combined.
  Instead of deleting the 
 \begin_inset Formula $I$
@@ -2395,7 +2302,6 @@ reference "subsec:PoissonBCbyDeletingRowAndColumn"
 \end_layout
 
 \begin_layout Example*
-
 Apply 
 \begin_inset Formula $\hat{u}_{2}=2$
 \end_inset
@@ -2422,7 +2328,6 @@ Apply
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2430,7 +2335,6 @@ Apply
 \end_layout
 
 \begin_layout Solution*
-
 Substract 
 \begin_inset Formula $\Mat{K}\ket{2}\hat{u}_{2}$
 \end_inset
@@ -2527,7 +2431,6 @@ Then, substitute
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 
@@ -2535,7 +2438,6 @@ Then, substitute
 \end_layout
 
 \begin_layout Remark*
-
 The solution is
 \begin_inset Formula 
 \[
@@ -2562,7 +2464,6 @@ which is accurate, and the condition number of
 \end_layout
 
 \begin_layout Standard
-
 \begin_inset Separator plain
 \end_inset
 

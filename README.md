@@ -1,5 +1,4 @@
 ---
-layout: page
 title: 首页
 ---
 
@@ -18,7 +17,7 @@ title: 首页
 
 - 在任意路径下创建本仓库的副本。
 - 编译 LyX 文档（生成 PDF 文件）：
-  1. 安装最新版的 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启 [中文支持](./documenting/latex/README.md#LyX-中文支持) 及 [代码高亮](./documenting/latex/README.md#LyX-代码高亮)。
+  1. 安装最新版的 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启[中文支持](./documenting/latex/README.md#LyX-中文支持)及[代码高亮](./documenting/latex/README.md#LyX-代码高亮)。
   1. 安装 [STIX](https://github.com/stipub/stixfonts) 及 [NewCM](https://ctan.org/tex-archive/fonts/newcomputermodern) 字体。
   1. 如果要编译除『[顶层 `README.lyx`](./README.lyx)』以外的其他 LyX 或 TeX 文档，则需在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的『符号链接 (symbolic link)』：
     
@@ -73,9 +72,8 @@ title: 首页
 ## [算法](./algorithms/README.md)
 
 - [数据结构](./algorithms/data_structures/README.md)
-- [数值分析](./algorithms/numerical_analysis/README.lyx)
+- [数值计算](./algorithms/numerical/)
 - [优化方法](./algorithms/optimization/README.lyx)
-- [有限单元](./algorithms/finite_element/README.lyx)
 - [OpenFOAM](algorithms/openfoam/README.md)
 
 ## [编程](./programming/README.md)
