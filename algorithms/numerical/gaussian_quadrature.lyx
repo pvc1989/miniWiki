@@ -6,20 +6,8 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage[g]{esvect}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-%\newcommand{\Mat}[1]{\bqty{#1}}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
-\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\renewcommand{\parallel}{/\negthickspace/}
-\usepackage{tikz}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
-\options intoc
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -52,8 +40,8 @@ theorems-chap
 \spacing single
 \use_hyperref true
 \pdf_bookmarks true
-\pdf_bookmarksnumbered false
-\pdf_bookmarksopen false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
 \pdf_bookmarksopenlevel 1
 \pdf_breaklinks true
 \pdf_pdfborder true
@@ -102,7 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -117,11 +105,1899 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-Gaussian 求积
+Gauss 型求积公式
 \end_layout
 
 \begin_layout Subsection
-一维形式
+一维区间（线段）
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一维区间]
+\end_layout
+
+\end_inset
+
+多项式 
+\begin_inset Formula $f(\eta)$
+\end_inset
+
+ 在一维区间 
+\begin_inset Formula $(-1,+1)$
+\end_inset
+
+ 上的
+\color blue
+定积分 (definite integral)
+\color inherit
+ 可以近似为加权求和：
+\begin_inset Formula 
+\begin{equation}
+\int_{-1}^{+1}f(\eta)\dd{\eta}\approx\sum_{q=1}^{Q}f\qty(\eta_{q})\,w_{q}\label{eq:guass_quadrature_1d}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\eta_{q}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+ 分别为第 
+\begin_inset Formula $q$
+\end_inset
+
+ 个
+\color blue
+求积点 (quadrature point)
+\color inherit
+ 的
+\color blue
+局部坐标 (local coordinate)
+\color inherit
+ 与相应的
+\color blue
+权重 (weight)
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_lines"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:gauss_quad_for_lines"
+
+\end_inset
+
+标准区间上的 Gauss–Legendre 积分
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+精度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+积分点个数 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+局部坐标 
+\begin_inset Formula $\xi_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+权重 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\pm\sqrt{1/3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+0\\
+\pm\sqrt{3/5}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+8/9\\
+5/9
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\pm\sqrt{\left(3-2\sqrt{6/5}\right)\mathbin{/}7}\\
+\pm\sqrt{\left(3+2\sqrt{6/5}\right)\mathbin{/}7}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(18+\sqrt{30}\right)\mathbin{/}36\\
+\left(18-\sqrt{30}\right)\mathbin{/}36
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+0\\
+\pm\sqrt{\left(5-2\sqrt{10/7}\right)\mathbin{/}9}\\
+\pm\sqrt{\left(5+2\sqrt{10/7}\right)\mathbin{/}9}
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+128/225\\
+\left(322+13\sqrt{70}\right)\mathbin{/}900\\
+\left(322-13\sqrt{70}\right)\mathbin{/}900
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[曲线段]
+\end_layout
+
+\end_inset
+
+任意（可参数化的）曲线段 
+\begin_inset Formula $\widetilde{AB}$
+\end_inset
+
+ 上的
+\color blue
+线积分 (line integral)
+\color inherit
+，可借助坐标变换 
+\begin_inset Formula $\vec{x}=\vec{x}(\eta)$
+\end_inset
+
+ 近似为
+\begin_inset Formula 
+\begin{equation}
+\int_{A}^{B}f(\vec{x})\dd{\vert\vec{x}\vert}=\int_{-1}^{+1}f(\eta)\,\vert\underline{J}(\eta)\vert\dd{\eta}\approx\sum_{q=1}^{Q}f(\vec{x}(\eta_{q}))\,\vert\underline{J}(\eta_{q})\vert\,w_{q}\label{eq:gauss_quad_for_curve}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\vert\underline{J}(\eta)\vert\coloneqq\frac{\dd{\vert\vec{x}\vert}}{\dd{\eta}}=\sqrt{\dv{\vec{x}}{\eta}\vdot\dv{\vec{x}}{\eta}}
+\]
+
+\end_inset
+
+为
+\color blue
+长度缩放系数
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[直线段]
+\end_layout
+
+\end_inset
+
+任意直线段 
+\begin_inset Formula $\overline{AB}$
+\end_inset
+
+ 上的线积分，可借助坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\eta)=\frac{1-\eta}{2}\vec{x}_{A}+\frac{1+\eta}{2}\vec{x}_{B}\qquad\eta\in[-1,+1]
+\]
+
+\end_inset
+
+近似为式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gauss_quad_for_curve"
+
+\end_inset
+
+，其中
+\begin_inset Formula 
+\[
+\vert\underline{J}(\eta)\vert=\sqrt{\dv{\vec{x}}{\eta}\vdot\dv{\vec{x}}{\eta}}=\frac{\vert\overline{AB}\vert}{2}\qquad\forall\eta
+\]
+
+\end_inset
+
+故可提到 
+\begin_inset Formula $\int$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sum$
+\end_inset
+
+ 外，即
+\begin_inset Formula 
+\[
+\int_{A}^{B}f(\vec{x})\dd{\vert\vec{x}\vert}=\vert\underline{J}\vert\int_{-1}^{+1}f(\vec{x}(\eta))\dd{\eta}\approx\frac{\vert\overline{AB}\vert}{2}\sum_{q=1}^{Q}f(\vec{x}(\eta_{q}))\,w_{q}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+二维区间（四边形）
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二维区间]
+\end_layout
+
+\end_inset
+
+多项式 
+\begin_inset Formula $f(\eta^{1},\eta^{2})$
+\end_inset
+
+ 在二维区间 
+\begin_inset Formula $(-1,+1)^{2}$
+\end_inset
+
+ 上的
+\color blue
+二重积分 (double integral)
+\color inherit
+ 可以近似为加权求和：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}\int_{-1}^{+1}f(\eta_{p}^{1},\eta_{q}^{2})\dd{\eta^{1}}\dd{\eta^{2}}\approx\sum_{p=1}^{P}\sum_{q=1}^{Q}f\qty(\eta_{p}^{1},\eta_{q}^{2})\,w_{p}w_{q}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\eta_{p},\eta_{q}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{p},w_{q}$
+\end_inset
+
+ 分别为
+\color blue
+一维区间
+\color inherit
+ Gauss 求积公式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:guass_quadrature_1d"
+
+\end_inset
+
+ 的
+\color blue
+局部坐标
+\color inherit
+与
+\color blue
+权重
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_lines"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[曲面四边形]
+\end_layout
+
+\end_inset
+
+任意（可参数化的）曲面四边形 
+\begin_inset Formula $\varGamma$
+\end_inset
+
+ 上的
+\color blue
+面积分 (surface integral)
+\color inherit
+，可借助坐标变换 
+\begin_inset Formula $\vec{x}=\vec{x}(\eta^{1},\eta^{2})$
+\end_inset
+
+ 近似为
+\begin_inset Formula 
+\begin{equation}
+\begin{aligned}\int_{\varGamma}f(\vec{x})\dd{\varGamma} & =\int_{-1}^{+1}\int_{-1}^{+1}f(\vec{x}(\vec{\eta}))\,\vert\underline{J}(\vec{\eta})\vert\dd{\eta^{1}}\dd{\eta^{2}}\\
+ & \approx\sum_{p=1}^{P}\sum_{q=1}^{Q}f(\vec{x}(\eta_{p}^{1},\eta_{q}^{2}))\,\vert\underline{J}(\eta_{p},\eta_{q})\vert\,w_{p}w_{q}
+\end{aligned}
+\label{eq:guass_quadrature_for_quadrilaterals}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\vert\underline{J}(\eta^{1},\eta^{2})\vert\coloneqq\frac{\dd\varGamma}{\dd{\eta^{1}}\dd{\eta^{2}}}=\sqrt{\det(\left(\frac{\partial\vec{x}}{\partial\vec{\eta}}\right)^{\dagger}\left(\frac{\partial\vec{x}}{\partial\vec{\eta}}\right))}
+\]
+
+\end_inset
+
+为
+\color blue
+面积缩放系数
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[平面四边形]
+\end_layout
+
+\end_inset
+
+任意平面四边形 
+\begin_inset Formula $\varGamma$
+\end_inset
+
+ 上的面积分，可借助坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\eta^{1},\eta^{2})=\sum_{i=1}^{4}\vec{x}_{i}N_{i}(\eta^{1},\eta^{2})=\frac{\begin{bmatrix}\vec{x}_{1} & \cdots & \vec{x}_{4}\end{bmatrix}}{4}\begin{bmatrix}(1-\eta^{1})(1-\eta^{2})\\
+(1+\eta^{1})(1-\eta^{2})\\
+(1+\eta^{1})(1+\eta^{2})\\
+(1-\eta^{1})(1+\eta^{2})
+\end{bmatrix}
+\]
+
+\end_inset
+
+近似为式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:guass_quadrature_for_quadrilaterals"
+
+\end_inset
+
+，其中面积缩放系数 
+\begin_inset Formula $\vert\underline{J}(\eta^{1},\eta^{2})\vert$
+\end_inset
+
+ 是 
+\begin_inset Formula $(\eta^{1},\eta^{2})$
+\end_inset
+
+ 的一次多项式，通常不能提到 
+\begin_inset Formula $\int$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sum$
+\end_inset
+
+ 外。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+三维区间（六面体）
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[三维区间]
+\end_layout
+
+\end_inset
+
+多项式 
+\begin_inset Formula $f(\eta^{1},\eta^{2},\eta^{3})$
+\end_inset
+
+ 在二维区间 
+\begin_inset Formula $(-1,+1)^{3}$
+\end_inset
+
+ 上的
+\color blue
+三重积分 (triple integral)
+\color inherit
+，可以近似为加权求和：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}\int_{-1}^{+1}\int_{-1}^{+1}f(\eta_{p}^{1},\eta_{q}^{2},\eta_{r}^{3})\dd{\eta^{1}}\dd{\eta^{2}}\dd{\eta^{3}}\approx\sum_{p=1}^{P}\sum_{q=1}^{Q}\sum_{r=1}^{R}f\qty(\eta_{p}^{1},\eta_{q}^{2},\eta_{r}^{3})\,w_{p}w_{q}w_{r}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\eta_{p},\eta_{q},\eta_{r}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{p},w_{q},w_{r}$
+\end_inset
+
+ 分别为
+\color blue
+一维区间
+\color inherit
+ Gauss 求积公式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:guass_quadrature_1d"
+
+\end_inset
+
+ 的
+\color blue
+局部坐标
+\color inherit
+与
+\color blue
+权重
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_lines"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[曲边六面体]
+\end_layout
+
+\end_inset
+
+任意（可参数化的）曲边六面体 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 上的
+\color blue
+体积分 (volume integral)
+\color inherit
+，可借助坐标变换 
+\begin_inset Formula $\vec{x}=\vec{x}(\eta^{1},\eta^{2},\eta^{3})$
+\end_inset
+
+ 近似为
+\begin_inset Formula 
+\begin{equation}
+\int_{\varOmega}f(\vec{x})\dd\varOmega\approx\sum_{p=1}^{P}\sum_{q=1}^{Q}\sum_{q=r}^{R}f(\vec{x}(\eta_{p}^{1},\eta_{q}^{2},\eta_{r}^{3}))\,\vert\underline{J}(\eta_{p}^{1},\eta_{q}^{2},\eta_{r}^{3})\vert\,w_{p}w_{q}w_{r}\label{eq:guass_quadrature_for_hexahedra}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\vert\underline{J}(\vec{\eta})\vert\coloneqq\frac{\dd\varOmega\equiv\dd{x^{1}}\dd{x^{2}}\dd{x^{3}}}{\dd{\eta^{1}}\dd{\eta^{2}}\dd{\eta^{3}}}=\det(\frac{\partial(x^{1},x^{2},x^{3})}{\partial(\eta^{1},\eta^{2},\eta^{3})})
+\]
+
+\end_inset
+
+为
+\color blue
+体积缩放系数
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[直边六面体]
+\end_layout
+
+\end_inset
+
+任意直边六面体 
+\begin_inset Formula $\varOmega$
+\end_inset
+
+ 上的体积分，可借助坐标变换
+\begin_inset Formula 
+\[
+\vec{x}=\sum_{i=1}^{8}\vec{x}_{i}N_{i}(\xi,\eta,\zeta)=\sum_{i=1}^{8}\vec{x}_{i}\frac{(1+\xi_{i}\xi)(1+\eta_{i}\eta)(1+\zeta_{i}\zeta)}{8}\qquad i=1,\dots,8
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\begin{bmatrix}x(\xi,\eta,\zeta)\\
+y(\xi,\eta,\zeta)\\
+z(\xi,\eta,\zeta)
+\end{bmatrix}=\sum_{i=1}^{8}\begin{bmatrix}x_{i}\\
+y_{i}\\
+z_{i}
+\end{bmatrix}N_{i}(\xi,\eta,\zeta)=\begin{bmatrix}\begin{bmatrix}x_{1}\\
+y_{1}\\
+z_{1}
+\end{bmatrix} & \cdots & \begin{bmatrix}x_{8}\\
+y_{8}\\
+z_{8}
+\end{bmatrix}\end{bmatrix}\begin{bmatrix}N_{1}(\xi,\eta,\zeta)\\
+\dots\\
+N_{8}(\xi,\eta,\zeta)
+\end{bmatrix}
+\]
+
+\end_inset
+
+近似为式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:guass_quadrature_for_hexahedra"
+
+\end_inset
+
+，其中面积缩放系数 
+\begin_inset Formula $\vert\underline{J}(\eta^{1},\eta^{2},\eta^{3})\vert$
+\end_inset
+
+ 是 
+\begin_inset Formula $(\eta^{1},\eta^{2},\eta^{3})$
+\end_inset
+
+ 的一次多项式，通常不能提到 
+\begin_inset Formula $\int$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sum$
+\end_inset
+
+ 外。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+此时 Jacobian 矩阵
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{J} & =\frac{\partial(x,y,z)}{\partial(\xi,\eta,\zeta)}=\sum_{i=1}^{8}\begin{bmatrix}x_{i}\\
+y_{i}\\
+z_{i}
+\end{bmatrix}\begin{bmatrix}\dfrac{\partial N_{i}}{\partial\xi} & \dfrac{\partial N_{i}}{\partial\eta} & \dfrac{\partial N_{i}}{\partial\zeta}\end{bmatrix}\\
+ & =\sum_{i=1}^{8}\frac{1}{8}\begin{bmatrix}x_{i}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta) & x_{i}\eta_{i}(1+\xi_{i}\xi)(1+\zeta_{i}\zeta) & x_{i}\zeta_{i}(1+\xi_{i}\xi)(1+\eta_{i}\eta)\\
+y_{i}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta) & y_{i}\eta_{i}(1+\xi_{i}\xi)(1+\zeta_{i}\zeta) & y_{i}\zeta_{i}(1+\xi_{i}\xi)(1+\eta_{i}\eta)\\
+z_{i}\xi_{i}(1+\eta_{i}\eta)(1+\zeta_{i}\zeta) & z_{i}\eta_{i}(1+\xi_{i}\xi)(1+\zeta_{i}\zeta) & z_{i}\zeta_{i}(1+\xi_{i}\xi)(1+\eta_{i}\eta)
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+的各项均为 
+\begin_inset Formula $(\eta^{1},\eta^{2},\eta^{3})$
+\end_inset
+
+ 的二次多项式，故 
+\begin_inset Formula $\det\underline{J}$
+\end_inset
+
+ 至多为 
+\begin_inset Formula $(\eta^{1},\eta^{2},\eta^{3})$
+\end_inset
+
+ 的六次多项式。又因为各边均为直线段，由
+\color blue
+射影几何
+\color inherit
+可知 
+\begin_inset Formula $\det\underline{J}$
+\end_inset
+
+ 中高于一次的项相互抵消。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+三角形
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[曲面三角形]
+\end_layout
+
+\end_inset
+
+任意（可参数化的）曲面三角形 
+\begin_inset Formula $\triangle ABC$
+\end_inset
+
+ 上的面积分，可借助坐标变换
+\begin_inset Formula 
+\[
+\vec{x}(\eta_{A},\eta_{B})=\eta_{A}\vec{x}_{A}+\eta_{B}\vec{x}_{B}+\eta_{C}\vec{x}_{C}\qquad\begin{cases}
+\vec{\eta}\coloneqq(\eta_{A},\eta_{B})\in[0,1]^{2}\\
+\eta_{A}+\eta_{B}+\eta_{C}=1
+\end{cases}
+\]
+
+\end_inset
+
+近似为
+\begin_inset Formula 
+\begin{equation}
+\iint_{\triangle ABC}f(\vec{x})=\int_{0}^{1}\int_{0}^{1-\eta_{B}}f(\vec{x}(\vec{\eta}))\,\vert\underline{J}(\vec{\eta})\vert\dd{\eta_{A}}\dd{\eta_{B}}\approx\sum_{q=1}^{Q}f(\vec{x}(\vec{\eta}_{q}))\,\vert\underline{J}(\vec{\eta}_{q})\vert\,w_{q}\label{eq:gauss_quad_for_triangles}
+\end{equation}
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vec{\eta}_{q}\coloneqq(\eta_{A},\eta_{B})_{q}$
+\end_inset
+
+ 与 
+\begin_inset Formula $w_{q}$
+\end_inset
+
+ 分别为第 
+\begin_inset Formula $q$
+\end_inset
+
+ 个积分点的
+\color blue
+面积坐标
+\color inherit
+与相应的
+\color blue
+权重
+\color inherit
+，常用组合列于表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_triangles"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:gauss_quad_for_triangles"
+
+\end_inset
+
+标准三角形上的 Gauss–Legendre 积分
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+精度
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+面积坐标 
+\begin_inset Formula $(\eta_{A})_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+权重 
+\begin_inset Formula $2w_{q}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1/3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+1/6\\
+1/2
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+3/10\\
+1/30
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(8-\sqrt{10}+\sqrt{38-44\sqrt{2/5}}\right)\mathbin{/}18\\
+\left(8-\sqrt{10}-\sqrt{38-44\sqrt{2/5}}\right)\mathbin{/}18
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+\left(620+\sqrt{213125-53320\sqrt{10}}\right)\mathbin{/}3720\\
+\left(620-\sqrt{213125-53320\sqrt{10}}\right)\mathbin{/}3720
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $7$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+1/3\\
+\left(6-\sqrt{15}\right)\mathbin{/}21\\
+\left(6+\sqrt{15}\right)\mathbin{/}21
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\begin{array}{c}
+9/40\\
+\left(155-\sqrt{15}\right)\mathbin{/}1200\\
+\left(155+\sqrt{15}\right)\mathbin{/}1200
+\end{array}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[面积坐标]
+\end_layout
+
+\end_inset
+
+表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_triangles"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 中的面积坐标只给出了一个分量 
+\begin_inset Formula $\eta_{A}$
+\end_inset
+
+，其他分量可由 
+\begin_inset Formula $\eta_{A}+\eta_{B}+\eta_{C}=1$
+\end_inset
+
+ 及对称性
+\begin_inset Formula 
+\[
+(\eta_{A}=\eta_{B})\lor(\eta_{B}=\eta_{C})\lor(\eta_{A}=\eta_{C})
+\]
+
+\end_inset
+
+得到。例如：七点公式的完整形式为
+\begin_inset Formula 
+\[
+\begin{array}{ccccccc}
+q &  & \eta_{A} & \eta_{B} & \eta_{C} &  & w\\
+1 &  & 1/3 & 1/3 & 1/3 &  & 9/40\\
+2 &  & a & a & 1-2a &  & c\\
+3 &  & a & 1-2a & a &  & c\\
+4 &  & 1-2a & a & a &  & c\\
+5 &  & b & b & 1-2b &  & d\\
+6 &  & b & 1-2b & b &  & d\\
+7 &  & 1-2b & b & b &  & d
+\end{array}\qquad\begin{aligned}a & =\left(6-\sqrt{15}\right)\mathbin{/}21\\
+b & =\left(6+\sqrt{15}\right)\mathbin{/}21\\
+c & =\left(155-\sqrt{15}\right)\mathbin{/}1200\\
+d & =\left(155+\sqrt{15}\right)\mathbin{/}1200
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[平面三角形]
+\end_layout
+
+\end_inset
+
+将求积公式-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gauss_quad_for_triangles"
+
+\end_inset
+
+ 应用于平面三角形 
+\begin_inset Formula $\triangle ABC$
+\end_inset
+
+ 时，面积缩放系数
+\begin_inset Formula 
+\[
+\vert\underline{J}(\vec{\eta})\vert\coloneqq\sqrt{\det(\underline{J}^{\dagger}\cdot\underline{J})}=2\vert\triangle ABC\vert\qquad\forall(\eta_{A},\eta_{B})\in[0,1-\eta_{B}]\times[0,1]
+\]
+
+\end_inset
+
+在整个三角形内有相同的值，故可以被提到 
+\begin_inset Formula $\int$
+\end_inset
+
+ 与 
+\begin_inset Formula $\sum$
+\end_inset
+
+ 外，即
+\begin_inset Formula 
+\[
+\iint_{\triangle ABC}f(\vec{x})=\vert\underline{J}\vert\int_{0}^{1}\int_{0}^{1-\eta_{B}}f(\vec{x}(\vec{\eta}))\,\dd{\eta_{A}}\dd{\eta_{B}}\approx2\vert\triangle ABC\vert\sum_{q=1}^{Q}f(\vec{x}(\vec{\eta}_{q}))\,w_{q}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对于平面三角形，Jacobian 矩阵
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在三维问题中为
+\begin_inset Formula 
+\[
+\underline{J}\coloneqq\frac{\partial(x,y,z)}{\partial(\eta_{A},\eta_{B})}=\begin{bmatrix}\pdv*{x}{\eta_{A}} & \pdv*{x}{\eta_{B}}\\
+\pdv*{y}{\eta_{A}} & \pdv*{y}{\eta_{B}}\\
+\pdv*{z}{\eta_{A}} & \pdv*{z}{\eta_{B}}
+\end{bmatrix}=\begin{bmatrix}x_{A}-x_{C} & x_{B}-x_{C}\\
+y_{A}-y_{C} & y_{B}-y_{C}\\
+z_{A}-z_{C} & z_{B}-z_{C}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+在二维问题中为
+\begin_inset Formula 
+\[
+\underline{J}\coloneqq\frac{\partial(x,y)}{\partial(\eta_{A},\eta_{B})}=\begin{bmatrix}\pdv*{x}{\eta_{A}} & \pdv*{x}{\eta_{B}}\\
+\pdv*{y}{\eta_{A}} & \pdv*{y}{\eta_{B}}
+\end{bmatrix}=\begin{bmatrix}x_{A}-x_{C} & x_{B}-x_{C}\\
+y_{A}-y_{C} & y_{B}-y_{C}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+故
+\begin_inset Formula 
+\[
+\underline{J}(\vec{\eta})\vert\coloneqq\sqrt{\det(\underline{J}^{\dagger}\cdot\underline{J})}=2\vert\triangle ABC\vert
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[权重]
+\end_layout
+
+\end_inset
+
+表-
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:gauss_quad_for_triangles"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 将权重写成 
+\begin_inset Formula $2w_{q}$
+\end_inset
+
+，是为了方便与其他文献对照。这些文献通常将
+\color blue
+标准三角形
+\color inherit
+上的 Gauss 求积公式定义为
+\begin_inset Formula 
+\[
+\int_{0}^{1}\int_{0}^{1-\eta_{B}}f(\eta_{A},\eta_{B})\,\dd{\eta_{A}}\dd{\eta_{B}}\approx\vert\triangle ABC\vert\sum_{q=1}^{Q}f(\vec{\eta}_{q})\,W_{q}
+\]
+
+\end_inset
+
+因此这两种定义以 
+\begin_inset Formula $W_{q}=2w_{q}$
+\end_inset
+
+ 相联系。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+三棱柱（三棱台）
+\end_layout
+
+\begin_layout Subsection
+三棱锥（四面体）
+\end_layout
+
+\begin_layout Subsection
+四棱锥（退化的六面体）
+\end_layout
+
+\begin_layout Section
+正交基函数
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:orthogonal_functions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+基于 Legendre 多项式
+\end_layout
+
+\begin_layout Subsection
+基于 Gram–Schmidt 过程
+\end_layout
+
+\begin_layout Standard
+将原始基函数的两两内积结果记为
+\begin_inset Formula 
+\[
+\underline{A}\coloneqq\begin{bmatrix}\langle\phi_{1}\vert\phi_{1}\rangle & \langle\phi_{1}\vert\phi_{2}\rangle & \cdots & \langle\phi_{1}\vert\phi_{n}\rangle\\
+ & \langle\phi_{2}\vert\phi_{2}\rangle & \cdots & \langle\phi_{2}\vert\phi_{n}\rangle\\
+ &  & \ddots & \vdots\\
+\mathrm{sym.} &  &  & \langle\phi_{n}\vert\phi_{n}\rangle
+\end{bmatrix}
+\]
+
+\end_inset
+
+将原始基函数与规范正交基函数之间的变换记为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{1}^{\mathrm{o.n.}}\\
+\phi_{2}^{\mathrm{o.n.}}\\
+\vdots\\
+\phi_{n}^{\mathrm{o.n.}}
+\end{bmatrix}=\underbrace{\begin{bmatrix}S_{11}\\
+S_{21} & S_{22}\\
+\vdots &  & \ddots\\
+S_{n1} & S_{n2} & \cdots & S_{nn}
+\end{bmatrix}}_{\underline{S}}\begin{bmatrix}\phi_{1}\\
+\phi_{2}\\
+\vdots\\
+\phi_{n}
+\end{bmatrix}
+\]
+
+\end_inset
+
+其中上三角阵 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 为 
+\color blue
+Schmdit 矩阵
+\color inherit
+（上标 o.
+ 与 o.n.
+ 分别表示
+\color blue
+正交化的 (Orthogonalized)
+\color inherit
+ 与
+\color blue
+正交归一化的 (OrthoNormalized)
+\color inherit
+），可逐行计算：
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Gram--Schmidt]
+\end_layout
+
+\end_inset
+
+首项 
+\begin_inset Formula $\phi_{1}^{\mathrm{o.n.}}$
+\end_inset
+
+ 只含 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ 成分，故只需
+\color blue
+归一化
+\color inherit
+：
+\begin_inset Formula 
+\[
+\phi_{1}^{\mathrm{o.n.}}=\frac{\phi_{1}}{\Vert\phi_{1}\Vert}\qquad S_{11}=\frac{1}{\Vert\phi_{1}\Vert}
+\]
+
+\end_inset
+
+获得 
+\begin_inset Formula $\left\{ \phi_{i}^{\mathrm{o.n.}}\right\} _{i=1}^{k-1}$
+\end_inset
+
+（即 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 的前 
+\begin_inset Formula $k-1$
+\end_inset
+
+ 行）后，计算 
+\begin_inset Formula $\phi_{k}^{\mathrm{o.n.}}$
+\end_inset
+
+ 需先作
+\color blue
+正交化
+\color inherit
+：
+\begin_inset Formula 
+\[
+\phi_{k}^{\mathrm{o.}}=\phi_{k}-\sum_{i=1}^{k-1}\phi_{i}^{\mathrm{o.n.}}\langle\phi_{i}^{\mathrm{o.n.}}\vert\phi_{k}\rangle
+\]
+
+\end_inset
+
+代入已知的 
+\begin_inset Formula $\phi_{i}^{\mathrm{o.n.}}=\sum_{j=1}^{i}S_{ij}\phi_{j}$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\begin{aligned}\phi_{k}^{\mathrm{o.}}\coloneqq\sum_{l=1}^{i}S_{kl}^{\mathrm{o.}}\phi_{l} & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\ip{\sum_{j=1}^{i}S_{ij}\phi_{j}}{\phi_{k}}\\
+ & =\phi_{k}-\sum_{i=1}^{k-1}\left(\sum_{l=1}^{i}S_{il}\phi_{l}\right)\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+S_{kl}^{\mathrm{o.}}=\begin{cases}
+-\sum_{i=1}^{k-1}\left(\sum_{j=1}^{i}S_{ij}A_{jk}\right)S_{il} & l<k\\
+1 & l=k
+\end{cases}
+\]
+
+\end_inset
+
+再用 
+\begin_inset Formula $\Vert\phi_{k}^{\mathrm{o.}}\Vert$
+\end_inset
+
+ 除 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行，即
+\color blue
+归一化
+\color inherit
+：
+\begin_inset Formula 
+\[
+S_{kl}=\frac{S_{kl}^{\mathrm{o.}}}{\Vert\phi_{k}^{\mathrm{o.}}\Vert}=\frac{S_{kl}^{\mathrm{o.}}}{\sqrt{\sum_{i=1}^{k}\left(\sum_{j=1}^{i-1}2S_{jk}A_{ji}+S_{ik}A_{ii}\right)S_{ik}}}\qquad l=1,\dots,k
+\]
+
+\end_inset
+
+
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
