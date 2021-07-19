@@ -10,13 +10,13 @@ title: 理论力学
 
 ### Galileo's 相对性原理
 
-【Galileo's 变换】若惯性参考系 $K'$ 以速度 $\Vec{V}$ 相对于另一个惯性参考系 $K$ 运动，则同一质点在这两个参考系中的位置与时间满足如下关系
+**Galileo's 变换**：若惯性参考系 $K'$ 以速度 $\Vec{V}$ 相对于另一个惯性参考系 $K$ 运动，则同一质点在这两个参考系中的位置与时间满足如下关系
 
 $$
 \Vec{r}=\Vec{r}'+\Vec{V}t\qquad t=t'
 $$
 
-【Galileo's 相对性原理】力学方程在“Galileo's 变换”作用下具有不变性。
+**Galileo's 相对性原理**：力学方程在 *Galileo's 变换*作用下具有不变性。
 
 ## 运动方程
 
@@ -72,7 +72,7 @@ $$
 L_{*}(\underline{q},\underline{\dot{q}},t)=L(\underline{q},\underline{\dot{q}},t)+\dv{}{t}f(\underline{q},t)
 $$
 
-则它们给出相同的 Lagrange's 方程，从而在力学上完全等价。
+则它们给出相同的 *Lagrange's 方程*，从而在力学上完全等价。
 
 ## $L$ 的具体形式
 
@@ -156,7 +156,7 @@ $$
 
 ### Legendre's 变换
 
-Lagrangian 函数 $L(\Mat{q},\Mat{\dot{q}},t)$ 关于“广义速度”的导数被称为“广义动量”，即
+Lagrangian 函数 $L(\Mat{q},\Mat{\dot{q}},t)$ *关于广义速度的导数*被称为**广义动量**，即
 
 $$
 \Mat{p}
@@ -173,13 +173,14 @@ $$
 \tilde{L}(\Mat{q},\Mat{p},t)\coloneqq \mathopen{L}\left(\Mat{q},\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t),t\right)
 $$
 
-由此可定义“Hamiltonian 函数”
+由此可定义 **Hamiltonian 函数**
 
 $$
 \boxed{H(\Mat{q},\Mat{p},t)\coloneqq \Mat{p}\cdot\mathopen{\Mat{\dot{q}}}(\Mat{q},\Mat{p},t)- \tilde{L}(\Mat{q},\Mat{p},t)}
 $$
 
-其物理意义为系统的能量。上述由 $L(\Mat{q},\Mat{\dot{q}},t)$ 导出 $H(\Mat{q},\Mat{p},t)$ 的过程在数学上被称为 Legendre's 变换，
+其物理意义为系统的能量。
+上述由 $L(\Mat{q},\Mat{\dot{q}},t)$ 导出 $H(\Mat{q},\Mat{p},t)$ 的过程在数学上被称为 **Legendre's 变换**
 
 ### Hamilton's 方程
 
@@ -204,13 +205,13 @@ $$
 -\pdv{L}{t}\dd{t}
 $$
 
-比较后一个等号两侧 $\dd{\Mat{p}},\dd{\Mat{q}}$ 系数，即得“Hamilton's 方程”<a href name="hamilton-eqn"></a>
+比较后一个等号两侧 $\dd{\Mat{p}},\dd{\Mat{q}}$ 系数，即得 **Hamilton's 方程**<a href name="hamilton-eqn"></a>
 
 $$
 \boxed{\Mat{\dot{q}}=+\pdv{H}{\Mat{p}}\qquad\Mat{\dot{p}}=-\pdv{H}{\Mat{q}}}
 $$
 
-此方程只含一阶导数，且具有很好的对称性，在分析力学中居于核心地位，故又名“正则方程 (canonical equations)”。
+此方程只含一阶导数，且具有很好的对称性，在分析力学中居于核心地位，故又名**正则方程 (canonical equations)**。
 
 ### 能量守恒<a href name="const-H"></a>
 
@@ -220,9 +221,9 @@ $$
 \boxed{\pdv{H}{t}=-\pdv{L}{t}}
 $$
 
-其中表示“时间”的变量 $t$ 可以推广为除了 $p,q$ 以外的任何决定 $L,H$ 的参数。
+其中表示*时间*的变量 $t$ 可以推广为除了 $p,q$ 以外的任何决定 $L,H$ 的参数。
 
-利用 [Hamilton's 方程](#hamilton-eqn)，可以将“能量守恒”条件化为
+利用 [Hamilton's 方程](#hamilton-eqn)，可以将*能量守恒*条件化为
 
 $$
 \dv{H}{t}
@@ -230,7 +231,7 @@ $$
 +\boxed{\pdv{H}{t}=0}
 $$
 
-即“$H$ 不显含时间”。
+即 *$H$ 不显含时间*。
 
 ## 作用量的 Hamiltonian 形式
 
@@ -267,7 +268,7 @@ $$
 \mathopen{\Mat{p}}(t_1)=-\pdv{S}{\mathopen{\Mat{q}}(t_1)}
 $$
 
-将上式代入“关于 $t_2,t_1$ 全导数”（依次固定 $t_1,t_2$ 并利用变上、下限积分的导数公式）
+将上式代入*关于 $t_2,t_1$ 全导数*（依次固定 $t_1,t_2$ 并利用变上、下限积分的导数公式）
 
 $$
 \dv{S}{t_2}=+L(t_2)=\pdv{S}{t_2}+\pdv{S}{\mathopen{\Mat{q}}(t_2)}\cdot\mathopen{\Mat{\dot{q}}}(t_2)\qquad
@@ -280,7 +281,7 @@ $$
 \pdv{S}{t_2}=-H(t_2)\qquad\pdv{S}{t_1}=+H(t_1)
 $$
 
-将它们代回“关于 $t_2,t_1$ 全导数”，即得
+将它们代回*关于 $t_2,t_1$ 全导数*，即得
 
 $$
 \dv{S}{t_2}=+\mathopen{\Mat{p}}(t_2)\cdot\mathopen{\Mat{\dot{q}}}(t_2)-H(t_2)\qquad
@@ -328,19 +329,19 @@ $$
 \delta{S}=-E\,\delta{t}+\delta{S_0}\qquad S_0\coloneqq\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}
 $$
 
-其中 $S_0$ 被称为“简约作用量”。消去 $\delta{S}=-E\,\delta{t}$，就得到“Maupertuis' 原理”
+其中 $S_0$ 被称为**简约作用量**。消去 $\delta{S}=-E\,\delta{t}$，就得到 **Maupertuis' 原理**
 
 $$
 \delta{S_0}\equiv\boxed{\delta{\int_{t_0}^t\Mat{p}\cdot\dd{\Mat{q}}}=0}
 $$
 
-基于该原理，可以解出“轨道”，即不含时间的曲线方程。具体做法如下：
+基于该原理，可以解出**轨道**，即不含时间的曲线方程。具体做法如下：
 
 1. 由 $E=E(\Mat{q},\Mat{\dot{q}})$ 解出 $\dd{t}$，将 $\dd{t}$ 表示成以 $\Mat{q},\dd{\Mat{q}}$ 为自变量的函数。
 2. 将上述 $\dd{t}$ 代入 $\Mat{p}=\partial L/\mathopen{\partial}\Mat{\dot{q}}$，将 $\Mat{p}$ 也表示成以 $\Mat{q},\dd{\Mat{q}}$ 为自变量的函数。
-3. 将上述 $\Mat{p}$ 代入 $\delta{S_0}=0$，即得 $\Mat{q},\dd{\Mat{q}}$ 所应满足的方程，此即“轨道方程”。
+3. 将上述 $\Mat{p}$ 代入 $\delta{S_0}=0$，即得 $\Mat{q},\dd{\Mat{q}}$ 所应满足的方程，此即**轨道方程**。
 
-【例】对于典型系统
+**例**：对于典型系统
 
 $$
 L=\tfrac12\Mat{\dot{q}}\cdot\mathopen{\Mat{A}}(\Mat{q})\cdot\Mat{\dot{q}}-U(\Mat{q})\qquad
@@ -388,7 +389,7 @@ $$
 \end{cases}
 $$
 
-的变换能够保持方程的正则性，因此该条件被称为“正则变换条件”，其中 $F=F(\Mat{q},\Mat{p},\Mat{\tilde{q}},\Mat{\tilde{p}},t)$ 被称为该变换的“生成函数”。
+的变换能够保持方程的正则性，因此该条件被称为**正则变换条件**，其中 $F=F(\Mat{q},\Mat{p},\Mat{\tilde{q}},\Mat{\tilde{p}},t)$ 被称为该变换的**生成函数**。
 这是因为，变换前后的作用量 $S,\tilde{S}$ 能分别导出 Hamilton's 方程，并且二者之差 $S-\tilde{S}=\left.F\right|_{t_1}^{t_2}$ 为不影响变分的常数。
 
 ### 正则变换公式
@@ -419,7 +420,7 @@ $$
 \tilde{H}-H=\pdv{F}{t}}
 $$
 
-其中生成函数 $F$ 只依赖于 $\Mat{q},\Mat{p},t$；若要获得只依赖于 $\Mat{q},\Mat{\tilde{p}},t$ 的生成函数，则需对正则变换条件作 Legendre's 变换：
+其中生成函数 $F$ 只依赖于 $\Mat{q},\Mat{p},t$；若要获得只依赖于 $\Mat{q},\Mat{\tilde{p}},t$ 的生成函数，则需对正则变换条件作 *Legendre's 变换*：
 
 $$
 \dd{\varPhi}\coloneqq\dd{(F+\Mat{\tilde{p}}\cdot\Mat{\tilde{q}})}
@@ -470,13 +471,13 @@ $$
 
 【引理】真实运动所引起的正则共轭变量 $\underline{q},\underline{p}$ 的变化，可以看作一系列正则变换累加的结果。
 
-【Liouville's 定理】相空间中任意点集的测度不随这些点的（满足力学定律的真实）运动而变化。
+**Liouville's 定理**：相空间中任意点集的测度不随这些点的（满足力学定律的真实）运动而变化。
 
 ## Poisson 括号
 
 ### 定义
 
-给定两个依赖于 $(\Mat{p},\Mat{q})$ 的函数 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$，它们的“Poisson 括号”是指
+给定两个依赖于 $(\Mat{p},\Mat{q})$ 的函数 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$，它们的 **Poisson 括号**是指
 
 $$
 \boxed{\{f,g\}\coloneqq\pdv{f}{\Mat{p}}\cdot\pdv{g}{\Mat{q}}-\pdv{f}{\Mat{q}}\cdot\pdv{g}{\Mat{p}}}
@@ -518,7 +519,7 @@ $$
 
 ### 运动积分
 
-【定理】若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
+**定理**：若 $f(\Mat{p},\Mat{q}),g(\Mat{p},\Mat{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
 
 $$
 \left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
