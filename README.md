@@ -1,4 +1,5 @@
 ---
+layout: page
 title: 首页
 ---
 
@@ -118,3 +119,4 @@ title: 首页
 - [书签编辑器](./documenting/bookmark)
   - [PDFBookmarker](./documenting/bookmark.md#PDFBookmarker)
   - [DJVUSED](./documenting/bookmark.md#DJVUSED)
+
