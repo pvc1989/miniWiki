@@ -16,7 +16,7 @@ $$
 \Vec{F}_{2\to1}=\frac{q_1 q_2}{4\pi\epsilon_0}\frac{\Vec{r}_1 - \Vec{r}_2}{\abs{\Vec{r}_1-\Vec{r}_2}^3}
 $$
 
-其中 $\epsilon_0$ 为“真空介电常数”。
+其中 $\epsilon_0$ 为**真空介电常数**。
 
 ## 持续的电流
 
@@ -46,7 +46,7 @@ $$
 \dd{\Vec{B}(\Vec{r}_1)} = \frac{\mu_0 I_2}{4\pi}\dd{\Vec{l}_2}\cross\frac{\Vec{r}_1 - \Vec{r}_2}{\abs{\Vec{r}_1-\Vec{r}_2}^3}
 $$
 
-其中 $\mu_0$ 为“真空磁导率”。
+其中 $\mu_0$ 为**真空磁导率**。
 
 ## 磁场对运动电荷的作用力
 
@@ -98,9 +98,9 @@ $$
 \coloneqq\frac{q_2}{4\pi\varepsilon_0}\frac{\Vec{r}_1-\Vec{r}_2}{\vert\Vec{r}_1-\Vec{r}_2\vert^3}
 $$
 
-被定义为“点电荷 $q_2\delta(\Vec{r}-\Vec{r}_2)$ 在 $\Vec{r}_1$ 处产生的电场强度”。
+被定义为**点电荷 $q_2\delta(\Vec{r}-\Vec{r}_2)$ 在 $\Vec{r}_1$ 处产生的电场强度**。
 
-实验结果显示“电场强度具有可加性”，即
+实验结果显示电场强度具有**可加性**，即
 
 $$
 \Vec{E}(\Vec{r};q_1,\Vec{r}_1\dots,q_n,\Vec{r}_n)
@@ -108,7 +108,7 @@ $$
 =\sum_{i=1}^n\frac{q_i}{4\pi\varepsilon_0}\frac{\Vec{r}-\Vec{r}_i}{\vert\Vec{r}-\Vec{r}_i\vert^3}
 $$
 
-上述求和式可以被推广为积分式，从而得到“在区域 $V$ 中按 $\rho(\Vec{r}')$ 分布的电荷在 $\Vec{r}$ 处产生的电场强度”：
+上述求和式可以被推广为积分式，从而得到**在区域 $V$ 中按 $\rho(\Vec{r}')$ 分布的电荷在 $\Vec{r}$ 处产生的电场强度**：
 
 $$
 \Vec{E}(\Vec{r};\rho,V)
@@ -117,7 +117,7 @@ $$
 
 ### 静电场的散度
 
-按 $\rho(\Vec{r})$ 分布的电荷所产生的电场 $\Vec{E}(\Vec{r})$ 对任意闭合曲面 $S$ 的通量，等于 $S$ 所围区域 $V$ 内的电荷量 $Q$ 除以 $\varepsilon_0$，此即“积分形式的 Gauss 电通量定律”：
+按 $\rho(\Vec{r})$ 分布的电荷所产生的电场 $\Vec{E}(\Vec{r})$ 对任意闭合曲面 $S$ 的通量，等于 $S$ 所围区域 $V$ 内的电荷量 $Q$ 除以 $\varepsilon_0$，此即**积分形式的 Gauss 电通量定律**：
 
 $$
 \oint_{S=\partial V} \Vec{\nu}\vdot\Vec{E}
@@ -125,13 +125,13 @@ $$
 = \frac{Q}{\varepsilon_0}
 $$
 
-在圆球上应用该式及 Gauss 散度定理，并令圆球半径趋于零，即得其“微分形式”：
+在圆球上应用该式及 Gauss 散度定理，并令圆球半径趋于零，即得其**微分形式**：
 
 $$
 \boxed{\divg\Vec{E}=\frac{\rho}{\varepsilon_0}}
 $$
 
-此即“真空中的稳态 Maxwell 方程组”的第一式。
+此即**真空中的稳态 Maxwell 方程组**的第一式。
 
 ### 静电场的旋度
 
@@ -152,14 +152,14 @@ $$
 ### 静电场的标量势
 
 静电场无旋的一个推论是：存在标量场 $\phi(\Vec{r})$ 使得 $\Vec{E}(\Vec{r})=-\grad\phi(\Vec{r})$ 对 $\Vec{r}$ 都成立。
-这样的标量场 $\phi(\Vec{r})$ 被定义为静电场 $\Vec{E}(\Vec{r})$ 的“静电势”，其中负号是根据 George Green 的建议引入的。
+这样的标量场 $\phi(\Vec{r})$ 被定义为静电场 $\Vec{E}(\Vec{r})$ 的**静电势**，其中负号是根据 George Green 的建议引入的。
 于是，Gauss 电通量定律可以被改写为
 
 $$
 \divg\grad\phi\equiv\nabla^2\phi=-\frac{\rho}{\varepsilon_0}
 $$
 
-它被称为“Poisson 方程”，其中 $\nabla^2$ 为“Laplace 算符” ，在直角坐标系和球坐标系下的表达式分别为
+它被称为 **Poisson 方程**，其中 $\nabla^2$ 为 **Laplace 算符** ，在直角坐标系和球坐标系下的表达式分别为
 
 $$
 \nabla^2
@@ -182,13 +182,13 @@ $$
 
 ### 电荷守恒定律
 
-封闭系统内的电荷总量保持不变，此即“电荷守恒定律”。具体的，给定（不随时间变化的）区域 $V$ 及（可能）随时间变化的电荷密度 $\rho(\Vec{r},t)$ 与电流密度 $\Vec{\jmath}(\Vec{r},t)$，则该定律可写为
+封闭系统内的电荷总量保持不变，此即**电荷守恒定律**。具体的，给定（不随时间变化的）区域 $V$ 及（可能）随时间变化的电荷密度 $\rho(\Vec{r},t)$ 与电流密度 $\Vec{\jmath}(\Vec{r},t)$，则该定律可写为
 
 $$
 \int_V\pdv{\rho(\Vec{r},t)}{t}+\oint_{\partial V}\Vec{\nu}(\Vec{r},t)\vdot\Vec{\jmath}(\Vec{r},t)=0
 $$
 
-利用 Gauss 散度定理，并令 $V$ 趋于无穷小区域，即得其“微分形式”： 
+利用 Gauss 散度定理，并令 $V$ 趋于无穷小区域，即得其**微分形式**： 
 
 $$
 \boxed{\pdv{\rho(\Vec{r},t)}{t}+\divg\Vec{\jmath}(\Vec{r},t)=0}
@@ -229,7 +229,7 @@ $$
 = \curl\frac{\mu_0}{4\pi}\int_{V(\Vec{r}')}\frac{\Vec{\jmath}(\Vec{r}')}{\vert\Vec{r}-\Vec{r}'\vert} \eqqcolon \curl\Vec{A}(\Vec{r})
 $$
 
-其中 $ \Vec{A}(\Vec{r}) $ 被称为 $\Vec{B}(\Vec{r})$ 的“矢量势”。
+其中 $ \Vec{A}(\Vec{r}) $ 被称为 $\Vec{B}(\Vec{r})$ 的**矢量势**。
 
 ### 静磁场的散度
 
@@ -245,7 +245,7 @@ $$
 \divg(\curl\Vec{A})=\boxed{\divg\Vec{B}=0}
 $$
 
-此即“真空中的稳态 Maxwell 方程组”的第三式。
+此即**真空中的稳态 Maxwell 方程组**的第三式。
 
 ### 静磁场的旋度
 
@@ -281,7 +281,7 @@ $$
 \boxed{\curl\Vec{B}=\mu_0\Vec{\jmath}}
 $$
 
-此即“真空中的稳态 Maxwell 方程组”的第四式。
+此即**真空中的稳态 Maxwell 方程组**的第四式。
 
 # 静电磁场
 
