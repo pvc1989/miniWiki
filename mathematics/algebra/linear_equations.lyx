@@ -113,7 +113,7 @@ theorems-chap
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\Mat{A}=\begin{bmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\underline{A}=\begin{bmatrix}a_{1,1} & \cdots & a_{1,n}\\
 \vdots &  & \vdots\\
 a_{m,1} & \cdots & a_{m,n}
 \end{bmatrix}=\begin{bmatrix}\vert C_{1}\rangle & \cdots & \vert C_{n}\rangle\end{bmatrix}=\begin{bmatrix}\langle R_{1}\vert\\
@@ -134,7 +134,7 @@ a_{m,1} & \cdots & a_{m,n}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathcal{R}(\Mat{A})\coloneqq\left\{ \langle\mu\vert\Mat{A}:\langle\mu\vert\in\mathbb{R}^{1\times m}\right\} \subset\mathbb{R}^{1\times n}
+\mathcal{R}(\underline{A})\coloneqq\left\{ \langle\mu\vert\,\underline{A}:\langle\mu\vert\in\mathbb{R}^{1\times m}\right\} \subset\mathbb{R}^{1\times n}
 \]
 
 \end_inset
@@ -149,7 +149,7 @@ a_{m,1} & \cdots & a_{m,n}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathcal{C}(\Mat{A})\coloneqq\left\{ \Mat{A}\vert\mu\rangle:\vert\mu\rangle\in\mathbb{R}^{n\times1}\right\} \subset\mathbb{R}^{m\times1}
+\mathcal{C}(\underline{A})\coloneqq\left\{ \underline{A}\,\vert\mu\rangle:\vert\mu\rangle\in\mathbb{R}^{n\times1}\right\} \subset\mathbb{R}^{m\times1}
 \]
 
 \end_inset
@@ -164,7 +164,7 @@ a_{m,1} & \cdots & a_{m,n}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathcal{N}(\Mat{A})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{n\times1}:\Mat{A}\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{n\times1}
+\mathcal{N}(\underline{A})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{n\times1}:\underline{A}\,\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{n\times1}
 \]
 
 \end_inset
@@ -179,7 +179,7 @@ a_{m,1} & \cdots & a_{m,n}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathcal{L}(\Mat{A})\coloneqq\left\{ \langle\mu\vert\in\mathbb{R}^{1\times m}:\langle\mu\vert\Mat{A}=\langle0\vert\right\} \subset\mathbb{R}^{1\times m}
+\mathcal{L}(\underline{A})\coloneqq\left\{ \langle\mu\vert\in\mathbb{R}^{1\times m}:\langle\mu\vert\,\underline{A}=\langle0\vert\right\} \subset\mathbb{R}^{1\times m}
 \]
 
 \end_inset
@@ -188,19 +188,699 @@ a_{m,1} & \cdots & a_{m,n}
 \end_layout
 
 \begin_layout Section
-直接解法
-\end_layout
-
-\begin_layout Subsection
 Gauss 消元法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:gauss_elimination"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Gauss 消元法]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-LU 分解法
+LU 分解（一般方阵）
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[LU 分解]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 为方阵，则存在以下分解
+\begin_inset Formula 
+\[
+\underline{P}\,\underline{A}=\underline{L}\,\underline{U}
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $P$
+\end_inset
+
+ 为可逆矩阵，对 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 作行变换。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\underline{L}$
+\end_inset
+
+ 为下三角阵，其各项为 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:gauss_elimination"
+
+\end_inset
+
+中的乘数。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\underline{U}$
+\end_inset
+
+ 为上三角阵，记录消元结果。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Gauss 消元法通常可以直接给出 LU 分解：
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}2 & -1 & 0\\
+-1 & 2 & -1\\
+0 & -1 & 2
+\end{bmatrix}}_{\underline{A}}=\underbrace{\begin{bmatrix}1\\
+-1/2 & 1\\
+0 & -2/3 & 1
+\end{bmatrix}}_{\underline{L}}\underbrace{\begin{bmatrix}2 & -1 & 0\\
+ & 3/2 & -1\\
+ &  & 4/3
+\end{bmatrix}}_{\underline{U}}
+\]
+
+\end_inset
+
+但有时需要作适当的行变换：
+\begin_inset Formula 
+\[
+\begin{bmatrix}1 & 1 & 0\\
+1 & 1 & 1\\
+0 & 1 & 1
+\end{bmatrix}\begin{cases}
+\underrightarrow{\text{先消元}}\begin{bmatrix}1 & 1 & 0\\
+0 & 0 & 1\\
+0 & 1 & 1
+\end{bmatrix}\underrightarrow{\text{后换行}}\begin{bmatrix}1 & 1 & 0\\
+0 & 1 & 1\\
+0 & 0 & 1
+\end{bmatrix}\\
+\underrightarrow{\text{先换行}}\begin{bmatrix}1 & 1 & 0\\
+ & 1 & 1\\
+1 & 1 & 1
+\end{bmatrix}\underrightarrow{\text{后消元}}\begin{bmatrix}1 & 1 & 0\\
+0 & 1 & 1\\
+0 & 0 & 1
+\end{bmatrix}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-追赶法
+Cholesky 分解（对称方阵）
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Cholesky 分解]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 为实对称矩阵，则存在以下分解
+\begin_inset Formula 
+\[
+\underline{A}=\underline{L}\,\underline{D}\,\underline{L}^{\dagger}=\underline{R}\,\underline{R}^{\dagger}
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\underline{L}$
+\end_inset
+
+ 仍为 LU 分解中的下三角阵。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\underline{D}$
+\end_inset
+
+ 为 
+\begin_inset Formula $\underline{U}$
+\end_inset
+
+ 的对角线。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\underline{R}$
+\end_inset
+
+ 为下三角阵。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+先作 LU 分解，再由 
+\begin_inset Formula $\underline{U}$
+\end_inset
+
+ 的对角线得到 
+\begin_inset Formula $\underline{D}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\begin{split}\begin{bmatrix}2 & -1 & 0\\
+-1 & 2 & -1\\
+0 & -1 & 2
+\end{bmatrix} & =\begin{bmatrix}1\\
+-1/2 & 1\\
+0 & -2/3 & 1
+\end{bmatrix}\begin{bmatrix}2 & -1 & 0\\
+ & 3/2 & -1\\
+ &  & 4/3
+\end{bmatrix}\\
+ & =\begin{bmatrix}1\\
+-1/2 & 1\\
+0 & -2/3 & 1
+\end{bmatrix}\begin{bmatrix}2\\
+ & 3/2\\
+ &  & 4/3
+\end{bmatrix}\begin{bmatrix}1 & -1/2 & 0\\
+ & 1 & -2/3\\
+ &  & 1
+\end{bmatrix}\\
+ & =\begin{bmatrix}\sqrt{2}\\
+-\sqrt{1/2} & \sqrt{3/2}\\
+0 & -\sqrt{2/3} & \sqrt{4/3}
+\end{bmatrix}\begin{bmatrix}\sqrt{2} & -\sqrt{1/2} & 0\\
+ & \sqrt{3/2} & -\sqrt{2/3}\\
+ &  & \sqrt{4/3}
+\end{bmatrix}
+\end{split}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+追赶法（三对角阵）
+\end_layout
+
+\begin_layout Subsection
+复杂度小结
+\end_layout
+
+\begin_layout Standard
+用 Gauss 消元或矩阵分解解 
+\begin_inset Formula $\underline{A}\,\vert x\rangle=\vert b\rangle$
+\end_inset
+
+ 的时间复杂度，取决于 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的对称性及非零元分布情况。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+矩阵分解法的时间复杂度
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 为满阵
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 为带状稀疏矩阵
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+步骤
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+一般
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+对称
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+带宽为 
+\begin_inset Formula $2w$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+带宽为 
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+将 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 分解为 
+\begin_inset Formula $\underline{L}\,\underline{U}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{3}n^{3}+\frac{1}{3}n^{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(w+1)^{2}n+w^{2}n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2n+n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+将 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 分解为 
+\begin_inset Formula $\underline{R}\,\underline{R}^{\dagger}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{6}n^{3}+\frac{1}{6}n^{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(w+1)^{2}n+w^{2}n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2n+n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+向下逐行解 
+\begin_inset Formula $\underline{L}\,\vert y\rangle=\vert b\rangle$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}n^{2}+\frac{1}{2}n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $wn+wn$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n+n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+向上逐行解 
+\begin_inset Formula $\underline{U}\,\vert x\rangle=\vert y\rangle$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2}n^{2}+\frac{1}{2}n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(w+1)n+wn$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2n+n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
