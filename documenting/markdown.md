@@ -6,7 +6,7 @@ title: Markdown
 
 ## [Markdown](https://daringfireball.net/projects/markdown/syntax)
 
-### [GitHub Flavored Markdown (GFM)](https://github.github.com/gfm/)
+### [GFM (GitHub Flavored Markdown)](https://github.github.com/gfm/)
 
 ## [kramdown](https://kramdown.gettalong.org/)
 
@@ -81,9 +81,9 @@ $$
 ### 引入第三方 `.js` 文件<a href id="js"></a>
 更符合模块化原则的方案是：将全局自定义宏写入 `.js` 文件，由上述文件中的 `extensions` 对其进行调用。MathJax 提供了一些模仿同名 LaTeX 宏包的[第三方扩展文件](https://github.com/mathjax/MathJax-third-party-extensions/tree/master/legacy)。如果对其效果不满意，可以自己写一个 `mymacros.js` 文件。
 
-以 [`physics.js`](https://github.com/ickc/MathJax-third-party-extensions/tree/gh-pages/physics) 为例：
+下面以（自 Typora 0.11.0 (5581) 起默认被引入的）[`physics.js`](https://github.com/ickc/MathJax-third-party-extensions/tree/gh-pages/physics) 为例：
 
-1. 将该文件放入 `/Applications/Typora.app/Contents/Resources/TypeMark/lib/MathJax/extensions/TeX/` 文件夹中。
+1. 将该文件放入 `/Applications/Typora.app/Contents/Resources/TypeMark/lib/MathJax3/es5/input/tex/extensions` 文件夹中。
 1. 在[前一节](#global)已提到的 `/Applications/Typora.app/Contents/Resources/TypeMark/index.html` 文件中，找到 `TeX` 字段，将 `"physics.js"` 追加到 `extensions` 的尾部。
 
 设置完成后，在数学环境中可以直接使用 `physics.js` 中定义过的命令（效果在重启 Typora 后可见）：
@@ -100,3 +100,14 @@ $$
 - 创建对文档内（除公式、代码环境外）任意元素的引用。
 - 简化对复杂标题（长度过长，或含空格、数学、代码等元素）的引用。
   - 若不用锚点，则引用本页内的《[用 `\def` 定义局部宏](#local)》《[在配置文件中定义全局宏](#global)》《[引入第三方 `.js` 文件](#js)》将较为繁琐。
+
+## 样式修改
+
+在配置文件 `/Applications/Typora.app/Contents/Resources/TypeMark/index.html` 中的 `</head>` 标签前添加以下内容：
+
+```html
+<link rel="stylesheet" href="path-to-your.css">
+```
+
+[`pvcstyle.css`](../assets/css/pvcstyle.css) 可作为样式文件 `path-to-your.css` 的示例。
+
