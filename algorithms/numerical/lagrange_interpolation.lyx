@@ -6,20 +6,8 @@
 \origin unavailable
 \textclass book
 \begin_preamble
-\usepackage{physics}
-\usepackage[g]{esvect}
-\newcommand{\Mat}[1]{\mathop{\underline{#1}}\nolimits}
-%\newcommand{\Mat}[1]{\bqty{#1}}
-\newcommand{\MDV}[2]{\frac{\mathrm{D} #1}{\mathrm{D} #2}}
-\renewcommand{\vec}[1]{\vv{#1}}  % \vv in esvect
-\renewcommand{\vu}[1]{\hat{\vb*{#1}}}
-\renewcommand{\parallel}{/\negthickspace/}
-\usepackage{tikz}
-\usepackage{mathspec}
-\setmainfont{Palatino Linotype}
-\usepackage[heading]{ctex}
+\usepackage{pvcstyle}
 \end_preamble
-\options intoc
 \use_default_options true
 \begin_modules
 theorems-ams
@@ -52,8 +40,8 @@ theorems-chap
 \spacing single
 \use_hyperref true
 \pdf_bookmarks true
-\pdf_bookmarksnumbered false
-\pdf_bookmarksopen false
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
 \pdf_bookmarksopenlevel 1
 \pdf_breaklinks true
 \pdf_pdfborder true
@@ -102,7 +90,7 @@ theorems-chap
 \papercolumns 1
 \papersides 1
 \paperpagestyle fancy
-\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\footnotesize}"
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
 \tracking_changes false
 \output_changes false
 \html_math_output 0
@@ -994,7 +982,7 @@ reference "eq:IsoparametricTransformation"
  is defined as
 \begin_inset Formula 
 \[
-\Mat{J(\vec{\eta})}\coloneqq\pdv{(x_{1},\dots,x_{m})}{(\eta_{1},\dots,\eta_{k})}=\begin{bmatrix}\pdv*{x_{1}}{\eta_{1}} & \cdots & \pdv*{x_{1}}{\eta_{k}}\\
+\underline{J}(\vec{\eta})\coloneqq\pdv{(x_{1},\dots,x_{m})}{(\eta_{1},\dots,\eta_{k})}=\begin{bmatrix}\pdv*{x_{1}}{\eta_{1}} & \cdots & \pdv*{x_{1}}{\eta_{k}}\\
 \vdots &  & \vdots\\
 \pdv*{x_{m}}{\eta_{1}} & \cdots & \pdv*{x_{m}}{\eta_{k}}
 \end{bmatrix}
@@ -1026,7 +1014,7 @@ reference "eq:IsoparametricTransformation"
  is defined as
 \begin_inset Formula 
 \[
-\abs{J(\vec{\eta})}=\sqrt{\det\Mat{J(\vec{\eta})}^{\dagger}\Mat{J(\vec{\eta})}}
+\vert J(\vec{\eta})\vert=\sqrt{\det(\underline{J}^{\dagger}(\vec{\eta})\cdot\underline{J}(\vec{\eta}))}
 \]
 
 \end_inset
@@ -1045,7 +1033,7 @@ transpose
 \end_inset
 
 , then 
-\begin_inset Formula $\abs{J(\vec{\eta})}=\det\Mat{J(\vec{\eta})}$
+\begin_inset Formula $\vert J(\vec{\eta})\vert=\det(\underline{J}(\vec{\eta}))$
 \end_inset
 
 .
@@ -1101,7 +1089,7 @@ At
 or in matrix form
 \begin_inset Formula 
 \[
-\bra{\nabla_{\eta}u^{h}}=\bra{\nabla_{x}u^{h}}\Mat{J(\vec{\eta})}
+\bra{\nabla\!_{\vec{\eta}}u^{h}(\vec{x}(\vec{\eta}))}=\bra{\nabla\!_{\vec{x}}u^{h}(\vec{x})}\underline{J}(\vec{\eta})
 \]
 
 \end_inset
@@ -1115,13 +1103,13 @@ If
 \end_inset
 
  and 
-\begin_inset Formula $\abs{J(\vec{\eta})}\ne0$
+\begin_inset Formula $\vert J(\vec{\eta})\vert\ne0$
 \end_inset
 
 , then
 \begin_inset Formula 
 \[
-\bra{\nabla_{x}u^{h}}=\bra{\nabla_{\eta}u^{h}}\Mat{J(\vec{\eta})}^{-1}
+\bra{\nabla\!_{\vec{x}}u^{h}(\vec{x})}=\bra{\nabla\!_{\vec{\eta}}u^{h}(\vec{x}(\vec{\eta}))}\underline{J}^{-1}(\vec{\eta})
 \]
 
 \end_inset
@@ -1168,7 +1156,7 @@ integral!~ element
  is
 \begin_inset Formula 
 \[
-\dd\varOmega=\abs{\Mat{J(\vec{\eta})}}\dd{\eta_{1}}\cdots\dd{\eta_{k}}
+\dd{\varOmega}=\abs{\underline{J}(\vec{\eta})}\dd{\eta_{1}}\cdots\dd{\eta_{k}}
 \]
 
 \end_inset
@@ -1198,7 +1186,7 @@ integral!~ on manifold
  is
 \begin_inset Formula 
 \[
-\int_{\varOmega_{e}}u^{h}(\vec{x})\dd\varOmega=\underbrace{\dotsint}_{k\text{-fold}}u^{h}(\vec{x}(\vec{\eta}))\abs{\Mat{J(\vec{\eta})}}\dd{\eta_{1}}\cdots\dd{\eta_{k}}
+\int_{\varOmega_{e}}u^{h}(\vec{x})\dd{\varOmega}=\underbrace{\dotsint}_{k\text{-fold}}u^{h}(\vec{x}(\vec{\eta}))\,\vert\underline{J}(\vec{\eta})\vert\dd{\eta_{1}}\cdots\dd{\eta_{k}}
 \]
 
 \end_inset
@@ -1250,7 +1238,7 @@ z
 \end{bmatrix}=\begin{bmatrix}x(s)\\
 y(s)\\
 z(s)
-\end{bmatrix}\qquad\Mat{J(s)}=\begin{bmatrix}\dv*{x}{s}\\
+\end{bmatrix}\qquad\underline{J}(s)=\begin{bmatrix}\dv*{x}{s}\\
 \dv*{y}{s}\\
 \dv*{z}{s}
 \end{bmatrix}
@@ -1305,7 +1293,7 @@ z
 \end{bmatrix}=\begin{bmatrix}x(u,v)\\
 y(u,v)\\
 z(u,v)
-\end{bmatrix}\qquad\Mat{J(u,v)}=\begin{bmatrix}\pdv*{x}{u} & \pdv*{x}{v}\\
+\end{bmatrix}\qquad\underline{J}(u,v)=\begin{bmatrix}\pdv*{x}{u} & \pdv*{x}{v}\\
 \pdv*{y}{u} & \pdv*{y}{v}\\
 \pdv*{z}{u} & \pdv*{z}{v}
 \end{bmatrix}
@@ -1360,7 +1348,7 @@ z
 \end{bmatrix}=\begin{bmatrix}x(r,s,t)\\
 y(r,s,t)\\
 z(r,s,t)
-\end{bmatrix}\qquad\Mat{J(r,s,t)}=\begin{bmatrix}\pdv*{x}{r} & \pdv*{x}{s} & \pdv*{x}{t}\\
+\end{bmatrix}\qquad\underline{J}(r,s,t)=\begin{bmatrix}\pdv*{x}{r} & \pdv*{x}{s} & \pdv*{x}{t}\\
 \pdv*{y}{r} & \pdv*{y}{s} & \pdv*{y}{t}\\
 \pdv*{z}{r} & \pdv*{z}{s} & \pdv*{z}{t}
 \end{bmatrix}
@@ -2579,7 +2567,7 @@ end{center}
 \left(\eta_{2}-0\right)\left(\eta_{0}-0\right)\left(\eta_{0}-\frac{1}{3}\right)
 \end{bmatrix}\\
 27\left(\eta_{0}-0\right)\left(\eta_{1}-0\right)\left(\eta_{2}-0\right)
-\end{bmatrix}=\frac{1}{2}\Mat{A}\begin{bmatrix}1\\
+\end{bmatrix}=\frac{1}{2}\underline{A}\begin{bmatrix}1\\
 \eta_{0}\\
 \eta_{1}\\
 \eta_{0}\eta_{0}\\
@@ -2597,7 +2585,7 @@ end{center}
 in which
 \begin_inset Formula 
 \[
-\Mat{A}=\begin{bmatrix}\begin{array}{rrrrrrrrrr}
+\underline{A}=\begin{bmatrix}\begin{array}{rrrrrrrrrr}
  & 2 &  & -9 &  &  & 9\\
  &  & 2 &  &  & -9 &  &  &  & 9\\
 2 & -11 & -11 & 18 & 36 & 18 & -9 & -27 & -27 & -9\\
