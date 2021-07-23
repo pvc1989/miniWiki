@@ -101,11 +101,11 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-Lagrange 插值
+插值
 \end_layout
 
 \begin_layout Section
-General Formulation
+Lagrange 插值
 \end_layout
 
 \begin_layout Problem
@@ -215,18 +215,183 @@ Here
 efficient
 \emph default
  means 
-\begin_inset Formula $\order{N\lg N}$
+\begin_inset Formula $\order{N\lg^{3}N}$
 \end_inset
 
  space and time complexity for preprocessing and 
-\begin_inset Formula $\order{\lg N}$
+\begin_inset Formula $\order{\lg^{3}N}$
 \end_inset
 
  time complexity for each query.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-Global Lagrange Polynomials
+一维插值
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Existence and Uniqueness]
+\end_layout
+
+\end_inset
+
+Given 
+\begin_inset Formula $(N+1)$
+\end_inset
+
+ sample points in interval 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+a=x_{0}<x_{1}<\cdots<x_{N-1}<x_{N}=b
+\]
+
+\end_inset
+
+There is a unique family of global Lagrange polynomials
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+polynomial!Lagrange ~!global ~
+\end_layout
+
+\end_inset
+
+ of order 
+\begin_inset Formula $N$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+L_{K}(x)=\prod_{\substack{I=0\\
+I\ne K
+}
+}^{N}\frac{x-x_{I}}{x_{K}-x_{I}}\qquad K=0,\dots,N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Accuracy]
+\end_layout
+
+\end_inset
+
+A function 
+\begin_inset Formula $u\in C^{N+1}[a,b]$
+\end_inset
+
+ can be approximated by
+\begin_inset Formula 
+\[
+u(x)\approx u^{h}(x)\coloneqq\sum_{K=0}^{N}\hat{u}_{K}L_{K}(x)\qquad\hat{u}_{K}\coloneqq u(x_{K})
+\]
+
+\end_inset
+
+with the error to be
+\begin_inset Formula 
+\[
+r(x)\coloneqq u(x)-u^{h}(x)=\frac{u^{(N+1)}(\xi)}{(N+1)!}\prod_{K=0}^{N}(x-x_{K})
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $\xi\in(a,b)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+If 
+\begin_inset Formula $u$
+\end_inset
+
+ is a polynomial of order 
+\begin_inset Formula $M\le N$
+\end_inset
+
+, then 
+\begin_inset Formula $r(x)\equiv0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+If the distribution of sample points is uniform, i.e.
+ 
+\begin_inset Formula $x_{K}=a+Kh$
+\end_inset
+
+, 
+\begin_inset Formula $h\coloneqq\frac{b-1}{N}$
+\end_inset
+
+, then 
+\begin_inset Formula $r\in\order{h^{N}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+全局插值
 \end_layout
 
 \begin_layout Definition
@@ -316,6 +481,13 @@ Global indices (e.g.
 \end_inset
 
 ) are written in uppercase to emphasize they are global.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Definition
@@ -434,8 +606,15 @@ locality
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-Local Lagrange Polynomials
+局部插值
 \end_layout
 
 \begin_layout Definition
@@ -722,7 +901,7 @@ global index
  is then calculated as
 \begin_inset Formula 
 \begin{equation}
-u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{N_{e}}\hat{u}_{I_{e}(i)}\cdot\phi_{I_{e}(i)}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e}\qquad\vec{x}\in\varOmega_{e}\label{eq:LocalLagrangeInterpolation}
+u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{N_{e}}\hat{u}_{I_{e}(i)}\phi_{I_{e}(i)}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e}\qquad\vec{x}\in\varOmega_{e}\label{eq:LocalLagrangeInterpolation}
 \end{equation}
 
 \end_inset
@@ -805,7 +984,7 @@ reference "eq:LocalLagrangeInterpolation"
  becomes
 \begin_inset Formula 
 \[
-u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{n}\hat{u}_{i}\cdot\phi_{i}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e}\qquad\vec{x}\in\varOmega_{e}
+u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{n}\hat{u}_{i}\phi_{i}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e}\qquad\vec{x}\in\varOmega_{e}
 \]
 
 \end_inset
@@ -813,8 +992,15 @@ u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{n}\hat{u}_{i}
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-Coordinate Transformation
+坐标变换
 \end_layout
 
 \begin_layout Standard
@@ -836,7 +1022,7 @@ status open
 
 \begin_layout Plain Layout
 
-[Isoparametric Transformation]
+[等参变换]
 \end_layout
 
 \end_inset
@@ -852,7 +1038,7 @@ If the coordinate transformation from
  is approximated by local Lagrange interpolation:
 \begin_inset Formula 
 \begin{equation}
-\vec{x}(\vec{\eta})\approx\vec{x}^{h}(\vec{\eta})=\sum_{i=1}^{n}\vec{x}_{i}\cdot\phi_{i}(\vec{\eta})\qquad\vec{x}(\vec{\eta})\in\varOmega_{e}\label{eq:IsoparametricTransformation}
+\vec{x}(\vec{\eta})\approx\vec{x}^{h}(\vec{\eta})=\sum_{i=1}^{n}\vec{x}_{i}\phi_{i}(\vec{\eta})\qquad\vec{x}(\vec{\eta})\in\varOmega_{e}\label{eq:IsoparametricTransformation}
 \end{equation}
 
 \end_inset
@@ -864,7 +1050,7 @@ which is the same as for interpolation of
 :
 \begin_inset Formula 
 \[
-u(\vec{x})\approx u^{h}(\vec{x}(\vec{\eta}))=\sum_{i=1}^{n}\hat{u}_{i}\cdot\phi_{i}(\vec{\eta})\qquad\vec{x}(\vec{\eta})\in\varOmega_{e}
+u(\vec{x})\approx u^{h}(\vec{x}(\vec{\eta}))=\sum_{i=1}^{n}\hat{u}_{i}\phi_{i}(\vec{\eta})\qquad\vec{x}(\vec{\eta})\in\varOmega_{e}
 \]
 
 \end_inset
@@ -917,7 +1103,7 @@ manifold!
 \end_inset
 
  (parameterized by 
-\begin_inset Formula $(\eta_{1},\dots,\eta_{k})$
+\begin_inset Formula $(\eta^{1},\dots,\eta^{k})$
 \end_inset
 
 ) embedded in a 
@@ -929,7 +1115,7 @@ manifold!
 \end_inset
 
  (with Cartesian coordinates 
-\begin_inset Formula $(x_{1},\dots,x_{m})$
+\begin_inset Formula $(x^{1},\dots,x^{m})$
 \end_inset
 
 ), it is required that
@@ -982,9 +1168,9 @@ reference "eq:IsoparametricTransformation"
  is defined as
 \begin_inset Formula 
 \[
-\underline{J}(\vec{\eta})\coloneqq\pdv{(x_{1},\dots,x_{m})}{(\eta_{1},\dots,\eta_{k})}=\begin{bmatrix}\pdv*{x_{1}}{\eta_{1}} & \cdots & \pdv*{x_{1}}{\eta_{k}}\\
+\underline{J}(\vec{\eta})\coloneqq\pdv{(x^{1},\dots,x^{m})}{(\eta^{1},\dots,\eta^{k})}=\begin{bmatrix}\pdv*{x^{1}}{\eta^{1}} & \cdots & \pdv*{x^{1}}{\eta^{k}}\\
 \vdots &  & \vdots\\
-\pdv*{x_{m}}{\eta_{1}} & \cdots & \pdv*{x_{m}}{\eta_{k}}
+\pdv*{x^{m}}{\eta^{1}} & \cdots & \pdv*{x^{m}}{\eta^{k}}
 \end{bmatrix}
 \]
 
@@ -1066,22 +1252,20 @@ At
 \end_inset
 
  with respect to global coordinates 
-\begin_inset Formula $(x_{1},\dots,x_{m})$
+\begin_inset Formula $(x^{1},\dots,x^{m})$
 \end_inset
 
  and those with respect to local coordinates 
-\begin_inset Formula $(\eta_{1},\dots,\eta_{k})$
+\begin_inset Formula $(\eta^{1},\dots,\eta^{k})$
 \end_inset
 
  are related by the chain rule:
 \begin_inset Formula 
 \[
-\begin{aligned} & \begin{bmatrix}\pdv*{u^{h}}{\eta_{1}} & \cdots & \pdv*{u^{h}}{\eta_{k}}\end{bmatrix}\\
-= & \begin{bmatrix}\pdv*{u^{h}}{x_{1}} & \cdots & \pdv*{u^{h}}{x_{m}}\end{bmatrix}\begin{bmatrix}\pdv*{x_{1}}{\eta_{1}} & \cdots & \pdv*{x_{1}}{\eta_{k}}\\
+\begin{bmatrix}\dfrac{\partial u^{h}}{\partial\eta^{1}} & \cdots & \dfrac{\partial u^{h}}{\partial\eta^{k}}\end{bmatrix}=\begin{bmatrix}\dfrac{\partial u^{h}}{\partial x^{1}} & \cdots & \dfrac{\partial u^{h}}{\partial x^{m}}\end{bmatrix}\begin{bmatrix}\dfrac{\partial x^{1}}{\partial\eta^{1}} & \cdots & \dfrac{\partial x^{1}}{\partial\eta^{k}}\\
 \vdots &  & \vdots\\
-\pdv*{x_{m}}{\eta_{1}} & \cdots & \pdv*{x_{m}}{\eta_{k}}
+\dfrac{\partial x^{m}}{\partial\eta^{1}} & \cdots & \dfrac{\partial x^{m}}{\partial\eta^{k}}
 \end{bmatrix}
-\end{aligned}
 \]
 
 \end_inset
@@ -1156,7 +1340,7 @@ integral!~ element
  is
 \begin_inset Formula 
 \[
-\dd{\varOmega}=\abs{\underline{J}(\vec{\eta})}\dd{\eta_{1}}\cdots\dd{\eta_{k}}
+\dd{\varOmega}=\abs{\underline{J}(\vec{\eta})}\dd{\eta^{1}}\cdots\dd{\eta^{k}}
 \]
 
 \end_inset
@@ -1186,7 +1370,7 @@ integral!~ on manifold
  is
 \begin_inset Formula 
 \[
-\int_{\varOmega_{e}}u^{h}(\vec{x})\dd{\varOmega}=\underbrace{\dotsint}_{k\text{-fold}}u^{h}(\vec{x}(\vec{\eta}))\,\vert\underline{J}(\vec{\eta})\vert\dd{\eta_{1}}\cdots\dd{\eta_{k}}
+\int_{\varOmega_{e}}u^{h}(\vec{x})\dd{\varOmega}=\underbrace{\dotsint}_{k\text{-fold}}u^{h}(\vec{x}(\vec{\eta}))\,\vert\underline{J}(\vec{\eta})\vert\dd{\eta^{1}}\cdots\dd{\eta^{k}}
 \]
 
 \end_inset
@@ -1359,184 +1543,19 @@ z(r,s,t)
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-On 1D Manifolds
+Hermite 插值
 \end_layout
 
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-manifold!
-\begin_inset Formula $1$
-\end_inset
-
--dimensional ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-On Interval 
-\begin_inset Formula $[a,b]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Existence and Uniqueness]
-\end_layout
-
-\end_inset
-
-Given 
-\begin_inset Formula $(N+1)$
-\end_inset
-
- sample points in interval 
-\begin_inset Formula $[a,b]$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-a=x_{0}<x_{1}<\cdots<x_{N-1}<x_{N}=b
-\]
-
-\end_inset
-
-There is a unique family of global Lagrange polynomials
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-polynomial!Lagrange ~!global ~
-\end_layout
-
-\end_inset
-
- of order 
-\begin_inset Formula $N$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-L_{K}(x)=\prod_{\substack{I=0\\
-I\ne K
-}
-}^{N}\frac{x-x_{I}}{x_{K}-x_{I}}\qquad K=0,\dots,N
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Accuracy]
-\end_layout
-
-\end_inset
-
-A function 
-\begin_inset Formula $u\in C^{N+1}[a,b]$
-\end_inset
-
- can be approximated by
-\begin_inset Formula 
-\[
-u(x)\approx u^{h}(x)\coloneqq\sum_{K=0}^{N}\hat{u}_{K}\cdot L_{K}(x)\qquad\hat{u}_{K}\coloneqq u(x_{K})
-\]
-
-\end_inset
-
-with the error to be
-\begin_inset Formula 
-\[
-r(x)\coloneqq u(x)-u^{h}(x)=\frac{u^{(N+1)}(\xi)}{(N+1)!}\prod_{K=0}^{N}(x-x_{K})
-\]
-
-\end_inset
-
-in which 
-\begin_inset Formula $\xi\in(a,b)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-If 
-\begin_inset Formula $u$
-\end_inset
-
- is a polynomial of order 
-\begin_inset Formula $M\le N$
-\end_inset
-
-, then 
-\begin_inset Formula $r(x)\equiv0$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-If the distribution of sample points is uniform, i.e.
- 
-\begin_inset Formula $x_{K}=a+Kh$
-\end_inset
-
-, 
-\begin_inset Formula $h\coloneqq\frac{b-1}{N}$
-\end_inset
-
-, then 
-\begin_inset Formula $r\in\order{h^{N}}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-On Arbitrary Curves
+\begin_layout Section
+曲线段单元
 \end_layout
 
 \begin_layout Standard
@@ -1706,15 +1725,14 @@ quadrature!Gauss--Legendre ~
 .
 \end_layout
 
-\begin_layout Subsection
-On Interval 
-\begin_inset Formula $[-1,1]$
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 \begin_inset Formula $n$
 \end_inset
 
@@ -1849,7 +1867,7 @@ Suppose
  nodes:
 \begin_inset Formula 
 \[
-\eta_{0}=-1\qquad\eta_{1}=1\qquad\eta_{k}=\frac{2}{n}(k-1)-1,k=2,\dots,n
+\eta_{0}=-1\qquad\eta_{1}=1\qquad\left\{ \eta_{k}=\frac{2}{n}(k-1)-1\right\} _{k=2}^{n}
 \]
 
 \end_inset
@@ -1876,7 +1894,7 @@ i\ne k
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 1st Order Element
 \end_layout
 
@@ -1919,7 +1937,7 @@ end{center}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ket{\phi(\eta)}=\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-1\right)/(-2)\\
+\ket{L(\eta)}=\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-1\right)/(-2)\\
 \left(\eta+1\right)\cancel{\left(\eta-1\right)}/(+2)
 \end{bmatrix}=\frac{1}{2}\begin{bmatrix}\begin{array}{rr}
 1 & -1\\
@@ -1962,17 +1980,17 @@ L[1] = (x + 1) / 2
 
 \begin_layout Plain Layout
 
-x_half = x / 2
+x^half = x / 2
 \end_layout
 
 \begin_layout Plain Layout
 
-L[0] = 0.5 - x_half
+L[0] = 0.5 - x^half
 \end_layout
 
 \begin_layout Plain Layout
 
-L[1] = 0.5 + x_half
+L[1] = 0.5 + x^half
 \end_layout
 
 \end_inset
@@ -1980,7 +1998,7 @@ L[1] = 0.5 + x_half
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 2nd Order Element
 \end_layout
 
@@ -2029,7 +2047,7 @@ end{center}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{\phi(\eta)} & =\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-0\right)\left(\eta-1\right)/(+2)\\
+\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-0\right)\left(\eta-1\right)/(+2)\\
 \left(\eta+1\right)\left(\eta-0\right)\cancel{\left(\eta-1\right)}/(+2)\\
 \left(\eta+1\right)\cancel{\left(\eta-0\right)}\left(\eta-1\right)/(-1)
 \end{bmatrix}\\
@@ -2062,22 +2080,22 @@ status open
 
 \begin_layout Plain Layout
 
-x_square = x * x
+x^square = x * x
 \end_layout
 
 \begin_layout Plain Layout
 
-L[0] = (x_square - x) / 2
+L[0] = (x^square - x) / 2
 \end_layout
 
 \begin_layout Plain Layout
 
-L[1] = (x_square + x) / 2
+L[1] = (x^square + x) / 2
 \end_layout
 
 \begin_layout Plain Layout
 
-L[2] = 1 - x_square
+L[2] = 1 - x^square
 \end_layout
 
 \begin_layout Plain Layout
@@ -2087,12 +2105,12 @@ L[2] = 1 - x_square
 
 \begin_layout Plain Layout
 
-x_square = x * x
+x^square = x * x
 \end_layout
 
 \begin_layout Plain Layout
 
-L[0] = (x_square - x) / 2
+L[0] = (x^square - x) / 2
 \end_layout
 
 \begin_layout Plain Layout
@@ -2102,7 +2120,7 @@ L[1] = L[0] + x  # reduce one *, but introduce a []
 
 \begin_layout Plain Layout
 
-L[2] = 1 - x_square
+L[2] = 1 - x^square
 \end_layout
 
 \begin_layout Plain Layout
@@ -2112,12 +2130,12 @@ L[2] = 1 - x_square
 
 \begin_layout Plain Layout
 
-x_square = x * x
+x^square = x * x
 \end_layout
 
 \begin_layout Plain Layout
 
-L0 = (x_square - x) / 2  # introduce a temp variable to avoid []
+L0 = (x^square - x) / 2  # introduce a temp variable to avoid []
 \end_layout
 
 \begin_layout Plain Layout
@@ -2132,7 +2150,7 @@ L[1] = L0 + x
 
 \begin_layout Plain Layout
 
-L[2] = 1 - x_square
+L[2] = 1 - x^square
 \end_layout
 
 \end_inset
@@ -2140,7 +2158,7 @@ L[2] = 1 - x_square
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 3rd Order Element
 \end_layout
 
@@ -2199,7 +2217,7 @@ end{center}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}\ket{\phi(\eta)} & =\begin{bmatrix}\frac{9}{-16}\cancel{\left(\eta+1\right)}\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
+\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\frac{9}{-16}\cancel{\left(\eta+1\right)}\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
 \frac{9}{+16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\cancel{\left(\eta-1\right)}\\
 \frac{27}{+16}\left(\eta+1\right)\cancel{\left(\eta+\frac{1}{3}\right)}\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
 \frac{27}{-16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\cancel{\left(\eta-\frac{1}{3}\right)}\left(\eta-1\right)
@@ -2223,7 +2241,7 @@ end{center}
 \end_layout
 
 \begin_layout Section
-On 2D Manifolds
+四边形单元
 \end_layout
 
 \begin_layout Standard
@@ -2231,11 +2249,7 @@ On 2D Manifolds
 status open
 
 \begin_layout Plain Layout
-manifold!
-\begin_inset Formula $2$
-\end_inset
-
--dimensional ~
+element!quadrilateral ~
 \end_layout
 
 \end_inset
@@ -2243,8 +2257,33 @@ manifold!
 
 \end_layout
 
-\begin_layout Subsection
-Triangular Elements
+\begin_layout Standard
+A 2D interval is the Cartesian product of two 1D intervals.
+\end_layout
+
+\begin_layout Section
+六面体单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+element!hexahedral ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A 3D interval is the Cartesian product of tree 1D intervals.
+\end_layout
+
+\begin_layout Section
+三角形单元
 \end_layout
 
 \begin_layout Standard
@@ -2260,7 +2299,7 @@ element!triangular ~
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 1st Order Element
 \end_layout
 
@@ -2276,11 +2315,11 @@ begin{center}
 \backslash
 begin{tikzpicture}   
 \backslash
-coordinate (P2) at (0,3);   
+coordinate (P3) at (0,3);   
 \backslash
-coordinate (P0) at (0,0);   
+coordinate (P1) at (0,0);   
 \backslash
-coordinate (P1) at (3,0);   
+coordinate (P2) at (3,0);   
 \backslash
 coordinate (P) at (1,1);   
 \backslash
@@ -2288,7 +2327,7 @@ fill (P) circle[radius=2pt] node[below]{$P$};
 \backslash
 foreach 
 \backslash
-x in {0,1,...,2} {     
+x in {1,2,3} {     
 \backslash
 fill (P
 \backslash
@@ -2300,7 +2339,7 @@ draw[dashed] (P)--(P
 \backslash
 x);   }    
 \backslash
-draw (P0)--(P1)--(P2)--(P0); 
+draw (P1)--(P2)--(P3)--(P1); 
 \backslash
 end{tikzpicture} 
 \backslash
@@ -2316,7 +2355,7 @@ area coordinate
 s:
 \begin_inset Formula 
 \[
-\eta_{0}\coloneqq\frac{A_{P12}}{A_{012}}\qquad\eta_{1}\coloneqq\frac{A_{P20}}{A_{012}}\qquad\eta_{2}\coloneqq\frac{A_{P01}}{A_{012}}
+\eta^{1}\coloneqq\frac{A_{P23}}{A_{123}}\qquad\eta^{2}\coloneqq\frac{A_{P31}}{A_{231}}\qquad\eta^{3}\coloneqq\frac{A_{P12}}{A_{312}}
 \]
 
 \end_inset
@@ -2329,7 +2368,7 @@ which automatically satisfies the Kronecker delta property and forms a partition
 :
 \begin_inset Formula 
 \[
-\eta_{0}+\eta_{1}+\eta_{2}=1\qquad\forall P
+\eta^{1}+\eta^{2}+\eta^{3}=1\qquad\forall P
 \]
 
 \end_inset
@@ -2340,16 +2379,16 @@ so it can be used as a family of 1st order Lagrange polynomials:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ket{\phi(\eta)}=\begin{bmatrix}\eta_{0}\\
-\eta_{1}\\
-\eta_{2}
+\ket{L(\eta)}=\begin{bmatrix}\eta^{1}\\
+\eta^{2}\\
+\eta^{3}
 \end{bmatrix}=\begin{bmatrix}\begin{array}{rrr}
  & 1\\
  &  & 1\\
 1 & -1 & -1
 \end{array}\end{bmatrix}\begin{bmatrix}1\\
-\eta_{0}\\
-\eta_{1}
+\eta^{1}\\
+\eta^{2}
 \end{bmatrix}
 \]
 
@@ -2358,7 +2397,7 @@ so it can be used as a family of 1st order Lagrange polynomials:
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 2nd Order Element
 \end_layout
 
@@ -2374,21 +2413,21 @@ begin{center}
 \backslash
 begin{tikzpicture}   
 \backslash
-coordinate (P2) at (0,2);   
+coordinate (P3) at (0,2);   
 \backslash
-coordinate (P5) at (0,1);   
+coordinate (P6) at (0,1);   
 \backslash
-coordinate (P4) at (1,1);   
+coordinate (P5) at (1,1);   
 \backslash
-coordinate (P0) at (0,0);   
+coordinate (P1) at (0,0);   
 \backslash
-coordinate (P3) at (1,0);   
+coordinate (P4) at (1,0);   
 \backslash
-coordinate (P1) at (2,0);   
+coordinate (P2) at (2,0);   
 \backslash
 foreach 
 \backslash
-x in {0,1,...,5} {     
+x in {1,2,...,6} {     
 \backslash
 fill (P
 \backslash
@@ -2396,7 +2435,7 @@ x) circle[radius=2pt] node[above right]{
 \backslash
 x};   }    
 \backslash
-draw (P0)--(P1)--(P2)--(P0); 
+draw (P1)--(P2)--(P3)--(P1); 
 \backslash
 end{tikzpicture} 
 \backslash
@@ -2416,27 +2455,23 @@ Each node is associated with a 2nd order polynomial of
 .
  Each linear function can be viewed as the equation of a line passing through
  some other nodes.
- For example, the Lagrange polynomial associated with node 
-\begin_inset Formula $1$
-\end_inset
-
- is
+ For example, the Lagrange polynomial associated with node 2 is
 \begin_inset Formula 
 \[
-L_{1}(\eta)=2\left(\eta_{1}-\frac{1}{2}\right)\left(\eta_{1}-0\right)
+L_{2}(\vec{\eta})=2\left(\eta^{2}-\frac{1}{2}\right)\left(\eta^{2}-0\right)
 \]
 
 \end_inset
 
 in which, 
-\begin_inset Formula $\eta_{1}=\frac{1}{2}$
+\begin_inset Formula $\eta^{2}=\frac{1}{2}$
 \end_inset
 
- is the line passing through node 3 and 4, and 
-\begin_inset Formula $\eta_{1}=0$
+ is the line passing through node 4 and 5, and 
+\begin_inset Formula $\eta^{2}=0$
 \end_inset
 
- is the line passing through node 0, 2 and 5.
+ is the line passing through node 1, 3 and 6.
  Lagrange polynomials associated with other nodes can be found in a similar
  manner.
 \end_layout
@@ -2444,27 +2479,27 @@ in which,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ket{\phi(\eta)}=\begin{bmatrix}2\begin{bmatrix}\left(\eta_{0}-\frac{1}{2}\right)\left(\eta_{0}-0\right)\\
-\left(\eta_{1}-\frac{1}{2}\right)\left(\eta_{1}-0\right)\\
-\left(\eta_{2}-\frac{1}{2}\right)\left(\eta_{2}-0\right)
+\ket{L(\eta^{1},\eta^{2},\eta^{3})}=\begin{bmatrix}2\begin{bmatrix}\left(\eta^{1}-\frac{1}{2}\right)\left(\eta^{1}-0\right)\\
+\left(\eta^{2}-\frac{1}{2}\right)\left(\eta^{2}-0\right)\\
+\left(\eta^{3}-\frac{1}{2}\right)\left(\eta^{3}-0\right)
 \end{bmatrix}\\
-4\begin{bmatrix}\left(\eta_{0}-0\right)\left(\eta_{1}-0\right)\\
-\left(\eta_{1}-0\right)\left(\eta_{2}-0\right)\\
-\left(\eta_{2}-0\right)\left(\eta_{0}-0\right)
+4\begin{bmatrix}\left(\eta^{1}-0\right)\left(\eta^{2}-0\right)\\
+\left(\eta^{2}-0\right)\left(\eta^{3}-0\right)\\
+\left(\eta^{3}-0\right)\left(\eta^{1}-0\right)
 \end{bmatrix}
-\end{bmatrix}=\begin{bmatrix}\eta_{0}\left(2\eta_{0}-1\right)\\
-\eta_{1}\left(2\eta_{1}-1\right)\\
-\eta_{2}\left(2\eta_{2}-1\right)\\
-4\eta_{0}\eta_{1}\\
-4\eta_{1}\eta_{2}\\
-4\eta_{2}\eta_{0}
+\end{bmatrix}=\begin{bmatrix}\eta^{1}\left(2\eta^{1}-1\right)\\
+\eta^{2}\left(2\eta^{2}-1\right)\\
+\eta^{3}\left(2\eta^{3}-1\right)\\
+4\eta^{1}\eta^{2}\\
+4\eta^{2}\eta^{3}\\
+4\eta^{3}\eta^{1}
 \end{bmatrix}
 \]
 
 \end_inset
 
 The partition of unity property can be verified by taking 
-\begin_inset Formula $\eta_{0},\eta_{1}$
+\begin_inset Formula $\eta^{1},\eta^{2}$
 \end_inset
 
  as independent variables and summing all the rows:
@@ -2473,7 +2508,7 @@ The partition of unity property can be verified by taking
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ket{\phi(\eta)}=\begin{bmatrix}\begin{array}{rrrrrr}
+\ket{L(\eta^{1},\eta^{2})}=\begin{bmatrix}\begin{array}{rrrrrr}
  & -1 &  & 2\\
  &  & -1 &  &  & 2\\
 1 & -3 & -3 & 2 & 4 & 2\\
@@ -2481,11 +2516,11 @@ The partition of unity property can be verified by taking
  &  & 4 &  & -4 & -4\\
  & 4 &  & -4 & -4
 \end{array}\end{bmatrix}\begin{bmatrix}1\\
-\eta_{0}\\
-\eta_{1}\\
-\eta_{0}\eta_{0}\\
-\eta_{0}\eta_{1}\\
-\eta_{1}\eta_{1}
+\eta^{1}\\
+\eta^{2}\\
+\eta^{1}\eta^{1}\\
+\eta^{1}\eta^{2}\\
+\eta^{2}\eta^{2}
 \end{bmatrix}
 \]
 
@@ -2494,7 +2529,7 @@ The partition of unity property can be verified by taking
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 3rd Order Elements
 \end_layout
 
@@ -2510,29 +2545,29 @@ begin{center}
 \backslash
 begin{tikzpicture}   
 \backslash
-coordinate (P2) at (0,3);   
+coordinate (P3) at (0,3);   
 \backslash
-coordinate (P7) at (0,2);   
+coordinate (P8) at (0,2);   
 \backslash
-coordinate (P6) at (1,2);   
+coordinate (P7) at (1,2);   
 \backslash
-coordinate (P8) at (0,1);   
+coordinate (P9) at (0,1);   
 \backslash
-coordinate (P9) at (1,1);   
+coordinate (P10) at (1,1);   
 \backslash
-coordinate (P5) at (2,1);   
+coordinate (P6) at (2,1);   
 \backslash
-coordinate (P0) at (0,0);   
+coordinate (P1) at (0,0);   
 \backslash
-coordinate (P3) at (1,0);   
+coordinate (P4) at (1,0);   
 \backslash
-coordinate (P4) at (2,0);   
+coordinate (P5) at (2,0);   
 \backslash
-coordinate (P1) at (3,0);   
+coordinate (P2) at (3,0);   
 \backslash
 foreach 
 \backslash
-x in {0,1,...,9} {     
+x in {1,2,...,10} {     
 \backslash
 fill (P
 \backslash
@@ -2540,7 +2575,7 @@ x) circle[radius=2pt] node[above right]{
 \backslash
 x};   }    
 \backslash
-draw (P0)--(P1)--(P2)--(P0); 
+draw (P1)--(P2)--(P3)--(P4); 
 \backslash
 end{tikzpicture} 
 \backslash
@@ -2555,28 +2590,28 @@ end{center}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ket{\phi(\eta)}=\begin{bmatrix}\frac{9}{2}\begin{bmatrix}\left(\eta_{0}-\frac{2}{3}\right)\left(\eta_{0}-\frac{1}{3}\right)\left(\eta_{0}-0\right)\\
-\left(\eta_{1}-\frac{2}{3}\right)\left(\eta_{1}-\frac{1}{3}\right)\left(\eta_{1}-0\right)\\
-\left(\eta_{2}-\frac{2}{3}\right)\left(\eta_{2}-\frac{1}{3}\right)\left(\eta_{2}-0\right)
+\ket{L(\vec{\eta})}=\begin{bmatrix}\frac{9}{2}\begin{bmatrix}\left(\eta^{1}-\frac{2}{3}\right)\left(\eta^{1}-\frac{1}{3}\right)\left(\eta^{1}-0\right)\\
+\left(\eta^{2}-\frac{2}{3}\right)\left(\eta^{2}-\frac{1}{3}\right)\left(\eta^{2}-0\right)\\
+\left(\eta^{3}-\frac{2}{3}\right)\left(\eta^{3}-\frac{1}{3}\right)\left(\eta^{3}-0\right)
 \end{bmatrix}\\
-\frac{27}{2}\begin{bmatrix}\left(\eta_{1}-0\right)\left(\eta_{0}-0\right)\left(\eta_{0}-\frac{1}{3}\right)\\
-\left(\eta_{0}-0\right)\left(\eta_{1}-0\right)\left(\eta_{1}-\frac{1}{3}\right)\\
-\left(\eta_{2}-0\right)\left(\eta_{1}-0\right)\left(\eta_{1}-\frac{1}{3}\right)\\
-\left(\eta_{1}-0\right)\left(\eta_{2}-0\right)\left(\eta_{2}-\frac{1}{3}\right)\\
-\left(\eta_{0}-0\right)\left(\eta_{2}-0\right)\left(\eta_{2}-\frac{1}{3}\right)\\
-\left(\eta_{2}-0\right)\left(\eta_{0}-0\right)\left(\eta_{0}-\frac{1}{3}\right)
+\frac{27}{2}\begin{bmatrix}\left(\eta^{2}-0\right)\left(\eta^{1}-0\right)\left(\eta^{1}-\frac{1}{3}\right)\\
+\left(\eta^{1}-0\right)\left(\eta^{2}-0\right)\left(\eta^{2}-\frac{1}{3}\right)\\
+\left(\eta^{3}-0\right)\left(\eta^{2}-0\right)\left(\eta^{2}-\frac{1}{3}\right)\\
+\left(\eta^{2}-0\right)\left(\eta^{3}-0\right)\left(\eta^{3}-\frac{1}{3}\right)\\
+\left(\eta^{1}-0\right)\left(\eta^{3}-0\right)\left(\eta^{3}-\frac{1}{3}\right)\\
+\left(\eta^{3}-0\right)\left(\eta^{1}-0\right)\left(\eta^{1}-\frac{1}{3}\right)
 \end{bmatrix}\\
-27\left(\eta_{0}-0\right)\left(\eta_{1}-0\right)\left(\eta_{2}-0\right)
+27\left(\eta^{1}-0\right)\left(\eta^{2}-0\right)\left(\eta^{3}-0\right)
 \end{bmatrix}=\frac{1}{2}\underline{A}\begin{bmatrix}1\\
-\eta_{0}\\
-\eta_{1}\\
-\eta_{0}\eta_{0}\\
-\eta_{0}\eta_{1}\\
-\eta_{1}\eta_{1}\\
-\eta_{0}\eta_{0}\eta_{0}\\
-\eta_{0}\eta_{0}\eta_{1}\\
-\eta_{0}\eta_{1}\eta_{1}\\
-\eta_{1}\eta_{1}\eta_{1}
+\eta^{1}\\
+\eta^{2}\\
+\eta^{1}\eta^{1}\\
+\eta^{1}\eta^{2}\\
+\eta^{2}\eta^{2}\\
+\eta^{1}\eta^{1}\eta^{1}\\
+\eta^{1}\eta^{1}\eta^{2}\\
+\eta^{1}\eta^{2}\eta^{2}\\
+\eta^{2}\eta^{2}\eta^{2}
 \end{bmatrix}
 \]
 
@@ -2604,92 +2639,8 @@ in which
 
 \end_layout
 
-\begin_layout Subsection
-Quadrilateral Elements
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!quadrilateral ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A 2D interval is the Cartesian product of two 1D intervals.
-\end_layout
-
 \begin_layout Section
-On 3D Manifolds
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-manifold!
-\begin_inset Formula $3$
-\end_inset
-
--dimensional ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Tetrahedral Elements
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!tetrahedral ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Similar to those on triangles.
-\end_layout
-
-\begin_layout Subsection
-Hexahedral Elements
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!hexahedral ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A 3D interval is the Cartesian product of tree 1D intervals.
-\end_layout
-
-\begin_layout Subsection
-Prismatic Elements
+三棱柱单元
 \end_layout
 
 \begin_layout Standard
@@ -2709,8 +2660,29 @@ element!prismatic ~
 A prism is the Cartesian product of a triangle and a line.
 \end_layout
 
-\begin_layout Subsection
-Pyramidal Elements
+\begin_layout Section
+三棱锥单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+element!tetrahedral ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to those on triangles.
+\end_layout
+
+\begin_layout Section
+四棱锥单元
 \end_layout
 
 \begin_layout Standard
