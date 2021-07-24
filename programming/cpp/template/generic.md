@@ -586,7 +586,7 @@ bool operator==(const MyKey& lhs, const MyKey& rhs);  // MyKey 必须支持 == �
 namespace std {
 template <>
 struct hash<MyKey> {
-  typedef Key argument_type;
+  typedef MyKey argument_type;
   typedef size_t result_type;
   size_t operator()(const MyKey& key) const noexcept {
     return key.hash();
