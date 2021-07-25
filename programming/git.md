@@ -147,7 +147,7 @@ git checkout [branch-name]
 ```shell 
 # 将指定分支上的历史合并到当前分支
 git merge [branch]
-# 以**变基 (rebase)** 代替**合并 (merge)** 
+# 以『变基 (rebase)』代替『合并 (merge)』
 # 将 topic-branch 上的提交追加到 base-branch 上的最新提交之后
 git checkout <topic-branch>
 git rebase <base-branch>
@@ -338,7 +338,7 @@ jobs:
 
 ### SSH 原理
 
-参见《[Secure SHell (SSH)](./linux/ssh.md)》。
+参见《[SSH (Secure SHell)](./linux/ssh.md)》。
 
 ### [Error: Permission denied (publickey)](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/error-permission-denied-publickey)
 
