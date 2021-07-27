@@ -1035,16 +1035,259 @@ LU-SGS
 Krylov 子空间迭代法
 \end_layout
 
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vert r\rangle\coloneqq\vert b\rangle-\underline{A}\vert x\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 最速下降法
+\end_layout
+
+\begin_layout Standard
+假设 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 对称正定，则 
+\begin_inset Formula $\underline{A}\vert x\rangle=\vert b\rangle$
+\end_inset
+
+ 等价于
+\begin_inset Formula 
+\[
+\min_{\vert x\rangle\in\mathbb{R}^{n}}\varphi(\vert x\rangle)\qquad\varphi(\vert x\rangle)\coloneqq\frac{1}{2}\langle x\vert\underline{A}\vert x\rangle-\langle x\vert b\rangle
+\]
+
+\end_inset
+
+考虑 
+\begin_inset Formula $\varphi(\vert x\rangle)$
+\end_inset
+
+ 的等值面，该曲面在点 
+\begin_inset Formula $\vert x^{(k)}\rangle$
+\end_inset
+
+ 处的
+\color blue
+最速下降方向 (steepest descent direction)
+\color inherit
+ 为
+\begin_inset Formula 
+\[
+\vert p^{(k)}\rangle=-\vert\grad\varphi(\vert x^{(k)}\rangle)\rangle=\vert b\rangle-\underline{A}\vert x^{(k)}\rangle\equiv\vert r^{(k)}\rangle
+\]
+
+\end_inset
+
+沿此方向，寻找
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vert x^{(k+1)}\rangle=\vert x^{(k)}\rangle+\lambda\vert p^{(k)}\rangle\equiv\vert x^{(k)}\rangle+\lambda\vert r^{(k)}\rangle
+\]
+
+\end_inset
+
+使 
+\begin_inset Formula $\varphi(\vert x^{(k+1)}\rangle)$
+\end_inset
+
+ 的值最小，即
+\begin_inset Formula 
+\[
+\begin{aligned}0 & =\frac{\partial\varphi(\vert x^{(k)}\rangle+\lambda\vert p^{(k)}\rangle)}{\partial\lambda}=\langle p^{(k)}\vert\grad\varphi(\vert x^{(k)}\rangle+\lambda\vert p^{(k)}\rangle)\rangle\\
+ & =\langle p^{(k)}\vert\underline{A}\vert x^{(k)}\rangle+\langle p^{(k)}\vert\underline{A}\lambda\vert p^{(k)}\rangle-\langle p^{(k)}\vert b\rangle\\
+ & =\langle p^{(k)}\vert\underline{A}\vert p^{(k)}\rangle\lambda-\langle p^{(k)}\vert r^{(k)}\rangle\\
+ & =\langle p^{(k)}\vert\underline{A}\vert p^{(k)}\rangle\lambda-\langle p^{(k)}\vert p^{(k)}\rangle
+\end{aligned}
+\]
+
+\end_inset
+
+由此得
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[最速下降法]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vert p^{(k)}\rangle=\vert b\rangle-\underline{A}\vert x^{(k)}\rangle\qquad\lambda=\frac{\langle p^{(k)}\vert p^{(k)}\rangle}{\langle p^{(k)}\vert\underline{A}\vert p^{(k)}\rangle}\qquad\vert x^{(k+1)}\rangle=\vert x^{(k)}\rangle+\lambda\vert p^{(k)}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 共轭梯度法
 \end_layout
 
+\begin_layout Standard
+将最速下降法中的一维搜索推广到二维
+\begin_inset Formula 
+\[
+\vert x^{(k+1)}\rangle=\vert x^{(k)}\rangle+\alpha\vert p^{(k)}\rangle\qquad\vert p^{(k)}\rangle\coloneqq\vert r^{(k)}\rangle-\beta\vert p^{(k-1)}\rangle
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vert r^{(k)}\rangle$
+\end_inset
+
+ 及 
+\begin_inset Formula $\vert p^{(k-1)}\rangle$
+\end_inset
+
+ 已知，系数 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 由相邻两次迭代的 
+\color blue
+
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+-正交 (
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+-orthogonal)
+\color inherit
+ 条件
+\begin_inset Formula 
+\[
+0=\langle p^{(k-1)}\vert\underline{A}\vert p^{(k)}\rangle\equiv\langle p^{(k-1)}\vert\underline{A}\vert r^{(k)}\rangle-\beta\langle p^{(k-1)}\vert\underline{A}\vert p^{(k-1)}\rangle
+\]
+
+\end_inset
+
+求得，再沿 
+\begin_inset Formula $\vert p^{(k)}\rangle$
+\end_inset
+
+ 方向寻找极值点：
+\begin_inset Formula 
+\[
+\begin{aligned}0 & =\frac{\partial\varphi(\vert x^{(k)}\rangle+\alpha\vert p^{(k)}\rangle)}{\partial\alpha}=\langle p^{(k)}\vert\grad\varphi(\vert x^{(k)}\rangle+\alpha\vert p^{(k)}\rangle)\rangle\\
+ & =\langle p^{(k)}\vert\underline{A}\vert x^{(k)}\rangle+\langle p^{(k)}\vert\underline{A}\alpha\vert p^{(k)}\rangle-\langle p^{(k)}\vert b\rangle\\
+ & =\langle p^{(k)}\vert\underline{A}\vert p^{(k)}\rangle\alpha-\langle p^{(k)}\vert r^{(k)}\rangle
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+即
+\begin_inset Formula 
+\[
+\begin{bmatrix}\langle r^{(k)}\vert\underline{A}\vert r^{(k)}\rangle & \langle r^{(k)}\vert\underline{A}\vert p^{(k-1)}\rangle\\
+\langle p^{(k-1)}\vert\underline{A}\vert r^{(k)}\rangle & \langle p^{(k-1)}\vert\underline{A}\vert p^{(k-1)}\rangle
+\end{bmatrix}\begin{bmatrix}\alpha\\
+\alpha\beta
+\end{bmatrix}=\begin{bmatrix}\langle r^{(k)}\vert r^{(k)}\rangle\\
+\langle p^{(k-1)}\vert r^{(k)}\rangle
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+由此得
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[共轭梯度法]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\vert r^{(k)}\rangle & =\vert b\rangle-\underline{A}\vert x^{(k)}\rangle & \beta & =\frac{\langle r^{(k)}\vert\underline{A}\vert p^{(k-1)}\rangle}{\langle p^{(k-1)}\vert\underline{A}\vert p^{(k-1)}\rangle}\\
+\vert p^{(k)}\rangle & =\vert r^{(k)}\rangle-\beta\vert p^{(k-1)}\rangle & \alpha & =\frac{\langle p^{(k)}\vert r^{(k)}\rangle}{\langle p^{(k)}\vert\underline{A}\vert p^{(k)}\rangle}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vert x^{(k+1)}\rangle=\begin{cases}
+ & k=0\\
+\vert x^{(k)}\rangle+\alpha\vert p^{(k)}\rangle & k>0
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Krylov 子空间
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{K}_{m}\coloneqq\mathrm{span}\left\{ \vert b\rangle,\underline{A}\vert b\rangle,\dots,\underline{A}^{m-1}\vert b\rangle\right\} 
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
