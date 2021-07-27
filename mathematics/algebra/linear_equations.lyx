@@ -884,19 +884,151 @@ status open
 \end_layout
 
 \begin_layout Section
-经典迭代法
+传统迭代法
+\end_layout
+
+\begin_layout Standard
+形式上解出方程组 
+\begin_inset Formula $\sum_{j=1}^{n}a_{ij}x_{j}=b_{i}$
+\end_inset
+
+ 的对角元：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{i}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}-\sum_{j=i+1}^{n}a_{ij}x_{j}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 Jacobi 迭代法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Jacobi-iteration"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
 Gauss–Seidel 迭代法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Gauss--Seidel-iteration"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k+1)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-超松弛迭代法
+松弛迭代法
+\end_layout
+
+\begin_layout Standard
+先由 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Jacobi-iteration"
+
+\end_inset
+
+或 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Gauss--Seidel-iteration"
+
+\end_inset
+
+得到 
+\begin_inset Formula $\tilde{x}_{i}^{(k+1)}$
+\end_inset
+
+，再与第 
+\begin_inset Formula $k$
+\end_inset
+
+ 迭代步的值作加权平均，得到第 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 迭代步的值：
+\begin_inset Formula 
+\[
+x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\omega\in(0,1)$
+\end_inset
+
+，则为
+\color blue
+亚松弛 (under relaxation)
+\color inherit
+ 迭代，收敛较慢但稳定性好。
+\end_layout
+
+\begin_layout Itemize
+若 
+\begin_inset Formula $\omega\in(1,\infty)$
+\end_inset
+
+，则为
+\color blue
+超松弛 (over relaxation)
+\color inherit
+ 迭代，收敛较快但稳定性差。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+LU-ADI
+\end_layout
+
+\begin_layout Subsection
+LU-SGS
 \end_layout
 
 \begin_layout Section
