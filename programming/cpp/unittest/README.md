@@ -163,15 +163,14 @@ class Queue {
 class QueueTest : public ::testing::Test {
  protected:
   void SetUp() override {
-     q1_.Enqueue(1);
-     q2_.Enqueue(2);
-     q2_.Enqueue(3);
+    q1_.Enqueue(1);
+    q2_.Enqueue(2); q2_.Enqueue(3);
   }
-  void TearDown() override {}  // 不需要释放动态资源, 可以省略
+  void TearDown() override {
+    // 不需要释放动态资源, 可以省略
+  }
 	// 公共数据
-  Queue<int> q0_;
-  Queue<int> q1_;
-  Queue<int> q2_;
+  Queue<int> q0_, q1_, q2_;
 };
 ```
 创建测试集：
@@ -223,7 +222,7 @@ int main(int argc, char **argv) {
 ```shell
 git clone https://github.com/google/googletest.git
 ```
-克隆成功后，在当前目（运行 `git clone` 时所在的目录）下将得到一个名为 `googletest`  的目录，其结构大致如下：
+克隆成功后，在当前（运行 `git clone` 的）目录下将得到一个名为 `googletest` 的目录，其结构大致如下：
 ```
 googletest
 ├── README.md
@@ -282,10 +281,10 @@ cmake --build build-dir
 2. 在本地项目的 `CMakeLists.txt` 中添加命令，构建 Google Test 和本地测试。
 
 官方文档《[Incorporating Into An Existing CMake Project](https://github.com/google/googletest/tree/master/googletest#incorporating-into-an-existing-cmake-project)》给出了这两个文件的模板。
-这里给出一个简单的 C++ 项目示例，[源文件目录](./googletest/)结构如下
+这里给出一个简单的 C++ 项目示例，[源文件目录](./use_gtest/)结构如下
 
 ```
-googletest
+use_gtest
 ├── CMakeLists.txt
 ├── CMakeLists.txt.in
 ├── include
@@ -299,7 +298,7 @@ googletest
 ```
 用 `cmake` 命令执行构建：
 ```bash
-cd googletest
+cd use_gtest
 mkdir build
 cd build
 cmake -S .. -B .  # cmake 3.13.5+
