@@ -106,6 +106,13 @@ theorems-chap
 
 \begin_layout Section
 特征值分解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:eigen-value-decomposition"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1084,6 +1091,411 @@ reference "sec:Jordan-decomposition"
 \end_inset
 
 》。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+QR 分解
+\end_layout
+
+\begin_layout Section
+奇异值分解
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:singular-value-decomposition"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+四个线性空间
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}=\begin{bmatrix}a_{1,1} & \cdots & a_{1,n}\\
+\vdots &  & \vdots\\
+a_{m,1} & \cdots & a_{m,n}
+\end{bmatrix}=\begin{bmatrix}\vert C_{1}\rangle & \cdots & \vert C_{n}\rangle\end{bmatrix}=\begin{bmatrix}\langle R_{1}\vert\\
+\vdots\\
+\langle R_{m}\vert
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[行空间]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{R}(\underline{A})\coloneqq\left\{ \langle\mu\vert\underline{A}:\langle\mu\vert\in\mathbb{R}^{1\times m}\right\} \subset\mathbb{R}^{1\times n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[列空间]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{C}(\underline{A})\coloneqq\left\{ \underline{A}\vert\mu\rangle:\vert\mu\rangle\in\mathbb{R}^{n\times1}\right\} \subset\mathbb{R}^{m\times1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[右核空间]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{N}(\underline{A})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{n\times1}:\underline{A}\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{n\times1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[左核空间]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{N}(\underline{A}^{\dagger})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{m\times1}:\vert\underline{A}^{\dagger}\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{m\times1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+SVD
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Reduced SVD]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert U_{1}\rangle & \cdots & \vert U_{r}\rangle\end{bmatrix}}_{\underline{U}_{m\times r}}\underbrace{\begin{bmatrix}\sigma_{1}\\
+ & \ddots\\
+ &  & \sigma_{r}
+\end{bmatrix}}_{\underline{\varSigma}_{r\times r}}\underbrace{\begin{bmatrix}\vert V_{1}\rangle^{\dagger}\\
+\vdots\\
+\vert V_{r}\rangle^{\dagger}
+\end{bmatrix}}_{(\underline{V}^{\dagger})_{r\times n}}\label{eq:SVD-reduced}
+\end{equation}
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\underline{A}_{m\times n}\underline{V}_{n\times r}=\underline{U}_{m\times r}\underline{\varSigma}_{r\times r}\iff\underline{A}\vert V_{r}\rangle=\sigma_{1}\vert U_{1}\rangle,\dots,\underline{A}\vert V_{r}\rangle=\sigma_{r}\vert U_{r}\rangle
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+(\underline{U}^{\dagger})_{r\times m}\underline{U}_{m\times r}=\underline{I}_{r\times r}=(\underline{V}^{\dagger})_{r\times n}\underline{V}_{n\times r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[存在性]
+\end_layout
+
+\end_inset
+
+任意 
+\begin_inset Formula $\underline{A}_{m\times n}$
+\end_inset
+
+ 都有 Reduced SVD。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Full SVD]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert U_{1}\rangle & \cdots & \vert U_{r}\rangle & \vert U_{r+1}\rangle & \cdots & \vert U_{m}\rangle\end{bmatrix}}_{\underline{U}_{m\times m}}\underbrace{\begin{bmatrix}\sigma_{1}\\
+ & \ddots\\
+ &  & \sigma_{r}\\
+ &  &  & 0\\
+ &  &  &  & \ddots\\
+ &  &  &  &  & 0\\
+ &  &  &  &  & \vdots\\
+ &  &  &  &  & 0
+\end{bmatrix}}_{\underline{\varSigma}_{m\times n}}\underbrace{\begin{bmatrix}\vert V_{1}\rangle^{\dagger}\\
+\vdots\\
+\vert V_{r}\rangle^{\dagger}\\
+\vert V_{r+1}\rangle^{\dagger}\\
+\vdots\\
+\vert V_{n}\rangle^{\dagger}
+\end{bmatrix}}_{(\underline{V}^{\dagger})_{n\times n}}\label{eq:SVD-full}
+\end{equation}
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\underline{A}_{m\times n}\underline{V}_{n\times n}=\underline{U}_{m\times m}\underline{\varSigma}_{m\times m}\iff\underline{A}\vert V_{i}\rangle=\begin{cases}
+\sigma_{i}\vert U_{i}\rangle & i=1,\dots,r\\
+0\vert U_{i}\rangle & i=r+1,\dots,n
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+(\underline{U}^{\dagger})_{m\times m}\underline{U}_{m\times m}=\underline{I}_{m\times m}\qquad(\underline{V}^{\dagger})_{n\times n}\underline{V}_{n\times n}=\underline{I}_{n\times n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[存在性]
+\end_layout
+
+\end_inset
+
+任意 
+\begin_inset Formula $\underline{A}_{m\times n}$
+\end_inset
+
+ 都有 Full SVD。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[正交性]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\underline{A}^{\dagger}\underline{A})_{n\times n}=\underline{V}_{n\times r}(\underline{\varSigma}^{\dagger}\underline{\varSigma})_{r\times r}(\underline{V}^{\dagger})_{r\times n}\qquad(\underline{A}\,\underline{A}^{\dagger})_{m\times m}=\underline{U}_{m\times r}(\underline{\varSigma}\,\underline{\varSigma}^{\dagger})_{r\times r}(\underline{U}^{\dagger})_{r\times m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+在式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SVD-full"
+
+\end_inset
+
+ 中，
+\begin_inset Formula $\underline{U}_{m\times m}$
+\end_inset
+
+ 的前 
+\begin_inset Formula $r$
+\end_inset
+
+ 列与 
+\begin_inset Formula $(\underline{V}^{\dagger})_{n\times n}$
+\end_inset
+
+ 的前 
+\begin_inset Formula $r$
+\end_inset
+
+ 行分别构成式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SVD-reduced"
+
+\end_inset
+
+ 中的 
+\begin_inset Formula $\underline{U}_{m\times r}$
+\end_inset
+
+ 与 
+\begin_inset Formula $(\underline{V}^{\dagger})_{r\times n}$
+\end_inset
+
+，且
+\begin_inset Formula 
+\[
+\left\{ \vert V_{\nu}\rangle\right\} _{\nu=r+1}^{n}\subset\mathcal{N}(\underline{A})\qquad\left\{ \vert U_{\mu}\rangle\right\} _{\mu=r+1}^{m}\subset\mathcal{N}(\underline{A}^{\dagger})
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
