@@ -1101,6 +1101,59 @@ reference "sec:Jordan-decomposition"
 \end_layout
 
 \begin_layout Subsection
+谱分解
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}\vert q_{i}\rangle=\lambda_{i}\vert q_{i}\rangle\qquad\vert e_{i}\rangle\coloneqq\frac{\vert q_{i}\rangle}{\Vert q_{i}\Vert}\qquad i=1,2,\dots,n
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\langle e_{i}\vert e_{j}\rangle=\begin{cases}
+0 & i\ne j\\
+1 & i=j
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\forall\vert u\rangle=\sum_{i=1}^{n}u_{i}\vert e_{i}\rangle=\sum_{i=1}^{n}\vert e_{i}\rangle\underbrace{\langle e_{i}\vert u\rangle}_{u_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}\vert u\rangle=\underline{A}\sum_{i=1}^{n}\vert e_{i}\rangle u_{i}=\sum_{i=1}^{n}\lambda_{i}\vert e_{i}\rangle\langle e_{i}\vert u\rangle=\left(\sum_{i=1}^{n}\lambda_{i}\vert e_{i}\rangle\langle e_{i}\vert\right)\vert u\rangle
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{\underline{A}=\sum_{i=1}^{n}\lambda_{i}\vert e_{i}\rangle\langle e_{i}\vert}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 QR 分解
 \end_layout
 
@@ -1115,83 +1168,24 @@ name "sec:singular-value-decomposition"
 
 \end_layout
 
+\begin_layout Standard
+本节研究以下矩阵
+\begin_inset Formula 
+\[
+\underline{A}_{m\times n}=\begin{bmatrix}a_{1,1} & a_{1,2} & \cdots & a_{1,n}\\
+a_{2,1} & a_{2,2} & \cdots & a_{2,n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{m,1} & a_{m,2} & \cdots & a_{m,n}
+\end{bmatrix}\qquad\mathrm{rank}\underline{A}_{m\times n}=r\le\min(m,n)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-四个线性空间
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\underline{A}=\begin{bmatrix}a_{1,1} & \cdots & a_{1,n}\\
-\vdots &  & \vdots\\
-a_{m,1} & \cdots & a_{m,n}
-\end{bmatrix}=\begin{bmatrix}\vert C_{1}\rangle & \cdots & \vert C_{n}\rangle\end{bmatrix}=\begin{bmatrix}\langle R_{1}\vert\\
-\vdots\\
-\langle R_{m}\vert
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[行空间]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mathcal{R}(\underline{A})\coloneqq\left\{ \langle\mu\vert\underline{A}:\langle\mu\vert\in\mathbb{R}^{1\times m}\right\} \subset\mathbb{R}^{1\times n}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[列空间]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mathcal{C}(\underline{A})\coloneqq\left\{ \underline{A}\vert\mu\rangle:\vert\mu\rangle\in\mathbb{R}^{n\times1}\right\} \subset\mathbb{R}^{m\times1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+核空间、象空间
 \end_layout
 
 \begin_layout Definition
@@ -1208,7 +1202,7 @@ status open
 
 \begin_inset Formula 
 \[
-\mathcal{N}(\underline{A})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{n\times1}:\underline{A}\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{n\times1}
+\mathcal{N}_{\mathrm{R}}(\underline{A})\equiv\ker(\underline{A})\coloneqq\left\{ \vert u\rangle\in\mathbb{R}^{n\times1}:\underline{A}\vert u\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{n\times1}
 \]
 
 \end_inset
@@ -1237,7 +1231,134 @@ status open
 
 \begin_inset Formula 
 \[
-\mathcal{N}(\underline{A}^{\dagger})\coloneqq\left\{ \vert\mu\rangle\in\mathbb{R}^{m\times1}:\vert\underline{A}^{\dagger}\vert\mu\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{m\times1}
+\mathcal{N}_{\mathrm{L}}(\underline{A})\coloneqq\left\{ \langle u\vert\in\mathbb{R}^{1\times m}:\langle u\vert\underline{A}=\langle0\vert\right\} \subset\mathbb{R}^{1\times m}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{N}(\underline{A}^{\dagger})\equiv\ker(\underline{A}^{\dagger})\coloneqq\left\{ \vert u\rangle\in\mathbb{R}^{m\times1}:\underline{A}^{\dagger}\vert u\rangle=\vert0\rangle\right\} \subset\mathbb{R}^{m\times1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{N}_{\mathrm{L}}(\underline{A})\equiv\mathcal{N}_{\mathrm{R}}(\underline{A}^{\dagger})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[右象空间]
+\end_layout
+
+\end_inset
+
+又名
+\color blue
+列空间 (column space)
+\color inherit
+
+\begin_inset Formula 
+\[
+\underline{A}\mathbb{R}^{n\times1}\equiv\mathcal{C}(\underline{A})\coloneqq\left\{ \underline{A}\vert v\rangle\in\mathbb{R}^{m\times1}:\vert v\rangle\in\mathbb{R}^{n\times1}\right\} \subset\mathbb{R}^{m\times1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[左象空间]
+\end_layout
+
+\end_inset
+
+又名
+\color blue
+行空间 (row space)
+\color inherit
+
+\begin_inset Formula 
+\[
+\mathcal{R}(\underline{A})\equiv\mathbb{R}^{1\times m}\underline{A}\coloneqq\left\{ \langle u\vert\underline{A}\in\mathbb{R}^{1\times n}:\langle u\vert\in\mathbb{R}^{1\times m}\right\} \subset\mathbb{R}^{1\times n}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{C}(\underline{A}^{\dagger})\equiv\underline{A}^{\dagger}\mathbb{R}^{m\times1}\coloneqq\left\{ \underline{A}^{\dagger}\vert u\rangle\in\mathbb{R}^{n\times1}:\vert u\rangle\in\mathbb{R}^{m\times1}\right\} \subset\mathbb{R}^{n\times1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mathcal{R}(\underline{A})\equiv\mathcal{C}(\underline{A}^{\dagger})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[亏加秩]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+n-\dim\ker(\underline{A}_{m\times n})=\mathrm{rank}(\underline{A}_{m\times n})=r=\mathrm{rank}\qty((\underline{A}^{\dagger})_{n\times m})=m-\dim\ker((\underline{A}^{\dagger})_{n\times m})
 \]
 
 \end_inset
@@ -1253,7 +1374,136 @@ status open
 \end_layout
 
 \begin_layout Subsection
-SVD
+奇异值、奇异向量
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[右奇异值、右奇异向量]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\underline{A}^{\dagger}\underline{A})_{n\times n}\vert v_{i}\rangle=\sigma_{i}^{2}\vert v_{i}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[左奇异值、左奇异向量]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\underline{A}\,\underline{A}^{\dagger})_{m\times m}\vert u_{i}\rangle=\tau_{i}^{2}\vert u_{i}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula $\underline{A}^{\dagger}\underline{A}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\underline{A}\,\underline{A}^{\dagger}$
+\end_inset
+
+ 分有 
+\begin_inset Formula $r$
+\end_inset
+
+ 个正特征值 
+\begin_inset Formula $\left\{ \sigma_{i}^{2}\right\} _{i=1}^{r}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\left\{ \tau_{i}^{2}\right\} _{i=1}^{r}$
+\end_inset
+
+，且
+\begin_inset Formula 
+\[
+\sigma_{i}=\tau_{i}\qquad i=1,2,\dots,r
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[特征值分解]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\underline{A}^{\dagger}\underline{A})_{n\times n}=\underline{V}_{n\times r}(\underline{\varSigma}^{\dagger}\underline{\varSigma})_{r\times r}(\underline{V}^{\dagger})_{r\times n}\qquad(\underline{A}\,\underline{A}^{\dagger})_{m\times m}=\underline{U}_{m\times r}(\underline{\varSigma}\,\underline{\varSigma}^{\dagger})_{r\times r}(\underline{U}^{\dagger})_{r\times m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Reduced SVD
 \end_layout
 
 \begin_layout Definition
@@ -1267,29 +1517,29 @@ status open
 
 \end_inset
 
+若 
+\begin_inset Formula $\mathrm{rank}\underline{A}_{m\times n}=r$
+\end_inset
 
+，则有
 \begin_inset Formula 
 \begin{equation}
-\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert U_{1}\rangle & \cdots & \vert U_{r}\rangle\end{bmatrix}}_{\underline{U}_{m\times r}}\underbrace{\begin{bmatrix}\sigma_{1}\\
+\underline{A}_{m\times n}=\sum_{i=1}^{r}\vert u_{i}\rangle\sigma_{i}\langle v_{i}\vert=\underbrace{\begin{bmatrix}\vert u_{1}\rangle & \cdots & \vert u_{r}\rangle\end{bmatrix}}_{\underline{U}_{m\times r}}\underbrace{\begin{bmatrix}\sigma_{1}\\
  & \ddots\\
  &  & \sigma_{r}
-\end{bmatrix}}_{\underline{\varSigma}_{r\times r}}\underbrace{\begin{bmatrix}\vert V_{1}\rangle^{\dagger}\\
+\end{bmatrix}}_{\underline{\varSigma}_{r\times r}}\underbrace{\begin{bmatrix}\langle v_{1}\vert\\
 \vdots\\
-\vert V_{r}\rangle^{\dagger}
+\langle v_{r}\vert
 \end{bmatrix}}_{(\underline{V}^{\dagger})_{r\times n}}\label{eq:SVD-reduced}
 \end{equation}
 
 \end_inset
 
-即
-\begin_inset Formula 
-\[
-\underline{A}_{m\times n}\underline{V}_{n\times r}=\underline{U}_{m\times r}\underline{\varSigma}_{r\times r}\iff\underline{A}\vert V_{r}\rangle=\sigma_{1}\vert U_{1}\rangle,\dots,\underline{A}\vert V_{r}\rangle=\sigma_{r}\vert U_{r}\rangle
-\]
-
+其中 
+\begin_inset Formula $\sigma_{i}$
 \end_inset
 
-其中
+ 均为正实数，且
 \begin_inset Formula 
 \[
 (\underline{U}^{\dagger})_{r\times m}\underline{U}_{m\times r}=\underline{I}_{r\times r}=(\underline{V}^{\dagger})_{r\times n}\underline{V}_{n\times r}
@@ -1332,6 +1582,65 @@ status open
 
 \end_layout
 
+\begin_layout Corollary
+Reduced SVD 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:SVD-reduced"
+
+\end_inset
+
+ 将 
+\begin_inset Formula $\mathcal{C}(\underline{A})\equiv\underline{A}\mathbb{R}^{n}$
+\end_inset
+
+ 的正交归一基底 
+\begin_inset Formula $\left\{ \vert v_{i}\rangle\right\} _{i=1}^{r}$
+\end_inset
+
+ 变换为 
+\begin_inset Formula $\mathcal{R}(\underline{A})\equiv\underline{A}^{\dagger}\mathbb{R}^{m}$
+\end_inset
+
+ 的正交归一基底 
+\begin_inset Formula $\left\{ \vert u_{i}\rangle\right\} _{i=1}^{r}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+将正交归一条件代入 SVD 的定义即可验证：
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{A}_{m\times n}\underline{V}_{n\times r}=\underline{U}_{m\times r}\underline{\varSigma}_{r\times r} & \iff\underline{A}\vert v_{r}\rangle=\sigma_{1}\vert u_{1}\rangle,\dots,\underline{A}\vert v_{r}\rangle=\sigma_{r}\vert u_{r}\rangle\\
+(\underline{A}^{\dagger})_{n\times m}\underline{U}_{m\times r}=\underline{V}_{n\times r}\underline{\varSigma}_{r\times r}^{-1} & \iff\underline{A}^{\dagger}\vert u_{r}\rangle=\sigma_{1}^{-1}\vert v_{1}\rangle,\dots,\underline{A}^{\dagger}\vert u_{r}\rangle=\sigma_{r}^{-1}\vert v_{r}\rangle
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Full SVD
+\end_layout
+
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1346,7 +1655,7 @@ status open
 
 \begin_inset Formula 
 \begin{equation}
-\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert U_{1}\rangle & \cdots & \vert U_{r}\rangle & \vert U_{r+1}\rangle & \cdots & \vert U_{m}\rangle\end{bmatrix}}_{\underline{U}_{m\times m}}\underbrace{\begin{bmatrix}\sigma_{1}\\
+\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert u_{1}\rangle & \cdots & \vert u_{r}\rangle & \vert u_{r+1}\rangle & \cdots & \vert u_{m}\rangle\end{bmatrix}}_{\underline{U}_{m\times m}}\underbrace{\begin{bmatrix}\sigma_{1}\\
  & \ddots\\
  &  & \sigma_{r}\\
  &  &  & 0\\
@@ -1354,25 +1663,14 @@ status open
  &  &  &  &  & 0\\
  &  &  &  &  & \vdots\\
  &  &  &  &  & 0
-\end{bmatrix}}_{\underline{\varSigma}_{m\times n}}\underbrace{\begin{bmatrix}\vert V_{1}\rangle^{\dagger}\\
+\end{bmatrix}}_{\underline{\varSigma}_{m\times n}}\underbrace{\begin{bmatrix}\langle v_{1}\vert\\
 \vdots\\
-\vert V_{r}\rangle^{\dagger}\\
-\vert V_{r+1}\rangle^{\dagger}\\
+\langle v_{r}\vert\\
+\langle v_{r+1}\vert\\
 \vdots\\
-\vert V_{n}\rangle^{\dagger}
+\langle v_{n}\vert
 \end{bmatrix}}_{(\underline{V}^{\dagger})_{n\times n}}\label{eq:SVD-full}
 \end{equation}
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\underline{A}_{m\times n}\underline{V}_{n\times n}=\underline{U}_{m\times m}\underline{\varSigma}_{m\times m}\iff\underline{A}\vert V_{i}\rangle=\begin{cases}
-\sigma_{i}\vert U_{i}\rangle & i=1,\dots,r\\
-0\vert U_{i}\rangle & i=r+1,\dots,n
-\end{cases}
-\]
 
 \end_inset
 
@@ -1420,82 +1718,33 @@ status open
 \end_layout
 
 \begin_layout Corollary
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[正交性]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-(\underline{A}^{\dagger}\underline{A})_{n\times n}=\underline{V}_{n\times r}(\underline{\varSigma}^{\dagger}\underline{\varSigma})_{r\times r}(\underline{V}^{\dagger})_{r\times n}\qquad(\underline{A}\,\underline{A}^{\dagger})_{m\times m}=\underline{U}_{m\times r}(\underline{\varSigma}\,\underline{\varSigma}^{\dagger})_{r\times r}(\underline{U}^{\dagger})_{r\times m}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Corollary
-在式 
+Full SVD 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:SVD-full"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- 中，
-\begin_inset Formula $\underline{U}_{m\times m}$
+ 将 
+\begin_inset Formula $\ker\underline{A}$
 \end_inset
 
- 的前 
-\begin_inset Formula $r$
+ 的正交归一基底 
+\begin_inset Formula $\left\{ \vert v_{i}\rangle\right\} _{i=r+1}^{m}$
 \end_inset
 
- 列与 
-\begin_inset Formula $(\underline{V}^{\dagger})_{n\times n}$
+ 变换为 
+\begin_inset Formula $\ker(\underline{A}^{\dagger})$
 \end_inset
 
- 的前 
-\begin_inset Formula $r$
+ 的正交归一基底 
+\begin_inset Formula $\left\{ \vert v_{i}\rangle\right\} _{i=r+1}^{n}$
 \end_inset
 
- 行分别构成式 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:SVD-reduced"
-
-\end_inset
-
- 中的 
-\begin_inset Formula $\underline{U}_{m\times r}$
-\end_inset
-
- 与 
-\begin_inset Formula $(\underline{V}^{\dagger})_{r\times n}$
-\end_inset
-
-，且
-\begin_inset Formula 
-\[
-\left\{ \vert V_{\nu}\rangle\right\} _{\nu=r+1}^{n}\subset\mathcal{N}(\underline{A})\qquad\left\{ \vert U_{\mu}\rangle\right\} _{\mu=r+1}^{m}\subset\mathcal{N}(\underline{A}^{\dagger})
-\]
-
-\end_inset
-
-
+。
 \end_layout
 
 \begin_layout Standard
