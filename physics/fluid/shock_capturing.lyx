@@ -1156,10 +1156,10 @@ scheme!TVD ~
 \end_layout
 
 \begin_layout Section
-间断识别器
+间断指示器
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:激波捕捉：间断识别器"
+name "sec:激波捕捉：间断指示器"
 
 \end_inset
 
@@ -1181,13 +1181,54 @@ name "sec:激波捕捉：间断识别器"
 \color inherit
  或
 \color blue
-间断识别器 (discontinuity identifier)
+间断指示器 (discontinuity identifier)
 \color inherit
 。
 \end_layout
 
 \begin_layout Subsection
 minmod
+\end_layout
+
+\begin_layout Standard
+先由单元平均值 
+\begin_inset Formula $\bar{u}_{i}=\vert E_{i}\vert^{-1}\int_{E_{i}}u\dd{x}$
+\end_inset
+
+ 计算单元界面两侧的值 
+\begin_inset Formula $u_{i+1/2}^{\pm}$
+\end_inset
+
+，再利用 minmod 函数
+\begin_inset Formula 
+\[
+m(a,b,c)=\begin{cases}
+s\min(\vert a\vert,\vert b\vert,\vert c\vert) & s=\sign(a)=\sign(b)=\sign(c)\\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\color blue
+限制
+\color inherit
+增量
+\begin_inset Formula 
+\[
+\begin{aligned}\Delta_{+}\bar{u}_{i} & =\bar{u}_{i+1}-\bar{u}_{i} & \Delta_{-}\bar{u}_{i} & =\bar{u}_{i}-\bar{u}_{i-1}\\
+\tilde{\tilde{u}}_{i}^{+} & =m(u_{i+1/2}^{-}-\bar{u}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}) & \tilde{\tilde{u}}_{i}^{-} & =m(\bar{u}_{i}-u_{i-1/2}^{+},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i})
+\end{aligned}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $m(a,b,c)\ne a$
+\end_inset
+
+，则报告坏单元。
 \end_layout
 
 \begin_layout Standard
@@ -1199,7 +1240,55 @@ TVB
 \end_layout
 
 \begin_layout Standard
-这种指示器的计算效率与 minmod 接近，但识别效果依赖于可调参数。
+先由单元平均值 
+\begin_inset Formula $\bar{u}_{i}=\vert E_{i}\vert^{-1}\int_{E_{i}}u\dd{x}$
+\end_inset
+
+ 计算单元界面两侧的值 
+\begin_inset Formula $u_{i+1/2}^{\pm}$
+\end_inset
+
+，再利用 TVB 函数
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tilde{m}(a,b,c)=\begin{cases}
+a & \vert a_{1}\vert\le Mh^{2}\\
+\min\mod(a,b,c) & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\color blue
+限制
+\color inherit
+增量
+\begin_inset Formula 
+\[
+\begin{aligned}\Delta_{+}\bar{u}_{i} & =\bar{u}_{i+1}-\bar{u}_{i} & \Delta_{-}\bar{u}_{i} & =\bar{u}_{i}-\bar{u}_{i-1}\\
+\tilde{\tilde{u}}_{i}^{+} & =\tilde{m}(u_{i+1/2}^{-}-\bar{u}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}) & \tilde{\tilde{u}}_{i}^{-} & =\tilde{m}(\bar{u}_{i}-u_{i-1/2}^{+},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i})
+\end{aligned}
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\tilde{m}(a,b,c)\ne a$
+\end_inset
+
+，则报告坏单元。
+\end_layout
+
+\begin_layout Standard
+这种指示器的计算效率与 minmod 接近，但识别效果依赖于可调参数 
+\begin_inset Formula $M$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsection
@@ -1207,7 +1296,190 @@ KXRCF
 \end_layout
 
 \begin_layout Standard
-这种指示器降低了误报率，但要付出更多的计算量，好在这种计算量的增长只是常数意义下的。
+单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的边界 
+\begin_inset Formula $\partial E_{i}$
+\end_inset
+
+ 可以按 
+\begin_inset Formula $\vec{v}\vdot\vec{n}$
+\end_inset
+
+ 的符号分为入口 
+\begin_inset Formula $\partial E_{i}^{-}$
+\end_inset
+
+ 与出口 
+\begin_inset Formula $\partial E_{i}^{+}$
+\end_inset
+
+ 两部分。
+\end_layout
+
+\begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[超收敛性]
+\end_layout
+
+\end_inset
+
+由
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:间断有限元"
+
+\end_inset
+
+方法给出的近似光滑解在出口 
+\begin_inset Formula $\partial E_{i}^{+}$
+\end_inset
+
+ 处具有
+\color blue
+超收敛性
+\color inherit
+：
+\begin_inset Formula 
+\[
+\int_{\partial E_{i}^{+}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q(\vec{x},t)\right)=\vert\partial E_{i}^{+}\vert\order(h^{2p+1})
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $q(\vec{x},t)$
+\end_inset
+
+ 为某个基本变量或特征变量，
+\begin_inset Formula $q^{h}|_{E_{i}}(\vec{x},t)$
+\end_inset
+
+ 为 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的近似解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "Krivodonova (2004)"
+target "https://doi.org/10.1016/j.apnum.2003.11.002"
+literal "false"
+
+\end_inset
+
+ 基于上述性质，提出了以下间断指示器：设 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 与 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 为相邻单元，在二者界面 
+\begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
+\end_inset
+
+ 上计算两侧的近似解之差的积分
+\begin_inset Formula 
+\[
+I_{i}=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q^{h}|_{E_{j}}(\vec{x},t)\right)=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}-q\right)-\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)
+\]
+
+\end_inset
+
+该积分值的数量级取决于近似解的光滑程度：
+\end_layout
+
+\begin_layout Itemize
+若近似解在 
+\begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
+\end_inset
+
+ 上光滑，则由引理可得 
+\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)=\vert\partial E_{j}^{+}\vert\order(h^{2p+1})$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+I_{i}=\int_{\partial E_{i}^{-}}\order(h^{p+1})=\vert\partial E_{i}^{-}\vert\order(h^{p+1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+若近似解在 
+\begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
+\end_inset
+
+ 上跳跃，则有 
+\begin_inset Formula $\left(q^{h}|_{E_{i}}-q\right)=\order(1)$
+\end_inset
+
+ 或 
+\begin_inset Formula $\left(q^{h}|_{E_{j}}-q\right)=\order(1)$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+I_{i}=\int_{\partial E_{i}^{-}}\order(1)=\vert\partial E_{i}^{-}\vert\order(1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+定义不依赖于 
+\begin_inset Formula $h$
+\end_inset
+
+ 及 
+\begin_inset Formula $\Vert q^{h}\Vert_{E_{i}}$
+\end_inset
+
+ 的指示器：
+\begin_inset Formula 
+\[
+I_{i}^{*}=\frac{\vert I_{i}\vert/\Vert q^{h}\Vert_{E_{i}}}{\vert\partial E_{i}^{-}\vert h^{(p+1)/2}}=\frac{\left|\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}-q^{h}|_{E_{j}}\right)\right|}{\vert\partial E_{i}^{-}\vert\sqrt{h^{p+1}}\Vert q^{h}\Vert_{E_{i}}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vert\partial E_{i}^{-}\vert h^{(p+1)/2}$
+\end_inset
+
+ 可视为以上两种情形的“平均精度”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
