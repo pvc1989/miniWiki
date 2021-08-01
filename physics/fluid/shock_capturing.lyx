@@ -892,6 +892,13 @@ scheme!monotonicity preserving ~
 
 \begin_layout Subsection
 TVD
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:TVD"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Definition
@@ -1137,11 +1144,35 @@ scheme!TVD ~
 \end_layout
 
 \begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[TVB]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:TVB"
+
+\end_inset
+
 标量守恒律的物理解是 TVD 函数，由 TVD 格式得到的数值解正确地
 \color blue
 模仿 (mimic)
 \color inherit
- 了这一性质，因此不会引入数值振荡。正因如此，TVD 格式（曾经）是求解守恒律（系统）的主要途径；与此同时，以 WENO 为代表的
+ 了这一性质，因此不会引入数值振荡。正因如此，TVD 格式（曾经）是求解守恒律（系统）的主要途径；与此同时，以 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:激波捕捉：WENO"
+
+\end_inset
+
+为代表的
 \color blue
 总变差有界 (TV Bounded, TVB)
 \color inherit
@@ -1256,7 +1287,7 @@ TVB
 \[
 \tilde{m}(a,b,c)=\begin{cases}
 a & \vert a_{1}\vert\le Mh^{2}\\
-\min\mod(a,b,c) & \text{otherwise}
+\mathrm{minmod}(a,b,c) & \text{otherwise}
 \end{cases}
 \]
 
@@ -1348,7 +1379,7 @@ reference "sec:间断有限元"
 ：
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{+}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q(\vec{x},t)\right)=\vert\partial E_{i}^{+}\vert\order(h^{2p+1})
+\int_{\partial E_{i}^{+}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q(\vec{x},t)\right)=\vert\partial E_{i}^{+}\vert\order{h^{2p+1}}
 \]
 
 \end_inset
@@ -1413,13 +1444,13 @@ I_{i}=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q^{h}|_{E_{j}}(\v
 \end_inset
 
  上光滑，则由引理可得 
-\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)=\vert\partial E_{j}^{+}\vert\order(h^{2p+1})$
+\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)=\vert\partial E_{j}^{+}\vert\order{h^{2p+1}}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-I_{i}=\int_{\partial E_{i}^{-}}\order(h^{p+1})=\vert\partial E_{i}^{-}\vert\order(h^{p+1})
+I_{i}=\int_{\partial E_{i}^{-}}\order{h^{p+1}}=\vert\partial E_{i}^{-}\vert\order{h^{p+1}}
 \]
 
 \end_inset
@@ -1433,17 +1464,17 @@ I_{i}=\int_{\partial E_{i}^{-}}\order(h^{p+1})=\vert\partial E_{i}^{-}\vert\orde
 \end_inset
 
  上跳跃，则有 
-\begin_inset Formula $\left(q^{h}|_{E_{i}}-q\right)=\order(1)$
+\begin_inset Formula $\left(q^{h}|_{E_{i}}-q\right)=\order{1}$
 \end_inset
 
  或 
-\begin_inset Formula $\left(q^{h}|_{E_{j}}-q\right)=\order(1)$
+\begin_inset Formula $\left(q^{h}|_{E_{j}}-q\right)=\order{1}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-I_{i}=\int_{\partial E_{i}^{-}}\order(1)=\vert\partial E_{i}^{-}\vert\order(1)
+I_{i}=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\order{1}
 \]
 
 \end_inset
@@ -2283,7 +2314,7 @@ min-mod
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\min\mod(r,1)\coloneqq\begin{cases}
+\begin_inset Formula $\mathrm{minmod}(r,1)\coloneqq\begin{cases}
 \min(r,1) & r\ge0\\
 0 & r<0
 \end{cases}$
@@ -2476,11 +2507,36 @@ literal "false"
 \color blue
 非线性权重
 \color inherit
-的设计上。(W)ENO 格式虽不能完全消除数值振荡（故不是 TVD 格式），但可以将数值振荡的幅值限制在 
+的设计上。
+\end_layout
+
+\begin_layout Remark*
+(W)ENO 格式虽不能完全消除数值振荡（故不是 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:TVD"
+
+\end_inset
+
+ 格式），但可以将数值振荡的幅值限制在 
 \begin_inset Formula $\order{h^{p}}$
 \end_inset
 
- 以下（因此是 TVB 格式），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
+ 以下（因此是 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "rem:TVB"
+
+\end_inset
+
+ 格式），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2562,9 +2618,9 @@ S_{1}=\begin{bmatrix}-2 & -1 & 0\end{bmatrix}\qquad S_{2}=\begin{bmatrix}-1 & 0 
  的三阶近似，相应的数值通量分别为
 \begin_inset Formula 
 \[
-\begin{bmatrix}f_{i+1/2}^{S_{1}}\\
-f_{i+1/2}^{S_{2}}\\
-f_{i+1/2}^{S_{3}}
+\begin{bmatrix}f_{i+1/2}^{[1]}\\
+f_{i+1/2}^{[2]}\\
+f_{i+1/2}^{[3]}
 \end{bmatrix}=\frac{1}{6}\begin{bmatrix}2 & -7 & 11\\
  & -1 & 5 & 2\\
  &  & 2 & 5 & -1
@@ -2581,9 +2637,9 @@ f_{i+2}
 对三者取加权平均即得大模板上的数值通量：
 \begin_inset Formula 
 \[
-f_{i+1/2}=\begin{bmatrix}w_{1} & w_{2} & w_{3}\end{bmatrix}\begin{bmatrix}f_{i+1/2}^{S_{1}}\\
-f_{i+1/2}^{S_{2}}\\
-f_{i+1/2}^{S_{3}}
+f_{i+1/2}=\begin{bmatrix}w_{1} & w_{2} & w_{3}\end{bmatrix}\begin{bmatrix}f_{i+1/2}^{[1]}\\
+f_{i+1/2}^{[2]}\\
+f_{i+1/2}^{[3]}
 \end{bmatrix}
 \]
 
@@ -2679,7 +2735,7 @@ literal "false"
 \end_inset
 
  上构造二次多项式 
-\begin_inset Formula $Q_{i}^{S_{k}}$
+\begin_inset Formula $Q_{i}^{[k]}$
 \end_inset
 
  作为在 
@@ -2693,17 +2749,17 @@ literal "false"
  的近似：
 \begin_inset Formula 
 \[
-Q_{i}^{S_{k}}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{S_{k}}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{S_{k}}\frac{(x-x_{i})^{2}}{2}
+Q_{i}^{[k]}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{[k]}(x-x_{i})+\eval{\pdv[2]{f}{x}}_{i}^{[k]}\frac{(x-x_{i})^{2}}{2}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left(\partial_{x}f\right)_{i}^{S_{k}}$
+\begin_inset Formula $\left(\partial_{x}f\right)_{i}^{[k]}$
 \end_inset
 
  与 
-\begin_inset Formula $\left(\partial_{x}^{2}f\right)_{i}^{S_{k}}$
+\begin_inset Formula $\left(\partial_{x}^{2}f\right)_{i}^{[k]}$
 \end_inset
 
  分别表示由 
@@ -2725,9 +2781,9 @@ Q_{i}^{S_{k}}(x)=f_{i}+\eval{\pdv{f}{x}}_{i}^{S_{k}}(x-x_{i})+\eval{\pdv[2]{f}{x
  处的近似值：
 \begin_inset Formula 
 \[
-\begin{bmatrix}\left(\partial_{x}f\right)_{i}^{S_{1}}\\
-\left(\partial_{x}f\right)_{i}^{S_{2}}\\
-\left(\partial_{x}f\right)_{i}^{S_{3}}
+\begin{bmatrix}\left(\partial_{x}f\right)_{i}^{[1]}\\
+\left(\partial_{x}f\right)_{i}^{[2]}\\
+\left(\partial_{x}f\right)_{i}^{[3]}
 \end{bmatrix}=\frac{1}{2h}\begin{bmatrix}1 & -4 & 3\\
  & -1 & 0 & 1\\
  &  & 3 & -4 & 1
@@ -2744,9 +2800,9 @@ f_{i+2}
 
 \begin_inset Formula 
 \[
-\begin{bmatrix}\left(\partial_{x}^{2}f\right)_{i}^{S_{1}}\\
-\left(\partial_{x}^{2}f\right)_{i}^{S_{2}}\\
-\left(\partial_{x}^{2}f\right)_{i}^{S_{3}}
+\begin{bmatrix}\left(\partial_{x}^{2}f\right)_{i}^{[1]}\\
+\left(\partial_{x}^{2}f\right)_{i}^{[2]}\\
+\left(\partial_{x}^{2}f\right)_{i}^{[3]}
 \end{bmatrix}=\frac{1}{h^{2}}\begin{bmatrix}1 & -2 & 1\\
  & 1 & -2 & 1\\
  &  & 1 & -2 & 1
@@ -2765,7 +2821,7 @@ f_{i+2}
 
 \begin_layout Enumerate
 计算二次多项式 
-\begin_inset Formula $Q_{i}^{S_{k}}$
+\begin_inset Formula $Q_{i}^{[k]}$
 \end_inset
 
  在控制体 
@@ -2779,25 +2835,25 @@ f_{i+2}
 
 \begin_inset Formula 
 \[
-\beta_{i}^{S_{k}}\coloneqq\int_{x_{i-1/2}}^{x_{i+1/2}}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{S_{k}}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{S_{k}}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{S_{k}}h^{2}\right)^{2}
+\beta_{i}^{[k]}\coloneqq\int_{x_{i-1/2}}^{x_{i+1/2}}\sum_{p=1}^{2}\left(\dv[p]{Q_{i}^{[k]}}{x}\right)^{2}h^{2p-1}\dd{x}=\left(\eval{\pdv{f}{x}}_{i}^{[k]}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}^{[k]}h^{2}\right)^{2}
 \]
 
 \end_inset
 
-在光滑区域，它们都趋于同一个二阶小量，记作 
+在光滑区域，它们都趋于同一个二阶小量 
 \begin_inset Formula $\beta_{i}^{\star}$
 \end_inset
 
 ，且两两之差为六阶小量：
 \begin_inset Formula 
 \[
-\beta_{i}^{S_{k}}=\beta_{i}^{\star}+\order{h^{6}}\qquad\beta_{i}^{\star}\coloneqq\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}
+\beta_{i}^{[k]}=\beta_{i}^{\star}+\order{h^{6}}\qquad\beta_{i}^{\star}\coloneqq\left(\eval{\pdv{f}{x}}_{i}h\right)^{2}+\frac{13}{12}\left(\eval{\pdv[2]{f}{x}}_{i}h^{2}\right)^{2}
 \]
 
 \end_inset
 
 在非光滑区域，坏模板上的 
-\begin_inset Formula $Q_{i}^{S_{k}}$
+\begin_inset Formula $Q_{i}^{[k]}$
 \end_inset
 
  偏离 
@@ -2811,7 +2867,7 @@ f_{i+2}
  处的 Taylor 展开式较多，因此
 \begin_inset Formula 
 \[
-\beta_{i}^{S_{k}}=\order{1}\gg\order{h^{2}}
+\beta_{i}^{[k]}=\order{1}\gg\order{h^{2}}
 \]
 
 \end_inset
@@ -2823,7 +2879,7 @@ f_{i+2}
 计算非线性权重
 \begin_inset Formula 
 \[
-w_{k}=\frac{w_{k}^{\beta}}{w_{3}^{\beta}+w_{2}^{\beta}+w_{3}^{\beta}}\qquad w_{k}^{\beta}=\frac{w_{k}^{\star}}{\left(\varepsilon+\beta_{i}^{S_{k}}\right)^{2}}\qquad\varepsilon=10^{-6}
+w_{k}=\frac{w_{k}^{\beta}}{w_{3}^{\beta}+w_{2}^{\beta}+w_{3}^{\beta}}\qquad w_{k}^{\beta}=\frac{w_{k}^{\star}}{\left(\varepsilon+\beta_{i}^{[k]}\right)^{2}}\qquad\varepsilon=10^{-6}
 \]
 
 \end_inset
@@ -3183,7 +3239,7 @@ name "alg:WENO：基于邻接单元：一维方程组"
  为一维守恒律方程组
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\partial_{x}\vert F\rangle=\ket{0}\qquad\underline{A}(\underline{U})\coloneqq\pdv*{\vert F\rangle}{\vert U\rangle}
+\partial_{t}\vert U\rangle+\partial_{x}\vert F\rangle=\vert o\rangle\qquad\underline{A}(\underline{U})\coloneqq\pdv*{\vert F\rangle}{\vert U\rangle}
 \]
 
 \end_inset
@@ -3272,7 +3328,7 @@ name "alg:WENO：基于邻接单元：一维方程组"
 ：
 \begin_inset Formula 
 \[
-\ket{V}\coloneqq\Mat{L}\vert U\rangle
+\vert V\rangle\coloneqq\Mat{L}\vert U\rangle
 \]
 
 \end_inset
@@ -3287,11 +3343,11 @@ name "alg:WENO：基于邻接单元：一维方程组"
 \begin_deeper
 \begin_layout Enumerate
 计算 
-\begin_inset Formula $\ket{V}_{k\to i}\coloneqq\Mat{L}\vert U\rangle_{k\to i}$
+\begin_inset Formula $\vert V\rangle_{k\to i}\coloneqq\Mat{L}\vert U\rangle_{k\to i}$
 \end_inset
 
 ，即 
-\begin_inset Formula $\ket{V}$
+\begin_inset Formula $\vert V\rangle$
 \end_inset
 
  的多项式近似。
@@ -3303,7 +3359,7 @@ name "alg:WENO：基于邻接单元：一维方程组"
 \end_inset
 
  已确保均值不变，故不必再对 
-\begin_inset Formula $\ket{V}_{k\to i}$
+\begin_inset Formula $\vert V\rangle_{k\to i}$
 \end_inset
 
  作平移。
@@ -3311,7 +3367,7 @@ name "alg:WENO：基于邻接单元：一维方程组"
 
 \begin_layout Enumerate
 对 
-\begin_inset Formula $\left\{ \ket{V}_{k\to i}\right\} _{k\in K_{i}}$
+\begin_inset Formula $\left\{ \vert V\rangle_{k\to i}\right\} _{k\in K_{i}}$
 \end_inset
 
  逐行调用算法 
@@ -3350,7 +3406,7 @@ reference "alg:WENO：基于邻接单元：标量函数"
 
 \begin_layout Enumerate
 按所得权重组合出 
-\begin_inset Formula $\ket{V}_{i}^{\mathrm{new}}$
+\begin_inset Formula $\vert V\rangle_{i}^{\mathrm{new}}$
 \end_inset
 
  的第 
@@ -3381,7 +3437,7 @@ reference "alg:WENO：基于邻接单元：标量函数"
 ：
 \begin_inset Formula 
 \[
-\vert U\rangle_{i}^{\mathrm{new}}\coloneqq\Mat{R}\ket{V}_{i}^{\mathrm{new}}
+\vert U\rangle_{i}^{\mathrm{new}}\coloneqq\Mat{R}\vert V\rangle_{i}^{\mathrm{new}}
 \]
 
 \end_inset
@@ -3416,7 +3472,7 @@ status open
  为高维守恒律方程组
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\divg\vec{\vert F\rangle}=\ket{0}
+\partial_{t}\vert U\rangle+\divg\vec{\vert F\rangle}=\vert o\rangle
 \]
 
 \end_inset
@@ -3452,7 +3508,7 @@ status open
 
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\partial_{\nu}\ket{F_{\nu}}=\ket{0}\qquad\ket{F_{\nu}}\coloneqq\vec{\nu}\vdot\vec{\vert F\rangle}
+\partial_{t}\vert U\rangle+\partial_{\nu}\vert F_{\nu}\rangle=\vert o\rangle\qquad\vert F_{\nu}\rangle\coloneqq\vec{\nu}\vdot\vec{\vert F\rangle}
 \]
 
 \end_inset
