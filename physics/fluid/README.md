@@ -356,5 +356,18 @@ $$
 - 若为每个单元独立地选择基函数，并且不要求在单元边界上保证连续性，则称相应的 FEM 为**间断的 (discontinuous)**。
 - 计算流体力学中较为常用的是**间断的 Galerkin 型有限单元法 (DG-FEM)**。
 
-为避免频繁对 $\Mat{A}$ 求逆（解线性方程组），可对所选的基函数作**正交化 (orthogonalization)**，使 $\Mat{A}$ 为对角阵。
+为避免频繁对 $\Mat{A}$​ 求逆（解线性方程组），可对所选的基函数作**正交化 (orthogonalization)**，使 $\Mat{A}$​ 为对角阵。
 
+以上讨论可推广到方程组：
+$$
+\partial_{t}\underline{U}+\divg\underline{\Vec{F}}\equiv\partial_{t}\underline{U}+\partial_{1}\underline{F_{1}}+\partial_{2}\underline{F_{2}}+\partial_{3}\underline{F_{3}}=\underline{0}\\\underline{U}_{1\times N}^{h}(\vec{x},t)=\underbrace{\begin{bmatrix}\phi_{1} & \cdots & \phi_{K}\end{bmatrix}}_{\underline{\varPhi}_{1\times K}(\vec{x})}\underbrace{\begin{bmatrix}\langle\phi_{1}\vert U_{1}\rangle & \cdots & \langle\phi_{1}\vert U_{N}\rangle\\
+\vdots & \ddots & \vdots\\
+\langle\phi_{K}\vert U_{1}\rangle & \cdots & \langle\phi_{K}\vert U_{N}\rangle
+\end{bmatrix}}_{\underline{\hat{U}}_{K\times N}(t)}\\\dv{\underline{\hat{U}}_{K\times N}}{t}=\underline{A}_{K\times K}^{-1}\underline{B}_{K\times N}\eqqcolon\underline{R}_{K\times N}\\\underline{B}_{K\times N}\coloneqq\begin{bmatrix}\int_{E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\partial_{i}\phi_{1}\\
+\vdots\\
+\int_{E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\partial_{i}\phi_{K}
+\end{bmatrix}_{K\times N}-\begin{bmatrix}\oint_{\partial E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\nu_{i}\phi_{1}\\
+\vdots\\
+\oint_{\partial E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\nu_{i}\phi_{K}
+\end{bmatrix}_{K\times N}
+$$
