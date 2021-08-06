@@ -331,22 +331,19 @@ $$
 
 $$
 \begin{gathered}
-\mathopen{\Mat{\hat{U}}}(t)\coloneqq\begin{bmatrix}\hat{U}_{1}(t)\\ \vdots\\ \hat{U}_{K}(t) \end{bmatrix}
+\mathopen{\Mat{\hat{U}}}(t)\coloneqq\begin{bmatrix}\hat{U}_{1}(t)& \cdots& \hat{U}_{K}(t) \end{bmatrix}
 \qquad
-\Mat{A}_{\varOmega}\coloneqq\begin{bmatrix}\ip{\psi_{1}}{\phi_{1}}_{\varOmega} & \cdots & \ip{\psi_{1}}{\phi_{K}}_{\varOmega}\\
+\Mat{A}_{\varOmega}\coloneqq\begin{bmatrix}\ip{\phi_{1}}{\psi_{1}} & \cdots & \ip{\phi_{1}}{\psi_{L}}\\
 \vdots & \ddots & \vdots\\
-\ip{\psi_{L}}{\phi_{1}}_{\varOmega} & \cdots & \ip{\psi_{L}}{\phi_{K}}_{\varOmega}
+\ip{\phi_{K}}{\phi_{1}} & \cdots & \ip{\phi_{K}}{\psi_{L}}
 \end{bmatrix}
 \\
-\mathopen{\Mat{B}_{\varOmega}}\big(\mathopen{\Mat{\hat{U}}}(t)\big)\coloneqq\langle\mathopen{\grad}\Mat{\psi}\vert\Vec{F}\rangle_{\varOmega}\coloneqq\int_{\varOmega}\begin{bmatrix}\grad\psi_{1}(\Vec{r})\\
-\vdots\\
-\grad\psi_{L}(\Vec{r})
-\end{bmatrix}\vdot\mathopen{\Vec{F}}\left(U^{h}(\Vec{r},t)\right)
+\mathopen{\Mat{B}_{\varOmega}}\big(\mathopen{\Mat{\hat{U}}}(t)\big)\coloneqq\langle\Vec{F}\vert\mathopen{\grad}\Mat{\psi}\rangle_{\varOmega}\coloneqq\int_{\varOmega}\Vec{F}\vdot\begin{bmatrix}\grad\psi_{1} & \cdots & \grad\psi_{L}\end{bmatrix}
 \\
-\mathopen{\Mat{B}_{\partial\varOmega}}\big(\mathopen{\Mat{\hat{U}}}(t)\big)\coloneqq\langle\Mat{\psi}\vert F_{\nu}\rangle_{\partial\varOmega}\coloneqq\oint_{\partial\varOmega}\begin{bmatrix}\psi_{1}(\Vec{r})\\
-\vdots\\
-\psi_{L}(\Vec{r})
-\end{bmatrix}\mathopen{F_{\nu}}\left(U_{-}^{h}(\Vec{r},t),U_{+}^{h}(\Vec{r},t)\right)
+\mathopen{\Mat{B}_{\partial\varOmega}}\big(\mathopen{\Mat{\hat{U}}}(t)\big)\coloneqq\langle F_{\nu}\vert\Mat{\psi} \rangle_{\partial\varOmega}\coloneqq\oint_{\partial\varOmega}F_{\nu}\begin{bmatrix}\psi_{1}&
+\cdots&
+\psi_{L}
+\end{bmatrix}
 \end{gathered}
 $$
 
@@ -356,18 +353,24 @@ $$
 - 若为每个单元独立地选择基函数，并且不要求在单元边界上保证连续性，则称相应的 FEM 为**间断的 (discontinuous)**。
 - 计算流体力学中较为常用的是**间断的 Galerkin 型有限单元法 (DG-FEM)**。
 
-为避免频繁对 $\Mat{A}$​ 求逆（解线性方程组），可对所选的基函数作**正交化 (orthogonalization)**，使 $\Mat{A}$​ 为对角阵。
+为避免频繁对 $\Mat{A}$ 求逆（解线性方程组），可对所选的基函数作**正交化 (orthogonalization)**，使 $\Mat{A}$ 为对角阵。
 
 以上讨论可推广到方程组：
+
 $$
-\partial_{t}\underline{U}+\divg\underline{\Vec{F}}\equiv\partial_{t}\underline{U}+\partial_{1}\underline{F_{1}}+\partial_{2}\underline{F_{2}}+\partial_{3}\underline{F_{3}}=\underline{0}\\\underline{U}_{1\times N}^{h}(\vec{x},t)=\underbrace{\begin{bmatrix}\phi_{1} & \cdots & \phi_{K}\end{bmatrix}}_{\underline{\varPhi}_{1\times K}(\vec{x})}\underbrace{\begin{bmatrix}\langle\phi_{1}\vert U_{1}\rangle & \cdots & \langle\phi_{1}\vert U_{N}\rangle\\
+\partial_{t}\underline{U}+\partial_{1}\underline{F_{1}}+\partial_{2}\underline{F_{2}}+\partial_{3}\underline{F_{3}}=\underline{0}\implies\dv{}{t}\underline{\hat{U}}_{K\times N}=\underline{B}_{K\times N}\underline{A}_{N\times N}^{-1}
+$$
+
+其中
+
+$$
+\begin{gathered}\underline{U}_{K\times1}^{h}(\vec{x},t)=\underbrace{\begin{bmatrix}\langle U_{1}\vert\phi_{1}\rangle & \cdots & \langle U_{1}\vert\phi_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle\phi_{K}\vert U_{1}\rangle & \cdots & \langle\phi_{K}\vert U_{N}\rangle
-\end{bmatrix}}_{\underline{\hat{U}}_{K\times N}(t)}\\\dv{\underline{\hat{U}}_{K\times N}}{t}=\underline{A}_{K\times K}^{-1}\underline{B}_{K\times N}\eqqcolon\underline{R}_{K\times N}\\\underline{B}_{K\times N}\coloneqq\begin{bmatrix}\int_{E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\partial_{i}\phi_{1}\\
+\langle U_{K}\vert\phi_{1}\rangle & \cdots & \langle U_{K}\vert\phi_{N}\rangle
+\end{bmatrix}}_{\underline{\hat{U}}_{K\times N}(t)}\underbrace{\begin{bmatrix}\phi_{1}(\vec{x})\\
 \vdots\\
-\int_{E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\partial_{i}\phi_{K}
-\end{bmatrix}_{K\times N}-\begin{bmatrix}\oint_{\partial E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\nu_{i}\phi_{1}\\
-\vdots\\
-\oint_{\partial E_{i}}\sum_{i=1}^{3}\underline{F_{i}}\nu_{i}\phi_{K}
-\end{bmatrix}_{K\times N}
+\phi_{N}(\vec{x})
+\end{bmatrix}}_{\underline{\phi}_{N\times1}(\vec{x})}\\
+\underline{B}_{K\times N}\coloneqq\sum_{i=1}^{3}\int_{E_{i}}\underline{F_{i}}_{K\times1}\left(\partial_{i}\underline{\phi}^{\dagger}\right)_{1\times N}-\oint_{\partial E_{i}}\underline{F_{\nu}}_{K\times1}\left(\underline{\phi}^{\dagger}\right)_{1\times N}
+\end{gathered}
 $$

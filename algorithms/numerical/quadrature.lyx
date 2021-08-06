@@ -2104,35 +2104,47 @@ S_{kl}=\frac{S_{kl}^{\mathrm{o.}}}{\Vert\phi_{k}^{\mathrm{o.}}\Vert}=\frac{S_{kl
 
 \begin_layout Standard
 矩阵函数 
-\begin_inset Formula $\vec{x}\mapsto\begin{bmatrix}U_{1}(\vec{x}) & \cdots & U_{N}(\vec{x})\end{bmatrix}$
+\begin_inset Formula $\vec{x}\mapsto\begin{bmatrix}U_{1}(\vec{x}) & \cdots & U_{K}(\vec{x})\end{bmatrix}^{\dagger}$
 \end_inset
 
  可以用其在正交归一基底 
-\begin_inset Formula $\begin{bmatrix}e_{1}(\vec{x}) & \cdots & e_{K}(\vec{x})\end{bmatrix}$
+\begin_inset Formula $\begin{bmatrix}e_{1}(\vec{x}) & \cdots & e_{N}(\vec{x})\end{bmatrix}^{\dagger}$
 \end_inset
 
  上的系数矩阵来表示：
 \begin_inset Formula 
 \[
-\underbrace{\begin{bmatrix}U_{1}(\vec{x}) & \cdots & U_{N}(\vec{x})\end{bmatrix}}_{\underline{U}(\vec{x})}=\underbrace{\begin{bmatrix}e_{1}(\vec{x}) & \cdots & e_{K}(\vec{x})\end{bmatrix}}_{\underline{E}(\vec{x})}\underbrace{\begin{bmatrix}\langle e_{1}\vert U_{1}\rangle & \cdots & \langle e_{1}\vert U_{N}\rangle\\
+\underbrace{\begin{bmatrix}U_{1}(\vec{x})\\
+\vdots\\
+U_{K}(\vec{x})
+\end{bmatrix}}_{\underline{U}(\vec{x})}=\underbrace{\begin{bmatrix}\langle U_{1}\vert e_{1}\rangle & \cdots & \langle U_{1}\vert e_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e_{K}\vert U_{1}\rangle & \cdots & \langle e_{K}\vert U_{N}\rangle
-\end{bmatrix}}_{\langle\underline{E}\vert\underline{U}\rangle}
+\langle U_{K}\vert e_{1}\rangle & \cdots & \langle U_{K}\vert e_{N}\rangle
+\end{bmatrix}}_{\langle\underline{U}\vert\underline{E}\rangle}\underbrace{\begin{bmatrix}e_{1}(\vec{x})\\
+\vdots\\
+e_{N}(\vec{x})
+\end{bmatrix}}_{\underline{E}(\vec{x})}
 \]
 
 \end_inset
 
 若取另一组正交归一基底 
-\begin_inset Formula $\begin{bmatrix}e'_{1}(\vec{x}) & \cdots & e'_{K}(\vec{x})\end{bmatrix}$
+\begin_inset Formula $\begin{bmatrix}e'_{1}(\vec{x}) & \cdots & e'_{N}(\vec{x})\end{bmatrix}^{\dagger}$
 \end_inset
 
 ，它与原始基底之间的关系为
 \begin_inset Formula 
 \[
-\underbrace{\begin{bmatrix}e_{1}(\vec{x}) & \cdots & e_{K}(\vec{x})\end{bmatrix}}_{\underline{E}(\vec{x})}=\underbrace{\begin{bmatrix}e'_{1}(\vec{x}) & \cdots & e'_{K}(\vec{x})\end{bmatrix}}_{\underline{E}'(\vec{x})}\underbrace{\begin{bmatrix}\langle e'_{1}\vert e_{1}\rangle & \cdots & \langle e'_{1}\vert e_{K}\rangle\\
+\underbrace{\begin{bmatrix}e_{1}(\vec{x})\\
+\vdots\\
+e_{N}(\vec{x})
+\end{bmatrix}}_{\underline{E}(\vec{x})}=\underbrace{\begin{bmatrix}\langle e{}_{1}\vert e'_{1}\rangle & \cdots & \langle e{}_{1}\vert e'_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e'_{K}\vert e_{1}\rangle & \cdots & \langle e'_{K}\vert e_{K}\rangle
-\end{bmatrix}}_{\langle\underline{E}'\vert\underline{E}\rangle}
+\langle e{}_{N}\vert e'_{1}\rangle & \cdots & \langle e{}_{N}\vert e'_{N}\rangle
+\end{bmatrix}}_{\langle\underline{E}'\vert\underline{E}\rangle}\underbrace{\begin{bmatrix}e'_{1}(\vec{x})\\
+\vdots\\
+e'_{N}(\vec{x})
+\end{bmatrix}}_{\underline{E}'(\vec{x})}
 \]
 
 \end_inset
@@ -2140,13 +2152,19 @@ S_{kl}=\frac{S_{kl}^{\mathrm{o.}}}{\Vert\phi_{k}^{\mathrm{o.}}\Vert}=\frac{S_{kl
 于是有恒等式
 \begin_inset Formula 
 \[
-\underbrace{\begin{bmatrix}U_{1}(\vec{x}) & \cdots & U_{N}(\vec{x})\end{bmatrix}}_{\underline{U}(\vec{x})}=\underbrace{\begin{bmatrix}e'_{1}(\vec{x}) & \cdots & e'_{K}(\vec{x})\end{bmatrix}}_{\underline{E}'(\vec{x})}\underbrace{\begin{bmatrix}\langle e'_{1}\vert e_{1}\rangle & \cdots & \langle e'_{1}\vert e_{K}\rangle\\
+\underbrace{\begin{bmatrix}U_{1}(\vec{x})\\
+\vdots\\
+U_{K}(\vec{x})
+\end{bmatrix}}_{\underline{U}(\vec{x})}=\underbrace{\begin{bmatrix}\langle U_{1}\vert e_{1}\rangle & \cdots & \langle U_{1}\vert e_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e'_{K}\vert e_{1}\rangle & \cdots & \langle e'_{K}\vert e_{K}\rangle
-\end{bmatrix}\begin{bmatrix}\langle e_{1}\vert U_{1}\rangle & \cdots & \langle e_{1}\vert U_{N}\rangle\\
+\langle U_{K}\vert e_{1}\rangle & \cdots & \langle U_{K}\vert e_{N}\rangle
+\end{bmatrix}\begin{bmatrix}\langle e{}_{1}\vert e'_{1}\rangle & \cdots & \langle e{}_{1}\vert e'_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e_{K}\vert U_{1}\rangle & \cdots & \langle e_{K}\vert U_{N}\rangle
-\end{bmatrix}}_{\langle\underline{E}'\vert\underline{U}\rangle}
+\langle e{}_{N}\vert e'_{1}\rangle & \cdots & \langle e{}_{N}\vert e'_{N}\rangle
+\end{bmatrix}}_{\langle\underline{U}\vert\underline{E}'\rangle}\underbrace{\begin{bmatrix}e'_{1}(\vec{x})\\
+\vdots\\
+e'_{N}(\vec{x})
+\end{bmatrix}}_{\underline{E}'(\vec{x})}
 \]
 
 \end_inset
@@ -2158,16 +2176,16 @@ S_{kl}=\frac{S_{kl}^{\mathrm{o.}}}{\Vert\phi_{k}^{\mathrm{o.}}\Vert}=\frac{S_{kl
  在两组正交归一基底上的系数矩阵之间的变换法则：
 \begin_inset Formula 
 \[
-\underbrace{\begin{bmatrix}\langle e'_{1}\vert U_{1}\rangle & \cdots & \langle e'_{1}\vert U_{N}\rangle\\
+\underbrace{\begin{bmatrix}\langle U_{1}\vert e'_{1}\rangle & \cdots & \langle U_{1}\vert e'_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e'_{K}\vert U_{1}\rangle & \cdots & \langle e'_{K}\vert U_{N}\rangle
-\end{bmatrix}}_{\langle\underline{E}'\vert\underline{U}\rangle}=\underbrace{\begin{bmatrix}\langle e'_{1}\vert e_{1}\rangle & \cdots & \langle e'_{1}\vert e_{K}\rangle\\
+\langle U_{K}\vert e'_{1}\rangle & \cdots & \langle U_{K}\vert e'_{N}\rangle
+\end{bmatrix}}_{\langle\underline{U}\vert\underline{E}'\rangle}=\underbrace{\begin{bmatrix}\langle U_{1}\vert e_{1}\rangle & \cdots & \langle U_{1}\vert e_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e'_{K}\vert e_{1}\rangle & \cdots & \langle e'_{K}\vert e_{K}\rangle
-\end{bmatrix}}_{\langle\underline{E}'\vert\underline{E}\rangle}\underbrace{\begin{bmatrix}\langle e_{1}\vert U_{1}\rangle & \cdots & \langle e_{1}\vert U_{N}\rangle\\
+\langle U_{K}\vert e_{1}\rangle & \cdots & \langle U_{K}\vert e_{N}\rangle
+\end{bmatrix}}_{\langle\underline{U}\vert\underline{E}\rangle}\underbrace{\begin{bmatrix}\langle e{}_{1}\vert e'_{1}\rangle & \cdots & \langle e{}_{1}\vert e'_{N}\rangle\\
 \vdots & \ddots & \vdots\\
-\langle e_{K}\vert U_{1}\rangle & \cdots & \langle e_{K}\vert U_{N}\rangle
-\end{bmatrix}}_{\langle\underline{E}\vert\underline{U}\rangle}
+\langle e{}_{N}\vert e'_{1}\rangle & \cdots & \langle e{}_{N}\vert e'_{N}\rangle
+\end{bmatrix}}_{\langle\underline{E}\vert\underline{E}'\rangle}
 \]
 
 \end_inset
