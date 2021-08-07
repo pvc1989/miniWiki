@@ -403,6 +403,23 @@ idx_t FindCommonElements(
 
 ### [Slurm](https://slurm.schedmd.com/)
 
+# 通信接口
+
+## 非阻塞通信
+
+```c
+int MPI_Isend(const void *buf, int count, MPI_Datatype datatype,
+    int dst, int tag, MPI_Comm comm, MPI_Request *request);
+int MPI_Irecv(      void *buf, int count, MPI_Datatype datatype,
+    int src, int tag, MPI_Comm comm, MPI_Request *request);
+int MPI_Wait(MPI_Request *request, MPI_Status *status);  /* 等到 request 完成时返回 */
+int MPI_Waitall(int count, MPI_Request array_of_requests[],
+    MPI_Status *array_of_statuses);  /* 等到 array_of_requests 中的所有收发全部完成时返回 */
+int MPI_Waitany(int count, MPI_Request array_of_requests[],
+    int *index, MPI_Status *status);  /* 等到 array_of_requests 中的任一收发完成时返回 */
+int MPI_Test(MPI_Request *request, int *flag/* 若 request 已完成，则设为 true */, MPI_Status *status);
+```
+
 # 稀疏矩阵
 
 ## 存储格式
@@ -419,7 +436,7 @@ idx_t FindCommonElements(
 
 ### 功能模块
 
-![](https://docs.petsc.org/en/latest/_images/library_structure.svg)
+![](https://petsc.org/release/_images/library_structure.svg)
 
 ### `IS`: Index Sets
 ### `Vec`: Vectors
