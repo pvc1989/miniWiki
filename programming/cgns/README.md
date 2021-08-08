@@ -29,7 +29,7 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 ## 文件读写
 
-符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [CGNSview](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/) 等工具安全地读写，其操作类似于在操作系统中访问*文件树*。
+符合 SIDS 规范的 CGNS 文件（数据库）是按 ADF 或 HDF5 编码的，因此无法用普通的文本编辑器读写，但可以用 [CGNSview](https://cgns.github.io/CGNS_docs_current/cgnstools/cgnsview/)、[HDFView](https://www.hdfgroup.org/downloads/hdfview/) 等工具安全地读写，其操作类似于在操作系统中访问*文件树*。
 
 如果要构建上述工具，则需安装以下依赖库，并在 CMake 中将 `CGNS_BUILD_CGNSTOOLS` 设为 `ON`：
 
@@ -407,6 +407,7 @@ ier = cgp_elements_read_data(// Read element data in parallel:
 - 一个 `Zone_t` 对象下可以有多个 `Elements_t` 对象：
   - 同一个 `Elements_t` 对象下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有*连续*且*互异*的编号。
+  - ⚠️ 若要用 [ParaView](../vtk/README.md#ParaView) 打开，则只应保留最高维的单元片段。
 - `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
 - `n_boundary` 为当前 `Elements_t` 对象的*边界单元数*：若 `n_boundary > 0`，则单元已被排序，且前  `n_boundary` 个单元为边界单元。
 - `parent_flag` 用于判断 parent data 是否存在。
@@ -569,6 +570,16 @@ ier = cgp_field_read(
 ier = cgp_field_read_data(// Read field data in parallel:
     int file_id, int base_id, int zone_id, int sol_id, int field_id,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
+    /* input ↑, output ↓ */
+    void *sol_array
+);
+ier = cgp_field_general_read_data(
+    int file_id, int base_id, int zone_id, int sol_id, int field_id,
+    cgsize_t *range_min, cgsize_t *range_max,  // range in file
+    DataType_t mem_datatype/* data type of the array in memory */,
+    int mem_rank/* number of dimensions of array in memory */,
+    cgsize_t *mem_dimensions/* dimensions of array in memory */,
+    cgsize_t *mem_range_min, cgsize_t *mem_range_max,  // range in memory
     /* input ↑, output ↓ */
     void *sol_array
 );
