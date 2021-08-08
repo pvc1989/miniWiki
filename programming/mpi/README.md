@@ -405,19 +405,105 @@ idx_t FindCommonElements(
 
 # 通信接口
 
-## 非阻塞通信
+## 点对点通信
+
+### 非阻塞通信
 
 ```c
 int MPI_Isend(const void *buf, int count, MPI_Datatype datatype,
-    int dst, int tag, MPI_Comm comm, MPI_Request *request);
+    int target, int tag, MPI_Comm comm, MPI_Request *request);
 int MPI_Irecv(      void *buf, int count, MPI_Datatype datatype,
-    int src, int tag, MPI_Comm comm, MPI_Request *request);
+    int source, int tag, MPI_Comm comm, MPI_Request *request);
 int MPI_Wait(MPI_Request *request, MPI_Status *status);  /* 等到 request 完成时返回 */
 int MPI_Waitall(int count, MPI_Request array_of_requests[],
     MPI_Status *array_of_statuses);  /* 等到 array_of_requests 中的所有收发全部完成时返回 */
 int MPI_Waitany(int count, MPI_Request array_of_requests[],
     int *index, MPI_Status *status);  /* 等到 array_of_requests 中的任一收发完成时返回 */
 int MPI_Test(MPI_Request *request, int *flag/* 若 request 已完成，则设为 true */, MPI_Status *status);
+```
+
+## 聚合通信
+
+### Barrier
+
+```c
+int MPI_Barrier(MPI_Comm comm);  /* 等到 comm 中的所有进程都运行到此 */
+int MPI_Ibarrier(MPI_Comm comm, MPI_Request *request);
+```
+
+### Broadcast
+
+```c
+int MPI_Bcast(void *buffer, int count, MPI_Datatype datatype,
+    int root, MPI_Comm comm);
+int MPI_Ibcast(void *buffer, int count, MPI_Datatype datatype,
+    int root, MPI_Comm comm, MPI_Request *request);
+```
+
+### Gather
+
+```c
+int MPI_Gather(const void *sendbuf, int sendcount, MPI_Datatype sendtype,
+    void *recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+    MPI_Comm comm);
+int MPI_Igather(const void *sendbuf, int sendcount, MPI_Datatype sendtype,
+    void *recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+    MPI_Comm comm, MPI_Request *request);
+```
+
+### Scatter
+
+```c
+int MPI_Scatter(const void *sendbuf, int sendcount, MPI_Datatype sendtype,
+    void *recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+    MPI_Comm comm)
+int MPI_Iscatter(const void *sendbuf, int sendcount, MPI_Datatype sendtype,
+    void *recvbuf, int recvcount, MPI_Datatype recvtype, int root,
+    MPI_Comm comm, MPI_Request *request)
+```
+
+### Reduce
+
+```c
+int MPI_Reduce(const void *sendbuf, void *recvbuf, int count,
+               MPI_Datatype datatype, MPI_Op op, int root,
+               MPI_Comm comm)
+int MPI_Ireduce(const void *sendbuf, void *recvbuf, int count,
+                MPI_Datatype datatype, MPI_Op op, int root,
+                MPI_Comm comm, MPI_Request *request)
+```
+
+其中 `op` 可以是预定义或自定义的运算：
+
+```c
+/* 预定义的运算 */
+MPI_MAX
+MPI_MIN
+MPI_SUM
+MPI_PROD
+MPI_LAND
+MPI_LOR
+MPI_LXOR
+MPI_BAND
+MPI_BOR
+MPI_BXOR
+MPI_MAXLOC
+MPI_MINLOC
+/* 自定义的运算 */
+typedef void MPI_User_function(
+    void *invec, void *inoutvec, int *len, MPI_Datatype *datatype);
+int MPI_Op_create(MPI_User_function *function, int commute/* 是否可交换 */,
+    MPI_Op *op)
+int MPI_Op_free(MPI_Op *op);
+/* e.g. */
+void user_fn(invec, inoutvec, len, datatype) {
+  for (int i = 0; i < len; ++i)
+    inoutvec[i] = invec[i] op inoutvec[i];
+}
+MPI_Op op;
+MPI_Op_create(user_fn, commutes, &op);
+/* use op */
+MPI_Op_free(&op);
 ```
 
 # 稀疏矩阵
