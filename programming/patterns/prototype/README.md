@@ -18,6 +18,6 @@ Specify the kinds of objects to create using a prototypical instance, and create
 - **抽象原型** (`Prototype`)
   - 声明一个用于复制对象的接口 (`Clone()`)。
 - **具体原型** (`ConcretePrototype`)
-  - 实现 **抽象原型** 中的复制接口。
+  - 实现*抽象原型*中的复制接口。
 - **用户** (`Client`)
   - 通过调用原型对象的复制接口 (`Clone()`) 来创建新的对象。

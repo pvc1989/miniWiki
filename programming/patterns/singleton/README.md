@@ -16,5 +16,5 @@ Ensure a class only has one instance, and provide a global point of access to it
 - **单例** (`NonDerivableSingleton`, `BaseSingleton`, `DerivedSingleton`)
   - 将该类型的唯一实例定义为静态成员 (`instance`)。
   - 声明一个用于访问该实例的静态方法 (`GetInstance()`)。
-  - 将构造函数声明为 *不可访问的*。
+  - 将构造函数声明为*不可访问的*。
   - 可能需要负责创建该类型的唯一实例。
