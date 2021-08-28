@@ -40,7 +40,7 @@ title: 创建类型
 
 ## `friend`<a href id="friend"></a>
 定义一个类时，可以用 `friend` 将其他（可见的）类或函数声明为它的**友元**，从而允许这些友元访问其私有成员。
-*友元声明* 不是*函数声明*。
+*友元声明*不是*函数声明*。
 通常，将友元声明集中放在类定义的头部或尾部。
 
 ⚠️ 友元机制破坏了类的封装，因此要少用。
@@ -82,7 +82,7 @@ SalesData::isbn(&total)
 
 ## `inline` 成员函数<a href id="inline"></a>
 成员函数可以是**内联的 (inline)**：
-- 定义在类的*内部*的成员函数是 *隐式* 内联的。
+- 定义在类的*内部*的成员函数是*隐式*内联的。
 - 定义在类的*外部*的成员函数也可以是内联的，只需要在（位于同一头文件中的）函数*定义*前加上 `inline` 关键词。
 
 ## 其他接口函数
@@ -146,7 +146,7 @@ class Point {
 ```cpp
 class Screen {
  public:
-  Screen& clear(char = kBackground);
+  Screen& clear(char c = kBackground);
  private:
   static const char kBackground;
 };
@@ -160,7 +160,7 @@ class Screen {
 ## 默认构造函数
 **默认构造函数 (default constructor)** 是指*形参列表为空*或*所有形参都有默认实参值*的特殊构造函数。
 
-如果没有*显式*定义任何构造函数，那么编译器会*隐式地*定义一个**合成的 (synthesized)** 默认构造函数。
+如果没有*显式地*定义任何构造函数，那么编译器会*隐式地*定义一个**合成的 (synthesized)** 默认构造函数。
 
 自 C++11 起，允许（并且推荐）在形参列表后紧跟 `= default;` 以*显式地*生成该构造函数。
 
