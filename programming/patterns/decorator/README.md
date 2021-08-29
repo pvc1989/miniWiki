@@ -19,8 +19,8 @@ Decorators provide a flexible alternative to subclassing for extending functiona
 - **部件** (`Component`)
   - 声明可动态添加职责的对象的接口 (`Request()`)。
 - **具体部件** (`ConcreteComponent`)
-  - 实现 **部件** 的接口。
+  - 实现*部件*的接口。
 - **修饰器** (`Decorator`)
-  - 维护一个指向 **部件** 实例的引用或指针，并提供与 **部件** 相同的接口 (`Request()`)。
+  - 维护一个指向*部件*实例的引用或指针，并提供与*部件*相同的接口 (`Request()`)。
 - **具体修饰器** (`StateDecorator`, `BehaviorDecorator`)
-  - 为 **部件** 实例添加职责，既可以添加状态 (`addedState`)，又可以添加行为 (`AddedOperation`)。
+  - 为*部件*实例添加职责，既可以添加状态 (`addedState`)，又可以添加行为 (`AddedOperation`)。

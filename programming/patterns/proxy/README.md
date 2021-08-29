@@ -23,3 +23,4 @@ Provide a surrogate or placeholder for another object to control access to it.
   - 定义 `Proxy` 和 `RealSubject` 的公共接口，以便用 `Proxy` 实例替换 `RealSubject` 实例。
 - **真实主体** (`RealSubject`)
   - 定义 `Proxy` 所表示的真实对象。
+
