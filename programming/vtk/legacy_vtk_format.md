@@ -2,7 +2,7 @@
 title: 传统 VTK 格式
 ---
 
-这是一种只支持“串行读写 (serial IO)”的简单格式。
+这是一种只支持**串行读写 (serial IO)** 的简单格式。
 相应的文件以 `.vtk` 为默认扩展名，分为五个基本段落，其中后两段可选：
 
 - [Version and Identifier](#Version)
@@ -13,25 +13,25 @@ title: 传统 VTK 格式
 
 一些约定：
 - `data_type` 表示数据类型，常用的有 `int`, `long`, `float`, `double` 等。
-- 关键词不区分大小写，习惯上全部大写。
+- *关键词*不区分大小写，习惯上全部大写。
 - 数组下标从 `0` 开始。
 - [DataSet Structure](#Structure) 必须出现在 [DataSet Attributes](#Attributes) 之前，并且二者拥有相同的结点个数及单元个数。
 
 # Version and Identifier<a name="Version"></a>
-本段只占一行，其中 `x.y` 为 *文件格式* 的版本号，而不是 *VTK 程序库* 的版本号： 
+本段只占一行，其中 `2.0` 为 VTK *文件格式*的版本号，而不是 VTK *程序库*的版本号： 
 ```vtk
-# vtk DataFile Version x.y
+# vtk DataFile Version 2.0
 ```
 
 # Header
 本段为概述文件内容的字符串（给人看的辅助信息，不影响数据读写），以 `\n` 结尾，最多可含 `256` 个字符。
 
 # File Format<a name="FileFormat"></a>
-本段表示 *数据* 的存储方式，可以是 `ASCII` 或 `BINARY` 之一。
-无论 *数据* 以 `ASCII` 还是 `BINARY` 形式存储，*关键词* 总是以文本形式存储。
+本段表示*数据*的存储方式，可以是 `ASCII` 或 `BINARY` 之一。
+无论*数据*以 `ASCII` 还是 `BINARY` 形式存储，*关键词*总是以文本形式存储。
 
 # DataSet Structure<a name="Structure"></a>
-描述结点的“坐标 (coordinates)”及“连接关系 (connection)”。
+描述结点的**坐标 (coordinates)** 及**连接关系 (connection)** 。
 以 `DATASET type` 为第一行，后接具体数据，其中 `type` 可以是以下几种之一：
 
 | `type`              | `vtkDataSet` 的派生类  | 含义       |
@@ -43,10 +43,10 @@ title: 传统 VTK 格式
 | `POLYDATA`          | `vtkPolyData`         | 多边形数据 |
 | `FIELD`             | `vtkField`            | 场        |
 
-对于隐含结点连接关系的类型（如 `STRUCTURED_POINTS`, `RECTILINEAR_GRID` 等），约定 `X` 方向的 *结点编号* 增长得最快、`Y` 方向次之、`Z` 方向最慢。
+对于隐含结点连接关系的类型（如 `STRUCTURED_POINTS`, `RECTILINEAR_GRID` 等），约定 `X` 方向的*结点编号*增长得最快、`Y` 方向次之、`Z` 方向最慢。
 
 ## `STRUCTURED_POINTS`
-该类型对数据“规律性 (regularity)”的要求最高，定义一个对象所需的信息最少，只有 *原点坐标* 和每个方向的 *结点总数* 与 *结点间距* 需要显式给出：
+该类型对数据**规整度 (regularity)** 的要求最高，定义一个对象所需的信息最少，只有*原点坐标*和每个方向的*结点总数*与*结点间距*需要显式给出：
 ```vtk
 DATASET STRUCTURED_POINTS
 DIMENSIONS n_x n_y n_z
@@ -55,7 +55,7 @@ SPACING s_x s_y s_z
 ```
 
 ## `RECTILINEAR_GRID`
-该类型放松了 `STRUCTURED_POINTS` 对 *结点等距* 的要求，允许每个方向的结点间距 *独立变化*，因此需要显式给出三个独立递增的 *坐标序列* ：
+该类型放松了 `STRUCTURED_POINTS` 对*结点等距*的要求，允许每个方向的结点间距*独立变化*，因此需要显式给出三个独立递增的*坐标序列*：
 ```vtk
 DATASET RECTILINEAR_GRID
 DIMENSIONS n_x n_y n_z
@@ -68,7 +68,7 @@ z[0] z[1] ... z[n_z - 1]
 ```
 
 ## `STRUCTURED_GRID`<a name="STRUCTURED_GRID"></a>
-该类型放松了 `RECTILINEAR_GRID` 对 *结点沿直线分布* 的要求，但仍需保持“结构化的 (structured)”连接关系，因此需要显式给出所有 *结点坐标* ：
+该类型放松了 `RECTILINEAR_GRID` 对*结点沿直线分布*的要求，但仍需保持**结构化的 (structured)** 连接关系，因此需要显式给出所有*结点坐标*：
 ```vtk
 DATASET STRUCTURED_GRID
 DIMENSIONS n_x n_y n_z
@@ -78,11 +78,11 @@ x[1] y[1] z[1]
 ...
 x[n_points - 1] y[n_points - 1] z[n_points - 1]
 ```
-其中，等式 `n_points` 必须满足 `n_points == n_x * n_y * n_z`。
-⚠️ VTK 中的一个 *结构网格* 相当于 ICEM 所生成的结构网格中的一个“区块 (block)”。
+其中 `n_points` 必须满足 `n_points == n_x * n_y * n_z`。
+⚠️ VTK 中的一个*结构网格*相当于 ICEM 所生成的结构网格中的一个**区块 (block)** 。
 
 ## `UNSTRUCTURED_GRID`<a name="UNSTRUCTURED_GRID"></a>
-该类型放松了 `STRUCTURED_GRID` 对 *结点连接关系* 的要求，允许结点以“非结构化的 (unstructured)”方式连接，因此除了需要显式给出 *结点位置* ：
+该类型放松了 `STRUCTURED_GRID` 对*结点连接关系*的要求，允许结点以**非结构化的 (unstructured)** 方式连接，因此除了需要显式给出*结点坐标*：
 ```vtk
 DATASET UNSTRUCTURED_GRID
 POINTS n_points data_type
@@ -91,7 +91,7 @@ x[1] y[1] z[1]
 ...
 x[n_points - 1] y[n_points - 1] z[n_points - 1]
 ```
-还需要显式给出各单元的 *结点列表* 及 *单元类型*：
+还需要显式给出各单元的*结点列表*及*单元类型*：
 ```vtk
 CELLS n_cells n_ints
 n_points[0], i, j, k, ... 
@@ -115,7 +115,7 @@ type[n_cells - 1]
 
 ## `POLYDATA`
 该类型表示最一般的数据集，由初等几何对象 `POINTS`, `VERTICES`, `LINES`,  `POLYGONS`, `TRIANGLE_STRIPS` 拼凑而成。
-- *结点位置* 由 `POINTS` 字段给出，格式与 [`STRUCTURED_GRID`](#STRUCTURED_GRID) 的 `POINTS` 字段一致：
+- *结点坐标*由 `POINTS` 字段给出，格式与 [`STRUCTURED_GRID`](#STRUCTURED_GRID) 的 `POINTS` 字段一致：
 ```vtk
 DATASET POLYDATA
 POINTS n_points data_type
@@ -124,13 +124,13 @@ x[1] y[1] z[1]
 ...
 x[n_points - 1] y[n_points - 1] z[n_points - 1]
 ```
-- *连接关系* 由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 等字段给出，格式与 [`UNSTRUCTURED_GRID`](#UNSTRUCTURED_GRID) 的 `CELLS` 字段类似：
+- *连接关系*由 `VERTICES`, `LINES`, `POLYGONS`, `TRIANGLE_STRIPS` 等字段给出，格式与 [`UNSTRUCTURED_GRID`](#UNSTRUCTURED_GRID) 的 `CELLS` 字段类似：
 ```vtk
 LINES n_lines size
-n_points[0], i[0], j[0], k[0], ...
-n_points[1], i[1], j[1], k[1], ...
+n_points[0] i[0] j[0] k[0], ...
+n_points[1] i[1] j[1] k[1], ...
 ...
-n_points[n_lines - 1], i[n_lines - 1], j[n_lines - 1], k[n_lines - 1], ...
+n_points[n_lines - 1] i[n_lines - 1] j[n_lines - 1] k[n_lines - 1] ...
 ```
 
 ## `FIELD`
@@ -199,7 +199,7 @@ u[n - 1] v[n - 1] w[n - 1]
 ```
 
 ## `NORMALS`
-通常用来表示面单元的 *法线方向*，格式与 `VECTORS` 类似，但要求各向量都是 *单位向量*。
+通常用来表示面单元的*法线方向*，格式与 `VECTORS` 类似，但要求各向量都是*单位向量*。
 
 ## `TEXTURE_COORDINATES`
 
