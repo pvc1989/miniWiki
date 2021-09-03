@@ -436,7 +436,7 @@ void *thread(void *vargp) {
 }
 ```
 
-# 5. 用旗语同步线程
+# 5. 用信号量同步线程
 
 一般而言，无法预知各线程被操作系统选中的执行顺序。
 
@@ -459,9 +459,9 @@ void *thread(void *vargp) {
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/safetraj.pdf)
 
-## 5.2. 旗语<a href id="semaphore"></a>
+## 5.2. 信号量<a href id="semaphore"></a>
 
-【**旗语 (semaphore)**】用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
+【**信号量 (semaphore)**】用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
 
 - 【`P(s)​`】🇳🇱proberen🇨🇳检测
   - 若 `s != 0`，则 `return --s`，此过程不可被中断。
@@ -485,11 +485,11 @@ void P(sem_t *s); /* Wrapper function for sem_wait */
 void V(sem_t *s); /* Wrapper function for sem_post */
 ```
 
-## 5.3. 用旗语实现互斥
+## 5.3. 用信号量实现互斥
 
-【**二项旗语 (binary semaphore)**】为每个共享变量关联一个初值为 `1` 的旗语 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
+【**二项信号量 (binary semaphore)**】为每个共享变量关联一个初值为 `1` 的信号量 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
 
-- 【**互斥 (mutex)**】用于支持对共享变量**互斥 (MUTually EXclusive)** 访问的二项旗语。
+- 【**互斥 (mutex)**】用于支持对共享变量**互斥 (MUTually EXclusive)** 访问的二项信号量。
 - 【**上锁 (lock)**】在关键段头部调用 `P(s)` 或 `sem_wait()`
 - 【**开锁 (unlock)**】在关键段尾部调用 `V(s)` 或 `sem_post()`
 - 【**禁止区域 (forbidden region)**】`s < 0` 的区域，略大于[不安全区域](#unsafe)。
@@ -568,9 +568,9 @@ int main() {
 }
 ```
 
-## 5.4. 用旗语调度共享资源
+## 5.4. 用信号量调度共享资源
 
-【**计数旗语 (counting semaphore)**】
+【**计数信号量 (counting semaphore)**】
 
 ### 生产者--消费者
 
@@ -897,7 +897,7 @@ void *sum_array(void *vargp) {
 以下函数不是线程安全的：
 
 1. 没有保护共享变量
-   - 解决：用[旗语](#semaphore)加锁
+   - 解决：用[信号量](#semaphore)加锁
    - 优点：调用侧无需改动
    - 缺点：性能下降
 2. 有依赖于调用历史的状态（全局或静态变量）

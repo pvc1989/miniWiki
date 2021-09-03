@@ -2,33 +2,45 @@
 title: 网络编程
 ---
 
-# 1. 客户端–服务器模型
+# 1. 客户端–服务端模型
 
-**客户端–服务器模型 (client–server model)** 是所有网络应用程序的基础。
+**客户端–服务端模型 (client–server model)** 是所有网络应用程序的基础。
 
-- 【**服务器 (server)**】管理资源、提供服务的进程。
+- 【**服务端 (server)**】管理资源、提供服务的进程。
+  - 【服务器 (server machine)】运行服务端程序的机器。
 - 【**客户端 (client)**】请求资源、使用服务的进程。
+  - 【客户机 (client machine)】运行客户端程序的机器。
 
-**交易 (transaction)** 是客户端与服务器交互的基本操作，含以下四步：
+**交易 (transaction)** 是客户端与服务端交互的基本操作，含以下四步：
 
-1. 客户端向服务器发送**请求 (request)**。
-2. 服务器接收该*请求*，并根据需要使用其管理的资源。
-3. 服务器向客户端发送**响应 (response)**，并等待下一个请求。
+1. 客户端向服务端发送**请求 (request)**。
+2. 服务端接收该*请求*，并根据需要使用其管理的资源。
+3. 服务端向客户端发送**响应 (response)**，并等待下一个请求。
 4. 客户端接收该*响应*，并根据需要处理之。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/cliservsteps.pdf)
 
-# 2. 网络
+## P2P (Peer-to-Peer)
+
+本质上仍属于客户端–服务端模型，只是其中的每一台主机既是客户机又是服务器。
+
+# 2. 计算机网络
 
 对一台主机而言，**网络 (newwork)** 相当于另一种读写设备。
 
-## 局域网
+## PAN
 
-【**局域网 (local area network, LAN)**】目前最流行的局域网技术为**以太网 (Ethernet)**。
+【**个域网 (personal area network, PAN)**】用无线（蓝牙）技术把个人使用的电子设备连接起来的网络。
+
+## LAN
+
+【**局域网 (local area network, LAN)**】覆盖较小（数十到数千米）范围的网络。
+
+目前最流行的局域网技术为**以太网 (Ethernet)**。
 
 ### 以太网段
 
-【**以太网段 (Ethernet segment)**】由多台主机通过以太网线（双绞线）连接到一台集线器所形成的*小型*网络，可覆盖一间或一层房屋。
+【**以太网段 (Ethernet segment)**】由多台主机通过*以太网线*（双绞线）连接到一台*集线器*所形成的*小型*网络，可覆盖一间或一层房屋。
 
 - 【**以太网线 (Ethernet wire)**】一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
 - 【**集线器 (hub)**】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
@@ -44,33 +56,41 @@ title: 网络编程
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/bridge.pdf)
 
-## 广域网
+## MAN
 
-【**广域网 (wide area network, WAN)**】由多个局域网通过电话线、光纤连接所形成的*大型*网络，可覆盖一城、一国，甚至全球。
+【**城域网 (metropolitan area network, MAN)**】覆盖几个街区或整个城市的网络。
+
+## WAN
+
+【**广域网 (wide area network, WAN)**】由多个局域网互连所形成的*大型*网络，可覆盖几十到几千公里。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/internet.pdf)
 
 - 【**路由器 (router)**】在多个局域网及广域网之间转发数据的设备。
+  - 【**报文 (message)**】被传输的数据，被拆分为若干*分组*（又名*包*）逐个进行传输。
+  - 【**分组交换 (packet switching)**】路由器收到一个*包*后，先将其放入缓存，再根据*包头*中的*目标地址*从路由器的*转发表*中找到合适的出口，最后把包转发给下一个路由器。
 - 【**协议 (protocol)**】运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
   - 【**命名格式 (naming scheme)**】定义格式统一的主机地址。
   - 【**发送机制 (delivery mechanism)**】定义数据打包的方式。
 
 ### 专线网
 
-### 互联网
+军队、铁路、银行、电力等系统内部的网络。
 
-【**互联网 (interconnected network, internet)**】由多个局域网、广域网经过路由器连接所形成的*公共*广域网，可覆盖全球。
+### 互连网
 
-- 【**互联网包 (internet packet)**】= 【**包头 (packet header)**】+ 有效载荷（用户数据）
-- 【**局域网帧 (LAN frame)**】=【**帧头 (frame header)**】+ 有效载荷（互联网包）
+【**互连网 (interconnected network, internet)**】由多个局域网、广域网经过路由器连接所形成的*公共*广域网，可覆盖全球。
+
+- 【**互连网包 (internet packet)**】= 【**包头 (packet header)**】+ 有效载荷（用户数据）
+- 【**局域网帧 (LAN frame)**】=【**帧头 (frame header)**】+ 有效载荷（互连网包）
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/intertrans.pdf)
 
 # 3. 因特网
 
-**全局 IP 互联网 (global IP internet)**，简称**因特网 (Internet)**，是所有*互联网*中最著名、最成功的一个。
+**全局 IP 互联网 (global IP internet)**，简称**互联网**或**因特网 (Internet)**，是所有*互连网*中最著名、最成功的一个。
 
-因特网中的每台主机都运行着实现了**TCP/IP 协议** 的软件。
+因特网中的每台主机都运行着遵循 **TCP/IP 协议** 的软件。
 
 - 【**IP (Internet Protocol)**】提供最基本的命名格式，以及主机到主机的**不可靠 (unreliable)** 传输机制。
 - 【**UDP (Unreliable Datagram Protocol)**】基于 IP 的简单扩展，提供进程到进程的*不可靠*传输。
@@ -81,6 +101,12 @@ title: 网络编程
 - 主机之集被映射到 **IP 地址 (IP address)** 之集。
 - IP 地址之集被映射到**因特网域名 (Internet domain name)** 之集。
 - 一台主机上的进程可通过**连接 (connection)** 与另一台主机上的进程**通信 (communicate)**。
+
+常用名词缩写：
+
+- **ISP (Internet Service Provider)**：提供互联网服务的机构（企业），可分为主干 ISP、地区 ISP、本地 ISP
+
+- **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备
 
 ## 3.1. IP 地址
 

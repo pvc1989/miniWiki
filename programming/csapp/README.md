@@ -106,7 +106,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 ### [12. 并发编程](./12_concurrent_programming.md)
 
 - 多进程并发、读写多路复用并发、多线程并发
-- 共享变量、旗语、同步、互斥
+- 共享变量、信号量、同步、互斥
 - 多线程并行、强扩展性、弱扩展性
 - 线程安全、再入函数、竞争、死锁
 
