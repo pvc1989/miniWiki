@@ -2956,7 +2956,7 @@ reference "sec:间断有限元"
 
 \begin_layout Notation*
 为方便叙述，将分片光滑的（标量或向量）函数 
-\begin_inset Formula $\phi$
+\begin_inset Formula $\psi$
 \end_inset
 
  在单元 
@@ -2970,7 +2970,7 @@ reference "sec:间断有限元"
  记为
 \begin_inset Formula 
 \[
-\phi_{i}(\vec{x})\coloneqq\phi(\vec{x})\qquad\vec{x}\in E_{i}
+\psi_{i}(\vec{x})\coloneqq\psi\vert_{E_{i}}(\vec{x})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
@@ -3052,7 +3052,7 @@ status collapsed
 \begin_deeper
 \begin_layout Enumerate
 将 
-\begin_inset Formula $\phi_{k}$
+\begin_inset Formula $\psi_{k}$
 \end_inset
 
  延拓到 
@@ -3060,7 +3060,7 @@ status collapsed
 \end_inset
 
  上，并对函数值作适当平移，使所得的 
-\begin_inset Formula $\phi_{k\to i}$
+\begin_inset Formula $\psi_{k\to i}$
 \end_inset
 
  在 
@@ -3068,7 +3068,7 @@ status collapsed
 \end_inset
 
  上的均值等于 
-\begin_inset Formula $\phi_{i}$
+\begin_inset Formula $\psi_{i}$
 \end_inset
 
  在 
@@ -3078,13 +3078,13 @@ status collapsed
  上的均值：
 \begin_inset Formula 
 \[
-\phi_{k\to i}(\vec{x})\coloneqq\phi_{k}(\vec{x})-\ev{\phi_{k}}_{i}+\ev{\phi_{i}}_{i}\qquad\vec{x}\in E_{i}
+\psi_{k\to i}(\vec{x})\coloneqq\psi_{k}(\vec{x})-\langle\psi_{k}\rangle_{i}+\langle\psi_{i}\rangle_{i}\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\ev{\psi}_{i}$
+\begin_inset Formula $\langle\psi\rangle_{i}$
 \end_inset
 
  表示函数 
@@ -3098,7 +3098,7 @@ status collapsed
  上的均值：
 \begin_inset Formula 
 \[
-\ev{\psi}_{i}\coloneqq\frac{\int_{E_{i}}\psi(\vec{x})}{\abs{E_{i}}\coloneqq\int_{E_{i}}1}
+\langle\psi\rangle_{i}\coloneqq\frac{\int_{E_{i}}\psi(\vec{x})}{\vert E_{i}\vert\coloneqq\int_{E_{i}}1}
 \]
 
 \end_inset
@@ -3108,7 +3108,7 @@ status collapsed
 
 \begin_layout Enumerate
 为 
-\begin_inset Formula $\phi_{k\to i}$
+\begin_inset Formula $\psi_{k\to i}$
 \end_inset
 
  分配理想权重：
@@ -3135,7 +3135,7 @@ w_{k\to i}^{\star}=\begin{cases}
 
 \begin_layout Enumerate
 计算 
-\begin_inset Formula $\phi_{k\to i}$
+\begin_inset Formula $\psi_{k\to i}$
 \end_inset
 
  在 
@@ -3145,7 +3145,7 @@ w_{k\to i}^{\star}=\begin{cases}
  上的光滑程度：
 \begin_inset Formula 
 \[
-\beta_{k\to i}=\sum_{\abs{\alpha}=1}^{p}\frac{\abs{E_{i}}^{\abs{\alpha}-1}}{(\abs{\alpha}!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\abs{\alpha}}\phi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\abs{\alpha}\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\beta_{k\to i}=\sum_{\vert\alpha\vert=1}^{p}\frac{\vert E_{i}\vert^{\vert\alpha\vert-1}}{(\vert\alpha\vert!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\vert\alpha\vert}\psi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}
 \]
 
 \end_inset
@@ -3184,21 +3184,21 @@ w_{k\to i}=\frac{w_{k\to i}^{\beta}}{\sum_{k\in K_{i}}w_{k\to i}^{\beta}}\qquad 
 \end_deeper
 \begin_layout Enumerate
 按上述非线性权重对 
-\begin_inset Formula $\left\{ \phi_{k}:k\in K_{i}\right\} $
+\begin_inset Formula $\left\{ \psi_{k}:k\in K_{i}\right\} $
 \end_inset
 
  作平均，以所得的新函数 
-\begin_inset Formula $\phi_{i}^{\mathrm{new}}$
+\begin_inset Formula $\psi_{i}^{\mathrm{new}}$
 \end_inset
 
  取代旧函数 
-\begin_inset Formula $\phi_{i}$
+\begin_inset Formula $\psi_{i}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-\phi_{i}^{\mathrm{new}}(\vec{x})\coloneqq\sum_{k\in K_{i}}w_{k\to i}\,\phi_{k\to i}(\vec{x})\qquad\vec{x}\in E_{i}
+\psi_{i}^{\mathrm{new}}(\vec{x})\coloneqq\sum_{k\in K_{i}}w_{k\to i}\,\psi_{k\to i}(\vec{x})\qquad\vec{x}\in E_{i}
 \]
 
 \end_inset
@@ -3239,7 +3239,7 @@ name "alg:WENO：基于邻接单元：一维方程组"
  为一维守恒律方程组
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\partial_{x}\vert F\rangle=\vert o\rangle\qquad\underline{A}(\underline{U})\coloneqq\pdv*{\vert F\rangle}{\vert U\rangle}
+\partial_{t}\vert U\rangle+\partial_{x}\vert F\rangle=\vert 0\rangle\qquad\underline{A}(\underline{U})\coloneqq\pdv*{\vert F\rangle}{\vert U\rangle}
 \]
 
 \end_inset
@@ -3472,7 +3472,7 @@ status open
  为高维守恒律方程组
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\divg\vec{\vert F\rangle}=\vert o\rangle
+\partial_{t}\vert U\rangle+\divg\vec{\vert F\rangle}=\vert 0\rangle
 \]
 
 \end_inset
@@ -3508,7 +3508,7 @@ status open
 
 \begin_inset Formula 
 \[
-\partial_{t}\vert U\rangle+\partial_{\nu}\vert F_{\nu}\rangle=\vert o\rangle\qquad\vert F_{\nu}\rangle\coloneqq\vec{\nu}\vdot\vec{\vert F\rangle}
+\partial_{t}\vert U\rangle+\partial_{\nu}\vert F_{\nu}\rangle=\vert 0\rangle\qquad\vert F_{\nu}\rangle\coloneqq\vec{\nu}\vdot\vec{\vert F\rangle}
 \]
 
 \end_inset
