@@ -54,43 +54,51 @@
 
 // @lc code=start
 class Solution {
-  void Erase(char c, bitset<9> *candidates) {
-    if (c != '.') candidates->reset(c - '1');
+  void use(char c, array<bool, 9> *used) {
+    if (c != '.')
+      used->at(c - '1') = true;
   }
-  bool DFS(vector<pair<int, int>> const &rest, int n, vector<vector<char>> *char_board) {
-    if (n >= rest.size()) return true;
-    int row{rest[n].first}, col{rest[n].second};
-    auto candidates = bitset<9>{"111111111"};
+  bool DFS(vector<pair<int, int>> const &fillable, int n_filled,
+      vector<vector<char>> *board) {
+    assert(n_filled <= fillable.size());
+    if (n_filled == fillable.size())
+      return true;  // solved
+    auto [row, col] = fillable[n_filled];
+    auto used = array<bool, 9>();
+    used.fill(false);
+    // erase used digits from candidates:
     for (int i = 0; i < 9; ++i) {
-      Erase((*char_board)[row][i], &candidates);
-      Erase((*char_board)[i][col], &candidates);
+      use((*board)[row][i], &used);
+      use((*board)[i][col], &used);
     }
     for (int i = row/3*3; i < row/3*3+3; ++i) {
       for (int j = col/3*3; j < col/3*3+3; ++j) {
-        Erase((*char_board)[i][j], &candidates);
+        use((*board)[i][j], &used);
       }
     }
+    // try each candidate:
     for (int i = 0; i < 9; ++i) {
-      if (candidates[i]) {
-        (*char_board)[row][col] = i + '1';
-        if (DFS(rest, n+1, char_board))
+      if (used[i] == false) {
+        (*board)[row][col] = i + '1';
+        if (DFS(fillable, n_filled + 1, board))
           return true;
       }
     }
-    (*char_board)[row][col] = '.';
-    return false;
+    // back trace if failed:
+    (*board)[row][col] = '.';
+    return false;  // cannot solve
   }
  public:
-  void solveSudoku(vector<vector<char>>& char_board) {
-    auto rest = vector<pair<int, int>>();
+  void solveSudoku(vector<vector<char>>& board) {
+    auto fillable = vector<pair<int, int>>();
     for (int i = 0; i < 9; ++i) {
       for (int j = 0; j < 9; ++j) {
-        if (char_board[i][j] == '.') {
-          rest.emplace_back(i, j);
+        if (board[i][j] == '.') {
+          fillable.emplace_back(i, j);
         }
       }
     }
-    DFS(rest, 0, &char_board);
+    DFS(fillable, /* n_filled = */0, &board);
   }
 };
 // @lc code=end
