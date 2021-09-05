@@ -10,15 +10,15 @@ CGNS 是一种通用（跨平台、易扩展、受众广）的 CFD 文件（数�
 
 | 术语 |                             含义                             |
 | :--: | :----------------------------------------------------------: |
-| ADF  | [**A**dvanced **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/adf) |
-| API  |        **A**pplication **P**rogramming **I**nterface         |
-| CFD  |           **C**omputational **F**luid **D**ynamics           |
-| CGNS | [**C**FD **G**eneral **N**otation **S**ystem](https://cgns.github.io/) |
-| CPEX |           **C**GNS **P**roposal for **EX**tension            |
-| FMM  |               **F**ile **M**apping **M**anual                |
-| HDF  | [**H**ierarchical **D**ata **F**ormat](https://cgns.github.io/CGNS_docs_current/hdf5) |
-| MLL  | [**M**id-**L**evel **L**ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
-| SIDS | [**S**tandard **I**nterface **D**ata **S**tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
+| ADF  | [*A*dvanced *D*ata *F*ormat](https://cgns.github.io/CGNS_docs_current/adf) |
+| API  |           *A*pplication *P*rogramming *I*nterface            |
+| CFD  |              *C*omputational *F*luid *D*ynamics              |
+| CGNS | [*C*FD *G*eneral *N*otation *S*ystem](https://cgns.github.io/) |
+| CPEX |              *C*GNS *P*roposal for *EX*tension               |
+| FMM  |                  *F*ile *M*apping *M*anual                   |
+| HDF  | [*H*ierarchical *D*ata *F*ormat](https://cgns.github.io/CGNS_docs_current/hdf5) |
+| MLL  | [*M*id-*L*evel *L*ibrary](https://cgns.github.io/CGNS_docs_current/midlevel/) |
+| SIDS | [*S*tandard *I*nterface *D*ata *S*tructures](https://cgns.github.io/CGNS_docs_current/sids/) |
 
 # SIDS
 
@@ -92,7 +92,7 @@ cmake -D CMAKE_BUILD_TYPE=Debug \
 入门指南主要介绍 Fortran-API，这里（平行地）介绍 C-API ，以便 C/C++ 用户参考。
 
 - C 的多维数组*按行 (row major)* 存储，Fortran 的多维数组*按列 (column major)* 存储，因此 *row in C* 对应于 *column in Fortran*。
-- Fortran 的数组索引是从 `1` 开始的（这与 SIDS 一致），而 C 则从 `0` 开始（故调用 C-API 时可能需要转换）。
+- Fortran 的数组索引从 `1` 开始（与 SIDS 一致），而 C 则从 `0` 开始（故调用 C-API 时可能需要转换）。
 
 ## 演示代码
 
@@ -115,19 +115,16 @@ root
 ier = cg_open(
     char *file_name, int mode/* CG_MODE_WRITE | CG_MODE_READ | CG_MODE_MODIFY */,
     /* input ↑, output ↓ */
-    int *file_id
-);
+    int *file_id);
 ier = cg_close(
-    int file_id
-);
+    int file_id);
 /* parallel (MPI) version */
 ier = cgp_open(
     char *file_name, int mode,
     /* input ↑, output ↓ */
     int *file_id);
 ier = cgp_close(
-    int file_id
-);
+    int file_id);
 ```
 
 用于新建对象的函数 `*_open()` 或 `*_write()` 总是以 `(int) id` 作为返回值。此 `id` 可以被后续代码用来访问该对象。
@@ -147,13 +144,11 @@ CGNSBase_t
 ier = cg_base_write(
     int file_id, char *base_name, int cell_dim, int phys_dim,
     /* input ↑, output ↓ */
-    int *base_id
-);
+    int *base_id);
 ier = cg_base_read(
     int file_id, int base_id,
     /* input ↑, output ↓ */
-    char *base_name, int *cell_dim, int *phys_dim
-);
+    char *base_name, int *cell_dim, int *phys_dim);
 ```
 
 ## `Zone_t`
@@ -176,13 +171,11 @@ ier = cg_zone_write(
     int file_id, int base_id, char *zone_name, cgsize_t *zone_size,
     ZoneType_t zone_type/* CGNS_ENUMV(Structured) | CGNS_ENUMV(Unstructured) */,
     /* input ↑, output ↓ */
-    int *zone_id
-);
+    int *zone_id);
 ier = cg_zone_read(
     int file_id, int base_id, int zone_id,
     /* input ↑, output ↓ */
-    char *zone_name, cgsize_t *zone_size
-);
+    char *zone_name, cgsize_t *zone_size);
 ```
 
 其中
@@ -221,50 +214,42 @@ ier = cg_grid_write(
     int file_id, int base_id, int zone_id,
     char *grid_name/* GridCoordinates */,
     /* input ↑, output ↓ */
-    int *grid_id
-);
+    int *grid_id);
 ier = cg_grid_read(
     int file_id, int base_id, int zone_id, int grid_id,
     /* input ↑, output ↓ */
-    char *grid_name
-);
+    char *grid_name);
 /* write/read (DataArray_t) "Coordinate[XYZ]" */
 ier = cg_coord_write(
     int file_id, int base_id, int zone_id,
     DataType_t data_type/* CGNS_ENUMV(RealDouble) */,
     char *coord_name, void *coord_array,
     /* input ↑, output ↓ */
-    int *coord_id
-);
+    int *coord_id);
 ier = cg_coord_read(
     int file_id, int base_id, int zone_id,
     char *coord_name, DataType_t data_type,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
     /* input ↑, output ↓ */
-    void *coord_array
-);
+    void *coord_array);
 /* parallel (MPI) version */
 ier = cgp_coord_write(
     int file_id, int base_id, int zone_id,
     DataType_t data_type/* CGNS_ENUMV(RealDouble) */,
     char *coord_name,
     /* input ↑, output ↓ */
-    int *coord_id
-);
+    int *coord_id);
 ier = cgp_coord_read(
-    /* undefined */
-);
+    /* undefined */);
 ier = cgp_coord_write_data(
     int file_id, int base_id, int zone_id, int coord_id,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
-    void *coord_array
-);
+    void *coord_array);
 ier = cgp_coord_read_data(
     int file_id, int base_id, int zone_id, int coord_id,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
     /* input ↑, output ↓ */
-    void *coord_array
-);
+    void *coord_array);
 ```
 
 其中
@@ -314,91 +299,75 @@ ier = cg_section_write(// for fixed-size elements:
     char *section_name, ElementType_t element_type,
     cgsize_t first, cgsize_t last, int n_boundary,
     cgsize_t *connectivity, /* input ↑, output ↓ */
-    int *section_id
-);
+    int *section_id);
 ier = cg_poly_section_write(// for MIXED | NGON_n | NFACE_n:
     int file_id, int base_id, int zone_id,
     char *section_name, ElementType_t element_type,
     cgsize_t first, cgsize_t last, int n_boundary,
     cgsize_t *connectivity, cgsize_t *offset,
     /* input ↑, output ↓ */
-    int *section_id
-);
+    int *section_id);
 /* read Elements_t and DataArray_t(s) */
 ier = cg_section_read(
     int file_id, int base_id, int zone_id, int section_id,
     /* input ↑, output ↓ */
     char *section_name, ElementType_t *element_type,
-    cgsize_t *first, cgsize_t *last, int *n_boundary, int *parent_flag
-);
+    cgsize_t *first, cgsize_t *last, int *n_boundary, int *parent_flag);
 ier = cg_poly_section_read(
-    /* undefined */
-);
+    /* undefined */);
 ier = cg_nsections(
     int file_id, int base_id, int zone_id, /* input ↑, output ↓ */
-    int *n_sections
-);
+    int *n_sections);
 /* write DataArray_t(s) */
 ier = cg_elements_write(
-    /* undefined */
-);
+    /* undefined */);
 ier = cg_poly_elements_write(
-    /* undefined */
-);
+    /* undefined */);
 ier = cg_elements_partial_write(
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
-    cgsize_t *connectivity
-);
+    cgsize_t *connectivity);
 ier = cg_poly_elements_partial_write(// for MIXED | NGON_n | NFACE_n:
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
-    cgsize_t *connectivity, cgsize_t *offset
-);
+    cgsize_t *connectivity, cgsize_t *offset);
 /* read DataArray_t(s) */
 ier = cg_elements_read(
     int file_id, int base_id, int zone_id, int section_id,
     /* input ↑, output ↓ */
-    cgsize_t *connectivity, cgsize_t *parent_data
-);
+    cgsize_t *connectivity, cgsize_t *parent_data);
 ier = cg_poly_elements_read(// for MIXED | NGON_n | NFACE_n:
     int file_id, int base_id, int zone_id, int section_id,
     /* input ↑, output ↓ */
-    cgsize_t *connectivity, cgsize_t *offset, cgsize_t *parent_data
-);
+    cgsize_t *connectivity, cgsize_t *offset, cgsize_t *parent_data);
 ier = cg_elements_partial_read(
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
     /* input ↑, output ↓ */
-    cgsize_t *connectivity, cgsize_t *parent_data
-);
+    cgsize_t *connectivity, cgsize_t *parent_data);
 ier = cg_poly_elements_partial_read(// for MIXED | NGON_n | NFACE_n:
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
     /* input ↑, output ↓ */
-    cgsize_t *connectivity, cgsize_t *offset, cgsize_t *parent_data
-);
+    cgsize_t *connectivity, cgsize_t *offset, cgsize_t *parent_data);
 /* parallel (MPI) version */
 ier = cgp_section_write(// Create a section data object:
     int file_id, int base_id, int zone_id,
     char *section_name, ElementType_t element_type,
     cgsize_t first, cgsize_t last, int n_boundary,
     /* input ↑, output ↓ */
-    int *section_id
-);
+    int *section_id);
 ier = cgp_elements_write_data(// Write element data in parallel:
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
     cgsize_t *connectivity);
 ier = cgp_section_read(
-    /* undefined */
-);
+    /* undefined */);
 ier = cgp_elements_read_data(// Read element data in parallel:
     int file_id, int base_id, int zone_id, int section_id,
     cgsize_t first, cgsize_t last,
     /* input ↑, output ↓ */
-    cgsize_t *connectivity
-);
+    cgsize_t *connectivity);
 ```
 
 其中
@@ -516,63 +485,52 @@ ier = cg_sol_write(
     int file_id, int base_id, int zone_id, char *sol_name,
     GridLocation_t location/* CGNS_ENUMV(Vertex) */,
     /* input ↑, output ↓ */
-    int *sol_id
-);
+    int *sol_id);
 ier = cg_sol_read(
-    /* undefined */
-);
+    /* undefined */);
 ier = cg_sol_info(
     int file_id, int base_id, int zone_id, int sol_id,
     /* input ↑, output ↓ */
-    char *sol_name, GridLocation_t *location
-);
+    char *sol_name, GridLocation_t *location);
 /* write DataArray_t */
 ier = cg_field_write(
     int file_id, int base_id, int zone_id, int sol_id,
     DataType_t datatype, char *field_name, void *sol_array,
     /* input ↑, output ↓ */
-    int *field_id
-);
+    int *field_id);
 ier = cg_field_partial_write(
     int file_id, int base_id, int zone_id, int sol_id,
     DataType_t datatype, char *field_name,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
     void *sol_array,
     /* input ↑, output ↓ */
-    int *field_id
-);
+    int *field_id);
 /* read DataArray_t */
 ier = cg_field_read(
     int file_id, int base_id, int zone_id, int sol_id,
     char *field_name, DataType_t data_type,
     cgsize_t *range_min, cgsize_t *range_max,
     /* input ↑, output ↓ */
-    void *sol_array
-);
+    void *sol_array);
 ier = cg_field_partial_read(
-    /* undefined */
-);
+    /* undefined */);
 /* parallel (MPI) version */
 ier = cgp_field_write(// Create a solution field data object:
     int file_id, int base_id, int zone_id, int sol_id,
     DataType_t datatype, char *field_name,
     /* input ↑, output ↓ */
-    int *field_id
-);
+    int *field_id);
 ier = cgp_field_write_data(// Write field data in parallel:
     int file_id, int base_id, int zone_id, int sol_id, int field_id,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
-    void *sol_array
-);
+    void *sol_array);
 ier = cgp_field_read(
-    /* undefined */
-);
+    /* undefined */);
 ier = cgp_field_read_data(// Read field data in parallel:
     int file_id, int base_id, int zone_id, int sol_id, int field_id,
     cgsize_t *range_min, cgsize_t *range_max,  // 1-based inclusive
     /* input ↑, output ↓ */
-    void *sol_array
-);
+    void *sol_array);
 ier = cgp_field_general_read_data(
     int file_id, int base_id, int zone_id, int sol_id, int field_id,
     cgsize_t *range_min, cgsize_t *range_max,  // range in file
@@ -581,8 +539,7 @@ ier = cgp_field_general_read_data(
     cgsize_t *mem_dimensions/* dimensions of array in memory */,
     cgsize_t *mem_range_min, cgsize_t *mem_range_max,  // range in memory
     /* input ↑, output ↓ */
-    void *sol_array
-);
+    void *sol_array);
 ```
 
 其中
@@ -627,13 +584,9 @@ ier = cg_goto(
 
 // Number of rind layers for each direction (structured grid):
 int rind_data[6] = {
-  1/* i_low */,
-  1/* i_high */,
-  1/* j_low */,
-  1/* j_high */,
-  0/* k_low */,
-  0/* k_high */
-};
+  1/* i_low */, 1/* i_high */,
+  1/* j_low */, 1/* j_high */,
+  0/* k_low */, 0/* k_high */};
 // Write number of rind layers:
 ier = cg_rind_write(int *rind_data);
 // Read number of rind layers:
@@ -660,9 +613,10 @@ ier = cg_dataclass_write(CGNS_ENUMV(NondimensionalParameter));
 
 ```c
 /* Write first five dimensional units: */
-ier = cg_units_write(CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter),
-               CGNS_ENUMV(Second), CGNS_ENUMV(Kelvin),
-               CGNS_ENUMV(Degree));
+ier = cg_units_write(
+    CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter),
+    CGNS_ENUMV(Second), CGNS_ENUMV(Kelvin),
+    CGNS_ENUMV(Degree));
 ```
 
 ## `DimensionalExponents_t` 
@@ -671,14 +625,14 @@ ier = cg_units_write(CGNS_ENUMV(Kilogram), CGNS_ENUMV(Meter),
 /* Write first five dimensional exponents of coordinates: */
 float dimensional_exponents[5] = {0., 1., 0., 0., 0.};
 ier = cg_goto(file_id, base_id, "Zone_t", zone_id, "GridCoordinates_t", 1,
-        "DataArray_t", coord_id, "end");
+    "DataArray_t", coord_id, "end");
 ier = cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
 /* Write first five dimensional exponents of pressure: */
 dimensional_exponents[0] = +1.0;
 dimensional_exponents[1] = -1.0;
 dimensional_exponents[2] = -2.0;
 ier = cg_goto(file_id, base_id, "Zone_t", zone_id, "FlowSolution_t", sol_id,
-        "DataArray_t", field_id, "end");
+    "DataArray_t", field_id, "end");
 ier = cg_exponents_write(CGNS_ENUMV(RealSingle), dimensional_exponents);
 ```
 
@@ -705,15 +659,13 @@ ier = cg_boco_write(
                                     CGNS_ENUMV(PointList) */,
     cgsize_t n_point, cgsize_t *point_set,
     // input ↑, output ↓
-    int *boco_id
-);
+    int *boco_id);
 
 // Get number of boundary condition in zone:
 ier = cg_nbocos(
     int file_id, int base_id, int zone_id,
     /* input ↑, output ↓ */
-    int *n_boco
-);
+    int *n_boco);
 
 // Get boundary condition info:
 ier = cg_boco_info(
@@ -724,21 +676,19 @@ ier = cg_boco_info(
     int *normal_id,
     cgsize_t *normal_list_size,
     DataType_t *normal_data_type,
-    int *n_data_set
-);
+    int *n_data_set);
 
 // Read boundary condition data and normals:
 ier = cg_boco_read(
     int file_id, int base_id, int zone_id, int boco_id,
     /* input ↑, output ↓ */
-    cgsize_t *point_set, void *normal_list
-);
+    cgsize_t *point_set, void *normal_list);
 ```
 
 其中
 
 - `cg_boco_write()` 用于创建一个表示具体边界条件的 `BC_t` 对象。
-  - 每个 `BC_t` 对象都是某个 `IndexRange_t` 对象或 `IndexArray_t` 对象的亲对象。
+  - 每个 `BC_t` 对象都含有一个 `IndexRange_t` 或 `IndexArray_t` 子对象。
   - 所有 `BC_t` 对象都是同一个 `ZoneBC_t` 对象的子对象。
   - 这个唯一的 `ZoneBC_t` 对象是某个 `Zone_t` 对象的子对象，因此是 `GridCoordinates_t` 对象及 `FlowSolution_t` 对象的同辈对象。
 - `boco_type` 的取值必须是枚举类型 `BCType_t` 的有效值，例如 `BCWallInviscid | BCInflowSupersonic | BCOutflowSubsonic`，完整列表参见《[Boundary Condition Type Structure Definition](https://cgns.github.io/CGNS_docs_current/sids/bc.html#BCType)》。
