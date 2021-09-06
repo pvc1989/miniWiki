@@ -47,7 +47,7 @@ struct ImplicitGraph {
 ## 循环实现<a href id="BFS-Iterative"></a>
 
 ```python
-def breadth_first_search(source):
+def breadth_first_search(graph, source):
   vertex_to_parent = {source: None}
   vertex_to_level  = {source: 0}
   current_level = 0
@@ -55,7 +55,7 @@ def breadth_first_search(source):
   while len(this_level):
     next_level = []
     for u in this_level:
-      for v in u.neighbors:
+      for v in graph.get_neighbors(u):
         if v not in vertex_to_level:
           vertex_to_level[v] = current_level
           vertex_to_parent[v] = u
@@ -66,8 +66,8 @@ def breadth_first_search(source):
 ```
 
 Complexity:
-- $\Theta(V+E)$ time
-- $\Theta(V+E)$ space
+- $Θ(V+E)$ time
+- $Θ(V+E)$ space
 
 ## 应用<a href id="BFS-应用"></a>
 
@@ -95,8 +95,8 @@ def find_shortest_ancestral_path(graph, u, v):
 ```
 
 Complexity:
-- $\Theta(V+E)$ time
-- $\Theta(V+E)$ space
+- $Θ(V+E)$ time
+- $Θ(V+E)$ space
 
 ### 跳跃游戏
 
@@ -112,22 +112,21 @@ Complexity:
 ```python
 def depth_first_search(graph):
   vertex_to_parent = dict()
-  for s in graph.vertices:
-    if s not in vertex_to_parent:
-      vertex_to_parent[s] = None
-      _depth_first_visit(s, vertex_to_parent)
+  for source in graph.vertices:
+    if source not in vertex_to_parent:
+  		_depth_first_visit(graph, source, vertex_to_parent)
   return vertex_to_parent
 
-def _depth_first_visit(source, vertex_to_parent):
-  for v in source.neighbors:
+def _depth_first_visit(graph, source, vertex_to_parent):
+  for v in graph.get_neighbors(source):
     if v not in vertex_to_parent:
       vertex_to_parent[v] = source
-      _depth_first_visit(v, vertex_to_parent)
+      _depth_first_visit(graph, v, vertex_to_parent)
 ```
 
 Complexity:
-- $\Theta(V+E)$ time
-- $\Theta(V+E)$ space
+- $Θ(V+E)$ time
+- $Θ(V+E)$ space
 
 ## 应用<a href id="DFS-应用"></a>
 
@@ -143,7 +142,7 @@ Edge Classification:
 
 DAG: Directed Acylic Graph.
 
-### 拓扑排序
+### 拓扑排序<a href id="topo-sort"></a>
 
 - Idea: sort vertices by the reverse of DFS finishing times, i.e. time at which `_depth_first_visit()` finishes.
 - Libraries
@@ -191,9 +190,9 @@ If negative weight edges are present, the algorithm should find negative weight 
   - Maintain connected components by a [Union–Find DS](./array.md#并查集).
   - Greedily choose the globally lowest-weight edge that connect two components.
 - Complexity:
-  - $\Theta(V)$ for building the `UnionFind` DS of vertices.
-  - $\Theta(E)$ for `sort()` if $W$ is `int`-valued and using [Radix Sort](./string.md#基数排序).
-  - $\Theta(E)$ calls of `UnionFind.connected()` and `UnionFind.union()`, which can be amortized $\Theta(\alpha(V))$.
+  - $Θ(V)$ for building the `UnionFind` DS of vertices.
+  - $Θ(E)$ for `sort()` if $W$ is `int`-valued and using [Radix Sort](./string.md#基数排序).
+  - $Θ(E)$ calls of `UnionFind.connected()` and `UnionFind.union()`, which can be amortized $Θ(\alpha(V))$.
 
 ```python
 def GetMinSpanTreeByKruskal(Vertices, Edges, Weight):
@@ -216,9 +215,9 @@ def GetMinSpanTreeByKruskal(Vertices, Edges, Weight):
   - Maintain a `MinPQ` on $V\setminus S$, where $d(S, v)\coloneqq\min_{u\in S}\{W(u, v)\}$ is used as $v$'s `key`.
   - Greedily choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Complexity:
-  - $\Theta(V)$ calls of `MinPQ.pop_min()`
-  - $\Theta(E)$ calls of `MinPQ.change_key()`, which can be amortized $\Theta(1)$ if using [Fibonacci Heap](./queue.md#fib-heap).
-  - $\Theta(V+E)$ space
+  - $Θ(V)$ calls of `MinPQ.pop_min()`
+  - $Θ(E)$ calls of `MinPQ.change_key()`, which can be amortized $Θ(1)$ if using [Fibonacci Heap](./queue.md#fib-heap).
+  - $Θ(V+E)$ space
 
 ```python
 def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
@@ -289,11 +288,11 @@ def find_shortest_path(source, graph, weight):
   - *Greedily* choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Correctness:
   - Relaxation is safe.
-  - Each time a vertex `u` is added to `S`, there is `d[u] = δ(s, u)`.
+  - When `u` is added to `S`, there is `depth[u] == distance(s, u)`.
 - Complexity:
   - $Θ(V)$ calls of `MinPQ.insert(Vertex, Key)`
   - $Θ(V)$ calls of `MinPQ.pop_min()`
-  - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`, which can be amortized $\Theta(1)$ if using [Fibonacci Heap](./queue.md#fib-heap).
+  - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`, which can be amortized $Θ(1)$ if using [Fibonacci Heap](./queue.md#fib-heap).
 
 ```python
 def find_shortest_path(source, graph, weight):
@@ -328,18 +327,25 @@ def find_shortest_path(source, graph, weight):
   - Allow negative edge weights.
   - Report cycles with negetive weights.
 - Complexity:
-  - $Θ(VE)$ calls of `relax()`.
-
-```python
-def find_shortest_path(source, graph, weight):
-  for i in range(len(graph.vertices) - 1):
-    for u, v in graph.edges:
-      relax(u, v, weight(u, v))
-  # One more pass to find negative cycles:
-  for u, v in graph.edges:
-    if relaxable(u, v, weight(u, v)):
-      raise Exception("There exists a negative cycle!")
-```
+  - For general graphs, $Θ(VE)$ calls of `relax()`:
+    ```python
+    def find_shortest_path(source, graph, weight):
+      for i in range(len(graph.vertices) - 1):
+        for u, v in graph.edges:
+          relax(u, v, weight(u, v))
+      # One more pass to find negative cycles:
+      for u, v in graph.edges:
+        if relaxable(u, v, weight(u, v)):
+          raise Exception("There exists a negative cycle!")
+    ```
+  - For DAGs, $Θ(V+E)$ for [topological sort](#topo-sort) and $Θ(E)$ calls of `relax()`:
+    ```python
+    def find_shortest_path(source, graph, weight):
+      sorted_vertices = topological_sort(graph)
+      for u in sorted_vertices:
+        for v in graph.get_neighbors(u):
+          relax(u, v, weight(u, v))
+    ```
 
 # 最大流、最小割
 
