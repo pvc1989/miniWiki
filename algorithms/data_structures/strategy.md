@@ -4,26 +4,33 @@ title: 常用策略
 
 # 分而治之
 
+## [主定理](./complexity.md#master-thm)
+
+$$
+T(N) =a\cdot T(N/b)+f(N)=\mathopen{\Theta}\left(N^{\log_{b}a}\right)+\sum_{\nu=0}^{n-1}a^{\nu}\cdot f(N/b^{\nu}),\qquad n\coloneqq\log_{b}N
+$$
+
 # 动态规划
 
 ## 框架
 
 ### 等价描述
 
-『动态规划 (Dynamic Programming, DP)』
+**动态规划 (Dynamic Programming, DP)**
+
 - ≈ 省力的暴力枚举
   - 简单的暴力枚举，通常具有指数复杂度。
   - 利用动态规划，可降到（伪）多项式复杂度。
-- ≈『递归 (recursion)』+『备忘 (memoization)』
-  - 『自顶向下 (top-down)』的递归代码，会因递归函数调用消耗一定的计算资源，但
-    - 是描述『子问题 (subproblem)』的最佳方式，通常比相应的非递归版本直观。
+- ≈ **递归 (recursion)** + **备忘 (memoization)**
+  - **自顶向下 (top-down)** 的递归代码，会因递归函数调用消耗一定的计算资源，但
+    - 是描述**子问题 (subproblem)** 的最佳方式，通常比相应的非递归版本直观。
     - 子问题的依赖关系隐含在递归调用中，无需刻意维护。
     - 不被原问题所依赖的子问题，不会被求解，可节约计算资源。
-  - 『自底向上 (bottom-up)』的非递归代码，通常具有更高的运行效率，但
+  - **自底向上 (bottom-up)** 的非递归代码，通常具有更高的运行效率，但
     - 通常不如相应的递归版本直观。
-    - 需按子问题的『拓扑顺序 (topological order)』逐层求解。
+    - 需按子问题的**拓扑顺序 (topological order)** 逐层求解。
     - 不被原问题所依赖的子问题，也会被求解，会浪费计算资源。
-- ≈ 『有向无环图 (Directed Acyclic Graph, DAG)』上的最短路径搜索
+- ≈ **有向无环图 (Directed Acyclic Graph, DAG)** 上的最短路径搜索
   - 以子问题为结点
   - 以依赖关系为邻边
   - 以优化目标为路径开销
@@ -33,7 +40,7 @@ title: 常用策略
 1. 定义子问题（关键步）。
 1. 猜测搜索方向（通常直接枚举可用路径）。
 1. 利用子问题的解（获得当前子问题的局部最优解）。
-1. 递归 + 备忘（或『自底向上』建表，以避免递归）。
+1. 递归 + 备忘（或*自底向上*建表，以避免递归）。
 1. 返回原问题的解（直接返回最后一个子问题的解，或组合某几个子问题的解）。
 
 ## 应用
@@ -44,7 +51,7 @@ title: 常用策略
 
 ### 段落分行
 
-在某些单词前换行，使整段文字的 `badness` 值最小。
+在某些单词前换行，使 整段文字的 `badness` 值最小。
 
 ```python
 # h := head, l := length, s := size
@@ -78,7 +85,7 @@ dp[i][j] = min(
 
 ### 0-1 背包
 
-给定 `n` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(Real) value[i]`），求容量为 `(Int) max_room` 的『背包 (knapsack)』所能装下的总价最大的货物。
+给定 `n_items` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(Real) value[i]`），求容量为 `(Int) max_room` 的**背包 (knapsack)** 所能装下的总价最大的货物。
 
 ```cpp
 // `dp[i][r]` := max value of items in range `[i, n)` with `r` remaining room
@@ -94,12 +101,12 @@ for (int item = value.size() - 1; 0 <= item; --item) {
 return dp[0][max_room];
 ```
 
-- 时间复杂度 `Θ(n * room)` 是『伪多项式的 (pseudopolynomial)』：
-  - 若 `Int` 为可变字长的整数类型，则每个 `size[i]` 需要 `lg(room)`『位 (bit)』来表示，故输入规模为 `O(n * lg(room))`，此时复杂度 `Θ(n * room)` 是『指数的』。
-  - 若 `Int` 为固定字长的整数类型，则 `lg(room)` 可视为常数，此时复杂度 `Θ(n * room)` 是『多项式的』。
-- 空间复杂度『伪多项式的』：
-  - 二维表格 `dp[][]` 需要 `Θ(n * room)` 存储空间。
-  - 实际建表时，只用到两个长度为 `Θ(room)` 的一维数组。
+- 时间复杂度 `Θ(n_items * max_room)` 是**伪多项式的 (pseudopolynomial)**：
+  - 若 `Int` 为可变字长的整数类型，则每个 `size[i]` 需要 `lg(max_room)` bits 来表示，故输入规模为 `O(n_items * lg(max_room))`，此时复杂度 `Θ(n_items * maxroom)` 是*指数的*。
+  - 若 `Int` 为固定字长的整数类型，则 `lg(room)` 可视为常数，此时复杂度 `Θ(n_items * max_room)` 是*多项式的*。
+- 空间复杂度*伪多项式的*：
+  - 二维表格 `dp[][]` 需要 `Θ(n_items * max_room)` 存储空间。
+  - 实际建表时，只用到两个长度为 `Θ(max_room)` 的一维数组。
 
 #### 硬币找零
 
@@ -115,13 +122,13 @@ return dp[0][max_room];
 
 ### 旅行商问题
 
-【旅行商问题 (Travelling Salesman Problem, TSP)】给定 $V$ 座城市及 $E$ 条（连接其中任意两市的）道路，求一条访问每座城市各一次的最短路径。
+【**旅行商问题 (Travelling Salesman Problem, TSP)**】给定 $V$ 座城市及 $E$​ 条（连接其中任意两市的）道路，求一条遍历所有城市的最短路径。
 
 #### 最短超字符串
 
 [LeetCode-943](./leetcode/943.find-the-shortest-superstring.cpp)
 
-给定 $N$ 个最长为 $W$ 字符且互不覆盖的字符串，求一个能够覆盖每个词的最短“超字符串 (superstring)”。
+给定 $N$ 个最长为 $W$ 字符且互不覆盖的字符串，求一个能够覆盖每个词的最短**超字符串 (superstring)**。
 
 复杂度
 - 时间 $Θ(N^2\cdot(2^N+W))$
@@ -157,7 +164,7 @@ $$
 P_{[0, j)}^{t} = \max_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
 $$
 
-其中 $P_{[i,j)}^{t}$ 表示『最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益』。
+其中 $P_{[i,j)}^{t}$ 表示*最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益*。
 
 ### 二叉树覆盖
 
@@ -243,7 +250,7 @@ S_{d}^{t} = \mathopen{\max}\left(S_{d-1}^{t-1}, H_{d-1}^{\boxed{t}}+P_d\right)
 $$
 
 其中
-- $P_d$ 表示『第 $d$ 天的股价』。
-- $S_{d}^{t}$ 表示『第 $d$ 天为卖出状态、前 $d$ 天至多卖出 $t$ 次的最大收益』。
-- $H_{d}^{t}$ 表示『第 $d$ 天为持有状态、前 $d$ 天至多买入 $t$ 次的最大收益』。
+- $P_d$ 表示*第 $d$ 天的股价*。
+- $S_{d}^{t}$ 表示*第 $d$ 天为卖出状态、前 $d$ 天至多卖出 $t$ 次的最大收益*。
+- $H_{d}^{t}$ 表示*第 $d$ 天为持有状态、前 $d$ 天至多买入 $t$ 次的最大收益*。
 

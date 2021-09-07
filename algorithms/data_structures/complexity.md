@@ -12,14 +12,14 @@ title: 复杂度 (Complexity)
 - MIT
   - Text: Chap-4  Divide-and-Conquer
 
-### 主定理
+### 主定理<a href id="master-thm"></a>
 
 $$
 \begin{aligned}T(N) & =a\cdot T(N/b)+f(N)=\mathopen{\Theta}\left(N^{\log_{b}a}\right)+\sum_{\nu=0}^{n-1}a^{\nu}\cdot f(N/b^{\nu}),\qquad n\coloneqq\log_{b}N\\
  & =\begin{cases}
-\mathopen{\Theta}\left(N^{\log_{b}a}\right) & f(N)=\mathopen{O}\left(N^{\log_{b}a}\div N^{\epsilon}\right)\\
-\mathopen{\Theta}\left(N^{\log_{b}a}\cdot(\lg N)^{m+1}\right) & f(N)=\mathopen{\Theta}\left(N^{\log_{b}a}\cdot(\lg N)^{m}\right)\\
-\mathopen{\Theta}\left(f(N)\right) & f(N)=\mathopen{\Omega}\left(N^{\log_{b}a}\times N^{\epsilon}\right)\land\exists c\in(0,1)\colon\ a\cdot f(N/b)\le c\cdot f(N)
+\mathopen{\varTheta}\left(N^{\log_{b}a}\right) & f(N)=\mathopen{O}\left(N^{\log_{b}a}\div N^{\epsilon}\right)\\
+\mathopen{\varTheta}\left(N^{\log_{b}a}\cdot(\lg N)^{m+1}\right) & f(N)=\mathopen{\varTheta}\left(N^{\log_{b}a}\cdot(\lg N)^{m}\right)\\
+\mathopen{\varTheta}\left(f(N)\right) & f(N)=\mathopen{\varOmega}\left(N^{\log_{b}a}\times N^{\epsilon}\right)\land\exists c\in(0,1)\colon\ a\cdot f(N/b)\le c\cdot f(N)
 \end{cases}
 \end{aligned}
 $$
