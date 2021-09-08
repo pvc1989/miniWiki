@@ -26,15 +26,20 @@ sudo apt install vim
 
 # Shell
 
-## Login Shell
-
-```shell
-echo $SHELL           # 查看 login shell
-chsh -s $(which zsh)  # 更换 login shell
-# 退出当前 shell 并重新打开
-```
-
 ## Bash
+
+### 启动方式
+
+根据启动方式，可以将 shell 分为
+
+- **login shell**：启动时*需要*输入用户名、密码（如：登入远程主机），并依次运行
+  - 全局脚本 `/etc/profile`
+  - 当前用户脚本 `~/.bash_profile`
+- **non-login shell**：启动时*无需*输入用户名、密码（如：在 GUI 中打开命令行终端），从主进程继承环境变量，并依次运行
+  - 全局脚本 `/etc/bash.bashrc`
+  - 当前用户脚本 `~/.bashrc`
+
+### 样式微调
 
 Ubuntu 默认的终端（`/bin/bash`）提示格式为
 
@@ -94,14 +99,22 @@ source ~/.bashrc
 
 ## ZSH
 
-若可以安装 `zsh`，则建议用它替换 `bash`：
+安装及配置：
 
 ```shell
 sudo apt install zsh
-# 下载好看的画风：
+# 下载好看的样式：
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 # 修改配置：
 vim ~/.zshrc
+```
+
+设为默认 shell：
+
+```shell
+echo $SHELL           # 查看 login shell
+chsh -s $(which zsh)  # 更换 login shell
+# 退出当前 shell 并重新打开
 ```
 
 ## [SSH](./ssh.md)
