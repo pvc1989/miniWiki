@@ -125,24 +125,215 @@ chsh -s $(which zsh)  # 更换 login shell
 
 ## [`ssh`](./ssh.md)
 
-## 文件操作
+## 文件系统操作
 
-### `locate` - *locate* files by name
+### `locate`
 
-### `find` - *find* files in a directory hierarchy
+*Locate* files by name.
 
-### `touch` - change file timestamps
+### `find`
 
-### `stat` - display file or file system *stat*us
+*Find* files in a directory hierarchy.
+
+```shell
+# Find files by extension:
+    find root_path -name '*.ext'
+
+# Find files matching multiple path/name patterns:
+    find root_path -path '**/path/**/*.ext' -or -name '*pattern*'
+
+# Find directories matching a given name, in case-insensitive mode:
+    find root_path -type d -iname '*lib*'
+
+# Find files matching a given pattern, excluding specific paths:
+    find root_path -name '*.py' -not -path '*/site-packages/*'
+
+# Find files matching a given size range:
+    find root_path -size +500k -size -10M
+
+# Run a command for each file (use `{}` within the command to access the filename):
+    find root_path -name '*.ext' -exec wc -l {} \;
+
+# Find files modified in the last 7 days and delete them:
+    find root_path -daystart -mtime -7 -delete
+
+# Find empty (0 byte) files and delete them:
+    find root_path -type f -empty -delete
+```
+
+### `touch`
+
+Change file timestamps, i.e. *touch* a file.
+
+### `stat`
+
+- GNU: Display file or file system *stat*us.
+- BSD: Display file *stat*us.
+
+```shell
+# Show file properties such as size, permissions, creation and access dates among others:
+    stat file
+
+# Same as above but vqerbose (more similar to Linux's `stat`):
+    stat -x file
+
+# Show only octal file permissions:
+    stat -f %Mp%Lp file
+
+# Show owner and group of the file:
+    stat -f "%Su %Sg" file
+
+# Show the size of the file in bytes:
+    stat -f "%z %N" file
+```
 
 ## 数据流操作
 
-|   名称   |   覆盖   |   追加    |
-| :------: | :------: | :-------: |
-| `stdout` | `1> dst` | `1>> dst` |
-| `stderr` | `2> dst` | `2>> dst` |
+### `cat`
 
-示例：
+Con*cat*enate files and print on the standard output.
+
+### `head`
+
+Output the *head* (i.e. the first part) of files.
+
+### `tail`
+
+Output the *tail* (i.e. the last part) of files.
+
+### `sort`
+
+*Sort* lines of text files.
+
+### `uniq`
+
+Report or omit repeated lines.
+
+### `sed`
+
+*S*tream *ed*itor for filtering and transforming text.
+
+```shell
+# Replace the first occurrence of a string in a file, and print the result:
+    sed 's/find/replace/' filename
+# Replace all occurrences of an extended regular expression in a file:
+    sed -E 's/regular_expression/replace/g' filename
+# Replace all occurrences of a string [i]n a file, overwriting the file (i.e. in-place):
+    sed -i '' 's/find/replace/g' filename
+# Replace only on lines matching the line pattern:
+    sed '/line_pattern/s/find/replace/' filename
+# Print only text between n-th line till the next empty line:
+    sed -n 'line_number,/^$/p' filename
+# Apply multiple find-replace expressions to a file:
+    sed -e 's/find/replace/' -e 's/find/replace/' filename
+# Replace separator `/` by any other character not used in the find or replace patterns, e.g. `#`:
+    sed 's#find#replace#' filename
+# [d]elete the line at the specific line number [i]n a file, overwriting the file:
+    sed -i '' 'line_numberd' filename
+```
+
+### `awk`
+
+A versatile programming language for working on files.
+
+```shell
+# Print the fifth column (a.k.a. field) in a space-separated file:
+    awk '{print $5}' filename
+# Print the second column of the lines containing "foo" in a space-separated file:
+    awk '/foo/ {print $2}' filename
+# Print the last column of each line in a file, using a comma (instead of space) as a field separator:
+    awk -F ',' '{print $NF}' filename
+# Sum the values in the first column of a file and print the total:
+    awk '{s+=$1} END {print s}' filename
+# Print every third line starting from the first line:
+    awk 'NR%3==1' filename
+# Print different values based on conditions:
+    awk '{if ($1 == "foo") print "Exact match foo"; else if ($1 ~ "bar") print "Partial match bar"; else print "Baz"}' filename
+# Print all lines where the 10th column value equals the specified value :
+    awk '($10 == value)'
+# Print all the lines which the 10th column value is between a min and a max :
+    awk '($10 >= min_value && $10 <= max_value)'
+```
+
+### `xargs`
+
+E*x*ecute a command with piped *arg*ument*s* coming from another command, a file, etc. 
+The input is treated as a single block of text and split into separate pieces on spaces, tabs, newlines and end-of-file.
+
+```shell
+# Run a command using the input data as arguments:
+    arguments_source | xargs command
+# Run multiple chained commands on the input data:
+    arguments_source | xargs sh -c "command1 && command2 | command3"
+# Delete all files with a `.backup` extension (`-print0` uses a null character to split file names, and `-0` uses it as delimiter):
+    find . -name '*.backup' -print0 | xargs -0 rm -v
+# Execute the command once for each input line, replacing any occurrences of the placeholder (here marked as `_`) with the input line:
+    arguments_source | xargs -I _ command _ optional_extra_arguments
+# Parallel runs of up to `max-procs` processes at a time; the default is 1. If `max-procs` is 0, xargs will run as many processes as possible at a time:
+    arguments_source | xargs -P max-procs command
+```
+
+### `grep`
+
+Print lines that match patterns.
+
+```shell
+# Search for a pattern within a file:
+    grep "search_pattern" path/to/file
+# Search for an exact string (disables regular expressions):
+    grep --fixed-strings "exact_string" path/to/file
+# Search for a pattern in all files recursively in a directory, showing line numbers of matches, ignoring binary files:
+    grep --recursive --line-number --binary-files=without-match "search_pattern" path/to/directory
+# Use extended regular expressions (supports `?`, `+`, `{}`, `()` and `|`), in case-insensitive mode:
+    grep --extended-regexp --ignore-case "search_pattern" path/to/file
+# Print 3 lines of context around, before, or after each match:
+    grep --context|before-context|after-context=3 "search_pattern" path/to/file
+# Print file name and line number for each match:
+    grep --with-filename --line-number "search_pattern" path/to/file
+# Search for lines matching a pattern, printing only the matched text:
+    grep --only-matching "search_pattern" path/to/file
+# Search stdin for lines that do not match a pattern:
+    cat path/to/file | grep --invert-match "search_pattern"
+```
+
+### `wc`
+
+Print newline, *w*ord, and byte *c*ounts for each file.
+
+```shell
+# Count [l]ines in file:
+    wc -l file
+# Count [w]ords in file:
+    wc -w file
+# Count [c]haracters (bytes) in file:
+    wc -c file
+# Count characters in file (taking [m]ulti-byte character sets into account):
+    wc -m file
+# Use standard input to count lines, words and characters (bytes) in that order:
+    find . | wc
+```
+
+### `tee` 
+
+Read from standard input and write to standard output and files.
+
+```shell
+# Copy standard input to each file, and also to standard output:
+    echo "example" | tee path/to/file
+# Append to the given files, do not overwrite:
+    echo "example" | tee -a path/to/file
+# Print standard input to the terminal, and also pipe it into another program for further processing:
+    echo "example" | tee /dev/tty | xargs printf "[%s]"
+# Create a directory called "example", count the number of characters in "example" and write "example" to the terminal:
+    echo "example" | tee >(xargs mkdir) >(wc -c)
+```
+
+### `>`, `>>`
+
+|   名称   |     覆盖      |      追加      |
+| :------: | :-----------: | :------------: |
+| `stdout` | `1> filename` | `1>> filename` |
+| `stderr` | `2> filename` | `2>> filename` |
 
 ```shell
 # 正常信息、错误信息 均输出到 屏幕
@@ -154,100 +345,6 @@ $ find ~/.. -name .bash_history > stdout.txt 2> stderr.txt
 # 正常信息、错误信息 均输出到 stdout_stderr.txt 文件
 $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 ```
-
-### `cat` - con*cat*enate files and print on the standard output
-
-### `head` - output the first part of files
-
-### `tail` - output the last part of files
-
-### `sort` - *sort* lines of text files
-
-### `uniq` - report or omit repeated lines
-
-### `sed` - *s*tream *ed*itor for filtering and transforming text
-
-```shell
-# Replace the first occurrence of a string in a file, and print the result:
-    sed 's/find/replace/' filename
-
-# Replace all occurrences of an extended regular expression in a file:
-    sed -E 's/regular_expression/replace/g' filename
-
-# Replace all occurrences of a string [i]n a file, overwriting the file (i.e. in-place):
-    sed -i '' 's/find/replace/g' filename
-
-# Replace only on lines matching the line pattern:
-    sed '/line_pattern/s/find/replace/' filename
-
-# Print only text between n-th line till the next empty line:
-    sed -n 'line_number,/^$/p' filename
-
-# Apply multiple find-replace expressions to a file:
-    sed -e 's/find/replace/' -e 's/find/replace/' filename
-
-# Replace separator `/` by any other character not used in the find or replace patterns, e.g. `#`:
-    sed 's#find#replace#' filename
-
-# [d]elete the line at the specific line number [i]n a file, overwriting the file:
-    sed -i '' 'line_numberd' filename
-```
-
-### `awk` - a versatile programming language for working on files.
-
-```shell
-# Print the fifth column (a.k.a. field) in a space-separated file:
-    awk '{print $5}' filename
-
-# Print the second column of the lines containing "foo" in a space-separated file:
-    awk '/foo/ {print $2}' filename
-
-# Print the last column of each line in a file, using a comma (instead of space) as a field separator:
-    awk -F ',' '{print $NF}' filename
-
-# Sum the values in the first column of a file and print the total:
-    awk '{s+=$1} END {print s}' filename
-
-# Print every third line starting from the first line:
-    awk 'NR%3==1' filename
-
-# Print different values based on conditions:
-    awk '{if ($1 == "foo") print "Exact match foo"; else if ($1 ~ "bar") print "Partial match bar"; else print "Baz"}' filename
-
-# Print all lines where the 10th column value equals the specified value :
-    awk '($10 == value)'
-
-# Print all the lines which the 10th column value is between a min and a max :
-    awk '($10 >= min_value && $10 <= max_value)'
-```
-
-### `xargs` - e*x*ecute a command with piped *arg*ument*s*
-
-```shell
-# Execute a command with piped arguments coming from another command, a file, etc.
-# The input is treated as a single block of text and split into separate pieces on spaces, tabs, newlines and end-of-file.
-
-# Run a command using the input data as arguments:
-    arguments_source | xargs command
-
-# Run multiple chained commands on the input data:
-    arguments_source | xargs sh -c "command1 && command2 | command3"
-
-# Delete all files with a `.backup` extension (`-print0` uses a null character to split file names, and `-0` uses it as delimiter):
-    find . -name '*.backup' -print0 | xargs -0 rm -v
-
-# Execute the command once for each input line, replacing any occurrences of the placeholder (here marked as `_`) with the input line:
-    arguments_source | xargs -I _ command _ optional_extra_arguments
-
-# Parallel runs of up to `max-procs` processes at a time; the default is 1. If `max-procs` is 0, xargs will run as many processes as possible at a time:
-    arguments_source | xargs -P max-procs command
-```
-
-### `grep` - print lines that match patterns
-
-### `wc` - *w*ord, line, character, and byte *c*ount
-
-### `tee` - read from standard input and write to standard output and files
 
 # 系统管理
 
