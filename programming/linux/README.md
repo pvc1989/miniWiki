@@ -26,7 +26,13 @@ sudo apt install vim
 
 # Shell
 
-## Bash
+## `sh`
+
+`sh` is a POSIX-compliant command interpreter (shell).
+It is implemented by re-execing as either `bash`, `dash`, or `zsh` as determined by the symbolic link located at `/private/var/select/sh`.
+If `/private/var/select/sh` does not exist or does not point to a valid shell, `sh` will use one of the supported shells.
+
+## `bash`
 
 ### 启动方式
 
@@ -97,7 +103,7 @@ alias ll='ls -lF'
 source ~/.bashrc
 ```
 
-## ZSH
+## `zsh`
 
 安装及配置：
 
@@ -117,9 +123,19 @@ chsh -s $(which zsh)  # 更换 login shell
 # 退出当前 shell 并重新打开
 ```
 
-## [SSH](./ssh.md)
+## [`ssh`](./ssh.md)
 
-## 文件重定向
+## 文件操作
+
+### `locate` - *locate* files by name
+
+### `find` - *find* files in a directory hierarchy
+
+### `touch` - change file timestamps
+
+### `stat` - display file or file system *stat*us
+
+## 数据流操作
 
 |   名称   |   覆盖   |   追加    |
 | :------: | :------: | :-------: |
@@ -139,9 +155,124 @@ $ find ~/.. -name .bash_history > stdout.txt 2> stderr.txt
 $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 ```
 
-# 进程管理
+### `cat` - con*cat*enate files and print on the standard output
 
-## 基本概念
+### `head` - output the first part of files
+
+### `tail` - output the last part of files
+
+### `sort` - *sort* lines of text files
+
+### `uniq` - report or omit repeated lines
+
+### `sed` - *s*tream *ed*itor for filtering and transforming text
+
+```shell
+# Replace the first occurrence of a string in a file, and print the result:
+    sed 's/find/replace/' filename
+
+# Replace all occurrences of an extended regular expression in a file:
+    sed -E 's/regular_expression/replace/g' filename
+
+# Replace all occurrences of a string [i]n a file, overwriting the file (i.e. in-place):
+    sed -i '' 's/find/replace/g' filename
+
+# Replace only on lines matching the line pattern:
+    sed '/line_pattern/s/find/replace/' filename
+
+# Print only text between n-th line till the next empty line:
+    sed -n 'line_number,/^$/p' filename
+
+# Apply multiple find-replace expressions to a file:
+    sed -e 's/find/replace/' -e 's/find/replace/' filename
+
+# Replace separator `/` by any other character not used in the find or replace patterns, e.g. `#`:
+    sed 's#find#replace#' filename
+
+# [d]elete the line at the specific line number [i]n a file, overwriting the file:
+    sed -i '' 'line_numberd' filename
+```
+
+### `awk` - a versatile programming language for working on files.
+
+```shell
+# Print the fifth column (a.k.a. field) in a space-separated file:
+    awk '{print $5}' filename
+
+# Print the second column of the lines containing "foo" in a space-separated file:
+    awk '/foo/ {print $2}' filename
+
+# Print the last column of each line in a file, using a comma (instead of space) as a field separator:
+    awk -F ',' '{print $NF}' filename
+
+# Sum the values in the first column of a file and print the total:
+    awk '{s+=$1} END {print s}' filename
+
+# Print every third line starting from the first line:
+    awk 'NR%3==1' filename
+
+# Print different values based on conditions:
+    awk '{if ($1 == "foo") print "Exact match foo"; else if ($1 ~ "bar") print "Partial match bar"; else print "Baz"}' filename
+
+# Print all lines where the 10th column value equals the specified value :
+    awk '($10 == value)'
+
+# Print all the lines which the 10th column value is between a min and a max :
+    awk '($10 >= min_value && $10 <= max_value)'
+```
+
+### `xargs` - e*x*ecute a command with piped *arg*ument*s*
+
+```shell
+# Execute a command with piped arguments coming from another command, a file, etc.
+# The input is treated as a single block of text and split into separate pieces on spaces, tabs, newlines and end-of-file.
+
+# Run a command using the input data as arguments:
+    arguments_source | xargs command
+
+# Run multiple chained commands on the input data:
+    arguments_source | xargs sh -c "command1 && command2 | command3"
+
+# Delete all files with a `.backup` extension (`-print0` uses a null character to split file names, and `-0` uses it as delimiter):
+    find . -name '*.backup' -print0 | xargs -0 rm -v
+
+# Execute the command once for each input line, replacing any occurrences of the placeholder (here marked as `_`) with the input line:
+    arguments_source | xargs -I _ command _ optional_extra_arguments
+
+# Parallel runs of up to `max-procs` processes at a time; the default is 1. If `max-procs` is 0, xargs will run as many processes as possible at a time:
+    arguments_source | xargs -P max-procs command
+```
+
+### `grep` - print lines that match patterns
+
+### `wc` - *w*ord, line, character, and byte *c*ount
+
+### `tee` - read from standard input and write to standard output and files
+
+# 系统管理
+
+## 权限管理
+
+### `id` - display user *id*entity
+
+### `chmod` - *ch*ange a file's *mod*e
+
+### `umask` - set file mode creation *mask*
+
+### `su` - run a command with *s*ubstitute *u*ser
+
+### `sudo` - execute a command as another user
+
+### `chown` - *ch*ange a file's *own*er
+
+### `chgrp` - *ch*ange a file's *gr*ou*p*
+
+### `passwd` - change user *passw*or*d*
+
+
+## 进程管理
+
+### 基本概念
 本节的**程序 (program)** 特指（存储在磁盘中的）可执行文件，而**进程 (process)** 则是（被操作系统加载到内存中的）某个程序的运行实例。
 操作系统在加载一个程序使其成为一个进程时，会为其分配一个 **Process ID (PID)** 并附上进程触发者的 **User ID (UID)** 及 **Group ID (GID)**。
 
@@ -150,7 +281,7 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 - 依赖者（即被触发者）被称为**子进程 (child process)**。
 - 子进程将亲进程的 UID、GID 继承下来，并以*亲进程的 PID* 作为自己的 **Parent Process ID (PPID)**。
 
-## 查看进程
+### 查看进程
 
 |          命令           |                     功能                     |
 | :---------------------: | :------------------------------------------: |
@@ -162,7 +293,7 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 |          `top`          |     动态显示所有进程状态（按 `q` 退出）      |
 | `top -o +cpu -s 3 -n 4` |  CPU 升序、采样周期 `3` 秒、最多 `4` 个进程  |
 
-## 管理进程
+### 管理进程
 
 |          命令           |                     功能                     |
 | :---------------------: | :------------------------------------------: |
@@ -172,7 +303,8 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 | `killall -s -9 process` |               显示但不执行操作               |
 
 
-## 管理任务
+### 管理任务
+
 由同一个 shell 进程触发的子进程称为**任务 (job)**。
 若系统只提供了一个 shell 进程，则用户通常需要将*任务*在**前台 (foreground)** 与**后台 (background)** 之间来回切换，以便让多个任务同时运行。
 
@@ -238,11 +370,9 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
    [2]+  Interrupt: 2            find / > temp.txt
    ```
 
-# 网络管理
+## 网络管理
 
-## 网卡设置
-
-### `ifconfig`
+### `ifconfig` - *config*ure a network *i*nter*f*ace
 
 ```shell
 $ ifconfig  # 查询所有网卡
@@ -286,7 +416,7 @@ $ sudo ifconfig eno1 192.168.1.111  # 设置指定网卡（除 IPv4 地址外，
 $ sudo ifconfig eno1 192.168.1.111 netmask 255.255.255.0 mtu 8000  # 更精细的设置
 ```
 
-### `ip`
+### `ip` - show / manipulate routing, network devices, interfaces and tunnels
 
 ```shell
 $ ip -s link show  # 显示所有网卡的信息及统计（`-s`）
@@ -321,9 +451,7 @@ $ sudo ip link set eno1 up|down   # 开关指定网卡
 $ sudo ip link set eno1 mtu 8000  # 调整个别参数
 ```
 
-## 连接测试
-
-### `ping`
+### `ping` - send ICMP ECHO_REQUEST to network hosts
 
 ```shell
 $ ping bing.com  # 持续测试，直到 Ctrl + C 停止
@@ -340,7 +468,7 @@ rtt min/avg/max/mdev = 3.252/3.402/3.589/0.144 ms
 
 ```
 
-### `traceroute`
+### `traceroute` - print the *route* packets *trace* to network host
 
 ```shell
 $ traceroute bing.com
@@ -363,9 +491,7 @@ traceroute to bing.com (204.79.197.200), 30 hops max, 60 byte packets
 
 ```
 
-## 域名解析
-
-### `host`
+### `host` - DNS lookup utility
 
 ```shell
 $ host bing.com
@@ -375,7 +501,7 @@ bing.com has IPv6 address 2620:1ec:c11::200
 bing.com mail is handled by 10 bing-com.mail.protection.outlook.com.
 ```
 
-### `nslookup`
+### `nslookup` - query Internet *n*ame *s*ervers interactively
 
 ```shell
 $ nslookup bing.com
@@ -392,3 +518,4 @@ Address: 2620:1ec:c11::200
 
 ```
 
+### `netstat` - show *net*work *stat*us
