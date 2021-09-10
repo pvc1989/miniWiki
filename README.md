@@ -80,6 +80,7 @@ title: 首页
 ## [编程](./programming/README.md)
 - 计算机系统
   - [CSAPP](./programming/csapp/README.md)
+  - [计算机网络](./programming/network.md)
 - 设计思想
   - [设计原则](./programming/principles/README.md)
   - [设计模式](./programming/patterns/README.md)

@@ -4,6 +4,7 @@ title: 编程
 
 # 计算机系统
 ## [CSAPP](./csapp/README.md)
+## [计算机网络](./network.md)
 
 # 设计思想
 ## [设计原则](./principles/README.md)
