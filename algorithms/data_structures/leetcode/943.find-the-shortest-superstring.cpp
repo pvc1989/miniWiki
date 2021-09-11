@@ -50,67 +50,69 @@
  */
 
 // @lc code=start
-struct Record {
-  int dist{-1};
-  int next{-1};
-};
 class Solution {
+  struct Record {
+    int overlap{-1};
+    int next{-1};
+  };
+
   int size_;
   int mask_all_;
-  array<array<int, 12>, 12> dist_;
-  array<array<Record, 12>, 1<<12> dp_;
+  array<array<int, 12>, 12> overlap_;   // overlap(s[i], s[j])
+  array<array<Record, 12>, 1<<12> dp_;  // dp_[mask][tail]
 
-  int dp(int mask, int curr) {
-    assert(0 <= curr && curr < size_);
-    assert(mask & (1<<curr));
+  int dp(int mask, int tail) {
+    assert(0 <= tail && tail < size_);
+    assert(mask & (1<<tail));
     assert(0 <= mask && mask <= mask_all_);
-    auto opt_dist = dp_[mask][curr].dist;
-    if (opt_dist == -1) {
-      int opt_next;
+    auto max_overlap = dp_[mask][tail].overlap;
+    if (max_overlap == -1) {
+      int max_next;
       for (int next = 0; next < size_; ++next) {
         if (mask & (1<<next))
           continue;
-        auto dist = dist_[curr][next] + dp(mask ^ (1<<next), next);
-        if (opt_dist < dist) {
-          opt_dist = dist;
-          opt_next = next;
+        auto overlap = overlap_[tail][next] + dp(mask ^ (1<<next), next);
+        if (max_overlap < overlap) {
+          max_overlap = overlap;
+          max_next = next;
         }
       }
-      dp_[mask][curr].dist = opt_dist;
-      dp_[mask][curr].next = opt_next;
+      dp_[mask][tail].overlap = max_overlap;
+      dp_[mask][tail].next = max_next;
     }
-    return opt_dist;
+    return max_overlap;
   }
+
  public:
   string shortestSuperstring(vector<string>& words) {
     size_ = words.size();
     mask_all_ = (1<<size_) - 1;
-    // Populate dist_ and dp_
+    // initialize overlap_ and dp_
     for (int i = 0; i < size_; ++i) {
       for (int j = 0; j < size_; ++j) {
         if (i != j) {
           for (int k = min(words[i].size(), words[j].size()); k >= 0; --k) {
-            if (words[i].substr(words[i].size()-k, k) == words[j].substr(0, k)) {
-              dist_[i][j] = k;
+            auto suffix_i = words[i].substr(words[i].size()-k, k);
+            auto prefix_j = words[j].substr(0, k);
+            if (suffix_i == prefix_j) {
+              overlap_[i][j] = k;
               break;
             }
           }
         }
       }
-      dp_[mask_all_][i].dist = 0;
-    }    
-    
+      dp_[mask_all_][i].overlap = 0;
+    }
     // try each word as head
     int opt_head;
-    int max_dist = -1;
+    int max_overlap = -1;
     for (int head = 0; head < size_; ++head) {
-      auto dist = dp(1<<head, head);
-      if (max_dist < dist) {
-        max_dist = dist;
+      auto overlap = dp(1<<head, head);
+      if (max_overlap < overlap) {
+        max_overlap = overlap;
         opt_head = head;
       }
     }
-    
     // build the superstring
     auto curr = opt_head;
     auto result = words[curr];
@@ -120,8 +122,8 @@ class Solution {
       assert(0 <= curr && curr < size_);
       assert(0 <= next && next < size_);
       assert(curr != next);
-      auto dist = dist_[curr][next];
-      result.append(words[next].substr(dist));
+      auto overlap = overlap_[curr][next];
+      result.append(words[next].substr(overlap));
       mask ^= (1<<next);
       curr = next;
     }

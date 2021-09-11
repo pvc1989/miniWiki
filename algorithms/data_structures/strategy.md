@@ -122,17 +122,18 @@ return dp[0][max_room];
 
 ### 旅行商问题
 
-【**旅行商问题 (Travelling Salesman Problem, TSP)**】给定 $V$ 座城市及 $E$​ 条（连接其中任意两市的）道路，求一条遍历所有城市的最短路径。
+【**旅行商问题 (Travelling Salesman Problem, TSP)**】给定 $V$​ 座城市及 $E$​​ 条（连接其中两市的）道路，求一条访问每座城市各一次且总长度最短的回路。
 
 #### 最短超字符串
 
-[LeetCode-943](./leetcode/943.find-the-shortest-superstring.cpp)
+【LeetCode-943 [description](https://leetcode.com/problems/find-the-shortest-superstring/), [solution](./leetcode/943.find-the-shortest-superstring.cpp)】给定 $N$ 个最长为 $W$​​​​​ 字符且两两互不覆盖的字符串，求一个能覆盖所有词的**最短超字符串 (shortest superstring)**。
 
-给定 $N$ 个最长为 $W$ 字符且互不覆盖的字符串，求一个能够覆盖每个词的最短**超字符串 (superstring)**。
+穷举：遍历 $N$ 个字符串的所有（共 $N!$ 种）排列，取重叠字符个数最多的情形。
 
-复杂度
-- 时间 $Θ(N^2\cdot(2^N+W))$
-- 空间 $Θ(N\cdot(2^N+W))$
+DP：令 `dp(mask, i)`返回由掩码 `mask` 所表示的子集中的字符串构成、以第 `i` 个字符串为后缀的超字符串的最大重叠字符个数
+
+- `dp(mask^(1<<j), j) = max_{i ∈ mask}(overlap(s[i], s[j]))`
+- 复杂度：时间 $Θ(N^2\cdot(2^N+W))$，空间 $Θ(N\cdot(2^N+W))$
 
 ### 正则表达式
 
