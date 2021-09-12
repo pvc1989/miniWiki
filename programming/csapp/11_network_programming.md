@@ -6,23 +6,23 @@ title: 网络编程
 
 **客户端–服务端模型 (client–server model)** 是所有网络应用程序的基础。
 
-- 【**服务端 (server)**】管理资源、提供服务的进程。
-  - 【服务器 (server machine)】运行服务端程序的机器。
-- 【**客户端 (client)**】请求资源、使用服务的进程。
-  - 【客户机 (client machine)】运行客户端程序的机器。
+- **服务端 (server)**：管理资源、提供服务的进程。
+  - **服务器 (server machine)**：运行服务端的机器。
+- **客户端 (client)**：请求资源、使用服务的进程。
+  - **客户机 (client machine)**：运行客户端的机器。
 
 **交易 (transaction)** 是客户端与服务端交互的基本操作，含以下四步：
 
 1. 客户端向服务端发送**请求 (request)**。
-2. 服务端接收该*请求*，并根据需要使用其管理的资源。
+2. 服务端处理该*请求*，处理过程中按需服务器上的资源。
 3. 服务端向客户端发送**响应 (response)**，并等待下一个请求。
-4. 客户端接收该*响应*，并根据需要处理之。
+4. 客户端处理该*响应*。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/cliservsteps.pdf)
 
 ## P2P (Peer-to-Peer)
 
-本质上仍属于客户端–服务端模型，只是其中的每一台主机既是客户机又是服务器。
+本质上仍属于*客户端–服务端*模型，只是其中的每一个进程既是客户端又是服务端。
 
 # 2. 计算机网络
 
@@ -30,48 +30,50 @@ title: 网络编程
 
 ## PAN
 
-【**个域网 (personal area network, PAN)**】用无线（蓝牙）技术把个人使用的电子设备连接起来的网络。
+**个人区域网 (personal area network, PAN)**：用无线（蓝牙）技术把个人使用的电子设备连接起来的网络。
 
 ## LAN
 
-【**局域网 (local area network, LAN)**】覆盖较小（数十到数千米）范围的网络。
+**局域网 (local area network, LAN)**：覆盖较小（数十到数千米）范围的网络。
 
 目前最流行的局域网技术为**以太网 (Ethernet)**。
 
 ### 以太网段
 
-【**以太网段 (Ethernet segment)**】由多台主机通过*以太网线*（双绞线）连接到一台*集线器*所形成的*小型*网络，可覆盖一间或一层房屋。
+**以太网段 (Ethernet segment)**：由多台主机通过*以太网线*（双绞线）连接到一台*集线器*所形成的*小型*网络，可覆盖一间或一层房屋。
 
-- 【**以太网线 (Ethernet wire)**】一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
-- 【**集线器 (hub)**】只是将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
+- **以太网线 (Ethernet wire)**：一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
+- **集线器 (hub)**：工作在*物理层*的网络设备，将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
 - 每个以太网适配器都拥有一个 48-bit 的**物理地址 (physical/MAC address)**，以区别于其他适配器。
-- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**头标  (header)**。
+- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**首部  (header)**。
 
 ### 桥接的以太网
 
-【**桥接的以太网 (bridged Ethernet)**】由多个以太网段连接到多个网桥所形成的*中型*网络，可覆盖整栋建筑或整个校园。
+**桥接的以太网 (bridged Ethernet)**：由多个以太网段连接到多个网桥所形成的*中型*网络，可覆盖整栋建筑或整个校园。
 
-- 【**网桥 (bridge)**】能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
+- **网桥 (bridge)**：工作在*数据链路层*的网络设备，能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
+- **交换机 (switch)**：工作在*数据链路层*的网络设备，可看作多个网桥的集成设备。
 - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/bridge.pdf)
 
 ## MAN
 
-【**城域网 (metropolitan area network, MAN)**】覆盖几个街区或整个城市的网络。
+**城域网 (metropolitan area network, MAN)**：覆盖几个街区或整个城市的网络。
 
 ## WAN
 
-【**广域网 (wide area network, WAN)**】由多个局域网互连所形成的*大型*网络，可覆盖几十到几千公里。
+**广域网 (wide area network, WAN)**：由多个局域网互连所形成的*大型*网络，可覆盖几十到几千公里。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/internet.pdf)
 
-- 【**路由器 (router)**】在多个局域网及广域网之间转发数据的设备。
-  - 【**报文 (message)**】被传输的数据，被拆分为若干*分组*（又名*包*）逐个进行传输。
-  - 【**分组交换 (packet switching)**】路由器收到一个*包*后，先将其放入缓存，再根据*包头*中的*目标地址*从路由器的*转发表*中找到合适的出口，最后把包转发给下一个路由器。
-- 【**协议 (protocol)**】运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
-  - 【**命名格式 (naming scheme)**】定义格式统一的主机地址。
-  - 【**发送机制 (delivery mechanism)**】定义数据打包的方式。
+- **路由器 (router)**：一种*网络层*的网络设备，在多个局域网及广域网之间转发数据。
+  - **报文 (message)**：被传输的数据，被拆分为若干*分组*（又名*包*）逐个进行传输。
+  - **分组交换 (packet switching)**：路由器收到一个*包*后，先将其放入缓存，再根据*包头*中的*目标地址*从路由器的*转发表*中找到合适的出口，最后把包转发给下一个路由器。
+    - 早期的分组交换网络：**ARPA (Advanced Research Project Agency)** net
+- **协议 (protocol)**：运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
+  - **命名格式 (naming scheme)**：定义格式统一的主机地址。
+  - **发送机制 (delivery mechanism)**：定义数据打包的方式。
 
 ### 专线网
 
@@ -79,34 +81,34 @@ title: 网络编程
 
 ### 互连网
 
-【**互连网 (interconnected network, internet)**】由多个局域网、广域网经过路由器连接所形成的*公共*广域网，可覆盖全球。
+**互连网 (interconnected network, internet)**：由多个局域网、广域网经过*路由器*连接所形成的广域网，可覆盖全球。
 
-- 【**互连网包 (internet packet)**】= 【**包头 (packet header)**】+ 有效载荷（用户数据）
-- 【**局域网帧 (LAN frame)**】=【**帧头 (frame header)**】+ 有效载荷（互连网包）
+- **internet packet** = **PH (packet header)** + *payload (Data)*
+- **LAN frame** = **FH (frame header)** + *payload（internet packet）*
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/netp/intertrans.pdf)
 
 # 3. 因特网
 
-**全局 IP 互联网 (global IP internet)**，简称**互联网**或**因特网 (Internet)**，是所有*互连网*中最著名、最成功的一个。
+**全球 IP 互联网 (global IP internet)**，简称**互联网**或**因特网 (Internet)**，是所有*互连网*中最著名、最成功的一个。
 
 因特网中的每台主机都运行着遵循 **TCP/IP 协议** 的软件。
 
-- 【**IP (Internet Protocol)**】提供最基本的命名格式，以及主机到主机的**不可靠 (unreliable)** 传输机制。
-- 【**UDP (Unreliable Datagram Protocol)**】基于 IP 的简单扩展，提供进程到进程的*不可靠*传输。
-- 【**TCP (Transmission Control Protocol)**】基于 IP 的复杂扩展，提供进程到进程的双向*可靠*传输。
+- **IP (Internet Protocol)**：提供最基本的命名格式，以及主机到主机的**不可靠 (unreliable)** 传输机制。
+- **UDP (Unreliable Datagram Protocol)**：基于 IP 协议的简单扩展，提供进程到进程的*不可靠*传输。
+- **TCP (Transmission Control Protocol)**：基于 IP 协议的复杂扩展，提供进程到进程的双向*可靠*传输。
 
 对于普通程序员，Internet 可以理解为由世界上所有具备以下性质的主机所构成的 internet：
 
-- 主机之集被映射到 **IP 地址 (IP address)** 之集。
-- IP 地址之集被映射到**因特网域名 (Internet domain name)** 之集。
-- 一台主机上的进程可通过**连接 (connection)** 与另一台主机上的进程**通信 (communicate)**。
+- *主机*被映射到 **IP 地址 (IP address)**。
+- *IP 地址*被映射到**因特网域名 (Internet domain name)**。
+- 一台主机上的进程可通过[连接](#connection)与另一台主机上的进程**通信 (communicate)**。
 
 常用名词缩写：
 
-- **ISP (Internet Service Provider)**：提供互联网服务的机构（企业），可分为主干 ISP、地区 ISP、本地 ISP
+- **ISP (Internet Service Provider)**：提供互联网服务的机构（企业），可分为主干 ISP、地区 ISP、本地 ISP。
 
-- **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备
+- **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备。
 
 ## 3.1. IP 地址
 
@@ -128,10 +130,10 @@ uint32_t htonl(uint32_t hostlong);
 uint16_t htons(uint16_t hostshort);
 /* Network byte order TO Host byte order */
 uint32_t ntohl(uint32_t netlong);
-uint16_t ntohs(unit16_t netshort);
+uint16_t ntohs(uint16_t netshort);
 ```
 
-【**带点的十进制记法 (dotted decimal notation)**】用 `.` 分割为四段的字符串，每段各表示一个取自 `[0, 256)` 的十进制整数，例如：地址 `(uint32_t) 0x8002c2f2` 可以用 `(char*) "128.2.194.242"` 表示。以下函数用于地址与其字符串表示之间的转换：
+**点分十进制记法 (dotted decimal notation)**：用 `.` 分割为四段的字符串，每段各表示一个取自 `[0, 256)` 的十进制整数，例如：地址 `(uint32_t) 0x8002c2f2` 可以用 `(char*) "128.2.194.242"` 表示。以下函数用于 IP 地址的字符串**表示格式 (`p`resentation format)** 与**网络格式 (`n`etwork format)** 之间的转换：
 
 ```c
 #include <arpa/inet.h>
@@ -145,24 +147,25 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 
 ## 3.2. 因特网域名
 
-【**域名 (domain name)**】用 `.` 隔开的一组单词（字符、数字、下划线），例如：`csapp.cs.cmu.edu` 为本书网站的域名，从右向左依次为
+**域名 (domain name)**：用 `.` 隔开的一组单词（字符、数字、下划线），例如：`csapp.cs.cmu.edu` 为本书网站的域名，从右向左依次为
 
 - 顶级域名 `edu`，同级的域名还有 `gov`、`com` 等。
 - 二级域名 `cmu`，同级的域名还有 `mit`、`princeton` 等。
 - 三级域名 `cs`，同级的域名还有 `ee`、`art` 等。
 
-【**域名系统 (domain name system, DNS)**】
+**域名系统 (domain name system, DNS)**：
 - 管理*域名*与 *IP 地址*之间映射关系的分布式数据库。
 - 用 `nslookup` 命令可以查询已知域名所对应的 IP 地址（可能有零到多个）。
 
 ## 3.3. 因特网连接
 
-【**连接 (connection)**】一对可以收发字节流的*进程*。
-- 【**点到点 (point-to-point)**】建立在一对*进程*之间。
-- 【**全双工 (full duplex)**】可以在同一时间双向传输。
-- 【**可靠 (reliable)**】字节流的接收顺序与发送顺序一致。
+**连接 (connection)**：<a href id="connection"></a>一对可以收发字节流的*进程*。
 
-【**套接字 (socket)**】连接的一端，用形如 `ip_address:port` 的**套接字地址**表示，其中 `(uint16_t) port` 为**端口号 (port number)**。
+- **端到端 (end-to-end)**：建立在一对*进程*之间。
+- **全双工 (full duplex)**：可以在同一时刻双向传输。
+- **可靠 (reliable)**：字节流的接收顺序与发送顺序一致。
+
+**套接字 (socket)**：连接的一端，用形如 `ip_address:port` 的[套接字](#socket)地址表示，其中 `(uint16_t) port` 为**端口号 (port number)**。
 
 - 客户端的端口号不固定，由操作系统内核自动分配。
 - 服务端的端口号相对固定，列于 `/etc/services` 中。
@@ -179,6 +182,12 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 对于应用程序，套接字是一个打开的文件。
 
 ```c
+/* 泛型套接字地址结构，用于 connect, bind, accept 等函数 */
+struct sockaddr {
+    uint16_t  sa_family;    /* Protocol family */
+    char      sa_data[14];  /* Address data  */
+};
+typedef struct sockaddr SA;
 /* IPv4 套接字地址结构 */
 struct sockaddr_in {
     uint16_t        sin_family;  /* 协议族，总是取 `AF_INET` */
@@ -186,14 +195,6 @@ struct sockaddr_in {
     struct in_addr  sin_addr;    /* IPv4 地址，大端字节顺序 */
     unsigned char   sin_zero[8]; /* 对齐至 sizeof(struct sockaddr) */
 };
-
-/* 泛型套接字地址结构，用于 connect, bind, accept 等函数 */
-struct sockaddr {
-    uint16_t  sa_family;    /* Protocol family */
-    char      sa_data[14];  /* Address data  */
-};
-
-typedef struct sockaddr SA;
 ```
 
 ## 4.2. `socket()`
@@ -206,7 +207,7 @@ typedef struct sockaddr SA;
 int socket(int domain, int type, int protocol);
 
 /* 建议用 getaddrinfo() 获得实参 */
-socket_fd = Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 为连接一端 */, 0);
+socket_fd = Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 作为连接的一端 */, 0);
 ```
 
 ## 4.3. `connect()`
@@ -219,7 +220,7 @@ int connect(int client_fd, const SA *server_addr,
             socklen_t addr_len/* sizeof(sockaddr_in) */);
 ```
 
-至此，*客户端*可通过在 `client_fd` 上读写数据，实现与*服务端*的通信。
+至此，*客户端*可通过在 `client_fd` 所表示的*文件（套接字）*上读写数据，实现与*服务端*的通信。
 
 ## 4.4. `bind()`
 
@@ -234,10 +235,10 @@ int bind(int server_fd, const SA *server_addr,
 
 ## 4.5. `listen()`
 
-- 【**活跃套接字 (active socket)**】`socket()` 返回的默认是这种，客户端可直接使用。
-- 【**监听套接字 (listening socket)**】专供服务端接收连接请求，记作 `listen_fd`。
+- **活跃套接字 (active socket)**：`socket()` 默认返回的套接字类型，客户端可直接使用。
+- **监听套接字 (listening socket)**：专供服务端接收连接请求，记作 `listen_fd`。<a href id="listen"></a>
 
-*服务端*用此函数将*活跃套接字*转变为*监听套接字*。若成功则返回 `0`，否则返回 `-1`。<a href id="listen"></a>
+*服务端*用此函数将*活跃套接字*转变为*监听套接字*。若成功则返回 `0`，否则返回 `-1`。
 
 ```c
 #include <sys/socket.h>
@@ -254,7 +255,7 @@ int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，�
 int accept(int listen_fd, SA *client_addr, int *client_addr);
 ```
 
-至此，*服务端*可通过在 `connect_fd` 上读写数据，实现与*客户端*的通信。
+至此，*服务端*可通过在 `connect_fd` 所表示的*文件（套接字）*上读写数据，实现与*客户端*的通信。
 
 ## 4.7. 信息提取
 
@@ -274,7 +275,7 @@ int accept(int listen_fd, SA *client_addr, int *client_addr);
 
 struct addrinfo {
     int ai_flags; /* AI_ADDRCONFIG | AI_CANONNAME | AI_NUMERICSERV | AI_PASSIVE */
-    int ai_family; /* AF_INET or AF_INET6 */
+    int ai_family; /* AF_INET | AF_INET6 */
     int ai_socktype; /* SOCK_STREAM */
     int ai_protocol; /* Third arg to socket function */
     char *ai_canonname; /* Canonical hostname */
@@ -284,7 +285,7 @@ struct addrinfo {
 };
 
 int getaddrinfo(
-    const char *host/* 域名 或 十进制地址 */,
+    const char *host/* 域名 或 点分十进制地址 */,
     const char *service/* 服务名 或 端口号 */,
     const struct addrinfo *hints/* NULL 或 只含前四项的 addrinfo */,
     struct addrinfo **result/* 输出链表 */
@@ -322,8 +323,8 @@ int main(int argc, char **argv) {
   }
 
   memset(&hints, 0, sizeof(struct addrinfo));                         
-  hints.ai_family = AF_INET;       /* IPv4 only */
-  hints.ai_socktype = SOCK_STREAM; /* 只关注连接 */
+  hints.ai_family = AF_INET;       /* 只用 IPv4 */
+  hints.ai_socktype = SOCK_STREAM; /* 只面向连接 */
   if ((rc = getaddrinfo(argv[1], NULL, &hints, &listp)) != 0) {
     fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
     exit(1);
@@ -348,7 +349,7 @@ int main(int argc, char **argv) {
 
 ```c
 #include "csapp.h"
-int open_clientfd(char *hostname, char *port/* 端口号 */) {
+int open_clientfd(char *hostname, char *port) {
   int clientfd, rc;
   struct addrinfo hints, *listp, *p;
 
@@ -363,9 +364,10 @@ int open_clientfd(char *hostname, char *port/* 端口号 */) {
   }
 
   for (p = listp; p; p = p->ai_next) {
-    if ((clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) 
+    clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
+    if (clientfd < 0)
       continue;
-    if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1) 
+    if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1)
       break; /* 连接成功，则终止遍历 */
     if (close(clientfd) < 0) { /* 连接失败，则关闭文件，再尝试下一个 */
       fprintf(stderr, "open_clientfd: close failed: %s\n", strerror(errno));
@@ -398,7 +400,8 @@ int open_listenfd(char *port) {
   }
 
   for (p = listp; p; p = p->ai_next) {
-    if ((listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) 
+    listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
+    if (listenfd < 0) 
       continue;
 
     /* Eliminates "Address already in use" error from bind() */
@@ -425,7 +428,7 @@ int open_listenfd(char *port) {
 }
 ```
 
-## 4.9. 示例：回音系统
+## 4.9. 示例：回显系统
 
 ### `echoclient.c`
 
@@ -459,12 +462,22 @@ int main(int argc, char **argv) {
 
 ### `echoserveri.c`
 
-【**迭代型服务器 (iterative server)**】同一时间只能服务一个客户端，不同客户端要排成队列依次接受服务。
+**迭代型服务端 (iterative server)**：同一时间只能服务一个客户端，不同客户端要排成队列依次接受服务。
 
 ```c
 #include "csapp.h"
 
-void echo(int connfd);
+void echo(int connect_fd) {
+  size_t n; 
+  char buf[MAXLINE]; 
+  rio_t rio;
+
+  Rio_readinitb(&rio, connect_fd);
+  while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
+    printf("server received %d bytes\n", (int)n);
+    Rio_writen(connect_fd, buf, n);
+  }
+}
 
 int main(int argc, char **argv) {
   int listenfd, connect_fd;
@@ -490,18 +503,6 @@ int main(int argc, char **argv) {
   }
   exit(0);
 }
-
-void echo(int connect_fd) {
-  size_t n; 
-  char buf[MAXLINE]; 
-  rio_t rio;
-
-  Rio_readinitb(&rio, connect_fd);
-  while((n = Rio_readlineb(&rio, buf, MAXLINE)) != 0) {
-    printf("server received %d bytes\n", (int)n);
-    Rio_writen(connect_fd, buf, n);
-  }
-}
 ```
 
 ### 演示
@@ -514,7 +515,7 @@ void echo(int connect_fd) {
 | `Connected to (localhost, 44250)` | ← 建立连接 |                                |
 |                                   | 发送信息 → |         `hello, world`         |
 |    `server received 13 bytes`     | ← 处理信息 |                                |
-|                                   | 显示回音 → |         `hello, world`         |
+|                                   | 回显信息 → |         `hello, world`         |
 |                                   | 结束连接 → |            `Ctrl+D`            |
 |                                   | ← 等待连接 |                                |
 |             `Ctrl+C`              | ← 停止服务 |                                |
@@ -523,30 +524,33 @@ void echo(int connect_fd) {
 
 ## 5.1. 网页基础
 
-【**超文本传输协议 (HyperText Transfer Protocol, HTTP)**】**网页 (Web)** 服务的协议
-- 【**浏览器 (browser)**】HTTP 的客户端
-- 【**内容 (content)**】HTTP 的客户端向服务端请求的数据
+**超文本传输协议 (HyperText Transfer Protocol, HTTP)**：提供**网页 (Web)** 服务的协议
 
-【[**超文本标记语言 (HyperText Markup Language, HTML)**](../../documenting/web/html.md)】
-- 【**页面 (page)**】HTML 的程序
-- 【**标签 (tag)**】HTML 的指令
+- **浏览器 (browser)**：HTTP 的客户端程序<a href id="browser"></a>
+- **内容 (content)**：HTTP 的客户端向服务器请求的数据
+
+[**超文本标记语言 (HyperText Markup Language, HTML)**](../../documenting/web/html.md)：
+
+- **页面 (page)**：HTML 的程序
+- **标签 (tag)**：HTML 的指令
 
 ## 5.2. 网页内容
 
-【**MIME (Multipurpose Internet Mail Extensions)】**<a href id="mime"></a>
+**MIME (Multipurpose Internet Mail Extensions)**<a href id="mime"></a>
 
 网页内容分类
-- 【**静态内容 (static content)**】服务端传送给客户端的文件
-- 【**动态内容 (dynamic content)**】先在服务端上计算得到、再传输给客户端的数据
+- **静态内容 (static content)**：服务端传送给客户端的文件
+- **动态内容 (dynamic content)**：在服务端上计算得到后传输给客户端的数据
 
-【**URL (universal resource locator)**】
-- `http://www.google.com:80/index.html`，其中
+**URL (universal resource locator)**：
+
+- 【静态】`http://www.google.com:80/index.html`，其中
   - `www.google.com` 为域名，`80` 为端口号（`http` 服务的默认端口号为 `80`，可省略）。
-  - `/` 表示**服务端所在主机**上用于存放静态内容的目录（如 `/usr/httpd/html/`）。
+  - `/` 表示*服务端所在主机*上用于存放*静态内容*的目录（如 `/usr/httpd/html/`）。
   - `index.html` 为静态内容文件，
-- `http://bluefish.ics.cs.cmu.edu:8000/cgi-bin/adder?15000&213`，其中
+- 【动态】`http://bluefish.ics.cs.cmu.edu:8000/cgi-bin/adder?15000&213`，其中
   - `bluefish.ics.cs.cmu.edu` 为域名，`8000` 为端口号。
-  - `/cgi-bin/` 表示**服务端所在主机**上用于存放动态内容的目录，如 `/usr/httpd/cgi-bin/`。
+  - `/cgi-bin/` 表示*服务端所在主机*上用于存放*动态内容*生成程序的目录，如 `/usr/httpd/cgi-bin/`。
   - `adder` 为可执行文件，功能为加法。
   - `?` 之后为 `adder` 的实参列表，`&` 用于分隔实参。
 
@@ -554,13 +558,13 @@ void echo(int connect_fd) {
 
 ### `telnet`
 
-在客户端（的命令行终端）内输入以下内容，以发起连接：
+在客户机的命令行终端内输入以下内容，以发起连接：
 
 ```shell
 telnet csapp.cs.cmu.edu 80
 ```
 
-服务端返回以下三行，显示在客户端：
+服务端返回以下三行，显示在客户机的命令行终端：
 
 ```
 Trying 128.2.100.230...
@@ -581,14 +585,14 @@ Host: csapp.cs.cmu.edu
 其中
 
 - 第一行称作**请求行 (request line)**，格式为 `method URI version`
-  - 若客户端为浏览器，则 URI 为 URL 的后缀（位于域名、端口号之后的部分）。
-  - 若客户端为代理服务器，则 URI 为整个 URL。
-- 第二行开始为**请求页眉 (request header)**，格式为 `header_name: header_data`
+  - 若客户端为[浏览器](#browser)，则 URI 为 URL 的后缀（位于域名、端口号之后的部分）。
+  - 若客户端为[代理服务器](./labs/proxy/README.md)，则 URI 为整个 URL。
+- 第二行开始为**请求首部 (request header)**，格式为 `header_name: header_data`
 - 最后的空行表示页眉结尾。
 
 ### HTTP 响应
 
-服务器返回以下内容，打印在客户端：
+服务端返回以下内容，打印在客户端：
 
 ```
 HTTP/1.1 200 OK
@@ -606,8 +610,8 @@ Content-Type: text/html; charset=UTF-8
 其中
 
 - 第一行称作**响应行 (response line)**，格式为 `version status_code status_message`
-- 第二行开始为**响应页眉 (response header)** 
-- 最后的空行表示页眉结尾。
+- 第二行开始为**响应首部 (response header)** 
+- 最后的空行表示首部结尾。
 
 接下来，客户端显示网页的 HTML 源代码：
 
@@ -632,19 +636,19 @@ Connection closed by foreign host.
 
 ## 5.4. 提供动态内容
 
-【**CGI (common gateway interface)**】
+**CGI (common gateway interface)**：
 
-### 客户端向服务器传递实参
+### 客户端向服务端传递实参
 
-`GET` 将 URI 中的实参传送给服务器，其中
+客户端请求行中的 `GET` 方法将 URI 中的实参传送给服务端，其中
 
 - `?` 分隔文件名与实参。
 - `&` 分割实参列表，实参列表中不能含空格。
 - 实参本身含*空格*的，用特殊字符 `%20` 表示。
 
-### 服务器向子进程传递实参
+### 服务端向子进程传递实参
 
-服务器收到 `GET /cgi-bin/adder?15000&213 HTTP/1.1` 后，会依次
+服务端收到 `GET /cgi-bin/adder?15000&213 HTTP/1.1` 后，会依次
 
 - 用 `fork` 创建一个子进程。
 - 将 CGI 环境变量 `QUERY_STRING` 设为 `15000&213`。 
@@ -652,23 +656,23 @@ Connection closed by foreign host.
 
 详见 [`serve_dynamic()`](#)。
 
-### 服务器向子进程传递其他信息
+### 服务端向子进程传递其他信息
 
 CGI 标准定义了一些环境变量，用于传递信息：
 
-- `QUERY_STRING` 程序实参
-- `SERVER_PORT` 服务器的[监听端口](#listen)
-- `REQUEST_METHOD` 可以为 `GET` 或 `POST`
-- `REMOTE_HOST` 客户端域名
-- `REMOTE_ADDR` 客户端 IP 地址
-- `CONTENT_TYPE` 仅供 `POST`，表示所请求对象的 [MIME](#mime) 类型
-- `CONTENT_LENGTH` 仅供 `POST`，表示所请求对象的字节数
+- 【`QUERY_STRING`】程序实参
+- 【`SERVER_PORT`】服务器的[监听端口](#listen)
+- 【`REQUEST_METHOD`】可以为 `GET` 或 `POST`
+- 【`REMOTE_HOST`】客户端域名
+- 【`REMOTE_ADDR`】客户端 IP 地址
+- 【`CONTENT_TYPE`】仅供 `POST`，表示所请求对象的 [MIME](#mime) 类型
+- 【`CONTENT_LENGTH`】仅供 `POST`，表示所请求对象的字节数
 
 ### 子进程向客户端发送结果
 
-加载 CGI 程序前，子进程会用 `dup2` 将 `stdout` 重定向到 `connect_fd`，从而传递给客户端。
+加载 CGI 程序前，子进程会用 `dup2()` 将 `stdout` 重定向到 `connect_fd`，从而传递给客户端。
 
-详见 [`serve_dynamic()`](#)。
+详见 [`serve_dynamic()`](#serve_dynamic)。
 
 
 ### `adder.c`
@@ -693,7 +697,7 @@ int main(void) {
 
   /* Make the response body */
   sprintf(content, "Welcome to add.com: ");
-  sprintf(content, "%sTHE Internet addition portal.\r\n<p>", content);
+  sprintf(content, "%sThe Internet addition portal.\r\n<p>", content);
   sprintf(content, "%sThe answer is: %d + %d = %d\r\n<p>", 
           content, n1, n2, n1 + n2);
   sprintf(content, "%sThanks for visiting!\r\n", content);
@@ -709,7 +713,7 @@ int main(void) {
 }
 ```
 
-# 6. 示例：`tiny.c`
+# 6. 示例：微型网页服务器
 
 ## `main()`
 
@@ -726,14 +730,14 @@ int main(int argc, char **argv) {
   }
 
   listen_fd = Open_listenfd(argv[1]);
-  while (1) { // 迭代型服务器
+  while (1) { // 迭代型服务端
     client_len = sizeof(client_addr);
     connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
     Getnameinfo((SA *)&client_addr, client_len,
                 hostname, MAXLINE,
                 port, MAXLINE, 0);
     printf("Accepted connection from (%s, %s)\n", hostname, port);
-    doit(connect_fd); // 处置请求
+    doit(connect_fd); // 处理请求
     Close(connect_fd);
   }
 }
@@ -759,7 +763,7 @@ void doit(int fd) {
                 "Tiny does not implement this method");
     return;
   }
-  read_requesthdrs(&rio); // 忽略请求页眉
+  read_requesthdrs(&rio); // 忽略请求首部
 
   is_static = parse_uri(uri, filename, cgiargs);
   if (stat(filename, &sbuf) < 0) {
@@ -884,7 +888,7 @@ void serve_static(int fd, char *filename, int filesize) {
 }
 ```
 
-## `serve_dynamic()`
+## `serve_dynamic()`<a href id="serve_dynamic"></a>
 
 ```c
 void serve_dynamic(int fd, char *filename, char *cgiargs) {

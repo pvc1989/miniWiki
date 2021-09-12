@@ -5,7 +5,7 @@ title: 虚拟内存
 # 1. 物理地址与虚拟地址
 
 - **物理地址 (physical address, PA)**：
-- **虚拟地址 (virtual memory, VA)**：
+- **虚拟地址 (virtual address, VA)**：
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/virtualoverview.pdf)
 
@@ -55,9 +55,9 @@ title: 虚拟内存
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmcache.pdf)
 
-- MMU (Memory Management Unit)
-- PTE (Page Table Entry)
-- PTEA (Page Table Entry Address)
+- **MMU (Memory Management Unit)**
+- **PTE (Page Table Entry)**
+- **PTEA (Page Table Entry Address)**
 
 ## 6.2. 用 TLB 加速地址翻译
 
@@ -89,7 +89,7 @@ title: 虚拟内存
 
 ## 8.1. 共享对象再探
 
-【**写时复制 (Copy-On-Write, COW)**】
+**写时复制 (Copy-On-Write, COW)**：
 
 |                    两个进程共享数据                     |              进程 2 在私有 COW 页面写入数据              |
 | :-----------------------------------------------------: | :------------------------------------------------------: |
@@ -113,7 +113,7 @@ int munmap(void *start, size_t length);
     // Returns: 0 if OK, −1 on error
 ```
 
-此函数从文件 `fd` 读取始于 `offset` 字节、长 `length` 字节的数据区块，映射到（可能）始于 `start` 的虚拟内存空间。
+此函数从文件 `fd` 读取始于 `offset` 字节、长度为 `length` 字节的数据区块，映射到（可能）始于 `start` 的虚拟内存空间。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmapargs.pdf)
 
@@ -358,8 +358,8 @@ extern void mm_free(void *ptr);
 ```
 
 为简化*合并相邻的空闲区块*，在链表两端引入一对辅助区块：
-- **起始区块 (prologue block)**：长度为 8 B，只含*区块首*及*区块尾*。
-- **结尾区块 (epilogue block)**：长度为 4 B，只含*区块首*，并标记为*已分配的*。
+- **起始区块 (prologue block)**：长度为 8 B，只含*区块首部*及*区块尾部*。
+- **结尾区块 (epilogue block)**：长度为 4 B，只含*区块首部*，并标记为*已分配的*。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmimplicitlist.pdf)
 
@@ -492,7 +492,7 @@ void *mm_malloc(size_t size) {
 
 **简易分离存储 (simple segregated storage)**：每条链表中的空闲区块具有相同的尺寸；不分裂或合并空闲区块。
 
-- 【优点】分配、释放均可在常数时间内完成（调用 `sbrk()` 除外）；无需区块首、区块尾；用单向链表即可实现。
+- 【优点】分配、释放均可在常数时间内完成（调用 `sbrk()` 除外）；无需区块首部、区块尾部；用单向链表即可实现。
 - 【缺点】空间利用率低。
 
 ### 分离匹配
