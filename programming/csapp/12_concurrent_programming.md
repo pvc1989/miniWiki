@@ -2,20 +2,21 @@
 title: 并发编程
 ---
 
-【**并发程序 (concurrent program)**】在*应用层 (application-level)* 实现*并发 (concurrency)* 的程序。
+- **并发 (concurrency)**：多个程序在宏观上（一段时间内）同时执行，但在微观上（某一时刻）未必同时执行。
+- **并发程序 (concurrent program)**：在**应用层 (application-level)** 实现*并发*的程序。
 
 # 1. 基于进程的并发
 
-1. 服务器收到一个客户端 `Client_1` 发来的连接请求。
-   - 返回一个异于 `listen_fd` 的 `connect_fd_1`
-2. 服务器 `fork` 出一个子进程 `Child_1`，由后者向 `Client_1` 提供服务。
-   - 子进程 `Child_1` 关闭 `listen_fd`
-   - 主进程 `Parent` 关闭 `connect_fd_1`
-3. 服务器收到另一个客户端 `Client_2` 发来的连接请求。
-   - 返回一个异于 `listen_fd` 的 `connect_fd_2`
+1. 服务端 `Server` 收到一个客户端 `Client_1` 发来的连接请求。
+   - 返回一个异于 `listenfd(3)` 的 `connfd(4)`
+2. 服务端 `fork` 出一个子进程 `Child_1`，由后者向 `Client_1` 提供服务。
+   - 子进程 `Child_1` 关闭 `listenfd(3)`
+   - 主进程 `Server` 关闭 `connfd(4)`
+3. 服务端收到另一个客户端 `Client_2` 发来的连接请求。
+   - 返回一个异于 `listenfd(3)` 的 `connfd(5)`
 4. 服务器 `fork` 出另一个子进程 `Child_2`，由后者向 `Client_2` 提供服务。
-   - 子进程 `Child_2` 关闭 `listen_fd`
-   - 主进程 `Parent` 关闭 `connect_fd_2`
+   - 子进程 `Child_2` 关闭 `listenfd(3)`
+   - 主进程 `Server` 关闭 `connfd(5)`
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/conc4.pdf)
 
@@ -23,6 +24,7 @@ title: 并发编程
 
 ```c
 #include "csapp.h"
+
 void echo(int connect_fd);
 
 void sigchld_handler(int sig) {
@@ -46,7 +48,7 @@ int main(int argc, char **argv) {
   while (1) {
     client_len = sizeof(struct sockaddr_storage); 
     connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
-    if (Fork() == 0) { 
+    if (Fork() == 0) {
       Close(listen_fd);   /* Child closes its listening socket */
       echo(connect_fd);   /* Child services client */
       Close(connect_fd);  /* Child closes connection with client */
@@ -61,14 +63,14 @@ int main(int argc, char **argv) {
 
 各进程有独立的虚拟内存空间，既是优点，也是缺点：
 
-- 【优点】各进程只能读写自己的虚拟内存，不会破坏其他进程的虚拟内存。
-- 【缺点】进程之间共享数据变得困难，必须使用显式**进程间通信 (InterProcess Communication, IPC)**。
+- 【优点】各进程只能读写自己的虚拟内存空间，不会破坏其他进程的虚拟内存空间。
+- 【缺点】进程之间共享数据变得困难，必须显式地使用**进程间通信 (InterProcess Communication, IPC)**。
 
 # 2. 基于读写复用的并发
 
 ## `select()`
 
-【需求】并发处理*连接请求*与*键盘输入*：
+【需求】并发地处理*连接请求*与*键盘输入*：
 
 - 等待连接请求，会屏蔽键盘输入。
 - 等待键盘输入，会屏蔽连接请求。
@@ -88,8 +90,15 @@ FD_ISSET(int fd, fd_set *fdset); /* Is bit `fd` in `fdset` on? */
 
 ```c
 #include "csapp.h"
+
 void echo(int connect_fd);
-void command(void);
+
+void command(void) {
+  char buf[MAXLINE];
+  if (!Fgets(buf, MAXLINE, stdin))
+    exit(0); /* EOF */
+  printf("%s", buf); /* Process the input command */
+}
 
 int main(int argc, char **argv) {
   int listen_fd, connect_fd;
@@ -104,42 +113,35 @@ int main(int argc, char **argv) {
   listen_fd = Open_listenfd(argv[1]);
 
   FD_ZERO(&read_set);              /* read_set = { } */
-  FD_SET(STDIN_FILENO, &read_set); /* read_set = { `stdin` } */
-  FD_SET(listen_fd, &read_set);    /* read_set = { `stdin`, `listen_fd` } */
+  FD_SET(STDIN_FILENO, &read_set); /* read_set = { stdin } */
+  FD_SET(listen_fd, &read_set);    /* read_set = { stdin, listen_fd } */
 
   while (1) {
     ready_set = read_set;
     Select(listen_fd+1, &ready_set, NULL, NULL, NULL);
-    /* 直到 `stdin` 或 `listen_fd` 可用 */
+    /* 直到 stdin 或 listen_fd 可用 */
     if (FD_ISSET(STDIN_FILENO, &ready_set)) {
-      /* `stdin` 可用，响应键盘输入 */
+      /* stdin 可用，响应键盘输入 */
       command();
     }
     if (FD_ISSET(listen_fd, &ready_set)) {
-      /* `listen_fd` 可用，响应连接请求 */
+      /* listen_fd 可用，响应连接请求 */
       client_len = sizeof(struct sockaddr_storage); 
       connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
-      echo(connect_fd); /* 可优化为 `echo_at_most_one_line()` */
+      echo(connect_fd); /* 可优化为 echo_at_most_one_line() */
       Close(connect_fd);
     }
   }
-}
-
-void command(void) {
-  char buf[MAXLINE];
-  if (!Fgets(buf, MAXLINE, stdin))
-    exit(0); /* EOF */
-  printf("%s", buf); /* Process the input command */
 }
 ```
 
 ## 2.1. `echoservers.c`
 
-【**状态机 (state machine)**】服务器为客户端 `Client_k` 分配描述符 `fd_k`
+**状态机 (state machine)**：服务端为客户端 `Client_k` 分配描述符 `d_k`
 
-- 【**状态 (state)**】服务器等待描述符 `fd_k` 可用。
-- 【**事件 (event)**】描述符 `fd_k` 可用，服务器通过 `select()` 检测。
-- 【**迁移 (transition)**】服务器从 `fd_k` 读取一行，通过 `check_clients()` 实现。
+- **状态 (state)**：服务端等待描述符 `d_k` 可用。
+- **事件 (event)**：服务端通过 `select()` 检测到 `d_k` 可用。
+- **迁移 (transition)**：服务端从 `d_k` 读取一行，通过 `check_clients()` 实现。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/state.pdf)
 
@@ -196,7 +198,7 @@ void init_pool(int listen_fd, pool_t *p) {
   /* Initially, there are no connected descriptors */
   int i;
   p->max_i = -1;
-  for (i = 0; i < FD_SETSIZE; i++)  
+  for (i = 0; i < FD_SETSIZE; i++)
     p->client_fd[i] = -1;
 
   /* Initially, listen_fd is the only member of read_set */
@@ -263,10 +265,10 @@ void check_clients(pool_t *p) {
 
 # 3. 基于线程的并发
 
-【**线程 (thread)**】运行在某个进程上下文中的一条逻辑控制流。<a href id="thread"></a>
+**线程 (thread)**：运行在某个[进程](./8_exceptional_control_flow.md#process)上下文中的一条逻辑控制流。<a href id="thread"></a>
 
 - 各线程有其独享的***线程*上下文 (*thread* context)**（**线程号 (Thread ID, TID)**、运行期栈、通用寄存器、条件码）。
-- 各线程共享其所属的***进程*上下文 (*process* context)**（代码、数据、堆、共享库、打开的文件）。
+- 各线程共享其所属的***进程*上下文 (*process* context)**（代码、数据、堆内存、共享库、打开的文件）。
 
 ## 3.1. 线程执行模型
 
@@ -278,9 +280,9 @@ void check_clients(pool_t *p) {
 
 - 线程上下文比进程上下文小很多，因此切换起来更快。
 - 同一进程的各线程之间没有严格的主从关系。
-  - 【**主线程 (main thread)**】最先运行的那个线程。
-  - 【**同伴进程 (peer thread)**】除主线程外的其他线程。
-  - 【**同伴池 (pool of peers)**】同一进程的所有线程。
+  - **主线程 (main thread)**：最先运行的那个线程。
+  - **同伴进程 (peer thread)**：除主线程外的其他线程。
+  - **同伴池 (pool of peers)**：同一进程的所有线程。
 
 ## 3.2. `pthread`
 
@@ -294,7 +296,7 @@ void *thread(void *vargp) { /* thread routine */
 }
 int main() {
   pthread_t tid;
-  Pthread_create(&tid, NULL, thread, NULL); /* 创建同伴线程，在其中运行 `thread()` */
+  Pthread_create(&tid, NULL, thread, NULL); /* 创建同伴线程，在其中运行 thread() */
   Pthread_join(tid, NULL); /* 等待同伴线程结束 */
   exit(0);
 }
@@ -302,7 +304,7 @@ int main() {
 
 `thread()` 只能接收与返回 `void*`，若要传入或返回多个参数，需借助 `struct`。
 
-## 3.3. 创建线程
+### 3.3. 创建线程
 
 ```c
 #include <pthread.h>
@@ -312,14 +314,14 @@ int pthread_create(pthread_t *tid, pthread_attr_t *attr/* NULL 表示默认属�
 pthread_t pthread_self(void); /* 返回当前线程的 TID */
 ```
 
-## 3.4. 结束线程
+### 3.4. 结束线程
 
 结束线程的几种方式：
 
 - 【隐式结束】传给 `pthread_create()` 的 `f()` 运行完毕并返回。
 - 【显式结束】调用 `pthread_exit()` 结束当前线程。
 - 【结束进程】某个同伴线程调用 `exit()` 结束整个进程。
-- 【取消线程】因另一个进程调用 `pthread_cancel()` 而结束。
+- 【取消线程】因另一个线程调用 `pthread_cancel()` 而结束。
 
 ```c
 #include <pthread.h>
@@ -327,7 +329,7 @@ void pthread_exit(void *thread_return);
 int pthread_cancel(pthread_t tid);
 ```
 
-## 3.5. 收割线程
+### 3.5. 收割线程
 
 ```c
 #include <pthread.h>
@@ -336,12 +338,12 @@ int pthread_join(pthread_t tid, void **thread_return);
 
 与[收割子进程](./8_exceptional_control_flow.md#收割子进程)的 `waitpid()` 类似，但 `pthread_join()` 只能收割特定的线程。
 
-## 3.6. 分离线程
+### 3.6. 分离线程
 
 任何线程总是处于以下两种状态之一：
 
-- 【**可加入的 (joinable)**】可以被其他线程收割或取消，其内存资源在该线程被收割或取消时才被释放。（默认）
-- 【**分离的 (detached)**】不能被其他线程收割或取消，其内存资源在该线程结束时被系统自动释放。（推荐）
+- **可加入的 (joinable)**：可以被其他线程收割或取消，其内存资源在该线程被收割或取消时才被释放。（默认）
+- **分离的 (detached)**：不能被其他线程收割或取消，其内存资源在该线程结束时被系统自动释放。（推荐）
 
 为避免内存泄漏，任何可加入线程都应当被显式收割或取消，或通过以下函数转为分离的状态：
 
@@ -352,7 +354,7 @@ int pthread_detach(pthread_t tid);
 pthread_detach(pthread_self());
 ```
 
-## 3.7. 初始化线程<a href id="pthread_once"></a>
+### 3.7. 初始化线程<a href id="pthread_once"></a>
 
 ```c
 #include <pthread.h>
@@ -374,7 +376,7 @@ void echo(int connect_fd);
 void *thread(void *vargp) { /* Thread routine */
   int connect_fd = *((int *)vargp);
   Pthread_detach(pthread_self());
-  Free(vargp); /* malloc'ed in main thread */
+  Free(vargp); /* Malloc'ed in main thread */
   echo(connect_fd);
   Close(connect_fd);
   return NULL;
@@ -384,7 +386,7 @@ int main(int argc, char **argv) {
   int listen_fd, *connect_fdp;
   socklen_t client_len;
   struct sockaddr_storage client_addr;
-  pthread_t tid; 
+  pthread_t tid;
 
   if (argc != 2) {
     fprintf(stderr, "usage: %s <port>\n", argv[0]);
@@ -403,36 +405,34 @@ int main(int argc, char **argv) {
 
 # 4. 多线程共享变量
 
-【**共享变量 (shared variable)**】被多个线程（直接或间接）访问的变量。
+**共享变量 (shared variable)**：被多个线程（直接或间接）访问的变量。
 
 - *寄存器*中的数据始终独享，*虚拟内存*中的数据可以共享。
 - 各线程通常不访问其他线程的*栈区*，但栈区属于*虚拟内存*，故仍可共享。
 
 ```c
 #include "csapp.h"
-#define N 2
-void *thread(void *vargp);
 
 char **ptr;  /* 全局变量 in 数据读写区，直接共享 */
 
+void *thread(void *vargp) {
+  int i = (int)vargp;    /* 局部自动变量 in 该线程栈区，不被共享 */
+  static int count = 0;  /* 局部静态变量 in 数据读写区，直接共享 */
+  printf("msgs[%d]: %s (count=%d)\n", i, ptr[i], ++count);
+  return NULL;
+}
+
 int main() {
-  int i;  
+  int i;
   pthread_t tid;
-  char *msgs[N] = { /* 局部自动变量 in 主线程栈区，间接共享 */
+  char *msgs[2] = { /* 局部自动变量 in 主线程栈区，间接共享 */
     "Hello from foo", "Hello from bar"
   };
 
   ptr = msgs;
-  for (i = 0; i < N; i++)
+  for (i = 0; i < 2; i++)
     Pthread_create(&tid, NULL, thread, (void *)i);
   Pthread_exit(NULL);
-}
-
-void *thread(void *vargp) {
-  int myid = (int)vargp; /* 局部自动变量 in 该线程栈区，不被共享 */
-  static int count = 0;  /* 局部静态变量 in 数据读写区，直接共享 */
-  printf("[%d]: %s (count=%d)\n", myid, ptr[myid], ++count);
-  return NULL;
 }
 ```
 
@@ -440,36 +440,38 @@ void *thread(void *vargp) {
 
 一般而言，无法预知各线程被操作系统选中的执行顺序。
 
+假设 `cnt` 为一*内存变量*（与整个生命期在寄存器中度过的*寄存器变量*相对）：
+
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/badcntasm.pdf)
 
 ## 5.1. 进程图<a href id="graph"></a>
 
-【**进程图 (progress graph)**】
+**进程图 (progress graph)**：
 
 - $n$ 个线程的执行过程对应于 $n$ 维空间中的轨迹。
 - 第 $k$ 坐标轴对应于第 $k$ 线程。
 - 点 $(I_1,I_2,\dots,I_n)$ 表示第 $k$ 线程完成指令 $I_k$ 后的状态，其中 $k=1,\dots,n$。
-- （单核处理器）同一时间只能执行一条指令，故轨迹的生长始终平行于某一坐标轴。
+- （单核处理器）同一时刻只能执行一条指令，故轨迹的生长始终平行于某一坐标轴。
 
 进程图有助于理解以下概念：
-- 【**关键段 (critical section)**】操纵共享变量的指令序列。<a href id="critical"></a>
-- 【**互斥 (mutual exclusion)**】任一线程执行关键段时，应当暂时独享对共享变量访问。
-- 【**不安全区域 (unsafe region)**】$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$ 线程的关键段。<a href id="unsafe"></a>
-- 【**不安全轨迹 (unsafe trajectory)**】经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
+- **关键段 (critical section)**：操纵共享变量的指令序列。<a href id="critical"></a>
+- **互斥 (mutual exclusion)**：任一线程执行关键段时，应当暂时独享对共享变量访问。
+- **不安全区 (unsafe region)**：$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$​ 线程的关键段。<a href id="unsafe"></a>
+- **不安全轨迹 (unsafe trajectory)**：经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/safetraj.pdf)
 
 ## 5.2. 信号量<a href id="semaphore"></a>
 
-【**信号量 (semaphore)**】用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
+**信号量 (semaphore)**：用于同步并发程序的整型全局变量 `s`​，只能由以下方法修改（由🇳🇱计算机科学家 Dijkstra 发明）
 
 - 【`P(s)​`】🇳🇱proberen🇨🇳检测
-  - 若 `s != 0`，则 `return --s`，此过程不可被中断。
+  - 若 `s != 0`，则 `return --s`，此过程不会被打断。
   - 若 `s == 0`，则暂停当前线程，直到被 `V(s)​` 重启，再 `return --s`。
 - 【`V(s)​`】🇳🇱verhogen🇨🇳增加
-  - 读取 `s`、`++s​`、存储 `s`，此过程不可被中断。
+  - 读取 `s`、增加 `s​`、存储 `s`，此过程不会被打断。
   - 若某些线程在 `P(s)​` 中等待，则重启其中任意一个。
-- 【不变量】`s >= 0` 始终成立。
+- 【不变量】若 `s` 初值为 `1`，且[关键段](#critical)位于 `P(s)`与 `V(s)` 之间，则 `s >= 0` 始终成立。
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/pgsem.pdf)
 
@@ -485,26 +487,26 @@ void P(sem_t *s); /* Wrapper function for sem_wait */
 void V(sem_t *s); /* Wrapper function for sem_post */
 ```
 
-## 5.3. 用信号量实现互斥
+## 5.3. 用信号量实现互斥访问
 
-【**二项信号量 (binary semaphore)**】为每个共享变量关联一个初值为 `1` 的信号量 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
+**二项信号量 (binary semaphore)**：为每个共享变量关联一个初值为 `1` 的信号量 `s`，用 `P(s)` 及 `V(s)` 包围[关键段](#critical)。
 
-- 【**互斥 (mutex)**】用于支持对共享变量**互斥 (MUTually EXclusive)** 访问的二项信号量。
-- 【**上锁 (lock)**】在关键段头部调用 `P(s)` 或 `sem_wait()`
-- 【**开锁 (unlock)**】在关键段尾部调用 `V(s)` 或 `sem_post()`
-- 【**禁止区域 (forbidden region)**】`s < 0` 的区域，略大于[不安全区域](#unsafe)。
+- **互斥 (mutex)**：用于支持对共享变量**互斥 (MUTually EXclusive)** 访问的二项信号量。
+- **上锁 (lock)**：在关键段之前调用 `P(s)` 或 `sem_wait()`
+- **开锁 (unlock)**：在关键段之后调用 `V(s)` 或 `sem_post()`
+- **禁止区域 (forbidden region)**：即 `s < 0` 的区域，略大于[不安全区域](#unsafe)。
 
 ```c
 #include "csapp.h"
 
-volatile long count = 0; /* global counter */
+volatile long cnt = 0; /* global counter */
 sem_t mutex; /* semaphore that protects `count` */
 
 void *thread(void *vargp) {
   long n_iters = *((long *)vargp);
   for (long i = 0; i < n_iters; i++) {
     P(&mutex);
-    count++;
+    cnt++;
     V(&mutex);
   }
   return NULL;
@@ -516,7 +518,7 @@ int main(int argc, char **argv) {
 
   /* Check input argument */
   if (argc != 2) { 
-    printf("usage: %s <niters>\n", argv[0]);
+    printf("usage: %s <n_iters>\n", argv[0]);
     exit(0);
   }
   n_iters = atoi(argv[1]);
@@ -528,58 +530,26 @@ int main(int argc, char **argv) {
   Pthread_join(tid1, NULL);
   Pthread_join(tid2, NULL);
   /* Check result */
-  if (count != (2 * n_iters))
-    printf("BOOM! count=%ld\n", count);
+  if (cnt != (2 * n_iters))
+    printf("BOOM! cnt=%ld\n", cnt);
   else
-    printf("OK count=%ld\n", count);
+    printf("OK cnt=%ld\n", cnt);
   exit(0);
-}
-```
-
-### `pthread_mutex_t`
-
-```c
-#include <pthread.h>
-
-// Without static initialization
-static pthread_once_t foo_once = PTHREAD_ONCE_INIT;
-static pthread_mutex_t foo_mutex;
-void foo_init() {
-  pthread_mutex_init(&foo_mutex, NULL);
-}
-void foo() {
-  pthread_once(&foo_once, foo_init);
-  pthread_mutex_lock(&foo_mutex);
-  /* critical section */
-  pthread_mutex_unlock(&foo_mutex);
-}
-
-// With static initialization, the same routine could be coded as
-static pthread_mutex_t foo_mutex = PTHREAD_MUTEX_INITIALIZER;
-void foo() {
-  pthread_mutex_lock(&foo_mutex);
-  /* critical section */
-  pthread_mutex_unlock(&foo_mutex);
-}
-
-int main() {
-  /* use foo() */
-  pthread_mutex_destroy(&foo_mutex);
 }
 ```
 
 ## 5.4. 用信号量调度共享资源
 
-【**计数信号量 (counting semaphore)**】
+**计数信号量 (counting semaphore)**：
 
 ### 生产者--消费者
 
-【**有界缓冲区 (bounded buffer)**】<a href id="bounded-buffer"></a>
+**有界缓冲区 (bounded buffer)**：<a href id="bounded-buffer"></a>
 
-- 【**生产者 (producer)**】
+- **生产者 (producer)**：
   - 若缓冲区有空，则向其中填入新**项目 (item)**；否则等待有空。
   - 实例：视频编码器、GUI 事件检测。
-- 【**消费者 (consumer)**】
+- **消费者 (consumer)**：
   - 若缓冲区非空，则从其中移出项目；否则等待非空。
   - 实例：视频解码器、GUI 事件响应。
 
@@ -632,11 +602,11 @@ int sbuf_remove(sbuf_t *sp) {
 
 ### 读者--作者
 
-- 【**读者 (reader)**】
+- **读者 (reader)**：
   - 只能读取共享资源的线程，可以与不限数量的读者共享资源。
   - 实例：网购时查看库存的用户、读取网页缓存的线程。
   - 第一类读写问题：偏向读者，读者一般无需等待，除非有作者在写（上锁）。
-- 【**作者 (writer)**】
+- **作者 (writer)**：
   - 可以修改共享资源的线程，修改时只能独享对资源的访问权。
   - 实例：网购时正在下单的用户、更新网页缓存的线程。
   - 第二类读写问题：偏向作者，读者需等待所有（正在写或等待的）作者写完。
@@ -708,7 +678,7 @@ int main(int argc, char **argv) {
   for (i = 0; i < NTHREADS; i++)  /* Create worker threads */
     Pthread_create(&tid, NULL, thread, NULL);
 
-  while (1) { 
+  while (1) {
     client_len = sizeof(struct sockaddr_storage);
     connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
     sbuf_insert(&sbuf, connect_fd); /* Insert connect_fd in buffer */
@@ -719,7 +689,7 @@ void *thread(void *vargp) {
   Pthread_detach(pthread_self());
   while (1) {
     int connect_fd = sbuf_remove(&sbuf); /* Remove connect_fd from buffer */
-    echo_cnt(connect_fd);                /* Service client */
+    echo_cnt(connect_fd);                /* Provide service to the client */
     Close(connect_fd);
   }
 }
@@ -759,11 +729,45 @@ void echo_cnt(int connect_fd) {
 }
 ```
 
+# 其他上锁机制
+
+## `pthread_mutex_t`
+
+```c
+#include <pthread.h>
+
+// Without static initialization
+static pthread_once_t foo_once = PTHREAD_ONCE_INIT;
+static pthread_mutex_t foo_mutex;
+void foo_init() {
+  pthread_mutex_init(&foo_mutex, NULL);
+}
+void foo() {
+  pthread_once(&foo_once, foo_init);
+  pthread_mutex_lock(&foo_mutex);
+  /* critical section */
+  pthread_mutex_unlock(&foo_mutex);
+}
+
+// With static initialization, the same routine could be coded as
+static pthread_mutex_t foo_mutex = PTHREAD_MUTEX_INITIALIZER;
+void foo() {
+  pthread_mutex_lock(&foo_mutex);
+  /* critical section */
+  pthread_mutex_unlock(&foo_mutex);
+}
+
+int main() {
+  /* use foo() */
+  pthread_mutex_destroy(&foo_mutex);
+}
+```
+
 # 6. 多线程并行<a href id="parallel"></a>
 
-【**并行程序 (parallel program)**】运行在**多核处理器 (multi-core processor)** 上的*并发程序*。
+**并行程序 (parallel program)**：运行在**多核处理器 (multi-core processor)** 上的*并发程序*。
 
-【通用技巧】将原问题划分为若干子问题，各线程依据其 TID 计算相应的子问题。
+【通用技巧】将原问题划分为若干子问题，各线程依据其 `tid` 计算相应的子问题。
 
 $$
 \sum_{i=0}^{mn-1}f(i)=\sum_{k=0}^{m-1}\left(\sum_{i=kn+0}^{kn+n-1}f(i)\right)
@@ -808,7 +812,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-【重要结论】同步开销很昂贵，应当尽量避免；若不能避免，则单次同步应当*分摊 (amortize)* 尽可能多的计算量。
+【重要结论】同步开销很昂贵，应当尽量避免；若不能避免，则单次同步应当**分摊 (amortize)** 尽可能多的计算量。
 
 ## `psum-array.c`
 
@@ -876,23 +880,23 @@ void *sum_array(void *vargp) {
 
 性能指标
 
-- 【**加速 (speedup)**】$S_p=T_1/T_p$
-  - 【**绝对加速 (absolute speedup)**】若 $T_1$ 为串行版本（在单核上）的运行时间
-  - 【**相对加速 (relative speedup)**】若 $T_1$ 为并行版本在单核上的运行时间
-- 【**效率 (efficiency)**】$E_p=S_p/p\equiv T_1/(pT_p)$
+- **加速 (speedup)**：$S_p=T_1/T_p$
+  - **绝对加速 (absolute speedup)**：若 $T_1$ 为串行版本（在单核上）的运行时间
+  - **相对加速 (relative speedup)**：若 $T_1$ 为并行版本在单核上的运行时间
+- **效率 (efficiency)**：$E_p=S_p/p\equiv T_1/(pT_p)$
 
 可扩展性
 
-- 【**强可扩展 (strongly scalable)**】问题规模不变，加速正比于核心数量。
+- **强可扩展 (strongly scalable)**：问题规模不变，加速正比于核心数量。
   - 例：处理固定数量的传感器传回的信号。
-- 【**弱可扩展 (weakly scalable)**】耗时基本不变，问题规模正比于核心数量。
-  - 例：科学计算程序。
+- **弱可扩展 (weakly scalable)**：耗时基本不变，问题规模正比于核心数量。
+  - 例：科学或工程计算程序。
 
 # 7. 其他并发问题
 
 ## 7.1. 线程安全<a href id="thread-safe"></a>
 
-【**线程安全 (thread-safe)**】反复运行并发的多线程函数总是给出相同结果。
+**线程安全 (thread-safe)**：反复运行并发的多线程函数总是给出相同结果。
 
 以下函数不是线程安全的：
 
@@ -905,20 +909,20 @@ void *sum_array(void *vargp) {
    - 解决：改写为[再入函数](#reentrant)
 3. 返回指向静态变量的指针
    - 实例：`ctime()`, `gethostname()`
-   - 解决：由调用侧传入指向私有变量的指针，或**锁后复制 (lock-and-copy)**：将不安全函数封装在锁内，在其中将结果*深拷贝 (deep copy)* 到私有内存。
+   - 解决：由调用侧传入指向私有变量的指针，或**锁后复制 (lock-and-copy)**：将不安全函数封装在锁内，在其中将结果 *deep copy* 到私有内存。
 4. 调用了第 2 类不安全函数
    - 解决：锁后复制
 
 ## 7.2. 再入函数<a href id="reentrant"></a>
 
-【**再入函数 (reentrant function)**】被多个线程调用时，不访问共享变量。
+**再入函数 (reentrant function)**：被多个线程调用时，不访问共享变量。
 
 - 一定是线程安全的
 - 比加锁的函数更高效
 - 若传入指针，则需指向调用侧的私有数据
 
 ```c
-/* rand_r - return a pseudorandom integer on 0..32767 */
+/* rand_r - return a pseudorandom integer in [0, 32768) */
 int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
   *nextp = *nextp * 1103515245 + 12345;
   return (unsigned int)(*nextp / 65536) % 32768;
@@ -939,13 +943,13 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 
 ## 7.4. 竞争
 
-【**竞争 (race)**】结果依赖于[进程图](#graph)中的路径。
+**竞争 (race)**：结果依赖于[进程图](#graph)中的路径。
 
 ## 7.5. 死锁
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/deadlock.pdf)
 
-【**死锁 (deadlock)**】某些被暂停的进程等待着不可能发生的事件。
+**死锁 (deadlock)**：某些被暂停的进程等待着不可能发生的事件。
 
 - 解决：确保各线程对各锁的上锁顺序一致。
 
