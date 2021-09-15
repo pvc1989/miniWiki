@@ -1,8 +1,8 @@
 ---
-Title: 计算机网络
+Title: 计算机网络层次结构
 ---
 
-# 0. 分层结构模型
+# 0. 层次结构模型
 
 ## 0.1 七层 ISO/OSI 参考模型
 
@@ -25,7 +25,7 @@ Title: 计算机网络
   - 全局性～：所有路由器掌握完整网络拓扑和链路费用信息，e.g. 链路状态路由算法
   - 分散性～：每个路由器只掌握物理相连的邻居及链路费用，e.g. 距离向量路由算法
 
-分层次的路由选择协议
+路由选择协议
 
 - 内部网关协议：RIP 或 OSPF
 - 外部网关协议：BGP-4
@@ -171,12 +171,12 @@ struct TcpHeader {
   1. Client 向 Server 发送*请求*报文段（`SYN=1, seq=x`）
   2. Server 向 Client 发送*确认*报文段（`SYN=1, ACK=1, seq=y, ack=x+1`）
   3. Client 向 Server 发送*确认*报文段（`ACK=1, seq=x+1, ack=y+1`），可携带数据
-- 连接释放（四次握手）：
+- 连接释放（四次挥手）：
   1. Client 向 Server 发送*释放*报文段（`FIN=1, seq=u`）
   2. Server 向 Client 发送*确认*报文段（`ACK=1, seq=v, ack=u+1`），进入半关闭状态（Server 仍可向 Client 传输数据）
   3. Server 向 Client 发送*释放*报文段（`FIN=1, ACK=1, seq=w, ack=u+1`）
   4. Client 向 Server 发送*确认*报文段 `ACK=1, seq=u+1, ack=w+1`，再等待 2 MSL（最长报文段寿命的两倍）
-     - 若 Server 未收到 Client 的确认报文段 [4]，则向其重传的释放报文段 [3]。
+     - 若 Server 未收到 Client 的确认报文段 [4]，则向其重传释放报文段 [3]。
      - 若 Client 在 2 MSL 内未收到 Server 重传的报文段 [3]，则彻底释放连接。
 
 ### 可靠传输
