@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 首页
+title: 葵花宝典
 ---
 
 # 编写说明
@@ -78,9 +78,10 @@ title: 首页
 - [OpenFOAM](algorithms/openfoam/README.md)
 
 ## [编程](./programming/README.md)
-- 计算机系统
-  - [CSAPP](./programming/csapp/README.md)
-  - [计算机网络](./programming/network.md)
+- [计算机系统](./programming/csapp/README.md)
+  - 计算机组成原理
+  - 操作系统
+  - 计算机网络
 - 设计思想
   - [设计原则](./programming/principles/README.md)
   - [设计模式](./programming/patterns/README.md)

@@ -2,9 +2,10 @@
 title: 编程
 ---
 
-# 计算机系统
-## [CSAPP](./csapp/README.md)
-## [计算机网络](./network.md)
+# [计算机系统](./csapp/README.md)
+## 计算机组成原理
+## 操作系统
+## 计算机网络
 
 # 设计思想
 ## [设计原则](./principles/README.md)
