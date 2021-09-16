@@ -29,7 +29,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 ## 1. 计算机系统速览
 
-## 第一部分：程序的结构与执行
+## 第一部分：程序的结构与执行（计组）
 
 ### [2. 信息的表示及运算](./2_bits_bytes_ints_floats.md)（计组）
 
@@ -63,7 +63,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 - 数据局部性、指令局部性
 - 缓存器、直接映射、集合关联、完全关联
 
-## 第二部分：在系统上运行程序
+## 第二部分：在系统上运行程序（OS）
 
 ### [7. 链接](./7_linking.md)（OS）
 
@@ -87,7 +87,7 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 - 内存映射、共享资源、写时复制
 - 动态内存、隐式链表、显式链表、分离链表、垃圾回收
 
-## 第三部分：程序间互动及通信
+## 第三部分：程序间互动及通信（OS + 网络）
 
 ### [10. 系统级读写](./10_system_level_io.md)（OS）
 
