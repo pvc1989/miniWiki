@@ -3,6 +3,78 @@ layout: page
 title: 葵花宝典
 ---
 
+# 内容目录
+
+## [数学](./mathematics/README.md)
+
+- [高等代数](./mathematics/algebra/README.lyx)
+- [实分析](./mathematics/real_analysis/README.lyx)
+- [复分析](./mathematics/complex/README.lyx)
+- [泛函分析](./mathematics/functional/README.lyx)
+- [常微分方程](./mathematics/ode/README.lyx)
+- [偏微分方程](./mathematics/pde/README.lyx)
+- [微分几何](./mathematics/geometry/README.lyx)
+
+## [物理](./physics/README.md)
+
+- [理论力学](./physics/mechanics/README.md)
+- [电动力学](./physics/electromagnetism/README.md)
+- [量子力学](./physics/quantum/README.md)
+- [统计力学](./physics/heat/README.lyx)
+- [流体力学](./physics/fluid/README.md)
+
+## [算法](./algorithms/README.md)
+
+- [数据结构](./algorithms/data_structures/README.md)
+- [数值计算](./algorithms/numerical/)
+- [优化方法](./algorithms/optimization/README.lyx)
+- [OpenFOAM](algorithms/openfoam/README.md)
+
+## [编程](./programming/README.md)
+- [计算机系统](./programming/csapp/README.md)
+  - 计算机组成
+  - 操作系统
+  - 计算机网络
+- 设计思想
+  - [设计原则](./programming/principles/README.md)
+  - [设计模式](./programming/patterns/README.md)
+- 编程语言
+  - [C++](./programming/cpp/README.md)
+  - [Octave/MATLAB](./programming/octave.md)
+  - [Python](./programming/python.md)
+  - [UML](./programming/uml/README.md)
+- 并行计算
+  - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel)
+  - [MPI](./programming/mpi/README.md)
+- 构建工具
+  - [Git](./programming/git.md)
+  - [批量构建](./programming/cpp/make/README.md)
+  - [断点调试](./programming/debug/README.md)
+- 开发环境
+  - [Linux](./programming/linux/README.md)
+  - [Docker](./programming/docker/README.md)
+- 网格表示
+  - [CGNS](./programming/cgns/README.md)
+  - [Gmsh](./programming/gmsh/README.md)
+  - [VTK](./programming/vtk/README.md)
+- 工程建模
+  - [SALOME](www.salome-platform.org)
+  - [Open CASCADE](https://www.opencascade.com)
+
+## [文档](./documenting/README.md)
+- [LaTeX](./documenting/latex/README.md)
+  - [LyX](./documenting/latex/README.md#LyX)
+  - [MathJax](./documenting/latex/README.md#MathJax)
+- [Markdown](./documenting/markdown.md)
+  - [Typora](./documenting/markdown.md#Typora)
+- [网页](./documenting/web/README.md)
+  - [HTML](./documenting/web/html.md)
+  - [CSS](./documenting/web/css.md)
+  - [JavaScript](./documenting/web/javascript.md)
+- [书签编辑器](./documenting/bookmark)
+  - [PDFBookmarker](./documenting/bookmark.md#PDFBookmarker)
+  - [DJVUSED](./documenting/bookmark.md#DJVUSED)
+
 # 编写说明
 
 ## 语言
@@ -49,76 +121,3 @@ title: 葵花宝典
 
 ## 纠错
 移步 [Issues](https://github.com/pvcStillInGradSchool/miniWiki/issues)，尽量做到一个 issue 对应一个问题。
-
-# 内容目录
-
-## [数学](./mathematics/README.md)
-
-- [线性代数](./mathematics/algebra/README.lyx)
-- [实分析](./mathematics/real_analysis/README.lyx)
-- [复分析](./mathematics/complex/README.lyx)
-- [泛函分析](./mathematics/functional/README.lyx)
-- [常微分方程](./mathematics/ode/README.lyx)
-- [偏微分方程](./mathematics/pde/README.lyx)
-- [微分几何](./mathematics/geometry/README.lyx)
-
-## [物理](./physics/README.md)
-
-- [理论力学](./physics/mechanics/README.md)
-- [电动力学](./physics/electromagnetism/README.md)
-- [量子力学](./physics/quantum/README.md)
-- [统计力学](./physics/heat/README.lyx)
-- [流体力学](./physics/fluid/README.md)
-
-## [算法](./algorithms/README.md)
-
-- [数据结构](./algorithms/data_structures/README.md)
-- [数值计算](./algorithms/numerical/)
-- [优化方法](./algorithms/optimization/README.lyx)
-- [OpenFOAM](algorithms/openfoam/README.md)
-
-## [编程](./programming/README.md)
-- [计算机系统](./programming/csapp/README.md)
-  - 计算机组成原理
-  - 操作系统
-  - 计算机网络
-- 设计思想
-  - [设计原则](./programming/principles/README.md)
-  - [设计模式](./programming/patterns/README.md)
-- 编程语言
-  - [C++](./programming/cpp/README.md)
-  - [Octave/MATLAB](./programming/octave.md)
-  - [Python](./programming/python.md)
-  - [UML](./programming/uml/README.md)
-- 并行计算
-  - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel)
-  - [MPI](./programming/mpi/README.md)
-- 构建工具
-  - [Git](./programming/git.md)
-  - [批量构建](./programming/cpp/make/README.md)
-  - [断点调试](./programming/debug/README.md)
-- 开发环境
-  - [Linux](./programming/linux/README.md)
-  - [Docker](./programming/docker/README.md)
-- 网格表示
-  - [CGNS](./programming/cgns/README.md)
-  - [Gmsh](./programming/gmsh/README.md)
-  - [VTK](./programming/vtk/README.md)
-- 工程建模
-  - [SALOME](www.salome-platform.org)
-  - [Open CASCADE](https://www.opencascade.com)
-
-## [文档](./documenting/README.md)
-- [LaTeX](./documenting/latex/README.md)
-  - [LyX](./documenting/latex/README.md#LyX)
-  - [MathJax](./documenting/latex/README.md#MathJax)
-- [Markdown](./documenting/markdown.md)
-  - [Typora](./documenting/markdown.md#Typora)
-- [网页](./documenting/web/README.md)
-  - [HTML](./documenting/web/html.md)
-  - [CSS](./documenting/web/css.md)
-  - [JavaScript](./documenting/web/javascript.md)
-- [书签编辑器](./documenting/bookmark)
-  - [PDFBookmarker](./documenting/bookmark.md#PDFBookmarker)
-  - [DJVUSED](./documenting/bookmark.md#DJVUSED)
-
