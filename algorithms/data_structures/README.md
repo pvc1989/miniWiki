@@ -38,6 +38,7 @@ title: 数据结构
 - [LeetCode](https://leetcode.com/): the world's leading online programming learning platform.
   - 建议用 [leetcode.vscode-leetcode](https://marketplace.visualstudio.com/items?itemName=LeetCode.vscode-leetcode) 在本地刷题及备份。本地题库无法更新时，可先执行 `rm ~/.lc/leetcode/cache/problems.json`，再点击刷新按钮。
 - [PAT](https://www.patest.cn/) (Programming Ability Test) and [PTA](https://pintia.cn) (Programming Teaching Assistant).
+- [牛客网](https://www.nowcoder.com)
 
 # [数组及基于数组的算法](./array.md)
 ## [数组的实现](./array.md#数组的实现)

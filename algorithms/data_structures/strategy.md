@@ -51,7 +51,7 @@ $$
 
 ### 段落分行
 
-在某些单词前换行，使 整段文字的 `badness` 值最小。
+在某些单词前换行，使整段文字的 `badness` 值最小。
 
 ```python
 # h := head, l := length, s := size
@@ -67,9 +67,10 @@ dp[h][t] = min(dp[h][h+l] + cost(h+l, h+l+1) + dp[h+l+1][t] for l in range(1, t-
 
 ### 编辑距离
 
-[LeetCode-72](./leetcode/72.edit-distance.cpp)
+LeetCode-72
 
-子问题：将 `x[i:m)` 变为 `y[j:n)` 的最小代价。
+- 【[描述](https://leetcode.com/problems/edit-distance/description/)】给定两个字符串 (`x `, `y`)，求使得二者相同的最少操作 (`add`, `del`, `replace`) 次数。
+- 【[解答](./leetcode/72.edit-distance.cpp)】子问题：将 `x[i:m)` 变为 `y[j:n)` 的最小代价。
 
 ```cpp
 dp[i][j] = min(
@@ -81,59 +82,61 @@ dp[i][j] = min(
 
 #### 最长公共子列
 
-[LeetCode-1143](./leetcode/1143.longest-common-subsequence.cpp)
+LeetCode-1143
+
+- 【[描述](https://leetcode.com/problems/longest-common-subsequence/description/)】给定两个字符串 (`x `, `y`)，求最长公共子列（只允许 `del` 操作）。
+- 【[解答](./leetcode/1143.longest-common-subsequence.cpp)】
 
 ### 0-1 背包
 
-给定 `n_items` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(Real) value[i]`），求容量为 `(Int) max_room` 的**背包 (knapsack)** 所能装下的总价最大的货物。
-
-```cpp
-// `dp[i][r]` := max value of items in range `[i, n)` with `r` remaining room
-for (int item = value.size() - 1; 0 <= item; --item) {
-  for (int room = max_room; 0 < room; --room) {
-    dp[item][room] = dp[item + 1][room];
-    if (size[item] < room) {
-      auto new_value = dp[item + 1][room - size[item]] + value[item];
-      dp[item][room] = max(dp[item][room], new_value);
+- 【描述】给定 `n_items` 种货物（第 `i` 种货物的大小为 `(Int) size[i]`，价值为 `(Real) value[i]`），求容量为 `(Int) max_room` 的**背包 (knapsack)** 所能装下的总价最大的货物。
+- 【解答】
+  ```cpp
+  // `dp[i][r]` := max value of items in range `[i, n)` with `r` remaining room
+  for (int item = value.size() - 1; 0 <= item; --item) {
+    for (int room = max_room; 0 < room; --room) {
+      dp[item][room] = dp[item + 1][room];
+      if (size[item] < room) {
+        auto new_value = dp[item + 1][room - size[item]] + value[item];
+        dp[item][room] = max(dp[item][room], new_value);
+      }
     }
   }
-}
-return dp[0][max_room];
-```
-
+  return dp[0][max_room];
+  ```
 - 时间复杂度 `Θ(n_items * max_room)` 是**伪多项式的 (pseudopolynomial)**：
   - 若 `Int` 为可变字长的整数类型，则每个 `size[i]` 需要 `lg(max_room)` bits 来表示，故输入规模为 `O(n_items * lg(max_room))`，此时复杂度 `Θ(n_items * maxroom)` 是*指数的*。
   - 若 `Int` 为固定字长的整数类型，则 `lg(room)` 可视为常数，此时复杂度 `Θ(n_items * max_room)` 是*多项式的*。
-- 空间复杂度*伪多项式的*：
+- 空间复杂度是*伪多项式的*：
   - 二维表格 `dp[][]` 需要 `Θ(n_items * max_room)` 存储空间。
   - 实际建表时，只用到两个长度为 `Θ(max_room)` 的一维数组。
 
 #### 硬币找零
 
-[LeetCode-322](./leetcode/322.coin-change.cpp)
+LeetCode-322
 
-目标：用最少数量的硬币达到目标面值。
+- 【[描述](https://leetcode.com/problems/coin-change/description/)】给定各面值数量不限的硬币，求达到目标面值的最少硬币数量。
+- 【[解答](./leetcode/322.coin-change.cpp)】
 
-#### 等分集合
+#### 二分集合
 
-[LeetCode-416](./leetcode/416.partition-equal-subset-sum.cpp)
+LeetCode-416
 
-目标：将集合划分为若干子集，使各子集元素之和相等。
+- 【[描述](https://leetcode.com/problems/partition-equal-subset-sum/description/)】将只含正数的集合划分为两个子集，使二者的元素之和相等。
+- 【[解答](./leetcode/416.partition-equal-subset-sum.cpp)】
 
 ### 旅行商问题
 
-【**旅行商问题 (Travelling Salesman Problem, TSP)**】给定 $V$​ 座城市及 $E$​​ 条（连接其中两市的）道路，求一条访问每座城市各一次且总长度最短的回路。
+【**旅行商问题 (Travelling Salesman Problem, TSP)**】给定 $V$ 座城市及 $E$ 条（连接其中两市的）道路，求一条访问每座城市各一次且总长度最短的回路。
 
 #### 最短超字符串
 
-【LeetCode-943 [description](https://leetcode.com/problems/find-the-shortest-superstring/), [solution](./leetcode/943.find-the-shortest-superstring.cpp)】给定 $N$ 个最长为 $W$​​​​​ 字符且两两互不覆盖的字符串，求一个能覆盖所有词的**最短超字符串 (shortest superstring)**。
+LeetCode-943
 
-穷举：遍历 $N$ 个字符串的所有（共 $N!$ 种）排列，取重叠字符个数最多的情形。
-
-DP：令 `dp(mask, i)`返回由掩码 `mask` 所表示的子集中的字符串构成、以第 `i` 个字符串为后缀的超字符串的最大重叠字符个数
-
-- `dp(mask^(1<<j), j) = max_{i ∈ mask}(overlap(s[i], s[j]))`
-- 复杂度：时间 $Θ(N^2\cdot(2^N+W))$，空间 $Θ(N\cdot(2^N+W))$
+- 【[描述](https://leetcode.com/problems/find-the-shortest-superstring/)】给定 $N$ 个最长为 $W$ 字符且两两互不覆盖的字符串，求一个能覆盖所有词的**最短超字符串 (shortest superstring)**。
+- 【[解答](./leetcode/943.find-the-shortest-superstring.cpp)】令 `dp(mask, i)` 返回由掩码 `mask` 所表示的子集中的字符串构成、以第 `i` 个字符串为后缀的超字符串的最大重叠字符个数
+  - `dp(mask^(1<<j), j) = max_{i ∈ mask}(overlap(s[i], s[j]))`
+  - 复杂度：时间 $Θ(N^2\cdot(2^N+W))$，空间 $Θ(N\cdot(2^N+W))$
 
 ### 正则表达式
 
