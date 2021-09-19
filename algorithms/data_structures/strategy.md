@@ -140,35 +140,45 @@ LeetCode-943
 
 ### 正则表达式
 
-#### `.` 表示任意字符、`*` 表示重复前一字符
+#### `*` 表示重复前一字符
 
-[LeetCode-10](./leetcode/10.regular-expression-matching.cpp)
+LeetCode-10
 
-#### `?` 表示任意字符、`*` 表示任意字符子串
+- 【[描述](https://leetcode.com/problems/regular-expression-matching/description/)】`.` 表示任意字符、`*` 表示重复前一字符
+- 【[解答](./leetcode/10.regular-expression-matching.cpp)】
 
-[LeetCode-44](./leetcode/44.wildcard-matching.cpp)
+#### `*` 表示任意字符子串
+
+LeetCode-44
+
+- 【[描述](https://leetcode.com/problems/wildcard-matching/description/)】`?` 表示任意字符、`*` 表示任意字符子串
+- 【[解答](./leetcode/44.wildcard-matching.cpp)】
 
 ### 最大股票收益
 
-#### 至多两次交易
+【**交易 (transaction)**】某支股票，在第 `i` 天被买入，在第 `j` 天被卖出，称作一次交易。
 
-[LeetCode-123](./leetcode/123.best-time-to-buy-and-sell-stock-iii.cpp)
+#### 至多 $2$ 次交易
 
-$$
-P_{[0, n)}^{2} = \max_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
-$$
+LeetCode-123
+
+- 【[描述](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/description/)】给定一段时间内的价格，至多 $2$ 次交易且互不重叠，求最大收益。
+- 【[解答](./leetcode/123.best-time-to-buy-and-sell-stock-iii.cpp)】有复杂度为 $O(2n^2)$​ 的 DP 解法
+  $$
+  P_{[0, n)}^{2} = \max_{i\in[0,n)} \left(P_{[0,i)}^{1} + P_{[i,n)}^{1}\right)
+  $$
+  其中 $P_{[i,j)}^{t}$ 表示*最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益*。
 
 #### 至多 $k$ 次交易
 
-[LeetCode-188](./leetcode/188.best-time-to-buy-and-sell-stock-iv.cpp)
+LeetCode-188
 
-仿照上题，有复杂度为 $O(kn^2)$ 的 DP 解法（另有复杂度为 $O(kn)$ 的[贪心](#k-transactions)解法）：
-
-$$
-P_{[0, j)}^{t} = \max_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
-$$
-
-其中 $P_{[i,j)}^{t}$ 表示*最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益*。
+- 【[描述](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/)】给定一段时间内的价格，至多 $k$ 次交易且互不重叠，求最大收益。
+- 【[解答](./leetcode/188.best-time-to-buy-and-sell-stock-iv.cpp)】仿照上题，有复杂度为 $O(kn^2)$ 的 DP 解法（另有复杂度为 $O(kn)$ 的[贪心](#k-transactions)解法）：
+  $$
+  P_{[0, j)}^{t} = \max_{i\in[0,j)} \left(P_{[0,i)}^{t-1} + P_{[i,j)}^{1}\right)\qquad j\in[0,n)
+  $$
+  其中 $P_{[i,j)}^{t}$ 表示*最早于第 $i$ 天买入、最晚于第 $(j-1)$ 天卖出、至多完成 $t$ 次交易的最大收益*。
 
 ### 二叉树覆盖
 
