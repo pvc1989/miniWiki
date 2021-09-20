@@ -9,12 +9,12 @@ title: 并发编程
 
 1. 服务端 `Server` 收到一个客户端 `Client_1` 发来的连接请求。
    - 返回一个异于 `listenfd(3)` 的 `connfd(4)`
-2. 服务端 `fork` 出一个子进程 `Child_1`，由后者向 `Client_1` 提供服务。
+2. 服务端用 `fork()` 创建一个子进程 `Child_1`，由后者向 `Client_1` 提供服务。
    - 子进程 `Child_1` 关闭 `listenfd(3)`
    - 主进程 `Server` 关闭 `connfd(4)`
 3. 服务端收到另一个客户端 `Client_2` 发来的连接请求。
    - 返回一个异于 `listenfd(3)` 的 `connfd(5)`
-4. 服务器 `fork` 出另一个子进程 `Child_2`，由后者向 `Client_2` 提供服务。
+4. 服务端用 `fork()` 创建一个子进程 `Child_2`，由后者向 `Client_2` 提供服务。
    - 子进程 `Child_2` 关闭 `listenfd(3)`
    - 主进程 `Server` 关闭 `connfd(5)`
 
@@ -64,13 +64,13 @@ int main(int argc, char **argv) {
 各进程有独立的虚拟内存空间，既是优点，也是缺点：
 
 - 【优点】各进程只能读写自己的虚拟内存空间，不会破坏其他进程的虚拟内存空间。
-- 【缺点】进程之间共享数据变得困难，必须显式地使用**进程间通信 (InterProcess Communication, IPC)**。
+- 【缺点】进程之间共享数据变得困难，必须显式地使用**进程间通信 (InterProcess Communication, IPC)**。高级 IPC 主要有三类：共享存储、消息传递、管道通信。
 
 # 2. 基于读写复用的并发
 
 ## `select()`
 
-【需求】并发地处理*连接请求*与*键盘输入*：
+【困难】不能并发地处理*连接请求*与*键盘输入*：
 
 - 等待连接请求，会屏蔽键盘输入。
 - 等待键盘输入，会屏蔽连接请求。
@@ -86,7 +86,7 @@ FD_SET(int fd, fd_set *fdset);   /* Turn on bit `fd` in `fdset` */
 FD_ISSET(int fd, fd_set *fdset); /* Is bit `fd` in `fdset` on? */
 ```
 
-此函数令内核暂停当前进程，直到**读取集 (read set)** `fdset` 中的至少一个（文件或套接字）描述符可以被读取（读取操作会立即返回），返回**可用集 (ready set)** 的*基数 (cardinality)*，并将*读取集*修改为*可用集*。
+此函数令内核暂停当前进程，直到**读取集 (read set)** `fdset` 中的至少一个（文件或套接字）描述符进入**可用 (ready)** 状态（即读取操作会立即返回），将传入的*读取集* `fdset` 修改为**可用集 (ready set)**，并返回可用描述符的数量。
 
 ```c
 #include "csapp.h"
