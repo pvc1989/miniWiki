@@ -500,7 +500,7 @@ void V(sem_t *s); /* Wrapper function for sem_post */
 #include "csapp.h"
 
 volatile long cnt = 0; /* global counter */
-sem_t mutex; /* semaphore that protects `count` */
+sem_t mutex; /* semaphore that protects `cnt` */
 
 void *thread(void *vargp) {
   long n_iters = *((long *)vargp);
@@ -943,13 +943,16 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 
 ## 7.4. 竞争
 
-**竞争 (race)**：结果依赖于[进程图](#graph)中的路径。
+**竞争 (race)**：多个线程同一段时间内访问同一块内存，且至少一个线程在改写其中的内容。
+
+- 【问题】结果未定义（依赖于[进程图](#graph)中的路径，即内存被各线程读写的顺序）
+- 【解决】引入同步（用互斥量保护共享变量、用原子操作访问共享变量）
 
 ## 7.5. 死锁
 
 ![](https://csapp.cs.cmu.edu/3e/ics3/conc/deadlock.pdf)
 
-**死锁 (deadlock)**：某些被暂停的进程等待着不可能发生的事件。
+**死锁 (deadlock)**：某些被暂停的线程等待着不可能发生的事件。
 
-- 解决：确保各线程对各锁的上锁顺序一致。
+- 【解决】确保各线程对各锁的上锁顺序一致。
 
