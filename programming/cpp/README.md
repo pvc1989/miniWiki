@@ -36,6 +36,8 @@ title: C/C++
 - [智能指针](./memory/smart_pointers.md)
 - [内存检查](./memory/check.md)
 
+## [多线程并发](./concurrency.md)
+
 # 抽象机制
 
 ## [`class`](https://en.cppreference.com/w/cpp/language/classes)
