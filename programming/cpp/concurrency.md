@@ -57,3 +57,64 @@ int main() {
   v.min = v.max = 1; 8; 
   ...
   ```
+
+# `<mutex>`
+
+## `unique_lock`
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <mutex>
+#include <thread>
+#include <vector>
+
+std::mutex mtx;
+
+void f(std::vector<int> const &v, int *res) {
+  *res = *std::max_element(v.begin(), v.end());
+  auto ul = std::unique_lock<std::mutex>{mtx};
+  std::cout << "v.max = " << *res << std::endl;
+}
+
+struct F {
+  std::vector<int> v_;
+  int *res_;
+
+  F(std::vector<int> const &v, int *res)
+      : v_(v), res_(res) {
+  }
+  void operator()() {
+    *res_ = *std::min_element(v_.begin(), v_.end());
+    auto ul = std::unique_lock<std::mutex>{mtx};
+    std::cout << "v.min = " << *res_ << std::endl;
+  }
+};
+
+int main() {
+  auto v1 = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };
+  auto v2 = std::vector<int>{ 9, 10, 11, 12, 13, 14 };
+  int x1, x2;
+  auto t1 = std::thread{f, v1, &x1};  //     f() executes in thread-1
+  auto t2 = std::thread{F{v2, &x2}};  // F{v2}() executes in thread-2
+  t1.join();  // wait for t1 to exit
+  t2.join();  // wait for t2 to exit
+}
+```
+
+## `defer_lock`
+
+```c++
+#include <mutex>
+
+std::mutex m1, m2;
+
+int main() {
+  auto ul1 = std::unique_lock<std::mutex>{m1, std::defer_lock};
+  auto ul2 = std::unique_lock<std::mutex>{m2, std::defer_lock};
+  // ...
+  std::lock(ul1, ul2);
+  // ...
+}
+```
+
