@@ -118,3 +118,91 @@ int main() {
 }
 ```
 
+# `<future>`
+
+## `promise`
+
+```cpp
+void Put(std::promise<X> &px) {  // a task: put the result in px
+  try {
+    auto res = X(/* ... */);
+    // may throw an exception
+    px.set_value(res);
+  } catch (...) {
+    // pass the exception to the future's thread:
+    px.set_exception(std::current_execption());
+  }
+}
+```
+
+## `future`
+
+```cpp
+void Get(std::future<X> &fx) {  // a task: get the result from fx
+  try {
+    auto x = fx.get();  // if necessary, wait for the value to get computed
+    // use x ...
+  } catch (...) {
+    // handle the exception ...
+  }
+}
+```
+
+## `packaged_task`
+
+```cpp
+#include <future>
+#include <iostream>
+#include <numeric>
+#include <vector>
+#include <thread>
+
+double accum(double const *beg, double const *end, double init) {
+  return std::accumulate(beg, end, init);
+}
+
+int main() {
+  auto v = std::vector<double>{ 0.1, 0.2, 0.3, 0.4, 0.5 };
+  using Task = decltype(accum);
+  auto pt0 = std::packaged_task<Task>{accum};
+  auto pt1 = std::packaged_task<Task>{accum};
+  auto f0 = std::future<double>{pt0.get_future()};
+  auto f1 = std::future<double>{pt1.get_future()};
+  auto *head = &v[0];
+  auto *half = head + v.size() / 2;
+  auto *tail = head + v.size();
+  auto t1 = std::thread{std::move(pt0), head, half, 0.0};
+  auto t2 = std::thread{std::move(pt1), half, tail, 0.0};
+  t1.join(); t2.join();
+  std::cout << f0.get() + f1.get() << std::endl;
+}
+```
+
+## `async`
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <future>
+
+template <typename RandomIt>
+int parallel_sum(RandomIt beg, RandomIt end) {
+  auto len = end - beg;
+  if (len < 1000)
+    return std::accumulate(beg, end, 0);
+
+  RandomIt mid = beg + len/2;
+  auto future = std::async(
+      /* std::launch::async, */parallel_sum<RandomIt>, mid, end);
+  int sum = parallel_sum(beg, mid);
+  return sum + future.get();
+}
+
+int main() {
+  std::vector<int> v(10000, 1);
+  std::cout << "The sum is " << parallel_sum(v.begin(), v.end()) << '\n';
+}
+```
+
+## 
