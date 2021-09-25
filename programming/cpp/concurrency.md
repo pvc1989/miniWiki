@@ -118,6 +118,52 @@ int main() {
 }
 ```
 
+# `<condition_variable>`
+
+```c++
+#include <condition_variable>
+#include <mutex>
+#include <queue>
+
+class Message {
+  // ...
+};
+
+std::queue<Message>     msg_queue;
+std::condition_variable msg_cond;
+std::mutex              msg_mutex;
+```
+
+## `wait`
+
+```c++
+void Consume() {
+  while (true) {
+    auto ul = std::unique_lock<std::mutex>{msg_mutex};
+    while (msg_cond.wait(ul))  // release `ul` until `!msg_queue.empty()`
+      /* do nothing */;
+    // relock upon wakeup
+    auto msg = msg_queue.front();
+    msg_queue.pop();
+    ul.unlock();
+    // parse msg ...
+  }
+}
+```
+
+## `notify_one`
+
+```c++
+void Produce() {
+  while (true) {
+    auto msg = Message{/* ... */};
+    auto ul = std::unique_lock<std::mutex>{msg_mutex};
+    msg_queue.push(msg);
+    msg_cond.notify_one();
+  }
+}
+```
+
 # `<future>`
 
 ## `promise`
@@ -205,4 +251,3 @@ int main() {
 }
 ```
 
-## 
