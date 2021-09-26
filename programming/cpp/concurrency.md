@@ -251,3 +251,17 @@ int main() {
 }
 ```
 
+
+# `<atomic>`
+
+## `volatile`
+
+关键词 `volatile` 用于禁止编译器对内存访问的优化，适用于可能被外部因素（如：传感器、计时器）修改的变量：
+
+```cpp
+volatile const long clock_register;  // updated by the hardware clock
+auto t1 {clock_register};
+// ... no use of clock_register here ...
+auto t2 {clock_register};  // 不保证 t1 == t2
+```
+
