@@ -729,7 +729,7 @@ void echo_cnt(int connect_fd) {
 }
 ```
 
-# 其他上锁机制
+# 其他互斥量
 
 ## `pthread_mutex_t`
 
@@ -762,6 +762,8 @@ int main() {
   pthread_mutex_destroy(&foo_mutex);
 }
 ```
+
+## [`std::mutex`](../cpp/concurrency.md#mutex)
 
 # 6. 多线程并行<a href id="parallel"></a>
 
@@ -954,5 +956,6 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 
 **死锁 (deadlock)**：某些被暂停的线程等待着不可能发生的事件。
 
+- 【示例】两个线程各自上的锁，都在等待对方解锁。
 - 【解决】确保各线程对各锁的上锁顺序一致。
 
