@@ -3153,16 +3153,38 @@ w_{k\to i}^{\star}=\begin{cases}
  上的光滑程度：
 \begin_inset Formula 
 \[
-\beta_{k\to i}=\sum_{\vert\alpha\vert=1}^{p}\frac{\vert E_{i}\vert^{\vert\alpha\vert-1}}{(\vert\alpha\vert!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\vert\alpha\vert}\psi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\beta_{k\to i}=\sum_{\vert\alpha\vert=1}^{p}\frac{\vert E_{i}\vert^{2\vert\alpha\vert/n-1}}{(\vert\alpha\vert!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\vert\alpha\vert}\psi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\qquad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}
 \]
 
 \end_inset
 
-其中 
-\begin_inset Formula $(\abs{\alpha}!)^{2}$
+其中系数 
+\begin_inset Formula $\vert E_{i}\vert^{2\vert\alpha\vert/n-1}/(\vert\alpha\vert!)^{2}$
 \end_inset
 
- 用于避免高阶导数的占比过多。
+ 的分子
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Zhu & Zhong & Shu & Qiu (2013)"
+target "https://doi.org/10.1016/j.jcp.2013.04.012"
+literal "false"
+
+\end_inset
+
+ 中的系数以 
+\begin_inset Formula $\vert E_{i}\vert^{\vert\alpha\vert-1}$
+\end_inset
+
+ 为分子。
+\end_layout
+
+\end_inset
+
+用于无量纲化，分母用于避免高阶导数的占比过多。
 \end_layout
 
 \begin_layout Enumerate
@@ -3215,6 +3237,63 @@ w_{k\to i}=\frac{w_{k\to i}^{\beta}}{\sum_{k\in K_{i}}w_{k\to i}^{\beta}}\qquad 
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+借助（向量）函数的投影表示法简化：
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{1}(x,y)\\
+\vdots\\
+f_{K}(x,y)
+\end{bmatrix}_{K\times1}=\underline{A}_{K\times N}\begin{bmatrix}1\\
+x-x_{0}\\
+y-y_{0}\\
+(x-x_{0})(x-x_{0})\\
+(x-x_{0})(y-y_{0})\\
+(y-y_{0})(y-y_{0})
+\end{bmatrix}_{N\times1}
+\]
+
+\end_inset
+
+可以将其偏导数表示为
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}\dfrac{\partial}{\partial x}\begin{bmatrix}f_{1}\\
+\vdots\\
+f_{K}
+\end{bmatrix} & \dfrac{\partial}{\partial y}\begin{bmatrix}f_{1}\\
+\vdots\\
+f_{K}
+\end{bmatrix} & \dfrac{\partial^{2}}{\partial x^{2}}\begin{bmatrix}f_{1}\\
+\vdots\\
+f_{K}
+\end{bmatrix} & \dfrac{\partial^{2}}{\partial x\partial y}\begin{bmatrix}f_{1}\\
+\vdots\\
+f_{K}
+\end{bmatrix} & \dfrac{\partial^{2}}{\partial y^{2}}\begin{bmatrix}f_{1}\\
+\vdots\\
+f_{K}
+\end{bmatrix}\end{bmatrix}}_{K\times(N-1)}=\underline{A}_{K\times N}\underbrace{\begin{bmatrix}0\\
+1\\
+0 & 1\\
+2(x-x_{0}) & 0 & 1\\
+0 & 0 & 0 & 1\\
+0 & 2(y-y_{0}) & 0 & 0 & 1
+\end{bmatrix}}_{N\times N}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
