@@ -417,9 +417,30 @@ target_link_libraries(<target> ... <item>... ...)
 
 ## CMake Tools<a href id="CMake-Tools"></a>
 
-微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有*体量轻*、*易扩展*、*多语言*、*跨平台*等优点，利用各种[扩展](https://marketplace.visualstudio.com/)，很容易将其改造为多语言共用的**集成开发环境 (Integrated Development Environment, IDE)**。
+微软发布的代码编辑器 [Visual Studio Code](https://code.visualstudio.com/) 具有*体量轻*、*易扩展*、*多语言*、*跨平台*等优点，利用各种[扩展](https://marketplace.visualstudio.com/)，很容易将其改造为多语言共用的**集成开发环境 (Integrated Development Environment, IDE)**。本节介绍利微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 扩展。
 
-本节介绍利用微软提供的 [CMake Tools](https://vector-of-bool.github.io/docs/vscode-cmake-tools/) 构建及调试 C/C++ 项目的方法。
+### 工具集
+
+工具集（编译器组合）既可由自动扫描获得，也可在 `~/.local/share/CMakeTools/cmake-tools-kits.json` 中手动添加：
+
+```json
+[
+  {
+    "name": "Clang 12.0.0",
+    "compilers": {
+      "C": "/usr/bin/clang",
+      "CXX": "/usr/bin/clang++"
+    }
+  },
+  {
+    "name": "GCC 11.2.0 x86_64-apple-darwin20",
+    "compilers": {
+      "C": "/usr/local/bin/x86_64-apple-darwin20-gcc-11",
+      "CXX": "/usr/local/bin/x86_64-apple-darwin20-g++-11"
+    }
+  }
+]
+```
 
 ### 构建
 
