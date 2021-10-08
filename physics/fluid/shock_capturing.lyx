@@ -180,7 +180,7 @@ Gibbs 现象
 \begin_layout Standard
 \begin_inset CommandInset href
 LatexCommand href
-name "Gottlieb & Shu (1997)"
+name "Gottlieb--Shu (1997)"
 target "https://doi.org/10.1137/S0036144596301390"
 literal "false"
 
@@ -806,7 +806,7 @@ noprefix "false"
 
 \end_inset
 
-由单调性条件-
+由单调性条件 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:激波捕捉：单调格式：线性"
@@ -1017,6 +1017,13 @@ status open
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:TVD-function"
+
+\end_inset
+
 若二元函数 
 \begin_inset Formula $u(x,t)$
 \end_inset
@@ -1039,7 +1046,7 @@ t_{2}\ge t_{1}\implies\TV(u;t_{2})\le\TV(u;t_{1})
 
 则称之为
 \color blue
-总变差递减 (TV Diminishing, TVD function)
+总变差递减函数 (TV Diminishing function, TVD function)
 \color inherit
 
 \begin_inset Index idx
@@ -1051,7 +1058,7 @@ TV!TVD!TV Diminishing
 
 \end_inset
 
- 函数
+
 \begin_inset Index idx
 status open
 
@@ -1082,6 +1089,13 @@ status open
 
 \end_inset
 
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:TVD-scheme"
+
+\end_inset
+
 若格式
 \begin_inset Formula 
 \[
@@ -1100,7 +1114,7 @@ u_{i}^{n+1}=H\qty(\dots,u_{i-1}^{n},u_{i}^{n},u_{i+1}^{n},\dots)
 
 则称之为
 \color blue
-总变差递减 (TV Diminishing, TVD)
+总变差递减格式 (TV Diminishing scheme, TVD scheme)
 \color inherit
 
 \begin_inset Index idx
@@ -1112,7 +1126,7 @@ TV!TVD!TV Diminishing
 
 \end_inset
 
- 格式
+
 \begin_inset Index idx
 status open
 
@@ -1133,7 +1147,21 @@ scheme!TVD ~
 \end_layout
 
 \begin_layout Theorem
-单调格式都是 TVD 格式；TVD 格式都是保单调格式。
+单调格式都是 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+；
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+都是保单调格式。
 \end_layout
 
 \begin_layout Standard
@@ -1149,7 +1177,7 @@ status open
 
 \begin_layout Plain Layout
 
-[TVB]
+[TVB 格式]
 \end_layout
 
 \end_inset
@@ -1157,15 +1185,36 @@ status open
 
 \begin_inset CommandInset label
 LatexCommand label
-name "rem:TVB"
+name "rem:TVB-scheme"
 
 \end_inset
 
-标量守恒律的物理解是 TVD 函数，由 TVD 格式得到的数值解正确地
+标量守恒律的物理解是 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-function"
+
+\end_inset
+
+，由 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+得到的数值解正确地
 \color blue
 模仿 (mimic)
 \color inherit
- 了这一性质，因此不会引入数值振荡。正因如此，TVD 格式（曾经）是求解守恒律（系统）的主要途径；与此同时，以 
+ 了这一性质，因此不会引入数值振荡。正因如此，
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+（曾经）是求解守恒律（系统）的主要途径；与此同时，以 
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:激波捕捉：WENO"
@@ -1174,9 +1223,16 @@ reference "sec:激波捕捉：WENO"
 
 为代表的
 \color blue
-总变差有界 (TV Bounded, TVB)
+总变差有界格式 (TV Bounded scheme, TVB scheme)
 \color inherit
- 格式也得到了发展，它们可以看做是 TVD 格式的弱化和推广。
+ 也得到了发展，它们可以看做是 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+的弱化和推广。
 \end_layout
 
 \begin_layout Standard
@@ -1537,7 +1593,14 @@ literal "false"
 
 \end_inset
 
- 提出了一种构造 TVD 格式的方案，其核心是以下引理。
+ 提出了一种构造 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+的方案，其核心是以下引理。
 \end_layout
 
 \begin_layout Lemma
@@ -1590,7 +1653,17 @@ u_{i}^{n+1}=u_{i}^{n}-\left(u_{i}^{n}-u_{i-1}^{n}\right)C_{i-1/2}^{-}+\left(u_{i
 
 \end_inset
 
-是一种 TVD 格式，如果它的（可变）系数满足
+是一种 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+，如果它的（可变）系数满足
 \begin_inset Formula 
 \begin{equation}
 \left(C_{i-1/2}^{-}\ge0\right)\land\left(C_{i+1/2}^{+}\ge0\right)\land\left(1-C_{i-1/2}^{-}-C_{i+1/2}^{+}\ge0\right)\qquad\forall i\label{eq:激波捕捉：Harten：条件}
@@ -1717,7 +1790,14 @@ reference "thm:激波捕捉：Harten"
 
 \end_inset
 
- 定理提供了一种构造五点 TVD 格式的范式。考虑用于求解标量守恒律 
+ 定理提供了一种构造五点 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "def:TVD-scheme"
+
+\end_inset
+
+的范式。考虑用于求解标量守恒律 
 \begin_inset Formula $\partial_{t}u+\partial_{x}f=0$
 \end_inset
 
@@ -2453,7 +2533,7 @@ name "sec:激波捕捉：WENO"
  格式始于 
 \begin_inset CommandInset href
 LatexCommand href
-name "Harten, Engquist, Osher and Chakravarthy (1987)"
+name "Harten--Engquist--Osher--Chakravarthy (1987)"
 target "https://doi.org/10.1016/0021-9991(87)90031-3"
 literal "false"
 
@@ -2514,22 +2594,25 @@ literal "false"
 (W)ENO 格式虽不能完全消除数值振荡（故不是 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:TVD"
+reference "def:TVD-scheme"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- 格式），但可以将数值振荡的幅值限制在 
+），但可以将数值振荡的幅值限制在 
 \begin_inset Formula $\order{h^{p}}$
 \end_inset
 
  以下（因此是 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "rem:TVB"
+reference "rem:TVB-scheme"
 
 \end_inset
 
- 格式），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
+），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
 \end_layout
 
 \begin_layout Standard
@@ -2720,7 +2803,7 @@ f_{i+2}
 \begin_layout Standard
 \begin_inset CommandInset href
 LatexCommand href
-name "Jiang (1996)"
+name "Jiang--Shu (1996)"
 target "https://doi.org/10.1006/jcph.1996.0130"
 literal "false"
 
@@ -2929,7 +3012,7 @@ name "sec:WENO：邻接单元"
 本节介绍由 
 \begin_inset CommandInset href
 LatexCommand href
-name "Zhong (2013)"
+name "Zhong--Shu (2013)"
 target "https://doi.org/10.1016/j.jcp.2012.08.028"
 literal "false"
 
@@ -2938,7 +3021,7 @@ literal "false"
  提出（适用于结构网格）、并由 
 \begin_inset CommandInset href
 LatexCommand href
-name "Zhu (2013)"
+name "Zhu--Zhong--Shu--Qiu (2013)"
 target "https://doi.org/10.1016/j.jcp.2013.04.012"
 literal "false"
 
@@ -3169,7 +3252,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset href
 LatexCommand href
-name "Zhu & Zhong & Shu & Qiu (2013)"
+name "Zhu--Zhong--Shu--Qiu (2013)"
 target "https://doi.org/10.1016/j.jcp.2013.04.012"
 literal "false"
 
