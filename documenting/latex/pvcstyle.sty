@@ -11,6 +11,7 @@
 %
 % Options for Fonts
 %
+\newif\if@xits\@xitsfalse\DeclareOption{xits}{\@xitstrue}
 \newif\if@stix\@stixfalse\DeclareOption{stix}{\@stixtrue}
 \newif\if@newcm\@newcmfalse\DeclareOption{newcm}{\@newcmtrue}
 \ExecuteOptions{newcm}
@@ -42,6 +43,12 @@
 % Fonts for Mathematics and Western Languages
 %
 \RequirePackage{unicode-math}
+\ifthenelse{\boolean{@xits}}{  % `then`-branch of `xits'
+  % font for english text
+  \setmainfont{XITS}
+  % font for mathematical symbols
+  \setmathfont{XITS Math}
+}{  % `else`-branch of `xits`
 \ifthenelse{\boolean{@stix}}{  % `then`-branch of `stix`
   % font for english text
   \setmainfont{STIX Two Text}
@@ -98,6 +105,7 @@
 }{  % `else`-branch of `newcm`
 }  % end of `newcm`
 }  % end of `stix`
+}  % end of `xits`
 \AtBeginDocument{
   \if@bold
     \renewcommand{\cross}{\vectimes}
