@@ -727,7 +727,7 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 其中
 
 - 这里的 `cg_boco_write()` 在形式上与*结构网格*版本一样，只是将 `n_point`、`point_set` 替换成了 `n_cell`、`cell_set`。
-- `grid_location == CGNS_ENUMV(FaceCenter)` 表当前 BC 作用在*面单元*上，即 `cell_set` 是存储*面单元*编号的数组。
+- `grid_location == CGNS_ENUMV(FaceCenter)` 表示当前边界条件定义在*面单元*上，即 `cell_set` 是存储*面单元*编号的数组。
 - 调用 `cg_gridlocation_write()` 之前必须先用 `cg_goto()` 定位到所需的 `BC_t` 对象。
 
 # 多区网格
