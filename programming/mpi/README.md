@@ -45,16 +45,16 @@ ping -c 4 host3
 在各台主机上分别创建名同名账户（为确保读写权限一致，建议 UID 也相同），并赋予其 `root` 权限（加入 `sudo` 用户组）：
 
 ```shell
-sudo adduser --uid 2000 common  # 根据提示，先输入 admin 的密码，
-                                # 再创建 common 的密码，并输入个人信息（可选）
-sudo usermod -aG sudo common    # 加入 sudo 用户组
+sudo adduser --uid 2000 mpiuser  # 根据提示，先输入 admin 的密码，
+                                 # 再创建 mpiuser 的密码，并输入个人信息（可选）
+sudo usermod -aG sudo mpiuser    # 加入 sudo 用户组
 ```
 
-完成后，切换到 `common` 用户，并验证权限设置正确：
+完成后，切换到 `mpiuser` 用户，并验证权限设置正确：
 
 ```shell
-su - common  # 需输入 common 的密码
-sudo whoami  # 需输入 common 的密码，应返回 root
+su - mpiuser  # 需输入 mpiuser 的密码
+sudo whoami   # 需输入 mpiuser 的密码，应返回 root
 ```
 
 ## 免密互访
@@ -74,7 +74,7 @@ systemctl status ssh
 
 ### 客户端
 
-在各台主机的同名账户（以 `common@host1` 为例）内分别生成一对密钥：
+在各台主机的同名账户（以 `mpiuser@host1` 为例）内分别生成一对密钥：
 
 ```shell
 cd ~/.ssh   # 若不存在，则以 mkdir ~/.ssh 创建之
@@ -84,9 +84,9 @@ ssh-keygen  # 根据提示，输入密钥的文件名 key1
 在各台主机上分别用 [`ssh-copy-id`](https://www.ssh.com/academy/ssh/copy-id) 将其公钥写到 `~/.ssh/authorized_keys` 中：
 
 ```shell
-ssh-copy-id -i ~/.ssh/key1.pub host1  # 根据提示，输入 common@host1 的密码
-ssh-copy-id -i ~/.ssh/key1.pub host2  # 根据提示，输入 common@host2 的密码
-ssh-copy-id -i ~/.ssh/key1.pub host3  # 根据提示，输入 common@host3 的密码
+ssh-copy-id -i ~/.ssh/key1.pub host1  # 根据提示，输入 mpiuser@host1 的密码
+ssh-copy-id -i ~/.ssh/key1.pub host2  # 根据提示，输入 mpiuser@host2 的密码
+ssh-copy-id -i ~/.ssh/key1.pub host3  # 根据提示，输入 mpiuser@host3 的密码
 ```
 
 在各台主机上分别验证免密互访：
@@ -105,7 +105,7 @@ host2
 host3
 ```
 
-⚠️ 若不成功，则需开启“认证代理 (authentication agent)”：
+⚠️ 若不成功，则需开启**认证代理 (authentication agent)**：
 
 ```shell
 eval `ssh-agent`     # 启动认证代理
@@ -124,7 +124,7 @@ ssh-add ~/.ssh/key1  # 加入私钥
 sudo apt install nfs-kernel-server
 ```
 
-在 `common@host1:~` 中创建并共享 `shared` 目录：
+在 `mpiuser@host1:~` 中创建并共享 `shared` 目录：
 
 ```shell
 mkdir ~/shared
@@ -134,10 +134,10 @@ sudo vim /etc/exports
 在 `/etc/exports` 文件中（用 `sudo` 权限）加入如下一行：
 
 ```
-/home/common/shared *(rw,sync,no_root_squash,no_subtree_check)
+/home/mpiuser/shared *(rw,sync,no_root_squash,no_subtree_check)
 ```
 
-保存后“输出文件系统 (**export** **f**ile **s**ystem)”，并重启 NFS 服务：
+保存后**输出文件系统 (*export* *f*ile *s*ystem)**，并重启 NFS 服务：
 
 ```shell
 sudo exportfs -a
@@ -152,31 +152,31 @@ sudo service nfs-kernel-server restart
 sudo apt install nfs-common
 ```
 
-在 `common@host2:~` 中创建同名目录并进行“挂载 (mount)”：
+在 `mpiuser@host2:~` 中创建同名目录并进行**挂载 (mount)**：
 
 ```shell
 mkdir ~/shared
-sudo mount -t nfs host1:/home/common/shared ~/shared
+sudo mount -t nfs host1:/home/mpiuser/shared ~/shared
 df -h
 ```
 
-此后，在 `common@host2:~/shared` 中读写，相当于在 `common@host1:~/shared` 中读写。
+此后，在 `mpiuser@host2:~/shared` 中读写，相当于在 `mpiuser@host1:~/shared` 中读写。
 
 为避免重启后手动挂载，可在 `/etc/fstab` 文件中（用 `sudo` 权限）加入如下一行：
 
 ```
-host1:/home/common/shared /home/common/shared nfs
+host1:/home/mpiuser/shared /home/mpiuser/shared nfs
 ```
 
-在 `host3` 中重复以上步骤。至此，三台主机共享了 `common@host1:~/shared` 这个目录。
+在 `host3` 中重复以上步骤。至此，三台主机共享了 `mpiuser@host1:~/shared` 这个目录。
 
 ## 编译运行
 
-本节所有操作均在 `common@host1` 上完成。
+本节所有操作均在 `mpiuser@host1` 上完成。
 
 ### 下载、配置
 
-在 `common@host1:~/shared` 下创建如下目录树： 
+在 `mpiuser@host1:~/shared` 下创建如下目录树： 
 
 ```shell
 mkdir ~/shared/mpich
@@ -198,7 +198,7 @@ mkdir build
 sudo apt install build-essential
 # 配置构建选项：
 cd ~/shared/mpich/build
-../source/configure --prefix=/home/common/shared/mpich/install --with-device=ch3 --disable-fortran 2>&1 | tee c.txt
+../source/configure --prefix=/home/mpiuser/shared/mpich/install --with-device=ch3 --disable-fortran 2>&1 | tee c.txt
 ```
 
 若配置成功，则应当显示以下信息：
@@ -223,7 +223,7 @@ make install 2>&1 | tee mi.txt
 修改环境变量（每次启动 shell 时要重做）：
 
 ```shell
-PATH=/home/common/mpich/install/bin:$PATH
+PATH=/home/mpiuser/mpich/install/bin:$PATH
 export PATH
 which mpiexec
 ```
@@ -231,7 +231,7 @@ which mpiexec
 若设置成功，则应当返回以下路径：
 
 ```
-/home/common/mpich/install/bin/mpiexec
+/home/mpiuser/mpich/install/bin/mpiexec
 ```
 
 ### 运行、测试
