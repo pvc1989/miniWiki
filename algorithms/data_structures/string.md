@@ -43,6 +43,11 @@ title: 串 (Strings)
 
 ## R-路字典树
 
+LeetCode-1032
+
+- 【[描述](https://leetcode.com/problems/stream-of-characters/)】
+- 【[解答](./leetcode/1032.stream-of-characters.cpp)】
+
 ## 三元搜索字典树
 
 # 子串搜索
