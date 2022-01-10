@@ -2,6 +2,42 @@
 title: 性能检测
 ---
 
+# Google `gperftools`<a href name="gperftools"></a>
+
+## 安装
+
+```shell
+git clone https://github.com/gperftools/gperftools.git
+cd gperftools
+./autogen.sh
+./configure
+make
+sudo make install
+```
+
+## 链接
+
+```shell
+c++ -o <executable-file> <source-files> -Wl,--no-as-needed,-lprofiler,--as-needed
+```
+
+## 运行
+
+```shell
+CPUPROFILE=<path-to-profile-file> <path-to-executable-file>
+```
+
+## 报告
+
+```shell
+pprof [options] <path-to-executable-file> <path-to-profile-file(s)>
+# options:
+#    --text              Generate text report
+#    --gv                Generate Postscript and display
+#    --evince            Generate PDF and display
+#    --web               Generate SVG and display
+```
+
 # GNU `gprof`<a href name="gprof"></a>
 
 ⚠️ 仅在 Linux 系统中可用。
@@ -19,7 +55,7 @@ cc -o myprog myprog.c -g -pg
 
 ## 运行
 
-运行程序，生成 `gmon.out` 二进制文件：
+运行程序，生成二进制文件 `gmon.out`：
 
 ```shell
 ./myprog

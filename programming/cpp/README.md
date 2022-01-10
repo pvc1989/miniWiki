@@ -70,6 +70,7 @@ title: C/C++
 
 ## [性能检测](./profile.md)
 
+- Google `gperftools`
 - GNU `gprof`
 
 ## [断点调试](./debug.md)
