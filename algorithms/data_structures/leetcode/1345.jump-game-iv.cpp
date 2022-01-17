@@ -81,19 +81,19 @@
 
 // @lc code=start
 class Solution {
-  int size_;
-  int count_;
   unordered_map<int, unordered_set<int>> value_to_index_set_;
   vector<int> index_to_level_;
   queue<int> index_queue_;
+  int size_;
+
   void enqueue(int index, int level) {
     if (0 <= index && index < size_/* enqueue valid index only */
         && index_to_level_[index] < 0/* enqueue new index only */) {
       index_to_level_[index] = level;
       index_queue_.emplace(index);
-      ++count_;  // each index will only be enqueued once
     }
   }
+
  public:
   int minJumps(vector<int> &index_to_value) {
     // initialization
@@ -123,7 +123,6 @@ class Solution {
         index_set.clear();
       }
     }
-    assert(count_ == size_);
     return index_to_level_.back();
   }
 };
