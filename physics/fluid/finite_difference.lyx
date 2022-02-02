@@ -2314,7 +2314,26 @@ status open
 
 \end_inset
 
-这是一族时间推进格式。在 CFD 中最常用的是以下三阶显式版本：
+这是一族时间推进格式。在 CFD 中应当选用具有 TVD 性质的版本：
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+二阶 
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{U}^{n+1/2} & =\underline{U}^{n}+\underline{R}^{n}h_{t}\\
+\underline{U}^{n+1}\equiv\underline{U}^{n+2/2} & =\frac{1}{2}\underline{U}^{n}+\frac{1}{2}\left(\underline{U}^{n+1/2}+\underline{R}^{n+1/2}h_{t}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+三阶 
 \begin_inset Formula 
 \[
 \begin{aligned}\underline{U}^{n+1/3} & =\underline{U}^{n}+\underline{R}^{n}h_{t}\\
@@ -2328,6 +2347,28 @@ status open
 
 \end_layout
 
+\begin_layout Description
+四阶 必须引入 
+\begin_inset Formula $\underline{R}$
+\end_inset
+
+ 的伴随算子 
+\begin_inset Formula $\underline{R^{\dagger}}$
+\end_inset
+
+，参见 
+\begin_inset CommandInset href
+LatexCommand href
+name "10.1090/s0025-5718-98-00913-2"
+target "https://doi.org/10.1090/s0025-5718-98-00913-2"
+literal "false"
+
+\end_inset
+
+。
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
