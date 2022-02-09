@@ -206,7 +206,10 @@ ssh-add -l             # 列出已加入的私钥
 
 # 在远程主机运行任务
 
+使用场景：借助 SSH 在远程主机启动某个（耗时较长的）任务后，允许当前 SSH 连接挂起或断开。
+
 ```shell
+# nohup := no hang up
 nohup command [options]    # 在远程主机的前台运行任务
 nohup command [options] &  # 在远程主机的后台运行任务
 ```
