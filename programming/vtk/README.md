@@ -208,7 +208,7 @@ lookup_table.Build()
 
 启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》用于系统学习。
 
-## 可执行程序
+## [可执行程序](https://docs.paraview.org/en/latest/UsersGuide/introduction.html#paraview-executables)
 
 ### `paraview`
 
@@ -259,7 +259,7 @@ foo.vtksN
 ```
 其中 `foo` 可以是任意非空字符串，`N` 为整数编号，扩展名 `.vtk` 可以替换为任意[ VTK 文件格式](#文件格式)所对应的扩展名。
 
-## 远程数据显式
+## [远程数据显式](https://docs.paraview.org/en/latest/ReferenceManual/parallelDataVisualization.html#remote-visualization-in-paraview)
 - 在远程及本地主机上：
   - 安装（版本号接近的）ParaView 软件。
   - 不建议用*包管理工具*安装，建议[到官网下载预编译版本](https://www.paraview.org/download/)。
