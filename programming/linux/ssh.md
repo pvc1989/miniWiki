@@ -82,7 +82,11 @@ ssh user@address do_something
 # 不等程序执行完，立即切换回本地终端：
 ssh -f user@address do_something
 ```
-输入 `exit` 则结束本次 SSH 连接，但一般不会关闭远程主机。
+输入 `exit` 则结束本次 SSH 连接，但一般不会关闭远程主机。若要关闭远程主机，则需输入远程用户密码：
+
+```shell
+ssh user@address sudo -S poweroff
+```
 
 ## 从 Windows 主机访问远程 Linux 主机
 
@@ -145,6 +149,8 @@ scp -r local_dir  user@address:dir
 # 下载：
 scp    user@address:file local_dir
 scp -r user@address:dir  local_dir
+# 指定端口：
+scp -r -P port user@address:dir local_dir
 ```
 
 # 免密访问
@@ -203,6 +209,28 @@ ssh-add -l             # 列出已加入的私钥
 ```
 
 上述命令可置于 `~/.bashrc` 或 `~/.zshrc` 中，以便每次启动 shell 时自动加载。
+
+# 非默认端口
+
+在服务器的 `/etc/ssh/sshd_config` 文件中加入以下两行：
+
+```shell
+Port 22    # 默认端口
+Port 1024  # 新开端口
+```
+
+并重启 SSH 服务：
+
+```shell
+sudo service sshd restart
+```
+
+在客户端选择目标端口：
+
+```shell
+ssh username@hostname_or_ipaddress  # 通过默认端口连接
+ssh -p 1024 username@hostname_or_ipaddress  # 通过特定端口连接
+```
 
 # 在远程主机运行任务
 
