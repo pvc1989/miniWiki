@@ -206,7 +206,7 @@ lookup_table.Build()
 
 [ParaView](https://www.paraview.org) 是基于 VTK 的 GUI 前端。
 
-启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://www.paraview.org/paraview-guide/)》用于系统学习。
+启动后，在 `Help` 列表中有各种本地或在线文档的链接，其中《Getting Started》可用于快速入门，《[ParaView Guide](https://docs.paraview.org/en/latest/)》用于系统学习。
 
 ## [可执行程序](https://docs.paraview.org/en/latest/UsersGuide/introduction.html#paraview-executables)
 
