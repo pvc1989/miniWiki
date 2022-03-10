@@ -174,7 +174,7 @@ Change file timestamps, i.e. *touch* a file.
 # Show file properties such as size, permissions, creation and access dates among others:
     stat file
 
-# Same as above but vqerbose (more similar to Linux's `stat`):
+# Same as above but verbose (more similar to Linux's `stat`):
     stat -x file
 
 # Show only octal file permissions:
@@ -347,6 +347,15 @@ $ find ~/.. -name .bash_history 2>&1 stdout_stderr.txt
 ```
 
 # 系统管理
+
+## 设备管理
+
+```shell
+# 查看 CPU 信息
+cat /proc/cpuinfo | grep "model name"
+# 查看 RAM 信息
+cat /proc/meminfo | grep Mem
+```
 
 ## 权限管理
 

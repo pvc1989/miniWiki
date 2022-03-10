@@ -27,6 +27,7 @@ title: MPI (Message Passing Interface)
 为方便后续操作，在各台主机的 `/etc/hosts` 文件中（用 `sudo` 权限）加入以下三行：
 
 ```
+# 若 host1 等主机名已被占用，则应改用其他主机名
 192.168.5.1    host1
 192.168.5.2    host2
 192.168.5.3    host3
