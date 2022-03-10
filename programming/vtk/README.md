@@ -271,3 +271,13 @@ foo.vtksN
   - 连接到远程主机（首次连接需要 `Add Server`），如果 `Pipeline Browser` 中的 `builtin` 被替换为远程主机的标识符，则表明连接成功。
   - 像操作本地数据一样，加载并显示远程数据。
 
+## [Filters]
+
+### [Calculator](https://docs.paraview.org/en/latest/UsersGuide/filteringData.html#calculator)
+
+```python
+# 构造矢量
+Velocity = (MomentumX*iHat + MomentumY*jHat + MomentumZ*kHat) / Density
+# 构造标量
+Pressure = EnergyStagnationDensity - dot(Velocity, Velocity) * Density / 2
+```
