@@ -49,7 +49,9 @@ title: 葵花宝典
 - 构建工具
   - [Git](./programming/git.md)
   - [批量构建](./programming/cpp/make/README.md)
-  - [断点调试](./programming/debug/README.md)
+  - [断点调试](./programming/cpp/debug.md)
+  - [性能检测](./programming/cpp/profile.md)
+  - [内存检查](./programming/cpp/memory/check.md)
 - 开发环境
   - [Linux](./programming/linux/README.md)
   - [Docker](./programming/docker/README.md)
