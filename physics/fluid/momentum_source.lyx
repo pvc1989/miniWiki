@@ -128,7 +128,7 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
-求三维空间中的直线段 
+求三维空间中的线段 
 \begin_inset Formula $PQ$
 \end_inset
 
@@ -136,7 +136,7 @@ literal "true"
 \begin_inset Formula $ABC$
 \end_inset
 
- 的交点。
+ 的公共点。
 \end_layout
 
 \begin_layout Standard
@@ -164,23 +164,118 @@ literal "true"
 
 \end_inset
 
-解出 
-\begin_inset Formula $\lambda_{A},\lambda_{B},\lambda_{C}$
-\end_inset
-
-，归一化即得交点 
-\begin_inset Formula $R$
-\end_inset
-
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
+若点 
+\begin_inset Formula $P$
+\end_inset
+
+ 与三角形 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 不共面，则
+\begin_inset Formula 
+\[
+\det\begin{bmatrix}(PA)_{x} & (PB)_{x} & (PC)_{x}\\
+(PA)_{y} & (PB)_{y} & (PC)_{y}\\
+(PA)_{z} & (PB)_{z} & (PC)_{z}
+\end{bmatrix}\ne0
+\]
+
+\end_inset
+
+故有唯一解。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若 
+\begin_inset Formula $\lambda_{A},\lambda_{B},\lambda_{C}$
+\end_inset
+
+ 均为正数，则存在位于三角形 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 内的唯一交点 
+\begin_inset Formula $R$
+\end_inset
+
+ 满足
 \begin_inset Formula 
 \[
 \overrightarrow{PR}=\frac{\overrightarrow{PQ}}{\lambda_{A}+\lambda_{B}+\lambda_{C}}
 \]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+否则，
+\begin_inset Formula $PQ$
+\end_inset
+
+ 所属直线与 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 所属平面有唯一的交点，但不在三角形 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 内。
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+否则，判断点 
+\begin_inset Formula $Q$
+\end_inset
+
+ 是否与三角形 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 共面。
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+若不共面，则点 
+\begin_inset Formula $P$
+\end_inset
+
+ 就是线段 
+\begin_inset Formula $PQ$
+\end_inset
+
+ 与三角形 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 的交点。
+\end_layout
+
+\begin_layout Itemize
+否则，抛出异常（
+\begin_inset Formula $PQ$
+\end_inset
+
+ 与 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 共面）。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
