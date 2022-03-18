@@ -213,7 +213,7 @@ SetFactory("OpenCASCADE");
 
 ## 创建初等实体
 只具有几何意义的对象称为**初等实体 (elementary entity)**。
-初等实体在创建时，被赋予一个正整数（`非正整数`为系统保留）编号，《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》称其为**标签 (tag)**。
+初等实体在创建时，被赋予一个正整数（*非正整数*为系统保留）编号，《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》称其为**标签 (tag)**。
 这些 `tag` 满足：
 - 每个初等 `Point` 具有唯一的 `tag` 
 - 每个初等 `Curve` 具有唯一的 `tag` 
@@ -222,9 +222,9 @@ SetFactory("OpenCASCADE");
 
 多数命令的语法与 C++ 相同，尤其要注意：每个语句最后的 `;` 不能省略。
 
-- 圆括号 `()` 中的编号表示`创建`一个新的实体。
-- 花括号 `{}` 中的编号表示`引用`一个已有的实体。
-- 尖括号 `< >` 之间的内容为可选项。
+- 圆括号 `()` 中的编号表示*创建*一个新的实体。
+- 花括号 `{}` 中的编号表示*引用*一个已有的实体。
+- 尖括号 `<>` 中的内容为可选项。
 
 ### `Point`s
 创建三维点：
@@ -375,7 +375,7 @@ Extrude{
 一组相同维度的初等实体可以组合成一个**物理实体 (physical entity)**，以便赋予它们物理意义。
 例如：材料属性、载荷分布、边界条件等。
 
-每个物理实体也有唯一的 `tag`，这里的`唯一`也是针对同一维度的物理实体而言的。
+每个物理实体也有唯一的 `tag`，这里的*唯一*也是针对同一维度的物理实体而言的。
 除此之外，每个物理实体还可以有一个字符串表示的名称。
 
 ```cpp
@@ -395,7 +395,7 @@ BooleanOperation{passiveEntityList}{toolEntityList}
 ```
 
 - `BooleanOperation` 代表某种布尔运算，可以是 `BooleanIntersection`、`BooleanUnion`、`BooleanDifference` 之一。
-- `passiveEntityList` 代表`被动 (passive)` 实体列表，`toolEntityList` 代表**工具 (tool)** 实体列表，它们可以是
+- `passiveEntityList` 代表**被动 (passive)** 实体列表，`toolEntityList` 代表**工具 (tool)** 实体列表，它们可以是
 
   ```cpp
   <Physical> Curve | Surface | Volume{tagList};  // ; 不能省略
@@ -488,8 +488,8 @@ Coherence;
 
 ## 设定单元尺寸
 单元尺寸可以通过以下三种方式设定：
-- 如果设定了 `Mesh.CharacteristicLengthFromPoints`，那么可以为每个 `Point` 设定一个`特征长度 (Characteristic Length)`。
-- 如果设定了 `Mesh.CharacteristicLengthFromCurvature`，那么网格尺寸将与`曲率 (Curvature)` 相适应。
+- 如果设定了 `Mesh.CharacteristicLengthFromPoints`，那么可以为每个 `Point` 设定一个**特征长度 (Characteristic Length)**。
+- 如果设定了 `Mesh.CharacteristicLengthFromCurvature`，那么网格尺寸将与**曲率 (Curvature)** 相适应。
 - 通过背景网格或标量场设定。
 这三种方式可以配合使用，Gmsh 会选用最小的一个。
 
