@@ -309,7 +309,15 @@ D(s)
 \end_layout
 
 \begin_layout Standard
-求三维空间中的线段 
+求线段 
+\begin_inset Formula $PQ$
+\end_inset
+
+ 与四面体 
+\begin_inset Formula $ABCD$
+\end_inset
+
+ 的公共部分，可以归结为求线段 
 \begin_inset Formula $PQ$
 \end_inset
 
@@ -321,6 +329,7 @@ D(s)
 \end_layout
 
 \begin_layout Standard
+设
 \begin_inset Formula 
 \[
 \overrightarrow{PQ}=\lambda_{A}\overrightarrow{PA}+\lambda_{B}\overrightarrow{PB}+\lambda_{C}\overrightarrow{PC}
@@ -330,7 +339,7 @@ D(s)
 
 即
 \begin_inset Formula 
-\[
+\begin{equation}
 \begin{bmatrix}(PQ)_{x}\\
 (PQ)_{y}\\
 (PQ)_{z}
@@ -340,8 +349,8 @@ D(s)
 \end{bmatrix}\begin{bmatrix}\lambda_{A}\\
 \lambda_{B}\\
 \lambda_{C}
-\end{bmatrix}
-\]
+\end{bmatrix}\label{eq:segment_triangle_intersection}
+\end{equation}
 
 \end_inset
 
@@ -357,7 +366,7 @@ D(s)
 \begin_inset Formula $ABC$
 \end_inset
 
- 不共面，则
+ 不共面，即
 \begin_inset Formula 
 \[
 \det\begin{bmatrix}(PA)_{x} & (PB)_{x} & (PC)_{x}\\
@@ -368,7 +377,14 @@ D(s)
 
 \end_inset
 
-故有唯一解。
+则方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:segment_triangle_intersection"
+
+\end_inset
+
+ 有唯一解。
 \end_layout
 
 \begin_deeper
@@ -443,7 +459,7 @@ D(s)
 \end_layout
 
 \begin_layout Itemize
-否则，抛出异常（
+否则，
 \begin_inset Formula $PQ$
 \end_inset
 
@@ -451,7 +467,11 @@ D(s)
 \begin_inset Formula $ABC$
 \end_inset
 
- 共面）。
+ 共面，但可能与 
+\begin_inset Formula $ABC$
+\end_inset
+
+ 没有公共点。
 \end_layout
 
 \end_deeper
