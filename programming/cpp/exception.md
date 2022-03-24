@@ -62,15 +62,15 @@ C++ 语言提供的**异常 (exception)** 机制是一种应用级[异常控制�
   ```cpp
   // <stdexcept>
   logic_error
-    invalid_argument
-    domain_error
-    length_error
-    out_of_range
+    invalid_argument  // 报告因参数值未被接受而引发的错误
+    domain_error  // 报告输入参数在定义域外的情形
+    length_error  // 报告试图超出长度极限所导致的错误
+    out_of_range  // 报告访问试图受定义范围外的元素所带来的错误
     future_error (C++11)
   runtime_error
-    range_error
-    overflow_error
-    underflow_error
+    range_error  // 计算结果不能以目标类型表示的情形
+    overflow_error  // 计算结果对目标类型过大的情形
+    underflow_error  // 计算结果是非正规浮点值的情形
     regex_error (C++11)
     nonexistent_local_time (C++20)
     ambiguous_local_time (C++20)
