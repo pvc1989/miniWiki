@@ -2,7 +2,10 @@
 title: C/C++
 ---
 
-# [cppreference.com](https://en.cppreference.com/w/cpp)
+# 参考文档
+
+- [cppreference.com](https://en.cppreference.com/w/cpp)
+- [Microsoft C/C++ Documentation](https://docs.microsoft.com/en-us/cpp/cpp/?view=msvc-170)
 
 # 语法基础
 
