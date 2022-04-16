@@ -279,5 +279,5 @@ foo.vtksN
 # 构造矢量
 Velocity = (MomentumX*iHat + MomentumY*jHat + MomentumZ*kHat) / Density
 # 构造标量
-Pressure = EnergyStagnationDensity - dot(Velocity, Velocity) * Density / 2
+Pressure = 0.4 * (EnergyStagnationDensity - dot(Velocity, Velocity) * Density / 2)
 ```
