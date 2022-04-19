@@ -401,7 +401,7 @@ status open
 \color blue
 元组
 \color inherit
-只是一个数学概念，它的各个分量不必具有相同的量纲，也不一定要有明确的坐标变换规则。
+只是一个数学概念，它的各个分量不必具有相同的量纲，也不一定要有明确的坐标变换规则。向量可视为一类特殊的元组。
 \end_layout
 
 \begin_layout Standard
@@ -422,7 +422,7 @@ status open
 
 \end_inset
 
-希腊字母 
+用小写希腊字母 
 \begin_inset Formula $\alpha,\beta,\kappa,\dots$
 \end_inset
 
@@ -580,7 +580,7 @@ status open
 \end_inset
 
 若以 
-\begin_inset Formula $C_{\vec{\alpha}}\coloneqq C_{\alpha_{1}\cdots\alpha_{n}}$
+\begin_inset Formula $C_{\vec{\alpha}}\equiv C_{(\alpha_{1},\dots,\alpha_{n})}$
 \end_inset
 
  表示 
@@ -598,7 +598,7 @@ status open
  可以表示为
 \begin_inset Formula 
 \[
-P(\vec{x})=\sum_{\vert\vec{\alpha}\vert\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alpha}}\equiv\sum_{\sum_{i=1}^{n}\alpha_{i}\le m}C_{\alpha_{1}\cdots\alpha_{n}}x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}
+P(\vec{x})=\sum_{\vert\vec{\alpha}\vert\le m}C_{\vec{\alpha}}\vec{x}^{\vec{\alpha}}\equiv\sum_{\sum_{i=1}^{n}\alpha_{i}\le m}C_{(\alpha_{1},\dots,\alpha_{n})}x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}
 \]
 
 \end_inset
@@ -708,7 +708,7 @@ status open
 \end_inset
 
  个复数 
-\begin_inset Formula $z_{1},\dots,z_{n}\in\mathbb{C}$
+\begin_inset Formula $z_{1},\dots,z_{n}$
 \end_inset
 
  及整数指标 
@@ -883,7 +883,7 @@ status open
 
 \begin_inset Formula 
 \[
-P(\grad)=\sum_{\vert\vec{\alpha}\vert\le m}C_{\vec{\alpha}}\grad^{\vec{\alpha}}\equiv\sum_{\left(\sum_{i=1}^{n}\alpha_{i}\right)\le m}C_{\alpha_{1}\cdots\alpha_{n}}\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}
+P_{m}(\grad)=\sum_{\vert\vec{\alpha}\vert\le m}C_{\vec{\alpha}}\grad^{\vec{\alpha}}\equiv\sum_{\left(\sum_{i=1}^{n}\alpha_{i}\right)\le m}C_{(\alpha_{1},\dots,\alpha_{n})}\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}
 \]
 
 \end_inset
@@ -944,10 +944,7 @@ status open
 可以证明：
 \begin_inset Formula 
 \[
-\partial_{\nu}=\vec{\nu}\vdot\grad=\lim_{\substack{t\in\mathbb{R}\\
-t\to0
-}
-}\frac{u(\vec{x}+t\vec{\nu})-u(\vec{x})}{t}\qquad\partial_{\nu}^{m}=\sum_{\vert\vec{\alpha}\vert=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\grad^{\vec{\alpha}}
+\partial_{\nu}=\vec{\nu}\vdot\grad\qquad\partial_{\nu}^{m}=\sum_{\vert\vec{\alpha}\vert=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\grad^{\vec{\alpha}}
 \]
 
 \end_inset
@@ -963,11 +960,11 @@ t\to0
 \end_layout
 
 \begin_layout Proof
-前者代入定义即可验证。对于后者，可以用数学归纳法证明；或者考虑到 
+前者代入定义即可验证。后者可以用数学归纳法证明；或者考虑到 
 \begin_inset Formula $\vec{\nu}$
 \end_inset
 
- 是固定的向量，它的导数 
+ 是固定的向量，导数 
 \begin_inset Formula $\partial_{i}\nu_{k}$
 \end_inset
 
@@ -995,13 +992,17 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Remark*
-在不致引起混淆的情况下，可以省略向量、元组、多重指标的箭头或加粗：
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+（不推荐）在不致引起混淆的情况下，可以省略向量、元组、多重指标的箭头或加粗：
 \begin_inset Formula 
 \[
 \begin{gathered}\vec{\alpha}\equiv\alpha\coloneqq(\alpha_{1},\dots,\alpha_{n})\qquad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}\qquad\alpha!\coloneqq(\alpha_{1}!)\cdots(\alpha_{n}!)\\
-\vec{x}\equiv x\coloneqq(x_{1},\dots,x_{n})\qquad x^{\alpha}\coloneqq x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}\qquad P(x)\coloneqq\sum_{\vert\alpha\vert\le m}c_{\alpha}x^{\alpha}\\
-\grad\equiv\partial\coloneqq(\partial_{1},\dots,\partial_{n})\qquad\partial^{\alpha}\coloneqq\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}}\qquad P(\partial)\coloneqq\sum_{\vert\alpha\vert\le m}c_{\alpha}\partial^{\alpha}
+\vec{x}\equiv x\coloneqq(x_{1},\dots,x_{n})\qquad x^{\alpha}\coloneqq x_{1}^{\alpha_{1}}\cdots x_{n}^{\alpha_{n}}\qquad P_{m}(x)\coloneqq\sum_{\vert\alpha\vert\le m}c_{\alpha}x^{\alpha}\\
+\grad\equiv\partial\coloneqq(\partial_{1},\dots,\partial_{n})\qquad\partial^{\alpha}\coloneqq\partial_{1}^{\alpha_{1}}\cdots\partial_{n}^{\alpha_{n}}\qquad P_{m}(\partial)\coloneqq\sum_{\vert\alpha\vert\le m}c_{\alpha}\partial^{\alpha}
 \end{gathered}
 \]
 
@@ -1010,8 +1011,6 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
@@ -1055,7 +1054,7 @@ u(x)=\sum_{\kappa=0}^{\infty}\frac{\dd^{\kappa}u(a)}{\kappa!}(x-a)^{\kappa}\qqua
  处的 Taylor 展开式具有几乎完全相同的形式：
 \begin_inset Formula 
 \[
-u(x)=\sum_{\kappa=0}^{\infty}\frac{\partial^{\kappa}u(a)}{\kappa!}(x-a)^{\kappa}\qquad\partial^{\kappa}u(a)\coloneqq\left.\frac{\partial^{\kappa_{1}+\cdots+\kappa_{n}}u}{\partial x_{1}^{\kappa_{1}}\cdots\partial x_{n}^{\kappa_{n}}}\right\vert _{x=a}
+u(\vec{x})=\sum_{\vec{\kappa}=\vec{0}}^{\infty}\frac{\vec{\partial}^{\vec{\kappa}}u(\vec{a})}{\vec{\kappa}!}(\vec{x}-\vec{a})^{\vec{\kappa}}\qquad\vec{\partial}^{\vec{\kappa}}u(\vec{a})\coloneqq\left.\frac{\partial^{\kappa_{1}+\cdots+\kappa_{n}}u}{\partial x_{1}^{\kappa_{1}}\cdots\partial x_{n}^{\kappa_{n}}}\right\vert _{\vec{x}=\vec{a}}
 \]
 
 \end_inset
@@ -1102,13 +1101,13 @@ status open
 \end_inset
 
  的乘积求 
-\begin_inset Formula $\alpha\in\mathbb{N}^{n}$
+\begin_inset Formula $\vec{\alpha}\in\mathbb{N}^{n}$
 \end_inset
 
  阶偏导数，有几乎完全相同的法则：
 \begin_inset Formula 
 \[
-\partial^{\alpha}(uv)=\sum_{\kappa=0}^{\alpha}\binom{\alpha}{\kappa}(\partial^{\kappa}u)(\partial^{\alpha-\kappa}v)
+\vec{\partial}^{\vec{\alpha}}(uv)=\sum_{\vec{\kappa}=\vec{0}}^{\vec{\alpha}}\binom{\vec{\alpha}}{\vec{\kappa}}(\vec{\partial}^{\vec{\kappa}}u)(\vec{\partial}^{\vec{\alpha}-\vec{\kappa}}v)
 \]
 
 \end_inset
