@@ -1130,8 +1130,12 @@ status open
 按方程个数分类
 \end_layout
 
+\begin_layout Standard
+与线性代数方程组类似，
+\end_layout
+
 \begin_layout Definition
-（与线性代数方程组类似）关于 
+关于 
 \begin_inset Formula $N$
 \end_inset
 
@@ -1198,25 +1202,45 @@ status open
 
 \end_inset
 
-（与线性代数方程组类似）偏微分方程组也可以写成更紧凑的矩阵形式。在数学、物理文献中，矩阵的记法并不统一。本章采用由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Dirac"
-target "https://doi.org/10.1017/S0305004100021162"
-literal "false"
+偏微分方程组也可以写成更紧凑的矩阵形式。在数学、物理文献中，矩阵的记法并不统一。本章仿照 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hassani_2013"
+literal "true"
 
 \end_inset
 
- 发明、经 
-\begin_inset CommandInset href
-LatexCommand href
-name "Hassani"
-target "https://doi.org/10.1007/978-3-319-01195-0"
-literal "false"
+ 采用 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Dirac_1939"
+literal "true"
 
 \end_inset
 
- 改进的 bra-ket 记号。
+ 发明的 bra-ket 记号。表 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:微分方程：概述：矩阵记法"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 列出了本章用到的主要符号，其中 
+\begin_inset Formula $*,\dagger$
+\end_inset
+
+ 分别表示
+\color blue
+复数的共轭
+\color inherit
+与
+\color blue
+复数矩阵的共轭转置
+\color inherit
+。
 \begin_inset Float table
 wide false
 sideways false
@@ -1834,29 +1858,7 @@ mel{U}{A}{V}
 
 \end_inset
 
-表 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "tab:微分方程：概述：矩阵记法"
-plural "false"
-caps "false"
-noprefix "false"
 
-\end_inset
-
- 列出了本章用到的主要符号，其中 
-\begin_inset Formula $*,\dagger$
-\end_inset
-
- 分别表示
-\color blue
-复数的共轭
-\color inherit
-与
-\color blue
-复数矩阵的共轭转置
-\color inherit
-。
 \end_layout
 
 \begin_layout Standard
@@ -1888,7 +1890,7 @@ status open
  阶偏微分方程（组）的一般形式为
 \begin_inset Formula 
 \begin{equation}
-\underline{F}(\vec{x},\grad^{\le m}\underline{U})=\underline{0}\label{eq:微分方程：概述：一般形式：非线性}
+\underline{F}(\vec{x},\vec{\partial}^{\le m}\underline{U})=\underline{0}\label{eq:微分方程：概述：一般形式：非线性}
 \end{equation}
 
 \end_inset
@@ -1912,7 +1914,7 @@ reference "eq:微分方程：概述：一般形式：非线性"
  可以化为
 \begin_inset Formula 
 \[
-\sum_{\vert\vec{\alpha}\vert\le m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\grad^{\vec{\alpha}}\underline{U}=\underline{B}(\vec{x})
+\left[\sum_{\vert\vec{\alpha}\vert\le m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\partial}^{\vec{\alpha}}\right]\underline{U}=\underline{B}(\vec{x})
 \]
 
 \end_inset
@@ -1933,10 +1935,10 @@ reference "eq:微分方程：概述：一般形式：非线性"
 \end_inset
 
  中含有 
-\begin_inset Formula $\grad^{\le m}\underline{U}$
+\begin_inset Formula $\vec{\partial}^{\le m}\underline{U}$
 \end_inset
 
- 中任意两项（可以是相同的两项）的乘积。
+ 中任意两项（可以是相同的两项）的乘积（或其他非线性表达式）。
 \end_layout
 
 \begin_layout Description
@@ -1954,7 +1956,7 @@ reference "eq:微分方程：概述：一般形式：非线性"
  可以化为
 \begin_inset Formula 
 \begin{equation}
-\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x},\grad^{<m}\underline{U})\cdot\grad^{\vec{\alpha}}\underline{U}=\underline{B}(\vec{x},\grad^{<m}\underline{U})\label{eq:微分方程：概述：一般形式：拟线性}
+\left[\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x},\vec{\partial}^{{\color{red}<}m}\underline{U})\,\vec{\partial}^{\vec{\alpha}}\right]\underline{U}=\underline{B}(\vec{x},\vec{\partial}^{{\color{red}<}m}\underline{U})\label{eq:微分方程：概述：一般形式：拟线性}
 \end{equation}
 
 \end_inset
@@ -1985,7 +1987,7 @@ reference "eq:微分方程：概述：一般形式：拟线性"
 ，即
 \begin_inset Formula 
 \[
-\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\grad^{\vec{\alpha}}\underline{U}=\underline{B}(\vec{x},\grad^{<m}\underline{U})
+\left[\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\partial}^{\vec{\alpha}}\right]\underline{U}=\underline{B}(\vec{x},\vec{\partial}^{<m}\underline{U})
 \]
 
 \end_inset
@@ -2008,16 +2010,17 @@ reference "eq:微分方程：概述：一般形式：拟线性"
 
  阶
 \color blue
-非线性微分方程
+非线性微分方程组
 \color inherit
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:微分方程：概述：一般形式：非线性"
+
+\begin_inset Formula 
+\[
+\underline{F}(\vec{x},\vec{\partial}^{<m}\underline{U})=\underline{0}
+\]
 
 \end_inset
 
- 作一阶微分，都能得到至多 
+作一阶微分，都能得到至多 
 \begin_inset Formula $m$
 \end_inset
 
@@ -2028,7 +2031,7 @@ reference "eq:微分方程：概述：一般形式：非线性"
 ：
 \begin_inset Formula 
 \begin{equation}
-\hat{A}\underline{U}=\underline{B}(\vec{x},\grad^{<m}\underline{U})\qquad\hat{A}\coloneqq\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x},\grad^{<m}\underline{U})\cdot\grad^{\vec{\alpha}}\label{eq:PDE::System::Quasi-linear}
+\left[\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x},\vec{\partial}^{<m}\underline{U})\,\vec{\partial}^{\vec{\alpha}}\right]\underline{U}=\underline{B}(\vec{x},\vec{\partial}^{<m}\underline{U})\label{eq:PDE::System::Quasi-linear}
 \end{equation}
 
 \end_inset
@@ -2044,18 +2047,18 @@ reference "eq:微分方程：概述：一般形式：非线性"
 ：
 \begin_inset Formula 
 \begin{equation}
-\hat{A}\underline{U}=\underline{B}(\vec{x},\grad^{<m}\underline{U})\qquad\hat{A}\coloneqq\sum_{i=1}^{n}\underline{A}_{i}(\vec{x},\grad^{<m}\underline{U})\cdot\partial_{i}\label{eq:PDEs::1st-order::Quasi-linear}
+\left[\sum_{i=1}^{n}\underline{\tilde{A}}_{i}(\vec{x},\underline{\tilde{U}})\,\partial_{i}\right]\underline{U}=\underline{\tilde{B}}(\vec{x},\underline{\tilde{U}})\label{eq:PDEs::1st-order::Quasi-linear}
 \end{equation}
 
 \end_inset
 
-因此，研究这种形式的
+因此，研究这种形式的偏微分方程组（实质上是研究形如 
+\begin_inset Formula $\sum_{i=1}^{n}\underline{A}_{i}(\vec{x},\underline{U})\,\partial_{i}$
+\end_inset
+
+ 的
 \color blue
-微分方程组
-\color inherit
-（实质上是研究相应的
-\color blue
-微分算子
+一阶拟线性微分算子
 \color inherit
 ）具有普遍的意义。
 \end_layout
