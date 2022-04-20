@@ -944,7 +944,7 @@ status open
 可以证明：
 \begin_inset Formula 
 \[
-\partial_{\nu}=\vec{\nu}\vdot\grad\qquad\partial_{\nu}^{m}=\sum_{\vert\vec{\alpha}\vert=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\grad^{\vec{\alpha}}
+\partial_{\nu}=\vec{\nu}\vdot\vec{\partial}\qquad\partial_{\nu}^{m}=\sum_{\vert\vec{\alpha}\vert=m}\frac{m!}{\vec{\alpha}!}\vec{\nu}^{\vec{\alpha}}\vec{\partial}^{\vec{\alpha}}
 \]
 
 \end_inset
@@ -2040,7 +2040,7 @@ reference "eq:微分方程：概述：一般形式：拟线性"
 \begin_inset Formula $\vec{\partial}^{>1}\underline{U}$
 \end_inset
 
- 视为彼此无关的未知函数，并补充适当的协调关系），都能得到
+ 视为彼此无关的未知函数，并补充适当的相容条件），都能得到
 \color blue
 一阶拟线性微分方程组
 \color inherit
@@ -3243,6 +3243,16 @@ Neumann BVP
 \end_layout
 
 \begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[相容条件]
+\end_layout
+
+\end_inset
+
 一般情况下，这里的
 \color blue
 法向导数
@@ -3253,16 +3263,17 @@ Neumann BVP
 \color inherit
 代替，因为沿边界任给的偏导数分布通常不满足
 \color blue
-协调条件 (compatibility condition)
+相容条件 (compatibility condition)
 \color inherit
 ：
 \begin_inset Formula 
-\[
-\pdv[2]{u}{x}{y}=\pdv[2]{u}{y}{x}\stackrel{?}{\impliedby}\begin{cases}
-\pdv*{u}{x}=\phi\\
-\pdv*{u}{y}=\psi
-\end{cases}
-\]
+\begin{equation}
+\pdv[2]{u}{x}{y}=\pdv[2]{u}{y}{x}\impliedby\begin{cases}
+\pdv*{u}{x}=\phi(x,y)\\
+\pdv*{u}{y}=\psi(x,y)\\
+\pdv*{\psi}{x}\stackrel{?}{=}\pdv*{\phi}{y}
+\end{cases}\label{eq:pdv_consistency}
+\end{equation}
 
 \end_inset
 
@@ -3415,19 +3426,19 @@ status open
 \begin_layout Remark*
 对于具有明确物理背景的 PDE，未知函数所含的
 \color blue
-时间变量 (temporal variable)
+时间自变量 (temporal independent variable)
 \color inherit
  很容易与
 \color blue
-空间变量 (spatial variable)
+空间自变量 (spatial independent variable)
 \color inherit
  相区分。然而，在某些不显含
 \color blue
-时间变量
+时间自变量
 \color inherit
 的问题中，可能存在某个
 \color blue
-空间变量
+空间自变量
 \color inherit
 具有
 \color blue
@@ -3440,11 +3451,11 @@ reference "eq:Potential::2d::Compressible"
 
 \end_inset
 
- 中的 
+ 中的自变量 
 \begin_inset Formula $x$
 \end_inset
 
- 方向在 
+ 在 
 \begin_inset Formula $M>1$
 \end_inset
 
@@ -3458,11 +3469,11 @@ reference "eq:Potential::2d::Compressible"
 \color inherit
 ）。为此，
 \color blue
-时间变量
+时间自变量
 \color inherit
 需要放松为
 \color blue
-具有时间特性的变量
+具有时间特性的自变量
 \color inherit
 ，而
 \color blue
@@ -3527,7 +3538,7 @@ status open
 ：
 \begin_inset Formula 
 \begin{equation}
-S\coloneqq\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\ \phi\in C^{m},\ \vec{\partial}\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
+S\coloneqq\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0\land\phi\in C^{m}\land\vec{\partial}\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
 \end{equation}
 
 \end_inset
@@ -3600,7 +3611,7 @@ status open
 
 \begin_inset Formula 
 \begin{equation}
-\left\{ \partial_{\nu}^{k}\underline{U}(\vec{x}):k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData}
+\left\{ \partial_{\nu}^{k}\underline{U}(\vec{x}):k=0,\dots,m-1\land\vec{x}\in S\right\} \label{eq:CauchyData}
 \end{equation}
 
 \end_inset
@@ -3624,6 +3635,16 @@ Cauchy 问题
 \end_layout
 
 \begin_layout Remark*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[相容条件]
+\end_layout
+
+\end_inset
+
 与 Neumann BC 类似，这里的
 \color blue
 法向导数
@@ -3638,7 +3659,7 @@ Cauchy 问题
 
  上满足
 \color blue
-协调条件 (compatibility condition)
+相容条件 (compatibility condition)
 \color inherit
 ：必须确保由
 \color blue
@@ -3652,77 +3673,115 @@ Cauchy 问题
 \color blue
 更高阶偏导数
 \color inherit
-是一致的。实际上，对于任给的直到 
+是一致的，例如式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pdv_consistency"
+
+\end_inset
+
+。这里的“导数”均指“导函数”。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+在超曲面 
+\begin_inset Formula $S$
+\end_inset
+
+ 上，任给 
+\begin_inset Formula $\underline{U}$
+\end_inset
+
+ 的 
+\begin_inset Formula $0$
+\end_inset
+
+ 到 
 \begin_inset Formula $(m-1)$
 \end_inset
 
  阶的
 \color blue
-法向导数
+法向导（函）数
 \color inherit
-，总是能够确定直到 
+，总能导出 
+\begin_inset Formula $\underline{U}$
+\end_inset
+
+ 的 
+\begin_inset Formula $0$
+\end_inset
+
+ 到 
 \begin_inset Formula $(m-1)$
 \end_inset
 
  阶的
 \color blue
-偏导数
+偏导（函）数
 \color inherit
-。在点 
+，即
+\begin_inset Formula 
+\[
+\left\{ \partial_{\nu}^{k}\underline{U}(\vec{x}):k=0,\dots,m-1\land\vec{x}\in S\right\} \implies\left\{ \vec{\partial}^{\vec{\alpha}}\underline{U}(\vec{x}):\vert\vec{\alpha}\vert=0,\dots,m-1\land\vec{x}\in S\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+在点 
 \begin_inset Formula $P\in S$
 \end_inset
 
- 处建立局部坐标系 
+ 邻域内建立局部坐标系 
 \begin_inset Formula $(y_{1},\dots,y_{n})$
 \end_inset
 
-，不失一般性，可以取单位法向量 
-\begin_inset Formula $\vec{\nu}$
+，不失一般性，可令第一个坐标为法向坐标（即 
+\begin_inset Formula $\vec{\nu}=\partial S/\partial y_{1}$
 \end_inset
 
- 为第 
-\begin_inset Formula $1$
-\end_inset
-
- 个基向量，则后 
+）、后 
 \begin_inset Formula $(n-1)$
 \end_inset
 
- 个基向量就定义了过点 
-\begin_inset Formula $P$
-\end_inset
-
- 的切平面（用 
-\begin_inset Formula $T_{P}S$
-\end_inset
-
- 表示）。于是 
+ 个坐标为切向坐标（即曲面参数）。于是，可将 CD 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:CauchyData"
 
 \end_inset
 
- 在点 
-\begin_inset Formula $P$
-\end_inset
-
- 附近可以重写为
+ 改写为
 \begin_inset Formula 
 \[
-\left\{ \partial_{\nu}^{k}\underline{U}(0,y_{2},\dots,y_{n}):k=0,\dots,m-1;\ (0,y_{2},\dots,y_{n})\in S\right\} 
+\left\{ \partial_{\nu}^{k}\underline{U}(y_{1},y_{2},\dots,y_{n})\equiv\psi_{k}(y_{2},\dots,y_{n}):k=0,\dots,m-1\land(y_{1},y_{2},\dots,y_{n})\in S\right\} 
 \]
 
 \end_inset
 
-将它们代入方向导数定义 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:方向导数"
-
+其中 
+\begin_inset Formula $\left\{ \psi_{k}\right\} _{k=0}^{m-1}$
 \end_inset
 
- 就能得到关于 
+ 为任给的已知函数。由此可得关于 
 \begin_inset Formula $y$
 \end_inset
 
@@ -3730,7 +3789,15 @@ reference "eq:方向导数"
 \begin_inset Formula $(m-1)$
 \end_inset
 
- 阶偏导数。只要坐标变换 
+ 阶偏导数：
+\begin_inset Formula 
+\[
+\frac{\partial^{\alpha_{1}+\cdots+\alpha_{n}}}{\partial y_{2}^{\alpha_{1}}\cdots\partial y_{n}^{\alpha_{n}}}\underline{U}(y_{1},y_{2},\dots,y_{n})=\frac{\partial^{\alpha_{2}+\cdots+\alpha_{n}}}{\partial y_{2}^{\alpha_{2}}\cdots\partial y_{n}^{\alpha_{n}}}\psi_{\alpha_{1}}(y_{2},\dots,y_{n})
+\]
+
+\end_inset
+
+只要坐标变换 
 \begin_inset Formula $x\mapsto y$
 \end_inset
 
@@ -3741,7 +3808,7 @@ reference "eq:方向导数"
 
 \begin_inset Formula 
 \[
-\pdv{U}{y_{k}}=\sum_{i=1}^{n}\pdv{U}{x_{i}}\pdv{x_{i}}{y_{k}}\qquad\forall k=1,\dots,n
+\pdv{y_{j}}=\sum_{i=1}^{n}\pdv{x_{i}}{y_{j}}\pdv{x_{i}}\qquad\forall j=1,\dots,n
 \]
 
 \end_inset
@@ -3754,11 +3821,22 @@ reference "eq:方向导数"
 \begin_inset Formula $(m-1)$
 \end_inset
 
- 阶偏导数。有了这些偏导数，就可以在点 
+ 阶偏导数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+有了这些偏导数，就可以在点 
 \begin_inset Formula $P$
 \end_inset
 
- 的充分小领域内，将 
+ 的充分小邻域内，将 
 \begin_inset Formula $S$
 \end_inset
 
@@ -3790,7 +3868,7 @@ reference "eq:方向导数"
 \begin_inset Formula $m$
 \end_inset
 
- 阶偏导数（考虑到协调条件，实际上所需的是 
+ 阶偏导数（考虑到相容条件，实际上所需的是 
 \begin_inset Formula $S$
 \end_inset
 
@@ -3803,13 +3881,6 @@ reference "eq:方向导数"
 \end_inset
 
  不能随意选择。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Definition
@@ -3835,7 +3906,7 @@ status open
 \begin_inset Formula $m$
 \end_inset
 
- 阶导数值不能由 CD 唯一地确定，则称 
+ 阶导数值不能由 CD 与 PDE 唯一地确定，则称 
 \begin_inset Formula $S$
 \end_inset
 
@@ -3909,7 +3980,7 @@ noprefix "false"
  上给出的 CD：
 \begin_inset Formula 
 \begin{equation}
-\left\{ \partial_{\nu}^{k}\underline{U}:k=0,\dots,m-1;\ \vec{x}\in S\right\} \label{eq:CauchyData::System}
+\left\{ \partial_{\nu}^{k}\underline{U}:k=0,\dots,m-1\land\vec{x}\in S\right\} \label{eq:CauchyData::System}
 \end{equation}
 
 \end_inset
@@ -3917,21 +3988,24 @@ noprefix "false"
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-若点 
+\begin_layout Proof
+先考虑简单情形。若点 
 \begin_inset Formula $P\in S$
 \end_inset
 
- 处的单位法向量 
+ 处的法向量 
 \begin_inset Formula $\vec{\nu}$
 \end_inset
 
- 恰好与某个坐标轴平行，不失一般性，就取该方向为 
+ 恰好与某个坐标轴平行，不失一般性，令 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 为 
 \begin_inset Formula $x_{1}$
 \end_inset
 
- 轴正向，则 
+ 轴的基向量，则 
 \begin_inset Formula $\partial_{1}^{m}$
 \end_inset
 
@@ -3957,23 +4031,39 @@ reference "eq:PDE::System::Quasi-linear"
 \begin_inset Formula $\partial_{\nu}^{m}\underline{U}$
 \end_inset
 
- 的线性代数方程组，它的解存在且唯一的充要条件是
+ 的线性代数方程组
 \begin_inset Formula 
 \[
-\det(\underline{A}_{\vec{\alpha}})\ne0\qquad\vec{\alpha}=(1,0,\dots,0)
+\underline{A}_{(1,0,\dots,0)}\,\partial_{1}^{m}\underline{U}=\underline{C}(\vec{\partial}^{<m}\underline{U},\partial_{2}\partial_{1}^{m-1}\underline{U},\dots,\partial_{n}\partial_{1}^{m-1}\underline{U})
 \]
 
 \end_inset
 
-这是下面所要讨论的更一般情形的特例。
+它的解存在且唯一的充要条件是
+\begin_inset Formula 
+\[
+\det(\underline{A}_{(1,0,\dots,0)})\ne0
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Itemize
-在点 
+\begin_layout Proof
+下面讨论更一般的情形。若点 
 \begin_inset Formula $P\in S$
 \end_inset
 
- 附近引入坐标变换
+ 处的法向量 
+\begin_inset Formula $\vec{\nu}$
+\end_inset
+
+ 不与任何坐标轴平行，则可在点 
+\begin_inset Formula $P\in S$
+\end_inset
+
+ 邻域内引入坐标变换
 \begin_inset Formula 
 \[
 \begin{bmatrix}y_{1}\\
@@ -3984,24 +4074,28 @@ y_{n}
 x_{2}\\
 \vdots\\
 x_{n}
-\end{bmatrix}\implies\frac{\partial}{\partial x_{k}}=\sum_{i=1}^{n}\frac{\partial y_{i}}{\partial x_{k}}\frac{\partial}{\partial y_{i}}=\frac{\partial\phi}{\partial x_{k}}\frac{\partial}{\partial y_{1}}+\mathrm{\delta}_{k}^{1}\frac{\partial}{\partial y_{k}}
+\end{bmatrix}\implies\frac{\partial}{\partial x_{k}}=\sum_{i=1}^{n}\frac{\partial y_{i}}{\partial x_{k}}\frac{\partial}{\partial y_{i}}=\frac{\partial\phi}{\partial x_{k}}\frac{\partial}{\partial y_{1}}+\sum_{i=2}^{n}\mathrm{\delta}_{k}^{i}\frac{\partial}{\partial y_{i}}
 \]
 
 \end_inset
 
 于是 
-\begin_inset Formula $S$
+\begin_inset Formula $S\equiv\left\{ \phi(x_{1},\dots,x_{n})=0\right\} $
 \end_inset
 
- 在该点的法向量 
-\begin_inset Formula $\vec{\partial}\phi$
+ 在该点的法向量
+\begin_inset Formula 
+\[
+\vec{\partial}\phi\equiv\begin{bmatrix}\dfrac{\partial\phi}{\partial x_{1}} & \dots & \dfrac{\partial\phi}{\partial x_{n}}\end{bmatrix}=\begin{bmatrix}\dfrac{\partial y_{1}}{\partial x_{1}} & \dots & \dfrac{\partial y_{1}}{\partial x_{n}}\end{bmatrix}
+\]
+
 \end_inset
 
- 就沿着 
+就是 
 \begin_inset Formula $y_{1}$
 \end_inset
 
- 轴正向，因此 
+ 轴的基向量，沿此方向的最高阶方向导数 
 \begin_inset Formula $\pdv*[m]{y_{1}}$
 \end_inset
 
@@ -4010,7 +4104,7 @@ x_{n}
 \end_inset
 
 ，它分布在 
-\begin_inset Formula $\vec{\partial}^{m}$
+\begin_inset Formula $\vec{\partial}^{=m}$
 \end_inset
 
  中：
@@ -4029,11 +4123,7 @@ x_{n}
 \begin_inset Formula $\pdv*[m-1]{y_{1}}$
 \end_inset
 
-，因而可以被 CD 唯一地确定。
-\end_layout
-
-\begin_layout Itemize
-将 CD 
+，因而可以被 CD 唯一地确定。将 CD 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:CauchyData::System"
@@ -4054,7 +4144,7 @@ reference "eq:PDE::System::Quasi-linear"
  的线性代数方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\vec{\partial}^{\vec{\alpha}}\phi\right)\partial_{\nu}^{m}\underline{U}=\underline{C}\label{eq:PDE::CharManifold::DAE}
+\left(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\,\vec{\partial}^{\vec{\alpha}}\phi\right)\partial_{\nu}^{m}\underline{U}=\underline{C}\label{eq:PDE::CharManifold::DAE}
 \end{equation}
 
 \end_inset
@@ -4062,7 +4152,7 @@ reference "eq:PDE::System::Quasi-linear"
 它的解存在且唯一的充要条件是
 \begin_inset Formula 
 \[
-\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\vec{\partial}^{\vec{\alpha}}\phi)\ne0
+\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\,\vec{\partial}^{\vec{\alpha}}\phi)\ne0
 \]
 
 \end_inset
@@ -4089,7 +4179,6 @@ reference "sec:微分方程：概述：按特征流形分类"
 特征流形的等式。
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -4097,16 +4186,26 @@ reference "sec:微分方程：概述：按特征流形分类"
 
 \end_layout
 
-\begin_layout Remark*
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[弱间断]
+\end_layout
+
+\end_inset
+
 在特征流形上，解的最高阶法向导数值 
 \begin_inset Formula $\partial_{\nu}^{m}\underline{U}(\vec{x})$
 \end_inset
 
- 无法被唯一地确定，因此允许其出现第一类间断，但低于 
+ 无法被唯一地确定，因此允许其出现第一类间断；但低于 
 \begin_inset Formula $m$
 \end_inset
 
- 阶的各阶导数依然要连续（否则更高阶的导数无法定义），这种类型的间断被称为
+ 阶的各阶导数依然要连续，否则更高阶的导数无法定义。这种类型的间断被称为
 \color blue
 弱间断 (weak discontinuity)
 \color inherit
@@ -4214,7 +4313,7 @@ f(t=0)=\phi(x=a)\qquad g(t=0)=\phi(x=b)
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Remark*
 \begin_inset ERT
 status open
 
