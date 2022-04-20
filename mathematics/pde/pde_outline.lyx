@@ -2037,7 +2037,7 @@ reference "eq:微分方程：概述：一般形式：拟线性"
 \end_inset
 
 对其进一步作变量替换（将 
-\begin_inset Formula $\grad^{>1}\underline{U}$
+\begin_inset Formula $\vec{\partial}^{>1}\underline{U}$
 \end_inset
 
  视为彼此无关的未知函数，并补充适当的协调关系），都能得到
@@ -2082,29 +2082,14 @@ name "sec:微分方程：概述：按特征流形分类"
 \end_layout
 
 \begin_layout Standard
-特征流形是由 PDE 确定的超曲面，它的意义将在《
+特征流形是由 PDE 的最高阶导数项确定的超曲面，它的物理意义将在《
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:PDE::CauchyProblem"
 
 \end_inset
 
-》一节得到充分展现。本节从几何的角度给出其定义，并用它对 PDE 进行分类，主要考虑 
-\begin_inset Formula $m$
-\end_inset
-
- 阶拟线性 PDE 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:PDE::System::Quasi-linear"
-
-\end_inset
-
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
-。为强调几何观念，本节采用向量记法。
+》一节给出。本节从几何的角度给出其定义，并用它对 PDE 进行分类。为强调几何观念，本节采用向量记法。
 \end_layout
 
 \begin_layout Notation*
@@ -2123,7 +2108,7 @@ reference "eq:PDE::System::Quasi-linear"
  处的取值：
 \begin_inset Formula 
 \[
-\underline{A}_{\vec{\alpha}}(\vec{x})\coloneqq\underline{A}_{\vec{\alpha}}(\vec{x},\grad^{<m}\underline{U}(\vec{x}))\qquad\underline{A}_{i}(\vec{x})\coloneqq\underline{A}_{i}(\vec{x},\grad^{<m}\underline{U}(\vec{x}))
+\underline{A}_{\vec{\alpha}}(\vec{x})\coloneqq\underline{A}_{\vec{\alpha}}(\vec{x},\vec{\partial}^{<m}\underline{U}(\vec{x}))\qquad\underline{A}_{i}(\vec{x})\coloneqq\underline{A}_{i}(\vec{x},\vec{\partial}^{<m}\underline{U}(\vec{x}))
 \]
 
 \end_inset
@@ -2149,26 +2134,34 @@ status open
 
 \end_inset
 
-由 PDE 
+由方程 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
+ 的系数矩阵 
+\begin_inset Formula $\left\{ \underline{A}_{\vec{\alpha}}(\vec{x})\right\} _{\vert\vec{\alpha}\vert=m}$
 \end_inset
 
- 构造的方阵
+ 与作为参数的向量 
+\begin_inset Formula $\vec{\sigma}\in\mathbb{R}^{n}$
+\end_inset
+
+ 可构造方阵
 \begin_inset Formula 
 \[
-\underline{\varLambda}(\vec{x},\vec{\sigma})\coloneqq\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\vec{\sigma}^{\vec{\alpha}}
+\underline{\varLambda}(\vec{x};\vec{\sigma})\coloneqq\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\sigma}^{\vec{\alpha}}
 \]
 
 \end_inset
 
-称为此方程或算子的
+称其为此方程（在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处）的
 \color blue
 特征矩阵 (characteristic matrix)
 \color inherit
@@ -2200,16 +2193,16 @@ status open
 
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma})\coloneqq\det(\underline{\varLambda}(\vec{x},\vec{\sigma}))\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\vec{\sigma}^{\vec{\alpha}})
+Q(\vec{x};\vec{\sigma})\coloneqq\det(\underline{\varLambda}(\vec{x};\vec{\sigma}))\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\sigma}^{\vec{\alpha}})
 \]
 
 \end_inset
 
-称为此方程或算子在点 
+称为此方程（在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处的
+ 处）的
 \color blue
 特征型 (characteristic form)
 \color inherit
@@ -2255,13 +2248,13 @@ status open
 \end_inset
 
  处的法向量 
-\begin_inset Formula $\grad\phi(\vec{x})$
+\begin_inset Formula $\vec{\partial}\phi(\vec{x})$
 \end_inset
 
  使上述特征型为零：
 \begin_inset Formula 
 \[
-Q(\vec{x},\grad\phi(\vec{x}))\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\grad^{\vec{\alpha}}\phi(\vec{x}))=0
+Q(\vec{x};\vec{\partial}\phi(\vec{x}))\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\partial}^{\vec{\alpha}}\phi(\vec{x}))=0
 \]
 
 \end_inset
@@ -2274,22 +2267,26 @@ Q(\vec{x},\grad\phi(\vec{x}))\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underlin
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处对 PDE 
+ 处对方程 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
  是
 \color blue
 特征的 (characteristic)
 \color inherit
-，相应的法向量称为
+，相应的法向量 
+\begin_inset Formula $\vec{\partial}\phi(\vec{x})$
+\end_inset
+
+ 称为此方程在点 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ 处的
 \color blue
 特征方向 (characteristic direction)
 \color inherit
@@ -2325,22 +2322,18 @@ name "def:特征流形"
 \begin_inset Formula $S$
 \end_inset
 
- 在其上每一点对 PDE 
+ 在其上所有点处对方程 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
  都是特征的，则称 
 \begin_inset Formula $S$
 \end_inset
 
- 为此方程或算子的
+ 为此方程的
 \color blue
 特征超曲面 (characteristic hyper-surface)
 \color inherit
@@ -2369,36 +2362,32 @@ status open
 
 \end_inset
 
-若 PDE 
+若方程 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
  在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处没有非零的特征方向：
+ 处没有非零的特征方向，即
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma})=\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot\vec{\sigma}^{\vec{\alpha}})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
+Q(\vec{x};\vec{\sigma})\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\sigma}^{\vec{\alpha}})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
 \]
 
 \end_inset
 
-则称此方程或算子在点 
+则称此方程在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处是
+ 处为
 \color blue
-椭圆的 (elliptic)
+椭圆型 (elliptic)
 \color inherit
 。
 \end_layout
@@ -2416,7 +2405,7 @@ status open
 
 \begin_layout Plain Layout
 
-[双曲型]
+[严格双曲型]
 \end_layout
 
 \end_inset
@@ -2432,19 +2421,23 @@ name "def:pde_hyperbolic"
 \begin_inset Formula $\vec{\tau}$
 \end_inset
 
-，若关于 
-\begin_inset Formula $\lambda$
+，若 
+\begin_inset Formula $\forall\vec{\sigma}\nparallel\vec{\tau}$
+\end_inset
+
+，关于 
+\begin_inset Formula $\mu$
 \end_inset
 
  的代数方程
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\cdot(\vec{\sigma}-\lambda\vec{\tau})^{\vec{\alpha}})=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
+Q(\vec{x};\vec{\sigma}-\mu\vec{\tau})\equiv\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}(\vec{x})\,(\vec{\sigma}-\mu\vec{\tau})^{\vec{\alpha}})=0
 \]
 
 \end_inset
 
-有 
+都有 
 \begin_inset Formula $mN$
 \end_inset
 
@@ -2452,34 +2445,55 @@ Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{\vert\vec{\alpha}\vert=m}\u
 \begin_inset Formula $m$
 \end_inset
 
- 为导数阶数、
+ 为导数的阶数、
 \begin_inset Formula $N$
 \end_inset
 
- 为未知函数个数），则称 PDE 
+ 为未知函数的个数），则称方程 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:PDE::System::Quasi-linear"
 
 \end_inset
 
- 及相应的算子 
-\begin_inset Formula $\hat{A}$
-\end_inset
-
  在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处是
+ 处
 \color blue
 沿方向 
 \begin_inset Formula $\vec{\tau}$
 \end_inset
 
- 严格双曲的 (hyperbolic)
+ 
+\color inherit
+为
+\color blue
+严格双曲型 (strictly hyperbolic)
 \color inherit
 。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[抛物型]
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2517,7 +2531,7 @@ reference "eq:PDEs::1st-order::Quasi-linear"
  的特征矩阵及特征型分别为
 \begin_inset Formula 
 \begin{equation}
-\underline{\varLambda}(\vec{x},\vec{\sigma})=\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot\sigma_{i}\qquad Q(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot\sigma_{i})\label{eq:PDE-System-1stOrder-CharForm}
+\underline{\varLambda}(\vec{x};\vec{\sigma})\equiv\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,\sigma_{i}\qquad Q(\vec{x};\vec{\sigma})\equiv\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,\sigma_{i})\label{eq:PDE-System-1stOrder-CharForm}
 \end{equation}
 
 \end_inset
@@ -2529,24 +2543,35 @@ reference "eq:PDEs::1st-order::Quasi-linear"
  的一阶 PDE 的解
 \begin_inset Formula 
 \begin{equation}
-Q(\vec{x},\grad\phi(\vec{x}))=\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot\partial_{i}\phi(\vec{x}))=0\label{eq:PDE-System-1stOrder-CharManifold}
+Q(\vec{x},\vec{\partial}\phi(\vec{x}))\equiv\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,\partial_{i}\phi(\vec{x}))=0\label{eq:PDE-System-1stOrder-CharManifold}
 \end{equation}
 
 \end_inset
 
-此方程及相应的算子在点 
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PDEs::1st-order::Quasi-linear"
+
+\end_inset
+
+ 在点 
 \begin_inset Formula $\vec{x}$
 \end_inset
 
- 处是
+ 处为
 \end_layout
 
 \begin_deeper
 \begin_layout Description
-椭圆型 若
+椭圆型 若 
+\begin_inset Formula $\forall\vec{\sigma}\ne\vec{0}$
+\end_inset
+
+ 都有
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot\sigma_{i})\ne0\qquad\forall\vec{\sigma}\ne\vec{0}
+Q(\vec{x};\vec{\sigma})\equiv\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,\sigma_{i})\ne0
 \]
 
 \end_inset
@@ -2567,67 +2592,192 @@ Q(\vec{x},\vec{\sigma})=\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot\sigma
 \begin_inset space \space{}
 \end_inset
 
-严格双曲型 若关于 
-\begin_inset Formula $\lambda$
+严格双曲型 若 
+\begin_inset Formula $\forall\vec{\sigma}\nparallel\vec{\tau}$
+\end_inset
+
+，关于 
+\begin_inset Formula $\mu$
 \end_inset
 
  的代数方程
 \begin_inset Formula 
 \[
-Q(\vec{x},\vec{\sigma}-\lambda\vec{\tau})=\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\cdot(\sigma_{i}-\lambda\tau_{i}))=0\qquad\forall\vec{\sigma}\nparallel\vec{\tau}
+Q(\vec{x};\vec{\sigma}-\mu\vec{\tau})\equiv\det(\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,(\sigma_{i}-\mu\tau_{i}))=0
 \]
 
 \end_inset
 
-有 
+都有 
 \begin_inset Formula $N$
 \end_inset
 
  个互异实根。
 \end_layout
 
-\begin_layout Description
-沿
-\begin_inset space \space{}
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
-\begin_inset Formula $t$
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[沿时间轴严格双曲型]
+\end_layout
+
 \end_inset
 
+若方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:PDEs::1st-order::Quasi-linear"
 
-\begin_inset space \space{}
 \end_inset
 
-轴严格双曲型 若方程可以简化为
+ 可化为
 \begin_inset Formula 
-\[
-\left(\partial_{t}+\underline{A}(t,x)\partial_{x}\right)\underline{U}(t,x)=\underline{0}
-\]
+\begin{equation}
+\left(\partial_{t}+\sum_{i=1}^{n}\underline{A}_{i}(t,\vec{x})\,\partial_{i}\right)\underline{U}(t,\vec{x})=\underline{0}\label{eq:1st-order-hyperbolic}
+\end{equation}
 
 \end_inset
 
-且 
-\begin_inset Formula $N\times N$
-\end_inset
+则以下条件等价：
+\end_layout
 
- 矩阵 
-\begin_inset Formula $\underline{A}(t,x)$
+\begin_deeper
+\begin_layout Enumerate
+方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1st-order-hyperbolic"
+
 \end_inset
 
  在点 
-\begin_inset Formula $(t,x)$
+\begin_inset Formula $(t,\vec{x})$
 \end_inset
 
- 处有 
+ 处沿 
+\begin_inset Formula $t$
+\end_inset
+
+ 轴 
+\begin_inset Formula $\vec{\tau}\equiv(1,0_{1},\dots,0_{n})$
+\end_inset
+
+ 为严格双曲型。
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\forall(\nu_{1},\dots,\nu_{n})\in\mathbb{R}^{n}$
+\end_inset
+
+，矩阵 
+\begin_inset Formula $\sum_{i=1}^{n}\underline{A}_{i}(t,\vec{x})\,\nu_{i}\eqqcolon\underline{A}_{\nu}$
+\end_inset
+
+ 在点 
+\begin_inset Formula $(t,\vec{x})$
+\end_inset
+
+ 处都有 
 \begin_inset Formula $N$
 \end_inset
 
  个互异
 \color blue
-实特征值 (eigenvalue)
+实特征值
 \color inherit
-。
+，即
+\begin_inset Formula 
+\[
+\det(\lambda_{k}\underline{1}-\underline{A}_{\nu})=0,\qquad k=1,\dots,N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\forall(\sigma_{t},\nu_{1},\dots,\nu_{n})\equiv\vec{\sigma}\nparallel\vec{\tau}$
+\end_inset
+
+，关于 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 的代数方程
+\begin_inset Formula 
+\[
+Q(\vec{x};\vec{\sigma}-\mu\vec{\tau})\equiv\det((\sigma_{t}-\mu)\underline{1}+\sum_{i=1}^{n}\underline{A}_{i}(\vec{x})\,\nu_{i})=0
+\]
+
+\end_inset
+
+都有 
+\begin_inset Formula $N$
+\end_inset
+
+ 个互异
+\color blue
+实根
+\color inherit
+，且
+\begin_inset Formula 
+\[
+\mu_{k}=\sigma_{t}-\lambda_{k},\qquad k=1,\dots,N
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\forall(\nu_{1},\dots,\nu_{n})\in\mathbb{R}^{n}$
+\end_inset
+
+，方程 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:1st-order-hyperbolic"
+
+\end_inset
+
+ 在点 
+\begin_inset Formula $(t,\vec{x})$
+\end_inset
+
+ 处有个 
+\begin_inset Formula $N$
+\end_inset
+
+ 个不平行于 
+\begin_inset Formula $t$
+\end_inset
+
+ 轴且彼此互异的
+\color blue
+特征方向
+\color inherit
+，且
+\begin_inset Formula 
+\[
+\vec{\sigma}-\mu_{k}\vec{\tau}\equiv(\lambda_{k},\nu_{1},\dots,\nu_{n}),\qquad k=1,\dots,N
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -2659,13 +2809,17 @@ status open
 \begin_deeper
 \begin_layout Itemize
 Laplace 方程 
-\begin_inset Formula $\laplacian u=0$
+\begin_inset Formula $\left(\partial_{1}^{2}+\cdots+\partial_{n}^{2}\right)u=0$
 \end_inset
 
- 是椭圆的：
+ 在任意一点处均为椭圆型，即 
+\begin_inset Formula $\forall\vec{\sigma}\ne\vec{0}$
+\end_inset
+
+ 都有
 \begin_inset Formula 
 \[
-\hat{A}=\partial_{1}^{2}+\cdots+\partial_{n}^{2}\implies\forall\vec{\sigma}\ne\vec{0}\colon Q(\vec{x},\vec{\sigma})=\sigma_{1}^{2}+\cdots+\sigma_{n}^{2}\ne0
+Q(\vec{x};\vec{\sigma})\equiv\det(\sum_{\vert\vec{\alpha}\vert=2}\underline{A}_{\vec{\alpha}}(\vec{x})\,\vec{\sigma}^{\vec{\alpha}})\equiv\sigma_{1}^{2}+\cdots+\sigma_{n}^{2}\ne0
 \]
 
 \end_inset
@@ -2675,29 +2829,52 @@ Laplace 方程
 
 \begin_layout Itemize
 波动方程 
-\begin_inset Formula $\partial_{t}^{2}u=c^{2}\laplacian u$
+\begin_inset Formula $\partial_{t}^{2}u=c^{2}\left(\partial_{1}^{2}+\cdots+\partial_{n}^{2}\right)u$
 \end_inset
 
- 沿时间轴 
+ 在任意一点处沿时间轴 
 \begin_inset Formula $\vec{\tau}=(1,0,\dots,0)$
 \end_inset
 
- 是严格双曲的：
+ 均为严格双曲型，即 
+\begin_inset Formula $\forall\vec{\sigma}\nparallel\vec{\tau}$
+\end_inset
+
+ 关于 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 的代数方程
 \begin_inset Formula 
 \[
-\hat{A}=\partial_{t}^{2}-c^{2}\cdot\left(\partial_{1}^{2}+\cdots+\partial_{n}^{2}\right)\implies\forall\vec{\sigma}\nparallel\vec{\tau}\colon\lambda=\sigma_{t}\pm c\sqrt{\sigma_{1}^{2}+\cdots+\sigma_{n}^{2}}
+Q(\vec{x};\vec{\sigma}-\mu\vec{\tau})\equiv\det(\sum_{\vert\vec{\alpha}\vert=2}\underline{A}_{\vec{\alpha}}(\vec{x})\,(\vec{\sigma}-\mu\vec{\tau})^{\vec{\alpha}})\equiv\mu^{2}\sigma_{t}^{2}-c^{2}(\sigma_{1}^{2}+\cdots+\sigma_{n}^{2})=0
 \]
 
 \end_inset
 
+都有 
+\begin_inset Formula $2$
+\end_inset
 
-\begin_inset Separator plain
+ 个互异实根
+\begin_inset Formula 
+\[
+\mu=\sigma_{t}\pm c\sqrt{\sigma_{1}^{2}+\cdots+\sigma_{n}^{2}}
+\]
+
 \end_inset
 
 
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 定解条件
 \begin_inset CommandInset label
@@ -3350,7 +3527,7 @@ status open
 ：
 \begin_inset Formula 
 \begin{equation}
-S\coloneqq\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\ \phi\in C^{m},\ \grad\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
+S\coloneqq\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\ \phi\in C^{m},\ \vec{\partial}\phi(\vec{x})\ne\vec{0}\right\} \label{eq:HyperSurface}
 \end{equation}
 
 \end_inset
@@ -3362,7 +3539,7 @@ S\coloneqq\left\{ \vec{x}\in\mathbb{R}^{n}:\phi(\vec{x})=0,\ \phi\in C^{m},\ \gr
  为
 \begin_inset Formula 
 \begin{equation}
-\vec{\nu}\coloneqq\frac{\grad\phi}{\Vert\grad\phi\Vert}\qquad\forall\vec{x}\in S\label{eq:HyperSurface::UnitNormal}
+\vec{\nu}\coloneqq\frac{\vec{\partial}\phi}{\Vert\vec{\partial}\phi\Vert}\qquad\forall\vec{x}\in S\label{eq:HyperSurface::UnitNormal}
 \end{equation}
 
 \end_inset
@@ -3596,7 +3773,7 @@ reference "eq:方向导数"
  外：
 \begin_inset Formula 
 \[
-\left.\grad^{\vec{\alpha}}\underline{U}\right\vert _{\vec{x}+\Delta\vec{x}}\approx\left.\grad^{\vec{\alpha}}\underline{U}\right\vert _{\vec{x}}+\sum_{k=1}^{n}\left.\frac{\partial\qty(\grad^{\vec{\alpha}}\underline{U})}{\partial x_{k}}\right\vert _{\vec{x}}\Delta x_{k}\qquad\forall\vert\vec{\alpha}\vert<m-1
+\left.\vec{\partial}^{\vec{\alpha}}\underline{U}\right\vert _{\vec{x}+\Delta\vec{x}}\approx\left.\vec{\partial}^{\vec{\alpha}}\underline{U}\right\vert _{\vec{x}}+\sum_{k=1}^{n}\left.\frac{\partial\qty(\vec{\partial}^{\vec{\alpha}}\underline{U})}{\partial x_{k}}\right\vert _{\vec{x}}\Delta x_{k}\qquad\forall\vert\vec{\alpha}\vert<m-1
 \]
 
 \end_inset
@@ -3817,7 +3994,7 @@ x_{n}
 \end_inset
 
  在该点的法向量 
-\begin_inset Formula $\grad\phi$
+\begin_inset Formula $\vec{\partial}\phi$
 \end_inset
 
  就沿着 
@@ -3833,13 +4010,13 @@ x_{n}
 \end_inset
 
 ，它分布在 
-\begin_inset Formula $\grad^{m}$
+\begin_inset Formula $\vec{\partial}^{m}$
 \end_inset
 
  中：
 \begin_inset Formula 
 \[
-\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}=\underbrace{\left(\prod_{i=1}^{n}\left(\pdv{\phi}{x_{i}}\right)^{\alpha_{i}}\right)}_{\grad^{\vec{\alpha}}\phi}\pdv[m]{y_{1}}+C_{\vec{\alpha}}\qquad\forall\vert\vec{\alpha}\vert=m
+\pdv[\alpha_{1}]{x_{1}}\cdots\pdv[\alpha_{n}]{x_{n}}=\underbrace{\left(\prod_{i=1}^{n}\left(\pdv{\phi}{x_{i}}\right)^{\alpha_{i}}\right)}_{\vec{\partial}^{\vec{\alpha}}\phi}\pdv[m]{y_{1}}+C_{\vec{\alpha}}\qquad\forall\vert\vec{\alpha}\vert=m
 \]
 
 \end_inset
@@ -3877,7 +4054,7 @@ reference "eq:PDE::System::Quasi-linear"
  的线性代数方程组：
 \begin_inset Formula 
 \begin{equation}
-\left(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\grad^{\vec{\alpha}}\phi\right)\partial_{\nu}^{m}\underline{U}=\underline{C}\label{eq:PDE::CharManifold::DAE}
+\left(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\vec{\partial}^{\vec{\alpha}}\phi\right)\partial_{\nu}^{m}\underline{U}=\underline{C}\label{eq:PDE::CharManifold::DAE}
 \end{equation}
 
 \end_inset
@@ -3885,7 +4062,7 @@ reference "eq:PDE::System::Quasi-linear"
 它的解存在且唯一的充要条件是
 \begin_inset Formula 
 \[
-\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\grad^{\vec{\alpha}}\phi)\ne0
+\det(\sum_{\vert\vec{\alpha}\vert=m}\underline{A}_{\vec{\alpha}}\cdot\vec{\partial}^{\vec{\alpha}}\phi)\ne0
 \]
 
 \end_inset
