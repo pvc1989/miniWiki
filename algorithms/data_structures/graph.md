@@ -222,11 +222,11 @@ def GetMinSpanTreeByKruskal(vertices, edges, get_weight):
   - $Θ(V+E)$ space
 
 ```python
-def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
+def GetMinSpanTreeByPrim(vertices, edges, get_weight):
   # Initialization:
   mst = dict() # vertex to parent
   pq = MinPQ() # v.key := d(S, v)
-  for v in Vertices:
+  for v in vertices:
     v.parent = None
     v.key = float('inf')
     pq.add(v)
@@ -234,15 +234,15 @@ def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
   u = pq.pop_min()
   mst[u] = None
   for v in u.neighbors:
-    v.key = Weight(u, v) # float up in the MinPQ
+    v.key = get_weight(u, v) # float up in the MinPQ
     v.parent = u
   # Greedily choose the next (V-1) vertices:
   while len(pq):
     u = pq.pop_min()
     mst[u] = u.parent
     for v in u.neighbors:
-      if (v not in mst) and (Weight(u, v) < v.key):
-        pq.change_key(v, key=Weight(u, v))
+      if (v not in mst) and (get_weight(u, v) < v.key):
+        pq.change_key(v, key=get_weight(u, v))
         v.parent = u
   # Termination:
   return mst
@@ -260,7 +260,7 @@ def GetMinSpanTreeByPrim(Vertices, Edges, Weight):
 ## 算法框架
 
 ```python
-def find_shortest_path(source, graph, weight):
+def find_shortest_path(source, graph, get_weight):
   # Initialization:
   vertex_to_length = dict()
   vertex_to_parent = dict()
@@ -274,7 +274,7 @@ def find_shortest_path(source, graph, weight):
     # for all (u, v), there is d[v] <= d[u] + w(u, v).
     if u is None:
       break # go to the termination step
-    d = vertex_to_length[u] + weight(u, v)
+    d = vertex_to_length[u] + get_weight(u, v)
     if vertex_to_length[v] > d: # need relaxation
       vertex_to_length[v] = d
       vertex_to_parent[v] = u
@@ -297,7 +297,7 @@ def find_shortest_path(source, graph, weight):
   - $Θ(E)$ calls of `MinPQ.decrease(Vertex, Key)`, which can be amortized $Θ(1)$ if using [Fibonacci Heap](./queue.md#fib-heap).
 
 ```python
-def find_shortest_path(source, graph, weight):
+def find_shortest_path(source, graph, get_weight):
   # Initialization:
   unfinished_vertices = MinPQ()
   vertex_to_length = dict()
@@ -312,7 +312,7 @@ def find_shortest_path(source, graph, weight):
   while len(unfinished_vertices):
     u = pq.pop_min()
     for v in u.neighbors:
-      d = vertex_to_length[u] + weight(u, v)
+      d = vertex_to_length[u] + get_weight(u, v)
       if vertex_to_length[v] > d: # need relaxation
         unfinished_vertices.decrease(v, d)
         vertex_to_length[v] = d
@@ -331,22 +331,22 @@ def find_shortest_path(source, graph, weight):
 - Complexity:
   - For general graphs, $Θ(VE)$ calls of `relax()`:
     ```python
-    def find_shortest_path(source, graph, weight):
+    def find_shortest_path(source, graph, get_weight):
       for i in range(len(graph.vertices) - 1):
         for u, v in graph.edges:
-          relax(u, v, weight(u, v))
+          relax(u, v, get_weight(u, v))
       # One more pass to find negative cycles:
       for u, v in graph.edges:
-        if relaxable(u, v, weight(u, v)):
+        if relaxable(u, v, get_weight(u, v)):
           raise Exception("There exists a negative cycle!")
     ```
   - For DAGs, $Θ(V+E)$ for [topological sort](#topo-sort) and $Θ(E)$ calls of `relax()`:
     ```python
-    def find_shortest_path(source, graph, weight):
+    def find_shortest_path(source, graph, get_weight):
       sorted_vertices = topological_sort(graph)
       for u in sorted_vertices:
         for v in graph.get_neighbors(u):
-          relax(u, v, weight(u, v))
+          relax(u, v, get_weight(u, v))
     ```
 
 # 最大流、最小割
