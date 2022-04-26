@@ -213,7 +213,7 @@ def GetMinSpanTreeByKruskal(vertices, edges, get_weight):
 
 ## Prim
 
-- Idea (like [Dijkstra's algorithm for Shortest Path](#DijkstraSP)):
+- Idea (like [Dijkstra's algorithm for Shortest Path](#Dijkstra)):
   - Maintain a `MinPQ` on $V\setminus S$, where $d(S, v)\coloneqq\min_{u\in S}\{W(u, v)\}$ is used as $v$'s `key`.
   - Greedily choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Complexity:
@@ -285,7 +285,7 @@ def find_shortest_path(source, graph, get_weight):
 ## Dijkstra
 
 - Assumption: non-negative edge weights.
-- Idea (like [Prim's algorithm for Minimum Spanning Tree](#PrimMST)):
+- Idea (like [Prim's algorithm for Minimum Spanning Tree](#Prim)):
   - Maintain a set $S$ of vertices whose final shortest path weights have been determined.
   - *Greedily* choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Correctness:
@@ -320,6 +320,8 @@ def find_shortest_path(source, graph, get_weight):
   # Termination:
   return vertex_to_length, vertex_to_parent
 ```
+
+[LeetCode-1631](https://leetcode.com/problems/path-with-minimum-effort/)
 
 ## Bellman–Ford
 
