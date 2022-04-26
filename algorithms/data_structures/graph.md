@@ -187,27 +187,29 @@ If negative weight edges are present, the algorithm should find negative weight 
 ## Kruskal
 
 - Idea:
-  - Maintain connected components by a [Union–Find DS](./array.md#并查集).
+  - Maintain connected components by a [Union–Find data structure](./array.md#并查集).
   - Greedily choose the globally lowest-weight edge that connect two components.
 - Complexity:
-  - $Θ(V)$ for building the `UnionFind` DS of vertices.
+  - $Θ(V)$ for building the `UnionFind` data structure of vertices.
   - $Θ(E)$ for `sort()` if $W$ is `int`-valued and using [Radix Sort](./string.md#基数排序).
   - $Θ(E)$ calls of `UnionFind.connected()` and `UnionFind.union()`, which can be amortized $Θ(\alpha(V))$.
 
 ```python
-def GetMinSpanTreeByKruskal(Vertices, Edges, Weight):
+def GetMinSpanTreeByKruskal(vertices, edges, get_weight):
   # Initialization:
   mst = set() # edges
-  uf = UnionFind(Vertices) # one component for each vertex
-  sort(Edges, Weight) # may be linear
+  uf = UnionFind(vertices) # one component for each vertex
+  sort(edges, get_weight) # may be linear
   # Greedily choose the lowest-weight edge:
-  for (u, v) in Edges:
+  for (u, v) in edges:
     if not uf.connected(u, v):
       uf.union(u, v)
       mst.add((u, v))
   # Termination:
   return mst
 ```
+
+[LeetCode-1584](https://leetcode.com/problems/min-cost-to-connect-all-points/)
 
 ## Prim
 
