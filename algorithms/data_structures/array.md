@@ -103,3 +103,6 @@ title: 数组及基于数组的算法
   - Video: [Part-1/Week-1  Union--Find](https://www.coursera.org/learn/algorithms-part1/supplement/bcelg/lecture-slides)
   - Programming Assignment: [Part-1/Week-1  Percolation](https://www.coursera.org/learn/algorithms-part1/programming/Lhp5z/percolation)
 
+LeetCode
+- [1202. Smallest String With Swaps](https://leetcode.com/problems/smallest-string-with-swaps/)
+- [1584. Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/)
