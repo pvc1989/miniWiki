@@ -291,7 +291,7 @@ def find_shortest_path(source, graph, get_weight):
   - *Greedily* choose the closest vertex from set $V\setminus S$ and add it to set $S$.
 - Correctness:
   - Relaxation is safe.
-  - When `u` is added to `S`, there is `depth[u] == distance(s, u)`.
+  - When $u$ is added to $S$, there is $d(u) = \delta(u)$.
 - Complexity:
   - $Θ(V)$ calls of `MinPQ.insert(Vertex, Key)`
   - $Θ(V)$ calls of `MinPQ.pop_min()`
@@ -311,7 +311,7 @@ def find_shortest_path(source, graph, get_weight):
   vertex_to_length[source] = 0
   # Relaxation:
   while len(unfinished_vertices):
-    u = pq.pop_min()
+    u = unfinished_vertices.pop_min()
     for v in u.neighbors:
       d = vertex_to_length[u] + get_weight(u, v)
       if vertex_to_length[v] > d: # need relaxation
@@ -322,7 +322,40 @@ def find_shortest_path(source, graph, get_weight):
   return vertex_to_length, vertex_to_parent
 ```
 
-[LeetCode-1631](https://leetcode.com/problems/path-with-minimum-effort/)
+In practice, the `decrease()` operation may be replaced by a `insert()` operation, which inserts a new copy of the `Vertex` with a decreased `Key`.
+The deletion of the old copy is delayed or even skipped.
+
+```python
+# no-decreasing version
+def find_shortest_path(source, graph, get_weight):
+  # Initialization:
+  unfinished_vertices = MinPQ()
+  finished_vertices = set()
+  vertex_to_length = dict()
+  vertex_to_parent = dict()
+  for v in graph.vertices:
+    unfinished_vertices.insert(v, float('inf'))
+    vertex_to_length[v] = float('inf')
+    vertex_to_parent[v] = None
+  unfinished_vertices.insert(source, 0)
+  vertex_to_length[source] = 0
+  # Relaxation:
+  while len(finished_vertices) < len(graph.vertices):
+    u = unfinished_vertices.pop_min()
+    if u not in finished_vertices:
+      for v in u.neighbors:
+        d = vertex_to_length[u] + get_weight(u, v)
+        if vertex_to_length[v] > d: # need relaxation
+          unfinished_vertices.insert(v, d)
+          vertex_to_length[v] = d
+          vertex_to_parent[v] = u
+      finished_vertices.insert(u)
+  # Termination:
+  return vertex_to_length, vertex_to_parent
+```
+
+LeetCode
+- [1631. Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/)
 
 ## Bellman–Ford
 
