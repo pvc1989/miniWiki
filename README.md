@@ -42,12 +42,12 @@ title: 葵花宝典
   - [C++](./programming/cpp/README.md)
   - [Octave/MATLAB](./programming/octave.md)
   - [Python](./programming/python.md)
-  - [UML](./programming/uml/README.md)
+  - [UML](./programming/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
 - 并行计算
-  - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel)
-  - [MPI](./programming/mpi/README.md)
+  - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
+  - [MPI](./programming/mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 - 构建工具
-  - [Git](./programming/git.md)
+  - [Git](./programming/git.md) --- Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
   - [批量构建](./programming/cpp/make/README.md)
   - [断点调试](./programming/cpp/debug.md)
   - [性能检测](./programming/cpp/profile.md)
@@ -56,9 +56,9 @@ title: 葵花宝典
   - [Linux](./programming/linux/README.md)
   - [Docker](./programming/docker/README.md)
 - 网格表示
-  - [CGNS](./programming/cgns/README.md)
-  - [Gmsh](./programming/gmsh/README.md)
-  - [VTK](./programming/vtk/README.md)
+  - [CGNS](./programming/cgns/README.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
+  - [Gmsh](./programming/gmsh/README.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
+  - [VTK](./programming/vtk/README.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
 - 工程建模
   - [SALOME](www.salome-platform.org)
   - [Open CASCADE](https://www.opencascade.com)
