@@ -385,6 +385,9 @@ LeetCode
           relax(u, v, get_weight(u, v))
     ```
 
+LeetCode
+- [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
+
 # 最大流、最小割
 
 - VisuAlgo
