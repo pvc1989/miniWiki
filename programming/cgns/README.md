@@ -178,6 +178,24 @@ ier = cg_zone_read(int i_file, int i_base, int i_zone,
     - *列数*至少为 `1`。
     - 若没有对单元排序（边界单元在前、内部单元在后），则*边界单元数*为 `0`。
 
+## 定位操作
+
+```c
+/* Access a node via label-index or name-0 pairs.
+ * 0 = CG_OK, 1 = CG_ERROR, 2 = CG_NODE_NOT_FOUND, 3 = CG_INCORRECT_PATH
+ */
+ier = cg_goto(int i_file, int i_base, ..., "end");
+ier = cg_gopath(int i_file, const char *path);
+/* Delete a child of current node. */
+ier = cg_delete_node(char *node_name);
+/* e.g. */
+cg_goto(i_file, i_base, "Zone_t", 1, "UserDefinedData_t", 1, NULL);
+cg_goto(i_file, i_base "Zone1", 0, "UserDefinedData_t", 1, NULL);
+cg_goto(i_file, i_base, "Zone_t", 1, "User", 0, NULL);
+cg_goto(i_file, i_base, "Zone1", 0, "User", 0, NULL);
+cg_gopath(i_file, "/Base/Zone1/User");
+```
+
 # 单区网格
 
 |      |      结构网格      |     非结构网格      |
