@@ -2325,13 +2325,13 @@ status open
 这是一族时间推进格式，最一般的形式为
 \begin_inset Formula 
 \begin{equation}
-\underline{U}^{n+i/m}=\sum_{k=0}^{i-1}\left(\alpha_{ik}\underline{U}^{n+k/m}+\beta_{ik}\underline{R}^{n+k/m}h_{t}\right),\qquad i=1,\dots,m\label{eq:m-stage_Runge--Kutta}
+\underline{U}^{n+i/m}=\sum_{k=0}^{i-1}\left(\alpha_{i,k}\underline{U}^{n+k/m}+\beta_{i,k}\underline{R}^{n+k/m}h_{t}\right),\qquad i=1,\dots,m\label{eq:m-stage_Runge--Kutta}
 \end{equation}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\sum_{k=0}^{i-1}\alpha_{ik}=1$
+\begin_inset Formula $\sum_{k=0}^{i-1}\alpha_{i,k}=1$
 \end_inset
 
  对所有 
@@ -2432,7 +2432,75 @@ name "alg:有限差分： 时间推进：隐式 Euler"
 \end_layout
 
 \begin_layout Subsection
-稳定性
+强稳定性
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[稳定性]
+\end_layout
+
+\end_inset
+
+存在非负常数 
+\begin_inset Formula $C$
+\end_inset
+
+ 使得
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\Vert\underline{U}^{n}\Vert\le C\Vert\underline{U}^{0}\Vert,\qquad\forall n\in\mathbb{N}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[强稳定性]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\Vert\underline{U}^{n}\Vert\le\Vert\underline{U}^{0}\Vert,\qquad\forall n\in\mathbb{N}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Definition
@@ -2446,7 +2514,7 @@ status open
 
 \end_inset
 
-强稳定保持 (strong stability-preserving, SSP)
+“强稳定保持 (strong stability-preserving, SSP)”
 \end_layout
 
 \begin_layout Standard
@@ -2457,6 +2525,16 @@ status open
 \end_layout
 
 \begin_layout Lemma
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[SSP RK]
+\end_layout
+
+\end_inset
+
 若式 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2465,18 +2543,85 @@ reference "eq:m-stage_Runge--Kutta"
 \end_inset
 
  中的所有 
-\begin_inset Formula $\alpha_{ik},\beta_{ik}$
+\begin_inset Formula $\alpha_{i,k},\beta_{i,k}$
 \end_inset
 
- 都非负，且 CFL 系数满足
+ 都非负，且满足
 \begin_inset Formula 
 \[
-c=\min_{i,k}\frac{\alpha_{ik}}{\beta_{ik}}
+h_{t}\le ch_{t}^{\text{F.E.}},\qquad c=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k}},
 \]
 
 \end_inset
 
-则其为 SSP 时间推进格式。
+则其为 SSP RK 格式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+满足上述条件时，每个中间步的 
+\begin_inset Formula $\underline{U}^{n+i/m}$
+\end_inset
+
+ 都可以分解为若干显式 Euler 推进的凸组合：
+\begin_inset Formula 
+\[
+\begin{aligned}\left\Vert \underline{U}^{n+i/m}\right\Vert  & =\left\Vert \sum_{k=0}^{i-1}\alpha_{i,k}\left(\underline{U}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}h_{t}\underline{R}^{n+k/m}\right)\right\Vert \\
+ & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{U}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}h_{t}\underline{R}^{n+k/m}\right\Vert 
+\end{aligned}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\frac{\beta_{i,k}}{\alpha_{i,k}}h_{t}\le\frac{\beta_{i,k}}{\alpha_{i,k}}ch_{t}^{\text{F.E.}}\le\frac{\beta_{i,k}}{\alpha_{i,k}}\frac{\alpha_{i,k}}{\beta_{i,k}}h_{t}^{\text{F.E.}}=h_{t}^{\text{F.E.}},\qquad\forall(i,k),
+\]
+
+\end_inset
+
+满足显式 Euler 强稳定性条件，因此有
+\begin_inset Formula 
+\[
+\left\Vert \underline{U}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}h_{t}\underline{R}^{n+k/m}\right\Vert \le\left\Vert \underline{U}^{n+k/m}\right\Vert ,\qquad\forall k=0,1,\dots,i-1.
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}\left\Vert \underline{U}^{n+i/m}\right\Vert  & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{U}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}h_{t}\underline{R}^{n+k/m}\right\Vert \\
+ & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{U}^{n+k/m}\right\Vert .
+\end{aligned}
+\]
+
+\end_inset
+
+据此有
+\begin_inset Formula 
+\[
+\left\Vert \underline{U}^{n+1/m}\right\Vert \le\sum_{k=0}^{0}\alpha_{1,0}\left\Vert \underline{U}^{n+0/m}\right\Vert =\left\Vert \underline{U}^{n}\right\Vert ,
+\]
+
+\end_inset
+
+从而可以递归地证明
+\begin_inset Formula 
+\[
+\left\Vert \underline{U}^{n+i/m}\right\Vert \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{U}^{n+k/m}\right\Vert \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{U}^{n}\right\Vert =\left\Vert \underline{U}^{n}\right\Vert .
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2487,19 +2632,7 @@ c=\min_{i,k}\frac{\alpha_{ik}}{\beta_{ik}}
 \end_layout
 
 \begin_layout Example
-四阶 RK 格式
-\begin_inset Formula 
-\[
-\begin{aligned}\underline{U}^{n+1/4} & =\underline{U}^{n}+\frac{h_{t}}{2}\underline{R}^{n}\\
-\underline{U}^{n+2/4} & =\underline{U}^{n}+\frac{h_{t}}{2}\underline{R}^{n+1/4}\\
-\underline{U}^{n+3/4} & =\underline{U}^{n}+h_{t}\,\underline{R}^{n+2/4}\\
-\underline{U}^{n+1}\equiv\underline{U}^{n+4/4} & =\underline{U}^{n}+\frac{h_{t}}{6}\left(\underline{R}^{n}+2\underline{R}^{n+1/4}+2\underline{R}^{n+2/4}+\underline{R}^{n+3/4}\right)
-\end{aligned}
-\]
-
-\end_inset
-
-不是 SSP 格式。构造 SSP 四阶 RK 格式必须引入 
+构造 SSP 四阶 RK 格式必须引入 
 \begin_inset Formula $\underline{R}$
 \end_inset
 
@@ -2516,6 +2649,40 @@ literal "false"
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hirsch_2007"
+literal "false"
+
+\end_inset
+
+ 给出的四阶 RK 格式
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{U}^{n+1/4} & =\underline{U}^{n}+\frac{h_{t}}{2}\underline{R}^{n}\\
+\underline{U}^{n+2/4} & =\underline{U}^{n}+\frac{h_{t}}{2}\underline{R}^{n+1/4}\\
+\underline{U}^{n+3/4} & =\underline{U}^{n}+h_{t}\,\underline{R}^{n+2/4}\\
+\underline{U}^{n+1}\equiv\underline{U}^{n+4/4} & =\underline{U}^{n}+\frac{h_{t}}{6}\left(\underline{R}^{n}+2\underline{R}^{n+1/4}+2\underline{R}^{n+2/4}+\underline{R}^{n+3/4}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+改写成式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:m-stage_Runge--Kutta"
+
+\end_inset
+
+ 的形式后，并非所有 
+\begin_inset Formula $\alpha_{i,k},\beta_{i,k}$
+\end_inset
+
+ 都非负，因此不是 SSP 格式。
 \end_layout
 
 \begin_layout Standard
