@@ -336,7 +336,9 @@ ier = cgp_elements_read_data(int i_file, int i_base, int i_zone, int i_sect,
   - 同一个 `Elements_t` 对象下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有*连续*且*互异*的编号。
   - ⚠️ 若要用 [ParaView](../vtk/README.md#ParaView) 打开，则只应保留最高维的单元片段。
-- `first`、`last` 为（当前 `Elements_t` 对象内）首、末单元的编号。
+- `first`、`last`
+  - 在串行版本及 `cgp_section_write()` 中为当前 `Elements_t` 对象内的首、末单元的编号。
+  - 在 `cgp_elements_write_data()` 及 `cgp_elements_write_data()` 中为当前进程所读写的首、末单元的编号。
 - `n_boundary` 为当前 `Elements_t` 对象的*边界单元数*：若 `n_boundary > 0`，则单元已被排序，且前  `n_boundary` 个单元为边界单元。
 - `parent_flag` 用于判断 parent data 是否存在。
 
