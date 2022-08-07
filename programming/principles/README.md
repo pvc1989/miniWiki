@@ -311,18 +311,18 @@ int main() {
 > Abstractions should not depend on details. Details should depend on abstractions.
 
 ## 倒置的含义
-*依赖倒置*首先是指*源代码依赖关系（通常表现为 `#include` 或 `import` 语句）*与*程序控制流*的倒置。
+*依赖倒置*首先是指*源代码依赖关系*（通常表现为 `#include` 或 `import` 语句）的倒置。
 
-*依赖关系*的倒置通常也意味着*接口所有权*的倒置：
-接口代表一种服务，其所有权应当归属于服务的*使用者（高层策略模块）*而非*提供者（底层实现模块）*。
+*源代码依赖关系*的倒置通常也意味着*接口所有权*的倒置：
+接口代表一种服务，其所有权应当归属于服务的*使用者*（高层策略模块）而非*提供者*（底层实现模块）。
 
-下面的示例体现了*依赖关系*和*接口所有权*的双重倒置：
+下面的示例体现了*源代码依赖关系*和*接口所有权*的双重倒置：
 
 ![](./inverted_dependency.svg)
 
-- 在高层模块 `Application` 中，`TaskScheduler` 的 `addTask(), popTask()` 方法用到了 `PriorityQueue` 接口所提供的 `push(), top(), pop()` 服务；而实现这些服务所用到的算法，并不需要暴露给 `TaskScheduler`。
-- 在中层模块 `Algorithm` 中，`BinaryHeap` 借助于 `Vector` 接口的 `at()` 服务，实现了 `PriorityQueue` 接口；而由 `Vector` 隐式提供的 `resize()` 服务，并不需要暴露给 `BinaryHeap`。
-- 在底层模块 `DataStructure` 中，`DynamicArray` 借助于更底层的（通常由操作系统提供的）动态内存管理服务，实现了 `Vector` 接口的 `resize()` 服务。
+- 在高层模块 `Application` 中，高层具体类 `TaskScheduler` 的 `addTask(), popTask()` 方法用到了高层接口 `PriorityQueue` 所提供的 `push(), top(), pop()` 服务；而实现这些服务所用到的数据结构及算法，并不需要暴露给 `TaskScheduler`。
+- 在中层模块 `Algorithm` 中，中层具体类 `BinaryHeap` 借助于中层接口 `Vector` 所提供的 `at()` 服务，给出了高层接口 `PriorityQueue` 的一种实现；而由中层接口 `Vector` 隐式提供的 `resize()` 服务，并不需要暴露给 `BinaryHeap`。
+- 在底层模块 `DataStructure` 中，底层具体类 `DynamicArray` 借助于更底层的（通常由操作系统提供的）动态内存管理服务，给出了中层接口 `Vector` 的一种实现。
 
 ## 语言实现机制
 
