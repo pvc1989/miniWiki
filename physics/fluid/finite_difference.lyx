@@ -2287,9 +2287,9 @@ name "alg:有限差分： 时间推进：显式 Euler"
 \color inherit
 近似时间导数：
 \begin_inset Formula 
-\[
-\frac{\underline{U}^{n+1}-\underline{U}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{U}^{n}=\underline{R}(\underline{U}^{n})
-\]
+\begin{equation}
+\frac{\underline{U}^{n+1}-\underline{U}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{U}^{n}=\underline{R}(\underline{U}^{n})\label{eq:explicit_euler}
+\end{equation}
 
 \end_inset
 
@@ -2413,6 +2413,14 @@ name "alg:有限差分： 时间推进：隐式 Euler"
 
 \end_inset
 
+亦即
+\begin_inset Formula 
+\begin{equation}
+\frac{\underline{U}^{n+1}-\underline{U}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{U}^{n+1}=\underline{R}(\underline{U}^{n+1})\label{eq:implicit_euler}
+\end{equation}
+
+\end_inset
+
 从而得隐式 Euler 推进格式：
 \begin_inset Formula 
 \[
@@ -2429,6 +2437,84 @@ name "alg:有限差分： 时间推进：隐式 Euler"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+更一般的隐式推进格式，可通过线性组合式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:explicit_euler"
+
+\end_inset
+
+ 与式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:implicit_euler"
+
+\end_inset
+
+ 构造而得：
+\begin_inset Formula 
+\begin{equation}
+\frac{\underline{U}^{n+1}-\underline{U}^{n}}{h_{t}}=\beta\underline{R}^{n+1}+(1-\beta)\underline{R}^{n}\label{eq:general_implicit}
+\end{equation}
+
+\end_inset
+
+右端项中的 
+\begin_inset Formula $\underline{R}^{n+1}$
+\end_inset
+
+ 可以被线性近似为
+\begin_inset Formula 
+\[
+\underline{R}^{n+1}\approx\underline{R}^{n}+\left(\frac{\partial\underline{R}}{\partial\underline{U}}\right)^{n}\left(\underline{U}^{n+1}-\underline{U}^{n}\right)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\partial\underline{R}/\partial\underline{U}$
+\end_inset
+
+ 被称为
+\color blue
+通量雅可比 (flux Jacobian)
+\color inherit
+。将其代入式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:general_implicit"
+
+\end_inset
+
+ 并移项，可得
+\begin_inset Formula 
+\[
+\left[\frac{\underline{I}}{h_{t}}-\beta\left(\frac{\partial\underline{R}}{\partial\underline{U}}\right)^{n}\right]\left(\underline{U}^{n+1}-\underline{U}^{n}\right)=\underline{R}^{n}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left[\cdots\right]$
+\end_inset
+
+ 内为一大型、稀疏、非对称、块状矩阵，被称为
+\color blue
+隐式算子 (implicit operator)
+\color inherit
+，而右端的 
+\begin_inset Formula $\underline{R}^{n}$
+\end_inset
+
+ 为
+\color blue
+现式算子 (explicit operator)
+\color inherit
+。二者所采用的离散格式可以不同；对于定常问题，解的精度由显式算子决定。通常不对隐式算子求逆，而是用近似分解（如 LU-SGS）或迭代法（Newton–Krylo
+v）求解线性方程组。
 \end_layout
 
 \begin_layout Subsection
