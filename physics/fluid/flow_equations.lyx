@@ -2123,7 +2123,7 @@ status open
 如果本构关系是线性的，即
 \begin_inset Formula 
 \begin{equation}
-\tau_{ik}=D_{ikrs}E_{rs}\qquad(i,k)\in\left\{ 1,2,3\right\} ^{2}\label{eq:流动方程：本构关系：线性}
+\tau_{ik}=D_{ikrs}E_{rs}\label{eq:流动方程：本构关系：线性}
 \end{equation}
 
 \end_inset
@@ -2159,14 +2159,14 @@ tensor!~ of rank four
 \end_inset
 
  个独立参数；考虑到 
-\begin_inset Formula $\tau_{ik}$
+\begin_inset Formula $\tau_{ik}=\tau_{ki}$
 \end_inset
 
  及 
-\begin_inset Formula $E_{ik}$
+\begin_inset Formula $E_{rs}=E_{sr}$
 \end_inset
 
- 的对称性，独立参数的个数可以降到 
+，独立参数的个数可以降到 
 \begin_inset Formula $\sum_{i=1}^{6}i=21$
 \end_inset
 
@@ -2227,14 +2227,6 @@ reference "eq:流动方程：本构关系：线性"
 \begin{equation}
 \tau_{ik}=\left(\frac{\partial u_{i}}{\partial x_{k}}+\frac{\partial u_{k}}{\partial x_{i}}\right)\mu+\frac{\partial u_{j}}{\partial x_{j}}\mathrm{\delta}_{ik}\lambda\label{eq:流动方程：本构关系：线性：各向同性}
 \end{equation}
-
-\end_inset
-
-或等价的
-\begin_inset Formula 
-\[
-\vec{\vec{\tau}}=(\grad\vec{u})\mu+(\grad\vec{u})^{\mathrm{T}}\mu+(\divg\vec{u})\vec{\vec{1}}\lambda=2\mu\vec{\vec{E}}+\lambda\vec{\vec{1}}\divg\vec{u}
-\]
 
 \end_inset
 
@@ -2357,7 +2349,7 @@ Stokes 提出假设（并被后人实验所证实）：除高温高压等极端�
 ，此时本构关系可以简化为
 \begin_inset Formula 
 \begin{equation}
-\tau_{ik}=\left[\left(\frac{\partial u_{i}}{\partial x_{k}}+\frac{\partial u_{k}}{\partial x_{i}}\right)-\frac{2}{3}\frac{\partial u_{j}}{\partial x_{j}}\mathrm{\delta}_{ik}\right]\mu\qquad\vec{\vec{\tau}}=\left[(\grad\vec{u})+(\grad\vec{u})^{\mathrm{T}}-\frac{2}{3}(\divg\vec{u})\vec{\vec{1}}\right]\mu\label{eq:stokes_hypothesis_on_fluid_viscosity}
+\tau_{ik}=\left[\left(\frac{\partial u_{i}}{\partial x_{k}}+\frac{\partial u_{k}}{\partial x_{i}}\right)-\frac{\partial u_{j}}{\partial x_{j}}\mathrm{\delta}_{ik}\frac{2}{3}\right]\mu\label{eq:stokes_hypothesis_on_fluid_viscosity}
 \end{equation}
 
 \end_inset
@@ -2391,14 +2383,18 @@ status open
 \begin_inset Formula $\mu$
 \end_inset
 
- 为常量，则黏性应力的散度 
+ 为常量，则黏性应力 
+\begin_inset Formula $\vec{\vec{\tau}}$
+\end_inset
+
+ 的散度 
 \begin_inset Formula $\divg\vec{\vec{\tau}}$
 \end_inset
 
  可以化为
 \begin_inset Formula 
 \[
-\divg\vec{\vec{\tau}}=\mu\laplacian\vec{u}+\frac{\mu}{3}\grad(\divg\vec{u})=\mu\divg(\grad\vec{u})+\frac{\mu}{3}\grad(\divg\vec{u})
+\divg\vec{\vec{\tau}}=\mu\laplacian\vec{u}+\frac{\mu}{3}\grad(\divg\vec{u})
 \]
 
 \end_inset
@@ -2424,9 +2420,8 @@ reference "eq:stokes_hypothesis_on_fluid_viscosity"
  即得
 \begin_inset Formula 
 \[
-\begin{aligned}\divg\vec{\vec{\tau}} & =\frac{\partial\tau_{ik}}{\partial x_{i}}=\frac{\partial}{\partial x_{i}}\left[\left(\frac{\partial u_{i}}{\partial x_{k}}+\frac{\partial u_{k}}{\partial x_{i}}\right)\mu-\frac{2}{3}\frac{\partial u_{j}}{\partial x_{j}}\mathrm{\delta}_{ik}\mu\right]\\
- & =\mu\frac{\partial^{2}u_{i}}{\partial x_{i}\partial x_{k}}+\mu\frac{\partial^{2}u_{k}}{\partial x_{i}^{2}}-\frac{2}{3}\mu\frac{\partial^{2}u_{j}}{\partial x_{k}\partial x_{j}}=\mu\frac{\partial^{2}u_{k}}{\partial x_{i}\partial x_{i}}+\frac{\mu}{3}\frac{\partial^{2}u_{j}}{\partial x_{k}\partial x_{j}}\\
- & =\mu\laplacian\vec{u}+\frac{\mu}{3}\grad(\divg\vec{u})=\mu\divg(\grad\vec{u})+\frac{\mu}{3}\grad(\divg\vec{u})
+\begin{aligned}\frac{\partial\tau_{ik}}{\partial x_{i}} & =\frac{\partial}{\partial x_{i}}\left[\left(\frac{\partial u_{i}}{\partial x_{k}}+\frac{\partial u_{k}}{\partial x_{i}}\right)\mu-\frac{2}{3}\frac{\partial u_{j}}{\partial x_{j}}\mathrm{\delta}_{ik}\mu\right]\\
+ & =\mu\frac{\partial^{2}u_{i}}{\partial x_{i}\partial x_{k}}+\mu\frac{\partial^{2}u_{k}}{\partial x_{i}^{2}}-\frac{2}{3}\mu\frac{\partial^{2}u_{j}}{\partial x_{k}\partial x_{j}}=\mu\frac{\partial^{2}u_{k}}{\partial x_{i}\partial x_{i}}+\frac{\mu}{3}\frac{\partial^{2}u_{j}}{\partial x_{k}\partial x_{j}}
 \end{aligned}
 \]
 
@@ -3113,7 +3108,11 @@ end{subequations}
 \end_layout
 
 \begin_layout Standard
-对于黏度为常量的 Stokes 流体，黏性通量的
+对于黏度 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 为常量的 Stokes 流体，黏性通量的
 \color blue
 体积分
 \color inherit
