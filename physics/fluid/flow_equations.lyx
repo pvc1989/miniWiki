@@ -787,7 +787,7 @@ surface!control ~
 \end_inset
 
  上任意一点的速度记作 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}$
+\begin_inset Formula $\vec{u}^{\partial V}$
 \end_inset
 
 ，用来与流体微团的速度 
@@ -795,7 +795,7 @@ surface!control ~
 \end_inset
 
  作区分。根据 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}$
+\begin_inset Formula $\vec{u}^{\partial V}$
 \end_inset
 
  的特点，控制体可以被分为三类：
@@ -821,7 +821,7 @@ volume!control ~!material body (system)
 \end_inset
 
 ，即 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}=\vec{u}$
+\begin_inset Formula $\vec{u}^{\partial V}=\vec{u}$
 \end_inset
 
  的情形。
@@ -843,7 +843,7 @@ volume!control ~!fixed ~
 \end_inset
 
 ，即 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}=\vec{0}$
+\begin_inset Formula $\vec{u}^{\partial V}=\vec{0}$
 \end_inset
 
  的情形。
@@ -901,7 +901,7 @@ status open
  可导，则有如下等式成立：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\phi=\int_{V}\pdv{\phi}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi}\label{eq:流动方程：Reynolds}
+\boxed{\dv{t}\int_{V}\phi=\int_{V}\pdv{\phi}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}^{\partial V}\,\phi}\label{eq:流动方程：Reynolds}
 \end{equation}
 
 \end_inset
@@ -1026,7 +1026,7 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}-\int_{V_{1}}\phi_{2}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\left(\vec{n}\vdot\vec{u}_{\mathrm{CS}}\right)_{1}\bcancel{(t_{2}-t_{1})}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi\right)_{1}
+\lim_{t_{2}\to t_{1}}\frac{\int_{V_{2}}\phi_{2}-\int_{V_{1}}\phi_{2}}{t_{2}-t_{1}}=\lim_{t_{2}\to t_{1}}\oint_{\partial V_{1}}\frac{\left(\vec{n}\vdot\vec{u}^{\partial V}\right)_{1}\bcancel{(t_{2}-t_{1})}}{\bcancel{(t_{2}-t_{1})}}\phi_{2}=\left(\oint_{\partial V}\vec{n}\vdot\vec{u}^{\partial V}\,\phi\right)_{1}
 \]
 
 \end_inset
@@ -1058,7 +1058,7 @@ noprefix "false"
 
 \begin_layout Standard
 物理定律一般在物质体（系统）上描述。本节用 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  表示物质体，以便与一般控制体 
@@ -1088,7 +1088,7 @@ derivative!material ~!~ of an integral
 \end_inset
 
  定义为：该时刻与之重合的物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  上的
@@ -1098,7 +1098,7 @@ derivative!material ~!~ of an integral
 ，即
 \begin_inset Formula 
 \begin{equation}
-\boxed{\DDt{}\int_{V}\phi\coloneqq\dv{t}\int_{V_{\mathrm{MB}}}\phi}\label{eq:流动方程：物质导数：定义}
+\boxed{\DDt{}\int_{V}\phi\coloneqq\dv{t}\int_{B}\phi}\label{eq:流动方程：物质导数：定义}
 \end{equation}
 
 \end_inset
@@ -1126,7 +1126,7 @@ derivative!material ~!~ of an integral
 \begin_inset Formula 
 \begin{equation}
 \boxed{\begin{aligned}\DDt{}\int_{V}\phi & =\int_{V}\pdv{\phi}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}\phi\\
- & =\dv{t}\int_{V}\phi+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\phi
+ & =\dv{t}\int_{V}\phi+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}^{\partial V}\right)\phi
 \end{aligned}
 }\label{eq:流动方程：物质导数：积分展开}
 \end{equation}
@@ -1145,11 +1145,11 @@ derivative!material ~!~ of an integral
 
 \begin_layout Proof
 物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  也是控制体，对 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\phi$
+\begin_inset Formula $\int_{B}\phi$
 \end_inset
 
  应用 Reynolds 输运定理式 
@@ -1162,7 +1162,7 @@ reference "eq:流动方程：Reynolds"
  即得
 \begin_inset Formula 
 \[
-\DDt{}\int_{V}\phi=\dv{t}\int_{V_{\mathrm{MB}}}\phi=\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi
+\DDt{}\int_{V}\phi=\dv{t}\int_{B}\phi=\int_{B}\pdv{\phi}{t}+\oint_{\partial B}\vec{n}\vdot\vec{u}^{B}\,\phi
 \]
 
 \end_inset
@@ -1172,7 +1172,7 @@ reference "eq:流动方程：Reynolds"
 物质体
 \color inherit
 的定义，此时 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  与 
@@ -1180,17 +1180,17 @@ reference "eq:流动方程：Reynolds"
 \end_inset
 
  重合，并且在 
-\begin_inset Formula $\partial V_{\mathrm{MB}}$
+\begin_inset Formula $\partial B$
 \end_inset
 
  上有 
-\begin_inset Formula $\vec{u}_{\mathrm{MB}}=\vec{u}$
+\begin_inset Formula $\vec{u}^{B}=\vec{u}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-\int_{V_{\mathrm{MB}}}\pdv{\phi}{t}=\int_{V}\pdv{\phi}{t}\qquad\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{u}_{\mathrm{MB}}\,\phi=\oint_{\partial V}\vec{n}\vdot\vec{u}\phi
+\int_{B}\pdv{\phi}{t}=\int_{V}\pdv{\phi}{t}\qquad\oint_{\partial B}\vec{n}\vdot\vec{u}^{B}\,\phi=\oint_{\partial V}\vec{n}\vdot\vec{u}\phi
 \]
 
 \end_inset
@@ -1215,7 +1215,7 @@ reference "eq:流动方程：Reynolds"
  的移项形式
 \begin_inset Formula 
 \[
-\int_{V}\pdv{\phi}{t}=\dv{t}\int_{V}\phi-\oint_{\partial V}\vec{n}\vdot\vec{u}_{\mathrm{CS}}\,\phi
+\int_{V}\pdv{\phi}{t}=\dv{t}\int_{V}\phi-\oint_{\partial V}\vec{n}\vdot\vec{u}^{\partial V}\,\phi
 \]
 
 \end_inset
@@ -1536,17 +1536,17 @@ conservation!~ of mass
 \end_inset
 
 物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  内所含总质量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\rho$
+\begin_inset Formula $\int_{B}\rho$
 \end_inset
 
  不随时间变化，即
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\rho=0
+\dv{t}\int_{B}\rho=0
 \]
 
 \end_inset
@@ -1603,7 +1603,7 @@ noprefix "false"
 \begin_inset Formula 
 \[
 \begin{gathered}\int_{V}\pdv{\rho}{t}+\oint_{\partial V}\vec{n}\vdot\vec{u}\rho=0\\
-\dv{t}\int_{V}\rho+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}_{\mathrm{CS}}\right)\rho=0
+\dv{t}\int_{V}\rho+\oint_{\partial V}\vec{n}\vdot\left(\vec{u}-\vec{u}^{\partial V}\right)\rho=0
 \end{gathered}
 \]
 
@@ -1844,19 +1844,19 @@ conservation!~ of momentum
 \end_inset
 
  物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  内所含总动量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{u}\rho$
+\begin_inset Formula $\int_{B}\vec{u}\rho$
 \end_inset
 
  的时间变化率，等于作用在 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  及其边界 
-\begin_inset Formula $\partial V_{\mathrm{MB}}$
+\begin_inset Formula $\partial B$
 \end_inset
 
  上的所有
@@ -1869,7 +1869,7 @@ conservation!~ of momentum
 \begin_layout Axiom
 \begin_inset Formula 
 \[
-\dv{t}\int_{V_{\mathrm{MB}}}\vec{u}\rho=\int_{V_{\mathrm{MB}}}\vec{b}+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\vec{\vec{\sigma}}
+\dv{t}\int_{B}\vec{u}\rho=\int_{B}\vec{b}+\oint_{\partial B}\vec{n}\vdot\vec{\vec{\sigma}}
 \]
 
 \end_inset
@@ -1900,7 +1900,7 @@ conservation!~ of momentum
 体积力密度 (density of body force)
 \color inherit
 ，表示作用在 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  中单位体积流体上的外力（例如
@@ -1916,7 +1916,7 @@ conservation!~ of momentum
 \end_inset
 
  为 
-\begin_inset Formula $\partial V_{\mathrm{MB}}$
+\begin_inset Formula $\partial B$
 \end_inset
 
  的单位外法向量。
@@ -1950,7 +1950,7 @@ tensor!stress ~
 \end_inset
 
  是一个向量，表示作用在 
-\begin_inset Formula $\partial V_{\mathrm{MB}}$
+\begin_inset Formula $\partial B$
 \end_inset
 
  上的外力的面密度。
@@ -2468,19 +2468,19 @@ conservation!~ of angular momentum
 \end_inset
 
 物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  内所含总角动量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\vec{x}\cross\vec{u}\rho$
+\begin_inset Formula $\int_{B}\vec{x}\cross\vec{u}\rho$
 \end_inset
 
  的时间变化率，等于作用在 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  及其边界 
-\begin_inset Formula $\partial V_{\mathrm{MB}}$
+\begin_inset Formula $\partial B$
 \end_inset
 
  上的所有
@@ -2554,11 +2554,11 @@ conservation!~ of energy
 \end_inset
 
 物质体 
-\begin_inset Formula $V_{\mathrm{MB}}$
+\begin_inset Formula $B$
 \end_inset
 
  内所含总能量 
-\begin_inset Formula $\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho$
+\begin_inset Formula $\int_{B}\left(e+\abs{\vec{u}}^{2}/2\right)\rho$
 \end_inset
 
  的时间变化率，等于
@@ -2576,7 +2576,7 @@ conservation!~ of energy
  之和：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{t}\int_{V_{\mathrm{MB}}}\left(e+\abs{\vec{u}}^{2}/2\right)\rho & =\int_{V_{\mathrm{MB}}}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial V_{\mathrm{MB}}}\vec{n}\vdot\left(\vec{\vec{\sigma}}\vdot\vec{u}-\vec{q}\right)\end{aligned}
+\begin{aligned}\dv{t}\int_{B}\left(e+\abs{\vec{u}}^{2}/2\right)\rho & =\int_{B}\left(\vec{b}\vdot\vec{u}+j\right)+\oint_{\partial B}\vec{n}\vdot\left(\vec{\vec{\sigma}}\vdot\vec{u}-\vec{q}\right)\end{aligned}
 \]
 
 \end_inset
@@ -2932,13 +2932,13 @@ noprefix "false"
  化为
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{V}\ket{U}+\oint_{\partial V}\vec{n}\vdot\left(\vec{\ket{F}}-\vec{u}_{\mathrm{CS}}\ket{U}\right)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}}\label{eq:流动方程：Navier--Stokes：积分型：移动控制体}
+\boxed{\dv{t}\int_{V}\ket{U}+\oint_{\partial V}\vec{n}\vdot\left(\vec{\ket{F}}-\vec{u}^{\partial V}\ket{U}\right)=\oint_{\partial V}\vec{n}\vdot\vec{\ket{G}}+\int_{V}\ket{H}}\label{eq:流动方程：Navier--Stokes：积分型：移动控制体}
 \end{equation}
 
 \end_inset
 
 特别地，若 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}=\vec{0}$
+\begin_inset Formula $\vec{u}^{\partial V}=\vec{0}$
 \end_inset
 
 ，则
