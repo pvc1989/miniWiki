@@ -817,7 +817,7 @@ status open
 \begin_layout Standard
 \begin_inset Formula 
 \[
-x_{i}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}-\sum_{j=i+1}^{n}a_{ij}x_{j}\right)
+x_{i}=\frac{1}{a_{ii}}\left(b_{i}-\sum_{j=1}^{i-1}a_{ij}x_{j}-\sum_{j=i+1}^{n}a_{ij}x_{j}\right)
 \]
 
 \end_inset
@@ -837,9 +837,13 @@ name "sec:Jacobi-iteration"
 \end_layout
 
 \begin_layout Standard
+右端都取旧值
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
+x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(b_{i}-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
 \]
 
 \end_inset
@@ -859,9 +863,21 @@ name "sec:Gauss--Seidel-iteration"
 \end_layout
 
 \begin_layout Standard
+右端 
+\begin_inset Formula $j<i$
+\end_inset
+
+ 的项取新值，
+\begin_inset Formula $j>i$
+\end_inset
+
+ 的项取旧值
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(1-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k+1)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
+x_{i}^{(k+1)}=\frac{1}{a_{ii}}\left(b_{i}-\sum_{j=1}^{i-1}a_{ij}x_{j}^{(k+1)}-\sum_{j=i+1}^{n}a_{ij}x_{j}^{(k)}\right)
 \]
 
 \end_inset
@@ -897,7 +913,7 @@ reference "sec:Gauss--Seidel-iteration"
 \end_inset
 
  迭代步的值作加权平均，得到第 
-\begin_inset Formula $K+1$
+\begin_inset Formula $k+1$
 \end_inset
 
  迭代步的值：
@@ -940,14 +956,6 @@ x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-LU-ADI
-\end_layout
-
-\begin_layout Subsection
-LU-SGS
 \end_layout
 
 \begin_layout Section
