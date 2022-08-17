@@ -2741,6 +2741,247 @@ AUSM
 \end_layout
 
 \begin_layout Section
+高阶有限体积格式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u(x)\approx u_{i}^{h}(x)\equiv\langle u\rangle_{I_{i}}+\sum_{l=1}^{k}\hat{u}_{l,i}\varphi_{l,i}(x),\qquad\forall x\in I_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Formula $k$
+\end_inset
+
+-exact Reconstruction
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle u_{i}^{h}\rangle_{I_{j}}=\langle u\rangle_{I_{j}},\qquad\forall I_{j}\in S_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Compact Least-Squares (CLS) Reconstruction
+\end_layout
+
+\begin_layout Quotation
+The present reconstruction procedure requires not only the dependent variables
+ but also its various orders of derivatives to conserve their means on the
+ face-neighboring cells.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang_2016"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+保重构多项式及其导数均值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle\partial_{x}^{m}u_{i}^{h}\rangle_{I_{j}}=\langle\partial_{x}^{m}u_{j}^{h}\rangle_{I_{j}},\qquad\forall m\in[0,M]\cap\mathbb{N},\qquad\forall I_{j}\in S_{i}\equiv\left\{ I_{i-1},I_{i+1}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Quotation
+The main shortcoming of the CLS reconstruction is that the reconstruction
+ polynomials at the control volumes close to the boundary should be one
+ order lower than those at the inner control volumes, which reduces the
+ accuracy of the scheme near the boundary.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang_2017"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Variational Reconstruction (VR)
+\end_layout
+
+\begin_layout Quotation
+The reconstruction polynomial of the variational reconstruction is obtained
+ by the minimization of the jumps of the depended variable and its spatial
+ derivatives across the cell interfaces.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang_2017"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u(\vec{x})\approx u_{i}^{h}(\vec{x})\equiv\langle u\rangle_{I_{i}}+\sum_{l=1}^{N_{c}(k)}\hat{u}_{l,i}\varphi_{l,i}(\vec{x}),\qquad\forall\vec{x}\in I_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The interfacial jump integration (IJI) for the 
+\begin_inset Formula $f$
+\end_inset
+
+-th cell interface 
+\begin_inset Formula $S_{f}$
+\end_inset
+
+ is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+I_{f}=\sum_{p=0}^{k}\int_{S_{f}}\left(\frac{d_{\mathrm{LR}}^{p}}{p!}\frac{\partial^{p}}{\partial\nu^{p}}\left(u_{\mathrm{L}}^{h}-u_{\mathrm{R}}^{h}\right)\right)^{2}\frac{\dd{S}}{d_{\mathrm{LR}}}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+I_{f}=\sum_{p=0}^{k}\int_{V_{\mathrm{L}}\cup V_{\mathrm{R}}}\left(\frac{d_{\mathrm{LR}}^{p}}{p!}\frac{\partial^{p}}{\partial\nu^{p}}\left(u_{\mathrm{L}}^{h}-u_{\mathrm{R}}^{h}\right)\right)^{2}\frac{\dd{V}}{d_{\mathrm{LR}}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $d_{\mathrm{LR}}$
+\end_inset
+
+ is the distance between the centroids of the two cells.
+\end_layout
+
+\begin_layout Standard
+To minimize the cost function
+\begin_inset Formula 
+\[
+I=\sum_{f=1}^{N_{f}}I_{f},
+\]
+
+\end_inset
+
+the variational principle gives
+\begin_inset Formula 
+\[
+\frac{\partial I}{\partial\hat{u}_{l,i}}=0,\qquad l=1,\dots,N_{c}(k),\qquad i=1,\dots,N,
+\]
+
+\end_inset
+
+which lead to a system of linear equations
+\begin_inset Formula 
+\[
+\underline{A}_{i}\,\underline{\hat{u}}_{i}=\sum_{j\ne i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}+\underline{b}_{i},\qquad i=1,\dots,N,
+\]
+
+\end_inset
+
+which can be solved by any of the following three methods:
+\end_layout
+
+\begin_layout Itemize
+blocked Jacobi iteration
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{i}^{(k+1)}=\underline{A}_{i}^{-1}\left(\sum_{j\ne i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+blocked Gauss–Seidel iteration
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{i}^{(k+1)}=\underline{A}_{i}^{-1}\left(\sum_{j<i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k+1)}+\sum_{j>i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+blocked SOR iteration
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{i}^{(k+1)}=(1-\omega)\underline{\hat{u}}_{i}^{(k)}+\omega\underline{A}_{i}^{-1}\left(\sum_{j<i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k+1)}+\sum_{j>i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $(0<\omega<2)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 间断有限元
 \begin_inset CommandInset label
 LatexCommand label
