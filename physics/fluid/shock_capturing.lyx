@@ -1243,10 +1243,10 @@ reference "def:TVD-scheme"
 \end_layout
 
 \begin_layout Section
-间断指示器
+间断识别器
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:激波捕捉：间断指示器"
+name "sec:激波捕捉：间断识别器"
 
 \end_inset
 
@@ -1268,7 +1268,7 @@ name "sec:激波捕捉：间断指示器"
 \color inherit
  或
 \color blue
-间断指示器 (discontinuity identifier)
+间断识别器 (discontinuity identifier)
 \color inherit
 。
 \end_layout
@@ -1567,6 +1567,110 @@ I_{i}^{*}=\frac{\vert I_{i}\vert/\Vert q^{h}\Vert_{E_{i}}}{\vert\partial E_{i}^{
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Li–Ren
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2011"
+literal "false"
+
+\end_inset
+
+ 将近似函数 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 在单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上的光滑度定义为
+\begin_inset Formula 
+\[
+\mathrm{IS}_{i}=\frac{\sum_{j\in S_{i}\setminus\left\{ i\right\} }\left\vert u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})\right\vert }{N_{i}h_{i}^{(k+1)/2}\max_{j\in S_{i}}\langle u\rangle_{j}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vec{r}_{i}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的中心，
+\begin_inset Formula $N_{i}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 的面邻接单元数量，
+\begin_inset Formula $\langle u\rangle_{j}$
+\end_inset
+
+ 表示 
+\begin_inset Formula $u$
+\end_inset
+
+ 在单元 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 上均值。
+\end_layout
+
+\begin_layout Standard
+基于
+\begin_inset Formula 
+\[
+u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})=\begin{cases}
+\order{h_{i}^{k+1}}, & \text{in smooth region}\\
+\order{1}, & \text{near discontinuity}
+\end{cases}
+\]
+
+\end_inset
+
+可知
+\begin_inset Formula 
+\[
+\lim_{h_{i}\to0}\mathrm{IS}_{i}=\begin{cases}
+\lim_{h_{i}\to0}\order{h_{i}^{+(k+1)/2}}=0, & \text{in smooth region}\\
+\lim_{h_{i}\to0}\order{h_{i}^{-(k+1)/2}}=\infty, & \text{near discontinuity}
+\end{cases}
+\]
+
+\end_inset
+
+由此得判据
+\begin_inset Formula 
+\[
+\begin{cases}
+\mathrm{IS}_{i}<\overline{\text{IS}}, & \text{in smooth region}\\
+\mathrm{IS}_{i}>\overline{\text{IS}}, & \text{near discontinuity}
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\overline{\text{IS}}=1$
+\end_inset
+
+ for 三阶及以下格式，
+\begin_inset Formula $\overline{\text{IS}}=3$
+\end_inset
+
+ for 四阶格式。
 \end_layout
 
 \begin_layout Section
