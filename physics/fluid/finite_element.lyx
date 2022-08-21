@@ -850,7 +850,7 @@ u(x,0)=\sin(x),\qquad x\in(0,2\pi)
 \begin_inset Formula $f(u)$
 \end_inset
 
-，在形式上套用 DG 格式：
+，在形式上应用 DG 方法：
 \begin_inset Formula 
 \[
 \int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}\left(\partial_{x}u^{h}\right)\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{\partial_{x}u^{h}}v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
@@ -916,7 +916,7 @@ q-\partial_{x}u=0,
 \end_layout
 
 \begin_layout Standard
-在形式上套用 DG 格式：
+在形式上应用 DG 方法：
 \begin_inset Formula 
 \[
 \begin{cases}
@@ -984,6 +984,116 @@ literal "false"
 
 \begin_layout Subsection
 高维标量问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{t}u+\partial_{i}\left(f_{i}(u)-a_{ik}(u)\left(\partial_{k}u\right)\right)=0,\qquad(t,\vec{r})\in(0,T)\times(0,1)^{d}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u(t,\vec{r})=u_{0}(\vec{r}),\qquad\vec{r}\in(0,1)^{d}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{ik}(u)$
+\end_inset
+
+ 对称、半正定，从而存在矩阵 
+\begin_inset Formula $b_{ik}(u)$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+a_{ik}(u)=b_{il}(u)\,b_{lk}(u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+定义辅助变量
+\begin_inset Formula 
+\[
+q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}u\right),\qquad l=1,2,\dots,d
+\]
+
+\end_inset
+
+则高阶方程化为一阶方程组
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}u+\partial_{i}\left(f_{i}(u)-b_{il}(u)\,q_{l}\right)=0,\\
+q_{l}-\partial_{k}g_{lk}(u)=0, & l=1,2,\dots,d
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在形式上应用 DG 方法：
+\begin_inset Formula 
+\[
+\int_{E}\left(\partial_{t}u^{h}\right)v^{h}+\oint_{\partial E}\nu_{i}\left(f_{i}(u^{h})-b_{il}(u^{h})\,q_{l}^{h}\right)v^{h}=\int_{E}\left(\partial_{i}v^{h}\right)\left(f_{i}(u^{h})-b_{il}(u^{h})\,q_{l}^{h}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{E}q_{l}^{h}w^{h}+\int_{E}\left(\partial_{k}w^{h}\right)\left(g_{lk}(u^{h})\right)=\oint_{\partial E}\nu_{k}g_{lk}(u^{h})\,w^{h},\qquad l=1,2,\dots,d
+\]
+
+\end_inset
+
+其中对流通量
+\begin_inset Formula 
+\[
+\left(\nu_{i}f_{i}(u^{h})\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
+\]
+
+\end_inset
+
+由纯对流问题的 Riemann 解给出；而扩散通量取作
+\begin_inset Formula 
+\[
+\left(\nu_{i}b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left[\nu_{k}g_{lk}(u^{h})\right]}{\left[u^{h}\right]}\left\{ q_{l}^{h}\right\} +C_{11}\left[u^{h}\right]+C_{1l}\left\{ q_{l}^{h}\right\} 
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\nu_{k}g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}g_{lk}(u^{h})\right\} -C_{1l}\left[u^{h}\right],\qquad l=1,2,\dots,d
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
