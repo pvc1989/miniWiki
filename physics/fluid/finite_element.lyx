@@ -802,6 +802,194 @@ reference "sec:有限差分：时间推进"
 LDG (Local DG)
 \end_layout
 
+\begin_layout Subsection
+一维传热问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Cockburn_2001"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一维传热方程
+\begin_inset Formula 
+\[
+\partial_{t}u-\partial_{x}^{2}u=0,\qquad(x,t)\in(0,2\pi)\times(0,T)
+\]
+
+\end_inset
+
+及初始条件
+\begin_inset Formula 
+\[
+u(x,0)=\sin(x),\qquad x\in(0,2\pi)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+错误格式
+\end_layout
+
+\begin_layout Standard
+将 
+\begin_inset Formula $-\partial_{x}u$
+\end_inset
+
+ 视为守恒律方程中的 
+\begin_inset Formula $f(u)$
+\end_inset
+
+，在形式上套用 DG 格式：
+\begin_inset Formula 
+\[
+\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}\left(\partial_{x}u^{h}\right)\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{\partial_{x}u^{h}}v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u^{h},v^{h}$
+\end_inset
+
+ 均取自 
+\begin_inset Formula $\mathbb{P}^{k}(I_{i})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边界项中的 
+\begin_inset Formula $\widehat{\partial_{x}u^{h}}$
+\end_inset
+
+ 为“数值通量”，因缺少迎风性质，自然地取平均值
+\begin_inset Formula 
+\[
+\widehat{\partial_{x}u^{h}}=\frac{\left(\partial_{x}u^{h}\right)_{\mathrm{L}}+\left(\partial_{x}u^{h}\right)_{\mathrm{R}}}{2}
+\]
+
+\end_inset
+
+时间离散用 TVD RK3 格式，所得结果表现出 inconsistency。
+\end_layout
+
+\begin_layout Subsubsection
+正确格式
+\end_layout
+
+\begin_layout Standard
+引入新变量 
+\begin_inset Formula $q\coloneqq\partial_{x}u$
+\end_inset
+
+，将方程 
+\begin_inset Formula $\partial_{t}u-\partial_{x}^{2}u=0$
+\end_inset
+
+ 化为一阶，二者合并组成一阶方程组
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}u-\partial_{x}q=0,\\
+q-\partial_{x}u=0,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在形式上套用 DG 格式：
+\begin_inset Formula 
+\[
+\begin{cases}
+\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}q^{h}\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{q^{h}}v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}\\
+\int_{I_{i}}q^{h}w^{h}\dd{x}+\int_{I_{i}}u^{h}\left(\partial_{x}w^{h}\right)\dd{x}=\left.\widehat{u^{h}}w^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u^{h},v^{h},w^{h},q^{h}$
+\end_inset
+
+ 均取自 
+\begin_inset Formula $\mathbb{P}^{k}(I_{i})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边界项中的 
+\begin_inset Formula $\widehat{u^{h}}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\widehat{q^{h}}$
+\end_inset
+
+ 为“数值通量”，因缺少迎风性质，可以自然地取平均值
+\begin_inset Formula 
+\[
+\widehat{u^{h}}=\frac{u_{\mathrm{L}}^{h}+u_{\mathrm{R}}^{h}}{2},\qquad\widehat{q^{h}}=\frac{q_{\mathrm{L}}^{h}+q_{\mathrm{R}}^{h}}{2}
+\]
+
+\end_inset
+
+或按 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Cockburn_1998b"
+literal "false"
+
+\end_inset
+
+ 建议取
+\begin_inset Formula 
+\[
+\widehat{u^{h}}=u_{\mathrm{L}}^{h},\qquad\widehat{q^{h}}=q_{\mathrm{R}}^{h}
+\]
+
+\end_inset
+
+ 或
+\begin_inset Formula 
+\[
+\widehat{u^{h}}=u_{\mathrm{R}}^{h},\qquad\widehat{q^{h}}=q_{\mathrm{L}}^{h}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+高维标量问题
+\end_layout
+
+\begin_layout Subsection
+高维系统问题
+\end_layout
+
 \begin_layout Section
 DDG (Direct DG)
 \end_layout
