@@ -157,7 +157,7 @@ Gauss 散度定理
 可得
 \begin_inset Formula 
 \begin{equation}
-\int_{\varOmega}\left(V\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=0\qquad\forall V,\forall\varOmega\label{eq:间断有限元：积分方程}
+\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=0\qquad\forall V,\forall\varOmega\label{eq:间断有限元：积分方程}
 \end{equation}
 
 \end_inset
@@ -245,7 +245,7 @@ reference "eq:间断有限元：积分方程"
 \[
 \begin{aligned}\int_{\varOmega}V\,\partial_{t}U\approx\int_{\varOmega}V^{h}\,\partial_{t}U^{h} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\varOmega}\psi_{l}\phi_{k}\right)\dv{\hat{U}_{k}}{t}\\
 \int_{\varOmega}\vec{F}\vdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\vdot\mathopen{\vec{F}}\left(U^{h}\right)\\
-\oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)
+\oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}\,\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{aligned}
 \]
 
@@ -281,7 +281,7 @@ reference "sec:有限体积：近似 Riemann 解"
  的任意性，可得矩阵方程
 \begin_inset Formula 
 \[
-\dv{\underline{\hat{U}}}{t}\underline{A}=\underline{B}_{\varOmega}-\underline{B}_{\partial\varOmega}
+\dv{\underline{\hat{U}}}{t}\,\underline{A}=\underline{B}_{\varOmega}-\underline{B}_{\partial\varOmega}
 \]
 
 \end_inset
@@ -652,7 +652,7 @@ reference "eq:间断有限元：矩阵方程"
 弱形式
 \begin_inset Formula 
 \[
-\int_{\varOmega}\left(V\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=\int_{\varOmega}VH
+\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=\int_{\varOmega}VH
 \]
 
 \end_inset
@@ -672,7 +672,7 @@ reference "eq:间断有限元：矩阵方程"
 矩阵方程
 \begin_inset Formula 
 \[
-\dv{\underline{\hat{U}}}{t}\underline{A}=\underline{B}
+\dv{\underline{\hat{U}}}{t}\,\underline{A}=\underline{B}
 \]
 
 \end_inset
@@ -696,7 +696,7 @@ reference "eq:间断有限元：矩阵方程"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\partial_{t}\underline{U}+\partial_{x}\underline{F^{x}}+\partial_{y}\underline{F^{y}}+\partial_{z}\underline{F^{z}}=\underline{H}\implies\dv{}{t}\underline{\hat{U}}_{K\times N}=\underline{B}_{K\times N}\,\underline{A}_{N\times N}^{-1}\eqqcolon\underline{R}_{K\times N}
+\partial_{t}\underline{U}+\partial_{x}\underline{F^{x}}+\partial_{y}\underline{F^{y}}+\partial_{z}\underline{F^{z}}=\underline{H}\implies\dv{}{t}\,\underline{\hat{U}}_{K\times N}=\underline{B}_{K\times N}\,\underline{A}_{N\times N}^{-1}\eqqcolon\underline{R}_{K\times N}
 \]
 
 \end_inset
@@ -853,7 +853,7 @@ u(x,0)=\sin(x),\qquad x\in(0,2\pi)
 ，在形式上应用 DG 方法：
 \begin_inset Formula 
 \[
-\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}\left(\partial_{x}u^{h}\right)\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{\partial_{x}u^{h}}v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}\left(\partial_{x}u^{h}\right)\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{\partial_{x}u^{h}}\,v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
 \]
 
 \end_inset
@@ -920,8 +920,8 @@ q-\partial_{x}u=0,
 \begin_inset Formula 
 \[
 \begin{cases}
-\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}q^{h}\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{q^{h}}v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}\\
-\int_{I_{i}}q^{h}w^{h}\dd{x}+\int_{I_{i}}u^{h}\left(\partial_{x}w^{h}\right)\dd{x}=\left.\widehat{u^{h}}w^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}q^{h}\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{q^{h}}\,v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}\\
+\int_{I_{i}}q^{h}\,w^{h}\dd{x}+\int_{I_{i}}u^{h}\left(\partial_{x}w^{h}\right)\dd{x}=\left.\widehat{u^{h}}\,w^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
 \end{cases}
 \]
 
@@ -1064,7 +1064,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 
 \begin_inset Formula 
 \[
-\int_{E}q_{l}^{h}w^{h}+\int_{E}\left(\partial_{k}w^{h}\right)\left(g_{lk}(u^{h})\right)=\oint_{\partial E}\nu_{k}g_{lk}(u^{h})\,w^{h},\qquad l=1,2,\dots,d
+\int_{E}q_{l}^{h}\,w^{h}+\int_{E}\left(\partial_{k}w^{h}\right)\left(g_{lk}(u^{h})\right)=\oint_{\partial E}\nu_{k}\,g_{lk}(u^{h})\,w^{h},\qquad l=1,2,\dots,d
 \]
 
 \end_inset
@@ -1072,7 +1072,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 其中对流通量
 \begin_inset Formula 
 \[
-\left(\nu_{i}f_{i}(u^{h})\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
+\left(\nu_{i}\,f_{i}(u^{h})\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
 \]
 
 \end_inset
@@ -1080,7 +1080,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 由纯对流问题的 Riemann 解给出；而扩散通量取作
 \begin_inset Formula 
 \[
-\left(\nu_{i}b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left[\nu_{k}g_{lk}(u^{h})\right]}{\left[u^{h}\right]}\left\{ q_{l}^{h}\right\} +C_{11}\left[u^{h}\right]+C_{1l}\left\{ q_{l}^{h}\right\} 
+\left(\nu_{i}\,b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left[\nu_{k}\,g_{lk}(u^{h})\right]}{\left[u^{h}\right]}\left\{ q_{l}^{h}\right\} +C_{11}\left[u^{h}\right]+C_{1l}\left\{ q_{l}^{h}\right\} 
 \]
 
 \end_inset
@@ -1088,7 +1088,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 
 \begin_inset Formula 
 \[
-\left(\nu_{k}g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}g_{lk}(u^{h})\right\} -C_{1l}\left[u^{h}\right],\qquad l=1,2,\dots,d
+\left(\nu_{k}\,g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}(u^{h})\right\} -C_{1l}\left[u^{h}\right],\qquad l=1,2,\dots,d
 \]
 
 \end_inset
