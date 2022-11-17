@@ -26,7 +26,7 @@ title: LaTeX
 - 中文博客
 - 祖传文档
 
-## 发行版 + 编辑器
+## 发行版与前端
 
 ### TeX Live<a href id="TeX-Live"></a>
 [TeX Live](https://tug.org/texlive/) 是一款开源、跨平台的 TeX **发行版 (distribution)**。
@@ -35,7 +35,51 @@ title: LaTeX
 2. 安装完成后，应当可以用 `texdoc ctex` 命令打开《[CTeX 宏集手册](https://ctan.org/pkg/ctex)》。
 
 ### TeXstudio
-[TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX **编辑器 (editor)**。
+[TeXstudio](https://texstudio.org/) 是一款开源、跨平台的 TeX **集成开发环境 (IDE)**。
+
+### LaTeX Workshop
+[LaTeX Workshop](https://github.com/James-Yu/LaTeX-Workshop) 是一款基于 VS Code 的轻量级 TeX **前端**。
+
+首次安装后，在 `~/Library/Application Support/Code/User/settings.json` 中加入以下内容，即可按绿色三角按钮进行[编译](https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile)：
+
+```json
+{
+  "latex-workshop.latex.autoBuild.run": "never",
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-shell-escape",
+        "-interaction=nonstopmode",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        "%DOCFILE%"
+      ],
+      "env": {}
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pvcthesis",
+      "tools": [
+        "xelatex",
+        "bibtex",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+  ],
+}
+```
 
 ## 中文支持
 
