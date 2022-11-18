@@ -65,7 +65,19 @@ title: LaTeX
         "%DOCFILE%"
       ],
       "env": {}
-    }
+    },
+    {
+      "name": "nomencl",
+      "command": "makeindex",
+      "args": [
+        "%DOCFILE%.nlo",
+        "-s",
+        "nomencl.ist",
+        "-o",
+        "%DOCFILE%.nls"
+      ],
+      "env": {}
+    },
   ],
   "latex-workshop.latex.recipes": [
     {
@@ -74,6 +86,7 @@ title: LaTeX
         "xelatex",
         "bibtex",
         "xelatex",
+        "nomencl",
         "xelatex"
       ]
     },
