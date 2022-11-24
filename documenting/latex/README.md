@@ -85,8 +85,8 @@ title: LaTeX
       "tools": [
         "xelatex",
         "bibtex",
-        "xelatex",
         "nomencl",
+        "xelatex",
         "xelatex"
       ]
     },
