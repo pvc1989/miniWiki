@@ -187,6 +187,21 @@ Change file timestamps, i.e. *touch* a file.
     stat -f "%z %N" file
 ```
 
+### `du`
+
+Show *d*isk *u*sage.
+
+```shell
+# Show disk usage of current folder:
+du -sh
+# Show disk usage of Videos:
+du -sh Videos/
+# Show disk usage of level-1 subfolders in current folder:
+du -h --max-depth=1
+# Show disk usage of level-1 subfolders in Pictures:
+du -h --max-depth=1 Pictures/
+```
+
 ## 数据流操作
 
 ### `cat`
