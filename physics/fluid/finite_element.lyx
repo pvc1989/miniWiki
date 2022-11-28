@@ -157,7 +157,7 @@ Gauss 散度定理
 可得
 \begin_inset Formula 
 \begin{equation}
-\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=0\qquad\forall V,\forall\varOmega\label{eq:间断有限元：积分方程}
+\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\cdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\cdot\vec{F}}_{F_{\nu}}V=0\qquad\forall V,\forall\varOmega\label{eq:间断有限元：积分方程}
 \end{equation}
 
 \end_inset
@@ -244,7 +244,7 @@ reference "eq:间断有限元：积分方程"
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\varOmega}V\,\partial_{t}U\approx\int_{\varOmega}V^{h}\,\partial_{t}U^{h} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\varOmega}\psi_{l}\phi_{k}\right)\dv{\hat{U}_{k}}{t}\\
-\int_{\varOmega}\vec{F}\vdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\vdot\mathopen{\vec{F}}\left(U^{h}\right)\\
+\int_{\varOmega}\vec{F}\cdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\cdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\cdot\mathopen{\vec{F}}\left(U^{h}\right)\\
 \oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}\,\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)
 \end{aligned}
 \]
@@ -256,7 +256,7 @@ reference "eq:间断有限元：积分方程"
 \end_inset
 
  为法向通量 
-\begin_inset Formula $F_{\nu}\coloneqq\vec{\nu}\vdot\vec{F}$
+\begin_inset Formula $F_{\nu}\coloneqq\vec{\nu}\cdot\vec{F}$
 \end_inset
 
  的近似值，通常取为某种精确或
@@ -293,7 +293,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \vdots & \ddots & \vdots\\
 \ip{\phi_{K}}{\phi_{1}} & \cdots & \ip{\phi_{K}}{\psi_{L}}
 \end{bmatrix}\\
-\underline{B}_{\varOmega}\coloneqq\int_{\varOmega}\vec{F}\vdot\begin{bmatrix}\grad\psi_{1} & \cdots & \grad\psi_{L}\end{bmatrix}\qquad\underline{B}_{\partial\varOmega}\coloneqq\oint_{\partial\varOmega}\mathopen{F_{\nu}}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}
+\underline{B}_{\varOmega}\coloneqq\int_{\varOmega}\vec{F}\cdot\begin{bmatrix}\grad\psi_{1} & \cdots & \grad\psi_{L}\end{bmatrix}\qquad\underline{B}_{\partial\varOmega}\coloneqq\oint_{\partial\varOmega}\mathopen{F_{\nu}}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}
 \end{gathered}
 \]
 
@@ -396,7 +396,7 @@ name "eq:间断有限元：矩阵方程"
 \vdots & \ddots & \vdots\\
 \ip{\phi_{1}}{\phi_{N}} & \cdots & \ip{\phi_{N}}{\phi_{N}}
 \end{bmatrix}\\
-\underline{B}(\underline{\hat{U}})\coloneqq\int_{E_{i}}\vec{F}\vdot\grad\begin{bmatrix}\phi_{1} & \cdots & \phi_{N}\end{bmatrix}-\oint_{\partial E_{i}}F_{\nu}\begin{bmatrix}\phi_{1} & \cdots & \phi_{N}\end{bmatrix}
+\underline{B}(\underline{\hat{U}})\coloneqq\int_{E_{i}}\vec{F}\cdot\grad\begin{bmatrix}\phi_{1} & \cdots & \phi_{N}\end{bmatrix}-\oint_{\partial E_{i}}F_{\nu}\begin{bmatrix}\phi_{1} & \cdots & \phi_{N}\end{bmatrix}
 \end{gathered}
 \end{equation}
 
@@ -652,7 +652,7 @@ reference "eq:间断有限元：矩阵方程"
 弱形式
 \begin_inset Formula 
 \[
-\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\vdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\vdot\vec{F}}_{F_{\nu}}V=\int_{\varOmega}VH
+\int_{\varOmega}\left(V\,\partial_{t}U-\vec{F}\cdot\grad V\right)+\oint_{\partial\varOmega}\underbrace{\vec{\nu}\cdot\vec{F}}_{F_{\nu}}V=\int_{\varOmega}VH
 \]
 
 \end_inset
@@ -661,7 +661,7 @@ reference "eq:间断有限元：矩阵方程"
 \begin_inset Formula 
 \[
 \begin{aligned}\int_{\varOmega}V\,\partial_{t}U\approx\int_{\varOmega}V^{h}\,\partial_{t}U^{h} & =\sum_{l}\hat{V}_{l}\,\sum_{k}\left(\int_{\varOmega}\psi_{l}\phi_{k}\right)\dv{\hat{U}_{k}}{t}\\
-\int_{\varOmega}\vec{F}\vdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\vdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\vdot\mathopen{\vec{F}}\left(U^{h}\right)\\
+\int_{\varOmega}\vec{F}\cdot\grad V\approx\int_{\varOmega}\vec{F}^{h}\cdot\grad V^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\left(\grad\psi_{l}\right)\cdot\mathopen{\vec{F}}\left(U^{h}\right)\\
 \oint_{\partial\varOmega}F_{\nu}\,V\approx\oint_{\partial\varOmega}F_{\nu}^{h}\,V^{h} & =\sum_{l}\hat{V}_{l}\,\oint_{\partial\varOmega}\psi_{l}\,\mathopen{F_{\nu}}\left(U_{-}^{h},U_{+}^{h}\right)\\
 \int_{\varOmega}V\,H\approx\int_{\varOmega}V^{h}\,H^{h} & =\sum_{l}\hat{V}_{l}\,\int_{\varOmega}\psi_{l}\,H\left(U^{h}\right)
 \end{aligned}
@@ -684,7 +684,7 @@ reference "eq:间断有限元：矩阵方程"
 \vdots & \ddots & \vdots\\
 \ip{\phi_{K}}{\phi_{1}} & \cdots & \ip{\phi_{K}}{\psi_{L}}
 \end{bmatrix}\\
-\underline{B}\coloneqq\int_{\varOmega}\vec{F}\vdot\begin{bmatrix}\grad\psi_{1} & \cdots & \grad\psi_{L}\end{bmatrix}-\oint_{\partial\varOmega}\mathopen{F_{\nu}}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}+\int_{\varOmega}H^{h}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}
+\underline{B}\coloneqq\int_{\varOmega}\vec{F}\cdot\begin{bmatrix}\grad\psi_{1} & \cdots & \grad\psi_{L}\end{bmatrix}-\oint_{\partial\varOmega}\mathopen{F_{\nu}}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}+\int_{\varOmega}H^{h}\begin{bmatrix}\psi_{1} & \cdots & \psi_{L}\end{bmatrix}
 \end{gathered}
 \]
 
