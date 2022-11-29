@@ -411,7 +411,7 @@ name "sec:eigen-value-decomposition"
 \end_layout
 
 \begin_layout Subsection
-特征值、特征向量
+特征值问题
 \end_layout
 
 \begin_layout Definition
@@ -2253,6 +2253,196 @@ name "sec:Jordan-decomposition"
 \end_layout
 
 \begin_layout Subsection
+广义特征值问题
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 是 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的某个多重特征值，其代数重数为 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+，几何重数为 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+，且
+\begin_inset Formula 
+\[
+t_{i}<r_{i},
+\]
+
+\end_inset
+
+则尝试对角化 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 时，会出现特征向量不够的问题，即 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的属于 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ 的线性无关的特征向量只有 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ 个，记作 
+\begin_inset Formula $\left\{ \vert v_{i,j}\rangle\right\} _{j=1}^{t_{1}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\underline{A}\,\vert v_{i,j}\rangle=\lambda_{i}\,\vert v_{i,j}\rangle,\quad j=1,\dots,t_{i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于每一个这样的 
+\begin_inset Formula $\vert v_{i,j}\rangle$
+\end_inset
+
+，都可以定义关于广义特征向量 
+\begin_inset Formula $\vert w\rangle$
+\end_inset
+
+ 的广义特征值问题：
+\begin_inset Formula 
+\[
+\underline{A}\,\vert w\rangle=\lambda_{i}\,\vert w\rangle+{\color{red}\vert v_{i,j}\rangle}.
+\]
+
+\end_inset
+
+不失一般性，可将其 
+\begin_inset Formula $K$
+\end_inset
+
+ 个线性无关解记作：
+\begin_inset Formula 
+\[
+\underline{A}\,\vert w_{i,j,k}\rangle=\lambda_{i}\,\vert w_{i,j,k}\rangle+{\color{red}\vert v_{i,j}\rangle},\quad k=1,\dots,K.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+对于每一个这样的 
+\begin_inset Formula $\vert w_{i,j,k}\rangle$
+\end_inset
+
+，都可以定义关于广义特征向量 
+\begin_inset Formula $\vert x\rangle$
+\end_inset
+
+ 的广义特征值问题：
+\begin_inset Formula 
+\[
+\underline{A}\,\vert x\rangle=\lambda_{i}\,\vert x\rangle+{\color{red}\vert w_{i,j,k}\rangle}.
+\]
+
+\end_inset
+
+不失一般性，可将其 
+\begin_inset Formula $L$
+\end_inset
+
+ 个线性无关解记作：
+\begin_inset Formula 
+\[
+\underline{A}\,\vert x_{i,j,k,l}\rangle=\lambda_{i}\,\vert x_{i,j,k,l}\rangle+{\color{red}\vert w_{i,j,k}\rangle},\quad l=1,\dots,L.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+如此递归，直到广义特征值问题无（新的线性无关）解。将其中某一组 
+\begin_inset Formula $(i,j,k,l,\dots)$
+\end_inset
+
+ 的结果写成矩阵形式，即得
+\begin_inset Formula 
+\[
+\underline{A}\begin{bmatrix}\vert v_{i,j}\rangle & \vert w_{i,j,k}\rangle & \vert x_{i,j,k,l}\rangle & \cdots\end{bmatrix}=\begin{bmatrix}\vert v_{i,j}\rangle & \vert w_{i,j,k}\rangle & \vert x_{i,j,k,l}\rangle & \cdots\end{bmatrix}\begin{bmatrix}\lambda_{i} & 1\\
+ & \lambda_{i} & 1\\
+ &  & \lambda_{i} & \ddots\\
+ &  &  & \ddots
+\end{bmatrix},
+\]
+
+\end_inset
+
+其中最右端的矩阵称为 
+\color red
+Jordan 块
+\color inherit
+。将所有 Jordan 块放置在对角线上，就得到简单程度仅次于对角阵的 Jordan 型矩阵，称为 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的 
+\color red
+Jordan 标准型
+\color inherit
+。将所有特征向量、广义特征向量按对应顺序排列，就得到 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的 
+\color red
+Jordan 分解
+\color inherit
+：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}=\underline{Q}\,\underline{J}\,\underline{Q}^{-1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+任意方阵都有 Jordan 分解。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+本节剩余部分证明该定理。
+\end_layout
+
+\begin_layout Subsection
 不变子空间
 \end_layout
 
@@ -2422,7 +2612,7 @@ status open
 
 \begin_layout Plain Layout
 
-[可分块对角化]
+[分块对角化]
 \end_layout
 
 \end_inset
@@ -2512,7 +2702,7 @@ status open
 
 \end_layout
 
-\begin_layout Remark*
+\begin_layout Standard
 于是
 \color red
 将 
@@ -2534,13 +2724,6 @@ status open
  作直和分解
 \color inherit
 。为此，需要找到足够多的不变子空间。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Lemma
@@ -2638,6 +2821,17 @@ status open
 
 \end_layout
 
+\begin_layout Proof
+non-trivial.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Lemma
 线性算子 
 \begin_inset Formula $\hat{A}$
@@ -2677,12 +2871,12 @@ f(\hat{A})\coloneqq\sum_{k=0}^{m}a_{k}\,\hat{A}^{k},\quad\forall k\colon a_{k}\i
 
 \end_layout
 
-\begin_layout Remark*
+\begin_layout Standard
 此结论为寻找 
 \begin_inset Formula $\hat{A}$
 \end_inset
 
- 的不变子空间提供了一条系统化的路径。剩下的问题便是
+ 的不变子空间提供了一条系统化的路径。剩下的任务便是
 \color red
 用足够多个 
 \begin_inset Formula $\ker f_{i}(\hat{A})$
@@ -2695,13 +2889,6 @@ f(\hat{A})\coloneqq\sum_{k=0}^{m}a_{k}\,\hat{A}^{k},\quad\forall k\colon a_{k}\i
  作直和分解
 \color inherit
 。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Theorem
