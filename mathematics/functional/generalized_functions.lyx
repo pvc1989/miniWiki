@@ -174,7 +174,7 @@ f(y)=\int_{-\infty}^{+\infty}f(y-x)\,\delta(x)\dd{x},\quad\forall f\in C(-\infty
 
 \begin_inset Formula 
 \[
-\delta(x)=\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{2\mathrm{\pi}}\dd{k}
+\delta(x)=\int_{-\infty}^{+\infty}\frac{\exp(\ii kx)}{2\mathrm{\pi}}\dd{k}=\int_{-\infty}^{+\infty}\exp(2\mathrm{\pi i}xy)\dd{y}
 \]
 
 \end_inset
@@ -235,6 +235,10 @@ f(y)=\int_{-\infty}^{+\infty}f(y-x)\,\delta(x)\dd{x},\quad\forall f\in C(-\infty
 \end_inset
 
 。
+\end_layout
+
+\begin_layout Subsection
+分布
 \end_layout
 
 \begin_layout Definition*
@@ -386,6 +390,14 @@ status open
 
 \end_inset
 
+即
+\begin_inset Formula 
+\[
+\boxed{F(\phi)=\int f(\vec{x})\,\phi(\vec{x})\dd{\vec{x}}}
+\]
+
+\end_inset
+
 定义出一个分布，记作 
 \begin_inset Formula $F_{f}$
 \end_inset
@@ -463,6 +475,10 @@ Dirac 函数
 
 \end_layout
 
+\begin_layout Subsection
+导数
+\end_layout
+
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -486,6 +502,14 @@ status open
 \begin_inset Formula 
 \[
 \phi\mapsto(-1)^{|\vec{\alpha}|}F(\vec{\partial}^{\vec{\alpha}}\phi),\quad\forall\phi\in D(\phi),
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\boxed{(\vec{\partial}^{\vec{\alpha}}F)(\phi)=(-1)^{|\vec{\alpha}|}F(\vec{\partial}^{\vec{\alpha}}\phi)},
 \]
 
 \end_inset
@@ -604,8 +628,378 @@ reference "eq:ordinary_function_as_distribution"
 运算及性质
 \end_layout
 
+\begin_layout Subsection
+自变量的线性变换
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\hat{\tau}\in L(\Omega)$
+\end_inset
+
+ 为非退化的线性变换，则 
+\begin_inset Formula $f_{\hat{\tau}}(\vec{x})=f(\hat{\tau}\,\vec{x})$
+\end_inset
+
+ 应推广为
+\begin_inset Formula 
+\[
+\boxed{F_{\hat{\tau}}(\phi)=\frac{F(\phi_{\hat{\tau}^{-1}})}{\vert\det\hat{\tau}\vert}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+按定义计算 
+\begin_inset Formula $F_{\hat{\tau}}(\phi)$
+\end_inset
+
+，即 
+\begin_inset Formula $\forall\phi\in D(\Omega)$
+\end_inset
+
+，
+\begin_inset Formula 
+\[
+F_{\hat{\tau}}(\phi)=\int f_{\hat{\tau}}(\vec{x})\,\phi(\vec{x})\dd{\vec{x}}=\int f(\hat{\tau}\,\vec{x})\,\phi(\vec{x})\dd{\vec{x}},
+\]
+
+\end_inset
+
+引入变量替换 
+\begin_inset Formula $\vec{y}\coloneqq\hat{\tau}\vec{x}$
+\end_inset
+
+ 并注意到 
+\begin_inset Formula $\dd{\vec{y}}=\vert\det\hat{\tau}\vert\dd{\vec{x}}$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+F_{\hat{\tau}}(\phi)=\int f(\vec{y})\,\phi(\hat{\tau}^{-1}\,\vec{y})\dd{\vec{x}}=\int f(\vec{y})\,\phi(\hat{\tau}^{-1}\,\vec{y})\,\frac{\dd{\vec{y}}}{\vert\det\hat{\tau}\vert},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vert\det\hat{\tau}\vert$
+\end_inset
+
+ 不随 
+\begin_inset Formula $\vec{y}$
+\end_inset
+
+ 变化，可提到积分号外。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+卷积
+\end_layout
+
+\begin_layout Standard
+若函数卷积定义为
+\begin_inset Formula 
+\[
+(f*g)(x)=\int f_{x}^{\sim}(y)\,g(y)\dd{y},\quad f_{x}^{\sim}(y)\coloneqq f(x-y),
+\]
+
+\end_inset
+
+则分布 
+\begin_inset Formula $F$
+\end_inset
+
+ 与函数 
+\begin_inset Formula $\psi$
+\end_inset
+
+ 的卷积有两种定义方式：
+\end_layout
+
+\begin_layout Itemize
+定义为 
+\begin_inset Formula $x\in\Omega$
+\end_inset
+
+ 的函数
+\begin_inset Formula 
+\[
+(F*\psi)(x)\coloneqq F(\psi_{x}^{\sim}),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+定义为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的分布
+\begin_inset Formula 
+\[
+(F*\psi)(\phi)\coloneqq F(\psi_{0}^{\sim}*\phi).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem*
+两种定义等价，且 
+\begin_inset Formula $F*\psi\in C^{\infty}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+只要证明
+\begin_inset Formula 
+\[
+F(\psi_{0}^{\sim}*\phi)=\int F(\psi_{x}^{\sim})\,\phi(x)\dd{x},\quad\forall\phi\in D(\Omega).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+See Section 3.1.2 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Stein_2011"
+literal "true"
+
+\end_inset
+
+ for details.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Corollary*
+若 
+\begin_inset Formula $F$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的分布，则存在光滑函数序列 
+\begin_inset Formula $\left\{ f_{n}\in C^{\infty}(\Omega)\right\} $
+\end_inset
+
+，其在分布的意义下收敛到 
+\begin_inset Formula $F$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Fourier 变换
+\end_layout
+
+\begin_layout Subsection
+Schwartz 空间
+\end_layout
+
+\begin_layout Subsection
+温和的分布
+\end_layout
+
+\begin_layout Subsection
+变换的定义
+\end_layout
+
+\begin_layout Standard
+由 Fourier 变换
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\phi^{\wedge}(\vec{y})=\int\phi(\vec{x})\exp(-2\mathrm{\pi}\ii\vec{x}\cdot\vec{y})\dd{\vec{x}}
+\]
+
+\end_inset
+
+定义的映射 
+\begin_inset Formula $\phi\mapsto\phi^{\wedge}$
+\end_inset
+
+ 是 
+\begin_inset Formula $S$
+\end_inset
+
+ 上的连续双射，其逆映射 
+\begin_inset Formula $\psi\mapsto\psi^{\vee}$
+\end_inset
+
+ 由逆变换
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\psi^{\vee}(\vec{x})=\int\psi(\vec{y})\exp(+2\mathrm{\pi}\ii\vec{x}\cdot\vec{y})\dd{\vec{y}}
+\]
+
+\end_inset
+
+定义。可以证明：
+\begin_inset Formula 
+\[
+(\phi^{\wedge})^{\vee}=\phi,\quad\forall\phi\in S.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+受恒等式
+\begin_inset Formula 
+\[
+\int\phi^{\wedge}(\vec{x})\,\psi(\vec{x})\dd{\vec{x}}=\int\phi(\vec{x})\,\psi^{\wedge}(\vec{x})\dd{\vec{x}}
+\]
+
+\end_inset
+
+启发，可以为温和的分布 
+\begin_inset Formula $F$
+\end_inset
+
+ 定义其 Fourier 变换及逆变换：
+\begin_inset Formula 
+\[
+F^{\wedge}(\phi)=F(\phi^{\wedge}),\quad\forall\phi\in S.
+\]
+
+\end_inset
+
+其逆变换为
+\begin_inset Formula 
+\[
+F^{\vee}(\phi)=F(\phi^{\vee}),\quad\forall\phi\in S.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以证明：
+\begin_inset Formula 
+\[
+(F^{\wedge})^{\vee}=F,\quad\forall F\in S^{*}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+变换的性质
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $F\in S^{*}$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+(\vec{\partial}_{\vec{x}}^{\vec{\alpha}}F)^{\wedge}=(+2\mathrm{\pi}\ii\vec{x})^{\vec{\alpha}}\,F^{\wedge},\quad\vec{\partial}_{\vec{x}}^{\vec{\alpha}}(F^{\wedge})=((-2\mathrm{\pi}\ii\vec{x})^{\vec{\alpha}}\,F)^{\wedge}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Dirac 函数]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+1^{\wedge}=\delta,\quad\delta^{\wedge}=1.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(\vec{\partial}_{\vec{x}}^{\vec{\alpha}}\delta)^{\wedge}=(+2\mathrm{\pi}\ii\vec{x})^{\vec{\alpha}},\quad\vec{\partial}_{\vec{x}}^{\vec{\alpha}}\delta=((-2\mathrm{\pi}\ii\vec{x})^{\vec{\alpha}})^{\wedge}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \end_body
