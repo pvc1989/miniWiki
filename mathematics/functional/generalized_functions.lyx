@@ -103,11 +103,11 @@ theorems-chap
 \begin_body
 
 \begin_layout Chapter
-Schwartz 理论
+广义函数论
 \end_layout
 
 \begin_layout Section
-delta 函数
+Dirac 函数
 \end_layout
 
 \begin_layout Subsection
@@ -118,17 +118,24 @@ delta 函数
 \begin_inset Formula 
 \[
 \int_{-\infty}^{+\infty}\delta(x)\dd{x}=1,\quad\delta(x)=\begin{cases}
-\infty & x=0\\
-0 & x\ne0
+\infty, & x=0\\
+0, & x\ne0
 \end{cases}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+卷积定义
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-f(\tilde{x})=\int_{-\infty}^{+\infty}f(x)\,\delta(\tilde{x}-x)\dd{x},\quad\forall f\in C(-\infty,+\infty)
+f(y)=\int_{-\infty}^{+\infty}f(y-x)\,\delta(x)\dd{x},\quad\forall f\in C(-\infty,+\infty)
 \]
 
 \end_inset
@@ -190,14 +197,6 @@ f(\tilde{x})=\int_{-\infty}^{+\infty}f(x)\,\delta(\tilde{x}-x)\dd{x},\quad\foral
 
 \begin_inset Formula 
 \[
-f(\tilde{x})=\int_{-\infty}^{+\infty}f(x)\,\delta(\tilde{x}-x)\dd{x},\quad\forall f\in C(-\infty,+\infty)
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
 \delta(ax)=\frac{\delta(x)}{\vert a\vert},\quad\forall a\in(-\infty,+\infty)
 \]
 
@@ -214,16 +213,399 @@ f(\tilde{x})=\int_{-\infty}^{+\infty}f(x)\,\delta(\tilde{x}-x)\dd{x},\quad\foral
 
 \end_layout
 
-\begin_layout Subsection
-泛函定义
+\begin_layout Section
+分布及其导数
+\end_layout
+
+\begin_layout Standard
+设 
+\begin_inset Formula $\Omega\in\mathbb{R}^{d}$
+\end_inset
+
+ 为一（固定）开集。取 
+\begin_inset Formula $C_{0}^{\infty}(\Omega)$
+\end_inset
+
+ 为
+\color red
+测试函数 (test functions)
+\color inherit
+ 空间，简记作 
+\begin_inset Formula $D(\Omega)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[函数序列收敛]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\left\{ \phi_{n}\right\} $
+\end_inset
+
+ 与 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 分别为 
+\begin_inset Formula $D(\Omega)$
+\end_inset
+
+ 中的函数序列与某一函数，所有 
+\begin_inset Formula $\phi_{n}$
+\end_inset
+
+ 的支集含于某一公共紧集，且 
+\begin_inset Formula $\forall\vec{\alpha}$
+\end_inset
+
+ 有 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}\phi_{n}$
+\end_inset
+
+ 随着 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+ 
+\color red
+一致地 (uniformly)
+\color inherit
+ 收敛到 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}\phi$
+\end_inset
+
+，则称 
+\color red
+
+\begin_inset Formula $\left\{ \phi_{n}\right\} $
+\end_inset
+
+ 收敛到 
+\begin_inset Formula $\phi$
+\end_inset
+
+
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[分布]
+\end_layout
+
+\end_inset
+
+若线性泛函 
+\begin_inset Formula $F\colon D(\Omega)\to\mathbb{C}$
+\end_inset
+
+ 在
+\begin_inset Formula 
+\[
+F(\phi_{n})\to F(\phi),\quad\forall(\phi_{n}\to\phi)
+\]
+
+\end_inset
+
+意义下连续，则称其为定义在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的
+\color red
+分布 (distribution)
+\color inherit
+，又名
+\color red
+广义函数 (generalized function)
+\color inherit
+。由 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的分布所构成的向量空间记作 
+\begin_inset Formula $D^{*}(\Omega)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[常规函数]
+\end_layout
+
+\end_inset
+
+任何常规（在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 的任意紧子集上可测且可积的）函数 
+\begin_inset Formula $f\colon\Omega\to\mathbb{C}$
+\end_inset
+
+ 都可以按
+\begin_inset Formula 
+\begin{equation}
+\phi\mapsto\int_{\Omega}f(\vec{x})\,\phi(\vec{x}),\quad\forall\phi\in D(\phi)\label{eq:ordinary_function_as_distribution}
+\end{equation}
+
+\end_inset
+
+定义出一个分布，记作 
+\begin_inset Formula $F_{f}$
+\end_inset
+
+ 或 
+\begin_inset Formula $F$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[有限测度]
+\end_layout
+
+\end_inset
+
+若 
+\begin_inset Formula $\mu$
+\end_inset
+
+ 为 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上的某种 Borel 测度，其在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 的紧子集上有限
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Dirac 函数 
+\begin_inset Formula $\delta(x)$
+\end_inset
+
+ 所表示的单位点源就是这样一种测度。
+\end_layout
+
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\phi\mapsto\int_{\Omega}\phi(\vec{x})\dd{\mu(\vec{x})},\quad\forall\phi\in D(\phi)
+\]
+
+\end_inset
+
+定义了一个分布，记作 
+\begin_inset Formula $F_{\mu}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[导数]
+\end_layout
+
+\end_inset
+
+分布 
+\begin_inset Formula $F$
+\end_inset
+
+ 的导数 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}F$
+\end_inset
+
+ 是这样一种泛函：
+\begin_inset Formula 
+\[
+\phi\mapsto(-1)^{|\vec{\alpha}|}F(\vec{\partial}^{\vec{\alpha}}\phi),\quad\forall\phi\in D(\phi),
+\]
+
+\end_inset
+
+它是对常规函数 
+\begin_inset Formula $f$
+\end_inset
+
+ 的导数 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}f$
+\end_inset
+
+ 的推广。将后者代入式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ordinary_function_as_distribution"
+
+\end_inset
+
+ 并做 
+\begin_inset Formula $|\vec{\alpha}|$
+\end_inset
+
+ 次分部积分，约去（因 
+\begin_inset Formula $\phi$
+\end_inset
+
+ 在 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 上具有紧支集而）始终为零的边界项后，可得
+\begin_inset Formula 
+\[
+\int_{\Omega}(\vec{\partial}^{\vec{\alpha}}f)\,\phi=(-1)^{|\vec{\alpha}|}\int_{\Omega}(\vec{\partial}^{\vec{\alpha}}\phi)\,f.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+Dirac 函数是 Heaviside 函数的广义导数。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+若 
+\begin_inset Formula $F,G$
+\end_inset
+
+ 是由 
+\begin_inset Formula $L^{2}(\Omega)$
+\end_inset
+
+ 中的函数 
+\begin_inset Formula $f,g$
+\end_inset
+
+ 按式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ordinary_function_as_distribution"
+
+\end_inset
+
+ 定义出的分布，则 
+\begin_inset Formula $f$
+\end_inset
+
+ 的弱导数 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}f$
+\end_inset
+
+ 存在且等于 
+\begin_inset Formula $g$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\int_{\Omega}g\,\phi=(-1)^{|\vec{\alpha}|}\int_{\Omega}(\vec{\partial}^{\vec{\alpha}}\phi)\,f,\quad\forall\phi\in D(\Omega)
+\]
+
+\end_inset
+
+等价于 
+\begin_inset Formula $\vec{\partial}^{\vec{\alpha}}F=G$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
-广义函数
+运算及性质
 \end_layout
 
 \begin_layout Section
-广义导数
+Fourier 变换
 \end_layout
 
 \end_body
