@@ -420,53 +420,6 @@ u^{+}\coloneqq\frac{U}{u_{\tau}},\quad y^{+}\coloneqq\frac{u_{\tau}y}{\nu}
 RANS
 \end_layout
 
-\begin_layout Standard
-应变率张量：
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-S_{ij}=\frac{\partial_{i}u_{j}+\partial_{j}u_{i}}{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-黏性应力张量：
-\begin_inset Formula 
-\[
-\tau_{ij}=2\mu S_{ij}+\lambda\delta_{ij}\partial_{k}u_{k}
-\]
-
-\end_inset
-
-Stokes 假设：
-\begin_inset Formula 
-\[
-\lambda=-\frac{2}{3}\mu\implies\tau_{ij}=2\mu S_{ij}-\frac{2}{3}\mu\delta_{ij}\partial_{k}u_{k}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-不可压：
-\begin_inset Formula 
-\[
-\partial_{k}u_{k}=0\implies\tau_{ij}=2\mu S_{ij}\equiv\mu(\partial_{i}u_{j}+\partial_{j}u_{i})
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Reynolds 平均
 \end_layout
@@ -714,6 +667,103 @@ status open
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+不可压 RANS 方程
+\end_layout
+
+\begin_layout Standard
+应变率张量：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{s_{ij}=\frac{\partial_{i}\,u_{j}+\partial_{j}\,u_{i}}{2}}
+\]
+
+\end_inset
+
+黏性应力张量：
+\begin_inset Formula 
+\[
+\tau_{ij}=2\mu\,s_{ij}+\lambda\,\delta_{ij}\,\partial_{k}\,u_{k}
+\]
+
+\end_inset
+
+Stokes 假设：
+\begin_inset Formula 
+\[
+\lambda=-\frac{2}{3}\mu\implies\tau_{ij}=2\mu\left(s_{ij}-\delta_{ij}\frac{\partial_{k}\,u_{k}}{3}\right)
+\]
+
+\end_inset
+
+不可压：
+\begin_inset Formula 
+\[
+\partial_{k}\,u_{k}=0\implies\boxed{\tau_{ij}=2\mu\,s_{ij}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+不可压 NS 方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{i}\,u_{i} & =0\\
+\rho\,\partial_{t}\,u_{i}+\rho\,u_{j}\,\partial_{j}\,u_{i} & =-\partial_{i}\,p+\partial_{j}\,(2\mu\,s_{ij})
+\end{aligned}
+\]
+
+\end_inset
+
+利用不可压缩性，可得
+\begin_inset Formula 
+\[
+u_{j}\,\partial_{j}\,u_{i}=\partial_{j}\,(u_{i}\,u_{j})-u_{i}\,\partial_{j}\,u_{j}=\partial_{j}\,(u_{i}\,u_{j}),
+\]
+
+\end_inset
+
+代入不可压 NS 方程，即得守恒型不可压 RANS 方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{i}\,U_{i} & =0\\
+\rho\,\partial_{t}\,U_{i}+\rho\,\partial_{j}\,(U_{i}\,U_{j}+\overline{u_{i}'\,u_{j}'}) & =-\partial_{i}\,P+\partial_{j}\,(2\mu\,S_{ij})
+\end{aligned}
+\]
+
+\end_inset
+
+右移 
+\begin_inset Formula $u_{i}'\,u_{j}'$
+\end_inset
+
+ 项，可得形式上与不可压 NS 方程一致的不可压 RANS 方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{i}\,U_{i} & =0\\
+\rho\,\partial_{t}\,U_{i}+\rho\,U_{j}\,\partial_{j}\,U_{i} & =-\partial_{i}\,P+\partial_{j}\,(2\mu\,S_{ij}-\rho\,\overline{u_{i}'\,u_{j}'})
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $-\rho\,\overline{u_{i}'\,u_{j}'}$
+\end_inset
+
+ 为
+\color red
+雷诺应力 (Reynolds stress)
+\color inherit
+ 张量，在三维空间中含六个独立分量。
 \end_layout
 
 \begin_layout Subsection
