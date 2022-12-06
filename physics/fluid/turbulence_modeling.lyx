@@ -420,10 +420,6 @@ u^{+}\coloneqq\frac{U}{u_{\tau}},\quad y^{+}\coloneqq\frac{u_{\tau}y}{\nu}
 RANS
 \end_layout
 
-\begin_layout Subsection
-统计平均
-\end_layout
-
 \begin_layout Standard
 应变率张量：
 \end_layout
@@ -471,37 +467,128 @@ Stokes 假设：
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Reynolds 平均
 \end_layout
 
 \begin_layout Standard
+某物理量 
+\begin_inset Formula $u$
+\end_inset
+
+ 总是可以分解为平均值 
+\begin_inset Formula $U$
+\end_inset
+
+ 与脉动值 
+\begin_inset Formula $u'$
+\end_inset
+
+ 之和：
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-v(\vec{r},t)=\overline{v}(\vec{r},t)+v'(\vec{r},t)
+u(\vec{r},t)=U(\vec{r},t)+u'(\vec{r},t),\quad U\equiv\langle u\rangle\equiv\overline{u},
 \]
 
+\end_inset
+
+其中“平均”可取以下三种定义：
+\end_layout
+
+\begin_layout Description
+时间平均 
+\begin_inset Formula 
+\[
+U_{T}(\vec{r},\cancel{t})\coloneqq\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau}
+\]
+
+\end_inset
+
+适用于
+\color red
+稳态 (stationary)
+\color inherit
+ 湍流。
+\end_layout
+
+\begin_layout Description
+空间平均 
+\begin_inset Formula 
+\[
+U_{V}(\cancel{\vec{r}},t)\coloneqq\lim_{V\to\infty}\frac{1}{V}\int_{V}u(\vec{r},\tau)\dd[3]{\vec{r}}
+\]
+
+\end_inset
+
+适用于
+\color red
+均匀 (homogeneous)
+\color inherit
+ 湍流。
+\end_layout
+
+\begin_layout Description
+系综平均 
+\begin_inset Formula 
+\[
+U_{E}(\vec{r},t)\coloneqq\lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}u_{n}(\vec{r},t)
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{n}$
+\end_inset
+
+ 为 
+\begin_inset Formula $u$
+\end_inset
+
+ 的第 
+\begin_inset Formula $n$
+\end_inset
+
+ 次测量值。适用于
+\color red
+随时间衰减 (decay in time)
+\color inherit
+ 湍流。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
+可以证明，以上三种平均运算都可以与任意线性运算交换：
 \begin_inset Formula 
 \[
-\overline{v}(\vec{r},t)\coloneqq\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}v(\vec{r},\tau)\dd{\tau}
+\langle\hat{L}\,u\rangle=\hat{L}\,\langle u\rangle,
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $\hat{L}$
+\end_inset
 
+ 为任意线性算符。
 \end_layout
 
 \begin_layout Standard
-可以证明：
+以下只考虑时间平均。可以证明：
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{\partial\overline{v}}{\partial t}=0,\quad\overline{v'}=\overline{v-\overline{v}}=\overline{v}-\overline{\overline{v}}=0,
+\frac{\partial U}{\partial t}=0,\quad\overline{U}=U,\quad\overline{u'}=\overline{u-U}=U-\overline{U}=0,
 \]
 
 \end_inset
@@ -509,7 +596,7 @@ v(\vec{r},t)=\overline{v}(\vec{r},t)+v'(\vec{r},t)
 但一般情况下
 \begin_inset Formula 
 \[
-\overline{v'v'}\ne0
+\overline{u'u'}\ne0.
 \]
 
 \end_inset
@@ -517,7 +604,119 @@ v(\vec{r},t)=\overline{v}(\vec{r},t)+v'(\vec{r},t)
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[相关性]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\overline{uv}=UV+\overline{u'v'},
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\overline{u'v'}\ne0$
+\end_inset
+
+，则称 
+\begin_inset Formula $u$
+\end_inset
+
+ 与 
+\begin_inset Formula $v$
+\end_inset
+
+ 是
+\color red
+相关的 (correlated)
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[unsteady RANS]
+\end_layout
+
+\end_inset
+
+有时需考虑相对于湍流脉动变化缓慢的因素，可将时间平均的定义修改为
+\begin_inset Formula 
+\[
+U_{T}(\vec{r},t)\coloneqq\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau},\quad T_{1}\ll T\ll T_{2},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $T_{1}$
+\end_inset
+
+ 为湍流脉动时间尺度，
+\begin_inset Formula $T_{2}$
+\end_inset
+
+ 为缓变因素时间尺度。在此基础上，假设
+\color red
+脉动量远小于平均量
+\color inherit
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+未必成立，如自由剪切流、近壁流。
+\end_layout
+
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+|u'|\ll|U|,
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\ev{\frac{\partial u}{\partial t}}_{T}\equiv\frac{1}{T}\int_{t}^{t+T}\frac{\partial u}{\partial t}\dd{\tau}\approx\frac{U(\vec{r},t+T)-U(\vec{r},t)}{T}\approx\frac{\partial U}{\partial t},
+\]
+
+\end_inset
+
+即时间导数与时间平均这两种运算依然可交换。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Favre 平均
 \end_layout
 
