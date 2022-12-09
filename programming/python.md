@@ -244,22 +244,6 @@ Python 中允许使用成对的单引号 `'...'` 或成对的双引号 `"..."` �
 
 ## [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
 
-### [`array`：数组](https://docs.python.org/3/library/array.html#module-array)
-
-`list` 和 `tuple` 都属于『异质 (heterogeneous)』容器：其中的元素可以属于不同类型。
-这种便利是通过牺牲效率而获得的。
-对于『均质 (homogeneous)』数据，这种效率损失可以通过改用标准库提供的 `array` 来避免。
-
-```python
-import array
-a = array.array('i')  # create an array of type signed int, typically int32
-a.append(3)
-a.append(5)
-print(a[0], a[-1])
-```
-然而，`array` 仅仅是一种容器，并不支持加减乘除等算术运算。
-如果有这类需求，应该考虑改用 `numpy` 提供的 [`ndarray`](https://docs.scipy.org/doc/numpy/reference/arrays.ndarray.html) 类型。
-
 ### [`heapq`：最小二叉堆算法](https://docs.python.org/3/library/heapq.html)
 
 `heapq` 只提供了[最小二叉堆『算法 (algorithm)』](https://visualgo.net/en/heap)，被操纵的数据需要存储在一个 `list` 里：
