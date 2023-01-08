@@ -211,7 +211,7 @@ GridCoordinates_t
 └── DataArray_t  // 个数 == 所属 CGNSBase_t 对象的 phys_dim
     ├── Name: CoordinateX | CoordinateY | CoordinateZ |
     │         CoordinateR | CoordinateTheta | CoordinatePhi
-    └── Data: 一维数组，长度 = 顶点数 + 外表层数  // 沿当前方向
+    └── Data: 一维数组，长度 = 顶点数 + 表皮层数  // 沿当前方向
 ```
 ```c
 /* write/read (GridCoordinates_t) "GridCoordinates" */
@@ -504,9 +504,9 @@ ier = cgp_field_general_read_data(int i_file, int i_base, int i_zone, int i_soln
 - 在调用 `cg_sol_write()` 时，将 `location` 的值由 `CGNS_ENUMV(Vertex)` 改为 `CGNS_ENUMV(CellCenter)`。
 - 在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与单元数量协调。
 
-## 外表数据
+## 表皮数据
 
-**外表数据 (rind data)** 是指存储在网格表面的一层或多层**影子单元 (ghost cells)** 上的数据 ：
+**表皮数据 (rind data)** 是指存储在网格最外侧的一层或多层**影子单元 (ghost cells)** 上的数据 ：
 
 ```
 ┌───╔═══╦═══╦═══╗───┬───┐      ═══ 网格单元
@@ -541,7 +541,7 @@ ier = cg_rind_read(int *rind_data);
 其中
 
 - `cg_goto()` 用于定位将要创建 `Rind_t` 对象的那个 `FlowSolution_t` 对象。
-- 外表数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与*扩充后的*单元数量协调。
+- 表皮数据存储在（根据影子单元层数）扩充的流场数组中，因此在结构网格的各逻辑方向上，用于存放数据的多维数组的长度必须与*扩充后的*单元数量协调。
 
 # 量纲信息
 
