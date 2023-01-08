@@ -799,6 +799,442 @@ reference "sec:有限差分：时间推进"
 \end_layout
 
 \begin_layout Section
+FR (Flux Reconstruction)
+\end_layout
+
+\begin_layout Subsection
+Solution Points
+\end_layout
+
+\begin_layout Standard
+On the 
+\begin_inset Formula $j$
+\end_inset
+
+th cell 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Standard
+select 
+\begin_inset Formula $K$
+\end_inset
+
+ solution points 
+\begin_inset Formula $x_{j,k}$
+\end_inset
+
+, which has solution 
+\begin_inset Formula $u_{j,k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+global to local 
+\begin_inset Formula $E_{j}\mapsto I\equiv[-1,1]$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lagrange polynomials on 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+ are
+\begin_inset Formula 
+\[
+\phi_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\phi_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}
+\]
+
+\end_inset
+
+then the solution polynomial on 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ be
+\begin_inset Formula 
+\[
+u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j,k}(x)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j}(\xi)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Discontinuous Flux
+\end_layout
+
+\begin_layout Standard
+evaluate fluxes at solution points
+\begin_inset Formula 
+\[
+f_{j,k}=f(u_{j,k})
+\]
+
+\end_inset
+
+then the discontinuous flux function
+\begin_inset Formula 
+\[
+f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\phi_{j,k}(x)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\phi_{k}(\xi)
+\]
+
+\end_inset
+
+Its derivative at 
+\begin_inset Formula $\xi_{l}$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+(\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\phi_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+(\partial_{x}\,f_{j})_{l}=\frac{2}{h_{j}}(\partial_{\xi}\,f_{j})_{l}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Upwind Flux
+\end_layout
+
+\begin_layout Standard
+The CFF takes the upwind flux values at the interfaces.
+\end_layout
+
+\begin_layout Standard
+At 
+\begin_inset Formula $x_{j+1/2}$
+\end_inset
+
+, there are left/right solutions 
+\begin_inset Formula 
+\[
+u_{L}=u_{j}(x_{j+1/2}),\quad u_{R}=u_{j+1}(x_{j+1/2})
+\]
+
+\end_inset
+
+and left/right fluxes
+\begin_inset Formula 
+\[
+f_{L}=f_{j}(x_{j+1/2}),\quad f_{R}=f_{j+1}(x_{j+1/2})
+\]
+
+\end_inset
+
+In general
+\begin_inset Formula 
+\[
+u_{L}\ne u_{R},\quad f_{L}\ne f_{R},\quad f_{L}\ne f(u_{L}),\quad f_{R}\ne f(u_{R})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One possible upwind flux is
+\begin_inset Formula 
+\[
+f_{j+1/2}^{\text{upw}}=\frac{1}{2}\left(f(u_{L})+f(u_{R})\right)-\frac{1}{2}\left|a(\tilde{u})\right|\left(u_{L}-u_{R}\right)
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+a(\tilde{u})=\begin{cases}
+\left(f(u_{L})-f(u_{R})\right)/\left(u_{L}-u_{R}\right), & u_{L}\ne u_{R}\\
+a(u_{L})=a(u_{R}), & u_{L}=u_{R}
+\end{cases}
+\]
+
+\end_inset
+
+It generally requires an entropy correction.
+\end_layout
+
+\begin_layout Subsection
+Continuous Flux
+\end_layout
+
+\begin_layout Standard
+A continuous function 
+\begin_inset Formula $F(x)$
+\end_inset
+
+ takes the upwind flux values at the cell interfaces:
+\begin_inset Formula 
+\[
+F(x_{j+1/2})=f_{j+1/2}^{\text{upw}}
+\]
+
+\end_inset
+
+and approximates 
+\begin_inset Formula $f_{j}(x)$
+\end_inset
+
+ in 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $u_{j}$
+\end_inset
+
+ is of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+, then 
+\begin_inset Formula $F_{j}$
+\end_inset
+
+ should be of degree 
+\begin_inset Formula $K$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+u_{j}^{n+1}=u_{j}^{n}-\left(\partial_{x}\,F_{j}\right)h_{t}
+\]
+
+\end_inset
+
+is of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+, too.
+ In local coordinates, function 
+\begin_inset Formula $g\coloneqq F_{j}-f_{j}$
+\end_inset
+
+ is a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ with prescribed left and right interface values
+\begin_inset Formula 
+\[
+\begin{cases}
+F_{j}(-1)-f_{j}(-1)=f_{j-1/2}^{\text{upw}}-f_{j}(-1)\\
+F_{j}(+1)-f_{j}(+1)=f_{j+1/2}^{\text{upw}}-f_{j}(+1)
+\end{cases}
+\]
+
+\end_inset
+
+that approximates the constant function 
+\begin_inset Formula $0$
+\end_inset
+
+ in some sense.
+\end_layout
+
+\begin_layout Standard
+Define the 
+\begin_inset Formula $K$
+\end_inset
+
+-degree correction function for the Left Boundary
+\begin_inset Formula 
+\[
+g_{\text{LB}}(-1)=1,\quad g_{\text{LB}}(+1)=0
+\]
+
+\end_inset
+
+and the 
+\begin_inset Formula $K$
+\end_inset
+
+-degree correction function for the Right Boundary
+\begin_inset Formula 
+\[
+g_{\text{RB}}(-1)=0,\quad g_{\text{RB}}(+1)=1
+\]
+
+\end_inset
+
+Then the 
+\begin_inset Formula $K$
+\end_inset
+
+-degree continuous flux could be
+\begin_inset Formula 
+\[
+F_{j}(\xi)=f_{j}(\xi)+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}(\xi)
+\]
+
+\end_inset
+
+then the local derivatives
+\begin_inset Formula 
+\[
+\partial_{\xi}\,F_{j}(\xi_{k})=f_{j}'(\xi_{k})+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}'(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}'(\xi)
+\]
+
+\end_inset
+
+and the global derivatives
+\begin_inset Formula 
+\[
+\partial_{x}\,F_{j}(x_{j,k})=\frac{2}{h_{j}}\,\partial_{\xi}\,F_{j}(\xi_{k})
+\]
+
+\end_inset
+
+then the ODEs
+\begin_inset Formula 
+\[
+\dv{t}u_{j,k}=-\partial_{x}\,F_{j}(x_{j,k})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Correction Functions
+\end_layout
+
+\begin_layout Standard
+The only thing left is to define 
+\begin_inset Formula $g\equiv g_{\text{LB}}$
+\end_inset
+
+ (
+\begin_inset Formula $g_{\text{RB}}$
+\end_inset
+
+ can be obtained by symmetry), which are polynomials of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ and already have one zero specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ zeros:
+\begin_inset Formula 
+\[
+\zeta_{1,}\dots,\zeta_{K-1},\zeta_{K}=1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DG
+\end_layout
+
+\begin_layout Standard
+Requiring 
+\begin_inset Formula $g\perp\mathbb{P}^{K-2}$
+\end_inset
+
+, which provides 
+\begin_inset Formula $K-1$
+\end_inset
+
+ conditions, with the other two at boundaries, gives
+\begin_inset Formula 
+\[
+g_{\text{DG}}=\frac{(-1)^{K}}{2}(P_{K}-P_{K-1})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $P_{K}$
+\end_inset
+
+ is the Legendre polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
 LDG (Local DG)
 \end_layout
 
