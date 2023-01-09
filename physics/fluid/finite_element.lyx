@@ -815,19 +815,20 @@ th cell
 \begin_inset Formula $E_{j}$
 \end_inset
 
-,
-\end_layout
-
-\begin_layout Standard
-select 
+, select 
 \begin_inset Formula $K$
 \end_inset
 
- solution points 
+ solution points.
+ The 
+\begin_inset Formula $k$
+\end_inset
+
+th solution point 
 \begin_inset Formula $x_{j,k}$
 \end_inset
 
-, which has solution 
+ has solution 
 \begin_inset Formula $u_{j,k}$
 \end_inset
 
@@ -835,14 +836,14 @@ select
 \end_layout
 
 \begin_layout Standard
-global to local 
+Define a global to local coordinate transform 
 \begin_inset Formula $E_{j}\mapsto I\equiv[-1,1]$
 \end_inset
 
  by
 \begin_inset Formula 
 \[
-x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi
+x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi.
 \]
 
 \end_inset
@@ -851,35 +852,40 @@ x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi
 \end_layout
 
 \begin_layout Standard
-Lagrange polynomials on 
-\begin_inset Formula $E_{j}$
-\end_inset
-
- of degree 
+For each solution point, there is a Lagrange polynomials of degree 
 \begin_inset Formula $K-1$
 \end_inset
 
- are
+.
+ In global coordinates, it is
 \begin_inset Formula 
 \[
-\phi_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}}
+\phi_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},
 \]
 
 \end_inset
 
-or
+while in local coordinates, it is
 \begin_inset Formula 
 \[
-\phi_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}
+\phi_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}.
 \]
 
 \end_inset
 
-then the solution polynomial on 
+
+\end_layout
+
+\begin_layout Standard
+The solution polynomial of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+ on 
 \begin_inset Formula $E_{j}$
 \end_inset
 
- be
+ is then
 \begin_inset Formula 
 \[
 u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j,k}(x)
@@ -890,7 +896,7 @@ u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j,k}(x)
 or
 \begin_inset Formula 
 \[
-u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j}(\xi)
+u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j}(\xi).
 \]
 
 \end_inset
@@ -903,15 +909,15 @@ Discontinuous Flux
 \end_layout
 
 \begin_layout Standard
-evaluate fluxes at solution points
+Evaluate fluxes at solution points, which gives
 \begin_inset Formula 
 \[
-f_{j,k}=f(u_{j,k})
+f_{j,k}=f(u_{j,k}),\quad k=1,\dots,K.
 \]
 
 \end_inset
 
-then the discontinuous flux function
+Then one can define the discontinuous flux function
 \begin_inset Formula 
 \[
 f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\phi_{j,k}(x)
@@ -922,16 +928,16 @@ f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\phi_{j,k}(x)
 or
 \begin_inset Formula 
 \[
-f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\phi_{k}(\xi)
+f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\phi_{k}(\xi).
 \]
 
 \end_inset
 
-Its derivative at 
-\begin_inset Formula $\xi_{l}$
+Its derivative at the 
+\begin_inset Formula $l$
 \end_inset
 
- is
+th solution point is then
 \begin_inset Formula 
 \[
 (\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\phi_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
@@ -942,7 +948,7 @@ Its derivative at
 or
 \begin_inset Formula 
 \[
-(\partial_{x}\,f_{j})_{l}=\frac{2}{h_{j}}(\partial_{\xi}\,f_{j})_{l}
+(\partial_{x}\,f_{j})_{l}=\frac{2}{h_{j}}(\partial_{\xi}\,f_{j})_{l}.
 \]
 
 \end_inset
@@ -955,26 +961,22 @@ Upwind Flux
 \end_layout
 
 \begin_layout Standard
-The CFF takes the upwind flux values at the interfaces.
-\end_layout
-
-\begin_layout Standard
 At 
 \begin_inset Formula $x_{j+1/2}$
 \end_inset
 
-, there are left/right solutions 
+, there are left and right solutions
 \begin_inset Formula 
 \[
-u_{L}=u_{j}(x_{j+1/2}),\quad u_{R}=u_{j+1}(x_{j+1/2})
+u_{L}\coloneqq u_{j}(x_{j+1/2}),\quad u_{R}\coloneqq u_{j+1}(x_{j+1/2}),
 \]
 
 \end_inset
 
-and left/right fluxes
+and the left and right fluxes
 \begin_inset Formula 
 \[
-f_{L}=f_{j}(x_{j+1/2}),\quad f_{R}=f_{j+1}(x_{j+1/2})
+f_{L}\coloneqq f_{j}(x_{j+1/2}),\quad f_{R}\coloneqq f_{j+1}(x_{j+1/2}),
 \]
 
 \end_inset
@@ -982,7 +984,7 @@ f_{L}=f_{j}(x_{j+1/2}),\quad f_{R}=f_{j+1}(x_{j+1/2})
 In general
 \begin_inset Formula 
 \[
-u_{L}\ne u_{R},\quad f_{L}\ne f_{R},\quad f_{L}\ne f(u_{L}),\quad f_{R}\ne f(u_{R})
+u_{L}\ne u_{R},\quad f_{L}\ne f_{R},\quad f_{L}\ne f(u_{L}),\quad f_{R}\ne f(u_{R}).
 \]
 
 \end_inset
@@ -994,7 +996,7 @@ u_{L}\ne u_{R},\quad f_{L}\ne f_{R},\quad f_{L}\ne f(u_{L}),\quad f_{R}\ne f(u_{
 One possible upwind flux is
 \begin_inset Formula 
 \[
-f_{j+1/2}^{\text{upw}}=\frac{1}{2}\left(f(u_{L})+f(u_{R})\right)-\frac{1}{2}\left|a(\tilde{u})\right|\left(u_{L}-u_{R}\right)
+f_{j+1/2}^{\text{upw}}=\frac{1}{2}\left(f(u_{L})+f(u_{R})\right)-\frac{1}{2}\left|a(\tilde{u})\right|\left(u_{L}-u_{R}\right),
 \]
 
 \end_inset
@@ -1003,8 +1005,8 @@ where
 \begin_inset Formula 
 \[
 a(\tilde{u})=\begin{cases}
-\left(f(u_{L})-f(u_{R})\right)/\left(u_{L}-u_{R}\right), & u_{L}\ne u_{R}\\
-a(u_{L})=a(u_{R}), & u_{L}=u_{R}
+\left(f(u_{L})-f(u_{R})\right)/\left(u_{L}-u_{R}\right), & u_{L}\ne u_{R};\\
+a(u_{L})=a(u_{R}), & u_{L}=u_{R}.
 \end{cases}
 \]
 
@@ -1018,19 +1020,19 @@ Continuous Flux
 \end_layout
 
 \begin_layout Standard
-A continuous function 
+A continuous flux function 
 \begin_inset Formula $F(x)$
 \end_inset
 
  takes the upwind flux values at the cell interfaces:
 \begin_inset Formula 
 \[
-F(x_{j+1/2})=f_{j+1/2}^{\text{upw}}
+F(x_{j\pm1/2})=f_{j\pm1/2}^{\text{upw}},
 \]
 
 \end_inset
 
-and approximates 
+and approximates the discontinuous flux function 
 \begin_inset Formula $f_{j}(x)$
 \end_inset
 
@@ -1041,7 +1043,7 @@ and approximates
 :
 \begin_inset Formula 
 \[
-F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}
+F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}.
 \]
 
 \end_inset
@@ -1079,11 +1081,11 @@ is of degree
 \end_inset
 
 , too.
- In local coordinates, function 
-\begin_inset Formula $g\coloneqq F_{j}-f_{j}$
+ The correction function 
+\begin_inset Formula $g(\xi)\coloneqq F_{j}(\xi)-f_{j}(\xi)$
 \end_inset
 
- is a polynomial of degree 
+ should be a polynomial of degree 
 \begin_inset Formula $K$
 \end_inset
 
@@ -1098,8 +1100,8 @@ F_{j}(+1)-f_{j}(+1)=f_{j+1/2}^{\text{upw}}-f_{j}(+1)
 
 \end_inset
 
-that approximates the constant function 
-\begin_inset Formula $0$
+and approximates the constant function 
+\begin_inset Formula $0(\xi)$
 \end_inset
 
  in some sense.
@@ -1113,55 +1115,63 @@ Define the
 -degree correction function for the Left Boundary
 \begin_inset Formula 
 \[
-g_{\text{LB}}(-1)=1,\quad g_{\text{LB}}(+1)=0
+g_{\text{LB}}(\xi)\begin{cases}
+=1, & \xi=-1,\\
+\approx0, & \xi\in(-1,+1),\\
+=0, & \xi=+1,
+\end{cases}
 \]
 
 \end_inset
 
-and the 
-\begin_inset Formula $K$
-\end_inset
-
--degree correction function for the Right Boundary
+and the counterpart for the Right Boundary
 \begin_inset Formula 
 \[
-g_{\text{RB}}(-1)=0,\quad g_{\text{RB}}(+1)=1
+g_{\text{RB}}(\xi)\begin{cases}
+=0, & \xi=-1,\\
+\approx0, & \xi\in(-1,+1),\\
+=1, & \xi=+1.
+\end{cases}
 \]
 
 \end_inset
 
-Then the 
+
+\end_layout
+
+\begin_layout Standard
+Then, the 
 \begin_inset Formula $K$
 \end_inset
 
 -degree continuous flux could be
 \begin_inset Formula 
 \[
-F_{j}(\xi)=f_{j}(\xi)+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}(\xi)
+F_{j}(\xi)=f_{j}(\xi)+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}(\xi).
 \]
 
 \end_inset
 
-then the local derivatives
+The local derivative is then
 \begin_inset Formula 
 \[
-\partial_{\xi}\,F_{j}(\xi_{k})=f_{j}'(\xi_{k})+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}'(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}'(\xi)
+\partial_{\xi}\,F_{j}(\xi_{k})=f_{j}'(\xi_{k})+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}'(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}'(\xi),
 \]
 
 \end_inset
 
-and the global derivatives
+and the global derivative is
 \begin_inset Formula 
 \[
-\partial_{x}\,F_{j}(x_{j,k})=\frac{2}{h_{j}}\,\partial_{\xi}\,F_{j}(\xi_{k})
+\partial_{x}\,F_{j}(x_{j,k})=\frac{2}{h_{j}}\,\partial_{\xi}\,F_{j}(\xi_{k}).
 \]
 
 \end_inset
 
-then the ODEs
+Then, the original conservation law can be approximated by a system of ODEs
 \begin_inset Formula 
 \[
-\dv{t}u_{j,k}=-\partial_{x}\,F_{j}(x_{j,k})
+\dv{t}u_{j,k}=-\partial_{x}\,F_{j}(x_{j,k}),\quad k=1,\dots,K.
 \]
 
 \end_inset
@@ -1174,7 +1184,7 @@ Correction Functions
 \end_layout
 
 \begin_layout Standard
-The only thing left is to define 
+To define a semi-discrete scheme, the only thing left is to define 
 \begin_inset Formula $g\equiv g_{\text{LB}}$
 \end_inset
 
@@ -1182,24 +1192,46 @@ The only thing left is to define
 \begin_inset Formula $g_{\text{RB}}$
 \end_inset
 
- can be obtained by symmetry), which are polynomials of degree 
+ can be obtained by symmetry), which is a polynomial of degree 
 \begin_inset Formula $K$
 \end_inset
 
- and already have one zero specified.
+ and already has two conditions specified.
  So one only need to specify the other 
 \begin_inset Formula $K-1$
 \end_inset
 
- zeros:
-\begin_inset Formula 
-\[
-\zeta_{1,}\dots,\zeta_{K-1},\zeta_{K}=1
-\]
+ conditions.
+\end_layout
 
+\begin_layout Standard
+Note that a polynomial of degree 
+\begin_inset Formula $K$
 \end_inset
 
+ has atmost 
+\begin_inset Formula $K$
+\end_inset
 
+ (real) zeros.
+ For 
+\begin_inset Formula $g$
+\end_inset
+
+, one of the zeros (denoted as 
+\begin_inset Formula $\zeta_{K}=1$
+\end_inset
+
+) has been specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ zeros (denoted as 
+\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K-1}$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Subsubsection
@@ -1211,14 +1243,15 @@ Requiring
 \begin_inset Formula $g\perp\mathbb{P}^{K-2}$
 \end_inset
 
-, which provides 
+ provides 
 \begin_inset Formula $K-1$
 \end_inset
 
- conditions, with the other two at boundaries, gives
+ conditions.
+ With the other two conditions at boundaries, it gives
 \begin_inset Formula 
 \[
-g_{\text{DG}}=\frac{(-1)^{K}}{2}(P_{K}-P_{K-1})
+g_{\text{DG}}=\frac{(-1)^{K}}{2}(P_{K}-P_{K-1}),
 \]
 
 \end_inset
