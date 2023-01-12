@@ -1486,6 +1486,14 @@ g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi))\equiv\mathr
 which leads to a simplified version of the DG scheme.
 \end_layout
 
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-1$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsubsection
 Staggered Grid
 \end_layout
@@ -1512,6 +1520,125 @@ g(\zeta_{0})=1,\quad g(\zeta_{k})=0,\quad k=1,\dots,K,
 \end_inset
 
 which leads to a simplified version of the SG scheme.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is less accurate than DG but has a CFL limit more than
+ 
+\begin_inset Formula $3/2$
+\end_inset
+
+ as large as that of DG.
+\end_layout
+
+\begin_layout Subsubsection
+Lumping Lobatto
+\end_layout
+
+\begin_layout Standard
+Relaxing 
+\begin_inset Formula $g\perp\mathbb{P}^{K-2}$
+\end_inset
+
+ in the DG scheme to 
+\begin_inset Formula $g\perp\mathbb{P}^{K-3}$
+\end_inset
+
+ and requiring 
+\begin_inset Formula $g'(1)=0$
+\end_inset
+
+ (i.e.
+ requiring 
+\begin_inset Formula $\xi=1$
+\end_inset
+
+ to be a zero of multiplicity 2) gives
+\begin_inset Formula 
+\[
+g_{\text{Lump, Lo}}=\frac{K-1}{2K-1}\mathrm{R}_{\mathrm{R},K}(\xi)+\frac{K}{2K-1}\mathrm{R}_{\mathrm{R},K-1}(\xi),
+\]
+
+\end_inset
+
+whose derivative vanishes at the right 
+\begin_inset Formula $K-1$
+\end_inset
+
+ Lobatto points and thus corrects 
+\begin_inset Formula $f_{j}'(\xi)$
+\end_inset
+
+ only at the left boundary.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-2$
+\end_inset
+
+ and has a CFL limit roughly twice as large as that of DG.
+\end_layout
+
+\begin_layout Subsubsection
+Other Choices
+\end_layout
+
+\begin_layout Standard
+Requiring 
+\begin_inset Formula $g(-1)=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=1$
+\end_inset
+
+ to be a zero of multiplicity 
+\begin_inset Formula $m$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+\dv[l]{\xi}g(1)=0,\quad l=0,1,\dots,m-1,
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $g\perp\mathbb{P}^{K-1-m}$
+\end_inset
+
+ , gives 
+\begin_inset Formula $g_{m}$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $g_{1}=g_{\text{DG}}$
+\end_inset
+
+, 
+\begin_inset Formula $g_{2}=g_{\text{Lump, Lo}}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-m$
+\end_inset
+
+.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Huynh_2007"
+literal "true"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
