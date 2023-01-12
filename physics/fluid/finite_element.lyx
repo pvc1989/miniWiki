@@ -1180,108 +1180,11 @@ Then, the original conservation law can be approximated by a system of ODEs
 \end_layout
 
 \begin_layout Subsection
-Correction Functions
-\end_layout
-
-\begin_layout Standard
-To define a semi-discrete scheme, the only thing left is to define 
-\begin_inset Formula $g(\xi)\equiv g_{\text{LB}}(\xi)$
-\end_inset
-
- (
-\begin_inset Formula $g_{\text{RB}}$
-\end_inset
-
- can be obtained by symmetry), which is a polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
- and already has two conditions specified.
- So one only need to specify the other 
-\begin_inset Formula $K-1$
-\end_inset
-
- conditions.
-\end_layout
-
-\begin_layout Standard
-Note that a polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
- has atmost 
-\begin_inset Formula $K$
-\end_inset
-
- (real) zeros.
- For 
-\begin_inset Formula $g(\xi)$
-\end_inset
-
-, one of the zeros (denoted as 
-\begin_inset Formula $\zeta_{K}=1$
-\end_inset
-
-) has been specified.
- So one only need to specify the other 
-\begin_inset Formula $K-1$
-\end_inset
-
- zeros (denoted as 
-\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K-1}$
-\end_inset
-
-).
+Quadratures and Polynomials
 \end_layout
 
 \begin_layout Subsubsection
 Legendre
-\end_layout
-
-\begin_layout Standard
-Requiring 
-\begin_inset Formula $g\perp\mathbb{P}^{K-2}$
-\end_inset
-
- provides 
-\begin_inset Formula $K-1$
-\end_inset
-
- conditions.
- With the other two conditions at boundaries, it gives
-\begin_inset Formula 
-\[
-g_{\text{DG}}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi)),
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\mathrm{P}_{K}(\xi)$
-\end_inset
-
- is the Legendre polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
-.
- Actually, 
-\begin_inset Formula $\mathrm{P}_{K}(\xi)$
-\end_inset
-
- can be determined from the following 
-\begin_inset Formula $1+K$
-\end_inset
-
- conditions:
-\begin_inset Formula 
-\[
-\mathrm{P}_{K}(+1)=1,\quad\mathrm{P}_{K}\perp\mathbb{P}^{K-1}.
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1292,7 +1195,7 @@ By requiring the algebraic precision of the
 -point quadrature rule, i.e.
 \begin_inset Formula 
 \[
-\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
 \]
 
 \end_inset
@@ -1303,6 +1206,35 @@ to be as high as possible, one gets the Gauss–Legendre quadrature.
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+The Legendre polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\mathrm{P}_{K}(\xi)=...,
+\]
+
+\end_inset
+
+whose zeros in 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ are the Gauss–Legendre quadrature points.
+ It is easy to see that
+\begin_inset Formula 
+\[
+\mathrm{P}_{K}(-1)=(-1)^{K},\quad\mathrm{P}_{K}(+1)=1,\quad\mathrm{P}_{K}\perp\mathbb{P}^{K-1}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1369,6 +1301,10 @@ whose zeros in
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 Similarly, the right Radau polynomials of degree 
 \begin_inset Formula $K$
 \end_inset
@@ -1376,16 +1312,12 @@ Similarly, the right Radau polynomials of degree
  is 
 \begin_inset Formula 
 \[
-\mathrm{R}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi)),
+\mathrm{R}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi)).
 \]
 
 \end_inset
 
-which can be determined from the following 
-\begin_inset Formula $2+(K-1)$
-\end_inset
-
- condition
+ It is easy to see that
 \begin_inset Formula 
 \[
 \mathrm{R}_{\mathrm{R},K}(-1)=1,\quad\mathrm{R}_{\mathrm{R},K}(+1)=0,\quad\mathrm{R}_{\mathrm{R},K}\perp\mathbb{P}^{K-2}.
@@ -1456,15 +1388,7 @@ whose zeros in
 \end_inset
 
  are the Lobatto quadrature points.
- Actually, 
-\begin_inset Formula $\mathrm{Lo}_{K}(\xi)$
-\end_inset
-
- can be determined from the following 
-\begin_inset Formula $2+(K-1)$
-\end_inset
-
- condition
+ It is easy to see that
 \begin_inset Formula 
 \[
 \mathrm{Lo}_{K}(-1)=0,\quad\mathrm{Lo}_{K}(+1)=0,\quad\mathrm{Lo}_{K}\perp\mathbb{P}^{K-3}.
@@ -1473,6 +1397,121 @@ whose zeros in
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Correction Functions
+\end_layout
+
+\begin_layout Standard
+To define a semi-discrete scheme, the only thing left is to define 
+\begin_inset Formula $g(\xi)\equiv g_{\text{LB}}(\xi)$
+\end_inset
+
+ (
+\begin_inset Formula $g_{\text{RB}}$
+\end_inset
+
+ can be obtained by symmetry), which is a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ and already has two conditions specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ conditions.
+\end_layout
+
+\begin_layout Standard
+Note that a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ has atmost 
+\begin_inset Formula $K$
+\end_inset
+
+ (real) zeros.
+ For 
+\begin_inset Formula $g(\xi)$
+\end_inset
+
+, one of the zeros (denoted as 
+\begin_inset Formula $\zeta_{K}=1$
+\end_inset
+
+) has been specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ zeros (denoted as 
+\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K-1}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Discontinous Galerkin
+\end_layout
+
+\begin_layout Standard
+Requiring 
+\begin_inset Formula $g\perp\mathbb{P}^{K-1}$
+\end_inset
+
+ is impossible to give
+\begin_inset Formula 
+\[
+g(-1)=1,\quad g(+1)=0.
+\]
+
+\end_inset
+
+Requiring 
+\begin_inset Formula $g\perp\mathbb{P}^{K-2}$
+\end_inset
+
+ and the above two conditions gives
+\begin_inset Formula 
+\[
+g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi))\equiv\mathrm{R}_{\mathrm{R},K}(\xi),
+\]
+
+\end_inset
+
+which leads to a simplified version of the DG scheme.
+\end_layout
+
+\begin_layout Subsubsection
+Staggered Grid
+\end_layout
+
+\begin_layout Standard
+Consider the 
+\begin_inset Formula $K+1$
+\end_inset
+
+ Chebyshev–Lobatto points
+\begin_inset Formula 
+\[
+\zeta_{k}=-\cos(\frac{k\pi}{K}),\quad k=0,1,\dots,K.
+\]
+
+\end_inset
+
+Requiring
+\begin_inset Formula 
+\[
+g(\zeta_{0})=1,\quad g(\zeta_{k})=0,\quad k=1,\dots,K,
+\]
+
+\end_inset
+
+which leads to a simplified version of the SG scheme.
 \end_layout
 
 \begin_layout Section
