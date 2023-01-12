@@ -860,7 +860,7 @@ For each solution point, there is a Lagrange polynomials of degree
  In global coordinates, it is
 \begin_inset Formula 
 \[
-\phi_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},
+\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},
 \]
 
 \end_inset
@@ -868,7 +868,7 @@ For each solution point, there is a Lagrange polynomials of degree
 while in local coordinates, it is
 \begin_inset Formula 
 \[
-\phi_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}.
+\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}.
 \]
 
 \end_inset
@@ -888,7 +888,7 @@ The solution polynomial of degree
  is then
 \begin_inset Formula 
 \[
-u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j,k}(x)
+u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{j,k}(x)
 \]
 
 \end_inset
@@ -896,7 +896,7 @@ u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j,k}(x)
 or
 \begin_inset Formula 
 \[
-u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\phi_{j}(\xi).
+u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi).
 \]
 
 \end_inset
@@ -920,7 +920,7 @@ f_{j,k}=f(u_{j,k}),\quad k=1,\dots,K.
 Then one can define the discontinuous flux function
 \begin_inset Formula 
 \[
-f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\phi_{j,k}(x)
+f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{j,k}(x)
 \]
 
 \end_inset
@@ -928,7 +928,7 @@ f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\phi_{j,k}(x)
 or
 \begin_inset Formula 
 \[
-f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\phi_{k}(\xi).
+f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{k}(\xi).
 \]
 
 \end_inset
@@ -940,7 +940,7 @@ Its derivative at the
 th solution point is then
 \begin_inset Formula 
 \[
-(\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\phi_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
+(\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\mathrm{La}_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
 \]
 
 \end_inset
@@ -1216,7 +1216,7 @@ The Legendre polynomial of degree
  is
 \begin_inset Formula 
 \[
-\mathrm{P}_{K}(\xi)=...,
+\mathrm{Le}_{K}(\xi)=...,
 \]
 
 \end_inset
@@ -1229,7 +1229,7 @@ whose zeros in
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{P}_{K}(-1)=(-1)^{K},\quad\mathrm{P}_{K}(+1)=1,\quad\mathrm{P}_{K}\perp\mathbb{P}^{K-1}.
+\mathrm{Le}_{K}(-1)=(-1)^{K},\quad\mathrm{Le}_{K}(+1)=1,\quad\mathrm{Le}_{K}\perp\mathbb{P}^{K-1}.
 \]
 
 \end_inset
@@ -1275,7 +1275,7 @@ The left Radau polynomial of degree
  is
 \begin_inset Formula 
 \[
-\mathrm{R}_{\mathrm{L},K}(\xi)=\frac{1}{2}(\mathrm{P}_{K}(\xi)+\mathrm{P}_{K-1}(\xi)),
+\mathrm{Ra}_{\mathrm{L},K}(\xi)=\frac{1}{2}(\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)),
 \]
 
 \end_inset
@@ -1286,7 +1286,7 @@ whose zeros in
 
  are the left Radau quadrature points.
  Actually, 
-\begin_inset Formula $\mathrm{R}_{\mathrm{L},K}(\xi)$
+\begin_inset Formula $\mathrm{Ra}_{\mathrm{L},K}(\xi)$
 \end_inset
 
  can be determined from the following 
@@ -1296,7 +1296,7 @@ whose zeros in
  condition
 \begin_inset Formula 
 \[
-\mathrm{R}_{\mathrm{L},K}(-1)=0,\quad\mathrm{R}_{\mathrm{L},K}(+1)=1,\quad\mathrm{R}_{\mathrm{L},K}\perp\mathbb{P}^{K-2}.
+\mathrm{Ra}_{\mathrm{L},K}(-1)=0,\quad\mathrm{Ra}_{\mathrm{L},K}(+1)=1,\quad\mathrm{Ra}_{\mathrm{L},K}\perp\mathbb{P}^{K-2}.
 \]
 
 \end_inset
@@ -1312,7 +1312,7 @@ Similarly, the right Radau polynomials of degree
  is 
 \begin_inset Formula 
 \[
-\mathrm{R}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi)).
+\mathrm{Ra}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)).
 \]
 
 \end_inset
@@ -1320,7 +1320,7 @@ Similarly, the right Radau polynomials of degree
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{R}_{\mathrm{R},K}(-1)=1,\quad\mathrm{R}_{\mathrm{R},K}(+1)=0,\quad\mathrm{R}_{\mathrm{R},K}\perp\mathbb{P}^{K-2}.
+\mathrm{Ra}_{\mathrm{R},K}(-1)=1,\quad\mathrm{Ra}_{\mathrm{R},K}(+1)=0,\quad\mathrm{Ra}_{\mathrm{R},K}\perp\mathbb{P}^{K-2}.
 \]
 
 \end_inset
@@ -1378,7 +1378,7 @@ The Lobatto polynomial of degree
  is
 \begin_inset Formula 
 \[
-\mathrm{Lo}_{K}(\xi)=\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-2}(\xi),
+\mathrm{Lo}_{K}(\xi)=\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-2}(\xi),
 \]
 
 \end_inset
@@ -1478,7 +1478,7 @@ Requiring
  and the above two conditions gives
 \begin_inset Formula 
 \[
-g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{P}_{K}(\xi)-\mathrm{P}_{K-1}(\xi))\equiv\mathrm{R}_{\mathrm{R},K}(\xi),
+g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi))\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
 \]
 
 \end_inset
@@ -1556,7 +1556,7 @@ Relaxing
  to be a zero of multiplicity 2) gives
 \begin_inset Formula 
 \[
-g_{\text{Lump, Lo}}=\frac{K-1}{2K-1}\mathrm{R}_{\mathrm{R},K}(\xi)+\frac{K}{2K-1}\mathrm{R}_{\mathrm{R},K-1}(\xi),
+g_{\text{Lump, Lo}}=\frac{K-1}{2K-1}\mathrm{Ra}_{\mathrm{R},K}(\xi)+\frac{K}{2K-1}\mathrm{Ra}_{\mathrm{R},K-1}(\xi),
 \]
 
 \end_inset
