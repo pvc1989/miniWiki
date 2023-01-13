@@ -1641,6 +1641,211 @@ literal "true"
 
 \end_layout
 
+\begin_layout Subsection
+FR On Triangular Mesh
+\end_layout
+
+\begin_layout Standard
+标量守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,u+\divg\vec{f}=0,
+\]
+
+\end_inset
+
+在单元 
+\begin_inset Formula $E$
+\end_inset
+
+ 上，用 
+\begin_inset Formula $(K-1)$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 近似 
+\begin_inset Formula $u$
+\end_inset
+
+，以分量为 
+\begin_inset Formula $(K-1)$
+\end_inset
+
+ 次多项式的向量函数 
+\begin_inset Formula $\vec{f}^{h}$
+\end_inset
+
+作为 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ 的近似。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\forall\phi\in\mathbb{P}^{K-1}(E)$
+\end_inset
+
+，该守恒律成立的必要条件为
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0
+\]
+
+\end_inset
+
+分部积分一次，得弱形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\vec{\nu}\vdot\vec{f}^{h}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0,
+\]
+
+\end_inset
+
+将 
+\begin_inset Formula $\vec{\nu}\vdot\vec{f}^{h}\eqqcolon f_{\nu}^{\text{int}}$
+\end_inset
+
+ 用迎风通量 
+\begin_inset Formula $f_{\nu}^{\text{upw}}$
+\end_inset
+
+ 替换，得
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\text{upw}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0,
+\]
+
+\end_inset
+
+再次分部积分，并记通量阶跃值
+\begin_inset Formula 
+\[
+[f_{\nu}]\coloneqq f_{\nu}^{\text{upw}}-f_{\nu}^{\text{int}},
+\]
+
+\end_inset
+
+得强形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle[f_{\nu}]\vert\phi\rangle_{\partial E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的次数不超过 
+\begin_inset Formula $K-1$
+\end_inset
+
+ 的单项式有 
+\begin_inset Formula $K_{N}\equiv\binom{K-1+2}{2}$
+\end_inset
+
+ 个。令 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+ 为 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个多项式基；令 
+\begin_inset Formula $\xi_{e,l}$
+\end_inset
+
+ 为 
+\begin_inset Formula $T$
+\end_inset
+
+ 的第 
+\begin_inset Formula $e$
+\end_inset
+
+ 条边上的第 
+\begin_inset Formula $l$
+\end_inset
+
+ 个通量计算点；令 
+\begin_inset Formula $\varphi_{e,l}$
+\end_inset
+
+ 为该点对应的 
+\begin_inset Formula $K-1$
+\end_inset
+
+ 次 Lagrange 多项式，并将其延拓到 
+\begin_inset Formula $\partial T$
+\end_inset
+
+ 上，从而有
+\begin_inset Formula 
+\[
+[f_{\nu}]=\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}(\xi,\eta)
+\]
+
+\end_inset
+
+更进一步地，可以将 
+\begin_inset Formula $\varphi_{e,l}$
+\end_inset
+
+ 延拓到整个 
+\begin_inset Formula $T$
+\end_inset
+
+ 上，即寻找 
+\begin_inset Formula $K_{N}$
+\end_inset
+
+ 个独立参数以确定 
+\begin_inset Formula $\gamma_{e,l}\in\mathbb{P}^{K-1}(T)$
+\end_inset
+
+，使其满足以下 
+\begin_inset Formula $K_{N}$
+\end_inset
+
+ 个独立等式：
+\begin_inset Formula 
+\[
+\langle\gamma_{e,l}\vert\phi_{k}\rangle_{T}=\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial T},\quad\forall k=1,\dots,K_{N}.
+\]
+
+\end_inset
+
+从而可以将边界积分化为体积分：
+\begin_inset Formula 
+\[
+\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial T} & =\left\langle \sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi\right\rangle _{\partial T}\\
+ & =\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial T}=\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\langle\gamma_{e,l}\vert\phi_{k}\rangle_{T}
+\end{aligned}
+\]
+
+\end_inset
+
+从而可以提出 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+，得半离散格式。
+\end_layout
+
 \begin_layout Section
 LDG (Local DG)
 \end_layout
