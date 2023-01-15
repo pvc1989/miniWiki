@@ -1658,7 +1658,11 @@ FR On Triangular Mesh
 \begin_inset Formula $E$
 \end_inset
 
- 上，用 
+ 上，以关于 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 的 
 \begin_inset Formula $(K-1)$
 \end_inset
 
@@ -1666,11 +1670,15 @@ FR On Triangular Mesh
 \begin_inset Formula $u^{h}$
 \end_inset
 
- 近似 
+ 作为对 
 \begin_inset Formula $u$
 \end_inset
 
-，以分量为 
+ 的近似，以分量为关于 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 的 
 \begin_inset Formula $(K-1)$
 \end_inset
 
@@ -1678,11 +1686,382 @@ FR On Triangular Mesh
 \begin_inset Formula $\vec{f}^{h}$
 \end_inset
 
-作为 
+作为对 
 \begin_inset Formula $\vec{f}$
 \end_inset
 
- 的近似。
+ 的近似。利用坐标变换 
+\begin_inset Formula $(x,y)\mapsto(\xi,\eta)$
+\end_inset
+
+ 及相应的导数变换（下标表示求导）
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
+y_{\xi} & y_{\eta}
+\end{bmatrix}}_{\underline{J}},
+\]
+
+\end_inset
+
+可将其化为标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的问题
+\begin_inset Formula 
+\[
+\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}=J\,u,\quad\begin{bmatrix}\hat{f}\\
+\hat{g}
+\end{bmatrix}=\underbrace{\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{J\,\underline{J}^{-1}}\begin{bmatrix}f\\
+g
+\end{bmatrix}.
+\]
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Proof
+由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
+y_{\xi} & y_{\eta}
+\end{bmatrix}}_{\underline{J}}
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{\underline{J}^{-1}},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{x} & f_{y}\\
+g_{x} & g_{y}
+\end{bmatrix}=\begin{bmatrix}f_{\xi} & f_{\eta}\\
+g_{\xi} & g_{\eta}
+\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{\underline{J}^{-1}}.
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}f_{x}+g_{y} & =\begin{bmatrix}f_{\xi} & f_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}y_{\eta}\\
+-y_{\xi}
+\end{bmatrix}+\begin{bmatrix}g_{\xi} & g_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}-x_{\eta}\\
+x_{\xi}
+\end{bmatrix}\\
+ & =\left(f_{\xi}\,y_{\eta}-f_{\eta}\,y_{\xi}-g_{\xi}\,x_{\eta}+g_{\eta}\,x_{\xi}\right)J^{-1}.
+\end{aligned}
+\]
+
+\end_inset
+
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{f}\\
+\hat{g}
+\end{bmatrix}=\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}\begin{bmatrix}f\\
+g
+\end{bmatrix}\equiv J\,\underline{J}^{-1}\begin{bmatrix}f\\
+g
+\end{bmatrix},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\hat{f}=f\,y_{\eta}-g\,x_{\eta},\quad\hat{g}=-f\,y_{\xi}+g\,x_{\xi},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta} & =\left(f\,y_{\eta}-g\,x_{\eta}\right)_{\xi}+\left(-f\,y_{\xi}+g\,x_{\xi}\right)_{\eta}\\
+\text{展开乘积之导} & =\left(f_{\xi}\,y_{\eta}+f\,y_{\eta\xi}\right)-\left(g_{\xi}\,x_{\eta}+g\,x_{\eta\xi}\right)-\left(f_{\eta}\,y_{\xi}+f\,y_{\xi\eta}\right)+\left(g_{\eta}\,x_{\xi}+g\,x_{\xi\eta}\right)\\
+\text{合并二阶导数} & =\underbrace{\left(f_{\xi}\,y_{\eta}-g_{\xi}\,x_{\eta}-f_{\eta}\,y_{\xi}+g_{\eta}\,x_{\xi}\right)}_{\left(f_{x}+g_{y}\right)J}+\underbrace{\left(f\,y_{\eta\xi}-g\,x_{\eta\xi}-f\,y_{\xi\eta}+g\,x_{\xi\eta}\right)}_{0}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Proof
+上述证明可推广到三维。由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix}}_{\underline{J}}
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underbrace{J^{-1}\overbrace{\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}}}_{\underline{J}^{-1}}^{\underline{J}^{*}},
+\]
+
+\end_inset
+
+或
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}J=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{x} & f_{y} & f_{z}\\
+g_{x} & g_{y} & g_{z}\\
+h_{x} & h_{y} & h_{z}
+\end{bmatrix}J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\\
+g_{\xi} & g_{\eta} & g_{\zeta}\\
+h_{\xi} & h_{\eta} & h_{\zeta}
+\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度与 
+\begin_inset Formula $J$
+\end_inset
+
+ 之积为
+\begin_inset Formula 
+\[
+\left(f_{x}+g_{y}+h_{z}\right)J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle+\begin{bmatrix}g_{\xi} & g_{\eta} & g_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle+\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。
+\end_layout
+
+\begin_layout Proof
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{f}\\
+\hat{g}\\
+\hat{h}
+\end{bmatrix}=\underline{J}^{*}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix}\equiv\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
+ & +\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f+\langle2\vert\underline{J}^{*}\vert2\rangle\,g+\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}\\
+ & +\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f+\langle3\vert\underline{J}^{*}\vert2\rangle\,g+\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta},
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\langle r\vert\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $r$
+\end_inset
+
+ 行、第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。按 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 分行，即
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+分别考虑一阶导数与二阶导数。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{不含二阶导数的项} & =\underbrace{\langle1\vert\underline{J}^{*}\vert1\rangle\,f_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle\,f_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle\,f_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert2\rangle\,g_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle\,g_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle\,g_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert3\rangle\,h_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle\,h_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle\,h_{\zeta}}_{\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle}\\
+ & =\left(f_{x}+g_{y}+h_{z}\right)J.
+\end{aligned}
+\]
+
+\end_inset
+
+于是，只需证明剩余项之和为零。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{含二阶导数的项} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle_{\zeta}\right)f\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle_{\zeta}\right)g\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle_{\zeta}\right)h.
+\end{aligned}
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 的系数分别等于
+\begin_inset Formula 
+\[
+\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}
+\end{bmatrix},
+\]
+
+\end_inset
+
+三者在形式上相同，故只需证明其中之一为零。考虑 
+\begin_inset Formula $f$
+\end_inset
+
+ 的系数
+\begin_inset Formula 
+\[
+\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi}+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta}+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta},
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+展开乘积之导，得
+\begin_inset Formula 
+\[
+\begin{aligned}\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi} & =y_{\eta\xi}\,z_{\zeta}-y_{\zeta\xi}\,z_{\eta}+y_{\eta}\,z_{\zeta\xi}-y_{\zeta}\,z_{\eta\xi},\\
+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta} & =y_{\zeta\eta}\,z_{\xi}-y_{\xi\eta}\,z_{\zeta}+y_{\zeta}\,z_{\xi\eta}-y_{\xi}\,z_{\zeta\eta},\\
+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta} & =y_{\xi\zeta}\,z_{\eta}-y_{\eta\zeta}\,z_{\xi}+y_{\xi}\,z_{\eta\zeta}-y_{\eta}\,z_{\xi\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+利用交叉导数相等，可得三行之和为零。
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1692,7 +2071,7 @@ FR On Triangular Mesh
 ，该守恒律成立的必要条件为
 \begin_inset Formula 
 \[
-\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0.
 \]
 
 \end_inset
@@ -1713,14 +2092,18 @@ FR On Triangular Mesh
 \begin_inset Formula $f_{\nu}^{\text{upw}}$
 \end_inset
 
- 替换，得
+ 替换，得弱形式
 \begin_inset Formula 
 \[
-\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\text{upw}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0,
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\text{upw}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0.
 \]
 
 \end_inset
 
+由此可以导出 DG 格式。
+\end_layout
+
+\begin_layout Standard
 再次分部积分，并记通量阶跃值
 \begin_inset Formula 
 \[
@@ -1737,7 +2120,19 @@ FR On Triangular Mesh
 
 \end_inset
 
+为提取出 
+\begin_inset Formula $\phi$
+\end_inset
 
+，需将 
+\begin_inset Formula $\partial E$
+\end_inset
+
+ 上的积分化为 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的积分。
 \end_layout
 
 \begin_layout Standard
@@ -1766,7 +2161,7 @@ FR On Triangular Mesh
 \end_inset
 
  个多项式基；令 
-\begin_inset Formula $\xi_{e,l}$
+\begin_inset Formula $\vec{\xi}_{e,l}$
 \end_inset
 
  为 
@@ -1796,7 +2191,7 @@ FR On Triangular Mesh
  上，从而有
 \begin_inset Formula 
 \[
-[f_{\nu}]=\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}(\xi,\eta)
+[f_{\nu}]\approx\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}(\xi,\eta)
 \]
 
 \end_inset
@@ -1824,15 +2219,27 @@ FR On Triangular Mesh
  个独立等式：
 \begin_inset Formula 
 \[
-\langle\gamma_{e,l}\vert\phi_{k}\rangle_{T}=\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial T},\quad\forall k=1,\dots,K_{N}.
+\langle\gamma_{e,l}\vert\phi_{k}\rangle_{T}=\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial T},\quad k=1,\dots,K_{N}.
 \]
 
 \end_inset
 
-从而可以将边界积分化为体积分：
+利用所得的 
+\begin_inset Formula $\gamma_{e,l}$
+\end_inset
+
+ 可以将 
+\begin_inset Formula $\partial T$
+\end_inset
+
+ 上的积分化为 
+\begin_inset Formula $T$
+\end_inset
+
+ 上 的积分：
 \begin_inset Formula 
 \[
-\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial T} & =\left\langle \sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi\right\rangle _{\partial T}\\
+\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial T} & \approx\left\langle \sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi_{k}\right\rangle _{\partial T}\\
  & =\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial T}=\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\langle\gamma_{e,l}\vert\phi_{k}\rangle_{T}
 \end{aligned}
 \]
@@ -1844,6 +2251,97 @@ FR On Triangular Mesh
 \end_inset
 
 ，得半离散格式。
+\end_layout
+
+\begin_layout Standard
+若通量计算点 
+\begin_inset Formula $\vec{\xi}_{e,l}$
+\end_inset
+
+ 取为 Gauss 积分点，则该点对应的权重为
+\begin_inset Formula 
+\[
+w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial T}.
+\]
+
+\end_inset
+
+又因 
+\begin_inset Formula $(\varphi_{e,l}\,\phi)\in\mathbb{P}^{2K-2}(T)$
+\end_inset
+
+ 可以被 
+\begin_inset Formula $K$
+\end_inset
+
+ 点 Gauss 积分公式精确计算，即
+\begin_inset Formula 
+\[
+\langle\varphi_{e,l}\vert\phi\rangle_{\partial T}=\sum_{k=1}^{K}w_{e,l}\,\phi(\vec{\xi}_{e,k})=w_{e,l}\,\phi(\vec{\xi}_{e,l}),
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\langle\gamma_{e,l}\vert\phi\rangle_{T}=\langle\varphi_{e,l}\vert\phi\rangle_{\partial T}=w_{e,l}\,\phi(\vec{\xi}_{e,l}),
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\gamma_{e,l}/w_{e,l}$
+\end_inset
+
+ 是 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的 Dirac 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 函数的一种近似。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K-1$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $\gamma_{e,l}$
+\end_inset
+
+ 是对通量散度 
+\begin_inset Formula $\divg\vec{f}^{h}$
+\end_inset
+
+ 的修正。若能构造出分量为 
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式的 
+\begin_inset Formula $\vec{g}_{e,l}$
+\end_inset
+
+，使得
+\begin_inset Formula 
+\[
+\divg\vec{g}_{e,l}=\gamma_{e,l},
+\]
+
+\end_inset
+
+则得对通量本身的修正，即连续通量
+\begin_inset Formula 
+\[
+\vec{F}^{h}=\vec{f}^{h}+\sum_{e=1}^{3}\sum_{l=1}^{K}[f_{\nu}]_{e,l}\,\vec{g}_{e,l},
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
