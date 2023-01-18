@@ -1987,7 +1987,7 @@ FR on Standard Triangule
 
 \begin_layout Standard
 利用坐标变换 
-\begin_inset Formula $(x,y)\mapsto(\xi,\eta)$
+\begin_inset Formula $\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}$
 \end_inset
 
  及相应的导数变换（下标表示求导）
@@ -2004,7 +2004,7 @@ y_{\xi} & y_{\eta}
 \begin_inset Formula $E$
 \end_inset
 
- 上的
+ 上的守恒律
 \begin_inset Formula 
 \[
 \partial_{t}\,u+\partial_{x}\,f+\partial_{y}\,g=0,
@@ -2016,7 +2016,7 @@ y_{\xi} & y_{\eta}
 \begin_inset Formula $T$
 \end_inset
 
- 上的问题
+ 上的守恒律
 \begin_inset Formula 
 \[
 \partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
@@ -2367,6 +2367,206 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+局部坐标下的标量函数 
+\begin_inset Formula $\hat{u},\hat{f},\hat{g}$
+\end_inset
+
+ 可以由标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的 
+\begin_inset Formula $p$
+\end_inset
+
+-次 Lagrange 插值多项式来近似：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{u}(\vec{\rho})\\
+\hat{f}(\vec{\rho})\\
+\hat{g}(\vec{\rho})
+\end{bmatrix}\approx\begin{bmatrix}\hat{u}^{\delta D}(\vec{\rho})\\
+\hat{f}^{\delta D}(\vec{\rho})\\
+\hat{g}^{\delta D}(\vec{\rho})
+\end{bmatrix}=\sum_{i=1}^{N_{T}(p)}\begin{bmatrix}\hat{u}_{i}^{\delta D}\\
+\hat{f}_{i}^{\delta D}\\
+\hat{g}_{i}^{\delta D}
+\end{bmatrix}l_{i}(\vec{\rho}),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $N_{T}(p)\equiv\binom{p+2}{2}$
+\end_inset
+
+ 为插值点个数，上标中的 
+\begin_inset Formula $D$
+\end_inset
+
+ 表示间断。于是，间断通量的散度可表示为
+\begin_inset Formula 
+\[
+\partial_{\xi}\,\hat{f}^{\delta D}+\partial_{\eta}\,\hat{g}^{\delta D}\approx\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\eta}\right).
+\]
+
+\end_inset
+
+定义局部坐标下的修正通量
+\begin_inset Formula 
+\[
+\hat{\vec{f}}^{\delta C}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho}),
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{\partial T}(p)$
+\end_inset
+
+ 为边界通量点总数；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $[\hat{f}_{\nu}]\coloneqq\hat{f}_{\nu}^{\delta I}-\hat{\vec{\nu}}\vdot\hat{\vec{f}}^{\delta D}$
+\end_inset
+
+ 为通量阶跃值；
+\end_layout
+
+\begin_layout Itemize
+向量修正函数 
+\begin_inset Formula $\vec{h}_{j}$
+\end_inset
+
+ 取自 Raviart–Thomas 空间 
+\begin_inset Formula $\mathbb{RT}_{p}(T)$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\divg\vec{h}_{j}=\mathbb{P}_{p}(T),\quad\hat{\vec{\nu}}\vdot\vec{h}_{j}\in\mathbb{P}_{p}(\partial T),
+\]
+
+\end_inset
+
+且具有 Kronecker delta 性质：
+\begin_inset Formula 
+\[
+\vec{h}_{j}(\vec{\rho}_{k})\vdot\vec{\nu}(\vec{\rho}_{k})=\delta_{jk}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由此得近似通量在边界求值点上的值：
+\begin_inset Formula 
+\[
+\hat{\vec{f}}^{\delta C}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[\halfnote\hat{f}_{\nu}]_{j},\quad\hat{\vec{f}}^{\delta}(\vec{\rho}_{j})=\hat{f}_{\nu}^{\delta I}(\vec{\rho}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset Formula 
+\[
+\hat{u}(\vec{\rho})\approx\hat{u}^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}\hat{u}_{i}^{\delta D}\,l_{i}(\vec{\rho})
+\]
+
+\end_inset
+
+及
+\begin_inset Formula 
+\[
+\hat{\vec{f}}(\vec{\rho})\approx\hat{\vec{f}}^{\delta D}(\vec{\rho})+\hat{\vec{f}}^{\delta C}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}(p)}\hat{\vec{f}}_{i}^{\delta D}\,l_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho})\right)
+\]
+
+\end_inset
+
+代入守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $\vec{\rho}_{k}$
+\end_inset
+
+ 上计算函数值，并利用 
+\begin_inset Formula $l_{i}(\vec{\rho}_{k})=\delta_{ik}$
+\end_inset
+
+，得半离散 FR 格式：
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{\hat{u}_{k}^{\delta D}}{t} & =-\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\eta}\right)\\
+ & -\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\phi_{j}(\vec{\rho}_{k}),\quad k=1,\dots,N_{T}(p).
+\end{aligned}
+\]
+
+\end_inset
+
+上述 FR 格式的具体形式，取决于
+\end_layout
+
+\begin_layout Itemize
+单元内部求值点 
+\begin_inset Formula $\left\{ \vec{\rho}_{k}\right\} _{k=1}^{N_{T}(p)}$
+\end_inset
+
+ 的分布。
+\end_layout
+
+\begin_layout Itemize
+单元边界求值点 
+\begin_inset Formula $\left\{ \vec{\rho}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 的分布。
+\end_layout
+
+\begin_layout Itemize
+向量修正函数 
+\begin_inset Formula $\left\{ \vec{h}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 或标量修正场 
+\begin_inset Formula $\left\{ \phi_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 的选取。
+\end_layout
+
+\begin_layout Itemize
+法向数值通量 
+\begin_inset Formula $\hat{f}_{\nu}$
+\end_inset
+
+ 的构造。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
