@@ -1,0 +1,1911 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\listings_params "style=xcode,frame=leftline,baselinestretch={1.0},breaklines=true,fontsize={\small}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+FR (Flux Reconstruction)
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:FR"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+For 1D Conservation Laws
+\end_layout
+
+\begin_layout Subsection
+Solution Points
+\end_layout
+
+\begin_layout Standard
+On the 
+\begin_inset Formula $j$
+\end_inset
+
+th cell 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+, select 
+\begin_inset Formula $K$
+\end_inset
+
+ solution points.
+ The 
+\begin_inset Formula $k$
+\end_inset
+
+th solution point 
+\begin_inset Formula $x_{j,k}$
+\end_inset
+
+ has solution 
+\begin_inset Formula $u_{j,k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Define a global to local coordinate transform 
+\begin_inset Formula $E_{j}\mapsto I\equiv[-1,1]$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each solution point, there is a Lagrange polynomials of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+.
+ In global coordinates, it is
+\begin_inset Formula 
+\[
+\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},
+\]
+
+\end_inset
+
+while in local coordinates, it is
+\begin_inset Formula 
+\[
+\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The solution polynomial of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+ on 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ is then
+\begin_inset Formula 
+\[
+u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{j,k}(x)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Discontinuous Flux
+\end_layout
+
+\begin_layout Standard
+Evaluate fluxes at solution points, which gives
+\begin_inset Formula 
+\[
+f_{j,k}=f(u_{j,k}),\quad k=1,\dots,K.
+\]
+
+\end_inset
+
+Then one can define the discontinuous flux function
+\begin_inset Formula 
+\[
+f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{j,k}(x)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{k}(\xi).
+\]
+
+\end_inset
+
+Its derivative at the 
+\begin_inset Formula $l$
+\end_inset
+
+th solution point is then
+\begin_inset Formula 
+\[
+(\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\mathrm{La}_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+(\partial_{x}\,f_{j})_{l}=\frac{2}{h_{j}}(\partial_{\xi}\,f_{j})_{l}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Upwind Flux
+\end_layout
+
+\begin_layout Standard
+At 
+\begin_inset Formula $x_{j+1/2}$
+\end_inset
+
+, there are left and right solutions
+\begin_inset Formula 
+\[
+u_{\mathrm{L}}\coloneqq u_{j}(x_{j+1/2}),\quad u_{\mathrm{R}}\coloneqq u_{j+1}(x_{j+1/2}),
+\]
+
+\end_inset
+
+and the left and right fluxes
+\begin_inset Formula 
+\[
+f_{\mathrm{L}}\coloneqq f_{j}(x_{j+1/2}),\quad f_{\mathrm{R}}\coloneqq f_{j+1}(x_{j+1/2}),
+\]
+
+\end_inset
+
+In general
+\begin_inset Formula 
+\[
+u_{\mathrm{L}}\ne u_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f(u_{\mathrm{L}}),\quad f_{\mathrm{R}}\ne f(u_{\mathrm{R}}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One possible upwind flux is
+\begin_inset Formula 
+\[
+f_{j+1/2}^{\text{upw}}=\frac{1}{2}\left(f(u_{\mathrm{L}})+f(u_{\mathrm{R}})\right)-\frac{1}{2}\left|a(\tilde{u})\right|\left(u_{\mathrm{L}}-u_{\mathrm{R}}\right),
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+a(\tilde{u})=\begin{cases}
+\left(f(u_{\mathrm{L}})-f(u_{\mathrm{R}})\right)/\left(u_{\mathrm{L}}-u_{\mathrm{R}}\right), & u_{\mathrm{L}}\ne u_{\mathrm{R}};\\
+a(u_{\mathrm{L}})=a(u_{\mathrm{R}}), & u_{\mathrm{L}}=u_{\mathrm{R}}.
+\end{cases}
+\]
+
+\end_inset
+
+It generally requires an entropy correction.
+\end_layout
+
+\begin_layout Subsection
+Continuous Flux
+\end_layout
+
+\begin_layout Standard
+A continuous flux function 
+\begin_inset Formula $F(x)$
+\end_inset
+
+ takes the upwind flux values at the cell interfaces:
+\begin_inset Formula 
+\[
+F(x_{j\pm1/2})=f_{j\pm1/2}^{\text{upw}},
+\]
+
+\end_inset
+
+and approximates the discontinuous flux function 
+\begin_inset Formula $f_{j}(x)$
+\end_inset
+
+ in 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $u_{j}$
+\end_inset
+
+ is of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+, then 
+\begin_inset Formula $F_{j}$
+\end_inset
+
+ should be of degree 
+\begin_inset Formula $K$
+\end_inset
+
+, so that
+\begin_inset Formula 
+\[
+u_{j}^{n+1}=u_{j}^{n}-\left(\partial_{x}\,F_{j}\right)h_{t}
+\]
+
+\end_inset
+
+is of degree 
+\begin_inset Formula $K-1$
+\end_inset
+
+, too.
+ The correction function 
+\begin_inset Formula $g(\xi)\coloneqq F_{j}(\xi)-f_{j}(\xi)$
+\end_inset
+
+ should be a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ with prescribed left and right interface values
+\begin_inset Formula 
+\[
+\begin{cases}
+F_{j}(-1)-f_{j}(-1)=f_{j-1/2}^{\text{upw}}-f_{j}(-1)\\
+F_{j}(+1)-f_{j}(+1)=f_{j+1/2}^{\text{upw}}-f_{j}(+1)
+\end{cases}
+\]
+
+\end_inset
+
+and approximates the constant function 
+\begin_inset Formula $0(\xi)$
+\end_inset
+
+ in some sense.
+\end_layout
+
+\begin_layout Standard
+Define the 
+\begin_inset Formula $K$
+\end_inset
+
+-degree correction function for the Left Boundary
+\begin_inset Formula 
+\[
+g_{\text{LB}}(\xi)\begin{cases}
+=1, & \xi=-1,\\
+\approx0, & \xi\in(-1,+1),\\
+=0, & \xi=+1,
+\end{cases}
+\]
+
+\end_inset
+
+and the counterpart for the Right Boundary
+\begin_inset Formula 
+\[
+g_{\text{RB}}(\xi)\begin{cases}
+=0, & \xi=-1,\\
+\approx0, & \xi\in(-1,+1),\\
+=1, & \xi=+1.
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, the 
+\begin_inset Formula $K$
+\end_inset
+
+-degree continuous flux could be
+\begin_inset Formula 
+\[
+F_{j}(\xi)=f_{j}(\xi)+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}(\xi).
+\]
+
+\end_inset
+
+The local derivative is then
+\begin_inset Formula 
+\[
+\partial_{\xi}\,F_{j}(\xi_{k})=f_{j}'(\xi_{k})+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}'(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}'(\xi),
+\]
+
+\end_inset
+
+and the global derivative is
+\begin_inset Formula 
+\[
+\partial_{x}\,F_{j}(x_{j,k})=\frac{2}{h_{j}}\,\partial_{\xi}\,F_{j}(\xi_{k}).
+\]
+
+\end_inset
+
+Then, the original conservation law can be approximated by a system of ODEs
+\begin_inset Formula 
+\[
+\dv{t}u_{j,k}=-\partial_{x}\,F_{j}(x_{j,k}),\quad k=1,\dots,K.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Quadratures and Polynomials
+\end_layout
+
+\begin_layout Subsubsection
+Legendre
+\end_layout
+
+\begin_layout Standard
+By requiring the algebraic precision of the 
+\begin_inset Formula $K$
+\end_inset
+
+-point quadrature rule, i.e.
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
+\]
+
+\end_inset
+
+to be as high as possible, one gets the Gauss–Legendre quadrature.
+ It is exact for members in 
+\begin_inset Formula $\mathbb{P}^{2K-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The Legendre polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\mathrm{Le}_{K}(\xi)=...,
+\]
+
+\end_inset
+
+whose zeros in 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ are the Gauss–Legendre quadrature points.
+ It is easy to see that
+\begin_inset Formula 
+\[
+\mathrm{Le}_{K}(-1)=(-1)^{K},\quad\mathrm{Le}_{K}(+1)=1,\quad\mathrm{Le}_{K}\perp\mathbb{P}_{K-1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Radau
+\end_layout
+
+\begin_layout Standard
+By requiring 
+\begin_inset Formula $\xi_{1}=-1$
+\end_inset
+
+ in the 
+\begin_inset Formula $K$
+\end_inset
+
+-point quadrature rule, i.e.
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
+\]
+
+\end_inset
+
+and requiring the rule's algebraic precision to be as high as possible,
+ one gets the left Radau quadrature.
+ It is exact for members in 
+\begin_inset Formula $\mathbb{P}^{2K-2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The left Radau polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\mathrm{Ra}_{\mathrm{L},K}(\xi)=\frac{1}{2}(\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)),
+\]
+
+\end_inset
+
+whose zeros in 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ are the left Radau quadrature points.
+ Actually, 
+\begin_inset Formula $\mathrm{Ra}_{\mathrm{L},K}(\xi)$
+\end_inset
+
+ can be determined from the following 
+\begin_inset Formula $2+(K-1)$
+\end_inset
+
+ condition
+\begin_inset Formula 
+\[
+\mathrm{Ra}_{\mathrm{L},K}(-1)=0,\quad\mathrm{Ra}_{\mathrm{L},K}(+1)=1,\quad\mathrm{Ra}_{\mathrm{L},K}\perp\mathbb{P}_{K-2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similarly, the right Radau polynomials of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+\mathrm{Ra}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)).
+\]
+
+\end_inset
+
+ It is easy to see that
+\begin_inset Formula 
+\[
+\mathrm{Ra}_{\mathrm{R},K}(-1)=1,\quad\mathrm{Ra}_{\mathrm{R},K}(+1)=0,\quad\mathrm{Ra}_{\mathrm{R},K}\perp\mathbb{P}_{K-2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Lobatto
+\end_layout
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $K\ge2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By requiring 
+\begin_inset Formula $\xi_{1}=-1$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi_{K}=+1$
+\end_inset
+
+ in the 
+\begin_inset Formula $K$
+\end_inset
+
+-point quadrature rule, i.e.
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,\quad\xi_{K}=+1,
+\]
+
+\end_inset
+
+and requiring the rule's algebraic precision to be as high as possible,
+ one gets the Lobatto quadrature.
+ It is exact for members in 
+\begin_inset Formula $\mathbb{P}^{2K-3}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The Lobatto polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\mathrm{Lo}_{K}(\xi)=\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-2}(\xi),
+\]
+
+\end_inset
+
+whose zeros in 
+\begin_inset Formula $[-1,+1]$
+\end_inset
+
+ are the Lobatto quadrature points.
+ It is easy to see that
+\begin_inset Formula 
+\[
+\mathrm{Lo}_{K}(-1)=0,\quad\mathrm{Lo}_{K}(+1)=0,\quad\mathrm{Lo}_{K}\perp\mathbb{P}_{K-3}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Correction Functions
+\end_layout
+
+\begin_layout Standard
+To define a semi-discrete scheme, the only thing left is to define 
+\begin_inset Formula $g(\xi)\equiv g_{\text{LB}}(\xi)$
+\end_inset
+
+ (
+\begin_inset Formula $g_{\text{RB}}$
+\end_inset
+
+ can be obtained by symmetry), which is a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ and already has two conditions specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ conditions.
+\end_layout
+
+\begin_layout Standard
+Note that a polynomial of degree 
+\begin_inset Formula $K$
+\end_inset
+
+ has atmost 
+\begin_inset Formula $K$
+\end_inset
+
+ (real) zeros.
+ For 
+\begin_inset Formula $g(\xi)$
+\end_inset
+
+, one of the zeros (denoted as 
+\begin_inset Formula $\zeta_{K}=1$
+\end_inset
+
+) has been specified.
+ So one only need to specify the other 
+\begin_inset Formula $K-1$
+\end_inset
+
+ zeros (denoted as 
+\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K-1}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsubsection
+Discontinous Galerkin
+\end_layout
+
+\begin_layout Standard
+Requiring 
+\begin_inset Formula $g\perp\mathbb{P}_{K-1}$
+\end_inset
+
+ is impossible to give
+\begin_inset Formula 
+\[
+g(-1)=1,\quad g(+1)=0.
+\]
+
+\end_inset
+
+Requiring 
+\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\end_inset
+
+ and the above two conditions gives
+\begin_inset Formula 
+\[
+g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi))\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
+\]
+
+\end_inset
+
+which leads to a simplified version of the DG scheme.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Staggered Grid
+\end_layout
+
+\begin_layout Standard
+Consider the 
+\begin_inset Formula $K+1$
+\end_inset
+
+ Chebyshev–Lobatto points
+\begin_inset Formula 
+\[
+\zeta_{k}=-\cos(\frac{k\pi}{K}),\quad k=0,1,\dots,K.
+\]
+
+\end_inset
+
+Requiring
+\begin_inset Formula 
+\[
+g(\zeta_{0})=1,\quad g(\zeta_{k})=0,\quad k=1,\dots,K,
+\]
+
+\end_inset
+
+which leads to a simplified version of the SG scheme.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is less accurate than DG but has a CFL limit more than
+ 
+\begin_inset Formula $3/2$
+\end_inset
+
+ as large as that of DG.
+\end_layout
+
+\begin_layout Subsubsection
+Lumping Lobatto
+\end_layout
+
+\begin_layout Standard
+Relaxing 
+\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\end_inset
+
+ in the DG scheme to 
+\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
+\end_inset
+
+ and requiring 
+\begin_inset Formula $g'(1)=0$
+\end_inset
+
+ (i.e.
+ requiring 
+\begin_inset Formula $\xi=1$
+\end_inset
+
+ to be a zero of multiplicity 2) gives
+\begin_inset Formula 
+\[
+g_{\text{Lump, Lo}}=\frac{K-1}{2K-1}\mathrm{Ra}_{\mathrm{R},K}(\xi)+\frac{K}{2K-1}\mathrm{Ra}_{\mathrm{R},K-1}(\xi),
+\]
+
+\end_inset
+
+whose derivative vanishes at the right 
+\begin_inset Formula $K-1$
+\end_inset
+
+ Lobatto points and thus corrects 
+\begin_inset Formula $f_{j}'(\xi)$
+\end_inset
+
+ only at the left boundary.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-2$
+\end_inset
+
+ and has a CFL limit roughly twice as large as that of DG.
+\end_layout
+
+\begin_layout Subsubsection
+Other Choices
+\end_layout
+
+\begin_layout Standard
+Requiring 
+\begin_inset Formula $g(-1)=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=1$
+\end_inset
+
+ to be a zero of multiplicity 
+\begin_inset Formula $m$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+\dv[l]{\xi}g(1)=0,\quad l=0,1,\dots,m-1,
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $g\perp\mathbb{P}_{K-1-m}$
+\end_inset
+
+ , gives 
+\begin_inset Formula $g_{m}$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $g_{1}=g_{\text{DG}}$
+\end_inset
+
+, 
+\begin_inset Formula $g_{2}=g_{\text{Lump, Lo}}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-m$
+\end_inset
+
+.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Huynh_2007"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+For 2D Conservation Laws
+\end_layout
+
+\begin_layout Subsection
+FR on Global Triangles
+\end_layout
+
+\begin_layout Standard
+标量守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,u+\divg\vec{f}=0,
+\]
+
+\end_inset
+
+在单元 
+\begin_inset Formula $E$
+\end_inset
+
+ 上，以关于 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 的 
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 作为对 
+\begin_inset Formula $u$
+\end_inset
+
+ 的近似，以分量为关于 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ 的 
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式的向量函数 
+\begin_inset Formula $\vec{f}^{h}$
+\end_inset
+
+作为对 
+\begin_inset Formula $\vec{f}$
+\end_inset
+
+ 的近似。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\forall\phi\in\mathbb{P}_{K}(E)$
+\end_inset
+
+，该守恒律成立的必要条件为
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0.
+\]
+
+\end_inset
+
+分部积分一次，得弱形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\vec{\nu}\vdot\vec{f}^{h}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0,
+\]
+
+\end_inset
+
+将 
+\begin_inset Formula $\vec{\nu}\vdot\vec{f}^{h}\eqqcolon f_{\nu}^{\text{int}}$
+\end_inset
+
+ 用迎风通量 
+\begin_inset Formula $f_{\nu}^{\text{upw}}$
+\end_inset
+
+ 替换，得弱形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\text{upw}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0.
+\]
+
+\end_inset
+
+由此可以导出 DG 格式。
+\end_layout
+
+\begin_layout Standard
+再次分部积分，并记通量阶跃值
+\begin_inset Formula 
+\[
+[f_{\nu}]\coloneqq f_{\nu}^{\text{upw}}-f_{\nu}^{\text{int}},
+\]
+
+\end_inset
+
+得强形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle[f_{\nu}]\vert\phi\rangle_{\partial E}+\langle\divg\vec{f}^{h}\vert\phi\rangle_{E}=0,
+\]
+
+\end_inset
+
+为提取出 
+\begin_inset Formula $\phi$
+\end_inset
+
+，需将 
+\begin_inset Formula $\partial E$
+\end_inset
+
+ 上的积分化为 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的积分。
+\end_layout
+
+\begin_layout Standard
+三角形 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的次数不超过 
+\begin_inset Formula $K$
+\end_inset
+
+ 的单项式有 
+\begin_inset Formula 
+\[
+\dim\mathbb{P}_{K}(E)=K_{N}=\binom{K+2}{2}
+\]
+
+\end_inset
+
+个。令 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+ 为 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个多项式基；令 
+\begin_inset Formula $(x,y)_{e,l}$
+\end_inset
+
+ 为 
+\begin_inset Formula $E$
+\end_inset
+
+ 的第 
+\begin_inset Formula $e$
+\end_inset
+
+ 条边上的第 
+\begin_inset Formula $l$
+\end_inset
+
+ 个（共 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 个）通量计算点；令 
+\begin_inset Formula $\varphi_{e,l}$
+\end_inset
+
+ 为该点对应的 
+\begin_inset Formula $K$
+\end_inset
+
+ 次 Lagrange 多项式，并将其延拓到 
+\begin_inset Formula $\partial E$
+\end_inset
+
+ 上，从而有
+\begin_inset Formula 
+\[
+[f_{\nu}]\approx\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\varphi_{e,l}(x,y)
+\]
+
+\end_inset
+
+更进一步地，可以将 
+\begin_inset Formula $\varphi_{e,l}$
+\end_inset
+
+ 延拓到整个 
+\begin_inset Formula $E$
+\end_inset
+
+上，即寻找 
+\begin_inset Formula $K_{N}$
+\end_inset
+
+ 个独立参数以确定 
+\begin_inset Formula $\gamma_{e,l}\in\mathbb{P}_{K}(E)$
+\end_inset
+
+，使其满足以下 
+\begin_inset Formula $K_{N}$
+\end_inset
+
+ 个独立等式：
+\begin_inset Formula 
+\[
+\langle\gamma_{e,l}\vert\phi_{k}\rangle_{E}=\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial E},\quad k=1,\dots,K_{N}.
+\]
+
+\end_inset
+
+利用所得的 
+\begin_inset Formula $\gamma_{e,l}$
+\end_inset
+
+ 可以将 
+\begin_inset Formula $\partial E$
+\end_inset
+
+ 上的积分化为 
+\begin_inset Formula $E$
+\end_inset
+
+ 上 的积分：
+\begin_inset Formula 
+\[
+\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial E} & \approx\left\langle \sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi_{k}\right\rangle _{\partial E}\\
+ & =\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial E}=\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\langle\gamma_{e,l}\vert\phi_{k}\rangle_{E}
+\end{aligned}
+\]
+
+\end_inset
+
+从而可以提出 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+，得 FR 格式。
+\end_layout
+
+\begin_layout Standard
+若通量计算点 
+\begin_inset Formula $(x,y)_{e,l}$
+\end_inset
+
+ 取为所属边的 Gauss 积分点，则该点对应的权重为
+\begin_inset Formula 
+\[
+w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
+\]
+
+\end_inset
+
+又因 
+\begin_inset Formula $(\varphi_{e,l}\,\phi)\in\mathbb{P}_{2K}(T)$
+\end_inset
+
+，故 
+\begin_inset Formula $\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}$
+\end_inset
+
+ 可以被 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 点 Gauss 积分公式精确计算，即
+\begin_inset Formula 
+\[
+\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=\sum_{k=1}^{K+1}w_{e,k}\,\phi(x_{e,k},y_{e,k})=w_{e,l}\,\phi(x_{e,k},y_{e,l}),
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\langle\gamma_{e,l}\vert\phi\rangle_{E}=\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=w_{e,l}\,\phi(x_{e,k},y_{e,l}),
+\]
+
+\end_inset
+
+因此 
+\begin_inset Formula $\gamma_{e,l}/w_{e,l}$
+\end_inset
+
+ 是 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的 Dirac 函数的一种近似。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $\gamma_{e,l}$
+\end_inset
+
+ 是对通量散度 
+\begin_inset Formula $\divg\vec{f}^{h}$
+\end_inset
+
+ 的修正。若能构造出分量为 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 次多项式的 
+\begin_inset Formula $\vec{g}_{e,l}$
+\end_inset
+
+，使得
+\begin_inset Formula 
+\[
+\divg\vec{g}_{e,l}=\gamma_{e,l},
+\]
+
+\end_inset
+
+则得对通量本身的修正，即连续通量
+\begin_inset Formula 
+\[
+\vec{F}^{h}=\vec{f}^{h}+\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\vec{g}_{e,l},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+FR on Standard Triangule
+\end_layout
+
+\begin_layout Standard
+利用坐标变换 
+\begin_inset Formula $\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}$
+\end_inset
+
+ 及相应的导数变换（下标表示求导）
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
+y_{\xi} & y_{\eta}
+\end{bmatrix}}_{\underline{J}},
+\]
+
+\end_inset
+
+可将一般三角形 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,u+\partial_{x}\,f+\partial_{y}\,g=0,
+\]
+
+\end_inset
+
+化为标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}=J\,u,\quad\begin{bmatrix}\hat{f}\\
+\hat{g}
+\end{bmatrix}=\underbrace{\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f\\
+g
+\end{bmatrix}.
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Proof
+由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
+y_{\xi} & y_{\eta}
+\end{bmatrix}}_{\underline{J}}
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{\underline{J}^{-1}},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{x} & f_{y}\\
+g_{x} & g_{y}
+\end{bmatrix}=\begin{bmatrix}f_{\xi} & f_{\eta}\\
+g_{\xi} & g_{\eta}
+\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}}_{\underline{J}^{-1}}.
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}f_{x}+g_{y} & =\begin{bmatrix}f_{\xi} & f_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}y_{\eta}\\
+-y_{\xi}
+\end{bmatrix}+\begin{bmatrix}g_{\xi} & g_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}-x_{\eta}\\
+x_{\xi}
+\end{bmatrix}\\
+ & =\left(f_{\xi}\,y_{\eta}-f_{\eta}\,y_{\xi}-g_{\xi}\,x_{\eta}+g_{\eta}\,x_{\xi}\right)J^{-1}.
+\end{aligned}
+\]
+
+\end_inset
+
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{f}\\
+\hat{g}
+\end{bmatrix}=\begin{bmatrix}y_{\eta} & -x_{\eta}\\
+-y_{\xi} & x_{\xi}
+\end{bmatrix}\begin{bmatrix}f\\
+g
+\end{bmatrix}\equiv J\,\underline{J}^{-1}\begin{bmatrix}f\\
+g
+\end{bmatrix},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\hat{f}=f\,y_{\eta}-g\,x_{\eta},\quad\hat{g}=-f\,y_{\xi}+g\,x_{\xi},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta} & =\left(f\,y_{\eta}-g\,x_{\eta}\right)_{\xi}+\left(-f\,y_{\xi}+g\,x_{\xi}\right)_{\eta}\\
+\text{展开乘积之导} & =\left(f_{\xi}\,y_{\eta}+f\,y_{\eta\xi}\right)-\left(g_{\xi}\,x_{\eta}+g\,x_{\eta\xi}\right)-\left(f_{\eta}\,y_{\xi}+f\,y_{\xi\eta}\right)+\left(g_{\eta}\,x_{\xi}+g\,x_{\xi\eta}\right)\\
+\text{合并二阶导数} & =\underbrace{\left(f_{\xi}\,y_{\eta}-g_{\xi}\,x_{\eta}-f_{\eta}\,y_{\xi}+g_{\eta}\,x_{\xi}\right)}_{\left(f_{x}+g_{y}\right)J}+\underbrace{\left(f\,y_{\eta\xi}-g\,x_{\eta\xi}-f\,y_{\xi\eta}+g\,x_{\xi\eta}\right)}_{0}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Proof
+上述证明可推广到三维。由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix}}_{\underline{J}}
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underbrace{J^{-1}\overbrace{\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}}}_{\underline{J}^{-1}}^{\underline{J}^{*}},
+\]
+
+\end_inset
+
+或
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}J=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{x} & f_{y} & f_{z}\\
+g_{x} & g_{y} & g_{z}\\
+h_{x} & h_{y} & h_{z}
+\end{bmatrix}J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\\
+g_{\xi} & g_{\eta} & g_{\zeta}\\
+h_{\xi} & h_{\eta} & h_{\zeta}
+\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度与 
+\begin_inset Formula $J$
+\end_inset
+
+ 之积为
+\begin_inset Formula 
+\[
+\left(f_{x}+g_{y}+h_{z}\right)J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle+\begin{bmatrix}g_{\xi} & g_{\eta} & g_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle+\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。
+\end_layout
+
+\begin_layout Proof
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{f}\\
+\hat{g}\\
+\hat{h}
+\end{bmatrix}=\underline{J}^{*}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix}\equiv\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
+ & +\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f+\langle2\vert\underline{J}^{*}\vert2\rangle\,g+\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}\\
+ & +\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f+\langle3\vert\underline{J}^{*}\vert2\rangle\,g+\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta},
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\langle r\vert\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $r$
+\end_inset
+
+ 行、第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。按 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 分行，即
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+分别考虑一阶导数与二阶导数。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{不含二阶导数的项} & =\underbrace{\langle1\vert\underline{J}^{*}\vert1\rangle\,f_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle\,f_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle\,f_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert2\rangle\,g_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle\,g_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle\,g_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert3\rangle\,h_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle\,h_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle\,h_{\zeta}}_{\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle}\\
+ & =\left(f_{x}+g_{y}+h_{z}\right)J.
+\end{aligned}
+\]
+
+\end_inset
+
+于是，只需证明剩余项之和为零。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{含二阶导数的项} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle_{\zeta}\right)f\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle_{\zeta}\right)g\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle_{\zeta}\right)h.
+\end{aligned}
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 的系数分别等于
+\begin_inset Formula 
+\[
+\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}
+\end{bmatrix},
+\]
+
+\end_inset
+
+三者在形式上相同，故只需证明其中之一为零。考虑 
+\begin_inset Formula $f$
+\end_inset
+
+ 的系数
+\begin_inset Formula 
+\[
+\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi}+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta}+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta},
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+展开乘积之导，得
+\begin_inset Formula 
+\[
+\begin{aligned}\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi} & =y_{\eta\xi}\,z_{\zeta}-y_{\zeta\xi}\,z_{\eta}+y_{\eta}\,z_{\zeta\xi}-y_{\zeta}\,z_{\eta\xi},\\
+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta} & =y_{\zeta\eta}\,z_{\xi}-y_{\xi\eta}\,z_{\zeta}+y_{\zeta}\,z_{\xi\eta}-y_{\xi}\,z_{\zeta\eta},\\
+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta} & =y_{\xi\zeta}\,z_{\eta}-y_{\eta\zeta}\,z_{\xi}+y_{\xi}\,z_{\eta\zeta}-y_{\eta}\,z_{\xi\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+利用交叉导数相等，可得三行之和为零。
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+局部坐标下的标量函数 
+\begin_inset Formula $\hat{u},\hat{f},\hat{g}$
+\end_inset
+
+ 可以由标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的 
+\begin_inset Formula $p$
+\end_inset
+
+-次 Lagrange 插值多项式来近似：
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{u}(\vec{\rho})\\
+\hat{f}(\vec{\rho})\\
+\hat{g}(\vec{\rho})
+\end{bmatrix}\approx\begin{bmatrix}\hat{u}^{\delta D}(\vec{\rho})\\
+\hat{f}^{\delta D}(\vec{\rho})\\
+\hat{g}^{\delta D}(\vec{\rho})
+\end{bmatrix}=\sum_{i=1}^{N_{T}(p)}\begin{bmatrix}\hat{u}_{i}^{\delta D}\\
+\hat{f}_{i}^{\delta D}\\
+\hat{g}_{i}^{\delta D}
+\end{bmatrix}l_{i}(\vec{\rho}),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $N_{T}(p)\equiv\binom{p+2}{2}$
+\end_inset
+
+ 为插值点个数，上标中的 
+\begin_inset Formula $D$
+\end_inset
+
+ 表示间断。于是，间断通量的散度可表示为
+\begin_inset Formula 
+\[
+\partial_{\xi}\,\hat{f}^{\delta D}+\partial_{\eta}\,\hat{g}^{\delta D}\approx\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\eta}\right).
+\]
+
+\end_inset
+
+定义局部坐标下的修正通量
+\begin_inset Formula 
+\[
+\hat{\vec{f}}^{\delta C}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho}),
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N_{\partial T}(p)$
+\end_inset
+
+ 为边界通量点总数；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $[\hat{f}_{\nu}]\coloneqq\hat{f}_{\nu}^{\delta I}-\hat{\vec{\nu}}\vdot\hat{\vec{f}}^{\delta D}$
+\end_inset
+
+ 为通量阶跃值；
+\end_layout
+
+\begin_layout Itemize
+向量修正函数 
+\begin_inset Formula $\vec{h}_{j}$
+\end_inset
+
+ 取自 Raviart–Thomas 空间：
+\begin_inset Formula 
+\[
+\begin{aligned}\mathbb{RT}_{p}(T) & \coloneqq\left(\mathbb{P}_{p}(T)\right)^{2}+\vec{\rho}\,\mathbb{P}_{p}(T)\\
+ & =\left\{ \begin{bmatrix}f(\xi,\eta)\\
+g(\xi,\eta)
+\end{bmatrix}+\begin{bmatrix}\xi\\
+\eta
+\end{bmatrix}h(\xi,\eta):(f,g,h)\in\left(\mathbb{P}_{p}(T)\right)^{3}\right\} 
+\end{aligned}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\divg\vec{h}_{j}\in\mathbb{P}_{p}(T)\impliedby\mathbb{RT}_{p}(T)\subset\left(\mathbb{P}_{p+1}(T)\right)^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{\vec{\nu}}\vdot\vec{h}_{j}|_{\partial T}\in\mathbb{R}_{p}(\partial T)\equiv\left\{ f:\left(f\in L^{2}(\partial T)\right)\land\left(f|_{\Gamma_{e}}\in\mathbb{P}_{p}(\Gamma_{e}),\forall e\right)\right\} ,
+\]
+
+\end_inset
+
+及 Kronecker delta 性质：
+\begin_inset Formula 
+\[
+\vec{h}_{j}(\vec{\rho}_{k})\vdot\vec{\nu}(\vec{\rho}_{k})=\delta_{jk}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由此得近似通量在边界求值点上的值：
+\begin_inset Formula 
+\[
+\hat{\vec{f}}^{\delta C}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[\halfnote\hat{f}_{\nu}]_{j},\quad\hat{\vec{f}}^{\delta}(\vec{\rho}_{j})=\hat{f}_{\nu}^{\delta I}(\vec{\rho}_{j}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset Formula 
+\[
+\hat{u}(\vec{\rho})\approx\hat{u}^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}\hat{u}_{i}^{\delta D}\,l_{i}(\vec{\rho})
+\]
+
+\end_inset
+
+及
+\begin_inset Formula 
+\[
+\hat{\vec{f}}(\vec{\rho})\approx\hat{\vec{f}}^{\delta D}(\vec{\rho})+\hat{\vec{f}}^{\delta C}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}(p)}\hat{\vec{f}}_{i}^{\delta D}\,l_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho})\right)
+\]
+
+\end_inset
+
+代入守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $\vec{\rho}_{k}$
+\end_inset
+
+ 上计算函数值，并利用 
+\begin_inset Formula $l_{i}(\vec{\rho}_{k})=\delta_{ik}$
+\end_inset
+
+，得半离散 FR 格式：
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{\hat{u}_{k}^{\delta D}}{t} & =-\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\eta}\right)\\
+ & -\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\phi_{j}(\vec{\rho}_{k}),\quad k=1,\dots,N_{T}(p).
+\end{aligned}
+\]
+
+\end_inset
+
+上述 FR 格式的具体形式，取决于
+\end_layout
+
+\begin_layout Itemize
+单元内部求值点 
+\begin_inset Formula $\left\{ \vec{\rho}_{k}\right\} _{k=1}^{N_{T}(p)}$
+\end_inset
+
+ 的分布。
+\end_layout
+
+\begin_layout Itemize
+单元边界求值点 
+\begin_inset Formula $\left\{ \vec{\rho}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 的分布。
+\end_layout
+
+\begin_layout Itemize
+向量修正函数 
+\begin_inset Formula $\left\{ \vec{h}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 或标量修正场 
+\begin_inset Formula $\left\{ \phi_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\end_inset
+
+ 的选取。
+\end_layout
+
+\begin_layout Itemize
+法向数值通量 
+\begin_inset Formula $\hat{f}_{\nu}$
+\end_inset
+
+ 的构造。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
