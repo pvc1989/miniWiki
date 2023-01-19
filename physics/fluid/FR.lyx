@@ -1324,7 +1324,7 @@ y_{\xi} & y_{\eta}
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,u+\partial_{x}\,f+\partial_{y}\,g=0,
+\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f+\partial_{y}\,g,
 \]
 
 \end_inset
@@ -1336,7 +1336,7 @@ y_{\xi} & y_{\eta}
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
+\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F+\partial_{\eta}\,G,
 \]
 
 \end_inset
@@ -1344,8 +1344,8 @@ y_{\xi} & y_{\eta}
 其中
 \begin_inset Formula 
 \[
-\hat{u}=J\,u,\quad\begin{bmatrix}\hat{f}\\
-\hat{g}
+U=J\,u,\quad\begin{bmatrix}F\\
+G
 \end{bmatrix}=\underbrace{\begin{bmatrix}y_{\eta} & -x_{\eta}\\
 -y_{\xi} & x_{\xi}
 \end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f\\
@@ -1411,8 +1411,8 @@ x_{\xi}
 定义局部坐标下的通量为
 \begin_inset Formula 
 \[
-\begin{bmatrix}\hat{f}\\
-\hat{g}
+\begin{bmatrix}F\\
+G
 \end{bmatrix}=\begin{bmatrix}y_{\eta} & -x_{\eta}\\
 -y_{\xi} & x_{\xi}
 \end{bmatrix}\begin{bmatrix}f\\
@@ -1427,7 +1427,7 @@ g
 即
 \begin_inset Formula 
 \[
-\hat{f}=f\,y_{\eta}-g\,x_{\eta},\quad\hat{g}=-f\,y_{\xi}+g\,x_{\xi},
+F=f\,y_{\eta}-g\,x_{\eta},\quad G=-f\,y_{\xi}+g\,x_{\xi},
 \]
 
 \end_inset
@@ -1435,7 +1435,7 @@ g
 则其在局部坐标下的散度为
 \begin_inset Formula 
 \[
-\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta} & =\left(f\,y_{\eta}-g\,x_{\eta}\right)_{\xi}+\left(-f\,y_{\xi}+g\,x_{\xi}\right)_{\eta}\\
+\begin{aligned}F_{\xi}+G_{\eta} & =\left(f\,y_{\eta}-g\,x_{\eta}\right)_{\xi}+\left(-f\,y_{\xi}+g\,x_{\xi}\right)_{\eta}\\
 \text{展开乘积之导} & =\left(f_{\xi}\,y_{\eta}+f\,y_{\eta\xi}\right)-\left(g_{\xi}\,x_{\eta}+g\,x_{\eta\xi}\right)-\left(f_{\eta}\,y_{\xi}+f\,y_{\xi\eta}\right)+\left(g_{\eta}\,x_{\xi}+g\,x_{\xi\eta}\right)\\
 \text{合并二阶导数} & =\underbrace{\left(f_{\xi}\,y_{\eta}-g_{\xi}\,x_{\eta}-f_{\eta}\,y_{\xi}+g_{\eta}\,x_{\xi}\right)}_{\left(f_{x}+g_{y}\right)J}+\underbrace{\left(f\,y_{\eta\xi}-g\,x_{\eta\xi}-f\,y_{\xi\eta}+g\,x_{\xi\eta}\right)}_{0}
 \end{aligned}
@@ -1535,9 +1535,9 @@ h_{\xi} & h_{\eta} & h_{\zeta}
 定义局部坐标下的通量为
 \begin_inset Formula 
 \[
-\begin{bmatrix}\hat{f}\\
-\hat{g}\\
-\hat{h}
+\begin{bmatrix}F\\
+G\\
+H
 \end{bmatrix}=\underline{J}^{*}\begin{bmatrix}f\\
 g\\
 h
@@ -1555,7 +1555,7 @@ h
 则其在局部坐标下的散度为
 \begin_inset Formula 
 \[
-\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
+\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
  & +\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f+\langle2\vert\underline{J}^{*}\vert2\rangle\,g+\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}\\
  & +\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f+\langle3\vert\underline{J}^{*}\vert2\rangle\,g+\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta},
 \end{aligned}
@@ -1586,7 +1586,7 @@ h
  分行，即
 \begin_inset Formula 
 \[
-\begin{aligned}\hat{f}_{\xi}+\hat{g}_{\eta}+\hat{h}_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
+\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
  & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\zeta}\\
  & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta}.
 \end{aligned}
@@ -1691,7 +1691,7 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 
 \begin_layout Standard
 局部坐标下的标量函数 
-\begin_inset Formula $\hat{u},\hat{f},\hat{g}$
+\begin_inset Formula $U,F,G$
 \end_inset
 
  可以由标准三角形 
@@ -1705,15 +1705,15 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 -次 Lagrange 插值多项式来近似：
 \begin_inset Formula 
 \[
-\begin{bmatrix}\hat{u}(\vec{\rho})\\
-\hat{f}(\vec{\rho})\\
-\hat{g}(\vec{\rho})
-\end{bmatrix}\approx\begin{bmatrix}\hat{u}^{\delta D}(\vec{\rho})\\
-\hat{f}^{\delta D}(\vec{\rho})\\
-\hat{g}^{\delta D}(\vec{\rho})
-\end{bmatrix}=\sum_{i=1}^{N_{T}(p)}\begin{bmatrix}\hat{u}_{i}^{\delta D}\\
-\hat{f}_{i}^{\delta D}\\
-\hat{g}_{i}^{\delta D}
+\begin{bmatrix}U(\vec{\rho})\\
+F(\vec{\rho})\\
+G(\vec{\rho})
+\end{bmatrix}\approx\begin{bmatrix}U^{\delta D}(\vec{\rho})\\
+F^{\delta D}(\vec{\rho})\\
+G^{\delta D}(\vec{\rho})
+\end{bmatrix}=\sum_{i=1}^{N_{T}(p)}\begin{bmatrix}U_{i}^{\delta D}\\
+F_{i}^{\delta D}\\
+G_{i}^{\delta D}
 \end{bmatrix}l_{i}(\vec{\rho}),
 \]
 
@@ -1723,14 +1723,14 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 \begin_inset Formula $N_{T}(p)\equiv\binom{p+2}{2}$
 \end_inset
 
- 为插值点个数，上标中的 
+ 为内部取值点个数，上标中的 
 \begin_inset Formula $D$
 \end_inset
 
  表示间断。于是，间断通量的散度可表示为
 \begin_inset Formula 
 \[
-\partial_{\xi}\,\hat{f}^{\delta D}+\partial_{\eta}\,\hat{g}^{\delta D}\approx\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\eta}\right).
+\partial_{\vec{\rho}}\vdot\vec{F}^{\delta D}\equiv\partial_{\xi}\,F^{\delta D}+\partial_{\eta}\,G^{\delta D}\approx\sum_{i=1}^{N_{T}(p)}\left(F_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\xi}+G_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\eta}\right).
 \]
 
 \end_inset
@@ -1738,7 +1738,7 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 定义局部坐标下的修正通量
 \begin_inset Formula 
 \[
-\hat{\vec{f}}^{\delta C}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho}),
+\vec{F}^{\delta C}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho}),
 \]
 
 \end_inset
@@ -1750,11 +1750,11 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 \begin_inset Formula $N_{\partial T}(p)$
 \end_inset
 
- 为边界通量点总数；
+ 为边界取值点总数；
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $[\hat{f}_{\nu}]\coloneqq\hat{f}_{\nu}^{\delta I}-\hat{\vec{\nu}}\vdot\hat{\vec{f}}^{\delta D}$
+\begin_inset Formula $[F_{\nu}]\coloneqq F_{\nu}^{\delta I}-\vec{\nu}\vdot\vec{F}^{\delta D}$
 \end_inset
 
  为通量阶跃值；
@@ -1762,7 +1762,7 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 
 \begin_layout Itemize
 向量修正函数 
-\begin_inset Formula $\vec{h}_{j}$
+\begin_inset Formula $\vec{\varphi}_{j}$
 \end_inset
 
  取自 Raviart–Thomas 空间：
@@ -1782,7 +1782,7 @@ g(\xi,\eta)
 从而有
 \begin_inset Formula 
 \[
-\divg\vec{h}_{j}\in\mathbb{P}_{p}(T)\impliedby\mathbb{RT}_{p}(T)\subset\left(\mathbb{P}_{p+1}(T)\right)^{2}
+\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}\in\mathbb{P}_{p}(T)\impliedby\mathbb{RT}_{p}(T)\subset\left(\mathbb{P}_{p+1}(T)\right)^{2}
 \]
 
 \end_inset
@@ -1790,7 +1790,7 @@ g(\xi,\eta)
 
 \begin_inset Formula 
 \[
-\hat{\vec{\nu}}\vdot\vec{h}_{j}|_{\partial T}\in\mathbb{R}_{p}(\partial T)\equiv\left\{ f:\left(f\in L^{2}(\partial T)\right)\land\left(f|_{\Gamma_{e}}\in\mathbb{P}_{p}(\Gamma_{e}),\forall e\right)\right\} ,
+\vec{\nu}\vdot\vec{\varphi}_{j}|_{\partial T}\in\mathbb{R}_{p}(\partial T)\equiv\left\{ f:\left(f\in L^{2}(\partial T)\right)\land\left(f|_{\Gamma_{e}}\in\mathbb{P}_{p}(\Gamma_{e}),\forall e\right)\right\} ,
 \]
 
 \end_inset
@@ -1798,7 +1798,7 @@ g(\xi,\eta)
 及 Kronecker delta 性质：
 \begin_inset Formula 
 \[
-\vec{h}_{j}(\vec{\rho}_{k})\vdot\vec{\nu}(\vec{\rho}_{k})=\delta_{jk}.
+\vec{\varphi}_{j}(\vec{\rho}_{k})\vdot\vec{\nu}(\vec{\rho}_{k})=\delta_{jk}.
 \]
 
 \end_inset
@@ -1810,7 +1810,7 @@ g(\xi,\eta)
 由此得近似通量在边界求值点上的值：
 \begin_inset Formula 
 \[
-\hat{\vec{f}}^{\delta C}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[\halfnote\hat{f}_{\nu}]_{j},\quad\hat{\vec{f}}^{\delta}(\vec{\rho}_{j})=\hat{f}_{\nu}^{\delta I}(\vec{\rho}_{j}).
+\vec{F}^{\delta C}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[F_{\nu}]_{j},\quad\vec{F}^{\delta}(\vec{\rho}_{j})=F_{\nu}^{\delta I}(\vec{\rho}_{j}).
 \]
 
 \end_inset
@@ -1822,7 +1822,7 @@ g(\xi,\eta)
 将
 \begin_inset Formula 
 \[
-\hat{u}(\vec{\rho})\approx\hat{u}^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}\hat{u}_{i}^{\delta D}\,l_{i}(\vec{\rho})
+U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta D}\,l_{i}(\vec{\rho})
 \]
 
 \end_inset
@@ -1830,32 +1830,32 @@ g(\xi,\eta)
 及
 \begin_inset Formula 
 \[
-\hat{\vec{f}}(\vec{\rho})\approx\hat{\vec{f}}^{\delta D}(\vec{\rho})+\hat{\vec{f}}^{\delta C}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}(p)}\hat{\vec{f}}_{i}^{\delta D}\,l_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\vec{h}_{j}(\vec{\rho})\right)
+\vec{F}(\vec{\rho})\approx\vec{F}^{\delta}(\vec{\rho})=\vec{F}^{\delta D}(\vec{\rho})+\vec{F}^{\delta C}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}(p)}\vec{F}_{i}^{\delta D}\,l_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho})\right)
 \]
 
 \end_inset
 
-代入守恒律
-\begin_inset Formula 
-\[
-\partial_{t}\,\hat{u}+\partial_{\xi}\,\hat{f}+\partial_{\eta}\,\hat{g}=0,
-\]
-
-\end_inset
-
-在 
+代入 
 \begin_inset Formula $\vec{\rho}_{k}$
 \end_inset
 
- 上计算函数值，并利用 
+ 点的守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,U^{\delta D}(\vec{\rho}_{k})+\partial_{\vec{\rho}}\vdot\vec{F}^{\delta}(\vec{\rho}_{k})=0,
+\]
+
+\end_inset
+
+并利用 
 \begin_inset Formula $l_{i}(\vec{\rho}_{k})=\delta_{ik}$
 \end_inset
 
 ，得半离散 FR 格式：
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{\hat{u}_{k}^{\delta D}}{t} & =-\sum_{i=1}^{N_{T}(p)}\left(\hat{f}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\xi}+\hat{g}_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\eta}\right)\\
- & -\sum_{j=1}^{N_{\partial T}(p)}[\hat{f}_{\nu}]_{j}\,\phi_{j}(\vec{\rho}_{k}),\quad k=1,\dots,N_{T}(p).
+\begin{aligned}\dv{U_{k}^{\delta D}}{t} & =-\sum_{i=1}^{N_{T}(p)}\left(F_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\xi}+G_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\eta}\right)\\
+ & -\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\underbrace{\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}}_{\phi_{j}}(\vec{\rho}_{k}),\quad k=1,\dots,N_{T}(p).
 \end{aligned}
 \]
 
@@ -1882,11 +1882,11 @@ g(\xi,\eta)
 
 \begin_layout Itemize
 向量修正函数 
-\begin_inset Formula $\left\{ \vec{h}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\begin_inset Formula $\left\{ \vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
 \end_inset
 
  或标量修正场 
-\begin_inset Formula $\left\{ \phi_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
+\begin_inset Formula $\left\{ \phi_{j}\equiv\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
 \end_inset
 
  的选取。
@@ -1894,7 +1894,7 @@ g(\xi,\eta)
 
 \begin_layout Itemize
 法向数值通量 
-\begin_inset Formula $\hat{f}_{\nu}$
+\begin_inset Formula $F_{\nu}$
 \end_inset
 
  的构造。
