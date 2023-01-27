@@ -84,9 +84,9 @@ title: 数据结构
 ## [最小展开树](./graph.md#最小展开树)
 [Kruskal](./graph.md#Kruskal)、[Prim](./graph.md#Prim)
 ## [最短路径](./graph.md#最短路径)
-[Dijkstra](./graph.md#Dijkstra)、[Bellman–Ford](./graph.md#Bellman–Ford)
+[Dijkstra](./graph.md#Dijkstra)、[Bellman–Ford](./graph.md#bellmanford)
 ## [最大流、最小割](./graph.md#最大流、最小割)
-[Ford–Fulkerson](./graph.md#Ford–Fulkerson)、[最大流–最小割定理](./graph.md#最大流–最小割定理)
+[Ford–Fulkerson](./graph.md#fordfulkerson)、[最大流–最小割定理](./graph.md#最大流–最小割定理)
 
 # [串 (Strings)](./string.md)
 ## [串的实现](./string.md#串的实现)
@@ -96,7 +96,7 @@ title: 数据结构
 ## [字典树](./string.md#字典树)
 [R-路字典树](./string.md#R-路字典树)、[三元搜索字典树](./string.md#三元搜索字典树)
 ## [子串搜索](./string.md#子串搜索)
-[Knuth–Morris–Pratt](./string.md#Knuth–Morris–Pratt)、[Boyer–Moore](./string.md#Boyer–Moore)、[Rabin–Karp](./string.md#Rabin–Karp)
+[Knuth–Morris–Pratt](./string.md#knuthmorrispratt)、[Boyer–Moore](./string.md#boyermoore)、[Rabin–Karp](./string.md#rabinkarp)
 ## [正则表达式](./string.md#正则表达式)
 [匹配算法](./string.md#匹配算法)（[NFA](./string.md#NFA)、[动态规划](./string.md#re-dp)）
 ## [数据压缩](./string.md#数据压缩)

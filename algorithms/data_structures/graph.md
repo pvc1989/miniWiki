@@ -387,6 +387,7 @@ LeetCode
 
 LeetCode
 - [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
+- [787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
 
 # 最大流、最小割
 
