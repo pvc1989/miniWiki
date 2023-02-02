@@ -78,13 +78,24 @@ apt  install hdf5-mpi # Ubuntu
 brew install hdf5-mpi # macOS
 ```
 
-安装完成后，即可在构建 CGNS/MLL 时，开启并行相关选项：
+或者先[手动构建 MPI](../mpi/README.md#编译运行)，再手动构建 HDF5。
+以 Linux 下构建 HDF5-1.14.0 为例：
+
+1. 下载 [HDF5® Source Code](https://www.hdfgroup.org/downloads/hdf5/source-code)，并解压到自选位置。设置环境变量 `HDF5_SOURCE_DIR` 使其指向源文件根目录。
+1. 在自选位置创建 `build` 目录，设置环境变量 `HDF5_BUILD_DIR` 使其指向该目录。
+1. 运行 `cmake -S ${HDF5_SOURCE_DIR} -B ${HDF5_BUILD_DIR} -D CMAKE_BUILD_TYPE=Release -D HDF5_ENABLE_PARALLEL=ON` 命令，开始配置。配置过程中，CMake 会自动查找已安装的 MPI；若自动查找失败，则需手动设置相关路径。
+1. 配置完成后，进入 `${HDF5_BUILD_DIR}` 目录，运行 `cmake --build .` 命令，开始构建。
+1. 构建完成后，在自选位置创建 `install` 目录，设置环境变量 `HDF5_INSTALL_DIR` 使其指向该目录。
+1. 进入 `${HDF5_BUILD_DIR}` 目录，运行 `cmake --install . --prefix ${HDF5_INSTALL_DIR}` 命令，开始安装。
+
+MPI 及 HDF5 安装完成后，即可在构建 CGNS/MLL 时，开启并行相关选项：
 
 ```shell
-cmake -D CMAKE_BUILD_TYPE=Debug \
-      -D CGNS_ENABLE_HDF5=ON \ # 并行版本必须启用 HDF5
-      -D HDF5_NEED_MPI=ON -D CGNS_ENABLE_PARALLEL=ON \ # 启用并行版本
-      -G Ninja -B ${CGNS_BUILD_DIR} -S ${CGNS_SOURCE_DIR}
+cmake -D CGNS_ENABLE_PARALLEL=ON \
+      -D CGNS_ENABLE_HDF5=ON \
+      -D HDF5_NEED_MPI=ON \
+      -D HDF5_DIR:PATH=${HDF5_INSTALL_DIR}/cmake \
+      -B ${CGNS_BUILD_DIR} -S ${CGNS_SOURCE_DIR}
 ```
 
 ## 数组索引
