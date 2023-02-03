@@ -9,9 +9,9 @@ title: Gmsh
 本文档是基于《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》编写的阅读笔记，不是原文的完整翻译，也没有严格遵循原文的结构。部分术语保留英文是为了方便读者查阅原始文档。
 
 Gmsh 可以按三种方式来使用：
-1. GUI 互动程序
-2. 脚本驱动程序
-3. [C++、C、Python、Julia 程序库](http://gmsh.info/doc/texinfo/gmsh.html#Gmsh-API)
+1. 人机互动的 GUI 程序
+2. 脚本驱动的 CLI 程序
+3. [C++、C、Python、Julia 程序库](http://gmsh.info/doc/texinfo/gmsh.html#Gmsh-application-programming-interface)
 
 其中*脚本驱动程序*是学习性价比最高的一种：
 - 绝大多数 GUI 功能都有对应的脚本命令，每一条 GUI 操作都会被记录在脚本文件中。
@@ -41,7 +41,7 @@ gmsh t1.geo -2
 | `-bin` | 以二进制模式输出 |
 | `-part n` | 将网格分割为 `n` 块 (用于并行计算) |
 
-完整列表参见《[3.3 Command-line options](http://gmsh.info/doc/texinfo/gmsh.html#Command_002dline-options)》。
+详见《[Gmsh command-line interface](http://gmsh.info/doc/texinfo/gmsh.html#Gmsh-command_002dline-interface)》。
 
 # 脚本语法
 
@@ -192,7 +192,7 @@ GEO 文件里的运算符与 C/C++ 里的同名运算符类似。
 | `Fabs(x)` | 绝对值 |
 | `Fmod(X, y)` | `x % y`，结果与 `x` 同号 |
 
-完整列表参见《[Built-in functions](http://gmsh.info/doc/texinfo/gmsh.html#Built_002din-functions)》。
+详见《[Built-in functions](http://gmsh.info/doc/texinfo/gmsh.html#Built_002din-functions)》。
 
 ### 自定义宏
 暂时不用。
@@ -231,7 +231,8 @@ Merge filename;  // 将指定文件中的数据合并到当前模型
 Printf("%g", Pi);  // 在终端或 GUI 信息栏输出 "3.14159"
 Printf("%g", Pi) > "temp.txt";  // 输出到指定文件
 ```
-完整列表参见《[4.7 General commands](http://gmsh.info/doc/texinfo/gmsh.html#General-commands)》
+
+详见《[General scripting commands](http://gmsh.info/doc/texinfo/gmsh.html#General-scripting-commands)》
 
 ### 通用选项
 暂时不用。
@@ -519,7 +520,7 @@ Coherence;
 `Recursive` 表示 `Delete` 命令递归地作用到所有次级实体上。
 
 ### 几何选项
-详见《[5.2 Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options)》。
+详见《[Geometry options](http://gmsh.info/doc/texinfo/gmsh.html#Geometry-options)》。
 
 ## 网格模块
 
@@ -530,6 +531,9 @@ Coherence;
     - 通过设置 `Mesh.SaveAll` 选项或使用命令行参数 `-save_all` 可以保存所有单元。
 
 ### 设定单元尺寸
+
+⚠️ 自 v4.7.0 起，`CharacteristicLength` 与 `Characteristic Length` 分别被重命名为 `MeshSize` 与 `Mesh Size`。
+
 单元尺寸可以通过以下三种方式设定：
 - 如果设定了 `Mesh.CharacteristicLengthFromPoints`，那么可以为每个 `Point` 设定一个**特征长度 (Characteristic Length)**。
 - 如果设定了 `Mesh.CharacteristicLengthFromCurvature`，那么网格尺寸将与**曲率 (Curvature)** 相适应。
@@ -542,7 +546,7 @@ Coherence;
 Characteristic Length{pointTagList} = length;
 ```
 
-完整列表参见《[Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html)》的《[6.3.1 Specifying mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Specifying-mesh-element-sizes)》。
+详见《[Mesh element sizes](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-element-sizes)》。
 
 ### 生成结构网格
 Gmsh 所生成的网格都是**非结构的 (unstructured)**，即各单元的取向和结点邻接关系完全由其结点列表决定，而不要求相邻单元之间有其他形式的关联，因此不能算是真正意义上的**结构 (structured)** 网格。
@@ -673,10 +677,11 @@ Coherence Mesh;
 // 将网格分为 part 块：
 PartitionMesh part;
 ```
-完整列表参见《[5.1.8 Miscellaneous](http://gmsh.info/doc/texinfo/gmsh.html#Miscellaneous-geometry-commands)》。
+
+详见《[Other geometry commands](http://gmsh.info/doc/texinfo/gmsh.html#Other-geometry-commands)》。
 
 ### 网格选项
-详见《[6.4 Mesh options](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-options)》。
+详见《[Mesh options](http://gmsh.info/doc/texinfo/gmsh.html#Mesh-options)》。
 
 # 文件格式
 
@@ -908,4 +913,4 @@ $EndElements
 
 ### 单元结点编号
 
-完整列表参见 [Gmsh Reference Manual](http://gmsh.info/doc/texinfo/gmsh.html) 的 [9.2 Node ordering](http://gmsh.info/doc/texinfo/gmsh.html#Node-ordering).
+详见《[Node ordering](http://gmsh.info/doc/texinfo/gmsh.html#Node-ordering)》。
