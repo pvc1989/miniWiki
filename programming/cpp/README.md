@@ -84,3 +84,7 @@ title: C/C++
 ## [内存检查](./memory/check.md)
 
 - Valgrind
+
+# 数值计算
+
+## [矩阵计算](./matrix.md)
