@@ -241,7 +241,7 @@ Printf("%g", Pi) > "temp.txt";  // 输出到指定文件
 ### CAD 内核
 CAD 内核可以在 GEO 文件头部通过以下命令之一设定：
 ```cpp
-SetFactory("built-in");
+SetFactory("Built-in");
 SetFactory("OpenCASCADE");
 ```
 
