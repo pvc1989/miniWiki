@@ -5,6 +5,8 @@ title: C/C++
 # 参考文档
 
 - [cppreference.com](https://en.cppreference.com/w/cpp)
+  - [C++ compiler support](https://en.cppreference.com/w/cpp/compiler_support)
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 - [Microsoft C/C++ Documentation](https://docs.microsoft.com/en-us/cpp/cpp/?view=msvc-170)
 
 # 语法基础
