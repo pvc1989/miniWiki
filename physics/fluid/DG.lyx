@@ -1161,8 +1161,198 @@ literal "true"
 DDG (Direct DG)
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu_2009_DDG,Liu_2010_DDG"
+literal "true"
+
+\end_inset
+
+ 求解扩散问题，
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016,Yang_2019"
+literal "true"
+
+\end_inset
+
+ 求解 Navier–Stokes 方程
+\end_layout
+
 \begin_layout Subsection
-扩散问题
+DG 框架
+\end_layout
+
+\begin_layout Standard
+对流–扩散方程
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{t}\,\underline{U}+\partial_{k}\,\underline{F}_{k}(\underline{U})=\partial_{k}\,\underline{G}_{k}(\underline{U},\underline{\partial U}),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{\partial U}\equiv\underline{\partial}\otimes\underline{U},
+\]
+
+\end_inset
+
+弱形式
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,\underline{U}\vert W\rangle_{E}+\langle n_{k}\,\underline{F}_{k}\vert W\rangle_{\partial E}-\langle\underline{F}_{k}\vert\partial_{k}\,W\rangle_{E}=\langle n_{k}\,\underline{G}_{k}\vert W\rangle_{\partial E}-\langle\underline{G}_{k}\vert\partial_{k}\,W\rangle_{E},
+\]
+
+\end_inset
+
+或
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,\underline{U}\vert W\rangle_{E}=\langle\underline{F}_{k}\vert\partial_{k}\,W\rangle_{E}-\langle n_{k}\,\underline{F}_{k}\vert W\rangle_{\partial E}+\langle n_{k}\,\underline{G}_{k}\vert W\rangle_{\partial E}-\langle\underline{G}_{k}\vert\partial_{k}\,W\rangle_{E},
+\]
+
+\end_inset
+
+引入多项式展开
+\begin_inset Formula 
+\[
+\underline{U}\approx\underline{U}_{h}=\sum_{i}\underline{U}_{i}(t)\,B_{i}(\vec{r}),\quad W\approx W_{h}=\sum_{j}W_{j}\,B_{j}(\vec{r}),
+\]
+
+\end_inset
+
+代入弱形式，得
+\begin_inset Formula 
+\[
+\begin{aligned}\langle\partial_{t}\,\underline{U}_{i}\,B_{i}\vert W_{j}\,B_{j}\rangle_{E} & =\langle\underline{F}_{k}(\underline{U}_{h})\vert\partial_{k}\,W_{j}\,B_{j}\rangle_{E}-\langle\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert\partial_{k}\,W_{j}\,B_{j}\rangle_{E}\\
+ & -\langle n_{k}\,\underline{F}_{k}(\underline{U}_{h})\vert W_{j}\,B_{j}\rangle_{\partial E}+\langle n_{k}\,\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert W_{j}\,B_{j}\rangle_{\partial E},
+\end{aligned}
+\]
+
+\end_inset
+
+将不含空间坐标的 
+\begin_inset Formula $\partial_{t}\,\underline{U}_{i}(t)$
+\end_inset
+
+ 及 
+\begin_inset Formula $W_{j}$
+\end_inset
+
+ 提到积分号外，并利用 
+\begin_inset Formula $\left\{ W_{j}\right\} _{j=1}^{N_{p}}$
+\end_inset
+
+ 的任意性，得 
+\begin_inset Formula $N_{p}$
+\end_inset
+
+ 个等式：
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{\underline{U}_{i}}{t}\langle B_{i}\vert B_{j}\rangle_{E} & =\langle\underline{F}_{k}(\underline{U}_{h})\vert\partial_{k}\,B_{j}\rangle_{E}-\langle\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert\partial_{k}\,B_{j}\rangle_{E}\\
+ & -\langle n_{k}\,\underline{F}_{k}(\underline{U}_{h})\vert B_{j}\rangle_{\partial E}+\langle n_{k}\,\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert B_{j}\rangle_{\partial E},
+\end{aligned}
+\]
+
+\end_inset
+
+引入数值通量
+\begin_inset Formula 
+\[
+n_{k}\,\underline{F}_{k}(\underline{U}_{h})\vert_{\partial E}\approx\underline{F}_{n}(\underline{U}_{h}^{\pm};\vec{n}),\quad n_{k}\,\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert_{\partial E}\approx\underline{G}_{n}(\underline{U}_{h}^{\pm},\underline{\partial U}_{h}^{\pm};\vec{n}),
+\]
+
+\end_inset
+
+得常微分方程组
+\begin_inset Formula 
+\[
+\dv{\underline{U}_{i}}{t}\langle B_{i}\vert B_{j}\rangle_{E}=\underline{R}_{j},\quad j=1,\dots,N_{p},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{R}_{j} & =\langle\underline{F}_{k}(\underline{U}_{h})\vert\partial_{k}\,B_{j}\rangle_{E}-\langle\underline{G}_{k}(\underline{U}_{h},\underline{\partial U}_{h})\vert\partial_{k}\,B_{j}\rangle_{E}\\
+ & -\langle\underline{F}_{n}(\underline{U}_{h}^{\pm};\vec{n})\vert B_{j}\rangle_{\partial E}+\langle\underline{G}_{n}(\underline{U}_{h}^{\pm},\underline{\partial U}_{h}^{\pm};\vec{n})\vert B_{j}\rangle_{\partial E},
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+数值扩散（黏性）通量
+\end_layout
+
+\begin_layout Standard
+分别记状态阶跃值、均值为
+\begin_inset Formula 
+\[
+\left[\underline{U}\right]=\underline{U}^{+}-\underline{U}^{-},\quad\left\{ \underline{U}\right\} =\frac{1}{2}(\underline{U}^{+}+\underline{U}^{-}),
+\]
+
+\end_inset
+
+DDG 法的关键步骤，在于构造 
+\begin_inset Formula $\underline{\partial U}\equiv\underline{\partial}\otimes\underline{U}$
+\end_inset
+
+ 的界面值：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\left(\underline{\partial}\otimes\underline{U}\right)_{\partial E}=\beta_{0}\Delta^{-1}\left[\underline{n}\otimes\underline{U}\right]+\left\{ \underline{\partial}\otimes\underline{U}\right\} +\beta_{1}\Delta\left[\underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}\right]},\label{eq:DDG-grad-at-interface}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{\partial}\otimes\underline{U}=\begin{pmatrix}\partial_{x}\,\underline{U}\\
+\partial_{y}\,\underline{U}
+\end{pmatrix},\quad\underline{n}\otimes\underline{U}=\begin{pmatrix}n_{x}\,\underline{U}\\
+n_{y}\,\underline{U}
+\end{pmatrix},\quad\underline{n}\cdot\underline{\partial}=n_{k}\,\partial_{k},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}=\begin{pmatrix}\partial_{x}\,\partial_{x}\,\underline{U} & \partial_{x}\,\partial_{y}\,\underline{U}\\
+\partial_{y}\,\partial_{x}\,\underline{U} & \partial_{y}\,\partial_{y}\,\underline{U}
+\end{pmatrix},
+\]
+
+\end_inset
+
+故 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDG-grad-at-interface"
+
+\end_inset
+
+ 式的展开形式为
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{x}\,\underline{U} & =\beta_{0}\Delta^{-1}n_{x}\left[\underline{U}\right]+\left\{ \partial_{x}\,\underline{U}\right\} +\beta_{1}\Delta\left(n_{x}\left[\partial_{x}\partial_{x}\,\underline{U}\right]+n_{y}\left[\partial_{x}\partial_{y}\,\underline{U}\right]\right),\\
+\partial_{y}\,\underline{U} & =\beta_{0}\Delta^{-1}n_{y}\left[\underline{U}\right]+\left\{ \partial_{y}\,\underline{U}\right\} +\beta_{1}\Delta\left(n_{y}\left[\partial_{y}\partial_{x}\,\underline{U}\right]+n_{y}\left[\partial_{y}\partial_{y}\,\underline{U}\right]\right).
+\end{aligned}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1173,18 +1363,84 @@ literal "true"
 
 \end_inset
 
+：
+\begin_inset Formula 
+\[
+\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
+\]
 
-\end_layout
+\end_inset
 
-\begin_layout Subsection
-Navier–Stokes
+
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset citation
-LatexCommand cite
+LatexCommand citet
 key "Cheng_2016"
 literal "true"
+
+\end_inset
+
+ 测试过
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},\vec{c}_{j}),\quad\Delta=\vert(\vec{c}_{i}-\vec{c_{j}})\vdot\vec{n}_{ij}\vert,\quad\Delta=\frac{\vert E_{i}\vert+\vert E_{j}\vert}{2\vert(\partial E)_{ij}\vert},
+\]
+
+\end_inset
+
+其中第二种效果最好，且等价于 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Yang_2019"
+literal "true"
+
+\end_inset
+
+ 采用的
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},(\partial E)_{ij})+d(\vec{c}_{j},(\partial E)_{ij})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在物理边界处，由于缺少邻接单元，无法直接套用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:DDG-grad-at-interface"
+
+\end_inset
+
+ 式。
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016"
+literal "true"
+
+\end_inset
+
+ 令边界处的二阶导数阶跃值为零，即取
+\begin_inset Formula 
+\[
+\partial_{n}\,\underline{U}=\beta_{0}\Delta^{-1}\left[\underline{U}\right]+\partial_{n}\,\underline{U}^{-},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},\partial\Omega)\times\begin{cases}
+2, & \text{ghost cell}\\
+1, & \text{prescribed}
+\end{cases}
+\]
 
 \end_inset
 
