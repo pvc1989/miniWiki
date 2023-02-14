@@ -25,7 +25,10 @@ title: C/C++
 
 # 标准库
 
-## 文件读写
+## [文件读写](./io.md)
+
+- IO Streams
+- C-style IO
 
 ## 容器
 
