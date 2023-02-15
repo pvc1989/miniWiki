@@ -350,10 +350,6 @@ reference "sec:有限体积：近似 Riemann 解"
  方程。
 \end_layout
 
-\begin_layout Subsubsection
-Galerkin
-\end_layout
-
 \begin_layout Standard
 若 
 \begin_inset Formula $K=L$
@@ -460,8 +456,8 @@ end{subequations}
 
 \end_layout
 
-\begin_layout Subsubsection
-正交基
+\begin_layout Subsection
+基函数选取
 \end_layout
 
 \begin_layout Standard
@@ -572,6 +568,25 @@ reference "sec:orthogonal_functions"
 \end_inset
 
 》。
+\end_layout
+
+\begin_layout Standard
+除上述正交归一基外，还可以取
+\end_layout
+
+\begin_layout Itemize
+Lagrange 插值基函数，由此导出 nodal DG；
+\end_layout
+
+\begin_layout Itemize
+Taylor 基函数，由此导出 modal DG；
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1312,7 +1327,11 @@ literal "true"
 
 \end_inset
 
-写出矩阵形式，得常微分方程组
+以其为第 
+\begin_inset Formula $j$
+\end_inset
+
+ 列，可得矩阵形式：
 \begin_inset Formula 
 \[
 \dv{}{t}\underline{\hat{U}}_{K\times N}=\underline{R}_{K\times N}\,\underline{M}_{N\times N}^{-1},
@@ -1350,10 +1369,83 @@ literal "true"
 
 \end_inset
 
-残值项变为
+而残值项则变为
 \begin_inset Formula 
 \[
 \underline{R}_{K\times N}\coloneqq\ip{\underline{F^{k}}_{h}-\underline{G^{k}}_{h}}{\partial_{k}\,\underline{B}}_{E}-\ip{\underline{F^{n}}_{h}-\underline{G^{n}}_{h}}{\underline{B}}_{\partial E}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在此形式下，最终的近似解
+\begin_inset Formula 
+\[
+\underbrace{\underline{U}_{h}(\vec{x},t)}_{K\times1}\approx\underbrace{\underline{\hat{U}}(t)}_{K\times N}\,\underbrace{\underline{B}^{\mathrm{T}}(\vec{x})}_{N\times1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+转置形式
+\end_layout
+
+\begin_layout Standard
+为方便与文献对照，这里对本节所有矩阵取转置，即
+\begin_inset Formula 
+\[
+\underline{U}_{1\times K}(\vec{x},t)\coloneqq\begin{bmatrix}U_{1}(\vec{x},t) & \cdots & U_{K}(\vec{x},t)\end{bmatrix},\quad\underline{B}_{N\times1}(\vec{x})\coloneqq\begin{bmatrix}B_{1}(\vec{x})\\
+\vdots\\
+B_{N}(\vec{x})
+\end{bmatrix},
+\]
+
+\end_inset
+
+质量阵（因其对称性）仍为
+\begin_inset Formula 
+\[
+\underline{M}_{N\times N}\coloneqq\ip{\underline{B}_{N\times1}}{\left(\underline{B}^{\mathrm{T}}\right)_{1\times N}}_{E}=\begin{bmatrix}\ip{B_{1}}{B_{1}}_{E} & \cdots & \ip{B_{1}}{B_{N}}_{E}\\
+\vdots & \ddots & \vdots\\
+\ip{B_{N}}{B_{1}}_{E} & \cdots & \ip{B_{N}}{B_{N}}_{E}
+\end{bmatrix}
+\]
+
+\end_inset
+
+系数矩阵变为
+\begin_inset Formula 
+\[
+\underline{\hat{U}}_{N\times K}(t)\coloneqq\ip{\underline{B}_{N\times1}}{\underline{U}_{1\times K}}_{E}=\begin{bmatrix}\langle B_{1}\vert U_{1}\rangle_{E} & \cdots & \langle B_{1}\vert U_{N}\rangle_{E}\\
+\vdots & \ddots & \vdots\\
+\langle B_{K}\vert U_{1}\rangle_{E} & \cdots & \langle B_{K}\vert U_{N}\rangle_{E}
+\end{bmatrix},
+\]
+
+\end_inset
+
+残值项变为
+\begin_inset Formula 
+\[
+\underline{R}_{N\times K}\coloneqq\ip{\partial_{k}\,\underline{B}}{\underline{F^{k}}_{h}-\underline{G^{k}}_{h}}_{E}-\ip{\underline{B}}{\underline{F^{n}}_{h}-\underline{G^{n}}_{h}}_{\partial E}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在此形式下，最终的近似解
+\begin_inset Formula 
+\[
+\underbrace{\underline{U}_{h}(\vec{x},t)}_{1\times K}\approx\underbrace{\underline{B}^{\mathrm{T}}(\vec{x})}_{1\times N}\,\underbrace{\underline{\hat{U}}(t)}_{N\times K}
 \]
 
 \end_inset
@@ -1505,6 +1597,248 @@ literal "true"
 2, & \text{ghost cell}\\
 1, & \text{prescribed}
 \end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+时间推进
+\end_layout
+
+\begin_layout Standard
+第 
+\begin_inset Formula $I$
+\end_inset
+
+ 号单元
+\begin_inset Formula 
+\[
+\underline{M}^{I}\dv{\underline{\hat{U}}^{I}}{t}=\underline{R}^{I},
+\]
+
+\end_inset
+
+组装后得到
+\begin_inset Formula 
+\[
+\underline{M}\dv{\underline{\hat{U}}}{t}=\underline{R},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{M}\coloneqq\begin{pmatrix}\ddots\\
+ & \underline{M}^{I}\\
+ &  & \ddots\\
+ &  &  & \underline{M}^{J}\\
+ &  &  &  & \ddots
+\end{pmatrix},\quad\underline{\hat{U}}\coloneqq\begin{pmatrix}\vdots\\
+\underline{\hat{U}}^{I}\\
+\vdots\\
+\underline{\hat{U}}^{J}\\
+\vdots
+\end{pmatrix},\quad\underline{R}\coloneqq\begin{pmatrix}\vdots\\
+\underline{R}^{I}\\
+\vdots\\
+\underline{R}^{J}\\
+\vdots
+\end{pmatrix}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+隐式 Euler
+\end_layout
+
+\begin_layout Standard
+对其应用隐式 Euler
+\begin_inset Formula 
+\[
+\underline{M}\frac{\Delta\underline{\hat{U}}}{\Delta t}=\underline{R}^{n+1},\quad\begin{cases}
+\Delta t\coloneqq t_{n+1}-t_{n},\\
+\Delta\underline{\hat{U}}\coloneqq\underline{\hat{U}}(t_{n+1})-\underline{\hat{U}}(t_{n}),
+\end{cases}
+\]
+
+\end_inset
+
+并引入线性近似
+\begin_inset Formula 
+\[
+\underline{R}^{n+1}\approx\underline{R}^{n}+\left(\frac{\partial\underline{R}}{\partial\underline{\hat{U}}}\right)^{n}\Delta\underline{\hat{U}},\quad\left\langle I\middle\vert\frac{\partial\underline{R}}{\partial\underline{\hat{U}}}\middle\vert J\right\rangle \coloneqq\frac{\partial\underline{R}^{I}}{\partial\underline{\hat{U}}^{J}},
+\]
+
+\end_inset
+
+则转化为求解
+\begin_inset Formula 
+\[
+\underline{A}^{n}\,\Delta\underline{\hat{U}}=\underline{R}^{n},\quad\underline{A}^{n}\coloneqq\frac{\underline{M}}{\Delta t}-\left(\frac{\partial\underline{R}}{\partial\underline{\hat{U}}}\right)^{n},
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $\Delta t\to\infty$
+\end_inset
+
+ 时，退化为 Newton 法解非线性代数方程组
+\begin_inset Formula 
+\[
+\underline{R}(\underline{\hat{U}}(t_{n})+\Delta\underline{\hat{U}})=\underline{0},
+\]
+
+\end_inset
+
+具有二阶收敛率。
+\end_layout
+
+\begin_layout Subsubsection
+矩阵列化
+\end_layout
+
+\begin_layout Standard
+考虑 
+\begin_inset Formula $\underline{X}\in\mathbb{R}^{k\times l}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\underline{Y}\colon\underline{X}\mapsto\underline{Y}(\underline{X})\in\mathbb{R}^{m\times n}$
+\end_inset
+
+，则在形式上有微分关系
+\begin_inset Formula 
+\[
+\dd\underline{Y}=\frac{\partial\underline{Y}}{\partial\underline{X}}\,\dd\underline{X}
+\]
+
+\end_inset
+
+但矩阵运算无法表达。实际上，这是一组张量关系
+\begin_inset Formula 
+\[
+\dd\langle r\vert\underline{Y}\vert s\rangle=\frac{\partial\langle r\vert\underline{Y}\vert s\rangle}{\partial\langle i\vert\underline{X}\vert j\rangle}\,\dd\langle i\vert\underline{X}\vert j\rangle,
+\]
+
+\end_inset
+
+需要给定 
+\begin_inset Formula $mn\times kl$
+\end_inset
+
+ 个参数才能表达。
+\end_layout
+
+\begin_layout Standard
+借助“列化”运算
+\begin_inset Formula 
+\[
+\underline{X}^{\mathrm{C}}=\begin{pmatrix}\underline{X}\vert1\rangle\\
+\vdots\\
+\underline{X}\vert l\rangle
+\end{pmatrix}_{kl\times1},\quad\underline{Y}^{\mathrm{C}}=\begin{pmatrix}\underline{Y}\vert1\rangle\\
+\vdots\\
+\underline{Y}\vert n\rangle
+\end{pmatrix}_{mn\times1},
+\]
+
+\end_inset
+
+则有 well defined 导数矩阵
+\begin_inset Formula 
+\[
+\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}=\begin{pmatrix}\dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert l\rangle}\\
+\ddots & \ddots & \vdots\\
+\dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert l\rangle}
+\end{pmatrix}\in\mathbb{R}^{mn\times kl},\quad\underbrace{\dd\underline{Y}^{\mathrm{C}}}_{mn\times1}=\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}\,\underbrace{\dd\underline{X}^{\mathrm{C}}}_{kl\times1},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{pmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
+\ddots & \ddots & \vdots\\
+\dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}
+\end{pmatrix}\in\mathbb{R}^{m\times k},\quad j=1,\dots,l,\quad,i=1,\dots,n,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+因此，各单元上的
+\begin_inset Formula 
+\[
+\underline{M}_{N\times N}\dv{}{t}\underline{\hat{U}}_{N\times K}=\underline{R}_{N\times K},
+\]
+
+\end_inset
+
+可以被 columnized 为
+\begin_inset Formula 
+\[
+\underline{M}^{\mathrm{C}}\dv{}{t}\underline{\hat{U}}^{\mathrm{C}}=\underline{R}^{\mathrm{C}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{M}^{\mathrm{C}}=\begin{pmatrix}\underline{M}\\
+ & \ddots\\
+ &  & \underline{M}
+\end{pmatrix}_{NK\times NK},\quad\underline{\hat{U}}^{\mathrm{C}}=\begin{pmatrix}\underline{\hat{U}}\vert1\rangle\\
+\vdots\\
+\underline{\hat{U}}\vert K\rangle
+\end{pmatrix}_{NK\times1},\quad\underline{R}^{\mathrm{C}}=\begin{pmatrix}\underline{R}\vert1\rangle\\
+\vdots\\
+\underline{R}\vert K\rangle
+\end{pmatrix}_{NK\times1},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+本节剩余部分将假设各单元上的矩阵都是 columnized。
+\end_layout
+
+\begin_layout Subsubsection
+GMRES
+\end_layout
+
+\begin_layout Standard
+left preconditioning:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{P}^{-1}\,\underline{A}\,\Delta\underline{\hat{U}}=\underline{P}^{-1}\,\underline{R}^{n},
+\]
+
+\end_inset
+
+LU–SGS preconditioner
+\begin_inset Formula 
+\[
+\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{U}+\underline{D}),
 \]
 
 \end_inset
