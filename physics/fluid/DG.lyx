@@ -360,7 +360,7 @@ Galerkin
 \end_inset
 
  且 
-\begin_inset Formula $\phi_{k}\stackrel{\forall k}{=}\psi_{k}$
+\begin_inset Formula $(\forall k)\,B_{k}=\phi_{k}=\psi_{k}$
 \end_inset
 
 ，则称相应的 FEM 为 
@@ -425,12 +425,20 @@ name "eq:间断有限元：矩阵方程"
 
 其中
 \begin_inset Formula 
+\[
+\underline{B}\coloneqq\begin{bmatrix}B_{1}(\vec{x}) & \cdots & B_{N}(\vec{x})\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
 \begin{equation}
-\begin{gathered}\underline{\hat{U}}_{1\times N}\coloneqq\begin{bmatrix}\hat{U}_{1} & \cdots & \hat{U}_{N}\end{bmatrix},\quad\underline{M}_{N\times N}\coloneqq\begin{bmatrix}\ip{\phi_{1}}{\phi_{1}}_{E} & \cdots & \ip{\phi_{N}}{\phi_{1}}_{E}\\
+\begin{gathered}\underline{\hat{U}}_{1\times N}\coloneqq\begin{bmatrix}\hat{U}_{1}(t) & \cdots & \hat{U}_{N}(t)\end{bmatrix},\quad\underline{M}_{N\times N}\coloneqq\begin{bmatrix}\ip{B_{1}}{B_{1}}_{E} & \cdots & \ip{B_{N}}{B_{1}}_{E}\\
 \vdots & \ddots & \vdots\\
-\ip{\phi_{1}}{\phi_{N}}_{E} & \cdots & \ip{\phi_{N}}{\phi_{N}}_{E}
+\ip{B_{1}}{B_{N}}_{E} & \cdots & \ip{B_{N}}{B_{N}}_{E}
 \end{bmatrix},\\
-\underline{R}_{1\times N}\coloneqq\begin{bmatrix}\ip{F_{h}^{k}}{\partial_{k}\,\phi_{1}}_{\varOmega}-\ip{F_{h}^{n}}{\phi_{1}}_{\partial\varOmega} & \cdots & \ip{F_{h}^{k}}{\partial_{k}\,\phi_{N}}_{\varOmega}-\ip{F_{h}^{n}}{\phi_{N}}_{\partial\varOmega}\end{bmatrix}.
+\underline{R}_{1\times N}\coloneqq\begin{bmatrix}\ip{F_{h}^{k}}{\partial_{k}\,B_{1}}_{\varOmega}-\ip{F_{h}^{n}}{B_{1}}_{\partial\varOmega} & \cdots & \ip{F_{h}^{k}}{\partial_{k}\,B_{N}}_{\varOmega}-\ip{F_{h}^{n}}{B_{N}}_{\partial\varOmega}\end{bmatrix}.
 \end{gathered}
 \end{equation}
 
@@ -493,7 +501,7 @@ reference "eq:间断有限元：矩阵方程"
 
 \begin_layout Itemize
 若 
-\begin_inset Formula $\left\{ \phi_{k}\right\} _{k=1}^{N}$
+\begin_inset Formula $\underline{B}$
 \end_inset
 
  选取为 
@@ -507,7 +515,7 @@ reference "eq:间断有限元：矩阵方程"
 
 \begin_inset Formula 
 \[
-\ip{\phi_{k}}{\phi_{l}}_{E}=\ip{\phi_{k}}{\phi_{k}}_{E}\delta_{kl},\quad\forall k,\forall l,
+\ip{B_{k}}{B_{l}}_{E}=\ip{B_{k}}{B_{k}}_{E}\delta_{kl},\quad\forall k,\forall l,
 \]
 
 \end_inset
@@ -529,17 +537,17 @@ reference "eq:间断有限元：矩阵方程"
 
 \begin_layout Itemize
 若进一步将 
-\begin_inset Formula $\left\{ \phi_{k}\right\} _{k=1}^{N}$
+\begin_inset Formula $\underline{B}$
 \end_inset
 
- 取为
+ 限制为
 \color red
 归一的 (normalized)
 \color inherit
  正交基
 \begin_inset Formula 
 \[
-\ip{\phi_{k}}{\phi_{l}}_{E}=\delta_{kl},\quad\forall k,\forall l,
+\ip{B_{k}}{B_{l}}_{E}=\delta_{kl},\quad\forall k,\forall l,
 \]
 
 \end_inset
@@ -556,7 +564,7 @@ reference "eq:间断有限元：矩阵方程"
 \end_layout
 
 \begin_layout Standard
-正交（归一）基底的获取过程详见《
+正交（归一）基底的构造过程详见《
 \begin_inset CommandInset ref
 LatexCommand nameref
 reference "sec:orthogonal_functions"
@@ -624,7 +632,7 @@ reference "eq:间断有限元：矩阵方程"
 其中，基函数及质量阵保持不变：
 \begin_inset Formula 
 \[
-\underline{\phi}_{1\times N}(\vec{x})\coloneqq\begin{bmatrix}\phi_{1}(\vec{x}) & \cdots & \phi_{N}(\vec{x})\end{bmatrix},
+\underline{B}_{1\times N}(\vec{x})\coloneqq\begin{bmatrix}B_{1}(\vec{x}) & \cdots & B_{N}(\vec{x})\end{bmatrix},
 \]
 
 \end_inset
@@ -632,9 +640,9 @@ reference "eq:间断有限元：矩阵方程"
 
 \begin_inset Formula 
 \[
-\underline{M}_{N\times N}\coloneqq\ip{\left(\underline{\phi}^{\mathrm{T}}\right)_{N\times1}}{\underline{\phi}_{1\times N}}_{E}=\begin{bmatrix}\ip{\phi_{1}}{\phi_{1}}_{E} & \cdots & \ip{\phi_{1}}{\phi_{N}}_{E}\\
+\underline{M}_{N\times N}\coloneqq\ip{\left(\underline{B}^{\mathrm{T}}\right)_{N\times1}}{\underline{B}_{1\times N}}_{E}=\begin{bmatrix}\ip{B_{1}}{B_{1}}_{E} & \cdots & \ip{B_{N}}{B_{1}}_{E}\\
 \vdots & \ddots & \vdots\\
-\ip{\phi_{N}}{\phi_{1}}_{E} & \cdots & \ip{\phi_{N}}{\phi_{N}}_{E}
+\ip{B_{1}}{B_{N}}_{E} & \cdots & \ip{B_{N}}{B_{N}}_{E}
 \end{bmatrix},
 \]
 
@@ -643,9 +651,9 @@ reference "eq:间断有限元：矩阵方程"
 未知量系数变为
 \begin_inset Formula 
 \[
-\underline{\hat{U}}_{K\times N}(t)\coloneqq\ip{\underline{U}_{K\times1}}{\underline{\phi}_{1\times N}}_{E}=\begin{bmatrix}\langle U_{1}\vert\phi_{1}\rangle_{E} & \cdots & \langle U_{1}\vert\phi_{N}\rangle_{E}\\
+\underline{\hat{U}}_{K\times N}(t)\coloneqq\ip{\underline{U}_{K\times1}}{\underline{B}_{1\times N}}_{E}=\begin{bmatrix}\langle U_{1}\vert B_{1}\rangle_{E} & \cdots & \langle U_{1}\vert B_{N}\rangle_{E}\\
 \vdots & \ddots & \vdots\\
-\langle U_{K}\vert\phi_{1}\rangle_{E} & \cdots & \langle U_{K}\vert\phi_{N}\rangle_{E}
+\langle U_{K}\vert B_{1}\rangle_{E} & \cdots & \langle U_{K}\vert B_{N}\rangle_{E}
 \end{bmatrix},
 \]
 
@@ -654,7 +662,7 @@ reference "eq:间断有限元：矩阵方程"
 残值项变为
 \begin_inset Formula 
 \[
-\underline{R}_{K\times N}\coloneqq\ip{\underline{F_{h}^{k}}_{K\times1}}{\partial_{k}\,\underline{\phi}_{1\times N}}_{E}-\ip{\underline{F_{h}^{n}}_{K\times1}}{\underline{\phi}_{1\times N}}_{\partial E}.
+\underline{R}_{K\times N}\coloneqq\ip{\underline{F^{k}}_{h}}{\partial_{k}\,\underline{B}}_{E}-\ip{\underline{F^{n}}_{h}}{\underline{B}}_{\partial E}.
 \]
 
 \end_inset
@@ -686,7 +694,7 @@ reference "eq:间断有限元：矩阵方程"
 唯一的区别在于
 \begin_inset Formula 
 \[
-\underline{R}_{K\times N}\coloneqq\ip{\underline{F_{h}^{k}}_{K\times1}}{\partial_{k}\,\underline{\phi}_{1\times N}}_{E}-\ip{\underline{F_{h}^{n}}_{K\times1}}{\underline{\phi}_{1\times N}}_{\partial E}{\color{red}+\ip{\underline{H}_{K\times1}}{\underline{\phi}_{1\times N}}_{E}}.
+\underline{R}_{K\times N}\coloneqq\ip{\underline{F^{k}}_{h}}{\partial_{k}\,\underline{B}}_{E}-\ip{\underline{F^{n}}_{h}}{\underline{B}}_{\partial E}{\color{red}+\ip{\underline{H}_{h}}{\underline{B}}_{E}}.
 \]
 
 \end_inset
@@ -1182,7 +1190,7 @@ literal "true"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\partial_{t}\,\underline{U}+\partial_{k}\,\underline{F^{k}}(\underline{U})=\partial_{k}\,\underline{G^{k}}(\underline{U},\underline{\partial U}),
+\partial_{t}\,\underline{U}+\partial_{k}\,\underline{F^{k}}(\underline{U})=\partial_{k}\,\underline{G^{k}}(\underline{U},\underline{\partial}\,\underline{U}),
 \]
 
 \end_inset
@@ -1190,7 +1198,7 @@ literal "true"
 其中
 \begin_inset Formula 
 \[
-\underline{\partial U}\equiv\underline{\partial}\otimes\underline{U},
+\underline{\partial}\,\underline{U}\equiv\underline{\partial}\otimes\underline{U},
 \]
 
 \end_inset
@@ -1218,7 +1226,7 @@ literal "true"
 引入多项式近似
 \begin_inset Formula 
 \[
-\underline{U}\approx\underline{U_{h}}=\sum_{i}\underline{\hat{U}}_{i}(t)\,B_{i}(\vec{r}),\quad w\approx w_{h}=\sum_{j}\hat{w}_{j}\,B_{j}(\vec{r}),
+\underline{U}\approx\underline{U}_{h}=\sum_{i}\underline{\hat{U}}_{i}(t)\,B_{i}(\vec{r}),\quad w\approx w_{h}=\sum_{j}\hat{w}_{j}\,B_{j}(\vec{r}),
 \]
 
 \end_inset
@@ -1226,7 +1234,7 @@ literal "true"
 代入弱形式，得
 \begin_inset Formula 
 \[
-\ip{\partial_{t}\,\underline{\hat{U}}_{i}\,B_{i}}{\hat{w}_{j}\,B_{j}}_{E}=\ip{\underline{F_{h}^{k}}-\underline{G_{h}^{k}}}{\partial_{k}\,\hat{w}_{j}\,B_{j}}_{E}-\ip{\underline{F_{h}^{n}}-\underline{G_{h}^{n}}}{\hat{w}_{j}\,B_{j}}_{\partial E},
+\ip{\partial_{t}\,\underline{\hat{U}}_{i}\,B_{i}}{\hat{w}_{j}\,B_{j}}_{E}=\ip{\underline{F^{k}}_{h}-\underline{G^{k}}_{h}}{\partial_{k}\,\hat{w}_{j}\,B_{j}}_{E}-\ip{\underline{F^{n}}_{h}-\underline{G^{n}}_{h}}{\hat{w}_{j}\,B_{j}}_{\partial E},
 \]
 
 \end_inset
@@ -1235,30 +1243,30 @@ literal "true"
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\underline{F^{k}}\vert_{E}\approx\underline{F_{h}^{k}}$
+\begin_inset Formula $\underline{F^{k}}\vert_{E}\approx\underline{F^{k}}_{h}$
 \end_inset
 
  及 
-\begin_inset Formula $\underline{G^{k}}\vert_{E}\approx\underline{G_{h}^{k}}$
+\begin_inset Formula $\underline{G^{k}}\vert_{E}\approx\underline{G^{k}}_{h}$
 \end_inset
 
  为域内通量近似值，可取 
-\begin_inset Formula $\underline{F^{k}}(\underline{U_{h}})$
+\begin_inset Formula $\underline{F^{k}}\qty(\underline{U}_{h})$
 \end_inset
 
  及 
-\begin_inset Formula $\underline{G^{k}}(\underline{U_{h}},\underline{\partial U_{h}})$
+\begin_inset Formula $\underline{G^{k}}\qty(\underline{U}_{h},\underline{\partial}\,\underline{U}_{h})$
 \end_inset
 
 ，亦可取其他插值函数；
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $n_{k}\,\underline{F^{k}}\vert_{\partial E}\approx\underline{F_{h}^{n}}\qty(\left(\underline{U_{h}}\right)^{\pm};\vec{n})$
+\begin_inset Formula $n_{k}\,\underline{F^{k}}\vert_{\partial E}\approx\underline{F^{n}}_{h}\qty(\left(\underline{U}_{h}\right)^{\pm};\vec{n})$
 \end_inset
 
  及 
-\begin_inset Formula $n_{k}\,\underline{G^{k}}\vert_{\partial E}\approx\underline{G_{h}^{n}}\qty(\left(\underline{U_{h}}\right)^{\pm},\left(\underline{\partial U_{h}}\right)^{\pm};\vec{n})$
+\begin_inset Formula $n_{k}\,\underline{G^{k}}\vert_{\partial E}\approx\underline{G^{n}}_{h}\qty(\left(\underline{U}_{h}\right)^{\pm},\left(\underline{\partial}\,\underline{U}_{h}\right)^{\pm};\vec{n})$
 \end_inset
 
  为边界法向通量近似值，即数值通量。
@@ -1299,7 +1307,7 @@ literal "true"
 其中
 \begin_inset Formula 
 \[
-\underline{R}_{j}=\left\langle \underline{F_{h}^{k}}-\underline{G_{h}^{k}}\middle\vert\partial_{k}\,B_{j}\right\rangle _{E}-\left\langle \underline{F_{h}^{n}}-\underline{G_{h}^{n}}\middle\vert B_{j}\right\rangle _{\partial E}.
+\underline{R}_{j}=\left\langle \underline{F^{k}}_{h}-\underline{G^{k}}_{h}\middle\vert\partial_{k}\,B_{j}\right\rangle _{E}-\left\langle \underline{F^{n}}_{h}-\underline{G^{n}}_{h}\middle\vert B_{j}\right\rangle _{\partial E}.
 \]
 
 \end_inset
@@ -1345,7 +1353,7 @@ literal "true"
 残值项变为
 \begin_inset Formula 
 \[
-\underline{R}_{K\times N}\coloneqq\ip{\underline{F_{h}^{k}}_{K\times1}-\underline{G_{h}^{k}}_{K\times1}}{\partial_{k}\,\underline{B}_{1\times N}}_{E}-\ip{\underline{F_{h}^{n}}_{K\times1}-\underline{G_{h}^{n}}_{K\times1}}{\underline{B}_{1\times N}}_{\partial E}.
+\underline{R}_{K\times N}\coloneqq\ip{\underline{F^{k}}_{h}-\underline{G^{k}}_{h}}{\partial_{k}\,\underline{B}}_{E}-\ip{\underline{F^{n}}_{h}-\underline{G^{n}}_{h}}{\underline{B}}_{\partial E}.
 \]
 
 \end_inset
@@ -1361,19 +1369,19 @@ literal "true"
 分别记状态阶跃值、均值为
 \begin_inset Formula 
 \[
-\left[\underline{U}\right]=\underline{U}^{+}-\underline{U}^{-},\quad\left\{ \underline{U}\right\} =\frac{1}{2}\left(\underline{U}^{+}+\underline{U}^{-}\right),
+\left[\underline{U}_{h}\right]=\underline{U}_{h}^{+}-\underline{U}_{h}^{-},\quad\left\{ \underline{U}_{h}\right\} =\frac{1}{2}\left(\underline{U}_{h}^{+}+\underline{U}_{h}^{-}\right),
 \]
 
 \end_inset
 
 DDG 法的关键步骤，在于构造 
-\begin_inset Formula $\underline{\partial U}\equiv\underline{\partial}\otimes\underline{U}$
+\begin_inset Formula $\underline{\partial}\,\underline{U}\equiv\underline{\partial}\otimes\underline{U}$
 \end_inset
 
  在界面处的近似值：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\left(\underline{\partial}\otimes\underline{U}\right)_{\partial E}\approx\left(\underline{\partial U}\right)_{h}\coloneqq\beta_{0}\,\Delta^{-1}\left[\underline{n}\otimes\underline{U_{h}}\right]+\left\{ \underline{\partial}\otimes\underline{U_{h}}\right\} +\beta_{1}\,\Delta\left[\underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{U_{h}}\right]},\label{eq:DDG-grad-at-interface}
+\boxed{\left(\underline{\partial}\otimes\underline{U}\right)_{\partial E}\approx\left(\underline{\partial}\,\underline{U}\right)_{h}\coloneqq\beta_{0}\,\Delta^{-1}\left[\underline{n}\otimes\underline{U}_{h}\right]+\left\{ \underline{\partial}\otimes\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left[\underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}\right]},\label{eq:DDG-grad-at-interface}
 \end{equation}
 
 \end_inset
@@ -1381,12 +1389,12 @@ DDG 法的关键步骤，在于构造
 其中
 \begin_inset Formula 
 \[
-\underline{\partial}\otimes\underline{U}\equiv\underline{\partial U}=\begin{pmatrix}\partial_{x}\,\underline{U}\\
+\underline{\partial}\otimes\underline{U}\equiv\underline{\partial}\,\underline{U}=\begin{pmatrix}\partial_{x}\,\underline{U}\\
 \partial_{y}\,\underline{U}
-\end{pmatrix},\quad\underline{n}\otimes\underline{U_{h}}=\begin{pmatrix}n_{x}\,\underline{U_{h}}\\
-n_{y}\,\underline{U_{h}}
-\end{pmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{U_{h}}=\begin{pmatrix}\partial_{x}\partial_{x}\,\underline{U_{h}} & \partial_{x}\partial_{y}\,\underline{U_{h}}\\
-\partial_{y}\partial_{x}\,\underline{U_{h}} & \partial_{y}\partial_{y}\,\underline{U_{h}}
+\end{pmatrix},\quad\underline{n}\otimes\underline{U}_{h}=\begin{pmatrix}n_{x}\,\underline{U}_{h}\\
+n_{y}\,\underline{U}_{h}
+\end{pmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}=\begin{pmatrix}\partial_{x}\partial_{x}\,\underline{U}_{h} & \partial_{x}\partial_{y}\,\underline{U}_{h}\\
+\partial_{y}\partial_{x}\,\underline{U}_{h} & \partial_{y}\partial_{y}\,\underline{U}_{h}
 \end{pmatrix},
 \]
 
@@ -1402,8 +1410,8 @@ reference "eq:DDG-grad-at-interface"
  式的展开形式为
 \begin_inset Formula 
 \[
-\begin{aligned}\left(\partial_{x}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{x}\,\underline{U_{h}}\right]+\left\{ \partial_{x}\,\underline{U_{h}}\right\} +\beta_{1}\,\Delta\left(n_{x}\left[\partial_{x}\partial_{x}\,\underline{U_{h}}\right]+n_{y}\left[\partial_{x}\partial_{y}\,\underline{U_{h}}\right]\right),\\
-\left(\partial_{y}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{y}\,\underline{U_{h}}\right]+\left\{ \partial_{y}\,\underline{U_{h}}\right\} +\beta_{1}\,\Delta\left(n_{y}\left[\partial_{y}\partial_{x}\,\underline{U_{h}}\right]+n_{y}\left[\partial_{y}\partial_{y}\,\underline{U_{h}}\right]\right).
+\begin{aligned}\left(\partial_{x}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{x}\,\underline{U}_{h}\right]+\left\{ \partial_{x}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{x}\left[\partial_{x}\partial_{x}\,\underline{U}_{h}\right]+n_{y}\left[\partial_{x}\partial_{y}\,\underline{U}_{h}\right]\right),\\
+\left(\partial_{y}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{y}\,\underline{U}_{h}\right]+\left\{ \partial_{y}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{y}\left[\partial_{y}\partial_{x}\,\underline{U}_{h}\right]+n_{y}\left[\partial_{y}\partial_{y}\,\underline{U}_{h}\right]\right).
 \end{aligned}
 \]
 
@@ -1485,7 +1493,7 @@ literal "true"
  令边界处的二阶导数阶跃值为零，即取
 \begin_inset Formula 
 \[
-\left(\partial_{n}\,\underline{U}\right)_{h}=\beta_{0}\,\Delta^{-1}\left[\underline{U_{h}}\right]+\left(\partial_{n}\,\underline{U_{h}}\right)^{-},
+\left(\partial_{n}\,\underline{U}\right)_{h}=\beta_{0}\,\Delta^{-1}\left[\underline{U}_{h}\right]+\left(\partial_{n}\,\underline{U}_{h}\right)^{-},
 \]
 
 \end_inset
