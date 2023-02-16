@@ -959,7 +959,7 @@ x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
 \end_layout
 
 \begin_layout Section
-KS (Krylov Subspace) 迭代法
+Krylov 迭代法
 \end_layout
 
 \begin_layout Subsection
@@ -977,8 +977,8 @@ status open
 
 \end_inset
 
-令 
-\begin_inset Formula $k=1,2,\dots,n$
+给定 
+\begin_inset Formula $\underline{A}\in\mathbb{F}^{n\times n},\vert b\rangle\in\mathbb{F}^{n\times1},k\in\mathbb{N}$
 \end_inset
 
 ，称
@@ -986,10 +986,18 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
+\begin_inset Formula $\underline{K}_{0}(\underline{A},\vert b\rangle)\coloneqq\begin{bmatrix}\vert0\rangle\end{bmatrix}$
+\end_inset
+
+ 及 
 \begin_inset Formula $\underline{K}_{k}(\underline{A},\vert b\rangle)\coloneqq\begin{bmatrix}\vert b\rangle & \underline{A}\vert b\rangle & \dots & \underline{A}^{k-1}\vert b\rangle\end{bmatrix}$
 \end_inset
 
- 为 
+ 为
+\begin_inset Formula $k$
+\end_inset
+
+-级 
 \color red
 Krylov 矩阵
 \color inherit
@@ -997,10 +1005,18 @@ Krylov 矩阵
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $\mathcal{K}_{0}(\underline{A},\vert b\rangle)\coloneqq\left\{ \vert0\rangle\right\} $
+\end_inset
+
+ 及 
 \begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)\coloneqq\mathrm{span}\left\{ \underline{A}^{j-1}\vert b\rangle\right\} _{j=1}^{k}$
 \end_inset
 
  为 
+\begin_inset Formula $k$
+\end_inset
+
+-级 
 \color red
 Krylov 子空间
 \color inherit
@@ -1015,12 +1031,72 @@ Krylov 子空间
 
 \end_layout
 
+\begin_layout Lemma
+Krylov 子空间具有嵌套性质：
+\begin_inset Formula 
+\[
+\mathcal{K}_{0}\subset\mathcal{K}_{1}\subset\cdots\subset\mathcal{K}_{k}\subset\mathcal{K}_{k+1}\subset\cdots\subset\mathcal{K}_{n}=\mathcal{K}_{n+1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-在 Krylov 子空间内选择合适的 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为求解 
+\begin_inset Formula $\underline{A}\vert x\rangle=\vert b\rangle$
+\end_inset
+
+，令 
+\begin_inset Formula $\vert x_{0}\rangle=\vert0\rangle$
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vert x_{0}\rangle$
+\end_inset
+
+ 亦可任取，只不过将问题转化为求解 
+\begin_inset Formula $\underline{A}\vert x'\rangle=\vert b'\rangle$
+\end_inset
+
+，其中 
+\begin_inset Formula $\vert x'\rangle\coloneqq\vert x\rangle-\vert x_{0}\rangle$
+\end_inset
+
+，
+\begin_inset Formula $\vert b'\rangle\coloneqq\vert r_{0}\rangle\equiv\vert b\rangle-\underline{A}\vert x_{0}\rangle$
+\end_inset
+
+。
+\end_layout
+
+\end_inset
+
+，遍历 
+\begin_inset Formula $k=1,\dots,n$
+\end_inset
+
+，在某种 
+\begin_inset Formula $k$
+\end_inset
+
+-级 Krylov 子空间内按某种规则选择适当的 
 \begin_inset Formula $\vert x_{k}\rangle$
 \end_inset
 
-，就得到相应的 KS 迭代法，如表 
+，就得到相应的 Krylov 迭代法，如表 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Krylov"
@@ -1102,7 +1178,7 @@ name "tab:Krylov"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\vert r_{k}\rangle\coloneqq\vert b\rangle-\underline{A}\vert x_{k}\rangle$
+\begin_inset Formula $\vert r_{k}\rangle$
 \end_inset
 
 
