@@ -391,7 +391,7 @@ status open
 
 \begin_layout Standard
 用 Gauss 消元或矩阵分解解 
-\begin_inset Formula $\underline{A}\cdot\underline{x}=\underline{b}$
+\begin_inset Formula $\underline{A}\cdot\vert x\rangle=\underline{b}$
 \end_inset
 
  的时间复杂度，取决于 
@@ -732,7 +732,7 @@ status open
 
 \begin_layout Plain Layout
 向上逐行解 
-\begin_inset Formula $\underline{U}\cdot\underline{x}=\underline{y}$
+\begin_inset Formula $\underline{U}\cdot\vert x\rangle=\underline{y}$
 \end_inset
 
 
@@ -959,279 +959,7 @@ x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
 \end_layout
 
 \begin_layout Section
-子空间迭代法
-\end_layout
-
-\begin_layout Standard
-将第 
-\begin_inset Formula $k$
-\end_inset
-
- 迭代步的残差记作
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\underline{r}_{k}\coloneqq\underline{b}-\underline{A}\cdot\underline{x}_{k}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-SD (Steepest Descent)
-\end_layout
-
-\begin_layout Standard
-假设 
-\begin_inset Formula $\underline{A}$
-\end_inset
-
- 对称正定，则 
-\begin_inset Formula $\underline{A}\cdot\underline{x}=\underline{b}$
-\end_inset
-
- 等价于
-\begin_inset Formula 
-\[
-\min_{\underline{x}\in\mathbb{R}^{n}}\varphi(\underline{x}),\quad\varphi(\underline{x})\coloneqq\frac{1}{2}\underline{x}\cdot\underline{A}\cdot\underline{x}-\underline{x}\cdot\underline{b}
-\]
-
-\end_inset
-
-考虑 
-\begin_inset Formula $\varphi(\underline{x})$
-\end_inset
-
- 的等值面，该曲面在点 
-\begin_inset Formula $\underline{x}_{k}$
-\end_inset
-
- 处的
-\color red
-最速下降方向 (steepest descent direction)
-\color inherit
- 为
-\begin_inset Formula 
-\[
-\underline{d}_{k}=-\grad\varphi(\underline{x}_{k})=\underline{b}-\underline{A}\cdot\underline{x}_{k}\equiv\underline{r}_{k}
-\]
-
-\end_inset
-
-沿此方向，寻找
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\underline{x}_{k+1}=\underline{x}_{k}+\alpha\underline{d}_{k}\equiv\underline{x}_{k}+\alpha\underline{r}_{k}
-\]
-
-\end_inset
-
-使 
-\begin_inset Formula $\varphi(\underline{x}_{k+1})$
-\end_inset
-
- 的值最小，即
-\begin_inset Formula 
-\begin{equation}
-\begin{aligned}0 & =\frac{\partial\varphi(\underline{x}_{k}+\alpha\underline{d}_{k})}{\partial\alpha}=\underline{d}_{k}\cdot\grad\varphi(\underline{x}_{k}+\alpha\underline{d}_{k})\\
- & =\underline{d}_{k}\cdot\underline{A}\cdot\underline{x}_{k}+\underline{d}_{k}\cdot\underline{A}\cdot\alpha\underline{d}_{k}-\underline{d}_{k}\cdot\underline{b}\\
- & =\alpha\underline{d}_{k}\cdot\underline{A}\cdot\underline{d}_{k}-\underline{d}_{k}\cdot\underline{r}_{k}
-\end{aligned}
-\label{eq:steepest-descent}
-\end{equation}
-
-\end_inset
-
-由此得
-\end_layout
-
-\begin_layout Algorithm
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[最速下降法]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underline{d}_{k}=\underline{r}_{k}\equiv\underline{b}-\underline{A}\cdot\underline{x}_{k},\quad\alpha=\frac{\underline{d}_{k}\cdot\underline{d}_{k}}{\underline{d}_{k}\cdot\underline{A}\cdot\underline{d}_{k}},\quad\underline{x}_{k+1}=\underline{x}_{k}+\alpha\underline{d}_{k}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-CG (Conjugate Gradient)
-\end_layout
-
-\begin_layout Standard
-将最速下降法中的路径 
-\begin_inset Formula $\underline{d}_{k}=\underline{r}_{k}$
-\end_inset
-
- 替换为 
-\begin_inset Formula $\underline{r}_{k}$
-\end_inset
-
- 及 
-\begin_inset Formula $\underline{d}_{k-1}$
-\end_inset
-
- 的线性组合
-\begin_inset Formula 
-\[
-\underline{x}_{k+1}=\underline{x}_{k}+\alpha\underline{d}_{k},\quad\underline{d}_{k}\coloneqq\underline{r}_{k}-\beta\underline{d}_{k-1}
-\]
-
-\end_inset
-
-其中系数 
-\begin_inset Formula $\beta$
-\end_inset
-
- 由 
-\color red
-
-\begin_inset Formula $\underline{A}$
-\end_inset
-
--正交 (
-\begin_inset Formula $\underline{A}$
-\end_inset
-
--orthogonal)
-\color inherit
- 又名
-\color red
-共轭 (conjugate)
-\color inherit
- 条件
-\begin_inset Formula 
-\[
-0=\underline{d}_{k}\cdot\underline{A}\cdot\underline{d}_{k-1}\equiv\underline{r}_{k}\cdot\underline{A}\cdot\underline{d}_{k-1}-\beta\underline{d}_{k-1}\cdot\underline{A}\cdot\underline{d}_{k-1}
-\]
-
-\end_inset
-
-求得，再沿 
-\begin_inset Formula $\underline{d}_{k}$
-\end_inset
-
- 方向寻找极值点，过程与式 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:steepest-descent"
-
-\end_inset
-
- 相同，由此得
-\end_layout
-
-\begin_layout Algorithm
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[共轭梯度法]
-\end_layout
-
-\end_inset
-
-令 
-\begin_inset Formula $\underline{x}_{0}=\underline{0}$
-\end_inset
-
- 并任取满足 
-\begin_inset Formula $\underline{d}_{0}\cdot\underline{A}\cdot\underline{b}=0$
-\end_inset
-
- 的 
-\begin_inset Formula $\underline{d}_{0}$
-\end_inset
-
-，依次计算
-\begin_inset Formula 
-\[
-\underline{x}_{k+1}=\underline{x}_{k}+\alpha_{k}\underline{d}_{k}=\underline{x}_{k}+\alpha\underline{r}_{k}-\alpha\beta\underline{d}_{k-1},\quad k=0,1,\dots,n-1,
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{r}_{k}=\underline{b}-\underline{A}\cdot\underline{x}_{k},\quad\beta=\frac{\underline{r}_{k}\cdot\underline{A}\cdot\underline{d}_{k-1}}{\underline{d}_{k-1}\cdot\underline{A}\cdot\underline{d}_{k-1}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underline{d}_{k}=\underline{r}_{k}-\beta\underline{d}_{k-1},\quad\alpha=\frac{\underline{r}_{k}\cdot\underline{d}_{k}}{\underline{d}_{k}\cdot\underline{A}\cdot\underline{d}_{k}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[误差估计]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\Vert\underline{x}-\underline{x}_{k}\Vert_{\underline{A}}\le2\left(\frac{\sqrt{\lambda_{\max}}-\sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}}+\sqrt{\lambda_{\min}}}\right)^{k}\Vert\underline{x}-\underline{x}_{0}\Vert_{\underline{A}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+KS (Krylov Subspace) 迭代法
 \end_layout
 
 \begin_layout Subsection
@@ -1258,7 +986,7 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $\underline{K}_{k}(\underline{A},\underline{b})\coloneqq\begin{bmatrix}\underline{b} & \underline{A}\cdot\underline{b} & \dots & \underline{A}^{k-1}\cdot\underline{b}\end{bmatrix}$
+\begin_inset Formula $\underline{K}_{k}(\underline{A},\vert b\rangle)\coloneqq\begin{bmatrix}\vert b\rangle & \underline{A}\vert b\rangle & \dots & \underline{A}^{k-1}\vert b\rangle\end{bmatrix}$
 \end_inset
 
  为 
@@ -1269,7 +997,7 @@ Krylov 矩阵
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\underline{b})\coloneqq\mathrm{span}\left\{ \underline{b},\underline{A}\cdot\underline{b},\dots,\underline{A}^{k-1}\cdot\underline{b}\right\} $
+\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)\coloneqq\mathrm{span}\left\{ \underline{A}^{j-1}\vert b\rangle\right\} _{j=1}^{k}$
 \end_inset
 
  为 
@@ -1289,17 +1017,17 @@ Krylov 子空间
 
 \begin_layout Standard
 在 Krylov 子空间内选择合适的 
-\begin_inset Formula $\underline{x}_{k}$
+\begin_inset Formula $\vert x_{k}\rangle$
 \end_inset
 
-，就得到相应的 Krylov 子空间迭代法。表 
+，就得到相应的 KS 迭代法，如表 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Krylov"
 
 \end_inset
 
- 列出了一些常用的 Krylov 子空间迭代法。
+ 所示。
 \end_layout
 
 \begin_layout Standard
@@ -1362,7 +1090,7 @@ name "tab:Krylov"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}$
+\begin_inset Formula $\vert x_{k}\rangle$
 \end_inset
 
 
@@ -1374,95 +1102,7 @@ name "tab:Krylov"
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{r}_{k}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Conjugate Gradients
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-对称正定
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}\in\mathcal{K}_{k}(\underline{A},\underline{b})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\underline{r}_{k}\perp\mathcal{K}_{k}(\underline{A},\underline{b})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-MINRES
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-对称非正定
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}\in\mathcal{K}_{k}(\underline{A},\underline{b})$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\min\underline{r}_{k}\cdot\underline{r}_{k}$
+\begin_inset Formula $\vert r_{k}\rangle\coloneqq\vert b\rangle-\underline{A}\vert x_{k}\rangle$
 \end_inset
 
 
@@ -1494,7 +1134,7 @@ GMRES
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}\in\mathcal{K}_{k}(\underline{A},\underline{b})$
+\begin_inset Formula $\vert x_{k}\rangle\in\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
 \end_inset
 
 
@@ -1506,7 +1146,95 @@ GMRES
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\min\underline{r}_{k}\cdot\underline{r}_{k}$
+\begin_inset Formula $\min\langle r_{k}\vert r_{k}\rangle$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MINRES
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+对称非正定
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vert x_{k}\rangle\in\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\min\langle r_{k}\vert r_{k}\rangle$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Conjugate Gradients
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+对称且正定
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vert x_{k}\rangle\in\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\vert r_{k}\rangle\perp\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
 \end_inset
 
 
@@ -1538,7 +1266,7 @@ BiConjugate Gradients
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}\in\mathcal{K}_{k}(\underline{A},\underline{b})$
+\begin_inset Formula $\vert x_{k}\rangle\in\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
 \end_inset
 
 
@@ -1550,7 +1278,7 @@ BiConjugate Gradients
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{r}_{k}\perp\mathcal{K}_{k}(\underline{A}^{\mathrm{T}},\underline{b})$
+\begin_inset Formula $\vert r_{k}\rangle\perp\mathcal{K}_{k}(\underline{A}^{\mathrm{T}},\vert b\rangle)$
 \end_inset
 
 
@@ -1582,7 +1310,7 @@ BiCG Stabilized
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\underline{x}_{k}\in\underline{A}^{\mathrm{T}}\cdot\mathcal{K}_{k}(\underline{A}^{\mathrm{T}},\underline{b})$
+\begin_inset Formula $\vert x_{k}\rangle\in\underline{A}^{\mathrm{T}}\cdot\mathcal{K}_{k}(\underline{A}^{\mathrm{T}},\vert b\rangle)$
 \end_inset
 
 
@@ -1614,7 +1342,7 @@ SYMMLQ
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+对称非正定
 \end_layout
 
 \end_inset
@@ -1632,7 +1360,7 @@ SYMMLQ
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\min\underline{r}_{k}\cdot\underline{A}\cdot\underline{r}_{k}$
+\begin_inset Formula $\min\langle r_{k}\vert\underline{A}\vert r_{k}\rangle$
 \end_inset
 
 
@@ -1675,7 +1403,7 @@ status open
  & 2\\
  &  & 3\\
  &  &  & 4
-\end{bmatrix},\quad\underline{b}=\begin{bmatrix}1\\
+\end{bmatrix},\quad\vert b\rangle=\begin{bmatrix}1\\
 1\\
 1\\
 1
@@ -1691,11 +1419,11 @@ status open
 
 \begin_inset Formula 
 \[
-\underline{K}_{4}^{\mathrm{T}}\cdot\underline{K}_{4}=\begin{bmatrix}4 & 10 & 30 & 100\\
+\underline{K}_{4}^{\mathrm{T}}\,\underline{K}_{4}=\begin{bmatrix}4 & 10 & 30 & 100\\
 10 & 30 & 100 & 354\\
 30 & 100 & 354 & 1300\\
 100 & 354 & 1300 & 4890
-\end{bmatrix},\quad\mathrm{cond}(\underline{K}_{4}^{\mathrm{T}}\cdot\underline{K}_{4})\approx\frac{5264}{0.004}\approx10^{6},\quad\mathrm{cond}(\underline{K}_{4})\approx10^{3}
+\end{bmatrix},\quad\mathrm{cond}(\underline{K}_{4}^{\mathrm{T}}\,\underline{K}_{4})\approx\frac{5264}{0.004}\approx10^{6},\quad\mathrm{cond}(\underline{K}_{4})\approx10^{3}
 \]
 
 \end_inset
@@ -1711,7 +1439,7 @@ status open
 \end_layout
 
 \begin_layout Subsection
-Arnoldi 正交化
+Arnoldi 正交归一化
 \end_layout
 
 \begin_layout Algorithm
@@ -1732,20 +1460,20 @@ name "alg:Krylov--Arnoldi"
 
 \end_inset
 
-令 
-\begin_inset Formula $\underline{c}_{1}=\underline{b}/\Vert b\Vert$
+由 
+\begin_inset Formula $\vert c_{1}\rangle=\vert b\rangle/\Vert b\Vert$
 \end_inset
 
-。假设已获得 
-\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\underline{b})$
+ 开始迭代。假设已获得 
+\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
 \end_inset
 
- 的一组正交基 
-\begin_inset Formula $\left\{ \underline{c}_{i}\right\} _{i=1}^{k}$
+ 的一组单位正交基 
+\begin_inset Formula $\left\{ \vert c_{i}\rangle\right\} _{i=1}^{k}$
 \end_inset
 
 ，从 
-\begin_inset Formula $\underline{A}\cdot\underline{c}_{k}$
+\begin_inset Formula $\underline{A}\vert c_{k}\rangle$
 \end_inset
 
  中
@@ -1754,15 +1482,15 @@ status open
 
 \begin_layout Plain Layout
 若从 
-\begin_inset Formula $\underline{A}^{k}\cdot\underline{b}$
+\begin_inset Formula $\underline{A}^{k}\vert b\rangle$
 \end_inset
 
  而非 
-\begin_inset Formula $\underline{A}\cdot\underline{c}_{k}$
+\begin_inset Formula $\underline{A}\vert c_{k}\rangle$
 \end_inset
 
  开始构造 
-\begin_inset Formula $\underline{c}_{k+1}$
+\begin_inset Formula $\vert c_{k+1}\rangle$
 \end_inset
 
 ，则为 Gram–Schmidt 过程。
@@ -1771,13 +1499,13 @@ status open
 \end_inset
 
 减去属于 
-\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\underline{b})$
+\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
 \end_inset
 
  的分量，对所得的向量
 \begin_inset Formula 
 \begin{equation}
-\underline{d}_{k+1}\coloneqq\underline{A}\cdot\underline{c}_{k}-\sum_{i=1}^{k}\underline{c}_{i}\otimes\underline{c}_{i}\cdot\underline{A}\cdot\underline{c}_{k}\label{eq:Krylov--Arnoldi}
+\vert d_{k+1}\rangle\coloneqq\underline{A}\vert c_{k}\rangle-\sum_{i=1}^{k}\vert c_{i}\rangle\langle c_{i}\vert\underline{A}\vert c_{k}\rangle\label{eq:Krylov--Arnoldi}
 \end{equation}
 
 \end_inset
@@ -1786,45 +1514,59 @@ status open
 \begin_inset Formula $k+1$
 \end_inset
 
- 个
-\color red
-单位基向量
-\color inherit
-及第 
-\begin_inset Formula $k+1$
-\end_inset
-
  个 
 \color red
 Krylov 子空间
 \color inherit
+及其第 
+\begin_inset Formula $k+1$
+\end_inset
 
+ 个
+\color red
+单位基向量
+\color inherit
+及
 \begin_inset Formula 
 \[
-\underline{c}_{k+1}=\frac{\underline{d}_{k+1}}{\Vert\underline{d}_{k+1}\Vert},\quad\mathcal{K}_{k+1}=\mathcal{K}_{k}\oplus\mathrm{span}\left\{ \underline{c}_{k+1}\right\} 
+\mathcal{K}_{k+1}=\mathcal{K}_{k}\oplus\mathrm{span}\left\{ \vert d_{k+1}\rangle\right\} ,\quad\vert c_{k+1}\rangle=\frac{\vert d_{k+1}\rangle}{\Vert d_{k+1}\Vert},
 \]
 
 \end_inset
 
 将上述内积 
-\begin_inset Formula $\underline{c}_{i}\cdot\underline{A}\cdot\underline{c}_{k}$
+\begin_inset Formula $\langle c_{i}\vert\underline{A}\vert c_{k}\rangle$
 \end_inset
 
  及范数 
-\begin_inset Formula $\Vert\underline{d}_{k+1}\Vert$
+\begin_inset Formula $\Vert d_{k+1}\Vert$
 \end_inset
 
- 记录为
+ 记为 k 级
 \color red
-上海森堡 (upper Hessenberg)
+ upper Hessenberg
 \color inherit
- 矩阵
+ 矩阵的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 列：
 \begin_inset Formula 
 \[
-\langle i\vert\underline{H}\vert k\rangle=\begin{cases}
-c_{i}\cdot\underline{A}\cdot\underline{c}_{k}, & i=1,2,\dots,k,\\
-\Vert\underline{d}_{k+1}\Vert, & i=k+1,
+\langle i\vert\underline{H}_{k}\vert k\rangle=\begin{cases}
+\langle c_{i}\vert\underline{A}\vert c_{k}\rangle, & i=1,2,\dots,k,\\
+\Vert d_{k+1}\Vert, & i=k+1,
 \end{cases}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\underline{A}\,\underbrace{\begin{bmatrix}\vert c_{1}\rangle & \dots & \vert c_{k}\rangle\end{bmatrix}}_{\underline{C}_{k}}=\underbrace{\begin{bmatrix}\underline{C}_{k} & \vert c_{k+1}\rangle\end{bmatrix}}_{\underline{C}_{k+1}}\,\underbrace{\begin{bmatrix}\underline{H}_{k-1} & \underline{C}_{k}^{\mathrm{T}}\,\underline{A}\vert c_{k}\rangle\\
+\underline{0}_{1\times(k-1)} & \Vert d_{k+1}\Vert
+\end{bmatrix}}_{\underline{H}_{k}},
 \]
 
 \end_inset
@@ -1832,7 +1574,7 @@ c_{i}\cdot\underline{A}\cdot\underline{c}_{k}, & i=1,2,\dots,k,\\
 最终得
 \begin_inset Formula 
 \[
-\underline{A}\cdot\underline{C}=\underline{C}\cdot\underline{H},\quad\underline{C}\coloneqq\begin{bmatrix}\underline{c}_{1} & \underline{c}_{2} & \dots & \underline{c}_{n}\end{bmatrix}
+\underline{A}\,\underbrace{\begin{bmatrix}\vert c_{1}\rangle & \dots & \vert c_{n}\rangle\end{bmatrix}}_{\underline{C}_{n}}=\underline{C}_{n}\,\underbrace{\begin{bmatrix}\underline{H}_{n-1} & \underline{C}_{n}^{\mathrm{T}}\,\underline{A}\vert c_{n}\rangle\end{bmatrix}}_{\underline{H}_{n}}.
 \]
 
 \end_inset
@@ -1856,10 +1598,29 @@ c_{i}\cdot\underline{A}\cdot\underline{c}_{k}, & i=1,2,\dots,k,\\
 \begin_inset Formula $\underline{H}$
 \end_inset
 
- 有相同的特征值，即
+ 有相同的特征值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+设 
+\begin_inset Formula $\vert x\rangle=\underline{C}\vert y\rangle$
+\end_inset
+
+，由 
+\begin_inset Formula $\underline{C}^{\mathrm{T}}\,\underline{C}=\underline{I}$
+\end_inset
+
+ 得
 \begin_inset Formula 
 \[
-\underline{A}\cdot\underbrace{\underline{C}\cdot\underline{y}}_{\underline{x}}=\lambda\underbrace{\underline{C}\cdot\underline{y}}_{\underline{x}}\impliedby\underline{H}\cdot\underline{y}=\underline{C}^{\mathrm{T}}\cdot\underline{A}\cdot\underline{C}\cdot\underline{y}=\lambda\underline{y}
+\underline{A}\,\underbrace{\underline{C}\vert y\rangle}_{\vert x\rangle}=\lambda\,\underbrace{\underline{C}\vert y\rangle}_{\vert x\rangle}\implies\underbrace{\underline{C}^{\mathrm{T}}\,\underline{A}\,\underline{C}}_{\underline{H}}\vert y\rangle=\underline{C}^{\mathrm{T}}\,\lambda\,\underline{C}\vert y\rangle=\lambda\vert y\rangle.
 \]
 
 \end_inset
@@ -1874,6 +1635,10 @@ c_{i}\cdot\underline{A}\cdot\underline{c}_{k}, & i=1,2,\dots,k,\\
 
 \end_layout
 
+\begin_layout Subsection
+Lanczos 追赶法
+\end_layout
+
 \begin_layout Example
 \begin_inset ERT
 status open
@@ -1882,6 +1647,22 @@ status open
 
 [Vandermonde]
 \end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underline{A}=\begin{bmatrix}1\\
+ & 2\\
+ &  & 3\\
+ &  &  & 4
+\end{bmatrix},\quad\vert b\rangle=\begin{bmatrix}1\\
+1\\
+1\\
+1
+\end{bmatrix},
+\]
 
 \end_inset
 
@@ -1911,17 +1692,13 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
-Lanczos 追赶法
-\end_layout
-
 \begin_layout Lemma
 若 
 \begin_inset Formula $\underline{A}$
 \end_inset
 
  对称，则 
-\begin_inset Formula $\underline{H}=\underline{C}^{\mathrm{T}}\cdot\underline{A}\cdot\underline{C}$
+\begin_inset Formula $\underline{H}=\underline{C}^{\mathrm{T}}\,\underline{A}\,\underline{C}$
 \end_inset
 
  为对称的三对角阵。
@@ -1973,7 +1750,149 @@ reference "eq:Krylov--Arnoldi"
  简化为三项：
 \begin_inset Formula 
 \[
-\underline{d}_{k+1}\coloneqq\underline{A}\cdot\underline{c}_{k}-\underline{c}_{k}\otimes c_{k}\cdot\underline{A}\cdot\underline{c}_{k}-c_{k-1}\otimes c_{k-1}\cdot\underline{A}\cdot\underline{c}_{k},\quad k=1,2,\dots,n-1.
+\vert d_{k+1}\rangle\coloneqq\underline{A}\vert c_{k}\rangle-\vert c_{k}\rangle\langle c_{k}\vert\underline{A}\vert c_{k}\rangle-\vert c_{k-1}\rangle\langle c_{k-1}\vert\underline{A}\vert c_{k}\rangle.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+对称正定系统
+\end_layout
+
+\begin_layout Subsection
+SD (Steepest Descent)
+\end_layout
+
+\begin_layout Standard
+假设 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 对称正定，则 
+\begin_inset Formula $\underline{A}\vert x\rangle=\vert b\rangle$
+\end_inset
+
+ 等价于
+\begin_inset Formula 
+\[
+\min_{\vert x\rangle\in\mathbb{R}^{n}}\varphi(\vert x\rangle),\quad\varphi(\vert x\rangle)\coloneqq\frac{1}{2}\langle x\vert\underline{A}\vert x\rangle-\langle x\vert b\rangle
+\]
+
+\end_inset
+
+考虑 
+\begin_inset Formula $\varphi(\vert x\rangle)$
+\end_inset
+
+ 的等值面，该曲面在点 
+\begin_inset Formula $\vert x_{k}\rangle$
+\end_inset
+
+ 处的
+\color red
+最速下降方向 (steepest descent direction)
+\color inherit
+ 为负梯度方向，即
+\begin_inset Formula 
+\[
+\vert d_{k}\rangle=-\left.\frac{\partial\varphi}{\partial\vert x\rangle}\right|_{\vert x_{k}\rangle}=\vert b\rangle-\underline{A}\vert x_{k}\rangle\equiv\vert r_{k}\rangle.
+\]
+
+\end_inset
+
+沿此方向，寻找
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha\vert d_{k}\rangle=\vert x_{k}\rangle+\alpha\left(\vert b\rangle-\underline{A}\vert x_{k}\rangle\right),
+\]
+
+\end_inset
+
+使 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 的值最小。为此，先定义 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 的一元函数
+\begin_inset Formula 
+\[
+\begin{aligned}\psi(\alpha) & =\varphi(\vert x_{k}\rangle+\alpha\vert d_{k}\rangle)=\frac{1}{2}\left(\langle x_{k}\vert+\alpha\langle d_{k}\vert\right)\underline{A}\left(\vert x_{k}\rangle+\alpha\vert d_{k}\rangle\right)-\left(\langle x_{k}\vert+\alpha\langle d_{k}\vert\right)\vert b\rangle,\\
+ & =\frac{\alpha^{2}}{2}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\underbrace{\frac{\alpha}{2}\langle x_{k}\vert\underline{A}\vert d_{k}\rangle+\frac{\alpha}{2}\langle d_{k}\vert\underline{A}\vert x_{k}\rangle}_{\alpha\langle d_{k}\vert\underline{A}\vert x_{k}\rangle}-\alpha\langle d_{k}\vert b\rangle+\underbrace{\frac{1}{2}\langle x_{k}\vert\underline{A}\vert x_{k}\rangle-\langle x_{k}\vert b\rangle}_{\varphi(\vert x_{k}\rangle)},
+\end{aligned}
+\]
+
+\end_inset
+
+其中用到了
+\begin_inset Formula 
+\[
+\langle x_{k}\vert\underline{A}\vert d_{k}\rangle=\langle d_{k}\vert\underline{A}^{\mathrm{T}}\vert x_{k}\rangle=\langle d_{k}\vert\underline{A}\vert x_{k}\rangle\impliedby\underline{A}^{\mathrm{T}}=\underline{A},
+\]
+
+\end_inset
+
+又因为
+\begin_inset Formula 
+\[
+\alpha\langle d_{k}\vert\underline{A}\vert x_{k}\rangle-\alpha\langle d_{k}\vert b\rangle=\alpha\langle d_{k}\vert d_{k}\rangle\impliedby\vert d_{k}\rangle\equiv\vert r_{k}\rangle\coloneqq\vert b\rangle-\underline{A}\vert x_{k}\rangle,
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\psi(\alpha)=\frac{\alpha^{2}}{2}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\alpha\langle d_{k}\vert r_{k}\rangle+\varphi(\vert x_{k}\rangle),
+\]
+
+\end_inset
+
+其最小值条件为
+\begin_inset Formula 
+\begin{equation}
+0=\frac{\dd\psi}{\dd\alpha}=\alpha\langle d_{k}\vert\underline{A}\vert d_{k}\rangle-\langle d_{k}\vert r_{k}\rangle\label{eq:steepest-descent}
+\end{equation}
+
+\end_inset
+
+由此得
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[最速下降法]
+\end_layout
+
+\end_inset
+
+ 在第 
+\begin_inset Formula $k+1$
+\end_inset
+
+ 步：
+\begin_inset Formula 
+\[
+\vert d_{k}\rangle=\vert b\rangle-\underline{A}\vert x_{k}\rangle,\quad\alpha=\frac{\langle d_{k}\vert d_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle},\quad\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha\vert d_{k}\rangle.
 \]
 
 \end_inset
@@ -1989,19 +1908,198 @@ reference "eq:Krylov--Arnoldi"
 \end_layout
 
 \begin_layout Subsection
-对称正定：CG
+CG (Conjugate Gradient)
+\end_layout
+
+\begin_layout Standard
+将最速下降法中的路径 
+\begin_inset Formula $\vert d_{k}\rangle=\vert r_{k}\rangle$
+\end_inset
+
+ 替换为 
+\begin_inset Formula $\vert r_{k}\rangle$
+\end_inset
+
+ 及 
+\begin_inset Formula $\vert d_{k-1}\rangle$
+\end_inset
+
+ 的线性组合，即
+\begin_inset Formula 
+\[
+\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha\vert d_{k}\rangle,\quad\vert d_{k}\rangle\coloneqq\vert r_{k}\rangle-\beta\vert d_{k-1}\rangle,
+\]
+
+\end_inset
+
+其中系数 
+\begin_inset Formula $\beta$
+\end_inset
+
+ 由 
+\color red
+
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+-正交 (
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+-orthogonal)
+\color inherit
+ 又名
+\color red
+共轭 (conjugate)
+\color inherit
+ 条件
+\begin_inset Formula 
+\[
+0=\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle\equiv\langle d_{k-1}\vert\underline{A}\vert r_{k}\rangle-\beta\langle d_{k-1}\vert\underline{A}\vert d_{k-1}\rangle
+\]
+
+\end_inset
+
+求得，再沿 
+\begin_inset Formula $\vert d_{k}\rangle$
+\end_inset
+
+ 方向寻找极值点，过程与式 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:steepest-descent"
+
+\end_inset
+
+ 相同，由此得
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[共轭梯度法]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:CG"
+
+\end_inset
+
+在第 
+\begin_inset Formula $k+1=1$
+\end_inset
+
+ 步，取 
+\begin_inset Formula $\vert x_{0}\rangle=\vert0\rangle$
+\end_inset
+
+ 及 
+\begin_inset Formula $\vert d_{0}\rangle=\vert b\rangle$
+\end_inset
+
+，依次计算
+\begin_inset Formula 
+\[
+\vert r_{0}\rangle=\vert b\rangle-\underline{A}\cancel{\vert x_{0}\rangle}=\vert b\rangle,\quad\alpha_{0}=\frac{\langle d_{0}\vert r_{0}\rangle}{\langle d_{0}\vert\underline{A}\vert d_{0}\rangle}=\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle},\quad\vert x_{1}\rangle=\cancel{\vert x_{0}\rangle}+\alpha_{0}\vert d_{0}\rangle.
+\]
+
+\end_inset
+
+在第 
+\begin_inset Formula $k+1=2,\dots,n$
+\end_inset
+
+ 步，依次计算
+\begin_inset Formula 
+\[
+\vert r_{k}\rangle=\vert b\rangle-\underline{A}\vert x_{k}\rangle,\quad\beta_{k}=\frac{\langle d_{k-1}\vert\underline{A}\vert r_{k}\rangle}{\langle d_{k-1}\vert\underline{A}\vert d_{k-1}\rangle},\quad\vert d_{k}\rangle=\vert r_{k}\rangle-\beta_{k}\vert d_{k-1}\rangle,\quad\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle},
+\]
+
+\end_inset
+
+以此更新解向量：
+\begin_inset Formula 
+\[
+\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha_{k}\vert d_{k}\rangle.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[误差估计]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Vert x-x_{k}\Vert_{\underline{A}}\le2\left(\frac{\sqrt{\lambda_{\max}}-\sqrt{\lambda_{\min}}}{\sqrt{\lambda_{\max}}+\sqrt{\lambda_{\min}}}\right)^{k}\Vert x-x_{0}\Vert_{\underline{A}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+非正定系统
 \end_layout
 
 \begin_layout Subsection
-最小二乘：LSQR
+MINRES (Minimum RESidual)
+\end_layout
+
+\begin_layout Standard
+对称系统可用。
 \end_layout
 
 \begin_layout Subsection
-对称非正定：MINRES
+GMRES (Generalized Minimum RESidual)
 \end_layout
 
-\begin_layout Subsection
-非对称：GMRES
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Saad_1986"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+非对称系统可用。
 \end_layout
 
 \end_body
