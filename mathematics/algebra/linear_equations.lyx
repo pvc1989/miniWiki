@@ -2147,8 +2147,350 @@ status open
 
 \end_layout
 
+\begin_layout Subsection
+CG 的 KS 诠释
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\forall k=0,\dots,n,$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vert x_{k}\rangle\in\mathcal{K}_{k},\quad\vert r_{k}\rangle\in\mathcal{K}_{k+1},\quad\vert d_{k}\rangle\in\mathcal{K}_{k+1},
+\]
+
+\end_inset
+
+且
+\begin_inset Formula 
+\[
+\mathcal{K}_{k}=\mathrm{span}\left\{ \vert r_{i}\rangle\right\} _{i=0}^{k-1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Formula $\forall k=1,\dots,n,$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\langle d_{i}\vert\underline{A}\vert d_{k}\rangle=0=\langle r_{i}\vert r_{k}\rangle,\quad\forall i=0,\dots,k-1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+对 
+\begin_inset Formula $k=1$
+\end_inset
+
+，可以直接验：代入 
+\begin_inset Formula $\vert r_{0}\rangle=\vert d_{0}\rangle=\vert b\rangle$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\vert r_{1}\rangle=\vert b\rangle-\underline{A}\vert x_{1}\rangle=\vert b\rangle-\underline{A}\underbrace{\overbrace{\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}}^{\alpha_{0}}\overbrace{\vert b\rangle}^{\vert d_{0}\rangle}}_{\vert x_{1}\rangle}=\vert b\rangle-\underline{A}\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\vert d_{1}\rangle=\vert r_{1}\rangle-\beta_{1}\vert d_{0}\rangle=\vert r_{1}\rangle-\underbrace{\frac{\langle d_{0}\vert\underline{A}\vert r_{1}\rangle}{\langle d_{0}\vert\underline{A}\vert d_{0}\rangle}}_{\beta_{1}}\vert d_{0}\rangle=\vert r_{1}\rangle-\frac{\langle b\vert\underline{A}\vert r_{1}\rangle}{\langle b\vert\underline{A}\vert b\rangle}\vert b\rangle,
+\]
+
+\end_inset
+
+于是
+\begin_inset Formula 
+\[
+\langle r_{0}\vert r_{1}\rangle=\underbrace{\langle b\vert}_{\langle r_{0}\vert}\underbrace{\left(\vert b\rangle-\underline{A}\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}\right)}_{\vert r_{1}\rangle}=\langle b\vert b\rangle-\frac{\langle b\vert\underline{A}\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}\langle b\vert b\rangle=0,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\langle d_{0}\vert\underline{A}\vert d_{1}\rangle=\underbrace{\langle b\vert\underline{A}}_{\langle d_{0}\vert\underline{A}}\underbrace{\left(\vert r_{1}\rangle-\frac{\langle b\vert\underline{A}\vert r_{1}\rangle}{\langle b\vert\underline{A}\vert b\rangle}\vert b\rangle\right)}_{\vert d_{1}\rangle}=\langle b\vert\underline{A}\vert r_{1}\rangle-\langle b\vert\underline{A}\vert r_{1}\rangle=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+下面假设命题对 
+\begin_inset Formula $k$
+\end_inset
+
+ 及比它更小的 
+\begin_inset Formula $k'$
+\end_inset
+
+ 都成立，只需验证 
+\begin_inset Formula $k+1$
+\end_inset
+
+ 情形。由
+\begin_inset Formula 
+\[
+\vert r_{k+1}\rangle-\vert r_{k}\rangle=-\underline{A}\left(\vert x_{k+1}\rangle-\vert x_{k}\rangle\right)=-\alpha_{k}\underline{A}\vert d_{k}\rangle,
+\]
+
+\end_inset
+
+及
+\begin_inset Formula 
+\[
+\langle r_{k}\vert=\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\underline{A}^{\cancel{\mathrm{T}}}\impliedby\vert r_{k}\rangle-\vert r_{k-1}\rangle=-\alpha_{k-1}\underline{A}\vert d_{k-1}\rangle
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{aligned}\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle & =\overbrace{\left(\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\right)}^{\langle r_{k}\vert}\overbrace{\left(-\alpha_{k}\underline{A}\vert d_{k}\rangle\right)}^{\vert r_{k+1}\rangle-\vert r_{k}\rangle}\\
+ & =-\alpha_{k}\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle+\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\alpha_{k}\underline{A}\vert d_{k}\rangle.
+\end{aligned}
+\]
+
+\end_inset
+
+利用定义
+\begin_inset Formula 
+\[
+\langle r_{k-1}\vert=\langle d_{k-1}\vert+\beta_{k-1}\langle d_{k-2}\vert
+\]
+
+\end_inset
+
+及归纳假设
+\begin_inset Formula 
+\[
+\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle=\langle d_{k-2}\vert\underline{A}\vert d_{k}\rangle=0
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle=\left(\langle d_{k-1}\vert+\beta_{k-1}\langle d_{k-2}\vert\right)\underline{A}\vert d_{k}\rangle=\cancel{\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle}+\beta_{k-1}\cancel{\langle d_{k-2}\vert\underline{A}\vert d_{k}\rangle}
+\]
+
+\end_inset
+
+及
+\begin_inset Formula 
+\[
+\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\alpha_{k}\underline{A}\vert d_{k}\rangle=\left(\langle r_{k-1}\vert-\langle r_{k}\vert\right)\alpha_{k}\underline{A}\vert d_{k}\rangle=\alpha_{k}\cancel{\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle}-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle,
+\]
+
+\end_inset
+
+因此
+\begin_inset Formula 
+\[
+\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle.
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula 
+\[
+\langle r_{k}\vert=\langle d_{k}\vert+\beta_{k}\langle d_{k-1}\vert
+\]
+
+\end_inset
+
+即得
+\begin_inset Formula 
+\[
+\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle=\alpha_{k}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\alpha_{k}\beta_{k}\cancel{\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle}.
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula 
+\[
+\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle}
+\]
+
+\end_inset
+
+即得
+\begin_inset Formula 
+\[
+\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle=-\langle d_{k}\vert r_{k}\rangle,
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\langle r_{k}\vert r_{k+1}\rangle=\langle r_{k}\vert r_{k}\rangle-\langle d_{k}\vert r_{k}\rangle=-\beta_{k}\langle d_{k-1}\vert r_{k}\rangle.
+\]
+
+\end_inset
+
+由于 
+\begin_inset Formula $d_{k-1}\in\mathcal{K}_{k}$
+\end_inset
+
+ 及归纳假设 
+\begin_inset Formula $\vert r_{k}\rangle\perp\mathcal{K}_{k}$
+\end_inset
+
+ 可知该式右端为零。对于 
+\begin_inset Formula $i\in\left\{ 1,\dots,k-1\right\} $
+\end_inset
+
+，利用
+\begin_inset Formula 
+\[
+\vert r_{k+1}\rangle=\vert b\rangle-\underline{A}\underbrace{\left(\vert x_{k}\rangle+\alpha_{k}\vert d_{k}\rangle\right)}_{\vert x_{k+1}\rangle}=\underbrace{\vert b\rangle-\underline{A}\vert x_{k}\rangle}_{\vert r_{k}\rangle}-\alpha_{k}\underline{A}\vert d_{k}\rangle
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\langle r_{i}\vert r_{k+1}\rangle=\cancel{\langle r_{i}\vert r_{k}\rangle}-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle=-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle.
+\]
+
+\end_inset
+
+再利用
+\begin_inset Formula 
+\[
+\langle r_{i}\vert=\langle d_{i}\vert+\beta_{i}\langle d_{i-1}\vert
+\]
+
+\end_inset
+
+及归纳假设
+\begin_inset Formula 
+\[
+\langle d_{i}\vert\underline{A}\vert d_{k}\rangle=\langle d_{i-1}\vert\underline{A}\vert d_{k}\rangle=0,\quad\forall i\in\left\{ 1,\dots,k-1\right\} ,
+\]
+
+\end_inset
+
+最终得
+\begin_inset Formula 
+\[
+\langle r_{i}\vert r_{k+1}\rangle=-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle=-\alpha_{k}\cancel{\langle d_{i}\vert\underline{A}\vert d_{k}\rangle}-\alpha_{k}\beta_{i}\cancel{\langle d_{i-1}\vert\underline{A}\vert d_{k}\rangle}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+共轭梯度法 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:CG"
+
+\end_inset
+
+ 等价于在 
+\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
+\end_inset
+
+ 中选择 
+\begin_inset Formula $\vert x_{k}\rangle$
+\end_inset
+
+，使得 
+\begin_inset Formula $\vert r_{k}\rangle$
+\end_inset
+
+ 与 
+\begin_inset Formula $\mathcal{K}_{k}(\underline{A},\vert b\rangle)$
+\end_inset
+
+ 正交。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 非正定系统
+\end_layout
+
+\begin_layout Standard
+共轭梯度法 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:CG"
+
+\end_inset
+
+ 的目标函数为
+\begin_inset Formula 
+\[
+\min\left(\frac{1}{2}\langle x_{k}\vert\underline{A}\vert x_{k}\rangle-\langle x_{k}\vert b\rangle\right),\quad\vert x_{k}\rangle\in\mathcal{K}_{k}(\underline{A},\vert b\rangle)
+\]
+
+\end_inset
+
+若要推广到非正定系统，则需替换目标函数，例如 
+\begin_inset Formula $\langle r_{k}\vert r_{k}\rangle$
+\end_inset
+
+ 或等价的 
+\begin_inset Formula $\Vert r_{k}\Vert_{2}$
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsection
