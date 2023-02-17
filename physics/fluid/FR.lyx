@@ -115,101 +115,112 @@ name "chap:FR"
 For 1D Conservation Laws
 \end_layout
 
-\begin_layout Subsubsection
-Solution Points
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u(x,t)}{\partial t}+\frac{\partial f(u)}{\partial x}=0
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-On the 
+在第 
 \begin_inset Formula $j$
 \end_inset
 
-th cell 
+ 号单元 
 \begin_inset Formula $E_{j}$
 \end_inset
 
-, select 
-\begin_inset Formula $K$
-\end_inset
-
- solution points.
- The 
-\begin_inset Formula $k$
-\end_inset
-
-th solution point 
-\begin_inset Formula $x_{j,k}$
-\end_inset
-
- has solution 
-\begin_inset Formula $u_{j,k}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Define a global to local coordinate transform 
+ 上，定义坐标变换 
 \begin_inset Formula $E_{j}\mapsto I\equiv[-1,1]$
 \end_inset
 
- by
+ 为
 \begin_inset Formula 
 \[
-x(\xi)=x_{j}+\frac{1}{2}h_{j}\,\xi.
+x|_{E_{j}}(\xi)=c_{j}+\frac{h_{j}}{2}\,\xi,\quad J_{j}=\left|\frac{\partial x}{\partial\xi}\right|\equiv\frac{h_{j}}{2}.
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $c_{j}$
+\end_inset
 
+ 为单元中心坐标，
+\begin_inset Formula $h_{j}$
+\end_inset
+
+ 为单元长度。
+\end_layout
+
+\begin_layout Subsubsection
+Lagrange 插值
 \end_layout
 
 \begin_layout Standard
-For each solution point, there is a Lagrange polynomials of degree 
-\begin_inset Formula $K-1$
-\end_inset
-
-.
- In global coordinates, it is
-\begin_inset Formula 
-\[
-\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},
-\]
-
-\end_inset
-
-while in local coordinates, it is
-\begin_inset Formula 
-\[
-\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The solution polynomial of degree 
-\begin_inset Formula $K-1$
-\end_inset
-
- on 
+在 
 \begin_inset Formula $E_{j}$
 \end_inset
 
- is then
+ 上选定 
+\begin_inset Formula $K$
+\end_inset
+
+ 个未知量求值点，记为 
+\begin_inset Formula $\left\{ x_{j,k}\equiv x|_{E_{j}}(\xi_{k})\right\} _{k=1}^{K}$
+\end_inset
+
+，并记 
+\begin_inset Formula $u(x_{j,k},t)\eqqcolon u_{j,k}(t)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\forall x_{j,k}$
+\end_inset
+
+ 可构造 
+\begin_inset Formula $(K-1)$
+\end_inset
+
+-次 Lagrange 多项式
 \begin_inset Formula 
 \[
-u_{j}(x)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{j,k}(x)
+\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},\quad\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}},
 \]
 
 \end_inset
 
-or
+从而得到 
+\begin_inset Formula $u$
+\end_inset
+
+ 的 
+\begin_inset Formula $(K-1)$
+\end_inset
+
+-次多项式近似
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi).
+u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
+\]
+
+\end_inset
+
+或局部坐标系下的
+\begin_inset Formula 
+\[
+\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -218,50 +229,50 @@ u_{j}(\xi)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi).
 \end_layout
 
 \begin_layout Subsubsection
-Discontinuous Flux
+间断通量
 \end_layout
 
 \begin_layout Standard
-Evaluate fluxes at solution points, which gives
+在 求值点 处计算通量值 
 \begin_inset Formula 
 \[
-f_{j,k}=f(u_{j,k}),\quad k=1,\dots,K.
+f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,K.
 \]
 
 \end_inset
 
-Then one can define the discontinuous flux function
+定义离散通量
 \begin_inset Formula 
 \[
-f_{j}(x)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{j,k}(x)
+f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \]
 
 \end_inset
 
-or
+或局部坐标下的
 \begin_inset Formula 
 \[
-f_{j}(\xi)=\sum_{k=1}^{K}f_{j,k}\,\mathrm{La}_{k}(\xi).
+\boxed{f_{j}^{\mathrm{D}}(x(\xi),t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
 
-Its derivative at the 
-\begin_inset Formula $l$
+其在 
+\begin_inset Formula $x_{j,l}\equiv x|_{E_{j}}(\xi_{l})$
 \end_inset
 
-th solution point is then
+ 处的导数为
 \begin_inset Formula 
 \[
-(\partial_{\xi}\,f_{j})_{l}=\sum_{k=1}^{K}f_{j,k}\,\underbrace{\partial_{\xi}\,\mathrm{La}_{k}(\xi_{l})}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}
+\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}=\sum_{k=1}^{K}f_{j,k}(t)\,\underbrace{\left.\frac{\partial\mathrm{La}_{k}}{\partial\xi}\right|_{\xi_{l}}}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}(t)
 \]
 
 \end_inset
 
-or
+或
 \begin_inset Formula 
 \[
-(\partial_{x}\,f_{j})_{l}=\frac{2}{h_{j}}(\partial_{\xi}\,f_{j})_{l}.
+\left.\frac{\partial f_{j}}{\partial x}\right|_{x_{j,l}}=\left.\frac{\partial x}{\partial\xi}\right|_{\xi_{l}}^{-1}\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}.
 \]
 
 \end_inset
@@ -270,31 +281,31 @@ or
 \end_layout
 
 \begin_layout Subsubsection
-Upwind Flux
+界面通量
 \end_layout
 
 \begin_layout Standard
-At 
+在单元界面 
 \begin_inset Formula $x_{j+1/2}$
 \end_inset
 
-, there are left and right solutions
+ 处，未知量近似解的左右值
 \begin_inset Formula 
 \[
-u_{\mathrm{L}}\coloneqq u_{j}(x_{j+1/2}),\quad u_{\mathrm{R}}\coloneqq u_{j+1}(x_{j+1/2}),
+u_{\mathrm{L}}\coloneqq u_{j}^{h}(x_{j+1/2}),\quad u_{\mathrm{R}}\coloneqq u_{j+1}^{h}(x_{j+1/2}),
 \]
 
 \end_inset
 
-and the left and right fluxes
+及间断通量的左右值
 \begin_inset Formula 
 \[
-f_{\mathrm{L}}\coloneqq f_{j}(x_{j+1/2}),\quad f_{\mathrm{R}}\coloneqq f_{j+1}(x_{j+1/2}),
+f_{\mathrm{L}}\coloneqq f_{j}^{\mathrm{D}}(x_{j+1/2}),\quad f_{\mathrm{R}}\coloneqq f_{j+1}^{\mathrm{D}}(x_{j+1/2}),
 \]
 
 \end_inset
 
-In general
+通常是间断的：
 \begin_inset Formula 
 \[
 u_{\mathrm{L}}\ne u_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f(u_{\mathrm{L}}),\quad f_{\mathrm{R}}\ne f(u_{\mathrm{R}}).
@@ -302,61 +313,69 @@ u_{\mathrm{L}}\ne u_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f_{\mathrm{R}},\quad f_
 
 \end_inset
 
+需要补充某种界面通量（某种 Riemann 求解器），记为 
+\begin_inset Formula $f^{\mathrm{I}}(x,t)$
+\end_inset
 
+。这里省略下标（即视为全局函数），乃因其在界面处的取值唯一，故不偏向于任意一侧。
 \end_layout
 
 \begin_layout Standard
-One possible upwind flux is
+一种常用的界面通量为
 \begin_inset Formula 
 \[
-f_{j+1/2}^{\text{upw}}=\frac{1}{2}\left(f(u_{\mathrm{L}})+f(u_{\mathrm{R}})\right)-\frac{1}{2}\left|a(\tilde{u})\right|\left(u_{\mathrm{L}}-u_{\mathrm{R}}\right),
+f_{j+1/2}^{\mathrm{I}}=\frac{f(u_{\mathrm{R}})+f(u_{\mathrm{L}})}{2}-\left|a(\tilde{u})\right|\frac{u_{\mathrm{R}}-u_{\mathrm{L}}}{2},
 \]
 
 \end_inset
 
-where
+其中
 \begin_inset Formula 
 \[
 a(\tilde{u})=\begin{cases}
-\left(f(u_{\mathrm{L}})-f(u_{\mathrm{R}})\right)/\left(u_{\mathrm{L}}-u_{\mathrm{R}}\right), & u_{\mathrm{L}}\ne u_{\mathrm{R}};\\
+\dfrac{f(u_{\mathrm{R}})-f(u_{\mathrm{L}})}{u_{\mathrm{R}}-u_{\mathrm{L}}}, & u_{\mathrm{L}}\ne u_{\mathrm{R}};\\
 a(u_{\mathrm{L}})=a(u_{\mathrm{R}}), & u_{\mathrm{L}}=u_{\mathrm{R}}.
 \end{cases}
 \]
 
 \end_inset
 
-It generally requires an entropy correction.
+推广到 Euler 系统即 Roe 平均，通常需要熵修正。
 \end_layout
 
 \begin_layout Subsubsection
-Continuous Flux
+连续通量
 \end_layout
 
 \begin_layout Standard
-A continuous flux function 
-\begin_inset Formula $F(x)$
+通过对 
+\begin_inset Formula $f_{j}^{\mathrm{D}}$
 \end_inset
 
- takes the upwind flux values at the cell interfaces:
+ 引入修正函数 
+\begin_inset Formula $f_{j}^{\mathrm{C}}$
+\end_inset
+
+，可以重构出连续的近似通量：
 \begin_inset Formula 
 \[
-F(x_{j\pm1/2})=f_{j\pm1/2}^{\text{upw}},
+\boxed{f_{j}^{\mathrm{R}}\coloneqq f_{j}^{\mathrm{D}}+f_{j}^{\mathrm{C}}},
 \]
 
 \end_inset
 
-and approximates the discontinuous flux function 
-\begin_inset Formula $f_{j}(x)$
-\end_inset
-
- in 
-\begin_inset Formula $E_{j}$
-\end_inset
-
-:
+要求其在单元界面处等于迎风通量：
 \begin_inset Formula 
 \[
-F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}.
+\boxed{\left.f_{j}^{\mathrm{R}}\right|_{x_{j\pm1/2}}=f_{j\pm1/2}^{\mathrm{I}}},
+\]
+
+\end_inset
+
+并且在单元内部（按某种度量）接近间断通量：
+\begin_inset Formula 
+\[
+\boxed{\left.f_{j}^{\mathrm{R}}\right|_{x}\approx\left.f_{j}^{\mathrm{D}}\right|_{x}},\quad\forall x\in E_{j}.
 \]
 
 \end_inset
@@ -365,82 +384,14 @@ F_{j}(x)\approx f_{j}(x),\quad x\in E_{j}.
 \end_layout
 
 \begin_layout Standard
-If 
-\begin_inset Formula $u_{j}$
-\end_inset
-
- is of degree 
-\begin_inset Formula $K-1$
-\end_inset
-
-, then 
-\begin_inset Formula $F_{j}$
-\end_inset
-
- should be of degree 
-\begin_inset Formula $K$
-\end_inset
-
-, so that
+不失一般性，可定义归一化的修正函数
 \begin_inset Formula 
 \[
-u_{j}^{n+1}=u_{j}^{n}-\left(\partial_{x}\,F_{j}\right)h_{t}
-\]
-
-\end_inset
-
-is of degree 
-\begin_inset Formula $K-1$
-\end_inset
-
-, too.
- The correction function 
-\begin_inset Formula $g(\xi)\coloneqq F_{j}(\xi)-f_{j}(\xi)$
-\end_inset
-
- should be a polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
- with prescribed left and right interface values
-\begin_inset Formula 
-\[
-\begin{cases}
-F_{j}(-1)-f_{j}(-1)=f_{j-1/2}^{\text{upw}}-f_{j}(-1)\\
-F_{j}(+1)-f_{j}(+1)=f_{j+1/2}^{\text{upw}}-f_{j}(+1)
-\end{cases}
-\]
-
-\end_inset
-
-and approximates the constant function 
-\begin_inset Formula $0(\xi)$
-\end_inset
-
- in some sense.
-\end_layout
-
-\begin_layout Standard
-Define the 
-\begin_inset Formula $K$
-\end_inset
-
--degree correction function for the Left Boundary
-\begin_inset Formula 
-\[
-g_{\text{LB}}(\xi)\begin{cases}
+g_{-1}(\xi)\begin{cases}
 =1, & \xi=-1,\\
 \approx0, & \xi\in(-1,+1),\\
 =0, & \xi=+1,
-\end{cases}
-\]
-
-\end_inset
-
-and the counterpart for the Right Boundary
-\begin_inset Formula 
-\[
-g_{\text{RB}}(\xi)\begin{cases}
+\end{cases}\quad g_{+1}(\xi)\begin{cases}
 =0, & \xi=-1,\\
 \approx0, & \xi\in(-1,+1),\\
 =1, & \xi=+1.
@@ -449,47 +400,91 @@ g_{\text{RB}}(\xi)\begin{cases}
 
 \end_inset
 
+由此得连续通量
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)g_{\eta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
+\]
+
+\end_inset
+
+其局部导数为
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial\xi}+\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi}.
+\]
+
+\end_inset
+
 
 \end_layout
 
+\begin_layout Subsubsection
+半离散格式
+\end_layout
+
 \begin_layout Standard
-Then, the 
+上述 
+\begin_inset Formula $f_{j}^{\mathrm{R}}$
+\end_inset
+
+ 的全局导数为
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\left(\frac{\partial x(\xi)}{\partial\xi}\right)^{-1}\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi},
+\]
+
+\end_inset
+
+用其近似原 PDE 中的 
+\begin_inset Formula $\partial_{x}\,f$
+\end_inset
+
+，即得半离散的 FR 格式：
+\begin_inset Formula 
+\[
+\boxed{\dv{u_{j,k}(t)}{t}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}},\quad k=1,\dots,K.
+\]
+
+\end_inset
+
+考虑显式 Euler 推进：
+\begin_inset Formula 
+\[
+u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
+\]
+
+\end_inset
+
+为保持 
+\begin_inset Formula $u_{j}^{n+1}$
+\end_inset
+
+ 的次数仍为 
+\begin_inset Formula $K-1$
+\end_inset
+
+，连续通量 
+\begin_inset Formula $f_{j}^{\mathrm{R}}$
+\end_inset
+
+ 及修正函数 
+\begin_inset Formula $g_{\pm1}$
+\end_inset
+
+ 均应为 
 \begin_inset Formula $K$
 \end_inset
 
--degree continuous flux could be
-\begin_inset Formula 
-\[
-F_{j}(\xi)=f_{j}(\xi)+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}(\xi).
-\]
-
+ 次多项式。由于 
+\begin_inset Formula $g_{\pm1}$
 \end_inset
 
-The local derivative is then
-\begin_inset Formula 
-\[
-\partial_{\xi}\,F_{j}(\xi_{k})=f_{j}'(\xi_{k})+\left(f_{j-1/2}^{\text{upw}}-f_{j}(-1)\right)g_{\text{LB}}'(\xi)+\left(f_{j+1/2}^{\text{upw}}-f_{j}(+1)\right)g_{\text{RB}}'(\xi),
-\]
-
+ 已给定两点取值，故仍需给定 
+\begin_inset Formula $K-1$
 \end_inset
 
-and the global derivative is
-\begin_inset Formula 
-\[
-\partial_{x}\,F_{j}(x_{j,k})=\frac{2}{h_{j}}\,\partial_{\xi}\,F_{j}(\xi_{k}).
-\]
-
-\end_inset
-
-Then, the original conservation law can be approximated by a system of ODEs
-\begin_inset Formula 
-\[
-\dv{t}u_{j,k}=-\partial_{x}\,F_{j}(x_{j,k}),\quad k=1,\dots,K.
-\]
-
-\end_inset
-
-
+ 个独立条件。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1035,13 +1030,13 @@ FR on Global Triangles
 \end_inset
 
  用迎风通量 
-\begin_inset Formula $f_{\nu}^{\text{upw}}$
+\begin_inset Formula $f_{\nu}^{\mathrm{I}}$
 \end_inset
 
  替换，得弱形式
 \begin_inset Formula 
 \[
-\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\text{upw}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0.
+\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\mathrm{I}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{h}\vert\grad\phi\rangle_{E}=0.
 \]
 
 \end_inset
@@ -1053,7 +1048,7 @@ FR on Global Triangles
 再次分部积分，并记通量阶跃值
 \begin_inset Formula 
 \[
-[f_{\nu}]\coloneqq f_{\nu}^{\text{upw}}-f_{\nu}^{\text{int}},
+[f_{\nu}]\coloneqq f_{\nu}^{\mathrm{I}}-f_{\nu}^{\text{int}},
 \]
 
 \end_inset
