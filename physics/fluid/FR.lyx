@@ -708,58 +708,7 @@ whose zeros in
 \end_layout
 
 \begin_layout Subsubsection
-Correction Functions
-\end_layout
-
-\begin_layout Standard
-To define a semi-discrete scheme, the only thing left is to define 
-\begin_inset Formula $g(\xi)\equiv g_{\text{LB}}(\xi)$
-\end_inset
-
- (
-\begin_inset Formula $g_{\text{RB}}$
-\end_inset
-
- can be obtained by symmetry), which is a polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
- and already has two conditions specified.
- So one only need to specify the other 
-\begin_inset Formula $K-1$
-\end_inset
-
- conditions.
-\end_layout
-
-\begin_layout Standard
-Note that a polynomial of degree 
-\begin_inset Formula $K$
-\end_inset
-
- has atmost 
-\begin_inset Formula $K$
-\end_inset
-
- (real) zeros.
- For 
-\begin_inset Formula $g(\xi)$
-\end_inset
-
-, one of the zeros (denoted as 
-\begin_inset Formula $\zeta_{K}=1$
-\end_inset
-
-) has been specified.
- So one only need to specify the other 
-\begin_inset Formula $K-1$
-\end_inset
-
- zeros (denoted as 
-\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K-1}$
-\end_inset
-
-).
+修正函数实例
 \end_layout
 
 \begin_layout Paragraph
@@ -767,43 +716,135 @@ Discontinous Galerkin
 \end_layout
 
 \begin_layout Standard
-Requiring 
-\begin_inset Formula $g\perp\mathbb{P}_{K-1}$
+前面提到 
+\begin_inset Formula $g_{-1}(\xi)$
 \end_inset
 
- is impossible to give
+ 应在“某种意义”下等于 
+\begin_inset Formula $0(\xi)$
+\end_inset
+
+，其中一种意义是正交性：使 
+\begin_inset Formula $g_{-1}\perp\mathbb{P}_{L}$
+\end_inset
+
+ 对尽可能高的 
+\begin_inset Formula $L$
+\end_inset
+
+ 成立。由于 
+\begin_inset Formula $\dim\mathbb{P}_{L}=L+1$
+\end_inset
+
+，故 
+\begin_inset Formula $g_{-1}\perp\mathbb{P}_{L}$
+\end_inset
+
+ 相当于给出了 
+\begin_inset Formula $L+1$
+\end_inset
+
+ 个独立等式：
 \begin_inset Formula 
 \[
-g(-1)=1,\quad g(+1)=0.
+g_{-1}\perp\phi_{l},\quad l=0,1,\dots,L,
 \]
 
 \end_inset
 
-Requiring 
-\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+其中 
+\begin_inset Formula $\left\{ \phi_{l}\right\} _{l=1}^{L}$
 \end_inset
 
- and the above two conditions gives
+ 是 
+\begin_inset Formula $\mathbb{P}_{L}$
+\end_inset
+
+ 的一组正交基；又因为 
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式 
+\begin_inset Formula $g_{-1}$
+\end_inset
+
+ 只有 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 个自由度，其中两个已被
 \begin_inset Formula 
 \[
-g(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi))\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
+g_{-1}(-1)=1,\quad g_{-1}(+1)=0,
 \]
 
 \end_inset
 
-which leads to a simplified version of the DG scheme.
-\end_layout
-
-\begin_layout Standard
-The resulting scheme is accurate to order 
-\begin_inset Formula $2K-1$
+锁定，故至多还可提 
+\begin_inset Formula $K-1$
 \end_inset
 
-.
+ 个正交性条件，即 
+\begin_inset Formula $g_{-1}\perp P_{K-2}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+g_{-1}(\xi)=\frac{(-1)^{K}}{2}\left(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)\right)\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
+\]
+
+\end_inset
+
+其导数为
+\begin_inset Formula 
+\[
+\frac{\dd g_{-1}(\xi)}{\dd\xi}=\frac{(-1)^{K}}{2}\left(\frac{\dd\mathrm{Le}_{K}(\xi)}{\dd\xi}-\frac{\dd\mathrm{Le}_{K-1}(\xi)}{\dd\xi}\right),
+\]
+
+\end_inset
+
+其中 Legendre 多项式的导数由递归关系算出：
+\begin_inset Formula 
+\[
+\frac{\dd\mathrm{Le}_{0}(\xi)}{\dd\xi}=0;\quad\frac{\dd\mathrm{Le}_{k}(\xi)}{\dd\xi}=k\,\mathrm{Le}_{k-1}(\xi)+\xi\,\frac{\dd\mathrm{Le}_{k-1}(\xi)}{\dd\xi},\quad k=1,\dots,K.
+\]
+
+\end_inset
+
+由此导出的 FR 格式与某种 DG 格式等价。
 \end_layout
 
 \begin_layout Paragraph
 Staggered Grid
+\end_layout
+
+\begin_layout Standard
+注意到 
+\begin_inset Formula $K$
+\end_inset
+
+-次多项式至多有 
+\begin_inset Formula $K$
+\end_inset
+
+ 个（实）零点，记为 
+\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K}$
+\end_inset
+
+。对于 
+\begin_inset Formula $g_{-1}(\xi)$
+\end_inset
+
+，其中之一已被给定，记为 
+\begin_inset Formula $\zeta_{K}=1$
+\end_inset
+
+。剩下的任务便是给出其余 
+\begin_inset Formula $K-1$
+\end_inset
+
+ 个零点。
 \end_layout
 
 \begin_layout Standard
