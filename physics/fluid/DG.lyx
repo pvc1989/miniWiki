@@ -1084,7 +1084,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 由纯对流问题的 Riemann 解给出；而扩散通量取作
 \begin_inset Formula 
 \[
-\left(\nu_{i}\,b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left[\nu_{k}\,g_{lk}(u^{h})\right]}{\left[u^{h}\right]}\left\{ q_{l}^{h}\right\} +C_{11}\left[u^{h}\right]+C_{1l}\left\{ q_{l}^{h}\right\} 
+\left(\nu_{i}\,b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left\llbracket \nu_{k}\,g_{lk}(u^{h})\right\rrbracket }{\left\llbracket u^{h}\right\rrbracket }\left\{ q_{l}^{h}\right\} +C_{11}\left\llbracket u^{h}\right\rrbracket +C_{1l}\left\{ q_{l}^{h}\right\} 
 \]
 
 \end_inset
@@ -1092,7 +1092,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 
 \begin_inset Formula 
 \[
-\left(\nu_{k}\,g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}(u^{h})\right\} -C_{1l}\left[u^{h}\right],\quad l=1,2,\dots,d
+\left(\nu_{k}\,g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}(u^{h})\right\} -C_{1l}\left\llbracket u^{h}\right\rrbracket ,\quad l=1,2,\dots,d
 \]
 
 \end_inset
@@ -1461,7 +1461,7 @@ B_{N}(\vec{x})
 分别记状态阶跃值、均值为
 \begin_inset Formula 
 \[
-\left[\underline{U}_{h}\right]=\underline{U}_{h}^{+}-\underline{U}_{h}^{-},\quad\left\{ \underline{U}_{h}\right\} =\frac{1}{2}\left(\underline{U}_{h}^{+}+\underline{U}_{h}^{-}\right),
+\left\llbracket \underline{U}_{h}\right\rrbracket =\underline{U}_{h}^{+}-\underline{U}_{h}^{-},\quad\left\{ \underline{U}_{h}\right\} =\frac{1}{2}\left(\underline{U}_{h}^{+}+\underline{U}_{h}^{-}\right),
 \]
 
 \end_inset
@@ -1473,7 +1473,7 @@ DDG 法的关键步骤，在于构造
  在界面处的近似值：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\left(\underline{\partial}\otimes\underline{U}\right)_{\partial E}\approx\left(\underline{\partial}\,\underline{U}\right)_{h}\coloneqq\beta_{0}\,\Delta^{-1}\left[\underline{n}\otimes\underline{U}_{h}\right]+\left\{ \underline{\partial}\otimes\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left[\underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}\right]},\label{eq:DDG-grad-at-interface}
+\boxed{\left(\underline{\partial}\otimes\underline{U}\right)_{\partial E}\approx\left(\underline{\partial}\,\underline{U}\right)_{h}\coloneqq\beta_{0}\,\Delta^{-1}\left\llbracket \underline{n}\otimes\underline{U}_{h}\right\rrbracket +\left\{ \underline{\partial}\otimes\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left\llbracket \underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}\right\rrbracket },\label{eq:DDG-grad-at-interface}
 \end{equation}
 
 \end_inset
@@ -1481,13 +1481,13 @@ DDG 法的关键步骤，在于构造
 其中
 \begin_inset Formula 
 \[
-\underline{\partial}\otimes\underline{U}\equiv\underline{\partial}\,\underline{U}=\begin{pmatrix}\partial_{x}\,\underline{U}\\
+\underline{\partial}\otimes\underline{U}\equiv\underline{\partial}\,\underline{U}=\begin{bmatrix}\partial_{x}\,\underline{U}\\
 \partial_{y}\,\underline{U}
-\end{pmatrix},\quad\underline{n}\otimes\underline{U}_{h}=\begin{pmatrix}n_{x}\,\underline{U}_{h}\\
+\end{bmatrix},\quad\underline{n}\otimes\underline{U}_{h}=\begin{bmatrix}n_{x}\,\underline{U}_{h}\\
 n_{y}\,\underline{U}_{h}
-\end{pmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}=\begin{pmatrix}\partial_{x}\partial_{x}\,\underline{U}_{h} & \partial_{x}\partial_{y}\,\underline{U}_{h}\\
+\end{bmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{U}_{h}=\begin{bmatrix}\partial_{x}\partial_{x}\,\underline{U}_{h} & \partial_{x}\partial_{y}\,\underline{U}_{h}\\
 \partial_{y}\partial_{x}\,\underline{U}_{h} & \partial_{y}\partial_{y}\,\underline{U}_{h}
-\end{pmatrix},
+\end{bmatrix},
 \]
 
 \end_inset
@@ -1502,8 +1502,8 @@ reference "eq:DDG-grad-at-interface"
  式的展开形式为
 \begin_inset Formula 
 \[
-\begin{aligned}\left(\partial_{x}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{x}\,\underline{U}_{h}\right]+\left\{ \partial_{x}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{x}\left[\partial_{x}\partial_{x}\,\underline{U}_{h}\right]+n_{y}\left[\partial_{x}\partial_{y}\,\underline{U}_{h}\right]\right),\\
-\left(\partial_{y}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left[n_{y}\,\underline{U}_{h}\right]+\left\{ \partial_{y}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{y}\left[\partial_{y}\partial_{x}\,\underline{U}_{h}\right]+n_{y}\left[\partial_{y}\partial_{y}\,\underline{U}_{h}\right]\right).
+\begin{aligned}\left(\partial_{x}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{x}\,\underline{U}_{h}\right\rrbracket +\left\{ \partial_{x}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{x}\left\llbracket \partial_{x}\partial_{x}\,\underline{U}_{h}\right\rrbracket +n_{y}\left\llbracket \partial_{x}\partial_{y}\,\underline{U}_{h}\right\rrbracket \right),\\
+\left(\partial_{y}\,\underline{U}\right)_{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{y}\,\underline{U}_{h}\right\rrbracket +\left\{ \partial_{y}\,\underline{U}_{h}\right\} +\beta_{1}\,\Delta\left(n_{y}\left\llbracket \partial_{y}\partial_{x}\,\underline{U}_{h}\right\rrbracket +n_{y}\left\llbracket \partial_{y}\partial_{y}\,\underline{U}_{h}\right\rrbracket \right).
 \end{aligned}
 \]
 
@@ -1585,7 +1585,7 @@ literal "true"
  令边界处的二阶导数阶跃值为零，即取
 \begin_inset Formula 
 \[
-\left(\partial_{n}\,\underline{U}\right)_{h}=\beta_{0}\,\Delta^{-1}\left[\underline{U}_{h}\right]+\left(\partial_{n}\,\underline{U}_{h}\right)^{-},
+\left(\partial_{n}\,\underline{U}\right)_{h}=\beta_{0}\,\Delta^{-1}\left\llbracket \underline{U}_{h}\right\rrbracket +\left(\partial_{n}\,\underline{U}_{h}\right)^{-},
 \]
 
 \end_inset
@@ -1632,22 +1632,22 @@ literal "true"
 其中
 \begin_inset Formula 
 \[
-\underline{M}\coloneqq\begin{pmatrix}\ddots\\
+\underline{M}\coloneqq\begin{bmatrix}\ddots\\
  & \underline{M}^{I}\\
  &  & \ddots\\
  &  &  & \underline{M}^{J}\\
  &  &  &  & \ddots
-\end{pmatrix},\quad\underline{\hat{U}}\coloneqq\begin{pmatrix}\vdots\\
+\end{bmatrix},\quad\underline{\hat{U}}\coloneqq\begin{bmatrix}\vdots\\
 \underline{\hat{U}}^{I}\\
 \vdots\\
 \underline{\hat{U}}^{J}\\
 \vdots
-\end{pmatrix},\quad\underline{R}\coloneqq\begin{pmatrix}\vdots\\
+\end{bmatrix},\quad\underline{R}\coloneqq\begin{bmatrix}\vdots\\
 \underline{R}^{I}\\
 \vdots\\
 \underline{R}^{J}\\
 \vdots
-\end{pmatrix}.
+\end{bmatrix}.
 \]
 
 \end_inset
@@ -1742,13 +1742,13 @@ literal "true"
 借助“列化”运算
 \begin_inset Formula 
 \[
-\underline{X}^{\mathrm{C}}=\begin{pmatrix}\underline{X}\vert1\rangle\\
+\underline{X}^{\mathrm{C}}=\begin{bmatrix}\underline{X}\vert1\rangle\\
 \vdots\\
 \underline{X}\vert l\rangle
-\end{pmatrix}_{kl\times1},\quad\underline{Y}^{\mathrm{C}}=\begin{pmatrix}\underline{Y}\vert1\rangle\\
+\end{bmatrix}_{kl\times1},\quad\underline{Y}^{\mathrm{C}}=\begin{bmatrix}\underline{Y}\vert1\rangle\\
 \vdots\\
 \underline{Y}\vert n\rangle
-\end{pmatrix}_{mn\times1},
+\end{bmatrix}_{mn\times1},
 \]
 
 \end_inset
@@ -1756,10 +1756,10 @@ literal "true"
 则有 well defined 导数矩阵
 \begin_inset Formula 
 \[
-\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}=\begin{pmatrix}\dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert l\rangle}\\
+\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}=\begin{bmatrix}\dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert l\rangle}\\
 \ddots & \ddots & \vdots\\
 \dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert l\rangle}
-\end{pmatrix}\in\mathbb{R}^{mn\times kl},\quad\underbrace{\dd\underline{Y}^{\mathrm{C}}}_{mn\times1}=\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}\,\underbrace{\dd\underline{X}^{\mathrm{C}}}_{kl\times1},
+\end{bmatrix}\in\mathbb{R}^{mn\times kl},\quad\underbrace{\dd\underline{Y}^{\mathrm{C}}}_{mn\times1}=\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}\,\underbrace{\dd\underline{X}^{\mathrm{C}}}_{kl\times1},
 \]
 
 \end_inset
@@ -1767,10 +1767,10 @@ literal "true"
 其中
 \begin_inset Formula 
 \[
-\frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{pmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
+\frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{bmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
 \ddots & \ddots & \vdots\\
 \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}
-\end{pmatrix}\in\mathbb{R}^{m\times k},\quad j=1,\dots,l,\quad,i=1,\dots,n,
+\end{bmatrix}\in\mathbb{R}^{m\times k},\quad j=1,\dots,l,\quad,i=1,\dots,n,
 \]
 
 \end_inset
@@ -1798,16 +1798,16 @@ literal "true"
 其中
 \begin_inset Formula 
 \[
-\underline{M}^{\mathrm{C}}=\begin{pmatrix}\underline{M}\\
+\underline{M}^{\mathrm{C}}=\begin{bmatrix}\underline{M}\\
  & \ddots\\
  &  & \underline{M}
-\end{pmatrix}_{NK\times NK},\quad\underline{\hat{U}}^{\mathrm{C}}=\begin{pmatrix}\underline{\hat{U}}\vert1\rangle\\
+\end{bmatrix}_{NK\times NK},\quad\underline{\hat{U}}^{\mathrm{C}}=\begin{bmatrix}\underline{\hat{U}}\vert1\rangle\\
 \vdots\\
 \underline{\hat{U}}\vert K\rangle
-\end{pmatrix}_{NK\times1},\quad\underline{R}^{\mathrm{C}}=\begin{pmatrix}\underline{R}\vert1\rangle\\
+\end{bmatrix}_{NK\times1},\quad\underline{R}^{\mathrm{C}}=\begin{bmatrix}\underline{R}\vert1\rangle\\
 \vdots\\
 \underline{R}\vert K\rangle
-\end{pmatrix}_{NK\times1},
+\end{bmatrix}_{NK\times1},
 \]
 
 \end_inset
@@ -1816,11 +1816,101 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
-本节剩余部分将假设各单元上的矩阵都是 columnized。
+本节剩余部分将假设各单元上的矩阵都是 columnized，并以 
+\begin_inset Formula $\vert R\rangle,\vert\Delta\hat{U}\rangle$
+\end_inset
+
+ 等符号强调之。
 \end_layout
 
 \begin_layout Subsubsection
-GMRES
+LU-SGS
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}=\underline{A}^{\mathrm{L}}+\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{A}^{\mathrm{L}},\underline{A}^{\mathrm{D}},\underline{A}^{\mathrm{U}}$
+\end_inset
+
+ 分别为严格下三角阵、对角阵、严格上三角阵。于是
+\begin_inset Formula 
+\[
+\underline{A}\,\vert\Delta\hat{U}\rangle=\vert R\rangle
+\]
+
+\end_inset
+
+可化为
+\begin_inset Formula 
+\[
+(\underline{A}^{\mathrm{L}}+\underline{A}^{\mathrm{D}})\,\underline{A}^{\mathrm{D}-}\,(\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}})\,\vert\Delta\hat{U}\rangle=\vert R\rangle+(\underline{A}^{\mathrm{L}}\,\underline{A}^{\mathrm{D}-}\,\underline{A}^{\mathrm{U}})\,\vert\Delta\hat{U}\rangle.
+\]
+
+\end_inset
+
+忽略最后一项，所得的方程
+\begin_inset Formula 
+\[
+(\underline{A}^{\mathrm{L}}+\underline{A}^{\mathrm{D}})\,\underline{A}^{\mathrm{D}-}\,(\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}})\,\Delta\underline{\hat{U}}=\vert R\rangle
+\]
+
+\end_inset
+
+可分两步求解（记 
+\begin_inset Formula $\vert\Delta\hat{U}^{*}\rangle\coloneqq\underline{A}^{\mathrm{D}-}\,(\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}})\,\vert\Delta\hat{U}\rangle$
+\end_inset
+
+）：
+\end_layout
+
+\begin_layout Itemize
+先逐行向下，解出 
+\begin_inset Formula $\vert\Delta\hat{U}^{*}\rangle$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+(\underline{A}^{\mathrm{L}}+\underline{A}^{\mathrm{D}})\,\vert\Delta\hat{U}^{*}\rangle=\vert R\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+再逐行向上，解出 
+\begin_inset Formula $\vert\Delta\hat{U}\rangle$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+(\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}})\,\vert\Delta\hat{U}\rangle=\underline{A}^{\mathrm{D}}\,\vert\Delta\hat{U}^{*}\rangle
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+GMRES+LU-SGS
 \end_layout
 
 \begin_layout Standard
@@ -1830,15 +1920,15 @@ left preconditioning:
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\underline{P}^{-1}\,\underline{A}\,\Delta\underline{\hat{U}}=\underline{P}^{-1}\,\underline{R}^{n},
+\underline{P}^{-1}\,\underline{A}\,\vert\Delta\hat{U}\rangle=\underline{P}^{-1}\,\vert R\rangle,
 \]
 
 \end_inset
 
-LU–SGS preconditioner
+in which, LU-SGS preconditioner is used:
 \begin_inset Formula 
 \[
-\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{U}+\underline{D}),
+\underline{P}=(\underline{A}^{\mathrm{L}}+\underline{A}^{\mathrm{D}})\,\underline{A}^{\mathrm{D}-}\,(\underline{A}^{\mathrm{D}}+\underline{A}^{\mathrm{U}}).
 \]
 
 \end_inset
