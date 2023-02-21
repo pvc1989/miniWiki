@@ -167,7 +167,7 @@ Lagrange 插值
 \begin_inset Formula $E_{j}$
 \end_inset
 
- 上选定 
+ 内选定 
 \begin_inset Formula $K$
 \end_inset
 
@@ -207,9 +207,6 @@ Lagrange 插值
 \end_inset
 
 -次多项式近似
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
 u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
@@ -220,7 +217,7 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 或局部坐标系下的
 \begin_inset Formula 
 \[
-\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{K}u_{j,k}\,\mathrm{La}_{k}(\xi)}.
+\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -988,6 +985,113 @@ literal "true"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+DG with FR
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u(x,t)}{\partial t}+\frac{\partial f(u)}{\partial x}=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在单元 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 上引入多项式近似
+\begin_inset Formula 
+\[
+u^{h}(x(\xi),t)=\sum_{k=1}^{K}\hat{u}_{k}(t)\,b_{k}(x(\xi)),\quad w^{h}(x(\xi))=\sum_{k=1}^{K}\hat{w}_{k}\,b_{k}(x(\xi)),
+\]
+
+\end_inset
+
+及相应的连续通量
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)g_{\eta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
+\]
+
+\end_inset
+
+代入积分形式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u+\partial_{x}\,f\vert w\rangle_{E}=0,\quad\forall w\colon E\to\mathbb{R},
+\]
+
+\end_inset
+
+得
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}0 & =\left\langle \partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\middle\vert w^{h}\right\rangle =\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle +\left\langle \partial_{x}\,f^{\mathrm{R}}\middle\vert w^{h}\right\rangle \\
+ & =\left\langle \partial_{t}\left(\hat{u}_{j}\,b_{j}\right)\middle\vert\hat{w}_{k}\,b_{k}\right\rangle +\left\langle \partial_{x}\,f^{\mathrm{R}}\middle\vert\hat{w}_{k}\,b_{k}\right\rangle ,\quad\forall\left\{ \hat{w}_{k}\right\} _{k=1}^{K}.
+\end{aligned}
+\]
+
+\end_inset
+
+利用 
+\begin_inset Formula $\hat{w}_{k}$
+\end_inset
+
+ 的任意性、
+\begin_inset Formula $\hat{u}_{j}$
+\end_inset
+
+ 的空间无关性，得 
+\begin_inset Formula $K$
+\end_inset
+
+ 个常微分方程：
+\begin_inset Formula 
+\[
+\left\langle b_{k}\middle\vert b_{j}\right\rangle \frac{\dd\hat{u}_{j}}{\dd t}=-\left\langle b_{k}\middle\vert\partial_{x}\,f^{\mathrm{R}}\right\rangle ,\quad k=1,\dots,K,
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}\left\langle b_{1}\middle\vert b_{1}\right\rangle  & \cdots & \left\langle b_{1}\middle\vert b_{K}\right\rangle \\
+\vdots & \ddots & \vdots\\
+\left\langle b_{K}\middle\vert b_{1}\right\rangle  & \cdots & \left\langle b_{K}\middle\vert b_{K}\right\rangle 
+\end{bmatrix}}_{\left\langle \underline{b}\middle\vert\underline{b}^{\mathrm{T}}\right\rangle \eqqcolon\underline{m}}\frac{\dd}{\dd t}\underbrace{\begin{bmatrix}\hat{u}_{1}\\
+\vdots\\
+\hat{u}_{K}
+\end{bmatrix}}_{\underline{\hat{u}}}=\underbrace{\begin{bmatrix}-\left\langle b_{1}\middle\vert\partial_{x}\,f^{\mathrm{R}}\right\rangle \\
+\vdots\\
+-\left\langle b_{K}\middle\vert\partial_{x}\,f^{\mathrm{R}}\right\rangle 
+\end{bmatrix}}_{\left\langle \underline{b}\middle\vert\partial_{x}\,f^{\mathrm{R}}\right\rangle \eqqcolon\underline{r}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{b}\coloneqq\begin{bmatrix}b_{1} & \cdots & b_{K}\end{bmatrix}^{\mathrm{T}}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
