@@ -600,16 +600,29 @@ class GeometricObject2d(abc.ABC):
         pass
 
 class Circle(GeometricObject2d):  
-    def __init__(self, x, y, r):
+    def __init__(self, x: float, y: float, r: float):
         self._x = x
         self._y = y
-        self._r = r 
+        self._r = r
     def area(self):
         return pi * self._r**2
 
+class Square(GeometricObject2d):  
+    def __init__(self, x: float, y: float, a: float):
+        self._x = x
+        self._y = y
+        self._a = a
+    def area(self, scale: float):
+        # The signiture is different from that of the abstract method,
+        # but still passes the instantiation check.
+        return self._a * self._a * scale
+
 if __name__ == '__main__':
     c = Circle(0, 0, 2)
-    print(c.area())
+    assert c.area() == 2 * 2 * pi
+    s = Square(0, 0, 2)
+    assert s.area(1) == 2 * 2 * 1
+    assert s.area(3) == 2 * 2 * 3
 ```
 
 ## [PEP 8：代码规范](https://www.python.org/dev/peps/pep-0008/)
