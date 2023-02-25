@@ -4731,17 +4731,11 @@ status open
 
 \end_layout
 
-\begin_layout Algorithm
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[von Neumann]
+\begin_layout Subsubsection
+von Neumann
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 该方法可用来获取用
 \color red
 线性格式
@@ -4760,7 +4754,6 @@ reference "eq:有限差分：时空耦合：单步显式"
 的稳定性条件：
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
 设 
 \begin_inset Formula $t_{n}$
@@ -4821,7 +4814,7 @@ E_{i}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{i})
 ，令其满足
 \begin_inset Formula 
 \[
-\vert G\vert^{2}<1,\quad\kappa h\in[-\mathrm{\pi},+\mathrm{\pi}],
+\vert G\vert<1,\quad\kappa h\in[-\mathrm{\pi},+\mathrm{\pi}],
 \]
 
 \end_inset
@@ -4837,7 +4830,6 @@ E_{i}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{i})
  的）取值范围，此即格式的稳定性条件。
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -4845,17 +4837,11 @@ E_{i}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{i})
 
 \end_layout
 
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[一阶迎风]
+\begin_layout Subsubsection
+平流问题
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 用 
 \begin_inset CommandInset ref
 LatexCommand nameref
@@ -4905,7 +4891,7 @@ G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
 得稳定性条件：
 \begin_inset Formula 
 \begin{equation}
-0<\sigma<1\label{eq:有限差分：时空耦合：稳定性条件}
+0<\sigma\equiv\frac{ah_{t}}{h_{x}}<1\label{eq:有限差分：时空耦合：稳定性条件}
 \end{equation}
 
 \end_inset
@@ -4915,6 +4901,74 @@ G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
 
 \begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+扩散问题
+\end_layout
+
+\begin_layout Standard
+为解扩散方程
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}=b\frac{\partial^{2}u}{\partial x^{2}},\quad b>0,
+\]
+
+\end_inset
+
+用中心差分做空间离散，用显式 Euler 做时间推进，所得格式为
+\begin_inset Formula 
+\[
+\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}=b\frac{u_{i-1}^{n}-2u_{i}^{n}+u_{i+1}^{n}}{h_{x}^{2}}.
+\]
+
+\end_inset
+
+为得其稳定性条件，用
+\begin_inset Formula 
+\[
+E_{i}^{n+1}=G(\kappa)\exp(\ii\kappa x_{i}),\quad E_{i}^{n}=\exp(\ii\kappa x_{i}),\quad E_{i\pm1}^{n}=\exp(\ii\kappa x_{i})\exp(\pm\ii\kappa h_{x}),
+\]
+
+\end_inset
+
+替换 
+\begin_inset Formula $u_{i}^{n+1},u_{i}^{n},u_{i\pm1}^{n}$
+\end_inset
+
+，得
+\begin_inset Formula 
+\[
+\frac{G(\kappa)-1}{h_{t}}=b\frac{\exp(-\ii\kappa h_{x})-2+\exp(\ii\kappa h_{x})}{h_{x}^{2}},
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+G(\kappa)=1+\frac{bh_{t}}{h_{x}^{2}}\left(2\cos(\kappa h_{x})-2\right)=1-\frac{bh_{t}}{h_{x}^{2}}4\left(\sin(\frac{\kappa h_{x}}{2})\right)^{2},
+\]
+
+\end_inset
+
+解不等式
+\begin_inset Formula 
+\[
+-1<G<1,\quad\forall(\kappa h_{x})\in[-\mathrm{\pi},+\mathrm{\pi}]
+\]
+
+\end_inset
+
+得稳定性条件：
+\begin_inset Formula 
+\[
+0<\frac{bh_{t}}{h_{x}^{2}}<\frac{1}{2}.
+\]
+
 \end_inset
 
 
