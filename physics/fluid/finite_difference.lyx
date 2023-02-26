@@ -119,41 +119,14 @@ name "chap:有限差分法"
 模型问题
 \end_layout
 
-\begin_layout Problem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[无界线性单波]
+\begin_layout Standard
+为评价格式的质量，通常以如下问题作为误差分析的基准。
 \end_layout
 
-\end_inset
-
-为评价格式的质量，通常以如下问题
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-即问题-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:微分方程：积分变换：线性平流"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 的简化版本。
+\begin_layout Subsubsection
+无界线性平流
 \end_layout
 
-\end_inset
-
-作为误差分析的基准：
-\end_layout
-
-\begin_deeper
 \begin_layout Itemize
 微分方程
 \begin_inset Formula 
@@ -190,7 +163,6 @@ u(x,t)=\exp(-\ii kat)\underbrace{\exp(\ii kx)}_{u(x,t=0)},\quad x\in(-\infty,+\i
 
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -198,32 +170,25 @@ u(x,t)=\exp(-\ii kat)\underbrace{\exp(\ii kx)}_{u(x,t=0)},\quad x\in(-\infty,+\i
 
 \end_layout
 
-\begin_layout Problem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[周期线性单波]
-\end_layout
-
-\end_inset
-
-
+\begin_layout Subsubsection
+周期线性平流
 \begin_inset CommandInset label
 LatexCommand label
-name "prob:有限差分：误差分析：周期单波"
+name "prob:有限差分：周期平流"
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
 通常将 
 \begin_inset Formula $x$
 \end_inset
 
- 的变化范围限制在有界区间内，并引入周期性（以简化边界条件处理）：
+ 的变化范围限制在有界区间内，并引入周期性（以简化边界条件处理），即
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 微分方程
 \begin_inset Formula 
@@ -267,14 +232,6 @@ u(x,t=0)=\exp(\ii\kappa x),\quad x\in[-l,+l];\quad\kappa=\frac{k\mathrm{\pi}}{l}
 u(x,t)=\exp(-\ii\kappa at)\underbrace{\exp(\ii\kappa x)}_{u(x,t=0)},\quad x\in[-l,+l],\quad t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
 \end{equation}
 
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
@@ -894,17 +851,11 @@ noprefix "false"
 格式构造
 \end_layout
 
-\begin_layout Algorithm
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[基于 Taylor 展开]
+\begin_layout Subsubsection
+基于 Taylor 展开
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 这种方法适用于等距网格 
 \begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
 \end_inset
@@ -912,7 +863,6 @@ status open
 ：
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
 给定（充分光滑的）函数 
 \begin_inset Formula $u(x,t)$
@@ -1040,7 +990,6 @@ reference "eq:有限差分：空间格式：一般线性：p 阶导数"
  有相同的系数矩阵，并且有唯一的非零解。
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1180,17 +1129,11 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Algorithm
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[基于 Lagrange 插值]
+\begin_layout Subsubsection
+基于 Lagrange 插值
 \end_layout
 
-\end_inset
-
+\begin_layout Standard
 这种方法适用于非等距网格 
 \begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
 \end_inset
@@ -1198,7 +1141,6 @@ status open
 ：
 \end_layout
 
-\begin_deeper
 \begin_layout Enumerate
 给定结点值、选择基架：与前一节完全相同。
 \end_layout
@@ -1247,7 +1189,6 @@ u(x,t)\approx u^{h}(x,t)=\sum_{s\in S_{i}}u_{i+s}(t)\,L_{i+s}(x),\quad L_{i+s}(x
 
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1257,6 +1198,10 @@ u(x,t)\approx u^{h}(x,t)=\sum_{s\in S_{i}}u_{i+s}(t)\,L_{i+s}(x),\quad L_{i+s}(x
 
 \begin_layout Subsection
 截断误差
+\end_layout
+
+\begin_layout Subsubsection
+Taylor 展开
 \end_layout
 
 \begin_layout Standard
@@ -1313,7 +1258,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
  的各次同类项，原则上可以得到
 \begin_inset Formula 
 \[
-\sum_{s\in S_{i}}\frac{b_{i+s}\,u_{i+s}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i}=\underbrace{\sum_{r=p}^{\infty}a_{r}h^{r}}_{\varepsilon_{\mathrm{T}}}
+\sum_{s\in S_{i}}\frac{b_{i+s}\,u_{i+s}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i}=\underbrace{\sum_{r=p}^{\infty}a_{r}\,h^{r}}_{\varepsilon_{\mathrm{T}}}
 \]
 
 \end_inset
@@ -1337,50 +1282,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
  阶精度。
 \end_layout
 
-\begin_layout Example
-考虑向后差分格式
-\begin_inset Formula 
-\begin{equation}
-\left.\frac{\partial u}{\partial x}\right|_{i}\approx\frac{u_{i}-u_{i-1}}{h}\label{eq:有限差分：空间格式：一阶向后}
-\end{equation}
-
-\end_inset
-
-由 Taylor 展开式
-\begin_inset Formula 
-\[
-\begin{aligned}u_{i-1} & =u_{i}+\left.\frac{\partial u}{\partial x}\right|_{i}(-h)+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{(-h)^{2r}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{(-h)^{2r+1}}{(2r+1)!}\\
- & =u_{i}-\left.\frac{\partial u}{\partial x}\right|_{i}h+\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h^{2}}{2}-\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{3}}{6}+\order{h^{4}}
-\end{aligned}
-\]
-
-\end_inset
-
-可得其截断误差为
-\begin_inset Formula 
-\[
-\begin{aligned}\frac{u_{i}-u_{i-1}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i} & =-\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{h^{2r-1}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{h^{2r}}{(2r+1)!}\\
- & =-\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h}{2}+\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{2}}{6}+\order{h^{3}}
-\end{aligned}
-\]
-
-\end_inset
-
-显然，该格式具有 
-\begin_inset Formula $1$
-\end_inset
-
- 阶精度。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 修正方程
 \end_layout
 
@@ -1401,7 +1303,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
 \color red
 修正方程 (modified equation)
 \color inherit
-。修正方程的解（记为 
+。修正方程的（时间精确）解（记为 
 \begin_inset Formula $u^{h}$
 \end_inset
 
@@ -1409,7 +1311,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
 \begin_inset Formula $h$
 \end_inset
 
- 为有限值时（忽略浮点误差的）数值解的行为。具体地，将一般的线性格式 
+ 为有限值时（忽略浮点误差的）数值解的耗散及色散特性。具体地，将一般的线性格式 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:有限差分：空间格式：一般线性"
@@ -1427,7 +1329,7 @@ reference "eq:有限差分：空间格式：一般线性"
 采用问题-
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:有限差分：误差分析：周期单波"
+reference "prob:有限差分：周期平流"
 
 \end_inset
 
@@ -1464,7 +1366,7 @@ noprefix "false"
 
 \end_inset
 
- 节，只需将那里的 
+，只需将那里的 
 \begin_inset Formula $k$
 \end_inset
 
@@ -1480,7 +1382,7 @@ noprefix "false"
 为
 \begin_inset Formula 
 \begin{equation}
-u^{h}(x,t)=\exp(\beta t)\frac{\exp(\ii\kappa x)}{\exp(\ii\kappa\alpha t)},\quad x\in[-l,+l],\quad t\in[0,+\infty)\label{eq:有限差分：空间格式：修正方程：精确解}
+u^{h}(x,t)=\exp(\beta t+\ii\kappa\alpha t)\underbrace{\exp(\ii\kappa x-\ii\kappa at)}_{u(x,t)},\quad x\in[-l,+l],\quad t\in[0,+\infty)\label{eq:有限差分：空间格式：修正方程：精确解}
 \end{equation}
 
 \end_inset
@@ -1488,7 +1390,7 @@ u^{h}(x,t)=\exp(\beta t)\frac{\exp(\ii\kappa x)}{\exp(\ii\kappa\alpha t)},\quad 
 其中
 \begin_inset Formula 
 \[
-\alpha=a-\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}a_{r},\quad\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}b_{r}
+\alpha=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}a_{r},\quad\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}b_{r}
 \]
 
 \end_inset
@@ -1528,7 +1430,7 @@ reference "eq:有限差分：空间格式：修正方程"
 
 \begin_layout Description
 相位误差 即 
-\begin_inset Formula $\alpha\ne a$
+\begin_inset Formula $\alpha\ne0$
 \end_inset
 
  所导致的误差，由修正方程 
@@ -1552,96 +1454,8 @@ reference "eq:有限差分：空间格式：修正方程"
 
 \end_layout
 
-\begin_layout Standard
-仿照
-\color red
-模型方程
-\color inherit
-的精确解-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:有限差分：误差分析：模型方程：精确解"
-
-\end_inset
-
-，可以将
-\color red
-修正方程
-\color inherit
-的精确解-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:有限差分：空间格式：修正方程：精确解"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- 改写为分离变量的形式：
-\begin_inset Formula 
-\[
-u^{h}(x,t)=\exp(\beta t)\frac{\exp(\ii\kappa x)}{\exp(\ii\kappa\alpha t)}\equiv\frac{\exp(\beta t)}{\exp(\ii\kappa\alpha t)}\underbrace{\exp(\ii\kappa x)}_{u(x,t=0)}.
-\]
-
-\end_inset
-
-引入
-\color red
-修正波数 (modified wave number)
-\color inherit
-
-\begin_inset Formula 
-\[
-\tilde{\kappa}\coloneqq\frac{\alpha+\ii\beta}{a}\kappa
-\]
-
-\end_inset
-
-可以让二者的
-\color red
-时变项
-\color inherit
-更加相似：
-\begin_inset Formula 
-\[
-u(x,t)=\frac{\exp(\ii\kappa x)}{\exp(\ii\kappa at)},\quad u^{h}(x,t)=\frac{\exp(\ii\kappa x)}{\exp(\ii\tilde{\kappa}\alpha t)}.
-\]
-
-\end_inset
-
-格式的质量完全体现在
-\color red
-修正波数
-\color inherit
-与
-\color red
-理想波数
-\color inherit
-的比值
-\begin_inset Formula 
-\[
-\frac{\tilde{\kappa}}{\kappa}\equiv\frac{\tilde{\kappa}h}{\kappa h}=\boxed{\frac{\alpha+\ii\beta}{a}}
-\]
-
-\end_inset
-
-与 
-\begin_inset Formula $1$
-\end_inset
-
- 的接近程度上：虚部表征幅值误差，实部表征相位误差。根据 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "thm:有限差分：Shannon"
-
-\end_inset
-
- 定理，只需考虑 
-\begin_inset Formula $\vert\kappa h\vert\le\mathrm{\pi}$
-\end_inset
-
- 的情形。
+\begin_layout Subsubsection
+格式分辨率
 \end_layout
 
 \begin_layout Theorem
@@ -1677,7 +1491,7 @@ name "thm:有限差分：Shannon"
 分别为
 \begin_inset Formula 
 \[
-\lambda_{\min}=2h\implies\kappa_{\max}=\frac{2\mathrm{\pi}}{\lambda_{\min}}=\frac{\mathrm{\pi}}{h}
+\lambda_{\min}=2h\implies k_{\max}=\frac{2\mathrm{\pi}}{\lambda_{\min}}=\frac{\mathrm{\pi}}{h}.
 \]
 
 \end_inset
@@ -1692,15 +1506,83 @@ name "thm:有限差分：Shannon"
 
 \end_layout
 
-\begin_layout Example
-一阶向后差分格式 
+\begin_layout Standard
+根据 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:有限差分：空间格式：一阶向后"
+LatexCommand nameref
+reference "thm:有限差分：Shannon"
 
 \end_inset
 
- 的修正方程为
+ 定理，只需考虑 
+\begin_inset Formula $\vert kh\vert\le\mathrm{\pi}$
+\end_inset
+
+ 的情形。定义 
+\begin_inset Formula $kh$
+\end_inset
+
+ 为
+\color red
+有效波数
+\color inherit
+，用于表示网格分辨率：
+\begin_inset Formula $2\mathrm{\pi}/kh$
+\end_inset
+
+ 表示一个波长内的网格点数。
+\end_layout
+
+\begin_layout Subsubsection
+例：一阶后差
+\end_layout
+
+\begin_layout Paragraph
+截断误差
+\end_layout
+
+\begin_layout Standard
+考虑向后差分格式
+\begin_inset Formula 
+\begin{equation}
+\left.\frac{\partial u}{\partial x}\right|_{i}\approx\frac{u_{i}-u_{i-1}}{h}\label{eq:有限差分：空间格式：一阶向后}
+\end{equation}
+
+\end_inset
+
+由 Taylor 展开式
+\begin_inset Formula 
+\[
+\begin{aligned}u_{i-1} & =u_{i}+\left.\frac{\partial u}{\partial x}\right|_{i}(-h)+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{(-h)^{2r}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{(-h)^{2r+1}}{(2r+1)!}\\
+ & =u_{i}-\left.\frac{\partial u}{\partial x}\right|_{i}h+\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h^{2}}{2}-\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{3}}{6}+\order{h^{4}}
+\end{aligned}
+\]
+
+\end_inset
+
+可得其截断误差为
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{u_{i}-u_{i-1}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i} & =-\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{h^{2r-1}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{h^{2r}}{(2r+1)!}\\
+ & =-\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h}{2}+\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{2}}{6}+\order{h^{3}}
+\end{aligned}
+\]
+
+\end_inset
+
+因此，该格式只具有 
+\begin_inset Formula $1$
+\end_inset
+
+ 阶精度。
+\end_layout
+
+\begin_layout Paragraph
+修正方程
+\end_layout
+
+\begin_layout Standard
+由上述截断误差，可得相应的修正方程为
 \begin_inset Formula 
 \[
 \frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=\sum_{r=1}^{\infty}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}\frac{\partial^{2r}u}{\partial x^{2r}}+\sum_{r=1}^{\infty}\underbrace{\frac{-h^{2r+1}}{(2r+1)!}\frac{a}{h}}_{a_{r}}\frac{\partial^{2r+1}u}{\partial x^{2r+1}}
@@ -1711,7 +1593,7 @@ reference "eq:有限差分：空间格式：一阶向后"
 采用模型问题-
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:有限差分：误差分析：周期单波"
+reference "prob:有限差分：周期平流"
 
 \end_inset
 
@@ -1741,12 +1623,24 @@ reference "eq:有限差分：空间格式：修正方程：精确解"
 
 \begin_inset Formula 
 \[
-\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}=\frac{a}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}=a\frac{\cos(\kappa h)-1}{\kappa h},
+\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}=\frac{a}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}=a\frac{\cos(\kappa h)-1}{\kappa h}.
 \]
 
 \end_inset
 
-从而有修正波数与理想波数的比值
+
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Note Note
+status open
+
+\begin_layout Paragraph
+修正波数
+\end_layout
+
+\begin_layout Plain Layout
+由上述修正方程的精确解，可得修正波数与理想波数之比为
 \begin_inset Formula 
 \begin{equation}
 \frac{\tilde{\kappa}}{\kappa}=\frac{\alpha+\ii\beta}{a}=\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}\label{eq:一阶迎风·修正波数}
@@ -1761,7 +1655,6 @@ reference "eq:有限差分：空间格式：修正方程：精确解"
  的符号可知：
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 若 
 \begin_inset Formula $a>0$
@@ -1778,8 +1671,7 @@ reference "eq:有限差分：空间格式：修正方程：精确解"
 ，则无论时间格式有多精确，该格式给出的近似解都是指数发散的。
 \end_layout
 
-\end_deeper
-\begin_layout Example
+\begin_layout Plain Layout
 因此格式 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1798,18 +1690,20 @@ reference "eq:有限差分：空间格式：一阶向后"
  的情形。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Subsection
-修正波数
+离散 Fourier 分析
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 前一节已经由
 \color red
 修正方程
@@ -1818,11 +1712,20 @@ reference "eq:有限差分：空间格式：一阶向后"
 \color red
 修正波数
 \color inherit
-，并提供了一种基于 Taylor 系数的推导方案，原则上可用于分析任意线性格式。本节将从
+，并提供了一种基于 Taylor 展开的推导方案，原则上可用于分析任意线性格式。本节将从更一般的
 \color red
 离散信号
 \color inherit
-的观点出发，重新导出这一关键概念，并提供一种更加简洁的计算方法。
+的观点出发，重新导出这一关键概念，并提供一种更简洁、更通用（不只适用于差分格式）的计算方法。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+离散 Fourier 变换
 \end_layout
 
 \begin_layout Standard
@@ -1837,7 +1740,7 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 则模型问题-
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "prob:有限差分：误差分析：周期单波"
+reference "prob:有限差分：周期平流"
 
 \end_inset
 
@@ -1857,15 +1760,19 @@ u_{r}(t)=u_{r\bmod n}(t),\quad\forall r\in\mathbb{Z},\quad\forall t\in\mathbb{R}
 \begin_inset Formula $n$
 \end_inset
 
- 个自由度。这样的系统在任意时刻都有
+ 个自由度，即 
+\begin_inset Formula $u_{1}\equiv u_{n}$
+\end_inset
+
+，可舍去头尾之一。这样的系统在任意时刻都有
 \color red
 离散 Fourier 变换 (Discrete Fourier Transform, DFT)
 \color inherit
 ：
 \begin_inset Formula 
-\[
-w\coloneqq\exp(\ii\frac{2\mathrm{\pi}}{n}),\quad\left\{ \hat{u}_{k}(t)\coloneqq\sum_{r=0}^{n-1}u_{r}(t)\,w^{-rk}\right\} _{k=0}^{n-1}\implies\left\{ u_{r}(t)=\frac{1}{n}\sum_{k=0}^{n-1}\hat{u}_{k}(t)\,w^{rk}\right\} _{i=0}^{n-1},
-\]
+\begin{equation}
+w\coloneqq\exp(\ii\frac{2\mathrm{\pi}}{n}),\quad\left\{ \hat{u}_{k}(t)\coloneqq\sum_{r=0}^{n-1}u_{r}(t)\,w^{-rk}\right\} _{k=0}^{n-1}\implies\left\{ u_{r}(t)=\frac{1}{n}\sum_{k=0}^{n-1}\hat{u}_{k}(t)\,w^{rk}\right\} _{i=0}^{n-1}.\label{eq:有限差分·DFT}
+\end{equation}
 
 \end_inset
 
@@ -1901,7 +1808,7 @@ literal "true"
 
 \end_layout
 
-\begin_layout Remark
+\begin_layout Remark*
 若 
 \begin_inset Formula $n$
 \end_inset
@@ -1938,6 +1845,10 @@ literal "true"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+截断 Fourier 级数
 \end_layout
 
 \begin_layout Standard
@@ -1997,11 +1908,7 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 \begin_inset Formula $n\mathrm{\pi}/l$
 \end_inset
 
- 的谐波无法区别于 
-\begin_inset Formula $\exp(\ii\kappa x)$
-\end_inset
-
-，它们在 DFT 
+ 的谐波在 DFT 
 \family roman
 \series medium
 \shape up
@@ -2028,10 +1935,18 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 \begin_inset Formula $\exp(\ii\kappa x)$
 \end_inset
 
-。
+，即所谓的 aliasing 现象。
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Subsubsection
+修正波数推导
+\end_layout
+
+\begin_layout Plain Layout
 不失一般性，下面只考虑波数为 
 \begin_inset Formula $\kappa$
 \end_inset
@@ -2060,33 +1975,244 @@ u_{r+s}(t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{r+s})=\underbrace{\hat{u}_{\kapp
 
 \end_inset
 
-其近似值可以由线性格式 
+
+\end_layout
+
+\begin_layout Plain Layout
+随着精度提高，线性差分格式 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:有限差分：空间格式：一般线性"
 
 \end_inset
 
- 得到：
+ 给出的近似，应当逼近上述结果，即
+\begin_inset Formula 
+\begin{equation}
+\left.\frac{\partial u}{\partial x}\right|_{r}\approx\sum_{s\in S_{r}}\frac{b_{r+s}\,\overbrace{u_{r}\exp(\ii\kappa sh)}^{u_{r+s}}}{h}\eqqcolon\ii\tilde{\kappa}u_{r},\label{eq:有限差分·修正波数}
+\end{equation}
+
+\end_inset
+
+由此得
+\begin_inset Formula 
+\[
+\frac{\tilde{\kappa}}{\kappa}=\sum_{s}\frac{b_{r+s}\overbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}^{\exp(\ii\kappa sh)}}{\ii\kappa h}=\boxed{\frac{\sum_{s}b_{r+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{r+s}\cos(s\kappa h)}{\kappa h}}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection
+修正波数测量
+\end_layout
+
+\begin_layout Plain Layout
+选定区间 
+\begin_inset Formula $[0,2l]$
+\end_inset
+
+，将差分格式的网格结点
 \begin_inset Formula 
 \[
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{1}{h}\sum_{s\in S_{r}}b_{r+s}\,\underbrace{u_{r}\exp(\ii\kappa sh)}_{u_{r+s}}\eqqcolon\ii\tilde{\kappa}u_{r}\implies\ii\tilde{\kappa}=\frac{1}{h}\sum_{s}b_{r+s}\underbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}_{\exp(\ii\kappa sh)}
+x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 \]
 
 \end_inset
 
-由此可得
+推广为一般线性格式的采样点。遍历 
+\begin_inset Formula $k=1,\dots,n$
+\end_inset
+
+，依次
+\end_layout
+
+\begin_layout Enumerate
+生成谐波 
+\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)\equiv\exp(\ii k\mathrm{\pi}x/l)$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+调用线性格式，获得 
+\begin_inset Formula $\partial u/\partial x$
+\end_inset
+
+ 在采样点上的近似值，记为 
+\begin_inset Formula $\underline{v}\coloneqq\left\{ v_{r}\coloneqq\left.\frac{\partial u^{h}}{\partial x}\right|_{r}\right\} _{r=0}^{n-1}$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+计算 
+\begin_inset Formula $\underline{v}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 项 DFT 系数 
+\begin_inset Formula $\hat{v}_{k}\coloneqq\sum_{r=0}^{n-1}v_{r}\,w^{-rk}$
+\end_inset
+
+ ，其中 
+\begin_inset Formula $w\coloneqq\exp(\ii2\mathrm{\pi}/n)$
+\end_inset
+
+；
+\end_layout
+
+\begin_layout Enumerate
+以 
+\begin_inset Formula $kh$
+\end_inset
+
+ 为横坐标、
+\begin_inset Formula $\tilde{k}h=?$
+\end_inset
+
+ 为纵坐标，在 
+\begin_inset Formula $\tilde{k}h$
+\end_inset
+
+–
+\begin_inset Formula $kh$
+\end_inset
+
+ 图上新增一点。
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[纵坐标取法]
+\end_layout
+
+\end_inset
+
+给定谐波 
+\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)$
+\end_inset
+
+ 的离散 Fourier 展开只有第 
+\begin_inset Formula $k$
+\end_inset
+
+ 项：
 \begin_inset Formula 
 \[
-\frac{\tilde{\kappa}}{\kappa}=\frac{\ii\tilde{\kappa}}{\ii\kappa}=\boxed{\frac{\sum_{s}b_{r+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{r+s}\cos(s\kappa h)}{\kappa h}}
+u_{r}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{r})=\exp(\ii\frac{k\mathrm{\pi}}{l}r\frac{2l}{n})=\exp(rk\ii\frac{2\mathrm{\pi}}{n})=w^{rk},
+\]
+
+\end_inset
+
+数值解 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 作为 
+\begin_inset Formula $u$
+\end_inset
+
+ 的近似，应当有 
+\begin_inset Formula $u_{r}^{h}\approx u_{r}=w^{rk}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\frac{\hat{u}_{k}^{h}}{n}=\frac{1}{n}\sum_{r=0}^{n-1}u_{r}^{h}\,w^{-rk}\approx\frac{1}{n}\sum_{r=0}^{n-1}\underbrace{w^{rk}}_{u_{r}}\,w^{-rk}=1,
+\]
+
+\end_inset
+
+因此其离散 Fourier 展开由第 
+\begin_inset Formula $k$
+\end_inset
+
+ 项主导：
+\begin_inset Formula 
+\[
+u_{r}^{h}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{u}_{k'}^{h}\,w^{rk'}\approx\frac{\hat{u}_{k}^{h}}{n}w^{rk}\approx w^{rk}=u_{r}.
+\]
+
+\end_inset
+
+线性格式保证各谐波分量独立发展，因此 
+\begin_inset Formula $(\partial u^{h}/\partial x)_{r}$
+\end_inset
+
+ 的离散 Fourier 展开亦应由第 
+\begin_inset Formula $k$
+\end_inset
+
+ 项主导。比较修正波数 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分·修正波数"
+
+\end_inset
+
+ 及 DFT 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分·DFT"
+
+\end_inset
+
+ 定义：
+\begin_inset Formula 
+\[
+\ii\tilde{\kappa}u_{r}\approx\ii\tilde{\kappa}u_{r}^{h}=\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{v}_{k'}\,w^{rk'}\approx\frac{\hat{v}_{k}}{n}w^{rk},
+\]
+
+\end_inset
+
+故应以 
+\begin_inset Formula $\hat{v}_{\kappa}/n$
+\end_inset
+
+ 作为 
+\begin_inset Formula $\ii\tilde{\kappa}$
+\end_inset
+
+ 的值，从而有
+\begin_inset Formula 
+\[
+\tilde{k}h=\frac{\tilde{\kappa}l}{\mathrm{\pi}}h=\frac{\ii\tilde{\kappa}}{\ii}\frac{lh}{\mathrm{\pi}}=\frac{\hat{v}_{\kappa}/n}{\ii}\frac{lh}{\mathrm{\pi}}=\frac{lh}{\ii\mathrm{\pi}}\frac{1}{n}\underbrace{\sum_{r=0}^{n-1}\left.\frac{\partial u^{h}}{\partial x}\right|_{r}w^{-rk}}_{\hat{v}_{k}}.
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+应用实例
 \end_layout
 
 \begin_layout Example
@@ -2136,7 +2262,7 @@ reference "eq:一阶迎风·修正波数"
  所得结果相同。
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -2183,15 +2309,20 @@ b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
-时间推进格式
+时间推进
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:有限差分：时间推进"
@@ -2584,7 +2715,7 @@ reference "eq:general_implicit"
 
  为
 \color red
-现式算子 (explicit operator)
+显式算子 (explicit operator)
 \color inherit
 。二者所采用的离散格式可以不同；对于定常问题，解的精度由显式算子决定。通常不对隐式算子求逆，而是用近似分解（如 LU-SGS）或迭代法（Newton–Krylo
 v）求解线性方程组。
@@ -4852,7 +4983,7 @@ reference "alg:有限差分：时空耦合：Godunov"
  格式解
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "prob:有限差分：误差分析：周期单波"
+reference "prob:有限差分：周期平流"
 
 \end_inset
 
