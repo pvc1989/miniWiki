@@ -159,7 +159,14 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-线性单波问题
+Fourier 变换法
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Fourier-变换法"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -206,7 +213,7 @@ name "prob:微分方程：积分变换：线性平流"
 ，使其满足以下偏微分方程
 \begin_inset Formula 
 \[
-\pdv{u}{t}+a\pdv{u}{x}=0,\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=0,\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
@@ -233,7 +240,7 @@ u(x,t=0)=u_{0}(x),\quad x\in(-\infty,+\infty)
 先考虑特殊的初始条件
 \begin_inset Formula 
 \[
-u(x,t=0)=\frac{\exp(\ii kx)}{\sqrt{2\mathrm{\pi}}},\quad x\in(-\infty,+\infty)
+u(x,t=0)=\exp(\ii kx),\quad x\in(-\infty,+\infty)
 \]
 
 \end_inset
@@ -250,10 +257,10 @@ u(x,t=0)=\frac{\exp(\ii kx)}{\sqrt{2\mathrm{\pi}}},\quad x\in(-\infty,+\infty)
 \begin_inset Formula $2\mathrm{\pi}$
 \end_inset
 
- 的区间内所含完整波形的个数。由特征线法易得其精确解为
+ 的区间内所含波形的个数。由特征线法易得其精确解为
 \begin_inset Formula 
 \[
-u(x,t)=\frac{\exp(\ii k\cdot(x-at))}{\sqrt{2\mathrm{\pi}}},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
+u(x,t)=u_{0}(x-at)=\frac{\exp(\ii kx)}{\exp(\ii kat)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
 \]
 
 \end_inset
@@ -278,7 +285,15 @@ u(x,t)=\frac{\exp(\ii k\cdot(x-at))}{\sqrt{2\mathrm{\pi}}},\quad(x,t)\in(-\infty
  为周期的平方可积函数，则先将其展开为 Fourier 级数：
 \begin_inset Formula 
 \[
-u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\mathrm{\pi}}},\quad\hat{u}_{0}(k)=\int_{-\mathrm{\pi}}^{+\mathrm{\pi}}u_{0}(x)\frac{\exp(-\ii kx)}{\sqrt{2\mathrm{\pi}}}\dd{x}
+u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\exp(\ii kx),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}_{0}(k)=\int_{-\mathrm{\pi}}^{+\mathrm{\pi}}u_{0}(x)\frac{\exp(-\ii kx)}{2\mathrm{\pi}}\dd{x},
 \]
 
 \end_inset
@@ -286,7 +301,7 @@ u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\math
 再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
 \begin_inset Formula 
 \[
-u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii k\cdot(x-at))}{\sqrt{2\mathrm{\pi}}}
+u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\exp(\ii kat)}.
 \]
 
 \end_inset
@@ -300,13 +315,21 @@ u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii k\cdot(x-at))}{\sqrt{2\
 \end_inset
 
  为周期的平方可积函数，则先将其展开为 Fourier 级数（其中 
-\begin_inset Formula $K=k\mathrm{\pi}/L$
+\begin_inset Formula $\kappa=k\mathrm{\pi}/L$
 \end_inset
 
 ）：
 \begin_inset Formula 
 \[
-u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\frac{\exp(\ii Kx)}{\sqrt{2L}},\quad\hat{u}_{0}(k)=\int_{-L}^{+L}u_{0}(x)\frac{\exp(-\ii Kx)}{\sqrt{2L}}\dd{x}
+u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\exp(\ii\kappa x),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}_{0}(k)=\int_{-L}^{+L}u_{0}(x)\frac{\exp(-\ii\kappa x)}{2L}\dd{x},
 \]
 
 \end_inset
@@ -314,7 +337,7 @@ u_{0}(x)=\sum_{k=-\infty}^{\infty}\hat{u}_{0}(k)\frac{\exp(\ii Kx)}{\sqrt{2L}},\
 再对各个单波解作线性叠加，得到原问题的 Fourier 级数解：
 \begin_inset Formula 
 \[
-u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii K\cdot(x-at))}{\sqrt{2L}}
+u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii\kappa x)}{\exp(\ii\kappa at)}.
 \]
 
 \end_inset
@@ -330,7 +353,15 @@ u(x,t)=\sum_{k\in\mathbb{Z}}\hat{u}_{0}(k)\frac{\exp(\ii K\cdot(x-at))}{\sqrt{2L
 ）平方可积函数，则先将其展开为 Fourier 积分：
 \begin_inset Formula 
 \[
-u_{0}(x)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\mathrm{\pi}}}\dd{k},\quad\hat{u}_{0}(k)=\int_{-\infty}^{+\infty}u_{0}(x)\frac{\exp(-\ii kx)}{\sqrt{2\mathrm{\pi}}}\dd{x}
+u_{0}(x)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\exp(\ii kx)\dd{k},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}_{0}(k)=\int_{-\infty}^{+\infty}u_{0}(x)\frac{\exp(-\ii kx)}{2\mathrm{\pi}}\dd{x},
 \]
 
 \end_inset
@@ -338,7 +369,7 @@ u_{0}(x)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\sqrt{2\mathr
 再对各个单波解作线性叠加，得到原问题的 Fourier 积分解：
 \begin_inset Formula 
 \[
-u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\frac{\exp(\ii k\cdot(x-at))}{\sqrt{2\mathrm{\pi}}}\dd{k}
+u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\frac{\exp(\ii kx)}{\exp(\ii kat)}\dd{k}.
 \]
 
 \end_inset
@@ -347,33 +378,6 @@ u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{0}(k)\frac{\exp(\ii k\cdot(x-at))}{\sqrt
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-不失一般性，本章剩余部分将以简谐波 
-\begin_inset Formula $\exp(\ii Kx)$
-\end_inset
-
- 或归一化的 
-\begin_inset Formula $\exp(\ii Kx)/\sqrt{2L}$
-\end_inset
-
- 为初始条件，后者可以让 
-\color red
-Fourier 级数
-\color inherit
-与 
-\color red
-Fourier 系数
-\color inherit
-在形式上具有对称性。
-\end_layout
-
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -411,7 +415,7 @@ name "prob:微分方程：积分变换：线性扩散"
 \end_inset
 
 给定常数 
-\begin_inset Formula $a\in\mathbb{R},\left\{ \beta_{n}\in\mathbb{R}\right\} _{n=1}^{\infty},k\in\mathbb{R}$
+\begin_inset Formula $a\in\mathbb{R},\left\{ b_{r}\in\mathbb{R}\right\} _{r=1}^{\infty},k\in\mathbb{R}$
 \end_inset
 
  及（几乎处处连续的）一元函数 
@@ -428,7 +432,7 @@ name "prob:微分方程：积分变换：线性扩散"
 \begin_layout Problem
 \begin_inset Formula 
 \[
-\pdv{u}{t}+a\pdv{u}{x}=\sum_{n=1}^{\infty}\beta_{n}\pdv[2n]{u}{x},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=\sum_{r=1}^{\infty}b_{r}\frac{\partial^{2r}u}{\partial x^{2r}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
@@ -452,7 +456,7 @@ u(x,t=0)=u_{0}(x),\quad x\in(-\infty,+\infty)
 \end_layout
 
 \begin_layout Solution*
-不失一般性，以简谐波 
+不失一般性，以谐波 
 \begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
@@ -461,59 +465,39 @@ u(x,t=0)=u_{0}(x),\quad x\in(-\infty,+\infty)
 
 \begin_deeper
 \begin_layout Itemize
-先考虑特殊情形：若 
-\begin_inset Formula $(\forall n)\beta_{n}\to0$
+先考虑 
+\begin_inset Formula $(\forall r)b_{r}\to0$
 \end_inset
 
-，则问题 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:微分方程：积分变换：线性扩散"
-
-\end_inset
-
- 退化为问题 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:微分方程：积分变换：线性平流"
-
-\end_inset
-
-，由前一节可知它的解为
+ 的特殊情形。由前一节可知它的解为
 \begin_inset Formula 
 \[
-u(x,t)=\exp(\ii\cdot(kx-\omega t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
+u(x,t)=\frac{\exp(\ii kx)}{\exp(\ii kat)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
 \]
 
 \end_inset
 
-其中 
+ 若引入 
 \begin_inset Formula $\omega=ka$
 \end_inset
 
-。
+，则为
+\begin_inset Formula 
+\[
+u(x,t)=\frac{\exp(\ii kx)}{\exp(\ii\omega t)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-再考虑一般情形：即 
-\begin_inset Formula $(\exists n)\beta_{n}\ne0$
+再考虑 
+\begin_inset Formula $(\exists r)b_{r}\ne0$
 \end_inset
 
-，则问题 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:微分方程：积分变换：线性扩散"
-
-\end_inset
-
- 可看作问题 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "prob:微分方程：积分变换：线性平流"
-
-\end_inset
-
- 的推广。假设问题 
+ 的一般情形。假设问题 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "prob:微分方程：积分变换：线性扩散"
@@ -529,7 +513,7 @@ reference "prob:微分方程：积分变换：线性扩散"
 \end_inset
 
 ，还依赖于 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ b_{r}\right\} _{r=1}^{\infty}$
 \end_inset
 
 。对这种形式的 
@@ -539,12 +523,20 @@ reference "prob:微分方程：积分变换：线性扩散"
  求偏导可得
 \begin_inset Formula 
 \[
-\pdv{u}{t}=-\ii\omega u,\quad\pdv{u}{x}=\ii ku,\quad\pdv[2n]{u}{x}=\left(\ii k\right)^{2n}u\equiv\left(-k^{2}\right)^{n}u
+\frac{\partial u}{\partial t}=-\ii\omega u,\quad\frac{\partial u}{\partial x}=\ii ku,\quad\frac{\partial^{2r}u}{\partial x^{2r}}=\left(\ii k\right)^{2r}u\equiv\left(-k^{2}\right)^{r}u
 \]
 
 \end_inset
 
-将它们代入 PDE 并消去公共因子，即得 
+将它们代入 PDE 并消去公共因子 
+\begin_inset Formula $-\ii u$
+\end_inset
+
+，解关于 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 的代数方程，即得 
 \begin_inset Formula $\omega$
 \end_inset
 
@@ -553,13 +545,13 @@ reference "prob:微分方程：积分变换：线性扩散"
 \end_inset
 
  及 
-\begin_inset Formula $\left\{ \beta_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ b_{r}\right\} _{r=1}^{\infty}$
 \end_inset
 
  的依赖关系：
 \begin_inset Formula 
 \[
-\omega=ka+\sqrt{-1}\underbrace{\left(\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\beta_{n}\right)}_{b_{k}}
+\omega=ka+\ii\underbrace{\left(\sum_{r=1}^{\infty}\left(-k^{2}\right)^{r}b_{r}\right)}_{\eqqcolon\beta}
 \]
 
 \end_inset
@@ -577,7 +569,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \begin{equation}
-u(x,t)=\exp(b_{k}t)\exp(\ii k\cdot(x-at)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)\label{eq:微分方程：积分变换：线性扩散：解析解}
+u(x,t)={\color{red}\exp(\beta t)}\frac{\exp(\ii kx)}{\exp(\ii kat)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)\label{eq:微分方程：积分变换：线性扩散：解析解}
 \end{equation}
 
 \end_inset
@@ -599,15 +591,15 @@ u(x,t)=\exp(b_{k}t)\exp(\ii k\cdot(x-at)),\quad(x,t)\in(-\infty,+\infty)\times[0
 \end_inset
 
  仍为常值，但振幅 
-\begin_inset Formula $\exp(b_{k}t)$
+\begin_inset Formula $\exp(\beta t)$
 \end_inset
 
  随时间 
 \begin_inset Formula $t$
 \end_inset
 
- 变化。真实（熵增）的物理过程通常能够确保 
-\begin_inset Formula $b_{k}<0$
+ 变化。真实（熵增）的物理过程应确保 
+\begin_inset Formula $\beta<0$
 \end_inset
 
 ，即振幅随时间衰减：
@@ -658,13 +650,13 @@ status open
 \end_inset
 
 考虑一维无界空间的线性扩散方程（其中 
-\begin_inset Formula $\beta>0$
+\begin_inset Formula $b>0$
 \end_inset
 
  为常数）
 \begin_inset Formula 
 \[
-\pdv{u}{t}=\beta\pdv[2]{u}{x},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+\frac{\partial u}{\partial t}=b\frac{\partial^{2}u}{\partial x^{2}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
@@ -711,22 +703,22 @@ reference "eq:微分方程：积分变换：线性扩散：解析解"
 \end_inset
 
  及 
-\begin_inset Formula $b_{k}=-\beta k^{2}$
+\begin_inset Formula $\beta=-k^{2}b$
 \end_inset
 
-，即得对应于简谐初值 
+，即得对应于谐初值 
 \begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  的单波解：
 \begin_inset Formula 
 \[
-\hat{u}_{k}(x,t)=\exp(-\beta k^{2}t)\exp(\ii kx)\equiv\exp(-\qty(\sqrt{\beta t}k-\frac{\ii x}{2\sqrt{\beta t}})^{2})\exp(\frac{-x^{2}}{4\beta t})
+\hat{u}_{k}(x,t)=\exp(-k^{2}bt)\exp(\ii kx).
 \]
 
 \end_inset
 
-将其代入
+将其代入 Fourier 积分
 \begin_inset Formula 
 \[
 u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{k}(x,t)\frac{\dd{k}}{2\mathrm{\pi}}
@@ -734,7 +726,23 @@ u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{k}(x,t)\frac{\dd{k}}{2\mathrm{\pi}}
 
 \end_inset
 
-并利用积分恒等式
+即得原问题的解。为计算对 
+\begin_inset Formula $k$
+\end_inset
+
+ 的积分，先凑出关于 
+\begin_inset Formula $k$
+\end_inset
+
+ 的平方：
+\begin_inset Formula 
+\[
+\hat{u}_{k}(x,t)=\exp(-\qty(\sqrt{bt}k-\frac{\ii x}{2\sqrt{bt}})^{2})\exp(\frac{-x^{2}}{4bt})
+\]
+
+\end_inset
+
+再利用积分恒等式
 \begin_inset Formula 
 \[
 \int_{\ii\alpha-\infty}^{\ii\alpha+\infty}\exp(-(x+\ii y)^{2})\dd{x}=\sqrt{\mathrm{\pi}},\quad(x,y)\in\mathbb{R}^{2},\quad\forall\alpha\in\mathbb{R}
@@ -745,11 +753,22 @@ u(x,t)=\int_{-\infty}^{+\infty}\hat{u}_{k}(x,t)\frac{\dd{k}}{2\mathrm{\pi}}
 即得
 \begin_inset Formula 
 \[
-u(x,t)=\frac{1}{\sqrt{4\mathrm{\pi}\beta t}}\exp(-\frac{x^{2}}{4\beta t}),\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+u(x,t)=\frac{1}{\sqrt{4\mathrm{\pi}bt}}\exp(-\frac{x^{2}}{4bt}),\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
 这一结果被称为
 \color red
 高斯核 (Gaussian kernel)
@@ -765,7 +784,7 @@ u(x,t)=\frac{1}{\sqrt{4\mathrm{\pi}\beta t}}\exp(-\frac{x^{2}}{4\beta t}),\quad(
  的卷积
 \begin_inset Formula 
 \[
-u(x,t)=\int_{-\infty}^{+\infty}\frac{u_{0}(x_{0})}{\sqrt{4\mathrm{\pi}\beta t}}\exp(-\frac{(x-x_{0})^{2}}{4\beta t})\dd{x_{0}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+u(x,t)=\int_{-\infty}^{+\infty}\frac{u_{0}(x_{0})}{\sqrt{4\mathrm{\pi}bt}}\exp(-\frac{(x-x_{0})^{2}}{4bt})\dd{x_{0}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
@@ -810,7 +829,7 @@ name "prob:微分方程：积分变换：线性色散"
 \end_inset
 
 给定常数 
-\begin_inset Formula $a\in\mathbb{R}\text{、}\left\{ \alpha_{n}\in\mathbb{R}\right\} _{n=1}^{\infty}\text{、}k\in\mathbb{R}$
+\begin_inset Formula $a\in\mathbb{R}\text{、}\left\{ a_{r}\in\mathbb{R}\right\} _{r=1}^{\infty}\text{、}k\in\mathbb{R}$
 \end_inset
 
  及（几乎处处连续的）一元函数 
@@ -827,7 +846,7 @@ name "prob:微分方程：积分变换：线性色散"
 \begin_layout Problem
 \begin_inset Formula 
 \[
-\pdv{u}{t}+a\pdv{u}{x}=\sum_{n=1}^{\infty}\alpha_{n}\pdv[2n+1]{u}{x},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=\sum_{n=1}^{\infty}a_{r}\frac{\partial^{2r+1}u}{\partial x^{2r+1}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
 \]
 
 \end_inset
@@ -851,14 +870,14 @@ u(x,t=0)=u_{0}(x),\quad x\in(-\infty,+\infty)
 \end_layout
 
 \begin_layout Solution*
-不失一般性，以简谐波 
+不失一般性，以谐波 
 \begin_inset Formula $\exp(\ii kx)$
 \end_inset
 
  为初始条件。与前一节类似，假设该初值问题的解具有以下形式
 \begin_inset Formula 
 \[
-u(x,t)=\exp(\ii\cdot(kx-\omega t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
+u(x,t)=\frac{\exp(\ii kx)}{\exp(\ii\omega t)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
 \]
 
 \end_inset
@@ -872,7 +891,7 @@ u(x,t)=\exp(\ii\cdot(kx-\omega t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\inft
 \end_inset
 
  及 
-\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ a_{r}\right\} _{r=1}^{\infty}$
 \end_inset
 
 。对这种形式的 
@@ -882,12 +901,20 @@ u(x,t)=\exp(\ii\cdot(kx-\omega t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\inft
  求偏导可得
 \begin_inset Formula 
 \[
-\pdv{u}{t}=-\ii\omega u,\quad\pdv{u}{x}=\ii ku,\quad\pdv[2n+1]{u}{x}=\left(-k^{2}\right)^{n}\ii ku
+\frac{\partial u}{\partial t}=-\ii\omega u,\quad\frac{\partial u}{\partial x}=\ii ku,\quad\frac{\partial^{2r+1}u}{\partial x^{2r+1}}=\left(\ii k\right)^{2r+1}u\equiv\left(-k^{2}\right)^{r}\ii ku,
 \]
 
 \end_inset
 
-将它们代入 PDE 并消去公共因子，即得 
+将它们代入 PDE 并消去公共因子 
+\begin_inset Formula $-\ii u$
+\end_inset
+
+，解关于 
+\begin_inset Formula $\omega$
+\end_inset
+
+ 的代数方程，即得 
 \begin_inset Formula $\omega$
 \end_inset
 
@@ -896,13 +923,13 @@ u(x,t)=\exp(\ii\cdot(kx-\omega t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\inft
 \end_inset
 
  及 
-\begin_inset Formula $\left\{ \alpha_{n}\right\} _{n=1}^{\infty}$
+\begin_inset Formula $\left\{ a_{r}\right\} _{r=1}^{\infty}$
 \end_inset
 
  的依赖关系：
 \begin_inset Formula 
 \[
-\omega=ka_{k},\quad a_{k}\coloneqq a-\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n}
+\omega=ka-k\underbrace{\sum_{r=1}^{\infty}\left(-k^{2}\right)^{r}a_{r}}_{\eqqcolon\alpha}
 \]
 
 \end_inset
@@ -920,7 +947,7 @@ noprefix "false"
  的解：
 \begin_inset Formula 
 \[
-u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
+u(x,t)={\color{red}\exp(\ii k\alpha t)}\frac{\exp(\ii kx)}{\exp(\ii kat)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)
 \]
 
 \end_inset
@@ -945,7 +972,7 @@ u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\i
 \end_inset
 
  的 
-\begin_inset Formula $a_{k}$
+\begin_inset Formula $a-\alpha$
 \end_inset
 
 ：
@@ -953,7 +980,7 @@ u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\i
 
 \begin_deeper
 \begin_layout Itemize
-对于单个简谐波，它的
+对于单个谐波，它的
 \color red
 相速度 (phase speed)
 \color inherit
@@ -961,7 +988,7 @@ u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\i
 \begin_inset Formula $\omega/k$
 \end_inset
 
-，它是波峰（或波节）的移动速度。如果初始波形中含有不同频率的简谐波，则它们的波峰（或波节）将以不同的相速度移动，这种现象被称为
+，它是波峰（或波节）的移动速度。如果初始波形中含有不同频率（颜色）的谐波，则它们的波峰（或波节）将以不同的相速度移动，这种现象被称为
 \color red
 色散 (dispersion)
 \color inherit
@@ -969,8 +996,7 @@ u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\i
 \end_layout
 
 \begin_layout Itemize
-单个简谐波的波形在全空间都是均匀的，因此无法传递能量（或信息）；能够传递能量（或信息）的波形，一定具有非均匀的空间分布（例如：高矮不均、疏密不均），这种波形被称
-为
+单个谐波的波形在全空间都是均匀的，因此无法传递能量（或信息）；能够传递能量（或信息）的波形，一定具有非均匀的空间分布（例如：高矮不均、疏密不均），这种波形被称为
 \color red
 波包 (wave packet)
 \color inherit
@@ -1015,7 +1041,7 @@ u(x,t)=\exp(\ii k\cdot\qty(x-a_{k}t)),\quad(x,t)\in(-\infty,+\infty)\times[0,+\i
 分别为
 \begin_inset Formula 
 \[
-\frac{\omega}{k}=a_{k}=a-\sum_{n=1}^{\infty}\left(-k^{2}\right)^{n}\alpha_{n},\quad\dv{\omega}{k}=a+k\dv{a_{k}}{k}=a-\sum_{n=1}^{\infty}(2n+1)\left(-k^{2}\right)^{n}\alpha_{n}
+\frac{\omega}{k}=a-\alpha=a-\sum_{r=1}^{\infty}\left(-k^{2}\right)^{r}\alpha_{r},\quad\frac{\dd\omega}{\dd k}=a-\alpha-k\frac{\dd\alpha}{\dd k}=a-\sum_{r=1}^{\infty}(1+2r)\left(-k^{2}\right)^{r}a_{r}
 \]
 
 \end_inset
@@ -1047,6 +1073,46 @@ literal "false"
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+一般线性单波
+\end_layout
+
+\begin_layout Standard
+既含扩散、又含色散的线性单波方程
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=\sum_{r=1}^{\infty}b_{r}\frac{\partial^{2r}u}{\partial x^{2r}}+\sum_{r=1}^{\infty}a_{r}\frac{\partial^{2r+1}u}{\partial x^{2r+1}},\quad(x,t)\in(-\infty,+\infty)\times(0,+\infty)
+\]
+
+\end_inset
+
+对应于谐波初值
+\begin_inset Formula 
+\[
+u(x,t=0)=u_{0}(x)=\exp(\ii kx),\quad x\in(-\infty,+\infty)
+\]
+
+\end_inset
+
+的解为
+\begin_inset Formula 
+\begin{equation}
+u(x,t)={\color{red}\exp(\beta t+\ii k\alpha t)}\frac{\exp(\ii kx)}{\exp(\ii kat)},\quad(x,t)\in(-\infty,+\infty)\times[0,+\infty)\label{eq:线性平流-扩散-色散解}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\beta\coloneqq\sum_{r=1}^{\infty}\left(-k^{2}\right)^{r}b_{r},\quad\alpha\coloneqq\sum_{r=1}^{\infty}\left(-k^{2}\right)^{r}a_{r}.
+\]
+
 \end_inset
 
 
