@@ -1452,6 +1452,118 @@ reference "eq:有限差分：空间格式：修正方程"
 \end_layout
 
 \begin_layout Subsubsection
+修正波数
+\end_layout
+
+\begin_layout Standard
+若给定 
+\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)$
+\end_inset
+
+，则对流项精确值为
+\begin_inset Formula 
+\[
+a\frac{\partial u}{\partial x}=a\frac{\dd\exp(\ii\kappa x)}{\dd x}=\ii\kappa a\exp(\ii\kappa x).
+\]
+
+\end_inset
+
+而实际上，它被近似为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}a\frac{\partial u}{\partial x}-\sum_{r=1}^{\infty}b_{r}\frac{\partial^{2r}u}{\partial x^{2r}}-\sum_{r=1}^{\infty}a_{r}\frac{\partial^{2r+1}u}{\partial x^{2r+1}} & =\left(\ii\kappa a-\sum_{r=1}^{\infty}(\ii\kappa)^{2r}b_{r}-\sum_{r=1}^{\infty}(\ii\kappa)^{2r+1}a_{r}\right)\exp(\ii\kappa x)\\
+ & =\left(\ii\kappa a-\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}b_{r}-\ii\kappa\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}a_{r}\right)\exp(\ii\kappa x)\\
+ & =\left(\ii\kappa a-\beta-\ii\kappa\alpha\right)\exp(\ii\kappa x).
+\end{aligned}
+\]
+
+\end_inset
+
+与精确值相比，多出的 
+\begin_inset Formula $\left(\beta+\ii\kappa\alpha\right)\exp(\ii\kappa x)$
+\end_inset
+
+ 即空间离散引起的误差。若定义修正波数
+\begin_inset Formula 
+\[
+\tilde{\kappa}\coloneqq\frac{a-\alpha}{a}\kappa+\ii\frac{\beta}{a}\impliedby\ii\kappa a-\beta-\ii\kappa\alpha\eqqcolon\ii\tilde{\kappa}a,
+\]
+
+\end_inset
+
+则其实部表示色散误差，虚部表示耗散误差。
+\end_layout
+
+\begin_layout Remark*
+李新亮讲义中定义的“修正波数”为满足
+\begin_inset Formula 
+\[
+\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\frac{\tilde{k}}{h}\underbrace{\exp(\ii kx_{r})}_{u_{r}},
+\]
+
+\end_inset
+
+的 
+\begin_inset Formula $\tilde{k}$
+\end_inset
+
+，与这里（令 
+\begin_inset Formula $l=\mathrm{\pi}$
+\end_inset
+
+）的 
+\begin_inset Formula $\tilde{\kappa}$
+\end_inset
+
+ 成正比：
+\begin_inset Formula 
+\[
+\tilde{k}=\ii\tilde{\kappa}h\impliedby\frac{\tilde{k}}{h}=\ii\tilde{\kappa}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2022"
+literal "true"
+
+\end_inset
+
+ 中的 scaled wavenumber 
+\begin_inset Formula $k$
+\end_inset
+
+ 及 modified scaled wavenumber 
+\begin_inset Formula $k′$
+\end_inset
+
+ 分别与这里的 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 及 
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+ 对应。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 例：一阶后差
 \end_layout
 
@@ -1503,7 +1615,7 @@ reference "eq:有限差分：空间格式：修正方程"
 由上述截断误差，可得相应的修正方程为
 \begin_inset Formula 
 \[
-\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=\sum_{r=1}^{\infty}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}\frac{\partial^{2r}u}{\partial x^{2r}}+\sum_{r=1}^{\infty}\underbrace{\frac{-h^{2r+1}}{(2r+1)!}\frac{a}{h}}_{a_{r}}\frac{\partial^{2r+1}u}{\partial x^{2r+1}}
+\frac{\partial u^{h}}{\partial t}+a\frac{\partial u^{h}}{\partial x}=\sum_{r=1}^{\infty}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}\frac{\partial^{2r}u^{h}}{\partial x^{2r}}+\sum_{r=1}^{\infty}\underbrace{\frac{-h^{2r+1}}{(2r+1)!}\frac{a}{h}}_{a_{r}}\frac{\partial^{2r+1}u^{h}}{\partial x^{2r+1}}
 \]
 
 \end_inset
@@ -1541,7 +1653,7 @@ a-\alpha=a-\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{-h^{
 
 \begin_inset Formula 
 \[
-\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}=\frac{a}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}=a\frac{\cos(\kappa h)-1}{\kappa h}.
+\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}=\frac{a}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}=\kappa a\frac{\cos(\kappa h)-1}{\kappa h}.
 \]
 
 \end_inset
@@ -1550,18 +1662,14 @@ a-\alpha=a-\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{-h^{
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Note Note
-status open
-
-\begin_layout Paragraph
 修正波数
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 由上述修正方程的精确解，可得修正波数与理想波数之比为
 \begin_inset Formula 
 \begin{equation}
-\frac{\tilde{\kappa}}{\kappa}=\frac{\alpha+\ii\beta}{a}=\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}\label{eq:一阶迎风·修正波数}
+\frac{\tilde{\kappa}}{\kappa}=\frac{a-\alpha}{a}+\ii\frac{\beta}{\kappa a}=\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}\label{eq:一阶迎风·修正波数}
 \end{equation}
 
 \end_inset
@@ -1589,7 +1697,7 @@ status open
 ，则无论时间格式有多精确，该格式给出的近似解都是指数发散的。
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 因此格式 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1608,20 +1716,11 @@ reference "eq:有限差分：空间格式：一阶向后"
  的情形。
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 离散 Fourier 分析
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 前一节已经由
 \color red
 修正方程
@@ -1635,90 +1734,6 @@ status open
 离散信号
 \color inherit
 的观点出发，重新导出这一关键概念，并提供一种更简洁、更通用（不只适用于差分格式）的计算方法。
-\end_layout
-
-\begin_layout Subsubsection
-采样定理
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Shannon]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:有限差分：Shannon"
-
-\end_inset
-
-间距为 
-\begin_inset Formula $h$
-\end_inset
-
- 的均匀网格所能分辨的
-\color red
-最短波长
-\color inherit
-及
-\color red
-最大波数
-\color inherit
-分别为
-\begin_inset Formula 
-\[
-\lambda_{\min}=2h\implies k_{\max}=\frac{2\mathrm{\pi}}{\lambda_{\min}}=\frac{\mathrm{\pi}}{h}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-根据 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "thm:有限差分：Shannon"
-
-\end_inset
-
- 定理，只需考虑 
-\begin_inset Formula $\vert kh\vert\le\mathrm{\pi}$
-\end_inset
-
- 的情形。定义 
-\begin_inset Formula $kh$
-\end_inset
-
- 为
-\color red
-有效波数
-\color inherit
-，用于表示网格分辨率：
-\begin_inset Formula $\lambda/h\equiv2\mathrm{\pi}/kh$
-\end_inset
-
- 表示一个波长内的网格点数。
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsubsection
@@ -2008,11 +2023,11 @@ reference "eq:有限差分：空间格式：一般线性"
 \end_inset
 
  函数的符号特性，分析 
-\begin_inset Formula $\tilde{k}$
+\begin_inset Formula $\tilde{\kappa}$
 \end_inset
 
 –
-\begin_inset Formula $k$
+\begin_inset Formula $\kappa$
 \end_inset
 
  关系实际上只需要考虑
@@ -2023,51 +2038,12 @@ k=1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil ,
 
 \end_inset
 
-或等价的
+即等价的
 \begin_inset Formula 
 \[
 \kappa h\equiv\frac{k\mathrm{\pi}}{l}\frac{2l}{n}=\frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}.
 \]
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark*
-李新亮讲义中定义的“修正波数”为满足
-\begin_inset Formula 
-\[
-\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\frac{\tilde{k}}{h}\underbrace{\exp(\ii kx_{r})}_{u_{r}},
-\]
-
-\end_inset
-
-的 
-\begin_inset Formula $\tilde{k}$
-\end_inset
-
-，与这里（令 
-\begin_inset Formula $l=\mathrm{\pi}$
-\end_inset
-
-）的 
-\begin_inset Formula $\tilde{\kappa}$
-\end_inset
-
- 成正比：
-\begin_inset Formula 
-\[
-\tilde{k}=\ii\tilde{\kappa}h\impliedby\frac{\tilde{k}}{h}=\ii\tilde{\kappa}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
@@ -2104,7 +2080,7 @@ b_{r+0}=1,\quad b_{r-1}=-1,
 \begin_inset Formula 
 \[
 \begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-\sin(-\kappa h)}{\kappa h}-\ii\frac{1-\cos(-\kappa h)}{\kappa h}\\
- & =\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}
+ & =\frac{\sin(\kappa h)}{\kappa h}-\ii\frac{1-\cos(\kappa h)}{\kappa h}
 \end{aligned}
 \]
 
@@ -2158,7 +2134,7 @@ b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
 \begin_inset Formula 
 \[
 \begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-2\sin(-\kappa h)+\frac{1}{2}\sin(-2\kappa h)}{\kappa h}-\ii\frac{\frac{3}{2}-2\cos(-\kappa h)+\frac{1}{2}\cos(-2\kappa h)}{\kappa h}\\
- & =\frac{4\sin(\kappa h)-\sin(2\kappa h)}{2\kappa h}+\ii\frac{3-4\cos(\kappa h)+\cos(2\kappa h)}{2\kappa h}
+ & =\frac{4\sin(\kappa h)-\sin(2\kappa h)}{2\kappa h}-\ii\frac{3-4\cos(\kappa h)+\cos(2\kappa h)}{2\kappa h}
 \end{aligned}
 \]
 
@@ -2200,7 +2176,11 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 
 \begin_layout Enumerate
 生成谐波 
-\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)\equiv\exp(\ii k\mathrm{\pi}x/l)$
+\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)$
+\end_inset
+
+，其中 
+\begin_inset Formula $\kappa=k\mathrm{\pi}/l$
 \end_inset
 
 ；
