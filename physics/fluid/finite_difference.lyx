@@ -1311,7 +1311,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
 \begin_inset Formula $h$
 \end_inset
 
- 为有限值时（忽略浮点误差的）数值解的耗散及色散特性。具体地，将一般的线性格式 
+ 为有限值时（忽略浮点误差的）空间离散格式的耗散及色散特性。具体地，将一般的线性格式 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:有限差分：空间格式：一般线性"
@@ -1407,7 +1407,7 @@ reference "eq:有限差分：误差分析：模型方程：精确解"
 \end_layout
 
 \begin_layout Description
-幅值误差 即 
+耗散误差 即 
 \begin_inset Formula $\beta\ne0$
 \end_inset
 
@@ -1426,7 +1426,7 @@ reference "eq:有限差分：空间格式：修正方程"
 \end_layout
 
 \begin_layout Description
-相位误差 即 
+色散误差 即 
 \begin_inset Formula $\alpha\ne0$
 \end_inset
 
@@ -1449,85 +1449,6 @@ reference "eq:有限差分：空间格式：修正方程"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsubsection
-格式分辨率
-\end_layout
-
-\begin_layout Theorem
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[Shannon]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:有限差分：Shannon"
-
-\end_inset
-
-间距为 
-\begin_inset Formula $h$
-\end_inset
-
- 的均匀网格所能分辨的
-\color red
-最短波长
-\color inherit
-及
-\color red
-最大波数
-\color inherit
-分别为
-\begin_inset Formula 
-\[
-\lambda_{\min}=2h\implies k_{\max}=\frac{2\mathrm{\pi}}{\lambda_{\min}}=\frac{\mathrm{\pi}}{h}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-根据 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "thm:有限差分：Shannon"
-
-\end_inset
-
- 定理，只需考虑 
-\begin_inset Formula $\vert kh\vert\le\mathrm{\pi}$
-\end_inset
-
- 的情形。定义 
-\begin_inset Formula $kh$
-\end_inset
-
- 为
-\color red
-有效波数
-\color inherit
-，用于表示网格分辨率：
-\begin_inset Formula $2\mathrm{\pi}/kh$
-\end_inset
-
- 表示一个波长内的网格点数。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1716,6 +1637,85 @@ status open
 的观点出发，重新导出这一关键概念，并提供一种更简洁、更通用（不只适用于差分格式）的计算方法。
 \end_layout
 
+\begin_layout Subsubsection
+采样定理
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Shannon]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:有限差分：Shannon"
+
+\end_inset
+
+间距为 
+\begin_inset Formula $h$
+\end_inset
+
+ 的均匀网格所能分辨的
+\color red
+最短波长
+\color inherit
+及
+\color red
+最大波数
+\color inherit
+分别为
+\begin_inset Formula 
+\[
+\lambda_{\min}=2h\implies k_{\max}=\frac{2\mathrm{\pi}}{\lambda_{\min}}=\frac{\mathrm{\pi}}{h}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+根据 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "thm:有限差分：Shannon"
+
+\end_inset
+
+ 定理，只需考虑 
+\begin_inset Formula $\vert kh\vert\le\mathrm{\pi}$
+\end_inset
+
+ 的情形。定义 
+\begin_inset Formula $kh$
+\end_inset
+
+ 为
+\color red
+有效波数
+\color inherit
+，用于表示网格分辨率：
+\begin_inset Formula $\lambda/h\equiv2\mathrm{\pi}/kh$
+\end_inset
+
+ 表示一个波长内的网格点数。
+\end_layout
+
 \end_inset
 
 
@@ -1860,7 +1860,7 @@ literal "true"
 ，定义
 \begin_inset Formula 
 \[
-\kappa=\frac{k\mathrm{\pi}}{l},\quad\omega=\exp(\ii\frac{2l}{n})
+\kappa=\frac{k\mathrm{\pi}}{l},\quad\omega=\exp(\ii h)\equiv\exp(\ii\frac{2l}{n})
 \]
 
 \end_inset
@@ -1902,7 +1902,7 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 \end_inset
 
  相差整数个 
-\begin_inset Formula $n\mathrm{\pi}/l$
+\begin_inset Formula $n\mathrm{\pi}/l\equiv2\mathrm{\pi}/h$
 \end_inset
 
  的谐波在 DFT 
@@ -1935,15 +1935,11 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 ，即所谓的 aliasing 现象。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
 \begin_layout Subsubsection
 修正波数推导
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 不失一般性，下面只考虑波数为 
 \begin_inset Formula $\kappa$
 \end_inset
@@ -1975,7 +1971,7 @@ u_{r+s}(t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{r+s})=\underbrace{\hat{u}_{\kapp
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 随着精度提高，线性差分格式 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1986,7 +1982,7 @@ reference "eq:有限差分：空间格式：一般线性"
  给出的近似，应当逼近上述结果，即
 \begin_inset Formula 
 \begin{equation}
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\sum_{s\in S_{r}}\frac{b_{r+s}\,\overbrace{u_{r}\exp(\ii\kappa sh)}^{u_{r+s}}}{h}\eqqcolon\ii\tilde{\kappa}u_{r},\label{eq:有限差分·修正波数}
+\ii\kappa u_{r}=\left.\frac{\partial u}{\partial x}\right|_{r}\approx\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\sum_{s\in S_{r}}\frac{b_{r+s}\,\overbrace{u_{r}\exp(\ii\kappa sh)}^{u_{r+s}}}{h}\eqqcolon\ii\tilde{\kappa}u_{r},\label{eq:有限差分·修正波数}
 \end{equation}
 
 \end_inset
@@ -1994,9 +1990,185 @@ reference "eq:有限差分：空间格式：一般线性"
 由此得
 \begin_inset Formula 
 \[
-\frac{\tilde{\kappa}}{\kappa}=\sum_{s}\frac{b_{r+s}\overbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}^{\exp(\ii\kappa sh)}}{\ii\kappa h}=\boxed{\frac{\sum_{s}b_{r+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{r+s}\cos(s\kappa h)}{\kappa h}}
+\frac{\tilde{\kappa}h}{\kappa h}=\sum_{s}\frac{b_{r+s}\overbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}^{\exp(\ii\kappa sh)}}{\ii\kappa h}=\boxed{\frac{\sum_{s}b_{r+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{r+s}\cos(s\kappa h)}{\kappa h}}
 \]
 
+\end_inset
+
+该比值越接近 
+\begin_inset Formula $1$
+\end_inset
+
+，空间离散格式的质量越好。考虑到 
+\begin_inset Formula $k$
+\end_inset
+
+ 的取值范围、
+\begin_inset Formula $\sin,\cos$
+\end_inset
+
+ 函数的符号特性，分析 
+\begin_inset Formula $\tilde{k}$
+\end_inset
+
+–
+\begin_inset Formula $k$
+\end_inset
+
+ 关系实际上只需要考虑
+\begin_inset Formula 
+\[
+k=1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil ,
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\[
+\kappa h\equiv\frac{k\mathrm{\pi}}{l}\frac{2l}{n}=\frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+李新亮讲义中定义的“修正波数”为满足
+\begin_inset Formula 
+\[
+\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\frac{\tilde{k}}{h}\underbrace{\exp(\ii kx_{r})}_{u_{r}},
+\]
+
+\end_inset
+
+的 
+\begin_inset Formula $\tilde{k}$
+\end_inset
+
+，与这里（令 
+\begin_inset Formula $l=\mathrm{\pi}$
+\end_inset
+
+）的 
+\begin_inset Formula $\tilde{\kappa}$
+\end_inset
+
+ 成正比：
+\begin_inset Formula 
+\[
+\tilde{k}=\ii\tilde{\kappa}h\impliedby\frac{\tilde{k}}{h}=\ii\tilde{\kappa}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[一阶迎风]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{u_{r}-u_{r-1}}{h},\quad a>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{r+0}=1,\quad b_{r-1}=-1,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-\sin(-\kappa h)}{\kappa h}-\ii\frac{1-\cos(-\kappa h)}{\kappa h}\\
+ & =\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}
+\end{aligned}
+\]
+
+\end_inset
+
+与式 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:一阶迎风·修正波数"
+
+\end_inset
+
+ 所得结果相同。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[二阶迎风]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{3u_{r}-4u_{r-1}+u_{r-2}}{2h},\quad a>0
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-2\sin(-\kappa h)+\frac{1}{2}\sin(-2\kappa h)}{\kappa h}-\ii\frac{\frac{3}{2}-2\cos(-\kappa h)+\frac{1}{2}\cos(-2\kappa h)}{\kappa h}\\
+ & =\frac{4\sin(\kappa h)-\sin(2\kappa h)}{2\kappa h}+\ii\frac{3-4\cos(\kappa h)+\cos(2\kappa h)}{2\kappa h}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -2006,7 +2178,7 @@ reference "eq:有限差分：空间格式：一般线性"
 修正波数测量
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 选定区间 
 \begin_inset Formula $[0,2l]$
 \end_inset
@@ -2020,7 +2192,7 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 \end_inset
 
 推广为一般线性格式的采样点。遍历 
-\begin_inset Formula $k=1,\dots,n$
+\begin_inset Formula $k=1,\dots,\left\lceil \frac{n-1}{2}\right\rceil $
 \end_inset
 
 ，依次
@@ -2068,25 +2240,25 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 
 \begin_layout Enumerate
 以 
-\begin_inset Formula $kh$
+\begin_inset Formula $\kappa h$
 \end_inset
 
  为横坐标、
-\begin_inset Formula $\tilde{k}h=?$
+\begin_inset Formula $\tilde{\kappa}h=h\hat{v}_{k}/\ii n$
 \end_inset
 
  为纵坐标，在 
-\begin_inset Formula $\tilde{k}h$
+\begin_inset Formula $\tilde{\kappa}h$
 \end_inset
 
 –
-\begin_inset Formula $kh$
+\begin_inset Formula $\kappa h$
 \end_inset
 
  图上新增一点。
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -2193,7 +2365,7 @@ reference "eq:有限差分·DFT"
  的值，从而有
 \begin_inset Formula 
 \[
-\tilde{k}h=\frac{\tilde{\kappa}l}{\mathrm{\pi}}h=\frac{\ii\tilde{\kappa}}{\ii}\frac{lh}{\mathrm{\pi}}=\frac{\hat{v}_{\kappa}/n}{\ii}\frac{lh}{\mathrm{\pi}}=\frac{lh}{\ii\mathrm{\pi}}\frac{1}{n}\underbrace{\sum_{r=0}^{n-1}\left.\frac{\partial u^{h}}{\partial x}\right|_{r}w^{-rk}}_{\hat{v}_{k}}.
+\tilde{\kappa}h=\frac{\ii\tilde{\kappa}}{\ii}h=\frac{\hat{v}_{\kappa}/n}{\ii}h=\frac{h}{\ii}\frac{1}{n}\underbrace{\sum_{r=0}^{n-1}\left.\frac{\partial u^{h}}{\partial x}\right|_{r}w^{-rk}}_{\hat{v}_{k}}.
 \]
 
 \end_inset
@@ -2201,118 +2373,8 @@ reference "eq:有限差分·DFT"
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-应用实例
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[一阶迎风]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{u_{r}-u_{r-1}}{h},\quad a>0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{r+0}=1,\quad b_{r-1}=-1,
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-\sin(-\kappa h)}{\kappa h}-\ii\frac{1-\cos(-\kappa h)}{\kappa h}\\
- & =\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}
-\end{aligned}
-\]
-
-\end_inset
-
-与式 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:一阶迎风·修正波数"
-
-\end_inset
-
- 所得结果相同。
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Example
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[二阶迎风]
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{3u_{r}-4u_{r-1}+u_{r-2}}{2h},\quad a>0
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{aligned}\frac{\tilde{\kappa}}{\kappa} & =\frac{-2\sin(-\kappa h)+\frac{1}{2}\sin(-2\kappa h)}{\kappa h}-\ii\frac{\frac{3}{2}-2\cos(-\kappa h)+\frac{1}{2}\cos(-2\kappa h)}{\kappa h}\\
- & =\frac{4\sin(\kappa h)-\sin(2\kappa h)}{2\kappa h}+\ii\frac{3-4\cos(\kappa h)+\cos(2\kappa h)}{2\kappa h}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
