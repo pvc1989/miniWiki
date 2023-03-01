@@ -2360,6 +2360,228 @@ reference "eq:有限差分·DFT"
 
 \end_layout
 
+\begin_layout Subsection
+最小色散格式
+\end_layout
+
+\begin_layout Subsubsection
+MDCD (Minimized Dispersion and Controllable Dissipation)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sun_2011"
+literal "true"
+
+\end_inset
+
+ The dispersion is optimized by the minimization of an integrated error
+ function while the dissipation is controlled by a problem-dependent free
+ parameter.
+\end_layout
+
+\begin_layout Lemma*
+线性差分格式
+\begin_inset Formula 
+\[
+\left.\frac{\partial f}{\partial x}\right|_{i}\approx\left(\frac{\partial f}{\partial x}\right)_{i}^{h}\coloneqq\sum_{s=-r}^{r}\frac{b_{s}\,f_{i+s}}{h}
+\]
+
+\end_inset
+
+的精度阶数至多为 
+\begin_inset Formula $2r$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\left.\frac{\partial f}{\partial x}\right|_{i}+\order{h^{2r}}.
+\]
+
+\end_inset
+
+若允许其精度阶数降低为 
+\begin_inset Formula $2r-2$
+\end_inset
+
+，则其色散与耗散可分别由 
+\begin_inset Formula $1$
+\end_inset
+
+ 个独立参数决定。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+阶数为 
+\begin_inset Formula $2r-2$
+\end_inset
+
+ 的格式可以构造为
+\begin_inset Formula 
+\[
+\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\underbrace{\sum_{s=-r}^{r}\frac{a_{s}\,f_{i+s}}{h}}_{\left(\partial f/\partial x\right)_{i}^{C}}+\alpha\underbrace{\frac{\Delta^{2r-1}f_{i-r}}{h}}_{\left(\partial f/\partial x\right)_{i}^{L}}+\beta\underbrace{\frac{\nabla^{2r-1}f_{i+r}}{h}}_{\left(\partial f/\partial x\right)_{i}^{R}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Delta f_{k}\coloneqq f_{k+1}-f_{k},\quad\nabla f_{k}\coloneqq f_{k}-f_{k-1},
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\left(\frac{\partial f}{\partial x}\right)_{i}^{C}=\left.\frac{\partial f}{\partial x}\right|_{i}+\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{i}^{L}=\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{i}^{R}=\order{h^{2r-2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+考虑谐波
+\begin_inset Formula 
+\[
+f(x)=\exp(\ii\kappa x)
+\]
+
+\end_inset
+
+精确解
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial x}=\frac{\ii k}{h}\exp(\ii\kappa x)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+k\coloneqq\kappa h\in[0,\mathrm{\pi}]
+\]
+
+\end_inset
+
+定义修正波数
+\begin_inset Formula 
+\[
+\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\frac{\ii k'}{h}\exp(\ii\kappa x)
+\]
+
+\end_inset
+
+其实部、虚部分别表示色散、耗散：
+\begin_inset Formula 
+\[
+k'=\Re(k')+\ii\Im(k')
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+……
+\end_layout
+
+\begin_layout Proof
+最终得
+\begin_inset Formula 
+\[
+\Re(k')=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Re(k')=
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\gamma_{\text{色}}=\alpha+\beta,\quad\gamma_{\text{耗}}=\alpha-\beta.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+通过最小化
+\begin_inset Formula 
+\[
+E=\int_{0}^{\mathrm{\pi}}\frac{\left(\Re(k')-k\right)^{2}}{\exp(\nu k)}\dd{k}
+\]
+
+\end_inset
+
+确定 
+\begin_inset Formula $\gamma_{\text{耗}}$
+\end_inset
+
+ 最优值。
+\end_layout
+
+\begin_layout Subsubsection
+MDAD (Minimized Dispersion and Adaptive Dissipation)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2022"
+literal "true"
+
+\end_inset
+
+ 构造自适应耗散格式的主要步骤：
+\end_layout
+
+\begin_layout Enumerate
+以四阶 MDCD 格式为基础，因其色散与耗散独立，可避免耗散调整破坏色散特性。
+\end_layout
+
+\begin_layout Enumerate
+为量化数值解局部尺度，提出一种基于导数的尺度传感器，可用于推导局部有效波数。
+\end_layout
+
+\begin_layout Enumerate
+利用色散–耗散条件，建立耗散系数与有效波数的关系。
+\end_layout
+
+\begin_layout Standard
+改格式能根据流场自动调整耗散，在高波数区充分大以压制振荡，在低波数区充分小以提高分辨率。
+\end_layout
+
 \begin_layout Section
 时间推进
 \begin_inset CommandInset label
