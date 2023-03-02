@@ -1486,7 +1486,42 @@ a\frac{\partial u}{\partial x}=a\frac{\dd\exp(\ii\kappa x)}{\dd x}=\ii\kappa a\e
 \begin_inset Formula $\left(\beta+\ii\kappa\alpha\right)\exp(\ii\kappa x)$
 \end_inset
 
- 即空间离散引起的误差。若定义修正波数
+ 即空间离散引起的误差。代入原方程，解关于离散近似值 
+\begin_inset Formula $\left\{ u_{j}^{h}\right\} _{j\in\mathbb{N}}$
+\end_inset
+
+ 的常微分方程组初值问题
+\begin_inset Formula 
+\[
+u_{j}^{h}(t=0)=\exp(\ii\kappa x_{j}),\quad\frac{\dd u_{j}^{h}(t)}{\dd t}+\left(\ii\kappa a-\beta-\ii\kappa\alpha\right)u_{j}^{h}(t)=0,\quad j\in\mathbb{N},
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+u_{j}^{h}(t)=\exp(\beta t+\ii\kappa\alpha t-\ii\kappa at)\exp(\ii\kappa x_{j}),
+\]
+
+\end_inset
+
+与修正方程的解 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分：空间格式：修正方程：精确解"
+
+\end_inset
+
+ 一致。
+\end_layout
+
+\begin_layout Standard
+可定义
+\color red
+修正波数 (modified wavenumber)
+\color inherit
+：
 \begin_inset Formula 
 \[
 \tilde{\kappa}\coloneqq\frac{a-\alpha}{a}\kappa+\ii\frac{\beta}{a}\impliedby\ii\kappa a-\beta-\ii\kappa\alpha\eqqcolon\ii\tilde{\kappa}a,
@@ -1494,9 +1529,77 @@ a\frac{\partial u}{\partial x}=a\frac{\dd\exp(\ii\kappa x)}{\dd x}=\ii\kappa a\e
 
 \end_inset
 
-则其实部表示色散误差，虚部表示耗散误差。
+其实部表示色散误差，虚部表示耗散误差。
 \end_layout
 
+\begin_layout Remark*
+依上述定义，
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 被 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lele_1992,Pirozzoli_2006"
+literal "true"
+
+\end_inset
+
+ 称为 reduced wavenumber，用 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ 表示，被 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Sun_2011,Li_2022"
+literal "true"
+
+\end_inset
+
+ 称为 scaled wavenumber，用 
+\begin_inset Formula $k$
+\end_inset
+
+ 表示。
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+ 被 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lele_1992,Pirozzoli_2006"
+literal "true"
+
+\end_inset
+
+ 称为 modified wavenumber，用 
+\begin_inset Formula $\Phi(\varphi)$
+\end_inset
+
+ 表示，被 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Sun_2011,Li_2022"
+literal "true"
+
+\end_inset
+
+ 称为 modified scaled wavenumber，用 
+\begin_inset Formula $k′$
+\end_inset
+
+ 表示。
+\end_layout
+
+\end_deeper
 \begin_layout Remark*
 李新亮讲义中定义的“修正波数”为满足
 \begin_inset Formula 
@@ -1527,33 +1630,6 @@ a\frac{\partial u}{\partial x}=a\frac{\dd\exp(\ii\kappa x)}{\dd x}=\ii\kappa a\e
 \end_inset
 
 
-\end_layout
-
-\begin_layout Remark*
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Li_2022"
-literal "true"
-
-\end_inset
-
- 中的 scaled wavenumber 
-\begin_inset Formula $k$
-\end_inset
-
- 及 modified scaled wavenumber 
-\begin_inset Formula $k′$
-\end_inset
-
- 分别与这里的 
-\begin_inset Formula $\kappa h$
-\end_inset
-
- 及 
-\begin_inset Formula $\tilde{\kappa}h$
-\end_inset
-
- 对应。
 \end_layout
 
 \begin_layout Standard
@@ -2033,7 +2109,7 @@ reference "eq:有限差分：空间格式：一般线性"
  关系实际上只需要考虑
 \begin_inset Formula 
 \[
-k=1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil ,
+k\in\left\{ 1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil \right\} ,
 \]
 
 \end_inset
@@ -2041,7 +2117,7 @@ k=1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil ,
 即等价的
 \begin_inset Formula 
 \[
-\kappa h\equiv\frac{k\mathrm{\pi}}{l}\frac{2l}{n}=\frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}.
+\kappa h\equiv\frac{k\mathrm{\pi}}{l}\frac{2l}{n}\in\left\{ \frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}\right\} .
 \]
 
 \end_inset
@@ -2360,8 +2436,123 @@ reference "eq:有限差分·DFT"
 
 \end_layout
 
+\begin_layout Subsubsection
+ADR (Approximate Dispersion Relation)
+\end_layout
+
+\begin_layout Standard
+考虑半离散格式给出的初值问题
+\begin_inset Formula 
+\begin{equation}
+u_{j}^{h}(t=0)=C\exp(\ii\kappa x_{j}),\quad\frac{\dd u_{j}^{h}(t)}{\dd t}+\left(a\frac{\partial u}{\partial x}\right)_{j}^{h}=0,\quad j\in\mathbb{N},\label{eq:有限差分·半离散·初值问题}
+\end{equation}
+
+\end_inset
+
+对于线性格式，可解得
+\begin_inset Formula 
+\[
+u_{j}^{h}(t)=\underbrace{\exp(\beta t+\ii\kappa\alpha t-\ii\kappa at)}_{\exp(-\ii\tilde{\kappa}at)}\underbrace{C\exp(\ii\kappa x_{j})}_{u_{j}^{h}(0)},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\tilde{\kappa}=\frac{a-\alpha}{a}\kappa+\ii\frac{\beta}{a}
+\]
+
+\end_inset
+
+为修正波数。为将其推广到非线性格式，对上述解取对数，得
+\begin_inset Formula 
+\[
+\tilde{\kappa}=\frac{\ii}{at}\ln\frac{u_{j}^{h}(t)}{u_{j}^{h}(0)}.
+\]
+
+\end_inset
+
+非线性格式所得 
+\begin_inset Formula $u_{j}^{h}$
+\end_inset
+
+ 一般含多个谐波分量，即有离散 Fourier 展开
+\begin_inset Formula 
+\[
+u_{j}^{h}(t)=\sum_{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil }\hat{u}_{k}^{h}(t)\,w^{jk}\impliedby\hat{u}_{k}^{h}(t)=\frac{1}{n}\sum_{j=0}^{n-1}u_{j}^{h}(t)\,w^{-jk},
+\]
+
+\end_inset
+
+而线性格式所得 
+\begin_inset Formula $u_{j}^{h}$
+\end_inset
+
+ 只含第 
+\begin_inset Formula $k$
+\end_inset
+
+ 项。据此，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pirozzoli_2006"
+literal "false"
+
+\end_inset
+
+ 定义
+\begin_inset Formula 
+\[
+\tilde{\kappa}\coloneqq\frac{\ii}{a\tau}\ln\frac{\hat{u}_{k}^{h}(\tau)}{\hat{u}_{k}^{h}(0)}=\frac{\ii}{a\tau}\ln\frac{\sum_{j=0}^{n-1}u_{j}^{h}(\tau)\,w^{-jk}}{\sum_{j=0}^{n-1}u_{j}^{h}(0)\,w^{-jk}}.
+\]
+
+\end_inset
+
+非线性格式的
+\color red
+近似色散关系 (approximate dispersion relation)
+\color inherit
+，其中 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 为极小的时间步长，
+\begin_inset Formula $u_{j}^{h}(\tau)$
+\end_inset
+
+ 由初值问题 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:有限差分·半离散·初值问题"
+
+\end_inset
+
+ 的高精度时间积分给出。非线性格式给出的 
+\begin_inset Formula $u_{j}^{h}(\tau)$
+\end_inset
+
+ 通常不再正比于 
+\begin_inset Formula $C$
+\end_inset
+
+，但 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pirozzoli_2006"
+literal "false"
+
+\end_inset
+
+ 指出：上述定义给出的修正波数对 
+\begin_inset Formula $C$
+\end_inset
+
+ 值不敏感。
+\end_layout
+
 \begin_layout Subsection
-最小色散格式
+最小色散格式 
 \end_layout
 
 \begin_layout Subsubsection
