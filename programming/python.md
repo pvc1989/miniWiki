@@ -52,7 +52,7 @@ print(1 + 1 == 3)  # False
 
 ## 无序容器
 
-### [`set`, `frozenset`：集合](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
+### 集合：[`set`, `frozenset`](https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset)
 
 `set` 为可变容器，`frozenset` 为不可变容器，二者均支持数学中的集合操作。
 
@@ -68,7 +68,7 @@ print(b.union(c) == b)         # True
 print(b.difference(c))  # {9, 3, 15}
 ```
 
-### [`dict`：字典 (dictionary)](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
+### 字典：[`dict`](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict)
 
 `dict` 是以『键-值对 (key-value pair)』 为元素的容器，并且支持按键查值。
 
@@ -135,7 +135,7 @@ s.remove(x)  # remove the first x from s
 s.reverse()
 ```
 
-### `list`, `tuple`, `range`
+### 泛型序列：`list`, `tuple`, `range`
 
 [`list`](https://docs.python.org/3/library/stdtypes.html#lists) 属于可变序列，而 [`tuple`](https://docs.python.org/3/library/stdtypes.html#tuples) 和 [`range`](https://docs.python.org/3/library/stdtypes.html#ranges) 属于不可变序列。
 
@@ -174,7 +174,7 @@ for i in range(1000000):
     print(i)
 ```
 
-### [`str`：字符串](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
+### 字符序列：[`str`](https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str)
 
 `str` 是一种由（按 Unicode 编码的）字符构成的不可变序列。
 
@@ -244,9 +244,9 @@ Python 中允许使用成对的单引号 `'...'` 或成对的双引号 `"..."` �
 
 ## [标准库中的数据类型](https://docs.python.org/3/library/datatypes.html)
 
-### [`heapq`：最小二叉堆算法](https://docs.python.org/3/library/heapq.html)
+### 小顶堆算法：[`heapq`](https://docs.python.org/3/library/heapq.html)
 
-`heapq` 只提供了[最小二叉堆『算法 (algorithm)』](https://visualgo.net/en/heap)，被操纵的数据需要存储在一个 `list` 里：
+`heapq` 只提供了[顶部最小二叉堆『算法 (algorithm)』](https://visualgo.net/en/heap)，被操纵的数据需要存储在一个 `list` 里：
 
 ```python
 import heapq
@@ -403,7 +403,7 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 # 数值计算
 
-## [`numpy`, `scipy`：数值与科学计算](https://www.scipy.org)
+## [`numpy`, `scipy`](https://www.scipy.org) for 数值计算
 
 最完整最准确的参考资料是
 - [Numpy Reference Guide](https://docs.scipy.org/doc/numpy/reference/) 
@@ -416,12 +416,12 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
-## [`matplotlib`：数据显示](https://matplotlib.org)
+## [`matplotlib`](https://matplotlib.org) for 数据可视化
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
 
 # 文件读写
-## [`io`：用于数据流的工具](https://docs.python.org/3/library/io.html)
+## [`io`](https://docs.python.org/3/library/io.html) for 数据流读写
 在 Python 中，文件被抽象成数据『流 (stream)』，所有文件『读写 (IO)』操作都是在流对象上进行的。
 除此之外，还有一种『内存中的流 (in-memory stream)』，它支持所有流上的抽象操作，但不与某个文件绑定。
 
@@ -460,7 +460,7 @@ s = f.readline()  # '\n' included
 f.write('hello, world\n')
 ```
 
-## [`sys.stdin`, `sys.stdout`, `sys.stderr`：标准输入输出](https://docs.python.org/3/library/sys.html#sys.stdin)
+## [`sys.stdin`, `sys.stdout`, `sys.stderr`](https://docs.python.org/3/library/sys.html#sys.stdin) for 标准读写
 从『标准输入 (`stdin`)』中逐行读取信息并进行处理：
 ```python
 import sys
@@ -468,7 +468,7 @@ for line in sys.stdin:
     # Process each line, which is an str object.
 ```
 
-## [`stdio` from *Introduction to Programming in Python*](https://introcs.cs.princeton.edu/python/)
+## [`stdio`](https://introcs.cs.princeton.edu/python/) from *Introduction to Programming in Python*
 
 前一节介绍的文本读写操作要求输入输出对象都是 `str` 类型，因此在读写 `int` 或 `float` 数据时，需要频繁地进行类型转换。
 
@@ -530,6 +530,8 @@ python3 randomseq.py 1000 | python3 average.py
 
 # 软件开发
 
+## 代码规范：[PEP 8](https://peps.python.org/pep-0008/) and [PEP 257](https://peps.python.org/pep-0257)
+
 ## [`argparse`](https://docs.python.org/3/library/argparse.html) for 命令行解析
 
 ```python
@@ -551,7 +553,7 @@ print(args)
 
 ## [`profile`](https://docs.python.org/3/library/profile.html) for 函数调用分析
 
-## [`timeit`](https://docs.python.org/3/library/timeit.html) for 测量代码片段运行时间
+## [`timeit`](https://docs.python.org/3/library/timeit.html) for 测量运行时间
 
 ```python
 timeit.default_timer()
@@ -628,12 +630,5 @@ if __name__ == '__main__':
     assert s.area(3) == 2 * 2 * 3
 ```
 
-## [PEP 8：代码规范](https://www.python.org/dev/peps/pep-0008/)
+抽象基类（接口）的『正确』用法，可参见《[设计原则](./principles/README.md)》及《[设计模式](./patterns/README.md)》。
 
-## [PyCharm：集成开发环境](https://www.jetbrains.com/pycharm/)
-
-- [Download](https://www.jetbrains.com/pycharm/download/)
-- [Tutorials](https://confluence.jetbrains.com/display/PYH/PyCharm+Tutorials)
-  - [Getting Started with PyCharm](https://confluence.jetbrains.com/display/PYH/Getting+Started+with+PyCharm)
-  - [Exploring the IDE. Quick Start Guide](https://confluence.jetbrains.com/display/PYH/Exploring+the+IDE.+Quick+Start+Guide)
-  - [Creating and running a Python unit test](https://confluence.jetbrains.com/display/PYH/Creating+and+running+a+Python+unit+test)
