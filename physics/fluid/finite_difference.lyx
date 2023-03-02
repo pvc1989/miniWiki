@@ -616,7 +616,7 @@ status open
 
 \begin_inset Formula 
 \[
-\left\{ u(x_{i})\right\} _{i=1}^{n},\quad x_{i}\coloneqq a+ih,\quad h\coloneqq\frac{b-a}{n},\quad i=0,1,\dots,n.
+\left\{ u(x_{j})\right\} _{j=1}^{n},\quad x_{j}\coloneqq a+jh,\quad h\coloneqq\frac{b-a}{n},\quad j=0,1,\dots,n.
 \]
 
 \end_inset
@@ -634,9 +634,9 @@ status open
 为
 \begin_inset Formula 
 \[
-\begin{aligned}\Vert u^{h}-u\Vert_{1} & \approx\sum_{i=0}^{n-1}h\,\vert u^{h}(x_{i})-u(x_{i})\vert\approx\sum_{i=1}^{n}h\,\vert u^{h}(x_{i})-u(x_{i})\vert\\
-\Vert u^{h}-u\Vert_{2} & \approx\sqrt{\sum_{i=0}^{n-1}h\,\vert u^{h}(x_{i})-u(x_{i})\vert^{2}}\approx\sqrt{\sum_{i=1}^{n}h\,\vert u^{h}(x_{i})-u(x_{i})\vert^{2}}\\
-\Vert u^{h}-u\Vert_{\infty} & \approx\max_{i=0}^{n-1}\vert u^{h}(x_{i})-u(x_{i})\vert\approx\max_{i=1}^{n}\vert u^{h}(x_{i})-u(x_{i})\vert
+\begin{aligned}\Vert u^{h}-u\Vert_{1} & \approx\sum_{j=0}^{n-1}h\,\vert u^{h}(x_{j})-u(x_{j})\vert\approx\sum_{j=1}^{n}h\,\vert u^{h}(x_{j})-u(x_{j})\vert\\
+\Vert u^{h}-u\Vert_{2} & \approx\sqrt{\sum_{j=0}^{n-1}h\,\vert u^{h}(x_{j})-u(x_{j})\vert^{2}}\approx\sqrt{\sum_{j=1}^{n}h\,\vert u^{h}(x_{j})-u(x_{j})\vert^{2}}\\
+\Vert u^{h}-u\Vert_{\infty} & \approx\max_{j=0}^{n-1}\vert u^{h}(x_{j})-u(x_{j})\vert\approx\max_{j=1}^{n}\vert u^{h}(x_{j})-u(x_{j})\vert
 \end{aligned}
 \]
 
@@ -857,7 +857,7 @@ noprefix "false"
 
 \begin_layout Standard
 这种方法适用于等距网格 
-\begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
+\begin_inset Formula $\left\{ x_{j}\equiv x_{0}+jh\right\} _{j\in\mathbb{N}}$
 \end_inset
 
 ：
@@ -869,7 +869,7 @@ noprefix "false"
 \end_inset
 
  在网格结点上的值 
-\begin_inset Formula $\left\{ u_{i}(t)\equiv u(x_{i},t)\right\} _{i\in I}$
+\begin_inset Formula $\left\{ u_{j}(t)\equiv u(x_{j},t)\right\} _{j\in\mathbb{N}}$
 \end_inset
 
 。
@@ -877,11 +877,11 @@ noprefix "false"
 
 \begin_layout Enumerate
 在 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $x_{j}$
 \end_inset
 
  处选定一组相邻结点，称作点 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $x_{j}$
 \end_inset
 
  处的
@@ -897,7 +897,7 @@ noprefix "false"
 指标 (Index)
 \color inherit
  集 
-\begin_inset Formula $I_{i}\subset I$
+\begin_inset Formula $I_{j}\subset\mathbb{N}$
 \end_inset
 
  或
@@ -905,7 +905,7 @@ noprefix "false"
 指标偏移 (index-Shift)
 \color inherit
  集 
-\begin_inset Formula $S_{i}$
+\begin_inset Formula $S_{j}$
 \end_inset
 
  表示。在线性格式中，导函数 
@@ -913,13 +913,13 @@ noprefix "false"
 \end_inset
 
  在结点 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $x_{j}$
 \end_inset
 
  处的近似值由相应基架上的函数值线性组合而得：
 \begin_inset Formula 
 \begin{equation}
-\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{i}\approx\sum_{k\in I_{i}}a_{k}^{(p)}\,u_{k}\equiv\sum_{s\in S_{i}}a_{i+s}^{(p)}\,u_{i+s}\label{eq:有限差分：空间格式：一般线性：p 阶导数}
+\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{j}\approx\sum_{k\in I_{j}}a_{k}^{(p)}\,u_{k}\equiv\sum_{s\in S_{j}}a_{j+s}^{(p)}\,u_{j+s}\label{eq:有限差分：空间格式：一般线性：p 阶导数}
 \end{equation}
 
 \end_inset
@@ -929,23 +929,23 @@ noprefix "false"
 
 \begin_layout Enumerate
 以 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $x_{j}$
 \end_inset
 
  为中心，对 
-\begin_inset Formula $\left\{ u_{i+s}\right\} _{s\in S_{i}}$
+\begin_inset Formula $\left\{ u_{j+s}\right\} _{s\in S_{j}}$
 \end_inset
 
  作 Taylor 展开：
 \begin_inset Formula 
 \[
-u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}\frac{(x_{i+s}-x_{i})^{r}}{r!}\equiv\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}\frac{(sh)^{r}}{r!}
+u_{j+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}\frac{(x_{j+s}-x_{j})^{r}}{r!}\equiv\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}\frac{(sh)^{r}}{r!}
 \]
 
 \end_inset
 
 这样的展开式有 
-\begin_inset Formula $\vert S_{i}\vert$
+\begin_inset Formula $\vert S_{j}\vert$
 \end_inset
 
  个，将它们代入式 
@@ -958,7 +958,7 @@ reference "eq:有限差分：空间格式：一般线性：p 阶导数"
  式即得
 \begin_inset Formula 
 \[
-\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{i}\approx\sum_{s\in S_{i}}a_{i+s}^{(p)}\underbrace{\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}\frac{(sh)^{r}}{r!}}_{u_{i+s}}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}\frac{h^{r}}{r!}\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}
+\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{j}\approx\sum_{s\in S_{j}}a_{j+s}^{(p)}\underbrace{\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}\frac{(sh)^{r}}{r!}}_{u_{j+s}}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}\frac{h^{r}}{r!}\sum_{s\in S_{j}}s^{r}a_{j+s}^{(p)}
 \]
 
 \end_inset
@@ -968,23 +968,23 @@ reference "eq:有限差分：空间格式：一般线性：p 阶导数"
 
 \begin_layout Enumerate
 比较 
-\begin_inset Formula $\left(\pdv*[r]{u}{x}\right)_{i}$
+\begin_inset Formula $\left(\pdv*[r]{u}{x}\right)_{j}$
 \end_inset
 
  的系数，可得关于 
-\begin_inset Formula $\left\{ a_{i+s}^{(p)}\right\} _{s\in S_{i}}$
+\begin_inset Formula $\left\{ a_{j+s}^{(p)}\right\} _{s\in S_{j}}$
 \end_inset
 
  的线性方程组
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}s^{r}a_{i+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r},\quad r=0,1,\dots,\vert S_{i}\vert-1\label{eq:有限差分：空间格式：Taylor}
+\sum_{s\in S_{j}}s^{r}a_{j+s}^{(p)}=\frac{r!}{h^{r}}\delta_{p}^{r},\quad r=0,1,\dots,\vert S_{j}\vert-1\label{eq:有限差分：空间格式：Taylor}
 \end{equation}
 
 \end_inset
 
 这样的方程组对任意 
-\begin_inset Formula $p\in\left\{ 0,1,\dots,\vert S_{i}\vert-1\right\} $
+\begin_inset Formula $p\in\left\{ 0,1,\dots,\vert S_{j}\vert-1\right\} $
 \end_inset
 
  有相同的系数矩阵，并且有唯一的非零解。
@@ -1053,11 +1053,11 @@ noprefix "false"
 
 \begin_layout Example
 取基架 
-\begin_inset Formula $I_{i}=\left\{ i-1,i,i+1\right\} $
+\begin_inset Formula $I_{j}=\left\{ j-1,j,j+1\right\} $
 \end_inset
 
  即 
-\begin_inset Formula $S_{i}=\left\{ -1,0,1\right\} $
+\begin_inset Formula $S_{j}=\left\{ -1,0,1\right\} $
 \end_inset
 
 。方程 
@@ -1076,9 +1076,9 @@ noprefix "false"
 \begin{bmatrix}(-1)^{0} & 0^{0} & 1^{0}\\
 (-1)^{1} & 0^{1} & 1^{1}\\
 (-1)^{2} & 0^{2} & 1^{2}
-\end{bmatrix}\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
-a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
-a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\end{bmatrix}\begin{bmatrix}a_{j-1}^{(0)} & a_{j-1}^{(1)} & a_{j-1}^{(2)}\\
+a_{j+0}^{(0)} & a_{j+0}^{(1)} & a_{j+0}^{(2)}\\
+a_{j+1}^{(0)} & a_{j+1}^{(1)} & a_{j+1}^{(2)}
 \end{bmatrix}=\begin{bmatrix}0!/h^{0}\\
  & 1!/h^{1}\\
  &  & 2!/h^{2}
@@ -1090,9 +1090,9 @@ a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
 解之得
 \begin_inset Formula 
 \[
-\begin{bmatrix}a_{i-1}^{(0)} & a_{i-1}^{(1)} & a_{i-1}^{(2)}\\
-a_{i+0}^{(0)} & a_{i+0}^{(1)} & a_{i+0}^{(2)}\\
-a_{i+1}^{(0)} & a_{i+1}^{(1)} & a_{i+1}^{(2)}
+\begin{bmatrix}a_{j-1}^{(0)} & a_{j-1}^{(1)} & a_{j-1}^{(2)}\\
+a_{j+0}^{(0)} & a_{j+0}^{(1)} & a_{j+0}^{(2)}\\
+a_{j+1}^{(0)} & a_{j+1}^{(1)} & a_{j+1}^{(2)}
 \end{bmatrix}=\begin{bmatrix}0 & -1/2h & 1/h^{2}\\
 1 & 0/2h & -2/h^{2}\\
 0 & 1/2h & 1/h^{2}
@@ -1114,7 +1114,7 @@ noprefix "false"
  即得
 \begin_inset Formula 
 \[
-\left.\frac{\partial u}{\partial x}\right|_{i}\approx\frac{u_{i+1}-u_{i-1}}{2h},\quad\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\approx\frac{u_{i}-2u_{i+1}+u_{i+2}}{h^{2}}.
+\left.\frac{\partial u}{\partial x}\right|_{j}\approx\frac{u_{j+1}-u_{j-1}}{2h},\quad\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{j}\approx\frac{u_{j}-2u_{j+1}+u_{j+2}}{h^{2}}.
 \]
 
 \end_inset
@@ -1135,7 +1135,7 @@ noprefix "false"
 
 \begin_layout Standard
 这种方法适用于非等距网格 
-\begin_inset Formula $\left\{ x_{i}\right\} _{i\in I}$
+\begin_inset Formula $\left\{ x_{j}\right\} _{j\in\mathbb{N}}$
 \end_inset
 
 ：
@@ -1149,19 +1149,19 @@ noprefix "false"
 作 Lagrange 插值：
 \begin_inset Formula 
 \[
-u(x,t)\approx u^{h}(x,t)=\sum_{s\in S_{i}}u_{i+s}(t)\,L_{i+s}(x),\quad L_{i+s}(x)=\prod_{r\in S_{i}\setminus\left\{ s\right\} }\frac{x-x_{i+s}}{x_{i+r}-x_{i+s}},\quad s\in S_{i}
+u(x,t)\approx u^{h}(x,t)=\sum_{s\in S_{j}}u_{j+s}(t)\,L_{j+s}(x),\quad L_{j+s}(x)=\prod_{r\in S_{j}\setminus\left\{ s\right\} }\frac{x-x_{j+s}}{x_{j+r}-x_{j+s}},\quad s\in S_{j}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\left\{ L_{i+s}\right\} _{s\in S_{i}}$
+\begin_inset Formula $\left\{ L_{j+s}\right\} _{s\in S_{j}}$
 \end_inset
 
  为具有以下性质的 Lagrange 多项式：
 \begin_inset Formula 
 \[
-\sum_{s\in S_{i}}L_{i+s}(x)\equiv1,\quad\forall x;\quad L_{i+r}(x_{i+s})=\delta_{rs},\quad(\forall r,\forall s)\in S_{i}
+\sum_{s\in S_{j}}L_{j+s}(x)\equiv1,\quad\forall x;\quad L_{j+r}(x_{j+s})=\delta_{rs},\quad(\forall r,\forall s)\in S_{j}
 \]
 
 \end_inset
@@ -1175,13 +1175,13 @@ u(x,t)\approx u^{h}(x,t)=\sum_{s\in S_{i}}u_{i+s}(t)\,L_{i+s}(x),\quad L_{i+s}(x
 \end_inset
 
  的空间偏导数可以由 
-\begin_inset Formula $\left\{ L_{i+s}\right\} _{s\in S_{i}}$
+\begin_inset Formula $\left\{ L_{j+s}\right\} _{s\in S_{j}}$
 \end_inset
 
  的导数获得：
 \begin_inset Formula 
 \[
-\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{i}\approx\sum_{s\in S_{i}}\left.\frac{\dd^{p}L_{i+s}}{\dd x^{p}}\right|_{i}u_{i+s}(t),\quad p=0,1,\dots,\vert S_{i}\vert-1
+\left.\frac{\partial^{p}u}{\partial x^{p}}\right|_{j}\approx\sum_{s\in S_{j}}\left.\frac{\dd^{p}L_{j+s}}{\dd x^{p}}\right|_{j}u_{j+s}(t),\quad p=0,1,\dots,\vert S_{j}\vert-1
 \]
 
 \end_inset
@@ -1206,7 +1206,7 @@ Taylor 展开
 
 \begin_layout Standard
 不失一般性，在等距网格 
-\begin_inset Formula $\left\{ x_{i}\equiv x_{0}+ih\right\} _{i\in I}$
+\begin_inset Formula $\left\{ x_{j}\equiv x_{0}+jh\right\} _{j\in\mathbb{N}}$
 \end_inset
 
  上，考虑线性格式
@@ -1238,7 +1238,7 @@ status collapsed
 ：
 \begin_inset Formula 
 \begin{equation}
-\left.\frac{\partial u}{\partial x}\right|_{i}\approx\sum_{s\in S_{i}}\frac{b_{i+s}\,u_{i+s}}{h}\label{eq:有限差分：空间格式：一般线性}
+\left.\frac{\partial u}{\partial x}\right|_{j}\approx\sum_{s\in S_{j}}\frac{b_{j+s}\,u_{j+s}}{h}\label{eq:有限差分：空间格式：一般线性}
 \end{equation}
 
 \end_inset
@@ -1246,7 +1246,7 @@ status collapsed
 将 Taylor 展开式
 \begin_inset Formula 
 \[
-u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}\frac{(sh)^{r}}{r!},\quad s\in S_{i}
+u_{j+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}\frac{(sh)^{r}}{r!},\quad s\in S_{j}
 \]
 
 \end_inset
@@ -1258,7 +1258,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
  的各次同类项，原则上可以得到
 \begin_inset Formula 
 \[
-\sum_{s\in S_{i}}\frac{b_{i+s}\,u_{i+s}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i}=\underbrace{\sum_{r=p}^{\infty}a_{r}\,h^{r}}_{\varepsilon_{\mathrm{T}}}
+\sum_{s\in S_{j}}\frac{b_{j+s}\,u_{j+s}}{h}-\left.\frac{\partial u}{\partial x}\right|_{j}=\underbrace{\sum_{r=p}^{\infty}a_{r}\,h^{r}}_{\varepsilon_{\mathrm{T}}}
 \]
 
 \end_inset
@@ -1288,7 +1288,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
 
 \begin_layout Standard
 在 
-\begin_inset Formula $x_{i}$
+\begin_inset Formula $x_{j}$
 \end_inset
 
  处，将 PDE 中的 
@@ -1296,7 +1296,7 @@ u_{i+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{i}
 \end_inset
 
  项用某种空间离散格式代替，并将截断误差移到等式另一端，再省略下标 
-\begin_inset Formula $i$
+\begin_inset Formula $j$
 \end_inset
 
 ，即得该格式的
@@ -1575,7 +1575,7 @@ literal "true"
 考虑向后差分格式
 \begin_inset Formula 
 \begin{equation}
-\left.\frac{\partial u}{\partial x}\right|_{i}\approx\frac{u_{i}-u_{i-1}}{h}\label{eq:有限差分：空间格式：一阶向后}
+\left.\frac{\partial u}{\partial x}\right|_{j}\approx\frac{u_{j}-u_{j-1}}{h}\label{eq:有限差分：空间格式：一阶向后}
 \end{equation}
 
 \end_inset
@@ -1583,8 +1583,8 @@ literal "true"
 由 Taylor 展开式
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i-1} & =u_{i}+\left.\frac{\partial u}{\partial x}\right|_{i}(-h)+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{(-h)^{2r}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{(-h)^{2r+1}}{(2r+1)!}\\
- & =u_{i}-\left.\frac{\partial u}{\partial x}\right|_{i}h+\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h^{2}}{2}-\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{3}}{6}+\order{h^{4}}
+\begin{aligned}u_{j-1} & =u_{j}+\left.\frac{\partial u}{\partial x}\right|_{j}(-h)+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{j}\frac{(-h)^{2r}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{j}\frac{(-h)^{2r+1}}{(2r+1)!}\\
+ & =u_{j}-\left.\frac{\partial u}{\partial x}\right|_{j}h+\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{j}\frac{h^{2}}{2}-\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{j}\frac{h^{3}}{6}+\order{h^{4}}
 \end{aligned}
 \]
 
@@ -1593,8 +1593,8 @@ literal "true"
 可得其截断误差为
 \begin_inset Formula 
 \[
-\begin{aligned}\frac{u_{i}-u_{i-1}}{h}-\left.\frac{\partial u}{\partial x}\right|_{i} & =-\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{i}\frac{h^{2r-1}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{i}\frac{h^{2r}}{(2r+1)!}\\
- & =-\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{i}\frac{h}{2}+\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{i}\frac{h^{2}}{6}+\order{h^{3}}
+\begin{aligned}\frac{u_{j}-u_{j-1}}{h}-\left.\frac{\partial u}{\partial x}\right|_{j} & =-\sum_{r=1}^{\infty}\left.\frac{\partial^{2r}u}{\partial x^{2r}}\right|_{j}\frac{h^{2r-1}}{(2r)!}+\sum_{r=1}^{\infty}\left.\frac{\partial^{2r+1}u}{\partial x^{2r+1}}\right|_{j}\frac{h^{2r}}{(2r+1)!}\\
+ & =-\left.\frac{\partial^{2}u}{\partial x^{2}}\right|_{j}\frac{h}{2}+\left.\frac{\partial^{3}u}{\partial x^{3}}\right|_{j}\frac{h^{2}}{6}+\order{h^{3}}
 \end{aligned}
 \]
 
@@ -1744,7 +1744,7 @@ reference "eq:有限差分：空间格式：一阶向后"
 不失一般性，考虑如下等距网格
 \begin_inset Formula 
 \[
-x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
+h\coloneqq\frac{2l}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
 \]
 
 \end_inset
@@ -1759,13 +1759,13 @@ reference "prob:有限差分：周期平流"
  中的周期条件退化为
 \begin_inset Formula 
 \[
-u_{r}(t)=u_{r\bmod n}(t),\quad\forall r\in\mathbb{Z},\quad\forall t\in\mathbb{R},
+u_{j}(t)=u_{j\bmod n}(t),\quad\forall j\in\mathbb{N},\quad\forall t\in\mathbb{R},
 \]
 
 \end_inset
 
 因此离散系统 
-\begin_inset Formula $\left\{ u_{r}(t)\right\} _{r=0}^{n}$
+\begin_inset Formula $\left\{ u_{j}(t)\right\} _{j=0}^{n}$
 \end_inset
 
  实际上只有 
@@ -1773,7 +1773,7 @@ u_{r}(t)=u_{r\bmod n}(t),\quad\forall r\in\mathbb{Z},\quad\forall t\in\mathbb{R}
 \end_inset
 
  个自由度，即 
-\begin_inset Formula $u_{1}\equiv u_{n}$
+\begin_inset Formula $u_{0}\equiv u_{n}$
 \end_inset
 
 ，可舍去头尾之一。这样的系统在任意时刻都有
@@ -1783,7 +1783,7 @@ u_{r}(t)=u_{r\bmod n}(t),\quad\forall r\in\mathbb{Z},\quad\forall t\in\mathbb{R}
 ：
 \begin_inset Formula 
 \begin{equation}
-w\coloneqq\exp(\ii\frac{2\mathrm{\pi}}{n}),\quad\left\{ \hat{u}_{k}(t)\coloneqq\sum_{r=0}^{n-1}u_{r}(t)\,w^{-rk}\right\} _{k=0}^{n-1}\implies\left\{ u_{r}(t)=\frac{1}{n}\sum_{k=0}^{n-1}\hat{u}_{k}(t)\,w^{rk}\right\} _{i=0}^{n-1}.\label{eq:有限差分·DFT}
+w\coloneqq\exp(\ii\frac{2\mathrm{\pi}}{n}),\quad\left\{ \hat{u}_{k}(t)\coloneqq\sum_{j=0}^{n-1}u_{j}(t)\,w^{-jk}\right\} _{k=0}^{n-1}\implies\left\{ u_{j}(t)=\frac{1}{n}\sum_{k=0}^{n-1}\hat{u}_{k}(t)\,w^{jk}\right\} _{j=0}^{n-1}.\label{eq:有限差分·DFT}
 \end{equation}
 
 \end_inset
@@ -1812,7 +1812,7 @@ literal "true"
  项：
 \begin_inset Formula 
 \[
-\left\{ \hat{u}_{k}(t)=\sum_{r=0}^{n-1}u_{r}(t)\,w^{-rk}\right\} _{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil },\quad\left\{ u_{r}(t)=\frac{1}{n}\sum_{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil }\hat{u}_{k}(t)\,w^{rk}\right\} _{r=0}^{n-1}.
+\left\{ \hat{u}_{k}(t)=\sum_{j=0}^{n-1}u_{j}(t)\,w^{-jk}\right\} _{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil },\quad\left\{ u_{j}(t)=\frac{1}{n}\sum_{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil }\hat{u}_{k}(t)\,w^{jk}\right\} _{j=0}^{n-1}.
 \]
 
 \end_inset
@@ -1865,7 +1865,7 @@ literal "true"
 
 \begin_layout Standard
 考虑到 
-\begin_inset Formula $\left\{ x_{i}\right\} _{i=0}^{n}$
+\begin_inset Formula $\left\{ x_{j}\right\} _{j=0}^{n}$
 \end_inset
 
  取自于 
@@ -1891,7 +1891,7 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 从而有
 \begin_inset Formula 
 \[
-\left\{ \hat{u}_{\kappa}(t)\coloneqq\hat{u}_{k}(t)=\sum_{r=0}^{n-1}u_{r}(t)\,\omega^{-r\kappa}\right\} _{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil },\quad\left\{ u_{r}(t)=\frac{1}{n}\sum_{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil }\hat{u}_{\kappa}(t)\,\omega^{r\kappa}\right\} _{r=0}^{n-1}
+\left\{ \hat{u}_{\kappa}(t)\coloneqq\hat{u}_{k}(t)=\sum_{j=0}^{n-1}u_{j}(t)\,\omega^{-j\kappa}\right\} _{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil },\quad\left\{ u_{j}(t)=\frac{1}{n}\sum_{k=-\left\lfloor \frac{n-1}{2}\right\rfloor }^{\left\lceil \frac{n-1}{2}\right\rceil }\hat{u}_{\kappa}(t)\,\omega^{j\kappa}\right\} _{j=0}^{n-1}
 \]
 
 \end_inset
@@ -1970,7 +1970,7 @@ u(x,t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x)
 其离散形式为
 \begin_inset Formula 
 \[
-u_{r+s}(t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{r+s})=\underbrace{\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{r})}_{u_{r}(t)}\exp(\ii\kappa sh)
+u_{j+s}(t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{j+s})=\underbrace{\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{j})}_{u_{j}(t)}\exp(\ii\kappa sh)
 \]
 
 \end_inset
@@ -1978,7 +1978,7 @@ u_{r+s}(t)=\hat{u}_{\kappa}(t)\exp(\ii\kappa x_{r+s})=\underbrace{\hat{u}_{\kapp
 其空间导数的精确值为
 \begin_inset Formula 
 \[
-\left.\frac{\partial u}{\partial x}\right|_{r}=\ii\kappa u_{r}\impliedby\frac{\partial u}{\partial x}=\ii\kappa u,
+\left.\frac{\partial u}{\partial x}\right|_{j}=\ii\kappa u_{j}\impliedby\frac{\partial u}{\partial x}=\ii\kappa u,
 \]
 
 \end_inset
@@ -1997,7 +1997,7 @@ reference "eq:有限差分：空间格式：一般线性"
  给出的近似，应当逼近上述结果，即
 \begin_inset Formula 
 \begin{equation}
-\ii\kappa u_{r}=\left.\frac{\partial u}{\partial x}\right|_{r}\approx\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\sum_{s\in S_{r}}\frac{b_{r+s}\,\overbrace{u_{r}\exp(\ii\kappa sh)}^{u_{r+s}}}{h}\eqqcolon\ii\tilde{\kappa}u_{r},\label{eq:有限差分·修正波数}
+\ii\kappa u_{j}=\left.\frac{\partial u}{\partial x}\right|_{j}\approx\left.\frac{\partial u^{h}}{\partial x}\right|_{j}=\sum_{s\in S_{j}}\frac{b_{j+s}\,\overbrace{u_{j}\exp(\ii\kappa sh)}^{u_{j+s}}}{h}\eqqcolon\ii\tilde{\kappa}u_{j},\label{eq:有限差分·修正波数}
 \end{equation}
 
 \end_inset
@@ -2005,7 +2005,7 @@ reference "eq:有限差分：空间格式：一般线性"
 由此得
 \begin_inset Formula 
 \[
-\frac{\tilde{\kappa}h}{\kappa h}=\sum_{s}\frac{b_{r+s}\overbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}^{\exp(\ii\kappa sh)}}{\ii\kappa h}=\boxed{\frac{\sum_{s}b_{r+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{r+s}\cos(s\kappa h)}{\kappa h}}
+\frac{\tilde{\kappa}h}{\kappa h}=\sum_{s}\frac{b_{j+s}\overbrace{\left(\cos(\kappa sh)+\ii\sin(\kappa sh)\right)}^{\exp(\ii\kappa sh)}}{\ii\kappa h}=\boxed{\frac{\sum_{s}b_{j+s}\sin(s\kappa h)}{\kappa h}-\ii\frac{\sum_{s}b_{j+s}\cos(s\kappa h)}{\kappa h}}
 \]
 
 \end_inset
@@ -2063,7 +2063,7 @@ status open
 
 \begin_inset Formula 
 \[
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{u_{r}-u_{r-1}}{h},\quad a>0
+\left.\frac{\partial u}{\partial x}\right|_{j}\approx\frac{u_{j}-u_{j-1}}{h},\quad a>0
 \]
 
 \end_inset
@@ -2071,7 +2071,7 @@ status open
 
 \begin_inset Formula 
 \[
-b_{r+0}=1,\quad b_{r-1}=-1,
+b_{j+0}=1,\quad b_{j-1}=-1,
 \]
 
 \end_inset
@@ -2117,7 +2117,7 @@ status open
 
 \begin_inset Formula 
 \[
-\left.\frac{\partial u}{\partial x}\right|_{r}\approx\frac{3u_{r}-4u_{r-1}+u_{r-2}}{2h},\quad a>0
+\left.\frac{\partial u}{\partial x}\right|_{j}\approx\frac{3u_{j}-4u_{j-1}+u_{j-2}}{2h},\quad a>0
 \]
 
 \end_inset
@@ -2125,7 +2125,7 @@ status open
 
 \begin_inset Formula 
 \[
-b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
+b_{j+0}=\frac{3}{2},\quad b_{j-1}=-2,\quad b_{j-2}=\frac{1}{2},
 \]
 
 \end_inset
@@ -2162,7 +2162,7 @@ b_{r+0}=\frac{3}{2},\quad b_{r-1}=-2,\quad b_{r-2}=\frac{1}{2},
 ，将差分格式的网格结点
 \begin_inset Formula 
 \[
-x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
+h\coloneqq\frac{2l}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
 \]
 
 \end_inset
@@ -2192,7 +2192,7 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 \end_inset
 
  在采样点上的近似值，记为 
-\begin_inset Formula $\underline{v}\coloneqq\left\{ v_{r}\coloneqq\left.\frac{\partial u^{h}}{\partial x}\right|_{r}\right\} _{r=0}^{n-1}$
+\begin_inset Formula $\underline{v}\coloneqq\left\{ v_{j}\coloneqq\left.\frac{\partial u^{h}}{\partial x}\right|_{j}\right\} _{j=0}^{n-1}$
 \end_inset
 
 ；
@@ -2208,7 +2208,7 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 \end_inset
 
  项 DFT 系数 
-\begin_inset Formula $\hat{v}_{k}\coloneqq\sum_{r=0}^{n-1}v_{r}\,w^{-rk}$
+\begin_inset Formula $\hat{v}_{k}\coloneqq\sum_{j=0}^{n-1}v_{j}\,w^{-jk}$
 \end_inset
 
  ，其中 
@@ -2224,7 +2224,7 @@ x_{r}\coloneqq rh,\quad h\coloneqq\frac{2l}{n},\quad r=0,1,\dots,n,
 \end_inset
 
  为横坐标、
-\begin_inset Formula $\tilde{\kappa}h=h\hat{v}_{k}/\ii n$
+\begin_inset Formula $\tilde{\kappa}h=(\hat{v}_{k}h)/(n\ii)$
 \end_inset
 
  为纵坐标，在 
@@ -2251,7 +2251,7 @@ status open
 
 \begin_layout Plain Layout
 
-[纵坐标取法]
+[纵坐标]
 \end_layout
 
 \end_inset
@@ -2267,7 +2267,7 @@ status open
  项：
 \begin_inset Formula 
 \[
-u_{r}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{r})=\exp(\ii\frac{k\mathrm{\pi}}{l}r\frac{2l}{n})=\exp(rk\ii\frac{2\mathrm{\pi}}{n})=w^{rk},
+u_{j}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{j})=\exp(\ii\frac{k\mathrm{\pi}}{l}j\frac{2l}{n})=\exp(jk\ii\frac{2\mathrm{\pi}}{n})=w^{jk},
 \]
 
 \end_inset
@@ -2281,13 +2281,13 @@ u_{r}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{r})=\exp(\ii\frac{k\mathrm{\pi}}{l}r\fra
 \end_inset
 
  的近似，应当有 
-\begin_inset Formula $u_{r}^{h}\approx u_{r}=w^{rk}$
+\begin_inset Formula $u_{j}^{h}\approx u_{j}=w^{jk}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-\frac{\hat{u}_{k}^{h}}{n}=\frac{1}{n}\sum_{r=0}^{n-1}u_{r}^{h}\,w^{-rk}\approx\frac{1}{n}\sum_{r=0}^{n-1}\underbrace{w^{rk}}_{u_{r}}\,w^{-rk}=1,
+\frac{\hat{u}_{k}^{h}}{n}=\frac{1}{n}\sum_{j=0}^{n-1}u_{j}^{h}\,w^{-jk}\approx\frac{1}{n}\sum_{j=0}^{n-1}\underbrace{w^{jk}}_{u_{j}}\,w^{-jk}=1,
 \]
 
 \end_inset
@@ -2299,13 +2299,13 @@ u_{r}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{r})=\exp(\ii\frac{k\mathrm{\pi}}{l}r\fra
  项主导：
 \begin_inset Formula 
 \[
-u_{r}^{h}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{u}_{k'}^{h}\,w^{rk'}\approx\frac{\hat{u}_{k}^{h}}{n}w^{rk}\approx w^{rk}=u_{r}.
+u_{j}^{h}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{u}_{k'}^{h}\,w^{jk'}\approx\frac{\hat{u}_{k}^{h}}{n}w^{jk}\approx w^{jk}=u_{j}.
 \]
 
 \end_inset
 
 线性格式保证各谐波分量独立发展，因此 
-\begin_inset Formula $(\partial u^{h}/\partial x)_{r}$
+\begin_inset Formula $(\partial u^{h}/\partial x)_{j}$
 \end_inset
 
  的离散 Fourier 展开亦应由第 
@@ -2329,7 +2329,7 @@ reference "eq:有限差分·DFT"
  定义：
 \begin_inset Formula 
 \[
-\ii\tilde{\kappa}u_{r}\approx\ii\tilde{\kappa}u_{r}^{h}=\left.\frac{\partial u^{h}}{\partial x}\right|_{r}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{v}_{k'}\,w^{rk'}\approx\frac{\hat{v}_{k}}{n}w^{rk},
+\ii\tilde{\kappa}u_{j}\approx\ii\tilde{\kappa}u_{j}^{h}=\left.\frac{\partial u^{h}}{\partial x}\right|_{j}=\frac{1}{n}\sum_{k'=0}^{n-1}\hat{v}_{k'}\,w^{jk'}\approx\frac{\hat{v}_{k}}{n}w^{jk},
 \]
 
 \end_inset
@@ -2345,7 +2345,7 @@ reference "eq:有限差分·DFT"
  的值，从而有
 \begin_inset Formula 
 \[
-\tilde{\kappa}h=\frac{\ii\tilde{\kappa}}{\ii}h=\frac{\hat{v}_{\kappa}/n}{\ii}h=\frac{h}{\ii}\frac{1}{n}\underbrace{\sum_{r=0}^{n-1}\left.\frac{\partial u^{h}}{\partial x}\right|_{r}w^{-rk}}_{\hat{v}_{k}}.
+\tilde{\kappa}h=\frac{\ii\tilde{\kappa}}{\ii}h=\frac{\hat{v}_{\kappa}}{n}\frac{h}{\ii}.
 \]
 
 \end_inset
@@ -2385,7 +2385,7 @@ literal "true"
 线性差分格式
 \begin_inset Formula 
 \[
-\left.\frac{\partial f}{\partial x}\right|_{i}\approx\left(\frac{\partial f}{\partial x}\right)_{i}^{h}\coloneqq\sum_{s=-r}^{r}\frac{b_{s}\,f_{i+s}}{h}
+\left.\frac{\partial f}{\partial x}\right|_{j}\approx\left(\frac{\partial f}{\partial x}\right)_{j}^{h}\coloneqq\sum_{s=-r}^{r}\frac{b_{s}\,f_{j+s}}{h}
 \]
 
 \end_inset
@@ -2397,7 +2397,7 @@ literal "true"
 ，即
 \begin_inset Formula 
 \[
-\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\left.\frac{\partial f}{\partial x}\right|_{i}+\order{h^{2r}}.
+\left(\frac{\partial f}{\partial x}\right)_{j}^{h}=\left.\frac{\partial f}{\partial x}\right|_{j}+\order{h^{2r}}.
 \]
 
 \end_inset
@@ -2428,7 +2428,7 @@ literal "true"
  的格式可以构造为
 \begin_inset Formula 
 \[
-\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\underbrace{\sum_{s=-r}^{r}\frac{a_{s}\,f_{i+s}}{h}}_{\left(\partial f/\partial x\right)_{i}^{C}}+\alpha\underbrace{\frac{\Delta^{2r-1}f_{i-r}}{h}}_{\left(\partial f/\partial x\right)_{i}^{L}}+\beta\underbrace{\frac{\nabla^{2r-1}f_{i+r}}{h}}_{\left(\partial f/\partial x\right)_{i}^{R}},
+\left(\frac{\partial f}{\partial x}\right)_{j}^{h}=\underbrace{\sum_{s=-r}^{r}\frac{a_{s}\,f_{j+s}}{h}}_{\left(\partial f/\partial x\right)_{j}^{C}}+\alpha\underbrace{\frac{\Delta^{2r-1}f_{j-r}}{h}}_{\left(\partial f/\partial x\right)_{j}^{L}}+\beta\underbrace{\frac{\nabla^{2r-1}f_{j+r}}{h}}_{\left(\partial f/\partial x\right)_{j}^{R}},
 \]
 
 \end_inset
@@ -2444,7 +2444,7 @@ literal "true"
 则
 \begin_inset Formula 
 \[
-\left(\frac{\partial f}{\partial x}\right)_{i}^{C}=\left.\frac{\partial f}{\partial x}\right|_{i}+\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{i}^{L}=\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{i}^{R}=\order{h^{2r-2}}.
+\left(\frac{\partial f}{\partial x}\right)_{j}^{C}=\left.\frac{\partial f}{\partial x}\right|_{j}+\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{j}^{L}=\order{h^{2r-2}},\quad\left(\frac{\partial f}{\partial x}\right)_{j}^{R}=\order{h^{2r-2}}.
 \]
 
 \end_inset
@@ -2480,7 +2480,7 @@ k\coloneqq\kappa h\in[0,\mathrm{\pi}]
 定义修正波数
 \begin_inset Formula 
 \[
-\left(\frac{\partial f}{\partial x}\right)_{i}^{h}=\frac{\ii k'}{h}\exp(\ii\kappa x)
+\left(\frac{\partial f}{\partial x}\right)_{j}^{h}=\frac{\ii k'}{h}\exp(\ii\kappa x)
 \]
 
 \end_inset
@@ -2512,7 +2512,7 @@ k'=\Re(k')+\ii\Im(k')
 
 \begin_inset Formula 
 \[
-\Re(k')=
+\Im(k')=
 \]
 
 \end_inset
@@ -2711,7 +2711,7 @@ reference "sec:有限差分：时空耦合"
 \end_inset
 
  是由 
-\begin_inset Formula $\left\{ u_{i}(t)\right\} _{i\in I},\left\{ r_{i}(\underline{u},t)\right\} _{i\in I}$
+\begin_inset Formula $\left\{ u_{j}(t)\right\} _{j\in\mathbb{N}},\left\{ r_{j}(\underline{u},t)\right\} _{j\in\mathbb{N}}$
 \end_inset
 
  构成的矩阵。
@@ -2790,17 +2790,17 @@ status open
 这是一族时间推进格式，最一般的形式为
 \begin_inset Formula 
 \begin{equation}
-\underline{u}^{n+i/m}=\sum_{k=0}^{i-1}\left(\alpha_{i,k}\,\underline{u}^{n+k/m}+\beta_{i,k}\,\underline{r}^{n+k/m}\,h_{t}\right),\quad i=1,\dots,m\label{eq:m-stage_Runge--Kutta}
+\underline{u}^{n+j/m}=\sum_{k=0}^{j-1}\left(\alpha_{j,k}\,\underline{u}^{n+k/m}+\beta_{j,k}\,\underline{r}^{n+k/m}\,h_{t}\right),\quad j=1,\dots,m\label{eq:m-stage_Runge--Kutta}
 \end{equation}
 
 \end_inset
 
 其中 
-\begin_inset Formula $\sum_{k=0}^{i-1}\alpha_{i,k}=1$
+\begin_inset Formula $\sum_{k=0}^{j-1}\alpha_{j,k}=1$
 \end_inset
 
  对所有 
-\begin_inset Formula $i$
+\begin_inset Formula $j$
 \end_inset
 
  都成立。在 CFD 中推荐选用以下版本：
@@ -3094,13 +3094,13 @@ reference "eq:m-stage_Runge--Kutta"
 \end_inset
 
  中的所有 
-\begin_inset Formula $\alpha_{i,k},\beta_{i,k}$
+\begin_inset Formula $\alpha_{j,k},\beta_{j,k}$
 \end_inset
 
  都非负，且满足
 \begin_inset Formula 
 \[
-h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k}},
+h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{j,k}\frac{\alpha_{j,k}}{\beta_{j,k}},
 \]
 
 \end_inset
@@ -3117,14 +3117,14 @@ h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k
 
 \begin_layout Proof
 满足上述条件时，每个中间步的 
-\begin_inset Formula $\underline{u}^{n+i/m}$
+\begin_inset Formula $\underline{u}^{n+j/m}$
 \end_inset
 
  都可以分解为若干显式 Euler 推进的凸组合：
 \begin_inset Formula 
 \[
-\begin{aligned}\left\Vert \underline{u}^{n+i/m}\right\Vert  & =\left\Vert \sum_{k=0}^{i-1}\alpha_{i,k}\left(\underline{u}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}\,h_{t}\,\underline{r}^{n+k/m}\right)\right\Vert \\
- & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert 
+\begin{aligned}\left\Vert \underline{u}^{n+j/m}\right\Vert  & =\left\Vert \sum_{k=0}^{j-1}\alpha_{j,k}\left(\underline{u}^{n+k/m}+\frac{\beta_{j,k}}{\alpha_{j,k}}\,h_{t}\,\underline{r}^{n+k/m}\right)\right\Vert \\
+ & \le\sum_{k=0}^{j-1}\alpha_{j,k}\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{j,k}}{\alpha_{j,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert 
 \end{aligned}
 \]
 
@@ -3133,7 +3133,7 @@ h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k
 其中
 \begin_inset Formula 
 \[
-\frac{\beta_{i,k}}{\alpha_{i,k}}\,h_{t}\le\frac{\beta_{i,k}}{\alpha_{i,k}}C\,h_{t}^{\text{F.E.}}\le\frac{\beta_{i,k}}{\alpha_{i,k}}\frac{\alpha_{i,k}}{\beta_{i,k}}\,h_{t}^{\text{F.E.}}=h_{t}^{\text{F.E.}},\quad\forall(i,k),
+\frac{\beta_{j,k}}{\alpha_{j,k}}\,h_{t}\le\frac{\beta_{j,k}}{\alpha_{j,k}}C\,h_{t}^{\text{F.E.}}\le\frac{\beta_{j,k}}{\alpha_{j,k}}\frac{\alpha_{j,k}}{\beta_{j,k}}\,h_{t}^{\text{F.E.}}=h_{t}^{\text{F.E.}},\quad\forall(j,k),
 \]
 
 \end_inset
@@ -3141,7 +3141,7 @@ h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k
 满足显式 Euler 强稳定性条件，因此有
 \begin_inset Formula 
 \[
-\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert \le\left\Vert \underline{u}^{n+k/m}\right\Vert ,\quad\forall k=0,1,\dots,i-1.
+\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{j,k}}{\alpha_{j,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert \le\left\Vert \underline{u}^{n+k/m}\right\Vert ,\quad\forall k=0,1,\dots,j-1.
 \]
 
 \end_inset
@@ -3149,8 +3149,8 @@ h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k
 从而有
 \begin_inset Formula 
 \[
-\begin{aligned}\left\Vert \underline{u}^{n+i/m}\right\Vert  & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{i,k}}{\alpha_{i,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert \\
- & \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{u}^{n+k/m}\right\Vert .
+\begin{aligned}\left\Vert \underline{u}^{n+j/m}\right\Vert  & \le\sum_{k=0}^{j-1}\alpha_{j,k}\left\Vert \underline{u}^{n+k/m}+\frac{\beta_{j,k}}{\alpha_{j,k}}\,h_{t}\,\underline{r}^{n+k/m}\right\Vert \\
+ & \le\sum_{k=0}^{j-1}\alpha_{j,k}\left\Vert \underline{u}^{n+k/m}\right\Vert .
 \end{aligned}
 \]
 
@@ -3167,7 +3167,7 @@ h_{t}\le C\,h_{t}^{\text{F.E.}},\quad C=\min_{i,k}\frac{\alpha_{i,k}}{\beta_{i,k
 从而可以递归地证明
 \begin_inset Formula 
 \[
-\left\Vert \underline{u}^{n+i/m}\right\Vert \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{u}^{n+k/m}\right\Vert \le\sum_{k=0}^{i-1}\alpha_{i,k}\left\Vert \underline{u}^{n}\right\Vert =\left\Vert \underline{u}^{n}\right\Vert .
+\left\Vert \underline{u}^{n+j/m}\right\Vert \le\sum_{k=0}^{j-1}\alpha_{j,k}\left\Vert \underline{u}^{n+k/m}\right\Vert \le\sum_{k=0}^{j-1}\alpha_{j,k}\left\Vert \underline{u}^{n}\right\Vert =\left\Vert \underline{u}^{n}\right\Vert .
 \]
 
 \end_inset
@@ -3230,7 +3230,7 @@ reference "eq:m-stage_Runge--Kutta"
 \end_inset
 
  的形式后，并非所有 
-\begin_inset Formula $\alpha_{i,k},\beta_{i,k}$
+\begin_inset Formula $\alpha_{j,k},\beta_{j,k}$
 \end_inset
 
  都非负，因此不是 SSP 格式。
@@ -3262,14 +3262,14 @@ name "sec:有限差分：时空耦合"
 不失一般性，本节在对称模板
 \begin_inset Formula 
 \[
-I_{i}=\begin{Bmatrix}i-k\\
-i-k+1\\
+I_{j}=\begin{Bmatrix}j-k\\
+j-k+1\\
 \vdots\\
-i\\
+j\\
 \vdots\\
-i+k-1\\
-i+k
-\end{Bmatrix}\equiv i+S_{i}=i+\begin{Bmatrix}-k\\
+j+k-1\\
+j+k
+\end{Bmatrix}\equiv j+S_{j}=j+\begin{Bmatrix}-k\\
 -k+1\\
 \vdots\\
 0\\
@@ -3284,7 +3284,7 @@ i+k
 上考虑形如
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}+\frac{f_{i+1/2}^{n}-f_{i-1/2}^{n}}{h_{x}}=0
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}+\frac{f_{j+1/2}^{n}-f_{j-1/2}^{n}}{h_{x}}=0
 \]
 
 \end_inset
@@ -3292,9 +3292,9 @@ i+k
 即
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}u_{i}^{n+1} & =u_{i}^{n}-\frac{h_{t}}{h_{x}}\underbrace{f_{1/2}\qty(\cancel{u_{i-k}^{n}},u_{i-k+1}^{n},\dots,u_{i+k-1}^{n},u_{i+k}^{n})}_{f_{i+1/2}^{n}}\\
- & \phantom{=u_{i}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{f_{1/2}\qty(u_{i-k}^{n},u_{i-k+1}^{n},\dots,u_{i+k-1}^{n},\cancel{u_{i+k}^{n}})}_{f_{i-1/2}^{n}}\\
- & =H\qty(u_{i-k}^{n},\dots,u_{i+k}^{n})\equiv H_{i}^{n}
+\begin{aligned}u_{j}^{n+1} & =u_{j}^{n}-\frac{h_{t}}{h_{x}}\underbrace{f_{1/2}\qty(\cancel{u_{j-k}^{n}},u_{j-k+1}^{n},\dots,u_{j+k-1}^{n},u_{j+k}^{n})}_{f_{j+1/2}^{n}}\\
+ & \phantom{=u_{j}^{n}.}+\frac{h_{t}}{h_{x}}\underbrace{f_{1/2}\qty(u_{j-k}^{n},u_{j-k+1}^{n},\dots,u_{j+k-1}^{n},\cancel{u_{j+k}^{n}})}_{f_{j-1/2}^{n}}\\
+ & =H\qty(u_{j-k}^{n},\dots,u_{j+k}^{n})\equiv H_{j}^{n}
 \end{aligned}
 \label{eq:有限差分：时空耦合：单步显式}
 \end{equation}
@@ -3480,7 +3480,7 @@ Godunov 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}+a\frac{u_{i}^{n}-u_{i-1}^{n}}{h_{x}}=0,\quad a>0
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}+a\frac{u_{j}^{n}-u_{j-1}^{n}}{h_{x}}=0,\quad a>0
 \]
 
 \end_inset
@@ -3488,8 +3488,8 @@ Godunov 格式
 通常将其改写为显式推进及守恒形式：
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =(1-\sigma)u_{i}^{n}+\sigma u_{i-1}^{n}\\
- & =u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right),\quad f_{i+1/2}^{n}\coloneqq f_{i}^{n}
+\begin{aligned}u_{j}^{n+1} & =(1-\sigma)u_{j}^{n}+\sigma u_{j-1}^{n}\\
+ & =u_{j}^{n}+\frac{h_{t}}{h_{x}}\left(f_{j-1/2}^{n}-f_{j+1/2}^{n}\right),\quad f_{j+1/2}^{n}\coloneqq f_{j}^{n}
 \end{aligned}
 \]
 
@@ -3505,21 +3505,21 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-f_{i+1/2}^{n}\equiv f_{1/2}^{\text{G}}\qty(u_{i}^{n},u_{i+1}^{n})=f\qty(\tilde{u}_{i+1/2}^{n}(0))
+f_{j+1/2}^{n}\equiv f_{1/2}^{\text{G}}\qty(u_{j}^{n},u_{j+1}^{n})=f\qty(\tilde{u}_{j+1/2}^{n}(0))
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\tilde{u}_{i+1/2}^{n}(0)$
+\begin_inset Formula $\tilde{u}_{j+1/2}^{n}(0)$
 \end_inset
 
  表示局部 Riemann 问题
 \begin_inset Formula 
 \[
 \frac{\partial u}{\partial t}+\frac{\partial f(u)}{\partial x}=0,\quad u(x,t=0)=\begin{cases}
-u_{i}^{n} & x<0\\
-u_{i+1}^{n} & x>0
+u_{j}^{n} & x<0\\
+u_{j+1}^{n} & x>0
 \end{cases}
 \]
 
@@ -3540,7 +3540,7 @@ u_{i+1}^{n} & x>0
  恰好为间断面特殊情形纳入其中：
 \begin_inset Formula 
 \[
-\tilde{u}_{i+1/2}^{n}(-0)\ne\tilde{u}_{i+1/2}^{n}(+0)\implies f\qty(\tilde{u}_{i+1/2}^{n}(-0))=f\qty(\tilde{u}_{i+1/2}^{n}(+0))
+\tilde{u}_{j+1/2}^{n}(-0)\ne\tilde{u}_{j+1/2}^{n}(+0)\implies f\qty(\tilde{u}_{j+1/2}^{n}(-0))=f\qty(\tilde{u}_{j+1/2}^{n}(+0))
 \]
 
 \end_inset
@@ -3597,11 +3597,11 @@ reference "eq:有限差分：时空耦合：线性平流"
 \end_inset
 
 ，再用 
-\begin_inset Formula $\qty(u_{i-1}^{n}+u_{i+1}^{n})/2$
+\begin_inset Formula $\qty(u_{j-1}^{n}+u_{j+1}^{n})/2$
 \end_inset
 
  替换 
-\begin_inset Formula $u_{i}^{n}$
+\begin_inset Formula $u_{j}^{n}$
 \end_inset
 
 ，即得 
@@ -3614,7 +3614,7 @@ Lax–Friedrichs 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-\qty(u_{i-1}^{n}+u_{i+1}^{n})/2}{h_{t}}+\frac{f_{i+1}^{n}-f_{i-1}^{n}}{2h_{x}}=0
+\frac{u_{j}^{n+1}-\qty(u_{j-1}^{n}+u_{j+1}^{n})/2}{h_{t}}+\frac{f_{j+1}^{n}-f_{j-1}^{n}}{2h_{x}}=0
 \]
 
 \end_inset
@@ -3625,8 +3625,8 @@ Lax–Friedrichs 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =\frac{1+\sigma}{2}u_{i-1}^{n}+\frac{1-\sigma}{2}u_{i+1}^{n}\\
- & =u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right),\quad f_{i+1/2}^{n}\coloneqq\frac{\sigma+1}{2\sigma}f_{i}^{n}+\frac{\sigma-1}{2\sigma}f_{i+1}^{n}
+\begin{aligned}u_{j}^{n+1} & =\frac{1+\sigma}{2}u_{j-1}^{n}+\frac{1-\sigma}{2}u_{j+1}^{n}\\
+ & =u_{j}^{n}+\frac{h_{t}}{h_{x}}\left(f_{j-1/2}^{n}-f_{j+1/2}^{n}\right),\quad f_{j+1/2}^{n}\coloneqq\frac{\sigma+1}{2\sigma}f_{j}^{n}+\frac{\sigma-1}{2\sigma}f_{j+1}^{n}
 \end{aligned}
 \]
 
@@ -3642,7 +3642,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-f_{i+1/2}^{n}\equiv f_{1/2}^{\text{LF}}\qty(u_{i}^{n},u_{i+1}^{n})\coloneqq\frac{f_{i}^{n}+f_{i+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{u_{i}^{n}-u_{i+1}^{n}}{2}
+f_{j+1/2}^{n}\equiv f_{1/2}^{\text{LF}}\qty(u_{j}^{n},u_{j+1}^{n})\coloneqq\frac{f_{j}^{n}+f_{j+1}^{n}}{2}+\frac{h_{x}}{h_{t}}\frac{u_{j}^{n}-u_{j+1}^{n}}{2}
 \]
 
 \end_inset
@@ -3716,7 +3716,7 @@ Lax–Wendroff 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}+a\frac{u_{i+1}^{n}-u_{i-1}^{n}}{2h_{x}}=\frac{a^{2}\,h_{t}}{2}\frac{u_{i+1}^{n}-2u_{i}^{n}+u_{i-1}^{n}}{h_{x}^{2}}
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}+a\frac{u_{j+1}^{n}-u_{j-1}^{n}}{2h_{x}}=\frac{a^{2}\,h_{t}}{2}\frac{u_{j+1}^{n}-2u_{j}^{n}+u_{j-1}^{n}}{h_{x}^{2}}
 \]
 
 \end_inset
@@ -3727,8 +3727,8 @@ Lax–Wendroff 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =\frac{\sigma^{2}+\sigma}{2}u_{i-1}^{n}+(1-\sigma^{2})u_{i}^{n}+\frac{\sigma^{2}-\sigma}{2}u_{i+1}^{n}\\
- & =u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right),\quad f_{i+1/2}^{n}\coloneqq\dfrac{1+\sigma}{2}f_{i}^{n}+\dfrac{1-\sigma}{2}f_{i+1}^{n}
+\begin{aligned}u_{j}^{n+1} & =\frac{\sigma^{2}+\sigma}{2}u_{j-1}^{n}+(1-\sigma^{2})u_{j}^{n}+\frac{\sigma^{2}-\sigma}{2}u_{j+1}^{n}\\
+ & =u_{j}^{n}+\frac{h_{t}}{h_{x}}\left(f_{j-1/2}^{n}-f_{j+1/2}^{n}\right),\quad f_{j+1/2}^{n}\coloneqq\dfrac{1+\sigma}{2}f_{j}^{n}+\dfrac{1-\sigma}{2}f_{j+1}^{n}
 \end{aligned}
 \]
 
@@ -3744,7 +3744,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-f_{i+1/2}^{n}\equiv f_{1/2}^{\text{LW}}\qty(u_{i}^{n},u_{i+1}^{n})\coloneqq f\qty(\dfrac{u_{i}^{n}+u_{i+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{f_{i}^{n}-f_{i+1}^{n}}{2})
+f_{j+1/2}^{n}\equiv f_{1/2}^{\text{LW}}\qty(u_{j}^{n},u_{j+1}^{n})\coloneqq f\qty(\dfrac{u_{j}^{n}+u_{j+1}^{n}}{2}+\dfrac{h_{t}}{h_{x}}\dfrac{f_{j}^{n}-f_{j+1}^{n}}{2})
 \]
 
 \end_inset
@@ -3815,7 +3815,7 @@ Warming–Beam 格式
 ：
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}+a\frac{u_{i-2}^{n}-4u_{i-1}^{n}+3u_{i}^{n}}{2h_{x}}=\frac{a^{2}\,h_{t}}{2}\frac{u_{i-2}^{n}-2u_{i-1}^{n}+u_{i}^{n}}{h_{x}^{2}},\quad a>0
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}+a\frac{u_{j-2}^{n}-4u_{j-1}^{n}+3u_{j}^{n}}{2h_{x}}=\frac{a^{2}\,h_{t}}{2}\frac{u_{j-2}^{n}-2u_{j-1}^{n}+u_{j}^{n}}{h_{x}^{2}},\quad a>0
 \]
 
 \end_inset
@@ -3826,8 +3826,8 @@ Warming–Beam 格式
 \begin_layout Algorithm
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =\frac{\sigma^{2}-\sigma}{2}u_{i-2}^{n}+(2\sigma-\sigma^{2})u_{i-1}^{n}+\frac{\sigma^{2}-3\sigma+2}{2}u_{i}^{n}\\
- & =u_{i}^{n}+\frac{h_{t}}{h_{x}}\left(f_{i-1/2}^{n}-f_{i+1/2}^{n}\right),\quad f_{i+1/2}^{n}\coloneqq\frac{\sigma-1}{2}f_{i-1}^{n}+\frac{3-\sigma}{2}f_{i}^{n}
+\begin{aligned}u_{j}^{n+1} & =\frac{\sigma^{2}-\sigma}{2}u_{j-2}^{n}+(2\sigma-\sigma^{2})u_{j-1}^{n}+\frac{\sigma^{2}-3\sigma+2}{2}u_{j}^{n}\\
+ & =u_{j}^{n}+\frac{h_{t}}{h_{x}}\left(f_{j-1/2}^{n}-f_{j+1/2}^{n}\right),\quad f_{j+1/2}^{n}\coloneqq\frac{\sigma-1}{2}f_{j-1}^{n}+\frac{3-\sigma}{2}f_{j}^{n}
 \end{aligned}
 \]
 
@@ -3843,7 +3843,7 @@ reference "eq:有限差分：时空耦合：标量守恒律"
 ，只需将数值通量推广为
 \begin_inset Formula 
 \[
-f_{i+1/2}^{n}\equiv f_{1/2}^{\text{LB}}\qty(u_{i-1}^{n},u_{i}^{n})\coloneqq f_{i}^{n}+\frac{f\qty(u_{i}^{n+1/2})-f_{i-1}^{n}}{2},\quad u_{i}^{n+1/2}=u_{i}^{n}-\frac{h_{t}}{h_{x}}\left(f_{i}^{n}-f_{i-1}^{n}\right)
+f_{j+1/2}^{n}\equiv f_{1/2}^{\text{LB}}\qty(u_{j-1}^{n},u_{j}^{n})\coloneqq f_{j}^{n}+\frac{f\qty(u_{j}^{n+1/2})-f_{j-1}^{n}}{2},\quad u_{j}^{n+1/2}=u_{j}^{n}-\frac{h_{t}}{h_{x}}\left(f_{j}^{n}-f_{j-1}^{n}\right)
 \]
 
 \end_inset
@@ -3883,8 +3883,8 @@ name "alg:有限差分：时空耦合：MacCormack"
  格式（MacCormack 1969、李新亮 2015）：
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1/2} & =u_{i}^{n}-\frac{h_{t}}{h_{x}}\left(f_{i+1}^{n}-f_{i}^{n}\right)\\
-u_{i}^{n+1}\equiv u_{i}^{n+2/2} & =\frac{u_{i}^{n}+u_{i}^{n+1/2}}{2}-\frac{h_{t}}{h_{x}}\frac{f\qty(u_{i}^{n+1/2})-f\qty(u_{i-1}^{n+1/2})}{2}
+\begin{aligned}u_{j}^{n+1/2} & =u_{j}^{n}-\frac{h_{t}}{h_{x}}\left(f_{j+1}^{n}-f_{j}^{n}\right)\\
+u_{j}^{n+1}\equiv u_{j}^{n+2/2} & =\frac{u_{j}^{n}+u_{j}^{n+1/2}}{2}-\frac{h_{t}}{h_{x}}\frac{f\qty(u_{j}^{n+1/2})-f\qty(u_{j-1}^{n+1/2})}{2}
 \end{aligned}
 \]
 
@@ -3893,8 +3893,8 @@ u_{i}^{n+1}\equiv u_{i}^{n+2/2} & =\frac{u_{i}^{n}+u_{i}^{n+1/2}}{2}-\frac{h_{t}
 或（Toro 1997、Hirsch 2007）
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1/2} & =u_{i}^{n}-\dfrac{h_{t}}{h_{x}}\left(f_{i}^{n}-f_{i-1}^{n}\right)\\
-u_{i}^{n+1}\equiv u_{i}^{n+2/2} & =\frac{u_{i}^{n}+u_{i}^{n+1/2}}{2}-\frac{h_{t}}{h_{x}}\frac{f\qty(u_{i+1}^{n+1/2})-f\qty(u_{i}^{n+1/2})}{2}
+\begin{aligned}u_{j}^{n+1/2} & =u_{j}^{n}-\dfrac{h_{t}}{h_{x}}\left(f_{j}^{n}-f_{j-1}^{n}\right)\\
+u_{j}^{n+1}\equiv u_{j}^{n+2/2} & =\frac{u_{j}^{n}+u_{j}^{n+1/2}}{2}-\frac{h_{t}}{h_{x}}\frac{f\qty(u_{j+1}^{n+1/2})-f\qty(u_{j}^{n+1/2})}{2}
 \end{aligned}
 \]
 
@@ -3976,7 +3976,7 @@ f_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1},\cancel{\phi_{k}})
  个自变量。为方便叙述，引入偏导数记号
 \begin_inset Formula 
 \[
-\partial_{s}f_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{f_{1/2}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}},\quad s\in S_{i}\setminus\left\{ k\right\} 
+\partial_{s}f_{1/2}\qty(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})\equiv\pdv{f_{1/2}(\phi_{-k},\phi_{-k+1},\dots,\phi_{k-1})}{\phi_{s}},\quad s\in S_{j}\setminus\left\{ k\right\} 
 \]
 
 \end_inset
@@ -4038,7 +4038,7 @@ f_{1/2}(u,\dots,u)=f(u)
 由一阶微分可以导出
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}\partial_{s}f_{1/2}(u,\dots,u)=a(u)
+\sum_{s\in S_{j}}\partial_{s}f_{1/2}(u,\dots,u)=a(u)
 \end{equation}
 
 \end_inset
@@ -4097,7 +4097,7 @@ H\qty(\phi_{-k},\dots,\phi_{k})
  个自变量。为方便叙述，引入偏导数记号
 \begin_inset Formula 
 \[
-\partial_{s}H\qty(\phi_{-k},\dots,\phi_{k})\equiv\pdv{H(\phi_{-k},\dots,\phi_{k})}{\phi_{s}},\quad s\in S_{i}
+\partial_{s}H\qty(\phi_{-k},\dots,\phi_{k})\equiv\pdv{H(\phi_{-k},\dots,\phi_{k})}{\phi_{s}},\quad s\in S_{j}
 \]
 
 \end_inset
@@ -4147,8 +4147,8 @@ H(u,\dots,u)=u
 
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\partial_{s}H\qty(u_{i-k}^{n},\dots,u_{i+k}^{n})=\delta_{s}^{0} & -\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{s-1}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{i-k+1}^{n},\dots,u_{i+k}^{n})}\\
- & +\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{s}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{i-k}^{n},\dots,u_{i+k-1}^{n})}
+\begin{aligned}\partial_{s}H\qty(u_{j-k}^{n},\dots,u_{j+k}^{n})=\delta_{s}^{0} & -\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{s-1}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{j-k+1}^{n},\dots,u_{j+k}^{n})}\\
+ & +\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{s}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{j-k}^{n},\dots,u_{j+k-1}^{n})}
 \end{aligned}
 \end{equation}
 
@@ -4157,8 +4157,8 @@ H(u,\dots,u)=u
 
 \begin_inset Formula 
 \begin{equation}
-\begin{aligned}\partial_{r}\partial_{s}H\qty(u_{i-k}^{n},\dots,u_{i+k}^{n})= & -\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{r-1}}{\phi_{s-1}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{i-k+1}^{n},\dots,u_{i+k}^{n})}\\
- & +\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{r}}{\phi_{s}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{i-k}^{n},\dots,u_{i+k-1}^{n})}
+\begin{aligned}\partial_{r}\partial_{s}H\qty(u_{j-k}^{n},\dots,u_{j+k}^{n})= & -\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{r-1}}{\phi_{s-1}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{j-k+1}^{n},\dots,u_{j+k}^{n})}\\
+ & +\frac{h_{t}}{h_{x}}\eval{\pdv{f_{1/2}}{\phi_{r}}{\phi_{s}}}_{(\phi_{-k},\dots,\phi_{k-1})=(u_{j-k}^{n},\dots,u_{j+k-1}^{n})}
 \end{aligned}
 \end{equation}
 
@@ -4210,7 +4210,7 @@ name "cor:有限差分：时空耦合：迭代函数性质"
 由以上两个引理可得
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}\partial_{s}H\qty(u,\dots,u)=\sum_{s\in S_{i}}\delta_{s}^{0}\equiv1
+\sum_{s\in S_{j}}\partial_{s}H\qty(u,\dots,u)=\sum_{s\in S_{j}}\delta_{s}^{0}\equiv1
 \end{equation}
 
 \end_inset
@@ -4218,7 +4218,7 @@ name "cor:有限差分：时空耦合：迭代函数性质"
 
 \begin_inset Formula 
 \begin{equation}
-\sum_{s\in S_{i}}s\partial_{s}H\qty(u,\dots,u)=-\frac{h_{t}}{h_{x}}a(u)\equiv-\sigma(u)
+\sum_{s\in S_{j}}s\partial_{s}H\qty(u,\dots,u)=-\frac{h_{t}}{h_{x}}a(u)\equiv-\sigma(u)
 \end{equation}
 
 \end_inset
@@ -4226,7 +4226,7 @@ name "cor:有限差分：时空耦合：迭代函数性质"
 
 \begin_inset Formula 
 \begin{equation}
-\sum_{r\in S_{i}}\sum_{s\in S_{i}}(r-s)^{2}\partial_{r}\partial_{s}H\qty(u,\dots,u)=\frac{h_{t}}{h_{x}}\sum_{r\in S_{i}}\sum_{s\in S_{i}}(r-s)^{2}\left(\partial_{r}\partial_{s}H-\partial_{r-1}\partial_{s-1}H\right)\equiv0
+\sum_{r\in S_{j}}\sum_{s\in S_{j}}(r-s)^{2}\partial_{r}\partial_{s}H\qty(u,\dots,u)=\frac{h_{t}}{h_{x}}\sum_{r\in S_{j}}\sum_{s\in S_{j}}(r-s)^{2}\left(\partial_{r}\partial_{s}H-\partial_{r-1}\partial_{s-1}H\right)\equiv0
 \end{equation}
 
 \end_inset
@@ -4322,7 +4322,7 @@ noprefix "false"
 \begin_inset Formula 
 \begin{equation}
 \begin{aligned}\frac{\partial u}{\partial t}+\frac{\partial f(u)}{\partial x} & =h_{t}\frac{\partial}{\partial x}\left(\beta\qty(u;\frac{h_{t}}{h_{x}})\frac{\partial u}{\partial x}\right)+\order{h_{t}^{2},h_{x}^{2}}\\
-\beta\qty(u;\frac{h_{t}}{h_{x}}) & =\frac{\sum_{s\in S_{i}}s^{2}\partial_{s}H}{2(h_{t}/h_{x})^{2}}-\frac{a^{2}}{2}
+\beta\qty(u;\frac{h_{t}}{h_{x}}) & =\frac{\sum_{s\in S_{j}}s^{2}\partial_{s}H}{2(h_{t}/h_{x})^{2}}-\frac{a^{2}}{2}
 \end{aligned}
 \label{eq:有限差分：时空耦合：修正方程}
 \end{equation}
@@ -4358,7 +4358,7 @@ reference "eq:有限差分：时空耦合：单步显式"
  的 Taylor 展开式
 \begin_inset Formula 
 \[
-u_{i+s}^{n}=u_{i}^{n}+\left(\partial_{x}u\right)_{i}^{n}h_{x}+\frac{1}{2!}\left(\partial_{x}^{2}u\right)_{i}^{n}h_{x}^{2}+\order{h_{x}^{3}}
+u_{j+s}^{n}=u_{j}^{n}+\left(\partial_{x}u\right)_{j}^{n}h_{x}+\frac{1}{2!}\left(\partial_{x}^{2}u\right)_{j}^{n}h_{x}^{2}+\order{h_{x}^{3}}
 \]
 
 \end_inset
@@ -4374,8 +4374,8 @@ u_{i+s}^{n}=u_{i}^{n}+\left(\partial_{x}u\right)_{i}^{n}h_{x}+\frac{1}{2!}\left(
  的 Taylor 展开式
 \begin_inset Formula 
 \[
-\begin{aligned}H_{i}^{n} & =H\qty(u_{i}^{n},\dots,u_{i}^{n},\dots,u_{i}^{n})+\sum_{s\in S_{i}}\left(\partial_{s}H\right)_{i}^{n}\underbrace{\left(u_{i+s}^{n}-u_{i}^{n}\right)}_{\order{h_{x}}}\\
- & +\sum_{r\in S_{i}}\sum_{s\in S_{i}}\frac{1}{2!}\left(\partial_{r}\partial_{s}H\right)_{i}^{n}\underbrace{\left(u_{i+r}^{n}-u_{i}^{n}\right)\left(u_{i+s}^{n}-u_{i}^{n}\right)}_{\order{h_{x}^{2}}}+\order{h_{x}^{3}}
+\begin{aligned}H_{j}^{n} & =H\qty(u_{j}^{n},\dots,u_{j}^{n},\dots,u_{j}^{n})+\sum_{s\in S_{j}}\left(\partial_{s}H\right)_{j}^{n}\underbrace{\left(u_{j+s}^{n}-u_{j}^{n}\right)}_{\order{h_{x}}}\\
+ & +\sum_{r\in S_{j}}\sum_{s\in S_{j}}\frac{1}{2!}\left(\partial_{r}\partial_{s}H\right)_{j}^{n}\underbrace{\left(u_{j+r}^{n}-u_{j}^{n}\right)\left(u_{j+s}^{n}-u_{j}^{n}\right)}_{\order{h_{x}^{2}}}+\order{h_{x}^{3}}
 \end{aligned}
 \]
 
@@ -4391,8 +4391,8 @@ reference "lem:有限差分：时空耦合：数值通量性质"
 ，可得
 \begin_inset Formula 
 \[
-\begin{aligned}H_{i}^{n} & =u_{i}^{n}+\sum_{s\in S_{i}}\left(\partial_{s}H\right)_{i}^{n}\left(\left(\partial_{x}u\right)_{i}^{n}\left(sh_{x}\right)+\frac{1}{2}\left(\partial_{x}^{2}u\right)_{i}^{n}\left(sh_{x}\right)^{2}+\order{h_{x}^{3}}\right)\\
- & +\sum_{r\in S_{i}}\sum_{s\in S_{i}}\frac{1}{2}\left(\partial_{r}\partial_{s}H\right)_{i}^{n}\left(\left(\left(\partial_{x}u\right)^{2}\right)_{i}^{n}\left(rh_{x}\right)\left(sh_{x}\right)+\order{h_{x}^{3}}\right)+\order{h_{x}^{3}}
+\begin{aligned}H_{j}^{n} & =u_{j}^{n}+\sum_{s\in S_{j}}\left(\partial_{s}H\right)_{j}^{n}\left(\left(\partial_{x}u\right)_{j}^{n}\left(sh_{x}\right)+\frac{1}{2}\left(\partial_{x}^{2}u\right)_{j}^{n}\left(sh_{x}\right)^{2}+\order{h_{x}^{3}}\right)\\
+ & +\sum_{r\in S_{j}}\sum_{s\in S_{j}}\frac{1}{2}\left(\partial_{r}\partial_{s}H\right)_{j}^{n}\left(\left(\left(\partial_{x}u\right)^{2}\right)_{j}^{n}\left(rh_{x}\right)\left(sh_{x}\right)+\order{h_{x}^{3}}\right)+\order{h_{x}^{3}}
 \end{aligned}
 \]
 
@@ -4412,7 +4412,7 @@ reference "cor:有限差分：时空耦合：迭代函数性质"
  的第二、三式整理为
 \begin_inset Formula 
 \[
-\sum_{s\in S_{i}}\left(\partial_{s}H\right)_{i}^{n}\left(\partial_{x}u\right)_{i}^{n}\left(sh_{x}\right)=\left(\partial_{x}u\right)_{i}^{n}\left(-h_{t}a_{i}^{n}\right)=\left(-\partial_{x}f\right)_{i}^{n}\,h_{t}
+\sum_{s\in S_{j}}\left(\partial_{s}H\right)_{j}^{n}\left(\partial_{x}u\right)_{j}^{n}\left(sh_{x}\right)=\left(\partial_{x}u\right)_{j}^{n}\left(-h_{t}a_{j}^{n}\right)=\left(-\partial_{x}f\right)_{j}^{n}\,h_{t}
 \]
 
 \end_inset
@@ -4420,8 +4420,8 @@ reference "cor:有限差分：时空耦合：迭代函数性质"
 
 \begin_inset Formula 
 \[
-\begin{aligned}\frac{1}{2}\sum_{s\in S_{i}}\left(\partial_{s}H\right)_{i}^{n}\left(\partial_{x}^{2}u\right)_{i}^{n}\left(sh_{x}\right)^{2} & +\frac{1}{2}\sum_{r\in S_{i}}\sum_{s\in S_{i}}\left(\partial_{r}\partial_{s}H\right)_{i}^{n}\left(\left(\partial_{x}u\right)^{2}\right)_{i}^{n}\left(rh_{x}\right)\left(sh_{x}\right)\\
- & =\frac{1}{2}\sum_{s\in S_{i}}\left(\partial_{x}\left[\left(\partial_{s}H\right)\left(\partial_{x}u\right)\right]\right)_{i}^{n}\left(sh_{x}\right)^{2}
+\begin{aligned}\frac{1}{2}\sum_{s\in S_{j}}\left(\partial_{s}H\right)_{j}^{n}\left(\partial_{x}^{2}u\right)_{j}^{n}\left(sh_{x}\right)^{2} & +\frac{1}{2}\sum_{r\in S_{j}}\sum_{s\in S_{j}}\left(\partial_{r}\partial_{s}H\right)_{j}^{n}\left(\left(\partial_{x}u\right)^{2}\right)_{j}^{n}\left(rh_{x}\right)\left(sh_{x}\right)\\
+ & =\frac{1}{2}\sum_{s\in S_{j}}\left(\partial_{x}\left[\left(\partial_{s}H\right)\left(\partial_{x}u\right)\right]\right)_{j}^{n}\left(sh_{x}\right)^{2}
 \end{aligned}
 \]
 
@@ -4445,8 +4445,8 @@ reference "eq:有限差分：时空耦合：单步显式"
  的 Taylor 展开式
 \begin_inset Formula 
 \[
-\begin{aligned}u_{i}^{n+1} & =u_{i}^{n}+\left(\partial_{t}u\right)_{i}^{n}\,h_{t}+\frac{1}{2}\left(\partial_{t}^{2}u\right)_{i}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}\\
- & =u_{i}^{n}+\left(-\partial_{x}f\right)_{i}^{n}\,h_{t}+\frac{1}{2}\left(\partial_{x}\left(a^{2}\partial_{x}u\right)\right)_{i}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}
+\begin{aligned}u_{j}^{n+1} & =u_{j}^{n}+\left(\partial_{t}u\right)_{j}^{n}\,h_{t}+\frac{1}{2}\left(\partial_{t}^{2}u\right)_{j}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}\\
+ & =u_{j}^{n}+\left(-\partial_{x}f\right)_{j}^{n}\,h_{t}+\frac{1}{2}\left(\partial_{x}\left(a^{2}\partial_{x}u\right)\right)_{j}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}
 \end{aligned}
 \]
 
@@ -4463,7 +4463,7 @@ reference "eq:有限差分：时空耦合：单步显式"
  同阶的性质，可得截断误差
 \begin_inset Formula 
 \[
-u_{i}^{n+1}-H_{i}^{n}=-\left(\frac{\partial}{\partial x}\left[\beta\qty(u;\frac{h_{t}}{h_{x}})\frac{\partial u}{\partial x}\right]\right)_{i}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}
+u_{j}^{n+1}-H_{j}^{n}=-\left(\frac{\partial}{\partial x}\left[\beta\qty(u;\frac{h_{t}}{h_{x}})\frac{\partial u}{\partial x}\right]\right)_{j}^{n}\,h_{t}^{2}+\order{h_{t}^{3}}
 \]
 
 \end_inset
@@ -4733,7 +4733,7 @@ name "eq:有限差分：相容性：时空 p 阶"
 线性显式格式
 \begin_inset Formula 
 \begin{equation}
-u_{i}^{n+1}=\sum_{s\in S_{i}}b_{s}u_{i+s}^{n}\equiv H\qty(u_{i-k},\dots,u_{i+k})
+u_{j}^{n+1}=\sum_{s\in S_{j}}b_{s}u_{j+s}^{n}\equiv H\qty(u_{j-k},\dots,u_{j+k})
 \end{equation}
 
 \end_inset
@@ -4796,7 +4796,7 @@ begin{subequations}
 将 Taylor 展开式代入格式
 \begin_inset Formula 
 \begin{equation}
-\underbrace{u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(h_{t})^{r}}{r!}\pdv[r]{u}{t}}_{u_{i}^{n+1}}=\sum_{s\in S}b_{s}\cdot\underbrace{\left(u_{i}^{n}+\sum_{r=1}^{\infty}\frac{(sh_{x})^{r}}{r!}\pdv[r]{u}{x}\right)}_{u_{i+s}^{n}}\label{eq:有限差分：相容性：Taylor}
+\underbrace{u_{j}^{n}+\sum_{r=1}^{\infty}\frac{(h_{t})^{r}}{r!}\pdv[r]{u}{t}}_{u_{j}^{n+1}}=\sum_{s\in S}b_{s}\cdot\underbrace{\left(u_{j}^{n}+\sum_{r=1}^{\infty}\frac{(sh_{x})^{r}}{r!}\pdv[r]{u}{x}\right)}_{u_{j+s}^{n}}\label{eq:有限差分：相容性：Taylor}
 \end{equation}
 
 \end_inset
@@ -5154,7 +5154,7 @@ reference "eq:有限差分：时空耦合：单步显式"
  时刻的误差为等距网格上的简谐波
 \begin_inset Formula 
 \[
-\varepsilon(x_{i},t_{n})\equiv E_{i}^{n}=\exp(\ii\kappa x_{i}),
+\varepsilon(x_{j},t_{n})\equiv E_{j}^{n}=\exp(\ii\kappa x_{j}),
 \]
 
 \end_inset
@@ -5166,7 +5166,7 @@ reference "eq:有限差分：时空耦合：单步显式"
 忽略截断误差以外的误差来源，则下一时刻的误差完全由格式决定：
 \begin_inset Formula 
 \[
-E_{i}^{n+1}=H\qty(E_{i-k}^{n},\dots,E_{i+k}^{n})
+E_{j}^{n+1}=H\qty(E_{j-k}^{n},\dots,E_{j+k}^{n})
 \]
 
 \end_inset
@@ -5176,7 +5176,7 @@ E_{i}^{n+1}=H\qty(E_{i-k}^{n},\dots,E_{i+k}^{n})
 
 \begin_layout Enumerate
 利用格式及方程的线性性质，可知 
-\begin_inset Formula $E_{i}^{n+1}$
+\begin_inset Formula $E_{j}^{n+1}$
 \end_inset
 
  依然是波数为 
@@ -5186,7 +5186,7 @@ E_{i}^{n+1}=H\qty(E_{i-k}^{n},\dots,E_{i+k}^{n})
  的简谐波：
 \begin_inset Formula 
 \[
-E_{i}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{i})
+E_{j}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{j})
 \]
 
 \end_inset
@@ -5251,7 +5251,7 @@ reference "prob:有限差分：周期平流"
 问题，则
 \begin_inset Formula 
 \[
-E_{i}^{n+1}=(1-\sigma)\,E_{i}^{n}+\sigma\,E_{i-1}^{n}=(1-\sigma)\exp(\ii\kappa x_{i})+\sigma\exp(\ii\kappa x_{i-1})
+E_{j}^{n+1}=(1-\sigma)\,E_{j}^{n}+\sigma\,E_{j-1}^{n}=(1-\sigma)\exp(\ii\kappa x_{j})+\sigma\exp(\ii\kappa x_{j-1})
 \]
 
 \end_inset
@@ -5259,7 +5259,7 @@ E_{i}^{n+1}=(1-\sigma)\,E_{i}^{n}+\sigma\,E_{i-1}^{n}=(1-\sigma)\exp(\ii\kappa x
 其中
 \begin_inset Formula 
 \[
-\exp(\ii\kappa x_{i-1})=\frac{\exp(\ii\kappa x_{i})}{\exp(\ii\kappa h)}
+\exp(\ii\kappa x_{j-1})=\frac{\exp(\ii\kappa x_{j})}{\exp(\ii\kappa h)}
 \]
 
 \end_inset
@@ -5314,7 +5314,7 @@ G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
 用中心差分做空间离散，用显式 Euler 做时间推进，所得格式为
 \begin_inset Formula 
 \[
-\frac{u_{i}^{n+1}-u_{i}^{n}}{h_{t}}=b\frac{u_{i-1}^{n}-2u_{i}^{n}+u_{i+1}^{n}}{h_{x}^{2}}.
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}=b\frac{u_{j-1}^{n}-2u_{j}^{n}+u_{j+1}^{n}}{h_{x}^{2}}.
 \]
 
 \end_inset
@@ -5322,13 +5322,13 @@ G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
 为得其稳定性条件，用
 \begin_inset Formula 
 \[
-E_{i}^{n+1}=G(\kappa)\exp(\ii\kappa x_{i}),\quad E_{i}^{n}=\exp(\ii\kappa x_{i}),\quad E_{i\pm1}^{n}=\exp(\ii\kappa x_{i})\exp(\pm\ii\kappa h_{x}),
+E_{j}^{n+1}=G(\kappa)\exp(\ii\kappa x_{j}),\quad E_{j}^{n}=\exp(\ii\kappa x_{j}),\quad E_{j\pm1}^{n}=\exp(\ii\kappa x_{j})\exp(\pm\ii\kappa h_{x}),
 \]
 
 \end_inset
 
 替换 
-\begin_inset Formula $u_{i}^{n+1},u_{i}^{n},u_{i\pm1}^{n}$
+\begin_inset Formula $u_{j}^{n+1},u_{j}^{n},u_{j\pm1}^{n}$
 \end_inset
 
 ，得
