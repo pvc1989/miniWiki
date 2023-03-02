@@ -530,9 +530,28 @@ python3 randomseq.py 1000 | python3 average.py
 
 # 软件开发
 
-## [`profile`：函数调用分析](https://docs.python.org/3/library/profile.html)
+## [`argparse`](https://docs.python.org/3/library/argparse.html) for 命令行解析
 
-## [`timeit`：测量代码片段运行时间](https://docs.python.org/3/library/timeit.html)
+```python
+import argparse
+
+parser = argparse.ArgumentParser(
+    prog = 'ProgramName',
+    description = 'What the program does',
+    epilog = 'Text at the bottom of help')
+
+parser.add_argument('-n', '--n_element',  # option that takes a value
+    default=10, type=int, help='number of elements')
+parser.add_argument('-v', '--verbose',    # on/off flag
+                    action='store_true')
+
+args = parser.parse_args()
+print(args)
+```
+
+## [`profile`](https://docs.python.org/3/library/profile.html) for 函数调用分析
+
+## [`timeit`](https://docs.python.org/3/library/timeit.html) for 测量代码片段运行时间
 
 ```python
 timeit.default_timer()
@@ -548,7 +567,7 @@ end = timer()
 print(end - start)
 ```
 
-## [`unittest`：单元测试框架](https://docs.python.org/3/library/unittest.html)
+## [`unittest`](https://docs.python.org/3/library/unittest.html) for 单元测试
 
 『单元测试 (unit test)』是『测试驱动开发 (Test Driven Development, TDD)』的基础。
 
@@ -572,7 +591,7 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
-## [`abc`：抽象基类](https://docs.python.org/3/library/abc.html)
+## [`abc`](https://docs.python.org/3/library/abc.html) for 定义抽象基类（接口）
 
 ```python
 import abc
