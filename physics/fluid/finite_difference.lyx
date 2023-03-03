@@ -193,7 +193,7 @@ name "prob:有限差分：周期平流"
 微分方程
 \begin_inset Formula 
 \[
-\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=0,\quad x\in(-l,+l),\quad t\in(0,\infty)
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=0,\quad x\in(-L,+L),\quad t\in(0,\infty)
 \]
 
 \end_inset
@@ -205,7 +205,7 @@ name "prob:有限差分：周期平流"
 周期边界条件
 \begin_inset Formula 
 \[
-u(-l,t)=u(+l,t),\quad\forall t\in[0,\infty)
+u(-L,t)=u(+L,t),\quad\forall t\in[0,\infty)
 \]
 
 \end_inset
@@ -217,7 +217,7 @@ u(-l,t)=u(+l,t),\quad\forall t\in[0,\infty)
 初始条件
 \begin_inset Formula 
 \[
-u(x,t=0)=\exp(\ii\kappa x),\quad x\in[-l,+l];\quad\kappa=\frac{k\mathrm{\pi}}{l},\quad k\in\mathbb{Z}
+u(x,t=0)=\exp(\ii\kappa x),\quad x\in[-L,+L];\quad\kappa=\frac{k\mathrm{\pi}}{L},\quad k\in\mathbb{Z}
 \]
 
 \end_inset
@@ -229,7 +229,7 @@ u(x,t=0)=\exp(\ii\kappa x),\quad x\in[-l,+l];\quad\kappa=\frac{k\mathrm{\pi}}{l}
 精确解
 \begin_inset Formula 
 \begin{equation}
-u(x,t)=\exp(-\ii\kappa at)\underbrace{\exp(\ii\kappa x)}_{u(x,t=0)},\quad x\in[-l,+l],\quad t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
+u(x,t)=\exp(-\ii\kappa at)\underbrace{\exp(\ii\kappa x)}_{u(x,t=0)},\quad x\in[-L,+L],\quad t\in[0,\infty)\label{eq:有限差分：误差分析：模型方程：精确解}
 \end{equation}
 
 \end_inset
@@ -1368,7 +1368,7 @@ noprefix "false"
 \end_inset
 
  替换为这里的 
-\begin_inset Formula $\kappa=k\mathrm{\pi}/l$
+\begin_inset Formula $\kappa=k\mathrm{\pi}/L$
 \end_inset
 
 。
@@ -1379,7 +1379,7 @@ noprefix "false"
 为
 \begin_inset Formula 
 \begin{equation}
-u^{h}(x,t)=\exp(\beta t+\ii\kappa\alpha t)\underbrace{\exp(\ii\kappa x-\ii\kappa at)}_{u(x,t)},\quad x\in[-l,+l],\quad t\in[0,+\infty)\label{eq:有限差分：空间格式：修正方程：精确解}
+u^{h}(x,t)=\exp(\beta t+\ii\kappa\alpha t)\underbrace{\exp(\ii\kappa x-\ii\kappa at)}_{u(x,t)},\quad x\in[-L,+L],\quad t\in[0,+\infty)\label{eq:有限差分：空间格式：修正方程：精确解}
 \end{equation}
 
 \end_inset
@@ -1614,7 +1614,7 @@ literal "true"
 \end_inset
 
 ，与这里（令 
-\begin_inset Formula $l=\mathrm{\pi}$
+\begin_inset Formula $L=\mathrm{\pi}$
 \end_inset
 
 ）的 
@@ -1820,7 +1820,7 @@ reference "eq:有限差分：空间格式：一阶向后"
 不失一般性，考虑如下等距网格
 \begin_inset Formula 
 \[
-h\coloneqq\frac{2l}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
+h\coloneqq\frac{2L}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
 \]
 
 \end_inset
@@ -1945,13 +1945,13 @@ literal "true"
 \end_inset
 
  取自于 
-\begin_inset Formula $[0,2l]$
+\begin_inset Formula $[0,2L]$
 \end_inset
 
 ，定义
 \begin_inset Formula 
 \[
-\kappa=\frac{k\mathrm{\pi}}{l},\quad\omega=\exp(\ii h)\equiv\exp(\ii\frac{2l}{n})
+\kappa=\frac{k\mathrm{\pi}}{L},\quad\omega=\exp(\ii h)\equiv\exp(\ii\frac{2L}{n})
 \]
 
 \end_inset
@@ -1959,7 +1959,7 @@ literal "true"
 可得
 \begin_inset Formula 
 \[
-w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp(\ii\frac{2\mathrm{\pi}}{n}\frac{\kappa l}{\mathrm{\pi}})=\exp(\ii\frac{2l}{n})^{\kappa}=\omega^{\kappa},
+w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa L/\mathrm{\pi}}=\exp(\ii\frac{2\mathrm{\pi}}{n}\frac{\kappa L}{\mathrm{\pi}})=\exp(\ii\frac{2L}{n})^{\kappa}=\omega^{\kappa},
 \]
 
 \end_inset
@@ -1993,7 +1993,7 @@ w^{k}=\left(\exp(\ii\frac{2\mathrm{\pi}}{n})\right)^{\kappa l/\mathrm{\pi}}=\exp
 \end_inset
 
  相差整数个 
-\begin_inset Formula $n\mathrm{\pi}/l\equiv2\mathrm{\pi}/h$
+\begin_inset Formula $n\mathrm{\pi}/L\equiv2\mathrm{\pi}/h$
 \end_inset
 
  的谐波在 DFT 
@@ -2117,7 +2117,7 @@ k\in\left\{ 1,2,\dots,\left\lceil \frac{n-1}{2}\right\rceil \right\} ,
 即等价的
 \begin_inset Formula 
 \[
-\kappa h\equiv\frac{k\mathrm{\pi}}{l}\frac{2l}{n}\in\left\{ \frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}\right\} .
+\kappa h\equiv\frac{k\mathrm{\pi}}{L}\frac{2L}{n}\in\left\{ \frac{2\mathrm{\pi}}{n},\frac{4\mathrm{\pi}}{n},\dots,\left\lceil \frac{n-1}{2}\right\rceil \frac{2\mathrm{\pi}}{n}\equiv\mathrm{\pi}\right\} .
 \]
 
 \end_inset
@@ -2232,13 +2232,13 @@ b_{j+0}=\frac{3}{2},\quad b_{j-1}=-2,\quad b_{j-2}=\frac{1}{2},
 
 \begin_layout Standard
 选定区间 
-\begin_inset Formula $[0,2l]$
+\begin_inset Formula $[0,2L]$
 \end_inset
 
 ，将差分格式的网格结点
 \begin_inset Formula 
 \[
-h\coloneqq\frac{2l}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
+h\coloneqq\frac{2L}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
 \]
 
 \end_inset
@@ -2256,7 +2256,7 @@ h\coloneqq\frac{2l}{n},\quad x_{j}\coloneqq jh,\quad j=0,1,\dots,n,
 \end_inset
 
 ，其中 
-\begin_inset Formula $\kappa=k\mathrm{\pi}/l$
+\begin_inset Formula $\kappa=k\mathrm{\pi}/L$
 \end_inset
 
 ；
@@ -2343,7 +2343,7 @@ status open
  项：
 \begin_inset Formula 
 \[
-u_{j}=\exp(\ii\frac{k\mathrm{\pi}}{l}x_{j})=\exp(\ii\frac{k\mathrm{\pi}}{l}j\frac{2l}{n})=\exp(jk\ii\frac{2\mathrm{\pi}}{n})=w^{jk},
+u_{j}=\exp(\ii\frac{k\mathrm{\pi}}{L}x_{j})=\exp(\ii\frac{k\mathrm{\pi}}{L}j\frac{2L}{n})=\exp(jk\ii\frac{2\mathrm{\pi}}{n})=w^{jk},
 \]
 
 \end_inset
