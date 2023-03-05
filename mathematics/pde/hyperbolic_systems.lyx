@@ -2172,6 +2172,130 @@ t_{\mathrm{br}}(x_{0})=t_{0}-\left(\dv*{a}{x_{0}}\right)^{-1}
 
 \end_layout
 
+\begin_layout Subsection
+Burgers 方程精确解
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset Formula 
+\[
+u=\frac{\partial U}{\partial x}
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+u\frac{\partial u}{\partial x}=\nu\frac{\partial^{2}u}{\partial x^{2}}
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}\frac{\partial U}{\partial x}+\frac{\partial U}{\partial x}\frac{\partial}{\partial x}\frac{\partial U}{\partial x}=\nu\frac{\partial^{2}}{\partial x^{2}}\frac{\partial U}{\partial x}
+\]
+
+\end_inset
+
+交换求导顺序，得
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial x}\left(\frac{\partial U}{\partial t}+\frac{1}{2}\left(\frac{\partial U}{\partial x}\right)^{2}\right)=\frac{\partial}{\partial x}\left(\nu\frac{\partial^{2}U}{\partial x^{2}}\right)
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}+\frac{1}{2}\left(\frac{\partial U}{\partial x}\right)^{2}=\nu\frac{\partial^{2}U}{\partial x^{2}}
+\]
+
+\end_inset
+
+再将 
+\begin_inset Formula $U=-2\nu\ln h$
+\end_inset
+
+ 从而有
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}=\frac{-2\nu}{h}\frac{\partial h}{\partial t},\quad\frac{\partial U}{\partial x}=\frac{-2\nu}{h}\frac{\partial h}{\partial x},\quad\frac{\partial^{2}U}{\partial x^{2}}=\frac{2\nu}{h^{2}}\left(\frac{\partial h}{\partial x}\right)^{2}-\frac{2\nu}{h}\frac{\partial^{2}h}{\partial x^{2}},
+\]
+
+\end_inset
+
+代入其中，得
+\begin_inset Formula 
+\[
+\frac{-2\nu}{h}\frac{\partial h}{\partial t}+\frac{1}{2}\left(\frac{-2\nu}{h}\frac{\partial h}{\partial x}\right)^{2}=\nu\left(\frac{2\nu}{h^{2}}\left(\frac{\partial h}{\partial x}\right)^{2}-\frac{2\nu}{h}\frac{\partial^{2}h}{\partial x^{2}}\right),
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\frac{\partial h}{\partial t}=\nu\frac{\partial^{2}h}{\partial x^{2}},
+\]
+
+\end_inset
+
+初始条件变为
+\begin_inset Formula 
+\[
+h(x,t=0)=\exp(\frac{U(x,t=0)}{-2\nu}),
+\]
+
+\end_inset
+
+该初值问题的精确解为
+\begin_inset Formula 
+\[
+h(x,t)=\frac{1}{\sqrt{4\mathrm{\pi}\nu t}}\int_{\mathbb{R}}\exp(\frac{U(y,t=0)}{-2\nu})\exp(\frac{(x-y)^{2}}{-4\nu t})\dd{y}
+\]
+
+\end_inset
+
+具体过程参见《
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:微分方程：积分变换：线性扩散"
+
+\end_inset
+
+》。
+\end_layout
+
+\begin_layout Standard
+令 
+\begin_inset Formula $\nu\to0$
+\end_inset
+
+，得
+\begin_inset Formula 
+\[
+U(x,t)=\min_{y\in\mathbb{R}}\left(U(y,t=0)+\frac{(x-y)^{2}}{2t}\right)
+\]
+
+\end_inset
+
+具体过程参见 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Strang_2007"
+literal "false"
+
+\end_inset
+
+ p.
+ 523.
+\end_layout
+
 \begin_layout Section
 线性多波
 \end_layout
@@ -6012,7 +6136,7 @@ reference "eq:微分方程：守恒律：跳跃条件：一维：标量"
 将偏微分方程修改为
 \begin_inset Formula 
 \[
-\left(\frac{\partial}{\partial t}+U\frac{\partial}{\partial x}\right)U=\epsilon\frac{\partial^{2}U}{\partial x^{2}},\quad\epsilon>0
+\left(\frac{\partial}{\partial t}+U\frac{\partial}{\partial x}\right)U=\nu\frac{\partial^{2}U}{\partial x^{2}},\quad\nu>0
 \]
 
 \end_inset
@@ -6038,6 +6162,10 @@ x/\epsilon & x\in[-\epsilon,\epsilon]\\
 
 \begin_layout Itemize
 当 
+\begin_inset Formula $\nu\to0$
+\end_inset
+
+ 或 
 \begin_inset Formula $\epsilon\to0$
 \end_inset
 
