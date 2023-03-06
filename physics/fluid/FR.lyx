@@ -521,7 +521,7 @@ The Legendre polynomial of degree
  is
 \begin_inset Formula 
 \[
-\mathrm{Le}_{K}(\xi)=...,
+\mathrm{Le}_{K}(\xi)=\frac{1}{2^{K}\,K!}\frac{\dd^{K}}{\dd\xi^{K}}\left(\xi^{2}-1\right)^{K},
 \]
 
 \end_inset
@@ -534,7 +534,7 @@ whose zeros in
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{Le}_{K}(-1)=(-1)^{K},\quad\mathrm{Le}_{K}(+1)=1,\quad\mathrm{Le}_{K}\perp\mathbb{P}_{K-1}.
+\mathrm{Le}_{K}(-1)=(-1)^{K},\quad\mathrm{Le}_{K}(+1)=1,\quad\mathrm{Le}_{K}(-\xi)=(-1)^{K}\,\mathrm{Le}_{K}(\xi),\quad\mathrm{Le}_{K}\perp\mathbb{P}_{K-1}.
 \]
 
 \end_inset
@@ -580,7 +580,7 @@ The left Radau polynomial of degree
  is
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{L},K}(\xi)=\frac{1}{2}(\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)),
+\mathrm{Ra}_{\mathrm{L},K}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2},
 \]
 
 \end_inset
@@ -617,7 +617,7 @@ Similarly, the right Radau polynomials of degree
  is 
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{R},K}(\xi)=\frac{(-1)^{K}}{2}(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)).
+\mathrm{Ra}_{\mathrm{R},K}(\xi)=(-1)^{K}\frac{\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)}{2}.
 \]
 
 \end_inset
@@ -709,12 +709,15 @@ whose zeros in
 \end_layout
 
 \begin_layout Paragraph
-Discontinous Galerkin
+\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 前面提到 
-\begin_inset Formula $g_{-1}(\xi)$
+\begin_inset Formula $g(\xi)$
 \end_inset
 
  应在“某种意义”下等于 
@@ -722,7 +725,7 @@ Discontinous Galerkin
 \end_inset
 
 ，其中一种意义是正交性：使 
-\begin_inset Formula $g_{-1}\perp\mathbb{P}_{L}$
+\begin_inset Formula $g\perp\mathbb{P}_{L}$
 \end_inset
 
  对尽可能高的 
@@ -734,7 +737,7 @@ Discontinous Galerkin
 \end_inset
 
 ，故 
-\begin_inset Formula $g_{-1}\perp\mathbb{P}_{L}$
+\begin_inset Formula $g_{\pm1}\perp\mathbb{P}_{L}$
 \end_inset
 
  相当于给出了 
@@ -744,7 +747,7 @@ Discontinous Galerkin
  个独立等式：
 \begin_inset Formula 
 \[
-g_{-1}\perp\phi_{l},\quad l=0,1,\dots,L,
+g\perp\phi_{l},\quad l=0,1,\dots,L,
 \]
 
 \end_inset
@@ -762,33 +765,37 @@ g_{-1}\perp\phi_{l},\quad l=0,1,\dots,L,
 \end_inset
 
  次多项式 
-\begin_inset Formula $g_{-1}$
+\begin_inset Formula $g$
 \end_inset
 
  只有 
 \begin_inset Formula $K+1$
 \end_inset
 
- 个自由度，其中两个已被
+ 个自由度，其中两个已被端点值锁定，对于 
+\begin_inset Formula $g_{+1}$
+\end_inset
+
+ 它们是
 \begin_inset Formula 
 \[
-g_{-1}(-1)=1,\quad g_{-1}(+1)=0,
+g_{+1}(-1)=0,\quad g_{+1}(+1)=1,
 \]
 
 \end_inset
 
-锁定，故至多还可提 
+故至多还可提 
 \begin_inset Formula $K-1$
 \end_inset
 
  个正交性条件，即 
-\begin_inset Formula $g_{-1}\perp\mathbb{P}_{K-2}$
+\begin_inset Formula $g_{+1}\perp\mathbb{P}_{K-2}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-g_{-1}(\xi)=\frac{(-1)^{K}}{2}\left(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)\right)\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
+g_{+1}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2}\equiv\mathrm{Ra}_{\mathrm{L},K}(\xi),
 \]
 
 \end_inset
@@ -796,7 +803,7 @@ g_{-1}(\xi)=\frac{(-1)^{K}}{2}\left(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)\
 其导数为
 \begin_inset Formula 
 \[
-\frac{\dd g_{-1}(\xi)}{\dd\xi}=\frac{(-1)^{K}}{2}\left(\frac{\dd\mathrm{Le}_{K}(\xi)}{\dd\xi}-\frac{\dd\mathrm{Le}_{K-1}(\xi)}{\dd\xi}\right),
+\frac{\dd g_{+1}(\xi)}{\dd\xi}=\frac{1}{2}\left(\frac{\dd\mathrm{Le}_{K}(\xi)}{\dd\xi}+\frac{\dd\mathrm{Le}_{K-1}(\xi)}{\dd\xi}\right),
 \]
 
 \end_inset
@@ -907,6 +914,118 @@ g_{\eta}\perp\mathbb{P}_{K-2}
 \end_layout
 
 \begin_layout Paragraph
+\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Relaxing 
+\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\end_inset
+
+ in the DG scheme to 
+\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
+\end_inset
+
+ and requiring 
+\begin_inset Formula $g_{+1}'(-1)=0$
+\end_inset
+
+ (i.e.
+ requiring 
+\begin_inset Formula $\xi=-1$
+\end_inset
+
+ to be a zero of multiplicity 2) gives
+\begin_inset Formula 
+\[
+\begin{aligned}g_{+1}(\xi) & =\frac{K-1}{2K-1}\mathrm{Ra}_{\mathrm{L},K}(\xi)+\frac{K}{2K-1}\mathrm{Ra}_{\mathrm{L},K-1}(\xi)\\
+ & =\frac{K-1}{2K-1}\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2}+\frac{K}{2K-1}\frac{\mathrm{Le}_{K-1}(\xi)+\mathrm{Le}_{K-2}(\xi)}{2}\\
+ & =\frac{K-1}{2K-1}\frac{\mathrm{Le}_{K}(\xi)}{2}+\frac{\mathrm{Le}_{K-1}(\xi)}{2}+\frac{K}{2K-1}\frac{\mathrm{Le}_{K-2}(\xi)}{2}
+\end{aligned}
+\]
+
+\end_inset
+
+whose derivative vanishes at the right 
+\begin_inset Formula $K-1$
+\end_inset
+
+ Lobatto points and thus corrects 
+\begin_inset Formula $f_{j}'(\xi)$
+\end_inset
+
+ only at the left boundary.
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-2$
+\end_inset
+
+ and has a CFL limit roughly twice as large as that of DG.
+\end_layout
+
+\begin_layout Standard
+该过程可以进一步推广：Requiring 
+\begin_inset Formula $g_{+1}(+1)=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\xi=-1$
+\end_inset
+
+ to be a zero of multiplicity 
+\begin_inset Formula $m$
+\end_inset
+
+, i.e.
+\begin_inset Formula 
+\[
+\dv[l]{\xi}g_{+1}(-1)=0,\quad l=0,1,\dots,m-1,
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $g_{+1}\perp\mathbb{P}_{K-1-m}$
+\end_inset
+
+ , gives 
+\begin_inset Formula $g_{m}$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $g_{1}=g_{\text{DG}}$
+\end_inset
+
+, 
+\begin_inset Formula $g_{2}=g_{\text{Lump, Lo}}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+The resulting scheme is accurate to order 
+\begin_inset Formula $2K-m$
+\end_inset
+
+.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Huynh_2007"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
 Staggered Grid
 \end_layout
 
@@ -972,109 +1091,57 @@ The resulting scheme is less accurate than DG but has a CFL limit more than
 \end_layout
 
 \begin_layout Paragraph
-Lumping Lobatto
+Energy Stable FR by Vincent et al.
 \end_layout
 
 \begin_layout Standard
-Relaxing 
-\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
-\end_inset
-
- in the DG scheme to 
-\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
-\end_inset
-
- and requiring 
-\begin_inset Formula $g'(1)=0$
-\end_inset
-
- (i.e.
- requiring 
-\begin_inset Formula $\xi=1$
-\end_inset
-
- to be a zero of multiplicity 2) gives
-\begin_inset Formula 
-\[
-g_{\text{Lump, Lo}}=\frac{K-1}{2K-1}\mathrm{Ra}_{\mathrm{R},K}(\xi)+\frac{K}{2K-1}\mathrm{Ra}_{\mathrm{R},K-1}(\xi),
-\]
-
-\end_inset
-
-whose derivative vanishes at the right 
-\begin_inset Formula $K-1$
-\end_inset
-
- Lobatto points and thus corrects 
-\begin_inset Formula $f_{j}'(\xi)$
-\end_inset
-
- only at the left boundary.
-\end_layout
-
-\begin_layout Standard
-The resulting scheme is accurate to order 
-\begin_inset Formula $2K-2$
-\end_inset
-
- and has a CFL limit roughly twice as large as that of DG.
-\end_layout
-
-\begin_layout Paragraph
-Other Choices
-\end_layout
-
-\begin_layout Standard
-Requiring 
-\begin_inset Formula $g(-1)=1$
-\end_inset
-
- and 
-\begin_inset Formula $\xi=1$
-\end_inset
-
- to be a zero of multiplicity 
-\begin_inset Formula $m$
-\end_inset
-
-, i.e.
-\begin_inset Formula 
-\[
-\dv[l]{\xi}g(1)=0,\quad l=0,1,\dots,m-1,
-\]
-
-\end_inset
-
-and 
-\begin_inset Formula $g\perp\mathbb{P}_{K-1-m}$
-\end_inset
-
- , gives 
-\begin_inset Formula $g_{m}$
-\end_inset
-
- (e.g.
- 
-\begin_inset Formula $g_{1}=g_{\text{DG}}$
-\end_inset
-
-, 
-\begin_inset Formula $g_{2}=g_{\text{Lump, Lo}}$
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-The resulting scheme is accurate to order 
-\begin_inset Formula $2K-m$
-\end_inset
-
-.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Huynh_2007"
-literal "true"
+key "Vincent_2010"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u$
+\end_inset
+
+ 以 
+\begin_inset Formula $K$
+\end_inset
+
+ 次多项式近似，则修正函数需 
+\begin_inset Formula $K+1$
+\end_inset
+
+ 次：
+\begin_inset Formula 
+\[
+g_{+1}(\xi)=\frac{1}{2}\left(\mathrm{Le}_{K}(\xi)+\frac{\eta_{K}}{1+\eta_{K}}\mathrm{Le}_{K-1}(\xi)+\frac{1}{1+\eta_{K}}\mathrm{Le}_{K+1}(\xi)\right)
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\eta_{K}=\frac{c}{-c_{-}},\quad c_{-}=\frac{-2}{2K+1}\overbrace{\left(\frac{2^{K}\,K!}{(2K)!}\right)^{2}}^{A_{K}},\quad c_{-}<c<\infty.
+\]
+
+\end_inset
+
+参数 
+\begin_inset Formula $c$
+\end_inset
+
+ 的某些特殊值可以导出既有格式：
+\begin_inset Formula 
+\[
+c_{\mathrm{DG}}=0,\quad c_{\mathrm{SD}}=\frac{2K}{(2K+1)(K+1)}A_{K},\quad c_{\mathrm{Huyhn}}=\frac{2(K+1)}{(2K+1)K}A_{K},
+\]
 
 \end_inset
 
