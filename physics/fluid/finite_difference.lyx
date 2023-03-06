@@ -2944,7 +2944,7 @@ name "alg:有限差分： 时间推进：显式 Euler"
 近似时间导数：
 \begin_inset Formula 
 \begin{equation}
-\frac{\underline{u}^{n+1}-\underline{u}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{u}^{n}=\underline{r}(\underline{u}^{n})\label{eq:explicit_euler}
+\frac{\underline{u}^{n+1}-\underline{u}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{u}^{n}=\underline{r}^{n}\coloneqq\underline{r}(t_{n},\underline{u}^{n})\label{eq:explicit_euler}
 \end{equation}
 
 \end_inset
@@ -3063,16 +3063,8 @@ name "alg:有限差分： 时间推进：隐式 Euler"
 \color inherit
 近似时间导数：
 \begin_inset Formula 
-\[
-\frac{\underline{u}^{n}-\underline{u}^{n-1}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{u}^{n}=\underline{r}(\underline{u}^{n})
-\]
-
-\end_inset
-
-亦即
-\begin_inset Formula 
 \begin{equation}
-\frac{\underline{u}^{n+1}-\underline{u}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{u}^{n+1}=\underline{r}(\underline{u}^{n+1})\label{eq:implicit_euler}
+\frac{\underline{u}^{n+1}-\underline{u}^{n}}{h_{t}}\approx\frac{\dd}{\dd t}\underline{u}^{n+1}=\underline{r}^{n+1}\coloneqq\underline{r}(t_{n+1},\underline{u}^{n+1})\label{eq:implicit_euler}
 \end{equation}
 
 \end_inset
@@ -3118,6 +3110,26 @@ reference "eq:implicit_euler"
 
 \end_inset
 
+若 
+\begin_inset Formula $\beta=1/2$
+\end_inset
+
+，则为隐式 Crank–Nicolson method；若进一步将 
+\begin_inset Formula $\underline{r}^{n+1}\equiv\underline{r}(t_{n+1},\underline{u}^{n+1})$
+\end_inset
+
+ 中的 
+\begin_inset Formula $\underline{u}^{n+1}$
+\end_inset
+
+ 用 
+\begin_inset Formula $\underline{u}^{n}+h_{t}\underline{r}^{n}$
+\end_inset
+
+ 替换，则为显式 Heun method。
+\end_layout
+
+\begin_layout Standard
 右端项中的 
 \begin_inset Formula $\underline{r}^{n+1}$
 \end_inset
@@ -3171,6 +3183,224 @@ reference "eq:general_implicit"
 \color inherit
 。二者所采用的离散格式可以不同；对于定常问题，解的精度由显式算子决定。通常不对隐式算子求逆，而是用近似分解（如 LU-SGS）或迭代法（Newton–Krylo
 v）求解线性方程组。
+\end_layout
+
+\begin_layout Subsection
+绝对稳定性
+\end_layout
+
+\begin_layout Standard
+考虑测试问题
+\begin_inset Formula 
+\[
+y'(t)=\lambda\,y(t),\quad\lambda\in\mathbb{C},\quad t>0;\quad y(0)=1,
+\]
+
+\end_inset
+
+其精确解为 
+\begin_inset Formula $y(t)=\exp(\lambda t)$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Definition
+给定数值方法及时间步长 
+\begin_inset Formula $h$
+\end_inset
+
+，若测试问题的数值解满足
+\begin_inset Formula 
+\[
+\lim_{t_{n}\to+\infty}\vert u_{n}\vert=0,
+\]
+
+\end_inset
+
+则称该数值方法为
+\color red
+绝对稳定的 (absolutely stable)
+\color inherit
+，并称复平面上的区域
+\begin_inset Formula 
+\[
+\mathcal{A}\coloneqq\left\{ h\lambda\in\mathbb{C}:\lim_{t_{n}\to+\infty}\vert u_{n}\vert=0\right\} 
+\]
+
+\end_inset
+
+为该数值方法的
+\color red
+绝对稳定域 (region of absolute stability)
+\color inherit
+。若某方法的 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ 覆盖整个 
+\begin_inset Formula $\mathbb{C}_{-}\coloneqq\left\{ z\in\mathbb{C}:\Re(z)<0\right\} $
+\end_inset
+
+，则称该方法是 
+\color red
+
+\begin_inset Formula $A$
+\end_inset
+
+-稳定的 (
+\begin_inset Formula $A$
+\end_inset
+
+-stable)
+\color inherit
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[显式 Euler]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{n+1}=u_{n}+r_{n}\,h=u_{n}+h\lambda u_{n}
+\]
+
+\end_inset
+
+绝对稳定域可由
+\begin_inset Formula 
+\[
+\vert1+h\lambda\vert<1\impliedby u_{n}=(1+h\lambda)^{n}
+\]
+
+\end_inset
+
+ 解出，即以 
+\begin_inset Formula $(-1,0)$
+\end_inset
+
+ 的圆心、
+\begin_inset Formula $1$
+\end_inset
+
+ 为半径的开圆，或更有实用价值的
+\begin_inset Formula 
+\[
+\left\{ h\lambda:\Re(\lambda)<0<h<-\frac{2\Re(\lambda)}{\vert\lambda\vert^{2}}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[隐式 Euler]
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u_{n+1}=u_{n}+r_{n+1}\,h=u_{n}+h\lambda u_{n+1}
+\]
+
+\end_inset
+
+绝对稳定域可由
+\begin_inset Formula 
+\[
+\vert1-h\lambda\vert>1\impliedby u_{n}=(1-h\lambda)^{-n}\impliedby u_{n+1}=\frac{1}{1-h\lambda}u_{n}
+\]
+
+\end_inset
+
+ 解出，为以 
+\begin_inset Formula $(1,0)$
+\end_inset
+
+ 的圆心、
+\begin_inset Formula $1$
+\end_inset
+
+ 为半径的闭圆之补。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[RK1--4]
+\end_layout
+
+\end_inset
+
+用 
+\begin_inset Formula $m$
+\end_inset
+
+ 阶显式 RK 方法解测试问题，可导出
+\begin_inset Formula 
+\[
+u_{n+1}=u_{n}\sum_{k=0}^{m}\frac{(h\lambda)^{k}}{k!},\quad m=1,2,3,4
+\]
+
+\end_inset
+
+其绝对稳定域可由
+\begin_inset Formula 
+\[
+\left\vert \sum_{k=0}^{s}\frac{(h\lambda)^{k}}{k!}\right\vert <1
+\]
+
+\end_inset
+
+ 解出，
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
