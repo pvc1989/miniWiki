@@ -782,7 +782,7 @@ g_{-1}(-1)=1,\quad g_{-1}(+1)=0,
 \end_inset
 
  个正交性条件，即 
-\begin_inset Formula $g_{-1}\perp P_{K-2}$
+\begin_inset Formula $g_{-1}\perp\mathbb{P}_{K-2}$
 \end_inset
 
 ，从而有
@@ -809,7 +809,101 @@ g_{-1}(\xi)=\frac{(-1)^{K}}{2}\left(\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)\
 
 \end_inset
 
-由此导出的 FR 格式与某种 DG 格式等价。
+由此导出的 FR 格式与某种 DG 格式等价：对 DG 格式
+\begin_inset Formula 
+\[
+\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle f^{\mathrm{D}}\middle\vert\partial_{x}\,w^{h}\right\rangle _{E}
+\]
+
+\end_inset
+
+右端项再次分部积分，得
+\begin_inset Formula 
+\[
+\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}-\left\langle \partial_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{E}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left\langle \partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}=0,
+\]
+
+\end_inset
+
+为得到与 FR 格式等价的
+\begin_inset Formula 
+\[
+\left\langle \partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\middle\vert w^{h}\right\rangle _{E}=0,
+\]
+
+\end_inset
+
+只需证明
+\begin_inset Formula 
+\[
+\left\langle n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle \partial_{x}\,f^{\mathrm{C}}\middle\vert w^{h}\right\rangle _{E},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}\,w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
+\]
+
+\end_inset
+
+对于线性坐标变换，有
+\begin_inset Formula 
+\[
+\left(\frac{\partial x}{\partial\xi}\right)^{-1}\left|\frac{\partial x}{\partial\xi}\right|=1\impliedby\frac{\partial x}{\partial\xi}=\frac{h_{x}}{2},
+\]
+
+\end_inset
+
+故只需要证明
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
+\]
+
+\end_inset
+
+根据修正函数的取法，其局部导数为
+\begin_inset Formula 
+\[
+\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi},
+\]
+
+\end_inset
+
+代入上述右端积分，并分部积分，得
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
+ & =\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\left(g_{\eta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
+ & -\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\int_{-1}^{+1}g_{\eta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行的积分可由正交性消除：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}g_{\eta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}=0\impliedby\begin{cases}
+w^{h}\in\mathbb{P}_{K-1}\\
+g_{\eta}\perp\mathbb{P}_{K-2}
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph
