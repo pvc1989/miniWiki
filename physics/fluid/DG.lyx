@@ -590,6 +590,281 @@ Taylor 基函数，由此导出 modal DG；
 \end_layout
 
 \begin_layout Subsubsection
+空间分辨率
+\end_layout
+
+\begin_layout Standard
+考虑无界问题
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=0,\quad a>0;\quad u(x,0)=\exp(\ii kx).
+\]
+
+\end_inset
+
+其精确解为
+\begin_inset Formula 
+\[
+u(x,t)=\frac{\exp(\ii kx)}{\exp(\ii\omega t)},\quad\omega=ka.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在弱形式
+\begin_inset Formula 
+\[
+\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle _{E_{j}}+\left\langle n_{x}\,f^{\mathrm{I}}\middle\vert w^{h}\right\rangle _{\partial E_{j}}=\left\langle f^{\mathrm{D}}\middle\vert\partial_{x}\,w^{h}\right\rangle _{E_{j}},
+\]
+
+\end_inset
+
+中，取迎风通量
+\begin_inset Formula 
+\[
+n_{x}\,f^{\mathrm{I}}=\begin{cases}
+au_{j}^{h}(x_{j+1/2},t), & x=x_{j+1/2}\\
+-au_{j-1}^{h}(x_{j-1/2},t), & x=x_{j-1/2}
+\end{cases}
+\]
+
+\end_inset
+
+及域内通量
+\begin_inset Formula 
+\[
+\left.f^{\mathrm{D}}\right\vert_{E_{j}}=f(u_{j}^{h}(x,t))=a\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{b}_{j}=\underline{b}_{j}^{\mathrm{T}}\,a\underline{\hat{u}}_{j}
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\ip{\partial_{x}\,\underline{b}}{f^{\mathrm{D}}}_{E_{j}}=\ip{\partial_{x}\,\underline{b}}{\underline{b}^{\mathrm{T}}\,a\underline{\hat{u}}}_{E_{j}}=\ip{\partial_{x}\,\underline{b}}{\underline{b}^{\mathrm{T}}}_{E_{j}}a\underline{\hat{u}}_{j}(t),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\langle \underline{b}\middle\vert n_{x}\,f^{\mathrm{I}}\right\rangle _{\partial E_{j}}=\underline{b}_{j}(x_{j+1/2})\,\underbrace{\underline{b}_{j}^{\mathrm{T}}(x_{j+1/2})\,a\underline{\hat{u}}_{j}(t)}_{au_{j}^{h}(x_{j+1/2},t)}-\underline{b}_{j}(x_{j-1/2})\,\underbrace{\underline{b}_{j-1}^{\mathrm{T}}(x_{j-1/2})\,a\underline{\hat{u}}_{j-1}(t)}_{au_{j-1}^{h}(x_{j-1/2},t)},
+\]
+
+\end_inset
+
+因此可将半离散格式归结为
+\begin_inset Formula 
+\[
+\underline{X}_{j}\frac{\dd}{\dd t}\underline{\hat{u}}_{j}+\underline{Y}_{j}\,\underline{\hat{u}}_{j}+\underline{Z}_{j}\,\underline{\hat{u}}_{j-1}=\underline{0},
+\]
+
+\end_inset
+
+ 不失一般性，基函数 
+\begin_inset Formula $\underline{b}_{j}$
+\end_inset
+
+ 可定义为相对坐标 
+\begin_inset Formula $x'=x-x_{j-1/2}$
+\end_inset
+
+ 的多项式，若网格均匀，则 
+\begin_inset Formula $\underline{X}_{j},\underline{Y}_{j},\underline{Z}_{j}$
+\end_inset
+
+ 与 
+\begin_inset Formula $j$
+\end_inset
+
+ 无关，从而可省略其下标。不失一般性，下面在均匀网格 
+\begin_inset Formula $x_{j-1/2}=jh$
+\end_inset
+
+ 上分析。
+\end_layout
+
+\begin_layout Standard
+初始条件 
+\begin_inset Formula $u(x,0)=\exp(\ii kx)$
+\end_inset
+
+ 被各单元近似为
+\begin_inset Formula 
+\[
+u_{j}^{h}(x,0)=\underline{b}_{j}^{\mathrm{T}}(x)\,\underline{\hat{u}}_{j}(0)=\sum_{l=1}^{N}b_{l}^{j}(x)\,\hat{u}_{l}^{j}(0),
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\underline{b}_{j}$
+\end_inset
+
+ 为归一化的正交基，则
+\begin_inset Formula 
+\[
+\hat{u}_{l}^{j}(0)=\langle b_{l}^{j}\vert\exp(\ii kx)\rangle_{E_{j}}=\langle b_{l}^{j}\vert\exp(\ii kx')\rangle_{E_{j}}\exp(\ii kjh),
+\]
+
+\end_inset
+
+右端的积分项与 
+\begin_inset Formula $j$
+\end_inset
+
+ 无关，可记为 
+\begin_inset Formula $\hat{u}_{l}$
+\end_inset
+
+，因此 
+\begin_inset Formula $\underline{\hat{u}}_{j}(0)$
+\end_inset
+
+ 可以表示为不依赖于 
+\begin_inset Formula $j$
+\end_inset
+
+ 的 
+\begin_inset Formula $\underline{\hat{u}}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\exp(\ii kjh)$
+\end_inset
+
+ 的乘积：
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(0)=\underline{\hat{u}}\exp(\ii kjh),\quad\underline{\hat{u}}\coloneqq\langle\underline{b}\vert\exp(\ii kx')\rangle_{E_{j}},
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\underline{b}_{j}$
+\end_inset
+
+ 为其他多项式基，则总可以表示为正交基的线性组合，故结论依然成立。
+\end_layout
+
+\begin_layout Standard
+线性格式不产生新的谐波分量，据此 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hu_1999"
+literal "false"
+
+\end_inset
+
+ 设
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(t)=\frac{\underline{\tilde{u}}\exp(\ii kjh)}{\exp(\ii\omega t)},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{\tilde{u}}$
+\end_inset
+
+ 为独立于 
+\begin_inset Formula $j,t$
+\end_inset
+
+ 的待定列阵，则
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j-1}(t)=\frac{\underline{\hat{u}}_{j}(t)}{\exp(\ii kh)},
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\left(-\ii\omega\underline{X}+\underline{Y}+\frac{\underline{Z}}{\exp(\ii kh)}\right)\underline{\tilde{u}}=\underline{0},
+\]
+
+\end_inset
+
+它相当于特征值问题
+\begin_inset Formula 
+\[
+\underline{M}\,\underline{\tilde{u}}=\omega\,\underline{\tilde{u}},\quad\underline{M}\coloneqq\left(\ii\underline{X}\right)^{-1}\left(\underline{Y}+\frac{\underline{Z}}{\exp(\ii kh)}\right),
+\]
+
+\end_inset
+
+解之得 
+\begin_inset Formula $N$
+\end_inset
+
+ 个模态 
+\begin_inset Formula $\left\{ \left(\omega_{l},\underline{\tilde{u}}_{l}\right)\right\} _{l=1}^{N}$
+\end_inset
+
+。实际解是这 
+\begin_inset Formula $N$
+\end_inset
+
+ 个模态的叠加：
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(t)=\sum_{l=1}^{N}\lambda_{l}\,\underline{\tilde{u}}_{l}\frac{\exp(\ii kjh)}{\exp(\ii\omega_{l}t)},
+\]
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hu_1999"
+literal "false"
+
+\end_inset
+
+ 定义：在一定波数范围内，满足 
+\begin_inset Formula $\omega_{l}\approx ka$
+\end_inset
+
+ 的那个模态为物理模态，其余为寄生模态。
+\end_layout
+
+\begin_layout Standard
+定义无量纲波数 
+\begin_inset Formula $K=kh$
+\end_inset
+
+ 及无量纲频率 
+\begin_inset Formula $\Omega=(\omega/a)h$
+\end_inset
+
+，则
+\begin_inset Formula 
+\[
+\Omega=\Re(\Omega)+\ii\Im(\Omega)
+\]
+
+\end_inset
+
+之实部表示色散，虚部表示耗散，精确解
+\begin_inset Formula 
+\[
+\Omega=K\impliedby\omega=ka.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
 方程组
 \end_layout
 
@@ -756,51 +1031,6 @@ reference "sec:有限差分：时间推进"
 \end_inset
 
 》一节的算法。
-\end_layout
-
-\begin_layout Standard
-无黏（纯对流）问题推荐采用
-\color red
-显式 TVD (a.k.a.
- SSP) Runge–Kutta 推进
-\color inherit
-：
-\end_layout
-
-\begin_layout Description
-二阶 
-\begin_inset Formula 
-\[
-\begin{aligned}\underline{\hat{U}}^{n+1/2} & =\underline{\hat{U}}^{n}+\underline{R}^{n}\Delta t\\
-\underline{\hat{U}}^{n+1}\equiv\underline{\hat{U}}^{n+2/2} & =\frac{1}{2}\underline{\hat{U}}^{n}+\frac{1}{2}\left(\underline{\hat{U}}^{n+1/2}+\underline{R}^{n+1/2}\Delta t\right)
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Description
-三阶 
-\begin_inset Formula 
-\[
-\begin{aligned}\underline{\hat{U}}^{n+1/3} & =\underline{\hat{U}}^{n}+\underline{R}^{n}\Delta t\\
-\underline{\hat{U}}^{n+2/3} & =\frac{3}{4}\underline{\hat{U}}^{n}+\frac{1}{4}\left(\underline{\hat{U}}^{n+1/3}+\underline{R}^{n+1/3}\Delta t\right)\\
-\underline{\hat{U}}^{n+1}\equiv\underline{\hat{U}}^{n+3/3} & =\frac{1}{3}\underline{\hat{U}}^{n}+\frac{2}{3}\left(\underline{\hat{U}}^{n+2/3}+\underline{R}^{n+2/3}\Delta t\right)
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
