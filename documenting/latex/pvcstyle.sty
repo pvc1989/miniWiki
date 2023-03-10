@@ -18,7 +18,7 @@
 %
 % Options for Code Highlighting
 %
-\PassOptionsToPackage{chapter}{minted}
+\newif\if@code\@codefalse\DeclareOption{code}{\@codetrue}
 %
 % Terminates Option Processing
 %
@@ -27,6 +27,19 @@
 % Packages for Package Writing
 %
 \RequirePackage{ifthen}  % mimic logical expressions
+%
+% Packages for Code Highlighting
+%
+\if@code
+\RequirePackage[chapter]{minted}
+\setminted{
+  style=xcode,
+  frame=leftline,
+  baselinestretch={1.0},
+  breaklines=true,
+  fontsize={\small}
+}
+\fi
 %
 % Packages for Mathematics
 %
