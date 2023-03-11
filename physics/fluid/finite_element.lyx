@@ -639,7 +639,7 @@ au_{j}^{h}(x_{j+1/2},t), & x=x_{j+1/2}\\
 及域内通量
 \begin_inset Formula 
 \[
-\left.f^{\mathrm{D}}\right\vert_{E_{j}}=f(u_{j}^{h}(x,t))=a\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{b}_{j}=\underline{b}_{j}^{\mathrm{T}}\,a\underline{\hat{u}}_{j}
+\left.f^{\mathrm{D}}\right\vert _{E_{j}}=f(u_{j}^{h}(x,t))=a\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{b}_{j}=\underline{b}_{j}^{\mathrm{T}}\,a\underline{\hat{u}}_{j}
 \]
 
 \end_inset
@@ -2238,11 +2238,11 @@ Lagrange 插值
 \end_inset
 
  内选定 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  个未知量求值点，记为 
-\begin_inset Formula $\left\{ x_{j,k}\equiv x|_{E_{j}}(\xi_{k})\right\} _{k=1}^{K}$
+\begin_inset Formula $\left\{ x_{j,k}\equiv x|_{E_{j}}(\xi_{k})\right\} _{k=1}^{N}$
 \end_inset
 
 ，并记 
@@ -2257,13 +2257,13 @@ Lagrange 插值
 \end_inset
 
  可构造 
-\begin_inset Formula $(K-1)$
+\begin_inset Formula $(N-1)$
 \end_inset
 
 -次 Lagrange 多项式
 \begin_inset Formula 
 \[
-\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{K}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},\quad\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{K}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}},
+\mathrm{La}_{j,k}(x)=\prod_{l=1,l\ne k}^{N}\frac{x-x_{j,l}}{x_{j,k}-x_{j,l}},\quad\mathrm{La}_{k}(\xi)=\prod_{l=1,l\ne k}^{N}\frac{\xi-\xi_{l}}{\xi_{k}-\xi_{l}},
 \]
 
 \end_inset
@@ -2273,13 +2273,13 @@ Lagrange 插值
 \end_inset
 
  的 
-\begin_inset Formula $(K-1)$
+\begin_inset Formula $(N-1)$
 \end_inset
 
 -次多项式近似
 \begin_inset Formula 
 \[
-u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
+u_{j}^{h}(x,t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \]
 
 \end_inset
@@ -2287,7 +2287,7 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 或局部坐标系下的
 \begin_inset Formula 
 \[
-\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
+\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -2303,7 +2303,7 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{K}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 在 求值点 处计算通量值 
 \begin_inset Formula 
 \[
-f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,K.
+f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,N.
 \]
 
 \end_inset
@@ -2311,7 +2311,7 @@ f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,K.
 定义离散通量
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
+f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \]
 
 \end_inset
@@ -2319,7 +2319,7 @@ f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 或局部坐标下的
 \begin_inset Formula 
 \[
-\boxed{f_{j}^{\mathrm{D}}(x(\xi),t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
+\boxed{f_{j}^{\mathrm{D}}(x(\xi),t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -2331,7 +2331,7 @@ f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{K}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
  处的导数为
 \begin_inset Formula 
 \[
-\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}=\sum_{k=1}^{K}f_{j,k}(t)\,\underbrace{\left.\frac{\partial\mathrm{La}_{k}}{\partial\xi}\right|_{\xi_{l}}}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{K}d_{l,k}\,f_{j,k}(t)
+\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}=\sum_{k=1}^{N}f_{j,k}(t)\,\underbrace{\left.\frac{\partial\mathrm{La}_{k}}{\partial\xi}\right|_{\xi_{l}}}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{N}d_{l,k}\,f_{j,k}(t)
 \]
 
 \end_inset
@@ -2470,7 +2470,7 @@ g_{-1}(\xi)\begin{cases}
 由此得连续通量
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)g_{\eta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
+f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
 \]
 
 \end_inset
@@ -2478,7 +2478,7 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=
 其局部导数为
 \begin_inset Formula 
 \[
-\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial\xi}+\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi}.
+\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial\xi}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}.
 \]
 
 \end_inset
@@ -2510,7 +2510,7 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=
 ，即得半离散的 FR 格式：
 \begin_inset Formula 
 \[
-\boxed{\dv{u_{j,k}(t)}{t}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}},\quad k=1,\dots,K.
+\boxed{\dv{u_{j,k}(t)}{t}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}},\quad k=1,\dots,N.
 \]
 
 \end_inset
@@ -2528,7 +2528,7 @@ u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
 \end_inset
 
  的次数仍为 
-\begin_inset Formula $K-1$
+\begin_inset Formula $N-1$
 \end_inset
 
 ，连续通量 
@@ -2540,7 +2540,7 @@ u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
 \end_inset
 
  均应为 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  次多项式。由于 
@@ -2548,7 +2548,7 @@ u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
 \end_inset
 
  已给定两点取值，故仍需给定 
-\begin_inset Formula $K-1$
+\begin_inset Formula $N-1$
 \end_inset
 
  个独立条件。
@@ -2564,20 +2564,20 @@ Legendre
 
 \begin_layout Standard
 By requiring the algebraic precision of the 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
 -point quadrature rule, i.e.
 \begin_inset Formula 
 \[
-\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{N}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
 \]
 
 \end_inset
 
 to be as high as possible, one gets the Gauss–Legendre quadrature.
  It is exact for members in 
-\begin_inset Formula $\mathbb{P}^{2K-1}$
+\begin_inset Formula $\mathbb{P}_{2N-1}([-1,+1])$
 \end_inset
 
 .
@@ -2585,13 +2585,13 @@ to be as high as possible, one gets the Gauss–Legendre quadrature.
 
 \begin_layout Standard
 The Legendre polynomial of degree 
-\begin_inset Formula $K$
+\begin_inset Formula $k$
 \end_inset
 
  is
 \begin_inset Formula 
 \[
-\mathrm{Le}_{K}(\xi)=\frac{1}{2^{K}\,K!}\frac{\dd^{K}}{\dd\xi^{K}}\left(\xi^{2}-1\right)^{K},
+\mathrm{Le}_{k}(\xi)=\frac{1}{2^{k}\,k!}\frac{\dd^{k}}{\dd\xi^{k}}\left(\xi^{2}-1\right)^{k},
 \]
 
 \end_inset
@@ -2604,7 +2604,7 @@ whose zeros in
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{Le}_{K}(-1)=(-1)^{K},\quad\mathrm{Le}_{K}(+1)=1,\quad\mathrm{Le}_{K}(-\xi)=(-1)^{K}\,\mathrm{Le}_{K}(\xi),\quad\mathrm{Le}_{K}\perp\mathbb{P}_{K-1}.
+\mathrm{Le}_{k}(-1)=(-1)^{k},\quad\mathrm{Le}_{k}(+1)=1,\quad\mathrm{Le}_{k}(-\xi)=(-1)^{k}\,\mathrm{Le}_{k}(\xi),\quad\mathrm{Le}_{k}\perp\mathbb{P}_{k-1}.
 \]
 
 \end_inset
@@ -2622,13 +2622,13 @@ By requiring
 \end_inset
 
  in the 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
 -point quadrature rule, i.e.
 \begin_inset Formula 
 \[
-\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{N}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,
 \]
 
 \end_inset
@@ -2636,7 +2636,7 @@ By requiring
 and requiring the rule's algebraic precision to be as high as possible,
  one gets the left Radau quadrature.
  It is exact for members in 
-\begin_inset Formula $\mathbb{P}^{2K-2}$
+\begin_inset Formula $\mathbb{P}_{2N-2}([-1,+1])$
 \end_inset
 
 .
@@ -2644,13 +2644,13 @@ and requiring the rule's algebraic precision to be as high as possible,
 
 \begin_layout Standard
 The left Radau polynomial of degree 
-\begin_inset Formula $K$
+\begin_inset Formula $k$
 \end_inset
 
  is
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{L},K}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2},
+\mathrm{Ra}_{\mathrm{L},k}(\xi)=\frac{\mathrm{Le}_{k}(\xi)+\mathrm{Le}_{k-1}(\xi)}{2},
 \]
 
 \end_inset
@@ -2661,17 +2661,17 @@ whose zeros in
 
  are the left Radau quadrature points.
  Actually, 
-\begin_inset Formula $\mathrm{Ra}_{\mathrm{L},K}(\xi)$
+\begin_inset Formula $\mathrm{Ra}_{\mathrm{L},k}(\xi)$
 \end_inset
 
  can be determined from the following 
-\begin_inset Formula $2+(K-1)$
+\begin_inset Formula $2+(k-1)$
 \end_inset
 
  condition
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{L},K}(-1)=0,\quad\mathrm{Ra}_{\mathrm{L},K}(+1)=1,\quad\mathrm{Ra}_{\mathrm{L},K}\perp\mathbb{P}_{K-2}.
+\mathrm{Ra}_{\mathrm{L},k}(-1)=0,\quad\mathrm{Ra}_{\mathrm{L},k}(+1)=1,\quad\mathrm{Ra}_{\mathrm{L},k}\perp\mathbb{P}_{k-2}.
 \]
 
 \end_inset
@@ -2681,13 +2681,13 @@ whose zeros in
 
 \begin_layout Standard
 Similarly, the right Radau polynomials of degree 
-\begin_inset Formula $K$
+\begin_inset Formula $k$
 \end_inset
 
  is 
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{R},K}(\xi)=(-1)^{K}\frac{\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)}{2}.
+\mathrm{Ra}_{\mathrm{R},k}(\xi)=(-1)^{k}\frac{\mathrm{Le}_{k}(\xi)-\mathrm{Le}_{k-1}(\xi)}{2}.
 \]
 
 \end_inset
@@ -2695,7 +2695,7 @@ Similarly, the right Radau polynomials of degree
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{Ra}_{\mathrm{R},K}(-1)=1,\quad\mathrm{Ra}_{\mathrm{R},K}(+1)=0,\quad\mathrm{Ra}_{\mathrm{R},K}\perp\mathbb{P}_{K-2}.
+\mathrm{Ra}_{\mathrm{R},k}(-1)=1,\quad\mathrm{Ra}_{\mathrm{R},k}(+1)=0,\quad\mathrm{Ra}_{\mathrm{R},k}\perp\mathbb{P}_{k-2}.
 \]
 
 \end_inset
@@ -2709,7 +2709,7 @@ Lobatto
 
 \begin_layout Standard
 Suppose 
-\begin_inset Formula $K\ge2$
+\begin_inset Formula $N\ge2$
 \end_inset
 
 .
@@ -2725,13 +2725,13 @@ By requiring
 \end_inset
 
  in the 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
 -point quadrature rule, i.e.
 \begin_inset Formula 
 \[
-\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{K}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,\quad\xi_{K}=+1,
+\int_{-1}^{+1}f(\xi)\dd{\xi}\approx\sum_{k=1}^{N}w_{k}\,f(\xi_{k}),\quad\xi_{1}=-1,\quad\xi_{N}=+1,
 \]
 
 \end_inset
@@ -2739,7 +2739,7 @@ By requiring
 and requiring the rule's algebraic precision to be as high as possible,
  one gets the Lobatto quadrature.
  It is exact for members in 
-\begin_inset Formula $\mathbb{P}^{2K-3}$
+\begin_inset Formula $\mathbb{P}_{2N-3}([-1,+1])$
 \end_inset
 
 .
@@ -2747,13 +2747,13 @@ and requiring the rule's algebraic precision to be as high as possible,
 
 \begin_layout Standard
 The Lobatto polynomial of degree 
-\begin_inset Formula $K$
+\begin_inset Formula $k$
 \end_inset
 
  is
 \begin_inset Formula 
 \[
-\mathrm{Lo}_{K}(\xi)=\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-2}(\xi),
+\mathrm{Lo}_{k}(\xi)=\mathrm{Le}_{k}(\xi)-\mathrm{Le}_{k-2}(\xi),
 \]
 
 \end_inset
@@ -2766,7 +2766,7 @@ whose zeros in
  It is easy to see that
 \begin_inset Formula 
 \[
-\mathrm{Lo}_{K}(-1)=0,\quad\mathrm{Lo}_{K}(+1)=0,\quad\mathrm{Lo}_{K}\perp\mathbb{P}_{K-3}.
+\mathrm{Lo}_{k}(-1)=0,\quad\mathrm{Lo}_{k}(+1)=0,\quad\mathrm{Lo}_{k}\perp\mathbb{P}_{k-3}.
 \]
 
 \end_inset
@@ -2779,7 +2779,7 @@ whose zeros in
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\begin_inset Formula $g\perp\mathbb{P}_{N-2}$
 \end_inset
 
 
@@ -2831,7 +2831,7 @@ g\perp\phi_{l},\quad l=0,1,\dots,L,
 \end_inset
 
  的一组正交基；又因为 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  次多项式 
@@ -2839,7 +2839,7 @@ g\perp\phi_{l},\quad l=0,1,\dots,L,
 \end_inset
 
  只有 
-\begin_inset Formula $K+1$
+\begin_inset Formula $N+1$
 \end_inset
 
  个自由度，其中两个已被端点值锁定，对于 
@@ -2855,17 +2855,17 @@ g_{+1}(-1)=0,\quad g_{+1}(+1)=1,
 \end_inset
 
 故至多还可提 
-\begin_inset Formula $K-1$
+\begin_inset Formula $N-1$
 \end_inset
 
  个正交性条件，即 
-\begin_inset Formula $g_{+1}\perp\mathbb{P}_{K-2}$
+\begin_inset Formula $g_{+1}\perp\mathbb{P}_{N-2}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-g_{+1}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2}\equiv\mathrm{Ra}_{\mathrm{L},K}(\xi),
+g_{+1}(\xi)=\frac{\mathrm{Le}_{N}(\xi)+\mathrm{Le}_{N-1}(\xi)}{2}\equiv\mathrm{Ra}_{\mathrm{L},N}(\xi),
 \]
 
 \end_inset
@@ -2873,7 +2873,7 @@ g_{+1}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2}\equiv\mathrm{R
 
 \begin_inset Formula 
 \[
-g_{-1}(\xi)=g_{+1}(-\xi)=\frac{\mathrm{Le}_{K}(-\xi)+\mathrm{Le}_{K-1}(-\xi)}{2}=(-1)^{K}\frac{\mathrm{Le}_{K}(\xi)-\mathrm{Le}_{K-1}(\xi)}{2}\equiv\mathrm{Ra}_{\mathrm{R},K}(\xi),
+g_{-1}(\xi)=g_{+1}(-\xi)=\frac{\mathrm{Le}_{N}(-\xi)+\mathrm{Le}_{N-1}(-\xi)}{2}=(-1)^{N}\frac{\mathrm{Le}_{N}(\xi)-\mathrm{Le}_{N-1}(\xi)}{2}\equiv\mathrm{Ra}_{\mathrm{R},N}(\xi),
 \]
 
 \end_inset
@@ -2881,7 +2881,7 @@ g_{-1}(\xi)=g_{+1}(-\xi)=\frac{\mathrm{Le}_{K}(-\xi)+\mathrm{Le}_{K-1}(-\xi)}{2}
 其导数为
 \begin_inset Formula 
 \[
-\frac{\dd g_{+1}(\xi)}{\dd\xi}=\frac{1}{2}\left(\frac{\dd\mathrm{Le}_{K}(\xi)}{\dd\xi}+\frac{\dd\mathrm{Le}_{K-1}(\xi)}{\dd\xi}\right),
+\frac{\dd g_{+1}(\xi)}{\dd\xi}=\frac{1}{2}\left(\frac{\dd\mathrm{Le}_{N}(\xi)}{\dd\xi}+\frac{\dd\mathrm{Le}_{N-1}(\xi)}{\dd\xi}\right),
 \]
 
 \end_inset
@@ -2889,7 +2889,7 @@ g_{-1}(\xi)=g_{+1}(-\xi)=\frac{\mathrm{Le}_{K}(-\xi)+\mathrm{Le}_{K-1}(-\xi)}{2}
 
 \begin_inset Formula 
 \[
-\frac{\dd g_{-1}(\xi)}{\dd\xi}=\frac{(-1)^{K}}{2}\left(\frac{\dd\mathrm{Le}_{K}(\xi)}{\dd\xi}-\frac{\dd\mathrm{Le}_{K-1}(\xi)}{\dd\xi}\right),
+\frac{\dd g_{-1}(\xi)}{\dd\xi}=\frac{(-1)^{N}}{2}\left(\frac{\dd\mathrm{Le}_{N}(\xi)}{\dd\xi}-\frac{\dd\mathrm{Le}_{N-1}(\xi)}{\dd\xi}\right),
 \]
 
 \end_inset
@@ -2897,110 +2897,23 @@ g_{-1}(\xi)=g_{+1}(-\xi)=\frac{\mathrm{Le}_{K}(-\xi)+\mathrm{Le}_{K-1}(-\xi)}{2}
 其中 Legendre 多项式的导数由递归关系算出：
 \begin_inset Formula 
 \[
-\frac{\dd\mathrm{Le}_{0}(\xi)}{\dd\xi}=0;\quad\frac{\dd\mathrm{Le}_{k}(\xi)}{\dd\xi}=k\,\mathrm{Le}_{k-1}(\xi)+\xi\,\frac{\dd\mathrm{Le}_{k-1}(\xi)}{\dd\xi},\quad k=1,\dots,K.
+\frac{\dd\mathrm{Le}_{0}(\xi)}{\dd\xi}=0;\quad\frac{\dd\mathrm{Le}_{k}(\xi)}{\dd\xi}=k\,\mathrm{Le}_{k-1}(\xi)+\xi\,\frac{\dd\mathrm{Le}_{k-1}(\xi)}{\dd\xi},\quad k=1,\dots,N.
 \]
 
 \end_inset
 
-由此导出的 FR 格式与某种 DG 格式等价：对 DG 格式
-\begin_inset Formula 
-\[
-\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle f^{\mathrm{D}}\middle\vert\partial_{x}\,w^{h}\right\rangle _{E}
-\]
+由此导出的 FR 格式与某种 DG 格式等价，详见 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:DGequivFR"
 
 \end_inset
 
-右端项再次分部积分，得
-\begin_inset Formula 
-\[
-\left\langle \partial_{t}\,u^{h}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}-\left\langle \partial_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{E}
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\left\langle \partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{E}+\left\langle n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}=0,
-\]
-
-\end_inset
-
-为得到与 FR 格式等价的
-\begin_inset Formula 
-\[
-\left\langle \partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\middle\vert w^{h}\right\rangle _{E}=0,
-\]
-
-\end_inset
-
-只需证明
-\begin_inset Formula 
-\[
-\left\langle n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}\middle\vert w^{h}\right\rangle _{\partial E}=\left\langle \partial_{x}\,f^{\mathrm{C}}\middle\vert w^{h}\right\rangle _{E},
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}\,w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
-\]
-
-\end_inset
-
-对于线性坐标变换，有
-\begin_inset Formula 
-\[
-\left(\frac{\partial x}{\partial\xi}\right)^{-1}\left|\frac{\partial x}{\partial\xi}\right|=1\impliedby\frac{\partial x}{\partial\xi}=\frac{h_{x}}{2},
-\]
-
-\end_inset
-
-故只需要证明
-\begin_inset Formula 
-\[
-\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
-\]
-
-\end_inset
-
-根据修正函数的取法，其局部导数为
-\begin_inset Formula 
-\[
-\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi},
-\]
-
-\end_inset
-
-代入上述右端积分，并分部积分，得
-\begin_inset Formula 
-\[
-\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\frac{\dd g_{\eta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
- & =\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\left(g_{\eta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
- & -\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f^{\mathrm{D}}(x(\eta),t)\right)\int_{-1}^{+1}g_{\eta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}
-\end{aligned}
-\]
-
-\end_inset
-
-最后一行的积分可由正交性消除：
-\begin_inset Formula 
-\[
-\int_{-1}^{+1}g_{\eta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}=0\impliedby\begin{cases}
-w^{h}\in\mathbb{P}_{K-1}\\
-g_{\eta}\perp\mathbb{P}_{K-2}
-\end{cases}
-\]
-
-\end_inset
-
-
+ 节。
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
+\begin_inset Formula $g\perp\mathbb{P}_{N-3}$
 \end_inset
 
 
@@ -3008,11 +2921,11 @@ g_{\eta}\perp\mathbb{P}_{K-2}
 
 \begin_layout Standard
 Relaxing 
-\begin_inset Formula $g\perp\mathbb{P}_{K-2}$
+\begin_inset Formula $g\perp\mathbb{P}_{N-2}$
 \end_inset
 
  in the DG scheme to 
-\begin_inset Formula $g\perp\mathbb{P}_{K-3}$
+\begin_inset Formula $g\perp\mathbb{P}_{N-3}$
 \end_inset
 
  and requiring 
@@ -3027,16 +2940,16 @@ Relaxing
  to be a zero of multiplicity 2) gives
 \begin_inset Formula 
 \[
-\begin{aligned}g_{+1}(\xi) & =\frac{K-1}{2K-1}\mathrm{Ra}_{\mathrm{L},K}(\xi)+\frac{K}{2K-1}\mathrm{Ra}_{\mathrm{L},K-1}(\xi)\\
- & =\frac{K-1}{2K-1}\frac{\mathrm{Le}_{K}(\xi)+\mathrm{Le}_{K-1}(\xi)}{2}+\frac{K}{2K-1}\frac{\mathrm{Le}_{K-1}(\xi)+\mathrm{Le}_{K-2}(\xi)}{2}\\
- & =\frac{K-1}{2K-1}\frac{\mathrm{Le}_{K}(\xi)}{2}+\frac{\mathrm{Le}_{K-1}(\xi)}{2}+\frac{K}{2K-1}\frac{\mathrm{Le}_{K-2}(\xi)}{2}
+\begin{aligned}g_{+1}(\xi) & =\frac{N-1}{2N-1}\mathrm{Ra}_{\mathrm{L},N}(\xi)+\frac{N}{2N-1}\mathrm{Ra}_{\mathrm{L},N-1}(\xi)\\
+ & =\frac{N-1}{2N-1}\frac{\mathrm{Le}_{N}(\xi)+\mathrm{Le}_{N-1}(\xi)}{2}+\frac{N}{2N-1}\frac{\mathrm{Le}_{N-1}(\xi)+\mathrm{Le}_{N-2}(\xi)}{2}\\
+ & =\frac{N-1}{2N-1}\frac{\mathrm{Le}_{N}(\xi)}{2}+\frac{\mathrm{Le}_{N-1}(\xi)}{2}+\frac{N}{2N-1}\frac{\mathrm{Le}_{N-2}(\xi)}{2}
 \end{aligned}
 \]
 
 \end_inset
 
 whose derivative vanishes at the right 
-\begin_inset Formula $K-1$
+\begin_inset Formula $N-1$
 \end_inset
 
  Lobatto points and thus corrects 
@@ -3048,7 +2961,7 @@ whose derivative vanishes at the right
 
 \begin_layout Standard
 The resulting scheme is accurate to order 
-\begin_inset Formula $2K-2$
+\begin_inset Formula $2N-2$
 \end_inset
 
  and has a CFL limit roughly twice as large as that of DG.
@@ -3076,7 +2989,7 @@ The resulting scheme is accurate to order
 \end_inset
 
 and 
-\begin_inset Formula $g_{+1}\perp\mathbb{P}_{K-1-m}$
+\begin_inset Formula $g_{+1}\perp\mathbb{P}_{N-1-m}$
 \end_inset
 
  , gives 
@@ -3097,7 +3010,7 @@ and
 
 \begin_layout Standard
 The resulting scheme is accurate to order 
-\begin_inset Formula $2K-m$
+\begin_inset Formula $2N-m$
 \end_inset
 
 .
@@ -3117,15 +3030,15 @@ Staggered Grid
 
 \begin_layout Standard
 注意到 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
 -次多项式至多有 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  个（实）零点，记为 
-\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{K}$
+\begin_inset Formula $\left\{ \zeta_{k}\right\} _{k=1}^{N}$
 \end_inset
 
 。对于 
@@ -3133,11 +3046,11 @@ Staggered Grid
 \end_inset
 
 ，其中之一已被给定，记为 
-\begin_inset Formula $\zeta_{K}=1$
+\begin_inset Formula $\zeta_{N}=1$
 \end_inset
 
 。剩下的任务便是给出其余 
-\begin_inset Formula $K-1$
+\begin_inset Formula $N-1$
 \end_inset
 
  个零点。
@@ -3145,13 +3058,13 @@ Staggered Grid
 
 \begin_layout Standard
 Consider the 
-\begin_inset Formula $K+1$
+\begin_inset Formula $N+1$
 \end_inset
 
  Chebyshev–Lobatto points
 \begin_inset Formula 
 \[
-\zeta_{k}=-\cos(\frac{k\pi}{K}),\quad k=0,1,\dots,K.
+\zeta_{k}=-\cos(\frac{k\pi}{N}),\quad k=0,1,\dots,N.
 \]
 
 \end_inset
@@ -3159,7 +3072,7 @@ Consider the
 Requiring
 \begin_inset Formula 
 \[
-g(\zeta_{0})=1,\quad g(\zeta_{k})=0,\quad k=1,\dots,K,
+g(\zeta_{0})=1,\quad g(\zeta_{k})=0,\quad k=1,\dots,N,
 \]
 
 \end_inset
@@ -3196,17 +3109,17 @@ literal "false"
 \end_inset
 
  以 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  次多项式近似，则修正函数需 
-\begin_inset Formula $K+1$
+\begin_inset Formula $N+1$
 \end_inset
 
  次：
 \begin_inset Formula 
 \[
-g_{+1}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\lambda\,\mathrm{Le}_{K-1}(\xi)+\mu\,\mathrm{Le}_{K+1}(\xi)}{2}
+g_{+1}(\xi)=\frac{\mathrm{Le}_{N}(\xi)+\lambda\,\mathrm{Le}_{N-1}(\xi)+\mu\,\mathrm{Le}_{N+1}(\xi)}{2}
 \]
 
 \end_inset
@@ -3214,7 +3127,7 @@ g_{+1}(\xi)=\frac{\mathrm{Le}_{K}(\xi)+\lambda\,\mathrm{Le}_{K-1}(\xi)+\mu\,\mat
 
 \begin_inset Formula 
 \[
-g_{-1}(\xi)=g_{+1}(-\xi)=(-1)^{K}\frac{\mathrm{Le}_{K}(\xi)-\lambda\,\mathrm{Le}_{K-1}(\xi)-\mu\,\mathrm{Le}_{K+1}(\xi)}{2}
+g_{-1}(\xi)=g_{+1}(-\xi)=(-1)^{N}\frac{\mathrm{Le}_{N}(\xi)-\lambda\,\mathrm{Le}_{N-1}(\xi)-\mu\,\mathrm{Le}_{N+1}(\xi)}{2}
 \]
 
 \end_inset
@@ -3230,7 +3143,7 @@ g_{-1}(\xi)=g_{+1}(-\xi)=(-1)^{K}\frac{\mathrm{Le}_{K}(\xi)-\lambda\,\mathrm{Le}
 
 \begin_inset Formula 
 \[
-c_{-}=\frac{-2}{2K+1}\overbrace{\left(\frac{2^{K}\,K!}{(2K)!}\right)^{2}}^{A_{K}},\quad c_{-}<c<\infty.
+c_{-}=\frac{-2}{2N+1}\overbrace{\left(\frac{2^{N}\,N!}{(2N)!}\right)^{2}}^{A_{N}},\quad c_{-}<c<\infty.
 \]
 
 \end_inset
@@ -3266,7 +3179,7 @@ Spectral
 Difference 
 \begin_inset Formula 
 \[
-c=\frac{2K}{(2K+1)(K+1)}A_{K},\quad\eta=\frac{K}{K+1},\quad\lambda=\frac{K}{2K+1},\quad\mu=\frac{K+1}{2K+1}.
+c=\frac{2N}{(2N+1)(N+1)}A_{N},\quad\eta=\frac{N}{N+1},\quad\lambda=\frac{N}{2N+1},\quad\mu=\frac{N+1}{2N+1}.
 \]
 
 \end_inset
@@ -3286,7 +3199,7 @@ Huyhn's
  
 \begin_inset Formula 
 \[
-c=\frac{2(K+1)}{(2K+1)K}A_{K},\quad\eta=\frac{K+1}{K},\quad\lambda=\frac{K+1}{2K+1},\quad\mu=\frac{K}{2K+1}.
+c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N+1},\quad\mu=\frac{N}{2N+1}.
 \]
 
 \end_inset
@@ -4255,65 +4168,205 @@ U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta
 \end_layout
 
 \begin_layout Section
-DG with FR
+DG vs.
+ FR
+\end_layout
+
+\begin_layout Subsection
+空间离散
 \end_layout
 
 \begin_layout Standard
+为求解线性标量守恒律
 \begin_inset Formula 
 \[
-\frac{\partial u(x,t)}{\partial t}+\frac{\partial f(u)}{\partial x}=0
+\frac{\partial u}{\partial t}+\frac{\partial f(u)}{\partial x}=0,\quad f(u)=au,\quad a>0,
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 在单元 
 \begin_inset Formula $E_{j}$
 \end_inset
 
- 上引入多项式近似
+ 上引入解的多项式近似
 \begin_inset Formula 
 \[
-u^{h}(x(\xi),t)=\sum_{j=1}^{N}\hat{u}_{j}(t)\,b_{j}(x(\xi)),\quad w^{h}(x(\xi))=\sum_{k=1}^{N}\hat{w}_{k}\,b_{k}(x(\xi)),
+u^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{k}(t)\,b_{k}(x),\quad\Span\left\{ b_{k}\right\} _{k=1}^{N}=\mathbb{P}_{N-1},
 \]
 
 \end_inset
 
-及相应的连续通量
+及相应的近似通量
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=\pm1}\left(f^{\mathrm{I}}(x(\eta),t)-f_{j}^{\mathrm{D}}(x(\eta),t)\right)g_{\eta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
+f^{h}(x,t)\coloneqq f(u^{h})=a\sum_{k=1}^{N}\hat{u}_{k}(t)\,b_{k}(x)=\sum_{j=1}^{N}\underbrace{a\hat{u}_{k}(t)}_{\hat{f}_{k}(t)}\,b_{k}(x).
 \]
 
 \end_inset
 
-代入积分形式
+因其在定义单元界面处间断，可记为
 \begin_inset Formula 
 \[
-\ip{\partial_{t}\,u+\partial_{x}\,f}{w}_{E_{j}}=0,\quad\forall w\colon E_{j}\to\mathbb{R},
+f^{h}(x,t)\eqqcolon f^{\mathrm{D}}(x,t).
 \]
 
 \end_inset
 
-得
+
+\end_layout
+
+\begin_layout Subsubsection
+DG
+\end_layout
+
+\begin_layout Standard
+借用 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 的同一组基，定义近似 test 函数
 \begin_inset Formula 
 \[
-\begin{aligned}0 & =\ip{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}{w^{h}}=\ip{\partial_{t}\,u^{h}}{w^{h}}+\ip{\partial_{x}\,f^{\mathrm{R}}}{w^{h}}\\
- & =\ip{\partial_{t}\left(\hat{u}_{j}\,b_{j}\right)}{\hat{w}_{k}\,b_{k}}+\ip{\partial_{x}\,f^{\mathrm{R}}}{\hat{w}_{k}\,b_{k}},\quad\forall\left\{ \hat{w}_{k}\right\} _{k=1}^{N}.
-\end{aligned}
+w^{h}(x)=\sum_{l=1}^{N}\hat{w}_{l}\,b_{l}(x)\in\mathbb{P}_{N-1}(E_{j}),
+\]
+
+\end_inset
+
+代入 weak form
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $f^{\mathrm{U}}$
+\end_inset
+
+ 为迎风 (Upwind) 通量。利用 
+\begin_inset Formula $\left\{ \hat{w}_{l}\right\} _{l=1}^{N}$
+\end_inset
+
+ 的任意性，可得 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 ODEs：
+\begin_inset Formula 
+\[
+\ip{b_{l}}{b_{k}}_{E_{j}}\frac{\dd\hat{u}_{k}}{\dd t}=\ip{\partial_{x}\,b_{l}}{f^{\mathrm{D}}}_{E_{j}}-\ip{b_{l}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}},\quad l=1,\dots,N.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+FR
+\end_layout
+
+\begin_layout Standard
+借用 DG 的多项式近似
+\begin_inset Formula 
+\[
+u^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{k}(t)\,b_{k}(x),\quad f^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}\hat{f}_{k}(t)\,b_{k}(x),
+\]
+
+\end_inset
+
+定义通量修正 (Correction) 函数
+\begin_inset Formula 
+\[
+f^{\mathrm{C}}(x(\xi),t)\coloneqq\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)\text{,}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $g_{\pm1}\in\mathbb{P}_{N}([-1,+1])$
+\end_inset
+
+ 且
+\begin_inset Formula 
+\[
+g_{-1}(-1)=g_{+1}(+1)=1,\quad g_{-1}(+1)=g_{+1}(-1)=0,
+\]
+
+\end_inset
+
+可以重构 (Reconstruct) 出连续通量
+\begin_inset Formula 
+\[
+f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t)\in\mathbb{P}_{N}(E_{j}),
+\]
+
+\end_inset
+
+则原 PDE 可近似为
+\begin_inset Formula 
+\[
+\frac{\partial u^{h}}{\partial t}+\frac{\partial f^{\mathrm{R}}}{\partial x}\approx\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=0,
+\]
+
+\end_inset
+
+在 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 Lagrange 结点处取值，可得 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 ODEs：
+\begin_inset Formula 
+\[
+\frac{\dd\hat{u}_{k}(t)}{\dd t}=-\frac{\partial f^{\mathrm{R}}(x_{k},t)}{\partial x},\quad k=1,\dots,N.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DG-with-FR
+\end_layout
+
+\begin_layout Standard
+借用 DG 的多项式近似
+\begin_inset Formula 
+\[
+u^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{k}(t)\,b_{k}(x),\quad f^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}\hat{f}_{k}(t)\,b_{k}(x),\quad w^{h}=w^{h}(x)=\sum_{l=1}^{N}\hat{w}_{l}\,b_{l}(x),
+\]
+
+\end_inset
+
+及 FR 的重构通量
+\begin_inset Formula 
+\[
+f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
+\]
+
+\end_inset
+
+代入积分式
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
 \]
 
 \end_inset
 
 利用 
-\begin_inset Formula $\hat{w}_{k}$
+\begin_inset Formula $\hat{w}_{l}$
 \end_inset
 
  的任意性、
-\begin_inset Formula $\hat{u}_{j}$
+\begin_inset Formula $\hat{u}_{k}$
 \end_inset
 
  的空间无关性，得 
@@ -4323,7 +4376,7 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=
  个常微分方程：
 \begin_inset Formula 
 \[
-\ip{b_{k}}{b_{j}}\frac{\dd\hat{u}_{j}}{\dd t}=-\ip{b_{k}}{\partial_{x}\,f^{\mathrm{R}}},\quad k=1,\dots,N,
+\ip{b_{l}}{b_{k}}\frac{\dd\hat{u}_{k}}{\dd t}=-\ip{b_{l}}{\partial_{x}\,f^{\mathrm{R}}},\quad l=1,\dots,N,
 \]
 
 \end_inset
@@ -4352,25 +4405,425 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\eta=
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset Float table
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-RK3 + [DG, FR, DG-with-FR] 之 CFL 对比
-\end_layout
+\begin_layout Subsection
+等价性
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DGequivFR"
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Subsubsection
+DG 
+\begin_inset Formula $\iff$
+\end_inset
+
+ DG-with-FR
+\end_layout
+
+\begin_layout Standard
+DG 格式的 weak form 为
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
+\]
+
+\end_inset
+
+对其右端项再次分部积分，得
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=0,
+\]
+
+\end_inset
+
+为得到与 DG-with-FR 格式等价的
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
+\]
+
+\end_inset
+
+只需证明
+\begin_inset Formula 
+\[
+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=\ip{w^{h}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
+\]
+
+\end_inset
+
+对于非退化且非变向坐标变换，有
+\begin_inset Formula 
+\[
+\left(\frac{\partial x}{\partial\xi}\right)^{-1}\left|\frac{\partial x}{\partial\xi}\right|=1,
+\]
+
+\end_inset
+
+故只需要证明
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
+\]
+
+\end_inset
+
+根据修正函数 
+\begin_inset Formula $f^{\mathrm{C}}$
+\end_inset
+
+ 的定义，其局部导数为
+\begin_inset Formula 
+\[
+\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
+\]
+
+\end_inset
+
+代入上述右端积分，并分部积分，得
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
+ & =\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
+ & -\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi},
+\end{aligned}
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula 
+\[
+g_{-1}(-1)=g_{+1}(+1)=1,\quad g_{-1}(+1)=g_{+1}(-1)=0,
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}=\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1},
+\]
+
+\end_inset
+
+而最后一行的积分可由正交性消除：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}=0\impliedby\begin{cases}
+w^{h}\in\mathbb{P}_{N-1}\\
+g_{\zeta}\perp\mathbb{P}_{N-2}
+\end{cases}
+\]
+
+\end_inset
+
+因此，DG 与利用 
+\begin_inset Formula $g_{\zeta}\perp\mathbb{P}_{N-2}$
+\end_inset
+
+ 的 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+DG-with-FR
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 等价。
+\end_layout
+
+\begin_layout Subsubsection
+DG-with-FR 
+\begin_inset Formula $\iff$
+\end_inset
+
+ FR
+\end_layout
+
+\begin_layout Standard
+构造 DG-with-FR 的积分式
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}},\quad\forall k\in\left\{ 1,\dots,N\right\} ,
+\]
+
+\end_inset
+
+的被积函数至多为 
+\begin_inset Formula $(N-1)+(N-1)$
+\end_inset
+
+ 次，精确数值积分需 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 Gauss–Legendre 积分点；FR 所用 Lagrange 插值亦需 
+\begin_inset Formula $N$
+\end_inset
+
+ 个结点；若二者相同，则 
+\begin_inset Formula $\forall k\in\left\{ 1,\dots,N\right\} $
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=\sum_{l=1}^{N}\underbrace{b_{k}(x_{l})}_{\delta_{kl}}\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{l}}W_{l}=\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{k}}W_{l}=0,
+\]
+
+\end_inset
+
+因此，
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+DG-with-FR
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 与以 Gauss–Legendre 积分点为 Lagrange 插值结点的 FR 等价。
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $\mathbb{P}_{N-1}$
+\end_inset
+
+ 的所有基等价
+\end_layout
+
+\begin_layout Standard
+上述所有格式都是线性且迎风的，可以统一为
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{r}_{j}\qty(\underline{\hat{u}}_{j},\underline{\hat{u}}_{j-1})=\underline{S}_{j}\,\underline{\hat{u}}_{j}+\underline{S}_{j-1}\,\underline{\hat{u}}_{j-1},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{S}_{j},\underline{S}_{j-1}$
+\end_inset
+
+ 为常值矩阵。
+\end_layout
+
+\begin_layout Standard
+若初值为 
+\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)$
+\end_inset
+
+，则均匀网格 
+\begin_inset Formula $x_{j}=jh$
+\end_inset
+
+ 上的许可解为
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(t)=\underline{\tilde{u}}\exp(\ii\kappa jh-\ii\omega t)\implies\underline{\hat{u}}_{j-1}(t)=\exp(-\ii\kappa h)\underline{\hat{u}}_{j}(t),
+\]
+
+\end_inset
+
+因此有
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{A}_{j}\,\underline{\hat{u}}_{j},\quad\underline{A}_{j}\coloneqq\underline{S}_{j}\,+\underline{S}_{j-1}\exp(-\ii\kappa h),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{A}_{j}$
+\end_inset
+
+ 只依赖于波数 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+，均匀网格上不依赖于 
+\begin_inset Formula $j$
+\end_inset
+
+。特征值问题
+\begin_inset Formula 
+\[
+-\ii\omega\,\underline{\tilde{u}}=\underline{A}\,\underline{\tilde{u}},
+\]
+
+\end_inset
+
+的解（修正波数 
+\begin_inset Formula $\omega/a\eqqcolon\tilde{\kappa}$
+\end_inset
+
+）体现了空间离散格式的色散、耗散特性。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathbb{P}_{N-1}$
+\end_inset
+
+ 的任意两组基之间有非退化的线性变换
+\begin_inset Formula 
+\[
+\underline{b}=\underline{T}\,\underline{b}'\implies\underline{\hat{u}}_{j}=\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{A}\,\underline{\hat{u}}_{j}\implies\frac{\dd}{\dd t}\underline{\hat{u}}_{j}'=\underline{T}\,\underline{A}\,\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{T}\,\underline{A}\,\underline{T}^{-1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 有相同的特征值，因此相应的空间离散格式有相同的色散、耗散特性。
+\end_layout
+
+\begin_layout Subsection
+修正波数
+\end_layout
+
+\begin_layout Standard
+解特征值问题
+\begin_inset Formula 
+\[
+-\ii\omega\,\underline{\tilde{u}}=\underline{A}\,\underline{\tilde{u}},
+\]
+
+\end_inset
+
+得 
+\begin_inset Formula $K$
+\end_inset
+
+ 个模态 
+\begin_inset Formula $\left\{ \left(\omega_{l},\underline{\tilde{u}}_{l}\right)\right\} _{l=1}^{N}$
+\end_inset
+
+，实际解是这 
+\begin_inset Formula $K$
+\end_inset
+
+ 个模态的叠加。
+\end_layout
+
+\begin_layout Standard
+Hu (1999) 定义：满足 
+\begin_inset Formula $\omega_{l}\approx\kappa a$
+\end_inset
+
+ 的那个模态为物理模态，其余为寄生模态。
+\end_layout
+
+\begin_layout Subsubsection
+ADR
+\end_layout
+
+\begin_layout Standard
+在全局取 
+\begin_inset Formula $n=10N_{E}$
+\end_inset
+
+ 个均布采样点，比较 
+\begin_inset Formula $u^{h}(x,t)$
+\end_inset
+
+ 在 
+\begin_inset Formula $t=0$
+\end_inset
+
+ 与 
+\begin_inset Formula $t=\tau$
+\end_inset
+
+ 的 DFT 系数：
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\tilde{\kappa}h\coloneqq\frac{\ii h}{a\tau}\ln\frac{\hat{u}_{k}^{h}(t=\tau)}{\hat{u}_{k}^{h}(t=0)}=\frac{\ii h}{a\tau}\ln\frac{\sum_{j=0}^{n-1}u^{h}(x_{j},t=\tau)\,w^{-jk}}{\sum_{j=0}^{n-1}u^{h}(x_{j},t=0)\,w^{-jk}},\quad w\coloneqq\exp(\ii\frac{2\mathrm{\pi}}{n}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+CFL
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="10" columns="5">
@@ -4397,14 +4850,7 @@ RK3 + [DG, FR, DG-with-FR] 之 CFL 对比
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Cockburn_2001"
-literal "true"
-
-\end_inset
-
-
+Cockburn (2001)
 \end_layout
 
 \end_inset
@@ -4413,7 +4859,11 @@ literal "true"
 \begin_inset Text
 
 \begin_layout Plain Layout
-DG
+FR (
+\begin_inset Formula $g\perp\mathbb{P}_{N-2}$
+\end_inset
+
+)
 \end_layout
 
 \end_inset
@@ -4422,8 +4872,8 @@ DG
 \begin_inset Text
 
 \begin_layout Plain Layout
-FR (Huyhn's 
-\begin_inset Formula $g_{2}$
+FR (
+\begin_inset Formula $g\perp\mathbb{P}_{N-3}$
 \end_inset
 
 )
@@ -4964,11 +5414,6 @@ DG with FR
 </cell>
 </row>
 </lyxtabular>
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
