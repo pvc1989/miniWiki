@@ -4406,247 +4406,7 @@ f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
 \end_layout
 
 \begin_layout Subsection
-等价性
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:DGequivFR"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-DG 
-\begin_inset Formula $\iff$
-\end_inset
-
- DG-with-FR
-\end_layout
-
-\begin_layout Standard
-DG 格式的 weak form 为
-\begin_inset Formula 
-\[
-\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
-\]
-
-\end_inset
-
-对其右端项再次分部积分，得
-\begin_inset Formula 
-\[
-\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=0,
-\]
-
-\end_inset
-
-为得到与 DG-with-FR 格式等价的
-\begin_inset Formula 
-\[
-\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
-\]
-
-\end_inset
-
-只需证明
-\begin_inset Formula 
-\[
-\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=\ip{w^{h}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
-\]
-
-\end_inset
-
-对于非退化且非变向坐标变换，有
-\begin_inset Formula 
-\[
-\left(\frac{\partial x}{\partial\xi}\right)^{-1}\left|\frac{\partial x}{\partial\xi}\right|=1,
-\]
-
-\end_inset
-
-故只需要证明
-\begin_inset Formula 
-\[
-\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
-\]
-
-\end_inset
-
-根据修正函数 
-\begin_inset Formula $f^{\mathrm{C}}$
-\end_inset
-
- 的定义，其局部导数为
-\begin_inset Formula 
-\[
-\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
-\]
-
-\end_inset
-
-代入上述右端积分，并分部积分，得
-\begin_inset Formula 
-\[
-\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
- & =\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
- & -\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi},
-\end{aligned}
-\]
-
-\end_inset
-
-利用
-\begin_inset Formula 
-\[
-g_{-1}(-1)=g_{+1}(+1)=1,\quad g_{-1}(+1)=g_{+1}(-1)=0,
-\]
-
-\end_inset
-
-可得
-\begin_inset Formula 
-\[
-\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}=\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1},
-\]
-
-\end_inset
-
-而最后一行的积分可由正交性消除：
-\begin_inset Formula 
-\[
-\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}=0\impliedby\begin{cases}
-w^{h}\in\mathbb{P}_{N-1}\\
-g_{\zeta}\perp\mathbb{P}_{N-2}
-\end{cases}
-\]
-
-\end_inset
-
-因此，DG 与利用 
-\begin_inset Formula $g_{\zeta}\perp\mathbb{P}_{N-2}$
-\end_inset
-
- 的 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-DG-with-FR
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- 等价。
-\end_layout
-
-\begin_layout Subsubsection
-DG-with-FR 
-\begin_inset Formula $\iff$
-\end_inset
-
- FR
-\end_layout
-
-\begin_layout Standard
-构造 DG-with-FR 的积分式
-\begin_inset Formula 
-\[
-\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}},\quad\forall k\in\left\{ 1,\dots,N\right\} ,
-\]
-
-\end_inset
-
-的被积函数至多为 
-\begin_inset Formula $(N-1)+(N-1)$
-\end_inset
-
- 次，精确数值积分需 
-\begin_inset Formula $N$
-\end_inset
-
- 个 Gauss–Legendre 积分点；FR 所用 Lagrange 插值亦需 
-\begin_inset Formula $N$
-\end_inset
-
- 个结点；若二者相同，则 
-\begin_inset Formula $\forall k\in\left\{ 1,\dots,N\right\} $
-\end_inset
-
- 有
-\begin_inset Formula 
-\[
-\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=\sum_{l=1}^{N}\underbrace{b_{k}(x_{l})}_{\delta_{kl}}\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{l}}W_{l}=\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{k}}W_{l}=0,
-\]
-
-\end_inset
-
-因此，
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-DG-with-FR
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
- 与以 Gauss–Legendre 积分点为 Lagrange 插值结点的 FR 等价。
-\end_layout
-
-\begin_layout Subsubsection
-\begin_inset Formula $\mathbb{P}_{N-1}$
-\end_inset
-
- 的所有基等价
+修正波数
 \end_layout
 
 \begin_layout Standard
@@ -4662,7 +4422,7 @@ DG-with-FR
 \begin_inset Formula $\underline{S}_{j},\underline{S}_{j-1}$
 \end_inset
 
- 为常值矩阵。
+ 为实常值矩阵。
 \end_layout
 
 \begin_layout Standard
@@ -4677,7 +4437,7 @@ DG-with-FR
  上的许可解为
 \begin_inset Formula 
 \[
-\underline{\hat{u}}_{j}(t)=\underline{\tilde{u}}\exp(\ii\kappa jh-\ii\omega t)\implies\underline{\hat{u}}_{j-1}(t)=\exp(-\ii\kappa h)\underline{\hat{u}}_{j}(t),
+\underline{\hat{u}}_{j}(t)=\underline{\tilde{u}}\exp(\ii\kappa jh-\ii\omega t)\implies\underline{\hat{u}}_{j-1}(t)=\underline{\hat{u}}_{j}(t)\exp(-\ii\kappa h),
 \]
 
 \end_inset
@@ -4685,27 +4445,58 @@ DG-with-FR
 因此有
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{A}_{j}\,\underline{\hat{u}}_{j},\quad\underline{A}_{j}\coloneqq\underline{S}_{j}\,+\underline{S}_{j-1}\exp(-\ii\kappa h),
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j},\quad\underline{S}(\kappa h)\coloneqq\underline{S}_{j}\,+\underline{S}_{j-1}\exp(-\ii\kappa h),
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\underline{A}_{j}$
+\begin_inset Formula $\underline{S}$
 \end_inset
 
- 只依赖于波数 
-\begin_inset Formula $\kappa h$
-\end_inset
-
-，均匀网格上不依赖于 
+ 为复常值矩阵，均匀网格上不依赖于 
 \begin_inset Formula $j$
 \end_inset
 
-。特征值问题
+，而只依赖于无量纲波数 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+。因 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 对 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 具有周期性
 \begin_inset Formula 
 \[
--\ii\omega\,\underline{\tilde{u}}=\underline{A}\,\underline{\tilde{u}},
+\underline{S}(\kappa h)=\underline{S}(\kappa h+m2\mathrm{\pi}),\quad m\in\mathbb{Z},
+\]
+
+\end_inset
+
+故只需考虑 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 在 
+\begin_inset Formula $[-\mathrm{\pi},\mathrm{\pi}]$
+\end_inset
+
+ 内取值。
+\end_layout
+
+\begin_layout Standard
+特征值问题
+\begin_inset Formula 
+\[
+-\ii\omega\,\underline{\tilde{u}}=\underline{S}\,\underline{\tilde{u}}\impliedby\begin{cases}
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j}\\
+\underline{\hat{u}}_{j}(t)=\underline{\tilde{u}}\exp(\ii\kappa jh-\ii\omega t)
+\end{cases}
 \]
 
 \end_inset
@@ -4714,55 +4505,8 @@ DG-with-FR
 \begin_inset Formula $\omega/a\eqqcolon\tilde{\kappa}$
 \end_inset
 
-）体现了空间离散格式的色散、耗散特性。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\mathbb{P}_{N-1}$
-\end_inset
-
- 的任意两组基之间有非退化的线性变换
-\begin_inset Formula 
-\[
-\underline{b}=\underline{T}\,\underline{b}'\implies\underline{\hat{u}}_{j}=\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
-\]
-
-\end_inset
-
-从而有
-\begin_inset Formula 
-\[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{A}\,\underline{\hat{u}}_{j}\implies\frac{\dd}{\dd t}\underline{\hat{u}}_{j}'=\underline{T}\,\underline{A}\,\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\underline{T}\,\underline{A}\,\underline{T}^{-1}$
-\end_inset
-
- 与 
-\begin_inset Formula $\underline{A}$
-\end_inset
-
- 有相同的特征值，因此相应的空间离散格式有相同的色散、耗散特性。
-\end_layout
-
-\begin_layout Subsection
-修正波数
-\end_layout
-
-\begin_layout Standard
-解特征值问题
-\begin_inset Formula 
-\[
--\ii\omega\,\underline{\tilde{u}}=\underline{A}\,\underline{\tilde{u}},
-\]
-
-\end_inset
-
-得 
-\begin_inset Formula $K$
+）体现了空间离散格式的色散、耗散特性。解之得 
+\begin_inset Formula $N$
 \end_inset
 
  个模态 
@@ -4770,14 +4514,25 @@ DG-with-FR
 \end_inset
 
 ，实际解是这 
-\begin_inset Formula $K$
+\begin_inset Formula $N$
 \end_inset
 
  个模态的叠加。
 \end_layout
 
+\begin_layout Subsubsection
+物理模态与寄生模态
+\end_layout
+
 \begin_layout Standard
-Hu (1999) 定义：满足 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hu_1999"
+literal "true"
+
+\end_inset
+
+ 定义：满足 
 \begin_inset Formula $\omega_{l}\approx\kappa a$
 \end_inset
 
@@ -4785,7 +4540,123 @@ Hu (1999) 定义：满足
 \end_layout
 
 \begin_layout Subsubsection
-ADR
+基准波数与真实波数
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vincent_2011"
+literal "true"
+
+\end_inset
+
+ 给出一种方法，将每个模态都关联到 
+\begin_inset Formula $[-N\mathrm{\pi},+N\mathrm{\pi}]$
+\end_inset
+
+ 内的 true wavenumber 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+：在 
+\begin_inset Formula $[-\mathrm{\pi},+\mathrm{\pi}]$
+\end_inset
+
+ 内取充分多 baseline wavenumbers，对每个这样的 
+\begin_inset Formula $\bar{\kappa}h$
+\end_inset
+
+：
+\end_layout
+
+\begin_layout Itemize
+计算相应的 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\left\{ \left(\omega_{l},\underline{\tilde{u}}_{l}\right)\right\} _{l=1}^{N}$
+\end_inset
+
+，将每个 
+\begin_inset Formula $\underline{\tilde{u}}_{l}$
+\end_inset
+
+ 所表示的多项式在 Legendre 基上投影。
+\end_layout
+
+\begin_layout Itemize
+假设已确定 
+\begin_inset Formula $m$
+\end_inset
+
+ 个模态所对应的 true wavenumbers 
+\begin_inset Formula $\left\{ (\kappa h)_{l}\right\} _{l=1}^{m}$
+\end_inset
+
+，在第 
+\begin_inset Formula $m+1$
+\end_inset
+
+ 步：
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+在剩余 
+\begin_inset Formula $N-m$
+\end_inset
+
+ 个模态中，寻找在第 
+\begin_inset Formula $m+1$
+\end_inset
+
+ 个 Legendre 基（
+\begin_inset Formula $m$
+\end_inset
+
+ 次 Legendre 多项式）上能量最大的一个。
+\end_layout
+
+\begin_layout Itemize
+为其寻找 
+\begin_inset Formula $n\in\mathbb{Z}$
+\end_inset
+
+，使得 
+\begin_inset Formula $\vert\bar{\kappa}h+n2\mathrm{\pi}\vert$
+\end_inset
+
+ 最小，且 
+\begin_inset Formula $n$
+\end_inset
+
+ 不曾被前 
+\begin_inset Formula $m$
+\end_inset
+
+ 个模态用过。以 
+\begin_inset Formula $\bar{\kappa}h+n2\mathrm{\pi}$
+\end_inset
+
+ 为第 
+\begin_inset Formula $m+1$
+\end_inset
+
+ 个 true wavenumber。
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DFT
 \end_layout
 
 \begin_layout Standard
@@ -4824,6 +4695,10 @@ CFL
 \end_layout
 
 \begin_layout Standard
+The DG-with-FR in the last column uses an insufficient quadrature.
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="10" columns="5">
@@ -4850,7 +4725,14 @@ CFL
 \begin_inset Text
 
 \begin_layout Plain Layout
-Cockburn (2001)
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Cockburn_2001"
+literal "true"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -5418,6 +5300,281 @@ DG with FR
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+等价性
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DGequivFR"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DG 
+\begin_inset Formula $\iff$
+\end_inset
+
+ DG-with-FR
+\end_layout
+
+\begin_layout Standard
+DG 格式的 weak form 为
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
+\]
+
+\end_inset
+
+对其右端项再次分部积分，得
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=0,
+\]
+
+\end_inset
+
+为得到与 DG-with-FR 格式等价的
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
+\]
+
+\end_inset
+
+只需证明
+\begin_inset Formula 
+\[
+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=\ip{w^{h}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
+\]
+
+\end_inset
+
+对于非退化且非变向坐标变换，有
+\begin_inset Formula 
+\[
+\left(\frac{\partial x}{\partial\xi}\right)^{-1}\left|\frac{\partial x}{\partial\xi}\right|=1,
+\]
+
+\end_inset
+
+故只需要证明
+\begin_inset Formula 
+\[
+\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
+\]
+
+\end_inset
+
+根据修正函数 
+\begin_inset Formula $f^{\mathrm{C}}$
+\end_inset
+
+ 的定义，其局部导数为
+\begin_inset Formula 
+\[
+\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
+\]
+
+\end_inset
+
+代入上述右端积分，并分部积分，得
+\begin_inset Formula 
+\[
+\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
+ & =\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
+ & -\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi},
+\end{aligned}
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula 
+\[
+g_{-1}(-1)=g_{+1}(+1)=1,\quad g_{-1}(+1)=g_{+1}(-1)=0,
+\]
+
+\end_inset
+
+可得
+\begin_inset Formula 
+\[
+\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}=\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1},
+\]
+
+\end_inset
+
+而最后一行的积分可由正交性消除：
+\begin_inset Formula 
+\[
+\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi}=0\impliedby\begin{cases}
+w^{h}\in\mathbb{P}_{N-1}\\
+g_{\zeta}\perp\mathbb{P}_{N-2}
+\end{cases}
+\]
+
+\end_inset
+
+因此，DG 与利用 
+\begin_inset Formula $g_{\zeta}\perp\mathbb{P}_{N-2}$
+\end_inset
+
+ 的 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+DG-with-FR
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 等价。
+\end_layout
+
+\begin_layout Subsubsection
+DG-with-FR 
+\begin_inset Formula $\iff$
+\end_inset
+
+ FR
+\end_layout
+
+\begin_layout Standard
+构造 DG-with-FR 的积分式
+\begin_inset Formula 
+\[
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=0,
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}},\quad\forall k\in\left\{ 1,\dots,N\right\} ,
+\]
+
+\end_inset
+
+的被积函数至多为 
+\begin_inset Formula $(N-1)+(N-1)$
+\end_inset
+
+ 次，精确数值积分需 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 Gauss–Legendre 积分点；FR 所用 Lagrange 插值亦需 
+\begin_inset Formula $N$
+\end_inset
+
+ 个结点；若二者相同，则 
+\begin_inset Formula $\forall k\in\left\{ 1,\dots,N\right\} $
+\end_inset
+
+ 有
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=\sum_{l=1}^{N}\underbrace{b_{k}(x_{l})}_{\delta_{kl}}\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{l}}W_{l}=\left(\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}\right)_{x_{k}}W_{l}=0,
+\]
+
+\end_inset
+
+因此，
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+DG-with-FR
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ 与以 Gauss–Legendre 积分点为 Lagrange 插值结点的 FR 等价。
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset Formula $\mathbb{P}_{N-1}$
+\end_inset
+
+ 的所有基等价
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\mathbb{P}_{N-1}(E_{j})$
+\end_inset
+
+ 的任意两组基之间有非退化的线性变换
+\begin_inset Formula 
+\[
+\underline{b}_{j}=\underline{T}\,\underline{b}'_{j}\implies\underline{\hat{u}}_{j}=\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j}\implies\frac{\dd}{\dd t}\underline{\hat{u}}_{j}'=\underline{T}\,\underline{S}\,\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{T}\,\underline{S}\,\underline{T}^{-1}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\underline{S}$
+\end_inset
+
+ 有相同的特征值，因此相应的空间离散格式有相同的色散、耗散特性。
 \end_layout
 
 \end_body
