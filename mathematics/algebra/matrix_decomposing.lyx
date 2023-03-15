@@ -383,7 +383,7 @@ Householder 变换
  的正交基，所得结果即现代 QR 分解：
 \begin_inset Formula 
 \[
-\underline{A}_{m\times n}=\underbrace{\begin{bmatrix}\vert q_{1}\rangle & \vert q_{2}\rangle & {\color{red}\vert q_{3}\rangle}\end{bmatrix}_{3\times3}}_{\underline{Q}}\,\underbrace{\begin{bmatrix}r_{11} & r_{12}\\
+\underline{A}_{3\times2}=\underbrace{\begin{bmatrix}\vert q_{1}\rangle & \vert q_{2}\rangle & {\color{red}\vert q_{3}\rangle}\end{bmatrix}_{3\times3}}_{\underline{Q}}\,\underbrace{\begin{bmatrix}r_{11} & r_{12}\\
 0 & r_{22}\\
 {\color{red}0} & {\color{red}0}
 \end{bmatrix}_{3\times2}}_{\underline{R}}
@@ -395,7 +395,80 @@ Householder 变换
 \end_layout
 
 \begin_layout Subsection
-Givens 变换
+最小二乘问题
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 有窄 QR 分解
+\begin_inset Formula 
+\[
+\underline{A}_{m\times n}=\underline{Q}_{m\times n}\,\underline{R}_{n\times n},
+\]
+
+\end_inset
+
+则最小二乘问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\min\Big\Vert\vert b\rangle-\underline{A}\,\vert x\rangle\Big\Vert^{2} & =\langle b\vert b\rangle+\min\left(\langle x\vert\underline{A}^{\dagger}\,\underline{A}\vert x\rangle-2\langle b\vert\underline{A}\vert x\rangle\right)\\
+ & =\langle b\vert b\rangle+\min\left(\langle x\vert\underline{R}^{\dagger}\,\cancelto{\underline{I}}{\underline{Q}^{\dagger}\,\underline{Q}}\,\underline{R}\vert x\rangle-2\langle b\vert\underline{Q}\,\underline{R}\vert x\rangle\right)\\
+ & =\langle b\vert b\rangle-\langle b\vert\underline{Q}\,\underline{Q}^{\dagger}\vert b\rangle+\min\Big\Vert\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle\Big\Vert^{2},
+\end{aligned}
+\]
+
+\end_inset
+
+转化为线性代数方程组问题
+\begin_inset Formula 
+\[
+\vert x\rangle=\underline{R}^{-1}\,\underline{Q}^{\dagger}\,\vert b\rangle\impliedby\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle=\vert0\rangle\impliedby\min\Big\Vert\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle\Big\Vert^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 有宽 QR 分解
+\begin_inset Formula 
+\[
+\underline{A}_{m\times n}=\underline{Q}_{m\times m}\,\underline{R}_{m\times n},
+\]
+
+\end_inset
+
+则最小二乘问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\min\Big\Vert\vert b\rangle-\underline{A}\,\vert x\rangle\Big\Vert^{2} & =\min\Big\Vert\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle\Big\Vert^{2},\end{aligned}
+\]
+
+\end_inset
+
+转化为线性代数方程组问题
+\begin_inset Formula 
+\[
+\vert x\rangle=\underbrace{\left(\underline{R}^{\dagger}\,\underline{R}\right)^{-1}}_{\left(\underline{A}^{\dagger}\,\underline{A}\right)^{-1}}\,\underbrace{\underline{R}^{\dagger}\,\underline{Q}^{\dagger}}_{\underline{A}^{\dagger}}\,\vert b\rangle\impliedby\underline{R}^{\dagger}\left(\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle\right)=\vert0\rangle\impliedby\min\Big\Vert\underline{Q}^{\dagger}\,\vert b\rangle-\underline{R}\,\vert x\rangle\Big\Vert^{2}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
