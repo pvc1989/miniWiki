@@ -974,7 +974,7 @@ x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
  等价于
 \begin_inset Formula 
 \[
-\min_{\vert x\rangle\in\mathbb{R}^{n}}\left(\frac{1}{2}\langle x\vert\underline{A}\vert x\rangle-\langle x\vert b\rangle\right)
+\min_{\vert x\rangle\in\mathbb{R}^{n}}\left(\frac{1}{2}\langle x\vert\,\underline{A}\,\vert x\rangle-\langle x\vert b\rangle\right)
 \]
 
 \end_inset
@@ -983,12 +983,12 @@ x_{i}^{(k+1)}=(1-\omega)x_{i}^{(k)}+\omega\tilde{x}_{i}^{(k+1)}
 \end_layout
 
 \begin_layout Subsection
-SD (Steepest Descent)
+最速下降法
 \end_layout
 
 \begin_layout Standard
 考虑 
-\begin_inset Formula $\varphi(\vert x\rangle)=\frac{1}{2}\langle x\vert\underline{A}\vert x\rangle-\langle x\vert b\rangle$
+\begin_inset Formula $\varphi(\vert x\rangle)=\frac{1}{2}\langle x\vert\,\underline{A}\,\vert x\rangle-\langle x\vert b\rangle$
 \end_inset
 
  的等值面，该曲面在点 
@@ -1030,7 +1030,7 @@ SD (Steepest Descent)
 \begin_inset Formula 
 \[
 \begin{aligned}\psi(\alpha) & =\varphi(\vert x_{k}\rangle+\alpha\vert d_{k}\rangle)=\frac{1}{2}\left(\langle x_{k}\vert+\alpha\langle d_{k}\vert\right)\underline{A}\left(\vert x_{k}\rangle+\alpha\vert d_{k}\rangle\right)-\left(\langle x_{k}\vert+\alpha\langle d_{k}\vert\right)\vert b\rangle,\\
- & =\frac{\alpha^{2}}{2}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\underbrace{\frac{\alpha}{2}\langle x_{k}\vert\underline{A}\vert d_{k}\rangle+\frac{\alpha}{2}\langle d_{k}\vert\underline{A}\vert x_{k}\rangle}_{\alpha\langle d_{k}\vert\underline{A}\vert x_{k}\rangle}-\alpha\langle d_{k}\vert b\rangle+\underbrace{\frac{1}{2}\langle x_{k}\vert\underline{A}\vert x_{k}\rangle-\langle x_{k}\vert b\rangle}_{\varphi(\vert x_{k}\rangle)},
+ & =\frac{\alpha^{2}}{2}\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle+\underbrace{\frac{\alpha}{2}\langle x_{k}\vert\,\underline{A}\,\vert d_{k}\rangle+\frac{\alpha}{2}\langle d_{k}\vert\,\underline{A}\,\vert x_{k}\rangle}_{\alpha\langle d_{k}\vert\,\underline{A}\,\vert x_{k}\rangle}-\alpha\langle d_{k}\vert b\rangle+\underbrace{\frac{1}{2}\langle x_{k}\vert\,\underline{A}\,\vert x_{k}\rangle-\langle x_{k}\vert b\rangle}_{\varphi(\vert x_{k}\rangle)},
 \end{aligned}
 \]
 
@@ -1039,7 +1039,7 @@ SD (Steepest Descent)
 其中用到了
 \begin_inset Formula 
 \[
-\langle x_{k}\vert\underline{A}\vert d_{k}\rangle=\langle d_{k}\vert\underline{A}^{\mathrm{T}}\vert x_{k}\rangle=\langle d_{k}\vert\underline{A}\vert x_{k}\rangle\impliedby\underline{A}^{\mathrm{T}}=\underline{A},
+\langle x_{k}\vert\,\underline{A}\,\vert d_{k}\rangle=\langle d_{k}\vert\,\underline{A}^{\mathrm{T}}\vert x_{k}\rangle=\langle d_{k}\vert\,\underline{A}\,\vert x_{k}\rangle\impliedby\underline{A}^{\mathrm{T}}=\underline{A},
 \]
 
 \end_inset
@@ -1047,7 +1047,7 @@ SD (Steepest Descent)
 又因为
 \begin_inset Formula 
 \[
-\alpha\langle d_{k}\vert\underline{A}\vert x_{k}\rangle-\alpha\langle d_{k}\vert b\rangle=\alpha\langle d_{k}\vert d_{k}\rangle\impliedby\vert d_{k}\rangle\equiv\vert r_{k}\rangle\coloneqq\vert b\rangle-\underline{A}\vert x_{k}\rangle,
+\alpha\langle d_{k}\vert\,\underline{A}\,\vert x_{k}\rangle-\alpha\langle d_{k}\vert b\rangle=\alpha\langle d_{k}\vert d_{k}\rangle\impliedby\vert d_{k}\rangle\equiv\vert r_{k}\rangle\coloneqq\vert b\rangle-\underline{A}\,\vert x_{k}\rangle,
 \]
 
 \end_inset
@@ -1055,7 +1055,7 @@ SD (Steepest Descent)
 故
 \begin_inset Formula 
 \[
-\psi(\alpha)=\frac{\alpha^{2}}{2}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\alpha\langle d_{k}\vert r_{k}\rangle+\varphi(\vert x_{k}\rangle),
+\psi(\alpha)=\frac{\alpha^{2}}{2}\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle+\alpha\langle d_{k}\vert r_{k}\rangle+\varphi(\vert x_{k}\rangle),
 \]
 
 \end_inset
@@ -1063,7 +1063,7 @@ SD (Steepest Descent)
 其最小值条件为
 \begin_inset Formula 
 \begin{equation}
-0=\frac{\dd\psi}{\dd\alpha}=\alpha\langle d_{k}\vert\underline{A}\vert d_{k}\rangle-\langle d_{k}\vert r_{k}\rangle\label{eq:steepest-descent}
+0=\frac{\dd\psi}{\dd\alpha}=\alpha\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle-\langle d_{k}\vert r_{k}\rangle\label{eq:steepest-descent}
 \end{equation}
 
 \end_inset
@@ -1089,7 +1089,7 @@ status open
  步：
 \begin_inset Formula 
 \[
-\vert d_{k}\rangle=\vert b\rangle-\underline{A}\,\vert x_{k}\rangle,\quad\alpha=\frac{\langle d_{k}\vert d_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle},\quad\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha\vert d_{k}\rangle.
+\vert d_{k}\rangle=\vert b\rangle-\underline{A}\,\vert x_{k}\rangle,\quad\alpha=\frac{\langle d_{k}\vert d_{k}\rangle}{\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle},\quad\vert x_{k+1}\rangle=\vert x_{k}\rangle+\alpha\vert d_{k}\rangle.
 \]
 
 \end_inset
@@ -1152,7 +1152,7 @@ CG (Conjugate Gradient)
  条件
 \begin_inset Formula 
 \[
-0=\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle\equiv\langle d_{k-1}\vert\underline{A}\vert r_{k}\rangle-\beta\langle d_{k-1}\vert\underline{A}\vert d_{k-1}\rangle
+0=\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle\equiv\langle d_{k-1}\vert\,\underline{A}\,\vert r_{k}\rangle-\beta\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k-1}\rangle
 \]
 
 \end_inset
@@ -1204,7 +1204,7 @@ name "alg:CG"
 ，依次计算
 \begin_inset Formula 
 \[
-\vert r_{0}\rangle=\vert b\rangle-\underline{A}\cancel{\vert x_{0}\rangle}=\vert b\rangle,\quad\alpha_{0}=\frac{\langle d_{0}\vert r_{0}\rangle}{\langle d_{0}\vert\underline{A}\vert d_{0}\rangle}=\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle},\quad\vert x_{1}\rangle=\cancel{\vert x_{0}\rangle}+\alpha_{0}\vert d_{0}\rangle.
+\vert r_{0}\rangle=\vert b\rangle-\underline{A}\cancel{\vert x_{0}\rangle}=\vert b\rangle,\quad\alpha_{0}=\frac{\langle d_{0}\vert r_{0}\rangle}{\langle d_{0}\vert\,\underline{A}\,\vert d_{0}\rangle}=\frac{\langle b\vert b\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle},\quad\vert x_{1}\rangle=\cancel{\vert x_{0}\rangle}+\alpha_{0}\vert d_{0}\rangle.
 \]
 
 \end_inset
@@ -1216,7 +1216,7 @@ name "alg:CG"
  步，依次计算
 \begin_inset Formula 
 \[
-\vert r_{k}\rangle=\vert b\rangle-\underline{A}\,\vert x_{k}\rangle,\quad\beta_{k}=\frac{\langle d_{k-1}\vert\underline{A}\vert r_{k}\rangle}{\langle d_{k-1}\vert\underline{A}\vert d_{k-1}\rangle},\quad\vert d_{k}\rangle=\vert r_{k}\rangle-\beta_{k}\vert d_{k-1}\rangle,\quad\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle},
+\vert r_{k}\rangle=\vert b\rangle-\underline{A}\,\vert x_{k}\rangle,\quad\beta_{k}=\frac{\langle d_{k-1}\vert\,\underline{A}\,\vert r_{k}\rangle}{\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k-1}\rangle},\quad\vert d_{k}\rangle=\vert r_{k}\rangle-\beta_{k}\vert d_{k-1}\rangle,\quad\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle},
 \]
 
 \end_inset
@@ -1374,7 +1374,7 @@ status collapsed
 \end_inset
 
  亦可任取，只不过将问题转化为求解 
-\begin_inset Formula $\underline{A}\vert x'\rangle=\vert b'\rangle$
+\begin_inset Formula $\underline{A}\,\vert x'\rangle=\vert b'\rangle$
 \end_inset
 
 ，其中 
@@ -1382,7 +1382,7 @@ status collapsed
 \end_inset
 
 ，
-\begin_inset Formula $\vert b'\rangle\coloneqq\vert r_{0}\rangle\equiv\vert b\rangle-\underline{A}\vert x_{0}\rangle$
+\begin_inset Formula $\vert b'\rangle\coloneqq\vert r_{0}\rangle\equiv\vert b\rangle-\underline{A}\,\vert x_{0}\rangle$
 \end_inset
 
 。
@@ -1742,7 +1742,7 @@ SYMMLQ
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\min\langle r_{k}\vert\underline{A}\vert r_{k}\rangle$
+\begin_inset Formula $\min\langle r_{k}\vert\,\underline{A}\,\vert r_{k}\rangle$
 \end_inset
 
 
@@ -1857,7 +1857,7 @@ CG 的 KS 诠释
 
 \begin_inset Formula 
 \[
-\langle d_{i}\vert\underline{A}\vert d_{k}\rangle=0=\langle r_{i}\vert r_{k}\rangle,\quad\forall i=0,\dots,k-1.
+\langle d_{i}\vert\,\underline{A}\,\vert d_{k}\rangle=0=\langle r_{i}\vert r_{k}\rangle,\quad\forall i=0,\dots,k-1.
 \]
 
 \end_inset
@@ -1884,7 +1884,7 @@ CG 的 KS 诠释
  得
 \begin_inset Formula 
 \[
-\vert r_{1}\rangle=\vert b\rangle-\underline{A}\vert x_{1}\rangle=\vert b\rangle-\underline{A}\underbrace{\overbrace{\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}}^{\alpha_{0}}\overbrace{\vert b\rangle}^{\vert d_{0}\rangle}}_{\vert x_{1}\rangle}=\vert b\rangle-\underline{A}\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle},
+\vert r_{1}\rangle=\vert b\rangle-\underline{A}\,\vert x_{1}\rangle=\vert b\rangle-\underline{A}\underbrace{\overbrace{\frac{\langle b\vert b\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle}}^{\alpha_{0}}\overbrace{\vert b\rangle}^{\vert d_{0}\rangle}}_{\vert x_{1}\rangle}=\vert b\rangle-\underline{A}\,\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle},
 \]
 
 \end_inset
@@ -1892,7 +1892,7 @@ CG 的 KS 诠释
 
 \begin_inset Formula 
 \[
-\vert d_{1}\rangle=\vert r_{1}\rangle-\beta_{1}\vert d_{0}\rangle=\vert r_{1}\rangle-\underbrace{\frac{\langle d_{0}\vert\underline{A}\vert r_{1}\rangle}{\langle d_{0}\vert\underline{A}\vert d_{0}\rangle}}_{\beta_{1}}\vert d_{0}\rangle=\vert r_{1}\rangle-\frac{\langle b\vert\underline{A}\vert r_{1}\rangle}{\langle b\vert\underline{A}\vert b\rangle}\vert b\rangle,
+\vert d_{1}\rangle=\vert r_{1}\rangle-\beta_{1}\vert d_{0}\rangle=\vert r_{1}\rangle-\underbrace{\frac{\langle d_{0}\vert\,\underline{A}\,\vert r_{1}\rangle}{\langle d_{0}\vert\,\underline{A}\,\vert d_{0}\rangle}}_{\beta_{1}}\vert d_{0}\rangle=\vert r_{1}\rangle-\frac{\langle b\vert\,\underline{A}\,\vert r_{1}\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle}\vert b\rangle,
 \]
 
 \end_inset
@@ -1900,7 +1900,7 @@ CG 的 KS 诠释
 于是
 \begin_inset Formula 
 \[
-\langle r_{0}\vert r_{1}\rangle=\underbrace{\langle b\vert}_{\langle r_{0}\vert}\underbrace{\left(\vert b\rangle-\underline{A}\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}\right)}_{\vert r_{1}\rangle}=\langle b\vert b\rangle-\frac{\langle b\vert\underline{A}\vert b\rangle}{\langle b\vert\underline{A}\vert b\rangle}\langle b\vert b\rangle=0,
+\langle r_{0}\vert r_{1}\rangle=\underbrace{\langle b\vert}_{\langle r_{0}\vert}\underbrace{\left(\vert b\rangle-\underline{A}\,\vert b\rangle\frac{\langle b\vert b\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle}\right)}_{\vert r_{1}\rangle}=\langle b\vert b\rangle-\frac{\langle b\vert\,\underline{A}\,\vert b\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle}\langle b\vert b\rangle=0,
 \]
 
 \end_inset
@@ -1908,7 +1908,7 @@ CG 的 KS 诠释
 
 \begin_inset Formula 
 \[
-\langle d_{0}\vert\underline{A}\vert d_{1}\rangle=\underbrace{\langle b\vert\underline{A}}_{\langle d_{0}\vert\underline{A}}\underbrace{\left(\vert r_{1}\rangle-\frac{\langle b\vert\underline{A}\vert r_{1}\rangle}{\langle b\vert\underline{A}\vert b\rangle}\vert b\rangle\right)}_{\vert d_{1}\rangle}=\langle b\vert\underline{A}\vert r_{1}\rangle-\langle b\vert\underline{A}\vert r_{1}\rangle=0.
+\langle d_{0}\vert\,\underline{A}\,\vert d_{1}\rangle=\underbrace{\langle b\vert\,\underline{A}}_{\langle d_{0}\vert\,\underline{A}}\underbrace{\left(\vert r_{1}\rangle-\frac{\langle b\vert\,\underline{A}\,\vert r_{1}\rangle}{\langle b\vert\,\underline{A}\,\vert b\rangle}\vert b\rangle\right)}_{\vert d_{1}\rangle}=\langle b\vert\,\underline{A}\,\vert r_{1}\rangle-\langle b\vert\,\underline{A}\,\vert r_{1}\rangle=0.
 \]
 
 \end_inset
@@ -1932,7 +1932,7 @@ CG 的 KS 诠释
  情形。由
 \begin_inset Formula 
 \[
-\vert r_{k+1}\rangle-\vert r_{k}\rangle=-\underline{A}\left(\vert x_{k+1}\rangle-\vert x_{k}\rangle\right)=-\alpha_{k}\underline{A}\vert d_{k}\rangle,
+\vert r_{k+1}\rangle-\vert r_{k}\rangle=-\underline{A}\left(\vert x_{k+1}\rangle-\vert x_{k}\rangle\right)=-\alpha_{k}\underline{A}\,\vert d_{k}\rangle,
 \]
 
 \end_inset
@@ -1940,7 +1940,7 @@ CG 的 KS 诠释
 及
 \begin_inset Formula 
 \[
-\langle r_{k}\vert=\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\underline{A}^{\cancel{\mathrm{T}}}\impliedby\vert r_{k}\rangle-\vert r_{k-1}\rangle=-\alpha_{k-1}\underline{A}\vert d_{k-1}\rangle
+\langle r_{k}\vert=\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\,\underline{A}^{\cancel{\mathrm{T}}}\impliedby\vert r_{k}\rangle-\vert r_{k-1}\rangle=-\alpha_{k-1}\underline{A}\,\vert d_{k-1}\rangle
 \]
 
 \end_inset
@@ -1948,8 +1948,8 @@ CG 的 KS 诠释
 得
 \begin_inset Formula 
 \[
-\begin{aligned}\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle & =\overbrace{\left(\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\right)}^{\langle r_{k}\vert}\overbrace{\left(-\alpha_{k}\underline{A}\vert d_{k}\rangle\right)}^{\vert r_{k+1}\rangle-\vert r_{k}\rangle}\\
- & =-\alpha_{k}\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle+\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\alpha_{k}\underline{A}\vert d_{k}\rangle.
+\begin{aligned}\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle & =\overbrace{\left(\langle r_{k-1}\vert-\alpha_{k-1}\langle d_{k-1}\vert\,\underline{A}\right)}^{\langle r_{k}\vert}\overbrace{\left(-\alpha_{k}\underline{A}\,\vert d_{k}\rangle\right)}^{\vert r_{k+1}\rangle-\vert r_{k}\rangle}\\
+ & =-\alpha_{k}\langle r_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle+\alpha_{k-1}\langle d_{k-1}\vert\,\underline{A}\alpha_{k}\underline{A}\,\vert d_{k}\rangle.
 \end{aligned}
 \]
 
@@ -1966,7 +1966,7 @@ CG 的 KS 诠释
 及归纳假设
 \begin_inset Formula 
 \[
-\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle=\langle d_{k-2}\vert\underline{A}\vert d_{k}\rangle=0
+\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle=\langle d_{k-2}\vert\,\underline{A}\,\vert d_{k}\rangle=0
 \]
 
 \end_inset
@@ -1974,7 +1974,7 @@ CG 的 KS 诠释
 可得
 \begin_inset Formula 
 \[
-\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle=\left(\langle d_{k-1}\vert+\beta_{k-1}\langle d_{k-2}\vert\right)\underline{A}\vert d_{k}\rangle=\cancel{\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle}+\beta_{k-1}\cancel{\langle d_{k-2}\vert\underline{A}\vert d_{k}\rangle}
+\langle r_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle=\left(\langle d_{k-1}\vert+\beta_{k-1}\langle d_{k-2}\vert\right)\underline{A}\,\vert d_{k}\rangle=\cancel{\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle}+\beta_{k-1}\cancel{\langle d_{k-2}\vert\,\underline{A}\,\vert d_{k}\rangle}
 \]
 
 \end_inset
@@ -1982,7 +1982,7 @@ CG 的 KS 诠释
 及
 \begin_inset Formula 
 \[
-\alpha_{k-1}\langle d_{k-1}\vert\underline{A}\alpha_{k}\underline{A}\vert d_{k}\rangle=\left(\langle r_{k-1}\vert-\langle r_{k}\vert\right)\alpha_{k}\underline{A}\vert d_{k}\rangle=\alpha_{k}\cancel{\langle r_{k-1}\vert\underline{A}\vert d_{k}\rangle}-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle,
+\alpha_{k-1}\langle d_{k-1}\vert\,\underline{A}\alpha_{k}\underline{A}\,\vert d_{k}\rangle=\left(\langle r_{k-1}\vert-\langle r_{k}\vert\right)\alpha_{k}\underline{A}\,\vert d_{k}\rangle=\alpha_{k}\cancel{\langle r_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle}-\alpha_{k}\langle r_{k}\vert\,\underline{A}\,\vert d_{k}\rangle,
 \]
 
 \end_inset
@@ -1990,7 +1990,7 @@ CG 的 KS 诠释
 因此
 \begin_inset Formula 
 \[
-\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle.
+\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\,\underline{A}\,\vert d_{k}\rangle.
 \]
 
 \end_inset
@@ -2006,7 +2006,7 @@ CG 的 KS 诠释
 即得
 \begin_inset Formula 
 \[
-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle=\alpha_{k}\langle d_{k}\vert\underline{A}\vert d_{k}\rangle+\alpha_{k}\beta_{k}\cancel{\langle d_{k-1}\vert\underline{A}\vert d_{k}\rangle}.
+\alpha_{k}\langle r_{k}\vert\,\underline{A}\,\vert d_{k}\rangle=\alpha_{k}\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle+\alpha_{k}\beta_{k}\cancel{\langle d_{k-1}\vert\,\underline{A}\,\vert d_{k}\rangle}.
 \]
 
 \end_inset
@@ -2014,7 +2014,7 @@ CG 的 KS 诠释
 代入
 \begin_inset Formula 
 \[
-\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\underline{A}\vert d_{k}\rangle}
+\alpha_{k}=\frac{\langle d_{k}\vert r_{k}\rangle}{\langle d_{k}\vert\,\underline{A}\,\vert d_{k}\rangle}
 \]
 
 \end_inset
@@ -2022,7 +2022,7 @@ CG 的 KS 诠释
 即得
 \begin_inset Formula 
 \[
-\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\underline{A}\vert d_{k}\rangle=-\langle d_{k}\vert r_{k}\rangle,
+\langle r_{k}\vert r_{k+1}\rangle-\langle r_{k}\vert r_{k}\rangle=-\alpha_{k}\langle r_{k}\vert\,\underline{A}\,\vert d_{k}\rangle=-\langle d_{k}\vert r_{k}\rangle,
 \]
 
 \end_inset
@@ -2054,7 +2054,7 @@ CG 的 KS 诠释
 ，利用
 \begin_inset Formula 
 \[
-\vert r_{k+1}\rangle=\vert r_{k}\rangle-\alpha_{k}\underline{A}\vert d_{k}\rangle
+\vert r_{k+1}\rangle=\vert r_{k}\rangle-\alpha_{k}\underline{A}\,\vert d_{k}\rangle
 \]
 
 \end_inset
@@ -2062,7 +2062,7 @@ CG 的 KS 诠释
 得
 \begin_inset Formula 
 \[
-\langle r_{i}\vert r_{k+1}\rangle=\cancel{\langle r_{i}\vert r_{k}\rangle}-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle=-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle.
+\langle r_{i}\vert r_{k+1}\rangle=\cancel{\langle r_{i}\vert r_{k}\rangle}-\alpha_{k}\langle r_{i}\vert\,\underline{A}\,\vert d_{k}\rangle=-\alpha_{k}\langle r_{i}\vert\,\underline{A}\,\vert d_{k}\rangle.
 \]
 
 \end_inset
@@ -2078,7 +2078,7 @@ CG 的 KS 诠释
 及归纳假设
 \begin_inset Formula 
 \[
-\langle d_{i}\vert\underline{A}\vert d_{k}\rangle=\langle d_{i-1}\vert\underline{A}\vert d_{k}\rangle=0,\quad\forall i\in\left\{ 1,\dots,k-1\right\} ,
+\langle d_{i}\vert\,\underline{A}\,\vert d_{k}\rangle=\langle d_{i-1}\vert\,\underline{A}\,\vert d_{k}\rangle=0,\quad\forall i\in\left\{ 1,\dots,k-1\right\} ,
 \]
 
 \end_inset
@@ -2086,7 +2086,7 @@ CG 的 KS 诠释
 最终得
 \begin_inset Formula 
 \[
-\langle r_{i}\vert r_{k+1}\rangle=-\alpha_{k}\langle r_{i}\vert\underline{A}\vert d_{k}\rangle=-\alpha_{k}\cancel{\langle d_{i}\vert\underline{A}\vert d_{k}\rangle}-\alpha_{k}\beta_{i}\cancel{\langle d_{i-1}\vert\underline{A}\vert d_{k}\rangle}=0.
+\langle r_{i}\vert r_{k+1}\rangle=-\alpha_{k}\langle r_{i}\vert\,\underline{A}\,\vert d_{k}\rangle=-\alpha_{k}\cancel{\langle d_{i}\vert\,\underline{A}\,\vert d_{k}\rangle}-\alpha_{k}\beta_{i}\cancel{\langle d_{i-1}\vert\,\underline{A}\,\vert d_{k}\rangle}=0.
 \]
 
 \end_inset
@@ -2102,7 +2102,7 @@ CG 的 KS 诠释
 ，利用 
 \begin_inset Formula 
 \[
-\langle r_{0}\vert=\langle d_{0}\vert=\langle b\vert,\quad\vert r_{k+1}\rangle=\vert r_{k}\rangle-\alpha_{k}\underline{A}\vert d_{k}\rangle,
+\langle r_{0}\vert=\langle d_{0}\vert=\langle b\vert,\quad\vert r_{k+1}\rangle=\vert r_{k}\rangle-\alpha_{k}\underline{A}\,\vert d_{k}\rangle,
 \]
 
 \end_inset
@@ -2110,7 +2110,7 @@ CG 的 KS 诠释
 及归纳假设
 \begin_inset Formula 
 \[
-\langle r_{0}\vert r_{k}\rangle=\langle d_{0}\vert\underline{A}\vert d_{k}\rangle=0,
+\langle r_{0}\vert r_{k}\rangle=\langle d_{0}\vert\,\underline{A}\,\vert d_{k}\rangle=0,
 \]
 
 \end_inset
@@ -2118,7 +2118,7 @@ CG 的 KS 诠释
 得
 \begin_inset Formula 
 \[
-\langle r_{0}\vert r_{k+1}\rangle=\cancel{\langle r_{0}\vert r_{k}\rangle}-\alpha_{k}\cancel{\langle d_{0}\vert\underline{A}\vert d_{k}\rangle}=0.
+\langle r_{0}\vert r_{k+1}\rangle=\cancel{\langle r_{0}\vert r_{k}\rangle}-\alpha_{k}\cancel{\langle d_{0}\vert\,\underline{A}\,\vert d_{k}\rangle}=0.
 \]
 
 \end_inset
@@ -2238,7 +2238,7 @@ status open
  的分量，对所得的向量
 \begin_inset Formula 
 \begin{equation}
-\vert w_{k+1}\rangle\coloneqq\underline{A}\,\vert v_{k}\rangle-\sum_{i=1}^{k}\vert v_{i}\rangle\langle v_{i}\vert\underline{A}\vert v_{k}\rangle\label{eq:Krylov--Arnoldi}
+\vert w_{k+1}\rangle\coloneqq\underline{A}\,\vert v_{k}\rangle-\sum_{i=1}^{k}\vert v_{i}\rangle\langle v_{i}\vert\,\underline{A}\,\vert v_{k}\rangle\label{eq:Krylov--Arnoldi}
 \end{equation}
 
 \end_inset
@@ -2279,7 +2279,7 @@ Krylov 子空间
 
 \begin_layout Standard
 以上述 
-\begin_inset Formula $\langle v_{i}\vert\underline{A}\vert v_{k}\rangle$
+\begin_inset Formula $\langle v_{i}\vert\,\underline{A}\,\vert v_{k}\rangle$
 \end_inset
 
  及 
@@ -2297,7 +2297,7 @@ Krylov 子空间
  矩阵
 \begin_inset Formula 
 \[
-\underline{H}_{k}\coloneqq\underline{V}_{k}^{\mathrm{T}}\,\underline{A}\,\underline{V}_{k}\impliedby\langle i\vert\underline{H}_{k}\vert k\rangle\coloneqq\langle v_{i}\vert\underline{A}\vert v_{k}\rangle,\quad i=1,2,\dots,k,
+\underline{H}_{k}\coloneqq\underline{V}_{k}^{\mathrm{T}}\,\underline{A}\,\underline{V}_{k}\impliedby\langle i\vert\underline{H}_{k}\vert k\rangle\coloneqq\langle v_{i}\vert\,\underline{A}\,\vert v_{k}\rangle,\quad i=1,2,\dots,k,
 \]
 
 \end_inset
@@ -2495,7 +2495,7 @@ reference "eq:Krylov--Arnoldi"
  简化为三项：
 \begin_inset Formula 
 \[
-\vert w_{k+1}\rangle\coloneqq\underline{A}\,\vert v_{k}\rangle-\vert v_{k}\rangle\langle v_{k}\vert\underline{A}\vert v_{k}\rangle-\vert v_{k-1}\rangle\langle v_{k-1}\vert\underline{A}\vert v_{k}\rangle.
+\vert w_{k+1}\rangle\coloneqq\underline{A}\,\vert v_{k}\rangle-\vert v_{k}\rangle\langle v_{k}\vert\,\underline{A}\,\vert v_{k}\rangle-\vert v_{k-1}\rangle\langle v_{k-1}\vert\,\underline{A}\,\vert v_{k}\rangle.
 \]
 
 \end_inset
@@ -2522,21 +2522,21 @@ Givens 旋转
  的 QR 分解
 \begin_inset Formula 
 \[
-\underline{\bar{H}}_{k}=\underline{Q}_{k}\begin{bmatrix}\underline{R}_{k\times k}\\
+\underline{\bar{H}}_{k}=\underline{Q}_{k+1}\begin{bmatrix}\underline{R}_{k\times k}\\
 \underline{0}_{1\times k}
-\end{bmatrix},\quad\underline{Q}_{k}\in\mathbb{C}^{(k+1)\times(k+1)},\quad\underline{Q}_{k}^{\dagger}\,\underline{Q}_{k}=\underline{I}_{k+1},
+\end{bmatrix},\quad\underline{Q}_{k+1}\in\mathbb{C}^{(k+1)\times(k+1)},\quad\underline{Q}_{k+1}^{\dagger}\,\underline{Q}_{k+1}=\underline{I}_{k+1},
 \]
 
 \end_inset
 
 可将 
-\begin_inset Formula $\underline{Q}_{k}^{\dagger}=\underline{Q}_{k}^{-1}\in\mathbb{C}^{(k+1)\times(k+1)}$
+\begin_inset Formula $\underline{Q}_{k+1}^{\dagger}=\underline{Q}_{k+1}^{-1}\in\mathbb{C}^{(k+1)\times(k+1)}$
 \end_inset
 
  视为一系列 Givens 旋转矩阵的乘积，即
 \begin_inset Formula 
 \[
-\underline{Q}_{k}^{\dagger}=\underline{G}_{k}\,\underline{G}_{k-1}\cdots\underline{G}_{1},
+\underline{Q}_{k+1}^{\dagger}=\underline{G}_{k}\,\underline{G}_{k-1}\cdots\underline{G}_{1},
 \]
 
 \end_inset
@@ -2670,7 +2670,7 @@ reference "alg:CG"
  相当于
 \begin_inset Formula 
 \[
-\min_{\vert x_{k}\rangle\in\mathbb{K}_{k}}\left(\frac{1}{2}\langle x_{k}\vert\underline{A}\vert x_{k}\rangle-\langle x_{k}\vert b\rangle\right).
+\min_{\vert x_{k}\rangle\in\mathbb{K}_{k}}\left(\frac{1}{2}\langle x_{k}\vert\,\underline{A}\,\vert x_{k}\rangle-\langle x_{k}\vert b\rangle\right).
 \]
 
 \end_inset
@@ -2874,9 +2874,9 @@ GMRES($m$)
  的 QR 分解
 \begin_inset Formula 
 \[
-\underline{\bar{H}}_{k}=\underline{Q}_{k}\begin{bmatrix}\underline{R}_{k\times k}\\
+\underline{\bar{H}}_{k}=\underline{Q}_{k+1}\begin{bmatrix}\underline{R}_{k\times k}\\
 \underline{0}_{1\times k}
-\end{bmatrix},\quad\underline{Q}_{k}\in\mathbb{C}^{(k+1)\times(k+1)},\quad\underline{Q}_{k}^{\dagger}\,\underline{Q}_{k}=\underline{I}_{k+1},
+\end{bmatrix},\quad\underline{Q}_{k+1}\in\mathbb{C}^{(k+1)\times(k+1)},\quad\underline{Q}_{k+1}^{\dagger}\,\underline{Q}_{k+1}=\underline{I}_{k+1},
 \]
 
 \end_inset
@@ -2884,7 +2884,7 @@ GMRES($m$)
 得最小值问题
 \begin_inset Formula 
 \[
-\min_{\vert y_{k}\rangle\in\mathbb{C}^{k}}\Big\Vert\beta\,\vert1_{k+1}\rangle-\underline{\bar{H}}_{k}\,\vert y_{k}\rangle\Big\Vert=\min_{\vert y_{k}\rangle\in\mathbb{C}^{k}}\Big\Vert\underbrace{\underline{Q}_{k}^{\dagger}\,\beta\,\vert1_{k+1}\rangle}_{=\underline{Q}_{k}^{\dagger}\vert1\rangle\beta\eqqcolon\vert g_{k}\rangle}-\begin{bmatrix}\underline{R}_{k\times k}\\
+\min_{\vert y_{k}\rangle\in\mathbb{C}^{k}}\Big\Vert\beta\,\vert1_{k+1}\rangle-\underline{\bar{H}}_{k}\,\vert y_{k}\rangle\Big\Vert=\min_{\vert y_{k}\rangle\in\mathbb{C}^{k}}\Big\Vert\underbrace{\underline{Q}_{k+1}^{\dagger}\,\beta\,\vert1_{k+1}\rangle}_{=\underline{Q}_{k+1}^{\dagger}\vert1\rangle\beta\eqqcolon\vert g_{k+1}\rangle}-\begin{bmatrix}\underline{R}_{k\times k}\\
 \underline{0}_{1\times k}
 \end{bmatrix}\vert y_{k}\rangle\Big\Vert
 \]
@@ -2894,7 +2894,7 @@ GMRES($m$)
  的解：
 \begin_inset Formula 
 \[
-\vert y_{k}\rangle=\underline{R}_{k\times k}^{-1}\begin{bmatrix}\underline{I}_{k} & \underline{0}_{k\times1}\end{bmatrix}\vert g_{k}\rangle\implies\Vert r_{k}\Vert=\langle k+1\vert g_{k}\rangle.
+\vert y_{k}\rangle=\underline{R}_{k\times k}^{-1}\begin{bmatrix}\underline{I}_{k} & \underline{0}_{k\times1}\end{bmatrix}\vert g_{k+1}\rangle\implies\Vert r_{k}\Vert=\langle k+1\vert g_{k+1}\rangle.
 \]
 
 \end_inset

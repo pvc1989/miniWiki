@@ -4363,24 +4363,44 @@ f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
 \end_layout
 
 \begin_layout Standard
-上述所有格式都是线性且迎风的，可以统一为
+上述所有格式都是线性的，可以统一为
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{r}_{j}\qty(\underline{\hat{u}}_{j},\underline{\hat{u}}_{j-1})=\underline{S}_{j}\,\underline{\hat{u}}_{j}+\underline{S}_{j-1}\,\underline{\hat{u}}_{j-1},
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{r}_{j}\qty(\underline{\hat{u}}_{j},\underline{\hat{u}}_{j-1},\underline{\hat{u}}_{j+1})=\underline{S}_{j}\,\underline{\hat{u}}_{j}+\underline{S}_{j-1}\,\underline{\hat{u}}_{j-1}+\underline{S}_{j+1}\,\underline{\hat{u}}_{j+1},
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\underline{S}_{j},\underline{S}_{j-1}$
+\begin_inset Formula $\underline{S}_{j},\underline{S}_{j-1},\underline{S}_{j+1}$
 \end_inset
 
- 为实常值矩阵。
+ 为实常值矩阵，且可以数值地构造：遍历 
+\begin_inset Formula $k=1,\dots,N$
+\end_inset
+
+，依次取
+\begin_inset Formula 
+\[
+\underline{S}_{j}\vert k\rangle=\underline{r}_{j}\qty(\vert k\rangle,\vert0\rangle,\vert0\rangle),\quad\underline{S}_{j-1}\vert k\rangle=\underline{r}_{j}\qty(\vert0\rangle,\vert k\rangle,\vert0\rangle),\quad\underline{S}_{j+1}\vert k\rangle=\underline{r}_{j}\qty(\vert0\rangle,\vert0\rangle,\vert k\rangle).
+\]
+
+\end_inset
+
+若网格均匀，且基函数 
+\begin_inset Formula $\underline{b}_{j}$
+\end_inset
+
+ 在相对坐标下具有相同的形式，则 
+\begin_inset Formula $\underline{S}_{j},\underline{S}_{j-1},\underline{S}_{j+1}$
+\end_inset
+
+ 对所有单元相同。
 \end_layout
 
 \begin_layout Standard
 若初值为 
-\begin_inset Formula $u(x,t)=\exp(\ii\kappa x)$
+\begin_inset Formula $u(x,t=0)=\exp(\ii\kappa x)$
 \end_inset
 
 ，则均匀网格 
@@ -4398,7 +4418,7 @@ f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
 因此有
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j},\quad\underline{S}(\kappa h)\coloneqq\underline{S}_{j}\,+\underline{S}_{j-1}\exp(-\ii\kappa h),
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j},\quad\underline{S}(\kappa h)\coloneqq\underline{S}_{j}+\underline{S}_{j-1}\exp(-\ii\kappa h)+\underline{S}_{j+1}\exp(+\ii\kappa h),
 \]
 
 \end_inset
@@ -4426,7 +4446,7 @@ f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
  具有周期性
 \begin_inset Formula 
 \[
-\underline{S}(\kappa h)=\underline{S}(\kappa h+m2\mathrm{\pi}),\quad m\in\mathbb{Z},
+\underline{S}(\kappa h)=\underline{S}(\kappa h+m2\mathrm{\pi}),\quad\forall m\in\mathbb{Z},
 \]
 
 \end_inset
@@ -4470,7 +4490,30 @@ f^{\mathrm{R}}(x,t)=f^{\mathrm{D}}(x,t)+f^{\mathrm{C}}(x,t),
 \begin_inset Formula $N$
 \end_inset
 
- 个模态的叠加。
+ 个模态的叠加：
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(t)=\sum_{l=1}^{N}C_{l}\,\underline{\tilde{u}}_{l}\exp(\ii\kappa jh-\ii\omega_{l}t),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{l}$
+\end_inset
+
+ 由初始条件决定：
+\begin_inset Formula 
+\[
+\underline{\hat{u}}_{j}(0)=\sum_{l=1}^{N}C_{l}\,\underline{\tilde{u}}_{l}\exp(\ii\kappa jh),\quad\hat{u}_{j,k}(0)=\begin{cases}
+\exp(\ii\kappa x_{j,k}), & \text{Lagrange basis}\\
+\dfrac{\ip{b_{k}}{\exp(\ii\kappa x)}}{\ip{b_{k}}{b_{k}}}, & \text{Legendre basis}
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -4485,7 +4528,11 @@ literal "true"
 
 \end_inset
 
- 定义：满足 
+ 定义：在 
+\begin_inset Formula $[-N\mathrm{\pi},+N\mathrm{\pi}]$
+\end_inset
+
+ 内满足 
 \begin_inset Formula $\omega_{l}\approx\kappa a$
 \end_inset
 
@@ -4493,81 +4540,58 @@ literal "true"
 \end_layout
 
 \begin_layout Subsubsection
-时域分析与空间分析
+基准波数与真实波数
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset citation
-LatexCommand citet
-key "Hu_2002,Mengaldo_2018"
-literal "true"
+LatexCommand cite
+key "Helenbrook_2006"
+literal "false"
 
 \end_inset
 
- 注意到特征值问题
-\begin_inset Formula 
-\[
-(\tilde{\kappa}h)\,\frac{a}{\ii h}\,\underline{\tilde{u}}=\underline{S}(\kappa h)\,\underline{\tilde{u}}
-\]
-
-\end_inset
-
-的自变量、应变量地位对等，故定义：
-\end_layout
-
-\begin_layout Itemize
-以 
-\begin_inset Formula $\kappa h$
-\end_inset
-
- 为实自变量，
+ 指出：寄生模态的 
 \begin_inset Formula $\tilde{\kappa}h$
 \end_inset
 
- 为复应变量的分析为时域分析，每个 
+–
 \begin_inset Formula $\kappa h$
 \end_inset
 
- 对应 
-\begin_inset Formula $N$
-\end_inset
-
- 个 
+ 曲线，可以由物理模态的 
 \begin_inset Formula $\tilde{\kappa}h$
 \end_inset
 
-。该方法只适用于均匀网格。
-\end_layout
-
-\begin_layout Itemize
-以 
-\begin_inset Formula $\tilde{\kappa}h$
-\end_inset
-
- 为实自变量，
+–
 \begin_inset Formula $\kappa h$
 \end_inset
 
- 为复应变量的分析为空间分析，每个 
-\begin_inset Formula $\tilde{\kappa}h$
-\end_inset
-
- 对应 2 个 
+ 曲线沿 
 \begin_inset Formula $\kappa h$
 \end_inset
 
-。该方法适用于非均匀网格。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
+ 轴平移 
+\begin_inset Formula $2\mathrm{\pi}$
 \end_inset
 
+ 的整数倍而得到。在 
+\begin_inset Formula $[(m-1)\mathrm{\pi},m\mathrm{\pi}]$
+\end_inset
 
-\end_layout
+ 内取 
+\begin_inset Formula $\kappa h$
+\end_inset
 
-\begin_layout Subsubsection
-基准波数与真实波数
+，将所得的 
+\begin_inset Formula $\left\{ (\tilde{\kappa}h)_{l}\right\} _{l=1}^{N}$
+\end_inset
+
+ 按模由小到大排序，其中排第 
+\begin_inset Formula $m$
+\end_inset
+
+ 的为物理模态。
 \end_layout
 
 \begin_layout Standard
@@ -4675,6 +4699,116 @@ literal "true"
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+若 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 非边界单元，则 
+\begin_inset Formula $\bar{\kappa}h$
+\end_inset
+
+ 可取 
+\begin_inset Formula $[-\mathrm{\pi},\mathrm{\pi}]$
+\end_inset
+
+ 内的任意值；否则只能考虑 
+\begin_inset Formula $[-L,L]$
+\end_inset
+
+ 内的周期解，即 
+\begin_inset Formula $\bar{\kappa}h$
+\end_inset
+
+ 只能取如下离散值：
+\begin_inset Formula 
+\[
+\bar{k}\in\mathbb{Z}\cap\left[-\frac{N_{E}}{2},\frac{N_{E}}{2}\right]\impliedby\begin{cases}
+\bar{\kappa}h\in[-\mathrm{\pi},\mathrm{\pi}]\\
+\bar{\kappa}L/\mathrm{\pi}\eqqcolon\bar{k}\in\mathbb{Z}\\
+h\coloneqq2L/N_{E}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+时域分析与空间分析
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Hu_2002,Mengaldo_2018"
+literal "true"
+
+\end_inset
+
+ 注意到特征值问题
+\begin_inset Formula 
+\[
+(\tilde{\kappa}h)\,\frac{a}{\ii h}\,\underline{\tilde{u}}=\underline{S}(\kappa h)\,\underline{\tilde{u}}
+\]
+
+\end_inset
+
+的自变量、应变量地位对等，故定义：
+\end_layout
+
+\begin_layout Itemize
+以 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 为实自变量，
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+ 为复应变量的分析为时域分析，每个 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 对应 
+\begin_inset Formula $N$
+\end_inset
+
+ 个 
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+。该方法只适用于均匀网格。
+\end_layout
+
+\begin_layout Itemize
+以 
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+ 为实自变量，
+\begin_inset Formula $\kappa h$
+\end_inset
+
+ 为复应变量的分析为空间分析，每个 
+\begin_inset Formula $\tilde{\kappa}h$
+\end_inset
+
+ 对应 2 个 
+\begin_inset Formula $\kappa h$
+\end_inset
+
+。该方法适用于非均匀网格。
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
