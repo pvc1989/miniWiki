@@ -4539,6 +4539,33 @@ literal "true"
  的那个模态为物理模态，其余为寄生模态。
 \end_layout
 
+\begin_layout Quote
+The numerical solution (3.9) is a superposition of 
+\begin_inset Formula $N$
+\end_inset
+
+ waves traveling at different phase speeds.
+ We define the physical mode as one with the frequency that approximates
+ the exact dispersion relation for a range of wave numbers.
+ The others are the parasite modes associated with the numerical scheme.
+ — 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hu_1999"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 基准波数与真实波数
 \end_layout
@@ -4592,6 +4619,58 @@ literal "false"
 \end_inset
 
  的为物理模态。
+\end_layout
+
+\begin_layout Quote
+We also have unrolled the 
+\begin_inset Formula $p+1$
+\end_inset
+
+ eigenvalues in 
+\begin_inset Formula $\theta$
+\end_inset
+
+; at any value of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ we have 
+\begin_inset Formula $p+1$
+\end_inset
+
+ eigenvalues.
+ The larger eigenvalues correspond physically to eigenfunctions with a wave
+ number that is shifted by an integer multiple of 
+\begin_inset Formula $2\mathrm{\pi}$
+\end_inset
+
+ from 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ We order the eigenvalues by magnitude and then assign the eigenvalues to
+ the expanded domain 
+\begin_inset Formula $[0,(p+1)\mathrm{\pi}]$
+\end_inset
+
+.
+ — 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Helenbrook_2006"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5698,6 +5777,65 @@ DG-with-FR
 \noun default
 \color inherit
  与以 Gauss–Legendre 积分点为 Lagrange 插值结点的 FR 等价。
+\end_layout
+
+\begin_layout Subsubsection
+DG-with-FR without Quadrature
+\end_layout
+
+\begin_layout Standard
+DG-with-FR 的另一种 quadrature free 实现：取正交基，则
+\begin_inset Formula 
+\[
+0=\ip{b_{k}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=\ip{b_{k}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{b_{k}}{\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{b_{k}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
+\]
+
+\end_inset
+
+可化为
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{t}\,u^{h}}_{E_{j}}=\ip{b_{k}}{\partial_{t}\,\sum_{l=1}^{N}\hat{u}_{l}\,b_{l}}_{E_{j}}=\sum_{l=1}^{N}\ip{b_{k}}{b_{l}}_{E_{j}}\left(\partial_{t}\,\hat{u}_{l}\right)=\ip{b_{k}}{b_{k}}_{E_{j}}\left(\partial_{t}\,\hat{u}_{k}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}=\ip{b_{k}}{\partial_{x}\,\sum_{l=1}^{N}\hat{f}_{l}\,b_{l}}_{E_{j}}=\sum_{l=1}^{N}\ip{b_{k}}{\partial_{x}\,b_{l}}_{E_{j}}\hat{f}_{l}=\sum_{l=k+1}^{N}\ip{b_{k}}{\partial_{x}\,b_{l}}_{E_{j}}\hat{f}_{l},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}}=\ip{b_{k}}{\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}-f^{\mathrm{D}}\right)_{\zeta}\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}-f^{\mathrm{D}}\right)_{\zeta}\ip{b_{k}}{\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\ip{b_{k}}{\partial_{x}\,b_{l}}_{E_{j}}$
+\end_inset
+
+ 为严格上三角阵，且不能进一步简化：
+\begin_inset Formula 
+\[
+\ip{b_{k}}{\partial_{x}\,b_{l+2}}_{E_{j}}=\ip{b_{k}}{\partial_{x}\,b_{l}}_{E_{j}}\ne0\impliedby\begin{cases}
+\ip{b_{k}}{\partial_{x}\,b_{l}}_{E_{j}}\ne0\\
+\partial_{x}\,b_{l+2}-\partial_{x}\,b_{l}=(2l+3)\,b_{l+1}\\
+\ip{b_{k}}{b_{l+1}}_{E_{j}}=0\impliedby k<l+1
+\end{cases}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
