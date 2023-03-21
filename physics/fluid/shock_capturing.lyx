@@ -1242,10 +1242,10 @@ reference "def:TVD-scheme"
 \end_layout
 
 \begin_layout Section
-间断识别器
+间断探测器
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:激波捕捉：间断识别器"
+name "sec:激波捕捉：间断探测器"
 
 \end_inset
 
@@ -1267,7 +1267,7 @@ name "sec:激波捕捉：间断识别器"
 \color inherit
  或
 \color red
-间断识别器 (discontinuity identifier)
+间断探测器 (discontinuity detector)
 \color inherit
 。
 \end_layout
@@ -1318,7 +1318,7 @@ s\min(\vert a\vert,\vert b\vert,\vert c\vert) & s=\Sign a=\Sign b=\Sign c\\
 \end_layout
 
 \begin_layout Standard
-这种指示器的计算效率很高，但容易将（光滑的）极值点所在单元误报为坏单元。
+这种探测器的计算效率很高，但容易将（光滑的）极值点所在单元误报为坏单元。
 \end_layout
 
 \begin_layout Subsection
@@ -1370,7 +1370,7 @@ a & \vert a_{1}\vert\le Mh^{2}\\
 \end_layout
 
 \begin_layout Standard
-这种指示器的计算效率与 minmod 接近，但识别效果依赖于可调参数 
+这种探测器的计算效率与 minmod 接近，但识别效果依赖于可调参数 
 \begin_inset Formula $M$
 \end_inset
 
@@ -1405,6 +1405,17 @@ KXRCF (Krivodonova–Xin–Remacle–Chevaugeon–Flaherty)
  两部分。
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Adjerid_2002,Krivodonova_2003"
+literal "false"
+
+\end_inset
+
+ 指出：
+\end_layout
+
 \begin_layout Lemma
 \begin_inset ERT
 status open
@@ -1416,17 +1427,11 @@ status open
 
 \end_inset
 
-由 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:DG"
-plural "false"
-caps "false"
-noprefix "false"
-
+若高阶格式给出的 
+\begin_inset Formula $p$
 \end_inset
 
- 方法给出的近似光滑解在出口 
+ 次多项式解光滑，则其在出口 
 \begin_inset Formula $\partial E_{i}^{+}$
 \end_inset
 
@@ -1437,20 +1442,20 @@ noprefix "false"
 ：
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{+}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q(\vec{x},t)\right)=\vert\partial E_{i}^{+}\vert\cdot\order{h^{2p+1}}
+\int_{\partial E_{i}^{+}}\left(u_{i}^{h}-u\right)=\vert\partial E_{i}^{+}\vert\cdot\order{h^{2p+1}}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $q(\vec{x},t)$
+\begin_inset Formula $u(\vec{x},t)$
 \end_inset
 
  为某个基本变量或特征变量，
-\begin_inset Formula $q^{h}|_{E_{i}}(\vec{x},t)$
+\begin_inset Formula $u_{i}^{h}(\vec{x},t)$
 \end_inset
 
- 为 
+ 为其在 
 \begin_inset Formula $E_{i}$
 \end_inset
 
@@ -1465,30 +1470,37 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-name "Krivodonova (2004)"
-target "https://doi.org/10.1016/j.apnum.2003.11.002"
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Krivodonova_2004"
 literal "false"
 
 \end_inset
 
- 基于上述性质，提出了以下间断指示器：设 
-\begin_inset Formula $E_{i}$
-\end_inset
-
- 与 
+ 基于上述性质，提出了以下间断探测器：设 
 \begin_inset Formula $E_{j}$
 \end_inset
 
- 为相邻单元，在二者界面 
+ 为与 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 相邻的单元（可能有多个，不失一般性，这里只考虑其中一个），且物理量流出 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+、流入 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+，在二者界面 
 \begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
 \end_inset
 
- 上计算两侧的近似解之差的积分
+ 上计算两侧近似解之差的积分
 \begin_inset Formula 
 \[
-I_{i}=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q^{h}|_{E_{j}}(\vec{x},t)\right)=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}-q\right)-\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)
+\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u\right)-\int_{\partial E_{j}^{+}}\left(u_{j}^{h}-u\right)
 \]
 
 \end_inset
@@ -1501,14 +1513,14 @@ I_{i}=\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}(\vec{x},t)-q^{h}|_{E_{j}}(\v
 \begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
 \end_inset
 
- 上光滑，则由引理可得 
-\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(q^{h}|_{E_{j}}-q\right)=\vert\partial E_{j}^{+}\vert\cdot\order{h^{2p+1}}$
+ 附近光滑，则由引理可得 
+\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(u_{j}^{h}-u\right)=\vert\partial E_{j}^{+}\vert\cdot\order{h^{2p+1}}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-I_{i}=\int_{\partial E_{i}^{-}}\order{h^{p+1}}=\vert\partial E_{i}^{-}\vert\cdot\order{h^{p+1}}
+\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{h^{p+1}}=\vert\partial E_{i}^{-}\vert\cdot\order{h^{p+1}}
 \]
 
 \end_inset
@@ -1521,18 +1533,18 @@ I_{i}=\int_{\partial E_{i}^{-}}\order{h^{p+1}}=\vert\partial E_{i}^{-}\vert\cdot
 \begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
 \end_inset
 
- 上跳跃，则有 
-\begin_inset Formula $\left(q^{h}|_{E_{i}}-q\right)=\order{1}$
+ 附近跳跃，则有 
+\begin_inset Formula $\left(u_{i}^{h}-u\right)=\order{1}$
 \end_inset
 
  或 
-\begin_inset Formula $\left(q^{h}|_{E_{j}}-q\right)=\order{1}$
+\begin_inset Formula $\left(u_{j}^{h}-u\right)=\order{1}$
 \end_inset
 
 ，从而有
 \begin_inset Formula 
 \[
-I_{i}=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\cdot\order{1}
+\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\cdot\order{1}
 \]
 
 \end_inset
@@ -1541,27 +1553,54 @@ I_{i}=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\cdot\order
 \end_layout
 
 \begin_layout Itemize
-定义不依赖于 
-\begin_inset Formula $h$
+定义不依赖于单元 
+\begin_inset Formula $E_{i}$
 \end_inset
 
- 及 
-\begin_inset Formula $\Vert q^{h}\Vert_{E_{i}}$
+ 的特征长度 
+\begin_inset Formula $h_{i}$
 \end_inset
 
- 的指示器：
+ 及其上近似解范数 
+\begin_inset Formula $\Vert u_{i}^{h}\Vert$
+\end_inset
+
+ 的探测器：
 \begin_inset Formula 
 \[
-I_{i}^{*}=\frac{\vert I_{i}\vert/\Vert q^{h}\Vert_{E_{i}}}{\vert\partial E_{i}^{-}\vert h^{(p+1)/2}}=\frac{\left|\int_{\partial E_{i}^{-}}\left(q^{h}|_{E_{i}}-q^{h}|_{E_{j}}\right)\right|}{\vert\partial E_{i}^{-}\vert\sqrt{h^{p+1}}\Vert q^{h}\Vert_{E_{i}}}
+I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}\,\Vert u_{i}^{h}\Vert}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+\infty, & \text{间断},\\
+0, & \text{光滑},
+\end{cases}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\vert\partial E_{i}^{-}\vert h^{(p+1)/2}$
+\begin_inset Formula $\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}$
 \end_inset
 
  可视为以上两种情形的“平均精度”。
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Krivodonova_2004"
+literal "false"
+
+\end_inset
+
+ 取
+\begin_inset Formula $h$
+\end_inset
+
+ 为单元外接球半径，
+\begin_inset Formula $\Vert u_{i}^{h}\Vert$
+\end_inset
+
+ 为 
+\begin_inset Formula $\vert u_{i}^{h}\vert$
+\end_inset
+
+ 在积分点处取值最大者。
 \end_layout
 
 \begin_layout Standard
@@ -1571,7 +1610,73 @@ I_{i}^{*}=\frac{\vert I_{i}\vert/\Vert q^{h}\Vert_{E_{i}}}{\vert\partial E_{i}^{
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
+Zhu–Qiu
+\end_layout
+
+\begin_layout Standard
+针对四面体单元，
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Tetra"
+literal "false"
+
+\end_inset
+
+ 提出一种与之类似的探测器：
+\begin_inset Formula 
+\[
+I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{{\color{red}(p>1\mathbin{?}1.5:1)}}{\color{blue}\min_{\vec{x}\in\partial E_{i}}\vert u_{i}^{h}\vert}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+\infty, & \text{间断},\\
+0, & \text{光滑},
+\end{cases}
+\]
+
+\end_inset
+
+针对稳态解问题，
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Steady"
+literal "false"
+
+\end_inset
+
+ 提出另一种与之类似的探测器：
+\begin_inset Formula 
+\[
+I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\right)\right|}{h_{i}\min_{k\in\left\{ i\right\} \cup K_{i}}\int_{E_{j}}\vert u_{j}^{h}\vert}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+\infty, & \text{间断},\\
+0, & \text{光滑},
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{k\to i}^{h}$
+\end_inset
+
+ 表示将 
+\begin_inset Formula $u_{k}^{h}\equiv\left.u^{h}\right|_{E_{k}}$
+\end_inset
+
+ 延拓到 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 所得的函数，
+\begin_inset Formula $K_{i}$
+\end_inset
+
+ 为与 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 邻接的那些单元的指标集。
+\end_layout
+
+\begin_layout Subsubsection
 Li–Ren
 \end_layout
 
@@ -1583,7 +1688,7 @@ literal "false"
 
 \end_inset
 
- 将近似函数 
+ 将高阶有限体积格式给出的近似解 
 \begin_inset Formula $u^{h}$
 \end_inset
 
@@ -1594,7 +1699,7 @@ literal "false"
  上的光滑度定义为
 \begin_inset Formula 
 \[
-\mathrm{IS}_{i}=\frac{\sum_{j\in S_{i}\setminus\left\{ i\right\} }\left\vert u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})\right\vert }{N_{i}h_{i}^{(k+1)/2}\max_{j\in S_{i}}\langle u\rangle_{j}}
+I_{i}=\frac{\max_{k\in K_{i}}\left\vert u_{i}^{h}(\vec{r}_{i})-u_{k}^{h}(\vec{r}_{i})\right\vert }{N_{i}\,h_{i}^{(p+1)/2}\max_{k\in\left\{ i\right\} \cup K_{i}}\left\vert \bar{u}_{k}\right\vert }
 \]
 
 \end_inset
@@ -1615,8 +1720,8 @@ literal "false"
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 的面邻接单元数量，
-\begin_inset Formula $\langle u\rangle_{j}$
+ 的邻接单元数量，
+\begin_inset Formula $\bar{u}_{k}$
 \end_inset
 
  表示 
@@ -1624,18 +1729,14 @@ literal "false"
 \end_inset
 
  在单元 
-\begin_inset Formula $E_{j}$
+\begin_inset Formula $E_{k}$
 \end_inset
 
- 上均值。
-\end_layout
-
-\begin_layout Standard
-基于
+ 上均值。由
 \begin_inset Formula 
 \[
-u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})=\begin{cases}
-\order{h_{i}^{k+1}}, & \text{in smooth region}\\
+u_{i}^{h}(\vec{r}_{i})-u_{k}^{h}(\vec{r}_{i})=\begin{cases}
+\order{h_{i}^{p+1}}, & \text{in smooth region}\\
 \order{1}, & \text{near discontinuity}
 \end{cases}
 \]
@@ -1645,9 +1746,9 @@ u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})=\begin{cases}
 可知
 \begin_inset Formula 
 \[
-\lim_{h_{i}\to0}\mathrm{IS}_{i}=\begin{cases}
-\lim_{h_{i}\to0}\order{h_{i}^{+(k+1)/2}}=0, & \text{in smooth region}\\
-\lim_{h_{i}\to0}\order{h_{i}^{-(k+1)/2}}=\infty, & \text{near discontinuity}
+\lim_{h_{i}\to0}I_{i}=\begin{cases}
+\lim_{h_{i}\to0}\order{h_{i}^{+(p+1)/2}}=0, & \text{in smooth region}\\
+\lim_{h_{i}\to0}\order{h_{i}^{-(p+1)/2}}=\infty, & \text{near discontinuity}
 \end{cases}
 \]
 
@@ -1657,22 +1758,17 @@ u_{i}^{h}(\vec{r}_{i})-u_{j}^{h}(\vec{r}_{i})=\begin{cases}
 \begin_inset Formula 
 \[
 \begin{cases}
-\mathrm{IS}_{i}<\overline{\text{IS}}, & \text{in smooth region}\\
-\mathrm{IS}_{i}>\overline{\text{IS}}, & \text{near discontinuity}
+I_{i}<\bar{S}, & \text{in smooth region}\\
+I_{i}>\bar{S}, & \text{near discontinuity}
+\end{cases},\quad\bar{S}=\begin{cases}
+1, & p\le2\\
+3, & p=3
 \end{cases}
 \]
 
 \end_inset
 
-其中 
-\begin_inset Formula $\overline{\text{IS}}=1$
-\end_inset
 
- for 三阶及以下格式，
-\begin_inset Formula $\overline{\text{IS}}=3$
-\end_inset
-
- for 四阶格式。
 \end_layout
 
 \begin_layout Section
@@ -2038,7 +2134,7 @@ f_{i+1/2}^{\mathrm{High}} & =A\times\begin{cases}
 \color inherit
 。最简单的
 \color red
-光滑程度指示器 (smoothness indicator)
+光滑度指示器 (smoothness indicator)
 \color inherit
  是变量在相邻网格节点上的变化量的比值
 \begin_inset Formula 
