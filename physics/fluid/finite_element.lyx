@@ -5852,7 +5852,32 @@ DG-with-FR 的另一种 quadrature free 实现：取正交基，则
  的任意两组基之间有非退化的线性变换
 \begin_inset Formula 
 \[
-\underline{b}_{j}=\underline{T}\,\underline{b}'_{j}\implies\underline{\hat{u}}_{j}=\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\underline{b}_{j}=\underline{C}\,\underline{b}'_{j}\implies\begin{cases}
+\underline{\hat{u}}_{j}=\underline{C}^{-\mathrm{T}}\,\underline{\hat{u}}_{j}',\\
+\underline{\hat{w}}_{j}=\underline{C}^{-\mathrm{T}}\,\underline{\hat{w}}_{j}',
+\end{cases}
+\]
+
+\end_inset
+
+因此有
+\begin_inset Formula 
+\[
+\begin{aligned}\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}} & =\ip{\underline{\hat{w}}_{j}^{\mathrm{T}}\,\underline{b}_{j}}{\partial_{t}\,\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{b}_{j}}_{E_{j}}=\ip{\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\underline{b}_{j}}{\partial_{t}\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{u}}'_{j}\right)^{\mathrm{T}}\underline{b}_{j}}_{E_{j}}\\
+ & =\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\ip{\underline{b}_{j}}{\underline{b}_{j}^{\mathrm{T}}}_{E_{j}}\frac{\dd}{\dd t}\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{u}}'_{j}\right)\\
+ & =\left(\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\underline{C}^{-1}\ip{\underline{b}_{j}}{\underline{b}_{j}^{\mathrm{T}}}_{E_{j}}\underline{C}^{-\mathrm{T}}\,\frac{\dd}{\dd t}\underline{\hat{u}}'_{j},
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\ip{w^{h}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}} & =\ip{\underline{\hat{w}}_{j}^{\mathrm{T}}\,\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}=\ip{\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}\\
+ & =\left(\underline{C}^{-\mathrm{T}}\,\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\ip{\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}\\
+ & =\left(\underline{\hat{w}}'_{j}\right)^{\mathrm{T}}\underline{C}^{-1}\ip{\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}},
+\end{aligned}
 \]
 
 \end_inset
@@ -5860,13 +5885,23 @@ DG-with-FR 的另一种 quadrature free 实现：取正交基，则
 从而有
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j}\implies\frac{\dd}{\dd t}\underline{\hat{u}}_{j}'=\underline{T}\,\underline{S}\,\underline{T}^{-1}\,\underline{\hat{u}}_{j}',
+\begin{aligned}\frac{\dd}{\dd t}\underline{\hat{u}}'_{j} & =\left(\underline{C}^{-1}\ip{\underline{b}_{j}}{\underline{b}_{j}^{\mathrm{T}}}_{E_{j}}\underline{C}^{-\mathrm{T}}\right)^{-1}\left(-\underline{C}^{-1}\ip{\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}\right)\\
+ & =\underline{C}^{\mathrm{T}}\left(-\ip{\underline{b}_{j}}{\underline{b}_{j}^{\mathrm{T}}}_{E_{j}}^{-1}\ip{\underline{b}_{j}}{\partial_{x}\,f^{\mathrm{R}}}_{E_{j}}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}'=\underline{C}^{\mathrm{T}}\,\underline{S}\,\underline{C}^{-\mathrm{T}}\,\underline{\hat{u}}_{j}'\impliedby\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underline{S}\,\underline{\hat{u}}_{j},
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\underline{T}\,\underline{S}\,\underline{T}^{-1}$
+\begin_inset Formula $\underline{C}^{\mathrm{T}}\,\underline{S}\,\underline{C}^{-\mathrm{T}}$
 \end_inset
 
  与 
