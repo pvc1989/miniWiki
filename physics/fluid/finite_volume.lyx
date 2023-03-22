@@ -439,7 +439,7 @@ Cell
 
 \end_inset
 </cell>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -503,11 +503,13 @@ Element
 
 \end_inset
 </cell>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
+\family typewriter
+Volume
 \end_layout
 
 \end_inset
@@ -2761,9 +2763,68 @@ name "sec:高阶有限体积格式"
 \end_layout
 
 \begin_layout Standard
+函数 
+\begin_inset Formula $u(\vec{x},t)$
+\end_inset
+
+ 在 
+\begin_inset Formula $d$
+\end_inset
+
+ 维控制体 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 内近似到 
+\begin_inset Formula $k$
+\end_inset
+
+ 次多项式：
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-u(x)\approx u_{i}^{h}(x)\equiv\langle u\rangle_{I_{i}}+\sum_{l=1}^{k}\hat{u}_{l,i}\,\varphi_{l,i}(x),\quad\forall x\in I_{i}
+u(\vec{x},t)\approx u_{i}^{h}(\vec{x},t)\equiv\hat{u}_{0,i}(t)+\sum_{l=1}^{N(k,d)}\hat{u}_{l,i}(t)\,\varphi_{l,i}(\vec{x}),\quad\forall x\in E_{i},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\hat{u}_{0,i}(t)=\langle u\rangle_{E_{i}};\quad N(k,d)=\binom{k+d}{d}-1;
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\varphi_{l,i}(\vec{x})=(\underline{x}-\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\underline{x}-\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{E_{i}},\quad\underline{\alpha}=\begin{bmatrix}1\\
+0\\
+\vdots
+\end{bmatrix},\dots,\begin{bmatrix}\vdots\\
+0\\
+k
+\end{bmatrix},
+\]
+
+\end_inset
+
+或无量纲化的
+\begin_inset Formula 
+\[
+\varphi_{l,i}(\vec{x})=(\delta\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\delta\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{E_{i}},\quad,\delta\underline{x}_{i}=\begin{bmatrix}(x-x_{i})/(x_{\max}-x_{\min})\\
+(y-y_{i})/(y_{\max}-y_{\min})\\
+\vdots
+\end{bmatrix},\quad\underline{\alpha}=\begin{bmatrix}1\\
+0\\
+\vdots
+\end{bmatrix},\dots,\begin{bmatrix}\vdots\\
+0\\
+k
+\end{bmatrix},
 \]
 
 \end_inset
@@ -2778,15 +2839,170 @@ u(x)\approx u_{i}^{h}(x)\equiv\langle u\rangle_{I_{i}}+\sum_{l=1}^{k}\hat{u}_{l,
 -exact Reconstruction
 \end_layout
 
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\langle u_{i}^{h}\rangle_{I_{j}}=\langle u\rangle_{I_{j}},\quad\forall I_{j}\in S_{i}
-\]
+\begin_layout Quote
+The property of 
+\begin_inset Formula $k$
+\end_inset
+
+-exactness means that 
+\begin_inset Formula $u_{i}^{h}$
+\end_inset
+
+ reconstructs polynomials of degree 
+\begin_inset Formula $k$
+\end_inset
+
+ or less exactly, which can be used to determine the coefficients 
+\begin_inset Formula $u_{l,i}$
+\end_inset
+
+.
+ In the neighborhood of 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+, there exists a degree 
+\begin_inset Formula $k$
+\end_inset
+
+ polynomial 
+\begin_inset Formula $v$
+\end_inset
+
+ that approximates the exact solution 
+\begin_inset Formula $u$
+\end_inset
+
+ to 
+\begin_inset Formula $\order{h^{k+1}}$
+\end_inset
+
+.
+ — 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2011_k-exact"
+literal "false"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\langle u_{i}^{h}\rangle_{E_{j}}=\langle u\rangle_{E_{j}}+\order{h^{k+1}},\quad\forall j\in S_{i},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ 为由 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 及其附近控制体构成的局部模板。为避免方程组奇异，应保证
+\begin_inset Formula 
+\[
+N(k,d)<\vert S_{i}\vert,
+\]
+
+\end_inset
+
+由此得超定线性方程组，可由 SVD 得最小二乘解。所得的 
+\begin_inset Formula $u^{h}$
+\end_inset
+
+ 被 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2011_k-exact"
+literal "false"
+
+\end_inset
+
+ 称为
+\color red
+初级 (primary)
+\color inherit
+ 重构。
+\end_layout
+
+\begin_layout Standard
+为简化 WENO 过程实现，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2011_k-exact"
+literal "false"
+
+\end_inset
+
+ 定义了一种
+\color red
+次级 (secondary)
+\color inherit
+ 重构，其基本思想是将 
+\begin_inset Formula $u_{j}^{h}$
+\end_inset
+
+ 延拓到 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 上，使其导数不变，并将均值修正为 
+\begin_inset Formula $\langle u\rangle_{i}$
+\end_inset
+
+，即定义
+\begin_inset Formula 
+\[
+u_{j\to i}^{h}(\vec{x},t)=\hat{u}_{0,j\to i}(t)+\sum_{l=1}^{N(k,d)}\hat{u}_{l,j\to i}(t)\,\varphi_{l,i}(\vec{x}),\quad\forall j\in T_{i},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+ 为由 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ 中最外层控制体构成的局部模版，待定系数除 
+\begin_inset Formula $\hat{u}_{0,j\to i}(t)=\langle u\rangle_{E_{i}}$
+\end_inset
+
+ 外，由线性方程组
+\begin_inset Formula 
+\[
+\left.\underline{\partial}^{\underline{\alpha}}u_{j\to i}^{h}\right|_{\vec{x}_{i}}=\left.\underline{\partial}^{\underline{\alpha}}u_{j}^{h}\right|_{\vec{x}_{i}},\quad\underline{\alpha}=\begin{bmatrix}1\\
+0\\
+\vdots
+\end{bmatrix},\dots,\begin{bmatrix}\vdots\\
+0\\
+k
+\end{bmatrix},
+\]
+
+\end_inset
+
+解出，可表示为 
+\begin_inset Formula $\hat{u}_{l,j}$
+\end_inset
+
+ 的线性组合。
 \end_layout
 
 \begin_layout Subsection
@@ -2797,6 +3013,7 @@ CLS (Compact Least-Squares) Reconstruction
 The present reconstruction procedure requires not only the dependent variables
  but also its various orders of derivatives to conserve their means on the
  face-neighboring cells.
+ — 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Wang_2016_I,Wang_2016_II"
@@ -2821,12 +3038,30 @@ literal "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\langle\partial_{x}^{m}u_{i}^{h}\rangle_{I_{j}}=\langle\partial_{x}^{m}u_{j}^{h}\rangle_{I_{j}},\quad\forall m\in[0,M]\cap\mathbb{N},\quad\forall I_{j}\in S_{i}\equiv\left\{ I_{i-1},I_{i+1}\right\} 
+\left\langle\underline{\partial}^{\underline{\alpha}}u_{i}^{h}\right\rangle_{E_{j}}=\left\langle\underline{\partial}^{\underline{\alpha}}u_{j}^{h}\right\rangle_{E_{j}},\quad\underline{\alpha}=\begin{bmatrix}0\\
+0\\
+\vdots
+\end{bmatrix},\dots,\begin{bmatrix}\vdots\\
+0\\
+k
+\end{bmatrix},\quad\forall E_{j}\in S_{i},
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $S_{i}$
+\end_inset
 
+ 为由 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ 及其
+\color red
+面邻 (face-neighboring)
+\color inherit
+ 控制体构成的紧致局部模板。
 \end_layout
 
 \begin_layout Quotation
@@ -2834,6 +3069,7 @@ The main shortcoming of the CLS reconstruction is that the reconstruction
  polynomials at the control volumes close to the boundary should be one
  order lower than those at the inner control volumes, which reduces the
  accuracy of the scheme near the boundary.
+ — 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Wang_2017"
@@ -2859,6 +3095,7 @@ VR (Variational Reconstruction)
 The reconstruction polynomial of the variational reconstruction is obtained
  by the minimization of the jumps of the depended variable and its spatial
  derivatives across the cell interfaces.
+ — 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Wang_2017"
@@ -2877,53 +3114,31 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-u(\vec{x})\approx u_{i}^{h}(\vec{x})\equiv\langle u\rangle_{I_{i}}+\sum_{l=1}^{N_{c}(k)}\hat{u}_{l,i}\,\varphi_{l,i}(\vec{x}),\quad\forall\vec{x}\in I_{i}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The interfacial jump integration (IJI) for the 
+第 
 \begin_inset Formula $f$
 \end_inset
 
--th cell interface 
-\begin_inset Formula $S_{f}$
+ 号控制面 
+\begin_inset Formula $S_{f}\equiv\partial E_{i}\cup\partial E_{j}$
 \end_inset
 
- is defined as
-\end_layout
-
-\begin_layout Standard
+ 上的 interfacial jump integration (IJI) 定义为
 \begin_inset Formula 
 \[
-I_{f}=\sum_{p=0}^{k}\int_{S_{f}}\left(\frac{d_{\mathrm{LR}}^{p}}{p!}\frac{\partial^{p}}{\partial\nu^{p}}\left(u_{\mathrm{L}}^{h}-u_{\mathrm{R}}^{h}\right)\right)^{2}\frac{\dd{S}}{d_{\mathrm{LR}}}
+I_{f}=\frac{1}{d_{ij}}\sum_{p=0}^{k}\norm{\frac{d_{ij}^{p}}{p!}\frac{\partial^{p}}{\partial\nu^{p}}\left(u_{i}^{h}-u_{j}^{h}\right)}_{2,S_{f}},
 \]
 
 \end_inset
 
-or
-\begin_inset Formula 
-\[
-I_{f}=\sum_{p=0}^{k}\int_{V_{\mathrm{L}}\cup V_{\mathrm{R}}}\left(\frac{d_{\mathrm{LR}}^{p}}{p!}\frac{\partial^{p}}{\partial\nu^{p}}\left(u_{\mathrm{L}}^{h}-u_{\mathrm{R}}^{h}\right)\right)^{2}\frac{\dd{V}}{d_{\mathrm{LR}}}
-\]
-
+其中 
+\begin_inset Formula $d_{ij}$
 \end_inset
 
-where 
-\begin_inset Formula $d_{\mathrm{LR}}$
+ 为 
+\begin_inset Formula $V_{i},V_{j}$
 \end_inset
 
- is the distance between the centroids of the two cells.
-\end_layout
-
-\begin_layout Standard
-To minimize the cost function
+ 形心距离。为最小化全局泛函
 \begin_inset Formula 
 \[
 I=\sum_{f=1}^{N_{f}}I_{f},
@@ -2931,70 +3146,63 @@ I=\sum_{f=1}^{N_{f}}I_{f},
 
 \end_inset
 
-the variational principle gives
+由泛函驻值条件
 \begin_inset Formula 
 \[
-\frac{\partial I}{\partial\hat{u}_{l,i}}=0,\quad l=1,\dots,N_{c}(k),\quad i=1,\dots,N,
+\frac{\partial I}{\partial\hat{u}_{l,i}}=0,\quad l=1,\dots,N(k,d),\quad i=1,\dots,N_{\mathrm{cell}},
 \]
 
 \end_inset
 
-which lead to a system of linear equations
+得线性方程组
 \begin_inset Formula 
 \[
-\underline{A}_{i}\,\underline{\hat{u}}_{i}=\sum_{j\ne i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}+\underline{b}_{i},\quad i=1,\dots,N,
+\underline{A}_{i}\,\vert\hat{u}_{i}\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\underline{B}_{i}^{j}\,\vert\hat{u}_{j}\rangle+\vert b_{i}\rangle,\quad i=1,\dots,N_{\mathrm{cell}},
 \]
 
 \end_inset
 
-which can be solved by any of the following three methods:
-\end_layout
-
-\begin_layout Itemize
-blocked Jacobi iteration
+其中
 \begin_inset Formula 
 \[
-\underline{\hat{u}}_{i}^{(k+1)}=\underline{A}_{i}^{-1}\left(\sum_{j\ne i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-blocked Gauss–Seidel iteration
-\begin_inset Formula 
-\[
-\underline{\hat{u}}_{i}^{(k+1)}=\underline{A}_{i}^{-1}\left(\sum_{j<i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k+1)}+\sum_{j>i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
+\langle l\vert\underline{A}_{i}\vert m\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,i}}{\partial\nu^{p}}}_{\partial E_{i}\cup\partial E_{j}},
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-blocked SOR iteration
 \begin_inset Formula 
 \[
-\underline{\hat{u}}_{i}^{(k+1)}=(1-\omega)\underline{\hat{u}}_{i}^{(k)}+\omega\underline{A}_{i}^{-1}\left(\sum_{j<i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k+1)}+\sum_{j>i}\underline{B}_{i}^{j}\,\underline{\hat{u}}_{j}^{(k)}+\underline{b}_{i}\right),
+\langle l\vert\underline{B}_{i}^{j}\vert m\rangle=\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,j}}{\partial\nu^{p}}}_{\partial E_{i}\cup\partial E_{j}},
 \]
 
 \end_inset
 
- where 
-\begin_inset Formula $(0<\omega<2)$
+
+\begin_inset Formula 
+\[
+\langle l\vert\hat{u}_{i}\rangle=\hat{u}_{l,i},\quad\langle l\vert\hat{u}_{j}\rangle=\hat{u}_{l,j},\quad\langle l\vert b_{i}\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\ip{\frac{\varphi_{l,i}}{d_{ij}}}{\bar{u}_{j}-\bar{u}_{i}}_{\partial E_{i}\cup\partial E_{j}},
+\]
+
 \end_inset
 
-.
-\end_layout
+组装后得大型稀疏线性方程组
+\begin_inset Formula 
+\[
+\underline{A}\,\vert\hat{u}\rangle=\vert b\rangle,\quad\underline{A}=\underline{L}+\underline{D}+\underline{U},
+\]
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
+其中 
+\begin_inset Formula $\underline{A}$
+\end_inset
 
+ 对称正定，且 
+\begin_inset Formula $2\underline{D}-\underline{A}$
+\end_inset
+
+ 亦正定，故方程组有唯一解，通常需迭代求解。实际计算中，重构迭代不必严格收敛，对稳态问题的每个时间步（或非稳态问题的内迭代）只需做一次 SOR。
 \end_layout
 
 \end_body
