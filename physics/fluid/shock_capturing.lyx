@@ -1216,11 +1216,11 @@ reference "def:TVD-scheme"
 （曾经）是求解守恒律（系统）的主要途径；与此同时，以 
 \begin_inset CommandInset ref
 LatexCommand nameref
-reference "sec:激波捕捉：WENO"
+reference "sec:WENO"
 
 \end_inset
 
-为代表的
+ 为代表的
 \color red
 总变差有界格式 (TV Bounded scheme, TVB scheme)
 \color inherit
@@ -2829,10 +2829,10 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-WENO 重构
+WENO
 \begin_inset CommandInset label
 LatexCommand label
-name "sec:激波捕捉：WENO"
+name "sec:WENO"
 
 \end_inset
 
@@ -2937,10 +2937,11 @@ reference "rem:TVB-scheme"
 \end_layout
 
 \begin_layout Subsection
-基于重叠模板
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:WENO：重叠模板"
+WENO 有限差分格式 by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Jiang_1996"
+literal "false"
 
 \end_inset
 
@@ -3115,10 +3116,9 @@ f_{i+2}
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset href
-LatexCommand href
-name "Jiang--Shu (1996)"
-target "https://doi.org/10.1006/jcph.1996.0130"
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Jiang_1996"
 literal "false"
 
 \end_inset
@@ -3312,46 +3312,23 @@ w_{k}=w_{k}^{\star}+\order{h^{4}}\impliedby w_{k}^{\beta}=\frac{w_{k}^{\star}}{(
 \end_layout
 
 \begin_layout Subsection
-基于邻接单元
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:WENO：邻接单元"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-本节介绍由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Zhong--Shu (2013)"
-target "https://doi.org/10.1016/j.jcp.2012.08.028"
+A simple WENO limiter by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhong_2013"
 literal "false"
 
 \end_inset
 
- 提出（适用于结构网格）、并由 
-\begin_inset CommandInset href
-LatexCommand href
-name "Zhu--Zhong--Shu--Qiu (2013)"
-target "https://doi.org/10.1016/j.jcp.2013.04.012"
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu_2013"
 literal "false"
 
 \end_inset
 
- 推广（适用于非结构网格）的 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:DG"
-plural "false"
-caps "false"
-noprefix "false"
 
-\end_inset
-
-–WENO 重构方法。
 \end_layout
 
 \begin_layout Notation*
@@ -4558,6 +4535,175 @@ u_{z}
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+A 
+\begin_inset Formula $p$
+\end_inset
+
+-weighted limiter by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2020"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2020"
+literal "false"
+
+\end_inset
+
+ 提出一种在光滑度、线性权、分母小量中考虑候选多项式次数影响的方案。
+\end_layout
+
+\begin_layout Subsubsection
+候选多项式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p$
+\end_inset
+
+-次多项式展开
+\begin_inset Formula 
+\[
+u_{i}^{h}(x,t)=\sum_{l=0}^{p}u_{i}^{l}(t)\,b_{l}(\xi),\quad\xi=\frac{x-x_{i}}{h_{i}/2}\in[-1,1].
+\]
+
+\end_inset
+
+将上述多项式展依次向低次多项式空间投影，得到 
+\begin_inset Formula $p$
+\end_inset
+
+ 个候选多项式
+\begin_inset Formula 
+\[
+u_{i,l}=\ip{u_{i}^{h}}{\mathbb{P}_{l}},\quad l=1,\dots,p.
+\]
+
+\end_inset
+
+若 
+\begin_inset Formula $\underline{b}$
+\end_inset
+
+ 为正交基，则无需计算投影。
+\end_layout
+
+\begin_layout Standard
+除此之外，左右邻接单元各提供一个候选一次多项式
+\begin_inset Formula 
+\[
+u_{k\to i}=\bar{u}_{i}+\left.\frac{\partial u}{\partial\xi}\right|_{k}b_{1},\quad k\in\left\{ i-1,i+1\right\} ,
+\]
+
+\end_inset
+
+其中待定系数 
+\begin_inset Formula $(\partial_{\xi}u)_{k}$
+\end_inset
+
+ 由最小值问题
+\begin_inset Formula 
+\[
+\min_{(\partial_{\xi}u)_{k}\in\mathbb{R}}\left\Vert u_{k\to i}-u_{k}^{h}\right\Vert _{L_{2}(E_{k})}
+\]
+
+\end_inset
+
+确定。
+\end_layout
+
+\begin_layout Standard
+由此得 
+\begin_inset Formula $p+2$
+\end_inset
+
+ 个候选多项式，统一地记为
+\begin_inset Formula 
+\[
+v_{l}=\begin{cases}
+u_{i,l}, & l\in\left\{ 1,\dots,p\right\} \\
+u_{k\to i,} & l\in\left\{ L,R\right\} 
+\end{cases}\quad T\coloneqq\left\{ 1,\dots,p\right\} \cup\left\{ L,R\right\} 
+\]
+
+\end_inset
+
+对其实施 WENO 重构：
+\begin_inset Formula 
+\[
+u_{i}^{\mathrm{new}}=\sum_{l\in T}w_{l}\,v_{l},\quad w_{l}=\frac{\alpha_{l}}{\sum_{k\in T}\alpha_{k}},\quad\alpha_{l}=\frac{\lambda_{l}}{\beta_{l}^{2}+\epsilon_{l}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+光滑度
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\beta_{l}=\sum_{k=1}^{p}\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+线性权
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\lambda_{l}=\begin{cases}
+10^{l+1}, & l\in\left\{ 2,\dots,p\right\} \\
+10, & l=1\\
+1, & l\in\left\{ L,R\right\} 
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+分母小量
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\epsilon_{l}=10^{-16}+\begin{cases}
+0, & l\in\left\{ 2,\dots,p\right\} \\
+K_{\epsilon}\frac{\beta_{L}^{2}+\beta_{R}^{2}}{2}, & l\in\left\{ 1,L,R\right\} 
+\end{cases}
+\]
+
+\end_inset
+
+默认取 
+\begin_inset Formula $K_{\epsilon}=0.1$
+\end_inset
+
+，可进一步优化。
 \end_layout
 
 \begin_layout Section
