@@ -416,9 +416,45 @@ pip install --system numpy  # 为所有用户安装 numpy, 系统管理员使用
 
 [NumPy for MATLAB users](https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html)
 
+## [`numdifftools`](https://numdifftools.readthedocs.io/en/latest/) for 数值微分
+
+```python
+import numdifftools as nd
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-2, 2, 100)
+for i in range(10):
+    # Calculate n-th derivative with finite difference approximation.
+    df = nd.Derivative(fun=np.tanh, n=i, step=0.1, order=4)
+    y = df(x)
+    h = plt.plot(x, y/np.abs(y).max())
+```
+
 ## [`matplotlib`](https://matplotlib.org) for 数据可视化
 
 [Pyplot tutorial](https://matplotlib.org/tutorials/introductory/pyplot.html)
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x_values = np.linspace(-1, 1, 1000) * np.pi
+y_values = np.abs(np.sin(8*x_values)) * np.exp(-x_values**2/2) * 5
+
+fig, ax = plt.subplots(figsize=[6, 4])
+# Define the zoomed box by relative values of [xmin, ymin, width, height]:
+axins = ax.inset_axes([0.7, 0.60, 0.25, 0.25])
+# Define the box to be zoomed by absolute values:
+axins.set_xlim(-1.0, +1.0)
+axins.set_ylim(+4.0, +5.0)
+# Plot twice:
+plt.plot(x_values, y_values)
+axins.plot(x_values, y_values)
+# Add edges between the two boxes: 
+ax.indicate_inset_zoom(axins, edgecolor="gray")
+plt.show()
+```
 
 # 文件读写
 ## [`io`](https://docs.python.org/3/library/io.html) for 数据流读写
