@@ -1505,7 +1505,7 @@ literal "false"
 
 \end_inset
 
-该积分值的数量级取决于近似解的光滑程度：
+该积分值的数量级取决于近似解的光滑度：
 \end_layout
 
 \begin_layout Itemize
@@ -1568,7 +1568,7 @@ literal "false"
  的探测器：
 \begin_inset Formula 
 \[
-I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}\,\Vert u_{i}^{h}\Vert}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}\left\Vert u_{i}^{h}\right\Vert _{\infty}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
 \infty, & \text{间断},\\
 0, & \text{光滑},
 \end{cases}
@@ -1581,26 +1581,6 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 \end_inset
 
  可视为以上两种情形的“平均精度”。
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Krivodonova_2004"
-literal "false"
-
-\end_inset
-
- 取
-\begin_inset Formula $h$
-\end_inset
-
- 为单元外接球半径，
-\begin_inset Formula $\Vert u_{i}^{h}\Vert$
-\end_inset
-
- 为 
-\begin_inset Formula $\vert u_{i}^{h}\vert$
-\end_inset
-
- 在积分点处取值最大者。
 \end_layout
 
 \begin_layout Standard
@@ -1633,7 +1613,7 @@ literal "false"
  上的光滑度定义为
 \begin_inset Formula 
 \[
-I_{i}=\frac{\max_{k\in K_{i}}\left\vert u_{i}^{h}(\vec{r}_{i})-u_{k}^{h}(\vec{r}_{i})\right\vert }{N_{i}\,h_{i}^{(p+1)/2}\max_{k\in\left\{ i\right\} \cup K_{i}}\left\vert \bar{u}_{k}\right\vert }
+I_{i}=\frac{\sum_{k\in K_{i}}\left\vert u_{i}^{h}(\vec{r}_{i})-u_{k}^{h}(\vec{r}_{i})\right\vert }{N_{i}\,h_{i}^{(p+1)/2}\max_{k\in\left\{ i\right\} \cup K_{i}}\left\vert \bar{u}_{k}\right\vert }
 \]
 
 \end_inset
@@ -1740,7 +1720,7 @@ literal "false"
  提出另一种与之类似的探测器：
 \begin_inset Formula 
 \[
-I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\right)\right|}{h_{i}\min_{k\in\left\{ i\right\} \cup K_{i}}\int_{E_{j}}\vert u_{j}^{h}\vert}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\right)\right|}{h_{i}\min_{k\in\left\{ i\right\} \cup K_{i}}\left\Vert u_{k}^{h}\right\Vert _{1}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
 \infty, & \text{间断},\\
 0, & \text{光滑},
 \end{cases}
@@ -1769,6 +1749,34 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
 \end_inset
 
  邻接的那些单元的指标集。
+\end_layout
+
+\begin_layout Subsubsection
+分母修正
+\end_layout
+
+\begin_layout Standard
+分母中的 
+\begin_inset Formula $\left\Vert u_{j}^{h}\right\Vert $
+\end_inset
+
+ 或 
+\begin_inset Formula $\left\vert \bar{u}_{k}\right\vert $
+\end_inset
+
+ 有可能接近 
+\begin_inset Formula $0$
+\end_inset
+
+，一种修正方式为平移函数值：
+\begin_inset Formula 
+\[
+\Vert u_{i}^{h}\Vert\to\Vert u_{i}^{h}+1\Vert\approx\Vert u_{i}^{h}\Vert+1,\quad\left\vert \bar{u}_{k}\right\vert \to\left\vert \bar{u}_{k}+1\right\vert \approx\left\vert \bar{u}_{k}\right\vert +1,
+\]
+
+\end_inset
+
+相当于放大分母，因而会使光滑度偏小。
 \end_layout
 
 \begin_layout Section
@@ -2124,7 +2132,7 @@ f_{i+1/2}^{\mathrm{High}} & =A\times\begin{cases}
 \begin_inset Formula $\left\{ u_{k}^{n}\right\} _{k=i-2}^{i+2}$
 \end_inset
 
- 光滑程度的系数 
+ 光滑度的系数 
 \begin_inset Formula $\phi_{i+1/2}$
 \end_inset
 
@@ -2875,13 +2883,13 @@ literal "false"
 \begin_layout Itemize
 取
 \color red
-光滑程度 (smoothness)
+光滑度 (smoothness)
 \color inherit
  最高的那一个作为近似解。
 \end_layout
 
 \begin_layout Standard
-在近似解充分光滑的区域，各候选多项式的光滑程度通常也很接近，只保留其中一个显然是对计算资源的一种浪费。为了充分利用所有已知信息，
+在近似解充分光滑的区域，各候选多项式的光滑度通常也很接近，只保留其中一个显然是对计算资源的一种浪费。为了充分利用所有已知信息，
 \color red
 加权基本无振荡 (Weighted ENO, WENO)
 \color inherit
@@ -3055,7 +3063,7 @@ f_{i+1/2}^{[3]}
 \begin_inset Formula $\begin{bmatrix}S_{1} & S_{2} & S_{3}\end{bmatrix}$
 \end_inset
 
- 上的光滑程度构造的
+ 上的光滑度构造的
 \color red
 非线性权重
 \color inherit
@@ -3227,7 +3235,7 @@ f_{i+2}
 
  上的
 \color red
-光滑程度
+光滑度
 \color inherit
 
 \begin_inset Formula 
@@ -3531,10 +3539,10 @@ w_{k\to i}^{\star}=\begin{cases}
 \begin_inset Formula $E_{i}$
 \end_inset
 
- 上的光滑程度：
+ 上的光滑度：
 \begin_inset Formula 
 \[
-\beta_{k\to i}=\sum_{\vert\alpha\vert=1}^{p}\frac{\vert E_{i}\vert^{2\vert\alpha\vert/n-1}}{(\vert\alpha\vert!)^{2}}\int_{E_{i}}\left(\frac{\partial^{\vert\alpha\vert}\psi_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2},\quad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}
+\beta_{k}=\sum_{\vert\alpha\vert=1}^{p}\int_{E_{i}}\left(\frac{\vert E_{i}\vert^{\vert\alpha\vert/n}}{\vert\alpha\vert!}\frac{\partial^{\vert\alpha\vert}u_{k\to i}}{\partial x_{1}^{\alpha_{1}}\cdots\partial x_{n}^{\alpha_{n}}}\right)^{2}\frac{\dd{E_{i}}}{\vert E_{i}\vert},\quad\vert\alpha\vert\coloneqq\alpha_{1}+\cdots+\alpha_{n}
 \]
 
 \end_inset
@@ -3543,15 +3551,14 @@ w_{k\to i}^{\star}=\begin{cases}
 \begin_inset Formula $\vert E_{i}\vert^{2\vert\alpha\vert/n-1}/(\vert\alpha\vert!)^{2}$
 \end_inset
 
- 的分子
+ 的分子用于无量纲化
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-name "Zhu--Zhong--Shu--Qiu (2013)"
-target "https://doi.org/10.1016/j.jcp.2013.04.012"
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Zhu_2013"
 literal "false"
 
 \end_inset
@@ -3560,12 +3567,12 @@ literal "false"
 \begin_inset Formula $\vert E_{i}\vert^{\vert\alpha\vert-1}$
 \end_inset
 
- 为分子。
+ 为分子，因此只对二维是无量纲的。
 \end_layout
 
 \end_inset
 
-用于无量纲化，分母用于避免高阶导数的占比过多。
+，分母用于避免高阶导数的占比过多。
 \end_layout
 
 \begin_layout Enumerate
@@ -3865,7 +3872,7 @@ reference "alg:WENO：基于邻接单元：标量函数"
 \begin_inset Formula $\ip{r}{V}_{k\to i}$
 \end_inset
 
- 的光滑程度 
+ 的光滑度 
 \begin_inset Formula $\beta_{k\to i}$
 \end_inset
 
@@ -4569,6 +4576,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+将 
 \begin_inset Formula $p$
 \end_inset
 
@@ -4580,14 +4588,14 @@ u_{i}^{h}(x,t)=\sum_{l=0}^{p}u_{i}^{l}(t)\,b_{l}(\xi),\quad\xi=\frac{x-x_{i}}{h_
 
 \end_inset
 
-将上述多项式展依次向低次多项式空间投影，得到 
+向低次多项式空间投影，得到 
 \begin_inset Formula $p$
 \end_inset
 
  个候选多项式
 \begin_inset Formula 
 \[
-u_{i,l}=\ip{u_{i}^{h}}{\mathbb{P}_{l}},\quad l=1,\dots,p.
+u_{i,l}^{h}=\ip{u_{i}^{h}}{\mathbb{P}_{l}},\quad l=1,\dots,p.
 \]
 
 \end_inset
@@ -4603,24 +4611,32 @@ u_{i,l}=\ip{u_{i}^{h}}{\mathbb{P}_{l}},\quad l=1,\dots,p.
 除此之外，左右邻接单元各提供一个候选一次多项式
 \begin_inset Formula 
 \[
-u_{k\to i}=\bar{u}_{i}+\left.\frac{\partial u}{\partial\xi}\right|_{k}b_{1},\quad k\in\left\{ i-1,i+1\right\} ,
+u_{k\to i}^{h}=\bar{u}_{i}+\left.\frac{\partial u}{\partial\xi}\right|_{k}b_{i,1},\quad k\in\left\{ i-1,i+1\right\} ,
 \]
 
 \end_inset
 
 其中待定系数 
-\begin_inset Formula $(\partial_{\xi}u)_{k}$
+\begin_inset Formula $(\partial_{\xi}u)_{k}\eqqcolon\alpha_{k}$
 \end_inset
 
  由最小值问题
 \begin_inset Formula 
 \[
-\min_{(\partial_{\xi}u)_{k}\in\mathbb{R}}\left\Vert u_{k\to i}-u_{k}^{h}\right\Vert _{L_{2}(E_{k})}
+\min_{\alpha\in\mathbb{R}}\left\Vert u_{k\to i}^{h}-u_{k}^{h}\right\Vert _{L_{2}(E_{k})}\iff\min_{\alpha\in\mathbb{R}}\int_{E_{i}}\left(\bar{u}_{i}+\alpha_{k}b_{i,1}-u_{k}^{h}\right)^{2}=\min_{\alpha\in\mathbb{R}}\left(A\alpha_{k}^{2}+B\alpha_{k}+C\right),
 \]
 
 \end_inset
 
-确定。
+确定：
+\begin_inset Formula 
+\[
+\alpha_{k}=\frac{-B}{2A}=\frac{-2\ip{b_{i,1}}{\bar{u}_{i}-u_{k}^{h}}_{E_{k}}}{2\ip{b_{i,1}}{b_{i,1}}_{E_{k}}}=\frac{\ip{b_{i,1}}{u_{k}^{h}-\bar{u}_{i}}_{E_{k}}}{\ip{b_{i,1}}{b_{i,1}}_{E_{k}}}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4632,8 +4648,8 @@ u_{k\to i}=\bar{u}_{i}+\left.\frac{\partial u}{\partial\xi}\right|_{k}b_{1},\qua
 \begin_inset Formula 
 \[
 v_{l}=\begin{cases}
-u_{i,l}, & l\in\left\{ 1,\dots,p\right\} \\
-u_{k\to i,} & l\in\left\{ L,R\right\} 
+u_{i,l}^{h}, & l\in\left\{ 1,\dots,p\right\} \\
+u_{k\to i}^{h}, & l\in\left\{ L,R\right\} 
 \end{cases}\quad T\coloneqq\left\{ 1,\dots,p\right\} \cup\left\{ L,R\right\} 
 \]
 
@@ -4657,7 +4673,7 @@ u_{i}^{\mathrm{new}}=\sum_{l\in T}w_{l}\,v_{l},\quad w_{l}=\frac{\alpha_{l}}{\su
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\beta_{l}=\sum_{k=1}^{p}\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi}
+\beta_{l}=\sum_{k=1}^{p}\int_{x_{i-1/2}}^{x_{i+1/2}}\left(\frac{J^{k}}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial x^{k}}\right)^{2}\frac{\dd{x}}{J}=\sum_{k=1}^{p}\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi}
 \]
 
 \end_inset
@@ -4681,7 +4697,47 @@ u_{i}^{\mathrm{new}}=\sum_{l\in T}w_{l}\,v_{l},\quad w_{l}=\frac{\alpha_{l}}{\su
 
 \end_inset
 
+为提高精度，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2020"
+literal "false"
 
+\end_inset
+
+ 引入了截断机制：令 
+\begin_inset Formula $l=p\to2$
+\end_inset
+
+，在此过程中，若
+\begin_inset Formula 
+\[
+\frac{\beta_{1}+\beta_{L}+\beta_{R}}{3}>\frac{K_{\text{trunc}}}{l-1}\sum_{k=2}^{l}\tau_{l,k},\quad\tau_{l,k}\coloneqq\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\sum_{k=2}^{l}\tau_{l,k}=\beta_{l}-\int_{-1}^{1}\left(\frac{\partial v_{l}}{\partial\xi}\right)^{2}\dd{\xi},\quad K_{\text{trunc}}=\begin{cases}
+0, & \text{no limiter}\\
+1, & \text{ordinary use}\\
+\infty, & \text{no truncation}
+\end{cases}
+\]
+
+\end_inset
+
+则置
+\begin_inset Formula 
+\[
+\lambda_{l-1}=\cdots=\lambda_{1}=\lambda_{L}=\lambda_{R}=0.
+\]
+
+\end_inset
+
+其用意为：在某个高次候选多项式足够光滑的情况下，忽略次数比它更低的候选多项式。
 \end_layout
 
 \begin_layout Subsubsection
