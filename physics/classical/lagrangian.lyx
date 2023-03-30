@@ -1,0 +1,656 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties false
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{pvcstyle}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+theorems-ams-extended
+theorems-chap
+\end_modules
+\maintain_unincluded_children true
+\language chinese-simplified
+\language_package default
+\inputencoding utf8-plain
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc true
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_pagemode FullScreen
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.5cm
+\topmargin 1.5cm
+\rightmargin 0.5cm
+\bottommargin 0.5cm
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style cjk
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle fancy
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Chapter
+Lagrangian 力学
+\end_layout
+
+\begin_layout Section
+最小作用量原理
+\end_layout
+
+\begin_layout Subsection
+广义坐标（速度）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{q}\coloneqq\begin{bmatrix}q_{1} & \dots & q_{n}\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{\dot{q}}\coloneqq\begin{bmatrix}\dot{q}_{1} & \dots & \dot{q}_{n}\end{bmatrix}\coloneqq\begin{bmatrix}\dfrac{\dd{q}_{1}}{\dd{t}} & \dots & \dfrac{\dd{q}_{n}}{\dd{t}}\end{bmatrix}\eqqcolon\dv{}{t}\underline{q}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+作用量的 Lagrangian 形式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{S\coloneqq\int_{t_{1}}^{t_{2}}L(\underline{q},\underline{\dot{q}},t)\dd{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta S=\int_{t_{1}}^{t_{2}}\delta L(\underline{q},\underline{\dot{q}},t)\dd{t}=\int_{t_{1}}^{t_{2}}\left(\pdv{L}{\underline{q}}\cdot\delta\underline{q}+\pdv{L}{\underline{\dot{q}}}\cdot\delta\underline{\dot{q}}\right)\dd{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Lagrange's 方程
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Lagrange's-方程"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{t_{1}}^{t_{2}}\pdv{L}{\underline{\dot{q}}}\cdot\delta\underline{\dot{q}}\dd{t}=\left(\pdv{L}{\underline{\dot{q}}}\cdot\delta\underline{q}\right)_{t_{1}}^{t_{2}}-\int_{t_{1}}^{t_{2}}\left(\dv{}{t}\pdv{L}{\underline{\dot{q}}}\right)\cdot\delta\underline{q}\dd{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\boxed{\dv{}{t}\pdv{L}{\underline{\dot{q}}}=\pdv{L}{\underline{q}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+若 
+\begin_inset Formula $L_{*}(\underline{q},\underline{\dot{q}},t)$
+\end_inset
+
+ 与 
+\begin_inset Formula $L(\underline{q},\underline{\dot{q}},t)$
+\end_inset
+
+ 只相差一个以 
+\begin_inset Formula $\underline{q},t$
+\end_inset
+
+ 为自变量的函数 
+\begin_inset Formula $f(\underline{q},t)$
+\end_inset
+
+ 关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的全导数，即
+\begin_inset Formula 
+\[
+L_{*}(\underline{q},\underline{\dot{q}},t)=L(\underline{q},\underline{\dot{q}},t)+\dv{}{t}f(\underline{q},t)
+\]
+
+\end_inset
+
+则它们给出相同的 Lagrange's 方程，从而在力学上完全等价。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\begin_inset Formula $L(\underline{q},\underline{\dot{q}},t)$
+\end_inset
+
+ 的具体形式
+\end_layout
+
+\begin_layout Subsection
+自由质点
+\end_layout
+
+\begin_layout Standard
+选定惯性系后，自由质点的广义坐标及广义速度可取为
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{q}\coloneqq\begin{bmatrix}x & y & z\end{bmatrix}\coloneqq\begin{bmatrix}\vec{i} & \vec{j} & \vec{k}\end{bmatrix}\cdot\vec{r},\quad\underline{\dot{q}}=\begin{bmatrix}\dot{x} & \dot{y} & \dot{z}\end{bmatrix}=\begin{bmatrix}\vec{i} & \vec{j} & \vec{k}\end{bmatrix}\cdot\vec{v}
+\]
+
+\end_inset
+
+因惯性系具有
+\color red
+时空均匀性
+\color inherit
+，故 
+\begin_inset Formula $L$
+\end_inset
+
+ 不依赖于 
+\begin_inset Formula $\vec{r},t$
+\end_inset
+
+；又因惯性系具有
+\color red
+空间各向同性
+\color inherit
+，故 
+\begin_inset Formula $L$
+\end_inset
+
+ 亦不依赖于 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的方向，从而只能依赖于 
+\begin_inset Formula $\vec{v}$
+\end_inset
+
+ 的长度，即
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L(\underline{q},\underline{\dot{q}},t)=L(v^{2}),\quad v^{2}\coloneqq\vec{v}\cdot\vec{v}
+\]
+
+\end_inset
+
+代入 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Lagrange's-方程"
+
+\end_inset
+
+即得自由质点的运动方程：
+\begin_inset Formula 
+\[
+\dv{}{t}\pdv{L}{\vec{v}}=0\implies\vec{v}=\text{const}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+设上述惯性系以无穷小速度 
+\begin_inset Formula $\vec{\epsilon}$
+\end_inset
+
+ 相对于另一惯性系运动，则由 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Galileo's-相对性原理"
+
+\end_inset
+
+可得 
+\begin_inset Formula $\vec{v}_{*}=\vec{v}+\vec{\epsilon}$
+\end_inset
+
+ 及
+\begin_inset Formula 
+\[
+L(v^{2}+2\vec{\epsilon}\cdot\vec{v}+\epsilon^{2})=L(v^{2})+\dv{f(\vec{r},t)}{t},\quad\exists f
+\]
+
+\end_inset
+
+对左侧作 Taylor 展开：
+\begin_inset Formula 
+\[
+L(v^{2}+2\vec{\epsilon}\cdot\vec{v}+\epsilon^{2})=L(v^{2})+\frac{\partial L}{\partial(v^{2})}2\vec{\epsilon}\cdot\vec{v}+O(\vec{\epsilon})
+\]
+
+\end_inset
+
+并将 
+\begin_inset Formula $\vec{\epsilon}$
+\end_inset
+
+ 的一次项与右侧的全微分项比较：
+\begin_inset Formula 
+\[
+\frac{\partial L}{\partial(v^{2})}2\vec{\epsilon}\cdot\vec{v}=\pdv{f(\vec{r},t)}{\vec{r}}+\pdv{f(\vec{r},t)}{t}
+\]
+
+\end_inset
+
+可见 
+\begin_inset Formula $\partial L/\partial(v^{2})$
+\end_inset
+
+ 必为常数，不妨记为 
+\begin_inset Formula $m/2$
+\end_inset
+
+，于是得到
+\begin_inset Formula 
+\[
+\boxed{L(\vec{v})=\frac{m}{2}v^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+封闭质点系
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L(\vec{r}_{1},\dots,\vec{r}_{n},\vec{v}_{1},\dots,\vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\vec{v}_{i}^{2}-V(\vec{r}_{1},\dots,\vec{r}_{n})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\boxed{L(\underline{q},\underline{\dot{q}},t)=\tfrac{1}{2}\underline{\dot{q}}\cdot\underline{A}(\underline{q})\cdot\underline{\dot{q}}-V(\underline{q})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+外场的影响
+\end_layout
+
+\begin_layout Standard
+单个质点：
+\begin_inset Formula 
+\[
+m\dv{v}{t}=-\pdv{V}{\vec{r}}\impliedby L=\frac{1}{2}mv^{2}-V(\vec{r},t)
+\]
+
+\end_inset
+
+质点系：
+\begin_inset Formula 
+\[
+L(\vec{r}_{1},\dots,\vec{r}_{n},\vec{v}_{1},\dots,\vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\vec{v}_{i}^{2}-V(\vec{r}_{1},\dots,\vec{r}_{n},t)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+对称性 
+\begin_inset Formula $\to$
+\end_inset
+
+ 守恒律
+\end_layout
+
+\begin_layout Subsection
+时间均匀性 
+\begin_inset Formula $\to$
+\end_inset
+
+ 能量守恒
+\end_layout
+
+\begin_layout Standard
+封闭系统的 
+\begin_inset Formula $L$
+\end_inset
+
+ 不显含时间，故其关于 
+\begin_inset Formula $t$
+\end_inset
+
+ 的全导数为
+\begin_inset Formula 
+\[
+\dv{L(\underline{q},\underline{\dot{q}})}{t}=\pdv{L}{\underline{q}}\cdot\dv{\underline{q}}{t}+\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{\dot{q}}}{t}
+\]
+
+\end_inset
+
+将 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Lagrange's-方程"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+代入其中，得到
+\begin_inset Formula 
+\[
+\dv{L}{t}=\left(\dv{}{t}\pdv{L}{\underline{\dot{q}}}\right)\cdot\dv{\underline{q}}{t}+\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{\dot{q}}}{t}=\dv{}{t}\left(\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{q}}{t}\right)
+\]
+
+\end_inset
+
+移项即得
+\begin_inset Formula 
+\[
+\dv{}{t}\left(\pdv{L}{\underline{\dot{q}}}\cdot\underline{\dot{q}}-L\right)=0
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+E\coloneqq\pdv{L}{\underline{\dot{q}}}\cdot\underline{\dot{q}}-L=\text{const}
+\]
+
+\end_inset
+
+将质点系的 
+\begin_inset Formula $L$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+L(\underline{q},\underline{\dot{q}})=T(\underline{q},\underline{\dot{q}})-V(\underline{q}),\quad T(\underline{q},\underline{\dot{q}})=\tfrac{1}{2}\underline{\dot{q}}\cdot\underline{A}(\underline{q})\cdot\underline{\dot{q}}
+\]
+
+\end_inset
+
+代入其中，可得
+\begin_inset Formula 
+\[
+E=\underline{\dot{q}}\cdot\underline{A}(\underline{q})\cdot\underline{\dot{q}}-(T-V)=T+V
+\]
+
+\end_inset
+
+故守恒量 
+\begin_inset Formula $E$
+\end_inset
+
+ 的物理意义为
+\color red
+动能
+\color inherit
+与
+\color red
+势能
+\color inherit
+之和，即质点系的
+\color red
+能量
+\color inherit
+。
+\end_layout
+
+\begin_layout Subsection
+空间均匀性 
+\begin_inset Formula $\to$
+\end_inset
+
+ 动量守恒
+\end_layout
+
+\begin_layout Standard
+全空间的任意无穷小平移 
+\begin_inset Formula $\delta\vec{r}\eqqcolon\vec{\epsilon}$
+\end_inset
+
+ 不改变系统的力学行为，即
+\begin_inset Formula 
+\[
+0=\delta L=\sum_{i=1}^{n}\pdv{L}{\vec{r}_{i}}\cdot\delta\vec{r}_{i}=\vec{\epsilon}\cdot\sum_{i=1}^{n}\pdv{L}{\vec{r}_{i}}
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\sum_{i=1}^{n}\pdv*{L}{\vec{r}_{i}}=\vec{o}$
+\end_inset
+
+；将 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sec:Lagrange's-方程"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 代入其中，即得
+\begin_inset Formula 
+\[
+\vec{o}=\sum_{i=1}^{n}\pdv{L}{\vec{r}_{i}}=\sum_{i=1}^{n}\dv{}{t}\pdv{L}{\vec{v}_{i}}=\dv{}{t}\sum_{i=1}^{n}\pdv{L}{\vec{v}_{i}}
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\vec{p}\coloneqq\sum_{i=1}^{n}\vec{p}_{i}\coloneqq\sum_{i=1}^{n}\pdv{L}{\vec{v}_{i}}=\sum_{i=1}^{n}m_{i}\vec{v}_{i}
+\]
+
+\end_inset
+
+为一守恒量，名为质点系的
+\color red
+动量 (momentum)
+\color inherit
+；其中 
+\begin_inset Formula $\vec{p}_{i}\coloneqq m_{i}\vec{v}_{i}$
+\end_inset
+
+ 为
+\color red
+第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个质点的动量
+\color inherit
+。
+\end_layout
+
+\begin_layout Subsection
+空间各向同性 
+\begin_inset Formula $\to$
+\end_inset
+
+ 角动量守恒
+\end_layout
+
+\begin_layout Standard
+全空间的任意无穷小旋转 
+\begin_inset Formula $\delta\vec{\varphi}$
+\end_inset
+
+ 引起的位移和速度分别为
+\begin_inset Formula 
+\[
+\delta\vec{r}_{i}=\delta\vec{\varphi}\cross\vec{r}_{i},\quad\delta\vec{v}_{i}=\delta\vec{\varphi}\cross\vec{v}_{i},\quad\forall i\in\{1,\dots,n\}
+\]
+
+\end_inset
+
+它们不改变系统的力学行为，即
+\begin_inset Formula 
+\[
+\begin{aligned}0=\delta L & =\sum_{i=1}^{n}\pdv{L}{\vec{r}_{i}}\cdot\delta\vec{r}_{i}+\sum_{i=1}^{n}\pdv{L}{\vec{v}_{i}}\cdot\delta\vec{v}_{i}\\
+ & =\sum_{i=1}^{n}\dot{\vec{p}}_{i}\cdot\left(\delta\vec{\varphi}\cross\vec{r}_{i}\right)+\sum_{i=1}^{n}\vec{p}_{i}\cdot\left(\delta\vec{\varphi}\cross\vec{v}_{i}\right)\\
+ & =\delta\vec{\varphi}\cdot\sum_{i=1}^{n}\dv{}{t}\left(\vec{r}_{i}\cross\vec{p}_{i}\right)\eqqcolon\delta\vec{\varphi}\cdot\sum_{i=1}^{n}\dv{\vec{L}_{i}}{t}
+\end{aligned}
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $\vec{L}\coloneqq\sum_{i=1}^{n}\vec{L}_{i}$
+\end_inset
+
+ 为一守恒量，名为质点系的
+\color red
+角动量 (angular momentum)
+\color inherit
+；其中 
+\begin_inset Formula $\vec{L}_{i}=\vec{r}_{i}\cross\vec{p}_{i}$
+\end_inset
+
+ 为
+\color red
+第 
+\begin_inset Formula $i$
+\end_inset
+
+ 个质点的角动量
+\color inherit
+。
+\end_layout
+
+\end_body
+\end_document
