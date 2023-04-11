@@ -1140,7 +1140,7 @@ reference "sec:有限差分：时间推进"
  时，退化为 Newton 法解非线性代数方程组
 \begin_inset Formula 
 \[
-\underline{r}\qty(\underline{\hat{u}}(t_{n})+\Delta\underline{\hat{u}})=\underline{0},
+\underline{r}\big(\underline{\hat{u}}(t_{n})+\Delta\underline{\hat{u}}\big)=\underline{0},
 \]
 
 \end_inset
@@ -1301,7 +1301,15 @@ LU-SGS
 
 \end_inset
 
-忽略最后一项，所得的方程
+忽略
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+最后一项，所得的方程
 \begin_inset Formula 
 \[
 (\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\vert\Delta\hat{u}\rangle=\vert r\rangle
@@ -1355,15 +1363,40 @@ LU-SGS
 
 \end_layout
 
+\begin_layout Standard
+该方法首先由 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yoon_1988"
+literal "true"
+
+\end_inset
+
+ 针对结构网格提出，后经 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+ 等推广到非结构网格。
+\end_layout
+
 \begin_layout Paragraph
 GMRES+LU-SGS
 \end_layout
 
 \begin_layout Standard
-left preconditioning:
-\end_layout
+以 LU-SGS 中的系数矩阵
+\begin_inset Formula 
+\[
+\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})
+\]
 
-\begin_layout Standard
+\end_inset
+
+为 left preconditioner:
 \begin_inset Formula 
 \[
 \underline{P}^{-1}\,\underline{A}\,\vert\Delta\hat{u}\rangle=\underline{P}^{-1}\,\vert r\rangle,
@@ -1371,15 +1404,65 @@ left preconditioning:
 
 \end_inset
 
-in which, LU-SGS preconditioner is used:
+调用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:GMRES"
+
+\end_inset
+
+ 迭代法解
 \begin_inset Formula 
 \[
-\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U}).
+\underline{\tilde{A}}\,\vert\Delta\hat{u}\rangle=\vert\tilde{r}\rangle,\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\vert\tilde{r}\rangle\coloneqq\underline{P}^{-1}\,\vert r\rangle.
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Paragraph
+免矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+ 提出将 
+\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Delta\underline{u}$
+\end_inset
+
+ 的乘积近似为 
+\begin_inset Formula $\Delta\underline{f}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\frac{\partial\underline{f}}{\partial\underline{u}}\,\Delta\underline{u}\approx\Delta\underline{f}\equiv\underline{f}(\underline{u}+\Delta\underline{u})-\underline{f}(\underline{u}),
+\]
+
+\end_inset
+
+由此免除矩阵 
+\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
+\end_inset
+
+ 的计算，从而免除 
+\begin_inset Formula $\underline{L},\underline{U}$
+\end_inset
+
+ 的计算及存储。
 \end_layout
 
 \begin_layout Subsection
