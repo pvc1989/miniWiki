@@ -1009,56 +1009,19 @@ reference "eq:间断有限元：矩阵方程"
 唯一的区别在于
 \begin_inset Formula 
 \[
-\underline{r}_{K\times N}\coloneqq\ip{\partial_{s}\,\underline{b}}{\underline{f_{s}^{h}}}_{E}-\ip{\underline{b}}{\underline{f_{n}^{h}}}_{\partial E}{\color{red}+\ip{\underline{b}}{\underline{q^{h}}}_{E}}.
+\underline{r}_{N\times K}\coloneqq\ip{\partial_{s}\,\underline{b}}{\underline{f_{s}^{h}}}_{E}-\ip{\underline{b}}{\underline{f_{n}^{h}}}_{\partial E}{\color{red}+\ip{\underline{b}}{\underline{q^{h}}}_{E}}.
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+隐式时间推进
 \end_layout
 
 \begin_layout Subsubsection
-时间推进
-\end_layout
-
-\begin_layout Standard
-不失一般性，忽略常微分方程组 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:间断有限元：矩阵方程"
-
-\end_inset
-
- 中的 
-\begin_inset Formula $\underline{m}$
-\end_inset
-
-，即
-\begin_inset Formula 
-\[
-\frac{\dd}{\dd t}\underline{\hat{u}}=\underline{r}(\underline{\hat{u}}).
-\]
-
-\end_inset
-
-它是一个标准的常微分方程组，因此可以照搬《
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "chap:有限差分法"
-
-\end_inset
-
-》之《
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:有限差分：时间推进"
-
-\end_inset
-
-》一节的算法。
-\end_layout
-
-\begin_layout Paragraph
 隐式 Euler
 \end_layout
 
@@ -1070,7 +1033,7 @@ reference "sec:有限差分：时间推进"
  号单元
 \begin_inset Formula 
 \[
-\underline{m}_{i}\dv{\underline{\hat{u}}_{i}}{t}=\underline{r}_{i},
+\underline{m}_{i}\,\dv{\underline{\hat{u}}_{i}}{t}=\underline{r}_{i},
 \]
 
 \end_inset
@@ -1078,7 +1041,7 @@ reference "sec:有限差分：时间推进"
 组装后得到
 \begin_inset Formula 
 \[
-\underline{m}\dv{\underline{\hat{u}}}{t}=\underline{r},
+\underline{m}\,\dv{\underline{\hat{u}}}{t}=\underline{r},
 \]
 
 \end_inset
@@ -1109,7 +1072,7 @@ reference "sec:有限差分：时间推进"
 对其应用隐式 Euler
 \begin_inset Formula 
 \[
-\underline{m}\frac{\Delta\underline{\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
+\underline{m}\,\frac{\Delta\underline{\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
 \Delta t\coloneqq t_{n+1}-t_{n},\\
 \Delta\underline{\hat{u}}\coloneqq\underline{\hat{u}}(t_{n+1})-\underline{\hat{u}}(t_{n}),
 \end{cases}
@@ -1148,7 +1111,7 @@ reference "sec:有限差分：时间推进"
 具有二阶收敛率。
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 矩阵列化
 \end_layout
 
@@ -1228,7 +1191,7 @@ reference "sec:有限差分：时间推进"
 因此，各单元上的
 \begin_inset Formula 
 \[
-\underline{m}_{N\times N}\dv{}{t}\underline{\hat{u}}_{N\times K}=\underline{r}_{N\times K},
+\underline{m}_{N\times N}\,\dv{}{t}\underline{\hat{u}}_{N\times K}=\underline{r}_{N\times K},
 \]
 
 \end_inset
@@ -1236,7 +1199,7 @@ reference "sec:有限差分：时间推进"
 可以被 columnized 为
 \begin_inset Formula 
 \[
-\underline{M}\dv{}{t}\underline{\hat{u}}^{\mathrm{C}}=\underline{r}^{\mathrm{C}},
+\underline{M}\,\dv{}{t}\underline{\hat{u}}^{\mathrm{C}}=\underline{r}^{\mathrm{C}},
 \]
 
 \end_inset
@@ -1262,14 +1225,14 @@ reference "sec:有限差分：时间推进"
 \end_layout
 
 \begin_layout Standard
-本节剩余部分将假设各单元上的矩阵都是 columnized，并以 
-\begin_inset Formula $\vert r\rangle,\vert\Delta\hat{u}\rangle$
+本节剩余部分将假设各单元上的 
+\begin_inset Formula $\underline{\hat{u}},\underline{r}$
 \end_inset
 
- 等符号强调之。
+ 及相应的全局矩阵都是 columnized。
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 LU-SGS
 \end_layout
 
@@ -1285,10 +1248,10 @@ LU-SGS
 \begin_inset Formula $\underline{L},\underline{D},\underline{U}$
 \end_inset
 
- 分别为严格下三角阵、对角阵、严格上三角阵。于是
+ 分别为严格下三角阵、块状对角阵、严格上三角阵。于是
 \begin_inset Formula 
 \[
-\underline{A}\,\vert\Delta\hat{u}\rangle=\vert r\rangle
+\underline{A}\,\Delta\underline{\hat{u}}=\underline{r}
 \]
 
 \end_inset
@@ -1296,7 +1259,7 @@ LU-SGS
 可化为
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\vert\Delta\hat{u}\rangle=\vert r\rangle+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\,\vert\Delta\hat{u}\rangle.
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{r}+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\,\Delta\underline{\hat{u}}.
 \]
 
 \end_inset
@@ -1312,13 +1275,13 @@ literal "true"
 最后一项，所得的方程
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\vert\Delta\hat{u}\rangle=\vert r\rangle
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{r}
 \]
 
 \end_inset
 
 可分两步求解（记 
-\begin_inset Formula $\vert\Delta\hat{u}^{*}\rangle\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\vert\Delta\hat{u}\rangle$
+\begin_inset Formula $\Delta\underline{\hat{u}^{*}}\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}$
 \end_inset
 
 ）：
@@ -1326,13 +1289,13 @@ literal "true"
 
 \begin_layout Itemize
 先逐行向下，解出 
-\begin_inset Formula $\vert\Delta\hat{u}^{*}\rangle$
+\begin_inset Formula $\Delta\underline{\hat{u}^{*}}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\vert\Delta\hat{u}^{*}\rangle=\vert r\rangle
+(\underline{L}+\underline{D})\,\Delta\underline{\hat{u}^{*}}=\underline{r}
 \]
 
 \end_inset
@@ -1342,13 +1305,13 @@ literal "true"
 
 \begin_layout Itemize
 再逐行向上，解出 
-\begin_inset Formula $\vert\Delta\hat{u}\rangle$
+\begin_inset Formula $\Delta\underline{\hat{u}}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-(\underline{D}+\underline{U})\,\vert\Delta\hat{u}\rangle=\underline{D}\,\vert\Delta\hat{u}^{*}\rangle
+(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{D}\,\Delta\underline{\hat{u}^{*}}
 \]
 
 \end_inset
@@ -1383,7 +1346,7 @@ literal "true"
  等推广到非结构网格。
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 GMRES+LU-SGS
 \end_layout
 
@@ -1399,7 +1362,7 @@ GMRES+LU-SGS
 为 left preconditioner:
 \begin_inset Formula 
 \[
-\underline{P}^{-1}\,\underline{A}\,\vert\Delta\hat{u}\rangle=\underline{P}^{-1}\,\vert r\rangle,
+\underline{P}^{-1}\,\underline{A}\,\Delta\underline{\hat{u}}=\underline{P}^{-1}\,\underline{r},
 \]
 
 \end_inset
@@ -1414,7 +1377,7 @@ reference "sec:GMRES"
  迭代法解
 \begin_inset Formula 
 \[
-\underline{\tilde{A}}\,\vert\Delta\hat{u}\rangle=\vert\tilde{r}\rangle,\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\vert\tilde{r}\rangle\coloneqq\underline{P}^{-1}\,\vert r\rangle.
+\underline{\tilde{A}}\,\Delta\underline{\hat{u}}=\underline{\tilde{r}},\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\underline{\tilde{r}}\coloneqq\underline{P}^{-1}\,\underline{r}.
 \]
 
 \end_inset
@@ -1422,7 +1385,143 @@ reference "sec:GMRES"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
+精确 Jacobian 矩阵
+\end_layout
+
+\begin_layout Standard
+GMRES 迭代需频繁计算 
+\begin_inset Formula $\underline{A}\,\Delta\underline{\hat{u}}$
+\end_inset
+
+，可近似为
+\begin_inset Formula 
+\[
+\underline{A}\,\Delta\underline{\hat{u}}=\frac{\underline{M}}{\Delta t}\Delta\underline{\hat{u}}-\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\Delta\underline{\hat{u}}\approx\frac{\underline{M}}{\Delta t}\Delta\underline{\hat{u}}-\frac{\underline{r}(\underline{\hat{u}}+\varepsilon\Delta\underline{\hat{u}})-\underline{r}(\underline{\hat{u}})}{\varepsilon},
+\]
+
+\end_inset
+
+但 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yang_2019"
+literal "true"
+
+\end_inset
+
+ 指出用精确 Jacobian 矩阵有若干优势。
+\end_layout
+
+\begin_layout Standard
+对于第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+，实际需要计算的是 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 行（以块为元）与 
+\begin_inset Formula $\Delta\underline{\hat{u}}$
+\end_inset
+
+ 的乘积，而 
+\begin_inset Formula $\langle i\vert\underline{A}$
+\end_inset
+
+ 的非零元（块）只会出现在满足 
+\begin_inset Formula $\partial E_{i}\cap\partial E_{j}\ne\varnothing$
+\end_inset
+
+ 的第 
+\begin_inset Formula $j$
+\end_inset
+
+ 列，即
+\begin_inset Formula 
+\[
+\partial E_{i}\cap\partial E_{j}\ne\varnothing\iff\underline{0}\ne\langle i\vert\underline{A}\vert j\rangle=\frac{\underline{M}_{i}}{\Delta t}\delta_{ij}-\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}}.
+\]
+
+\end_inset
+
+具体的有
+\begin_inset Formula 
+\[
+\langle i\vert\underline{A}\vert j\rangle=\begin{cases}
+\langle i\vert\underline{L}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{j}, & i>j\\
+\langle i\vert\underline{D}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{i}+\underline{M}_{i}/\Delta t, & i=j\\
+\langle i\vert\underline{U}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{j}, & i<j
+\end{cases}
+\]
+
+\end_inset
+
+对于标量守恒律，由依赖关系
+\begin_inset Formula 
+\[
+\underline{r}_{i}(\underline{\hat{u}}_{i},\underline{\hat{u}}_{j})=\ip{\partial_{s}\,\underline{b}_{i}}{f_{s}^{h}(\underline{\hat{u}}_{i})}_{E_{i}}-\ip{\underline{b}_{i}}{f_{n}^{h}(\underline{\hat{u}}_{i},\underline{\hat{u}}_{j})}_{\partial E_{i}},
+\]
+
+\end_inset
+
+可知
+\begin_inset Formula 
+\[
+\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{i}}=\ip{\partial_{s}\,\underline{b}_{i}}{\frac{\partial f_{s}^{h}}{\partial\underline{\hat{u}}_{i}}}_{E_{i}}-\ip{\underline{b}_{i}}{\frac{\partial f_{n}^{h}}{\partial\underline{\hat{u}}_{i}}}_{\partial E_{i}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}}=-\ip{\underline{b}_{i}}{\frac{\partial f_{n}^{h}}{\partial\underline{\hat{u}}_{j}}}_{\partial E_{i}},\quad i\ne j
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\partial f_{n}^{h}/\partial\underline{\hat{u}}_{j}$
+\end_inset
+
+ 需根据具体的 Riemann 解推导。若 
+\begin_inset Formula $f_{s}^{h}=f_{s}(u^{h})=f_{s}(\underline{b}_{i}\cdot\underline{\hat{u}}_{i})$
+\end_inset
+
+，则 
+\begin_inset Formula $\partial f_{s}^{h}/\partial\underline{\hat{u}}_{i}$
+\end_inset
+
+ 可化为
+\begin_inset Formula 
+\[
+\frac{\partial f_{s}^{h}}{\partial\underline{\hat{u}}_{i}}=\frac{\partial f_{s}(u^{h})}{\partial\underline{\hat{u}}_{i}}=\frac{\partial f_{s}}{\partial u^{h}}\,\frac{\partial u^{h}}{\partial\underline{\hat{u}}_{i}}=a_{s}(u^{h})\,\underline{b}_{i},
+\]
+
+\end_inset
+
+对于守恒律系统，形式上仍有
+\begin_inset Formula 
+\[
+\frac{\partial\underline{f_{s}^{h}}}{\partial\underline{\hat{u}}_{i}}=\frac{\partial\underline{f_{s}}(\underline{u^{h}})}{\partial\underline{\hat{u}}_{i}}=\frac{\partial\underline{f_{s}}}{\partial\underline{u^{h}}}\frac{\partial\underline{u^{h}}}{\partial\underline{\hat{u}}_{i}},
+\]
+
+\end_inset
+
+但需注意各矩阵的维度。
+\end_layout
+
+\begin_layout Subsubsection
 免矩阵
 \end_layout
 
