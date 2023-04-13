@@ -917,7 +917,11 @@ reference "eq:间断有限元：矩阵方程"
 \end_inset
 
  替换为 
-\begin_inset Formula $\underline{u}_{1\times K}\coloneqq\begin{bmatrix}u_{1} & \cdots & u_{K}\end{bmatrix}$
+\begin_inset Formula $\bra{u}\coloneqq\begin{bmatrix}u_{1} & \cdots & u_{K}\end{bmatrix}$
+\end_inset
+
+ 或 
+\begin_inset Formula $\ket{u}\equiv\bra{u}^{\dagger}$
 \end_inset
 
 ，将通量分量 
@@ -925,13 +929,17 @@ reference "eq:间断有限元：矩阵方程"
 \end_inset
 
  替换为 
-\begin_inset Formula $\underline{f_{s}}_{1\times K}$
+\begin_inset Formula $\bra{f_{s}}$
 \end_inset
 
-，就得到相应的微分方程组
+ 或 
+\begin_inset Formula $\ket{f_{s}}$
+\end_inset
+
+，就得到相应的偏微分方程组
 \begin_inset Formula 
 \[
-\partial_{t}\underline{u}_{1\times K}+\partial_{s}\,\underline{f_{s}}_{1\times K}=\underline{0}_{1\times K},
+\partial_{t}\bra{u}+\partial_{s}\bra{f_{s}}=\bra{0}\qor\partial_{t}\ket{u}+\partial_{s}\ket{f_{s}}=\ket{0},
 \]
 
 \end_inset
@@ -939,7 +947,7 @@ reference "eq:间断有限元：矩阵方程"
 及对应的有限元方程
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{N\times K}=\underline{m}_{N\times N}^{-1}\,\underline{r}_{N\times K},
+\frac{\dd}{\dd t}\left(\underline{\hat{u}}_{i}\right)_{N\times K}=\left(\underline{m}_{i}\right)_{N\times N}^{-1}\left(\underline{r}_{i}\right)_{N\times K},
 \]
 
 \end_inset
@@ -947,37 +955,25 @@ reference "eq:间断有限元：矩阵方程"
 其中，基函数及质量阵保持不变：
 \begin_inset Formula 
 \[
-\underline{b}_{N\times1}(\vec{x})\coloneqq\begin{bmatrix}b_{1}(\vec{x}) & \cdots & b_{N}(\vec{x})\end{bmatrix}^{\mathrm{T}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underline{m}_{N\times N}\coloneqq\ip{\underline{b}_{N\times1}}{\left(\underline{b}^{\mathrm{T}}\right)_{1\times N}}_{E}=\begin{bmatrix}\ip{b_{1}}{b_{1}}_{E} & \cdots & \ip{b_{1}}{b_{N}}_{E}\\
+\ket{b_{i}(\vec{x})}=\begin{bmatrix}b_{i,1}(\vec{x})\\
+\vdots\\
+b_{i,N}(\vec{x})
+\end{bmatrix},\quad\underline{m}_{i}=\int_{E_{i}}\ket{b_{i}}\bra{b_{i}}=\begin{bmatrix}\ip{b_{i,1}}{b_{i,1}} & \cdots & \ip{b_{i,1}}{b_{i,N}}\\
 \vdots & \ddots & \vdots\\
-\ip{b_{N}}{b_{1}}_{E} & \cdots & \ip{b_{N}}{b_{N}}_{E}
-\end{bmatrix},
+\ip{b_{i,N}}{b_{i,1}} & \cdots & \ip{b_{i,N}}{b_{i,N}}
+\end{bmatrix}
 \]
 
 \end_inset
 
-未知量系数变为
-\begin_inset Formula 
-\[
-\underline{\hat{u}}_{N\times K}(t)\coloneqq\ip{\underline{b}_{N\times1}}{\underline{u}_{1\times K}}_{E}=\begin{bmatrix}\langle b_{1}\vert u_{1}\rangle_{E} & \cdots & \langle b_{1}\vert u_{K}\rangle_{E}\\
-\vdots & \ddots & \vdots\\
-\langle b_{N}\vert u_{1}\rangle_{E} & \cdots & \langle b_{N}\vert u_{K}\rangle_{E}
-\end{bmatrix},
-\]
-
+未知量系数及残值项分别变为 
+\begin_inset Formula $N\times K$
 \end_inset
 
-残值项变为
+ 矩阵
 \begin_inset Formula 
 \[
-\underline{r}_{N\times K}\coloneqq\ip{\partial_{s}\,\underline{b}}{\underline{f_{s}^{h}}}_{E}-\ip{\underline{b}}{\underline{f_{n}^{h}}}_{\partial E}.
+\underline{\hat{u}}_{i}(t)=\int_{E_{i}}\ket{b_{i}(\vec{x})}{u(\vec{x},t)},\quad\underline{r}_{i}\coloneqq\int_{E_{i}}\ket{\partial_{s}\,b_{i}}\bra{f_{s}^{h}}-\int_{\partial E_{i}}\ket{b_{i}}\bra{f_{n}^{h}}.
 \]
 
 \end_inset
@@ -993,23 +989,23 @@ reference "eq:间断有限元：矩阵方程"
 若在守恒律方程组的右端添加源项：
 \begin_inset Formula 
 \[
-\partial_{t}\,\underline{u}+\partial_{s}\,\underline{f_{s}}=\underline{q},
+\partial_{t}\bra{u}+\partial_{s}\bra{f_{s}}=\bra{q}\qor\partial_{t}\ket{u}+\partial_{s}\ket{f_{s}}=\ket{q},
 \]
 
 \end_inset
 
-则整个推导过程大致相同，只需在弱形式、残值项中补充源项。所得有限元方程（形式上）仍为
+则整个推导过程大致相同，只需在弱形式、残值项中补充源项。所得有限元方程仍为
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{N\times K}=\underline{m}_{N\times N}^{-1}\,\underline{r}_{N\times K},
+\frac{\dd}{\dd t}\left(\underline{\hat{u}}_{i}\right)_{N\times K}=\left(\underline{m}_{i}\right)_{N\times N}^{-1}\left(\underline{r}_{i}\right)_{N\times K},
 \]
 
 \end_inset
 
-唯一的区别在于
+唯一的区别在于残值项多出源项的体积分
 \begin_inset Formula 
 \[
-\underline{r}_{N\times K}\coloneqq\ip{\partial_{s}\,\underline{b}}{\underline{f_{s}^{h}}}_{E}-\ip{\underline{b}}{\underline{f_{n}^{h}}}_{\partial E}{\color{red}+\ip{\underline{b}}{\underline{q^{h}}}_{E}}.
+\underline{r}_{i}\coloneqq\int_{E_{i}}\ket{\partial_{s}\,b_{i}}\bra{f_{s}^{h}}-\int_{\partial E_{i}}\ket{b_{i}}\bra{f_{n}^{h}}{\color{red}\,+\int_{E_{i}}\ket{b_{i}}\bra{q^{h}}}.
 \]
 
 \end_inset
@@ -1072,9 +1068,9 @@ reference "eq:间断有限元：矩阵方程"
 对其应用隐式 Euler
 \begin_inset Formula 
 \[
-\underline{m}\,\frac{\Delta\underline{\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
+\underline{m}\,\frac{\ket{\Delta\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
 \Delta t\coloneqq t_{n+1}-t_{n},\\
-\Delta\underline{\hat{u}}\coloneqq\underline{\hat{u}}(t_{n+1})-\underline{\hat{u}}(t_{n}),
+\ket{\Delta\hat{u}}\coloneqq\underline{\hat{u}}(t_{n+1})-\underline{\hat{u}}(t_{n}),
 \end{cases}
 \]
 
@@ -1083,7 +1079,7 @@ reference "eq:间断有限元：矩阵方程"
 并引入线性近似
 \begin_inset Formula 
 \[
-\underline{r}^{n+1}\approx\underline{r}^{n}+\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n}\Delta\underline{\hat{u}},\quad\left\langle i\middle\vert\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\middle\vert j\right\rangle \coloneqq\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}},
+\underline{r}^{n+1}\approx\underline{r}^{n}+\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n}\ket{\Delta\hat{u}},\quad\mel{i}{\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}}{j}\coloneqq\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}},
 \]
 
 \end_inset
@@ -1091,7 +1087,7 @@ reference "eq:间断有限元：矩阵方程"
 则转化为求解
 \begin_inset Formula 
 \[
-\underline{A}^{n}\,\Delta\underline{\hat{u}}=\underline{r}^{n},\quad\underline{A}^{n}\coloneqq\frac{\underline{m}}{\Delta t}-\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n},
+\underline{A}^{n}\ket{\Delta\hat{u}}=\underline{r}^{n},\quad\underline{A}^{n}\coloneqq\frac{\underline{m}}{\Delta t}-\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n},
 \]
 
 \end_inset
@@ -1103,7 +1099,7 @@ reference "eq:间断有限元：矩阵方程"
  时，退化为 Newton 法解非线性代数方程组
 \begin_inset Formula 
 \[
-\underline{r}\big(\underline{\hat{u}}(t_{n})+\Delta\underline{\hat{u}}\big)=\underline{0},
+\underline{r}\qty(\underline{\hat{u}}(t_{n})+\ket{\Delta\hat{u}})=\underline{0},
 \]
 
 \end_inset
@@ -1132,10 +1128,10 @@ reference "eq:间断有限元：矩阵方程"
 
 \end_inset
 
-但矩阵运算无法表达。实际上，这是一组张量关系
+但无法用常规矩阵运算无法表达。实际上，这是一组张量关系
 \begin_inset Formula 
 \[
-\dd\langle r\vert\underline{Y}\vert s\rangle=\frac{\partial\langle r\vert\underline{Y}\vert s\rangle}{\partial\langle i\vert\underline{X}\vert j\rangle}\,\dd\langle i\vert\underline{X}\vert j\rangle,
+\dd\langle r\vert\underline{Y}\vert s\rangle=\sum_{i=1}^{k}\sum_{j=1}^{l}\frac{\partial\langle r\vert\underline{Y}\vert s\rangle}{\partial\langle i\vert\underline{X}\vert j\rangle}\,\dd\langle i\vert\underline{X}\vert j\rangle,
 \]
 
 \end_inset
@@ -1144,11 +1140,15 @@ reference "eq:间断有限元：矩阵方程"
 \begin_inset Formula $mn\times kl$
 \end_inset
 
- 个参数才能表达。
+ 个参数才能将 
+\begin_inset Formula $\partial\underline{Y}/\partial\underline{X}$
+\end_inset
+
+ 确定下来。
 \end_layout
 
 \begin_layout Standard
-借助“列化”运算
+借助“列化”运算（对于 column-major 存储，无额外开销）
 \begin_inset Formula 
 \[
 \underline{X}^{\mathrm{C}}=\begin{bmatrix}\underline{X}\vert1\rangle\\
@@ -1179,7 +1179,10 @@ reference "eq:间断有限元：矩阵方程"
 \frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{bmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
 \ddots & \ddots & \vdots\\
 \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}
-\end{bmatrix}\in\mathbb{R}^{m\times k},\quad j=1,\dots,l,\quad,i=1,\dots,n,
+\end{bmatrix}\in\mathbb{R}^{m\times k},\quad\begin{cases}
+i=1,\dots,n,\\
+j=1,\dots,l,
+\end{cases}
 \]
 
 \end_inset
@@ -1188,10 +1191,10 @@ reference "eq:间断有限元：矩阵方程"
 \end_layout
 
 \begin_layout Standard
-因此，各单元上的
+因此，各单元上的有限元方程
 \begin_inset Formula 
 \[
-\underline{m}_{N\times N}\,\dv{}{t}\underline{\hat{u}}_{N\times K}=\underline{r}_{N\times K},
+\frac{\dd}{\dd t}\left(\underline{\hat{u}}_{i}\right)_{N\times K}=\left(\underline{m}_{i}\right)_{N\times N}^{-1}\left(\underline{r}_{i}\right)_{N\times K},
 \]
 
 \end_inset
@@ -1199,7 +1202,7 @@ reference "eq:间断有限元：矩阵方程"
 可以被 columnized 为
 \begin_inset Formula 
 \[
-\underline{M}\,\dv{}{t}\underline{\hat{u}}^{\mathrm{C}}=\underline{r}^{\mathrm{C}},
+\dv{}{t}\ket{\hat{u}_{i}}=\underline{M}_{i}^{-1}\ket{r_{i}},
 \]
 
 \end_inset
@@ -1207,16 +1210,55 @@ reference "eq:间断有限元：矩阵方程"
 其中
 \begin_inset Formula 
 \[
-\underline{M}=\begin{bmatrix}\underline{m}\\
+\underline{M}_{i}=\begin{bmatrix}\underline{m}_{i}\\
  & \ddots\\
- &  & \underline{m}
-\end{bmatrix}_{NK\times NK},\quad\underline{\hat{u}}^{\mathrm{C}}=\begin{bmatrix}\underline{\hat{u}}\vert1\rangle\\
+ &  & \underline{m}_{i}
+\end{bmatrix}_{NK\times NK},\quad\ket{\hat{u}_{i}}=\begin{bmatrix}\underline{\hat{u}}_{i}\vert1\rangle\\
 \vdots\\
-\underline{\hat{u}}\vert K\rangle
-\end{bmatrix}_{NK\times1},\quad\underline{r}^{\mathrm{C}}=\begin{bmatrix}\underline{r}\vert1\rangle\\
+\underline{\hat{u}}_{i}\vert K\rangle
+\end{bmatrix}_{NK\times1},\quad\ket{r_{i}}=\begin{bmatrix}\underline{r}_{i}\vert1\rangle\\
 \vdots\\
-\underline{r}\vert K\rangle
-\end{bmatrix}_{NK\times1},
+\underline{r}_{i}\vert K\rangle
+\end{bmatrix}_{NK\times1}.
+\]
+
+\end_inset
+
+组装后得到
+\begin_inset Formula 
+\[
+\underline{M}\,\dv{}{t}\ket{\hat{u}}=\ket{r},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{M}\coloneqq\begin{bmatrix}\ddots\\
+ & \underline{M}_{i}\\
+ &  & \ddots\\
+ &  &  & \underline{M}_{j}\\
+ &  &  &  & \ddots
+\end{bmatrix},\quad\ket{\hat{u}}\coloneqq\begin{bmatrix}\vdots\\
+\ket{\hat{u}_{i}}\\
+\vdots\\
+\ket{\hat{u}_{j}}\\
+\vdots
+\end{bmatrix},\quad\ket{r}\coloneqq\begin{bmatrix}\vdots\\
+\ket{r_{i}}\\
+\vdots\\
+\ket{r_{j}}\\
+\vdots
+\end{bmatrix}.
+\]
+
+\end_inset
+
+按此记法，隐式 Euler 需求解的线性代数方程组为
+\begin_inset Formula 
+\[
+\underline{A}^{n}\ket{\Delta\hat{u}}=\ket{r^{n}},\quad\underline{A}^{n}\coloneqq\frac{\underline{M}}{\Delta t}-\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}},\quad\mel{i}{\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}}}{j}\coloneqq\frac{\partial\ket{r_{i}^{n}}}{\partial\bra{\hat{u}_{j}^{n}}}.
 \]
 
 \end_inset
@@ -1225,11 +1267,7 @@ reference "eq:间断有限元：矩阵方程"
 \end_layout
 
 \begin_layout Standard
-本节剩余部分将假设各单元上的 
-\begin_inset Formula $\underline{\hat{u}},\underline{r}$
-\end_inset
-
- 及相应的全局矩阵都是 columnized。
+本节剩余部分将尽可能使用 columnized 矩阵。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1251,7 +1289,7 @@ LU-SGS
  分别为严格下三角阵、块状对角阵、严格上三角阵。于是
 \begin_inset Formula 
 \[
-\underline{A}\,\Delta\underline{\hat{u}}=\underline{r}
+\underline{A}\ket{\Delta\hat{u}}=\ket{r}
 \]
 
 \end_inset
@@ -1259,7 +1297,7 @@ LU-SGS
 可化为
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{r}+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\,\Delta\underline{\hat{u}}.
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\ket{\Delta\hat{u}}.
 \]
 
 \end_inset
@@ -1275,13 +1313,13 @@ literal "true"
 最后一项，所得的方程
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{r}
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}
 \]
 
 \end_inset
 
 可分两步求解（记 
-\begin_inset Formula $\Delta\underline{\hat{u}^{*}}\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}$
+\begin_inset Formula $\ket{\Delta\hat{u}^{*}}\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}$
 \end_inset
 
 ）：
@@ -1289,13 +1327,13 @@ literal "true"
 
 \begin_layout Itemize
 先逐行向下，解出 
-\begin_inset Formula $\Delta\underline{\hat{u}^{*}}$
+\begin_inset Formula $\ket{\Delta\hat{u}^{*}}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-(\underline{L}+\underline{D})\,\Delta\underline{\hat{u}^{*}}=\underline{r}
+(\underline{L}+\underline{D})\ket{\Delta\hat{u}^{*}}=\ket{r}
 \]
 
 \end_inset
@@ -1305,13 +1343,13 @@ literal "true"
 
 \begin_layout Itemize
 再逐行向上，解出 
-\begin_inset Formula $\Delta\underline{\hat{u}}$
+\begin_inset Formula $\ket{\Delta\hat{u}}$
 \end_inset
 
 ：
 \begin_inset Formula 
 \[
-(\underline{D}+\underline{U})\,\Delta\underline{\hat{u}}=\underline{D}\,\Delta\underline{\hat{u}^{*}}
+(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\underline{D}\ket{\Delta\hat{u}^{*}}
 \]
 
 \end_inset
@@ -1362,7 +1400,7 @@ GMRES+LU-SGS
 为 left preconditioner:
 \begin_inset Formula 
 \[
-\underline{P}^{-1}\,\underline{A}\,\Delta\underline{\hat{u}}=\underline{P}^{-1}\,\underline{r},
+\underline{P}^{-1}\,\underline{A}\ket{\Delta\hat{u}}=\underline{P}^{-1}\ket{r},
 \]
 
 \end_inset
@@ -1377,7 +1415,7 @@ reference "sec:GMRES"
  迭代法解
 \begin_inset Formula 
 \[
-\underline{\tilde{A}}\,\Delta\underline{\hat{u}}=\underline{\tilde{r}},\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\underline{\tilde{r}}\coloneqq\underline{P}^{-1}\,\underline{r}.
+\underline{\tilde{A}}\ket{\Delta\hat{u}}=\ket{\tilde{r}},\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\ket{\tilde{r}}\coloneqq\underline{P}^{-1}\ket{r}.
 \]
 
 \end_inset
@@ -1391,13 +1429,13 @@ reference "sec:GMRES"
 
 \begin_layout Standard
 GMRES 迭代需频繁计算 
-\begin_inset Formula $\underline{A}\,\Delta\underline{\hat{u}}$
+\begin_inset Formula $\underline{A}\ket{\Delta\hat{u}}$
 \end_inset
 
 ，可近似为
 \begin_inset Formula 
 \[
-\underline{A}\,\Delta\underline{\hat{u}}=\frac{\underline{M}}{\Delta t}\Delta\underline{\hat{u}}-\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\Delta\underline{\hat{u}}\approx\frac{\underline{M}}{\Delta t}\Delta\underline{\hat{u}}-\frac{\underline{r}(\underline{\hat{u}}+\varepsilon\Delta\underline{\hat{u}})-\underline{r}(\underline{\hat{u}})}{\varepsilon},
+\underline{A}\ket{\Delta\hat{u}}=\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\partial\ket{r}}{\partial\bra{\hat{u}}}\ket{\Delta\hat{u}}\approx\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\ket{r}_{\ket{\hat{u}}+\varepsilon\ket{\Delta\hat{u}}}-\ket{r}_{\ket{\hat{u}}}}{\varepsilon},
 \]
 
 \end_inset
@@ -1431,7 +1469,7 @@ literal "true"
 \end_inset
 
  行（以块为元）与 
-\begin_inset Formula $\Delta\underline{\hat{u}}$
+\begin_inset Formula $\ket{\Delta\hat{u}}$
 \end_inset
 
  的乘积，而 
@@ -1449,7 +1487,7 @@ literal "true"
  列，即
 \begin_inset Formula 
 \[
-\partial E_{i}\cap\partial E_{j}\ne\varnothing\iff\underline{0}\ne\langle i\vert\underline{A}\vert j\rangle=\frac{\underline{M}_{i}}{\Delta t}\delta_{ij}-\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}}.
+\partial E_{i}\cap\partial E_{j}\ne\varnothing\iff\underline{0}\ne\langle i\vert\underline{A}\vert j\rangle.
 \]
 
 \end_inset
@@ -1458,18 +1496,18 @@ literal "true"
 \begin_inset Formula 
 \[
 \langle i\vert\underline{A}\vert j\rangle=\begin{cases}
-\langle i\vert\underline{L}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{j}, & i>j\\
-\langle i\vert\underline{D}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{i}+\underline{M}_{i}/\Delta t, & i=j\\
-\langle i\vert\underline{U}\vert j\rangle=-\partial\underline{r}_{i}/\partial\underline{\hat{u}}_{j}, & i<j
+\langle i\vert\underline{L}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i>j\\
+\langle i\vert\underline{D}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{i}}}+\underline{M}_{i}/\Delta t, & i=j\\
+\langle i\vert\underline{U}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i<j
 \end{cases}
 \]
 
 \end_inset
 
-对于标量守恒律，由依赖关系
+对于标量守恒律，由
 \begin_inset Formula 
 \[
-\underline{r}_{i}(\underline{\hat{u}}_{i},\underline{\hat{u}}_{j})=\ip{\partial_{s}\,\underline{b}_{i}}{f_{s}^{h}(\underline{\hat{u}}_{i})}_{E_{i}}-\ip{\underline{b}_{i}}{f_{n}^{h}(\underline{\hat{u}}_{i},\underline{\hat{u}}_{j})}_{\partial E_{i}},
+\ket{r_{i}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}f_{s}^{h}\qty(\ket{\hat{u}_{i}})-\int_{\partial E_{i}}\ket{b_{i}}f_{n}^{h}\qty(\ket{\hat{u}_{i}},\ket{\hat{u}_{j}}),
 \]
 
 \end_inset
@@ -1477,7 +1515,7 @@ literal "true"
 可知
 \begin_inset Formula 
 \[
-\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{i}}=\ip{\partial_{s}\,\underline{b}_{i}}{\frac{\partial f_{s}^{h}}{\partial\underline{\hat{u}}_{i}}}_{E_{i}}-\ip{\underline{b}_{i}}{\frac{\partial f_{n}^{h}}{\partial\underline{\hat{u}}_{i}}}_{\partial E_{i}}
+\pdv{\ket{r_{i}}}{\bra{\hat{u}_{i}}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{i}}},
 \]
 
 \end_inset
@@ -1485,40 +1523,62 @@ literal "true"
 
 \begin_inset Formula 
 \[
-\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}}=-\ip{\underline{b}_{i}}{\frac{\partial f_{n}^{h}}{\partial\underline{\hat{u}}_{j}}}_{\partial E_{i}},\quad i\ne j
+\pdv{\ket{r_{i}}}{\bra{\hat{u}_{j}}}=-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{j}}},\quad i\ne j
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\partial f_{n}^{h}/\partial\underline{\hat{u}}_{j}$
+\begin_inset Formula $\partial f_{n}^{h}/\partial\bra{\hat{u}_{j}}$
 \end_inset
 
- 需根据具体的 Riemann 解推导。若 
-\begin_inset Formula $f_{s}^{h}=f_{s}(u^{h})=f_{s}(\underline{b}_{i}\cdot\underline{\hat{u}}_{i})$
+ 需根据具体的 Riemann 解推导，而 
+\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
+\end_inset
+
+ 只依赖于 
+\begin_inset Formula $f_{s}^{h}$
+\end_inset
+
+ 的取法。若 
+\begin_inset Formula $f_{s}^{h}=f_{s}(u^{h})=f_{s}\qty(\ip{b_{i}}{\hat{u}_{i}})$
 \end_inset
 
 ，则 
-\begin_inset Formula $\partial f_{s}^{h}/\partial\underline{\hat{u}}_{i}$
+\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
 \end_inset
 
  可化为
 \begin_inset Formula 
 \[
-\frac{\partial f_{s}^{h}}{\partial\underline{\hat{u}}_{i}}=\frac{\partial f_{s}(u^{h})}{\partial\underline{\hat{u}}_{i}}=\frac{\partial f_{s}}{\partial u^{h}}\,\frac{\partial u^{h}}{\partial\underline{\hat{u}}_{i}}=a_{s}(u^{h})\,\underline{b}_{i},
+\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}\circ u^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}}{\partial u^{h}}\frac{\partial u^{h}}{\partial\bra{\hat{u}_{i}}}=\left(a_{s}\circ u^{h}\right)\bra{b_{i}},
 \]
 
 \end_inset
 
-对于守恒律系统，形式上仍有
+对于守恒律系统，该式形式上仍成立，但需注意各矩阵的维数：
 \begin_inset Formula 
 \[
-\frac{\partial\underline{f_{s}^{h}}}{\partial\underline{\hat{u}}_{i}}=\frac{\partial\underline{f_{s}}(\underline{u^{h}})}{\partial\underline{\hat{u}}_{i}}=\frac{\partial\underline{f_{s}}}{\partial\underline{u^{h}}}\frac{\partial\underline{u^{h}}}{\partial\underline{\hat{u}}_{i}},
+\frac{\partial\ket{f_{s}^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\frac{\partial\ket{f_{s}}\circ\ket{u^{h}}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial\ket{f_{s}}_{K}}{\partial\bra{u^{h}}_{K}}\frac{\partial\ket{u^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\left(\underline{a_{s}}\circ\ket{u^{h}}\right)_{K\times K}\begin{bmatrix}\bra{b_{i}}\\
+ & \ddots\\
+ &  & \bra{b_{i}}
+\end{bmatrix}_{K\times NK},
 \]
 
 \end_inset
 
-但需注意各矩阵的维度。
+其中最后一个矩阵来源于
+\begin_inset Formula 
+\[
+\ket{u^{h}}_{K}=\begin{bmatrix}\bra{b_{i}}\\
+ & \ddots\\
+ &  & \bra{b_{i}}
+\end{bmatrix}_{K\times NK}\ket{\hat{u}_{i}}_{NK}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
