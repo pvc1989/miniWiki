@@ -135,7 +135,7 @@ status open
 
  用有限个
 \color red
-子区域 (subdomain)
+子域 (subdomain)
 \color inherit
  及其边界的
 \color red
@@ -149,15 +149,15 @@ status open
 \color red
 网格 (mesh/grid)
 \color inherit
-。子区域又被称为
+。子区域可以显式定义为具有简单几何外形（如：直线段、三角形、四边形、四面体、三棱柱、六面体）的
 \color red
 单元 (element/cell)
 \color inherit
-，它们通常具有简单的几何外形（例如：直线段、三角形、四边形、四面体、三棱柱、六面体）。定义单元所用到的点被称为
+，也可以隐式定义（如：Voronoi cell）。定义子域所用到的点被称为
 \color red
 结点 (node)
 \color inherit
-。一个结点可以由多个单元共享（顶点），也可以被某一个单元独占（内点）。为方便叙述，表 
+，一个结点可以由多个子域共享（顶点），也可以被某一个子域独占（内点）。为方便叙述，表 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:有限体积：网格术语"
@@ -188,9 +188,8 @@ name "tab:有限体积：网格术语"
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="12" columns="5">
+<lyxtabular version="3" rows="14" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -201,15 +200,6 @@ name "tab:有限体积：网格术语"
 
 \begin_layout Plain Layout
 类名
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-别名
 \end_layout
 
 \end_inset
@@ -250,17 +240,6 @@ name "tab:有限体积：网格术语"
 
 \family typewriter
 Index
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family typewriter
-Tag
 \end_layout
 
 \end_inset
@@ -319,17 +298,6 @@ Number
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family typewriter
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 \begin_inset Formula $N(X)$
 \end_inset
 
@@ -371,18 +339,7 @@ Size
 \begin_layout Plain Layout
 
 \family typewriter
-Mesh
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family typewriter
-Grid
+Mesh,Grid
 \end_layout
 
 \end_inset
@@ -428,24 +385,13 @@ Grid
 </cell>
 </row>
 <row>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \family typewriter
-Cell
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family typewriter
-Element
+Cell,
 \end_layout
 
 \end_inset
@@ -494,22 +440,13 @@ Element
 </cell>
 </row>
 <row>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \family typewriter
-Volume
+Element
 \end_layout
 
 \end_inset
@@ -554,24 +491,119 @@ Element
 </cell>
 </row>
 <row>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \family typewriter
-Wall
+Volume,
 \end_layout
 
 \end_inset
 </cell>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(G,i)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G$
+\end_inset
+
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号 
+\family typewriter
+Volume
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \family typewriter
-Surface
+Subdomain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V(G)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $V$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G$
+\end_inset
+
+ 的所有 
+\family typewriter
+Volume
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+Surface,
 \end_layout
 
 \end_inset
@@ -620,20 +652,13 @@ Surface
 </cell>
 </row>
 <row>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+\family typewriter
+Wall,
 \end_layout
 
 \end_inset
@@ -678,20 +703,13 @@ Surface
 </cell>
 </row>
 <row>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+\family typewriter
+Interface
 \end_layout
 
 \end_inset
@@ -700,7 +718,7 @@ Surface
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $S(E_{i})$
+\begin_inset Formula $S(V_{i})$
 \end_inset
 
 
@@ -712,7 +730,7 @@ Surface
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $S_{E_{i}}$
+\begin_inset Formula $S_{V_{i}}$
 \end_inset
 
 
@@ -724,7 +742,7 @@ Surface
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  的所有 
@@ -736,24 +754,13 @@ Surface
 </cell>
 </row>
 <row>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \family typewriter
-Node
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family typewriter
-Point
+Point,
 \end_layout
 
 \end_inset
@@ -802,20 +809,13 @@ Point
 </cell>
 </row>
 <row>
-<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+\family typewriter
+Node,
 \end_layout
 
 \end_inset
@@ -860,20 +860,13 @@ Point
 </cell>
 </row>
 <row>
-<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+\family typewriter
+Vertex
 \end_layout
 
 \end_inset
@@ -882,7 +875,7 @@ Point
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $P(E_{i})$
+\begin_inset Formula $P(V_{i})$
 \end_inset
 
 
@@ -894,7 +887,7 @@ Point
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $P_{E_{i}}$
+\begin_inset Formula $P_{V_{i}}$
 \end_inset
 
 
@@ -906,7 +899,7 @@ Point
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  的所有 
@@ -955,15 +948,11 @@ status open
 \color red
 控制面 (Control Surface, CS)
 \color inherit
- 具有重要的物理意义。在有限体积法中，最自然的方案是：以 
+ 具有重要的物理意义。在有限体积法中，可以取 
 \family typewriter
 Element
 \family default
- 为控制体，以 
-\family typewriter
-Surface
-\family default
- 为控制面。因此通常要求：
+ 为控制体并要求
 \end_layout
 
 \begin_deeper
@@ -984,7 +973,11 @@ Grid
 \family typewriter
 Element
 \family default
-s 之间没有（除公共边界以外的）实质性的重叠，即
+s 之间没有（除公共 
+\family typewriter
+Surface
+\family default
+ 以外的）重叠，即
 \begin_inset Formula 
 \[
 \underbrace{\vert E_{i}\cap E_{k}\vert}_{\int_{E_{i}\cap E_{k}}1}=\delta_{ik}\underbrace{\vert E_{k}\vert}_{\int_{E_{k}}1},\quad\forall(i,k)\in I(E)\times I(E)
@@ -996,42 +989,16 @@ s 之间没有（除公共边界以外的）实质性的重叠，即
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-在上述条件下，相邻 
-\family typewriter
-Element
-\family default
-s 之间可以有公共 
-\family typewriter
-Surface
-\family default
-，它们在 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:有限体积：Godunov"
-
-\end_inset
-
-中具有特别重要的意义。除此之外，有限体积法对网格没有更多的要求，因此特别适合于
+\begin_layout Condition
+所得格式被为
 \color red
-非结构网格 (unstructured mesh)
+格心型的 (cell-centered)
 \color inherit
-，从而特别适合于具有复杂几何边界的问题。这种网格的灵活性正是
+。除此之外，控制体亦可取为结点邻域，相应的格式被称为
 \color red
-有限体积法
+格点型的 (cell-vertex)
 \color inherit
-相对于
-\color red
-有限差分法
-\color inherit
-的优势之一。
+。
 \end_layout
 
 \begin_layout Standard
@@ -1062,7 +1029,7 @@ Grid
 \family default
  是 
 \family typewriter
-Element
+Volume
 \family default
 、
 \family typewriter
@@ -1105,7 +1072,7 @@ Surface
 \family default
  应当支持对其两侧 
 \family typewriter
-Element
+Volumn
 \family default
 s 的 
 \begin_inset Formula $\order{\lg^{3}N}$
@@ -1168,21 +1135,24 @@ s：
 \begin_inset Formula $i$
 \end_inset
 
- 个控制体，以相邻 
+ 个控制体（即 
+\begin_inset Formula $E_{i}\coloneqq V_{i}$
+\end_inset
+
+），以相邻 
 \family typewriter
 Element
 \family default
-s 的公共端点为控制面，因此 
+s 的公共端点为控制面（即 
 \begin_inset Formula $P_{i}\coloneqq S_{i}$
 \end_inset
 
-。对于静态网格（在计算过程中保持不变的网格），最简单的数据结构（数组）即可高效实现上述方案。在更一般的一维非结构网格中，结点编号顺序可能相当随意，即不要求
- 
-\begin_inset Formula $i<j\iff x_{i}<x_{j}$
-\end_inset
+）。
+\end_layout
 
-，而是记 
-\begin_inset Formula $E_{i}\coloneqq(x_{i-1/2},x_{i+1/2})$
+\begin_layout Remark
+类似地，亦可定义格心型网格，记 
+\begin_inset Formula $V_{i}\coloneqq(x_{i-1/2},x_{i+1/2})$
 \end_inset
 
 ，其中 
@@ -1191,25 +1161,29 @@ s 的公共端点为控制面，因此
 
  表示
 \color red
-单元 
-\begin_inset Formula $E_{i}$
+控制体 
+\begin_inset Formula $V_{i}$
 \end_inset
 
  两端点的坐标值
 \color inherit
 。按此记法，
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  的长度（一维体积）可以记为
 \begin_inset Formula 
 \[
-h_{i}\coloneqq\vert E_{i}\vert\coloneqq\int_{E_{i}}1=\int_{x_{i-1/2}}^{x_{i+1/2}}1\dd{x}=x_{i+1/2}-x_{i-1/2},\quad\forall i\in I(E)
+h_{i}\coloneqq\vert V_{i}\vert\coloneqq\int_{V_{i}}1=\int_{x_{i-1/2}}^{x_{i+1/2}}1\dd{x}=x_{i+1/2}-x_{i-1/2},\quad\forall i\in I(V)
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Remark
+对于静态网格（在计算过程中保持不变的网格），最简单的数据结构（数组）即可高效实现上述方案。
 \end_layout
 
 \begin_layout Standard
@@ -1287,7 +1261,7 @@ s 的信息，而不会显式记录
 \family typewriter
 Surface
 \family default
-s。在导入这类网格文件时，需要以 
+s。对于格心型格式，在导入这类网格文件时，需要以 
 \begin_inset Formula $\order{N\lg N}$
 \end_inset
 
@@ -1326,7 +1300,15 @@ literal "false"
 
 \end_inset
 
-。
+；对于格点型格式，结点之间的边与控制面一一对应，相当于隐式创建了 
+\family typewriter
+Surface
+\family default
+s 及其对相邻 
+\family typewriter
+Volumn
+\family default
+s 的引用。
 \end_layout
 
 \begin_layout Standard
@@ -1371,7 +1353,7 @@ literal "false"
 形式
 \begin_inset Formula 
 \[
-\partial_{t}U+\divg\vec{F}=0
+\partial_{t}\,u+\divg\vec{f}=0
 \]
 
 \end_inset
@@ -1383,7 +1365,7 @@ literal "false"
  
 \begin_inset Formula 
 \[
-\int_{\varOmega}\partial_{t}U+\oint_{\partial\varOmega}\vec{\nu}\cdot\vec{F}=0
+\int_{\varOmega}\partial_{t}\,u+\oint_{\partial\varOmega}\vec{\nu}\cdot\vec{f}=0
 \]
 
 \end_inset
@@ -1393,7 +1375,7 @@ literal "false"
 Gauss 散度定理
 \color inherit
 而得到的。后者对通量 
-\begin_inset Formula $\vec{F}$
+\begin_inset Formula $\vec{f}$
 \end_inset
 
  的光滑性要求低于前者，因而具有更广的适用范围。
@@ -1411,25 +1393,25 @@ Gauss 散度定理
  
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\varOmega}U+\oint_{\partial\varOmega}\vec{\nu}\cdot\vec{F}=0\label{eq:有限体积：守恒律：积分型：静止控制体}
+\dv{t}\int_{\varOmega}u+\oint_{\partial\varOmega}\vec{\nu}\cdot\vec{f}=0\label{eq:有限体积：守恒律：积分型：静止控制体}
 \end{equation}
 
 \end_inset
 
 取控制体 
-\begin_inset Formula $\varOmega=E_{i}$
+\begin_inset Formula $\varOmega=V_{i}$
 \end_inset
 
  及相应的控制面 
-\begin_inset Formula $\partial\varOmega=\partial E_{i}$
+\begin_inset Formula $\partial\varOmega=\partial V_{i}$
 \end_inset
 
 ，并引入近似 
-\begin_inset Formula $U\approx U^{h}(\vec{x},t)$
+\begin_inset Formula $u\approx u^{h}(\vec{x},t)$
 \end_inset
 
  及相应的 
-\begin_inset Formula $\vec{F}\approx\vec{F}^{h}\qty(U^{h})$
+\begin_inset Formula $\vec{f}\approx\vec{f}^{h}\qty(u^{h})$
 \end_inset
 
 ，就得到
@@ -1439,7 +1421,7 @@ Gauss 散度定理
 ：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\dv{t}\int_{E_{i}}U^{h}+\oint_{\partial E_{i}}\vec{\nu}\cdot\vec{F}^{h}=0,\quad\forall i\in I(E)}\label{eq:有限体积：守恒律：半离散：固定控制体}
+\boxed{\dv{t}\int_{V_{i}}u^{h}+\oint_{\partial V_{i}}\vec{\nu}\cdot\vec{f}^{h}=0,\quad\forall i\in I(E)}\label{eq:有限体积：守恒律：半离散：固定控制体}
 \end{equation}
 
 \end_inset
@@ -1463,13 +1445,13 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
  需考虑控制面速度 
-\begin_inset Formula $\vec{u}_{\mathrm{CS}}$
+\begin_inset Formula $\vec{v}_{\mathrm{CS}}$
 \end_inset
 
  的影响：
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{\varOmega}U+\oint_{\partial\varOmega}\vec{\nu}\cdot\left(\vec{F}-\vec{u}_{\mathrm{CS}}U\right)=0\label{eq:有限体积：守恒律：积分型：移动控制体}
+\dv{t}\int_{\varOmega}u+\oint_{\partial\varOmega}\vec{\nu}\cdot\left(\vec{f}-\vec{v}_{\mathrm{CS}}u\right)=0\label{eq:有限体积：守恒律：积分型：移动控制体}
 \end{equation}
 
 \end_inset
@@ -1477,7 +1459,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{E_{i}}U^{h}+\oint_{\partial E_{i}}\vec{\nu}\cdot\left(\vec{F}^{h}-\vec{u}_{\mathrm{CS}}U^{h}\right)=0,\quad\forall i\in I(E)\label{eq:有限体积：守恒律：半离散：移动控制体}
+\dv{t}\int_{V_{i}}u^{h}+\oint_{\partial V_{i}}\vec{\nu}\cdot\left(\vec{f}^{h}-\vec{v}_{\mathrm{CS}}u^{h}\right)=0,\quad\forall i\in I(E)\label{eq:有限体积：守恒律：半离散：移动控制体}
 \end{equation}
 
 \end_inset
@@ -1487,11 +1469,11 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 
 \begin_layout Itemize
 各种有限体积格式的区别，只体现在 
-\begin_inset Formula $U^{h}$
+\begin_inset Formula $u^{h}$
 \end_inset
 
  及 
-\begin_inset Formula $\vec{F}^{h}$
+\begin_inset Formula $\vec{f}^{h}$
 \end_inset
 
  的构造上。
@@ -1506,19 +1488,19 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 
 \begin_layout Remark
 对于一维问题，向量 
-\begin_inset Formula $\vec{F}$
+\begin_inset Formula $\vec{f}$
 \end_inset
 
  退化为标量 
-\begin_inset Formula $F$
+\begin_inset Formula $f$
 \end_inset
 
 ，控制面 
-\begin_inset Formula $S(E_{i})$
+\begin_inset Formula $S(V_{i})$
 \end_inset
 
  退化为 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  的两个端点 
@@ -1526,7 +1508,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
 ，面积分退化为 
-\begin_inset Formula $F^{h}$
+\begin_inset Formula $f^{h}$
 \end_inset
 
  在 
@@ -1536,7 +1518,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
  处取值之差：
 \begin_inset Formula 
 \begin{equation}
-\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}U^{h}\dd{x}+F_{i+1/2}^{h}-F_{i-1/2}^{h}=0,\quad\forall i\in I(E)\label{eq:有限体积：守恒型格式：一维}
+\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}u^{h}\dd{x}+f_{i+1/2}^{h}-f_{i-1/2}^{h}=0,\quad\forall i\in I(V)\label{eq:有限体积：守恒型格式：一维}
 \end{equation}
 
 \end_inset
@@ -1558,7 +1540,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \begin_layout Standard
 对任意两个 
 \family typewriter
-Element
+Volumn
 \family default
 s 应用格式 
 \begin_inset CommandInset ref
@@ -1570,29 +1552,29 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 ，并将所得等式叠加，就得到
 \begin_inset Formula 
 \[
-\dv{t}\int_{E_{i}\cup E_{k}}U^{h}+\oint_{\partial E_{i}\cup\partial E_{k}}\vec{\nu}\cdot\vec{F}^{h}=0,\quad\forall(i,k)\in I(E)\times I(E)
+\dv{t}\int_{V_{i}\cup V_{k}}u^{h}+\oint_{\partial V_{i}\cup\partial V_{k}}\vec{\nu}\cdot\vec{f}^{h}=0,\quad\forall(i,k)\in I(V)\times I(V)
 \]
 
 \end_inset
 
 若 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  与 
-\begin_inset Formula $E_{k}$
+\begin_inset Formula $V_{k}$
 \end_inset
 
  有公共边界，即 
-\begin_inset Formula $\partial E_{i}\cap\partial E_{k}\eqqcolon S_{ik}\ne\varnothing$
+\begin_inset Formula $\partial V_{i}\cap\partial V_{k}\eqqcolon S_{ik}\ne\varnothing$
 \end_inset
 
 ，则 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  与 
-\begin_inset Formula $E_{k}$
+\begin_inset Formula $V_{k}$
 \end_inset
 
  在 
@@ -1604,15 +1586,15 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
  恰好相反；若进一步有 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  与 
-\begin_inset Formula $E_{k}$
+\begin_inset Formula $V_{k}$
 \end_inset
 
  给出的 
-\begin_inset Formula $\vec{F}^{h}$
+\begin_inset Formula $\vec{f}^{h}$
 \end_inset
 
  在 
@@ -1620,7 +1602,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
 \end_inset
 
  上有唯一的取值，则 
-\begin_inset Formula $\vec{\nu}\cdot\vec{F}^{h}$
+\begin_inset Formula $\vec{\nu}\cdot\vec{f}^{h}$
 \end_inset
 
  在 
@@ -1630,7 +1612,7 @@ reference "eq:有限体积：守恒律：半离散：固定控制体"
  两侧的积分恰好相互抵消，从而有
 \begin_inset Formula 
 \[
-\oint_{\partial E_{i}\cup\partial E_{k}}\vec{\nu}\cdot\vec{F}^{h}=\oint_{\partial(E_{i}\cup E_{k})}\vec{\nu}\cdot\vec{F}^{h}
+\oint_{\partial V_{i}\cup\partial V_{k}}\vec{\nu}\cdot\vec{f}^{h}=\oint_{\partial(V_{i}\cup V_{k})}\vec{\nu}\cdot\vec{f}^{h}
 \]
 
 \end_inset
@@ -1728,13 +1710,13 @@ Godunov 假设：在
 \end_inset
 
  时刻，守恒变量 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
- 在每个控制体（单元）内按常数分布
+ 在每个控制体内按常数分布
 \begin_inset Formula 
 \[
-U(x,t_{n})=\overline{U}_{i}^{n},\quad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+1/2}),\quad\forall i\in I(E)
+u(x,t_{n})=\bar{u}_{i}^{n},\quad\forall x\in V_{i}\coloneqq(x_{i-1/2},x_{i+1/2}),\quad\forall i\in I(E)
 \]
 
 \end_inset
@@ -1750,7 +1732,7 @@ U(x,t_{n})=\overline{U}_{i}^{n},\quad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+
  为自变量的）局部 Riemann 问题。它的解（关于局部变量）具有自相似性，因此可以将它们记为
 \begin_inset Formula 
 \[
-\widetilde{U}_{i+1/2}^{n}(\xi/\tau),\quad\forall(\xi,\tau)\,\text{充分接近}\,(0,0)
+\widetilde{u}_{i+1/2}^{n}(\xi/\tau),\quad\forall(\xi,\tau)\,\text{充分接近}\,(0,0)
 \]
 
 \end_inset
@@ -1776,11 +1758,11 @@ U(x,t_{n})=\overline{U}_{i}^{n},\quad\forall x\in E_{i}\coloneqq(x_{i-1/2},x_{i+
 \end_inset
 
  内的全局解，记为 
-\begin_inset Formula $\widetilde{U}^{n}(x,t)$
+\begin_inset Formula $\widetilde{u}^{n}(x,t)$
 \end_inset
 
 。除了极简单的情况，通常 
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{u}^{n}(x,t_{n+1})$
 \end_inset
 
  在各个控制体内已不再是常数。
@@ -1877,11 +1859,11 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_inset
 
  时刻重新得到分段常数形式的 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
 ，Godunov 引入的第一个方案是对精确解 
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{u}^{n}(x,t_{n+1})$
 \end_inset
 
  在控制体 
@@ -1891,7 +1873,7 @@ reference "sec:有限体积：近似 Riemann 解"
  内取平均，即引入定义（并直接计算）
 \begin_inset Formula 
 \[
-\overline{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x}
+\bar{u}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{u}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1905,7 +1887,7 @@ reference "sec:有限体积：近似 Riemann 解"
 
 \begin_layout Standard
 这种方法有一个显著缺点：积分的计算需根据 
-\begin_inset Formula $\widetilde{U}^{n}(x,t_{n+1})$
+\begin_inset Formula $\widetilde{u}^{n}(x,t_{n+1})$
 \end_inset
 
  的具体形式（函数图象通常为折线）分段完成。
@@ -1919,13 +1901,13 @@ reference "sec:有限体积：近似 Riemann 解"
 作为改进，Godunov 引入的第二个方案是将积分形式的守恒律
 \begin_inset Formula 
 \[
-\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}U\dd{x}+F_{i+1/2}-F_{i-1/2}=0
+\dv{t}\int_{x_{i-1/2}}^{x_{i+1/2}}u\dd{x}+f_{i+1/2}-f_{i-1/2}=0
 \]
 
 \end_inset
 
 中的守恒变量 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  用（
@@ -1933,7 +1915,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_inset
 
  时刻各局部 Riemann 问题的解构成的）全局解 
-\begin_inset Formula $\widetilde{U}^{n}$
+\begin_inset Formula $\widetilde{u}^{n}$
 \end_inset
 
  替换，并在时段 
@@ -1943,7 +1925,7 @@ reference "sec:有限体积：近似 Riemann 解"
  上积分，从而得到离散形式的守恒律
 \begin_inset Formula 
 \begin{equation}
-\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{u}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{f}\left(\widetilde{u}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=0\label{eq:有限体积：Godunov：离散}
 \end{equation}
 
 \end_inset
@@ -1953,7 +1935,7 @@ reference "sec:有限体积：近似 Riemann 解"
 
 \begin_layout Itemize
 注意到 
-\begin_inset Formula $\widetilde{U}^{n}$
+\begin_inset Formula $\widetilde{u}^{n}$
 \end_inset
 
  在 
@@ -1963,7 +1945,7 @@ reference "sec:有限体积：近似 Riemann 解"
  时刻的初始条件是分段常值函数：
 \begin_inset Formula 
 \[
-\widetilde{U}^{n}(x,t_{n})\coloneqq\overline{U}_{i}^{n},\quad\forall x\in E_{i}
+\widetilde{u}^{n}(x,t_{n})\coloneqq\bar{u}_{i}^{n},\quad\forall x\in V_{i}
 \]
 
 \end_inset
@@ -1975,7 +1957,7 @@ reference "sec:有限体积：近似 Riemann 解"
  时刻的均值
 \begin_inset Formula 
 \[
-\overline{U}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t_{n+1})\dd{x}
+\bar{u}_{i}^{n+1}\coloneqq\frac{1}{x_{i+1/2}-x_{i-1/2}}\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{u}^{n}(x,t_{n+1})\dd{x}
 \]
 
 \end_inset
@@ -1990,7 +1972,7 @@ reference "eq:有限体积：Godunov：离散"
  的第一个积分可以化简为
 \begin_inset Formula 
 \[
-\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{U}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}=\left(\overline{U}_{i}^{n+1}-\overline{U}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
+\left[\int_{x_{i-1/2}}^{x_{i+1/2}}\widetilde{u}^{n}(x,t)\dd{x}\right|_{t_{n}}^{t_{n+1}}=\left(\bar{u}_{i}^{n+1}-\bar{u}_{i}^{n}\right)(x_{i+1/2}-x_{i-1/2})
 \]
 
 \end_inset
@@ -2006,7 +1988,7 @@ reference "eq:有限体积：Godunov：离散"
  为控制面处通量的时间平均值：
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x_{i+1/2},t)\right)\dd{t}
+f_{i+1/2}^{n}\coloneqq\frac{1}{t_{n+1}-t_{n}}\int_{t_{n}}^{t_{n+1}}\mathopen{f}\left(\widetilde{u}^{n}(x_{i+1/2},t)\right)\dd{t}
 \]
 
 \end_inset
@@ -2023,13 +2005,13 @@ reference "sec:有限体积：Riemann"
 \end_inset
 
 的解不发生干涉），被积函数中的 
-\begin_inset Formula $\widetilde{U}^{n}(x_{i+1/2},t)\coloneqq\widetilde{U}_{i+1/2}^{n}(0/(t-t_{n}))$
+\begin_inset Formula $\widetilde{u}^{n}(x_{i+1/2},t)\coloneqq\widetilde{u}_{i+1/2}^{n}(0/(t-t_{n}))$
 \end_inset
 
  为常量，因此该积分平均值就是
 \begin_inset Formula 
 \[
-F_{i+1/2}^{n}=\mathopen{F}\left(\widetilde{U}_{i+1/2}^{n}(0)\right)
+f_{i+1/2}^{n}=\mathopen{f}\left(\widetilde{u}_{i+1/2}^{n}(0)\right)
 \]
 
 \end_inset
@@ -2044,7 +2026,7 @@ reference "eq:有限体积：Godunov：离散"
  的第二个积分可以化简为
 \begin_inset Formula 
 \[
-\left[\int_{t_{n}}^{t_{n+1}}\mathopen{F}\left(\widetilde{U}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=\left(F_{i+1/2}^{n}-F_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
+\left[\int_{t_{n}}^{t_{n+1}}\mathopen{f}\left(\widetilde{u}^{n}(x,t)\right)\dd{t}\right|_{x_{i-1/2}}^{x_{i+1/2}}=\left(f_{i+1/2}^{n}-f_{i-1/2}^{n}\right)(t_{n+1}-t_{n})
 \]
 
 \end_inset
@@ -2063,7 +2045,7 @@ reference "eq:有限体积：Godunov：离散"
 ，即得改进的 Godunov 格式：
 \begin_inset Formula 
 \begin{equation}
-\boxed{\overline{U}_{i}^{n+1}=\overline{U}_{i}^{n}-\frac{F_{i+1/2}^{n}-F_{i-1/2}^{n}}{x_{i+1/2}-x_{i-1/2}}\left(t_{n+1}-t_{n}\right),\quad F_{i\pm1/2}^{n}=\mathopen{F}\left(\widetilde{U}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
+\boxed{\bar{u}_{i}^{n+1}=\bar{u}_{i}^{n}-\frac{f_{i+1/2}^{n}-f_{i-1/2}^{n}}{x_{i+1/2}-x_{i-1/2}}\left(t_{n+1}-t_{n}\right),\quad f_{i\pm1/2}^{n}=\mathopen{f}\left(\widetilde{u}_{i\pm1/2}^{n}(0)\right)}\label{eq:有限体积：Godunov：推进}
 \end{equation}
 
 \end_inset
@@ -2099,7 +2081,7 @@ reference "eq:有限体积：守恒型格式：一维"
 \end_inset
 
  中，对守恒变量取零阶近似 
-\begin_inset Formula $U^{h}\coloneqq\overline{U}$
+\begin_inset Formula $u^{h}\coloneqq\bar{u}$
 \end_inset
 
 ，并用局部 Riemann 问题的
@@ -2107,7 +2089,7 @@ reference "eq:有限体积：守恒型格式：一维"
 精确解
 \color inherit
 计算近似通量 
-\begin_inset Formula $F_{i\pm1/2}^{n}\coloneqq\mathopen{F}\left(\widetilde{U}_{i\pm1/2}^{n}(0)\right)$
+\begin_inset Formula $f_{i\pm1/2}^{n}\coloneqq\mathopen{f}\left(\widetilde{u}_{i\pm1/2}^{n}(0)\right)$
 \end_inset
 
 ，即得式 
@@ -2172,7 +2154,7 @@ reference "sec:有限体积：近似 Riemann 解"
 \end_layout
 
 \begin_layout Itemize
-提高单元内守恒变量的精度，沿这一方向可以导出
+提高控制体内守恒变量的精度，沿这一方向可以导出
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:高阶有限体积格式"
@@ -2209,16 +2191,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-考虑最一般的守恒律（组）
+考虑最一般的守恒律（系统）
 \begin_inset Formula 
 \[
-\partial_{t}U+\divg\vec{F}=0
+\partial_{t}\,u+\divg\vec{f}=0
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  可以是标量、向量、列矩阵。仿照一维版本，假设 
@@ -2226,13 +2208,13 @@ noprefix "false"
 \end_inset
 
  时刻的守恒变量 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
- 在每个控制体（单元）内按常数分布：
+ 在每个控制体内按常数分布：
 \begin_inset Formula 
 \[
-U(\vec{x},t_{n})=\overline{U}_{i}^{n}\coloneqq\frac{\int_{E_{i}}U}{\vert E_{i}\vert\coloneqq\int_{E_{i}}1},\quad\forall\vec{x}\in E_{i}
+u(\vec{x},t_{n})=\bar{u}_{i}^{n}\coloneqq\frac{\int_{V_{i}}u}{\vert V_{i}\vert\coloneqq\int_{V_{i}}1},\quad\forall\vec{x}\in V_{i}
 \]
 
 \end_inset
@@ -2250,13 +2232,13 @@ reference "eq:有限体积：Godunov：推进"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\boxed{\overline{U}_{i}^{n+1}=\overline{U}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\vert E_{i}\vert}\oint_{\partial E_{i}}F_{\nu}^{n}}
+\boxed{\bar{u}_{i}^{n+1}=\bar{u}_{i}^{n}-\frac{t_{n+1}-t_{n}}{\vert V_{i}\vert}\oint_{\partial V_{i}}f_{\nu}^{n}}
 \]
 
 \end_inset
 
 其中法向通量 
-\begin_inset Formula $F_{\nu}^{n}$
+\begin_inset Formula $f_{\nu}^{n}$
 \end_inset
 
  由局部法向 Riemann 问题的解给出：
@@ -2274,7 +2256,7 @@ status open
 \end_inset
 
 在控制面 
-\begin_inset Formula $A_{k}\subset\partial E_{i}$
+\begin_inset Formula $A_{k}\subset\partial V_{i}$
 \end_inset
 
  上任取一点 
@@ -2303,11 +2285,11 @@ status open
 \end_inset
 
  为自变量，以 
-\begin_inset Formula $\partial_{\tau}U+\partial_{\nu}F_{\nu}=0$
+\begin_inset Formula $\partial_{\tau}u+\partial_{\nu}f_{\nu}=0$
 \end_inset
 
  为守恒律（系统），其中 
-\begin_inset Formula $F_{\nu}\coloneqq\vec{\nu}\cdot\vec{F}$
+\begin_inset Formula $f_{\nu}\coloneqq\vec{\nu}\cdot\vec{f}$
 \end_inset
 
  为
@@ -2319,11 +2301,11 @@ status open
 
 \begin_layout Itemize
 调用 Riemann 求解器，得到自相似解 
-\begin_inset Formula $\widetilde{U}_{\vec{a}}^{n}(\nu/\tau)$
+\begin_inset Formula $\widetilde{u}_{\vec{a}}^{n}(\nu/\tau)$
 \end_inset
 
  及法向通量 
-\begin_inset Formula $F_{\nu}^{n}(\vec{a})=\mathopen{F_{\nu}}\left(\widetilde{U}_{\vec{a}}^{n}(\pm0)\right)$
+\begin_inset Formula $f_{\nu}^{n}(\vec{a})=\mathopen{f_{\nu}}\left(\widetilde{u}_{\vec{a}}^{n}(\pm0)\right)$
 \end_inset
 
 。
@@ -2342,7 +2324,7 @@ status open
 \end_inset
 
  代替，即 
-\begin_inset Formula $F_{\nu}^{n}\qty(A_{k})=\mathopen{F_{\nu}}\left(\widetilde{U}_{A_{k}}^{n}(\pm0)\right)$
+\begin_inset Formula $f_{\nu}^{n}\qty(A_{k})=\mathopen{f_{\nu}}\left(\widetilde{u}_{A_{k}}^{n}(\pm0)\right)$
 \end_inset
 
 。
@@ -2350,7 +2332,7 @@ status open
 
 \begin_layout Standard
 若 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  的某个分量可以看作某个向量在
@@ -2362,7 +2344,7 @@ status open
 
 \begin_layout Itemize
 调用 Riemann 求解器前，需将 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  的
@@ -2378,7 +2360,7 @@ status open
 
 \begin_layout Itemize
 获得 Riemann 解后，需按上一步的逆变换（将 
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  的
@@ -2390,7 +2372,7 @@ status open
 全局形式
 \color inherit
 ）对 
-\begin_inset Formula $F_{\nu}^{n}$
+\begin_inset Formula $f_{\nu}^{n}$
 \end_inset
 
  作变换。
@@ -2430,7 +2412,7 @@ status open
  替换一维 Burgers 方程
 \begin_inset Formula 
 \[
-\partial_{t}U+\partial_{x}\qty(U^{2}/2)=0
+\partial_{t}u+\partial_{x}\qty(u^{2}/2)=0
 \]
 
 \end_inset
@@ -2442,7 +2424,7 @@ status open
 ，就得到二维 Burgers 方程
 \begin_inset Formula 
 \[
-\partial_{t}U+\underbrace{\left(\alpha_{x}\partial_{x}+\alpha_{y}\partial_{y}\right)}_{\partial_{\alpha}}\qty(U^{2}/2)=0
+\partial_{t}u+\underbrace{\left(\alpha_{x}\partial_{x}+\alpha_{y}\partial_{y}\right)}_{\partial_{\alpha}}\qty(u^{2}/2)=0
 \]
 
 \end_inset
@@ -2450,12 +2432,12 @@ status open
 其守恒律形式为
 \begin_inset Formula 
 \[
-\partial_{t}U+\divg\vec{F}=0,\quad\vec{F}=\vec{\alpha}U^{2}/2
+\partial_{t}u+\divg\vec{f}=0,\quad\vec{f}=\vec{\alpha}u^{2}/2
 \]
 
 \end_inset
 
-于是单元边界上的
+于是控制体边界上的
 \color red
 法向守恒律
 \color inherit
@@ -2466,7 +2448,7 @@ status open
 分别为
 \begin_inset Formula 
 \[
-\partial_{\tau}U+\partial_{\nu}F_{\nu}=0,\quad F_{\nu}\coloneqq\vec{\nu}\cdot\vec{F}=\vec{\nu}\cdot\vec{\alpha}U^{2}/2
+\partial_{\tau}u+\partial_{\nu}f_{\nu}=0,\quad f_{\nu}\coloneqq\vec{\nu}\cdot\vec{f}=\vec{\nu}\cdot\vec{\alpha}u^{2}/2
 \]
 
 \end_inset
@@ -2476,7 +2458,7 @@ status open
 \end_inset
 
  为常量，故相应局部 Riemann 问题的求解仍可调用一维 Burgers–Riemann 求解器；
-\begin_inset Formula $U$
+\begin_inset Formula $u$
 \end_inset
 
  不含向量分量，故无需作变换。
@@ -2503,18 +2485,18 @@ status open
 三维 Euler 方程的守恒形式为
 \begin_inset Formula 
 \[
-\partial_{t}\ket{U}+\divg\vec{\ket{F}}=\ket{0},\quad\ket{U}\coloneqq\begin{bmatrix}\rho\\
-\rho\vec{u}\\
+\partial_{t}\ket{u}+\divg\vec{\ket{f}}=\ket{0},\quad\ket{u}\coloneqq\begin{bmatrix}\rho\\
+\rho\vec{v}\\
 \rho e_{0}
-\end{bmatrix},\quad\vec{\ket{F}}\coloneqq\begin{bmatrix}\rho\vec{u}\\
-\rho\vec{u}\vec{u}+p\vec{\vec{1}}\\
-\rho h_{0}\vec{u}
+\end{bmatrix},\quad\vec{\ket{f}}\coloneqq\begin{bmatrix}\rho\vec{v}\\
+\rho\vec{v}\vec{v}+p\vec{\vec{1}}\\
+\rho h_{0}\vec{v}
 \end{bmatrix}
 \]
 
 \end_inset
 
-于是单元边界上的
+于是控制体边界上的
 \color red
 法向守恒律
 \color inherit
@@ -2525,16 +2507,16 @@ status open
 分别为
 \begin_inset Formula 
 \[
-\partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0},\quad\ket{F_{\nu}}\coloneqq\vec{\nu}\cdot\vec{\ket{F}}=\begin{bmatrix}\rho u_{\nu}\\
-\rho u_{\nu}\vec{u}+p\vec{\nu}\\
-\rho h_{0}u_{\nu}
+\partial_{\tau}\ket{u}+\partial_{\nu}\ket{f_{\nu}}=\ket{0},\quad\ket{f_{\nu}}\coloneqq\vec{\nu}\cdot\vec{\ket{f}}=\begin{bmatrix}\rho v_{\nu}\\
+\rho v_{\nu}\vec{v}+p\vec{\nu}\\
+\rho h_{0}v_{\nu}
 \end{bmatrix}
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $u_{\nu}\coloneqq\vec{\nu}\cdot\vec{u}$
+\begin_inset Formula $u_{\nu}\coloneqq\vec{\nu}\cdot\vec{v}$
 \end_inset
 
  为
@@ -2556,7 +2538,7 @@ status open
  亦为单位切向量，于是可作向量分解
 \begin_inset Formula 
 \[
-\vec{u}=\vec{\nu}u_{\nu}+\vec{\sigma}u_{\sigma}+\vec{\pi}u_{\pi},\quad u_{\nu}\coloneqq\vec{\nu}\cdot\vec{u},\quad u_{\sigma}\coloneqq\vec{\sigma}\cdot\vec{u},\quad u_{\pi}\coloneqq\vec{\pi}\cdot\vec{u}
+\vec{v}=\vec{\nu}v_{\nu}+\vec{\sigma}v_{\sigma}+\vec{\pi}v_{\pi},\quad v_{\nu}\coloneqq\vec{\nu}\cdot\vec{v},\quad v_{\sigma}\coloneqq\vec{\sigma}\cdot\vec{v},\quad v_{\pi}\coloneqq\vec{\pi}\cdot\vec{v}
 \]
 
 \end_inset
@@ -2580,16 +2562,16 @@ status open
 中的具体形式：
 \begin_inset Formula 
 \[
-\partial_{\tau}\ket{U}+\partial_{\nu}\ket{F_{\nu}}=\ket{0},\quad\ket{U}\coloneqq\begin{bmatrix}\rho\\
-\rho u_{\nu}\\
-\rho u_{\sigma}\\
-\rho u_{\pi}\\
+\partial_{\tau}\ket{u}+\partial_{\nu}\ket{f_{\nu}}=\ket{0},\quad\ket{u}\coloneqq\begin{bmatrix}\rho\\
+\rho v_{\nu}\\
+\rho v_{\sigma}\\
+\rho v_{\pi}\\
 \rho e_{0}
-\end{bmatrix},\quad\ket{F_{\nu}}\coloneqq\begin{bmatrix}\rho u_{\nu}\\
-\rho u_{\nu}u_{\nu}+p\\
-\rho u_{\sigma}u_{\nu}\\
-\rho u_{\pi}u_{\nu}\\
-\rho h_{0}u_{\nu}
+\end{bmatrix},\quad\ket{f_{\nu}}\coloneqq\begin{bmatrix}\rho v_{\nu}\\
+\rho v_{\nu}v_{\nu}+p\\
+\rho v_{\sigma}v_{\nu}\\
+\rho v_{\pi}v_{\nu}\\
+\rho h_{0}v_{\nu}
 \end{bmatrix}
 \]
 
@@ -2607,11 +2589,11 @@ reference "sec:激波管：高维版本"
 \end_inset
 
 》一节。列矩阵 
-\begin_inset Formula $\ket{U}$
+\begin_inset Formula $\ket{u}$
 \end_inset
 
  的中间三个分量为动量密度 
-\begin_inset Formula $\rho\vec{u}$
+\begin_inset Formula $\rho\vec{v}$
 \end_inset
 
  在
@@ -2624,7 +2606,7 @@ reference "sec:激波管：高维版本"
 \begin_deeper
 \begin_layout Itemize
 上一时间步的 
-\begin_inset Formula $\ket{U_{\pm}^{n}}$
+\begin_inset Formula $\ket{u_{\pm}^{n}}$
 \end_inset
 
  是在
@@ -2632,7 +2614,7 @@ reference "sec:激波管：高维版本"
 全局坐标系
 \color inherit
 中给出的，而传给 Riemann 求解器的 
-\begin_inset Formula $\ket{U_{\pm}^{n}}$
+\begin_inset Formula $\ket{u_{\pm}^{n}}$
 \end_inset
 
  应当在
@@ -2654,15 +2636,15 @@ reference "sec:激波管：高维版本"
 ：
 \begin_inset Formula 
 \[
-\begin{bmatrix}\ip{\nu}{U_{\pm}^{n}}\\
-\ip{\sigma}{U_{\pm}^{n}}\\
-\ip{\pi}{U_{\pm}^{n}}
+\begin{bmatrix}\ip{\nu}{u_{\pm}^{n}}\\
+\ip{\sigma}{u_{\pm}^{n}}\\
+\ip{\pi}{u_{\pm}^{n}}
 \end{bmatrix}=\begin{bmatrix}\ip{\nu}{x} & \ip{\nu}{y} & \ip{\nu}{z}\\
 \ip{\sigma}{x} & \ip{\sigma}{y} & \ip{\sigma}{z}\\
 \ip{\pi}{x} & \ip{\pi}{y} & \ip{\pi}{z}
-\end{bmatrix}\begin{bmatrix}\ip{x}{U_{\pm}^{n}}\\
-\ip{y}{U_{\pm}^{n}}\\
-\ip{z}{U_{\pm}^{n}}
+\end{bmatrix}\begin{bmatrix}\ip{x}{u_{\pm}^{n}}\\
+\ip{y}{u_{\pm}^{n}}\\
+\ip{z}{u_{\pm}^{n}}
 \end{bmatrix}
 \]
 
@@ -2673,7 +2655,7 @@ reference "sec:激波管：高维版本"
 
 \begin_layout Itemize
 Riemann 求解器输出的 
-\begin_inset Formula $\ket{F_{\nu}^{n}}$
+\begin_inset Formula $\ket{f_{\nu}^{n}}$
 \end_inset
 
  是在
@@ -2681,7 +2663,7 @@ Riemann 求解器输出的
 法向坐标系
 \color inherit
 中给出的，而下一时间步的 
-\begin_inset Formula $\ket{U_{\pm}^{n+1}}$
+\begin_inset Formula $\ket{u_{\pm}^{n+1}}$
 \end_inset
 
  应当在
@@ -2703,15 +2685,15 @@ Riemann 求解器输出的
 ：
 \begin_inset Formula 
 \[
-\begin{bmatrix}\ip{x}{F_{\nu}^{n}}\\
-\ip{y}{F_{\nu}^{n}}\\
-\ip{z}{F_{\nu}^{n}}
+\begin{bmatrix}\ip{x}{f_{\nu}^{n}}\\
+\ip{y}{f_{\nu}^{n}}\\
+\ip{z}{f_{\nu}^{n}}
 \end{bmatrix}=\begin{bmatrix}\ip{x}{\nu} & \ip{x}{\sigma} & \ip{x}{\pi}\\
 \ip{y}{\nu} & \ip{y}{\sigma} & \ip{y}{\pi}\\
 \ip{z}{\nu} & \ip{z}{\sigma} & \ip{z}{\pi}
-\end{bmatrix}\begin{bmatrix}\ip{\nu}{F_{\nu}^{n}}\\
-\ip{\sigma}{F_{\nu}^{n}}\\
-\ip{\pi}{F_{\nu}^{n}}
+\end{bmatrix}\begin{bmatrix}\ip{\nu}{f_{\nu}^{n}}\\
+\ip{\sigma}{f_{\nu}^{n}}\\
+\ip{\pi}{f_{\nu}^{n}}
 \end{bmatrix}
 \]
 
@@ -2772,7 +2754,7 @@ name "sec:高阶有限体积格式"
 \end_inset
 
  维控制体 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  内近似到 
@@ -2785,7 +2767,7 @@ name "sec:高阶有限体积格式"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-u(\vec{x},t)\approx u_{i}^{h}(\vec{x},t)\equiv\hat{u}_{0,i}(t)+\sum_{l=1}^{N(k,d)}\hat{u}_{l,i}(t)\,\varphi_{l,i}(\vec{x}),\quad\forall x\in E_{i},
+u(\vec{x},t)\approx u_{i}^{h}(\vec{x},t)\equiv\hat{u}_{0,i}(t)+\sum_{l=1}^{N(k,d)}\hat{u}_{l,i}(t)\,\varphi_{l,i}(\vec{x}),\quad\forall x\in V_{i},
 \]
 
 \end_inset
@@ -2793,7 +2775,7 @@ u(\vec{x},t)\approx u_{i}^{h}(\vec{x},t)\equiv\hat{u}_{0,i}(t)+\sum_{l=1}^{N(k,d
 其中
 \begin_inset Formula 
 \[
-\hat{u}_{0,i}(t)=\langle u\rangle_{E_{i}};\quad N(k,d)=\binom{k+d}{d}-1;
+\hat{u}_{0,i}(t)=\langle u\rangle_{V_{i}};\quad N(k,d)=\binom{k+d}{d}-1;
 \]
 
 \end_inset
@@ -2801,7 +2783,7 @@ u(\vec{x},t)\approx u_{i}^{h}(\vec{x},t)\equiv\hat{u}_{0,i}(t)+\sum_{l=1}^{N(k,d
 
 \begin_inset Formula 
 \[
-\varphi_{l,i}(\vec{x})=(\underline{x}-\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\underline{x}-\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{E_{i}},\quad\underline{\alpha}=\begin{bmatrix}1\\
+\varphi_{l,i}(\vec{x})=(\underline{x}-\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\underline{x}-\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{V_{i}},\quad\underline{\alpha}=\begin{bmatrix}1\\
 0\\
 \vdots
 \end{bmatrix},\dots,\begin{bmatrix}\vdots\\
@@ -2815,7 +2797,7 @@ k
 或无量纲化的
 \begin_inset Formula 
 \[
-\varphi_{l,i}(\vec{x})=(\delta\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\delta\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{E_{i}},\quad,\delta\underline{x}_{i}=\begin{bmatrix}(x-x_{i})/(x_{\max}-x_{\min})\\
+\varphi_{l,i}(\vec{x})=(\delta\underline{x}_{i})^{\underline{\alpha}}-\left\langle (\delta\underline{x}_{i})^{\underline{\alpha}}\right\rangle _{V_{i}},\quad,\delta\underline{x}_{i}=\begin{bmatrix}(x-x_{i})/(x_{\max}-x_{\min})\\
 (y-y_{i})/(y_{\max}-y_{\min})\\
 \vdots
 \end{bmatrix},\quad\underline{\alpha}=\begin{bmatrix}1\\
@@ -2869,7 +2851,7 @@ The property of
 
 .
  In the neighborhood of 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
 , there exists a degree 
@@ -2910,7 +2892,7 @@ literal "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\langle u_{i}^{h}\rangle_{E_{j}}=\langle u\rangle_{E_{j}}+\order{h^{k+1}},\quad\forall j\in S_{i},
+\langle u_{i}^{h}\rangle_{V_{j}}=\langle u\rangle_{V_{j}}+\order{h^{k+1}},\quad\forall j\in S_{i},
 \]
 
 \end_inset
@@ -2920,7 +2902,7 @@ literal "false"
 \end_inset
 
  为由 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  及其附近控制体构成的局部模板。为避免方程组奇异，应保证
@@ -2968,7 +2950,7 @@ literal "false"
 \end_inset
 
  延拓到 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  上，使其导数不变，并将均值修正为 
@@ -2992,7 +2974,7 @@ u_{j\to i}^{h}(\vec{x},t)=\hat{u}_{0,j\to i}(t)+\sum_{l=1}^{N(k,d)}\hat{u}_{l,j\
 \end_inset
 
  中最外层控制体构成的局部模版，待定系数除 
-\begin_inset Formula $\hat{u}_{0,j\to i}(t)=\langle u\rangle_{E_{i}}$
+\begin_inset Formula $\hat{u}_{0,j\to i}(t)=\langle u\rangle_{V_{i}}$
 \end_inset
 
  外，由线性方程组
@@ -3049,13 +3031,13 @@ literal "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left\langle \underline{\partial}^{\underline{\alpha}}u_{i}^{h}\right\rangle _{E_{j}}=\left\langle \underline{\partial}^{\underline{\alpha}}u_{j}^{h}\right\rangle _{E_{j}},\quad\underline{\alpha}=\begin{bmatrix}0\\
+\left\langle \underline{\partial}^{\underline{\alpha}}u_{i}^{h}\right\rangle _{V_{j}}=\left\langle \underline{\partial}^{\underline{\alpha}}u_{j}^{h}\right\rangle _{V_{j}},\quad\underline{\alpha}=\begin{bmatrix}0\\
 0\\
 \vdots
 \end{bmatrix},\dots,\begin{bmatrix}\vdots\\
 0\\
 k
-\end{bmatrix},\quad\forall E_{j}\in S_{i},
+\end{bmatrix},\quad\forall V_{j}\in S_{i},
 \]
 
 \end_inset
@@ -3065,7 +3047,7 @@ k
 \end_inset
 
  为由 
-\begin_inset Formula $E_{i}$
+\begin_inset Formula $V_{i}$
 \end_inset
 
  及其
@@ -3130,7 +3112,7 @@ literal "false"
 \end_inset
 
  号控制面 
-\begin_inset Formula $S_{f}\equiv\partial E_{i}\cup\partial E_{j}$
+\begin_inset Formula $S_{f}\equiv\partial V_{i}\cup\partial V_{j}$
 \end_inset
 
  上的 interfacial jump integration (IJI) 定义为
@@ -3176,7 +3158,7 @@ I=\sum_{f=1}^{N_{f}}I_{f},
 其中
 \begin_inset Formula 
 \[
-\langle l\vert\underline{A}_{i}\vert m\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,i}}{\partial\nu^{p}}}_{\partial E_{i}\cup\partial E_{j}},
+\langle l\vert\underline{A}_{i}\vert m\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,i}}{\partial\nu^{p}}}_{\partial V_{i}\cup\partial V_{j}},
 \]
 
 \end_inset
@@ -3184,7 +3166,7 @@ I=\sum_{f=1}^{N_{f}}I_{f},
 
 \begin_inset Formula 
 \[
-\langle l\vert\underline{B}_{i}^{j}\vert m\rangle=\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,j}}{\partial\nu^{p}}}_{\partial E_{i}\cup\partial E_{j}},
+\langle l\vert\underline{B}_{i}^{j}\vert m\rangle=\sum_{p=0}^{k}\frac{d_{ij}^{2p-1}}{(p!)^{2}}\ip{\frac{\partial^{p}\varphi_{l,i}}{\partial\nu^{p}}}{\frac{\partial^{p}\varphi_{m,j}}{\partial\nu^{p}}}_{\partial V_{i}\cup\partial V_{j}},
 \]
 
 \end_inset
@@ -3192,7 +3174,7 @@ I=\sum_{f=1}^{N_{f}}I_{f},
 
 \begin_inset Formula 
 \[
-\langle l\vert\hat{u}_{i}\rangle=\hat{u}_{l,i},\quad\langle l\vert\hat{u}_{j}\rangle=\hat{u}_{l,j},\quad\langle l\vert b_{i}\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\ip{\frac{\varphi_{l,i}}{d_{ij}}}{\bar{u}_{j}-\bar{u}_{i}}_{\partial E_{i}\cup\partial E_{j}},
+\langle l\vert\hat{u}_{i}\rangle=\hat{u}_{l,i},\quad\langle l\vert\hat{u}_{j}\rangle=\hat{u}_{l,j},\quad\langle l\vert b_{i}\rangle=\sum_{j\in S_{i}\setminus\left\{ i\right\} }\ip{\frac{\varphi_{l,i}}{d_{ij}}}{\bar{u}_{j}-\bar{u}_{i}}_{\partial V_{i}\cup\partial V_{j}},
 \]
 
 \end_inset
