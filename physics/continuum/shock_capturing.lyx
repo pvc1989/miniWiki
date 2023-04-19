@@ -1170,86 +1170,8 @@ reference "def:TVD-scheme"
 
 \end_layout
 
-\begin_layout Remark
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-[TVB 格式]
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "rem:TVB-scheme"
-
-\end_inset
-
-标量守恒律的物理解是 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:TVD-function"
-
-\end_inset
-
-，由 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:TVD-scheme"
-
-\end_inset
-
-得到的数值解正确地
-\color red
-模仿 (mimic)
-\color inherit
- 了这一性质，因此不会引入数值振荡。正因如此，
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:TVD-scheme"
-
-\end_inset
-
-（曾经）是求解守恒律（系统）的主要途径；与此同时，以 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "sec:WENO"
-
-\end_inset
-
- 为代表的
-\color red
-总变差有界格式 (TV Bounded scheme, TVB scheme)
-\color inherit
- 也得到了发展，它们可以看做是 
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "def:TVD-scheme"
-
-\end_inset
-
-的弱化和推广。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
-间断探测器
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:激波捕捉：间断探测器"
-
-\end_inset
-
-
+间断探测
 \end_layout
 
 \begin_layout Standard
@@ -1273,112 +1195,14 @@ name "sec:激波捕捉：间断探测器"
 \end_layout
 
 \begin_layout Subsection
-minmod
-\end_layout
-
-\begin_layout Standard
-先由单元平均值 
-\begin_inset Formula $\bar{u}_{i}=\vert E_{i}\vert^{-1}\int_{E_{i}}u\dd{x}$
-\end_inset
-
- 计算单元界面两侧的值 
-\begin_inset Formula $u_{i+1/2}^{\pm}$
-\end_inset
-
-，再利用 minmod 函数
-\begin_inset Formula 
-\[
-m(a,b,c)=\begin{cases}
-s\min(\vert a\vert,\vert b\vert,\vert c\vert) & s=\Sign a=\Sign b=\Sign c\\
-0 & \text{otherwise}
-\end{cases}
-\]
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Krivodonova_2004"
+literal "false"
 
 \end_inset
 
 
-\color red
-限制
-\color inherit
-增量
-\begin_inset Formula 
-\[
-\begin{aligned}\Delta_{+}\bar{u}_{i} & =\bar{u}_{i+1}-\bar{u}_{i} & \Delta_{-}\bar{u}_{i} & =\bar{u}_{i}-\bar{u}_{i-1}\\
-\tilde{\tilde{u}}_{i}^{+} & =m(u_{i+1/2}^{-}-\bar{u}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}) & \tilde{\tilde{u}}_{i}^{-} & =m(\bar{u}_{i}-u_{i-1/2}^{+},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i})
-\end{aligned}
-\]
-
-\end_inset
-
-若 
-\begin_inset Formula $m(a,b,c)\ne a$
-\end_inset
-
-，则报告坏单元。
-\end_layout
-
-\begin_layout Standard
-这种探测器的计算效率很高，但容易将（光滑的）极值点所在单元误报为坏单元。
-\end_layout
-
-\begin_layout Subsection
-TVB
-\end_layout
-
-\begin_layout Standard
-先由单元平均值 
-\begin_inset Formula $\bar{u}_{i}=\vert E_{i}\vert^{-1}\int_{E_{i}}u\dd{x}$
-\end_inset
-
- 计算单元界面两侧的值 
-\begin_inset Formula $u_{i+1/2}^{\pm}$
-\end_inset
-
-，再利用 TVB 函数
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\tilde{m}(a,b,c)=\begin{cases}
-a & \vert a_{1}\vert\le Mh^{2}\\
-\mathrm{minmod}(a,b,c) & \text{otherwise}
-\end{cases}
-\]
-
-\end_inset
-
-
-\color red
-限制
-\color inherit
-增量
-\begin_inset Formula 
-\[
-\begin{aligned}\Delta_{+}\bar{u}_{i} & =\bar{u}_{i+1}-\bar{u}_{i} & \Delta_{-}\bar{u}_{i} & =\bar{u}_{i}-\bar{u}_{i-1}\\
-\tilde{\tilde{u}}_{i}^{+} & =\tilde{m}(u_{i+1/2}^{-}-\bar{u}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}) & \tilde{\tilde{u}}_{i}^{-} & =\tilde{m}(\bar{u}_{i}-u_{i-1/2}^{+},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i})
-\end{aligned}
-\]
-
-\end_inset
-
-若 
-\begin_inset Formula $\tilde{m}(a,b,c)\ne a$
-\end_inset
-
-，则报告坏单元。
-\end_layout
-
-\begin_layout Standard
-这种探测器的计算效率与 minmod 接近，但识别效果依赖于可调参数 
-\begin_inset Formula $M$
-\end_inset
-
-。
-\end_layout
-
-\begin_layout Subsection
-KXRCF (2004)
 \end_layout
 
 \begin_layout Standard
@@ -1590,8 +1414,15 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 
 \end_layout
 
-\begin_layout Subsubsection
-Li–Ren (2011)
+\begin_layout Subsection
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Li_2011_k-exact"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1685,8 +1516,23 @@ I_{i}>\bar{S}, & \text{near discontinuity}
 
 \end_layout
 
-\begin_layout Subsubsection
-Zhu–Shu–Qiu (2021)
+\begin_layout Subsection
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Tetra"
+literal "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Steady"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1751,7 +1597,7 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
  邻接的那些单元的指标集。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 分母修正
 \end_layout
 
@@ -1780,14 +1626,7 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
 \end_layout
 
 \begin_layout Section
-通量限制器
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:激波捕捉：通量限制器"
-
-\end_inset
-
-
+通量限制
 \end_layout
 
 \begin_layout Subsection
@@ -2021,13 +1860,6 @@ status open
 \backslash
 begin{subequations}
 \end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "eq:激波捕捉：通量限制器"
 
 \end_inset
 
@@ -2504,12 +2336,6 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "tab:常用通量限制器"
-
-\end_inset
-
 常用通量限制器
 \end_layout
 
@@ -2698,14 +2524,7 @@ alpha
 \end_layout
 
 \begin_layout Section
-斜率限制器
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:激波捕捉：斜率限制器"
-
-\end_inset
-
-
+斜率限制
 \end_layout
 
 \begin_layout Subsection
@@ -2732,15 +2551,151 @@ TVD 斜率
 \end_layout
 
 \begin_layout Section
-矩限制器
+投影限制
+\end_layout
+
+\begin_layout Subsection
+minmod by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Cockburn_1989_General"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+先由单元平均值 
+\begin_inset Formula $\bar{u}_{i}=\vert E_{i}\vert^{-1}\int_{E_{i}}u\dd{x}$
+\end_inset
+
+ 计算均值增量
+\begin_inset Formula 
+\[
+\Delta_{+}\bar{u}_{i}=\bar{u}_{i+1}-\bar{u}_{i},\quad\Delta_{-}\bar{u}_{i}=\bar{u}_{i}-\bar{u}_{i-1},
+\]
+
+\end_inset
+
+记
+\begin_inset Formula 
+\[
+\tilde{u}_{i}=u_{j+1/2}^{-}-\bar{u}_{i},\quad\tilde{\tilde{u}}_{i}=\bar{u}_{i}-u_{j-1/2}^{+},
+\]
+
+\end_inset
+
+将其修正为
+\begin_inset Formula 
+\[
+\tilde{u}_{i}^{(\text{mod})}=m(\tilde{u}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}),\quad\tilde{\tilde{u}}_{i}^{(\text{mod})}=m(\tilde{\tilde{u}}_{i},\Delta_{+}\bar{u}_{i},\Delta_{-}\bar{u}_{i}),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $m$
+\end_inset
+
+ 可以是 minmod 函数
+\begin_inset Formula 
+\[
+m(a_{1},\dots,a_{n})=\begin{cases}
+s\min_{1\le k\le n}\vert a_{k}\vert, & s=\Sign a_{1}=\cdots=\Sign a_{n}\\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+或 TVB 修正的 minmod 函数
+\begin_inset Formula 
+\[
+\tilde{m}(a_{1},\dots,a_{n})=\begin{cases}
+a_{1}, & \vert a_{1}\vert\le Mh^{2}\\
+m(a_{1},\dots,a_{n}), & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+至此有均值 
+\begin_inset Formula $\bar{u}_{i}$
+\end_inset
+
+、右边界值 
+\begin_inset Formula $u_{j+1/2}^{-}=\bar{u}_{i}+\tilde{u}_{i}^{(\text{mod})}$
+\end_inset
+
+、左边界值 
+\begin_inset Formula $u_{j-1/2}^{+}=\bar{u}_{i}-\tilde{\tilde{u}}_{i}$
+\end_inset
+
+ 三个已知量，可唯一地重构出二次多项式。
+\end_layout
+
+\begin_layout Subsection
+矩限制器 by 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Biswas_1994"
 literal "false"
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+正交基函数展开
+\begin_inset Formula 
+\[
+u_{j}^{h}(\xi,t)=\sum_{k=0}^{p}c_{j,k}(t)\,\mathrm{P}_{k}(\xi),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+c_{j,k}(t)=\frac{2k+1}{2}\int_{-1}^{1}u_{j}^{h}(\xi,t)\,\mathrm{P}_{k}(\xi)\dd{\xi},
+\]
+
+\end_inset
+
+令其保持单调性
+\begin_inset Formula 
+\[
+(2k+1)\,c_{j,k}^{(\text{mod})}=m\qty(\begin{array}{c}
+(2k+1)\,c_{j,k}\\
+c_{j+1,k}-c_{j,k}\\
+c_{j,k}-c_{j-1,k}
+\end{array}),\quad k=p,p-1,\dots,1,0,1,\dots,p-1,p.
+\]
+
+\end_inset
+
+注意限制顺序为
+\end_layout
+
+\begin_layout Quote
+First, the highest-order coefficient is limited.
+\end_layout
+
+\begin_layout Quote
+Then the limiter is applied to successively lower-order coefficients when
+ the next higher coefficient on the interval has been changed by the limiting.
+\end_layout
+
+\begin_layout Quote
+Once the lower-order coefficients are limited, the higher-order coefficients
+ are re-limited using the updated low-order coefficients.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -2770,34 +2725,27 @@ Weighted BAP (WBAP)
 \end_layout
 
 \begin_layout Standard
-secondary reconstruction:
-\end_layout
-
-\begin_layout Standard
+将二次重构多项式
 \begin_inset Formula 
 \[
-u_{k\to i}^{h}(\vec{r})=\langle u\rangle_{i}+\sum_{l=1}^{N_{c}(k)}\hat{u}_{k\to i}^{l}\varphi_{l,i}(\vec{r}),
+u_{k\to i}^{h}(\vec{r})=\bar{u}_{i}+\sum_{l=1}^{N_{c}(k)}\hat{u}_{k\to i}^{l}\,\varphi_{l,i}(\vec{r}),
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-replace 
+的系数 
 \begin_inset Formula $\hat{u}_{k\to i}^{l}$
 \end_inset
 
- by
+ 替换为
 \begin_inset Formula 
 \[
-\tilde{u}_{i}^{l}=L\qty(\hat{u}_{i}^{l},\hat{u}_{k_{1}\to i}^{l},\dots,\hat{u}_{k_{K}\to i}^{l})
+\tilde{u}_{i}^{l}=L\qty(\hat{u}_{i}^{l},\hat{u}_{k_{1}\to i}^{l},\dots,\hat{u}_{k_{K}\to i}^{l}),
 \]
 
 \end_inset
 
-where
+其中
 \begin_inset Formula 
 \[
 L(a_{0},a_{1},\dots,a_{K})=a_{0}\cdot W\qty(1,\frac{a_{1}}{a_{0}},\dots,\frac{a_{K}}{a_{0}}),
@@ -2812,16 +2760,16 @@ in which
  is the WBAP-L2 limiting function:
 \begin_inset Formula 
 \[
-W(1,\theta_{1},\dots,\theta_{J})=\frac{n_{p}+\sum_{k=1}^{K}1/\theta_{k}^{p-1}}{n_{p}+\sum_{k=1}^{K}1/\theta_{k}^{p}}
+W(1,\theta_{1},\dots,\theta_{K})=\frac{n_{p}+\sum_{k=1}^{K}1/\theta_{k}^{p-1}}{n_{p}+\sum_{k=1}^{K}1/\theta_{k}^{p}}
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $n_{p}$
+\begin_inset Formula $n_{p}=10$
 \end_inset
 
-=10 and 
+ and 
 \begin_inset Formula $p=4$
 \end_inset
 
@@ -2837,14 +2785,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-WENO
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:WENO"
-
-\end_inset
-
-
+WENO 重构
 \end_layout
 
 \begin_layout Standard
@@ -2853,11 +2794,10 @@ name "sec:WENO"
 基本无振荡 (Essentially Non-Oscillatory, ENO)
 \color inherit
  格式始于 
-\begin_inset CommandInset href
-LatexCommand href
-name "Harten--Engquist--Osher--Chakravarthy (1987)"
-target "https://doi.org/10.1016/0021-9991(87)90031-3"
-literal "false"
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Harten_1997"
+literal "true"
 
 \end_inset
 
@@ -2905,14 +2845,18 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-各种 WENO 格式的区别，正是体现在
+各种 WENO 格式的区别，体现在
+\color red
+候选多项式
+\color inherit
+及
 \color red
 非线性权重
 \color inherit
 的设计上。
 \end_layout
 
-\begin_layout Remark*
+\begin_layout Standard
 (W)ENO 格式虽不能完全消除数值振荡（故不是 
 \begin_inset CommandInset ref
 LatexCommand nameref
@@ -2937,15 +2881,8 @@ reference "rem:TVB-scheme"
 ），同时还能够避免近似解的精度在光滑极值点附近降阶，因此特别适合于既含间断（激波、接触）、又含复杂光滑结构（湍流、涡系）的问题。
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
-WENO 有限差分格式 by 
+WENO by 
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Jiang_1996"
@@ -3314,6 +3251,190 @@ w_{k}=w_{k}^{\star}+\order{h^{4}}\impliedby w_{k}^{\beta}=\frac{w_{k}^{\star}}{(
 
 \begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+TENO by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Fu_2016"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K$
+\end_inset
+
+ 点格式由 
+\begin_inset Formula $K-2$
+\end_inset
+
+ 个候选模板组合非线性加权而得
+\begin_inset Formula 
+\[
+\hat{f}_{i+1/2}=\sum_{k=0}^{K-3}w_{k}\,\hat{f}_{k,i+1/2},\quad w_{k}=\frac{d_{k}\,\delta_{k}}{\sum_{k}d_{k}\,\delta_{k}},
+\]
+
+\end_inset
+
+其中线性权 
+\begin_inset Formula $d_{k}$
+\end_inset
+
+ 可按精度最高（或其他准则）推得；
+\begin_inset Formula $\delta_{k}$
+\end_inset
+
+ 为取决于光滑度的 0-1 函数，候选模板要么被选中，要么被舍弃，故名为 targeted ENO (TENO) 格式。
+\end_layout
+
+\begin_layout Subsubsection
+候选模板
+\end_layout
+
+\begin_layout Standard
+不同于 WENO 选取宽度一致的低阶候选模板，TENO 的候选模板宽度逐渐增加：设第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个模板的宽度为 
+\begin_inset Formula $r_{k}$
+\end_inset
+
+，可构造 
+\begin_inset Formula $r_{k}-1$
+\end_inset
+
+ 次近似通量
+\begin_inset Formula 
+\[
+\hat{f}_{k}(x)=\sum_{l=0}^{r_{k}-1}a_{l,k}\,x^{l},
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $K=5$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Takagi_2022"
+literal "true"
+
+\end_inset
+
+ 取
+\begin_inset Formula 
+\[
+\hat{f}_{0,i+1/2}=\frac{-f_{i-1}+5f_{i}+2f_{i+1}}{6},\quad d_{0}=\frac{6}{10},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{f}_{1,i+1/2}=\frac{2f_{i}+5f_{i+1}-f_{i+2}}{6},\quad d_{1}=\frac{3}{10},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{f}_{2,i+1/2}=\frac{2f_{i-2}-7f_{i-1}+11f_{i}}{6},\quad d_{2}=\frac{1}{10},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+光滑度
+\end_layout
+
+\begin_layout Standard
+a strong scale separation procedure (smoothness indicator) is introduced
+ as
+\begin_inset Formula 
+\[
+\gamma_{k}=\left(1+\frac{\tau_{K}}{\beta_{k,r}+\varepsilon}\right)^{q},\quad\begin{cases}
+k=0,\dots,K-3\\
+q\gg2\\
+\varepsilon=10^{-40}
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\beta_{k,r}=\sum_{j=1}^{r-1}h^{2j-1}\int_{x_{i-1/2}}^{x_{i+1/2}}\left(\dv[j]{\hat{f}_{k}}{x}\right)^{2}\dd{x}
+\]
+
+\end_inset
+
+与 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Jiang_1996"
+literal "false"
+
+\end_inset
+
+ 中相同。
+\end_layout
+
+\begin_layout Standard
+对 smoothness indicator 归一化
+\begin_inset Formula 
+\[
+\chi_{k}=\frac{\gamma_{k}}{\sum_{k}\gamma_{k}},
+\]
+
+\end_inset
+
+并引入 0-1 开关
+\begin_inset Formula 
+\[
+\delta_{k}=(\chi_{k}\ge C_{T}),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $K=5$
+\end_inset
+
+, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Takagi_2022"
+literal "true"
+
+\end_inset
+
+ 取
+\begin_inset Formula 
+\[
+q=6,\quad\tau_{K}=\vert\beta_{1,3}-\beta_{2,3}\vert,\quad C_{T}=10^{-5},
+\]
+
 \end_inset
 
 
@@ -4760,6 +4881,72 @@ K_{\epsilon}\frac{\beta_{L}^{2}+\beta_{R}^{2}}{2}, & l\in\left\{ 1,L,R\right\}
 \end_inset
 
 ，可进一步优化。
+\end_layout
+
+\begin_layout Section
+THINC 重构
+\end_layout
+
+\begin_layout Subsection
+Deng (2019)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Deng_2019"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Xu (2023)
+\end_layout
+
+\begin_layout Standard
+先对限制前的重构多项式 
+\begin_inset Formula $u_{i}^{\text{old}}(x)$
+\end_inset
+
+ 缩放：
+\begin_inset Formula 
+\[
+q_{i}(x)\coloneqq\frac{u_{i}^{\text{old}}(x)-\bar{u}_{i}}{A},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+A\coloneqq\alpha\min(u_{\max}-\bar{u}_{i},\bar{u}_{i}-u_{\min}),\quad\begin{cases}
+u_{\max}\coloneqq\max(\bar{u}_{i-1},\bar{u}_{i},\bar{u}_{i+1})\\
+u_{\min}\coloneqq\min(\bar{u}_{i-1},\bar{u}_{i},\bar{u}_{i+1})
+\end{cases}
+\]
+
+\end_inset
+
+一般取 
+\begin_inset Formula $\alpha\le1$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+限制后的重构多项式为
+\begin_inset Formula 
+\[
+u_{i}^{\text{new}}(x)=\bar{u}_{i}+A\frac{\tanh(q_{i}(x))-\overline{\tanh(q_{i}(x))}}{1+\abs{\overline{\tanh(q_{i}(x))}}}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
