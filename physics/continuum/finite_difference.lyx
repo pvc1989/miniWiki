@@ -2979,6 +2979,14 @@ status open
 
 这是一族时间推进格式，最一般的形式为
 \begin_inset Formula 
+\[
+\underline{u}^{n+1}=\underline{u}^{n}+h_{t}\sum_{j=1}^{m}b_{j}\,\underline{K}_{j},\quad\underline{K}_{j}\coloneqq\underline{r}\qty(t_{n}+h_{t}\sum_{k=1}^{j-1}a_{j,k},\underline{u}^{n}+h_{t}\sum_{k=1}^{j-1}a_{j,k}\underline{K}_{k}),
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
 \begin{equation}
 \underline{u}^{n+j/m}=\sum_{k=0}^{j-1}\left(\alpha_{j,k}\,\underline{u}^{n+k/m}+\beta_{j,k}\,\underline{r}^{n+k/m}\,h_{t}\right),\quad j=1,\dots,m\label{eq:m-stage_Runge--Kutta}
 \end{equation}
@@ -2993,7 +3001,11 @@ status open
 \begin_inset Formula $j$
 \end_inset
 
- 都成立。在 CFD 中推荐选用以下版本：
+ 都成立。
+\end_layout
+
+\begin_layout Algorithm
+在 CFD 中推荐选用以下具有 TVD/SSP 性质的版本：
 \end_layout
 
 \begin_deeper
@@ -3003,6 +3015,17 @@ status open
 \[
 \begin{aligned}\underline{u}^{n+1/2} & =\underline{u}^{n}+\underline{r}^{n}\,h_{t}\\
 \underline{u}^{n+1}\equiv\underline{u}^{n+2/2} & =\frac{1}{2}\underline{u}^{n}+\frac{1}{2}\left(\underline{u}^{n+1/2}+\underline{r}^{n+1/2}\,h_{t}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{u}^{n+1} & =\underline{u}^{n}+\left(\frac{1}{2}\underline{K}_{1}+\frac{1}{2}\underline{K}_{2}\right)h_{t},\\
+\underline{K}_{1} & =\underline{r}\qty(t_{n},\underline{u}^{n}),\\
+\underline{K}_{2} & =\underline{r}\qty(t_{n}+h_{t},\underline{u}^{n}+\underline{K}_{1}\,h_{t}),
 \end{aligned}
 \]
 
@@ -3018,6 +3041,18 @@ status open
 \begin{aligned}\underline{u}^{n+1/3} & =\underline{u}^{n}+\underline{r}^{n}\,h_{t}\\
 \underline{u}^{n+2/3} & =\frac{3}{4}\underline{u}^{n}+\frac{1}{4}\left(\underline{u}^{n+1/3}+\underline{r}^{n+1/3}\,h_{t}\right)\\
 \underline{u}^{n+1}\equiv\underline{u}^{n+3/3} & =\frac{1}{3}\underline{u}^{n}+\frac{2}{3}\left(\underline{u}^{n+2/3}+\underline{r}^{n+2/3}\,h_{t}\right)
+\end{aligned}
+\]
+
+\end_inset
+
+或等价的
+\begin_inset Formula 
+\[
+\begin{aligned}\underline{u}^{n+1} & =\underline{u}^{n}+\left(\frac{1}{6}\underline{K}_{1}+\frac{1}{6}\underline{K}_{2}+\frac{2}{3}\underline{K}_{3}\right)h_{t},\\
+\underline{K}_{1} & =\underline{r}\qty(t_{n},\underline{u}^{n}),\\
+\underline{K}_{2} & =\underline{r}\qty(t_{n}+h_{t},\underline{u}^{n}+\underline{K}_{1}h_{t}),\\
+\underline{K}_{3} & =\underline{r}\qty(t_{n}+\frac{1}{2}h_{t},\underline{u}^{n}+\left(\frac{1}{4}\underline{K}_{1}+\frac{1}{4}\underline{K}_{2}\right)h_{t}),
 \end{aligned}
 \]
 
@@ -3072,6 +3107,63 @@ name "alg:有限差分： 时间推进：隐式 Euler"
 \begin_inset Formula 
 \[
 \underline{u}^{n+1}=\underline{u}^{n}+\underline{r}^{n+1}\,h_{t}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Algorithm
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[SDIRK]
+\end_layout
+
+\end_inset
+
+三级四阶隐式 RK
+\begin_inset Formula 
+\[
+\underline{u}^{n+1}=\underline{u}^{n}+h_{t}\sum_{j=1}^{3}b_{j}\,\underline{K}_{j},\quad\underline{K}_{j}\coloneqq\underline{r}\qty(t_{n}+h_{t}\sum_{k=1}^{j}a_{j,k},\underline{u}^{n}+h_{t}\sum_{k=1}^{j}a_{j,k}\underline{K}_{k}),
+\]
+
+\end_inset
+
+其系数为 
+\begin_inset Formula 
+\[
+\begin{bmatrix}a_{1,1}\\
+a_{2,1} & a_{2,2}\\
+a_{3,1} & a_{3,2} & a_{3,3}
+\end{bmatrix}=\begin{bmatrix}\zeta\\
+1/2-\zeta & \zeta\\
+2\zeta & 1-4\zeta & \zeta
+\end{bmatrix},\quad\begin{bmatrix}b_{1}\\
+b_{2}\\
+b_{3}
+\end{bmatrix}=\frac{1}{(2\zeta-1)^{2}}\begin{bmatrix}1/6\\
+4\zeta^{2}-4\zeta+2/3\\
+1/6
+\end{bmatrix},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\zeta=0.128886400515\impliedby\min\left\{ \zeta\in\mathbb{R}:\zeta^{3}-\frac{3}{2}\zeta^{2}+\frac{1}{2}\zeta-\frac{1}{24}=0\right\} .
 \]
 
 \end_inset
