@@ -142,11 +142,28 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-热平衡 
-\begin_inset Formula $\implies$
+热平衡
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[热平衡]
+\end_layout
+
 \end_inset
 
- 温度
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Axiom
@@ -161,6 +178,13 @@ status open
 \end_inset
 
 若系统甲与系统乙处于热平衡，且系统乙与系统丙处于热平衡，则系统甲与系统丙亦处于热平衡。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -885,7 +909,7 @@ name "sec:热力学：第一定律"
 \end_layout
 
 \begin_layout Subsection
-热力学过程
+准静态过程
 \end_layout
 
 \begin_layout Definition
@@ -899,7 +923,7 @@ status open
 
 \end_inset
 
-
+过程进行得如此缓慢，以至于系统在每一时刻都（近似）处于平衡态。
 \end_layout
 
 \begin_layout Standard
@@ -976,7 +1000,7 @@ status open
 \end_layout
 
 \begin_layout Subsection
-能量守恒
+第一类永动机
 \end_layout
 
 \begin_layout Definition
@@ -1332,6 +1356,51 @@ pV^{\gamma}=\mathrm{const}.
 第二定律
 \end_layout
 
+\begin_layout Subsection
+第二类永动机
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[热机效率]
+\end_layout
+
+\end_inset
+
+设某热机在单个循环中，从恒定高温热源吸热 
+\begin_inset Formula $Q_{1}$
+\end_inset
+
+，向恒定低温热源放热 
+\begin_inset Formula $Q_{2}$
+\end_inset
+
+，则（由第一定律可知）其对外做功为 
+\begin_inset Formula $W=Q_{1}-Q_{2}$
+\end_inset
+
+，效率为
+\begin_inset Formula 
+\[
+\eta\coloneqq\frac{W}{Q_{1}}=1-\frac{Q_{2}}{Q_{1}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
 \begin_inset ERT
 status open
@@ -1343,7 +1412,11 @@ status open
 
 \end_inset
 
+能够从单一热源吸热并将其完全转化为有用功（即效率达 
+\begin_inset Formula $100\%$
+\end_inset
 
+）的热机。
 \end_layout
 
 \begin_layout Standard
@@ -1359,13 +1432,58 @@ status open
 
 \begin_layout Plain Layout
 
-[热力学第二定律]
+[热力学第二定律的 Kelvin 表述]
 \end_layout
 
 \end_inset
 
-A process whose only net result is to take heat from a reservoir and convert
- it to work is impossible.
+不可能从单一热源吸热并将其完全转化为有用功，即第二类永动机不存在。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Axiom
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[热力学第二定律的  Clausius 表述]
+\end_layout
+
+\end_inset
+
+不可能把热量从低温物体传向高温物体而不引起其他变化。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+可逆热机
+\end_layout
+
+\begin_layout Definition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Carnot 热机]
+\end_layout
+
+\end_inset
+
+工作在恒定高温热源与恒定低温热源之间的热机，依次经历等稳膨胀、绝热膨胀、等稳压缩、绝热压缩四个准静态过程。
 \end_layout
 
 \begin_layout Standard
@@ -1386,7 +1504,40 @@ status open
 
 \end_inset
 
+不存在耗散的准静态过程。
+\end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[可逆 Carnot 热机]
+\end_layout
+
+\end_inset
+
+以理想气体为工质的可逆 Carnot 热机的效率为
+\begin_inset Formula 
+\[
+\eta=1-\frac{Q_{2}}{Q_{1}}=1-\frac{T_{2}}{T_{1}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $T$
+\end_inset
+
+ 为理想气体温标。
 \end_layout
 
 \begin_layout Standard
@@ -1397,62 +1548,17 @@ status open
 \end_layout
 
 \begin_layout Theorem
-Given two heat engines working between 
-\begin_inset Formula $T_{1}$
-\end_inset
+\begin_inset ERT
+status open
 
- and 
-\begin_inset Formula $T_{2}$
-\end_inset
+\begin_layout Plain Layout
 
- (
-\begin_inset Formula $T_{2}<T_{1}$
-\end_inset
-
-).
- One is reversible, which takes heat 
-\begin_inset Formula $Q_{1}$
-\end_inset
-
- from 
-\begin_inset Formula $T_{1}$
-\end_inset
-
- and delivers heat 
-\begin_inset Formula $Q_{2}$
-\end_inset
-
- at 
-\begin_inset Formula $T_{2}$
-\end_inset
-
-.
- The other is arbitrary, which also takes heat 
-\begin_inset Formula $Q_{1}$
-\end_inset
-
- from 
-\begin_inset Formula $T_{1}$
-\end_inset
-
- but delivers heat 
-\begin_inset Formula $Q_{2}$
-\end_inset
-
-' at 
-\begin_inset Formula $T_{2}$
-\end_inset
-
-.
- Then
-\begin_inset Formula 
-\[
-Q_{2}\le Q_{2}'\qand W=Q_{1}-Q_{2}>Q_{1}-Q_{2}'=W'
-\]
+[Carnot]
+\end_layout
 
 \end_inset
 
-
+在所有热机中，可逆热机的效率最高。所有可逆热机的效率相同，且不依赖于工质。
 \end_layout
 
 \begin_layout Standard
@@ -1462,10 +1568,8 @@ Q_{2}\le Q_{2}'\qand W=Q_{1}-Q_{2}>Q_{1}-Q_{2}'=W'
 
 \end_layout
 
-\begin_layout Corollary
-There is only one reversible heat engine in the world, whose efficiency
- is the highest among all the heat engines, and depends only on the pair
- of temperatures it is running between.
+\begin_layout Proof
+反证法：用效率更高的非可逆热机驱动可逆热机，可实现从单一热源吸热并完全转化为有用功。
 \end_layout
 
 \begin_layout Standard
@@ -1473,21 +1577,25 @@ There is only one reversible heat engine in the world, whose efficiency
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+热力学温标
 \end_layout
 
 \begin_layout Standard
 Once the efficiency of a reversible engine running between a certain temperature
  
-\begin_inset Formula $T$
+\begin_inset Formula $\theta$
 \end_inset
 
  and a standard temperature 
-\begin_inset Formula $T_{s}$
+\begin_inset Formula $\theta_{S}$
 \end_inset
 
  is known, we could work out the efficiency for any other pair of temperatures.
  For a reversible engine running between 
-\begin_inset Formula $T_{s}$
+\begin_inset Formula $T_{S}$
 \end_inset
 
  and 
@@ -1503,17 +1611,17 @@ Once the efficiency of a reversible engine running between a certain temperature
 \end_inset
 
  must be proportional to the heat 
-\begin_inset Formula $Q_{s}$
+\begin_inset Formula $Q_{S}$
 \end_inset
 
  delivered at 
-\begin_inset Formula $T_{s}$
+\begin_inset Formula $\theta_{S}$
 \end_inset
 
 , i.e.
 \begin_inset Formula 
 \[
-Q(T)=f(T)\cdot Q_{s}
+Q(\theta)=f(\theta)\cdot Q_{S}
 \]
 
 \end_inset
@@ -1535,7 +1643,7 @@ in which, the coefficient
 
 \begin_layout Standard
 We can use this function 
-\begin_inset Formula $f(T)$
+\begin_inset Formula $f(\theta)$
 \end_inset
 
  itself as a new scale of temperature, called the 
@@ -1545,28 +1653,84 @@ absolute thermodynamic temperature
 :
 \begin_inset Formula 
 \[
-Q\left(T^{\text{new}}\right)=T^{\text{new}}S,\quad T^{\text{new}}\coloneqq f\left(T\right)\cdot T_{s},\quad S\coloneqq\frac{Q_{s}}{T_{s}}
+T\coloneqq f\left(\theta\right)\cdot\theta_{S},
 \]
 
 \end_inset
 
 It can be proved that if we choose 
-\begin_inset Formula $T_{s}=1^{\circ}$
+\begin_inset Formula $T_{S}=1^{\circ}$
 \end_inset
 
 , then 
-\begin_inset Formula $T^{\text{new}}$
+\begin_inset Formula $T$
 \end_inset
 
  will be equivalent with that defined by the kinetic theory.
- From now on, we shall use this definition of temperature exclusively, and
- ignore the superscript 
-\begin_inset Formula $^{\text{new}}$
+ From now on, we shall use this definition of temperature exclusively.
+\end_layout
+
+\begin_layout Theorem
+Using the absolute thermodynamic temperature, the work done by a reversible
+ heat engine running between 
+\begin_inset Formula $T_{1}$
 \end_inset
 
+ and 
+\begin_inset Formula $T_{2}$
+\end_inset
+
+ (
+\begin_inset Formula $T_{2}<T_{1}$
+\end_inset
+
+) is
+\begin_inset Formula 
+\[
+W=Q_{1}-Q_{2}=\left(1-\frac{T_{2}}{T_{1}}\right)Q_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+热力学熵
+\end_layout
+
+\begin_layout Standard
+By using the absolute thermodynamic temperature, the unique reversible heat
+ engine defines a equivalence relation on the set of 
+\begin_inset Formula $\left(Q,T\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\left(Q_{1},T_{1}\right)=\left(Q_{2},T_{2}\right)\qif\frac{Q_{1}}{T_{1}}=\frac{Q_{2}}{T_{2}}
+\]
+
+\end_inset
+
+It is clear that this equivalence relation is actually the 
+\noun on
+isentropic relation
+\noun default
 .
  The quantity 
-\begin_inset Formula $S$
+\begin_inset Formula 
+\[
+S\coloneqq\frac{Q_{S}}{T_{S}}
+\]
+
 \end_inset
 
  is called 
@@ -1578,6 +1742,10 @@ entropy
 \end_inset
 
 -reservoir.
+\end_layout
+
+\begin_layout Subsection
+熵增计算
 \end_layout
 
 \begin_layout Standard
@@ -1635,129 +1803,7 @@ More generally, during a reversible process
 \end_layout
 
 \begin_layout Standard
-By using the absolute thermodynamic temperature, the unique reversible heat
- engine defines a equivalence relation on the set of 
-\begin_inset Formula $\left(Q,T\right)$
-\end_inset
-
-:
-\begin_inset Formula 
-\[
-\left(Q_{1},T_{1}\right)=\left(Q_{2},T_{2}\right)\qif\frac{Q_{1}}{T_{1}}=\frac{Q_{2}}{T_{2}}
-\]
-
-\end_inset
-
-It is clear that this equivalence relation is actually the 
-\noun on
-isentropic relation
-\noun default
-.
-\end_layout
-
-\begin_layout Theorem
-Using the absolute thermodynamic temperature, the work done by a reversible
- heat engine running between 
-\begin_inset Formula $T_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $T_{2}$
-\end_inset
-
- (
-\begin_inset Formula $T_{2}<T_{1}$
-\end_inset
-
-) is
-\begin_inset Formula 
-\[
-W=Q_{1}-Q_{2}=\left(1-\frac{T_{2}}{T_{1}}\right)Q_{1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-After introducing the concept of entropy, the 2nd law of thermodynamics
- can be restated as
-\end_layout
-
-\begin_layout Axiom
-In any irreversible process, the entropy (of the whole world) is increased.
- Only in reversible processes does the entropy (of the whole world) remain
- constant.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The LHS is 
-\begin_inset Formula $\delta q$
-\end_inset
-
- rather than 
-\begin_inset Formula $\dd{q}$
-\end_inset
-
-, since 
-\begin_inset Formula $q$
-\end_inset
-
- is not a state variable and the RHS is generally not an 
-\begin_inset CommandInset href
-LatexCommand href
-name "exact differential"
-target "https://en.wikipedia.org/wiki/Exact_differential"
-literal "false"
-
-\end_inset
-
-.
- By multiplying an 
-\begin_inset CommandInset href
-LatexCommand href
-name "integrating factor"
-target "https://en.wikipedia.org/wiki/Integrating_factor"
-literal "false"
-
-\end_inset
-
- 
-\begin_inset Formula $1/T$
-\end_inset
-
- and assuming 
-\begin_inset Formula $\delta q$
-\end_inset
-
- is added reversibly to the system, the LHS becomes 
-\begin_inset Formula $\dd{s}$
-\end_inset
-
- (which is a state variable) and the RHS becomes exact:
-\begin_inset Formula 
-\[
-\dd{s}=\frac{\delta q}{T}=\frac{\dd{e}+p\dd{v}}{T}
-\]
-
-\end_inset
-
-So, the 1st law of thermodynamics can also be written as
+引入热力学熵的概念后，热力学第一定律可表示为
 \begin_inset Formula 
 \begin{equation}
 T\dd{s}=\dd{e}+p\dd{v}=\dd{h}-v\dd{p}\label{eq:热力学：第一定律}
@@ -1765,11 +1811,15 @@ T\dd{s}=\dd{e}+p\dd{v}=\dd{h}-v\dd{p}\label{eq:热力学：第一定律}
 
 \end_inset
 
-The 2nd line comes from 
-\begin_inset Formula $h\coloneqq e+pv$
+其中 
+\begin_inset Formula $T\dd{s}$
 \end_inset
 
-.
+ 与 
+\begin_inset Formula $p\dd{v}$
+\end_inset
+
+ 分别表示系统在（联系始末状态的）可逆过程中的吸热与对外做功。
 \end_layout
 
 \begin_layout Example
@@ -1819,6 +1869,108 @@ If the gas is also calorically perfect (
 \begin_inset Formula 
 \[
 s_{2}-s_{1}=c_{v}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{\rho_{2}}{\rho_{1}}=c_{p}\ln\frac{T_{2}}{T_{1}}-R\ln\frac{p_{2}}{p_{1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+熵增原理
+\end_layout
+
+\begin_layout Standard
+After introducing the concept of entropy, the 2nd law of thermodynamics
+ can be restated as
+\end_layout
+
+\begin_layout Axiom
+In any irreversible process, the entropy (of the whole world) is increased.
+ Only in reversible processes does the entropy (of the whole world) remain
+ constant.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Clausius 不等式]
+\end_layout
+
+\end_inset
+
+系统经历任意循环，当其温度为 
+\begin_inset Formula $T$
+\end_inset
+
+ 时吸热 
+\begin_inset Formula $\delta Q$
+\end_inset
+
+，则有
+\begin_inset Formula 
+\[
+\oint_{C}\frac{\delta Q}{T}\le0,
+\]
+
+\end_inset
+
+其中等号仅对可逆循环成立。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+任意无穷小过程 
+\begin_inset Formula $A\to B$
+\end_inset
+
+，总可以用可逆过程 
+\begin_inset Formula $B\to A$
+\end_inset
+
+ 闭环，由 Clausius 不等式得
+\begin_inset Formula 
+\[
+\frac{\delta Q_{A\to B}^{\mathrm{arb}}}{T}+\frac{\delta Q_{B\to A}^{\mathrm{rev}}}{T}\le0,
+\]
+
+\end_inset
+
+翻转可逆过程方向则有
+\begin_inset Formula 
+\[
+\delta Q_{A\to B}^{\mathrm{arb}}\le-\delta Q_{B\to A}^{\mathrm{rev}}=\delta Q_{A\to B}^{\mathrm{rev}}=T\dd{S_{A\to B}},
+\]
+
+\end_inset
+
+特别地，对绝热过程有
+\begin_inset Formula 
+\[
+\dd{S}\ge0.
 \]
 
 \end_inset
