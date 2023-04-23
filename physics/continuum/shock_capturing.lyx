@@ -1195,6 +1195,56 @@ reference "def:TVD-scheme"
 \end_layout
 
 \begin_layout Subsection
+基于点值平均值
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2022"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在界面 
+\begin_inset Formula $x_{j+1/2}$
+\end_inset
+
+ 处定义判据
+\begin_inset Formula 
+\[
+\sigma_{j+1/2}\coloneqq(\min(\psi_{j},\psi_{j+1})\ge\psi_{c})=\begin{cases}
+1, & \text{smooth},\\
+0, & \text{jump},
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\psi_{c}=0.4;\quad\psi_{j}\coloneqq\frac{2ab+\varepsilon}{a^{2}+b^{2}+\varepsilon}\impliedby\begin{cases}
+a\coloneqq\vert f_{j}-f_{j-1}\vert+\vert f_{j}-2f_{j-1}+f_{j-2}\vert,\\
+b\coloneqq\vert f_{j}-f_{j+1}\vert+\vert f_{j}-2f_{j+1}+f_{j+2}\vert,\\
+\varepsilon\coloneqq\frac{0.9\psi_{c}}{1-0.9\psi_{c}}\xi^{2},\quad\xi=0.01,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+基于控制面差值
+\end_layout
+
+\begin_layout Subsubsection
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Krivodonova_2004"
@@ -1414,7 +1464,53 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 
 \end_layout
 
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Tetra"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+针对四面体单元，
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Zhu_2021_Tetra"
+literal "false"
+
+\end_inset
+
+ 提出一种与 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Krivodonova_2004"
+literal "false"
+
+\end_inset
+
+ 类似的探测器：
+\begin_inset Formula 
+\[
+I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{{\color{red}(p>1\mathbin{?}1.5:1)}}{\color{blue}\min_{\vec{x}\in\partial E_{i}}\vert u_{i}^{h}\vert}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
+\infty, & \text{间断},\\
+0, & \text{光滑},
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
+基于控制体差值
+\end_layout
+
+\begin_layout Subsubsection
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Li_2011_k-exact"
@@ -1516,15 +1612,7 @@ I_{i}>\bar{S}, & \text{near discontinuity}
 
 \end_layout
 
-\begin_layout Subsection
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Zhu_2021_Tetra"
-literal "false"
-
-\end_inset
-
- and 
+\begin_layout Subsubsection
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Zhu_2021_Steady"
@@ -1536,25 +1624,6 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-针对四面体单元，
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Zhu_2021_Tetra"
-literal "false"
-
-\end_inset
-
- 提出一种与之类似的探测器：
-\begin_inset Formula 
-\[
-I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{{\color{red}(p>1\mathbin{?}1.5:1)}}{\color{blue}\min_{\vec{x}\in\partial E_{i}}\vert u_{i}^{h}\vert}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
-\infty, & \text{间断},\\
-0, & \text{光滑},
-\end{cases}
-\]
-
-\end_inset
-
 针对稳态解问题，
 \begin_inset CommandInset citation
 LatexCommand citet
@@ -1563,7 +1632,15 @@ literal "false"
 
 \end_inset
 
- 提出另一种与之类似的探测器：
+ 提出另一种与 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Li_2011_k-exact"
+literal "false"
+
+\end_inset
+
+ 类似的探测器：
 \begin_inset Formula 
 \[
 I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\right)\right|}{h_{i}\min_{k\in\left\{ i\right\} \cup K_{i}}\left\Vert u_{k}^{h}\right\Vert _{1}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
@@ -1597,7 +1674,7 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
  邻接的那些单元的指标集。
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 分母修正
 \end_layout
 
@@ -2785,7 +2862,7 @@ literal "false"
 \end_layout
 
 \begin_layout Section
-WENO 重构
+有限差分型 WENO 重构
 \end_layout
 
 \begin_layout Standard
@@ -3257,6 +3334,10 @@ w_{k}=w_{k}^{\star}+\order{h^{4}}\impliedby w_{k}^{\beta}=\frac{w_{k}^{\star}}{(
 \end_layout
 
 \begin_layout Subsection
+WENO-Z by
+\end_layout
+
+\begin_layout Subsection
 TENO by 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3438,6 +3519,10 @@ q=6,\quad\tau_{K}=\vert\beta_{1,3}-\beta_{2,3}\vert,\quad C_{T}=10^{-5},
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+有限单元型 WENO 重构
 \end_layout
 
 \begin_layout Subsection
@@ -4794,7 +4879,19 @@ u_{i}^{\mathrm{new}}=\sum_{l\in T}w_{l}\,v_{l},\quad w_{l}=\frac{\alpha_{l}}{\su
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\beta_{l}=\sum_{k=1}^{p}\int_{x_{i-1/2}}^{x_{i+1/2}}\left(\frac{J^{k}}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial x^{k}}\right)^{2}\frac{\dd{x}}{J}=\sum_{k=1}^{p}\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi}
+\beta_{l}=\sum_{k=1}^{p}\int_{x_{i-1/2}}^{x_{i+1/2}}\left(\frac{J^{k}}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial x^{k}}\right)^{2}\frac{\dd{x}}{J},\quad J\coloneqq\frac{x_{i+1/2}-x_{i-/2}}{2},
+\]
+
+\end_inset
+
+对于线性几何插值，上述 
+\begin_inset Formula $J=\dv*{x^{h}}{\xi}$
+\end_inset
+
+，因此有
+\begin_inset Formula 
+\[
+\beta_{l}=\sum_{k=1}^{p}\int_{-1}^{1}\left(\frac{1}{(k-1)!}\frac{\partial^{k}v_{l}}{\partial\xi^{k}}\right)^{2}\dd{\xi}
 \]
 
 \end_inset
