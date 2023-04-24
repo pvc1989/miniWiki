@@ -4370,6 +4370,108 @@ U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta
 
 \end_layout
 
+\begin_layout Subsection
+二阶导数项的处理
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Castonguay_2013,Williams_2013"
+literal "false"
+
+\end_inset
+
+ 借用 LDG 方法，将二阶 PDE 改写为一阶 PDE 系统：
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f^{\mathrm{c}}(u)}{\partial x}=\frac{\partial f^{\mathrm{d}}(u,q)}{\partial x},\quad q=\frac{\partial u}{\partial x}.
+\]
+
+\end_inset
+
+先（仿照 Riemann 解）定义界面函数值
+\begin_inset Formula 
+\[
+u^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} -\beta\left\llbracket u^{\mathrm{D}}\right\rrbracket ,\quad\beta=\pm0.5,
+\]
+
+\end_inset
+
+再（仿照通量重构）定义（在界面处连续的）重构函数
+\begin_inset Formula 
+\[
+u^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{k}(t)\,L_{k}(x)}_{u^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(u^{\mathrm{I}}(x(\zeta),t)-u^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)}_{u^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+\]
+
+\end_inset
+
+以此导出（在界面处间断的）未知量导数
+\begin_inset Formula 
+\[
+q^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{k}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(u^{\mathrm{I}}(x(\zeta),t)-u^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\]
+
+\end_inset
+
+从而导出（在界面处间断的）域内通量
+\begin_inset Formula 
+\[
+f^{\mathrm{D}}=f^{\mathrm{c}}\qty(u^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u^{\mathrm{D}}(x,t),q^{\mathrm{D}}(x,t)),
+\]
+
+\end_inset
+
+及界面通量
+\begin_inset Formula 
+\[
+f^{\mathrm{I}}=f^{\mathrm{c,I}}-f^{\mathrm{d,I}},\quad\begin{cases}
+f^{\mathrm{c,I}}=\left\{ f^{\mathrm{d,D}}\right\} -\frac{\lambda}{2}\vert a\vert\left\llbracket u^{\mathrm{D}}\right\rrbracket ,\\
+f^{\mathrm{d,I}}=\left\{ f^{\mathrm{d,D}}\right\} +\beta\left\llbracket f^{\mathrm{d,D}}\right\rrbracket +\tau\left\llbracket u^{\mathrm{D}}\right\rrbracket ,
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tau=0,0.1,1$
+\end_inset
+
+ are tested in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Castonguay_2013"
+literal "false"
+
+\end_inset
+
+。以此定义（在界面处连续的）重构通量
+\begin_inset Formula 
+\[
+f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\,L_{k}(x)}_{f^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right){\color{red}h_{\zeta}}(\xi)}_{f^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ 可以不同于 
+\begin_inset Formula $g_{\zeta}$
+\end_inset
+
+。以此导出（在界面处间断的）通量导数
+\begin_inset Formula 
+\[
+\frac{\partial f^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\]
+
+\end_inset
+
+在结点出对该式取值，即得 FR 格式。
+\end_layout
+
 \begin_layout Section
 DG vs.
  FR
