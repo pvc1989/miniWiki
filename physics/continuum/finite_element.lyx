@@ -1647,7 +1647,7 @@ literal "false"
 一维传热方程
 \begin_inset Formula 
 \[
-\partial_{t}u-\partial_{x}^{2}u=0,\quad(x,t)\in(0,2\pi)\times(0,T)
+\partial_{t}\,u-\partial_{x}^{2}\,u=0,\quad(x,t)\in(0,2\pi)\times(0,T)
 \]
 
 \end_inset
@@ -1669,7 +1669,7 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 
 \begin_layout Standard
 将 
-\begin_inset Formula $-\partial_{x}u$
+\begin_inset Formula $-\partial_{x}\,u$
 \end_inset
 
  视为守恒律中的 
@@ -1679,7 +1679,7 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 ，在形式上应用 DG 方法：
 \begin_inset Formula 
 \[
-\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}\left(\partial_{x}u^{h}\right)\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{\partial_{x}u^{h}}\,v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{\partial_{x}\,u^{h}}_{E_{i}}=\ip{v^{h}}{\partial_{n}\,u^{h}}_{\partial E_{i}},
 \]
 
 \end_inset
@@ -1689,7 +1689,7 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 \end_inset
 
  均取自 
-\begin_inset Formula $\mathbb{P}^{k}(I_{i})$
+\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
 \end_inset
 
 
@@ -1697,13 +1697,13 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 
 \begin_layout Standard
 边界项中的 
-\begin_inset Formula $\widehat{\partial_{x}u^{h}}$
+\begin_inset Formula $\partial_{n}\,u^{h}\coloneqq n_{x}\,\partial_{x}\,u^{h}$
 \end_inset
 
- 为“数值通量”，因缺少迎风性质，自然地取平均值
+ 为（法向）“数值通量”，因缺少迎风性质，自然地取平均值
 \begin_inset Formula 
 \[
-\widehat{\partial_{x}u^{h}}=\frac{\left(\partial_{x}u^{h}\right)_{\mathrm{L}}+\left(\partial_{x}u^{h}\right)_{\mathrm{R}}}{2}
+\partial_{x}\,u^{h}=\frac{\left(\partial_{x}\,u^{h}\right)_{\mathrm{L}}+\left(\partial_{x}\,u^{h}\right)_{\mathrm{R}}}{2}
 \]
 
 \end_inset
@@ -1717,11 +1717,11 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 
 \begin_layout Standard
 引入新变量 
-\begin_inset Formula $q\coloneqq\partial_{x}u$
+\begin_inset Formula $q\coloneqq\partial_{x}\,u$
 \end_inset
 
 ，将方程 
-\begin_inset Formula $\partial_{t}u-\partial_{x}^{2}u=0$
+\begin_inset Formula $\partial_{t}\,u-\partial_{x}^{2}\,u=0$
 \end_inset
 
  化为一阶，二者合并组成一阶方程组
@@ -1731,8 +1731,8 @@ u(x,0)=\sin(x),\quad x\in(0,2\pi)
 \begin_inset Formula 
 \[
 \begin{cases}
-\partial_{t}u-\partial_{x}q=0,\\
-q-\partial_{x}u=0,
+\partial_{t}\,u-\partial_{x}\,q=0,\\
+q-\partial_{x}\,u=0,
 \end{cases}
 \]
 
@@ -1746,8 +1746,8 @@ q-\partial_{x}u=0,
 \begin_inset Formula 
 \[
 \begin{cases}
-\int_{I_{i}}\left(\partial_{t}u^{h}\right)v^{h}\dd{x}+\int_{I_{i}}q^{h}\left(\partial_{x}v^{h}\right)\dd{x}=\left.\widehat{q^{h}}\,v^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}\\
-\int_{I_{i}}q^{h}\,w^{h}\dd{x}+\int_{I_{i}}u^{h}\left(\partial_{x}w^{h}\right)\dd{x}=\left.\widehat{u^{h}}\,w^{h}\right|_{x_{i-1/2}}^{x_{i+1/2}}
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{q^{h}}_{E_{i}}=\ip{v^{h}}{q_{n}^{h}}_{\partial E_{i}},\\
+\ip{w^{h}}{q^{h}}_{E_{i}}+\ip{\partial_{x}\,w^{h}}{u^{h}}_{E_{i}}=\ip{w^{h}}{u_{n}^{h}}_{\partial E_{i}},
 \end{cases}
 \]
 
@@ -1758,7 +1758,7 @@ q-\partial_{x}u=0,
 \end_inset
 
  均取自 
-\begin_inset Formula $\mathbb{P}^{k}(I_{i})$
+\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
 \end_inset
 
 
@@ -1766,17 +1766,17 @@ q-\partial_{x}u=0,
 
 \begin_layout Standard
 边界项中的 
-\begin_inset Formula $\widehat{u^{h}}$
+\begin_inset Formula $u_{n}^{h}$
 \end_inset
 
  及 
-\begin_inset Formula $\widehat{q^{h}}$
+\begin_inset Formula $q_{n}^{h}$
 \end_inset
 
- 为“数值通量”，因缺少迎风性质，可以自然地取平均值
+ 为（法向）“数值通量”，因缺少迎风性质，可以自然地取平均值
 \begin_inset Formula 
 \[
-\widehat{u^{h}}=\frac{u_{\mathrm{L}}^{h}+u_{\mathrm{R}}^{h}}{2},\quad\widehat{q^{h}}=\frac{q_{\mathrm{L}}^{h}+q_{\mathrm{R}}^{h}}{2}
+u_{n}^{h}=n_{x}\frac{u_{\mathrm{L}}^{h}+u_{\mathrm{R}}^{h}}{2},\quad q_{n}^{h}=n_{x}\frac{q_{\mathrm{L}}^{h}+q_{\mathrm{R}}^{h}}{2},
 \]
 
 \end_inset
@@ -1792,7 +1792,7 @@ literal "false"
  建议取
 \begin_inset Formula 
 \[
-\widehat{u^{h}}=u_{\mathrm{L}}^{h},\quad\widehat{q^{h}}=q_{\mathrm{R}}^{h}
+u_{n}^{h}=n_{x}\,u_{\mathrm{L}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{R}}^{h}
 \]
 
 \end_inset
@@ -1800,7 +1800,7 @@ literal "false"
  或
 \begin_inset Formula 
 \[
-\widehat{u^{h}}=u_{\mathrm{R}}^{h},\quad\widehat{q^{h}}=q_{\mathrm{L}}^{h}
+u_{n}^{h}=n_{x}\,u_{\mathrm{R}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{L}}^{h}
 \]
 
 \end_inset
@@ -1815,7 +1815,7 @@ literal "false"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\partial_{t}u+\partial_{i}\left(f_{i}(u)-a_{ik}(u)\left(\partial_{k}u\right)\right)=0,\quad(t,\vec{r})\in(0,T)\times(0,1)^{d}
+\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-a_{ik}(u)\left(\partial_{k}\,u\right)\right)=0,\quad(t,\vec{r})\in(0,T)\times(0,1)^{d}
 \]
 
 \end_inset
@@ -1851,7 +1851,7 @@ a_{ik}(u)=b_{il}(u)\,b_{lk}(u)
 定义辅助变量
 \begin_inset Formula 
 \[
-q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}u\right),\quad l=1,2,\dots,d
+q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}\,u\right),\quad l=1,2,\dots,d
 \]
 
 \end_inset
@@ -1860,8 +1860,8 @@ q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}u\right),\quad l=1,2,\dots,
 \begin_inset Formula 
 \[
 \begin{cases}
-\partial_{t}u+\partial_{i}\left(f_{i}(u)-b_{il}(u)\,q_{l}\right)=0,\\
-q_{l}-\partial_{k}g_{lk}(u)=0, & l=1,2,\dots,d
+\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-b_{il}(u)\,q_{l}\right)=0,\\
+q_{l}-\partial_{k}\,g_{lk}(u)=0, & l=1,2,\dots,d
 \end{cases}
 \]
 
@@ -1882,7 +1882,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 在形式上应用 DG 方法：
 \begin_inset Formula 
 \[
-\int_{E}\left(\partial_{t}u^{h}\right)v^{h}+\oint_{\partial E}\nu_{i}\left(f_{i}(u^{h})-b_{il}(u^{h})\,q_{l}^{h}\right)v^{h}=\int_{E}\left(\partial_{i}v^{h}\right)\left(f_{i}(u^{h})-b_{il}(u^{h})\,q_{l}^{h}\right),
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{v^{h}}{\nu_{i}\,f_{i}^{h}-\nu_{i}\,b_{il}^{h}\,q_{l}^{h}}_{\partial E_{j}}=\ip{\partial_{i}v^{h}}{f_{i}^{h}-b_{il}^{h}\,q_{l}^{h}}_{E_{j}},
 \]
 
 \end_inset
@@ -1890,7 +1890,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 
 \begin_inset Formula 
 \[
-\int_{E}q_{l}^{h}\,w^{h}+\int_{E}\left(\partial_{k}w^{h}\right)\left(g_{lk}(u^{h})\right)=\oint_{\partial E}\nu_{k}\,g_{lk}(u^{h})\,w^{h},\quad l=1,2,\dots,d
+\ip{w^{h}}{q_{l}^{h}}_{E_{j}}+\ip{\partial_{k}\,w^{h}}{g_{lk}^{h}}_{E_{j}}=\ip{w^{h}}{\nu_{k}\,g_{lk}^{h}}_{\partial E_{j}},\quad l=1,2,\dots,d
 \]
 
 \end_inset
@@ -1898,7 +1898,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 其中对流通量
 \begin_inset Formula 
 \[
-\left(\nu_{i}\,f_{i}(u^{h})\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
+\left(\nu_{i}\,f_{i}^{h}\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
 \]
 
 \end_inset
@@ -1906,7 +1906,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 由纯对流问题的 Riemann 解给出；而扩散通量取作
 \begin_inset Formula 
 \[
-\left(\nu_{i}\,b_{il}(u^{h})\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left\llbracket \nu_{k}\,g_{lk}(u^{h})\right\rrbracket }{\left\llbracket u^{h}\right\rrbracket }\left\{ q_{l}^{h}\right\} +C_{11}\left\llbracket u^{h}\right\rrbracket +C_{1l}\left\{ q_{l}^{h}\right\} 
+\left(\nu_{i}\,b_{il}^{h}\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left\llbracket \nu_{k}\,g_{lk}^{h}\right\rrbracket }{\left\llbracket u^{h}\right\rrbracket }\left\{ q_{l}^{h}\right\} +C_{11}\left\llbracket u^{h}\right\rrbracket +C_{1l}\left\{ q_{l}^{h}\right\} 
 \]
 
 \end_inset
@@ -1914,7 +1914,7 @@ g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
 
 \begin_inset Formula 
 \[
-\left(\nu_{k}\,g_{lk}(u^{h})\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}(u^{h})\right\} -C_{1l}\left\llbracket u^{h}\right\rrbracket ,\quad l=1,2,\dots,d
+\left(\nu_{k}\,g_{lk}^{h}\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}^{h}\right\} -C_{1l}\left\llbracket u^{h}\right\rrbracket ,\quad l=1,2,\dots,d
 \]
 
 \end_inset
