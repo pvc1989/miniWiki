@@ -5742,7 +5742,7 @@ E_{j}^{n+1}=G(\sigma;\kappa)\exp(\ii\kappa x_{j})
 \end_layout
 
 \begin_layout Subsubsection
-平流问题
+纯对流
 \end_layout
 
 \begin_layout Standard
@@ -5754,13 +5754,14 @@ reference "alg:有限差分：时空耦合：Godunov"
 \end_inset
 
  格式解
-\begin_inset CommandInset ref
-LatexCommand nameref
-reference "prob:有限差分：周期平流"
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=0,\quad a>0,
+\]
 
 \end_inset
 
-问题，则
+则
 \begin_inset Formula 
 \[
 E_{j}^{n+1}=(1-\sigma)\,E_{j}^{n}+\sigma\,E_{j-1}^{n}=(1-\sigma)\exp(\ii\kappa x_{j})+\sigma\exp(\ii\kappa x_{j-1})
@@ -5779,7 +5780,7 @@ E_{j}^{n+1}=(1-\sigma)\,E_{j}^{n}+\sigma\,E_{j-1}^{n}=(1-\sigma)\exp(\ii\kappa x
 于是有
 \begin_inset Formula 
 \[
-G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
+G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}=1-\sigma\left(1-\cos(\kappa h)+\ii\sin(\kappa h)\right),
 \]
 
 \end_inset
@@ -5811,7 +5812,7 @@ G(\sigma;\kappa)=(1-\sigma)+\frac{\sigma}{\exp(\ii\kappa h)}
 \end_layout
 
 \begin_layout Subsubsection
-扩散问题
+纯扩散
 \end_layout
 
 \begin_layout Standard
@@ -5854,7 +5855,7 @@ E_{j}^{n+1}=G(\kappa)\exp(\ii\kappa x_{j}),\quad E_{j}^{n}=\exp(\ii\kappa x_{j})
 从而有
 \begin_inset Formula 
 \[
-G(\kappa)=1+\frac{bh_{t}}{h_{x}^{2}}\left(2\cos(\kappa h_{x})-2\right)=1-\frac{bh_{t}}{h_{x}^{2}}4\left(\sin(\frac{\kappa h_{x}}{2})\right)^{2},
+G(\kappa)=1+\beta\left(2\cos(\kappa h_{x})-2\right)=1-\beta\left(2\sin(\frac{\kappa h_{x}}{2})\right)^{2},\quad\beta\coloneqq\frac{bh_{t}}{h_{x}^{2}},
 \]
 
 \end_inset
@@ -5870,12 +5871,140 @@ G(\kappa)=1+\frac{bh_{t}}{h_{x}^{2}}\left(2\cos(\kappa h_{x})-2\right)=1-\frac{b
 得稳定性条件：
 \begin_inset Formula 
 \[
-0<\frac{bh_{t}}{h_{x}^{2}}<\frac{1}{2}.
+0<\beta<\frac{1}{2}.
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+对流扩散
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+a\frac{\partial u}{\partial x}=b\frac{\partial^{2}u}{\partial x^{2}},\quad a>0,\quad b>0,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{u_{j}^{n+1}-u_{j}^{n}}{h_{t}}+a\frac{u_{j}^{n}-u_{j-1}^{n}}{h_{x}}=b\frac{u_{j-1}^{n}-2u_{j}^{n}+u_{j+1}^{n}}{h_{x}^{2}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{G(\kappa)-1}{h_{t}}+a\frac{1-\exp(-\ii\kappa h_{x})}{h_{x}}=b\frac{\exp(-\ii\kappa h_{x})-2+\exp(\ii\kappa h_{x})}{h_{x}^{2}},
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}G(\kappa) & =1-\frac{ah_{t}}{h_{x}}\left(1-\cos(\kappa h_{x})+\ii\sin(\kappa h_{x})\right)+\frac{bh_{t}}{h_{x}^{2}}\left(2\cos(\kappa h_{x})-2\right),\\
+ & =1-\sigma\left(1-\cos(\kappa h_{x})+\ii\sin(\kappa h_{x})\right)-2\beta\left(1-\cos(\kappa h_{x})\right),
+\end{alignedat}
+\]
+
+\end_inset
+
+由稳定性条件 
+\begin_inset Formula $\vert G\vert<1$
+\end_inset
+
+ 得
+\begin_inset Formula 
+\[
+\left(1-\left(\sigma+2\beta\right)\left(1-\cos(\kappa h_{x})\right)\right)^{2}+\left(\sigma\sin(\kappa h_{x})\right)^{2}<1,
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\left(\sigma+2\beta\right)^{2}\left(1-\cos(\kappa h_{x})\right)^{2}+\left(\sigma\sin(\kappa h_{x})\right)^{2}<2\left(\sigma+2\beta\right)\left(1-\cos(\kappa h_{x})\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\sigma+2\beta\right)\left(1-\cos(\kappa h_{x})\right)+\frac{\left(\sigma\sin(\kappa h_{x})\right)^{2}}{\left(\sigma+2\beta\right)\left(1-\cos(\kappa h_{x})\right)}<2,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\sigma+2\beta\right)\left(\cancel{2}\sin[2](\frac{\kappa h_{x}}{2})\right)+\frac{\sigma^{2}}{\sigma+2\beta}\frac{\cancel{4}\cancel{\sin[2](\frac{\kappa h_{x}}{2})}\cos[2](\frac{\kappa h_{x}}{2})}{\cancel{2}\cancel{\sin[2](\frac{\kappa h_{x}}{2})}}<\cancel{2},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\sigma+2\beta\right)\sin[2](\frac{\kappa h_{x}}{2})+\frac{\sigma^{2}}{\sigma+2\beta}\cos[2](\frac{\kappa h_{x}}{2})<1,
+\]
+
+\end_inset
+
+一个充分条件是
+\begin_inset Formula 
+\[
+\left(\sigma+2\beta<1\right)\land\left(\frac{\sigma^{2}}{\sigma+2\beta}<1\right),
+\]
+
+\end_inset
+
+定义单元雷诺数 
+\begin_inset Formula $\mathrm{Re}=ah_{x}/b=\sigma/\beta$
+\end_inset
+
+，则该条件可改写为
+\begin_inset Formula 
+\[
+\sigma^{2}<\sigma+\frac{2\sigma}{\mathrm{Re}}<1,
+\]
+
+\end_inset
+
+最终得稳定性条件
+\begin_inset Formula 
+\[
+\sigma<\frac{1}{1+2/\mathrm{Re}}<1.
+\]
+
+\end_inset
+
+由此可见：黏性越强（
+\begin_inset Formula $b\uparrow$
+\end_inset
+
+），单元雷诺数越小（
+\begin_inset Formula $\mathrm{Re}\downarrow$
+\end_inset
+
+），所需时间步长越小（
+\begin_inset Formula $\sigma\downarrow$
+\end_inset
+
+） 。
 \end_layout
 
 \begin_layout Subsection
