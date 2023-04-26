@@ -1703,6 +1703,96 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
 \end_layout
 
 \begin_layout Section
+人工黏性
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neumann_1950"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Persson_2006"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+正交基展开
+\begin_inset Formula 
+\[
+u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad\ip{\phi_{j}}{\phi_{k}}=\delta_{jk},
+\]
+
+\end_inset
+
+利用 Fourier 系数在间断区按 
+\begin_inset Formula $k^{-1}$
+\end_inset
+
+ 收敛、在光滑区（至少）按 
+\begin_inset Formula $k^{-2}$
+\end_inset
+
+ 收敛，定义探测器
+\begin_inset Formula 
+\[
+S=\frac{\norm{u^{h,p}-u^{h,p-1}}_{L_{2}(E_{j})}^{2}}{\norm{u^{h,p}}_{L_{2}(E_{j})}^{2}}=\frac{\abs{\hat{u}_{p}}^{2}}{\sum_{k=0}^{p}\abs{\hat{u}_{k}}^{2}}\approx\begin{cases}
+p^{-4}, & \text{smooth},\\
+p^{-2}, & \text{jump},
+\end{cases}
+\]
+
+\end_inset
+
+引入人工黏性项
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}\left(\varepsilon\frac{\partial u}{\partial x}\right),
+\]
+
+\end_inset
+
+黏性系数定义为
+\begin_inset Formula 
+\[
+\varepsilon=\begin{cases}
+0, & s-s_{0}\in(-\infty,-\kappa),\\
+\frac{\varepsilon_{0}}{2}\left(1+\sin(\frac{s-s_{0}}{\kappa}\frac{\mathrm{\pi}}{2})\right) & s-s_{0}\in[-\kappa,+\kappa],\\
+\varepsilon_{0}, & s-s_{0}\in(+\kappa,+\infty),
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula 
+\[
+s=\log_{10}S,\quad s_{0}\sim\frac{1}{p^{4}},\quad\varepsilon_{0}\sim\frac{h}{p},
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is chosen empirically sufficiently large so as to obtain a sharp but smooth
+ shock profile.
+\end_layout
+
+\begin_layout Section
 通量限制
 \end_layout
 
