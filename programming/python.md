@@ -587,7 +587,34 @@ args = parser.parse_args()
 print(args)
 ```
 
-## [`profile`](https://docs.python.org/3/library/profile.html) for 函数调用分析
+## `cProfile`, `Stats` for [函数调用分析](https://docs.python.org/3/library/profile.html)
+
+现生成统计文件：
+
+```shell
+python -m cProfile [-o stats_file] (-m module | myscript.py)
+```
+
+再打印统计结果：
+
+```python
+import pstats
+from pstats import SortKey
+p = pstats.Stats('stats_file')
+# 按 cumulative time 排序，打印前 20 行
+p.strip_dirs().sort_stats('time').print_stats(20)
+# or equivalently
+p.strip_dirs().sort_stats(SortKey.TIME).print_stats(20)
+```
+
+其中 `sort_stats` 常用可选参数包括
+
+|         字符串型参数          |      枚举型参数      |               含义               |
+| :---------------------------: | :------------------: | :------------------------------: |
+|    `'calls'` 或 `'ncalls'`    |   `SortKey.CALLS`    |             调用次数             |
+| `'cumulative'` 或 `'cumtime'` | `SortKey.CUMULATIVE` | 累积耗时（含调用其他函数的时间） |
+|    `'time'` 或 `'tottime'`    |    `SortKey.TIME`    | 净耗时（不含调用其他函数的时间） |
+
 
 ## [`timeit`](https://docs.python.org/3/library/timeit.html) for 测量运行时间
 
