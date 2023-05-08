@@ -1195,7 +1195,7 @@ reference "def:TVD-scheme"
 \end_layout
 
 \begin_layout Subsection
-基于点值平均值
+基于点值或均值
 \end_layout
 
 \begin_layout Subsubsection
@@ -1231,7 +1231,7 @@ literal "false"
 \psi_{c}=0.4;\quad\psi_{j}\coloneqq\frac{2ab+\varepsilon}{a^{2}+b^{2}+\varepsilon}\impliedby\begin{cases}
 a\coloneqq\vert f_{j}-f_{j-1}\vert+\vert f_{j}-2f_{j-1}+f_{j-2}\vert,\\
 b\coloneqq\vert f_{j}-f_{j+1}\vert+\vert f_{j}-2f_{j+1}+f_{j+2}\vert,\\
-\varepsilon\coloneqq\frac{0.9\psi_{c}}{1-0.9\psi_{c}}\xi^{2},\quad\xi=0.01,
+\varepsilon\coloneqq0.9\psi_{c}/\left(1-0.9\psi_{c}\right)\xi^{2},\quad\xi=0.01,
 \end{cases}
 \]
 
@@ -1264,16 +1264,16 @@ literal "false"
 \begin_inset Formula $\partial E_{i}$
 \end_inset
 
- 可以按 
+ 可以按速度的法向分量 
 \begin_inset Formula $\vec{v}\cdot\vec{n}$
 \end_inset
 
- 的符号分为入口 
-\begin_inset Formula $\partial E_{i}^{-}$
+ 的正负性分为入口 
+\begin_inset Formula $\partial E_{i}^{-}\coloneqq\left\{ \vec{x}\in\partial E_{i}:\vec{v}\cdot\vec{n}<0\right\} $
 \end_inset
 
  与出口 
-\begin_inset Formula $\partial E_{i}^{+}$
+\begin_inset Formula $\partial E_{i}^{+}\coloneqq\left\{ \vec{x}\in\partial E_{i}:\vec{v}\cdot\vec{n}>0\right\} $
 \end_inset
 
  两部分。
@@ -1355,11 +1355,11 @@ literal "false"
 \begin_inset Formula $E_{j}$
 \end_inset
 
- 为与 
-\begin_inset Formula $E_{i}$
+ 为对 
+\begin_inset Formula $\partial E_{i}^{-}$
 \end_inset
 
- 相邻的单元（可能有多个，不失一般性，这里只考虑其中一个），且物理量流出 
+ 有贡献的相邻单元（即物理量流出 
 \begin_inset Formula $E_{j}$
 \end_inset
 
@@ -1367,7 +1367,11 @@ literal "false"
 \begin_inset Formula $E_{i}$
 \end_inset
 
-，在二者界面 
+），这样的 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 可能有多个，不失一般性，先考虑只有一个的情形。在二者界面 
 \begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
 \end_inset
 
@@ -1439,12 +1443,12 @@ literal "false"
 \begin_inset Formula $\Vert u_{i}^{h}\Vert$
 \end_inset
 
- 的探测器：
+ 的光滑度：
 \begin_inset Formula 
 \[
-I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}\left\Vert u_{i}^{h}\right\Vert _{\infty}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
-\infty, & \text{间断},\\
-0, & \text{光滑},
+I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}\left\Vert u_{i}^{h}\right\Vert }=\begin{cases}
+\order{h_{i}^{-(p+1)/2}}, & \text{间断},\\
+\order{h_{i}^{+(p+1)/2}}, & \text{光滑},
 \end{cases}
 \]
 
@@ -1454,7 +1458,19 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 \begin_inset Formula $\vert\partial E_{i}^{-}\vert\,h_{i}^{(p+1)/2}$
 \end_inset
 
- 可视为以上两种情形的“平均精度”。
+ 可视为以上两种情形的“平均精度”，
+\begin_inset Formula $\left\Vert u_{i}^{h}\right\Vert $
+\end_inset
+
+ 在一维取单元均值（作为 
+\begin_inset Formula $\left\Vert u_{i}^{h}\right\Vert _{1}/\vert E_{i}\vert$
+\end_inset
+
+ 的近似）、在多维取所有积分点上的最大值（作为 
+\begin_inset Formula $\left\Vert u_{i}^{h}\right\Vert _{\infty}$
+\end_inset
+
+ 的近似）。
 \end_layout
 
 \begin_layout Standard
@@ -1462,6 +1478,22 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+若有多个 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 对 
+\begin_inset Formula $\partial E_{i}^{-}$
+\end_inset
+
+ 有贡献，则应对所有 
+\begin_inset Formula $\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|$
+\end_inset
+
+ 求和；更保守地，可以先对被积函数取绝对值，再积分、求和。
 \end_layout
 
 \begin_layout Subsubsection
@@ -1492,7 +1524,7 @@ literal "false"
 
 \end_inset
 
- 类似的探测器：
+ 类似的光滑度：
 \begin_inset Formula 
 \[
 I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\right|}{\vert\partial E_{i}^{-}\vert\,h_{i}^{{\color{red}(p>1\mathbin{?}1.5:1)}}{\color{blue}\min_{\vec{x}\in\partial E_{i}}\vert u_{i}^{h}\vert}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
@@ -1640,7 +1672,7 @@ literal "false"
 
 \end_inset
 
- 类似的探测器：
+ 类似的光滑度：
 \begin_inset Formula 
 \[
 I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\right)\right|}{h_{i}\min_{k\in\left\{ i\right\} \cup K_{i}}\left\Vert u_{k}^{h}\right\Vert _{1}}\xrightarrow[p\to\infty]{h\to0\,\text{or}}\begin{cases}
@@ -1729,10 +1761,10 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-正交基展开
+假设有正交基展开
 \begin_inset Formula 
 \[
-u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad\ip{\phi_{j}}{\phi_{k}}=\delta_{jk},
+u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad,\hat{u}_{k}=\frac{\ip{u}{\phi_{k}}_{E_{j}}}{\ip{\phi_{k}}{\phi_{k}}_{E_{j}}},\quad\ip{\phi_{j}}{\phi_{k}}_{E_{j}}=\delta_{jk}\ip{\phi_{k}}{\phi_{k}}_{E_{j}},
 \]
 
 \end_inset
@@ -1745,21 +1777,25 @@ u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad\ip{\phi_{j}}{\phi_{k}}=\
 \begin_inset Formula $k^{-2}$
 \end_inset
 
- 收敛，定义探测器
+ 收敛，定义 smoothness indicator
 \begin_inset Formula 
 \[
-S=\frac{\norm{u^{h,p}-u^{h,p-1}}_{L_{2}(E_{j})}^{2}}{\norm{u^{h,p}}_{L_{2}(E_{j})}^{2}}=\frac{\abs{\hat{u}_{p}}^{2}}{\sum_{k=0}^{p}\abs{\hat{u}_{k}}^{2}}\approx\begin{cases}
-p^{-4}, & \text{smooth},\\
-p^{-2}, & \text{jump},
+S=\frac{\norm{u^{h,p}-u^{h,p-1}}_{L_{2}(E_{j})}^{2}}{\norm{u^{h,p}}_{L_{2}(E_{j})}^{2}}=\frac{\abs{\hat{u}_{p}}^{2}\ip{\phi_{p}}{\phi_{p}}_{E_{j}}}{\sum_{k=0}^{p}\abs{\hat{u}_{k}}^{2}\ip{\phi_{k}}{\phi_{k}}_{E_{j}}}\begin{cases}
+\lessapprox p^{-4}, & \text{smooth},\\
+\approx p^{-2}, & \text{jump},
 \end{cases}
 \]
 
 \end_inset
 
+其物理意义为最高模态能量与总能量的比值。
+\end_layout
+
+\begin_layout Standard
 引入人工黏性项
 \begin_inset Formula 
 \[
-\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}\left(\varepsilon\frac{\partial u}{\partial x}\right),
+\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}\left(\nu\frac{\partial u}{\partial x}\right),
 \]
 
 \end_inset
@@ -1767,10 +1803,10 @@ p^{-2}, & \text{jump},
 黏性系数定义为
 \begin_inset Formula 
 \[
-\varepsilon=\begin{cases}
+\nu=\begin{cases}
 0, & s-s_{0}\in(-\infty,-\kappa),\\
-\frac{\varepsilon_{0}}{2}\left(1+\sin(\frac{s-s_{0}}{\kappa}\frac{\mathrm{\pi}}{2})\right) & s-s_{0}\in[-\kappa,+\kappa],\\
-\varepsilon_{0}, & s-s_{0}\in(+\kappa,+\infty),
+\frac{\nu_{0}}{2}\left(1+\sin(\frac{s-s_{0}}{\kappa}\frac{\mathrm{\pi}}{2})\right) & s-s_{0}\in[-\kappa,+\kappa],\\
+\nu_{0}, & s-s_{0}\in(+\kappa,+\infty),
 \end{cases}
 \]
 
@@ -1779,13 +1815,13 @@ p^{-2}, & \text{jump},
 其中 
 \begin_inset Formula 
 \[
-s=\log_{10}S,\quad s_{0}\sim\frac{1}{p^{4}},\quad\varepsilon_{0}\sim\frac{h}{p},
+s=\lg S,\quad s_{0}\sim\lg\frac{1}{p^{4}},\quad\nu_{0}\sim\frac{h}{p},
 \]
 
 \end_inset
 
 and 
-\begin_inset Formula $\kappa$
+\begin_inset Formula $\kappa\sim s_{0}$
 \end_inset
 
  is chosen empirically sufficiently large so as to obtain a sharp but smooth
