@@ -1994,120 +1994,23 @@ literal "true"
 DDG (Direct DG)
 \end_layout
 
-\begin_layout Standard
+\begin_layout Quote
+From the PDE point of view, jumps of all even order derivatives as well
+ as the average of odd order derivatives all contribute to the trace of
+ the solution derivative.
+ ...
+ The form of the numerical flux is motivated by an exact trace formulation
+ derived from solving the heat equation with smooth initial data having
+ only one discontinuous point.
+ —— 
 \begin_inset CommandInset citation
 LatexCommand citet
-key "Liu_2009_DDG,Liu_2010_DDG"
+key "Liu_2009_DDG"
 literal "true"
 
 \end_inset
 
- 求解扩散问题，
-\end_layout
 
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cheng_2016,Yang_2019"
-literal "true"
-
-\end_inset
-
- 求解 Navier–Stokes 方程
-\end_layout
-
-\begin_layout Subsubsection
-空间离散
-\end_layout
-
-\begin_layout Standard
-对流–扩散方程组
-\begin_inset Formula 
-\[
-\partial_{t}\,\underline{u}+\partial_{s}\,\underline{f_{s}}(\underline{u})=\partial_{s}\,\underline{g_{s}}(\underline{u},\underline{\partial}\,\underline{u}),
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{\partial}\,\underline{u}\equiv\underline{\partial}\otimes\underline{u},
-\]
-
-\end_inset
-
-弱形式
-\begin_inset Formula 
-\[
-\ip{w}{\partial_{t}\,\underline{u}}_{E}+\ip{w}{n_{s}\,\underline{f_{s}}}_{\partial E}-\ip{\partial_{s}\,w}{\underline{f_{s}}}_{E}=\ip{w}{n_{s}\,\underline{g_{s}}}_{\partial E}-\ip{\partial_{s}\,w}{\underline{g_{s}}}_{E},
-\]
-
-\end_inset
-
-移项得
-\begin_inset Formula 
-\[
-\ip{w}{\partial_{t}\,\underline{u}}_{E}=\ip{\partial_{s}\,w}{\underline{f_{s}}-\underline{g_{s}}}_{E}-\ip{w}{n_{s}\,\underline{f_{s}}-n_{s}\,\underline{g_{s}}}_{\partial E},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-引入 
-\begin_inset Formula $p$
-\end_inset
-
- 次多项式近似
-\begin_inset Formula 
-\[
-\underline{u}\approx\underline{u^{h}}=\sum_{k=1}^{N(p,d)}\underline{\hat{u}_{k}}(t)\,b_{k}(\vec{r}),\quad w\approx w^{h}=\sum_{l=1}^{N(p,d)}\hat{w}_{l}\,b_{l}(\vec{r}),\quad\Span\left\{ b_{k}\right\} _{k=1}^{N(p,d)}=\mathbb{P}_{p}(E)
-\]
-
-\end_inset
-
-代入弱形式，得
-\begin_inset Formula 
-\[
-\ip{\hat{w}_{l}\,b_{l}}{\partial_{t}\,\underline{\hat{u}_{k}}\,b_{k}}_{E}=\ip{\partial_{s}\,\hat{w}_{l}\,b_{l}}{\underline{f_{s}^{h}}-\underline{g_{s}^{h}}}_{E}-\ip{\hat{w}_{l}\,b_{l}}{\underline{f_{n}^{h}}-\underline{g_{n}^{h}}}_{\partial E},
-\]
-
-\end_inset
-
-其中
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\left.\underline{f_{s}}\right\vert _{E}\approx\underline{f_{s}^{h}}$
-\end_inset
-
- 及 
-\begin_inset Formula $\left.\underline{g_{s}}\right\vert _{E}\approx\underline{g_{s}^{h}}$
-\end_inset
-
- 为域内通量近似值，可取 
-\begin_inset Formula $\underline{f_{s}}\qty(\underline{u^{h}})$
-\end_inset
-
- 及 
-\begin_inset Formula $\underline{g_{s}}\qty(\underline{u^{h}},\underline{\partial}\,\underline{u^{h}})$
-\end_inset
-
-，亦可取其他插值函数；
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\left.n_{s}\,\underline{f_{s}}\right\vert _{\partial E}\approx\underline{f_{n}^{h}}\qty(\left.\underline{u^{h}}\right|_{\pm};\vec{n})$
-\end_inset
-
- 及 
-\begin_inset Formula $\left.n_{s}\,\underline{g_{s}}\right\vert _{\partial E}\approx\underline{g_{n}^{h}}\qty(\left.\underline{u^{h}}\right|_{\pm},\underline{\partial}\left.\underline{u^{h}}\right|_{\pm};\vec{n})$
-\end_inset
-
- 为边界法向通量近似值，即数值通量。
 \end_layout
 
 \begin_layout Standard
@@ -2118,116 +2021,86 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
-将不含空间坐标的 
-\begin_inset Formula $\partial_{t}\,\underline{\hat{u}_{k}}(t)$
-\end_inset
-
- 及 
-\begin_inset Formula $\hat{w}_{l}$
-\end_inset
-
- 提到积分号外，并利用 
-\begin_inset Formula $\left\{ \hat{w}_{l}\right\} _{l=1}^{N}$
-\end_inset
-
- 的任意性，得 
-\begin_inset Formula $N$
-\end_inset
-
- 个等式：
-\begin_inset Formula 
-\[
-\langle b_{l}\vert b_{k}\rangle_{E}\dv{\underline{\hat{u}_{k}}}{t}=\underline{r_{l}},\quad l=1,\dots,N,
-\]
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Liu_2009_DDG"
+literal "true"
 
 \end_inset
 
-其中
-\begin_inset Formula 
-\[
-\underline{r_{l}}=\ip{\partial_{s}\,b_{l}}{\underline{f_{s}^{h}}-\underline{g_{s}^{h}}}_{E}-\ip{b_{l}}{\underline{f_{n}^{h}}-\underline{g_{n}^{h}}}_{\partial E}.
-\]
+ 提出并用于求解扩散问题，
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016,Yang_2019"
+literal "true"
 
 \end_inset
 
-以其为第 
-\begin_inset Formula $l$
-\end_inset
-
- 行，可得矩阵形式：
-\begin_inset Formula 
-\[
-\dv{}{t}\underline{\hat{u}}_{N\times K}=\underline{m}_{N\times N}^{-1}\,\underline{r}_{N\times K}(\underline{\hat{u}}),
-\]
-
-\end_inset
-
-其中，基函数阵
-\begin_inset Formula 
-\[
-\underline{b}_{N\times1}(\vec{x})\coloneqq\begin{bmatrix}b_{1}(\vec{x})\\
-\vdots\\
-b_{N}(\vec{x})
-\end{bmatrix},
-\]
-
-\end_inset
-
-质量阵
-\begin_inset Formula 
-\[
-\underline{m}_{N\times N}\coloneqq\ip{\underline{b}_{N\times1}}{\left(\underline{b}^{\mathrm{T}}\right)_{1\times N}}_{E}=\begin{bmatrix}\ip{b_{1}}{b_{1}}_{E} & \cdots & \ip{b_{1}}{b_{N}}_{E}\\
-\vdots & \ddots & \vdots\\
-\ip{b_{N}}{b_{1}}_{E} & \cdots & \ip{b_{N}}{b_{N}}_{E}
-\end{bmatrix},
-\]
-
-\end_inset
-
-未知量系数阵
-\begin_inset Formula 
-\[
-\underline{\hat{u}}_{N\times K}(t)\coloneqq\ip{\underline{b}_{N\times1}}{\underline{u}_{1\times K}}_{E}=\begin{bmatrix}\langle b_{1}\vert u_{1}\rangle_{E} & \cdots & \langle b_{1}\vert u_{N}\rangle_{E}\\
-\vdots & \ddots & \vdots\\
-\langle b_{K}\vert u_{1}\rangle_{E} & \cdots & \langle b_{K}\vert u_{N}\rangle_{E}
-\end{bmatrix},
-\]
-
-\end_inset
-
-在形式上均与纯对流问题相同，而残值项则变为
-\begin_inset Formula 
-\[
-\underline{r}_{N\times K}\coloneqq\ip{\partial_{s}\,\underline{b}}{\underline{f_{s}^{h}}-\underline{g_{s}^{h}}}_{E}-\ip{\underline{b}}{\underline{f_{n}^{h}}-\underline{g_{n}^{h}}}_{\partial E}.
-\]
-
-\end_inset
-
-最终的近似解为
-\begin_inset Formula 
-\[
-\underbrace{\underline{u^{h}}(\vec{x},t)}_{1\times K}\approx\underbrace{\underline{b}^{\mathrm{T}}(\vec{x})}_{1\times N}\underbrace{\underline{\hat{u}}(t)}_{N\times K}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-数值通量
+ 推广到求解 Navier–Stokes 方程。
 \end_layout
 
 \begin_layout Standard
-分别记状态阶跃值、均值为
+考虑一维扩散问题
 \begin_inset Formula 
 \[
-\left\llbracket \underline{u^{h}}\right\rrbracket =\left.\underline{u^{h}}\right|_{+}-\left.\underline{u^{h}}\right|_{-},\quad\left\{ \underline{u^{h}}\right\} =\frac{1}{2}\left(\left.\underline{u^{h}}\right|_{+}+\left.\underline{u^{h}}\right|_{-}\right),
+\frac{\partial u}{\partial t}+\frac{\partial}{\partial x}\left(a(u)\frac{\partial u}{\partial x}\right)=0,\quad a(u)>0,
 \]
 
 \end_inset
 
-DDG 法的关键步骤，在于构造 
+定义扩散通量
+\begin_inset Formula 
+\[
+h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\impliedby b(u)\coloneqq\int^{u}a(s)\dd{s},
+\]
+
+\end_inset
+
+则数值通量一般形式为
+\begin_inset Formula 
+\[
+\widehat{h(u)}=\beta_{0}\frac{\left\llbracket b(u)\right\rrbracket }{h}+\left\{ \frac{\partial b(u)}{\partial x}\right\} +\sum_{m=1}^{\left\lfloor k/2\right\rfloor }\beta_{m}\,h^{2m-1}\left\llbracket \frac{\partial^{2m}b(u)}{\partial x^{2m}}\right\rrbracket ,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $k$
+\end_inset
+
+ 为界面两侧多项式次数的较大者。
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Liu_2009_DDG"
+literal "true"
+
+\end_inset
+
+ 数值试验表明：取
+\begin_inset Formula 
+\[
+\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
+\]
+
+\end_inset
+
+可在 
+\begin_inset Formula $k=0,1,2,3$
+\end_inset
+
+ 情形下，得 
+\begin_inset Formula $k+1$
+\end_inset
+
+ 阶最优精度。
+\end_layout
+
+\begin_layout Standard
+高维方程组情形：以 
+\begin_inset Formula $k=2,3$
+\end_inset
+
+ 为例，构造 
 \begin_inset Formula $\underline{\partial}\,\underline{u}\equiv\underline{\partial}\otimes\underline{u}$
 \end_inset
 
@@ -2271,28 +2144,6 @@ reference "eq:DDG-grad-at-interface"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Liu_2009_DDG,Liu_2010_DDG"
-literal "true"
-
-\end_inset
-
-：
-\begin_inset Formula 
-\[
-\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Cheng_2016"
@@ -2800,6 +2651,14 @@ whose zeros in
 \begin_inset Formula 
 \[
 \mathrm{Le}_{k}(-1)=(-1)^{k},\quad\mathrm{Le}_{k}(+1)=1,\quad\mathrm{Le}_{k}(-\xi)=(-1)^{k}\,\mathrm{Le}_{k}(\xi),\quad\mathrm{Le}_{k}\perp\mathbb{P}_{k-1}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\int_{-1}^{1}\mathrm{Le}_{j}(\xi)\,\mathrm{Le}_{k}(\xi)\dd{\xi}=\frac{2\delta_{jk}}{2k+1}.
 \]
 
 \end_inset
@@ -4371,7 +4230,7 @@ U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta
 \end_layout
 
 \begin_layout Subsection
-二阶导数项的处理
+FR with LDG
 \end_layout
 
 \begin_layout Standard
@@ -4472,6 +4331,74 @@ f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\,L_{k}
 在结点出对该式取值，即得 FR 格式。
 \end_layout
 
+\begin_layout Subsection
+FR with DDG
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{\partial u}{\partial x}\right)^{\mathrm{I}}\coloneqq\beta_{0}\,n_{x}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket }{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} +\beta_{1}\,n_{x}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket ,\quad\begin{cases}
+\beta_{0}\in[2,4],\\
+\beta_{1}=1/12,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accuracy order?
+\end_layout
+
+\begin_layout Standard
+Energy stable?
+\end_layout
+
+\begin_layout Subsection
+能量耗散
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f^{\mathrm{c}}}{\partial x}=\frac{\partial f^{\mathrm{d}}}{\partial x}+b\frac{\partial^{2}u}{\partial x^{2}},\quad f=f^{\mathrm{c}}-f^{\mathrm{d}}-b\frac{\partial u}{\partial x},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left.\frac{\partial u_{j}^{\mathrm{D}}(x,t)}{\partial t}\right|_{x_{j,k}}+\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=0,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=-\sum_{k=0}^{p}\hat{f}_{j,k}^{\mathrm{D}}(t)\frac{\partial L_{j,k}(x)}{\partial x}-\sum_{\zeta=\pm1}\left(f_{j}^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{h_{\zeta}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dv{t}\left(\frac{1}{2}\hat{u}_{j,k}^{2}\right)=-\hat{u}_{j,k}(t)\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}},
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 DG vs.
  FR
@@ -4541,13 +4468,13 @@ w^{h}(x)=\sum_{l=1}^{N}\hat{w}_{l}\,b_{l}(x)\in\mathbb{P}_{N-1}(E_{j}),
 代入 weak form
 \begin_inset Formula 
 \[
-\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
+\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{I}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $f^{\mathrm{U}}$
+\begin_inset Formula $f^{\mathrm{I}}$
 \end_inset
 
  为迎风 (Upwind) 通量。利用 
@@ -4561,7 +4488,7 @@ w^{h}(x)=\sum_{l=1}^{N}\hat{w}_{l}\,b_{l}(x)\in\mathbb{P}_{N-1}(E_{j}),
  个 ODEs：
 \begin_inset Formula 
 \[
-\ip{b_{l}}{b_{k}}_{E_{j}}\frac{\dd\hat{u}_{k}}{\dd t}=\ip{\partial_{x}\,b_{l}}{f^{\mathrm{D}}}_{E_{j}}-\ip{b_{l}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}},\quad l=1,\dots,N.
+\ip{b_{l}}{b_{k}}_{E_{j}}\frac{\dd\hat{u}_{k}}{\dd t}=\ip{\partial_{x}\,b_{l}}{f^{\mathrm{D}}}_{E_{j}}-\ip{b_{l}}{n_{x}\,f^{\mathrm{I}}}_{\partial E_{j}},\quad l=1,\dots,N.
 \]
 
 \end_inset
@@ -4585,7 +4512,7 @@ u^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{k}(t)\,b_{k}(x),\quad f^{\mathrm{D}}(x,t)=\sum
 定义通量修正 (Correction) 函数
 \begin_inset Formula 
 \[
-f^{\mathrm{C}}(x(\xi),t)\coloneqq\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)\text{,}
+f^{\mathrm{C}}(x(\xi),t)\coloneqq\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)\text{,}
 \]
 
 \end_inset
@@ -5977,7 +5904,7 @@ DG
 DG 格式的 weak form 为
 \begin_inset Formula 
 \[
-\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
+\ip{w^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{I}}}_{\partial E_{j}}=\ip{\partial_{x}\,w^{h}}{f^{\mathrm{D}}}_{E_{j}},
 \]
 
 \end_inset
@@ -5985,7 +5912,7 @@ DG 格式的 weak form 为
 对其右端项再次分部积分，得
 \begin_inset Formula 
 \[
-\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=0,
+\ip{w^{h}}{\partial_{t}\,u^{h}+\partial_{x}\,f^{\mathrm{D}}}_{E_{j}}+\ip{w^{h}}{n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=0,
 \]
 
 \end_inset
@@ -6001,7 +5928,7 @@ DG 格式的 weak form 为
 只需证明
 \begin_inset Formula 
 \[
-\ip{w^{h}}{n_{x}\,f^{\mathrm{U}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=\ip{w^{h}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
+\ip{w^{h}}{n_{x}\,f^{\mathrm{I}}-n_{x}\,f^{\mathrm{D}}}_{\partial E_{j}}=\ip{w^{h}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}},
 \]
 
 \end_inset
@@ -6009,7 +5936,7 @@ DG 格式的 weak form 为
 即
 \begin_inset Formula 
 \[
-\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
+\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\underbrace{\left(\frac{\partial x}{\partial\xi}\right)^{-1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}}_{\partial_{x}\,f^{\mathrm{C}}}w^{h}\left|\frac{\partial x}{\partial\xi}\right|\dd{\xi},
 \]
 
 \end_inset
@@ -6025,7 +5952,7 @@ DG 格式的 weak form 为
 故只需要证明
 \begin_inset Formula 
 \[
-\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
+\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1}=\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi},
 \]
 
 \end_inset
@@ -6037,7 +5964,7 @@ DG 格式的 weak form 为
  的定义，其局部导数为
 \begin_inset Formula 
 \[
-\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
+\frac{\partial f^{\mathrm{C}}}{\partial\xi}=\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
 \]
 
 \end_inset
@@ -6045,9 +5972,9 @@ DG 格式的 weak form 为
 代入上述右端积分，并分部积分，得
 \begin_inset Formula 
 \[
-\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
- & =\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
- & -\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi},
+\begin{aligned}\int_{-1}^{+1}\frac{\partial f^{\mathrm{C}}}{\partial\xi}w^{h}\dd{\xi} & =\int_{-1}^{+1}\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}w^{h}(x(\xi))\dd{\xi}\\
+ & =\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}\\
+ & -\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\int_{-1}^{+1}g_{\zeta}(\xi)\frac{\dd w^{h}(x(\xi))}{\dd\xi}\dd{\xi},
 \end{aligned}
 \]
 
@@ -6064,7 +5991,7 @@ g_{-1}(-1)=g_{+1}(+1)=1,\quad g_{-1}(+1)=g_{+1}(-1)=0,
 可得
 \begin_inset Formula 
 \[
-\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}=\left(f^{\mathrm{U}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1},
+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\left(g_{\zeta}(\xi)\,w^{h}(x(\xi))\right)_{\xi=-1}^{\xi=+1}=\left(f^{\mathrm{I}}\,w^{h}-f^{\mathrm{D}}\,w^{h}\right)_{\xi=-1}^{\xi=+1},
 \]
 
 \end_inset
@@ -6226,7 +6153,7 @@ DG-with-FR 的另一种 quadrature free 实现：取正交基，则
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\ip{b_{k}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}}=\ip{b_{k}}{\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}-f^{\mathrm{D}}\right)_{\zeta}\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}}=\sum_{\zeta=\pm1}\left(f^{\mathrm{U}}-f^{\mathrm{D}}\right)_{\zeta}\ip{b_{k}}{\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}},
+\ip{b_{k}}{\partial_{x}\,f^{\mathrm{C}}}_{E_{j}}=\ip{b_{k}}{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}-f^{\mathrm{D}}\right)_{\zeta}\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}}=\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}-f^{\mathrm{D}}\right)_{\zeta}\ip{b_{k}}{\frac{\dd g_{\zeta}}{\dd x}}_{E_{j}},
 \]
 
 \end_inset
