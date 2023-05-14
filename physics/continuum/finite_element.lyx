@@ -3272,10 +3272,6 @@ c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N
 For 2D Conservation Laws
 \end_layout
 
-\begin_layout Subsubsection
-FR on Global Triangles
-\end_layout
-
 \begin_layout Standard
 标量守恒律
 \begin_inset Formula 
@@ -3314,7 +3310,7 @@ FR on Global Triangles
 \end_inset
 
  次多项式的向量函数 
-\begin_inset Formula $\vec{f}^{h}$
+\begin_inset Formula $\vec{f}^{\mathrm{D}}$
 \end_inset
 
 作为对 
@@ -3331,7 +3327,7 @@ FR on Global Triangles
 ，该守恒律成立的必要条件为
 \begin_inset Formula 
 \[
-\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\divg\vec{f}^{\mathrm{D}}\vert\phi\rangle_{E}=0.
+\langle\partial_{t}\,u^{h}+\divg\vec{f}^{\mathrm{D}}\vert\phi\rangle_{E}=0.
 \]
 
 \end_inset
@@ -3348,7 +3344,7 @@ FR on Global Triangles
 \begin_inset Formula $\vec{\nu}\vdot\vec{f}^{\mathrm{D}}\eqqcolon f_{\nu}^{\mathrm{D}}$
 \end_inset
 
- 用迎风通量 
+ 用迎风型界面通量 
 \begin_inset Formula $f_{\nu}^{\mathrm{I}}$
 \end_inset
 
@@ -3364,7 +3360,7 @@ FR on Global Triangles
 \end_layout
 
 \begin_layout Standard
-再次分部积分，并记通量阶跃值
+再次分部积分，并记法向通量阶跃值
 \begin_inset Formula 
 \[
 [f_{\nu}]\coloneqq f_{\nu}^{\mathrm{I}}-f_{\nu}^{\mathrm{D}},
@@ -3392,11 +3388,65 @@ FR on Global Triangles
 \begin_inset Formula $E$
 \end_inset
 
- 上的积分。
+ 上的积分，即寻找 
+\begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+\langle[f_{\nu}]\vert\phi\rangle_{\partial E}=\langle h\vert\phi\rangle_{E}=\langle\divg f^{\mathrm{C}}\vert\phi\rangle_{E},
+\]
+
+\end_inset
+
+从而有 FR 的加权残值形式：
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}+\divg\vec{f}^{\mathrm{R}}\vert\phi\rangle_{E}=0,\quad\vec{f}^{\mathrm{R}}=\vec{f}^{\mathrm{D}}+\vec{f}^{\mathrm{C}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\vec{f}^{\mathrm{C}}$
+\end_inset
+
+ 只是一种形式化的表达式，并不需要实际求出。在结点处取值，即得半离散格式
+\begin_inset Formula 
+\[
+\dv{\hat{u}_{j,k}}{t}+\sum_{m}\overbrace{\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}}^{\divg\vec{f}^{\mathrm{D}}}(\vec{x}_{j,k})+h(\vec{x}_{j,k})=0.
+\]
+
+\end_inset
+
+问题归结为 
+\begin_inset Formula $h$
+\end_inset
+
+ 的构造。
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Huynh_2011"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-三角形 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Huynh_2011"
+literal "false"
+
+\end_inset
+
+ 给出的方案如下：三角形 
 \begin_inset Formula $E$
 \end_inset
 
@@ -3412,7 +3462,7 @@ FR on Global Triangles
 
 \end_inset
 
-个。令 
+个，令 
 \begin_inset Formula $\phi_{k}$
 \end_inset
 
@@ -3424,8 +3474,8 @@ FR on Global Triangles
 \begin_inset Formula $k$
 \end_inset
 
- 个多项式基；令 
-\begin_inset Formula $(x,y)_{e,l}$
+ 个多项式基。令 
+\begin_inset Formula $\vec{x}_{e,l}$
 \end_inset
 
  为 
@@ -3436,7 +3486,11 @@ FR on Global Triangles
 \begin_inset Formula $e$
 \end_inset
 
- 条边上的第 
+ 条（共 
+\begin_inset Formula $3$
+\end_inset
+
+ 条）边上的第 
 \begin_inset Formula $l$
 \end_inset
 
@@ -3463,7 +3517,7 @@ FR on Global Triangles
 ），从而有
 \begin_inset Formula 
 \[
-[f_{\nu}]\approx\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\varphi_{e,l}(x,y)
+[f_{\nu}]\approx\sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\varphi_{e,l}(x,y)
 \]
 
 \end_inset
@@ -3511,29 +3565,46 @@ FR on Global Triangles
  上 的积分：
 \begin_inset Formula 
 \[
-\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial E} & \approx\left\langle \sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi_{k}\right\rangle _{\partial E}\\
- & =\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial E}=\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\langle\gamma_{e,l}\vert\phi_{k}\rangle_{E}
+\begin{aligned}\langle[f_{\nu}]\vert\phi_{k}\rangle_{\partial E} & \approx\left\langle \sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\varphi_{e,l}\middle\vert\phi_{k}\right\rangle _{\partial E}=\sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\langle\varphi_{e,l}\vert\phi_{k}\rangle_{\partial E}\\
+ & =\sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\langle\gamma_{e,l}\vert\phi_{k}\rangle_{E}=\left\langle \sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\gamma_{e,l}\middle\vert\phi_{k}\right\rangle _{E},
 \end{aligned}
 \]
 
 \end_inset
 
-从而可以提出 
-\begin_inset Formula $\phi_{k}$
+由此得
+\begin_inset Formula 
+\[
+\hat{h}_{j,k}=\sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\gamma_{e,l}(\vec{x}_{j,k}),
+\]
+
 \end_inset
 
-，得 FR 格式。
-\end_layout
+其中 
+\begin_inset Formula $\gamma_{e,l}(\vec{x}_{j,k})$
+\end_inset
 
-\begin_layout Standard
+ 可以预先算出并缓存。最终的半离散格式为
+\begin_inset Formula 
+\[
+\dv{\hat{u}_{j,k}}{t}+\overbrace{\sum_{m}\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}}^{\divg\vec{f}^{\mathrm{D}}}(\vec{x}_{j,k})+\overbrace{\sum_{e}\sum_{l}[f_{\nu}]_{e,l}\,\gamma_{e,l}}^{\divg\vec{f}^{\mathrm{C}}}(\vec{x}_{j,k})=0.
+\]
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
 若通量计算点 
-\begin_inset Formula $(x,y)_{e,l}$
+\begin_inset Formula $\vec{x}_{e,l}$
 \end_inset
 
  取为所属边的 Gauss 积分点，则该点对应的权重为
 \begin_inset Formula 
 \[
-w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
+\langle\varphi_{e,l}\vert1\rangle_{\partial E}=\sum_{k}\underbrace{\varphi_{e,l}(\vec{x}_{e,k})}_{\delta_{kl}}\,w_{e,k}=w_{e,l}.
 \]
 
 \end_inset
@@ -3553,7 +3624,7 @@ w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
  点 Gauss 积分公式精确计算，即
 \begin_inset Formula 
 \[
-\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=\sum_{k=1}^{K+1}w_{e,k}\,\phi(x_{e,k},y_{e,k})=w_{e,l}\,\phi(x_{e,k},y_{e,l}),
+\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=\sum_{k=1}^{K+1}w_{e,k}\,\varphi_{e,l}(\vec{x}_{e,k})\,\phi(\vec{x}_{e,k})=w_{e,l}\,\phi(\vec{x}_{e,l}),
 \]
 
 \end_inset
@@ -3561,7 +3632,7 @@ w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
 故
 \begin_inset Formula 
 \[
-\langle\gamma_{e,l}\vert\phi\rangle_{E}=\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=w_{e,l}\,\phi(x_{e,k},y_{e,l}),
+\langle\gamma_{e,l}\vert\phi\rangle_{E}=\langle\varphi_{e,l}\vert\phi\rangle_{\partial E}=w_{e,l}\,\phi(\vec{x}_{e,l}),
 \]
 
 \end_inset
@@ -3577,7 +3648,13 @@ w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
  上的 Dirac 函数的一种近似。
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
 \begin_inset Formula $K$
 \end_inset
 
@@ -3586,10 +3663,10 @@ w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
 \end_inset
 
  是对通量散度 
-\begin_inset Formula $\divg\vec{f}^{h}$
+\begin_inset Formula $\divg\vec{f}^{\mathrm{D}}$
 \end_inset
 
- 的修正。若能构造出分量为 
+ 的修正。原则上可以构造出分量为 
 \begin_inset Formula $K+1$
 \end_inset
 
@@ -3608,8 +3685,13 @@ w_{e,l}=\langle\varphi_{e,l}\vert1\rangle_{\partial E}.
 则得对通量本身的修正，即连续通量
 \begin_inset Formula 
 \[
-\vec{F}^{h}=\vec{f}^{h}+\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\vec{g}_{e,l},
+\vec{f}^{\mathrm{R}}=\vec{f}^{\mathrm{D}}+\sum_{e=1}^{3}\sum_{l=1}^{K+1}[f_{\nu}]_{e,l}\,\vec{g}_{e,l}.
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -4439,7 +4521,7 @@ f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2}
 
 \begin_inset Formula 
 \[
-\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv{L_{j+1,l}(x_{j+\zeta/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+\zeta/2})}{x}\right),
+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv{L_{j+1,l}(x_{j+1/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+1/2})}{x}\right),
 \]
 
 \end_inset
@@ -4447,11 +4529,31 @@ f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2}
 
 \begin_inset Formula 
 \[
-\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv[2]{L_{j+1,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x},
+\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv[2]{L_{j+1,l}(x_{j+1/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+1/2})}{x},
 \]
 
 \end_inset
 
+整理成矩阵形式
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\underline{S}_{j}\,\underline{\hat{u}}_{j}+\underline{S}_{j-1}\,\underline{\hat{u}}_{j-1}+\underline{S}_{j+1}\,\underline{\hat{u}}_{j+1},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{S}_{j}=
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 将上述结果代入能量方程
 \begin_inset Formula 
 \[
