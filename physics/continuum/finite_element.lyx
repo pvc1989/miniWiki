@@ -4307,7 +4307,7 @@ literal "false"
 。以此定义（在界面处连续的）重构通量
 \begin_inset Formula 
 \[
-f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\,L_{k}(x)}_{f^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right){\color{red}h_{\zeta}}(\xi)}_{f^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}(t)\,L_{k}(x)}_{f^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right){\color{red}h_{\zeta}}(\xi)}_{f^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
 \]
 
 \end_inset
@@ -4323,7 +4323,7 @@ f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\,L_{k}
 。以此导出（在界面处间断的）通量导数
 \begin_inset Formula 
 \[
-\frac{\partial f^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{k}^{\mathrm{D}}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\frac{\partial f^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{k}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
 \]
 
 \end_inset
@@ -4362,9 +4362,116 @@ Energy stable?
 \end_layout
 
 \begin_layout Standard
+引入人工黏性，求解对流扩散方程
 \begin_inset Formula 
 \[
-\frac{\partial u}{\partial t}+\frac{\partial f^{\mathrm{c}}}{\partial x}=\frac{\partial f^{\mathrm{d}}}{\partial x}+b\frac{\partial^{2}u}{\partial x^{2}},\quad f=f^{\mathrm{c}}-f^{\mathrm{d}}-b\frac{\partial u}{\partial x},
+\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=0,\quad f=f^{\mathrm{c}}-f^{\mathrm{d}}-\nu\frac{\partial u}{\partial x},\quad\nu>0,
+\]
+
+\end_inset
+
+应用 FR 方法
+\begin_inset Formula 
+\[
+u_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{j,k}(t)\,L_{j,k}(x),\quad f_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{f}_{j,k}(t)\,L_{j,k}(x),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\right)h_{-1}(\xi)+\left(f_{j+1/2}^{\mathrm{I}}-f_{j+1/2}^{\mathrm{D}}\right)h_{+1}(\xi),
+\]
+
+\end_inset
+
+在第 
+\begin_inset Formula $j$
+\end_inset
+
+ 号单元的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个结点处有
+\begin_inset Formula 
+\[
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x},
+\]
+
+\end_inset
+
+将各通量分解为不依赖与依赖人工黏性的两部分：
+\begin_inset Formula 
+\[
+\hat{f}_{j,l}=\left(f^{\mathrm{c}}-f^{\mathrm{d}}\right)_{x_{j,l}}-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})=\cdots-\nu_{j}\sum_{l=0}^{p}L_{j,l}(x_{j+\zeta/2})\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}f_{j+1/2}^{\mathrm{I}} & =f_{j+1/2}^{\mathrm{c,I}}-f_{j+1/2}^{\mathrm{d,I}}-\max(\nu_{j},\nu_{j+1})\left(\frac{\partial u}{\partial x}\right)_{j+1/2}^{\mathrm{I}}\\
+ & =\cdots-\max(\nu_{j},\nu_{j+1})\left(\beta_{0}\,n_{x}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}+\beta_{1}\,n_{x}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\,L_{j+1,l}(x_{j+1/2})-\sum_{l=0}^{p}\hat{u}_{j,l}\,L_{j,l}(x_{j+1/2}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv{L_{j+1,l}(x_{j+\zeta/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+\zeta/2})}{x}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv[2]{L_{j+1,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x},
+\]
+
+\end_inset
+
+将上述结果代入能量方程
+\begin_inset Formula 
+\[
+\dv{t}\left(\frac{1}{2}\hat{u}_{j,k}^{2}\right)=-\hat{u}_{j,k}\frac{\partial f_{j,k}^{\mathrm{R}}}{\partial x}=-\hat{u}_{j,k}\left(\sum_{l=0}^{p}\hat{f}_{j,l}\,\dv{L_{j,l}(x_{j,k})}{x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x}\right),
+\]
+
+\end_inset
+
+得各项对人工黏性耗散的贡献：
+\begin_inset Formula 
+\[
+\hat{u}_{j,k}\sum_{l=0}^{p}\hat{f}_{j,l}\,\dv{L_{j,l}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\,\nu_{j}\sum_{l=0}^{p}\dv{L_{j,l}(x_{j,k})}{x}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\hat{u}_{j,k}\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{D}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\,\nu_{j}\sum_{\zeta=\pm1}\dv{h_{\zeta}(x_{j,k})}{x}\sum_{l=0}^{p}L_{j,l}(x_{j+\zeta/2})\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
 \]
 
 \end_inset
@@ -4375,23 +4482,7 @@ Energy stable?
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left.\frac{\partial u_{j}^{\mathrm{D}}(x,t)}{\partial t}\right|_{x_{j,k}}+\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=0,
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=-\sum_{k=0}^{p}\hat{f}_{j,k}^{\mathrm{D}}(t)\frac{\partial L_{j,k}(x)}{\partial x}-\sum_{\zeta=\pm1}\left(f_{j}^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{h_{\zeta}(\xi)}{\xi}}{\dv*{x}{\xi}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\dv{t}\left(\frac{1}{2}\hat{u}_{j,k}^{2}\right)=-\hat{u}_{j,k}(t)\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}},
+\hat{u}_{j,k}\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\sum_{\zeta=\pm1}\max(\nu_{j},\nu_{j+\zeta})\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
 \]
 
 \end_inset
