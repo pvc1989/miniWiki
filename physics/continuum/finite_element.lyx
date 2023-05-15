@@ -2228,7 +2228,7 @@ name "sec:FR"
 \end_layout
 
 \begin_layout Subsection
-For 1D Conservation Laws
+一维形式
 \end_layout
 
 \begin_layout Standard
@@ -2242,6 +2242,10 @@ For 1D Conservation Laws
 
 \end_layout
 
+\begin_layout Subsubsection
+坐标变换
+\end_layout
+
 \begin_layout Standard
 在第 
 \begin_inset Formula $j$
@@ -2251,14 +2255,18 @@ For 1D Conservation Laws
 \begin_inset Formula $E_{j}$
 \end_inset
 
- 上，定义坐标变换 
-\begin_inset Formula $E_{j}\mapsto I\equiv[-1,1]$
+ 上，定义物理坐标 
+\begin_inset Formula $x$
 \end_inset
 
- 为
+ 到参数坐标 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的变换：
 \begin_inset Formula 
 \[
-x|_{E_{j}}(\xi)=c_{j}+\frac{h_{j}}{2}\,\xi,\quad J_{j}=\left|\frac{\partial x}{\partial\xi}\right|\equiv\frac{h_{j}}{2}.
+x|_{E_{j}}(\xi)\equiv x_{j}(\xi)\coloneqq c_{j}+\frac{h_{j}}{2}\,\xi,\quad J_{j}=\left|\frac{\partial x_{j}}{\partial\xi}\right|\equiv\frac{h_{j}}{2}.
 \]
 
 \end_inset
@@ -2292,7 +2300,7 @@ Lagrange 插值
 \end_inset
 
 ，并记 
-\begin_inset Formula $u(x_{j,k},t)\eqqcolon u_{j,k}(t)$
+\begin_inset Formula $u(x_{j,k},t)\eqqcolon\hat{u}_{j,k}(t)$
 \end_inset
 
 。
@@ -2325,7 +2333,7 @@ Lagrange 插值
 -次多项式近似
 \begin_inset Formula 
 \[
-u_{j}^{h}(x,t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
+u_{j}^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \]
 
 \end_inset
@@ -2333,7 +2341,7 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 或局部坐标系下的
 \begin_inset Formula 
 \[
-\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
+\boxed{u_{j}^{h}(x(\xi),t)=\sum_{k=1}^{N}\hat{u}_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -2346,10 +2354,14 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{N}u_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \end_layout
 
 \begin_layout Standard
-在 求值点 处计算通量值 
+在 
+\begin_inset Formula $x_{j,k}$
+\end_inset
+
+ 处计算通量值
 \begin_inset Formula 
 \[
-f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,N.
+\hat{f}_{j,k}\coloneqq f(\hat{u}_{j,k}),\quad k=1,\dots,N.
 \]
 
 \end_inset
@@ -2357,7 +2369,7 @@ f_{j,k}\coloneqq f(u_{j,k}),\quad k=1,\dots,N.
 定义离散通量
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
+f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}\hat{f}_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \]
 
 \end_inset
@@ -2365,7 +2377,7 @@ f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 或局部坐标下的
 \begin_inset Formula 
 \[
-\boxed{f_{j}^{\mathrm{D}}(x(\xi),t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
+\boxed{f_{j}^{\mathrm{D}}(x(\xi),t)=\sum_{k=1}^{N}\hat{f}_{j,k}(t)\,\mathrm{La}_{k}(\xi)}.
 \]
 
 \end_inset
@@ -2374,18 +2386,18 @@ f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}f_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 \begin_inset Formula $x_{j,l}\equiv x|_{E_{j}}(\xi_{l})$
 \end_inset
 
- 处的导数为
+ 处关于参数坐标的导数为
 \begin_inset Formula 
 \[
-\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}=\sum_{k=1}^{N}f_{j,k}(t)\,\underbrace{\left.\frac{\partial\mathrm{La}_{k}}{\partial\xi}\right|_{\xi_{l}}}_{\eqqcolon d_{l,k}}=\sum_{k=1}^{N}d_{l,k}\,f_{j,k}(t)
+\left.\frac{\partial f_{j}^{\mathrm{D}}}{\partial\xi}\right|_{\xi_{l}}=\sum_{k=1}^{N}\hat{f}_{j,k}(t)\,\left.\frac{\partial\mathrm{La}_{k}}{\partial\xi}\right|_{\xi_{l}},
 \]
 
 \end_inset
 
-或
+关于物理坐标的导数为
 \begin_inset Formula 
 \[
-\left.\frac{\partial f_{j}}{\partial x}\right|_{x_{j,l}}=\left.\frac{\partial x}{\partial\xi}\right|_{\xi_{l}}^{-1}\left.\frac{\partial f_{j}}{\partial\xi}\right|_{\xi_{l}}.
+\left.\frac{\partial f_{j}^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\left.\frac{\partial x_{j}}{\partial\xi}\right|_{\xi_{l}}^{-1}\left.\frac{\partial f_{j}^{\mathrm{D}}}{\partial\xi}\right|_{\xi_{l}}=\frac{2}{h_{j}}\left.\frac{\partial f_{j}^{\mathrm{D}}}{\partial\xi}\right|_{\xi_{l}}.
 \]
 
 \end_inset
@@ -2427,33 +2439,10 @@ u_{\mathrm{L}}\ne u_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f_{\mathrm{R}},\quad f_
 \end_inset
 
 需要补充某种界面通量（某种 Riemann 求解器），记为 
-\begin_inset Formula $f^{\mathrm{I}}(x,t)$
+\begin_inset Formula $f_{j+1/2}^{\mathrm{I}}$
 \end_inset
 
-。这里省略下标（即视为全局函数），乃因其在界面处的取值唯一，故不偏向于任意一侧。
-\end_layout
-
-\begin_layout Standard
-一种常用的界面通量为
-\begin_inset Formula 
-\[
-f_{j+1/2}^{\mathrm{I}}=\frac{f(u_{\mathrm{R}})+f(u_{\mathrm{L}})}{2}-\left|a(\tilde{u})\right|\frac{u_{\mathrm{R}}-u_{\mathrm{L}}}{2},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-a(\tilde{u})=\begin{cases}
-\dfrac{f(u_{\mathrm{R}})-f(u_{\mathrm{L}})}{u_{\mathrm{R}}-u_{\mathrm{L}}}, & u_{\mathrm{L}}\ne u_{\mathrm{R}};\\
-a(u_{\mathrm{L}})=a(u_{\mathrm{R}}), & u_{\mathrm{L}}=u_{\mathrm{R}}.
-\end{cases}
-\]
-
-\end_inset
-
-推广到 Euler 系统即 Roe 平均，通常需要熵修正。
+。
 \end_layout
 
 \begin_layout Subsubsection
@@ -2516,7 +2505,7 @@ g_{-1}(\xi)\begin{cases}
 由此得连续通量
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
+f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)g_{\zeta}(\xi)}^{f_{j}^{\mathrm{C}}(x(\xi),t)},
 \]
 
 \end_inset
@@ -2524,7 +2513,15 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta
 其局部导数为
 \begin_inset Formula 
 \[
-\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial\xi}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f_{j}^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi}.
+\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial\xi}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dd g_{\zeta}(\xi)}{\dd\xi},
+\]
+
+\end_inset
+
+全局导数为
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi}=\frac{\partial f_{j}^{\mathrm{D}}(x(\xi),t)}{\partial x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x_{j}}{\xi}}.
 \]
 
 \end_inset
@@ -2544,7 +2541,7 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta
  的全局导数为
 \begin_inset Formula 
 \[
-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\left(\frac{\partial x(\xi)}{\partial\xi}\right)^{-1}\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi},
+\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\left(\frac{\partial x_{j}}{\partial\xi}\right)^{-1}\frac{\partial f_{j}^{\mathrm{R}}(x(\xi),t)}{\partial\xi},
 \]
 
 \end_inset
@@ -2553,10 +2550,22 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta
 \begin_inset Formula $\partial_{x}\,f$
 \end_inset
 
-，即得半离散的 FR 格式：
+，并在 
+\begin_inset Formula $x_{j,k}$
+\end_inset
+
+ 处取值，即得半离散的 FR 格式：
 \begin_inset Formula 
 \[
-\boxed{\dv{u_{j,k}(t)}{t}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}},\quad k=1,\dots,N.
+\boxed{\dv{\hat{u}_{j,k}(t)}{t}=-\frac{\partial f_{j}^{\mathrm{R}}(x_{j,k},t)}{\partial x}},\quad k=1,\dots,N,
+\]
+
+\end_inset
+
+或更具体的
+\begin_inset Formula 
+\[
+\dv{\hat{u}_{j,k}(t)}{t}=-\sum_{l=1}^{N}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{g_{\zeta}(\xi_{k})}{\xi}}{\dv*{x_{j}(\xi_{k})}{\xi}}.
 \]
 
 \end_inset
@@ -2564,28 +2573,44 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta
 考虑显式 Euler 推进：
 \begin_inset Formula 
 \[
-u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
+u_{j}^{h}(x,t_{n+1})=u_{j}^{h}(x,t_{n})-\frac{\partial f_{j}^{\mathrm{R}}(x,t_{n})}{\partial x}h_{t},
 \]
 
 \end_inset
 
 为保持 
-\begin_inset Formula $u_{j}^{n+1}$
+\begin_inset Formula $u_{j}^{h}(x,t_{n+1})$
 \end_inset
 
- 的次数仍为 
+ 仍为 
+\begin_inset Formula $x$
+\end_inset
+
+ 的 
 \begin_inset Formula $N-1$
 \end_inset
 
-，连续通量 
-\begin_inset Formula $f_{j}^{\mathrm{R}}$
+ 次多项式，连续通量 
+\begin_inset Formula $f_{j}^{\mathrm{R}}(x,t_{n})$
 \end_inset
 
- 及修正函数 
+ 应为 
+\begin_inset Formula $x$
+\end_inset
+
+ 的 
+\begin_inset Formula $N$
+\end_inset
+
+ 次多项式。这相当于要求修正函数 
 \begin_inset Formula $g_{\pm1}$
 \end_inset
 
  均应为 
+\begin_inset Formula $\xi$
+\end_inset
+
+ 的 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2593,7 +2618,7 @@ u_{j}^{n+1}=u_{j}^{n}-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}h_{t},
 \begin_inset Formula $g_{\pm1}$
 \end_inset
 
- 已给定两点取值，故仍需给定 
+ 已给定两端点值，故仍需给定 
 \begin_inset Formula $N-1$
 \end_inset
 
@@ -3269,7 +3294,7 @@ c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N
 \end_layout
 
 \begin_layout Subsection
-For 2D Conservation Laws
+多维形式
 \end_layout
 
 \begin_layout Standard
@@ -3757,7 +3782,7 @@ g
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Proof
 由导数变换公式
@@ -3857,7 +3882,7 @@ F=f\,y_{\eta}-g\,x_{\eta},\quad G=-f\,y_{\xi}+g\,x_{\xi},
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Proof
 上述证明可推广到三维。由导数变换公式
@@ -4312,7 +4337,11 @@ U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta
 \end_layout
 
 \begin_layout Subsection
-FR with LDG
+黏性项处理
+\end_layout
+
+\begin_layout Subsubsection
+LDG
 \end_layout
 
 \begin_layout Standard
@@ -4334,7 +4363,15 @@ literal "false"
 先（仿照 Riemann 解）定义界面函数值
 \begin_inset Formula 
 \[
-u^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} -\beta\left\llbracket u^{\mathrm{D}}\right\rrbracket ,\quad\beta=\pm0.5,
+u_{j+1/2}^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} _{j+1/2}-\beta\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},\quad\beta=\pm0.5,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\{ u^{\mathrm{D}}\right\} _{j+1/2}\coloneqq\frac{1}{2}\left(u_{j}^{\mathrm{D}}(x_{j+1/2})+u_{j+1}^{\mathrm{D}}(x_{j+1/2})\right),\quad\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}\coloneqq u_{j+1}^{\mathrm{D}}(x_{j+1/2})-u_{j}^{\mathrm{D}}(x_{j+1/2}).
 \]
 
 \end_inset
@@ -4342,7 +4379,7 @@ u^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} -\beta\left\llbracket u^{\mathrm{D
 再（仿照通量重构）定义（在界面处连续的）重构函数
 \begin_inset Formula 
 \[
-u^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{k}(t)\,L_{k}(x)}_{u^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(u^{\mathrm{I}}(x(\zeta),t)-u^{\mathrm{D}}(x(\zeta),t)\right)g_{\zeta}(\xi)}_{u^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+u_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{j,k}(t)\,L_{j,k}(x)}_{u_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)g_{\zeta}(\xi)}_{u_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
 \]
 
 \end_inset
@@ -4350,7 +4387,7 @@ u^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{k}(t)\,L_{k}(x)}_{u^{\mat
 以此导出（在界面处间断的）未知量导数
 \begin_inset Formula 
 \[
-q^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{k}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(u^{\mathrm{I}}(x(\zeta),t)-u^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x}{\xi}},
+q_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x_{j}}{\xi}},
 \]
 
 \end_inset
@@ -4358,7 +4395,7 @@ q^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{k}(t)\frac{\partial L_{k}(x)}{\partia
 从而导出（在界面处间断的）域内通量
 \begin_inset Formula 
 \[
-f^{\mathrm{D}}=f^{\mathrm{c}}\qty(u^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u^{\mathrm{D}}(x,t),q^{\mathrm{D}}(x,t)),
+f_{j}^{\mathrm{D}}=f^{\mathrm{c}}\qty(u_{j}^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u_{j}^{\mathrm{D}}(x,t),q_{j}^{\mathrm{D}}(x,t)),
 \]
 
 \end_inset
@@ -4366,9 +4403,9 @@ f^{\mathrm{D}}=f^{\mathrm{c}}\qty(u^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u^{\ma
 及界面通量
 \begin_inset Formula 
 \[
-f^{\mathrm{I}}=f^{\mathrm{c,I}}-f^{\mathrm{d,I}},\quad\begin{cases}
-f^{\mathrm{c,I}}=\left\{ f^{\mathrm{d,D}}\right\} -\frac{\lambda}{2}\vert a\vert\left\llbracket u^{\mathrm{D}}\right\rrbracket ,\\
-f^{\mathrm{d,I}}=\left\{ f^{\mathrm{d,D}}\right\} +\beta\left\llbracket f^{\mathrm{d,D}}\right\rrbracket +\tau\left\llbracket u^{\mathrm{D}}\right\rrbracket ,
+f_{j+1/2}^{\mathrm{I}}=f_{j+1/2}^{\mathrm{c,I}}-f_{j+1/2}^{\mathrm{d,I}},\quad\begin{cases}
+f_{j+1/2}^{\mathrm{c,I}}=\text{exact/approximate Riemann solution},\\
+f_{j+1/2}^{\mathrm{d,I}}=\left\{ f^{\mathrm{d,D}}\right\} _{j+1/2}+\beta\left\llbracket f^{\mathrm{d,D}}\right\rrbracket _{j+1/2}+\tau\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},
 \end{cases}
 \]
 
@@ -4389,7 +4426,7 @@ literal "false"
 。以此定义（在界面处连续的）重构通量
 \begin_inset Formula 
 \[
-f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}(t)\,L_{k}(x)}_{f^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right){\color{red}h_{\zeta}}(\xi)}_{f^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+f_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{j,k}(t)\,L_{j,k}(x)}_{f_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right){\color{red}h_{\zeta}}(\xi)}_{f_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
 \]
 
 \end_inset
@@ -4405,7 +4442,7 @@ f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}(t)\,L_{k}(x)}_{f^{\mat
 。以此导出（在界面处间断的）通量导数
 \begin_inset Formula 
 \[
-\frac{\partial f^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{k}(t)\frac{\partial L_{k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f^{\mathrm{I}}(x(\zeta),t)-f^{\mathrm{D}}(x(\zeta),t)\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
 \]
 
 \end_inset
@@ -4413,14 +4450,14 @@ f^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{k}(t)\,L_{k}(x)}_{f^{\mat
 在结点出对该式取值，即得 FR 格式。
 \end_layout
 
-\begin_layout Subsection
-FR with DDG
+\begin_layout Subsubsection
+DDG
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left(\frac{\partial u}{\partial x}\right)^{\mathrm{I}}\coloneqq\beta_{0}\,n_{x}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket }{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} +\beta_{1}\,n_{x}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket ,\quad\begin{cases}
+\left(\frac{\partial u}{\partial x}\right)_{j+1/2}^{\mathrm{I}}\coloneqq\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2},\quad\begin{cases}
 \beta_{0}\in[2,4],\\
 \beta_{1}=1/12,
 \end{cases}
@@ -4440,7 +4477,7 @@ Energy stable?
 \end_layout
 
 \begin_layout Subsection
-能量耗散
+能量耗散率
 \end_layout
 
 \begin_layout Standard
@@ -4452,10 +4489,14 @@ Energy stable?
 
 \end_inset
 
-应用 FR 方法
+应用 
+\begin_inset Formula $p$
+\end_inset
+
+-exact FR 方法
 \begin_inset Formula 
 \[
-u_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{j,k}(t)\,L_{j,k}(x),\quad f_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{f}_{j,k}(t)\,L_{j,k}(x),
+u_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{u}_{j,l}(t)\,L_{j,l}(x),\quad f_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x),
 \]
 
 \end_inset
@@ -4479,7 +4520,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
  个结点处有
 \begin_inset Formula 
 \[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\left.\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}\right|_{x_{j,k}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x},
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x},
 \]
 
 \end_inset
@@ -4487,7 +4528,22 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 将各通量分解为不依赖与依赖人工黏性的两部分：
 \begin_inset Formula 
 \[
-\hat{f}_{j,l}=\left(f^{\mathrm{c}}-f^{\mathrm{d}}\right)_{x_{j,l}}-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\begin{aligned}\hat{f}_{j,l} & =\cdots-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x}\\
+ & =\cdots-\nu_{j}\,\underbrace{\begin{bmatrix}L'_{j,0}(x_{j,l}) & \cdots & L'_{j,p}(x_{j,l})\end{bmatrix}}_{\underline{A}_{j,l}}\,\underline{\hat{u}}_{j}(t),\quad\underline{\hat{u}}_{j}(t)\coloneqq\begin{bmatrix}\hat{u}_{j,0}(t)\\
+\vdots\\
+\hat{u}_{j,p}(t)
+\end{bmatrix},
+\end{aligned}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}-\sum_{l}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x} & =-\sum_{l}L'_{j,l}(x_{j,k})\,\overbrace{\left(\cdots-\nu_{j}\,\underline{A}_{j,l}\,\underline{\hat{u}}_{j}(t)\right)}^{\hat{f}_{j,l}(t)}\\
+ & =\cdots+\nu_{j}\,\overbrace{\sum_{l}L'_{j,l}(x_{j,k})\,\underline{A}_{j,l}}^{\underline{B}_{j,k}}\,\underline{\hat{u}}_{j}(t),
+\end{aligned}
 \]
 
 \end_inset
@@ -4495,16 +4551,26 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 
 \begin_inset Formula 
 \[
-f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})=\cdots-\nu_{j}\sum_{l=0}^{p}L_{j,l}(x_{j+\zeta/2})\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{h_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}h'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
+ & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}h'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\,\underline{A}_{j,l}}^{\underline{C}_{j,k}}\,\underline{\hat{u}}_{j}(t),
+\end{aligned}
 \]
 
 \end_inset
 
-
+故
 \begin_inset Formula 
 \[
-\begin{aligned}f_{j+1/2}^{\mathrm{I}} & =f_{j+1/2}^{\mathrm{c,I}}-f_{j+1/2}^{\mathrm{d,I}}-\max(\nu_{j},\nu_{j+1})\left(\frac{\partial u}{\partial x}\right)_{j+1/2}^{\mathrm{I}}\\
- & =\cdots-\max(\nu_{j},\nu_{j+1})\left(\beta_{0}\,n_{x}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}+\beta_{1}\,n_{x}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}\right),
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\left(\underline{B}_{j,k}-\underline{C}_{j,k}\right)\underline{\hat{u}}_{j}(t)-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
+\]
+
+\end_inset
+
+还需确定
+\begin_inset Formula 
+\[
+\begin{aligned}f_{j+\zeta/2}^{\mathrm{I}} & =f_{j+\zeta/2}^{\mathrm{c,I}}-f_{j+\zeta/2}^{\mathrm{d,I}}-\max(\nu_{j},\nu_{j+\zeta})\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\\
+ & =\cdots-\max(\nu_{j},\nu_{j+\zeta})\left(\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\right),
 \end{aligned}
 \]
 
@@ -4513,7 +4579,7 @@ f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2}
 其中
 \begin_inset Formula 
 \[
-\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\,L_{j+1,l}(x_{j+1/2})-\sum_{l=0}^{p}\hat{u}_{j,l}\,L_{j,l}(x_{j+1/2}),
+\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\,L_{j+\zeta,l}(x_{j+\zeta/2})-\sum_{l=0}^{p}\hat{u}_{j,l}\,L_{j,l}(x_{j+\zeta/2})\right),
 \]
 
 \end_inset
@@ -4521,7 +4587,7 @@ f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2}
 
 \begin_inset Formula 
 \[
-\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv{L_{j+1,l}(x_{j+1/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+1/2})}{x}\right),
+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+\zeta/2})}{x}\right),
 \]
 
 \end_inset
@@ -4529,62 +4595,74 @@ f_{j+\zeta/2}^{\mathrm{D}}=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2}
 
 \begin_inset Formula 
 \[
-\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\sum_{l=0}^{p}\hat{u}_{j+1,l}\dv[2]{L_{j+1,l}(x_{j+1/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+1/2})}{x},
+\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv[2]{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x}\right),
 \]
 
 \end_inset
 
-整理成矩阵形式
+整理成矩阵形式有
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\underline{S}_{j}\,\underline{\hat{u}}_{j}+\underline{S}_{j-1}\,\underline{\hat{u}}_{j-1}+\underline{S}_{j+1}\,\underline{\hat{u}}_{j+1},
+\begin{aligned} & \beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
+= & \underbrace{\begin{bmatrix}\cdots & +\beta_{0}h^{-1}\zeta L_{j+\zeta,l}(x_{j+\zeta/2})+\frac{1}{2}L_{j+\zeta,l}(x_{j+\zeta/2})+\beta_{1}h\zeta L''_{j+\zeta,l}(x_{j+\zeta/2}) & \cdots\end{bmatrix}}_{\underline{D}_{j,\zeta}^{+}}\,\underline{\hat{u}}_{j+\zeta}(t)\\
++ & \underbrace{\begin{bmatrix}\cdots & -\beta_{0}h^{-1}\zeta L_{j+\zeta,l}(x_{j+\zeta/2})+\frac{1}{2}L_{j+\zeta,l}(x_{j+\zeta/2})-\beta_{1}h\zeta L''_{j+\zeta,l}(x_{j+\zeta/2}) & \cdots\end{bmatrix}}_{\underline{D}_{j,\zeta}^{-}}\,\underline{\hat{u}}_{j}(t)
+\end{aligned}
 \]
 
 \end_inset
 
-其中
+故
 \begin_inset Formula 
 \[
-\underline{S}_{j}=
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\max(\nu_{j},\nu_{j+1})\,h'_{+1}(x_{j,k})\left(\underline{D}_{j,+1}^{+}\,\underline{\hat{u}}_{j+1}(t)+\underline{D}_{j,+1}^{-}\,\underline{\hat{u}}_{j}(t)\right)\\
+ & +\max(\nu_{j},\nu_{j-1})\,h'_{-1}(x_{j,k})\left(\underline{D}_{j,-1}^{+}\,\underline{\hat{u}}_{j-1}(t)+\underline{D}_{j,-1}^{-}\,\underline{\hat{u}}_{j}(t)\right),
+\end{aligned}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-将上述结果代入能量方程
+假设人工黏性的分布是孤立的，即
 \begin_inset Formula 
 \[
-\dv{t}\left(\frac{1}{2}\hat{u}_{j,k}^{2}\right)=-\hat{u}_{j,k}\frac{\partial f_{j,k}^{\mathrm{R}}}{\partial x}=-\hat{u}_{j,k}\left(\sum_{l=0}^{p}\hat{f}_{j,l}\,\dv{L_{j,l}(x_{j,k})}{x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x}\right),
+\max(\nu_{j},\nu_{j+1})=\max(\nu_{j},\nu_{j-1})=\nu_{j},
 \]
 
 \end_inset
 
-得各项对人工黏性耗散的贡献：
+则
 \begin_inset Formula 
 \[
-\hat{u}_{j,k}\sum_{l=0}^{p}\hat{f}_{j,l}\,\dv{L_{j,l}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\,\nu_{j}\sum_{l=0}^{p}\dv{L_{j,l}(x_{j,k})}{x}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(h'_{+1}(x_{j,k})\,\underline{D}_{j,+1}^{-}+h'_{-1}(x_{j,k})\,\underline{D}_{j,-1}^{-}\right)}^{\underline{D}_{j,k}}\,\underline{\hat{u}}_{j}(t),\\
+ & +\nu_{j}\,\overbrace{h'_{-1}(x_{j,k})\,\underline{D}_{j,-1}^{+}}^{\underline{E}_{j,k}}\,\underline{\hat{u}}_{j-1}(t)+\nu_{j}\,\overbrace{h'_{+1}(x_{j,k})\,\underline{D}_{j,+1}^{+}}^{\underline{F}_{j,k}}\,\underline{\hat{u}}_{j+1}(t),
+\end{aligned}
 \]
 
 \end_inset
 
-
+综上，
 \begin_inset Formula 
 \[
-\hat{u}_{j,k}\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{D}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\,\nu_{j}\sum_{\zeta=\pm1}\dv{h_{\zeta}(x_{j,k})}{x}\sum_{l=0}^{p}L_{j,l}(x_{j+\zeta/2})\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x},
+\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\nu_{j}\left(\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\underline{\hat{u}}_{j}+\underline{E}_{j}\,\underline{\hat{u}}_{j-1}+\underline{F}_{j}\,\underline{\hat{u}}_{j+1}\right),
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $\underline{B}_{j},\underline{C}_{j},\underline{D}_{j},\underline{E}_{j},\underline{F}_{j}$
+\end_inset
 
-\end_layout
+ 分别是以 
+\begin_inset Formula $\underline{B}_{j,k},\underline{C}_{j,k},\underline{D}_{j,k},\underline{E}_{j,k},\underline{F}_{j,k}$
+\end_inset
 
-\begin_layout Standard
+ 为第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
 \begin_inset Formula 
 \[
-\hat{u}_{j,k}\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots-\hat{u}_{j,k}\sum_{\zeta=\pm1}\max(\nu_{j},\nu_{j+\zeta})\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
+\frac{\dd}{\dd t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}=\underline{\hat{u}}_{j}^{\mathrm{T}}\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\nu_{j}\left(\underline{\hat{u}}_{j}^{\mathrm{T}}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\underline{\hat{u}}_{j}+\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{E}_{j}\,\underline{\hat{u}}_{j-1}+\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{F}_{j}\,\underline{\hat{u}}_{j+1}\right),
 \]
 
 \end_inset
