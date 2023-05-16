@@ -3440,7 +3440,7 @@ c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N
  只是一种形式化的表达式，并不需要实际求出。在结点处取值，即得半离散格式
 \begin_inset Formula 
 \[
-\dv{\hat{u}_{j,k}}{t}+\sum_{m}\overbrace{\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}}^{\divg\vec{f}^{\mathrm{D}}}(\vec{x}_{j,k})+h(\vec{x}_{j,k})=0.
+\dv{\hat{u}_{j,k}}{t}+\overbrace{\sum_{m}\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}}^{\divg\vec{f}^{\mathrm{D}}}(\vec{x}_{j,k})+h(\vec{x}_{j,k})=0.
 \]
 
 \end_inset
@@ -3724,7 +3724,14 @@ status open
 \end_layout
 
 \begin_layout Subsubsection
-FR on Standard Triangule
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Castonguay_2011"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3781,8 +3788,8 @@ g
 \end_inset
 
 
-\begin_inset Note Note
-status open
+\begin_inset Foot
+status collapsed
 
 \begin_layout Proof
 由导数变换公式
@@ -3871,18 +3878,11 @@ F=f\,y_{\eta}-g\,x_{\eta},\quad G=-f\,y_{\xi}+g\,x_{\xi},
 
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Separator plain
 \end_inset
 
 
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
+\begin_inset Foot
+status collapsed
 
 \begin_layout Proof
 上述证明可推广到三维。由导数变换公式
@@ -4102,21 +4102,14 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 利用交叉导数相等，可得三行之和为零。
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-局部坐标下的标量函数 
-\begin_inset Formula $U,F,G$
+局部坐标下的函数 
+\begin_inset Formula $U,\vec{F}$
 \end_inset
 
  可以由标准三角形 
@@ -4127,19 +4120,16 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 \begin_inset Formula $p$
 \end_inset
 
--次 Lagrange 插值多项式来近似：
+-次 Lagrange 插值来近似：
 \begin_inset Formula 
 \[
-\begin{bmatrix}U(\vec{\rho})\\
-F(\vec{\rho})\\
-G(\vec{\rho})
-\end{bmatrix}\approx\begin{bmatrix}U^{\delta D}(\vec{\rho})\\
-F^{\delta D}(\vec{\rho})\\
-G^{\delta D}(\vec{\rho})
-\end{bmatrix}=\sum_{i=1}^{N_{T}(p)}\begin{bmatrix}U_{i}^{\delta D}\\
-F_{i}^{\delta D}\\
-G_{i}^{\delta D}
-\end{bmatrix}l_{i}(\vec{\rho}),
+\begin{bmatrix}U(\vec{\rho},t)\\
+\vec{F}(\vec{\rho},t)
+\end{bmatrix}\approx\begin{bmatrix}U^{\mathrm{D}}(\vec{\rho},t)\\
+\vec{F}^{\mathrm{D}}(\vec{\rho},t)
+\end{bmatrix}=\sum_{i=1}^{N_{T}}\begin{bmatrix}\hat{U}_{i}(t)\\
+\vec{F}(\hat{U}_{i}(t))
+\end{bmatrix}L_{i}(\vec{\rho}),
 \]
 
 \end_inset
@@ -4148,45 +4138,167 @@ G_{i}^{\delta D}
 \begin_inset Formula $N_{T}(p)\equiv\binom{p+2}{2}$
 \end_inset
 
- 为内部取值点个数，上标中的 
-\begin_inset Formula $D$
+ 为 solution points 个数，上标中的 D 表示其在单元边界处间断。为构造在单元边界处连续的重构 (R) 通量（实际上是构造修正
+ (C) 通量 
+\begin_inset Formula $\vec{F}^{\mathrm{C}}$
 \end_inset
 
- 表示间断。于是，间断通量的散度可表示为
+）
 \begin_inset Formula 
 \[
-\partial_{\vec{\rho}}\vdot\vec{F}^{\delta D}\equiv\partial_{\xi}\,F^{\delta D}+\partial_{\eta}\,G^{\delta D}\approx\sum_{i=1}^{N_{T}(p)}\left(F_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\xi}+G_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho})}{\partial\eta}\right).
+\vec{F}^{\mathrm{R}}=\vec{F}^{\mathrm{D}}+\vec{F}^{\mathrm{C}},
 \]
 
 \end_inset
 
-定义局部坐标下的修正通量
+规定
 \begin_inset Formula 
 \[
-\vec{F}^{\delta C}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho}),
+\vec{\nu}\vdot\vec{F}^{\mathrm{R}}=F_{\nu}^{\mathrm{I}}\qty(U^{\mathrm{D}},U_{+}^{\mathrm{D}}),\quad\forall\vec{\rho}\in\partial T,
 \]
 
 \end_inset
 
-其中
+其中 
+\begin_inset Formula $F_{\nu}^{\mathrm{I}}$
+\end_inset
+
+ 为法向数值通量，
+\begin_inset Formula $U^{\mathrm{D}},U_{+}^{\mathrm{D}}$
+\end_inset
+
+ 分别为当前（内侧）单元与外侧单元的近似解。这相当于规定
+\begin_inset Formula 
+\[
+\vec{\nu}\vdot\vec{F}^{\mathrm{C}}=F_{\nu}^{\mathrm{I}}-\vec{\nu}\vdot\vec{F}^{\mathrm{D}}\eqqcolon[F_{\nu}],\quad\forall\vec{\rho}\in\partial T.
+\]
+
+\end_inset
+
+为寻找具有这种性质的 
+\begin_inset Formula $\vec{F}^{\mathrm{C}}$
+\end_inset
+
+，仿照一维形式的 FR，定义
+\begin_inset Formula 
+\[
+\vec{F}^{\mathrm{C}}(\vec{\rho})=\sum_{j=1}^{N_{\partial T}}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho}),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $[F_{\nu}]_{j}$
+\end_inset
+
+ 为 
+\begin_inset Formula $[F_{\nu}]\equiv F^{\mathrm{I}}-\vec{\nu}\vdot\vec{F}^{\mathrm{D}}$
+\end_inset
+
+ 在 flux point 
+\begin_inset Formula $\vec{\rho}_{j}\in\partial T$
+\end_inset
+
+ 处的取值，
+\begin_inset Formula $\vec{\varphi}_{j}$
+\end_inset
+
+ 为待定的向量修正函数。
+\end_layout
+
+\begin_layout Standard
+将
+\begin_inset Formula 
+\[
+U(\vec{\rho},t)\approx U^{\mathrm{D}}(\vec{\rho},t)=\sum_{i=1}^{N_{T}}\hat{U}_{i}(t)\,L_{i}(\vec{\rho})
+\]
+
+\end_inset
+
+及
+\begin_inset Formula 
+\[
+\vec{F}(\vec{\rho})\approx\vec{F}^{\mathrm{R}}(\vec{\rho})=\vec{F}^{\mathrm{D}}(\vec{\rho})+\vec{F}^{\mathrm{C}}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}}\vec{F}(\hat{U}_{i}(t))\,L_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho})\right)
+\]
+
+\end_inset
+
+代入强形式
+\begin_inset Formula 
+\[
+\partial_{t}\,U^{\mathrm{D}}+\partial_{\vec{\rho}}\vdot\vec{F}^{\mathrm{R}}=0,
+\]
+
+\end_inset
+
+并依次在 solution points 
+\begin_inset Formula $\vec{\rho}_{k}$
+\end_inset
+
+ 处取值，再利用 
+\begin_inset Formula $U^{\mathrm{D}}(\vec{\rho}_{k},t)=\sum_{i=1}^{N_{T}}\hat{U}_{i}(t)\,L_{i}(\vec{\rho}_{k})=\hat{U}_{k}(t)$
+\end_inset
+
+，即得半离散格式：
+\begin_inset Formula 
+\[
+\dv{\hat{U}_{k}(t)}{t}=-\sum_{i=1}^{N_{T}}\vec{F}(\hat{U}_{i}(t))\vdot\partial_{\vec{\rho}}\,L_{i}(\vec{\rho}_{k})-\sum_{j=1}^{N_{\partial T}}[F_{\nu}]_{j}\,\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}(\vec{\rho}_{k}).
+\]
+
+\end_inset
+
+其具体形式取决于
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $N_{\partial T}(p)$
+单元内部的 solution points 
+\begin_inset Formula $\left\{ \vec{\rho}_{i}\right\} _{i=1}^{N_{T}}$
 \end_inset
 
- 为边界取值点总数；
+ 的分布。
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $[F_{\nu}]\coloneqq F_{\nu}^{\delta I}-\vec{\nu}\vdot\vec{F}^{\delta D}$
+单元边界上的 flux points 
+\begin_inset Formula $\left\{ \vec{\rho}_{j}\right\} _{j=1}^{N_{\partial T}}$
 \end_inset
 
- 为通量阶跃值；
+ 的分布。
 \end_layout
 
 \begin_layout Itemize
 向量修正函数 
+\begin_inset Formula $\left\{ \vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}}$
+\end_inset
+
+ 或标量修正场 
+\begin_inset Formula $\left\{ \phi_{j}\equiv\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}}$
+\end_inset
+
+ 的选取。
+\end_layout
+
+\begin_layout Itemize
+法向数值通量 
+\begin_inset Formula $F_{\nu}^{\mathrm{I}}$
+\end_inset
+
+ 的形式。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+量修正函数 
 \begin_inset Formula $\vec{\varphi}_{j}$
 \end_inset
 
@@ -4235,11 +4347,11 @@ g(\xi,\eta)
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 由此得近似通量在边界求值点上的值：
 \begin_inset Formula 
 \[
-\vec{F}^{\delta C}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[F_{\nu}]_{j},\quad\vec{F}^{\delta}(\vec{\rho}_{j})=F_{\nu}^{\delta I}(\vec{\rho}_{j}).
+\vec{F}^{\mathrm{C}}(\vec{\rho}_{j})\vdot\vec{\nu}(\vec{\rho}_{j})=[F_{\nu}]_{j},\quad\vec{F}^{\delta}(\vec{\rho}_{j})=F_{\nu}^{\delta I}(\vec{\rho}_{j}).
 \]
 
 \end_inset
@@ -4247,90 +4359,6 @@ g(\xi,\eta)
 
 \end_layout
 
-\begin_layout Standard
-将
-\begin_inset Formula 
-\[
-U(\vec{\rho})\approx U^{\delta D}(\vec{\rho})=\sum_{i=1}^{N_{T}(p)}U_{i}^{\delta D}\,l_{i}(\vec{\rho})
-\]
-
-\end_inset
-
-及
-\begin_inset Formula 
-\[
-\vec{F}(\vec{\rho})\approx\vec{F}^{\delta}(\vec{\rho})=\vec{F}^{\delta D}(\vec{\rho})+\vec{F}^{\delta C}(\vec{\rho})=\left(\sum_{i=1}^{N_{T}(p)}\vec{F}_{i}^{\delta D}\,l_{i}(\vec{\rho})\right)+\left(\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\vec{\varphi}_{j}(\vec{\rho})\right)
-\]
-
-\end_inset
-
-代入 
-\begin_inset Formula $\vec{\rho}_{k}$
-\end_inset
-
- 点的守恒律
-\begin_inset Formula 
-\[
-\partial_{t}\,U^{\delta D}(\vec{\rho}_{k})+\partial_{\vec{\rho}}\vdot\vec{F}^{\delta}(\vec{\rho}_{k})=0,
-\]
-
-\end_inset
-
-并利用 
-\begin_inset Formula $l_{i}(\vec{\rho}_{k})=\delta_{ik}$
-\end_inset
-
-，得半离散 FR 格式：
-\begin_inset Formula 
-\[
-\begin{aligned}\dv{U_{k}^{\delta D}}{t} & =-\sum_{i=1}^{N_{T}(p)}\left(F_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\xi}+G_{i}^{\delta D}\frac{\partial l_{i}(\vec{\rho}_{k})}{\partial\eta}\right)\\
- & -\sum_{j=1}^{N_{\partial T}(p)}[F_{\nu}]_{j}\,\underbrace{\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}}_{\phi_{j}}(\vec{\rho}_{k}),\quad k=1,\dots,N_{T}(p).
-\end{aligned}
-\]
-
-\end_inset
-
-上述 FR 格式的具体形式，取决于
-\end_layout
-
-\begin_layout Itemize
-单元内部求值点 
-\begin_inset Formula $\left\{ \vec{\rho}_{k}\right\} _{k=1}^{N_{T}(p)}$
-\end_inset
-
- 的分布。
-\end_layout
-
-\begin_layout Itemize
-单元边界求值点 
-\begin_inset Formula $\left\{ \vec{\rho}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
-\end_inset
-
- 的分布。
-\end_layout
-
-\begin_layout Itemize
-向量修正函数 
-\begin_inset Formula $\left\{ \vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
-\end_inset
-
- 或标量修正场 
-\begin_inset Formula $\left\{ \phi_{j}\equiv\partial_{\vec{\rho}}\vdot\vec{\varphi}_{j}\right\} _{j=1}^{N_{\partial T}(p)}$
-\end_inset
-
- 的选取。
-\end_layout
-
-\begin_layout Itemize
-法向数值通量 
-\begin_inset Formula $F_{\nu}$
-\end_inset
-
- 的构造。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
