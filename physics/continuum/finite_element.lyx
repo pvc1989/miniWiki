@@ -4529,7 +4529,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 \begin_inset Formula 
 \[
 \begin{aligned}\hat{f}_{j,l} & =\cdots-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x}\\
- & =\cdots-\nu_{j}\,\underbrace{\begin{bmatrix}L'_{j,0}(x_{j,l}) & \cdots & L'_{j,p}(x_{j,l})\end{bmatrix}}_{\underline{A}_{j,l}}\,\underline{\hat{u}}_{j}(t),\quad\underline{\hat{u}}_{j}(t)\coloneqq\begin{bmatrix}\hat{u}_{j,0}(t)\\
+ & =\cdots-\nu_{j}\,\underbrace{\begin{bmatrix}L'_{j,0}(x_{j,l}) & \cdots & L'_{j,p}(x_{j,l})\end{bmatrix}}_{\bra{A_{j,l}}}\ket{\hat{u}_{j}},\quad\ket{\hat{u}_{j}}\coloneqq\begin{bmatrix}\hat{u}_{j,0}(t)\\
 \vdots\\
 \hat{u}_{j,p}(t)
 \end{bmatrix},
@@ -4541,8 +4541,8 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 从而有
 \begin_inset Formula 
 \[
-\begin{aligned}-\sum_{l}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x} & =-\sum_{l}L'_{j,l}(x_{j,k})\,\overbrace{\left(\cdots-\nu_{j}\,\underline{A}_{j,l}\,\underline{\hat{u}}_{j}(t)\right)}^{\hat{f}_{j,l}(t)}\\
- & =\cdots+\nu_{j}\,\overbrace{\sum_{l}L'_{j,l}(x_{j,k})\,\underline{A}_{j,l}}^{\underline{B}_{j,k}}\,\underline{\hat{u}}_{j}(t),
+\begin{aligned}-\sum_{l}\hat{f}_{j,l}(t)\dv{L_{j,l}(x_{j,k})}{x} & =-\sum_{l}L'_{j,l}(x_{j,k})\,\overbrace{\left(\cdots-\nu_{j}\bra{A_{j,l}}\ket{\hat{u}_{j}}\right)}^{\hat{f}_{j,l}(t)}\\
+ & =\cdots+\nu_{j}\,\overbrace{\sum_{l}L'_{j,l}(x_{j,k})\bra{A_{j,l}}}^{\bra{B_{j,k}}}\ket{\hat{u}_{j}},
 \end{aligned}
 \]
 
@@ -4552,7 +4552,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 \begin_inset Formula 
 \[
 \begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{h_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}h'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
- & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}h'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\,\underline{A}_{j,l}}^{\underline{C}_{j,k}}\,\underline{\hat{u}}_{j}(t),
+ & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}h'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\bra{A_{j,l}}}^{\bra{C_{j,k}}}\ket{\hat{u}_{j}},
 \end{aligned}
 \]
 
@@ -4561,7 +4561,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 故
 \begin_inset Formula 
 \[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\left(\underline{B}_{j,k}-\underline{C}_{j,k}\right)\underline{\hat{u}}_{j}(t)-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\bra{B_{j,k}}\ket{\hat{u}_{j}}+\nu_{j}\bra{C_{j,k}}\ket{\hat{u}_{j}}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
 \]
 
 \end_inset
@@ -4603,9 +4603,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 整理成矩阵形式有
 \begin_inset Formula 
 \[
-\begin{aligned} & \beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
-= & \underbrace{\begin{bmatrix}\cdots & +\beta_{0}h^{-1}\zeta L_{j+\zeta,l}(x_{j+\zeta/2})+\frac{1}{2}L_{j+\zeta,l}(x_{j+\zeta/2})+\beta_{1}h\zeta L''_{j+\zeta,l}(x_{j+\zeta/2}) & \cdots\end{bmatrix}}_{\underline{D}_{j,\zeta}^{+}}\,\underline{\hat{u}}_{j+\zeta}(t)\\
-+ & \underbrace{\begin{bmatrix}\cdots & -\beta_{0}h^{-1}\zeta L_{j+\zeta,l}(x_{j+\zeta/2})+\frac{1}{2}L_{j+\zeta,l}(x_{j+\zeta/2})-\beta_{1}h\zeta L''_{j+\zeta,l}(x_{j+\zeta/2}) & \cdots\end{bmatrix}}_{\underline{D}_{j,\zeta}^{-}}\,\underline{\hat{u}}_{j}(t)
+\begin{aligned} & \phantom{.=}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}=\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
+ & =\underbrace{\left(+\beta_{0}h^{-1}\zeta\bra{L_{j+\zeta}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j+\zeta}(x_{j+\zeta/2})}+\beta_{1}h\zeta\bra{L''_{j+\zeta}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{+}}}\ket{\hat{u}_{j+\zeta}}\\
+ & +\underbrace{\left(-\beta_{0}h^{-1}\zeta\bra{L_{j}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j}(x_{j+\zeta/2})}-\beta_{1}h\zeta\bra{L''_{j}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{-}}}\ket{\hat{u}_{j}},
 \end{aligned}
 \]
 
@@ -4614,8 +4614,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 故
 \begin_inset Formula 
 \[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\max(\nu_{j},\nu_{j+1})\,h'_{+1}(x_{j,k})\left(\underline{D}_{j,+1}^{+}\,\underline{\hat{u}}_{j+1}(t)+\underline{D}_{j,+1}^{-}\,\underline{\hat{u}}_{j}(t)\right)\\
- & +\max(\nu_{j},\nu_{j-1})\,h'_{-1}(x_{j,k})\left(\underline{D}_{j,-1}^{+}\,\underline{\hat{u}}_{j-1}(t)+\underline{D}_{j,-1}^{-}\,\underline{\hat{u}}_{j}(t)\right),
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & \sum_{\zeta=\pm1}h'_{\zeta}(x_{j,k})\max(\nu_{j},\nu_{j+\zeta})\left(\bra{D_{j,\zeta}^{+}}\ket{\hat{u}_{j+\zeta}}+\bra{D_{j,\zeta}^{-}}\ket{\hat{u}_{j}}\right)\\
+=\cdots & +\max(\nu_{j},\nu_{j+1})\,h'_{+1}(x_{j,k})\left(\bra{D_{j,+1}^{+}}\ket{\hat{u}_{j+1}}+\bra{D_{j,+1}^{-}}\ket{\hat{u}_{j}}\right)\\
+ & +\max(\nu_{j},\nu_{j-1})\,h'_{-1}(x_{j,k})\left(\bra{D_{j,-1}^{+}}\ket{\hat{u}_{j-1}}+\bra{D_{j,-1}^{-}}\ket{\hat{u}_{j}}\right),
 \end{aligned}
 \]
 
@@ -4632,8 +4633,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 则
 \begin_inset Formula 
 \[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(h'_{+1}(x_{j,k})\,\underline{D}_{j,+1}^{-}+h'_{-1}(x_{j,k})\,\underline{D}_{j,-1}^{-}\right)}^{\underline{D}_{j,k}}\,\underline{\hat{u}}_{j}(t),\\
- & +\nu_{j}\,\overbrace{h'_{-1}(x_{j,k})\,\underline{D}_{j,-1}^{+}}^{\underline{E}_{j,k}}\,\underline{\hat{u}}_{j-1}(t)+\nu_{j}\,\overbrace{h'_{+1}(x_{j,k})\,\underline{D}_{j,+1}^{+}}^{\underline{F}_{j,k}}\,\underline{\hat{u}}_{j+1}(t),
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(h'_{+1}(x_{j,k})\bra{D_{j,+1}^{-}}+h'_{-1}(x_{j,k})\bra{D_{j,-1}^{-}}\right)}^{\bra{D_{j,k}}}\ket{\hat{u}_{j}},\\
+ & +\nu_{j}\,\overbrace{h'_{-1}(x_{j,k})\bra{D_{j,-1}^{+}}}^{\bra{E_{j,k}}}\ket{\hat{u}_{j-1}}\\
+ & +\nu_{j}\,\overbrace{h'_{+1}(x_{j,k})\bra{D_{j,+1}^{+}}}^{\bra{F_{j,k}}}\ket{\hat{u}_{j+1}},
 \end{aligned}
 \]
 
@@ -4642,7 +4644,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 综上，
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\nu_{j}\left(\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\underline{\hat{u}}_{j}+\underline{E}_{j}\,\underline{\hat{u}}_{j-1}+\underline{F}_{j}\,\underline{\hat{u}}_{j+1}\right),
+\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots+\nu_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\ket{\hat{u}_{j}}+\nu_{j}\,\underline{E}_{j}\ket{\hat{u}_{j-1}}+\nu_{j}\,\underline{F}_{j}\ket{\hat{u}_{j+1}},
 \]
 
 \end_inset
@@ -4652,7 +4654,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 \end_inset
 
  分别是以 
-\begin_inset Formula $\underline{B}_{j,k},\underline{C}_{j,k},\underline{D}_{j,k},\underline{E}_{j,k},\underline{F}_{j,k}$
+\begin_inset Formula $\bra{B_{j,k}},\bra{C_{j,k}},\bra{D_{j,k}},\bra{E_{j,k}},\bra{F_{j,k}}$
 \end_inset
 
  为第 
@@ -4662,7 +4664,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
  行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
 \begin_inset Formula 
 \[
-\frac{\dd}{\dd t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}=\underline{\hat{u}}_{j}^{\mathrm{T}}\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\cdots+\nu_{j}\left(\underline{\hat{u}}_{j}^{\mathrm{T}}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\underline{\hat{u}}_{j}+\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{E}_{j}\,\underline{\hat{u}}_{j-1}+\underline{\hat{u}}_{j}^{\mathrm{T}}\,\underline{F}_{j}\,\underline{\hat{u}}_{j+1}\right),
+\begin{aligned}\frac{\dd}{\dd t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2} & =\bra{\hat{u}_{j}}\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots\\
+ & +\nu_{j}\bra{\hat{u}_{j}}\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\nu_{j}\bra{\hat{u}_{j}}\underline{E}_{j}\ket{\hat{u}_{j-1}}+\nu_{j}\bra{\hat{u}_{j}}\underline{F}_{j}\ket{\hat{u}_{j+1}},
+\end{aligned}
 \]
 
 \end_inset
