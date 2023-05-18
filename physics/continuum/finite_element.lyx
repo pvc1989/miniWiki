@@ -4532,7 +4532,7 @@ u_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{u}_{j,l}(t)\,L_{j,l}(x),\quad f_{j}^{
 
 \begin_inset Formula 
 \[
-f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\right)h_{-1}(\xi)+\left(f_{j+1/2}^{\mathrm{I}}-f_{j+1/2}^{\mathrm{D}}\right)h_{+1}(\xi),
+f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\right)g_{-1}(\xi)+\left(f_{j+1/2}^{\mathrm{I}}-f_{j+1/2}^{\mathrm{D}}\right)g_{+1}(\xi),
 \]
 
 \end_inset
@@ -4548,7 +4548,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
  个结点处有
 \begin_inset Formula 
 \[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{h_{\zeta}(x_{j,k})}{x},
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{g_{\zeta}(x_{j,k})}{x},
 \]
 
 \end_inset
@@ -4579,8 +4579,8 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 
 \begin_inset Formula 
 \[
-\begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{h_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}h'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
- & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}h'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\bra{A_{j,l}}}^{\bra{C_{j,k}}}\ket{\hat{u}_{j}},
+\begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{g_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}g'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
+ & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}g'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\bra{A_{j,l}}}^{\bra{C_{j,k}}}\ket{\hat{u}_{j}},
 \end{aligned}
 \]
 
@@ -4589,7 +4589,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 故
 \begin_inset Formula 
 \[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\bra{B_{j,k}}\ket{\hat{u}_{j}}+\nu_{j}\bra{C_{j,k}}\ket{\hat{u}_{j}}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x},
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\bra{B_{j,k}}\ket{\hat{u}_{j}}-\nu_{j}\bra{C_{j,k}}\ket{\hat{u}_{j}}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x},
 \]
 
 \end_inset
@@ -4597,8 +4597,8 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 还需确定
 \begin_inset Formula 
 \[
-\begin{aligned}f_{j+\zeta/2}^{\mathrm{I}} & =f_{j+\zeta/2}^{\mathrm{c,I}}-f_{j+\zeta/2}^{\mathrm{d,I}}-\max(\nu_{j},\nu_{j+\zeta})\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\\
- & =\cdots-\max(\nu_{j},\nu_{j+\zeta})\left(\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\right),
+\begin{aligned}f_{j+\zeta/2}^{\mathrm{I}} & =f_{j+\zeta/2}^{\mathrm{c,I}}-f_{j+\zeta/2}^{\mathrm{d,I}}-\nu_{j+\zeta/2}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\\
+ & =\cdots-\nu_{j+\zeta/2}\left(\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\right),
 \end{aligned}
 \]
 
@@ -4623,7 +4623,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 
 \begin_inset Formula 
 \[
-\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv[2]{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x}\right),
+\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv[2]{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x}\right),
 \]
 
 \end_inset
@@ -4632,7 +4632,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 \begin_inset Formula 
 \[
 \begin{aligned} & \phantom{.=}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}=\beta_{0}\frac{\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}}{h}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\,h\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
- & =\underbrace{\left(+\beta_{0}h^{-1}\zeta\bra{L_{j+\zeta}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j+\zeta}(x_{j+\zeta/2})}+\beta_{1}h\zeta\bra{L''_{j+\zeta}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{+}}}\ket{\hat{u}_{j+\zeta}}\\
+ & =\underbrace{\left(\beta_{0}h^{-1}\zeta\bra{L_{j+\zeta}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j+\zeta}(x_{j+\zeta/2})}+\beta_{1}h\zeta\bra{L''_{j+\zeta}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{+}}}\ket{\hat{u}_{j+\zeta}}\\
  & +\underbrace{\left(-\beta_{0}h^{-1}\zeta\bra{L_{j}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j}(x_{j+\zeta/2})}-\beta_{1}h\zeta\bra{L''_{j}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{-}}}\ket{\hat{u}_{j}},
 \end{aligned}
 \]
@@ -4642,9 +4642,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 故
 \begin_inset Formula 
 \[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & \sum_{\zeta=\pm1}h'_{\zeta}(x_{j,k})\max(\nu_{j},\nu_{j+\zeta})\left(\bra{D_{j,\zeta}^{+}}\ket{\hat{u}_{j+\zeta}}+\bra{D_{j,\zeta}^{-}}\ket{\hat{u}_{j}}\right)\\
-=\cdots & +\max(\nu_{j},\nu_{j+1})\,h'_{+1}(x_{j,k})\left(\bra{D_{j,+1}^{+}}\ket{\hat{u}_{j+1}}+\bra{D_{j,+1}^{-}}\ket{\hat{u}_{j}}\right)\\
- & +\max(\nu_{j},\nu_{j-1})\,h'_{-1}(x_{j,k})\left(\bra{D_{j,-1}^{+}}\ket{\hat{u}_{j-1}}+\bra{D_{j,-1}^{-}}\ket{\hat{u}_{j}}\right),
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\sum_{\zeta=\pm1}g'_{\zeta}(x_{j,k})\,\nu_{j+\zeta/2}\left(\bra{D_{j,\zeta}^{+}}\ket{\hat{u}_{j+\zeta}}+\bra{D_{j,\zeta}^{-}}\ket{\hat{u}_{j}}\right)\\
+=\cdots & +\nu_{j+1/2}\,g'_{+1}(x_{j,k})\left(\bra{D_{j,+1}^{+}}\ket{\hat{u}_{j+1}}+\bra{D_{j,+1}^{-}}\ket{\hat{u}_{j}}\right)\\
+ & +\nu_{j-1/2}\,g'_{-1}(x_{j,k})\left(\bra{D_{j,-1}^{+}}\ket{\hat{u}_{j-1}}+\bra{D_{j,-1}^{-}}\ket{\hat{u}_{j}}\right),
 \end{aligned}
 \]
 
@@ -4653,7 +4653,7 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 假设人工黏性的分布是孤立的，即
 \begin_inset Formula 
 \[
-\max(\nu_{j},\nu_{j+1})=\max(\nu_{j},\nu_{j-1})=\nu_{j},
+\nu_{j-1/2}=\nu_{j}=\nu_{j+1/2},
 \]
 
 \end_inset
@@ -4661,9 +4661,8 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 则
 \begin_inset Formula 
 \[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{h_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(h'_{+1}(x_{j,k})\bra{D_{j,+1}^{-}}+h'_{-1}(x_{j,k})\bra{D_{j,-1}^{-}}\right)}^{\bra{D_{j,k}}}\ket{\hat{u}_{j}},\\
- & +\nu_{j}\,\overbrace{h'_{-1}(x_{j,k})\bra{D_{j,-1}^{+}}}^{\bra{E_{j,k}}}\ket{\hat{u}_{j-1}}\\
- & +\nu_{j}\,\overbrace{h'_{+1}(x_{j,k})\bra{D_{j,+1}^{+}}}^{\bra{F_{j,k}}}\ket{\hat{u}_{j+1}},
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(g'_{+1}(x_{j,k})\bra{D_{j,+1}^{-}}+g'_{-1}(x_{j,k})\bra{D_{j,-1}^{-}}\right)}^{\bra{D_{j,k}}}\ket{\hat{u}_{j}}\\
+ & +\nu_{j}\,\overbrace{g'_{-1}(x_{j,k})\bra{D_{j,-1}^{+}}}^{\bra{E_{j,k}}}\ket{\hat{u}_{j-1}}+\nu_{j}\,\overbrace{g'_{+1}(x_{j,k})\bra{D_{j,+1}^{+}}}^{\bra{F_{j,k}}}\ket{\hat{u}_{j+1}},
 \end{aligned}
 \]
 
