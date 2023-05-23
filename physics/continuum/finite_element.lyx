@@ -3293,6 +3293,32 @@ c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N
 
 \end_layout
 
+\begin_layout Subsubsection
+Energy Stable
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\norm{u^{\mathrm{D}}}_{p,c}=\sqrt{\sum_{j}\left(\norm{u_{j}^{\mathrm{D}}}_{L_{2}(E_{j})}^{2}+\frac{c}{2}\left(\frac{\abs{E_{j}}}{2}\right)^{2p}\norm{\pdv[p]{u_{j}^{\mathrm{D}}}{x}}_{L_{2}(E_{j})}^{2}\right)},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{t}\norm{u^{\mathrm{D}}}_{p,c}^{2}\le0.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 多维形式
 \end_layout
@@ -3724,14 +3750,7 @@ status open
 \end_layout
 
 \begin_layout Subsubsection
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Castonguay_2011"
-literal "false"
-
-\end_inset
-
-
+坐标变换（可选）
 \end_layout
 
 \begin_layout Standard
@@ -3742,8 +3761,8 @@ literal "false"
  及相应的导数变换（下标表示求导）
 \begin_inset Formula 
 \[
-\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
-y_{\xi} & y_{\eta}
+\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
+\partial_{\xi}\,y & \partial_{\eta}\,y
 \end{bmatrix}}_{\underline{J}},
 \]
 
@@ -3756,7 +3775,7 @@ y_{\xi} & y_{\eta}
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f+\partial_{y}\,g,
+\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f_{x}+\partial_{y}\,f_{y},
 \]
 
 \end_inset
@@ -3768,7 +3787,7 @@ y_{\xi} & y_{\eta}
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F+\partial_{\eta}\,G,
+\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta},
 \]
 
 \end_inset
@@ -3776,12 +3795,12 @@ y_{\xi} & y_{\eta}
 其中
 \begin_inset Formula 
 \[
-U=J\,u,\quad\begin{bmatrix}F\\
-G
-\end{bmatrix}=\underbrace{\begin{bmatrix}y_{\eta} & -x_{\eta}\\
--y_{\xi} & x_{\xi}
-\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f\\
-g
+U=J\,u,\quad\begin{bmatrix}F_{x}\\
+F_{y}
+\end{bmatrix}\coloneqq\underbrace{\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f_{x}\\
+f_{y}
 \end{bmatrix}.
 \]
 
@@ -3789,15 +3808,15 @@ g
 
 
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Proof
 由导数变换公式
 \begin_inset Formula 
 \[
-\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta}\\
-y_{\xi} & y_{\eta}
-\end{bmatrix}}_{\underline{J}}
+\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
+\partial_{\xi}\,y & \partial_{\eta}\,y
+\end{bmatrix}}_{\underline{J}},
 \]
 
 \end_inset
@@ -3805,8 +3824,8 @@ y_{\xi} & y_{\eta}
 得
 \begin_inset Formula 
 \[
-\begin{bmatrix}\phi_{x} & \phi_{y}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta}\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
--y_{\xi} & x_{\xi}
+\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}\underbrace{\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
 \end{bmatrix}}_{\underline{J}^{-1}},
 \]
 
@@ -3815,13 +3834,13 @@ y_{\xi} & y_{\eta}
 从而得
 \begin_inset Formula 
 \[
-\begin{bmatrix}f_{x} & f_{y}\\
-g_{x} & g_{y}
-\end{bmatrix}=\begin{bmatrix}f_{\xi} & f_{\eta}\\
-g_{\xi} & g_{\eta}
-\end{bmatrix}\underbrace{J^{-1}\begin{bmatrix}y_{\eta} & -x_{\eta}\\
--y_{\xi} & x_{\xi}
-\end{bmatrix}}_{\underline{J}^{-1}}.
+\begin{bmatrix}\partial_{x}\,f_{x} & \partial_{y}\,f_{x}\\
+\partial_{x}\,f_{y} & \partial_{y}\,f_{y}
+\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}.
 \]
 
 \end_inset
@@ -3829,12 +3848,12 @@ g_{\xi} & g_{\eta}
 于是，通量在全局坐标下的散度为
 \begin_inset Formula 
 \[
-\begin{aligned}f_{x}+g_{y} & =\begin{bmatrix}f_{\xi} & f_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}y_{\eta}\\
--y_{\xi}
-\end{bmatrix}+\begin{bmatrix}g_{\xi} & g_{\eta}\end{bmatrix}J^{-1}\begin{bmatrix}-x_{\eta}\\
-x_{\xi}
+\begin{aligned}\partial_{x}\,f_{x}+\partial_{y}\,f_{y} & =\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y\\
+-\partial_{\xi}\,y
+\end{bmatrix}+\begin{bmatrix}\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}\end{bmatrix}\frac{1}{J}\begin{bmatrix}-\partial_{\eta}\,x\\
+\partial_{\xi}\,x
 \end{bmatrix}\\
- & =\left(f_{\xi}\,y_{\eta}-f_{\eta}\,y_{\xi}-g_{\xi}\,x_{\eta}+g_{\eta}\,x_{\xi}\right)J^{-1}.
+ & =\left(\frac{\partial f_{x}}{\partial\xi}\frac{\partial y}{\partial\eta}-\frac{\partial f_{x}}{\partial\eta}\frac{\partial y}{\partial\xi}-\frac{\partial f_{y}}{\partial\xi}\frac{\partial x}{\partial\eta}+\frac{\partial f_{y}}{\partial\eta}\frac{\partial x}{\partial\xi}\right)\frac{1}{J}.
 \end{aligned}
 \]
 
@@ -3843,23 +3862,15 @@ x_{\xi}
 定义局部坐标下的通量为
 \begin_inset Formula 
 \[
-\begin{bmatrix}F\\
-G
-\end{bmatrix}=\begin{bmatrix}y_{\eta} & -x_{\eta}\\
--y_{\xi} & x_{\xi}
-\end{bmatrix}\begin{bmatrix}f\\
-g
-\end{bmatrix}\equiv J\,\underline{J}^{-1}\begin{bmatrix}f\\
-g
+\begin{bmatrix}F_{\xi}\\
+F_{\eta}
+\end{bmatrix}=J\,\underline{J}^{-1}\begin{bmatrix}f_{x}\\
+f_{y}
+\end{bmatrix}=\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}\begin{bmatrix}f_{x}\\
+f_{y}
 \end{bmatrix},
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-F=f\,y_{\eta}-g\,x_{\eta},\quad G=-f\,y_{\xi}+g\,x_{\xi},
 \]
 
 \end_inset
@@ -3867,10 +3878,49 @@ F=f\,y_{\eta}-g\,x_{\eta},\quad G=-f\,y_{\xi}+g\,x_{\xi},
 则其在局部坐标下的散度为
 \begin_inset Formula 
 \[
-\begin{aligned}F_{\xi}+G_{\eta} & =\left(f\,y_{\eta}-g\,x_{\eta}\right)_{\xi}+\left(-f\,y_{\xi}+g\,x_{\xi}\right)_{\eta}\\
-\text{展开乘积之导} & =\left(f_{\xi}\,y_{\eta}+f\,y_{\eta\xi}\right)-\left(g_{\xi}\,x_{\eta}+g\,x_{\eta\xi}\right)-\left(f_{\eta}\,y_{\xi}+f\,y_{\xi\eta}\right)+\left(g_{\eta}\,x_{\xi}+g\,x_{\xi\eta}\right)\\
-\text{合并二阶导数} & =\underbrace{\left(f_{\xi}\,y_{\eta}-g_{\xi}\,x_{\eta}-f_{\eta}\,y_{\xi}+g_{\eta}\,x_{\xi}\right)}_{\left(f_{x}+g_{y}\right)J}+\underbrace{\left(f\,y_{\eta\xi}-g\,x_{\eta\xi}-f\,y_{\xi\eta}+g\,x_{\xi\eta}\right)}_{0}
+\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta}=\frac{\partial}{\partial\xi}\left(\frac{\partial y}{\partial\eta}f_{x}-\frac{\partial x}{\partial\eta}f_{y}\right)+\frac{\partial}{\partial\eta}\left(-\frac{\partial y}{\partial\xi}f_{x}+\frac{\partial x}{\partial\xi}f_{y}\right),
+\]
+
+\end_inset
+
+逐项展开乘积之导，得
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial^{2}y}{\partial\xi\partial\eta}f_{x}-\frac{\partial^{2}x}{\partial\xi\partial\eta}f_{y}\right)+\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)\\
+ & +\left(-\frac{\partial^{2}y}{\partial\eta\partial\xi}f_{x}+\frac{\partial^{2}x}{\partial\eta\partial\xi}f_{y}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right),
 \end{aligned}
+\]
+
+\end_inset
+
+其中二阶导数项两两相消，故剩下
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right)\\
+ & =\tr(\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})=\tr(J\,\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})\\
+ & =J\tr(\begin{bmatrix}\partial_{x}\,\xi & \partial_{y}\,\xi\\
+\partial_{x}\,\eta & \partial_{y}\,\eta
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})=J\tr(\begin{bmatrix}\partial_{x}\,f_{x} & \cdots\\
+\cdots & \partial_{y}\,f_{y}
+\end{bmatrix})\\
+ & =J\left(\partial_{x}\,f_{x}+\partial_{y}\,f_{y}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\partial_{\vec{\rho}}\vdot\vec{F}=J\,\partial_{\vec{r}}\vdot\vec{f}.
 \]
 
 \end_inset
@@ -4101,6 +4151,37 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 
 利用交叉导数相等，可得三行之和为零。
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+基于上述结果，有如下积分恒等式
+\begin_inset Formula 
+\[
+\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{J\,\partial_{\vec{r}}\vdot\vec{f}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E},
+\]
+
+\end_inset
+
+对该式两端分别应用散度定理，得
+\begin_inset Formula 
+\[
+\ip{U}{\vec{\nu}\vdot\vec{F}}_{\partial T}=\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E}=\ip{J\,u}{\vec{n}\vdot\vec{f}}_{\partial E},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Castonguay_2011"
+literal "false"
 
 \end_inset
 
@@ -4691,14 +4772,22 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
  行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
 \begin_inset Formula 
 \[
-\begin{aligned}\frac{\dd}{\dd t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2} & =\bra{\hat{u}_{j}}\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots\\
- & +\nu_{j}\bra{\hat{u}_{j}}\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\nu_{j}\bra{\hat{u}_{j}}\underline{E}_{j}\ket{\hat{u}_{j-1}}+\nu_{j}\bra{\hat{u}_{j}}\underline{F}_{j}\ket{\hat{u}_{j+1}},
+\begin{aligned}\dv{t}\sum_{k=0}^{p}\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2} & =\dv{t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}w_{j,k}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}=\cdots\\
+ & =\cdots+\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
 \end{aligned}
 \]
 
 \end_inset
 
+其中 
+\begin_inset Formula $\underline{W}_{j}$
+\end_inset
 
+ 是由 Gauss 求积权重 
+\begin_inset Formula $\left\{ w_{j,k}\right\} _{k=0}^{p}$
+\end_inset
+
+ 构成的对角阵。
 \end_layout
 
 \begin_layout Section
