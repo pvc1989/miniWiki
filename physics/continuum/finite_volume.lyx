@@ -3052,7 +3052,7 @@ k
 
  及其
 \color red
-面邻 (face-neighboring)
+面相邻 (face-neighboring)
 \color inherit
  控制体构成的紧致局部模板。
 \end_layout
@@ -3196,6 +3196,24 @@ I=\sum_{f=1}^{N_{f}}I_{f},
 \end_inset
 
  亦正定，故方程组有唯一解，通常需迭代求解。实际计算中，重构迭代不必严格收敛，对稳态问题的每个时间步（或非稳态问题的内迭代）只需做一次 SOR。
+\end_layout
+
+\begin_layout Standard
+更一般的重构泛函可取为
+\begin_inset Formula 
+\[
+\begin{aligned}I_{f} & =w_{\mathrm{s}}\sum_{p=0}^{k}d_{ij}^{2p}\,w_{\mathrm{s},p}\sum_{\vert\alpha\vert=0}^{p}\left\Vert \partial_{\underline{\alpha}}u_{i}^{h}-\partial_{\underline{\alpha}}u_{j}^{h}\right\Vert _{L_{2}(S_{f})}^{2}\\
+ & +w_{\mathrm{v}}\sum_{p=0}^{k}\left\{ d_{ij}^{2p}\,w_{\mathrm{v},p}\sum_{\vert\alpha\vert=0}^{p}\left(\left\Vert \partial_{\underline{\alpha}}u_{i}^{h}-\partial_{\underline{\alpha}}u_{j}^{h}\right\Vert _{L_{2}(V_{i})}^{2}+\left\Vert \partial_{\underline{\alpha}}u_{i}^{h}-\partial_{\underline{\alpha}}u_{j}^{h}\right\Vert _{L_{2}(V_{j})}^{2}\right)\right\} ,
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $w_{\mathrm{s}},w_{\mathrm{s},p},w_{\mathrm{v}},w_{\mathrm{v},p}$
+\end_inset
+
+ 为人工选定的权函数，可依据某种精度或效率准则进行优化。
 \end_layout
 
 \end_body
