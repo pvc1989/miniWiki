@@ -117,8 +117,9 @@ otherObject->SetExample(obj);                        // 使用
 
 ### Python 示例
 [`read.py`](./read.py) 和 [`write.py`](./write.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
-⚠️ 要运行该示例，必须先在本地[构建 VTK 程序库及 Python 模块](https://vtk.org/Wiki/VTK/Configure_and_Build)。
-如果构建成功，则运行以下命令
+⚠️ 要运行该示例，必须先在本地部署 VTK 模块（可直接运行 [`pip install vtk`](https://pypi.org/project/vtk/) 安装）。
+
+运行以下命令
 
 ```shell
 mkdir build  # 在 write.py 所属目录下，创建 build 目录

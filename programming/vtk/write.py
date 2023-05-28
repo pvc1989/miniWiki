@@ -41,11 +41,9 @@ grid.GetPointData().SetVectors(vector_on_points)
 
 # 创建四个「单元 (vtkCell)」
 # void vtkUnstructuredGrid::Allocate(vtkIdType numCells=1000)
-grid.Allocate(n_cells)
 vector_on_cells = vtk.vtkFloatArray()
 vector_on_cells.SetName("Average Position")
 vector_on_cells.SetNumberOfComponents(3)
-vector_on_cells.SetNumberOfTuples(n_cells)
 for i_cell in range(n_cells):
   global_id_list = connectivity[i_cell]
   n_nodes = len(global_id_list)
@@ -67,7 +65,7 @@ for i_cell in range(n_cells):
   grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
   # 以结点坐标的平均值为「单元数据 (cell data)」
   xyz_average /= n_nodes
-  vector_on_cells.InsertTuple(i_cell, xyz_average)
+  vector_on_cells.InsertNextTuple(xyz_average)
 # vtkCellData* vtkDataSet::GetCellData()
 # vtkDataSetAttributes <- vtkCellData
 # vtkDataSetAttributes::SetVectors(vtkDataArray*)
