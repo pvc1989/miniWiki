@@ -104,6 +104,438 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
+空间离散
+\end_layout
+
+\begin_layout Subsection
+坐标变换
+\end_layout
+
+\begin_layout Standard
+利用坐标变换 
+\begin_inset Formula $\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}$
+\end_inset
+
+ 及相应的导数变换（下标表示求导）
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
+\partial_{\xi}\,y & \partial_{\eta}\,y
+\end{bmatrix}}_{\underline{J}},
+\]
+
+\end_inset
+
+可将一般三角形 
+\begin_inset Formula $E$
+\end_inset
+
+ 上的守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f_{x}+\partial_{y}\,f_{y},
+\]
+
+\end_inset
+
+化为标准三角形 
+\begin_inset Formula $T$
+\end_inset
+
+ 上的守恒律
+\begin_inset Formula 
+\[
+\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+U=J\,u,\quad\begin{bmatrix}F_{x}\\
+F_{y}
+\end{bmatrix}\coloneqq\underbrace{\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f_{x}\\
+f_{y}
+\end{bmatrix}.
+\]
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Proof
+由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
+\partial_{\xi}\,y & \partial_{\eta}\,y
+\end{bmatrix}}_{\underline{J}},
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}\underbrace{\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}}_{\underline{J}^{-1}},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{x}\,f_{x} & \partial_{y}\,f_{x}\\
+\partial_{x}\,f_{y} & \partial_{y}\,f_{y}
+\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}.
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{x}\,f_{x}+\partial_{y}\,f_{y} & =\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y\\
+-\partial_{\xi}\,y
+\end{bmatrix}+\begin{bmatrix}\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}\end{bmatrix}\frac{1}{J}\begin{bmatrix}-\partial_{\eta}\,x\\
+\partial_{\xi}\,x
+\end{bmatrix}\\
+ & =\left(\frac{\partial f_{x}}{\partial\xi}\frac{\partial y}{\partial\eta}-\frac{\partial f_{x}}{\partial\eta}\frac{\partial y}{\partial\xi}-\frac{\partial f_{y}}{\partial\xi}\frac{\partial x}{\partial\eta}+\frac{\partial f_{y}}{\partial\eta}\frac{\partial x}{\partial\xi}\right)\frac{1}{J}.
+\end{aligned}
+\]
+
+\end_inset
+
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}F_{\xi}\\
+F_{\eta}
+\end{bmatrix}=J\,\underline{J}^{-1}\begin{bmatrix}f_{x}\\
+f_{y}
+\end{bmatrix}=\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}\begin{bmatrix}f_{x}\\
+f_{y}
+\end{bmatrix},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta}=\frac{\partial}{\partial\xi}\left(\frac{\partial y}{\partial\eta}f_{x}-\frac{\partial x}{\partial\eta}f_{y}\right)+\frac{\partial}{\partial\eta}\left(-\frac{\partial y}{\partial\xi}f_{x}+\frac{\partial x}{\partial\xi}f_{y}\right),
+\]
+
+\end_inset
+
+逐项展开乘积之导，得
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial^{2}y}{\partial\xi\partial\eta}f_{x}-\frac{\partial^{2}x}{\partial\xi\partial\eta}f_{y}\right)+\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)\\
+ & +\left(-\frac{\partial^{2}y}{\partial\eta\partial\xi}f_{x}+\frac{\partial^{2}x}{\partial\eta\partial\xi}f_{y}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+其中二阶导数项两两相消，故剩下
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right)\\
+ & =\tr(\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
+-\partial_{\xi}\,y & \partial_{\xi}\,x
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})=\tr(J\,\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})\\
+ & =J\tr(\begin{bmatrix}\partial_{x}\,\xi & \partial_{y}\,\xi\\
+\partial_{x}\,\eta & \partial_{y}\,\eta
+\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
+\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
+\end{bmatrix})=J\tr(\begin{bmatrix}\partial_{x}\,f_{x} & \cdots\\
+\cdots & \partial_{y}\,f_{y}
+\end{bmatrix})\\
+ & =J\left(\partial_{x}\,f_{x}+\partial_{y}\,f_{y}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\partial_{\vec{\rho}}\vdot\vec{F}=J\,\partial_{\vec{r}}\vdot\vec{f}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Proof
+上述证明可推广到三维。由导数变换公式
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix}}_{\underline{J}}
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underbrace{J^{-1}\overbrace{\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}}}_{\underline{J}^{-1}}^{\underline{J}^{*}},
+\]
+
+\end_inset
+
+或
+\begin_inset Formula 
+\[
+\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}J=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+从而得
+\begin_inset Formula 
+\[
+\begin{bmatrix}f_{x} & f_{y} & f_{z}\\
+g_{x} & g_{y} & g_{z}\\
+h_{x} & h_{y} & h_{z}
+\end{bmatrix}J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\\
+g_{\xi} & g_{\eta} & g_{\zeta}\\
+h_{\xi} & h_{\eta} & h_{\zeta}
+\end{bmatrix}\underline{J}^{*},
+\]
+
+\end_inset
+
+于是，通量在全局坐标下的散度与 
+\begin_inset Formula $J$
+\end_inset
+
+ 之积为
+\begin_inset Formula 
+\[
+\left(f_{x}+g_{y}+h_{z}\right)J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle+\begin{bmatrix}g_{\xi} & g_{\eta} & g_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle+\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。
+\end_layout
+
+\begin_layout Proof
+定义局部坐标下的通量为
+\begin_inset Formula 
+\[
+\begin{bmatrix}F\\
+G\\
+H
+\end{bmatrix}=\underline{J}^{*}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix}\equiv\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
+y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
+y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
+\end{bmatrix}\begin{bmatrix}f\\
+g\\
+h
+\end{bmatrix},
+\]
+
+\end_inset
+
+则其在局部坐标下的散度为
+\begin_inset Formula 
+\[
+\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
+ & +\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f+\langle2\vert\underline{J}^{*}\vert2\rangle\,g+\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}\\
+ & +\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f+\langle3\vert\underline{J}^{*}\vert2\rangle\,g+\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta},
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\langle r\vert\underline{J}^{*}\vert c\rangle$
+\end_inset
+
+ 表示取 
+\begin_inset Formula $\underline{J}^{*}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $r$
+\end_inset
+
+ 行、第 
+\begin_inset Formula $c$
+\end_inset
+
+ 列。按 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 分行，即
+\begin_inset Formula 
+\[
+\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\zeta}\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+分别考虑一阶导数与二阶导数。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{不含二阶导数的项} & =\underbrace{\langle1\vert\underline{J}^{*}\vert1\rangle\,f_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle\,f_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle\,f_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert2\rangle\,g_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle\,g_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle\,g_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle}\\
+ & +\underbrace{\langle1\vert\underline{J}^{*}\vert3\rangle\,h_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle\,h_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle\,h_{\zeta}}_{\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle}\\
+ & =\left(f_{x}+g_{y}+h_{z}\right)J.
+\end{aligned}
+\]
+
+\end_inset
+
+于是，只需证明剩余项之和为零。
+\begin_inset Formula 
+\[
+\begin{aligned}\sum\text{含二阶导数的项} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle_{\zeta}\right)f\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle_{\zeta}\right)g\\
+ & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle_{\zeta}\right)h.
+\end{aligned}
+\]
+
+\end_inset
+
+注意到 
+\begin_inset Formula $f,g,h$
+\end_inset
+
+ 的系数分别等于
+\begin_inset Formula 
+\[
+\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+z_{\xi} & z_{\eta} & z_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}
+\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
+x_{\xi} & x_{\eta} & x_{\zeta}\\
+y_{\xi} & y_{\eta} & y_{\zeta}
+\end{bmatrix},
+\]
+
+\end_inset
+
+三者在形式上相同，故只需证明其中之一为零。考虑 
+\begin_inset Formula $f$
+\end_inset
+
+ 的系数
+\begin_inset Formula 
+\[
+\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi}+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta}+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta},
+\]
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+展开乘积之导，得
+\begin_inset Formula 
+\[
+\begin{aligned}\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi} & =y_{\eta\xi}\,z_{\zeta}-y_{\zeta\xi}\,z_{\eta}+y_{\eta}\,z_{\zeta\xi}-y_{\zeta}\,z_{\eta\xi},\\
+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta} & =y_{\zeta\eta}\,z_{\xi}-y_{\xi\eta}\,z_{\zeta}+y_{\zeta}\,z_{\xi\eta}-y_{\xi}\,z_{\zeta\eta},\\
+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta} & =y_{\xi\zeta}\,z_{\eta}-y_{\eta\zeta}\,z_{\xi}+y_{\xi}\,z_{\eta\zeta}-y_{\eta}\,z_{\xi\zeta}.
+\end{aligned}
+\]
+
+\end_inset
+
+利用交叉导数相等，可得三行之和为零。
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+基于上述结果，有如下积分恒等式
+\begin_inset Formula 
+\[
+\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{J\,\partial_{\vec{r}}\vdot\vec{f}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E},
+\]
+
+\end_inset
+
+对该式两端分别应用散度定理，得
+\begin_inset Formula 
+\[
+\ip{U}{\vec{\nu}\vdot\vec{F}}_{\partial T}=\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E}=\ip{J\,u}{\vec{n}\vdot\vec{f}}_{\partial E},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 DG (Discontinuous Galerkin)
 \begin_inset CommandInset label
 LatexCommand label
@@ -112,10 +544,6 @@ name "sec:DG"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-For Conservation Laws
 \end_layout
 
 \begin_layout Subsubsection
@@ -1014,1209 +1442,6 @@ b_{i,N}(\vec{x})
 \end_layout
 
 \begin_layout Subsection
-隐式时间推进
-\end_layout
-
-\begin_layout Subsubsection
-隐式 Euler
-\end_layout
-
-\begin_layout Standard
-第 
-\begin_inset Formula $i$
-\end_inset
-
- 号单元
-\begin_inset Formula 
-\[
-\underline{m}_{i}\,\dv{\underline{\hat{u}}_{i}}{t}=\underline{r}_{i},
-\]
-
-\end_inset
-
-组装后得到
-\begin_inset Formula 
-\[
-\underline{m}\,\dv{\underline{\hat{u}}}{t}=\underline{r},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{m}\coloneqq\begin{bmatrix}\ddots\\
- & \underline{m}_{i}\\
- &  & \ddots\\
- &  &  & \underline{m}_{j}\\
- &  &  &  & \ddots
-\end{bmatrix},\quad\underline{\hat{u}}\coloneqq\begin{bmatrix}\vdots\\
-\underline{\hat{u}}_{i}\\
-\vdots\\
-\underline{\hat{u}}_{j}\\
-\vdots
-\end{bmatrix},\quad\underline{r}\coloneqq\begin{bmatrix}\vdots\\
-\underline{r}_{i}\\
-\vdots\\
-\underline{r}_{j}\\
-\vdots
-\end{bmatrix}.
-\]
-
-\end_inset
-
-对其应用隐式 Euler
-\begin_inset Formula 
-\[
-\underline{m}\,\frac{\ket{\Delta\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
-\Delta t\coloneqq t_{n+1}-t_{n},\\
-\ket{\Delta\hat{u}}\coloneqq\underline{\hat{u}}(t_{n+1})-\underline{\hat{u}}(t_{n}),
-\end{cases}
-\]
-
-\end_inset
-
-并引入线性近似
-\begin_inset Formula 
-\[
-\underline{r}^{n+1}\approx\underline{r}^{n}+\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n}\ket{\Delta\hat{u}},\quad\mel{i}{\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}}{j}\coloneqq\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}},
-\]
-
-\end_inset
-
-则转化为求解
-\begin_inset Formula 
-\[
-\underline{A}^{n}\ket{\Delta\hat{u}}=\underline{r}^{n},\quad\underline{A}^{n}\coloneqq\frac{\underline{m}}{\Delta t}-\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n},
-\]
-
-\end_inset
-
-当 
-\begin_inset Formula $\Delta t\to\infty$
-\end_inset
-
- 时，退化为 Newton 法解非线性代数方程组
-\begin_inset Formula 
-\[
-\underline{r}\qty(\underline{\hat{u}}(t_{n})+\ket{\Delta\hat{u}})=\underline{0},
-\]
-
-\end_inset
-
-具有二阶收敛率。
-\end_layout
-
-\begin_layout Subsubsection
-矩阵列化
-\end_layout
-
-\begin_layout Standard
-考虑 
-\begin_inset Formula $\underline{X}\in\mathbb{R}^{k\times l}$
-\end_inset
-
- 及 
-\begin_inset Formula $\underline{Y}\colon\underline{X}\mapsto\underline{Y}(\underline{X})\in\mathbb{R}^{m\times n}$
-\end_inset
-
-，则在形式上有微分关系
-\begin_inset Formula 
-\[
-\dd\underline{Y}=\frac{\partial\underline{Y}}{\partial\underline{X}}\,\dd\underline{X}
-\]
-
-\end_inset
-
-但无法用常规矩阵运算无法表达。实际上，这是一组张量关系
-\begin_inset Formula 
-\[
-\dd\langle r\vert\underline{Y}\vert s\rangle=\sum_{i=1}^{k}\sum_{j=1}^{l}\frac{\partial\langle r\vert\underline{Y}\vert s\rangle}{\partial\langle i\vert\underline{X}\vert j\rangle}\,\dd\langle i\vert\underline{X}\vert j\rangle,
-\]
-
-\end_inset
-
-需要给定 
-\begin_inset Formula $mn\times kl$
-\end_inset
-
- 个参数才能将 
-\begin_inset Formula $\partial\underline{Y}/\partial\underline{X}$
-\end_inset
-
- 确定下来。
-\end_layout
-
-\begin_layout Standard
-借助“列化”运算（对于 column-major 存储，无额外开销）
-\begin_inset Formula 
-\[
-\underline{X}^{\mathrm{C}}=\begin{bmatrix}\underline{X}\vert1\rangle\\
-\vdots\\
-\underline{X}\vert l\rangle
-\end{bmatrix}_{kl\times1},\quad\underline{Y}^{\mathrm{C}}=\begin{bmatrix}\underline{Y}\vert1\rangle\\
-\vdots\\
-\underline{Y}\vert n\rangle
-\end{bmatrix}_{mn\times1},
-\]
-
-\end_inset
-
-则有 well defined 导数矩阵
-\begin_inset Formula 
-\[
-\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}=\begin{bmatrix}\dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert l\rangle}\\
-\ddots & \ddots & \vdots\\
-\dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert l\rangle}
-\end{bmatrix}\in\mathbb{R}^{mn\times kl},\quad\underbrace{\dd\underline{Y}^{\mathrm{C}}}_{mn\times1}=\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}\,\underbrace{\dd\underline{X}^{\mathrm{C}}}_{kl\times1},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{bmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
-\ddots & \ddots & \vdots\\
-\dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}
-\end{bmatrix}\in\mathbb{R}^{m\times k},\quad\begin{cases}
-i=1,\dots,n,\\
-j=1,\dots,l,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-因此，各单元上的有限元方程
-\begin_inset Formula 
-\[
-\frac{\dd}{\dd t}\left(\underline{\hat{u}}_{i}\right)_{N\times K}=\left(\underline{m}_{i}\right)_{N\times N}^{-1}\left(\underline{r}_{i}\right)_{N\times K},
-\]
-
-\end_inset
-
-可以被 columnized 为
-\begin_inset Formula 
-\[
-\dv{}{t}\ket{\hat{u}_{i}}=\underline{M}_{i}^{-1}\ket{r_{i}},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{M}_{i}=\begin{bmatrix}\underline{m}_{i}\\
- & \ddots\\
- &  & \underline{m}_{i}
-\end{bmatrix}_{NK\times NK},\quad\ket{\hat{u}_{i}}=\begin{bmatrix}\underline{\hat{u}}_{i}\vert1\rangle\\
-\vdots\\
-\underline{\hat{u}}_{i}\vert K\rangle
-\end{bmatrix}_{NK\times1},\quad\ket{r_{i}}=\begin{bmatrix}\underline{r}_{i}\vert1\rangle\\
-\vdots\\
-\underline{r}_{i}\vert K\rangle
-\end{bmatrix}_{NK\times1}.
-\]
-
-\end_inset
-
-组装后得到
-\begin_inset Formula 
-\[
-\underline{M}\,\dv{}{t}\ket{\hat{u}}=\ket{r},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{M}\coloneqq\begin{bmatrix}\ddots\\
- & \underline{M}_{i}\\
- &  & \ddots\\
- &  &  & \underline{M}_{j}\\
- &  &  &  & \ddots
-\end{bmatrix},\quad\ket{\hat{u}}\coloneqq\begin{bmatrix}\vdots\\
-\ket{\hat{u}_{i}}\\
-\vdots\\
-\ket{\hat{u}_{j}}\\
-\vdots
-\end{bmatrix},\quad\ket{r}\coloneqq\begin{bmatrix}\vdots\\
-\ket{r_{i}}\\
-\vdots\\
-\ket{r_{j}}\\
-\vdots
-\end{bmatrix}.
-\]
-
-\end_inset
-
-按此记法，隐式 Euler 需求解的线性代数方程组为
-\begin_inset Formula 
-\[
-\underline{A}^{n}\ket{\Delta\hat{u}}=\ket{r^{n}},\quad\underline{A}^{n}\coloneqq\frac{\underline{M}}{\Delta t}-\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}},\quad\mel{i}{\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}}}{j}\coloneqq\frac{\partial\ket{r_{i}^{n}}}{\partial\bra{\hat{u}_{j}^{n}}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-本节剩余部分将尽可能使用 columnized 矩阵。
-\end_layout
-
-\begin_layout Subsubsection
-LU-SGS
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\underline{A}=\underline{L}+\underline{D}+\underline{U},
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\underline{L},\underline{D},\underline{U}$
-\end_inset
-
- 分别为严格下三角阵、块状对角阵、严格上三角阵。于是
-\begin_inset Formula 
-\[
-\underline{A}\ket{\Delta\hat{u}}=\ket{r}
-\]
-
-\end_inset
-
-可化为
-\begin_inset Formula 
-\[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\ket{\Delta\hat{u}}.
-\]
-
-\end_inset
-
-忽略
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Sharov_1997"
-literal "true"
-
-\end_inset
-
-最后一项，所得的方程
-\begin_inset Formula 
-\[
-(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}
-\]
-
-\end_inset
-
-可分两步求解（记 
-\begin_inset Formula $\ket{\Delta\hat{u}^{*}}\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}$
-\end_inset
-
-）：
-\end_layout
-
-\begin_layout Itemize
-先逐行向下，解出 
-\begin_inset Formula $\ket{\Delta\hat{u}^{*}}$
-\end_inset
-
-：
-\begin_inset Formula 
-\[
-(\underline{L}+\underline{D})\ket{\Delta\hat{u}^{*}}=\ket{r}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-再逐行向上，解出 
-\begin_inset Formula $\ket{\Delta\hat{u}}$
-\end_inset
-
-：
-\begin_inset Formula 
-\[
-(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\underline{D}\ket{\Delta\hat{u}^{*}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-该方法首先由 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Yoon_1988"
-literal "true"
-
-\end_inset
-
- 针对结构网格提出，后经 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Sharov_1997"
-literal "true"
-
-\end_inset
-
- 等推广到非结构网格。
-\end_layout
-
-\begin_layout Subsubsection
-GMRES+LU-SGS
-\end_layout
-
-\begin_layout Standard
-以 LU-SGS 中的系数矩阵
-\begin_inset Formula 
-\[
-\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})
-\]
-
-\end_inset
-
-为 left preconditioner:
-\begin_inset Formula 
-\[
-\underline{P}^{-1}\,\underline{A}\ket{\Delta\hat{u}}=\underline{P}^{-1}\ket{r},
-\]
-
-\end_inset
-
-调用 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:GMRES"
-
-\end_inset
-
- 迭代法解
-\begin_inset Formula 
-\[
-\underline{\tilde{A}}\ket{\Delta\hat{u}}=\ket{\tilde{r}},\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\ket{\tilde{r}}\coloneqq\underline{P}^{-1}\ket{r}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-精确 Jacobian 矩阵
-\end_layout
-
-\begin_layout Standard
-GMRES 迭代需频繁计算 
-\begin_inset Formula $\underline{A}\ket{\Delta\hat{u}}$
-\end_inset
-
-，可近似为
-\begin_inset Formula 
-\[
-\underline{A}\ket{\Delta\hat{u}}=\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\partial\ket{r}}{\partial\bra{\hat{u}}}\ket{\Delta\hat{u}}\approx\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\ket{r}_{\ket{\hat{u}}+\varepsilon\ket{\Delta\hat{u}}}-\ket{r}_{\ket{\hat{u}}}}{\varepsilon},
-\]
-
-\end_inset
-
-但 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Yang_2019"
-literal "true"
-
-\end_inset
-
- 指出用精确 Jacobian 矩阵有若干优势。
-\end_layout
-
-\begin_layout Standard
-对于第 
-\begin_inset Formula $i$
-\end_inset
-
- 号单元 
-\begin_inset Formula $E_{i}$
-\end_inset
-
-，实际需要计算的是 
-\begin_inset Formula $\underline{A}$
-\end_inset
-
- 的第 
-\begin_inset Formula $i$
-\end_inset
-
- 行（以块为元）与 
-\begin_inset Formula $\ket{\Delta\hat{u}}$
-\end_inset
-
- 的乘积，而 
-\begin_inset Formula $\langle i\vert\underline{A}$
-\end_inset
-
- 的非零元（块）只会出现在满足 
-\begin_inset Formula $\partial E_{i}\cap\partial E_{j}\ne\varnothing$
-\end_inset
-
- 的第 
-\begin_inset Formula $j$
-\end_inset
-
- 列，即
-\begin_inset Formula 
-\[
-\partial E_{i}\cap\partial E_{j}\ne\varnothing\iff\underline{0}\ne\langle i\vert\underline{A}\vert j\rangle.
-\]
-
-\end_inset
-
-具体的有
-\begin_inset Formula 
-\[
-\langle i\vert\underline{A}\vert j\rangle=\begin{cases}
-\langle i\vert\underline{L}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i>j\\
-\langle i\vert\underline{D}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{i}}}+\underline{M}_{i}/\Delta t, & i=j\\
-\langle i\vert\underline{U}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i<j
-\end{cases}
-\]
-
-\end_inset
-
-对于标量守恒律，由
-\begin_inset Formula 
-\[
-\ket{r_{i}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}f_{s}^{h}\qty(\ket{\hat{u}_{i}})-\int_{\partial E_{i}}\ket{b_{i}}f_{n}^{h}\qty(\ket{\hat{u}_{i}},\ket{\hat{u}_{j}}),
-\]
-
-\end_inset
-
-可知
-\begin_inset Formula 
-\[
-\pdv{\ket{r_{i}}}{\bra{\hat{u}_{i}}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{i}}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\pdv{\ket{r_{i}}}{\bra{\hat{u}_{j}}}=-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{j}}},\quad i\ne j
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\partial f_{n}^{h}/\partial\bra{\hat{u}_{j}}$
-\end_inset
-
- 需根据具体的 Riemann 解推导，而 
-\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
-\end_inset
-
- 只依赖于 
-\begin_inset Formula $f_{s}^{h}$
-\end_inset
-
- 的取法。若 
-\begin_inset Formula $f_{s}^{h}=f_{s}(u^{h})=f_{s}\qty(\ip{b_{i}}{\hat{u}_{i}})$
-\end_inset
-
-，则 
-\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
-\end_inset
-
- 可化为
-\begin_inset Formula 
-\[
-\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}\circ u^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}}{\partial u^{h}}\frac{\partial u^{h}}{\partial\bra{\hat{u}_{i}}}=\left(a_{s}\circ u^{h}\right)\bra{b_{i}},
-\]
-
-\end_inset
-
-对于守恒律系统，该式形式上仍成立，但需注意各矩阵的维数：
-\begin_inset Formula 
-\[
-\frac{\partial\ket{f_{s}^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\frac{\partial\ket{f_{s}}\circ\ket{u^{h}}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial\ket{f_{s}}_{K}}{\partial\bra{u^{h}}_{K}}\frac{\partial\ket{u^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\left(\underline{a_{s}}\circ\ket{u^{h}}\right)_{K\times K}\begin{bmatrix}\bra{b_{i}}\\
- & \ddots\\
- &  & \bra{b_{i}}
-\end{bmatrix}_{K\times NK},
-\]
-
-\end_inset
-
-其中最后一个矩阵来源于
-\begin_inset Formula 
-\[
-\ket{u^{h}}_{K}=\begin{bmatrix}\bra{b_{i}}\\
- & \ddots\\
- &  & \bra{b_{i}}
-\end{bmatrix}_{K\times NK}\ket{\hat{u}_{i}}_{NK}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-免矩阵
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Sharov_1997"
-literal "true"
-
-\end_inset
-
- 提出将 
-\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
-\end_inset
-
- 与 
-\begin_inset Formula $\Delta\underline{u}$
-\end_inset
-
- 的乘积近似为 
-\begin_inset Formula $\Delta\underline{f}$
-\end_inset
-
-，即
-\begin_inset Formula 
-\[
-\frac{\partial\underline{f}}{\partial\underline{u}}\,\Delta\underline{u}\approx\Delta\underline{f}\equiv\underline{f}(\underline{u}+\Delta\underline{u})-\underline{f}(\underline{u}),
-\]
-
-\end_inset
-
-由此免除矩阵 
-\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
-\end_inset
-
- 的计算，从而免除 
-\begin_inset Formula $\underline{L},\underline{U}$
-\end_inset
-
- 的计算及存储。
-\end_layout
-
-\begin_layout Subsection
-LDG (Local DG)
-\end_layout
-
-\begin_layout Subsubsection
-一维传热问题
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cockburn_2001"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-一维传热方程
-\begin_inset Formula 
-\[
-\partial_{t}\,u-\partial_{x}^{2}\,u=0,\quad(x,t)\in(0,2\pi)\times(0,T)
-\]
-
-\end_inset
-
-及初始条件
-\begin_inset Formula 
-\[
-u(x,0)=\sin(x),\quad x\in(0,2\pi)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-错误格式
-\end_layout
-
-\begin_layout Standard
-将 
-\begin_inset Formula $-\partial_{x}\,u$
-\end_inset
-
- 视为守恒律中的 
-\begin_inset Formula $f(u)$
-\end_inset
-
-，在形式上应用 DG 方法：
-\begin_inset Formula 
-\[
-\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{\partial_{x}\,u^{h}}_{E_{i}}=\ip{v^{h}}{\partial_{n}\,u^{h}}_{\partial E_{i}},
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $u^{h},v^{h}$
-\end_inset
-
- 均取自 
-\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-边界项中的 
-\begin_inset Formula $\partial_{n}\,u^{h}\coloneqq n_{x}\,\partial_{x}\,u^{h}$
-\end_inset
-
- 为（法向）“数值通量”，因缺少迎风性质，自然地取平均值
-\begin_inset Formula 
-\[
-\partial_{x}\,u^{h}=\frac{\left(\partial_{x}\,u^{h}\right)_{\mathrm{L}}+\left(\partial_{x}\,u^{h}\right)_{\mathrm{R}}}{2}
-\]
-
-\end_inset
-
-时间离散用 TVD RK3 格式，所得结果表现出 inconsistency。
-\end_layout
-
-\begin_layout Paragraph
-正确格式
-\end_layout
-
-\begin_layout Standard
-引入新变量 
-\begin_inset Formula $q\coloneqq\partial_{x}\,u$
-\end_inset
-
-，将方程 
-\begin_inset Formula $\partial_{t}\,u-\partial_{x}^{2}\,u=0$
-\end_inset
-
- 化为一阶，二者合并组成一阶方程组
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\begin{cases}
-\partial_{t}\,u-\partial_{x}\,q=0,\\
-q-\partial_{x}\,u=0,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在形式上应用 DG 方法：
-\begin_inset Formula 
-\[
-\begin{cases}
-\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{q^{h}}_{E_{i}}=\ip{v^{h}}{q_{n}^{h}}_{\partial E_{i}},\\
-\ip{w^{h}}{q^{h}}_{E_{i}}+\ip{\partial_{x}\,w^{h}}{u^{h}}_{E_{i}}=\ip{w^{h}}{u_{n}^{h}}_{\partial E_{i}},
-\end{cases}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $u^{h},v^{h},w^{h},q^{h}$
-\end_inset
-
- 均取自 
-\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-边界项中的 
-\begin_inset Formula $u_{n}^{h}$
-\end_inset
-
- 及 
-\begin_inset Formula $q_{n}^{h}$
-\end_inset
-
- 为（法向）“数值通量”，因缺少迎风性质，可以自然地取平均值
-\begin_inset Formula 
-\[
-u_{n}^{h}=n_{x}\frac{u_{\mathrm{L}}^{h}+u_{\mathrm{R}}^{h}}{2},\quad q_{n}^{h}=n_{x}\frac{q_{\mathrm{L}}^{h}+q_{\mathrm{R}}^{h}}{2},
-\]
-
-\end_inset
-
-或按 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cockburn_1998b"
-literal "false"
-
-\end_inset
-
- 建议取
-\begin_inset Formula 
-\[
-u_{n}^{h}=n_{x}\,u_{\mathrm{L}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{R}}^{h}
-\]
-
-\end_inset
-
- 或
-\begin_inset Formula 
-\[
-u_{n}^{h}=n_{x}\,u_{\mathrm{R}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{L}}^{h}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-高维标量问题
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-a_{ik}(u)\left(\partial_{k}\,u\right)\right)=0,\quad(t,\vec{r})\in(0,T)\times(0,1)^{d}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-u(t,\vec{r})=u_{0}(\vec{r}),\quad\vec{r}\in(0,1)^{d}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $a_{ik}(u)$
-\end_inset
-
- 对称、半正定，从而存在矩阵 
-\begin_inset Formula $b_{ik}(u)$
-\end_inset
-
- 使得
-\begin_inset Formula 
-\[
-a_{ik}(u)=b_{il}(u)\,b_{lk}(u)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-定义辅助变量
-\begin_inset Formula 
-\[
-q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}\,u\right),\quad l=1,2,\dots,d
-\]
-
-\end_inset
-
-则高阶方程化为一阶方程组
-\begin_inset Formula 
-\[
-\begin{cases}
-\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-b_{il}(u)\,q_{l}\right)=0,\\
-q_{l}-\partial_{k}\,g_{lk}(u)=0, & l=1,2,\dots,d
-\end{cases}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在形式上应用 DG 方法：
-\begin_inset Formula 
-\[
-\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{v^{h}}{\nu_{i}\,f_{i}^{h}-\nu_{i}\,b_{il}^{h}\,q_{l}^{h}}_{\partial E_{j}}=\ip{\partial_{i}v^{h}}{f_{i}^{h}-b_{il}^{h}\,q_{l}^{h}}_{E_{j}},
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\ip{w^{h}}{q_{l}^{h}}_{E_{j}}+\ip{\partial_{k}\,w^{h}}{g_{lk}^{h}}_{E_{j}}=\ip{w^{h}}{\nu_{k}\,g_{lk}^{h}}_{\partial E_{j}},\quad l=1,2,\dots,d
-\]
-
-\end_inset
-
-其中对流通量
-\begin_inset Formula 
-\[
-\left(\nu_{i}\,f_{i}^{h}\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
-\]
-
-\end_inset
-
-由纯对流问题的 Riemann 解给出；而扩散通量取作
-\begin_inset Formula 
-\[
-\left(\nu_{i}\,b_{il}^{h}\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left\llbracket \nu_{k}\,g_{lk}^{h}\right\rrbracket }{\left\llbracket u^{h}\right\rrbracket }\left\{ q_{l}^{h}\right\} +C_{11}\left\llbracket u^{h}\right\rrbracket +C_{1l}\left\{ q_{l}^{h}\right\} 
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left(\nu_{k}\,g_{lk}^{h}\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}^{h}\right\} -C_{1l}\left\llbracket u^{h}\right\rrbracket ,\quad l=1,2,\dots,d
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-高维系统问题
-\end_layout
-
-\begin_layout Subsection
-CDG (Compact DG)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Peraire_2008"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-...
- to overcome the issue that LDG method is not compact when applied to multidimen
-sional problems.
-\end_layout
-
-\begin_layout Subsection
-RDG (Recovery-based DG)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "van_Leer_2005,van_Leer_2007"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-...
- recovers a smooth continuous solution that in the weak sense is indistinguishab
-le from the discontinuous discrete solution.
-\end_layout
-
-\begin_layout Subsection
-rDG (Reconstructed DG)
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Luo_2010"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-...
- a smooth continuous solution is reconstructed at each cell interface from
- the discontinuous discrete solution and the diffusive fluxes are then obtained
- based on the smooth reconstructed solution.
-\end_layout
-
-\begin_layout Subsection
-DDG (Direct DG)
-\end_layout
-
-\begin_layout Quote
-From the PDE point of view, jumps of all even order derivatives as well
- as the average of odd order derivatives all contribute to the trace of
- the solution derivative.
- ...
- The form of the numerical flux is motivated by an exact trace formulation
- derived from solving the heat equation with smooth initial data having
- only one discontinuous point.
- —— 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Liu_2009_DDG"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Liu_2009_DDG"
-literal "true"
-
-\end_inset
-
- 提出并用于求解扩散问题，
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cheng_2016,Yang_2019"
-literal "true"
-
-\end_inset
-
- 推广到求解 Navier–Stokes 方程。
-\end_layout
-
-\begin_layout Standard
-考虑一维扩散问题
-\begin_inset Formula 
-\[
-\frac{\partial u}{\partial t}+\frac{\partial}{\partial x}\left(a(u)\frac{\partial u}{\partial x}\right)=0,\quad a(u)>0,
-\]
-
-\end_inset
-
-定义扩散通量
-\begin_inset Formula 
-\[
-h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\impliedby b(u)\coloneqq\int^{u}a(s)\dd{s},
-\]
-
-\end_inset
-
-则数值通量一般形式为
-\begin_inset Formula 
-\[
-\widehat{h(u)}=\beta_{0}\frac{\left\llbracket b(u)\right\rrbracket }{h}+\left\{ \frac{\partial b(u)}{\partial x}\right\} +\sum_{m=1}^{\left\lfloor k/2\right\rfloor }\beta_{m}\,h^{2m-1}\left\llbracket \frac{\partial^{2m}b(u)}{\partial x^{2m}}\right\rrbracket ,
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $k$
-\end_inset
-
- 为界面两侧多项式次数的较大者。
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Liu_2009_DDG"
-literal "true"
-
-\end_inset
-
- 数值试验表明：取
-\begin_inset Formula 
-\[
-\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
-\]
-
-\end_inset
-
-可在 
-\begin_inset Formula $k=0,1,2,3$
-\end_inset
-
- 情形下，得 
-\begin_inset Formula $k+1$
-\end_inset
-
- 阶最优精度。
-\end_layout
-
-\begin_layout Standard
-高维方程组情形：以 
-\begin_inset Formula $k=2,3$
-\end_inset
-
- 为例，构造 
-\begin_inset Formula $\underline{\partial}\,\underline{u}\equiv\underline{\partial}\otimes\underline{u}$
-\end_inset
-
- 在界面处的近似值：
-\begin_inset Formula 
-\begin{equation}
-\boxed{\left(\underline{\partial}\otimes\underline{u}\right)_{\partial E}\approx\left(\underline{\partial}\,\underline{u}\right)^{h}\coloneqq\beta_{0}\,\Delta^{-1}\left\llbracket \underline{n}\otimes\underline{u^{h}}\right\rrbracket +\left\{ \underline{\partial}\otimes\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left\llbracket \underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{u^{h}}\right\rrbracket },\label{eq:DDG-grad-at-interface}
-\end{equation}
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\underline{\partial}\otimes\underline{u}\equiv\underline{\partial}\,\underline{u}=\begin{bmatrix}\partial_{x}\,\underline{u}\\
-\partial_{y}\,\underline{u}
-\end{bmatrix},\quad\underline{n}\otimes\underline{u^{h}}=\begin{bmatrix}n_{x}\,\underline{u^{h}}\\
-n_{y}\,\underline{u^{h}}
-\end{bmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{u^{h}}=\begin{bmatrix}\partial_{x}\partial_{x}\,\underline{u^{h}} & \partial_{x}\partial_{y}\,\underline{u^{h}}\\
-\partial_{y}\partial_{x}\,\underline{u^{h}} & \partial_{y}\partial_{y}\,\underline{u^{h}}
-\end{bmatrix},
-\]
-
-\end_inset
-
-故 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:DDG-grad-at-interface"
-
-\end_inset
-
- 式的展开形式为
-\begin_inset Formula 
-\[
-\begin{aligned}\left(\partial_{x}\,\underline{u}\right)^{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{x}\,\underline{u^{h}}\right\rrbracket +\left\{ \partial_{x}\,\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left(n_{x}\left\llbracket \partial_{x}\partial_{x}\,\underline{u^{h}}\right\rrbracket +n_{y}\left\llbracket \partial_{x}\partial_{y}\,\underline{u^{h}}\right\rrbracket \right),\\
-\left(\partial_{y}\,\underline{u}\right)^{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{y}\,\underline{u^{h}}\right\rrbracket +\left\{ \partial_{y}\,\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left(n_{y}\left\llbracket \partial_{y}\partial_{x}\,\underline{u^{h}}\right\rrbracket +n_{y}\left\llbracket \partial_{y}\partial_{y}\,\underline{u^{h}}\right\rrbracket \right).
-\end{aligned}
-\]
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cheng_2016"
-literal "true"
-
-\end_inset
-
- 测试过
-\begin_inset Formula 
-\[
-\Delta=d(\vec{c}_{i},\vec{c}_{j}),\quad\Delta=\vert(\vec{c}_{i}-\vec{c_{j}})\vdot\vec{n}_{ij}\vert,\quad\Delta=\frac{\vert E_{i}\vert+\vert E_{j}\vert}{2\vert(\partial E)_{ij}\vert},
-\]
-
-\end_inset
-
-其中第二种效果最好，且等价于 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Yang_2019"
-literal "true"
-
-\end_inset
-
- 采用的
-\begin_inset Formula 
-\[
-\Delta=d(\vec{c}_{i},(\partial E)_{ij})+d(\vec{c}_{j},(\partial E)_{ij})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-在物理边界处，由于缺少邻接单元，无法直接套用 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:DDG-grad-at-interface"
-
-\end_inset
-
- 式。
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Cheng_2016"
-literal "true"
-
-\end_inset
-
- 令边界处的二阶导数阶跃值为零，即取
-\begin_inset Formula 
-\[
-\left(\partial_{n}\,\underline{u}\right)^{h}=\beta_{0}\,\Delta^{-1}\left\llbracket \underline{u^{h}}\right\rrbracket +\partial_{n}\left.\underline{u^{h}}\right|_{-},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\Delta=d(\vec{c}_{i},\partial\Omega)\times\begin{cases}
-2, & \text{ghost cell}\\
-1, & \text{prescribed}
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
 FR (Flux Reconstruction)
 \begin_inset CommandInset label
 LatexCommand label
@@ -2227,7 +1452,7 @@ name "sec:FR"
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 一维形式
 \end_layout
 
@@ -2242,7 +1467,7 @@ name "sec:FR"
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 坐标变换
 \end_layout
 
@@ -2282,7 +1507,7 @@ x|_{E_{j}}(\xi)\equiv x_{j}(\xi)\coloneqq c_{j}+\frac{h_{j}}{2}\,\xi,\quad J_{j}
  为单元长度。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 Lagrange 插值
 \end_layout
 
@@ -2349,7 +1574,7 @@ u_{j}^{h}(x,t)=\sum_{k=1}^{N}\hat{u}_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 间断通量
 \end_layout
 
@@ -2405,7 +1630,7 @@ f_{j}^{\mathrm{D}}(x,t)=\sum_{k=1}^{N}\hat{f}_{j,k}(t)\,\mathrm{La}_{j,k}(x),
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 界面通量
 \end_layout
 
@@ -2445,7 +1670,7 @@ u_{\mathrm{L}}\ne u_{\mathrm{R}},\quad f_{\mathrm{L}}\ne f_{\mathrm{R}},\quad f_
 。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 连续通量
 \end_layout
 
@@ -2529,7 +1754,7 @@ f_{j}^{\mathrm{R}}(x(\xi),t)=f_{j}^{\mathrm{D}}(x(\xi),t)+\overbrace{\sum_{\zeta
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 半离散格式
 \end_layout
 
@@ -2625,11 +1850,11 @@ u_{j}^{h}(x,t_{n+1})=u_{j}^{h}(x,t_{n})-\frac{\partial f_{j}^{\mathrm{R}}(x,t_{n
  个独立条件。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 Quadratures and Polynomials
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 Legendre
 \end_layout
 
@@ -2691,7 +1916,7 @@ whose zeros in
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 Radau
 \end_layout
 
@@ -2782,7 +2007,7 @@ Similarly, the right Radau polynomials of degree
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 Lobatto
 \end_layout
 
@@ -2853,11 +2078,11 @@ whose zeros in
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 修正函数实例
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 \begin_inset Formula $g\perp\mathbb{P}_{N-2}$
 \end_inset
 
@@ -2991,7 +2216,7 @@ reference "sec:DGequivFR"
  节。
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 \begin_inset Formula $g\perp\mathbb{P}_{N-3}$
 \end_inset
 
@@ -3103,7 +2328,7 @@ literal "true"
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 Staggered Grid
 \end_layout
 
@@ -3168,7 +2393,7 @@ The resulting scheme is less accurate than DG but has a CFL limit more than
  as large as that of DG.
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subparagraph
 Energy Stable FR by Vincent et al.
 \end_layout
 
@@ -3293,7 +2518,7 @@ c=\frac{2(N+1)}{(2N+1)N}A_{N},\quad\eta=\frac{N+1}{N},\quad\lambda=\frac{N+1}{2N
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 Energy Stable
 \end_layout
 
@@ -3319,7 +2544,7 @@ Energy Stable
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 多维形式
 \end_layout
 
@@ -3478,7 +2703,7 @@ Energy Stable
  的构造。
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Paragraph
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Huynh_2011"
@@ -3749,435 +2974,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsubsection
-坐标变换（可选）
-\end_layout
-
-\begin_layout Standard
-利用坐标变换 
-\begin_inset Formula $\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}$
-\end_inset
-
- 及相应的导数变换（下标表示求导）
-\begin_inset Formula 
-\[
-\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
-\partial_{\xi}\,y & \partial_{\eta}\,y
-\end{bmatrix}}_{\underline{J}},
-\]
-
-\end_inset
-
-可将一般三角形 
-\begin_inset Formula $E$
-\end_inset
-
- 上的守恒律
-\begin_inset Formula 
-\[
-\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f_{x}+\partial_{y}\,f_{y},
-\]
-
-\end_inset
-
-化为标准三角形 
-\begin_inset Formula $T$
-\end_inset
-
- 上的守恒律
-\begin_inset Formula 
-\[
-\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta},
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-U=J\,u,\quad\begin{bmatrix}F_{x}\\
-F_{y}
-\end{bmatrix}\coloneqq\underbrace{\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f_{x}\\
-f_{y}
-\end{bmatrix}.
-\]
-
-\end_inset
-
-
-\begin_inset Foot
-status open
-
-\begin_layout Proof
-由导数变换公式
-\begin_inset Formula 
-\[
-\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
-\partial_{\xi}\,y & \partial_{\eta}\,y
-\end{bmatrix}}_{\underline{J}},
-\]
-
-\end_inset
-
-得
-\begin_inset Formula 
-\[
-\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}\underbrace{\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}}_{\underline{J}^{-1}},
-\]
-
-\end_inset
-
-从而得
-\begin_inset Formula 
-\[
-\begin{bmatrix}\partial_{x}\,f_{x} & \partial_{y}\,f_{x}\\
-\partial_{x}\,f_{y} & \partial_{y}\,f_{y}
-\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
-\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
-\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}.
-\]
-
-\end_inset
-
-于是，通量在全局坐标下的散度为
-\begin_inset Formula 
-\[
-\begin{aligned}\partial_{x}\,f_{x}+\partial_{y}\,f_{y} & =\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\end{bmatrix}\frac{1}{J}\begin{bmatrix}\partial_{\eta}\,y\\
--\partial_{\xi}\,y
-\end{bmatrix}+\begin{bmatrix}\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}\end{bmatrix}\frac{1}{J}\begin{bmatrix}-\partial_{\eta}\,x\\
-\partial_{\xi}\,x
-\end{bmatrix}\\
- & =\left(\frac{\partial f_{x}}{\partial\xi}\frac{\partial y}{\partial\eta}-\frac{\partial f_{x}}{\partial\eta}\frac{\partial y}{\partial\xi}-\frac{\partial f_{y}}{\partial\xi}\frac{\partial x}{\partial\eta}+\frac{\partial f_{y}}{\partial\eta}\frac{\partial x}{\partial\xi}\right)\frac{1}{J}.
-\end{aligned}
-\]
-
-\end_inset
-
-定义局部坐标下的通量为
-\begin_inset Formula 
-\[
-\begin{bmatrix}F_{\xi}\\
-F_{\eta}
-\end{bmatrix}=J\,\underline{J}^{-1}\begin{bmatrix}f_{x}\\
-f_{y}
-\end{bmatrix}=\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}\begin{bmatrix}f_{x}\\
-f_{y}
-\end{bmatrix},
-\]
-
-\end_inset
-
-则其在局部坐标下的散度为
-\begin_inset Formula 
-\[
-\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta}=\frac{\partial}{\partial\xi}\left(\frac{\partial y}{\partial\eta}f_{x}-\frac{\partial x}{\partial\eta}f_{y}\right)+\frac{\partial}{\partial\eta}\left(-\frac{\partial y}{\partial\xi}f_{x}+\frac{\partial x}{\partial\xi}f_{y}\right),
-\]
-
-\end_inset
-
-逐项展开乘积之导，得
-\begin_inset Formula 
-\[
-\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial^{2}y}{\partial\xi\partial\eta}f_{x}-\frac{\partial^{2}x}{\partial\xi\partial\eta}f_{y}\right)+\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)\\
- & +\left(-\frac{\partial^{2}y}{\partial\eta\partial\xi}f_{x}+\frac{\partial^{2}x}{\partial\eta\partial\xi}f_{y}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right),
-\end{aligned}
-\]
-
-\end_inset
-
-其中二阶导数项两两相消，故剩下
-\begin_inset Formula 
-\[
-\begin{aligned}\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta} & =\left(\frac{\partial y}{\partial\eta}\frac{\partial f_{x}}{\partial\xi}-\frac{\partial x}{\partial\eta}\frac{\partial f_{y}}{\partial\xi}\right)+\left(-\frac{\partial y}{\partial\xi}\frac{\partial f_{x}}{\partial\eta}+\frac{\partial x}{\partial\xi}\frac{\partial f_{y}}{\partial\eta}\right)\\
- & =\tr(\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
-\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
-\end{bmatrix})=\tr(J\,\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
-\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
-\end{bmatrix})\\
- & =J\tr(\begin{bmatrix}\partial_{x}\,\xi & \partial_{y}\,\xi\\
-\partial_{x}\,\eta & \partial_{y}\,\eta
-\end{bmatrix}\begin{bmatrix}\partial_{\xi}\,f_{x} & \partial_{\eta}\,f_{x}\\
-\partial_{\xi}\,f_{y} & \partial_{\eta}\,f_{y}
-\end{bmatrix})=J\tr(\begin{bmatrix}\partial_{x}\,f_{x} & \cdots\\
-\cdots & \partial_{y}\,f_{y}
-\end{bmatrix})\\
- & =J\left(\partial_{x}\,f_{x}+\partial_{y}\,f_{y}\right),
-\end{aligned}
-\]
-
-\end_inset
-
-即
-\begin_inset Formula 
-\[
-\partial_{\vec{\rho}}\vdot\vec{F}=J\,\partial_{\vec{r}}\vdot\vec{f}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Proof
-上述证明可推广到三维。由导数变换公式
-\begin_inset Formula 
-\[
-\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}=\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}\underbrace{\begin{bmatrix}x_{\xi} & x_{\eta} & x_{\zeta}\\
-y_{\xi} & y_{\eta} & y_{\zeta}\\
-z_{\xi} & z_{\eta} & z_{\zeta}
-\end{bmatrix}}_{\underline{J}}
-\]
-
-\end_inset
-
-得
-\begin_inset Formula 
-\[
-\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underbrace{J^{-1}\overbrace{\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
-y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
-y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
-\end{bmatrix}}}_{\underline{J}^{-1}}^{\underline{J}^{*}},
-\]
-
-\end_inset
-
-或
-\begin_inset Formula 
-\[
-\begin{bmatrix}\phi_{x} & \phi_{y} & \phi_{z}\end{bmatrix}J=\begin{bmatrix}\phi_{\xi} & \phi_{\eta} & \phi_{\zeta}\end{bmatrix}\underline{J}^{*},
-\]
-
-\end_inset
-
-从而得
-\begin_inset Formula 
-\[
-\begin{bmatrix}f_{x} & f_{y} & f_{z}\\
-g_{x} & g_{y} & g_{z}\\
-h_{x} & h_{y} & h_{z}
-\end{bmatrix}J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\\
-g_{\xi} & g_{\eta} & g_{\zeta}\\
-h_{\xi} & h_{\eta} & h_{\zeta}
-\end{bmatrix}\underline{J}^{*},
-\]
-
-\end_inset
-
-于是，通量在全局坐标下的散度与 
-\begin_inset Formula $J$
-\end_inset
-
- 之积为
-\begin_inset Formula 
-\[
-\left(f_{x}+g_{y}+h_{z}\right)J=\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle+\begin{bmatrix}g_{\xi} & g_{\eta} & g_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle+\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle,
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\underline{J}^{*}\vert c\rangle$
-\end_inset
-
- 表示取 
-\begin_inset Formula $\underline{J}^{*}$
-\end_inset
-
- 的第 
-\begin_inset Formula $c$
-\end_inset
-
- 列。
-\end_layout
-
-\begin_layout Proof
-定义局部坐标下的通量为
-\begin_inset Formula 
-\[
-\begin{bmatrix}F\\
-G\\
-H
-\end{bmatrix}=\underline{J}^{*}\begin{bmatrix}f\\
-g\\
-h
-\end{bmatrix}\equiv\begin{bmatrix}y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta} & x_{\zeta}\,z_{\eta}-x_{\eta}\,z_{\zeta} & x_{\eta}\,y_{\zeta}-x_{\zeta}\,y_{\eta}\\
-y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta} & x_{\xi}\,z_{\zeta}-x_{\zeta}\,z_{\xi} & x_{\zeta}\,y_{\xi}-x_{\xi}\,y_{\zeta}\\
-y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi} & x_{\eta}\,z_{\xi}-x_{\xi}\,z_{\eta} & x_{\xi}\,y_{\eta}-x_{\eta}\,y_{\xi}
-\end{bmatrix}\begin{bmatrix}f\\
-g\\
-h
-\end{bmatrix},
-\]
-
-\end_inset
-
-则其在局部坐标下的散度为
-\begin_inset Formula 
-\[
-\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f+\langle1\vert\underline{J}^{*}\vert2\rangle\,g+\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}\\
- & +\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f+\langle2\vert\underline{J}^{*}\vert2\rangle\,g+\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}\\
- & +\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f+\langle3\vert\underline{J}^{*}\vert2\rangle\,g+\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta},
-\end{aligned}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\langle r\vert\underline{J}^{*}\vert c\rangle$
-\end_inset
-
- 表示取 
-\begin_inset Formula $\underline{J}^{*}$
-\end_inset
-
- 的第 
-\begin_inset Formula $r$
-\end_inset
-
- 行、第 
-\begin_inset Formula $c$
-\end_inset
-
- 列。按 
-\begin_inset Formula $f,g,h$
-\end_inset
-
- 分行，即
-\begin_inset Formula 
-\[
-\begin{aligned}F_{\xi}+G_{\eta}+H_{\zeta} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert1\rangle\,f\right)_{\zeta}\\
- & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert2\rangle\,g\right)_{\zeta}\\
- & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\xi}+\left(\langle2\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\eta}+\left(\langle3\vert\underline{J}^{*}\vert3\rangle\,h\right)_{\zeta}.
-\end{aligned}
-\]
-
-\end_inset
-
-分别考虑一阶导数与二阶导数。
-\begin_inset Formula 
-\[
-\begin{aligned}\sum\text{不含二阶导数的项} & =\underbrace{\langle1\vert\underline{J}^{*}\vert1\rangle\,f_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle\,f_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle\,f_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert1\rangle}\\
- & +\underbrace{\langle1\vert\underline{J}^{*}\vert2\rangle\,g_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle\,g_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle\,g_{\zeta}}_{\begin{bmatrix}f_{\xi} & f_{\eta} & f_{\zeta}\end{bmatrix}\underline{J}^{*}\vert2\rangle}\\
- & +\underbrace{\langle1\vert\underline{J}^{*}\vert3\rangle\,h_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle\,h_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle\,h_{\zeta}}_{\begin{bmatrix}h_{\xi} & h_{\eta} & h_{\zeta}\end{bmatrix}\underline{J}^{*}\vert3\rangle}\\
- & =\left(f_{x}+g_{y}+h_{z}\right)J.
-\end{aligned}
-\]
-
-\end_inset
-
-于是，只需证明剩余项之和为零。
-\begin_inset Formula 
-\[
-\begin{aligned}\sum\text{含二阶导数的项} & =\left(\langle1\vert\underline{J}^{*}\vert1\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert1\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert1\rangle_{\zeta}\right)f\\
- & +\left(\langle1\vert\underline{J}^{*}\vert2\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert2\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert2\rangle_{\zeta}\right)g\\
- & +\left(\langle1\vert\underline{J}^{*}\vert3\rangle_{\xi}+\langle2\vert\underline{J}^{*}\vert3\rangle_{\eta}+\langle3\vert\underline{J}^{*}\vert3\rangle_{\zeta}\right)h.
-\end{aligned}
-\]
-
-\end_inset
-
-注意到 
-\begin_inset Formula $f,g,h$
-\end_inset
-
- 的系数分别等于
-\begin_inset Formula 
-\[
-\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
-y_{\xi} & y_{\eta} & y_{\zeta}\\
-z_{\xi} & z_{\eta} & z_{\zeta}
-\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
-z_{\xi} & z_{\eta} & z_{\zeta}\\
-x_{\xi} & x_{\eta} & x_{\zeta}
-\end{bmatrix},\quad\det\begin{bmatrix}\partial_{\xi} & \partial_{\eta} & \partial_{\zeta}\\
-x_{\xi} & x_{\eta} & x_{\zeta}\\
-y_{\xi} & y_{\eta} & y_{\zeta}
-\end{bmatrix},
-\]
-
-\end_inset
-
-三者在形式上相同，故只需证明其中之一为零。考虑 
-\begin_inset Formula $f$
-\end_inset
-
- 的系数
-\begin_inset Formula 
-\[
-\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi}+\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta}+\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta},
-\]
-
-\end_inset
-
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-展开乘积之导，得
-\begin_inset Formula 
-\[
-\begin{aligned}\left(y_{\eta}\,z_{\zeta}-y_{\zeta}\,z_{\eta}\right)_{\xi} & =y_{\eta\xi}\,z_{\zeta}-y_{\zeta\xi}\,z_{\eta}+y_{\eta}\,z_{\zeta\xi}-y_{\zeta}\,z_{\eta\xi},\\
-\left(y_{\zeta}\,z_{\xi}-y_{\xi}\,z_{\zeta}\right)_{\eta} & =y_{\zeta\eta}\,z_{\xi}-y_{\xi\eta}\,z_{\zeta}+y_{\zeta}\,z_{\xi\eta}-y_{\xi}\,z_{\zeta\eta},\\
-\left(y_{\xi}\,z_{\eta}-y_{\eta}\,z_{\xi}\right)_{\zeta} & =y_{\xi\zeta}\,z_{\eta}-y_{\eta\zeta}\,z_{\xi}+y_{\xi}\,z_{\eta\zeta}-y_{\eta}\,z_{\xi\zeta}.
-\end{aligned}
-\]
-
-\end_inset
-
-利用交叉导数相等，可得三行之和为零。
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-基于上述结果，有如下积分恒等式
-\begin_inset Formula 
-\[
-\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{J\,\partial_{\vec{r}}\vdot\vec{f}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E},
-\]
-
-\end_inset
-
-对该式两端分别应用散度定理，得
-\begin_inset Formula 
-\[
-\ip{U}{\vec{\nu}\vdot\vec{F}}_{\partial T}=\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E}=\ip{J\,u}{\vec{n}\vdot\vec{f}}_{\partial E},
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
+\begin_layout Paragraph
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Castonguay_2011"
@@ -4525,354 +3322,8 @@ c\sum_{k=1}^{N_{T}}\sigma_{k}\sum_{m=1}^{p+1}\binom{p}{m-1}\left(D^{(m,p)}B_{i}\
  次多项式，可以精确积分。
 \end_layout
 
-\begin_layout Subsection
-黏性项处理
-\end_layout
-
-\begin_layout Subsubsection
-LDG
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Castonguay_2013,Williams_2013"
-literal "false"
-
-\end_inset
-
- 借用 LDG 方法，将二阶 PDE 改写为一阶 PDE 系统：
-\begin_inset Formula 
-\[
-\frac{\partial u}{\partial t}+\frac{\partial f^{\mathrm{c}}(u)}{\partial x}=\frac{\partial f^{\mathrm{d}}(u,q)}{\partial x},\quad q=\frac{\partial u}{\partial x}.
-\]
-
-\end_inset
-
-先（仿照 Riemann 解）定义界面函数值
-\begin_inset Formula 
-\[
-u_{j+1/2}^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} _{j+1/2}-\beta\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},\quad\beta=\pm0.5,
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\left\{ u^{\mathrm{D}}\right\} _{j+1/2}\coloneqq\frac{1}{2}\left(u_{j}^{\mathrm{D}}(x_{j+1/2})+u_{j+1}^{\mathrm{D}}(x_{j+1/2})\right),\quad\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}\coloneqq u_{j+1}^{\mathrm{D}}(x_{j+1/2})-u_{j}^{\mathrm{D}}(x_{j+1/2}).
-\]
-
-\end_inset
-
-再（仿照通量重构）定义（在界面处连续的）重构函数
-\begin_inset Formula 
-\[
-u_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{j,k}(t)\,L_{j,k}(x)}_{u_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)g_{\zeta}(\xi)}_{u_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
-\]
-
-\end_inset
-
-以此导出（在界面处间断的）未知量导数
-\begin_inset Formula 
-\[
-q_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x_{j}}{\xi}},
-\]
-
-\end_inset
-
-从而导出（在界面处间断的）域内通量
-\begin_inset Formula 
-\[
-f_{j}^{\mathrm{D}}=f^{\mathrm{c}}\qty(u_{j}^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u_{j}^{\mathrm{D}}(x,t),q_{j}^{\mathrm{D}}(x,t)),
-\]
-
-\end_inset
-
-及界面通量
-\begin_inset Formula 
-\[
-f_{j+1/2}^{\mathrm{I}}=f_{j+1/2}^{\mathrm{c,I}}-f_{j+1/2}^{\mathrm{d,I}},\quad\begin{cases}
-f_{j+1/2}^{\mathrm{c,I}}=\text{exact/approximate Riemann solution},\\
-f_{j+1/2}^{\mathrm{d,I}}=\left\{ f^{\mathrm{d,D}}\right\} _{j+1/2}+\beta\left\llbracket f^{\mathrm{d,D}}\right\rrbracket _{j+1/2}+\tau\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},
-\end{cases}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\tau=0,0.1,1$
-\end_inset
-
- are tested in 
-\begin_inset CommandInset citation
-LatexCommand citet
-key "Castonguay_2013"
-literal "false"
-
-\end_inset
-
-。以此定义（在界面处连续的）重构通量
-\begin_inset Formula 
-\[
-f_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{j,k}(t)\,L_{j,k}(x)}_{f_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right){\color{red}h_{\zeta}}(\xi)}_{f_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $h_{\zeta}$
-\end_inset
-
- 可以不同于 
-\begin_inset Formula $g_{\zeta}$
-\end_inset
-
-。以此导出（在界面处间断的）通量导数
-\begin_inset Formula 
-\[
-\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
-\]
-
-\end_inset
-
-在结点出对该式取值，即得 FR 格式。
-\end_layout
-
-\begin_layout Subsubsection
-DDG
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left(\frac{\partial u}{\partial x}\right)_{j+1/2}^{\mathrm{I}}\coloneqq\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+1/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2},\quad\begin{cases}
-\beta_{0}\in[2,4],\\
-\beta_{1}=1/12,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Accuracy order?
-\end_layout
-
-\begin_layout Standard
-Energy stable?
-\end_layout
-
-\begin_layout Subsection
-能量耗散率
-\end_layout
-
-\begin_layout Standard
-引入人工黏性，求解对流扩散方程
-\begin_inset Formula 
-\[
-\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=0,\quad f=f^{\mathrm{c}}-f^{\mathrm{d}}-\nu\frac{\partial u}{\partial x},\quad\nu>0,
-\]
-
-\end_inset
-
-应用 
-\begin_inset Formula $p$
-\end_inset
-
--exact FR 方法
-\begin_inset Formula 
-\[
-u_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{u}_{j,l}(t)\,L_{j,l}(x),\quad f_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x),
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\right)g_{-1}(\xi)+\left(f_{j+1/2}^{\mathrm{I}}-f_{j+1/2}^{\mathrm{D}}\right)g_{+1}(\xi),
-\]
-
-\end_inset
-
-在第 
-\begin_inset Formula $j$
-\end_inset
-
- 号单元的第 
-\begin_inset Formula $k$
-\end_inset
-
- 个结点处有
-\begin_inset Formula 
-\[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{g_{\zeta}(x_{j,k})}{x},
-\]
-
-\end_inset
-
-将各通量分解为不依赖与依赖人工黏性的两部分：
-\begin_inset Formula 
-\[
-\begin{aligned}\hat{f}_{j,l} & =\cdots-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x}\\
- & =\cdots-\nu_{j}\,\underbrace{\begin{bmatrix}L'_{j,0}(x_{j,l}) & \cdots & L'_{j,p}(x_{j,l})\end{bmatrix}}_{\bra{A_{j,l}}}\ket{\hat{u}_{j}},\quad\ket{\hat{u}_{j}}\coloneqq\begin{bmatrix}\hat{u}_{j,0}(t)\\
-\vdots\\
-\hat{u}_{j,p}(t)
-\end{bmatrix},
-\end{aligned}
-\]
-
-\end_inset
-
-从而有
-\begin_inset Formula 
-\[
-\begin{aligned}-\sum_{l}\hat{f}_{j,l}(t)\dv{L_{j,l}(x_{j,k})}{x} & =-\sum_{l}L'_{j,l}(x_{j,k})\,\overbrace{\left(\cdots-\nu_{j}\bra{A_{j,l}}\ket{\hat{u}_{j}}\right)}^{\hat{f}_{j,l}(t)}\\
- & =\cdots+\nu_{j}\,\overbrace{\sum_{l}L'_{j,l}(x_{j,k})\bra{A_{j,l}}}^{\bra{B_{j,k}}}\ket{\hat{u}_{j}},
-\end{aligned}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{g_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}g'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
- & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}g'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\bra{A_{j,l}}}^{\bra{C_{j,k}}}\ket{\hat{u}_{j}},
-\end{aligned}
-\]
-
-\end_inset
-
-故
-\begin_inset Formula 
-\[
-\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\bra{B_{j,k}}\ket{\hat{u}_{j}}-\nu_{j}\bra{C_{j,k}}\ket{\hat{u}_{j}}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x},
-\]
-
-\end_inset
-
-还需确定
-\begin_inset Formula 
-\[
-\begin{aligned}f_{j+\zeta/2}^{\mathrm{I}} & =f_{j+\zeta/2}^{\mathrm{c,I}}-f_{j+\zeta/2}^{\mathrm{d,I}}-\nu_{j+\zeta/2}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\\
- & =\cdots-\nu_{j+\zeta/2}\left(\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+\zeta/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\right),
-\end{aligned}
-\]
-
-\end_inset
-
-其中
-\begin_inset Formula 
-\[
-\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\,L_{j+\zeta,l}(x_{j+\zeta/2})-\sum_{l=0}^{p}\hat{u}_{j,l}\,L_{j,l}(x_{j+\zeta/2})\right),
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+\zeta/2})}{x}\right),
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv[2]{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x}\right),
-\]
-
-\end_inset
-
-整理成矩阵形式有
-\begin_inset Formula 
-\[
-\begin{aligned} & \phantom{.=}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}=\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+\zeta/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
- & =\underbrace{\left(+\zeta\,\beta_{0}\,h_{j+\zeta/2}^{-1}\bra{L_{j+\zeta}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j+\zeta}(x_{j+\zeta/2})}+\zeta\,\beta_{1}h_{j+\zeta/2}\,\bra{L''_{j+\zeta}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{+}}}\ket{\hat{u}_{j+\zeta}}\\
- & +\underbrace{\left(-\zeta\,\beta_{0}\,h_{j+\zeta/2}^{-1}\bra{L_{j}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j}(x_{j+\zeta/2})}-\zeta\,\beta_{1}\,h_{j+\zeta/2}\bra{L''_{j}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{-}}}\ket{\hat{u}_{j}},
-\end{aligned}
-\]
-
-\end_inset
-
-故
-\begin_inset Formula 
-\[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\sum_{\zeta=\pm1}g'_{\zeta}(x_{j,k})\,\nu_{j+\zeta/2}\left(\bra{D_{j,\zeta}^{+}}\ket{\hat{u}_{j+\zeta}}+\bra{D_{j,\zeta}^{-}}\ket{\hat{u}_{j}}\right)\\
-=\cdots & +\nu_{j+1/2}\,g'_{+1}(x_{j,k})\left(\bra{D_{j,+1}^{+}}\ket{\hat{u}_{j+1}}+\bra{D_{j,+1}^{-}}\ket{\hat{u}_{j}}\right)\\
- & +\nu_{j-1/2}\,g'_{-1}(x_{j,k})\left(\bra{D_{j,-1}^{+}}\ket{\hat{u}_{j-1}}+\bra{D_{j,-1}^{-}}\ket{\hat{u}_{j}}\right),
-\end{aligned}
-\]
-
-\end_inset
-
-假设人工黏性的分布是孤立的，即
-\begin_inset Formula 
-\[
-\nu_{j-1/2}=\nu_{j}=\nu_{j+1/2},
-\]
-
-\end_inset
-
-则
-\begin_inset Formula 
-\[
-\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(g'_{+1}(x_{j,k})\bra{D_{j,+1}^{-}}+g'_{-1}(x_{j,k})\bra{D_{j,-1}^{-}}\right)}^{\bra{D_{j,k}}}\ket{\hat{u}_{j}}\\
- & +\nu_{j}\,\overbrace{g'_{-1}(x_{j,k})\bra{D_{j,-1}^{+}}}^{\bra{E_{j,k}}}\ket{\hat{u}_{j-1}}+\nu_{j}\,\overbrace{g'_{+1}(x_{j,k})\bra{D_{j,+1}^{+}}}^{\bra{F_{j,k}}}\ket{\hat{u}_{j+1}},
-\end{aligned}
-\]
-
-\end_inset
-
-综上，
-\begin_inset Formula 
-\[
-\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots+\nu_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\ket{\hat{u}_{j}}+\nu_{j}\,\underline{E}_{j}\ket{\hat{u}_{j-1}}+\nu_{j}\,\underline{F}_{j}\ket{\hat{u}_{j+1}},
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\underline{B}_{j},\underline{C}_{j},\underline{D}_{j},\underline{E}_{j},\underline{F}_{j}$
-\end_inset
-
- 分别是以 
-\begin_inset Formula $\bra{B_{j,k}},\bra{C_{j,k}},\bra{D_{j,k}},\bra{E_{j,k}},\bra{F_{j,k}}$
-\end_inset
-
- 为第 
-\begin_inset Formula $k$
-\end_inset
-
- 行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
-\begin_inset Formula 
-\[
-\begin{aligned}\dv{t}\sum_{k=0}^{p}\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2} & =\dv{t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}w_{j,k}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}=\cdots\\
- & =\cdots+\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
-\end{aligned}
-\]
-
-\end_inset
-
-其中 
-\begin_inset Formula $\underline{W}_{j}$
-\end_inset
-
- 是由 Gauss 求积权重 
-\begin_inset Formula $\left\{ w_{j,k}\right\} _{k=0}^{p}$
-\end_inset
-
- 构成的对角阵。
-\end_layout
-
 \begin_layout Section
-DG vs.
- FR
+色散耗散特性
 \end_layout
 
 \begin_layout Subsection
@@ -6719,6 +5170,1604 @@ DG-with-FR 的另一种 quadrature free 实现：取正交基，则
 \end_inset
 
  有相同的特征值，因此相应的空间离散格式有相同的色散、耗散特性。
+\end_layout
+
+\begin_layout Section
+界面黏性通量
+\end_layout
+
+\begin_layout Subsection
+BR (Bassi–Rebay)
+\end_layout
+
+\begin_layout Subsubsection
+BR1
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bassi_1997"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+BR2
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bassi_2005"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+LDG (Local DG)
+\end_layout
+
+\begin_layout Subsubsection
+一维传热问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cockburn_2001"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+一维传热方程
+\begin_inset Formula 
+\[
+\partial_{t}\,u-\partial_{x}^{2}\,u=0,\quad(x,t)\in(0,2\pi)\times(0,T)
+\]
+
+\end_inset
+
+及初始条件
+\begin_inset Formula 
+\[
+u(x,0)=\sin(x),\quad x\in(0,2\pi)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+错误格式
+\end_layout
+
+\begin_layout Standard
+将 
+\begin_inset Formula $-\partial_{x}\,u$
+\end_inset
+
+ 视为守恒律中的 
+\begin_inset Formula $f(u)$
+\end_inset
+
+，在形式上应用 DG 方法：
+\begin_inset Formula 
+\[
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{\partial_{x}\,u^{h}}_{E_{i}}=\ip{v^{h}}{\partial_{n}\,u^{h}}_{\partial E_{i}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u^{h},v^{h}$
+\end_inset
+
+ 均取自 
+\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边界项中的 
+\begin_inset Formula $\partial_{n}\,u^{h}\coloneqq n_{x}\,\partial_{x}\,u^{h}$
+\end_inset
+
+ 为（法向）“数值通量”，因缺少迎风性质，自然地取平均值
+\begin_inset Formula 
+\[
+\partial_{x}\,u^{h}=\frac{\left(\partial_{x}\,u^{h}\right)_{\mathrm{L}}+\left(\partial_{x}\,u^{h}\right)_{\mathrm{R}}}{2}
+\]
+
+\end_inset
+
+时间离散用 TVD RK3 格式，所得结果表现出 inconsistency。
+\end_layout
+
+\begin_layout Paragraph
+正确格式
+\end_layout
+
+\begin_layout Standard
+引入新变量 
+\begin_inset Formula $q\coloneqq\partial_{x}\,u$
+\end_inset
+
+，将方程 
+\begin_inset Formula $\partial_{t}\,u-\partial_{x}^{2}\,u=0$
+\end_inset
+
+ 化为一阶，二者合并组成一阶方程组
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}\,u-\partial_{x}\,q=0,\\
+q-\partial_{x}\,u=0,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在形式上应用 DG 方法：
+\begin_inset Formula 
+\[
+\begin{cases}
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{i}}+\ip{\partial_{x}\,v^{h}}{q^{h}}_{E_{i}}=\ip{v^{h}}{q_{n}^{h}}_{\partial E_{i}},\\
+\ip{w^{h}}{q^{h}}_{E_{i}}+\ip{\partial_{x}\,w^{h}}{u^{h}}_{E_{i}}=\ip{w^{h}}{u_{n}^{h}}_{\partial E_{i}},
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u^{h},v^{h},w^{h},q^{h}$
+\end_inset
+
+ 均取自 
+\begin_inset Formula $\mathbb{P}_{k}(E_{i})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+边界项中的 
+\begin_inset Formula $u_{n}^{h}$
+\end_inset
+
+ 及 
+\begin_inset Formula $q_{n}^{h}$
+\end_inset
+
+ 为（法向）“数值通量”，因缺少迎风性质，可以自然地取平均值
+\begin_inset Formula 
+\[
+u_{n}^{h}=n_{x}\frac{u_{\mathrm{L}}^{h}+u_{\mathrm{R}}^{h}}{2},\quad q_{n}^{h}=n_{x}\frac{q_{\mathrm{L}}^{h}+q_{\mathrm{R}}^{h}}{2},
+\]
+
+\end_inset
+
+或按 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cockburn_1998b"
+literal "false"
+
+\end_inset
+
+ 建议取
+\begin_inset Formula 
+\[
+u_{n}^{h}=n_{x}\,u_{\mathrm{L}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{R}}^{h}
+\]
+
+\end_inset
+
+ 或
+\begin_inset Formula 
+\[
+u_{n}^{h}=n_{x}\,u_{\mathrm{R}}^{h},\quad q_{n}^{h}=n_{x}\,q_{\mathrm{L}}^{h}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+高维标量问题
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-a_{ik}(u)\left(\partial_{k}\,u\right)\right)=0,\quad(t,\vec{r})\in(0,T)\times(0,1)^{d}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+u(t,\vec{r})=u_{0}(\vec{r}),\quad\vec{r}\in(0,1)^{d}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $a_{ik}(u)$
+\end_inset
+
+ 对称、半正定，从而存在矩阵 
+\begin_inset Formula $b_{ik}(u)$
+\end_inset
+
+ 使得
+\begin_inset Formula 
+\[
+a_{ik}(u)=b_{il}(u)\,b_{lk}(u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+定义辅助变量
+\begin_inset Formula 
+\[
+q_{l}(t,\vec{r})\coloneqq b_{lk}(u)\left(\partial_{k}\,u\right),\quad l=1,2,\dots,d
+\]
+
+\end_inset
+
+则高阶方程化为一阶方程组
+\begin_inset Formula 
+\[
+\begin{cases}
+\partial_{t}\,u+\partial_{i}\left(f_{i}(u)-b_{il}(u)\,q_{l}\right)=0,\\
+q_{l}-\partial_{k}\,g_{lk}(u)=0, & l=1,2,\dots,d
+\end{cases}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+g_{lk}(u)\coloneqq\int^{u}b_{lk}(s)\dd{s}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在形式上应用 DG 方法：
+\begin_inset Formula 
+\[
+\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{v^{h}}{\nu_{i}\,f_{i}^{h}-\nu_{i}\,b_{il}^{h}\,q_{l}^{h}}_{\partial E_{j}}=\ip{\partial_{i}v^{h}}{f_{i}^{h}-b_{il}^{h}\,q_{l}^{h}}_{E_{j}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\ip{w^{h}}{q_{l}^{h}}_{E_{j}}+\ip{\partial_{k}\,w^{h}}{g_{lk}^{h}}_{E_{j}}=\ip{w^{h}}{\nu_{k}\,g_{lk}^{h}}_{\partial E_{j}},\quad l=1,2,\dots,d
+\]
+
+\end_inset
+
+其中对流通量
+\begin_inset Formula 
+\[
+\left(\nu_{i}\,f_{i}^{h}\right)_{\partial E}\approx f_{\nu}(u_{\mathrm{L}}^{h},u_{\mathrm{R}}^{h})
+\]
+
+\end_inset
+
+由纯对流问题的 Riemann 解给出；而扩散通量取作
+\begin_inset Formula 
+\[
+\left(\nu_{i}\,b_{il}^{h}\,q_{l}^{h}\right)_{\partial E}\approx\frac{\left\llbracket \nu_{k}\,g_{lk}^{h}\right\rrbracket }{\left\llbracket u^{h}\right\rrbracket }\left\{ q_{l}^{h}\right\} +C_{11}\left\llbracket u^{h}\right\rrbracket +C_{1l}\left\{ q_{l}^{h}\right\} 
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left(\nu_{k}\,g_{lk}^{h}\right)_{\partial E}\approx\left\{ \nu_{k}\,g_{lk}^{h}\right\} -C_{1l}\left\llbracket u^{h}\right\rrbracket ,\quad l=1,2,\dots,d
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+高维系统问题
+\end_layout
+
+\begin_layout Subsubsection
+LDG for FR
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Castonguay_2013,Williams_2013"
+literal "false"
+
+\end_inset
+
+ 借用 LDG 方法，将二阶 PDE 改写为一阶 PDE 系统：
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f^{\mathrm{c}}(u)}{\partial x}=\frac{\partial f^{\mathrm{d}}(u,q)}{\partial x},\quad q=\frac{\partial u}{\partial x}.
+\]
+
+\end_inset
+
+先（仿照 Riemann 解）定义界面函数值
+\begin_inset Formula 
+\[
+u_{j+1/2}^{\mathrm{I}}=\left\{ u^{\mathrm{D}}\right\} _{j+1/2}-\beta\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},\quad\beta=\pm0.5,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\{ u^{\mathrm{D}}\right\} _{j+1/2}\coloneqq\frac{1}{2}\left(u_{j}^{\mathrm{D}}(x_{j+1/2})+u_{j+1}^{\mathrm{D}}(x_{j+1/2})\right),\quad\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2}\coloneqq u_{j+1}^{\mathrm{D}}(x_{j+1/2})-u_{j}^{\mathrm{D}}(x_{j+1/2}).
+\]
+
+\end_inset
+
+再（仿照通量重构）定义（在界面处连续的）重构函数
+\begin_inset Formula 
+\[
+u_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{u}_{j,k}(t)\,L_{j,k}(x)}_{u_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)g_{\zeta}(\xi)}_{u_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+\]
+
+\end_inset
+
+以此导出（在界面处间断的）未知量导数
+\begin_inset Formula 
+\[
+q_{j}^{\mathrm{D}}(x,t)=\sum_{k=0}^{p}\hat{u}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(u_{j+\zeta/2}^{\mathrm{I}}-u_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{g_{\zeta}(\xi)}{\xi}}{\dv*{x_{j}}{\xi}},
+\]
+
+\end_inset
+
+从而导出（在界面处间断的）域内通量
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{D}}=f^{\mathrm{c}}\qty(u_{j}^{\mathrm{D}}(x,t))-f^{\mathrm{d}}\qty(u_{j}^{\mathrm{D}}(x,t),q_{j}^{\mathrm{D}}(x,t)),
+\]
+
+\end_inset
+
+及界面通量
+\begin_inset Formula 
+\[
+f_{j+1/2}^{\mathrm{I}}=f_{j+1/2}^{\mathrm{c,I}}-f_{j+1/2}^{\mathrm{d,I}},\quad\begin{cases}
+f_{j+1/2}^{\mathrm{c,I}}=\text{exact/approximate Riemann solution},\\
+f_{j+1/2}^{\mathrm{d,I}}=\left\{ f^{\mathrm{d,D}}\right\} _{j+1/2}+\beta\left\llbracket f^{\mathrm{d,D}}\right\rrbracket _{j+1/2}+\tau\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+1/2},
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tau=0,0.1,1$
+\end_inset
+
+ are tested in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Castonguay_2013"
+literal "false"
+
+\end_inset
+
+。以此定义（在界面处连续的）重构通量
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{R}}(x,t)=\underbrace{\sum_{k=0}^{p}\hat{f}_{j,k}(t)\,L_{j,k}(x)}_{f_{j}^{\mathrm{D}}\in\mathbb{P}_{p}(E_{j})}+\underbrace{\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right){\color{red}h_{\zeta}}(\xi)}_{f_{j}^{\mathrm{C}}\in\mathbb{P}_{p+1}(E_{j})},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ 可以不同于 
+\begin_inset Formula $g_{\zeta}$
+\end_inset
+
+。以此导出（在界面处间断的）通量导数
+\begin_inset Formula 
+\[
+\frac{\partial f_{j}^{\mathrm{R}}(x,t)}{\partial x}=\sum_{k=0}^{p}\hat{f}_{j,k}(t)\frac{\partial L_{j,k}(x)}{\partial x}+\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\frac{\dv*{{\color{red}h_{\zeta}}(\xi)}{\xi}}{\dv*{x}{\xi}},
+\]
+
+\end_inset
+
+在结点出对该式取值，即得 FR 格式。
+\end_layout
+
+\begin_layout Subsection
+CDG (Compact DG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Peraire_2008"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+ to overcome the issue that LDG method is not compact when applied to multidimen
+sional problems.
+\end_layout
+
+\begin_layout Subsection
+RDG (Recovery-based DG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "van_Leer_2005,van_Leer_2007"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+ recovers a smooth continuous solution that in the weak sense is indistinguishab
+le from the discontinuous discrete solution.
+\end_layout
+
+\begin_layout Subsection
+rDG (Reconstructed DG)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Luo_2010"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+...
+ a smooth continuous solution is reconstructed at each cell interface from
+ the discontinuous discrete solution and the diffusive fluxes are then obtained
+ based on the smooth reconstructed solution.
+\end_layout
+
+\begin_layout Subsection
+DDG (Direct DG)
+\end_layout
+
+\begin_layout Quote
+From the PDE point of view, jumps of all even order derivatives as well
+ as the average of odd order derivatives all contribute to the trace of
+ the solution derivative.
+ ...
+ The form of the numerical flux is motivated by an exact trace formulation
+ derived from solving the heat equation with smooth initial data having
+ only one discontinuous point.
+ —— 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Liu_2009_DDG"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Liu_2009_DDG"
+literal "true"
+
+\end_inset
+
+ 提出并用于求解扩散问题，
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016,Yang_2019"
+literal "true"
+
+\end_inset
+
+ 推广到求解 Navier–Stokes 方程。
+\end_layout
+
+\begin_layout Subsubsection
+一维标量形式
+\end_layout
+
+\begin_layout Standard
+考虑一维扩散问题
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial}{\partial x}\left(a(u)\frac{\partial u}{\partial x}\right)=0,\quad a(u)>0,
+\]
+
+\end_inset
+
+定义扩散通量
+\begin_inset Formula 
+\[
+h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\impliedby b(u)\coloneqq\int^{u}a(s)\dd{s},
+\]
+
+\end_inset
+
+则数值通量一般形式为
+\begin_inset Formula 
+\[
+\widehat{h(u)}=\beta_{0}\frac{\left\llbracket b(u)\right\rrbracket }{h}+\left\{ \frac{\partial b(u)}{\partial x}\right\} +\sum_{m=1}^{\left\lfloor k/2\right\rfloor }\beta_{m}\,h^{2m-1}\left\llbracket \frac{\partial^{2m}b(u)}{\partial x^{2m}}\right\rrbracket ,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $k$
+\end_inset
+
+ 为界面两侧多项式次数的较大者。
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Liu_2009_DDG"
+literal "true"
+
+\end_inset
+
+ 数值试验表明：取
+\begin_inset Formula 
+\[
+\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
+\]
+
+\end_inset
+
+可在 
+\begin_inset Formula $k=0,1,2,3$
+\end_inset
+
+ 情形下，得 
+\begin_inset Formula $k+1$
+\end_inset
+
+ 阶最优精度。
+\end_layout
+
+\begin_layout Subsubsection
+高维方程组形式
+\end_layout
+
+\begin_layout Standard
+高维方程组情形：以 
+\begin_inset Formula $k=2,3$
+\end_inset
+
+ 为例，构造 
+\begin_inset Formula $\underline{\partial}\,\underline{u}\equiv\underline{\partial}\otimes\underline{u}$
+\end_inset
+
+ 在界面处的近似值：
+\begin_inset Formula 
+\begin{equation}
+\boxed{\left(\underline{\partial}\otimes\underline{u}\right)_{\partial E}\approx\left(\underline{\partial}\,\underline{u}\right)^{h}\coloneqq\beta_{0}\,\Delta^{-1}\left\llbracket \underline{n}\otimes\underline{u^{h}}\right\rrbracket +\left\{ \underline{\partial}\otimes\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left\llbracket \underline{n}\cdot\underline{\partial}\otimes\underline{\partial}\otimes\underline{u^{h}}\right\rrbracket },\label{eq:DDG-grad-at-interface}
+\end{equation}
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{\partial}\otimes\underline{u}\equiv\underline{\partial}\,\underline{u}=\begin{bmatrix}\partial_{x}\,\underline{u}\\
+\partial_{y}\,\underline{u}
+\end{bmatrix},\quad\underline{n}\otimes\underline{u^{h}}=\begin{bmatrix}n_{x}\,\underline{u^{h}}\\
+n_{y}\,\underline{u^{h}}
+\end{bmatrix},\quad\underline{\partial}\otimes\underline{\partial}\otimes\underline{u^{h}}=\begin{bmatrix}\partial_{x}\partial_{x}\,\underline{u^{h}} & \partial_{x}\partial_{y}\,\underline{u^{h}}\\
+\partial_{y}\partial_{x}\,\underline{u^{h}} & \partial_{y}\partial_{y}\,\underline{u^{h}}
+\end{bmatrix},
+\]
+
+\end_inset
+
+故 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DDG-grad-at-interface"
+
+\end_inset
+
+ 式的展开形式为
+\begin_inset Formula 
+\[
+\begin{aligned}\left(\partial_{x}\,\underline{u}\right)^{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{x}\,\underline{u^{h}}\right\rrbracket +\left\{ \partial_{x}\,\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left(n_{x}\left\llbracket \partial_{x}\partial_{x}\,\underline{u^{h}}\right\rrbracket +n_{y}\left\llbracket \partial_{x}\partial_{y}\,\underline{u^{h}}\right\rrbracket \right),\\
+\left(\partial_{y}\,\underline{u}\right)^{h} & =\beta_{0}\,\Delta^{-1}\left\llbracket n_{y}\,\underline{u^{h}}\right\rrbracket +\left\{ \partial_{y}\,\underline{u^{h}}\right\} +\beta_{1}\,\Delta\left(n_{y}\left\llbracket \partial_{y}\partial_{x}\,\underline{u^{h}}\right\rrbracket +n_{y}\left\llbracket \partial_{y}\partial_{y}\,\underline{u^{h}}\right\rrbracket \right).
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016"
+literal "true"
+
+\end_inset
+
+ 测试过
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},\vec{c}_{j}),\quad\Delta=\vert(\vec{c}_{i}-\vec{c_{j}})\vdot\vec{n}_{ij}\vert,\quad\Delta=\frac{\vert E_{i}\vert+\vert E_{j}\vert}{2\vert(\partial E)_{ij}\vert},
+\]
+
+\end_inset
+
+其中第二种效果最好，且等价于 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Yang_2019"
+literal "true"
+
+\end_inset
+
+ 采用的
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},(\partial E)_{ij})+d(\vec{c}_{j},(\partial E)_{ij})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在物理边界处，由于缺少邻接单元，无法直接套用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:DDG-grad-at-interface"
+
+\end_inset
+
+ 式。
+\begin_inset CommandInset citation
+LatexCommand citet
+key "Cheng_2016"
+literal "true"
+
+\end_inset
+
+ 令边界处的二阶导数阶跃值为零，即取
+\begin_inset Formula 
+\[
+\left(\partial_{n}\,\underline{u}\right)^{h}=\beta_{0}\,\Delta^{-1}\left\llbracket \underline{u^{h}}\right\rrbracket +\partial_{n}\left.\underline{u^{h}}\right|_{-},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\Delta=d(\vec{c}_{i},\partial\Omega)\times\begin{cases}
+2, & \text{ghost cell}\\
+1, & \text{prescribed}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+DDG for FR
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(\frac{\partial u}{\partial x}\right)_{j+1/2}^{\mathrm{I}}\coloneqq\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+1/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+1/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+1/2},\quad\begin{cases}
+\beta_{0}\in[2,4],\\
+\beta_{1}=1/12,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Accuracy order?
+\end_layout
+
+\begin_layout Standard
+Energy stable?
+\end_layout
+
+\begin_layout Section
+人工黏性
+\end_layout
+
+\begin_layout Standard
+引入人工黏性，求解对流扩散方程
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=0,\quad f=f^{\mathrm{c}}-f^{\mathrm{d}}-\nu\frac{\partial u}{\partial x},\quad\nu>0,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+FR 能量耗散率
+\end_layout
+
+\begin_layout Standard
+应用 
+\begin_inset Formula $p$
+\end_inset
+
+-exact FR 方法
+\begin_inset Formula 
+\[
+u_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{u}_{j,l}(t)\,L_{j,l}(x),\quad f_{j}^{\mathrm{D}}(x,t)=\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,L_{j,l}(x),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\right)g_{-1}(\xi)+\left(f_{j+1/2}^{\mathrm{I}}-f_{j+1/2}^{\mathrm{D}}\right)g_{+1}(\xi),
+\]
+
+\end_inset
+
+在第 
+\begin_inset Formula $j$
+\end_inset
+
+ 号单元的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个结点处有
+\begin_inset Formula 
+\[
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=-\sum_{l=0}^{p}\hat{f}_{j,l}(t)\,\dv{L_{j,l}(x_{j,k})}{x}-\sum_{\zeta=\pm1}\left(f_{j+\zeta/2}^{\mathrm{I}}-f_{j+\zeta/2}^{\mathrm{D}}\right)\dv{g_{\zeta}(x_{j,k})}{x},
+\]
+
+\end_inset
+
+将各通量分解为不依赖与依赖人工黏性的两部分：
+\begin_inset Formula 
+\[
+\begin{aligned}\hat{f}_{j,l} & =\cdots-\nu_{j}\left.\frac{\partial u^{\mathrm{D}}}{\partial x}\right|_{x_{j,l}}=\cdots-\nu_{j}\sum_{m=0}^{p}\hat{u}_{j,m}\dv{L_{j,m}(x_{j,l})}{x}\\
+ & =\cdots-\nu_{j}\,\underbrace{\begin{bmatrix}L'_{j,0}(x_{j,l}) & \cdots & L'_{j,p}(x_{j,l})\end{bmatrix}}_{\bra{A_{j,l}}}\ket{\hat{u}_{j}},\quad\ket{\hat{u}_{j}}\coloneqq\begin{bmatrix}\hat{u}_{j,0}(t)\\
+\vdots\\
+\hat{u}_{j,p}(t)
+\end{bmatrix},
+\end{aligned}
+\]
+
+\end_inset
+
+从而有
+\begin_inset Formula 
+\[
+\begin{aligned}-\sum_{l}\hat{f}_{j,l}(t)\dv{L_{j,l}(x_{j,k})}{x} & =-\sum_{l}L'_{j,l}(x_{j,k})\,\overbrace{\left(\cdots-\nu_{j}\bra{A_{j,l}}\ket{\hat{u}_{j}}\right)}^{\hat{f}_{j,l}(t)}\\
+ & =\cdots+\nu_{j}\,\overbrace{\sum_{l}L'_{j,l}(x_{j,k})\bra{A_{j,l}}}^{\bra{B_{j,k}}}\ket{\hat{u}_{j}},
+\end{aligned}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\sum_{\zeta}f_{j+\zeta/2}^{\mathrm{D}}\dv{g_{\zeta}(x_{j,k})}{x} & =\sum_{\zeta}g'_{\zeta}(x_{j,k})\,\overbrace{\sum_{l}\hat{f}_{j,l}(t)\,L_{j,l}(x_{j+\zeta/2})}^{f_{j+\zeta/2}^{\mathrm{D}}}\\
+ & =\cdots-\nu_{j}\,\overbrace{\sum_{\zeta}g'_{\zeta}(x_{j,k})\sum_{l}L_{j,l}(x_{j+\zeta/2})\bra{A_{j,l}}}^{\bra{C_{j,k}}}\ket{\hat{u}_{j}},
+\end{aligned}
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\frac{\dd{\hat{u}_{j,k}(t)}}{\dd{t}}=\cdots+\nu_{j}\bra{B_{j,k}}\ket{\hat{u}_{j}}-\nu_{j}\bra{C_{j,k}}\ket{\hat{u}_{j}}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x},
+\]
+
+\end_inset
+
+还需确定
+\begin_inset Formula 
+\[
+\begin{aligned}f_{j+\zeta/2}^{\mathrm{I}} & =f_{j+\zeta/2}^{\mathrm{c,I}}-f_{j+\zeta/2}^{\mathrm{d,I}}-\nu_{j+\zeta/2}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}\\
+ & =\cdots-\nu_{j+\zeta/2}\left(\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+\zeta/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\left\llbracket u^{\mathrm{D}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\,L_{j+\zeta,l}(x_{j+\zeta/2})-\sum_{l=0}^{p}\hat{u}_{j,l}\,L_{j,l}(x_{j+\zeta/2})\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}=\frac{1}{2}\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}+\sum_{l=0}^{p}\hat{u}_{j,l}\dv{L_{j,l}(x_{j+\zeta/2})}{x}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left\llbracket \frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}=\zeta\left(\sum_{l=0}^{p}\hat{u}_{j+\zeta,l}\dv[2]{L_{j+\zeta,l}(x_{j+\zeta/2})}{x}-\sum_{l=0}^{p}\hat{u}_{j,l}\dv[2]{L_{j,l}(x_{j+\zeta/2})}{x}\right),
+\]
+
+\end_inset
+
+整理成矩阵形式有
+\begin_inset Formula 
+\[
+\begin{aligned} & \phantom{.=}\left(\frac{\partial u}{\partial x}\right)_{j+\zeta/2}^{\mathrm{I}}=\beta_{0}\left\llbracket \frac{u^{\mathrm{D}}}{h}\right\rrbracket _{j+\zeta/2}+\left\{ \frac{\partial u^{\mathrm{D}}}{\partial x}\right\} _{j+\zeta/2}+\beta_{1}\left\llbracket h\frac{\partial^{2}u^{\mathrm{D}}}{\partial x^{2}}\right\rrbracket _{j+\zeta/2}\\
+ & =\underbrace{\left(+\zeta\,\beta_{0}\,h_{j+\zeta/2}^{-1}\bra{L_{j+\zeta}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j+\zeta}(x_{j+\zeta/2})}+\zeta\,\beta_{1}h_{j+\zeta/2}\,\bra{L''_{j+\zeta}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{+}}}\ket{\hat{u}_{j+\zeta}}\\
+ & +\underbrace{\left(-\zeta\,\beta_{0}\,h_{j+\zeta/2}^{-1}\bra{L_{j}(x_{j+\zeta/2})}+\frac{1}{2}\bra{L'_{j}(x_{j+\zeta/2})}-\zeta\,\beta_{1}\,h_{j+\zeta/2}\bra{L''_{j}(x_{j+\zeta/2})}\right)}_{\bra{D_{j,\zeta}^{-}}}\ket{\hat{u}_{j}},
+\end{aligned}
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\sum_{\zeta=\pm1}g'_{\zeta}(x_{j,k})\,\nu_{j+\zeta/2}\left(\bra{D_{j,\zeta}^{+}}\ket{\hat{u}_{j+\zeta}}+\bra{D_{j,\zeta}^{-}}\ket{\hat{u}_{j}}\right)\\
+=\cdots & +\nu_{j+1/2}\,g'_{+1}(x_{j,k})\left(\bra{D_{j,+1}^{+}}\ket{\hat{u}_{j+1}}+\bra{D_{j,+1}^{-}}\ket{\hat{u}_{j}}\right)\\
+ & +\nu_{j-1/2}\,g'_{-1}(x_{j,k})\left(\bra{D_{j,-1}^{+}}\ket{\hat{u}_{j-1}}+\bra{D_{j,-1}^{-}}\ket{\hat{u}_{j}}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+假设人工黏性的分布是孤立的，即
+\begin_inset Formula 
+\[
+\nu_{j-1/2}=\nu_{j}=\nu_{j+1/2},
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\begin{aligned}-\sum_{\zeta=\pm1}f_{j+\zeta/2}^{\mathrm{I}}\dv{g_{\zeta}(x_{j,k})}{x}=\cdots & +\nu_{j}\,\overbrace{\left(g'_{+1}(x_{j,k})\bra{D_{j,+1}^{-}}+g'_{-1}(x_{j,k})\bra{D_{j,-1}^{-}}\right)}^{\bra{D_{j,k}}}\ket{\hat{u}_{j}}\\
+ & +\nu_{j}\,\overbrace{g'_{-1}(x_{j,k})\bra{D_{j,-1}^{+}}}^{\bra{E_{j,k}}}\ket{\hat{u}_{j-1}}+\nu_{j}\,\overbrace{g'_{+1}(x_{j,k})\bra{D_{j,+1}^{+}}}^{\bra{F_{j,k}}}\ket{\hat{u}_{j+1}},
+\end{aligned}
+\]
+
+\end_inset
+
+综上，
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots+\nu_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\ket{\hat{u}_{j}}+\nu_{j}\,\underline{E}_{j}\ket{\hat{u}_{j-1}}+\nu_{j}\,\underline{F}_{j}\ket{\hat{u}_{j+1}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{B}_{j},\underline{C}_{j},\underline{D}_{j},\underline{E}_{j},\underline{F}_{j}$
+\end_inset
+
+ 分别是以 
+\begin_inset Formula $\bra{B_{j,k}},\bra{C_{j,k}},\bra{D_{j,k}},\bra{E_{j,k}},\bra{F_{j,k}}$
+\end_inset
+
+ 为第 
+\begin_inset Formula $k$
+\end_inset
+
+ 行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
+\begin_inset Formula 
+\[
+\begin{aligned}\dv{t}\sum_{k=0}^{p}\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2} & =\dv{t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}w_{j,k}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}=\cdots\\
+ & =\cdots+\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{W}_{j}$
+\end_inset
+
+ 是由 Gauss 求积权重 
+\begin_inset Formula $\left\{ w_{j,k}\right\} _{k=0}^{p}$
+\end_inset
+
+ 构成的对角阵。
+\end_layout
+
+\begin_layout Section
+隐式时间推进
+\end_layout
+
+\begin_layout Subsection
+隐式 Euler
+\end_layout
+
+\begin_layout Standard
+第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号单元
+\begin_inset Formula 
+\[
+\underline{m}_{i}\,\dv{\underline{\hat{u}}_{i}}{t}=\underline{r}_{i},
+\]
+
+\end_inset
+
+组装后得到
+\begin_inset Formula 
+\[
+\underline{m}\,\dv{\underline{\hat{u}}}{t}=\underline{r},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{m}\coloneqq\begin{bmatrix}\ddots\\
+ & \underline{m}_{i}\\
+ &  & \ddots\\
+ &  &  & \underline{m}_{j}\\
+ &  &  &  & \ddots
+\end{bmatrix},\quad\underline{\hat{u}}\coloneqq\begin{bmatrix}\vdots\\
+\underline{\hat{u}}_{i}\\
+\vdots\\
+\underline{\hat{u}}_{j}\\
+\vdots
+\end{bmatrix},\quad\underline{r}\coloneqq\begin{bmatrix}\vdots\\
+\underline{r}_{i}\\
+\vdots\\
+\underline{r}_{j}\\
+\vdots
+\end{bmatrix}.
+\]
+
+\end_inset
+
+对其应用隐式 Euler
+\begin_inset Formula 
+\[
+\underline{m}\,\frac{\ket{\Delta\hat{u}}}{\Delta t}=\underline{r}^{n+1},\quad\begin{cases}
+\Delta t\coloneqq t_{n+1}-t_{n},\\
+\ket{\Delta\hat{u}}\coloneqq\underline{\hat{u}}(t_{n+1})-\underline{\hat{u}}(t_{n}),
+\end{cases}
+\]
+
+\end_inset
+
+并引入线性近似
+\begin_inset Formula 
+\[
+\underline{r}^{n+1}\approx\underline{r}^{n}+\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n}\ket{\Delta\hat{u}},\quad\mel{i}{\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}}{j}\coloneqq\frac{\partial\underline{r}_{i}}{\partial\underline{\hat{u}}_{j}},
+\]
+
+\end_inset
+
+则转化为求解
+\begin_inset Formula 
+\[
+\underline{A}^{n}\ket{\Delta\hat{u}}=\underline{r}^{n},\quad\underline{A}^{n}\coloneqq\frac{\underline{m}}{\Delta t}-\left(\frac{\partial\underline{r}}{\partial\underline{\hat{u}}}\right)^{n},
+\]
+
+\end_inset
+
+当 
+\begin_inset Formula $\Delta t\to\infty$
+\end_inset
+
+ 时，退化为 Newton 法解非线性代数方程组
+\begin_inset Formula 
+\[
+\underline{r}\qty(\underline{\hat{u}}(t_{n})+\ket{\Delta\hat{u}})=\underline{0},
+\]
+
+\end_inset
+
+具有二阶收敛率。
+\end_layout
+
+\begin_layout Subsection
+矩阵列化
+\end_layout
+
+\begin_layout Standard
+考虑 
+\begin_inset Formula $\underline{X}\in\mathbb{R}^{k\times l}$
+\end_inset
+
+ 及 
+\begin_inset Formula $\underline{Y}\colon\underline{X}\mapsto\underline{Y}(\underline{X})\in\mathbb{R}^{m\times n}$
+\end_inset
+
+，则在形式上有微分关系
+\begin_inset Formula 
+\[
+\dd\underline{Y}=\frac{\partial\underline{Y}}{\partial\underline{X}}\,\dd\underline{X}
+\]
+
+\end_inset
+
+但无法用常规矩阵运算无法表达。实际上，这是一组张量关系
+\begin_inset Formula 
+\[
+\dd\langle r\vert\underline{Y}\vert s\rangle=\sum_{i=1}^{k}\sum_{j=1}^{l}\frac{\partial\langle r\vert\underline{Y}\vert s\rangle}{\partial\langle i\vert\underline{X}\vert j\rangle}\,\dd\langle i\vert\underline{X}\vert j\rangle,
+\]
+
+\end_inset
+
+需要给定 
+\begin_inset Formula $mn\times kl$
+\end_inset
+
+ 个参数才能将 
+\begin_inset Formula $\partial\underline{Y}/\partial\underline{X}$
+\end_inset
+
+ 确定下来。
+\end_layout
+
+\begin_layout Standard
+借助“列化”运算（对于 column-major 存储，无额外开销）
+\begin_inset Formula 
+\[
+\underline{X}^{\mathrm{C}}=\begin{bmatrix}\underline{X}\vert1\rangle\\
+\vdots\\
+\underline{X}\vert l\rangle
+\end{bmatrix}_{kl\times1},\quad\underline{Y}^{\mathrm{C}}=\begin{bmatrix}\underline{Y}\vert1\rangle\\
+\vdots\\
+\underline{Y}\vert n\rangle
+\end{bmatrix}_{mn\times1},
+\]
+
+\end_inset
+
+则有 well defined 导数矩阵
+\begin_inset Formula 
+\[
+\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}=\begin{bmatrix}\dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert1\rangle}{\partial\underline{X}\vert l\rangle}\\
+\ddots & \ddots & \vdots\\
+\dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert1\rangle} & \cdots & \dfrac{\partial\underline{Y}\vert n\rangle}{\partial\underline{X}\vert l\rangle}
+\end{bmatrix}\in\mathbb{R}^{mn\times kl},\quad\underbrace{\dd\underline{Y}^{\mathrm{C}}}_{mn\times1}=\frac{\partial\underline{Y}^{\mathrm{C}}}{\partial\underline{X}^{\mathrm{C}}}\,\underbrace{\dd\underline{X}^{\mathrm{C}}}_{kl\times1},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\frac{\partial\underline{Y}\vert i\rangle}{\partial\underline{X}\vert j\rangle}=\begin{bmatrix}\dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle1\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}\\
+\ddots & \ddots & \vdots\\
+\dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle1\vert\underline{X}\vert j\rangle} & \cdots & \dfrac{\partial\langle m\vert\underline{Y}\vert i\rangle}{\partial\langle k\vert\underline{X}\vert j\rangle}
+\end{bmatrix}\in\mathbb{R}^{m\times k},\quad\begin{cases}
+i=1,\dots,n,\\
+j=1,\dots,l,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+因此，各单元上的有限元方程
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\left(\underline{\hat{u}}_{i}\right)_{N\times K}=\left(\underline{m}_{i}\right)_{N\times N}^{-1}\left(\underline{r}_{i}\right)_{N\times K},
+\]
+
+\end_inset
+
+可以被 columnized 为
+\begin_inset Formula 
+\[
+\dv{}{t}\ket{\hat{u}_{i}}=\underline{M}_{i}^{-1}\ket{r_{i}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{M}_{i}=\begin{bmatrix}\underline{m}_{i}\\
+ & \ddots\\
+ &  & \underline{m}_{i}
+\end{bmatrix}_{NK\times NK},\quad\ket{\hat{u}_{i}}=\begin{bmatrix}\underline{\hat{u}}_{i}\vert1\rangle\\
+\vdots\\
+\underline{\hat{u}}_{i}\vert K\rangle
+\end{bmatrix}_{NK\times1},\quad\ket{r_{i}}=\begin{bmatrix}\underline{r}_{i}\vert1\rangle\\
+\vdots\\
+\underline{r}_{i}\vert K\rangle
+\end{bmatrix}_{NK\times1}.
+\]
+
+\end_inset
+
+组装后得到
+\begin_inset Formula 
+\[
+\underline{M}\,\dv{}{t}\ket{\hat{u}}=\ket{r},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\underline{M}\coloneqq\begin{bmatrix}\ddots\\
+ & \underline{M}_{i}\\
+ &  & \ddots\\
+ &  &  & \underline{M}_{j}\\
+ &  &  &  & \ddots
+\end{bmatrix},\quad\ket{\hat{u}}\coloneqq\begin{bmatrix}\vdots\\
+\ket{\hat{u}_{i}}\\
+\vdots\\
+\ket{\hat{u}_{j}}\\
+\vdots
+\end{bmatrix},\quad\ket{r}\coloneqq\begin{bmatrix}\vdots\\
+\ket{r_{i}}\\
+\vdots\\
+\ket{r_{j}}\\
+\vdots
+\end{bmatrix}.
+\]
+
+\end_inset
+
+按此记法，隐式 Euler 需求解的线性代数方程组为
+\begin_inset Formula 
+\[
+\underline{A}^{n}\ket{\Delta\hat{u}}=\ket{r^{n}},\quad\underline{A}^{n}\coloneqq\frac{\underline{M}}{\Delta t}-\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}},\quad\mel{i}{\frac{\partial\ket{r^{n}}}{\partial\bra{\hat{u}^{n}}}}{j}\coloneqq\frac{\partial\ket{r_{i}^{n}}}{\partial\bra{\hat{u}_{j}^{n}}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+本节剩余部分将尽可能使用 columnized 矩阵。
+\end_layout
+
+\begin_layout Subsection
+LU-SGS
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underline{A}=\underline{L}+\underline{D}+\underline{U},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{L},\underline{D},\underline{U}$
+\end_inset
+
+ 分别为严格下三角阵、块状对角阵、严格上三角阵。于是
+\begin_inset Formula 
+\[
+\underline{A}\ket{\Delta\hat{u}}=\ket{r}
+\]
+
+\end_inset
+
+可化为
+\begin_inset Formula 
+\[
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}+(\underline{L}\,\underline{D}^{-1}\,\underline{U})\ket{\Delta\hat{u}}.
+\]
+
+\end_inset
+
+忽略
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+最后一项，所得的方程
+\begin_inset Formula 
+\[
+(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\ket{r}
+\]
+
+\end_inset
+
+可分两步求解（记 
+\begin_inset Formula $\ket{\Delta\hat{u}^{*}}\coloneqq\underline{D}^{-1}\,(\underline{D}+\underline{U})\ket{\Delta\hat{u}}$
+\end_inset
+
+）：
+\end_layout
+
+\begin_layout Itemize
+先逐行向下，解出 
+\begin_inset Formula $\ket{\Delta\hat{u}^{*}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+(\underline{L}+\underline{D})\ket{\Delta\hat{u}^{*}}=\ket{r}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+再逐行向上，解出 
+\begin_inset Formula $\ket{\Delta\hat{u}}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+(\underline{D}+\underline{U})\ket{\Delta\hat{u}}=\underline{D}\ket{\Delta\hat{u}^{*}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+该方法首先由 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yoon_1988"
+literal "true"
+
+\end_inset
+
+ 针对结构网格提出，后经 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+ 等推广到非结构网格。
+\end_layout
+
+\begin_layout Subsection
+GMRES+LU-SGS
+\end_layout
+
+\begin_layout Standard
+以 LU-SGS 中的系数矩阵
+\begin_inset Formula 
+\[
+\underline{P}=(\underline{L}+\underline{D})\,\underline{D}^{-1}\,(\underline{D}+\underline{U})
+\]
+
+\end_inset
+
+为 left preconditioner:
+\begin_inset Formula 
+\[
+\underline{P}^{-1}\,\underline{A}\ket{\Delta\hat{u}}=\underline{P}^{-1}\ket{r},
+\]
+
+\end_inset
+
+调用 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:GMRES"
+
+\end_inset
+
+ 迭代法解
+\begin_inset Formula 
+\[
+\underline{\tilde{A}}\ket{\Delta\hat{u}}=\ket{\tilde{r}},\quad\underline{\tilde{A}}\coloneqq\underline{P}^{-1}\,\underline{A},\quad\ket{\tilde{r}}\coloneqq\underline{P}^{-1}\ket{r}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+精确 Jacobian 矩阵
+\end_layout
+
+\begin_layout Standard
+GMRES 迭代需频繁计算 
+\begin_inset Formula $\underline{A}\ket{\Delta\hat{u}}$
+\end_inset
+
+，可近似为
+\begin_inset Formula 
+\[
+\underline{A}\ket{\Delta\hat{u}}=\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\partial\ket{r}}{\partial\bra{\hat{u}}}\ket{\Delta\hat{u}}\approx\frac{\underline{M}}{\Delta t}\ket{\Delta\hat{u}}-\frac{\ket{r}_{\ket{\hat{u}}+\varepsilon\ket{\Delta\hat{u}}}-\ket{r}_{\ket{\hat{u}}}}{\varepsilon},
+\]
+
+\end_inset
+
+但 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yang_2019"
+literal "true"
+
+\end_inset
+
+ 指出用精确 Jacobian 矩阵有若干优势。
+\end_layout
+
+\begin_layout Standard
+对于第 
+\begin_inset Formula $i$
+\end_inset
+
+ 号单元 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+，实际需要计算的是 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $i$
+\end_inset
+
+ 行（以块为元）与 
+\begin_inset Formula $\ket{\Delta\hat{u}}$
+\end_inset
+
+ 的乘积，而 
+\begin_inset Formula $\langle i\vert\underline{A}$
+\end_inset
+
+ 的非零元（块）只会出现在满足 
+\begin_inset Formula $\partial E_{i}\cap\partial E_{j}\ne\varnothing$
+\end_inset
+
+ 的第 
+\begin_inset Formula $j$
+\end_inset
+
+ 列，即
+\begin_inset Formula 
+\[
+\partial E_{i}\cap\partial E_{j}\ne\varnothing\iff\underline{0}\ne\langle i\vert\underline{A}\vert j\rangle.
+\]
+
+\end_inset
+
+具体的有
+\begin_inset Formula 
+\[
+\langle i\vert\underline{A}\vert j\rangle=\begin{cases}
+\langle i\vert\underline{L}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i>j\\
+\langle i\vert\underline{D}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{i}}}+\underline{M}_{i}/\Delta t, & i=j\\
+\langle i\vert\underline{U}\vert j\rangle=-\pdv*{\ket{r_{i}}}{\bra{\hat{u}_{j}}}, & i<j
+\end{cases}
+\]
+
+\end_inset
+
+对于标量守恒律，由
+\begin_inset Formula 
+\[
+\ket{r_{i}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}f_{s}^{h}\qty(\ket{\hat{u}_{i}})-\int_{\partial E_{i}}\ket{b_{i}}f_{n}^{h}\qty(\ket{\hat{u}_{i}},\ket{\hat{u}_{j}}),
+\]
+
+\end_inset
+
+可知
+\begin_inset Formula 
+\[
+\pdv{\ket{r_{i}}}{\bra{\hat{u}_{i}}}=\int_{E_{i}}\ket{\partial_{s}\,b_{i}}\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{i}}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\pdv{\ket{r_{i}}}{\bra{\hat{u}_{j}}}=-\int_{\partial E_{i}}\ket{b_{i}}\frac{\partial f_{n}^{h}}{\partial\bra{\hat{u}_{j}}},\quad i\ne j
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\partial f_{n}^{h}/\partial\bra{\hat{u}_{j}}$
+\end_inset
+
+ 需根据具体的 Riemann 解推导，而 
+\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
+\end_inset
+
+ 只依赖于 
+\begin_inset Formula $f_{s}^{h}$
+\end_inset
+
+ 的取法。若 
+\begin_inset Formula $f_{s}^{h}=f_{s}(u^{h})=f_{s}\qty(\ip{b_{i}}{\hat{u}_{i}})$
+\end_inset
+
+，则 
+\begin_inset Formula $\partial f_{s}^{h}/\partial\bra{\hat{u}_{i}}$
+\end_inset
+
+ 可化为
+\begin_inset Formula 
+\[
+\frac{\partial f_{s}^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}\circ u^{h}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial f_{s}}{\partial u^{h}}\frac{\partial u^{h}}{\partial\bra{\hat{u}_{i}}}=\left(a_{s}\circ u^{h}\right)\bra{b_{i}},
+\]
+
+\end_inset
+
+对于守恒律系统，该式形式上仍成立，但需注意各矩阵的维数：
+\begin_inset Formula 
+\[
+\frac{\partial\ket{f_{s}^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\frac{\partial\ket{f_{s}}\circ\ket{u^{h}}}{\partial\bra{\hat{u}_{i}}}=\frac{\partial\ket{f_{s}}_{K}}{\partial\bra{u^{h}}_{K}}\frac{\partial\ket{u^{h}}_{K}}{\partial\bra{\hat{u}_{i}}_{NK}}=\left(\underline{a_{s}}\circ\ket{u^{h}}\right)_{K\times K}\begin{bmatrix}\bra{b_{i}}\\
+ & \ddots\\
+ &  & \bra{b_{i}}
+\end{bmatrix}_{K\times NK},
+\]
+
+\end_inset
+
+其中最后一个矩阵来源于
+\begin_inset Formula 
+\[
+\ket{u^{h}}_{K}=\begin{bmatrix}\bra{b_{i}}\\
+ & \ddots\\
+ &  & \bra{b_{i}}
+\end{bmatrix}_{K\times NK}\ket{\hat{u}_{i}}_{NK}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+免矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sharov_1997"
+literal "true"
+
+\end_inset
+
+ 提出将 
+\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\Delta\underline{u}$
+\end_inset
+
+ 的乘积近似为 
+\begin_inset Formula $\Delta\underline{f}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\frac{\partial\underline{f}}{\partial\underline{u}}\,\Delta\underline{u}\approx\Delta\underline{f}\equiv\underline{f}(\underline{u}+\Delta\underline{u})-\underline{f}(\underline{u}),
+\]
+
+\end_inset
+
+由此免除矩阵 
+\begin_inset Formula $\partial\underline{f}/\partial\underline{u}$
+\end_inset
+
+ 的计算，从而免除 
+\begin_inset Formula $\underline{L},\underline{U}$
+\end_inset
+
+ 的计算及存储。
 \end_layout
 
 \end_body
