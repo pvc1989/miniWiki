@@ -433,7 +433,7 @@ Reynolds 平均
 \end_inset
 
  总是可以分解为平均值 
-\begin_inset Formula $U$
+\begin_inset Formula $\overline{u}$
 \end_inset
 
  与脉动值 
@@ -441,24 +441,53 @@ Reynolds 平均
 \end_inset
 
  之和：
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
-u(\vec{r},t)=U(\vec{r},t)+u'(\vec{r},t),\quad U\equiv\langle u\rangle\equiv\overline{u},
+u(\vec{r},t)=\overline{u}(\vec{r},t)+u'(\vec{r},t),
 \]
 
 \end_inset
 
-其中“平均”可取以下三种定义：
+该记法与 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Blazek_2015"
+literal "true"
+
+\end_inset
+
+ 一致（亦可按 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pope_2000"
+literal "true"
+
+\end_inset
+
+ 记作 
+\begin_inset Formula $U=\langle U\rangle+u$
+\end_inset
+
+，或按 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Durbin_2010"
+literal "true"
+
+\end_inset
+
+ 记作 
+\begin_inset Formula $\tilde{u}=U+u$
+\end_inset
+
+），其中“平均”可取以下三种定义：
 \end_layout
 
 \begin_layout Description
 时间平均 
 \begin_inset Formula 
 \[
-U_{T}(\vec{r},\cancel{t})\coloneqq\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau}
+\overline{u}_{T}(\vec{r},\cancel{t})\coloneqq\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau}
 \]
 
 \end_inset
@@ -474,7 +503,7 @@ U_{T}(\vec{r},\cancel{t})\coloneqq\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}u(\v
 空间平均 
 \begin_inset Formula 
 \[
-U_{V}(\cancel{\vec{r}},t)\coloneqq\lim_{V\to\infty}\frac{1}{V}\int_{V}u(\vec{r},\tau)\dd[3]{\vec{r}}
+\overline{u}_{V}(\cancel{\vec{r}},t)\coloneqq\lim_{V\to\infty}\frac{1}{V}\int_{V}u(\vec{r},\tau)\dd[3]{\vec{r}}
 \]
 
 \end_inset
@@ -490,7 +519,7 @@ U_{V}(\cancel{\vec{r}},t)\coloneqq\lim_{V\to\infty}\frac{1}{V}\int_{V}u(\vec{r},
 系综平均 
 \begin_inset Formula 
 \[
-U_{E}(\vec{r},t)\coloneqq\lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}u_{n}(\vec{r},t)
+\overline{u}_{E}(\vec{r},t)\coloneqq\lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}u_{n}(\vec{r},t)
 \]
 
 \end_inset
@@ -544,7 +573,7 @@ U_{E}(\vec{r},t)\coloneqq\lim_{N\to\infty}\frac{1}{N}\sum_{n=1}^{N}u_{n}(\vec{r}
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\frac{\partial U}{\partial t}=0,\quad\overline{U}=U,\quad\overline{u'}=\overline{u-U}=U-\overline{U}=0,
+\frac{\partial\overline{u}}{\partial t}=0,\quad\overline{\overline{u}}=\overline{u},\quad\overline{u'}=\overline{u-\overline{u}}=\overline{u}-\overline{u}=0,
 \]
 
 \end_inset
@@ -574,7 +603,7 @@ status open
 
 \begin_inset Formula 
 \[
-\overline{u\,v}=U\,V+\overline{u'\,v'},
+\overline{u\,v}=\overline{u}\,\overline{v}+\overline{u'\,v'},
 \]
 
 \end_inset
@@ -619,7 +648,7 @@ status open
 有时需考虑相对于湍流脉动变化缓慢的因素，可将时间平均的定义修改为
 \begin_inset Formula 
 \[
-U_{T}(\vec{r},t)\coloneqq\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau},\quad T_{1}\ll T\ll T_{2},
+\overline{u}_{T}(\vec{r},t)\coloneqq\frac{1}{T}\int_{t}^{t+T}u(\vec{r},\tau)\dd{\tau},\quad T_{1}\ll T\ll T_{2},
 \]
 
 \end_inset
@@ -649,7 +678,7 @@ status open
 ，即
 \begin_inset Formula 
 \[
-|u'|\ll|U|,
+|u'|\ll|\overline{u}|,
 \]
 
 \end_inset
@@ -657,7 +686,7 @@ status open
 则
 \begin_inset Formula 
 \[
-\ev{\frac{\partial u}{\partial t}}_{T}\equiv\frac{1}{T}\int_{t}^{t+T}\frac{\partial u}{\partial t}\dd{\tau}\approx\frac{U(\vec{r},t+T)-U(\vec{r},t)}{T}\approx\frac{\partial U}{\partial t},
+\ev{\frac{\partial u}{\partial t}}_{T}\equiv\frac{1}{T}\int_{t}^{t+T}\frac{\partial u}{\partial t}\dd{\tau}\approx\frac{\overline{u}(\vec{r},t+T)-\overline{u}(\vec{r},t)}{T}\approx\frac{\partial\overline{u}}{\partial t},
 \]
 
 \end_inset
@@ -674,6 +703,66 @@ status open
 
 \begin_layout Subsection
 不可压 RANS 方程
+\end_layout
+
+\begin_layout Standard
+由质量（连续）方程
+\begin_inset Formula 
+\[
+\divg\vec{u}=\frac{\partial u_{i}}{\partial x_{i}}=0,
+\]
+
+\end_inset
+
+得速度的物质导数为
+\begin_inset Formula 
+\[
+\frac{\mathrm{D}u_{j}}{\mathrm{D}t}=\left(\frac{\partial}{\partial t}+u_{i}\frac{\partial}{\partial x_{i}}\right)u_{j}=\frac{\partial u_{j}}{\partial t}+\frac{\partial(u_{i}\,u_{j})}{\partial x_{i}}-u_{j}\cancelto{0}{\frac{\partial u_{i}}{\partial x_{i}}},
+\]
+
+\end_inset
+
+其平均为
+\begin_inset Formula 
+\[
+\left\langle \frac{\mathrm{D}u_{j}}{\mathrm{D}t}\right\rangle =\frac{\partial\left\langle u_{j}\right\rangle }{\partial t}+\frac{\partial\left\langle u_{i}\,u_{j}\right\rangle }{\partial x_{i}}=\frac{\partial\left\langle u_{j}\right\rangle }{\partial t}+\frac{\partial\left\langle \left(\overline{u_{i}}+u_{i}'\right)\left(\overline{u_{j}}+u_{j}'\right)\right\rangle }{\partial x_{i}},
+\]
+
+\end_inset
+
+利用
+\begin_inset Formula 
+\[
+\left\langle \overline{u_{i}}\,\overline{u_{j}}\right\rangle =\overline{u_{i}}\,\overline{u_{j}}=\left\langle u_{i}\right\rangle \left\langle u_{j}\right\rangle ,\quad\left\langle u_{i}'\right\rangle =\left\langle u_{j}'\right\rangle =0,
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\frac{\partial\left\langle \left(\overline{u_{i}}+u_{i}'\right)\left(\overline{u_{j}}+u_{j}'\right)\right\rangle }{\partial x_{i}}=\frac{\partial\left\langle u_{i}\right\rangle \left\langle u_{j}\right\rangle }{\partial x_{i}}+\frac{\partial\left\langle u_{i}'\,u_{j}'\right\rangle }{\partial x_{i}}=\left\langle u_{i}\right\rangle \frac{\partial\left\langle u_{j}\right\rangle }{\partial x_{i}}+\left\langle u_{j}\right\rangle \cancelto{0}{\frac{\partial\left\langle u_{i}\right\rangle }{\partial x_{i}}}+\frac{\partial\left\langle u_{i}'\,u_{j}'\right\rangle }{\partial x_{i}},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\frac{\partial\left\langle u_{i}\right\rangle }{\partial x_{i}}=\left\langle \frac{\partial u_{i}}{\partial x_{i}}\right\rangle =\left\langle 0\right\rangle =0,
+\]
+
+\end_inset
+
+最终得
+\begin_inset Formula 
+\[
+\left\langle \frac{\mathrm{D}u_{j}}{\mathrm{D}t}\right\rangle =\frac{\partial\left\langle u_{j}\right\rangle }{\partial t}+\left\langle u_{i}\right\rangle \frac{\partial\left\langle u_{j}\right\rangle }{\partial x_{i}}+\frac{\partial\left\langle u_{i}'\,u_{j}'\right\rangle }{\partial x_{i}}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -707,66 +796,112 @@ Stokes 假设：
 不可压：
 \begin_inset Formula 
 \[
-\partial_{k}\,u_{k}=0\implies\boxed{\tau_{ij}=2\mu\,s_{ij}}
+\partial_{k}\,u_{k}=0\implies\boxed{\frac{\partial\tau_{ij}}{\partial x_{i}}=\mu\frac{\partial}{\partial x_{i}}\left(\frac{\partial u_{j}}{\partial x_{i}}+\frac{\partial u_{i}}{\partial x_{j}}\right)=\mu\frac{\partial^{2}u_{j}}{\partial x_{i}^{2}}}+\mu\frac{\partial}{\partial x_{j}}\cancelto{0}{\frac{\partial u_{i}}{\partial x_{i}},}
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-不可压 NS 方程：
+故不可压动量方程为
 \begin_inset Formula 
 \[
-\begin{aligned}\partial_{i}\,u_{i} & =0\\
-\rho\,\partial_{t}\,u_{i}+\rho\,u_{j}\,\partial_{j}\,u_{i} & =-\partial_{i}\,p+\partial_{j}\,(2\mu\,s_{ij})
-\end{aligned}
+\frac{\mathrm{D}u_{j}}{\mathrm{D}t}=-\frac{1}{\rho}\frac{\partial p}{\partial x_{j}}+\nu\frac{\partial^{2}u_{j}}{\partial x_{i}^{2}},\quad\nu=\frac{\mu}{\rho},
 \]
 
 \end_inset
 
-利用不可压缩性，可得
+其平均为
 \begin_inset Formula 
 \[
-u_{j}\,\partial_{j}\,u_{i}=\partial_{j}\,(u_{i}\,u_{j})-u_{i}\,\partial_{j}\,u_{j}=\partial_{j}\,(u_{i}\,u_{j}),
-\]
-
-\end_inset
-
-代入不可压 NS 方程，即得守恒型不可压 RANS 方程：
-\begin_inset Formula 
-\[
-\begin{aligned}\partial_{i}\,U_{i} & =0\\
-\rho\,\partial_{t}\,U_{i}+\rho\,\partial_{j}\,(U_{i}\,U_{j}+\overline{u_{i}'\,u_{j}'}) & =-\partial_{i}\,P+\partial_{j}\,(2\mu\,S_{ij})
-\end{aligned}
+\left\langle \frac{\mathrm{D}u_{j}}{\mathrm{D}t}\right\rangle =\frac{\partial\overline{u_{j}}}{\partial t}+\overline{u_{i}}\frac{\partial\overline{u_{j}}}{\partial x_{i}}+\frac{\partial\overline{u_{i}'\,u_{j}'}}{\partial x_{i}}=-\frac{1}{\rho}\frac{\partial\overline{p}}{\partial x_{j}}+\nu\frac{\partial^{2}\overline{u_{j}}}{\partial x_{i}^{2}},
 \]
 
 \end_inset
 
 右移 
-\begin_inset Formula $u_{i}'\,u_{j}'$
+\begin_inset Formula $\overline{u_{i}'\,u_{j}'}$
 \end_inset
 
- 项，可得形式上与不可压 NS 方程一致的不可压 RANS 方程：
+ 项并乘 
+\begin_inset Formula $\rho$
+\end_inset
+
+，可得形式上与（不可压）动量方程几乎一致的（不可压）雷诺平均动量方程：
 \begin_inset Formula 
 \[
-\begin{aligned}\partial_{i}\,U_{i} & =0\\
-\rho\,\partial_{t}\,U_{i}+\rho\,U_{j}\,\partial_{j}\,U_{i} & =-\partial_{i}\,P+\partial_{j}\,(2\mu\,S_{ij}-\rho\,\overline{u_{i}'\,u_{j}'})
-\end{aligned}
+\frac{\partial\overline{u_{j}}}{\partial t}+\overline{u_{i}}\frac{\partial\overline{u_{j}}}{\partial x_{i}}=-\frac{1}{\rho}\frac{\partial\overline{p}}{\partial x_{j}}+\nu\frac{\partial^{2}\overline{u_{j}}}{\partial x_{i}^{2}}-\frac{\partial\overline{u_{i}'\,u_{j}'}}{\partial x_{i}},
 \]
 
 \end_inset
 
-其中 
+对其求散度可得压力的 Poisson 方程
+\begin_inset Formula 
+\[
+-\frac{1}{\rho}\frac{\partial^{2}\overline{p}}{\partial x_{j}^{2}}=\frac{\partial\overline{u_{i}}}{\partial x_{j}}\frac{\partial\overline{u_{j}}}{\partial x_{i}}+\frac{\partial^{2}\overline{u_{i}'\,u_{j}'}}{\partial x_{i}\,\partial x_{j}},
+\]
+
+\end_inset
+
+它们共同构成不可压 RANS 方程组。独立变量个数大于方程个数，需对 
+\begin_inset Formula $-\overline{u_{i}'\,u_{j}'}$
+\end_inset
+
+ 项引入模型。
+\end_layout
+
+\begin_layout Subsubsection
+雷诺应力
+\end_layout
+
+\begin_layout Standard
+雷诺平均动量方程中待模化的 
+\begin_inset Formula $-\overline{u_{i}'\,u_{j}'}$
+\end_inset
+
+（或量纲上更正确的 
 \begin_inset Formula $-\rho\,\overline{u_{i}'\,u_{j}'}$
 \end_inset
 
- 为
+ ）被称为
 \color red
 雷诺应力 (Reynolds stress)
 \color inherit
- 张量，在三维空间中含六个独立分量。
+ 张量，它是对称半正定的，其对角元之和
+\begin_inset Formula 
+\[
+k\coloneqq\frac{1}{2}\left(\overline{u_{1}'\,u_{1}'}+\overline{u_{2}'\,u_{2}'}+\overline{u_{3}'\,u_{3}'}\right)=\frac{1}{2}\ev{\vec{u}\vdot\vec{u}},
+\]
+
+\end_inset
+
+为旋转不变量，被称为
+\color red
+湍动能 (turbulent kinetic energy)
+\color inherit
+。利用 
+\begin_inset Formula $k$
+\end_inset
+
+ 可将 
+\begin_inset Formula $\overline{u_{i}'\,u_{j}'}$
+\end_inset
+
+ 分解为各向异性与各向同性两部分：
+\begin_inset Formula 
+\[
+\overline{u_{i}'\,u_{j}'}=a_{ij}+2k\frac{\delta_{ij}}{3},
+\]
+
+\end_inset
+
+其中各向异性部分又可以无量纲化为
+\begin_inset Formula 
+\[
+b_{ij}=\frac{a_{ij}}{2k}=\frac{\ev{u_{i}'\,u_{j}'}}{\ev{u_{l}'\,u_{l}'}}+\frac{\delta_{ij}}{3},
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
