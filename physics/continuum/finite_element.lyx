@@ -5959,6 +5959,71 @@ Energy stable?
 
 \end_inset
 
+假设已知第 
+\begin_inset Formula $j$
+\end_inset
+
+ 号单元上的动能耗散率为
+\begin_inset Formula 
+\[
+\dv{t}\underbrace{\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2}}_{K_{j}}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}=\cdots+\nu_{j}\,\underbrace{\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{D}_{j}\ket{\hat{u}_{j}}+\cancel{\underline{E}_{j}\ket{\hat{u}_{j-1}}}+\cancel{\underline{F}_{j}\ket{\hat{u}_{j+1}}}\right)}_{G_{j}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{W}_{j}$
+\end_inset
+
+ 为由数值积分权重构成的对角阵，
+\begin_inset Formula $\underline{D}_{j},\underline{E}_{j},\underline{F}_{j}$
+\end_inset
+
+ 为由空间离散格式确定的常值矩阵：
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\ket{\hat{u}_{j}}=\cdots+\nu_{j}\left(\underline{D}_{j}\ket{\hat{u}_{j}}+\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
+\]
+
+\end_inset
+
+
+\begin_inset Formula $\nu_{j}$
+\end_inset
+
+ 为待定的人工黏性系数，其数值由
+\begin_inset Formula 
+\[
+\nu_{j}=\frac{\Delta K_{j}}{-G_{j}\,\tau}\impliedby\dv{t}K_{j}=\cdots+\nu_{j}\,G_{j},
+\]
+
+\end_inset
+
+确定，即期望数值振荡对应的动能 
+\begin_inset Formula $\Delta K_{j}$
+\end_inset
+
+ 在 
+\begin_inset Formula $\tau$
+\end_inset
+
+ 时间（可调经验参数）内被耗散掉。振荡动能 
+\begin_inset Formula $\Delta K_{j}$
+\end_inset
+
+ 有以下几种取法：
+\begin_inset Formula 
+\[
+\begin{aligned}\Delta K_{j}^{\mathrm{I}} & =\min_{k=j\pm1}\norm{u_{j}^{\mathrm{D}}-u_{k}^{\mathrm{D}}}_{L_{2}(E_{j})}^{2},\\
+\Delta K_{j}^{\mathrm{II}} & =\min_{k=j\pm1}\norm{u_{j}^{\mathrm{D}}-u_{k}^{\mathrm{D},\mathbb{P}_{1}(E_{j})}}_{L_{2}(E_{j})}^{2},\\
+\Delta K_{j}^{\mathrm{III}} & =\min_{\zeta=\pm1}\sum_{q=0}^{p}\left(\left(\frac{\partial^{q}u_{j}^{\mathrm{D}}}{\partial x^{q}}-\frac{\partial^{q}u_{j+\zeta}^{\mathrm{D}}}{\partial x^{q}}\right)_{x_{j+\zeta/2}}\left(x_{j}-x_{j+\zeta}\right)^{q}\,w_{q}\right)^{2},\quad w=(1,1),\\
+\Delta K_{j}^{\mathrm{IV}} & =\min\qty(\Delta K_{j}^{\mathrm{I}},\Delta K_{j}^{\mathrm{II}}),\\
+\Delta K_{j}^{\mathrm{V}} & =\min\qty(\Delta K_{j}^{\mathrm{III}},\Delta K_{j}^{\mathrm{IV}})\equiv\min\qty(\Delta K_{j}^{\mathrm{I}},\Delta K_{j}^{\mathrm{II}},\Delta K_{j}^{\mathrm{III}}),
+\end{aligned}
+\]
+
+\end_inset
+
 
 \end_layout
 
