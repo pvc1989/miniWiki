@@ -2722,7 +2722,119 @@ name "sec:有限体积：近似 Riemann 解"
 \end_layout
 
 \begin_layout Subsection
+Local Lax–Friedrichs
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\vert\hat{F}\rangle=\frac{\ket{F_{-}}+\ket{F_{+}}}{2}-\lambda_{\max}\frac{\ket{U_{+}}-\ket{U_{-}}}{2},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\lambda_{\max}=\max_{\omega\in[0,1]}\abs{\lambda(\omega)}$
+\end_inset
+
+，
+\begin_inset Formula $\lambda(\omega)$
+\end_inset
+
+ 为 
+\begin_inset Formula $\ket{U}=(1-\omega)\ket{U_{-}}+\omega\ket{U_{+}}$
+\end_inset
+
+ 时 
+\begin_inset Formula $\pdv*{\ket{F}}{\ket{U}}$
+\end_inset
+
+ 的最大特征值。实际计算时，可取两侧的较大值，即
+\begin_inset Formula 
+\[
+\lambda_{\max}=\max\qty(|u_{\pm}-a_{\pm}|,\cancel{|u_{\pm}|},|u_{\pm}+a_{\pm}|),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{\pm},a_{\pm}$
+\end_inset
+
+ 用界面值或单元均值代入。
+\end_layout
+
+\begin_layout Subsection
 Roe
+\end_layout
+
+\begin_layout Standard
+先计算 Roe 平均：
+\begin_inset Formula 
+\[
+\tilde{\rho}=\sqrt{\rho_{-}}\sqrt{\rho_{+}},\quad\tilde{\vec{u}}=\frac{\sqrt{\rho_{-}}\vec{u}_{-}+\sqrt{\rho_{+}}\vec{u}_{+}}{\sqrt{\rho_{-}}+\sqrt{\rho_{+}}},\quad\tilde{H}=\frac{\sqrt{\rho_{-}}H_{-}+\sqrt{\rho_{+}}H_{+}}{\sqrt{\rho_{-}}+\sqrt{\rho_{+}}},\quad\tilde{a}=\sqrt{(\gamma-1)\left(\tilde{H}-\tilde{K}\right)},
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+H=\frac{a^{2}}{\gamma-1}+K,\quad a^{2}=\frac{\gamma p}{\rho},\quad K=\frac{\vec{u}\vdot\vec{u}}{2},
+\]
+
+\end_inset
+
+再以上述 Roe 平均值计算特征值
+\begin_inset Formula 
+\[
+\tilde{\lambda}_{1}=\tilde{u}-\tilde{a},\quad\tilde{\lambda}_{2}=\tilde{\lambda}_{3}=\tilde{\lambda}_{4}=\tilde{u},\quad\tilde{\lambda}_{5}=\tilde{u}+\tilde{a},
+\]
+
+\end_inset
+
+及特征向量
+\begin_inset Formula 
+\[
+\begin{bmatrix}\vert\tilde{R}_{1}\rangle & \vert\tilde{R}_{2}\rangle & \vert\tilde{R}_{3}\rangle & \vert\tilde{R}_{4}\rangle & \vert\tilde{R}_{5}\rangle\end{bmatrix}=\begin{bmatrix}1 & 1 & 0 & 0 & 1\\
+\tilde{u}-\tilde{a} & \tilde{u} & 0 & 0 & \tilde{u}+\tilde{a}\\
+\tilde{v} & \tilde{v} & 1 & 0 & \tilde{v}\\
+\tilde{w} & \tilde{w} & 0 & 1 & \tilde{w}\\
+\tilde{H}-\tilde{u}\tilde{a} & \tilde{K} & \tilde{v} & \tilde{w} & \tilde{H}+\tilde{u}\tilde{a}
+\end{bmatrix},
+\]
+
+\end_inset
+
+及波强度
+\begin_inset Formula 
+\[
+\tilde{\alpha}_{1}=\frac{\left\llbracket p\right\rrbracket -\tilde{\rho}\tilde{a}\left\llbracket u\right\rrbracket }{2\tilde{a}^{2}},\quad\tilde{\alpha}_{2}=\left\llbracket \rho\right\rrbracket -\frac{\left\llbracket p\right\rrbracket }{\tilde{a}^{2}},\quad\tilde{\alpha}_{3}=\tilde{\rho}\left\llbracket v\right\rrbracket ,\quad\tilde{\alpha}_{4}=\tilde{\rho}\left\llbracket w\right\rrbracket ,\quad\tilde{\alpha}_{5}=\frac{\left\llbracket p\right\rrbracket +\tilde{\rho}\tilde{a}\left\llbracket u\right\rrbracket }{2\tilde{a}^{2}},
+\]
+
+\end_inset
+
+最后得界面通量
+\begin_inset Formula 
+\[
+\vert\hat{F}\rangle=\frac{\ket{F_{-}}+\ket{F_{+}}}{2}-\frac{1}{2}\sum_{i=1}^{5}\tilde{\alpha}_{i}\abs{\tilde{\lambda}_{i}}\vert\tilde{R}_{i}\rangle.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+详见 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Roe_1984"
+literal "false"
+
+\end_inset
+
+。
 \end_layout
 
 \begin_layout Subsection
