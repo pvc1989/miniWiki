@@ -5173,7 +5173,7 @@ DG-with-FR 的另一种 quadrature free 实现：取正交基，则
 \end_layout
 
 \begin_layout Section
-界面黏性通量
+黏性项处理
 \end_layout
 
 \begin_layout Subsection
@@ -5743,7 +5743,7 @@ literal "true"
 考虑一维扩散问题
 \begin_inset Formula 
 \[
-\frac{\partial u}{\partial t}+\frac{\partial}{\partial x}\left(a(u)\frac{\partial u}{\partial x}\right)=0,\quad a(u)>0,
+\frac{\partial u}{\partial t}=\frac{\partial}{\partial x}\left(a(u)\frac{\partial u}{\partial x}\right),\quad a(u)>0,
 \]
 
 \end_inset
@@ -5751,7 +5751,7 @@ literal "true"
 定义扩散通量
 \begin_inset Formula 
 \[
-h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\impliedby b(u)\coloneqq\int^{u}a(s)\dd{s},
+f^{\mathrm{d}}=\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\impliedby b(u)\coloneqq\int^{u}a(s)\dd{s},
 \]
 
 \end_inset
@@ -5759,7 +5759,7 @@ h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\
 则数值通量一般形式为
 \begin_inset Formula 
 \[
-\widehat{h(u)}=\beta_{0}\frac{\left\llbracket b(u)\right\rrbracket }{h}+\left\{ \frac{\partial b(u)}{\partial x}\right\} +\sum_{m=1}^{\left\lfloor k/2\right\rfloor }\beta_{m}\,h^{2m-1}\left\llbracket \frac{\partial^{2m}b(u)}{\partial x^{2m}}\right\rrbracket ,
+\widehat{f}_{j+1/2}^{\mathrm{d}}=\beta_{0}\,h_{j+1/2}^{-1}\left\llbracket b(u^{h})\right\rrbracket _{j+1/2}+\left\{ \frac{\partial b(u^{h})}{\partial x}\right\} _{j+1/2}+\sum_{m=2}^{\left\lfloor k/2\right\rfloor }\beta_{m}\,h_{j+1/2}^{2m-1}\left\llbracket \frac{\partial^{2m}b(u^{h})}{\partial x^{2m}}\right\rrbracket _{j+1/2},
 \]
 
 \end_inset
@@ -5768,7 +5768,28 @@ h(u)\coloneqq\frac{\partial b(u)}{\partial x}=a(u)\frac{\partial u}{\partial x}\
 \begin_inset Formula $k$
 \end_inset
 
- 为界面两侧多项式次数的较大者。
+ 为界面两侧多项式次数的较大者，
+\begin_inset Formula 
+\[
+\left\llbracket X\right\rrbracket _{j+1/2}=X_{j+1/2}^{+}-X_{j+1/2}^{-},\quad\left\{ X\right\} _{j+1/2}=\frac{1}{2}\left(X_{j+1/2}^{+}+X_{j+1/2}^{-}\right),\quad h_{j+1/2}=x_{j+1}-x_{j},
+\]
+
+\end_inset
+
+直接代入 DG 弱形式
+\begin_inset Formula 
+\[
+\begin{aligned}\mathcal{DG}(u^{h},v^{h}) & =\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}+\ip{\partial_{x}\,v^{h}}{f^{\mathrm{d}}}_{E_{j}}-\ip{v^{h}}{n_{x}\,f^{\mathrm{d}}}_{\partial E_{j}}\\
+ & =\int_{x_{j-1/2}}^{x_{j+1/2}}\left(v^{h}\frac{\partial u^{h}}{\partial t}+\frac{\partial v^{h}}{\partial x}f^{\mathrm{d}}(u^{h})\right)\dd{x}+\eval{\left(v^{h}\,\hat{f}^{\mathrm{d}}\right)}_{x_{j-1/2}}^{x_{j+1/2}}=0,
+\end{aligned}
+\]
+
+\end_inset
+
+即得半离散格式。
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset citation
 LatexCommand citet
 key "Liu_2009_DDG"
@@ -5779,28 +5800,147 @@ literal "true"
  数值试验表明：取
 \begin_inset Formula 
 \[
-\beta_{0}\in[2,4],\quad\beta_{1}=\frac{1}{12},
+\beta_{0}=1,\quad\beta_{1}=\frac{1}{12},\quad\beta_{m\ge2}=0,
 \]
 
 \end_inset
 
 可在 
-\begin_inset Formula $k=0,1,2,3$
+\begin_inset Formula $k\le3$
 \end_inset
 
- 情形下，得 
+ 时得 
 \begin_inset Formula $k+1$
 \end_inset
 
- 阶最优精度。
+ 阶最优精度。为在 
+\begin_inset Formula $k>3$
+\end_inset
+
+ 时得最优精度，需引入 
+\begin_inset Formula $\beta_{m\ge2}$
+\end_inset
+
+，但没有明确的准则。
 \end_layout
 
 \begin_layout Subsubsection
-高维方程组形式
+界面修正项
 \end_layout
 
 \begin_layout Standard
-高维方程组情形：以 
+为在 
+\begin_inset Formula $k>3$
+\end_inset
+
+ 时只取 
+\begin_inset Formula $(\beta_{0},\beta_{1})$
+\end_inset
+
+ 仍有最优精度，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Liu_2010_DDG"
+literal "false"
+
+\end_inset
+
+ 在 DDG 弱形式中引入界面修正项：
+\begin_inset Formula 
+\[
+\mathcal{DDG}(u^{h},v^{h})+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j+1/2}+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j-1/2}=0,
+\]
+
+\end_inset
+
+或更一般的高维版本
+\begin_inset Formula 
+\[
+\mathcal{DDG}(u^{h},v^{h})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial v^{h}}{\partial n}}_{\partial E}=0,
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\left\llbracket X\right\rrbracket _{\partial E}$
+\end_inset
+
+ 表示外侧值减内侧值，
+\begin_inset Formula $\pdv*{Y}{n}$
+\end_inset
+
+ 表示沿外法向求导，因此在 
+\begin_inset Formula $x_{j\pm1/2}$
+\end_inset
+
+ 处分别有
+\begin_inset Formula 
+\[
+\eval{\left\llbracket X\right\rrbracket _{\partial E}}_{j-1/2}=-\left\llbracket X\right\rrbracket _{j-1/2},\quad\eval{\frac{\partial Y}{\partial n}}_{j-1/2}=-\eval{\frac{\partial Y}{\partial x}}_{j-1/2},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\eval{\left\llbracket X\right\rrbracket _{\partial E}}_{j+1/2}=+\left\llbracket X\right\rrbracket _{j+1/2},\quad\eval{\frac{\partial Y}{\partial n}}_{j+1/2}=+\eval{\frac{\partial Y}{\partial x}}_{j+1/2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为得到上述修正项对半离散格式的影响，将 test function 的展开式 
+\begin_inset Formula $v^{h}(\vec{x})=\sum_{k}\hat{v}_{k}\,\phi_{k}(\vec{x})$
+\end_inset
+
+ 代入修正后的弱形式，得
+\begin_inset Formula 
+\[
+\mathcal{DDG}(u^{h},v^{h})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\sum_{k}\hat{v}_{k}\phi_{k}}{\partial n}}_{\partial E}=\mathcal{DG}(u^{h},v^{h})+\sum_{k}\hat{v}_{k}\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\phi_{k}}{\partial n}}_{\partial E}=0,
+\]
+
+\end_inset
+
+故半离散格式被修正为
+\begin_inset Formula 
+\[
+\underline{m}\frac{\dd}{\dd t}\underline{\hat{u}}=\underline{r}(\underline{\hat{u}})+\frac{1}{2}\begin{bmatrix}\ip{\left\llbracket b(u^{h})\right\rrbracket }{\partial_{n}\,\phi_{1}}_{\partial E}\\
+\vdots\\
+\ip{\left\llbracket b(u^{h})\right\rrbracket }{\partial_{n}\,\phi_{N}}_{\partial E}
+\end{bmatrix},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{r}$
+\end_inset
+
+ 为未做修正的 DDG 残值项。
+\end_layout
+
+\begin_layout Standard
+数值实验表明，若取 
+\begin_inset Formula $\beta_{0}=2,\beta_{1}=\frac{1}{12}$
+\end_inset
+
+，则对 
+\begin_inset Formula $k\le9$
+\end_inset
+
+ 均有最优精度。
+\end_layout
+
+\begin_layout Subsubsection
+高维方程组
+\end_layout
+
+\begin_layout Standard
+以 
 \begin_inset Formula $k=2,3$
 \end_inset
 
@@ -6016,7 +6156,7 @@ Energy stable?
 \[
 \begin{aligned}\Delta K_{j}^{\mathrm{I}} & =\min_{k=j\pm1}\norm{u_{j}^{\mathrm{D}}-u_{k}^{\mathrm{D}}}_{L_{2}(E_{j})}^{2},\\
 \Delta K_{j}^{\mathrm{II}} & =\min_{k=j\pm1}\norm{u_{j}^{\mathrm{D}}-u_{k}^{\mathrm{D},\mathbb{P}_{1}(E_{j})}}_{L_{2}(E_{j})}^{2},\\
-\Delta K_{j}^{\mathrm{III}} & =\min_{\zeta=\pm1}\sum_{q=0}^{p}\left(\left(\frac{\partial^{q}u_{j}^{\mathrm{D}}}{\partial x^{q}}-\frac{\partial^{q}u_{j+\zeta}^{\mathrm{D}}}{\partial x^{q}}\right)_{x_{j+\zeta/2}}\left(x_{j}-x_{j+\zeta}\right)^{q}\,w_{q}\right)^{2},\quad w=(1,1),\\
+\Delta K_{j}^{\mathrm{III}} & =\min_{\zeta=\pm1}\sum_{q=0}^{p}\left(\left(\frac{\partial^{q}u_{j}^{\mathrm{D}}}{\partial x^{q}}-\frac{\partial^{q}u_{j+\zeta}^{\mathrm{D}}}{\partial x^{q}}\right)_{x_{j+\zeta/2}}h_{j+\zeta/2}^{q}\,w_{q}\right)^{2},\quad w=(1,1),\\
 \Delta K_{j}^{\mathrm{IV}} & =\min\qty(\Delta K_{j}^{\mathrm{I}},\Delta K_{j}^{\mathrm{II}}),\\
 \Delta K_{j}^{\mathrm{V}} & =\min\qty(\Delta K_{j}^{\mathrm{III}},\Delta K_{j}^{\mathrm{IV}})\equiv\min\qty(\Delta K_{j}^{\mathrm{I}},\Delta K_{j}^{\mathrm{II}},\Delta K_{j}^{\mathrm{III}}),
 \end{aligned}
