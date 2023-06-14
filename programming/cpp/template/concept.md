@@ -169,3 +169,98 @@ Numeric auto some_function(int x) {
 }
 ```
 
+# 标准库概念
+
+## `<concepts>`
+
+## Range
+
+[Range](https://en.cppreference.com/w/cpp/ranges/range) 是对容器概念的推广，可以由「起始迭代器 + END」来定义，其中 END 可以是：
+
+- 终止迭代器，如 `{ vec.begin(), vec.end() }`
+- 个数，如 `{ vec.begin(), vec.size() }`
+- 终止条件，如 `{ vec.begin(), [](int x){ return x % 2; } }`
+
+标准库在命名空间 `std::ranges` 中定义了一些常用的 range `concept`s：
+
+|                       Range `concept`s                       |                             说明                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [`ranges::range`](https://en.cppreference.com/w/cpp/ranges/range) |                   提供「起始迭代器 + END」                   |
+| [`ranges::borrowed_range`](https://en.cppreference.com/w/cpp/ranges/borrowed_range) |                   迭代器可返回（不会空悬）                   |
+| [`ranges::sized_range`](https://en.cppreference.com/w/cpp/ranges/sized_range) |                      支持 O(1) `size()`                      |
+| [`ranges::view`](https://en.cppreference.com/w/cpp/ranges/view) |                   支持 O(1) `operator=()`                    |
+| [`ranges::input_range`](https://en.cppreference.com/w/cpp/ranges/input_range) | 支持 [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) |
+| [`ranges::output_range`](https://en.cppreference.com/w/cpp/ranges/output_range) | 支持 [`output_iterator`](https://en.cppreference.com/w/cpp/iterator/output_iterator) |
+| [`ranges::forward_range`](https://en.cppreference.com/w/cpp/ranges/forward_range) | 支持 [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) |
+| [`ranges::bidirectional_range`](https://en.cppreference.com/w/cpp/ranges/bidirectional_range) | 支持 [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator) |
+| [`ranges::random_access_range`](https://en.cppreference.com/w/cpp/ranges/random_access_range) | 支持 [`random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator) |
+| [`ranges::contiguous_range`](https://en.cppreference.com/w/cpp/ranges/contiguous_range) | 支持 [`contiguous_iterator`](https://en.cppreference.com/w/cpp/iterator/contiguous_iterator) |
+| [`ranges::common_range`](https://en.cppreference.com/w/cpp/ranges/common_range) |                                                              |
+| [`ranges::viewable_range`](https://en.cppreference.com/w/cpp/ranges/viewable_range) | 可以安全地转化为 [`view`](https://en.cppreference.com/w/cpp/ranges/view) |
+| [`ranges::constant_range`](https://en.cppreference.com/w/cpp/ranges/constant_range) (C++23) |                           元素只读                           |
+
+标准库在命名空间 `std::ranges` 中还提供了一些对常用算法的封装，使得形如 `std::sort(v.begin(), v.end())` 的调用可简化为 `std::ranges::sort(v)`，从而避免传错迭代器。
+
+## View
+
+[View](https://en.cppreference.com/w/cpp/ranges/view) 是对 range 的轻量化封装（适配器）。
+
+标准库在命名空间 `std::ranges` 中提供了一些常用的 views：
+
+|           `VIEW`            |         `for (auto x : VIEW) { use(x); }` 的传统写法         |
+| :-------------------------: | :----------------------------------------------------------: |
+|        `all_view{r}`        |                  `for (auto x : r) use(x);`                  |
+|     `filter_view{r, p}`     |             `for (auto x : r) if (p(x)) use(x);`             |
+|   `transform_view{r, f}`    |                `for (auto x : r) use(f(x));`                 |
+|      `take_view{r, n}`      | `int i{0}; for (auto x : r) if (i++ == n) break; else use(x);` |
+|      `drop_view{r, n}`      | `int i{0}; for (auto x : r) if (i++ < n) continue; else use(x);` |
+|   `take_while_view{r, p}`   |      `for (auto x : r) if (!p(x)) break; else use(x);`       |
+|   `drop_while_view{r, p}`   |     `for (auto x : r) if (p(x)) continue; else use(x);`      |
+|       `join_view{r}`        |         `for (auto &y : r) for (auto x : y) use(x);`         |
+|        `key_view{r}`        |               `for (auto [x, y] : r) use(x);`                |
+|       `value_view{r}`       |               `for (auto [y, x] : r) use(x);`                |
+|        `ref_view{r}`        |                 `for (auto &x : r) use(x);`                  |
+|        以下为生成器         |                                                              |
+|       `iota_view{y}`        |           `for (int i = 0: true; ++i) use(y + i);`           |
+|      `iota_view{y, z}`      |            `for (auto x = y: x < z; ++x) use(x);`            |
+| `istream_view<double>{cin}` |             `double x; while (cin >> x) use(x);`             |
+
+表中 `ranges::X_view{ARGS}` 等价于 `views::X(ARGS)`，即每个 `views::X` 函数生成一个 `ranges::X_view` 对象。
+
+例如按条件过滤：
+
+```cpp
+auto filter_odd(ranges::forward_range auto& r) {
+  ranges::filter_view v {r, [](int x) { return x % 2; } };  // v 的用户只访问 r 中的奇数
+  return v;  // 轻量化封装，直接按值返回
+}
+int main() {
+  auto v = vector<int>{ 3, 5, 1, 2 };
+  cout << "odd numbers: ";
+  auto fv = filter_odd(v);
+  static_assert(ranges::forward_range<decltype(fv)>);  // view 依然是 range
+  ranges::for_each(fv, [](int x) { cout << x << ' '; });  // 可以像 range 一样使用 view
+  cout << "\n";
+}
+```
+
+可以创建 view of view，例如：
+
+```cpp
+ranges::forward_range/* 类型限制 */ auto
+take_2(ranges::view auto/* view 无需传引用 */ fv) {
+  ranges::take_view tv {fv, 100};  // 只访问前 2 个奇数
+  // 等价于 auto tv = views::take(fv, 100);
+  return tv;
+}
+int main() {
+  auto v = vector<int>{ 3, 5, 1, 2 };
+  cout << "odd numbers: ";
+  auto fv = filter_odd(v);
+  auto tv = take_2(fv);  // view of view
+  ranges::for_each(tv, [](int x) { cout << x << ' '; });
+  cout << "\n";
+}
+```
+
+## Pipeline
