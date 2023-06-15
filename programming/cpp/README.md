@@ -59,8 +59,8 @@ title: C/C++
 
 - [泛型编程](./template/generic.md)
 - [类型推断](./template/type_deduction.md)
-- [概念](./template/concept.md)
 - [元编程](./template/metaprogramming.md)
+- [概念](./template/concept.md)
 
 # 开发工具
 

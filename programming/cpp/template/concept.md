@@ -173,6 +173,62 @@ Numeric auto some_function(int x) {
 
 ## `<concepts>`
 
+标准库在 `<concepts>` 中定义了一些常用概念。
+
+### 核心语言概念
+
+
+- [`same_as<T, U>`](https://en.cppreference.com/w/cpp/concepts/same_as) means `T` is the same as `U`.
+- [`derived_from<T, U>`](https://en.cppreference.com/w/cpp/concepts/derived_from) means `T` is derived from `U`.
+- [`convertible_to<T, U>`](https://en.cppreference.com/w/cpp/concepts/convertible_to) means `T` is convertible to `U`.
+- [`common_reference_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/common_reference_with) means `T` shares a common reference type with `U`.
+- [`common_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/common_with) means `T` shares a common type ([`common_type_t<T, U>`](https://en.cppreference.com/w/cpp/types/common_type)) with `U`.
+- [`integral<T>`](https://en.cppreference.com/w/cpp/concepts/integral) means `T` is a type of integers.
+- [`signed_integral<T>`](https://en.cppreference.com/w/cpp/concepts/signed_integral) means `T` is a type of signed integers.
+- [`unsigned_integral<T>`](https://en.cppreference.com/w/cpp/concepts/unsigned_integral) means `T` is a type of unsigned integers.
+- [`floating_point<T>`](https://en.cppreference.com/w/cpp/concepts/floating_point) means `T` is a type of floating point numbers.
+- [`assignable_from<T, U>`](https://en.cppreference.com/w/cpp/concepts/assignable_from) means `T` is assignable from `U`.
+- [`swappable_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/swappable) means `T` is swappable with `U`.
+
+  - [`swappable<T>`](https://en.cppreference.com/w/cpp/concepts/swappable) is short for `swappable_with<T, T>`.
+
+
+### 比较概念
+
+
+- *[`boolean-testable`](https://en.cppreference.com/w/cpp/concepts/boolean-testable)* (exposition-only) means `T` can be used in Boolean contexts.
+- [`equality_comparable_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/equality_comparable) means `T` is equality comparable with `U`.
+  - [`equality_comparable<T>`](https://en.cppreference.com/w/cpp/concepts/equality_comparable) is short for `equality_comparable_with<T, T>`.
+- [`three_way_comparable_with<T, U>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) means
+  - [`three_way_comparable<T>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) is short for `three_way_comparable_with<T, T>`.
+- [`totally_ordered_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/totally_ordered) ([`<compare>`](https://en.cppreference.com/w/cpp/header/compare)) means
+  - [`totally_ordered<T>`](https://en.cppreference.com/w/cpp/concepts/totally_ordered) is short for `totally_ordered_with<T, T>`.
+
+### 对象概念
+
+- [`destructible<T>`](https://en.cppreference.com/w/cpp/concepts/destructible) means `T` is destructible.
+- [`constructible_from<T, Args>`](https://en.cppreference.com/w/cpp/concepts/constructible_from) means `T` can be constructed from an argument list of type `Args`.
+- [`default_initializable<T>`](https://en.cppreference.com/w/cpp/concepts/default_initializable) means `T` can be default constructed.
+- [`move_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/move_constructible) means `T` can be move constructed.
+  - [`movable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means `move_constructible<T> && assignable_from<T&, T> && swappable<T>`.
+
+- [`copy_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/copy_constructible) means `T` can be copy constructed.
+  - [`copyable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means `copy_constructible<T> && assignable_from<T, const T&> && movable<T>`.
+
+- [`semiregular<T>`](https://en.cppreference.com/w/cpp/concepts/semiregular) means `copyable<T> && default_initializable<T>`.
+  - [`regular<T>`](https://en.cppreference.com/w/cpp/concepts/regular) means `semiregular<T> && equality_comparable<T>`.
+
+
+### 可调用概念
+
+- [`invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) means an `F` can be invoked with an argument list of type `Args`. 
+  - [`regular_invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) means an `invocable<F, Args>` that is equality preserving (i.e. $\forall (x = y)\implies f(x)=f(y)$, which (currently) cannot be represented in code).
+    - [`predicate<F, Args>`](https://en.cppreference.com/w/cpp/concepts/predicate) means an `regular_invocable<F, Args>` that returns a `bool`.
+      - [`relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/relation) means `predicate<F, T, U>`.
+        - [`equivalence_relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/equivalence_relation) means an `relation<F, T, U>` that provides an equivalence relation (, which (currently) cannot be represented in code).
+        - [`strict_weak_order<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/strict_weak_order) means an `relation<F, T, U>` that provides strict weak ordering (, which (currently) cannot be represented in code).
+
+
 ## Range
 
 [Range](https://en.cppreference.com/w/cpp/ranges/range) 是对容器概念的推广，可以由「起始迭代器 + END」来定义，其中 END 可以是：
@@ -207,23 +263,23 @@ Numeric auto some_function(int x) {
 
 标准库在命名空间 `std::ranges` 中提供了一些常用的 views：
 
-|           `VIEW`            |         `for (auto x : VIEW) { use(x); }` 的传统写法         |
-| :-------------------------: | :----------------------------------------------------------: |
-|        `all_view{r}`        |                  `for (auto x : r) use(x);`                  |
-|     `filter_view{r, p}`     |             `for (auto x : r) if (p(x)) use(x);`             |
-|   `transform_view{r, f}`    |                `for (auto x : r) use(f(x));`                 |
-|      `take_view{r, n}`      | `int i{0}; for (auto x : r) if (i++ == n) break; else use(x);` |
-|      `drop_view{r, n}`      | `int i{0}; for (auto x : r) if (i++ < n) continue; else use(x);` |
-|   `take_while_view{r, p}`   |      `for (auto x : r) if (!p(x)) break; else use(x);`       |
-|   `drop_while_view{r, p}`   |     `for (auto x : r) if (p(x)) continue; else use(x);`      |
-|       `join_view{r}`        |         `for (auto &y : r) for (auto x : y) use(x);`         |
-|        `key_view{r}`        |               `for (auto [x, y] : r) use(x);`                |
-|       `value_view{r}`       |               `for (auto [y, x] : r) use(x);`                |
-|        `ref_view{r}`        |                 `for (auto &x : r) use(x);`                  |
-|        以下为生成器         |                                                              |
-|       `iota_view{y}`        |           `for (int i = 0: true; ++i) use(y + i);`           |
-|      `iota_view{y, z}`      |            `for (auto x = y: x < z; ++x) use(x);`            |
-| `istream_view<double>{cin}` |             `double x; while (cin >> x) use(x);`             |
+|                            `VIEW`                            |         `for (auto x : VIEW) { use(x); }` 的传统写法         |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| [`all_view{r}`](https://en.cppreference.com/w/cpp/ranges/all_view) |                  `for (auto x : r) use(x);`                  |
+| [`filter_view{r, p}`](https://en.cppreference.com/w/cpp/ranges/filter_view) |             `for (auto x : r) if (p(x)) use(x);`             |
+| [`transform_view{r, f}`](https://en.cppreference.com/w/cpp/ranges/transform_view) |                `for (auto x : r) use(f(x));`                 |
+| [`take_view{r, n}`](https://en.cppreference.com/w/cpp/ranges/take_view) | `int i{0}; for (auto x : r) if (i++ == n) break; else use(x);` |
+| [`drop_view{r, n}`](https://en.cppreference.com/w/cpp/ranges/drop_view) | `int i{0}; for (auto x : r) if (i++ < n) continue; else use(x);` |
+| [`take_while_view{r, p}`](https://en.cppreference.com/w/cpp/ranges/take_while_view) |      `for (auto x : r) if (!p(x)) break; else use(x);`       |
+| [`drop_while_view{r, p}`](https://en.cppreference.com/w/cpp/ranges/drop_while_view) |     `for (auto x : r) if (p(x)) continue; else use(x);`      |
+| [`join_view{r}`](https://en.cppreference.com/w/cpp/ranges/join_view) |         `for (auto &y : r) for (auto x : y) use(x);`         |
+| [`keys_view{r}`](https://en.cppreference.com/w/cpp/ranges/keys_view) |               `for (auto [x, y] : r) use(x);`                |
+| [`values_view{r}`](https://en.cppreference.com/w/cpp/ranges/values_view) |               `for (auto [y, x] : r) use(x);`                |
+| [`ref_view{r}`](https://en.cppreference.com/w/cpp/ranges/ref_view) |                 `for (auto &x : r) use(x);`                  |
+|                         以下为生成器                         |                                                              |
+| [`iota_view{y}`](https://en.cppreference.com/w/cpp/ranges/iota_view) |           `for (int i = 0: true; ++i) use(y + i);`           |
+| [`iota_view{y, z}`](https://en.cppreference.com/w/cpp/ranges/iota_view) |            `for (auto x = y: x < z; ++x) use(x);`            |
+| [`istream_view<double>{cin}`](https://en.cppreference.com/w/cpp/ranges/basic_istream_view) |             `double x; while (cin >> x) use(x);`             |
 
 表中 `ranges::X_view{ARGS}` 等价于 `views::X(ARGS)`，即每个 `views::X` 函数生成一个 `ranges::X_view` 对象。
 
@@ -264,3 +320,28 @@ int main() {
 ```
 
 ## Pipeline
+
+标准库 range 及 view 支持 `|` 运算符，可以像在 Unix shell 中串联多个命令一样，串联多个 filters：
+
+```cpp
+void user(ranges::forward_range auto& r) {
+  auto odd = [](int x) { return x % 2; };
+  for (int x : r | views::filter(odd) | views::take(3)) {
+    cout << x << ' ';
+  }
+}
+// 等价于
+void user_pre20(ranges::forward_range auto& r) {
+  auto odd = [](int x) { return x % 2; };
+  int cnt = 0;
+  for (int x : r) {
+    if (odd(x)) {
+    	cout << x << ' ';
+      if (++cnt == 3) {
+        break;
+      }
+    }
+  }
+}
+```
+
