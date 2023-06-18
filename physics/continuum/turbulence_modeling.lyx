@@ -972,7 +972,11 @@ DNS
 \end_layout
 
 \begin_layout Standard
-DNS (direct numerical simulation)
+DNS (direct numerical simulation) 所需网格点数约为 
+\begin_inset Formula $\mathrm{Re}^{9/4}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -980,19 +984,367 @@ LES
 \end_layout
 
 \begin_layout Standard
-LES (large eddy simulation)
+LES (large eddy simulation) 最早由 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Smagorinsky_1963"
+literal "false"
+
+\end_inset
+
+ 用于求解大气环流问题。
 \end_layout
 
 \begin_layout Standard
-SGS (subgrid scale)
+基本思想：某一尺度以上的载能大涡用数值格式求解，该尺度以下的均匀小涡用 SGS (subgrid scale) 模型代替求解。
 \end_layout
 
-\begin_layout Section
+\begin_layout Standard
+所需网格点数约为 
+\begin_inset Formula $\mathrm{Re}^{1.8}$
+\end_inset
+
+，小于 DNS。
+\end_layout
+
+\begin_layout Standard
+中心格式比迎风格式耗散小，更适合于高波数问题。
+\end_layout
+
+\begin_layout Subsection
+空间滤波器
+\end_layout
+
+\begin_layout Standard
+物理量分解为大尺度可解量与小尺度脉动量之和：
+\begin_inset Formula 
+\[
+U=\overline{U}+U',
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\overline{U}(\vec{r},t)=\int_{\Omega}U(\vec{s},t)\,G(\vec{r},\vec{s},\Delta)\dd[3]{\vec{s}},
+\]
+
+\end_inset
+
+表示在区域 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ 内按尺度 
+\begin_inset Formula $\Delta=(\Delta_{1}\Delta_{2}\Delta_{3})^{1/3}$
+\end_inset
+
+ 滤波。常用的滤波器有
+\end_layout
+
+\begin_layout Itemize
+Tophat
+\begin_inset Formula 
+\[
+G=\begin{cases}
+\Delta^{-3}, & \abs{r_{i}-s_{i}}<\Delta_{i}/2,\\
+0, & \text{else},
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sharp Fourier cut-off
+\begin_inset Formula 
+\[
+G=\prod_{i=1}^{3}\frac{1}{\mathrm{\pi}}\frac{\sin(\mathrm{\pi}\frac{r_{i}-s_{i}}{\Delta_{i}})}{r_{i}-s_{i}},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Gaussian
+\begin_inset Formula 
+\[
+G=\left(\frac{6}{\mathrm{\pi}\Delta^{2}}\right)^{3/2}\exp(\frac{-6\norm{\vec{r}-\vec{s}}^{2}}{\Delta^{2}}),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+滤波后方程
+\end_layout
+
+\begin_layout Subsubsection
+不可压
+\end_layout
+
+\begin_layout Standard
+形式上与 RANS 方程基本一致：
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\partial\overline{u_{i}}}{\partial x_{i}} & =0,\\
+\frac{\partial\overline{u_{j}}}{\partial t}+\overline{u_{i}}\frac{\partial\overline{u_{j}}}{\partial x_{i}} & =-\frac{1}{\rho}\frac{\partial\overline{p}}{\partial x_{j}}+\nu\frac{\partial^{2}\overline{u_{j}}}{\partial x_{i}^{2}}-\frac{\partial\tau_{ij}^{S}}{\partial x_{i}},
+\end{aligned}
+\]
+
+\end_inset
+
+只不过这里需要模化的是“亚格子应力 (subgrid-scale, SGS)”张量：
+\begin_inset Formula 
+\[
+\tau_{ij}^{S}=\overline{u_{i}\,u_{j}}-\overline{u_{i}}\,\overline{u_{j}},
+\]
+
+\end_inset
+
+该张量又可以分解为
+\begin_inset Formula 
+\[
+\tau_{ij}^{S}=L_{ij}+C_{ij}+\tau_{ij}^{SR},
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{ij}=\overline{\overline{u_{i}}\,\overline{u_{j}}}-\overline{u_{i}}\,\overline{u_{j}}$
+\end_inset
+
+ 为 Leonard 应力，表示大尺度涡之间的相互作用；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C_{ij}=\overline{\overline{u_{i}}\,u_{j}'}-\overline{u_{i}'\,\overline{u_{j}}}$
+\end_inset
+
+ 为交叉 (Cross) 应力，表示大尺度涡与小尺度涡之间的相互作用；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\tau_{ij}^{SR}=\overline{u_{i}'\,u_{j}'}$
+\end_inset
+
+ 为亚格子 Reynolds 应力，表示小尺度涡之间的相互作用。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+可压
+\end_layout
+
+\begin_layout Subsection
+亚格子模型
+\end_layout
+
+\begin_layout Standard
+主要任务：模拟大尺度与小尺度之间的能量传输。平均而言，能量由大尺度传向小尺度；但有时也会出现“反传 (backscatter)”。
+\end_layout
+
+\begin_layout Itemize
+显式模型：包括“涡黏 (eddy-viscosity)”模型与“动态 SGS”模型。必要条件为：空间离散引起的数值耗散远低于亚格子耗散。
+\end_layout
+
+\begin_layout Itemize
+隐式模型：用格式耗散模拟 
+\begin_inset Formula $\tau_{ij}^{S}$
+\end_inset
+
+，从而不显含该项。
+\end_layout
+
+\begin_layout Subsubsection
+涡黏模型
+\end_layout
+
+\begin_layout Standard
+不可压：
+\begin_inset Formula 
+\[
+\tau_{ij}^{S}-\frac{\mathrm{\delta}_{ij}}{3}\tau_{kk}^{S}=-2\nu_{T}\,\overline{S_{ij}},
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\overline{S_{ij}}$
+\end_inset
+
+ 为大尺度应变率张量，由滤波后方程的解导出；
+\end_layout
+
+\begin_layout Itemize
+涡黏系数 
+\begin_inset Formula $\nu_{T}$
+\end_inset
+
+ 通常由代数模型给出。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Smagorinsky 模型假设：小尺度涡完全地、瞬时耗散掉其吸收自大尺度的能量。具体形式为
+\begin_inset Formula 
+\[
+\nu_{T}=(C_{\text{Sma}}\,\Delta)^{2}\abs{\overline{S}},
+\]
+
+\end_inset
+
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C_{\text{Sma}}$
+\end_inset
+
+ 为 Smagorinsky 常数，理论值为 
+\begin_inset Formula $0.18$
+\end_inset
+
+，但实际值依赖于具体流动。
+\end_layout
+
+\begin_layout Itemize
+滤波尺度 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ 通常取 
+\begin_inset Formula $2(\Delta x\,\Delta y\,\Delta z)^{1/3}$
+\end_inset
+
+，即网格平均尺度的二倍；
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\abs{\overline{S}}=\sqrt{2\overline{S_{ij}}\,\overline{S_{ij}}}$
+\end_inset
+
+ 为应变率张量的幅值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为体现近壁区小尺度涡减缓生成，van Driest 将 Smagorinsky 模型需修正为
+\begin_inset Formula 
+\[
+\nu_{T}=\left[C_{\text{Sma}}\,\Delta\left(1-e^{-\gamma^{+}/25}\right)\right]^{2}\abs{\overline{S}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\gamma^{+}$
+\end_inset
+
+ 表示无量纲壁面距离。
+\end_layout
+
+\begin_layout Subsubsection
+动态 SGS 模型
+\end_layout
+
+\begin_layout Standard
+形式上与 Smagorinsky 模型类似：
+\begin_inset Formula 
+\[
+\nu_{T}=C_{\text{Dyn}}(\vec{r},t)\,\Delta^{2}\abs{\overline{S}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $C_{\text{Dyn}}$
+\end_inset
+
+ 由最小尺度能量导出。
+\end_layout
+
+\begin_layout Subsubsection
+壁面模型
+\end_layout
+
+\begin_layout Subsubsection
 DES
 \end_layout
 
 \begin_layout Standard
-DES (detached eddy simulation)
+为进一步减少高雷诺数问题所需计算资源，
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Spalart_2000,Spalart_2000_AIAA"
+literal "false"
+
+\end_inset
+
+ 提出 DES (detached eddy simulation)，其基本思想为：贴体边界层用 RANS 模拟，脱体涡用 LES 模拟。具体的：将
+ SA 模型中的壁面距离 
+\begin_inset Formula $d$
+\end_inset
+
+ 替换为 DES 尺度
+\begin_inset Formula 
+\[
+l=\min(C_{\text{DES}}\max(\Delta x,\Delta y,\Delta z),d),
+\]
+
+\end_inset
+
+则近壁面退化为 SA 模型，远场相当于以 SA 为 SGS 模型，其中 DES 常数 
+\begin_inset Formula $C_{\text{DES}}$
+\end_inset
+
+ 一定程度上依赖于流动（如各向同性湍流取 
+\begin_inset Formula $0.65$
+\end_inset
+
+，跨声速、超声速射流取 
+\begin_inset Formula $0.1$
+\end_inset
+
+）。
 \end_layout
 
 \end_body
