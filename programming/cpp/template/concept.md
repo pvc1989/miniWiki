@@ -6,7 +6,7 @@ title: 概念
 
 ## 使用 `concept`
 
-类型未加限制的版本，类型错误到『实例化时 (instantiation time)』才会发现：
+未加类型限制的模板，类型错误到『实例化时 (instantiation time)』才会发现：
 
 ```cpp
 template<typename Seq, typename Val>
@@ -124,7 +124,6 @@ concept Sequence = requires (S a) {
 
   { a.begin() } -> same_as<iterator_t<S>>;  // S 必须有返回 iterator 的 begin()
   { a.end() } -> same_as<iterator_t<S>>;
-
 };
 template<typename T, typename U = T>
 concept Numeric = requires(T x, U y) {
@@ -229,7 +228,58 @@ Numeric auto some_function(int x) {
         - [`strict_weak_order<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/strict_weak_order) means an `relation<F, T, U>` that provides strict weak ordering (, which (currently) cannot be represented in code).
 
 
-## Range
+## `<iterator>`
+
+### 迭代器概念
+
+- [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) specifies that a type is indirectly readable by applying `operator *`.
+- [`indirectly_writable`](https://en.cppreference.com/w/cpp/iterator/indirectly_writable) specifies that a value can be written to an iterator's referenced object.
+- [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) specifies that a [`semiregular`](https://en.cppreference.com/w/cpp/concepts/semiregular) type can be incremented with pre- and post-increment operators.
+  - [`incrementable`](https://en.cppreference.com/w/cpp/iterator/incrementable) specifies that the increment operation on a [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) type is [equality-preserving](https://en.cppreference.com/w/cpp/concepts#Equality_preservation) and that the type is [`equality_comparable`](https://en.cppreference.com/w/cpp/concepts/equality_comparable).
+
+- [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) specifies that objects of a type can be incremented and dereferenced.
+  - [`sentinel_for`](https://en.cppreference.com/w/cpp/iterator/sentinel_for) specifies a type is a sentinel for an [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) type.
+  - [`sized_sentinel_for`](https://en.cppreference.com/w/cpp/iterator/sized_sentinel_for) specifies that the `-` operator can be applied to an iterator and a sentinel to calculate their difference in constant time.
+
+- [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) specifies that a type is an input iterator, that is, its referenced values can be read and it can be both pre- and  post-incremented.
+  - [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) specifies that an [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) is a forward iterator, supporting equality comparison and multi-pass.
+    - [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator) specifies that a [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) is a bidirectional iterator, supporting movement backwards.
+      - [`random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator) specifies that a [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator) is a random-access iterator, supporting advancement in constant time and subscripting.
+        - [`contiguous_iterator`](https://en.cppreference.com/w/cpp/iterator/contiguous_iterator) specifies that a [`random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator) is a contiguous iterator, referring to elements that are contiguous in memory.
+
+- [`output_iterator`](https://en.cppreference.com/w/cpp/iterator/output_iterator) specifies that a type is an output iterator for a given value  type, that is, values of that type can be written to it and it can be  both pre- and post-incremented.
+
+### 算法概念
+
+为简化算法对类型的限制，标准库定义了一组概念：
+
+- [`indirectly_movable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable) specifies that values may be moved from an [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) type `In` to an [`indirectly_writable`](https://en.cppreference.com/w/cpp/iterator/indirectly_writable) type `Out`.
+- [`indirectly_movable_storable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable_storable) specifies that [`indirectly_movable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable) and that the move may be performed via an intermediate object.
+- [`indirectly_copyable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) specifies that values may be copied from an [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) type `In` to an [`indirectly_writable`](https://en.cppreference.com/w/cpp/iterator/indirectly_writable) type `Out`.
+- [`indirectly_copyable_storable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable_storable) specifies that [`indirectly_copyable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) and that the copy may be performed via an intermediate object.
+- [`indirectly_swappable<I1, I2=I1>`](https://en.cppreference.com/w/cpp/iterator/indirectly_swappable) specifies that the values referenced by two [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) types can be swapped.
+- [`indirectly_comparable<I1, I2, Comp>`](https://en.cppreference.com/w/cpp/iterator/indirectly_comparable) specifies that the values referenced by two [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) types can be compared.
+- [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) specifies the common requirements of algorithms that reorder elements in place, i.e. [`forward_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) `&&` [`indirectly_movable_storable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable_storable) `&&` [`indirectly_swappable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_swappable).
+  - [`sortable<In, Comp = ranges::less, Proj = std::identity>`](https://en.cppreference.com/w/cpp/iterator/sortable) specifies the common requirements of algorithms that permute sequences into ordered sequences. i.e. [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) `&&` [`indirect_strict_weak_order<Comp, std::projected<I, Proj>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
+- [`mergeable<I1, I2, Out, Comp = ranges::less, Proj1 = std::identity, Proj2 = std::identity>`](https://en.cppreference.com/w/cpp/iterator/mergeable) specifies the requirements of algorithms that merge sorted sequences into an output sequence by copying elements, i.e. [`input_iterator<I1>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) `&&` [`input_iterator<I2>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) `&&` [`weakly_incrementable<Out>`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) `&&` [`indirectly_copyable<I1, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) `&&` [`indirectly_copyable<I2, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) `&&` [`indirect_strict_weak_order<Comp, std::projected<I1, Proj1>, std::projected<I2, Proj2>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
+
+其中
+
+- `std::projected` (defined in `<iterator>`) 为封装了迭代器 `<In>` 及可调用对象 `Proj` 的类型：
+  
+  ```cpp
+  template< std::indirectly_readable In,
+            std::indirectly_regular_unary_invocable<In> Proj >
+  struct projected {
+    using value_type = std::remove_cvref_t<std::indirect_result_t<Proj&, In>>;
+    std::indirect_result_t<Proj&, In> operator*() const; // not defined
+  };
+  ```
+- `std::identity` (defined in `<functional>`) 为函数对象类型，其 `operator()` 原样返回实参。
+
+## `<ranges>`
+
+### Range
 
 [Range](https://en.cppreference.com/w/cpp/ranges/range) 是对容器概念的推广，可以由「起始迭代器 + END」来定义，其中 END 可以是：
 
@@ -257,7 +307,7 @@ Numeric auto some_function(int x) {
 
 标准库在命名空间 `std::ranges` 中还提供了一些对常用算法的封装，使得形如 `std::sort(v.begin(), v.end())` 的调用可简化为 `std::ranges::sort(v)`，从而避免传错迭代器。
 
-## View
+### View
 
 [View](https://en.cppreference.com/w/cpp/ranges/view) 是对 range 的轻量化封装（适配器）。
 
@@ -319,7 +369,7 @@ int main() {
 }
 ```
 
-## Pipeline
+### Pipeline
 
 标准库 range 及 view 支持 `|` 运算符，可以像在 Unix shell 中串联多个命令一样，串联多个 filters：
 
