@@ -236,18 +236,45 @@ Numeric auto some_function(int x) {
 - [`indirectly_writable`](https://en.cppreference.com/w/cpp/iterator/indirectly_writable) specifies that a value can be written to an iterator's referenced object.
 - [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) specifies that a [`semiregular`](https://en.cppreference.com/w/cpp/concepts/semiregular) type can be incremented with pre- and post-increment operators.
   - [`incrementable`](https://en.cppreference.com/w/cpp/iterator/incrementable) specifies that the increment operation on a [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) type is [equality-preserving](https://en.cppreference.com/w/cpp/concepts#Equality_preservation) and that the type is [`equality_comparable`](https://en.cppreference.com/w/cpp/concepts/equality_comparable).
-
 - [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) specifies that objects of a type can be incremented and dereferenced.
-  - [`sentinel_for`](https://en.cppreference.com/w/cpp/iterator/sentinel_for) specifies a type is a sentinel for an [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) type.
-  - [`sized_sentinel_for`](https://en.cppreference.com/w/cpp/iterator/sized_sentinel_for) specifies that the `-` operator can be applied to an iterator and a sentinel to calculate their difference in constant time.
-
+  - [`sentinel_for<S, I>`](https://en.cppreference.com/w/cpp/iterator/sentinel_for) specifies a type `S` is a sentinel for an [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) type `I`, i.e. [`semiregular<S>`](https://en.cppreference.com/w/cpp/concepts/semiregular) `&&` [`input_or_output_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) `&&` `__WeaklyEqualityComparableWith<S, I>`.
+  - [`sized_sentinel_for<S, I>`](https://en.cppreference.com/w/cpp/iterator/sized_sentinel_for) specifies that the `-` operator can be applied to an iterator and a sentinel to calculate their difference in constant time.
 - [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) specifies that a type is an input iterator, that is, its referenced values can be read and it can be both pre- and  post-incremented.
   - [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) specifies that an [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) is a forward iterator, supporting equality comparison and multi-pass.
     - [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator) specifies that a [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) is a bidirectional iterator, supporting movement backwards.
       - [`random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator) specifies that a [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator) is a random-access iterator, supporting advancement in constant time and subscripting.
         - [`contiguous_iterator`](https://en.cppreference.com/w/cpp/iterator/contiguous_iterator) specifies that a [`random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator) is a contiguous iterator, referring to elements that are contiguous in memory.
-
 - [`output_iterator`](https://en.cppreference.com/w/cpp/iterator/output_iterator) specifies that a type is an output iterator for a given value  type, that is, values of that type can be written to it and it can be  both pre- and post-incremented.
+
+其中 sentinel 为 C++20 引入的概念，表示可直接与迭代器进行比较的类型，具体用法可参见示例：
+
+```cpp
+#include <concepts>
+#include <algorithm>
+#include <iterator>
+#include <iostream>
+
+template<class Iter>
+class Sentinel {
+ public:
+  Sentinel(int ee) : end(ee) { }
+  Sentinel() : end(0) {}  // std::sentinel_for<S, I> 要求 S 有默认构造函数
+
+  friend bool operator==(const Iter& p, Sentinel s) { return (*p == s.end); }
+  friend bool operator!=(const Iter& p, Sentinel s) { return !(p == s); }
+
+ private:
+  std::iter_value_t<const char*> end;  // the sentinel value
+};
+static_assert(std::sentinel_for<Sentinel<const char*>, const char*>);
+
+int main() {
+  const char aa[] = "Hello, World!\nBye for now\n";
+  // 打印 "Hello, World!"
+  std::ranges::for_each(aa, Sentinel<const char*>('\n'),
+      [](const char x) { std::cout << x; });
+}
+```
 
 ### 算法概念
 
