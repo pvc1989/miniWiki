@@ -1007,6 +1007,179 @@ k_{T}=c_{p}\frac{\mu_{T}}{\mathrm{Pr}_{T}},
 Boussinesq 假设失效情形：平均应变率有突变；流线有大曲率；流动有旋转或分层；管道中的次级流动；边界层分离或再附。
 \end_layout
 
+\begin_layout Subsubsection
+Spalart–Allmaras 一方程模型
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Spalart_1992"
+literal "false"
+
+\end_inset
+
+ 引入关于涡粘度 
+\begin_inset Formula $\tilde{\nu}$
+\end_inset
+
+ 的输运方程
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\partial\tilde{\nu}}{\partial t} & +\divg(\vec{u}\tilde{\nu})=\frac{1}{\sigma}\left\{ \divg\left[(\nu_{L}+\tilde{\nu})\,\grad\tilde{\nu}\right]+C_{b2}\left(\grad\tilde{\nu}\right)^{2}\right\} \\
+ & +\overbrace{C_{b1}\left(1-f_{t2}\right)\tilde{S}\,\tilde{\nu}}^{P}-\overbrace{\left(C_{w1}\,f_{w}-C_{b1}\,f_{t2}/\kappa^{2}\right)\left(\tilde{\nu}/d\right)^{2}}^{D}+\overbrace{f_{t1}\norm{\Delta\vec{u}}^{2}}^{T}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $d$
+\end_inset
+
+ 为壁面距离，各项的含义分别为
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{1}{\sigma}\left\{ \divg\left[(\nu_{L}+\tilde{\nu})\,\grad\tilde{\nu}\right]+C_{b2}\left(\grad\tilde{\nu}\right)^{2}\right\} $
+\end_inset
+
+ 为耗散项，其中 
+\begin_inset Formula $C_{b2}=0.622$
+\end_inset
+
+，
+\begin_inset Formula $\sigma=2/3$
+\end_inset
+
+，也可以写成
+\begin_inset Formula 
+\[
+\frac{1+C_{b2}}{\sigma}\frac{\partial}{\partial x_{j}}\left[(\nu_{L}+\tilde{\nu})\frac{\partial\tilde{\nu}}{\partial x_{j}}\right]-\frac{C_{b2}}{\sigma}(\nu_{L}+\tilde{\nu})\frac{\partial^{2}\tilde{\nu}}{\partial x_{j}^{2}},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $P=C_{b1}\left(1-f_{t2}\right)\tilde{S}\,\tilde{\nu}$
+\end_inset
+
+ 为 production 项，其中 
+\begin_inset Formula $C_{b1}=0.1355$
+\end_inset
+
+，其余参数为
+\begin_inset Formula 
+\[
+\begin{aligned}\chi & =\frac{\tilde{\nu}}{\nu_{L}}\leftarrow\nu_{L}=\frac{\mu_{L}}{\rho},\\
+f_{v1} & =\frac{\chi^{3}}{\chi^{3}+C_{v1}^{3}}\leftarrow C_{v1}=7.1,\\
+f_{v2} & =\begin{cases}
+\left(1+\chi^{3}/C_{v2}\right)^{-3}\leftarrow C_{v2}=5, & \text{Blazek (2015)}\\
+1-\chi/(1+\chi\,f_{v1}), & \text{Allmaras (2012)}
+\end{cases},\\
+f_{v3} & =\begin{cases}
+\dfrac{\left(1+\chi\,f_{v1}\right)\left(1-f_{v2}\right)}{\max(\chi,0.001)}, & \text{Blazek (2015)}\\
+1, & \text{Allmaras (2012)}
+\end{cases}\\
+\tilde{S} & =f_{v3}\,S+\frac{\tilde{\nu}}{\kappa^{2}\,d^{2}}f_{v2}\leftarrow\begin{cases}
+S=\sqrt{2\varOmega_{ij}\,\varOmega_{ij}},\\
+\kappa=0.41,
+\end{cases}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $D=\left(C_{w1}\,f_{w}-C_{b1}\,f_{t2}/\kappa^{2}\right)\left(\tilde{\nu}/d\right)^{2}$
+\end_inset
+
+ 的为 destruction 项，其中
+\begin_inset Formula 
+\[
+\begin{aligned}C_{w1} & =\frac{C_{b1}}{\kappa^{2}}+\frac{1+C_{b2}}{\sigma},\\
+g & =r+C_{w2}\left(r^{6}-r\right)\leftarrow\begin{cases}
+C_{w2}=0.3,\\
+r=\min\qty(\frac{\tilde{\nu}}{\tilde{S}\,\kappa^{2}\,d^{2}},r_{\lim}=10),
+\end{cases}\\
+f_{w} & =g\sqrt[6]{\frac{1+C_{w3}^{6}}{g^{6}+C_{w3}^{6}}}\leftarrow C_{w3}=2,
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $T=f_{t1}\norm{\Delta\vec{u}}^{2}$
+\end_inset
+
+ 为 trip 项，其中
+\begin_inset Formula 
+\[
+\begin{aligned}g_{t} & =\min\qty(0.1,\frac{\norm{\Delta\vec{u}}}{\omega_{t}\,\Delta x}),\\
+f_{t1} & =g_{t}\,C_{t1}\exp(-C_{t2}\,\omega_{t}^{2}\frac{d^{2}+g_{t}^{2}\,d_{t}^{2}}{\norm{\Delta\vec{u}}^{2}})\leftarrow\begin{cases}
+C_{t1}=1,\\
+C_{t2}=2,
+\end{cases}\\
+f_{t2} & =C_{t3}\exp(-C_{t4}\,\chi^{2})\leftarrow\begin{cases}
+C_{t3}=1.3,\\
+C_{t4}=0.5,
+\end{cases}
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\omega_{t}$
+\end_inset
+
+ 为转捩点的壁面涡量，
+\begin_inset Formula $\Delta\vec{u}$
+\end_inset
+
+ 为当前位置与转捩点的速度差，
+\begin_inset Formula $d_{t}$
+\end_inset
+
+ 为到最近转捩点的距离，
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ 为转捩点处的流向网格间距。
+\end_layout
+
+\begin_layout Standard
+最终需要的湍流黏度为
+\begin_inset Formula 
+\[
+\mu_{T}=f_{v1}\,\rho\,\tilde{\nu},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Allmaras_2012"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 非线性涡黏模型
 \end_layout
