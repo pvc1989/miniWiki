@@ -198,10 +198,16 @@ Numeric auto some_function(int x) {
 - *[`boolean-testable`](https://en.cppreference.com/w/cpp/concepts/boolean-testable)* (exposition-only) means `T` can be used in Boolean contexts.
 - [`equality_comparable_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/equality_comparable) means `T` is equality comparable with `U`.
   - [`equality_comparable<T>`](https://en.cppreference.com/w/cpp/concepts/equality_comparable) is short for `equality_comparable_with<T, T>`.
-- [`three_way_comparable_with<T, U>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) means
-  - [`three_way_comparable<T>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) is short for `three_way_comparable_with<T, T>`.
-- [`totally_ordered_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/totally_ordered) ([`<compare>`](https://en.cppreference.com/w/cpp/header/compare)) means
+- [`three_way_comparable_with<T, U, Cat = std::partial_ordering>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) means the three way comparison operator `<=>` on `T` and `U` operands yield results consistent with the comparison category implied by `Cat`.
+  - [`three_way_comparable<T, Cat = std::partial_ordering>`](https://en.cppreference.com/w/cpp/utility/compare/three_way_comparable) is short for `three_way_comparable_with<T, T>`.
+- [`totally_ordered_with<T, U>`](https://en.cppreference.com/w/cpp/concepts/totally_ordered) (defined in [`<compare>`](https://en.cppreference.com/w/cpp/header/compare)) means that all the 6 comparison operators on (possibly mixed) `T` and `U` operands yield results consistent with a [strict total order](https://en.wikipedia.org/wiki/Total_order#Strict_and_non-strict_total_orders).
   - [`totally_ordered<T>`](https://en.cppreference.com/w/cpp/concepts/totally_ordered) is short for `totally_ordered_with<T, T>`.
+
+标准库在 [`<compare>`](https://en.cppreference.com/w/cpp/header/compare) 中定义了三种 `ordering` 类型，用于表示三路比较运算符 `<=>` 的结果。它们都支持六种比较运算，区别在于：
+
+- [`partial_ordering`](https://en.cppreference.com/w/cpp/utility/compare/partial_ordering) 表示相等的值不可替换（可以区分），且允许存在不可比较的值（即 `a < b`, `a == b`, `a > b` 可以都为 `false`，如质点（按 `p.x < q.x && p.y < q.y` 定义 `p < q`，相等时可按质量区分）。
+- [`weak_ordering`](https://en.cppreference.com/w/cpp/utility/compare/weak_ordering) 表示相等的值不可替换（可以区分），但不允许存在不可比较的值（即 `a < b`, `a == b`, `a > b` 有且仅有一个为 `true`），如学生（按姓名字典序比较，相等时可学号区分）。
+- [`strong_ordering`](https://en.cppreference.com/w/cpp/utility/compare/strong_ordering) 表示相等的值可以替换（无法区分），且不允许存在不可比较的值，如整数、字符串。
 
 ### 对象概念
 
@@ -209,23 +215,23 @@ Numeric auto some_function(int x) {
 - [`constructible_from<T, Args>`](https://en.cppreference.com/w/cpp/concepts/constructible_from) means `T` can be constructed from an argument list of type `Args`.
 - [`default_initializable<T>`](https://en.cppreference.com/w/cpp/concepts/default_initializable) means `T` can be default constructed.
 - [`move_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/move_constructible) means `T` can be move constructed.
-  - [`movable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means `move_constructible<T> && assignable_from<T&, T> && swappable<T>`.
+  - [`movable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means [`move_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/move_constructible) 且 [`assignable_from<T&, T>`](https://en.cppreference.com/w/cpp/concepts/assignable_from) 且 [`swappable<T>`](https://en.cppreference.com/w/cpp/concepts/swappable).
 
 - [`copy_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/copy_constructible) means `T` can be copy constructed.
-  - [`copyable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means `copy_constructible<T> && assignable_from<T, const T&> && movable<T>`.
+  - [`copyable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) means [`copy_constructible<T>`](https://en.cppreference.com/w/cpp/concepts/copy_constructible) 且 [`assignable_from<T, const T&>`](https://en.cppreference.com/w/cpp/concepts/assignable_from) 且 [`movable<T>`](https://en.cppreference.com/w/cpp/concepts/movable).
 
-- [`semiregular<T>`](https://en.cppreference.com/w/cpp/concepts/semiregular) means `copyable<T> && default_initializable<T>`.
-  - [`regular<T>`](https://en.cppreference.com/w/cpp/concepts/regular) means `semiregular<T> && equality_comparable<T>`.
+- [`semiregular<T>`](https://en.cppreference.com/w/cpp/concepts/semiregular) means [`copyable<T>`](https://en.cppreference.com/w/cpp/concepts/movable) 且 [`default_initializable<T>`](https://en.cppreference.com/w/cpp/concepts/default_initializable).
+  - [`regular<T>`](https://en.cppreference.com/w/cpp/concepts/regular) means [`semiregular<T>`](https://en.cppreference.com/w/cpp/concepts/semiregular) 且 [`equality_comparable<T>`](https://en.cppreference.com/w/cpp/concepts/equality_comparable).
 
 
 ### 可调用概念
 
 - [`invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) means an `F` can be invoked with an argument list of type `Args`. 
-  - [`regular_invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) means an `invocable<F, Args>` that is equality preserving (i.e. $\forall (x = y)\implies f(x)=f(y)$, which (currently) cannot be represented in code).
-    - [`predicate<F, Args>`](https://en.cppreference.com/w/cpp/concepts/predicate) means an `regular_invocable<F, Args>` that returns a `bool`.
+  - [`regular_invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) means an [`invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) that is [equality-preserving](https://en.cppreference.com/w/cpp/concepts#Equality_preservation) (i.e. $\forall (x = y)\implies f(x)=f(y)$, which (currently) cannot be represented in code).
+    - [`predicate<F, Args>`](https://en.cppreference.com/w/cpp/concepts/predicate) means an [`regular_invocable<F, Args>`](https://en.cppreference.com/w/cpp/concepts/invocable) that returns a `bool`.
       - [`relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/relation) means `predicate<F, T, U>`.
-        - [`equivalence_relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/equivalence_relation) means an `relation<F, T, U>` that provides an equivalence relation (, which (currently) cannot be represented in code).
-        - [`strict_weak_order<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/strict_weak_order) means an `relation<F, T, U>` that provides strict weak ordering (, which (currently) cannot be represented in code).
+        - [`equivalence_relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/equivalence_relation) means an [`relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/relation) that provides an equivalence relation (, which (currently) cannot be represented in code).
+        - [`strict_weak_order<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/strict_weak_order) means an [`relation<F, T, U>`](https://en.cppreference.com/w/cpp/concepts/relation) that provides strict weak ordering (, which (currently) cannot be represented in code).
 
 
 ## `<iterator>`
@@ -237,7 +243,7 @@ Numeric auto some_function(int x) {
 - [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) specifies that a [`semiregular`](https://en.cppreference.com/w/cpp/concepts/semiregular) type can be incremented with pre- and post-increment operators.
   - [`incrementable`](https://en.cppreference.com/w/cpp/iterator/incrementable) specifies that the increment operation on a [`weakly_incrementable`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) type is [equality-preserving](https://en.cppreference.com/w/cpp/concepts#Equality_preservation) and that the type is [`equality_comparable`](https://en.cppreference.com/w/cpp/concepts/equality_comparable).
 - [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) specifies that objects of a type can be incremented and dereferenced.
-  - [`sentinel_for<S, I>`](https://en.cppreference.com/w/cpp/iterator/sentinel_for) specifies a type `S` is a sentinel for an [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) type `I`, i.e. [`semiregular<S>`](https://en.cppreference.com/w/cpp/concepts/semiregular) `&&` [`input_or_output_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) `&&` `__WeaklyEqualityComparableWith<S, I>`.
+  - [`sentinel_for<S, I>`](https://en.cppreference.com/w/cpp/iterator/sentinel_for) specifies a type `S` is a sentinel for an [`input_or_output_iterator`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) type `I`, i.e. [`semiregular<S>`](https://en.cppreference.com/w/cpp/concepts/semiregular) 且 [`input_or_output_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/input_or_output_iterator) 且 `__WeaklyEqualityComparableWith<S, I>`.
   - [`sized_sentinel_for<S, I>`](https://en.cppreference.com/w/cpp/iterator/sized_sentinel_for) specifies that the `-` operator can be applied to an iterator and a sentinel to calculate their difference in constant time.
 - [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) specifies that a type is an input iterator, that is, its referenced values can be read and it can be both pre- and  post-incremented.
   - [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) specifies that an [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator) is a forward iterator, supporting equality comparison and multi-pass.
@@ -286,9 +292,9 @@ int main() {
 - [`indirectly_copyable_storable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable_storable) specifies that [`indirectly_copyable<In, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) and that the copy may be performed via an intermediate object.
 - [`indirectly_swappable<I1, I2=I1>`](https://en.cppreference.com/w/cpp/iterator/indirectly_swappable) specifies that the values referenced by two [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) types can be swapped.
 - [`indirectly_comparable<I1, I2, Comp>`](https://en.cppreference.com/w/cpp/iterator/indirectly_comparable) specifies that the values referenced by two [`indirectly_readable`](https://en.cppreference.com/w/cpp/iterator/indirectly_readable) types can be compared.
-- [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) specifies the common requirements of algorithms that reorder elements in place, i.e. [`forward_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) `&&` [`indirectly_movable_storable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable_storable) `&&` [`indirectly_swappable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_swappable).
-  - [`sortable<In, Comp = ranges::less, Proj = std::identity>`](https://en.cppreference.com/w/cpp/iterator/sortable) specifies the common requirements of algorithms that permute sequences into ordered sequences. i.e. [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) `&&` [`indirect_strict_weak_order<Comp, std::projected<I, Proj>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
-- [`mergeable<I1, I2, Out, Comp = ranges::less, Proj1 = std::identity, Proj2 = std::identity>`](https://en.cppreference.com/w/cpp/iterator/mergeable) specifies the requirements of algorithms that merge sorted sequences into an output sequence by copying elements, i.e. [`input_iterator<I1>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) `&&` [`input_iterator<I2>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) `&&` [`weakly_incrementable<Out>`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) `&&` [`indirectly_copyable<I1, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) `&&` [`indirectly_copyable<I2, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) `&&` [`indirect_strict_weak_order<Comp, std::projected<I1, Proj1>, std::projected<I2, Proj2>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
+- [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) specifies the common requirements of algorithms that reorder elements in place, i.e. [`forward_iterator<I>`](https://en.cppreference.com/w/cpp/iterator/forward_iterator) 且 [`indirectly_movable_storable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_movable_storable) 且 [`indirectly_swappable<I, I>`](https://en.cppreference.com/w/cpp/iterator/indirectly_swappable).
+  - [`sortable<In, Comp = ranges::less, Proj = std::identity>`](https://en.cppreference.com/w/cpp/iterator/sortable) specifies the common requirements of algorithms that permute sequences into ordered sequences. i.e. [`permutable<I>`](https://en.cppreference.com/w/cpp/iterator/permutable) 且 [`indirect_strict_weak_order<Comp, std::projected<I, Proj>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
+- [`mergeable<I1, I2, Out, Comp = ranges::less, Proj1 = std::identity, Proj2 = std::identity>`](https://en.cppreference.com/w/cpp/iterator/mergeable) specifies the requirements of algorithms that merge sorted sequences into an output sequence by copying elements, i.e. [`input_iterator<I1>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) 且 [`input_iterator<I2>`](https://en.cppreference.com/w/cpp/iterator/input_iterator) 且 [`weakly_incrementable<Out>`](https://en.cppreference.com/w/cpp/iterator/weakly_incrementable) 且 [`indirectly_copyable<I1, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) 且 [`indirectly_copyable<I2, Out>`](https://en.cppreference.com/w/cpp/iterator/indirectly_copyable) 且 [`indirect_strict_weak_order<Comp, std::projected<I1, Proj1>, std::projected<I2, Proj2>>`](https://en.cppreference.com/w/cpp/iterator/indirect_strict_weak_order).
 
 其中
 
