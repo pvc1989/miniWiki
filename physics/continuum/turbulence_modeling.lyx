@@ -1180,6 +1180,147 @@ literal "false"
 
 \end_layout
 
+\begin_layout Subsubsection
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 两方程模型
+\end_layout
+
+\begin_layout Standard
+低雷诺数 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 模型需要求解关于湍动能 
+\begin_inset Formula $k$
+\end_inset
+
+ 与湍流耗散率 
+\begin_inset Formula $\varepsilon^{*}=\varepsilon-\varepsilon_{w}$
+\end_inset
+
+ 的方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\partial\rho k}{\partial t}+\frac{\partial\rho u_{j}k}{\partial x_{j}} & =\frac{\partial}{\partial x_{j}}\left[\left(\mu_{L}+\frac{\mu_{T}}{\sigma_{k}}\right)\frac{\partial k}{\partial x_{j}}\right]+\tau_{ij}^{F}\,S_{ij}-\rho\,\varepsilon,\\
+\frac{\partial\rho\varepsilon^{*}}{\partial t}+\frac{\partial\rho u_{j}\varepsilon^{*}}{\partial x_{j}} & =\frac{\partial}{\partial x_{j}}\left[\left(\mu_{L}+\frac{\mu_{T}}{\sigma_{\varepsilon}}\right)\frac{\partial\varepsilon^{*}}{\partial x_{j}}\right]+\tau_{ij}^{F}\,S_{ij}\,C_{\varepsilon1}\,f_{\varepsilon1}\frac{\varepsilon^{*}}{k}-C_{\varepsilon2}\,f_{\varepsilon2}\,\rho\frac{(\varepsilon^{*})^{2}}{k}+\phi_{\varepsilon},
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\tau_{ij}^{F}$
+\end_inset
+
+ 为 Favre 平均，
+\begin_inset Formula $\phi_{\varepsilon}$
+\end_inset
+
+ 为显式壁面源项，湍流黏度为
+\begin_inset Formula 
+\[
+\mu_{T}=C_{\mu}\,f_{\mu}\,\rho\frac{k^{2}}{\varepsilon^{*}},
+\]
+
+\end_inset
+
+其余参数的取法差异较大，参见 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Patel_1985"
+literal "false"
+
+\end_inset
+
+，其中 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Launder_1974"
+literal "false"
+
+\end_inset
+
+ 的版本效果较好：
+\begin_inset Formula 
+\[
+C_{\mu}=0.09,\quad C_{\varepsilon1}=1.44,\quad C_{\varepsilon2}=1.92,\quad\sigma_{k}=1.0,\quad\sigma_{\varepsilon}=1.3,\quad\mathrm{Pr}_{T}=0.9,
+\]
+
+\end_inset
+
+近壁衰减函数为
+\begin_inset Formula 
+\[
+f_{\mu}=\exp(\frac{-3.4}{\left(1+0.02\,\mathrm{Re}_{T}\right)^{2}}),\quad f_{\varepsilon1}=1,\quad f_{\varepsilon2}=1-0.3\exp(\mathrm{Re}_{T}^{2})\leftarrow\mathrm{Re}_{T}=\frac{\rho\,k^{2}}{\varepsilon^{*}\,\mu_{L}},
+\]
+
+\end_inset
+
+壁面项为
+\begin_inset Formula 
+\[
+\phi_{\varepsilon}=2\mu_{T}\frac{\mu_{L}}{\rho}\left(\frac{\partial^{2}u_{t}}{\partial n^{2}}\right)^{2},\quad\varepsilon_{w}=\frac{2\mu_{L}}{\rho}\left(\frac{\partial\sqrt{k}}{\partial n}\right)^{2},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ 为平行于壁面的速度分量；也可以取
+\begin_inset Formula 
+\[
+\phi_{\varepsilon}=2\mu_{T}\frac{\mu_{L}}{\rho}\left(\frac{\partial^{2}u_{i}}{\partial x_{j}\,\partial x_{k}}\right)^{2},\quad\varepsilon_{w}=\frac{2\mu_{L}}{\rho}\left(\frac{\partial\sqrt{k}}{\partial x_{j}}\right)^{2},
+\]
+
+\end_inset
+
+以避免依赖于距离。
+\end_layout
+
+\begin_layout Standard
+上述模型在壁面附近需要非常密的边界层网格（第一层结点位于 
+\begin_inset Formula $y^{+}\le1$
+\end_inset
+
+ 处）；若使用粗网格（第一层结点位于 
+\begin_inset Formula $10\le y^{+}\le100$
+\end_inset
+
+ 处），则需以壁面函数代替衰减函数 (
+\begin_inset Formula $f_{\mu}=f_{\varepsilon1}=f_{\varepsilon2}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\varepsilon_{w}=0$
+\end_inset
+
+, 
+\begin_inset Formula $\phi_{\varepsilon}=0$
+\end_inset
+
+)，由此得高雷诺数 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 模型。
+\end_layout
+
 \begin_layout Subsection
 非线性涡黏模型
 \end_layout
@@ -1531,13 +1672,13 @@ Smagorinsky 模型假设：小尺度涡完全地、瞬时耗散掉其吸收自�
 为体现近壁区小尺度涡减缓生成，van Driest 将 Smagorinsky 模型需修正为
 \begin_inset Formula 
 \[
-\nu_{T}=\left[C_{\text{Sma}}\,\Delta\left(1-e^{-\gamma^{+}/25}\right)\right]^{2}\abs{\overline{S}},
+\nu_{T}=\left[C_{\text{Sma}}\,\Delta\left(1-e^{-y^{+}/25}\right)\right]^{2}\abs{\overline{S}},
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\gamma^{+}$
+\begin_inset Formula $y^{+}$
 \end_inset
 
  表示无量纲壁面距离。
