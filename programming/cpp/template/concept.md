@@ -298,17 +298,28 @@ int main() {
 
 其中
 
-- `std::projected` (defined in `<iterator>`) 为封装了迭代器 `<In>` 及可调用对象 `Proj` 的类型：
+- `Proj` 表示作用在 `Iter` 型迭代器所指类型（可由 [`std::iter_reference_t<Iter>`](https://en.cppreference.com/w/cpp/iterator/iter_t) 得到）上的可调用类型（返回值类型可由 [`std::indirect_result_t<Proj&, Iter>`](https://en.cppreference.com/w/cpp/iterator/indirect_result_t) 得到），其名称来源于数学中的「投影 (projection)」，例如：
+
+  ```cpp
+  // 按绝对值由大到小排序并打印
+  auto v = std::vector<int>{ -1, +2, -3 };
+  std::ranges::sort(v, /* Comp */std::ranges::greater{},
+      /* a temporary Proj */[](int i){ return std::abs(i); });
+  std::ranges::for_each(v, /* another Proj */[](int i){ std::cout << i << ' '; });
+  ```
+
+- 通常不需要实施上述投影，故标准库提供了默认投影类型 [`std::identity`](https://en.cppreference.com/w/cpp/utility/functional/identity) (defined in [`<functional>`](https://en.cppreference.com/w/cpp/header/functional))，其 `operator()` 原样返回实参。
+
+- [`std::projected`](https://en.cppreference.com/w/cpp/iterator/projected) (defined in [`<iterator>`](https://en.cppreference.com/w/cpp/header/iterator)) 用于提取 `Proj` 型可调用对象（作用于 `In` 型迭代器所指对象）的返回值类型：
   
   ```cpp
   template< std::indirectly_readable In,
             std::indirectly_regular_unary_invocable<In> Proj >
   struct projected {
     using value_type = std::remove_cvref_t<std::indirect_result_t<Proj&, In>>;
-    std::indirect_result_t<Proj&, In> operator*() const; // not defined
+    std::indirect_result_t<Proj&, In> operator*() const; // 只声明不定义
   };
   ```
-- `std::identity` (defined in `<functional>`) 为函数对象类型，其 `operator()` 原样返回实参。
 
 ## `<ranges>`
 
