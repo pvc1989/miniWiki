@@ -1043,6 +1043,135 @@ Taylor 基函数，由此导出 modal DG；
 \end_layout
 
 \begin_layout Subsubsection
+SEM (Spectral Element Method)
+\end_layout
+
+\begin_layout Standard
+若 nodal DG 进一步有 solution points 与 quadrature points 重叠，则得到
+\color red
+谱单元法 (spectral element method, SEM)
+\color inherit
+，其数值（体）积分由多点求和退化为单点取值：
+\begin_inset Formula 
+\[
+\langle\phi_{k}\vert\phi_{l}\rangle_{E}=\int_{E_{i}}\phi_{k}\,\phi_{l}\dd{E_{i}}\approx\sum_{n=1}^{N}\phi_{k}(\vec{x}_{n})\,\phi_{l}(\vec{x}_{n})\,w_{n}=\begin{cases}
+\left(\phi_{k}(\vec{x}_{k})\right)^{2}w_{k}, & k=l,\\
+0, & k\ne l,
+\end{cases}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}\ip{\partial_{s}\,\phi_{k}}{f_{s}^{h}}_{E_{i}} & =\int_{E_{i}}\vec{f}^{h}\vdot\grad\phi_{k}\dd{E_{i}}\\
+ & \approx\sum_{n=1}^{N}\left(\sum_{m=1}^{N}\hat{\vec{f}}_{m}\,\phi_{m}(\vec{x}_{n})\right)\vdot\left(\grad\phi_{k}\right)_{n}\,w_{n}\\
+ & =\sum_{n=1}^{N}\left(\vec{f}\vdot\grad\phi_{k}\right)_{n}w_{n},
+\end{aligned}
+\]
+
+\end_inset
+
+因此计算量显著减小，但数值积分的代数精度可能不足。
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Li_2018"
+literal "false"
+
+\end_inset
+
+ 指出：
+\end_layout
+
+\begin_layout Lemma
+若方阵 
+\begin_inset Formula $\underline{A}$
+\end_inset
+
+ 的对角元均为 
+\begin_inset Formula $\order{1}$
+\end_inset
+
+、非对接元均为 
+\begin_inset Formula $\order{h^{p}}$
+\end_inset
+
+，则其逆 
+\begin_inset Formula $\underline{A}^{-1}$
+\end_inset
+
+ 的对角元为 
+\begin_inset Formula $\langle k\vert\underline{A}^{-1}\vert k\rangle=\langle k\vert\underline{A}\vert k\rangle^{-1}+\order{h^{p}}$
+\end_inset
+
+、非对角元均为 
+\begin_inset Formula $\order{h^{p}}$
+\end_inset
+
+。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+因此若数值积分的代数精度为 
+\begin_inset Formula $q$
+\end_inset
+
+，即近似对角质量阵 
+\begin_inset Formula $\underline{\tilde{m}}$
+\end_inset
+
+ 的精度为
+\begin_inset Formula 
+\[
+\langle k\vert\underline{\tilde{m}}\vert l\rangle=\langle k\vert\underline{m}\vert l\rangle+\order{h^{q}},
+\]
+
+\end_inset
+
+则
+\begin_inset Formula 
+\[
+\langle k\vert\underline{m}^{-1}\vert l\rangle=\langle k\vert\underline{\tilde{m}}^{-1}\vert l\rangle+\order{h^{q}},
+\]
+
+\end_inset
+
+因此，只要用 
+\begin_inset Formula $\underline{\tilde{m}}$
+\end_inset
+
+ 代替 
+\begin_inset Formula $\underline{m}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+\frac{\dd}{\dd t}\underline{\hat{u}}=\underline{m}^{-1}\,\underline{r}(\underline{\hat{u}})=\left(\underline{\tilde{m}}^{-1}+\order{h^{q}}\right)\,\underline{r}(\underline{\hat{u}}),
+\]
+
+\end_inset
+
+所引入的误差为 
+\begin_inset Formula $\order{h^{q}}$
+\end_inset
+
+ 远小于格式误差 
+\begin_inset Formula $\order{h^{p+1}}$
+\end_inset
+
+，该近似就不会使格式精度降阶。
+\end_layout
+
+\begin_layout Subsubsection
 空间分辨率
 \end_layout
 
