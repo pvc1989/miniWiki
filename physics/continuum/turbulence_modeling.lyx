@@ -988,7 +988,7 @@ Boussinesq 观察发现：湍流中的动量传递，由大涡引起的混合所
 \begin_inset Formula $\mu_{T}$
 \end_inset
 
- 为涡黏系数，相应的有湍流热传导系数
+ 为湍流涡黏系数，相应的有湍流热传导系数
 \begin_inset Formula 
 \[
 k_{T}=c_{p}\frac{\mu_{T}}{\mathrm{Pr}_{T}},
@@ -1004,11 +1004,50 @@ k_{T}=c_{p}\frac{\mu_{T}}{\mathrm{Pr}_{T}},
 \end_layout
 
 \begin_layout Standard
-Boussinesq 假设失效情形：平均应变率有突变；流线有大曲率；流动有旋转或分层；管道中的次级流动；边界层分离或再附。
+Boussinesq 假设存在 
+\begin_inset Formula $\mu_{T}$
+\end_inset
+
+ 各向同性、坐标不变形(?)、
+\begin_inset Formula $\tau_{ij}^{R}$
+\end_inset
+
+ 与 
+\begin_inset Formula $\ev{S_{ij}}$
+\end_inset
+
+ 瞬时平衡且同向等固有缺陷，因此有以下失效情形：平均应变率有突变；流线有大曲率；流动有旋转或分层；管道中的次级流动；边界层分离或再附。
 \end_layout
 
 \begin_layout Subsubsection
-Spalart–Allmaras 一方程模型
+线性涡黏模型分类
+\end_layout
+
+\begin_layout Standard
+按近壁区处理方式不同，可分为低雷诺数模型（求解 RANS 方程）与高雷诺数模型（用壁面函数模化）。
+\end_layout
+
+\begin_layout Subsubsection
+S–A 一方程模型
+\end_layout
+
+\begin_layout Quote
+\begin_inset CommandInset citation
+LatexCommand cite
+key "YanChao_2020"
+literal "false"
+
+\end_inset
+
+：S–A 模型是一个强调应用的实用化模型。突出的优点是鲁棒性非常好、计算效率高、简单实用，是航空航天领域应用最广的模型之一，尤其在航空领域受到普遍欢迎，对附着边
+界层等较简 单的流动效果很好……但是，一般说来，S–A 模型的普适性、精度（如涡黏性有时偏大）、对分离等复杂流动的模拟能力等有待进一步提高。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1321,6 +1360,225 @@ f_{\mu}=\exp(\frac{-3.4}{\left(1+0.02\,\mathrm{Re}_{T}\right)^{2}}),\quad f_{\va
  模型。
 \end_layout
 
+\begin_layout Subsubsection
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 两方程模型
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wilcox_1988"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+SST 两方程模型
+\end_layout
+
+\begin_layout Quote
+\begin_inset CommandInset citation
+LatexCommand cite
+key "YanChao_2020"
+literal "false"
+
+\end_inset
+
+：SST 模型是目前广泛使用的线性涡黏模型中评价性能最好一个……它巧妙结合了 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+、
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 和 JK 模型的优点。除了具有上述 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 的稳定性好、精度高等优点外，还可以较好地处理湍流剪切应力在逆压梯度和分离边界层内的输运，故 SST 模型能更好地预测逆压梯度和边界层分离等较复杂的流动情况。因
+此，SST 模型以其精度高、鲁棒性好、适用性较广而成为航空航 天领域应用最广的湍流模型之一。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+SST (Shear Stress Transport) 模型由 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Menter_1994"
+literal "false"
+
+\end_inset
+
+ 通过在内层（近壁区）采用 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 模型、在外层（边界层边缘、自由剪切层）采用（变换为 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 形式的）高雷诺数 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 模型而得到 。形式上，该模型仍需求解 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 模型的两个方程：
+\begin_inset Formula 
+\[
+\begin{aligned}\frac{\partial\rho k}{\partial t}+\frac{\partial\rho u_{j}k}{\partial x_{j}} & =\frac{\partial}{\partial x_{j}}\left[\left(\mu_{L}+\sigma_{k}\,\mu_{T}\right)\frac{\partial k}{\partial x_{j}}\right]+\tau_{ij}^{F}\,S_{ij}-\beta^{*}\,\rho\,\omega\,k,\\
+\frac{\partial\rho\omega}{\partial t}+\frac{\partial\rho u_{j}\omega}{\partial x_{j}} & =\frac{\partial}{\partial x_{j}}\left[\left(\mu_{L}+\sigma_{\omega}\,\mu_{T}\right)\frac{\partial\omega}{\partial x_{j}}\right]+\tau_{ij}^{F}\,S_{ij}\,C_{\omega}\,\rho\,\mu_{T}^{-1}-\beta\,\rho\,\omega^{2}+(1-f_{1})\frac{2\rho\,\sigma_{\omega2}}{\omega}\frac{\partial k}{\partial x_{j}}\frac{\partial\omega}{\partial x_{j}},
+\end{aligned}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\beta^{*}=0.09$
+\end_inset
+
+，函数 
+\begin_inset Formula $f_{1}$
+\end_inset
+
+ 用于混合内层系数 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ 与外层系数 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+ ：
+\begin_inset Formula 
+\[
+f_{1}=\tanh(\min\left[\max\left\{ \frac{\sqrt{k}}{0.09\,\omega\,d},\frac{500\,\mu_{L}}{\rho\,\omega\,d^{2}}\right\} ,\frac{4\rho\sigma_{\omega2}k}{\mathrm{CD}_{k\omega}\,d^{2}}\right]),
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\mathrm{CD}_{k\omega}$
+\end_inset
+
+ 为交叉耗散项中的正项，即
+\begin_inset Formula 
+\[
+\mathrm{CD}_{k\omega}=\max\left(\frac{2\rho\,\sigma_{\omega2}}{\omega}\frac{\partial k}{\partial x_{j}}\frac{\partial\omega}{\partial x_{j}},10^{-20}\right),
+\]
+
+\end_inset
+
+混合后的系数为
+\begin_inset Formula 
+\[
+\phi=f_{1}\phi_{1}+(1-f_{1})\,\phi_{2},
+\]
+
+\end_inset
+
+内部 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\omega$
+\end_inset
+
+ 模型系数为
+\begin_inset Formula 
+\[
+\sigma_{k}=0.85,\quad\sigma_{\omega}=0.5,\quad\beta=0.075,\quad C_{\omega}=0.533,
+\]
+
+\end_inset
+
+外部 
+\begin_inset Formula $k$
+\end_inset
+
+–
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 模型系数为
+\begin_inset Formula 
+\[
+\sigma_{k}=1.0,\quad\sigma_{\omega}=0.856,\quad\beta=0.0828,\quad C_{\omega}=0.44,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+湍流黏度为
+\begin_inset Formula 
+\[
+\mu_{T}=\frac{a_{1}\,\rho\,k}{\max(a_{1}\,\omega,f_{2}\norm{\curl\vec{u}})}\leftarrow a_{1}=0.31,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+f_{2}=\tanh(\left(\max\left[\frac{2\sqrt{k}}{0.09\,\omega\,d},\frac{500\,\mu_{L}}{\rho\,\omega\,d^{2}}\right]\right)^{2}),
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 非线性涡黏模型
 \end_layout
@@ -1363,6 +1621,22 @@ I_{s} & \coloneqq\frac{S_{ij}^{*}}{2}\left(\ev{S_{kk}}\ev{S_{ll}}-\ev{S_{kk}}^{2
 \end_inset
 
  模型给出。
+\end_layout
+
+\begin_layout Subsection
+转捩模型
+\end_layout
+
+\begin_layout Subsubsection
+低雷诺数模型
+\end_layout
+
+\begin_layout Subsubsection
+间歇性模型
+\end_layout
+
+\begin_layout Subsubsection
+层流动能模型
 \end_layout
 
 \begin_layout Subsection
