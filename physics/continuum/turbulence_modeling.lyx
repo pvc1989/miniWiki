@@ -701,8 +701,8 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
-不可压 RANS 方程
+\begin_layout Subsubsection
+RANS 方程
 \end_layout
 
 \begin_layout Standard
@@ -917,21 +917,25 @@ Favre 平均
 \begin_inset Formula $p$
 \end_inset
 
- 施以 Reynolds 平均，对其余量施以密度加权平均：
+ 取 Reynolds 平均，对其余量取 
+\begin_inset Formula $\rho$
+\end_inset
+
+-加权平均，以速度为例：
 \begin_inset Formula 
 \[
-v(\vec{r},t)=\widetilde{v}(\vec{r},t)+v''(\vec{r},t)
+u_{i}(\vec{r},t)=\widetilde{u_{i}}(\vec{r},t)+u_{i}''(\vec{r},t),
 \]
 
 \end_inset
 
-
+其中
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\widetilde{v}(\vec{r},t)\coloneqq\frac{1}{\overline{\rho}(\vec{r},t)}\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}\rho(\vec{r},\tau)\,v(\vec{r},\tau)\dd{\tau}
+\widetilde{u_{i}}(\vec{r},t)\coloneqq\frac{1}{\overline{\rho}(\vec{r},t)}\lim_{T\to\infty}\frac{1}{T}\int_{t}^{t+T}\rho(\vec{r},\tau)\,u_{i}(\vec{r},\tau)\dd{\tau},
 \]
 
 \end_inset
@@ -943,15 +947,7 @@ v(\vec{r},t)=\widetilde{v}(\vec{r},t)+v''(\vec{r},t)
 可以证明：
 \begin_inset Formula 
 \[
-\frac{\partial\widetilde{v}}{\partial t}=0,\quad\widetilde{v''}=0,
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\overline{\rho}\,\widetilde{v}=\overline{\rho\,v},\quad\overline{\rho\,v''}=\overline{\rho}\,\widetilde{v''}=0,
+\widetilde{u_{i}''}=0,\quad\overline{\rho}\,\widetilde{u_{i}}=\overline{\rho\,u_{i}},\quad\overline{\rho\,u_{i}''}=\overline{\rho}\,\widetilde{u_{i}''}=0,
 \]
 
 \end_inset
@@ -959,12 +955,61 @@ v(\vec{r},t)=\widetilde{v}(\vec{r},t)+v''(\vec{r},t)
 但一般情况下
 \begin_inset Formula 
 \[
-\overline{v''}\ne0,\quad\widetilde{v''\,v''}\ne0,
+\overline{u_{i}''}\ne0,\quad\widetilde{u_{i}''\,u_{i}''}\ne0,\quad\widetilde{u_{i}''\,u_{j}''}\ne0,
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection
+FRANS 方程
+\end_layout
+
+\begin_layout Standard
+Favre- and Reynolds-averaged Navier–Stokes 方程
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}\begin{bmatrix}\overline{\rho}\\
+\overline{\rho}\,\widetilde{u_{i}}\\
+\overline{\rho}\,\widetilde{e_{0}}
+\end{bmatrix}+\frac{\partial}{\partial x_{j}}\begin{bmatrix}\overline{\rho}\,\widetilde{u_{j}}\\
+\overline{\rho}\,\widetilde{u_{i}}\,\widetilde{u_{j}}\\
+\overline{\rho}\,\widetilde{h_{0}}\,\widetilde{u_{j}}
+\end{bmatrix}=\frac{\partial}{\partial x_{j}}\begin{bmatrix}0\\
+\widetilde{\tau_{ij}}+\tau_{ij}^{F}-\overline{p}\\
+\widetilde{u_{i}}\left(\widetilde{\tau_{ij}}+\tau_{ij}^{F}\right)+\cancel{\widetilde{u_{i}''\,\tau_{ij}}}+\kappa\,\partial_{j}\,\widetilde{T}-\overline{\rho}\left(\widetilde{u_{j}''\,h''}+\cancel{\widetilde{u_{j}''\,k}}\right)
+\end{bmatrix},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\widetilde{k}\equiv\frac{1}{2}\widetilde{u_{i}''\,u_{i}''}$
+\end_inset
+
+ 的分子扩散项 
+\begin_inset Formula $\partial_{j}\,\widetilde{u_{i}''\,\tau_{ij}}$
+\end_inset
+
+ 及湍流输运项 
+\begin_inset Formula $\partial_{j}\left(\overline{\rho}\,\widetilde{u_{j}''\,k}\right)$
+\end_inset
+
+ 通常被忽略；Favre-averaged 雷诺应力张量
+\begin_inset Formula 
+\[
+\tau_{ij}^{F}=-\overline{\rho}\,\widetilde{u_{i}''\,u_{j}''},
+\]
+
+\end_inset
+
+的六个分量及湍流传热项 
+\begin_inset Formula $-\overline{\rho}\,\widetilde{u_{j}''\,h''}$
+\end_inset
+
+ 的三个分量，需模化。
 \end_layout
 
 \begin_layout Subsection
@@ -979,7 +1024,15 @@ Boussinesq 假设
 Boussinesq 观察发现：湍流中的动量传递，由大涡引起的混合所主导。由此引出假设：（与层流类似，）湍流中的切应力正比于平均应变率，即
 \begin_inset Formula 
 \[
-\tau_{ij}^{R}\equiv-\rho\ev{u_{i}'\,u_{j}'}=\mu_{T}\underbrace{\ev{\frac{\partial u_{i}}{\partial x_{j}}+\frac{\partial u_{j}}{\partial x_{i}}}}_{2\ev{S_{ij}}}-\frac{\mathrm{\delta}_{ij}}{3}\rho\underbrace{\ev{u_{i}'\,u_{i}'}}_{2k},
+\tau_{ij}^{R}\equiv-\rho\overline{u_{i}'\,u_{j}'}=\mu_{T}\left(\frac{\partial\overline{u_{i}}}{\partial x_{j}}+\frac{\partial\overline{u_{j}}}{\partial x_{i}}\right)-\frac{2\mathrm{\delta}_{ij}}{3}\rho\,k,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tau_{ij}^{F}\equiv-\overline{\rho}\,\widetilde{u_{i}''\,u_{j}''}=\mu_{T}\left(\frac{\partial\widetilde{u_{i}}}{\partial x_{j}}+\frac{\partial\widetilde{u_{j}}}{\partial x_{i}}\right)-\frac{2\mathrm{\delta}_{ij}}{3}\left(\mu_{T}\frac{\partial\widetilde{u_{i}}}{\partial x_{i}}+\overline{\rho}\,\widetilde{k}\right),
 \]
 
 \end_inset
@@ -988,19 +1041,52 @@ Boussinesq 观察发现：湍流中的动量传递，由大涡引起的混合所
 \begin_inset Formula $\mu_{T}$
 \end_inset
 
- 为湍流涡黏系数，相应的有湍流热传导系数
+ 为湍流涡黏系数。
+\end_layout
+
+\begin_layout Standard
+对可压流动，湍流传热项通常取雷诺比拟
 \begin_inset Formula 
 \[
-k_{T}=c_{p}\frac{\mu_{T}}{\mathrm{Pr}_{T}},
+-\overline{\rho}\,\widetilde{u_{j}''\,h''}=-\kappa_{T}\frac{\partial\widetilde{T}}{\partial x_{j}},
 \]
 
 \end_inset
 
-通常取 
+其中
+\begin_inset Formula 
+\[
+\kappa_{T}=c_{p}\frac{\mu_{T}}{\mathrm{Pr}_{T}},
+\]
+
+\end_inset
+
+为湍流传热系数，通常取 
 \begin_inset Formula $\mathrm{Pr}_{T}=0.9$
 \end_inset
 
  for air.
+\end_layout
+
+\begin_layout Standard
+综上，采用线性涡黏模型的 FRANS 方程可简化为与 NS 几乎完全相同的形式：
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial t}\begin{bmatrix}\overline{\rho}\\
+\overline{\rho}\,\widetilde{u_{i}}\\
+\overline{\rho}\,\widetilde{e_{0}}
+\end{bmatrix}+\frac{\partial}{\partial x_{j}}\begin{bmatrix}\overline{\rho}\,\widetilde{u_{j}}\\
+\overline{\rho}\,\widetilde{u_{i}}\,\widetilde{u_{j}}\\
+\overline{\rho}\,\widetilde{h_{0}}\,\widetilde{u_{j}}
+\end{bmatrix}=\frac{\partial}{\partial x_{j}}\begin{bmatrix}0\\
+\left(\mu_{L}+\mu_{T}\right)\widetilde{S_{ij}}-\overline{p}\\
+\left(\mu_{L}+\mu_{T}\right)\widetilde{S_{ij}}\,\widetilde{u_{i}}+\left(\kappa_{L}+\kappa_{T}\right)\left(\partial_{j}\,\widetilde{T}\right)
+\end{bmatrix},
+\]
+
+\end_inset
+
+区别只在于黏性系数与传热系数。
 \end_layout
 
 \begin_layout Standard
