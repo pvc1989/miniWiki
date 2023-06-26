@@ -161,7 +161,7 @@ literal "true"
 \rho h_{0}\vec{u}
 \end{bmatrix}=\begin{bmatrix}0\\
 \vec{b}_{\mathrm{V}}-\grad p\\
-0
+\vec{b}_{\mathrm{V}}\vdot\vec{u}
 \end{bmatrix}
 \]
 
@@ -230,6 +230,397 @@ D(s)
 
 \begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+偏航修正
+\end_layout
+
+\begin_layout Standard
+三种截面 (Figure 6.30 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Johnson_2013"
+literal "true"
+
+\end_inset
+
+)：
+\end_layout
+
+\begin_layout Description
+Analysis
+\begin_inset space \space{}
+\end_inset
+
+截面 垂直于参考轴 (a straight radial line through the center of rotation)，以 
+\begin_inset Formula $A$
+\end_inset
+
+ 修饰。
+\end_layout
+
+\begin_layout Description
+Normal
+\begin_inset space \space{}
+\end_inset
+
+截面 垂直于气动中心连线 (the tangent to the quarter-chord locus)，以 
+\begin_inset Formula $N$
+\end_inset
+
+ 修饰。一般地，
+\begin_inset Formula $N$
+\end_inset
+
+ 与 
+\begin_inset Formula $A$
+\end_inset
+
+ 夹角为 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+，即 
+\begin_inset Formula $N$
+\end_inset
+
+-截面绕 
+\begin_inset Formula $z$
+\end_inset
+
+-轴转过 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 得 
+\begin_inset Formula $A$
+\end_inset
+
+-截面。
+\end_layout
+
+\begin_layout Description
+Yawed
+\begin_inset space \space{}
+\end_inset
+
+截面 平行于自由来流 
+\begin_inset Formula $V$
+\end_inset
+
+，以 
+\begin_inset Formula $Y$
+\end_inset
+
+ 修饰。一般地，
+\begin_inset Formula $Y$
+\end_inset
+
+ 与 
+\begin_inset Formula $A$
+\end_inset
+
+ 夹角为 
+\begin_inset Formula $\varLambda$
+\end_inset
+
+，即 
+\begin_inset Formula $A$
+\end_inset
+
+-截面绕 
+\begin_inset Formula $z$
+\end_inset
+
+-轴转过 
+\begin_inset Formula $\varLambda$
+\end_inset
+
+ 得 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+考虑既有偏航 
+\begin_inset Formula $\varLambda$
+\end_inset
+
+、又有后掠 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ 的无穷长平直机翼，并采用小迎角假设。
+\end_layout
+
+\begin_layout Subsubsection
+弦长
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c^{N}=c^{A}\cos(\epsilon)=c^{Y}\cos(\varLambda+\epsilon),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+面内速度
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{V^{N}}{\cos(\varLambda+\epsilon)}=\frac{V^{A}}{\cos(\varLambda)}=V^{Y}\impliedby\begin{cases}
+V^{N}=V^{Y}\cos(\varLambda+\epsilon),\\
+V^{A}=V^{Y}\cos(\varLambda),
+\end{cases},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+面内动压
+\end_layout
+
+\begin_layout Standard
+面内动压按面内速度计算，即 
+\begin_inset Formula $q=\frac{1}{2}\rho V^{2}$
+\end_inset
+
+，从而有
+\begin_inset Formula 
+\[
+\frac{q^{N}}{\cos[2](\varLambda+\epsilon)}=\frac{q^{A}}{\cos[2](\varLambda)}=q^{Y}\impliedby\begin{cases}
+q^{N}=q^{Y}\cos[2](\varLambda+\epsilon),\\
+q^{A}=q^{Y}\cos[2](\varLambda),
+\end{cases},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+升力系数
+\end_layout
+
+\begin_layout Standard
+对于无穷长机翼，压力 
+\begin_inset Formula $p$
+\end_inset
+
+ 不随展向位置 
+\begin_inset Formula $r$
+\end_inset
+
+ 变化（但可以随弦向位置 
+\begin_inset Formula $\bar{x}\equiv x/c$
+\end_inset
+
+ 变化），故升力系数 
+\begin_inset Formula $C_{l}$
+\end_inset
+
+ 与动压 
+\begin_inset Formula $q$
+\end_inset
+
+ 的乘积不随 
+\begin_inset Formula $r$
+\end_inset
+
+ 变化：
+\begin_inset Formula 
+\[
+q\,C_{l}=\int p\dd{\bar{x}},
+\]
+
+\end_inset
+
+该乘积（或积分值）与展向微元面积 
+\begin_inset Formula $c\dd{r}$
+\end_inset
+
+ 的乘积表示展向微元上的升力，它沿展向的积分值不依赖于截面方向：
+\begin_inset Formula 
+\[
+\int q^{N}\,C_{l}^{N}\,c^{N}\dd{r^{N}}=\int q^{A}\,C_{l}^{A}\,c^{A}\dd{r^{A}}=\int q^{Y}\,C_{l}^{Y}\,c^{Y}\dd{r^{Y}}=\text{桨叶升力},
+\]
+
+\end_inset
+
+而 
+\begin_inset Formula $c\dd{r}$
+\end_inset
+
+ 沿展向的积分值亦不依赖于截面方向：
+\begin_inset Formula 
+\[
+\int c^{N}\dd{r^{N}}=\int c^{A}\dd{r^{A}}=\int c^{Y}\dd{r^{Y}}=\text{桨叶面积},
+\]
+
+\end_inset
+
+故 
+\begin_inset Formula $q\,C_{l}$
+\end_inset
+
+ 及 
+\begin_inset Formula $c\dd{r}$
+\end_inset
+
+ 均与截面方向无关。因此升力系数 
+\begin_inset Formula $C_{l}$
+\end_inset
+
+ 在三种截面之间的换算关系为
+\begin_inset Formula 
+\[
+C_{l}^{N}\cos[2](\varLambda+\epsilon)=C_{l}^{A}\cos[2](\varLambda)=C_{l}^{Y},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+阻力系数
+\end_layout
+
+\begin_layout Quote
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Johnson_2013"
+literal "true"
+
+\end_inset
+
+: the yawed section drag coeffciient is given by two-dimensional airfoil
+ characteristics, and the normal section lift coefficient is not infulenced
+ by yawed flow below stall.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据上述假设，阻力平行于来流方向，即位于 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面内：
+\begin_inset Formula 
+\[
+D=D^{Y}\equiv q^{Y}\,C_{d}^{Y}\,c^{Y}\dd{r^{Y}},
+\]
+
+\end_inset
+
+其在 
+\begin_inset Formula $N$
+\end_inset
+
+-截面及 
+\begin_inset Formula $A$
+\end_inset
+
+-截面内的分量为
+\begin_inset Formula 
+\[
+q^{N}\,C_{d}^{N}\,c^{N}\dd{r^{N}}\equiv D^{N}=D^{Y}\cos(\varLambda+\epsilon),\quad q^{A}\,C_{d}^{A}\,c^{A}\dd{r^{A}}\equiv D^{A}=D^{Y}\cos(\varLambda),
+\]
+
+\end_inset
+
+再利用 
+\begin_inset Formula $c\dd{r}$
+\end_inset
+
+ 的旋转不变性，可得
+\begin_inset Formula 
+\[
+\frac{q^{N}\,C_{d}^{N}}{\cos(\varLambda+\epsilon)}=\frac{q^{A}\,C_{d}^{A}}{\cos(\varLambda)}=q^{Y}\,C_{d}^{Y},
+\]
+
+\end_inset
+
+代入动压 
+\begin_inset Formula $q$
+\end_inset
+
+ 的换算关系，最终得阻力系数 
+\begin_inset Formula $C_{d}$
+\end_inset
+
+ 的换算关系
+\begin_inset Formula 
+\[
+C_{d}^{N}\cos(\varLambda+\epsilon)=C_{d}^{A}\cos(\varLambda)=C_{d}^{Y},
+\]
+
+\end_inset
+
+相应的轴向阻力分别为
+\begin_inset Formula 
+\[
+R^{N}=D^{Y}\sin(\varLambda+\epsilon)=D^{N}\tan(\varLambda+\epsilon),\quad R^{A}=D^{Y}\sin(\varLambda)=D^{A}\tan(\varLambda),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+迎角
+\end_layout
+
+\begin_layout Standard
+在小迎角假设下，
+\begin_inset Formula $V\alpha$
+\end_inset
+
+ 为法向速度，不随截面方向变化，故
+\begin_inset Formula 
+\[
+\alpha^{N}\cos(\varLambda+\epsilon)=\alpha^{A}\cos(\varLambda)=\alpha^{Y},
+\]
+
+\end_inset
+
+因此后掠或偏航可减小升力线斜率：
+\begin_inset Formula 
+\[
+\frac{\partial C_{l}^{Y}}{\partial\alpha^{Y}}=\frac{\partial C_{l}^{A}}{\partial\alpha^{A}}\cos(\varLambda)=\frac{\partial C_{l}^{N}}{\partial\alpha^{N}}\cos(\varLambda+\epsilon),
+\]
+
 \end_inset
 
 
