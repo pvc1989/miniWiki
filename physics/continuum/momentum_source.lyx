@@ -354,6 +354,61 @@ Yawed
 
 \end_layout
 
+\begin_layout Quote
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Johnson_2013"
+literal "true"
+
+\end_inset
+
+: the yawed section drag coefficient is given by two-dimensional airfoil
+ characteristics, and the normal section lift coefficient is not influenced
+ by yawed flow below stall.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据以上假设，应当在 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面内运用二维翼型数据。该假设有以下局限性：
+\end_layout
+
+\begin_layout Itemize
+前飞时 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面翼型随方位角变化，通常只能用不变的 
+\begin_inset Formula $N$
+\end_inset
+
+-截面或 
+\begin_inset Formula $A$
+\end_inset
+
+-截面翼型代替。
+\end_layout
+
+\begin_layout Itemize
+自由来流的方向未必是边界层底部流动的方向，后者才是正确的阻力方向。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 考虑既有偏航 
 \begin_inset Formula $\varLambda$
@@ -363,17 +418,18 @@ Yawed
 \begin_inset Formula $\epsilon$
 \end_inset
 
- 的无穷长平直机翼，并采用小迎角假设。
-\end_layout
-
-\begin_layout Subsubsection
-弦长
-\end_layout
-
-\begin_layout Standard
+ 的无穷长平直机翼，则弦长在三种截面之间的换算关系为
 \begin_inset Formula 
 \[
 c^{N}=c^{A}\cos(\epsilon)=c^{Y}\cos(\varLambda+\epsilon),
+\]
+
+\end_inset
+
+以下推导采用小迎角假设
+\begin_inset Formula 
+\[
+\alpha\ll1\iff|w|\ll|u|,
 \]
 
 \end_inset
@@ -510,28 +566,8 @@ C_{l}^{N}\cos[2](\varLambda+\epsilon)=C_{l}^{A}\cos[2](\varLambda)=C_{l}^{Y},
 阻力系数
 \end_layout
 
-\begin_layout Quote
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Johnson_2013"
-literal "true"
-
-\end_inset
-
-: the yawed section drag coeffciient is given by two-dimensional airfoil
- characteristics, and the normal section lift coefficient is not infulenced
- by yawed flow below stall.
-\end_layout
-
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-根据上述假设，阻力平行于来流方向，即位于 
+阻力平行于来流方向，即位于 
 \begin_inset Formula $Y$
 \end_inset
 
@@ -599,7 +635,7 @@ R^{N}=D^{Y}\sin(\varLambda+\epsilon)=D^{N}\tan(\varLambda+\epsilon),\quad R^{A}=
 \end_layout
 
 \begin_layout Subsubsection
-迎角
+有效迎角
 \end_layout
 
 \begin_layout Standard
@@ -615,10 +651,101 @@ R^{N}=D^{Y}\sin(\varLambda+\epsilon)=D^{N}\tan(\varLambda+\epsilon),\quad R^{A}=
 
 \end_inset
 
-因此后掠或偏航可减小升力线斜率：
+升力线斜率 
+\begin_inset Formula $C_{l,\alpha}\equiv\pdv*{C_{l}}{\alpha}$
+\end_inset
+
+：
 \begin_inset Formula 
 \[
-\frac{\partial C_{l}^{Y}}{\partial\alpha^{Y}}=\frac{\partial C_{l}^{A}}{\partial\alpha^{A}}\cos(\varLambda)=\frac{\partial C_{l}^{N}}{\partial\alpha^{N}}\cos(\varLambda+\epsilon),
+C_{l,\alpha}^{Y}=C_{l,\alpha}^{A}\cos(\varLambda)=C_{l,\alpha}^{N}\cos(\varLambda+\epsilon),
+\]
+
+\end_inset
+
+在线性段内：
+\begin_inset Formula 
+\[
+\frac{\alpha^{Y}-\alpha_{0}^{Y}}{\alpha^{N}-\alpha_{0}^{N}}=\frac{C_{l}^{Y}/C_{l,\alpha}^{Y}}{C_{l}^{N}/C_{l,\alpha}^{N}}=\cos(\varLambda+\epsilon)\impliedby\begin{cases}
+C_{l}^{N}=C_{l,\alpha}^{N}\cdot(\alpha^{N}-\alpha_{0}^{N}),\\
+C_{l}^{Y}=C_{l,\alpha}^{Y}\cdot(\alpha^{Y}-\alpha_{0}^{Y}),
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+根据假设，升力系数不受展向流动影响，即 
+\begin_inset Formula $C_{l}^{N}(\alpha^{N})=C_{l}^{2D}(\alpha^{N})$
+\end_inset
+
+，因此在线性段内：
+\begin_inset Formula 
+\[
+C_{l}^{N}(\alpha^{N})=C_{l}^{2D}(\alpha^{N})=C_{l,\alpha}^{N}\cdot(\alpha^{N}-\alpha_{0}^{N}),
+\]
+
+\end_inset
+
+为了在形式上，让 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面也适用 
+\begin_inset Formula $C_{l}^{Y}(\alpha^{Y})=C_{l}^{2D}(\alpha)$
+\end_inset
+
+， 需将 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ 需替换为有效迎角 
+\begin_inset Formula $\alpha^{E}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+C_{l}^{Y}(\alpha^{Y})=C_{l}^{2D}(\alpha^{E})=C_{l,\alpha}^{N}\cdot(\alpha^{E}-\alpha_{0}^{N}),
+\]
+
+\end_inset
+
+另一方面，在线性段内有
+\begin_inset Formula 
+\[
+C_{l}^{Y}(\alpha^{Y})=C_{l,\alpha}^{Y}\cdot(\alpha^{Y}-\alpha_{0}^{Y})=C_{l,\alpha}^{N}\cos(\varLambda+\epsilon)\cdot(\alpha^{N}-\alpha_{0}^{N})\cos(\varLambda+\epsilon),
+\]
+
+\end_inset
+
+比较二者得
+\begin_inset Formula 
+\[
+\frac{\alpha^{E}-\alpha_{0}^{N}}{\alpha^{N}-\alpha_{0}^{N}}=\cos[2](\varLambda+\epsilon),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+计算 
+\begin_inset Formula $Y$
+\end_inset
+
+-截面阻力系数的有效迎角为 
+\begin_inset Formula $\alpha^{E}=\alpha^{Y}$
+\end_inset
+
+，即
+\begin_inset Formula 
+\[
+C_{d}^{Y}(\alpha^{Y})=C_{d}^{2D}(\alpha^{Y}),
 \]
 
 \end_inset
