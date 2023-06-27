@@ -163,14 +163,12 @@ scp -r -P port user@address:dir local_dir
 首先，在客户端制作密钥：
 
 ```shell
-# 切换到 ~ 目录：
-cd ~
+# 切换到 ~/.ssh 目录：
+cd ~/.ssh
 # 生成 SSH 密钥：
 ssh-keygen  # 根据提示
     # 先输入文件名（可按一次 [Enter] 以接受默认设置）
     # 再输入通行码（可按两次 [Enter] 以接受默认设置）
-# 切换到 ~/.ssh 目录：
-cd .ssh
 # 将公钥文件 id_rsa.pub 传送给服务端指定用户：
 scp id_rsa.pub user@address:~  # 需要输入服务端密码
 ```

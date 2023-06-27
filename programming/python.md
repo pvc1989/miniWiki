@@ -589,7 +589,7 @@ print(args)
 
 ## `cProfile`, `Stats` for [函数调用分析](https://docs.python.org/3/library/profile.html)
 
-现生成统计文件：
+先生成统计文件：
 
 ```shell
 python -m cProfile [-o stats_file] (-m module | myscript.py)

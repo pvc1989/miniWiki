@@ -111,6 +111,10 @@ source ~/.bashrc
 sudo apt install zsh
 # 下载好看的样式：
 sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+# 或手动下载 install.sh，再执行该脚本：
+mv install.sh ~/
+chmod 755 install.sh
+sh -c ./install.sh
 # 修改配置：
 vim ~/.zshrc
 ```
