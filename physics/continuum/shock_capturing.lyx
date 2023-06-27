@@ -1807,7 +1807,7 @@ name "subsec:KlocknerDetector"
 
 \begin_layout Standard
 假设模态系数近似按 
-\begin_inset Formula $\abs{\hat{u}_{n}}=c\,n^{s}$
+\begin_inset Formula $\abs{\hat{u}_{n}}=c\,n^{-s}$
 \end_inset
 
  衰减，其中 
@@ -5272,10 +5272,10 @@ reference "subsec:PerssonDetector"
  探测器基础上，将黏性系数定义为
 \begin_inset Formula 
 \[
-\nu=\begin{cases}
+\nu(s;s_{0},\kappa)=\nu_{0}\begin{cases}
 0, & s-s_{0}\in(-\infty,-\kappa),\\
-\frac{\nu_{0}}{2}\left(1+\sin(\frac{s-s_{0}}{\kappa}\frac{\mathrm{\pi}}{2})\right) & s-s_{0}\in[-\kappa,+\kappa],\\
-\nu_{0}, & s-s_{0}\in(+\kappa,+\infty),
+\frac{1}{2}\left(1+\sin(\frac{s-s_{0}}{\kappa}\frac{\mathrm{\pi}}{2})\right) & s-s_{0}\in[-\kappa,+\kappa],\\
+1, & s-s_{0}\in(+\kappa,+\infty),
 \end{cases}
 \]
 
@@ -5319,7 +5319,98 @@ noprefix "false"
 
 \end_inset
 
- 探测器基础上，
+ 探测器（即 
+\begin_inset Formula $\abs{\hat{u}_{n}}\approx c\,n^{-s}$
+\end_inset
+
+ 中的 
+\begin_inset Formula $s$
+\end_inset
+
+ 值）基础上，确定单元黏性系数
+\begin_inset Formula 
+\[
+\nu(s)=1-\nu_{\text{Persson}}(s;s_{0}=2,\kappa=1)\implies\nu_{0}\begin{cases}
+1, & s=1,\\
+1/2, & s=2,\\
+0, & s=3,
+\end{cases}
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\nu_{0}$
+\end_inset
+
+ 根据对流距离 
+\begin_inset Formula $\lambda t=h/p$
+\end_inset
+
+ 与该时段内（由扩散方程基本解得到的）扩散半径 
+\begin_inset Formula $\sigma=\sqrt{2\nu t}$
+\end_inset
+
+ 相等决定：
+\begin_inset Formula 
+\[
+\nu_{0}=\lambda\sigma=\lambda\frac{h}{p},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+再将上述在单元内为常值的黏度，改造为在相邻顶点间线性过渡的 
+\begin_inset Formula $C^{0}$
+\end_inset
+
+ 分布：
+\end_layout
+
+\begin_layout Enumerate
+在每个顶点处取邻接单元的最大值；
+\end_layout
+
+\begin_layout Enumerate
+Propagate the resulting maxima back to each element adjoining the vertex.
+ 
+\end_layout
+
+\begin_layout Enumerate
+在同一单元的顶点间线性插值。
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Feistauer_2007"
+literal "true"
+
+\end_inset
+
+ 及 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Barter_2010"
+literal "true"
+
+\end_inset
+
+ 指出 
+\begin_inset Formula $\nu(x)$
+\end_inset
+
+ 取光滑分布的必要性。
 \end_layout
 
 \begin_layout Subsection
