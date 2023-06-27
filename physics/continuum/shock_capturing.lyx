@@ -1734,6 +1734,145 @@ I_{i}=\frac{\max_{k\in K_{i}}\left|\int_{E_{i}}\left(u_{i}^{h}-u_{k\to i}^{h}\ri
 相当于放大分母，因而会使光滑度偏小。
 \end_layout
 
+\begin_layout Subsection
+基于模态系数
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Persson_2006"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PerssonDetector"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+假设有正交基展开
+\begin_inset Formula 
+\[
+u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad,\hat{u}_{k}=\frac{\ip{u}{\phi_{k}}_{E_{j}}}{\ip{\phi_{k}}{\phi_{k}}_{E_{j}}},\quad\ip{\phi_{j}}{\phi_{k}}_{E_{j}}=\delta_{jk}\ip{\phi_{k}}{\phi_{k}}_{E_{j}},
+\]
+
+\end_inset
+
+利用 Fourier 系数在间断区按 
+\begin_inset Formula $k^{-1}$
+\end_inset
+
+ 收敛、在光滑区（至少）按 
+\begin_inset Formula $k^{-2}$
+\end_inset
+
+ 收敛，定义 smoothness indicator
+\begin_inset Formula 
+\[
+S=\frac{\norm{u^{h,p}-u^{h,p-1}}_{L_{2}(E_{j})}^{2}}{\norm{u^{h,p}}_{L_{2}(E_{j})}^{2}}=\frac{\abs{\hat{u}_{p}}^{2}\ip{\phi_{p}}{\phi_{p}}_{E_{j}}}{\sum_{k=0}^{p}\abs{\hat{u}_{k}}^{2}\ip{\phi_{k}}{\phi_{k}}_{E_{j}}}\begin{cases}
+\lessapprox p^{-4}, & \text{smooth},\\
+\approx p^{-2}, & \text{jump},
+\end{cases}
+\]
+
+\end_inset
+
+其物理意义为最高模态能量与总能量的比值。
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kl_ckner_2011"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:KlocknerDetector"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+假设模态系数近似按 
+\begin_inset Formula $\abs{\hat{u}_{n}}=c\,n^{s}$
+\end_inset
+
+ 衰减，其中 
+\begin_inset Formula $c,s$
+\end_inset
+
+ 由最小二乘法得到：
+\begin_inset Formula 
+\[
+\min\sum_{n=1}^{p}\left(\lg c-s\lg n-\lg\abs{\hat{u}_{n}}\right)^{2},
+\]
+
+\end_inset
+
+期望有
+\begin_inset Formula 
+\[
+s\approx\begin{cases}
+1, & u\in L^{2}\setminus C^{0},\\
+2, & u\in C^{0}\setminus C^{1},\\
+3, & u\in C^{1}\setminus C^{2},
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为避免奇偶性导致某些系数过小，从而导致光滑度估计过于乐观，引入 skyline pessimization：
+\begin_inset Formula 
+\[
+\bar{u}_{n}=\max_{m\in\left\{ \min(n,p-1),\dots,p\right\} }\abs{\hat{u}_{m}},\quad n=1,2,\dots,p,
+\]
+
+\end_inset
+
+在此之前，为避免高频噪声主导光滑度估计，用以下 
+\begin_inset Formula $\tilde{u}_{n}$
+\end_inset
+
+ 代替 
+\begin_inset Formula $\hat{u}_{n}$
+\end_inset
+
+：
+\begin_inset Formula 
+\[
+\ans{\tilde{u}_{n}}^{2}=\ans{\hat{u}_{n}}^{2}+\left(\norm{u}b_{n}\right)^{2},\quad n=1,2,\dots,p,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+b_{n}\coloneqq\frac{n^{-p}}{\sqrt{\sum_{m=1}^{p}\left(m^{-p}\right)^{2}}},\quad n=1,2,\dots,p,
+\]
+
+\end_inset
+
+用于将能量理想地分布到各阶模态。
+\end_layout
+
 \begin_layout Section
 TVD 格式/限制器
 \end_layout
@@ -5084,6 +5223,18 @@ u_{i}^{\text{new}}(x)=\bar{u}_{i}+A\frac{\tanh(q_{i}(x))-\overline{\tanh(q_{i}(x
 人工黏性
 \end_layout
 
+\begin_layout Standard
+引入人工黏性项
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}\left(\nu\frac{\partial u}{\partial x}\right),
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -5096,6 +5247,10 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
+基于模态系数
+\end_layout
+
+\begin_layout Subsubsection
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Persson_2006"
@@ -5107,46 +5262,14 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-假设有正交基展开
-\begin_inset Formula 
-\[
-u^{h,p}=\sum_{k=0}^{p}\hat{u}_{k}(t)\,\phi_{k}(x),\quad,\hat{u}_{k}=\frac{\ip{u}{\phi_{k}}_{E_{j}}}{\ip{\phi_{k}}{\phi_{k}}_{E_{j}}},\quad\ip{\phi_{j}}{\phi_{k}}_{E_{j}}=\delta_{jk}\ip{\phi_{k}}{\phi_{k}}_{E_{j}},
-\]
+在 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:PerssonDetector"
 
 \end_inset
 
-利用 Fourier 系数在间断区按 
-\begin_inset Formula $k^{-1}$
-\end_inset
-
- 收敛、在光滑区（至少）按 
-\begin_inset Formula $k^{-2}$
-\end_inset
-
- 收敛，定义 smoothness indicator
-\begin_inset Formula 
-\[
-S=\frac{\norm{u^{h,p}-u^{h,p-1}}_{L_{2}(E_{j})}^{2}}{\norm{u^{h,p}}_{L_{2}(E_{j})}^{2}}=\frac{\abs{\hat{u}_{p}}^{2}\ip{\phi_{p}}{\phi_{p}}_{E_{j}}}{\sum_{k=0}^{p}\abs{\hat{u}_{k}}^{2}\ip{\phi_{k}}{\phi_{k}}_{E_{j}}}\begin{cases}
-\lessapprox p^{-4}, & \text{smooth},\\
-\approx p^{-2}, & \text{jump},
-\end{cases}
-\]
-
-\end_inset
-
-其物理意义为最高模态能量与总能量的比值。
-\end_layout
-
-\begin_layout Standard
-引入人工黏性项
-\begin_inset Formula 
-\[
-\frac{\partial u}{\partial t}+\frac{\partial f}{\partial x}=\frac{\partial}{\partial x}\left(\nu\frac{\partial u}{\partial x}\right),
-\]
-
-\end_inset
-
-黏性系数定义为
+ 探测器基础上，将黏性系数定义为
 \begin_inset Formula 
 \[
 \nu=\begin{cases}
@@ -5172,6 +5295,31 @@ and
 
  is chosen empirically sufficiently large so as to obtain a sharp but smooth
  shock profile.
+\end_layout
+
+\begin_layout Subsubsection
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kl_ckner_2011"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:KlocknerDetector"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ 探测器基础上，
 \end_layout
 
 \begin_layout Subsection
