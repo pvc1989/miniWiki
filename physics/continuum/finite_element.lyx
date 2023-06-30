@@ -5305,20 +5305,48 @@ literal "false"
  在 DDG 弱形式中引入界面修正项：
 \begin_inset Formula 
 \[
-\mathcal{DDG}(u^{h},v^{h})+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j+1/2}+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j-1/2}=0,
+\mathcal{DDG}(u^{h},v^{h};E_{j})+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j+1/2}+\left(\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}\frac{\partial v^{h}}{\partial x}\right)_{j-1/2}=0,
 \]
 
 \end_inset
 
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\llbracket X\right\rrbracket _{j\pm1/2}$
+\end_inset
+
+ 表示右侧值减左侧值，
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathcal{DDG}(u^{h},v^{h};E_{j})=\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}-\ip{\partial_{x}\,v^{h}}{f^{\mathrm{D}}}_{E_{j}}+\left(v^{h}\,f^{\mathrm{I}}\right)_{j-1/2}^{j+1/2},$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 或更一般的高维版本
 \begin_inset Formula 
 \[
-\mathcal{DDG}(u^{h},v^{h})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial v^{h}}{\partial n}}_{\partial E}=0,
+\mathcal{DDG}(u^{h},v^{h};E_{j})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial v^{h}}{\partial n}}_{\partial E_{j}}=0,
 \]
 
 \end_inset
 
-其中 
+其中
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\mathcal{DDG}(u^{h},v^{h};E_{j})=\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}-\ip{\partial_{x}\,v^{h}}{f^{\mathrm{D}}}_{E_{j}}+\ip{v^{h}}{f_{n}^{\mathrm{I}}}_{\partial E_{j}},$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\left\llbracket X\right\rrbracket _{\partial E}$
 \end_inset
 
@@ -5350,6 +5378,13 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 为得到上述修正项对半离散格式的影响，将 test function 的展开式 
 \begin_inset Formula $v^{h}(\vec{x})=\sum_{k}\hat{v}_{k}\,\phi_{k}(\vec{x})$
 \end_inset
@@ -5357,7 +5392,7 @@ literal "false"
  代入修正后的弱形式，得
 \begin_inset Formula 
 \[
-\mathcal{DDG}(u^{h},v^{h})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\sum_{k}\hat{v}_{k}\phi_{k}}{\partial n}}_{\partial E}=\mathcal{DDG}(u^{h},v^{h})+\sum_{k}\hat{v}_{k}\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\phi_{k}}{\partial n}}_{\partial E}=0,
+\mathcal{DDG}(u^{h},v^{h};E_{j})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\sum_{k}\hat{v}_{k}\,\phi_{k}}{\partial n}}_{\partial E_{j}}=\mathcal{DDG}(u^{h},v^{h};E_{j})+\sum_{k}\hat{v}_{k}\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\phi_{k}}{\partial n}}_{\partial E_{j}}=0,
 \]
 
 \end_inset
@@ -5365,16 +5400,19 @@ literal "false"
 故半离散格式被修正为
 \begin_inset Formula 
 \[
-\underline{m}\frac{\dd}{\dd t}\underline{\hat{u}}=\underline{r}(\underline{\hat{u}})-\frac{1}{2}\begin{bmatrix}\ip{\left\llbracket b(u^{h})\right\rrbracket }{\partial_{n}\,\phi_{1}}_{\partial E}\\
-\vdots\\
-\ip{\left\llbracket b(u^{h})\right\rrbracket }{\partial_{n}\,\phi_{N}}_{\partial E}
+\underline{m}_{j}\frac{\dd}{\dd t}\underline{\hat{u}}_{j}=\underbrace{\begin{bmatrix}\vdots\\
+\ip{\partial_{s}\,\phi_{k}}{f_{s}^{h}}_{E_{j}}-\ip{\phi_{k}}{f_{n}^{h}}_{\partial E_{j}}\\
+\vdots
+\end{bmatrix}}_{\underline{r}_{j}}-\begin{bmatrix}\vdots\\
+\ip{\frac{1}{2}\left\llbracket b(u^{h})\right\rrbracket }{\partial_{n}\,\phi_{k}}_{\partial E_{j}}\\
+\vdots
 \end{bmatrix},
 \]
 
 \end_inset
 
 其中 
-\begin_inset Formula $\underline{r}$
+\begin_inset Formula $\underline{r}_{j}$
 \end_inset
 
  为未做修正的 DDG 残值项。
@@ -5541,6 +5579,62 @@ Accuracy order?
 
 \begin_layout Standard
 Energy stable?
+\end_layout
+
+\begin_layout Standard
+类比 DDG 的修正
+\begin_inset Formula 
+\[
+\mathcal{DDG}(u^{h},v^{h};E_{j})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial v^{h}}{\partial n}}_{\partial E_{j}}=0,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\mathcal{DDG}(u^{h},v^{h};E_{j})=\ip{v^{h}}{\partial_{t}\,u^{h}}_{E_{j}}-\ip{\partial_{s}\,v^{h}}{f_{s}^{\mathrm{D}}}_{E_{j}}+\ip{v^{h}}{f_{n}^{\mathrm{I}}}_{\partial E_{j}},
+\]
+
+\end_inset
+
+引入对 DFR 的修正：
+\begin_inset Formula 
+\[
+\mathcal{DFR}(u^{h},v^{h};E_{j})+\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial v^{h}}{\partial n}}_{\partial E_{j}}=0,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\mathcal{DFR}(u^{h},v^{h};E_{j})=\ip{v^{h}}{\partial_{t}\,u^{h}+\partial_{s}\,f_{s}^{\mathrm{R}}}_{E_{j}},
+\]
+
+\end_inset
+
+若取 quadrature points 为 solution points，则有
+\begin_inset Formula 
+\[
+\ip{\phi_{k}}{\partial_{t}\,u^{h}+\partial_{s}\,f_{s}^{\mathrm{R}}}_{E_{j}}=\sum_{l=1}^{N}\underbrace{\phi_{k}(\vec{x}_{l})}_{\mathrm{\delta}_{kl}}\left(\partial_{t}\,u^{h}+\partial_{s}\,f_{s}^{\mathrm{R}}\right)_{\vec{x}_{l}}W_{l}=\left(\partial_{t}\,u^{h}+\partial_{s}\,f_{s}^{\mathrm{R}}\right)_{x_{k}}W_{k}=0,
+\]
+
+\end_inset
+
+故第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个 ODE 被修正为
+\begin_inset Formula 
+\[
+\dv{\hat{u}_{k}}{t}=-\eval{\frac{\partial f_{s}^{\mathrm{R}}}{\partial s}}_{\vec{x}_{k}}-W_{k}^{-1}\ip{\frac{\left\llbracket b(u^{h})\right\rrbracket }{2}}{\frac{\partial\phi_{k}}{\partial n}}_{\partial E_{j}},
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
