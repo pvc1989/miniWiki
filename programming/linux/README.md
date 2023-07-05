@@ -129,6 +129,68 @@ chsh -s $(which zsh)  # 更换 login shell
 
 ## [`ssh`](./ssh.md)
 
+## 语法
+
+### `for` 循环
+
+```shell
+# , 前后不能有空格
+for x in {2,3,4}; do echo $x; done
+# 或等价的
+for ((x = 2; x <= 4; ++x)); do echo $x ; done
+# 输出：
+2
+3
+4
+```
+
+嵌套循环：
+
+```shell
+for x in {2,3}; do for y in {a,b}; do echo $x $y; done; done
+# 输出
+2 a
+2 b
+3 a
+3 b
+```
+
+### 参数展开
+
+See [3.5.3 Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html) for more.
+
+```shell
+# 假设
+for x in p=2*.log ; do echo ${x} ; done
+# 输出
+p=2_n=10.log
+p=2_n=20.log
+p=2_n=40.log
+p=2_n=80.log
+# 则 ${parameter:offset:length}
+for x in p=2*.log ; do echo ${x:4:3} ; done
+# 输出 x[4, 4+3)
+n=1
+n=2
+n=4
+n=8
+# 或
+for x in p=2*.log ; do echo ${x:(-4)} ; done
+for x in p=2*.log ; do echo ${x: -4} ; done
+# 均输出
+.log
+.log
+.log
+.log
+# 替换后缀
+for x in p=2*.log ; do echo ${x%.log}.csv ; done
+# 输出
+p=2_n=10.csv
+p=2_n=20.csv
+p=2_n=40.csv
+p=2_n=80.csv
+```
+
 ## 文件系统操作
 
 ### `locate`
@@ -238,7 +300,7 @@ Report or omit repeated lines.
 # Replace all occurrences of an extended regular expression in a file:
     sed -E 's/regular_expression/replace/g' filename
 # Replace all occurrences of a string [i]n a file, overwriting the file (i.e. in-place):
-    sed -i '' 's/find/replace/g' filename
+    sed -i 's/find/replace/g' filename
 # Replace only on lines matching the line pattern:
     sed '/line_pattern/s/find/replace/' filename
 # Print only text between n-th line till the next empty line:
