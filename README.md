@@ -35,6 +35,9 @@ title: 葵花宝典
   - 计算机组成
   - 操作系统
   - 计算机网络
+- 数据库系统
+  - [数据模型](./programming/database/models.md)
+
 - 设计思想
   - [设计原则](./programming/principles/README.md)
   - [设计模式](./programming/patterns/README.md)
