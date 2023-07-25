@@ -28,43 +28,73 @@ title: 葵花宝典
 - [数据结构](./algorithms/data_structures/README.md)
 - [数值计算](./algorithms/numerical/)
 - [优化方法](./algorithms/optimization/README.lyx)
-- [OpenFOAM](algorithms/openfoam/README.md)
 
-## [编程](./programming/README.md)
-- [计算机系统](./programming/csapp/README.md)
-  - 计算机组成
-  - 操作系统
-  - 计算机网络
-- 数据库系统
-  - [数据模型](./programming/database/models.md)
+## 计算机基础
 
-- 设计思想
-  - [设计原则](./programming/principles/README.md)
-  - [设计模式](./programming/patterns/README.md)
-- 编程语言
-  - [C++](./programming/cpp/README.md)
-  - [Octave/MATLAB](./programming/octave.md)
-  - [Python](./programming/python.md)
-  - [UML](./programming/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
-- 并行计算
-  - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
-  - [MPI](./programming/mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
-- 构建工具
-  - [Git](./programming/git.md) --- Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+### 组成原理
+
+- [CSAPP](./programming/csapp/README.md)
+
+### 操作系统
+
+- [CSAPP](./programming/csapp/README.md)
+- [Linux](./programming/linux/README.md)
+- [Docker](./programming/docker/README.md)
+
+### 计算机网络
+
+- [CSAPP](./programming/csapp/README.md)
+
+### 数据库系统
+
+- [数据模型](./programming/database/models.md)
+
+## 软件开发
+
+### 高级语言
+
+- [C/C++](./programming/cpp/README.md)
   - [批量构建](./programming/cpp/make/README.md)
   - [断点调试](./programming/cpp/debug.md)
   - [性能检测](./programming/cpp/profile.md)
   - [内存检查](./programming/cpp/memory/check.md)
-- 开发环境
-  - [Linux](./programming/linux/README.md)
-  - [Docker](./programming/docker/README.md)
-- 网格表示
-  - [CGNS](./programming/cgns/README.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
-  - [Gmsh](./programming/gmsh/README.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
-  - [VTK](./programming/vtk/README.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
-- 工程建模
-  - [SALOME](www.salome-platform.org)
-  - [Open CASCADE](https://www.opencascade.com)
+- [MATLAB/Octave](./programming/octave.md)
+- [Python](./programming/python.md)
+- 编译原理
+
+### 架构设计
+
+- [UML](./programming/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
+- [设计原则](./programming/principles/README.md)
+- [设计模式](./programming/patterns/README.md)
+
+### 版本控制
+
+- [Git](./programming/git.md) --- Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+
+## 开源软件
+
+### 并行计算
+
+- [Pthread](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
+
+- [MPI](./programming/mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
+
+### CAD 建模
+
+- [SALOME](www.salome-platform.org)
+- [Open CASCADE](https://www.opencascade.com)
+
+### 网格相关
+
+- [Gmsh](./programming/gmsh/README.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
+
+- [CGNS](./programming/cgns/README.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
+- [VTK](./programming/vtk/README.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
+
+### PDE 求解
+
+- [OpenFOAM](algorithms/openfoam/README.md)
 
 ## [文档](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
