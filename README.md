@@ -47,7 +47,7 @@ title: 葵花宝典
 
 ### 数据库系统
 
-- [数据模型](./programming/database/models.md)
+- [数据模型](./programming/database/data_models.md)
 
 ## 软件开发
 
@@ -64,9 +64,9 @@ title: 葵花宝典
 
 ### 架构设计
 
-- [UML](./programming/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
-- [设计原则](./programming/principles/README.md)
-- [设计模式](./programming/patterns/README.md)
+- [UML](./programming/design/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
+- [设计原则](./programming/design/principles/README.md)
+- [设计模式](./programming/design/patterns/README.md)
 
 ### 版本控制
 
