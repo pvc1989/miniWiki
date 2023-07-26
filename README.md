@@ -53,13 +53,9 @@ title: 葵花宝典
 
 ### 高级语言
 
-- [C/C++](./programming/cpp/README.md)
-  - [批量构建](./programming/cpp/make/README.md)
-  - [断点调试](./programming/cpp/debug.md)
-  - [性能检测](./programming/cpp/profile.md)
-  - [内存检查](./programming/cpp/memory/check.md)
-- [MATLAB/Octave](./programming/octave.md)
-- [Python](./programming/python.md)
+- [C/C++](./programming/languages/cpp/README.md)
+- [MATLAB/Octave](./programming/languages/octave.md)
+- [Python](./programming/languages/python.md)
 - 编译原理
 
 ### 架构设计
