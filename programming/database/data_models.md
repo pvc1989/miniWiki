@@ -116,3 +116,64 @@ Title: Data Models
 Knowledge graph：以 `subject/object` 为 node，`predicate` 为 edge。
 
 # Object-Based Data Model
+
+## Object-Relational Database Systems
+
+增加了面向对象特性的关系型数据库系统。
+
+### User-Defined Types
+
+```sql
+create type Person (
+  ID varchar(20) primary key, name varchar(20), address varchar(20)
+) ref from(ID);
+create table people of Person;
+insert into people (ID, name, address) values ('12345', 'Srinivasan', '23 Coyote Run');
+```
+
+### Type Inheritance
+
+```sql
+create type Student under Person (degree varchar(20));
+create type Teacher under Person (salary integer);
+```
+
+### Table Inheritance
+
+In PostgreSQL:
+
+```sql
+create table students (degree varchar(20)) inherits people;
+create table teachers (salary integer) inherits people;
+```
+
+In SQL-1999:
+
+```sql
+create table people of Person;
+create table students of Student under people;
+create table teachers of Teacher under people;
+```
+
+In either case:
+
+```sql
+insert into student values ('00128', 'Zhang', '235 Coyote Run', 'Ph.D.');
+```
+
+## Object-Relational Mapping (ORM)
+
+在面向对象编程语言的类型系统与关系型数据库之间自动完成数据转换。
+
+- [Hibernate](https://hibernate.org/) for Java.
+- [Django](https://www.djangoproject.com) for Python.
+
+## Object-Oriented Database Systems
+
+允许面向对象编程语言直接访问数据的数据库系统。
+
+两大缺陷：
+
+- imperative 编程语言不支持 declarative query。
+- 指针错误带来数据库破坏风险。
+
