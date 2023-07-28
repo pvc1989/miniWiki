@@ -37,17 +37,24 @@ title: 葵花宝典
 
 ### 操作系统
 
-- [CSAPP](./programming/csapp/README.md)
+- [链接](./programming/csapp/7_linking.md)
+- [异常控制流](./programming/csapp/8_exceptional_control_flow.md)
+- [虚拟存储](./programming/9_virtual_memory.md)
+- [系统级读写](./programming/10_system_level_io.md)
+- [并发编程](./programming/12_concurrent_programming.md)
 - [Linux](./programming/linux/README.md)
 - [Docker](./programming/docker/README.md)
 
 ### 计算机网络
 
-- [CSAPP](./programming/csapp/README.md)
+- [网络编程](./programming/csapp/11_network_programming.md)
+- [SSH](./programming/linux/ssh.md)
+- [网页](./documenting/web/README.md)
 
 ### 数据库系统
 
 - [数据模型](./programming/database/data_models.md)
+- [SQL](./programming/database/sql.md)
 
 ## 软件开发
 
