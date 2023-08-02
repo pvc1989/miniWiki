@@ -94,6 +94,52 @@ title: 数组及基于数组的算法
 
 ## 二分查找
 
+## 排列
+
+```cpp
+template< class BidirIt, class Compare >
+constexpr bool next_permutation( BidirIt first, BidirIt last, Compare comp );
+```
+
+将范围 `[first, last)` 视为其所含元素的一种排列，若该排列在字典序（元素之间用 `comp` 比较）意义下的下一个排列存在，则将 `[first, last)` 置为新的排列，并返回 `true`；否则返回 `false`，并将 `[first, last)` 置于 `sort(first, last, comp)` 后的状态。
+
+用法示例：
+
+```cpp
+// Given an array nums of distinct integers, return all the possible permutations.
+vector<vector<int>> permute(vector<int>& nums) {
+  auto ans = vector<vector<int>>();
+  sort(nums.begin(), nums.end());
+  do {
+    ans.push_back(nums);
+  } while (next_permutation(nums.begin(), nums.end()));
+  return ans;
+}
+```
+
+可能的实现：
+
+```cpp
+template< class BidirIt, class Compare >
+bool next_permutation(BidirIt first, BidirIt last, Compare comp) {
+  // 将 [first, last) 变换为等价的 [r_first, r_last)
+  auto r_first = std::make_reverse_iterator(last);
+  auto r_last = std::make_reverse_iterator(first);
+  // 从右向左，寻找最长的单调 range，记作 [r_first, left)
+  auto left = std::is_sorted_until(r_first, r_last, comp);
+
+  if (left != r_last) {
+    // [r_first, left) 中至少有 1 个元素的值“大于” *left，找到最“小”（原 range 最右）的那个
+    auto right = std::upper_bound(r_first, left, *left);
+    std::iter_swap(left, right);
+    // 交换后，[r_first, left) 依然为单调 range，且 *left 被尽可能小地变“大”了
+  }
+
+  std::reverse(r_first, left);  // 反转后，[left.base(), last) 单调递增
+  return left != r_last;
+}
+```
+
 # 并查集
 
 - VisuAlgo

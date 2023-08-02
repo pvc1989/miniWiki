@@ -47,7 +47,8 @@ title: 数据结构
 ## [通用排序](./array.md#通用排序)
 [平方排序](./array.md#平方排序)、[Shell 排序](./array.md#shellsort)、[归并排序](./array.md#归并排序)、[快速排序](./array.md#快速排序)
 ## [通用查找](./array.md#通用查找)
-[顺序查找](./array.md#顺序查找)、[二分查找](./array.md#二分查找)
+[顺序查找](./array.md#顺序查找)、[二分查找](./array.md#二分查找)、[排列](./array.md#排列)
+
 ## [并查集](./array.md#并查集)
 
 # [队列 (Queues)](./queue.md)
