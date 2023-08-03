@@ -44,7 +44,7 @@ delete from r; -- 只删除 r 中的 tuples
 增删 attributes：
 
 ```sql
-alter table r add Attribute Domain; -- 增加一列，各 tuple 的该属性值为 `null
+alter table r add Attribute Domain; -- 增加一列，各 tuples 的该属性值为 null
 alter table r drop Attribute; -- 删除一列
 ```
 
@@ -150,7 +150,7 @@ select name from instructor where dept_name = 'Physics' order by name;
 select * from instructor order by salary desc, name asc;
 ```
 
-## `between`
+## `between` --- 数值范围
 
 ```sql
 select name from instructor where salary between 90000 and 100000;
@@ -181,7 +181,7 @@ where (instructor.ID, dept_name) = (teaches.ID, 'Biology');
 
 ```sql
 (select ...) intersect (select ...);  -- 集合交运算，结果不含重复的 tuples
-(select ...) union all (select ...);  -- 结果保留重复的 tuples，重复次数 = min(各 queries 中的重复次数)
+(select ...) intersect all (select ...);  -- 结果保留重复的 tuples，重复次数 = min(各 queries 中的重复次数)
 ```
 
 ⚠️ MySQL 不支持 `intersect`。
@@ -214,7 +214,7 @@ false  or unknown  -- 结果为 unknown
 
 # Aggregate Functions
 
-SQL 提供 5 个聚合函数，它们以集合为输入，输出单值（的集合）。
+SQL 提供 5 个聚合函数，它们以集合为输入，以单值（的集合）为输出。
 
 - `avg`, `sum` 的输入必须是数值的集合
 - `min`, `max`, `count` 的输入可以是其他类型数据的集合
@@ -233,7 +233,7 @@ from teaches where semester = 'Spring' and year = 2018;
 select count (*) from course;
 ```
 
-## `group by`
+## `group by` --- 分组
 
 按 `dept_name` 分组，计算各组的 `avg (salary)`：
 
@@ -243,17 +243,16 @@ select dept_name, avg (salary) as avg_salary from instructor group by dept_name;
 
 ⚠️ 未出现在 `group by`-clause 里的 attributes，在 `select`-clause 中只能作为聚合函数的输入，不能作为输出的 attributes。
 
-## `having`
+## `having` --- 组条件
 
-对 groups 施加条件：
+平均工资大于 42000 的系：<a href id="having"></a>
 
 ```sql
-select dept name, avg (salary) as avg_salary
+select dept_name, avg (salary) as avg_salary
 from instructor
-group by dept_name having avg (salary) > 42000;
+group by dept_name
+having avg (salary) > 42000;
 ```
-
-## 小结
 
 逻辑顺序：
 
@@ -261,13 +260,13 @@ group by dept_name having avg (salary) > 42000;
 - 利用 `where`-clause 筛选 tuples
 - 利用 `group by`-clause 分组（默认为一组）
 - 利用 `having`-clause 对各 groups 进行筛选
-- 输出 `select`-clause 规定的 attributes (of groups)
+- 输出 `select`-clause 指定的 attributes (of groups)
 
 # Nested Subqueries
 
-## `in` --- 集合成员
+## `in` --- $\in$
 
-“集合”可以是 `select` 的结果，或 `(v_1, ..., v_n)`。
+这里的“集合”可以是形如 `(select ...)` 的子查询结果，或形如 `(v_1, ..., v_n)` 的枚举集。
 
 与 `intersect` 等价：
 
@@ -285,10 +284,143 @@ where semester = 'Fall' and year = 2017 and
 	course_id not in (select course_id from section where semester = 'Spring' and year = 2018);
 ```
 
-## Set Comparison
+## `some` --- $\exist$
 
+```sql
+-- salary 大于子查询结果中的某个 salary
+select name from instructor
+where salary > some (select salary from instructor where dept name = 'Biology');
+```
 
+⚠️ 与 `any` 为同义词，早期版本的 SQL 只支持 `any`。
 
+## `all` --- $\forall$
 
+```sql
+-- salary 大于子查询结果中的所有 salary
+select name from instructor
+where salary > all (select salary from instructor where dept name = 'Biology');
+```
+
+## `exists` --- 集合非空
+
+```sql
+select course_id from section as S
+where semester = 'Fall' and year = 2017 and
+	exists (select * from section as T
+          where semester = 'Spring' and year = 2018 and S.course_id = T.course_id);
+```
+
+其中 `S` 在外层查询定义，可以在内层子查询中使用。作用域规则与高级编程语言类似。
+
+$A\supset B$ 可以表示为
+
+```sql
+not exists (B except A)
+```
+
+上过生物系所有课程的学生：
+
+```sql
+select S.ID, S.name from student as S
+where not exists (
+  (select course_id from course where dept_name = 'Biology')  -- Biology 的所有课程
+  except
+  (select T.course_id from takes as T where S.ID = T.ID) -- 学号为 S.ID 的学生上过的课程
+);
+```
+
+## `unique` --- 无重复
+
+2017 年至多开过一次的课程：
+
+```sql
+select T.course_id from course as T
+where unique (select R.course_id from section as R
+              where T.course_id = R.course_id and R.year = 2017);
+```
+
+等价于
+
+```sql
+select T.course_id from course as T
+where 1 >= (select count(R.course id) from section as R
+            where T.course_id = R.course_id and R.year = 2017);
+```
+
+⚠️ 若 $t_1$ 与 $t_2$ 至少有一个同名 attribute 的值均为 `null`，其余同名 attributes 的值均非空且相等，则 $t_1=t_2$ 返回 `unknown`；而 `unique` 当且仅当存在 $t_1=t_2$ 为 `true` 时才返回 `false`；故在此情形下，`unique` 依然返回 `true`。
+
+## `from`-clause 中的子查询
+
+与 [`having`](#having) 等价的写法：
+
+```sql
+select dept_name, avg_salary
+from (select dept_name, avg (salary) as avg_salary
+      from instructor group by dept_name)
+where avg_salary > 42000;
+```
+
+子查询结果是一个 relation，可将其命名为 `dept_avg`，它含有 `dept_name`, `avg_salary` 这两个 attributes：
+
+```sql
+select dept_name, avg_salary
+from (select dept_name, avg (salary) from instructor group by dept_name)
+	as dept_avg (dept_name, avg_salary)
+where avg_salary > 42000;
+```
+
+⚠️ MySQL 及 PostgreSQL 规定 `from`-clause 中的子查询结果必须被命名。
+
+自 SQL-2003 起，支持用 `lateral` 访问 `from`-clause 中已出现过的 relation：
+
+```sql
+select name, salary, avg_salary
+from instructor I1, lateral (select avg(salary) as avg_salary
+                             from instructor I2
+                             where I2.dept_name = I1.dept_name);
+```
+
+## `with` --- 临时关系
+
+拥有最大预算的系：
+
+```sql
+with max_budget (value)  -- 创建临时关系 max_budget，其唯一的属性名为 value
+	as (select max(budget) from department)
+select dept_name
+from department, max_budget
+where department.budget = max budget.value;
+```
+
+通常比嵌套的子查询更清晰，且临时关系可在多处复用。
+
+可以创建多个临时关系：
+
+```sql
+with
+	/* 临时关系 1 */dept_total (dept_name, value)
+		as (select dept_name, sum(salary) from instructor group by dept_name),
+	/* 临时关系 2 */dept_total_avg(value)
+		as (select avg(value) from dept_total)
+select dept_name
+from dept_total, dept_total_avg
+where dept_total.value > dept_total_avg.value;  -- 总工资 > 平均总工资
+```
+
+## 标量子查询
+
+返回单值（之集）的子查询，可用在 `select`-, `where`-, `having`-clauses 中接收单值的地方。
+
+查询各系及其讲师人数：
+
+```sql
+select dept_name,
+  (select count(*)
+   from instructor
+   where department.dept_name = instructor.dept_name
+  ) as num_instructors/* 该系讲师人数 */
+from department;
+```
 
 # Modification of Database
