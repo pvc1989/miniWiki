@@ -2,6 +2,23 @@
 Title: SQL (Structured Query Language)
 ---
 
+# Softwares
+
+## MySQL
+
+- [Tips on using MySQL](https://www.db-book.com/university-lab-dir/mysql-tips.html)
+
+## PostgreSQL
+
+- [Tips on using PostgreSQL](https://www.db-book.com/university-lab-dir/postgresql-tips.html)
+
+## SQLite
+
+### `sql.js`
+
+- [Online SQL interpreter on db-book.com](https://www.db-book.com/university-lab-dir/sqljs.html)
+- [Try SQL at w3schools.com](https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all)
+
 # Data Definition
 
 ## Basic Types
@@ -424,3 +441,90 @@ from department;
 ```
 
 # Modification of Database
+
+若含有 `where`-clause，则先完成该 clause，再修改 relation。
+
+## `delete`
+
+与 `select` 类似：
+
+```sql
+delete from relation where predicate;
+```
+
+每次只能从一个 relation 中删除 tuples。
+
+`where`-clause 可以含子查询：
+
+```sql
+delete from instructor
+where salary < (select avg (salary) from instructor);
+```
+
+## `insert`
+
+按 attributes 在 schema 中的顺序插入 values：
+
+```sql
+insert into course -- attributes 依次为 course_id, title, dept_name, credits
+values ('CS-437', 'Database Systems', 'Comp. Sci.', 4);
+```
+
+或显式给定顺序（可以与 schema 中的不一致）：
+
+```sql
+insert into course (title, course id, credits, dept_name)
+values ('Database Systems', 'CS-437', 4, 'Comp. Sci.');
+```
+
+更一般的，可以插入查询结果：
+
+```sql
+-- 从 student 中找到音乐系总学分超过 144 的学生，将他们插入 instructor
+insert into instructor
+  select ID, name, dept_name, 18000
+  from student
+  where dept_name = 'Music' and tot_cred > 144;
+```
+
+## `update`
+
+所有讲师涨薪 5%：
+
+```sql
+update instructor
+set salary = salary * 1.05;
+```
+
+收入小于平均收入的讲师涨薪 5%：
+
+```sql
+update instructor
+set salary = salary * 1.05
+where salary < (select avg (salary) from instructor);
+```
+
+条件分支：
+
+```sql
+update instructor
+set salary =
+	case
+    when salary <= 50000 then salary * 1.05  -- [0, 50000]
+    when salary <= 100000 then salary * 1.03 -- (50000, 100000]
+    else salary * 1.01  -- (100000, infty)
+	end
+```
+
+[标量子查询](#标量子查询)可用于 `set`-clause：
+
+```sql
+-- 将每个 student 的 tot_cred 更新为已通过（grade 非空不等于 F）课程的学分之和
+update student
+set tot cred = (
+  select sum(credits)  -- 若未通过任何课程，则返回 null
+  from takes, course
+  where student.ID = takes.ID and takes.course_id = course.course_id
+  	and takes.grade <> 'F' and takes.grade is not null);
+```
+
