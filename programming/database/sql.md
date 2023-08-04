@@ -398,7 +398,7 @@ from instructor I1, lateral (select avg(salary) as avg_salary
                              where I2.dept_name = I1.dept_name);
 ```
 
-## `with` --- 临时关系
+## `with` --- Temporary Relations<a href id="with"></a>
 
 拥有最大预算的系：
 
@@ -601,9 +601,58 @@ select * from student left outer join takes on (1 = 1);  -- 等价于 cross join
 select * from student left outer join takes on (1 = 1) where student.ID = takes.ID;  -- 等价于 natural join
 ```
 
-# Views
+# Views --- Virtual Relations
+
+[`with`](#with)-clause 可在单个 query 内创建临时关系。
+
+## `create view`
+
+```sql
+create view view_name as <query_expression>;
+create view view_name(attribute_1, ..., attribute_n) as <query_expression>;
+```
+
+各系系名及该系讲师的总工资：
+
+```sql
+create view department_total_salary(dept_name, total_salary) as
+  select dept_name, sum (salary) from instructor group by dept_name;
+```
+
+## Materialized Views
+
+为避免数据过期，view 通常在被使用时才会去执行 query。
+
+为节省时间，某些系统允许预存 view，并负责（在 query 中的 relation(s) 被更新时）更新 view 中的数据。存在多种更新策略：
+
+- immediately：
+- lazily：
+- periodically：
+
+## Updatable Views
+
+满足以下条件的 view 可以被更新：
+
+- `from`-clause 只含 1 个实际 relation
+- `select`-clause 只含 attribute names，不含表达式、聚合函数、`distinct` 修饰
+- 未列出的 attributes 接受 `null` 值
+- query 中不含 `group by` 或 `having`
+
+💡 推荐用 trigger 机制更新 view。
 
 # Transactions
+
+每个 transaction 由一组不可分的 statements 构成，只能以以下两种方式之一结束：
+
+- `commit work`
+- `rollback work`
+
+MySQL、PostgreSQL 默认将每一条 statement 视为一个 transaction，且执行完后自动提交。
+
+为创建含多条 statements 的 transaction，必须关闭自动提交机制。
+
+- SQL-1999、SQL Server 支持将多条 statements 置于 `begin atomic ... end` 中，以创建 transaction。
+- MySQL、PostgreSQL 支持 `begin` 但不支持 `end`，必须以 `commit work` 或 `rollback work` 结尾。
 
 # Integrity Constraints
 
