@@ -528,3 +528,97 @@ set tot cred = (
   	and takes.grade <> 'F' and takes.grade is not null);
 ```
 
+# Join Expressions
+
+## `cross join`
+
+表示 Cartesian product，可以用 `,` 代替：
+
+```sql
+select count(*) from student cross join takes;
+-- 等价于
+select count(*) from student, takes;
+```
+
+## `natural join`
+
+只保留 Cartesian product 中同名 attributes 取相同值的 tuples，且同名 attributes 只保留一个。
+
+```sql
+select name, course_id from student, takes where student.ID = takes.ID;
+-- 等价于
+select name, course_id from student natural join takes;
+```
+
+可以用 `join r using (a)` 指定与 `r` 连接时需相等的 attribute(s)：
+
+```sql
+-- (student natural join takes) 与 course 有两个同名 attributes (course_id, dept_name)
+select name, title from (student natural join takes)
+	join course using (course_id);  -- 保留 course_id 相等的 tuples
+select name, title from (student natural join takes)
+	natural join course;  -- 保留 dept_name, course_id 均相等的 tuples
+```
+
+## `on` --- Conditional Join
+
+```sql
+select * from student, takes where student.ID = takes.ID;
+-- 等价于
+select * from student join takes on student.ID = takes.ID;  -- 同名 attributes 均保留
+-- 几乎等价于
+select * from student natural join takes;  -- 同名 attributes 只保留一个
+```
+
+## `inner join`
+
+以上 `join`s 都是 `inner join`，其中 `inner` 可以省略。
+
+## `outer join`
+
+`outer join` 为没有参与 `inner join` 的单侧 `tuple` 提供 `null` 值配对，即：允许来自一侧 tuple 在另一侧中缺少与之匹配的 tuple。在连接后的 tuple 中，缺失的值置为 `null`。
+
+在连接结果中保留没有选课的学生，其选课信息置为 `null`：
+
+```sql
+-- left outer join 允许 left tuple 缺少与之匹配的 right tuple
+select * from student natural left outer join takes;
+-- right outer join 允许 right tuple 缺少与之匹配的 left tuple
+select * from takes natural right outer join student;
+```
+
+```sql
+A full outer join B
+-- 等价于
+(A left outer join B) union (A right outer join B)
+```
+
+`outer join` 也可以配合 `on` 使用：
+
+```sql
+select * from student left outer join takes on student.ID = takes.ID;  -- 除 ID 保留两次外，几乎等价于 natural left outer join
+select * from student left outer join takes on (1 = 1);  -- 等价于 cross join（所有 tuples 均参与 inner join，不提供 null 值配对）
+select * from student left outer join takes on (1 = 1) where student.ID = takes.ID;  -- 等价于 natural join
+```
+
+# Views
+
+# Transactions
+
+# Integrity Constraints
+
+# Data Types and Schemas
+
+# Index Definition
+
+# Authorization
+
+# SQL in Programming Languages
+
+# Functions and Procedures
+
+# Triggers
+
+# Recursive Queries
+
+# Advanced Aggregation Features
