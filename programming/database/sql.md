@@ -230,6 +230,36 @@ false  or unknown  -- 结果为 unknown
 
 `select`-clause 中的 `distinct` 将两个 `null` 视为相同的值。
 
+## `coalesce`
+
+以任意多个相同类型为输入，返回第一个非空值：
+
+```sql
+select ID, coalesce(salary, 0/* 将 null 替换为 0 */) as salary
+from instructor;
+```
+
+## `decode` in Oracle
+
+不要求类型相同，按第一个匹配替换：
+
+```sql
+decode (value,
+        match_1, replacement_1,
+        ...,
+        match_n, replacement_n,
+        default_replacement);
+```
+
+⚠️ 与一般情形不同，`null` 与 `null` 视为相等。
+
+将 `null` 替换为 `N/A`：
+
+```sql
+select ID, decode (salary, null, 'N/A', salary) as salary
+from instructor
+```
+
 # Aggregate Functions
 
 SQL 提供 5 个聚合函数，它们以集合为输入，以单值（的集合）为输出。
@@ -808,6 +838,207 @@ create assertion credits_earned_constraint check
 ⚠️ 因开销巨大，多数系统尚未支持 `assertion`。
 
 # Data Types and Schemas
+
+## 时间相关类型
+
+```sql
+date '2018-04-25'
+time '09:30:00'  -- time(3) 表示秒精确到 3 位小数，默认 0 位小数
+timestamp '2018-04-25 10:29:01.45'  -- 默认 6 位小数
+```
+
+抽取信息：
+
+```sql
+extract(f/* year, month, day, hour, minute, second */ from d/* date or time */)
+```
+
+获取当前时间：
+
+```sql
+current_date
+current_time  -- 含时区信息
+localtime  -- 不含时区信息
+current_timestamp
+localtimestamp
+```
+
+## 类型转换
+
+`cast(e as t)` 将表达式 `e` 转化为类型`t`：
+
+```sql
+select cast(ID/* 原为 varchar(5) */ as numeric(5)) as inst_id
+from instructor
+order by inst_id  -- 按数值比较
+```
+
+## 格式转换
+
+MySQL：
+
+```mysql
+format
+```
+
+[PostgreSQL](https://www.postgresql.org/docs/current/functions-formatting.html#FUNCTIONS-FORMATTING-TABLE)：
+
+```postgresql
+to_char(timestamp '2002-04-20 17:31:12.66', 'HH12:MI:SS') → 05:31:12
+to_char(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12
+to_char(125, '999') → 125
+to_char(125.8::real, '999D9') → 125.8
+to_char(-125.8, '999D99S') → 125.80-
+to_date('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05
+to_number('12,454.8-', '99G999D9S') → -12454.8
+to_timestamp('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05 00:00:00-05
+```
+
+## `default` --- 默认值
+
+```sql
+create table student
+  (ID varchar (5),
+   name varchar (20) not null,
+   dept_name varchar (20), 
+   tot_cred numeric(3,0) default 0,
+   primary key (ID)
+  );
+insert into student(ID, name, dept_name)
+  values ('12789', 'Newman', 'Comp. Sci.'/* 缺省 tot_cred 值，以 0 补之 */);
+```
+
+## `*lob` --- Large OBject
+
+- `clob` --- Character LOB
+- `blob` --- Binary LOB
+
+可以定义 LOB attributes：
+
+```sql
+book_review clob(10KB)
+image blob(10MB)
+movie blob(2GB)
+```
+
+⚠️ LOB 的读写效率很低，一般以其 locator 作为 attribute，而非对象本身。
+
+## 用户定义类型
+
+### `create type`
+
+美元与英镑不应当能直接比较、算术运算，可通过定义类型加以区分：
+
+```sql
+create type Dollars as numeric(12,2) final;
+create type  Pounds as numeric(12,2) final;
+create table department
+  (dept_name varchar (20),
+   building varchar (15),
+   budget Dollars);
+```
+
+### `create domain`
+
+SQL-92 支持自定义 domain，以施加[完整性约束](#integrity)、默认值：
+
+```sql
+create domain DDollars as numeric(12,2) not null;
+create domain YearlySalary numeric(8,2)
+  constraint salary_value_test check(value >= 29000.00);
+```
+
+⚠️ 不同自定义 domain 的值直接可以直接比较、算术运算。
+
+## 生成唯一键值
+
+### Oracle
+
+```sql
+create table instructor (
+  ID number(5) generated always as identity/* 总是由系统自动生成 ID 值 */,
+  ...,
+  primary key (ID);
+);
+insert into instructor(name, dept_name, salary) 
+  values ('Newprof', 'Comp. Sci.', 100000);  -- 缺省 ID 值
+```
+
+若 `always` 替换为 `by default`，则允许用户给定 ID 值。
+
+### MySQL
+
+```mysql
+create table instructor (
+  ID number(5) auto_increment,
+  ...,
+  primary key (ID);
+);
+```
+
+### PostgreSQL
+
+```postgresql
+create table instructor (
+  ID serial,
+  ...,
+  primary key (ID);
+);
+```
+
+相当于
+
+```sql
+CREATE SEQUENCE inst_id_seq AS integer;
+CREATE TABLE instructor (
+  ID integer DEFAULT nextval('inst_id_seq')
+  ...,
+  primary key (ID);
+);
+ALTER SEQUENCE inst_id_seq OWNED BY instructor.ID;
+```
+
+## 复用 Schema
+
+```sql
+create table temp_instructor like instructor;  -- ⚠️ 尚未实现
+```
+
+由查询结果推断 schema：
+
+```sql
+create table t1 as (select * from instructor where dept_name = 'Music')
+with data/* 多数实现默认带数据，哪怕 with data 被省略 */;
+```
+
+## `create schema`
+
+|           数据库系统           |         操作系统          |
+| :----------------------------: | :-----------------------: |
+|            catalog             | home directory of a user  |
+|             schema             |    a directory in `~`     |
+|        relations, views        |           files           |
+|        connect to a DBS        |       log into a OS       |
+|    default catalog & schema    |            `~`            |
+| `catalog5.univ_schema.course ` | `/home/username/filename` |
+
+```postgresql
+CREATE SCHEMA hollywood
+    CREATE TABLE films (title text, release date, awards text[])
+    CREATE VIEW winners AS
+        SELECT title, release FROM films WHERE awards IS NOT NULL;
+DROP SCHEMA hollywood;
+```
+
+等价于
+
+```postgresql
+CREATE SCHEMA hollywood;
+CREATE TABLE hollywood.films (title text, release date, awards text[]);
+CREATE VIEW hollywood.winners AS
+    SELECT title, release FROM hollywood.films WHERE awards IS NOT NULL;
+DROP SCHEMA hollywood;
+```
 
 # Index Definition
 
