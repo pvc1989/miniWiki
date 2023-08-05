@@ -40,12 +40,12 @@ Title: SQL (Structured Query Language)
 
 ```sql
 create table r (
-	Attribute_1 Domain_1 <not null>, ..., Attribute_n Domain_n <not null>,
+  Attribute_1 Domain_1 <not null>, ..., Attribute_n Domain_n <not null>,
   <integrity_constraint_1>, ..., <integrity_constraint_1>
 );
 ```
 
-其中 `not null` 规定该 attribute 不能取空值，`integrity_constraint_i` 可以是
+其中 `not null` 规定该 attribute 不能取空值，`integrity_constraint_i` 可以是任意 [integrity constraints](#integrity)，例如：
 
 ```sql
 primary key (A_{j_1}, ..., A_{j_m}) -- 规定 r 的 m 个 attributes 为 r 的主键，其值唯一且不能为空
@@ -291,7 +291,7 @@ having avg (salary) > 42000;
 ```sql
 select distinct course_id from section
 where semester = 'Fall' and year = 2017 and
-	course_id in (select course_id from section where semester = 'Spring' and year = 2018);
+  course_id in (select course_id from section where semester = 'Spring' and year = 2018);
 ```
 
 与 `except` 等价：
@@ -299,7 +299,7 @@ where semester = 'Fall' and year = 2017 and
 ```sql
 select distinct course_id from section
 where semester = 'Fall' and year = 2017 and
-	course_id not in (select course_id from section where semester = 'Spring' and year = 2018);
+  course_id not in (select course_id from section where semester = 'Spring' and year = 2018);
 ```
 
 ## `some` --- $\exist$
@@ -325,7 +325,7 @@ where salary > all (select salary from instructor where dept name = 'Biology');
 ```sql
 select course_id from section as S
 where semester = 'Fall' and year = 2017 and
-	exists (select * from section as T
+  exists (select * from section as T
           where semester = 'Spring' and year = 2018 and S.course_id = T.course_id);
 ```
 
@@ -366,7 +366,7 @@ where 1 >= (select count(R.course id) from section as R
             where T.course_id = R.course_id and R.year = 2017);
 ```
 
-⚠️ 若 $t_1$ 与 $t_2$ 至少有一个同名 attribute 的值均为 `null`，其余同名 attributes 的值均非空且相等，则 $t_1=t_2$ 返回 `unknown`；而 `unique` 当且仅当存在 $t_1=t_2$ 为 `true` 时才返回 `false`；故在此情形下，`unique` 依然返回 `true`。
+⚠️ <a href id="null=null"></a>若 $t_1$ 与 $t_2$ 至少有一个同名 attribute 的值均为 `null`，其余同名 attributes 的值均非空且相等，则 $t_1=t_2$ 返回 `unknown`；而 `unique` 当且仅当存在 $t_1=t_2$ 为 `true` 时才返回 `false`；故在此情形下，`unique` 依然返回 `true`。
 
 ## `from`-clause 中的子查询
 
@@ -384,7 +384,7 @@ where avg_salary > 42000;
 ```sql
 select dept_name, avg_salary
 from (select dept_name, avg (salary) from instructor group by dept_name)
-	as dept_avg (dept_name, avg_salary)
+  as dept_avg (dept_name, avg_salary)
 where avg_salary > 42000;
 ```
 
@@ -405,7 +405,7 @@ from instructor I1, lateral (select avg(salary) as avg_salary
 
 ```sql
 with max_budget (value)  -- 创建临时关系 max_budget，其唯一的属性名为 value
-	as (select max(budget) from department)
+  as (select max(budget) from department)
 select dept_name
 from department, max_budget
 where department.budget = max budget.value;
@@ -417,10 +417,10 @@ where department.budget = max budget.value;
 
 ```sql
 with
-	/* 临时关系 1 */dept_total (dept_name, value)
-		as (select dept_name, sum(salary) from instructor group by dept_name),
-	/* 临时关系 2 */dept_total_avg(value)
-		as (select avg(value) from dept_total)
+  /* 临时关系 1 */dept_total (dept_name, value)
+    as (select dept_name, sum(salary) from instructor group by dept_name),
+  /* 临时关系 2 */dept_total_avg(value)
+    as (select avg(value) from dept_total)
 select dept_name
 from dept_total, dept_total_avg
 where dept_total.value > dept_total_avg.value;  -- 总工资 > 平均总工资
@@ -510,11 +510,11 @@ where salary < (select avg (salary) from instructor);
 ```sql
 update instructor
 set salary =
-	case
+  case
     when salary <= 50000 then salary * 1.05  -- [0, 50000]
     when salary <= 100000 then salary * 1.03 -- (50000, 100000]
     else salary * 1.01  -- (100000, infty)
-	end
+  end
 ```
 
 [标量子查询](#标量子查询)可用于 `set`-clause：
@@ -526,7 +526,7 @@ set tot cred = (
   select sum(credits)  -- 若未通过任何课程，则返回 null
   from takes, course
   where student.ID = takes.ID and takes.course_id = course.course_id
-  	and takes.grade <> 'F' and takes.grade is not null);
+    and takes.grade <> 'F' and takes.grade is not null);
 ```
 
 # Join Expressions
@@ -556,9 +556,9 @@ select name, course_id from student natural join takes;
 ```sql
 -- (student natural join takes) 与 course 有两个同名 attributes (course_id, dept_name)
 select name, title from (student natural join takes)
-	join course using (course_id);  -- 保留 course_id 相等的 tuples
+  join course using (course_id);  -- 保留 course_id 相等的 tuples
 select name, title from (student natural join takes)
-	natural join course;  -- 保留 dept_name, course_id 均相等的 tuples
+  natural join course;  -- 保留 dept_name, course_id 均相等的 tuples
 ```
 
 ## `on` --- Conditional Join
@@ -679,7 +679,133 @@ UPDATE accounts SET balance = balance + 100.00 WHERE name = 'Wally';
 COMMIT;
 ```
 
-# Integrity Constraints
+# Integrity Constraints<a href id="integrity"></a>
+
+可以在 `create table` 时给定，也可以向已有的 relation 中添加：
+
+```sql
+alter table relation add <integrity_constraint>;
+```
+
+## `not null` --- 非空值
+
+默认 `null` 属于所有 domains；若要从某个 domain 中排除 `null`，可在 domain 后加 `not null`：
+
+```sql
+name varchar(20) not null
+budget numeric(12,2) not null
+```
+
+`primary key` 默认为 `not null`。
+
+## `unique` --- Superkey
+
+```sql
+unique (A_1, ..., A_n)  -- 这组 attributes 构成一个 superkey，即不同 tuples 的取值不能重复
+```
+
+⚠️ `null` 不等于任何值，参见 [`null = null`](#null=null)。
+
+## `check` --- 条件检查
+
+```sql
+CREATE TABLE department
+  (..., 
+   budget numeric(12,2) check (budget > 0)/* 预算值必须为正 */,
+   ...);
+create table section
+  (...,
+   semester varchar (6),
+   check (semester in ('Fall', 'Winter', 'Spring', 'Summer')),
+   ...); 
+```
+
+⚠️ 除 `check(true)` 外，`check(unknown)` 亦返回 `true`。
+
+⚠️ SQL 标准支持 `check` 中含 subquery，但多数系统尚未支持。
+
+## `references` --- 外键约束
+
+```sql
+foreign key (dept_name) references department  -- primary key by default
+foreign key (dept_name) references department(dept_name/* primary key or superkey */)
+```
+
+亦可在 attribute 定义中使用：
+
+```sql
+CREATE TABLE course
+  (...,
+   dept_name varchar(20) references department,
+   ...);
+```
+
+违反约束的操作默认被拒绝（transaction 回滚），但 `foreign key` 允许设置 `cascade` 等操作：
+
+```sql
+foreign key (dept_name) references department
+  on delete cascade/* 若 department 中的某个 tuple 被删除，则 course 中相应的 tuples 亦被删除 */
+  on update cascade/* 若 department 中的某个 tuple 被更新，则 course 中相应的 tuples 亦被更新 */
+```
+
+除 `cascade` 外，还支持 `set null` 或 `set default` 操作。
+
+⚠️ 含有 `null` 的 tuple 默认满足约束。
+
+## `constraint` --- 约束命名
+
+```sql
+create table instructor
+  (...,
+   salary numeric(8,2), /* 命名的约束 */constraint minsalary check (salary > 29000),
+   ...);
+alter table instructor drop constraint minsalary;  -- 删除该约束
+```
+
+## 延迟检查
+
+某些场景必须临时违反约束，例如：
+
+```sql
+-- 夫妻二人均以对方姓名为外键，先 insert 任何一人都会违反外键约束
+create table person
+  (name varchar(20),
+   spouse varchar(20),
+   primary key (name),
+   foreign key (spouse) references person(name)
+  );
+```
+
+SQL 标准支持
+
+- 用 `initially deferred` 修饰约束，表示该约束延迟到 transaction 末尾才检查。
+- 用 `deferrable` 修饰约束，表示该约束默认立即检查，但可以在 transaction 中用 `set constraints <constraint_1, ..., constraint_n> defered` 延迟到末尾。
+
+## `assertion`
+
+```sql
+create assertion <assertion_name> check <predicate>;
+```
+
+$\forall$ 学生，其 `tot_cred` = 其已通过课程的学分之和：
+
+```sql
+create assertion credits_earned_constraint check
+  (not exists (select ID from student
+               where tot_cred <>
+                 (select coalesce(sum(credits), 0)
+                  from takes natural join course
+                  where student.ID = takes.ID
+                    and grade is not null
+                    and grade<> 'F'
+                 )
+              )
+  );
+```
+
+💡 SQL 不支持 $\forall x, P(x)$，但可以等价的表示为 $\nexists x, \lnot P(x)$。
+
+⚠️ 因开销巨大，多数系统尚未支持 `assertion`。
 
 # Data Types and Schemas
 
