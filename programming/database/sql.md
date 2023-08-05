@@ -11,6 +11,7 @@ Title: SQL (Structured Query Language)
 ## PostgreSQL
 
 - [Tips on using PostgreSQL](https://www.db-book.com/university-lab-dir/postgresql-tips.html)
+- [PostgreSQL (Current) Documentation](https://www.postgresql.org/docs/current/index.html)
 
 ## SQLite
 
@@ -642,7 +643,7 @@ create view department_total_salary(dept_name, total_salary) as
 
 # Transactions
 
-每个 transaction 由一组不可分的 statements 构成，只能以以下两种方式之一结束：
+每个 transaction 由一组不可分的 statements 构成，整体效果为 all-or-nothing，只能以以下两种方式之一结束：
 
 - `commit work`
 - `rollback work`
@@ -652,7 +653,31 @@ MySQL、PostgreSQL 默认将每一条 statement 视为一个 transaction，且�
 为创建含多条 statements 的 transaction，必须关闭自动提交机制。
 
 - SQL-1999、SQL Server 支持将多条 statements 置于 `begin atomic ... end` 中，以创建 transaction。
-- MySQL、PostgreSQL 支持 `begin` 但不支持 `end`，必须以 `commit work` 或 `rollback work` 结尾。
+- MySQL、PostgreSQL 支持 `begin` 但不支持 `end`，必须以 `commit` 或 `rollback` 结尾。
+
+## PostgreSQL
+
+从 Alice's 账户向 Bob's 账户转账 100 元，所涉及的两步 `update` 操作是不可分的：
+
+```postgresql
+BEGIN;
+UPDATE accounts SET balance = balance - 100.00 WHERE name = 'Alice';
+UPDATE accounts SET balance = balance + 100.00 WHERE name = 'Bob';
+COMMIT;  -- 如果 Alice's 账户余额为负或其他故障，可以用 ROLLBACK 回滚到交易前的状态
+```
+
+PostgreSQL 支持更精细的提交/回滚控制：
+
+```postgresql
+BEGIN;
+UPDATE accounts SET balance = balance - 100.00 WHERE name = 'Alice';
+SAVEPOINT my_savepoint;
+UPDATE accounts SET balance = balance + 100.00 WHERE name = 'Bob';
+-- oops ... forget that and use Wally's account
+ROLLBACK TO my_savepoint;  -- 在 my_savepoint 之后的 savepoints 将被自动释放
+UPDATE accounts SET balance = balance + 100.00 WHERE name = 'Wally';
+COMMIT;
+```
 
 # Integrity Constraints
 
