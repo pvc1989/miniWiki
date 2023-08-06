@@ -1,5 +1,5 @@
 ---
-Title: SQL (Structured Query Language)
+title: SQL (Structured Query Language)
 ---
 
 # Softwares

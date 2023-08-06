@@ -1,5 +1,5 @@
 ---
-Title: Data Models
+title: Data Models
 ---
 
 # Relational Model
