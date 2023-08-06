@@ -736,7 +736,7 @@ unique (A_1, ..., A_n)  -- 这组 attributes 构成一个 superkey，即不同 t
 
 ⚠️ `null` 不等于任何值，参见 [`null = null`](#null=null)。
 
-## `check` --- 条件检查
+## `check` --- 条件检查<a href id="check"></a>
 
 ```sql
 CREATE TABLE department
@@ -754,7 +754,7 @@ create table section
 
 ⚠️ SQL 标准支持 `check` 中含 subquery，但多数系统尚未支持。
 
-## `references` --- 外键约束
+## `references` --- 外键约束<a href id="foreign"></a>
 
 ```sql
 foreign key (dept_name) references department  -- primary key by default
@@ -1040,9 +1040,89 @@ CREATE VIEW hollywood.winners AS
 DROP SCHEMA hollywood;
 ```
 
-# Index Definition
+# Indexing
+
+Index 将一组 attributes 组合为一个 search key，用来避免遍历所有 tuples 从而加速查找。
+
+Index 与物理层相关，而 SQL 标准限于逻辑层，故没有提供 index 定义命令；但很多数据库系统提供了以下命令：
+
+```sql
+create index <index_name> on <relation_name> (<attribute_list>);
+drop index <index_name>;
+```
 
 # Authorization
+
+最高权限属于***数据库管理员 (DataBase Administrator, DBA)***，其权限包括授权、重构数据库等。
+
+## Privileges
+
+```sql
+grant <privilege_list>
+on <relation_name/view_name>
+to <user_list/role_list>;
+
+revoke <privilege_list>
+on <relation_name/view_name>
+from <user_list/role_list>;
+```
+
+其中
+
+- `privilege_list` 可以包括
+
+  - `select`，相当于文件系统中的 read 权限。
+  - `insert`，可以在其后附加 `(attribute_list)`，表示 `insert` 时只允许提供这些 attributes 的值。
+  - `update`，可以在其后附加 `(attribute_list)`，表示 `update` 时只允许修改这些 attributes 的值。
+  - `references`，可以在其后附加 `(attribute_list)`，表示这些 attributes 可以被用作 [foreign key](#foreign) 或出现在 [`check`](#check) 约束中。
+  - `delete`
+  - 相当于以上之和的 `all privileges`（创建 `relation` 的 `user` 自动获得 `all privileges`）。
+- `user_list` 可以包括
+  - 具体的用户名
+  - `public`，表示当前及将来所有用户
+
+## Roles
+
+同类用户应当拥有相同权限。
+
+```sql
+create role instructor;
+grant select on takes to instructor;
+```
+
+Role 可以被赋予某个具体的 user 或其他 role：
+
+```sql
+create role dean;
+grant instructor to dean;  -- 继承 instructor 的权限
+grant dean to Robert;
+```
+
+默认当前 session 的 role 为 `null`，但可显式指定：
+
+```sql
+set role role_name;
+```
+
+此后赋权时可附加 ` granted by current_role`，以避免 cascading revocation。
+
+## 传递权限
+
+默认不允许转移权限，但可以用 `with grant option` 赋予某个 user/role 传递权限的权限：
+
+```sql
+grant select on department to Alice with grant option;
+revoke option grant for select on department from Alice;
+```
+
+某个权限的权限传递关系构成一个 directed graph：以 users/roles 为 nodes（其中 DBA 为 root）、以权限传递关系为 edges，每个 user/role 有一条或多条来自 root 的路径。
+
+撤回某个 user/role 的权限可能导致其下游 users/roles 的权限亦被撤销：
+
+```sql
+revoke select on department from Alice;  -- 允许 cascading revocation
+revoke select on department from Alice restrict;  -- 如有 cascading revocation 则报错
+```
 
 # SQL in Programming Languages
 
