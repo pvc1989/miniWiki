@@ -244,11 +244,11 @@ from instructor;
 不要求类型相同，按第一个匹配替换：
 
 ```sql
-decode (value,
-        match_1, replacement_1,
-        ...,
-        match_n, replacement_n,
-        default_replacement);
+decode(value,
+       match_1, replacement_1,
+       ...,
+       match_n, replacement_n,
+       default_replacement);
 ```
 
 ⚠️ 与一般情形不同，`null` 与 `null` 视为相等。
@@ -256,8 +256,8 @@ decode (value,
 将 `null` 替换为 `N/A`：
 
 ```sql
-select ID, decode (salary, null, 'N/A', salary) as salary
-from instructor
+select ID, decode(salary, null, 'N/A', salary) as salary
+from instructor;
 ```
 
 # Aggregate Functions
@@ -267,33 +267,34 @@ SQL 提供 5 个聚合函数，它们以集合为输入，以单值（的集合�
 - `avg`, `sum` 的输入必须是数值的集合
 - `min`, `max`, `count` 的输入可以是其他类型数据的集合
 
-除 `count (*)` 外，均忽略 `null`；作用于空集时，`count` 返回 `0`，其余返回 `null`。
+除 `count(*)` 外，均忽略 `null`；作用于空集时，`count` 返回 `0`，其余返回 `null`。
 
 ## Basis Aggregation
 
 ```sql
-select avg (salary) as avg_salary
+select avg(salary) as avg_salary
 from instructor where dept_name = 'Comp. Sci.';
 
-select count (distinct ID)
+select count(distinct ID)
 from teaches where semester = 'Spring' and year = 2018;
 
-select count (*) from course;
+select count(*) from course;
 ```
 
 ## `group by` --- 分组
 
-按 `dept_name` 分组，计算各组的 `avg (salary)`：
+按 `dept_name` 分组，计算各组的 `avg(salary)`：
 
 ```sql
-select dept_name, avg (salary) as avg_salary from instructor group by dept_name;
+select dept_name, avg(salary) as avg_salary
+from instructor group by dept_name;
 ```
 
 ⚠️ 未出现在 `group by`-clause 里的 attributes，在 `select`-clause 中只能作为聚合函数的输入，不能作为输出的 attributes。
 
-## `having` --- 组条件
+## `having` --- 组条件<a href id="having"></a>
 
-平均工资大于 42000 的系：<a href id="having"></a>
+平均工资大于 42000 的系：
 
 ```sql
 select dept_name, avg (salary) as avg_salary
@@ -321,7 +322,8 @@ having avg (salary) > 42000;
 ```sql
 select distinct course_id from section
 where semester = 'Fall' and year = 2017 and
-  course_id in (select course_id from section where semester = 'Spring' and year = 2018);
+  course_id in (select course_id from section
+                where semester = 'Spring' and year = 2018);
 ```
 
 与 `except` 等价：
@@ -329,15 +331,16 @@ where semester = 'Fall' and year = 2017 and
 ```sql
 select distinct course_id from section
 where semester = 'Fall' and year = 2017 and
-  course_id not in (select course_id from section where semester = 'Spring' and year = 2018);
+  course_id not in (select course_id from section
+                    where semester = 'Spring' and year = 2018);
 ```
 
-## `some` --- $\exist$
+## `some` --- $\exists$
 
 ```sql
 -- salary 大于子查询结果中的某个 salary
 select name from instructor
-where salary > some (select salary from instructor where dept name = 'Biology');
+where salary > some (select salary from instructor where dept_name = 'Biology');
 ```
 
 ⚠️ 与 `any` 为同义词，早期版本的 SQL 只支持 `any`。
@@ -347,7 +350,7 @@ where salary > some (select salary from instructor where dept name = 'Biology');
 ```sql
 -- salary 大于子查询结果中的所有 salary
 select name from instructor
-where salary > all (select salary from instructor where dept name = 'Biology');
+where salary > all (select salary from instructor where dept_name = 'Biology');
 ```
 
 ## `exists` --- 集合非空
@@ -392,7 +395,7 @@ where unique (select R.course_id from section as R
 
 ```sql
 select T.course_id from course as T
-where 1 >= (select count(R.course id) from section as R
+where 1 >= (select count(R.course_id) from section as R
             where T.course_id = R.course_id and R.year = 2017);
 ```
 
@@ -504,7 +507,7 @@ values ('CS-437', 'Database Systems', 'Comp. Sci.', 4);
 或显式给定顺序（可以与 schema 中的不一致）：
 
 ```sql
-insert into course (title, course id, credits, dept_name)
+insert into course (title, course_id, credits, dept_name)
 values ('Database Systems', 'CS-437', 4, 'Comp. Sci.');
 ```
 
@@ -552,7 +555,7 @@ set salary =
 ```sql
 -- 将每个 student 的 tot_cred 更新为已通过（grade 非空不等于 F）课程的学分之和
 update student
-set tot cred = (
+set tot_cred = (
   select sum(credits)  -- 若未通过任何课程，则返回 null
   from takes, course
   where student.ID = takes.ID and takes.course_id = course.course_id
@@ -1124,7 +1127,7 @@ revoke select on department from Alice;  -- 允许 cascading revocation
 revoke select on department from Alice restrict;  -- 如有 cascading revocation 则报错
 ```
 
-# SQL in Programming Languages
+# In Programming Languages
 
 # Functions and Procedures
 
