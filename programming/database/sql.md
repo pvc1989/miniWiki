@@ -1129,6 +1129,147 @@ revoke select on department from Alice restrict;  -- 如有 cascading revocation
 
 # In Programming Languages
 
+- Dynamic SQL：在*运行期*以字符串形式构造并提交 SQL 语句。
+- Embedded SQL：由预处理器在*编译期*将查询需求编译为函数调用。
+
+## Java
+
+Java DataBase Connectivity (JDBC)
+
+- [Java JDBC API - Oracle](https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/)
+- [Microsoft JDBC Driver for SQL Server](https://learn.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server)
+
+```java
+import java.sql.*;
+
+public static void JDBCexample(String userid, String passwd) {
+  try (
+    /* try-with-resources since Java 7 */
+    Connection conn = DriverManager.getConnection(
+        "<protocol>@<url>:<port>:<database>", userid, passwd);
+    Statement stmt = conn.createStatement();
+    /* 否则需要手动 conn.close(); stmt.close(); */
+  ) {
+    try {
+      stmt.executeUpdate("<INSERT|UPDATE|DELETE_statement>");
+    } catch (SQLException sqle) {
+      System.out.println("Could not insert tuple. " + sqle);
+    }
+    ResultSet rset = stmt.executeQuery("<SELECT_statement>");
+    while (rset.next()/* for each tuple */) {
+      System.out.println(rset.getString("<attribute_name>") + " " 
+                         + rset.getFloat(2/* (1-based) 2nd attribute */));
+    }
+  } catch (Exception sqle) {
+    System.out.println("Exception : " + sqle);
+  }
+} 
+```
+
+若要在 Java 程序中推断某个 relation 的 schema，可以从 `ResultSet` 对象中提取元数据：
+
+```java
+ResultSetMetaData rsmd = rset.getMetaData();
+for(int i = 1; i <= rsmd.getColumnCount(); i++) {
+  System.out.println(rsmd.getColumnName(i));
+  System.out.println(rsmd.getColumnTypeName(i));
+} 
+```
+
+💡 推荐用 `prepareStatement` 方法（由 SQL 系统完成代入并处理转义），以替代更危险的 `String` 串联操作：
+
+```java
+PreparedStatement pStmt = conn.prepareStatement(
+    "insert into instructor values(?, ?, ?, ?)");
+pStmt.setString(1, "88877");
+pStmt.setString(2, "Perry");
+pStmt.setString(3, "Finance");
+pStmt.setInt(4, 125000);
+pStmt.executeUpdate();  // insert into instructor values(88877, Perry, Finance, 125000);
+pStmt.setString(1, "88878");
+pStmt.executeUpdate();  // insert into instructor values(88878, Perry, Finance, 125000);
+```
+
+类似地，可参数化 SQL 函数、过程调用：
+
+```java
+// 需用 registerOutParameter() 注册返回类型
+CallableStatement cStmt1 = conn.prepareCall("{? = call some function(?)}"); CallableStatement cStmt2 = conn.prepareCall("{call some procedure(?, ?)}");
+```
+
+## Python
+
+- [`psycopg2`](https://www.psycopg.org/docs/) is the most popular PostgreSQL database adapter for the Python programming language.
+  - [Passing parameters to SQL queries](https://www.psycopg.org/docs/usage.html#query-parameters)
+- [`pyodbc`](https://github.com/mkleehammer/pyodbc/wiki) is an open source Python module that makes accessing ODBC databases simple.
+
+```python3
+import psycopg2
+
+def PythonDatabaseExample(userid, passwd):
+    try:
+        conn = psycopg2.connect(host, port, dbname, user, password)
+        cur = conn.cursor()
+        try:
+            cur.execute("insert into instructor values(%s, %s, %s, %s)",
+                        ("77987", "Kim", "Physics", 98000))
+            conn.commit()
+        except Exception as sqle:
+            print("Could not insert tuple. ", sqle)
+            conn.rollback()
+        cur.execute("""select dept_name, avg (salary)
+                       from instructor group by dept_name""")
+        for dept in cur:
+            print dept[0], dept[1]
+    except Exception as sqle:
+        print("Exception : ", sqle) 
+```
+
+## C
+
+Open Database Connectivity (ODBC)
+
+- [Microsoft ODBC Specification](https://github.com/Microsoft/ODBC-Specification)
+- [Microsoft ODBC Driver for SQL Server](https://learn.microsoft.com/en-us/sql/connect/odbc/microsoft-odbc-driver-for-sql-server)
+
+```c
+void ODBCexample() {
+  RETCODE error;
+  HENV env; SQLAllocEnv(&env); /* environment */
+  HDBC conn; SQLAllocConnect(env, &conn); /* database connection */
+  SQLConnect(conn,
+             "db.yale.edu", SQL_NTS/* 表示前一个实参是以 '\0' 结尾的字符串 */,
+             "avi", SQL_NTS, "avipasswd", SQL_NTS);
+  {
+    HSTMT stmt; SQLAllocStmt(conn, &stmt); /* statement */
+    char * sqlquery = "select dept_name, sum (salary) from instructor group by dept_name";
+    error = SQLExecDirect(stmt, sqlquery, SQL_NTS);
+    if (error == SQL_SUCCESS) {
+      char deptname[80]; int lenOut1;
+      SQLBindCol(stmt, 1/* 第 1 个 attribute */, SQL_C_CHAR, deptname,
+                 80/* 最大长度 */, &lenOut1/* 实际长度（负值表示 null）的地址 */);
+      float salary; int lenOut2;
+      SQLBindCol(stmt, 2/* 第 2 个 attribute */, SQL_C_FLOAT, &salary, 0, &lenOut2);
+      while (SQLFetch(stmt) == SQL_SUCCESS) {
+        printf(" %s %g∖n", deptname, salary);
+      }
+    }
+    SQLFreeStmt(stmt, SQL_DROP);  /* 所有 allocated 资源都要被 freed */
+  }
+  SQLDisconnect(conn);
+  SQLFreeConnect(conn);
+  SQLFreeEnv(env);
+}
+```
+
+Transactions 相关：
+
+```c
+SQLSetConnectOption(conn, SQL_AUTOCOMMIT, 0);
+SQLTransact(conn, SQL_COMMIT);
+SQLTransact(conn, SQL_ROLLBACK);
+```
+
 # Functions and Procedures
 
 # Triggers
