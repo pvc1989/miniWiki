@@ -1272,6 +1272,121 @@ SQLTransact(conn, SQL_ROLLBACK);
 
 # Functions and Procedures
 
+⚠️ 实际数据库系统给出的具体实现不同于 SQL 标准（本节）。
+
+## 基本语法
+
+```sql
+declare <variable_name> <type>;  -- 声明变量
+set <variable_name> = <value>  -- 变量赋值
+begin <SQL_statements> end  -- 复合语句
+begin atomic <SQL_transaction> end  -- 不可分的复合语句
+```
+
+循环（`leave` 相当于 `break`，`iterate` 相当于 `continue`）：
+
+```sql
+while boolean_expression do
+  sequence_of_statements;
+end while
+
+repeat
+  sequence_of_statements;
+until boolean_expression
+end repeat
+
+declare n integer default 0;
+for r as  -- for each row in the table
+  select budget from department;
+do
+  set n = n - r.budget;
+end for
+```
+
+条件分支：
+
+```sql
+if boolean_expression then
+  statement_or_compound_statement
+elseif boolean_expression then
+  statement_or_compound_statement
+else
+  statement_or_compound_statement
+end if
+```
+
+## 异常机制
+
+```sql
+declare out_of_classroom_seats condition  -- 内置 sqlexception, sqlwarning, not found. 
+declare exit/* 或 continue */ handler for out_of_classroom_seats
+
+begin
+  ...
+  signal out_of_classroom_seats  -- 抛出异常
+  ...
+end 
+```
+
+## 可调用对象
+
+输出某系讲师人数：
+
+```sql
+create function dept_count(dept_name varchar(20))
+  returns integer
+begin
+  declare d_count integer;
+    select count(*) into d_count
+    from instructor
+    where instructor.dept_name = dept_name
+  return d_count;
+end
+-- 或等价的 procedure
+create procedure dept_count_proc(in dept_name varchar(20),
+                                 out d_count integer)
+begin
+  select count(*) into d_count
+  from instructor
+  where instructor.dept_name = dept_count_proc.dept_name
+end
+-- 调用 procedure 前，需先声明返回值：
+declare d_count integer;
+call dept_count_proc('Physics', d_count);
+```
+
+输出某系讲师信息：
+
+```sql
+create function instructor_of(dept_name varchar(20))
+  returns table (ID varchar (5), name varchar (20),
+                 dept_name varchar (20), salary numeric (8,2))
+  return table (
+    select ID, name, dept_name, salary
+    from instructor
+    where instructor.dept_name = instructor_of.dept_name
+  );
+```
+
+⚠️ 可以同名：
+
+- 同名 procedures 的 arguments 个数必须不同。
+- 同名 functions 的 arguments 个数可以相同，但至少有一个 argument 的类型不同。
+
+## External Language Routines
+
+```sql
+create function dept_count(dept_name varchar(20))
+  returns integer
+  language C
+  external name 'path_to_dept_count'
+
+create procedure dept_count_proc(in dept_name varchar(20),
+                                 out d_count integer)
+  language C
+  external name 'path_to_dept_count_proc'
+```
+
 # Triggers
 
 # Recursive Queries
