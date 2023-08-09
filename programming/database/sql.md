@@ -432,7 +432,7 @@ from instructor I1, lateral (select avg(salary) as avg_salary
                              where I2.dept_name = I1.dept_name);
 ```
 
-## `with` --- Temporary Relations<a href id="with"></a>
+## `WITH` --- Temporary Relations<a href id="with"></a>
 
 拥有最大预算的系：
 
@@ -635,7 +635,7 @@ select * from student left outer join takes on (1 = 1);  -- 等价于 cross join
 select * from student left outer join takes on (1 = 1) where student.ID = takes.ID;  -- 等价于 natural join
 ```
 
-# Views --- Virtual Relations
+# Views --- Virtual Relations<a href id="view"></a>
 
 [`with`](#with)-clause 可在单个 query 内创建临时关系。
 
@@ -1465,5 +1465,30 @@ ALTER TRIGGER <trigger_name> ENABLE;
 ```
 
 # Recursive Queries
+
+用例：找到某一课程的所有（直接或间接）先修课程。
+
+创建递归的[临时表](#with)：
+
+```sql
+WITH RECURSIVE rec_prereq(course_id, prereq_id) AS (
+  /* base query */SELECT course_id, prereq_id FROM prereq
+  UNION
+  /* recursive query */SELECT rec_prereq.course_id, prereq.prereq_id
+    FROM rec_prereq, prereq
+    WHERE rec_prereq.prereq_id = prereq.course_id
+)
+SELECT * FROM rec_prereq WHERE rec_prereq.course_id = 'CS-347';
+```
+
+若以 `CREATE RECURSIVE VIEW` 代替 `WITH RECURSIVE`，则创建递归的 [view](#view)。
+
+某些数据库系统允许省略 `RECURSIVE`。
+
+Recursive query 必须是单调的，即 $V_1\subset V_2 \implies f(V_1)\subset f(V_2)$，因此不能含有
+
+- 以 recursive view 为输入的聚合函数
+- `NOT EXISTS` 作用在用到 recursive view 的 subquery 上
+- `EXCEPT` 右端项含有 recursive view
 
 # Advanced Aggregation Features
