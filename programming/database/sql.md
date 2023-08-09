@@ -657,7 +657,7 @@ create view department_total_salary(dept_name, total_salary) as
 
 为避免数据过期，view 通常在被使用时才会去执行 query。
 
-为节省时间，某些系统允许预存 view，并负责（在 query 中的 relation(s) 被更新时）更新 view 中的数据。存在多种更新策略：
+为节省时间，某些数据库系统支持 materialized view，以负责预存并（在 query 中的 relation(s) 被更新时）更新 view 中的数据。存在多种更新策略：
 
 - immediately：
 - lazily：
@@ -784,6 +784,8 @@ foreign key (dept_name) references department
 除 `cascade` 外，还支持 `set null` 或 `set default` 操作。
 
 ⚠️ 含有 `null` 的 tuple 默认满足约束。
+
+💡 借助 [triggers](#Triggers) 可实现更一般的 [referential integrity](#referential) constraints。
 
 ## `constraint` --- 约束命名
 
@@ -1388,6 +1390,79 @@ create procedure dept_count_proc(in dept_name varchar(20),
 ```
 
 # Triggers
+
+用例：规定某商品库存的最小值，当售出该商品导致库存量小于最小值时，自动下单订购该商品。
+
+定义 trigger 需指定：
+
+- Event: 触发 trigger 的事件（售出商品）
+- Condition: 执行 actions 的条件（库存量小于最小值）
+- Actions: 需要执行的操作（自动下单）
+
+## Referential Integrity<a href id="referential"></a>
+
+```sql
+CREATE TRIGGER timeslot_check1
+/* Event: */AFTER INSERT ON section
+REFERENCING NEW ROW AS nrow FOR EACH ROW  -- 遍历 each inserted row
+/* Condition: */WHEN (
+  /* inserted time_slot_id 不属于 time_slot */
+  nrow.time_slot_id NOT IN (SELECT time_slot_id FROM time_slot)
+)
+/* Action: */BEGIN ROLLBACK END;
+
+CREATE TRIGGER timeslot_check2
+/* Event: */AFTER DELETE ON timeslot
+REFERENCING OLD ROW AS orow FOR EACH ROW  -- 遍历 each deleted row
+/* Condition: */WHEN (
+  /* deleted time_slot_id 不属于 time_slot */
+  orow.time_slot_id NOT IN (SELECT time_slot_id FROM time_slot)
+  AND
+  /* 且依然被 section 中的 tuple(s) 引用 */
+  orow.time_slot_id IN (SELECT time_slot_id FROM section)
+)
+/* Action: */BEGIN ROLLBACK END;
+```
+
+## 更新关联数据
+
+`UPDATE` 触发的 trigger 可以指定 attributes：
+
+```sql
+CREATE TRIGGER credits_earned 
+AFTER UPDATE OF takes ON grade
+REFERENCING NEW ROW AS nrow
+REFERENCING OLD ROW AS orow
+FOR EACH ROW
+WHEN (/* 新成绩及格且非空 */nrow.grade <> 'F' AND nrow.grade IS NOT NULL)
+  AND (/* 旧成绩不及格或为空 */orow.grade = 'F' OR orow.grade IS NULL)
+BEGIN ATOMIC
+  UPDATE student SET tot_cred = tot_cred +
+    (SELECT credits FROM course WHERE course.course_id = nrow.course_id)
+  WHERE student.id = nrow.id;
+END;
+```
+
+## Transition Tables
+
+涉及的所有称为 transition tables：
+
+```sql
+REFERENCING NEW TABLE AS ntbl
+REFERENCING OLD TABLE AS otbl
+FOR EACH STATEMENT
+```
+
+⚠️ 只能用于 `AFTER` triggres。
+
+## `DISABLE` and `ENABLE`
+
+Triggers 在创建时默认为启用的。可手动停用或启用：
+
+```sql
+ALTER TRIGGER <trigger_name> DISABLE;
+ALTER TRIGGER <trigger_name> ENABLE;
+```
 
 # Recursive Queries
 
