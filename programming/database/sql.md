@@ -1497,7 +1497,7 @@ Recursive query 必须是单调的，即 $V_1\subset V_2 \implies f(V_1)\subset 
 
 # Advanced Aggregation Features
 
-## `RANK` --- 排名
+## Ranking
 
 假设 `studentgr_grades` 有每个学生的 `ID` 及其 `GPA`，按 `GPA` 降序排序并输出排名：
 
@@ -1528,3 +1528,60 @@ ORDER BY dept_name, dept_rank;
 - `CUME_DIST` 定义为 $p/n$，其中 $n$ 为 tuples 个数，$p$ 为排名 $\le$ 当前值的个数。
 - `ROW_NUMBER` 相当于先对各 rows 排序，在输出各 row 的序号。
 - `NTILE(n)` 将 tuples 按顺序均匀（各桶 tuples 数量至多相差 `1`）分入 `n` 个桶，返回每个 tuple 的桶号。
+
+## Windowing
+
+假设 `tot_credits(year, num_credits)` 含有每年的总学分。
+
+对 `(year-3, year]` 的值取平均：
+
+```sql
+SELECT year,
+  AVG(num_credits) OVER (ORDER BY year ROWS 3 PRECEDING)
+  AS avg_total_credits
+FROM tot_credits;
+```
+
+对 `(year-3, year+2)` 的值取平均：
+
+```sql
+SELECT year,
+  AVG(num_credits) OVER (ORDER BY year ROWS BETWEEN 3 PRECEDING AND 2 FOLLOWING)
+  AS avg_total_credits
+FROM tot_credits;
+```
+
+对每年及之前所有年份的值取平均：
+
+```sql
+SELECT year,
+  AVG(num_credits) OVER (ORDER BY year ROWS UNBOUNDED PRECEDING) AS avg_total_credits
+FROM tot_credits;
+```
+
+Windowing 也支持按 `PARTITION` 执行：
+
+```sql
+SELECT dept_name, year,
+  AVG(num_credits)
+  OVER (PARTITION BY dept_name ORDER BY year ROWS BETWEEN 3 PRECEDING AND CURRENT ROW)
+  AS avg_total_credits
+from tot_credits_dept;
+```
+
+## Pivoting
+
+- Cross-tabulation/pivot-table：由某个 relation `R` 导出的 table `T`，其中 `R` 的某个 attribute `A` 的值被 `T` 用作 attribute names，相应的值通常取某些聚合函数的返回值。
+- Pivot attribute：上述 attribute `A`。
+
+假设有 `sales(name, size, color, quantity)`，以下语句得到以 `(name, size, dark, pastel, white)` 为 attributes 的 pivot-table：
+
+```sql
+SELECT * FROM sales
+PIVOT(
+  SUM(quantity)  -- operations for getting new attribute values
+  FOR color  -- the pivot attribute
+  IN ('dark', 'pastel', 'white')  -- new attribute names
+);
+```
+
