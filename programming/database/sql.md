@@ -6,18 +6,18 @@ title: SQL (Structured Query Language)
 
 ## MySQL
 
-- [Tips ON using MySQL](https://www.db-book.com/university-lab-dir/mysql-tips.html)
+- [Tips on using MySQL](https://www.db-book.com/university-lab-dir/mysql-tips.html)
 
 ## PostgreSQL
 
-- [Tips ON using PostgreSQL](https://www.db-book.com/university-lab-dir/postgresql-tips.html)
+- [Tips on using PostgreSQL](https://www.db-book.com/university-lab-dir/postgresql-tips.html)
 - [PostgreSQL (Current) Documentation](https://www.postgresql.org/docs/current/index.html)
 
 ## SQLite
 
 ### `sql.js`
 
-- [Online SQL interpreter ON db-book.com](https://www.db-book.com/university-lab-dir/sqljs.html)
+- [Online SQL interpreter on db-book.com](https://www.db-book.com/university-lab-dir/sqljs.html)
 - [Try SQL at w3schools.com](https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all)
 
 # Data Definition
@@ -68,7 +68,7 @@ ALTER TABLE r DROP Attribute; -- 删除一列
 
 # Basic Structure of SQL Queries
 
-## Queries ON a Single Relation
+## Queries on a Single Relation
 
 查询单一 attribute：
 
@@ -89,7 +89,7 @@ SELECT ID, name, salary * 1.1 FROM instructor;
 SELECT name FROM instructor WHERE dept_name = 'Comp. Sci.' AND salary > 70000;
 ```
 
-## Queries ON Multiple Relations
+## Queries on Multiple Relations
 
 不同 relations 的同名 attributes 以 `relation.attribute` 的方式区分：
 
@@ -845,7 +845,7 @@ CREATE ASSERTION credits_earned_constraint CHECK (
 
 ⚠️ 因开销巨大，多数系统尚未支持 `ASSERTION`。
 
-# Data Types AND Schemas
+# Data Types and Schemas
 
 ## 时间相关类型
 
@@ -1159,7 +1159,7 @@ public static void JDBCexample(String userid, String passwd) {
     try {
       stmt.executeUpdate("<INSERT|UPDATE|DELETE_statement>");
     } catch (SQLException sqle) {
-      System.out.println("Could NOT insert tuple. " + sqle);
+      System.out.println("Could not insert tuple. " + sqle);
     }
     ResultSet rset = stmt.executeQuery("<SELECT_statement>");
     while (rset.next()/* for each tuple */) {
@@ -1220,14 +1220,14 @@ def PythonDatabaseExample(userid, passwd):
             cur.execute("INSERT INTO instructor VALUES(%s, %s, %s, %s)",
                         ("77987", "Kim", "Physics", 98000))
             conn.commit()
-        EXCEPT Exception AS sqle:
-            print("Could NOT insert tuple. ", sqle)
+        except Exception as sqle:
+            print("Could not insert tuple. ", sqle)
             conn.rollback()
         cur.execute("""SELECT dept_name, AVG(salary)
                        FROM instructor GROUP BY dept_name""")
         for dept in cur:
             print dept[0], dept[1]
-    except exception as sqle:
+    except Exception as sqle:
         print("Exception : ", sqle) 
 ```
 
@@ -1276,7 +1276,7 @@ SQLTransact(conn, SQL_COMMIT);
 SQLTransact(conn, SQL_ROLLBACK);
 ```
 
-# Functions AND Procedures
+# Functions and Procedures
 
 ⚠️ 实际数据库系统给出的具体实现不同于 SQL 标准（本节）。
 
@@ -1459,7 +1459,7 @@ FOR EACH STATEMENT
 
 ⚠️ 只能用于 `AFTER` triggres。
 
-## `DISABLE` AND `ENABLE`
+## `DISABLE` and `ENABLE`
 
 Triggers 在创建时默认为启用的。可手动停用或启用：
 
