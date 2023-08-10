@@ -1585,3 +1585,40 @@ PIVOT(
 );
 ```
 
+## Rollup & Cube
+
+`GROUP BY ROLLUP(attribute_list)` 表示以 `attribute_list` 的每个 prefix 作为 `GROUP BY` 的 attributes 列表，再对所有结果取 `UNION`：
+
+```sql
+SELECT item_name, color, SUM(quantity)
+FROM sales
+GROUP BY ROLLUP(item_name, color);
+-- 等价于
+(SELECT item_name, color, SUM(quantity)
+ FROM sales GROUP BY(item_name, color))
+UNION
+(SELECT item_name, NULL AS color, SUM(quantity)
+ FROM sales GROUP BY(item_name))
+UNION
+(SELECT NULL AS item_name, NULL AS color, SUM(quantity)
+ FROM sales);
+```
+
+`GROUP BY CUBE(attribute_list)` 表示以 `attribute_list` 的每个 subset 作为 `GROUP BY` 的 attributes 列表，再对所有结果取 `UNION`：
+
+```sql
+SELECT item_name, color, size, SUM(quantity)
+FROM sales
+GROUP BY CUBE(item_name, color, size);
+```
+
+`GROUPING` 函数可判断 `NULL` 值是否由 `ROLLUP` 或 `CUBE` 产生：
+
+```sql
+SELECT  --  最终得到 (item_name, color, quantity)
+ (CASE WHEN GROUPING(item_name) = 1 THEN 'all' ELSE item_name END) AS item_name,
+ (CASE WHEN grouping(color) = 1 THEN 'all' ELSE color END) AS color,
+ SUM(quantity) AS quantity
+FROM sales GROUP BY ROLLUP(item_name, color);
+```
+
