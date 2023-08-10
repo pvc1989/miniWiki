@@ -1496,3 +1496,35 @@ Recursive query 必须是单调的，即 $V_1\subset V_2 \implies f(V_1)\subset 
 - `EXCEPT` 右端项含有 recursive view
 
 # Advanced Aggregation Features
+
+## `RANK` --- 排名
+
+假设 `studentgr_grades` 有每个学生的 `ID` 及其 `GPA`，按 `GPA` 降序排序并输出排名：
+
+```sql
+SELECT ID, RANK() OVER (ORDER BY (GPA) DESC) AS s_rank
+FROM student_grades ORDER BY s_rank;
+```
+
+默认将 `NULL` 视为最大值，可手动设为最小值：
+
+```sql
+SELECT ID, RANK() OVER (ORDER BY (GPA) DESC NULLS LAST) AS s_rank
+FROM student_grades ORDER BY s_rank;
+```
+
+假设有 `dept_grades(ID, dept_name, GPA)`，则可先按 `dept_name` 分组，再对各组按 `GPA` 排名：
+
+```sql
+SELECT ID, dept_name,
+  RANK() OVER (PARTITION BY dept_name ORDER BY GPA DESC) AS dept_rank
+FROM dept_grades
+ORDER BY dept_name, dept_rank;
+```
+
+其他排名函数：
+
+- `PERCENT_RANK` 定义为分数 $(r-1)/(n-1)$，其中 $n$ 为 tuples 个数，$r$ 为 `RANK` 结果。
+- `CUME_DIST` 定义为 $p/n$，其中 $n$ 为 tuples 个数，$p$ 为排名 $\le$ 当前值的个数。
+- `ROW_NUMBER` 相当于先对各 rows 排序，在输出各 row 的序号。
+- `NTILE(n)` 将 tuples 按顺序均匀（各桶 tuples 数量至多相差 `1`）分入 `n` 个桶，返回每个 tuple 的桶号。
