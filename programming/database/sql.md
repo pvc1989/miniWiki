@@ -32,7 +32,7 @@ title: SQL (Structured Query Language)
 |                  `S`                   |                                             |
 |            `NUMERIC(p, d)`             | 定点数（`p` 位十进制小数，小数点后 `d` 位） |
 |       `REAL`, `DOUBLE PRECISION`       |                   浮点数                    |
-|               `float(n)`               |       浮点数（至少 `n` 位十进制小数）       |
+|               `FLOAT(n)`               |       浮点数（至少 `n` 位十进制小数）       |
 
 ## Basic Schema Definition
 
@@ -83,7 +83,7 @@ SELECT DISTINCT dept_name FROM instructor; -- 从上述结果中去除重复
 SELECT ID, name, salary * 1.1 FROM instructor;
 ```
 
-带条件（可用 `AND`, `or`, `NOT` 相连）查询：
+带条件（可用 `AND`, `OR`, `NOT` 相连）查询：
 
 ```sql
 SELECT name FROM instructor WHERE dept_name = 'Comp. Sci.' AND salary > 70000;
@@ -892,14 +892,14 @@ format
 [PostgreSQL](https://www.postgresql.org/docs/current/functions-formatting.html#FUNCTIONS-FORMATTING-TABLE)：
 
 ```postgresql
-to_char(timestamp '2002-04-20 17:31:12.66', 'HH12:MI:SS') → 05:31:12
-to_char(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12
-to_char(125, '999') → 125
-to_char(125.8::real, '999D9') → 125.8
-to_char(-125.8, '999D99S') → 125.80-
-to_date('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05
-to_number('12,454.8-', '99G999D9S') → -12454.8
-to_timestamp('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05 00:00:00-05
+TO_CHAR(timestamp '2002-04-20 17:31:12.66', 'HH12:MI:SS') → 05:31:12
+TO_CHAR(interval '15h 2m 12s', 'HH24:MI:SS') → 15:02:12
+TO_CHAR(125, '999') → 125
+TO_CHAR(125.8::real, '999D9') → 125.8
+TO_CHAR(-125.8, '999D99S') → 125.80-
+TO_DATE('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05
+TO_NUMBER('12,454.8-', '99G999D9S') → -12454.8
+TO_TIMESTAMP('05 Dec 2000', 'DD Mon YYYY') → 2000-12-05 00:00:00-05
 ```
 
 ## `DEFAULT` --- 默认值
@@ -947,13 +947,13 @@ CREATE TABLE department (
 );
 ```
 
-### `CREATE domain`
+### `CREATE DOMAIN`
 
 SQL-92 支持自定义 domain，以施加[完整性约束](#integrity)、默认值：
 
 ```sql
-CREATE domain DDollars AS NUMERIC(12,2) NOT NULL;
-CREATE domain YearlySalary NUMERIC(8,2)
+CREATE DOMAIN DDollars AS NUMERIC(12,2) NOT NULL;
+CREATE DOMAIN YearlySalary NUMERIC(8,2)
   CONSTRAINT salary_value_test CHECK(value >= 29000.00);
 ```
 
@@ -979,7 +979,7 @@ INSERT INTO instructor(name, dept_name, salary)
 
 ```mysql
 CREATE TABLE instructor (
-  ID number(5) auto_increment,
+  ID number(5) AUTO_INCREMENT,
   ...,
   PRIMARY KEY (ID)
 );
