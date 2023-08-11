@@ -2693,6 +2693,10 @@ A prism is the Cartesian product of a triangle and a line.
  三角形
 \end_layout
 
+\begin_layout Standard
+尽管网格生成模块一般不会通过退化四边形来获得三角形，但在三维问题中需确保来自金字塔单元的三角形，与来自四面体、三棱柱单元的三角形相协调。
+\end_layout
+
 \begin_layout Subsubsection
 一阶单元
 \end_layout
@@ -2849,6 +2853,127 @@ a\in\left\{ 1,2,3\right\} ,\\
 
 \begin_layout Subsubsection
 高阶单元
+\end_layout
+
+\begin_layout Standard
+二阶四边形有 8-结点、9-结点两种方案，其 hierarchical 插值为
+\begin_inset Formula 
+\[
+u^{h}(\xi,\eta)=\sum_{a=1}^{4}N_{a}^{Q}(\xi,\eta)\,u_{a}+\sum_{a=5}^{8}N_{a}^{Q}(\xi,\eta)\,\Delta u_{a}+\sum_{a=9}^{9}N_{a}^{Q}(\xi,\eta)\,\Delta\Delta u_{a},
+\]
+
+\end_inset
+
+其中基函数为
+\begin_inset Formula 
+\[
+N_{a}^{Q}=\begin{cases}
+(1+\xi_{a}\xi)(1+\eta_{a}\eta)/4, & a=1,2,3,4,\\
+(1-\xi^{2})(1+\eta_{a}\eta)/2, & a=5,7,\\
+(1+\xi_{a}\xi)(1-\eta^{2})/2, & a=6,8,\\
+(1-\xi^{2})(1-\eta^{2}), & a=9,
+\end{cases}
+\]
+
+\end_inset
+
+系数分别为顶点值：
+\begin_inset Formula 
+\[
+u_{a}=u(\xi_{a},\eta_{a})\equiv\hat{u}_{a},\quad a=1,2,3,4,
+\]
+
+\end_inset
+
+边点值与 Q4 插值的偏差：
+\begin_inset Formula 
+\[
+\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b},\quad a=5,6,7,8,
+\]
+
+\end_inset
+
+内点值与 Q8 插值的偏差：
+\begin_inset Formula 
+\[
+\Delta\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b}-\sum_{b=5}^{8}N_{b}^{Q}(\xi_{a},\eta_{a})\,\Delta u_{b},\quad,a=9,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+可以证明：合并 
+\begin_inset Formula $3,4,7$
+\end_inset
+
+ 号点、忽略 
+\begin_inset Formula $9$
+\end_inset
+
+ 号点后，有与一阶单元相同的
+\begin_inset Formula 
+\[
+N_{a}^{Q\to T}=A_{a}=N_{a}^{T},\quad a\in\left\{ 1,2,3\right\} ,
+\]
+
+\end_inset
+
+及不受合并影响的
+\begin_inset Formula 
+\[
+N_{6}^{Q\to T}=4A_{2}A_{3}=N_{6}^{T},\quad N_{8}^{Q\to T}=4A_{3}A_{1}=N_{8}^{T},
+\]
+
+\end_inset
+
+唯一需要修正的是与合并点相对的 
+\begin_inset Formula $5$
+\end_inset
+
+ 号边点
+\begin_inset Formula 
+\[
+N_{5}^{Q\to T}\ne4A_{1}A_{2}=N_{5}^{T},
+\]
+
+\end_inset
+
+注意到
+\begin_inset Formula 
+\[
+N_{5}^{T}=4A_{1}A_{2}=4\cdot\frac{(1-\xi)(1-\eta)}{4}\cdot\frac{(1+\xi)(1-\eta)}{4}=\frac{(1-\xi^{2})(1-2\eta+\eta^{2})}{4},
+\]
+
+\end_inset
+
+且
+\begin_inset Formula 
+\[
+\frac{(1-\xi^{2})(1-2\eta+\eta^{2})}{4}=\frac{(1-\xi^{2})(2-2\eta)}{4}+\frac{(1-\xi^{2})(1-\eta^{2})}{4}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
+\]
+
+\end_inset
+
+故
+\begin_inset Formula 
+\[
+N_{5}^{T}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+由 
+\begin_inset Formula $\left\{ N_{1}^{T},N_{2}^{T},N_{3}^{T},N_{5}^{T},N_{6}^{T},N_{8}^{T}\right\} $
+\end_inset
+
+ 可得标准的等参形函数。
 \end_layout
 
 \begin_layout Subsection
