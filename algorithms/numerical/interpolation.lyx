@@ -2698,22 +2698,26 @@ A prism is the Cartesian product of a triangle and a line.
 \end_layout
 
 \begin_layout Subsubsection
-一阶单元
+Q4 
+\begin_inset Formula $\to$
+\end_inset
+
+ T3
 \end_layout
 
 \begin_layout Standard
-前两个点不变
+前 2 个点不变
 \begin_inset Formula 
 \[
-N_{1}^{Q\to T}=N_{1}^{Q}=\frac{(1-\xi)(1-\eta)}{4},\quad N_{2}^{Q\to T}=N_{2}^{Q}=\frac{(1+\xi)(1-\eta)}{4},
+N_{1}^{Q\to T}\coloneqq N_{1}^{Q}=\frac{(1-\xi)(1-\eta)}{4},\quad N_{2}^{Q\to T}\coloneqq N_{2}^{Q}=\frac{(1+\xi)(1-\eta)}{4},
 \]
 
 \end_inset
 
-后两个点合并
+后 2 个点合并
 \begin_inset Formula 
 \[
-N_{3}^{Q\to T}=N_{3}^{Q}+N_{4}^{Q}=\frac{(1+\xi)(1+\eta)}{4}+\frac{(1-\xi)(1+\eta)}{4}=\frac{1+\eta}{2},
+N_{3}^{Q\to T}\coloneqq N_{3}^{Q}+N_{4}^{Q}=\frac{(1+\xi)(1+\eta)}{4}+\frac{(1-\xi)(1+\eta)}{4}=\frac{1+\eta}{2},
 \]
 
 \end_inset
@@ -2852,11 +2856,15 @@ a\in\left\{ 1,2,3\right\} ,\\
 \end_layout
 
 \begin_layout Subsubsection
-高阶单元
+Q8/Q9 
+\begin_inset Formula $\to$
+\end_inset
+
+ T6
 \end_layout
 
 \begin_layout Standard
-二阶四边形有 8-结点、9-结点两种方案，其 hierarchical 插值为
+二阶四边形有 Q8、Q9 两种方案，二者的 hierarchical 插值均为
 \begin_inset Formula 
 \[
 u^{h}(\xi,\eta)=\sum_{a=1}^{4}N_{a}^{Q}(\xi,\eta)\,u_{a}+\sum_{a=5}^{8}N_{a}^{Q}(\xi,\eta)\,\Delta u_{a}+\sum_{a=9}^{9}N_{a}^{Q}(\xi,\eta)\,\Delta\Delta u_{a},
@@ -2869,9 +2877,9 @@ u^{h}(\xi,\eta)=\sum_{a=1}^{4}N_{a}^{Q}(\xi,\eta)\,u_{a}+\sum_{a=5}^{8}N_{a}^{Q}
 \[
 N_{a}^{Q}=\begin{cases}
 (1+\xi_{a}\xi)(1+\eta_{a}\eta)/4, & a=1,2,3,4,\\
-(1-\xi^{2})(1+\eta_{a}\eta)/2, & a=5,7,\\
-(1+\xi_{a}\xi)(1-\eta^{2})/2, & a=6,8,\\
-(1-\xi^{2})(1-\eta^{2}), & a=9,
+(1-\xi^{2})(1+\eta_{a}\eta)/2, & a=5,7,\quad\xi_{a}=0,\\
+(1+\xi_{a}\xi)(1-\eta^{2})/2, & a=6,8,\quad\eta_{a}=0,\\
+(1-\xi^{2})(1-\eta^{2}), & a=9,\quad\xi_{a}=\eta_{a}=0,
 \end{cases}
 \]
 
@@ -2905,46 +2913,58 @@ u_{a}=u(\xi_{a},\eta_{a})\equiv\hat{u}_{a},\quad a=1,2,3,4,
 \end_layout
 
 \begin_layout Standard
-可以证明：合并 
-\begin_inset Formula $3,4,7$
-\end_inset
-
- 号点、忽略 
-\begin_inset Formula $9$
-\end_inset
-
- 号点后，有与一阶单元相同的
+合并边 3-7-4、忽略面点 9，即
 \begin_inset Formula 
 \[
-N_{a}^{Q\to T}=A_{a}=N_{a}^{T},\quad a\in\left\{ 1,2,3\right\} ,
+1\to1',\quad2\to2',\quad(3,4,7)\to3',\quad5\to4',\quad6\to5',\quad8\to6',
 \]
 
 \end_inset
 
-及不受合并影响的
+可以证明：有顶点
 \begin_inset Formula 
 \[
-N_{6}^{Q\to T}=4A_{2}A_{3}=N_{6}^{T},\quad N_{8}^{Q\to T}=4A_{3}A_{1}=N_{8}^{T},
+N_{1'}^{T}=A_{1'}=\frac{1-\xi}{2}\frac{1-\eta}{2}=N_{1}^{Q},
 \]
 
 \end_inset
 
-唯一需要修正的是与合并点相对的 
-\begin_inset Formula $5$
-\end_inset
 
- 号边点
 \begin_inset Formula 
 \[
-N_{5}^{Q\to T}\ne4A_{1}A_{2}=N_{5}^{T},
+N_{2'}^{T}=A_{2'}=\frac{1+\xi}{2}\frac{1-\eta}{2}=N_{2}^{Q},
 \]
 
 \end_inset
 
-注意到
+
 \begin_inset Formula 
 \[
-N_{5}^{T}=4A_{1}A_{2}=4\cdot\frac{(1-\xi)(1-\eta)}{4}\cdot\frac{(1+\xi)(1-\eta)}{4}=\frac{(1-\xi^{2})(1-2\eta+\eta^{2})}{4},
+N_{3'}^{T}=A_{3'}=\frac{1+\eta}{2}=N_{3}^{Q}+N_{4}^{Q},
+\]
+
+\end_inset
+
+及不受合并影响的边点
+\begin_inset Formula 
+\[
+N_{5'}^{T}=4A_{2'}A_{3'}=4\frac{1+\xi}{2}\frac{1-\eta}{2}\frac{1+\eta}{2}=N_{6}^{Q},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+N_{6'}^{T}=4A_{1'}A_{3'}=4\frac{1-\xi}{2}\frac{1-\eta}{2}\frac{1+\eta}{2}=N_{8}^{Q},
+\]
+
+\end_inset
+
+唯一需要修正的是合并点对侧的边点，注意到
+\begin_inset Formula 
+\[
+N_{4'}^{T}=4A_{1'}A_{2'}=4\cdot\frac{(1-\xi)(1-\eta)}{4}\cdot\frac{(1+\xi)(1-\eta)}{4}=\frac{(1-\xi^{2})(1-2\eta+\eta^{2})}{4},
 \]
 
 \end_inset
@@ -2960,7 +2980,7 @@ N_{5}^{T}=4A_{1}A_{2}=4\cdot\frac{(1-\xi)(1-\eta)}{4}\cdot\frac{(1+\xi)(1-\eta)}
 故
 \begin_inset Formula 
 \[
-N_{5}^{T}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
+N_{4'}^{T}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
 \]
 
 \end_inset
@@ -2970,10 +2990,10 @@ N_{5}^{T}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
 
 \begin_layout Standard
 由 
-\begin_inset Formula $\left\{ N_{1}^{T},N_{2}^{T},N_{3}^{T},N_{5}^{T},N_{6}^{T},N_{8}^{T}\right\} $
+\begin_inset Formula $\left\{ N_{a'}^{T}\right\} _{a=1}^{6}$
 \end_inset
 
- 可得标准的等参形函数。
+ 可得标准的 Lagrange 形函数。
 \end_layout
 
 \begin_layout Subsection
@@ -2999,6 +3019,179 @@ element!pyramidal ~
 
 \begin_layout Standard
 A pyramid can be viewed as a degenerated case of a hexahedron.
+\end_layout
+
+\begin_layout Subsubsection
+H8 
+\begin_inset Formula $\to$
+\end_inset
+
+ P5
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,5,6,7,8,
+\]
+
+\end_inset
+
+前 4 点不动：
+\begin_inset Formula 
+\[
+N_{a}^{H\to P}=N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,
+\]
+
+\end_inset
+
+后 4 点合并：
+\begin_inset Formula 
+\[
+N_{a}^{H\to P}=\sum_{a=5}^{8}N_{a}^{H}=\frac{1+\zeta}{2}\sum_{a=5}^{8}\frac{(1+\xi_{a}\xi)(1+\eta_{a}\eta)}{4}=\frac{1+\zeta}{2},\quad a=5,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+H20/H27 
+\begin_inset Formula $\to$
+\end_inset
+
+ P13/P14
+\end_layout
+
+\begin_layout Standard
+顶点
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,5,6,7,8,
+\]
+
+\end_inset
+
+边点
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{4}\begin{cases}
+(1-\xi^{2})(1+\eta_{a}\eta)(1+\zeta_{a}\zeta), & a=9,11,13,15,\quad\xi_{a}=0,\\
+(1+\xi_{a}\xi)(1-\eta^{2})(1+\zeta_{a}\zeta), & a=10,12,14,16,\quad\eta_{a}=0,\\
+(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1-\zeta^{2}), & a=17,18,19,20,\quad\zeta_{a}=0,
+\end{cases}
+\]
+
+\end_inset
+
+面点
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{2}\begin{cases}
+(1+\xi_{a}\xi)(1-\eta^{2})(1-\zeta^{2}), & a=21,22,\quad\eta_{a}=\zeta_{a}=0,\\
+(1-\xi^{2})(1+\eta_{a}\eta)(1-\zeta^{2}), & a=23,24,\quad\xi_{a}=\zeta_{a}=0,\\
+(1-\xi^{2})(1-\eta^{2})(1+\zeta_{a}\zeta), & a=25,26,\quad\xi_{a}=\eta_{a}=0,
+\end{cases}
+\]
+
+\end_inset
+
+内点
+\begin_inset Formula 
+\[
+N_{a}^{H}=(1-\xi^{2})(1-\eta^{2})(1-\zeta^{2}),\quad a=27,\quad\xi_{a}=\eta_{a}=\zeta_{a}=0,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+合并一条边，需在其两侧分别做 Q8/Q9 
+\begin_inset Formula $\to$
+\end_inset
+
+ T3 或 T6 
+\begin_inset Formula $\to$
+\end_inset
+
+ L3 退化。例如：合并 5-6，需忽略 5-6 边上的 13、用 26 修正对侧的 15，用 23 修正对侧的 9。故合并顶部 4 点、忽略面点，即
+\begin_inset Formula 
+\[
+a\to\begin{cases}
+a', & a=1,2,3,4,\\
+5', & a=5,6,7,8,\\
+(a-3)', & a=9,10,11,12,\\
+(a-7)', & a=17,18,19,20,\\
+14', & a=25,
+\end{cases}
+\]
+
+\end_inset
+
+所得 Pyramid 单元的形函数为
+\end_layout
+
+\begin_layout Itemize
+未合并的顶点
+\begin_inset Formula 
+\[
+N_{1'}^{P}=N_{1}^{H},\quad N_{2'}^{P}=N_{2}^{H},\quad N_{3'}^{P}=N_{3}^{H},\quad N_{4'}^{P}=N_{4}^{H},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+被合并的顶点
+\begin_inset Formula 
+\[
+N_{5'}^{P}=N_{5}^{H}+N_{6}^{H}+N_{7}^{H}+N_{8}^{H},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+需修正的边点
+\begin_inset Formula 
+\[
+N_{6'}^{P}=N_{9}^{H}-\frac{1}{4}N_{23}^{H},\quad N_{7'}^{P}=N_{10}^{H}-\frac{1}{4}N_{22}^{H},\quad N_{8'}^{P}=N_{11}^{H}-\frac{1}{4}N_{24}^{H},\quad N_{9'}^{P}=N_{12}^{H}-\frac{1}{4}N_{21}^{H},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+未受影响的顶点
+\begin_inset Formula 
+\[
+N_{10'}^{P}=N_{17}^{H},\quad N_{11'}^{P}=N_{18}^{H},\quad N_{12'}^{P}=N_{19}^{H},\quad N_{13'}^{P}=N_{20}^{H},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+未受影响的面点（仅 H20、P14 有）
+\begin_inset Formula 
+\[
+N_{14'}^{P}=N_{25}^{H},
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
