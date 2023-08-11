@@ -315,7 +315,7 @@ A function
  can be approximated by
 \begin_inset Formula 
 \[
-u(x)\approx u^{h}(x)\coloneqq\sum_{K=0}^{N}\hat{u}_{K}L_{K}(x),\quad\hat{u}_{K}\coloneqq u(x_{K})
+u(x)\approx u^{h}(x)\coloneqq\sum_{K=0}^{N}\hat{u}_{K}\,L_{K}(x),\quad\hat{u}_{K}\coloneqq u(x_{K})
 \]
 
 \end_inset
@@ -514,36 +514,25 @@ Given a family of global Lagrange polynomials, the approximated value of
  can be calculated as
 \begin_inset Formula 
 \begin{equation}
-u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{K=1}^{N}\hat{u}_{K}\cdot\phi_{K}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}\label{eq:GlobalLagrangeInterpolation}
+u(\vec{x})\approx u^{h}(\vec{x})=\sum_{K=1}^{N}\hat{u}_{K}\,L_{K}(\vec{x})\label{eq:GlobalLagrangeInterpolation}
 \end{equation}
 
 \end_inset
 
-in which
-\begin_inset Formula 
-\[
-\bra{\hat{u}}\coloneqq\begin{bmatrix}\hat{u}_{1} & \cdots & \hat{u}_{N}\end{bmatrix}
-\]
-
+in which 
+\begin_inset Formula $\left\{ \hat{u}_{K}\right\} _{K=1}^{N}$
 \end_inset
 
-are the values of 
+ are the values of 
 \begin_inset Formula $u$
 \end_inset
 
- measured at each node, and
-\begin_inset Formula 
-\[
-\ket{\phi(\vec{x})}=\begin{bmatrix}\phi_{1}\left(\vec{x}\right)\\
-\vdots\\
-\phi_{N}\left(\vec{x}\right)
-\end{bmatrix}
-\]
-
+ measured at each node, and 
+\begin_inset Formula $\left\{ L_{K}(\vec{x})\right\} _{K=1}^{N}$
 \end_inset
 
-are the values of 
-\begin_inset Formula $\left\{ \phi_{K}\right\} _{K=1}^{N}$
+ are the values of 
+\begin_inset Formula $\left\{ L_{K}\right\} _{K=1}^{N}$
 \end_inset
 
  evaluated at the query point 
@@ -562,7 +551,7 @@ are the values of
 
 \begin_layout Remark*
 Suppose each evaluation of 
-\begin_inset Formula $\phi_{K}(\vec{x})$
+\begin_inset Formula $L_{K}(\vec{x})$
 \end_inset
 
  takes 
@@ -851,9 +840,9 @@ The formulation is almost the same as that in global Lagrange interpolation,
  except for the evaluation of
 \begin_inset Formula 
 \[
-\ket{\phi(\vec{x})}=\begin{bmatrix}\phi_{1}\left(\vec{x}\right)\\
+\ket{\phi(\vec{x})}=\begin{bmatrix}\phi_{1}(\vec{x})\\
 \vdots\\
-\phi_{N}\left(\vec{x}\right)
+\phi_{N}(\vec{x})
 \end{bmatrix}
 \]
 
@@ -908,7 +897,7 @@ global index
  is then calculated as
 \begin_inset Formula 
 \begin{equation}
-u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{N_{e}}\hat{u}_{I_{e}(i)}\phi_{I_{e}(i)}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e},\quad\vec{x}\in\varOmega_{e}\label{eq:LocalLagrangeInterpolation}
+u(\vec{x})\approx u^{h}(\vec{x})=\sum_{i=1}^{N_{e}}\hat{u}_{I_{e}(i)}\phi_{I_{e}(i)}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}_{e},\quad\vec{x}\in\varOmega_{e}\label{eq:LocalLagrangeInterpolation}
 \end{equation}
 
 \end_inset
@@ -991,7 +980,7 @@ reference "eq:LocalLagrangeInterpolation"
  becomes
 \begin_inset Formula 
 \[
-u\left(\vec{x}\right)\approx u^{h}\left(\vec{x}\right)=\sum_{i=1}^{n}\hat{u}_{i}\phi_{i}\left(\vec{x}\right)=\ip{\hat{u}}{\phi(\vec{x})}_{e},\quad\vec{x}\in\varOmega_{e}
+u(\vec{x})\approx u^{h}(\vec{x})=\sum_{i=1}^{n}\hat{u}_{i}\phi_{i}(\vec{x})=\ip{\hat{u}}{\phi(\vec{x})}_{e},\quad\vec{x}\in\varOmega_{e}
 \]
 
 \end_inset
@@ -2251,56 +2240,6 @@ z(r,s,t)
 三角形
 \end_layout
 
-\begin_layout Subsection
-三棱锥（四面体）
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!tetrahedral ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Similar to those on triangles.
-\end_layout
-
-\begin_layout Section
-直积单元
-\end_layout
-
-\begin_layout Subsection
-四边形
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!quadrilateral ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A 2D interval is the Cartesian product of two 1D intervals.
-\end_layout
-
-\begin_layout Subsubsection
-三角形
-\end_layout
-
 \begin_layout Standard
 \begin_inset Index idx
 status collapsed
@@ -2314,7 +2253,7 @@ element!triangular ~
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 1st Order Element
 \end_layout
 
@@ -2412,7 +2351,7 @@ so it can be used as a family of 1st order Lagrange polynomials:
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 2nd Order Element
 \end_layout
 
@@ -2544,7 +2483,7 @@ The partition of unity property can be verified by taking
 
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsubsection
 3rd Order Elements
 \end_layout
 
@@ -2655,6 +2594,52 @@ in which
 \end_layout
 
 \begin_layout Subsection
+三棱锥（四面体）
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+element!tetrahedral ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to those on triangles.
+\end_layout
+
+\begin_layout Section
+直积单元
+\end_layout
+
+\begin_layout Subsection
+四边形
+\end_layout
+
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+element!quadrilateral ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A 2D interval is the Cartesian product of two 1D intervals.
+\end_layout
+
+\begin_layout Subsection
 六面体
 \end_layout
 
@@ -2701,7 +2686,19 @@ A prism is the Cartesian product of a triangle and a line.
 \end_layout
 
 \begin_layout Subsection
+三角形 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ 四边形
+\end_layout
+
+\begin_layout Subsection
 四棱锥（金字塔）
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ 六面体
 \end_layout
 
 \begin_layout Standard
