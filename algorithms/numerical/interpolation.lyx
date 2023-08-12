@@ -3065,7 +3065,7 @@ H20/H27
 \end_layout
 
 \begin_layout Standard
-顶点
+顶点的 hierarchical 形函数为
 \begin_inset Formula 
 \[
 N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,5,6,7,8,
@@ -3073,7 +3073,30 @@ N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,
 
 \end_inset
 
-边点
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+u^{h,8}(\vec{r})=\sum_{a=1}^{8}u(\vec{r}_{a})\cdot N_{a}^{H}(\vec{r}),
+\]
+
+\end_inset
+
+此时 hierarchical 形函数亦即 Lagrange 形函数，故上述插值可记为
+\begin_inset Formula 
+\[
+u^{h,8}(\vec{r})=\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,3,4,5,6,7,8,\\
+N_{a}^{H8}(\vec{r})=N_{a}^{H}(\vec{r}), & a=1,2,3,4,5,6,7,8,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+引入边点，其 hierarchical 形函数为
 \begin_inset Formula 
 \[
 N_{a}^{H}=\frac{1}{4}\begin{cases}
@@ -3085,7 +3108,34 @@ N_{a}^{H}=\frac{1}{4}\begin{cases}
 
 \end_inset
 
-面点
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,20}(\vec{r}) & =u^{h,8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-u^{h,8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{8}\hat{u}_{a}\cdot\left(N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=9}^{20}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值，可记为
+\begin_inset Formula 
+\[
+u^{h,20}(\vec{r})=\sum_{a=1}^{20}\hat{u}_{a}\cdot N_{a}^{H20}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,20,\\
+N_{a}^{H20}(\vec{r})=N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,8,\\
+N_{a}^{H20}(\vec{r})=N_{a}^{H}(\vec{r}), & a=9,10,\dots,20,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+进一步引入面点
 \begin_inset Formula 
 \[
 N_{a}^{H}=\frac{1}{2}\begin{cases}
@@ -3097,10 +3147,58 @@ N_{a}^{H}=\frac{1}{2}\begin{cases}
 
 \end_inset
 
-内点
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,26}(\vec{r}) & =u^{h,20}(\vec{r})+\sum_{b=21}^{26}\left(u(\vec{r}_{b})-u^{h,20}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{20}\hat{u}_{a}\cdot\left(N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=21}^{26}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值
+\begin_inset Formula 
+\[
+u^{h,26}(\vec{r})=\sum_{a=1}^{26}\hat{u}_{a}\cdot N_{a}^{H26}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,26,\\
+N_{a}^{H26}(\vec{r})=N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,20,\\
+N_{a}^{H26}(\vec{r})=N_{a}^{H}(\vec{r}), & a=21,22,\dots,26,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最后引入内点
 \begin_inset Formula 
 \[
 N_{a}^{H}=(1-\xi^{2})(1-\eta^{2})(1-\zeta^{2}),\quad a=27,\quad\xi_{a}=\eta_{a}=\zeta_{a}=0,
+\]
+
+\end_inset
+
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,27}(\vec{r}) & =u^{h,26}(\vec{r})+\left(u(\vec{r}_{27})-u^{h,26}(\vec{r}_{27})\right)\cdot N_{27}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{26}\hat{u}_{a}\cdot\left(N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r})\right)+\hat{u}_{27}\cdot N_{27}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值
+\begin_inset Formula 
+\[
+u^{h,27}(\vec{r})=\sum_{a=1}^{27}\hat{u}_{a}\cdot N_{a}^{H27}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,27,\\
+N_{a}^{H27}(\vec{r})=N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r}), & a=1,2,\dots,26,\\
+N_{a}^{H27}(\vec{r})=N_{a}^{H}(\vec{r}), & a=27,
+\end{cases}
 \]
 
 \end_inset
