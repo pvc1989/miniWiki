@@ -104,7 +104,7 @@ theorems-chap
 \end_layout
 
 \begin_layout Section
-一维插值
+一元函数插值
 \end_layout
 
 \begin_layout Subsection
@@ -149,7 +149,7 @@ node
 \end_inset
 
  
-\begin_inset Formula $\left\{ \vec{x}_{I}\right\} _{I=1}^{N}$
+\begin_inset Formula $\left\{ x_{I}\right\} _{I=1}^{N}$
 \end_inset
 
 , which are 
@@ -174,7 +174,7 @@ approximated value
 query point
 \noun default
  
-\begin_inset Formula $\vec{x}$
+\begin_inset Formula $x$
 \end_inset
 
 
@@ -188,7 +188,7 @@ query!~ point
 \end_inset
 
 , denoted as 
-\begin_inset Formula $u^{h}(\vec{x})$
+\begin_inset Formula $u^{h}(x)$
 \end_inset
 
 , which satisfies 
@@ -208,7 +208,7 @@ interpolation!~ condition!Lagrange ~
 :
 \begin_inset Formula 
 \begin{equation}
-u^{h}(\vec{x}_{I})=\hat{u}_{I},\quad I=1,\dots,N\label{eq:LagrangeInterpolationCondition}
+u^{h}(x_{I})=\hat{u}_{I},\quad I=1,\dots,N\label{eq:LagrangeInterpolationCondition}
 \end{equation}
 
 \end_inset
@@ -218,11 +218,11 @@ Here
 efficient
 \emph default
  means 
-\begin_inset Formula $\order{N\lg^{3}N}$
+\begin_inset Formula $\order{N\lg N}$
 \end_inset
 
  space and time complexity for preprocessing and 
-\begin_inset Formula $\order{\lg^{3}N}$
+\begin_inset Formula $\order{\lg N}$
 \end_inset
 
  time complexity for each query.
@@ -387,6 +387,150 @@ If the distribution of sample points is uniform, i.e.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+Hermite 插值
+\end_layout
+
+\begin_layout Subsection
+样条插值
+\end_layout
+
+\begin_layout Section
+多元函数插值
+\end_layout
+
+\begin_layout Problem
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+[Lagrange Interpolation]
+\end_layout
+
+\end_inset
+
+Given the 
+\noun on
+measured value
+\noun default
+s of 
+\begin_inset Formula $u$
+\end_inset
+
+ on 
+\begin_inset Formula $N$
+\end_inset
+
+ distinct 
+\noun on
+node
+\noun default
+s
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+node
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\left\{ \vec{x}_{I}\right\} _{I=1}^{N}$
+\end_inset
+
+, which are 
+\begin_inset Formula $\left\{ \hat{u}_{I}\right\} _{I=1}^{N}$
+\end_inset
+
+.
+ Find an 
+\emph on
+efficient
+\emph default
+ way to calculate the 
+\noun on
+approximated value
+\noun default
+ of 
+\begin_inset Formula $u$
+\end_inset
+
+ on any arbitrary 
+\noun on
+query point
+\noun default
+ 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+query!~ point
+\end_layout
+
+\end_inset
+
+, denoted as 
+\begin_inset Formula $u^{h}(\vec{x})$
+\end_inset
+
+, which satisfies 
+\noun on
+Lagrange interpolation condition
+\noun default
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+interpolation!~ condition!Lagrange ~
+\end_layout
+
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+u^{h}(\vec{x}_{I})=\hat{u}_{I},\quad I=1,\dots,N\label{eq:LagrangeInterpolationCondition-1}
+\end{equation}
+
+\end_inset
+
+Here 
+\emph on
+efficient
+\emph default
+ means 
+\begin_inset Formula $\order{N\lg^{d}N}$
+\end_inset
+
+ space and time complexity for preprocessing and 
+\begin_inset Formula $\order{\lg^{d}N}$
+\end_inset
+
+ time complexity for each query, where 
+\begin_inset Formula $d$
+\end_inset
+
+ is the dimension of the underlying space.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+全局 Lagrange 插值
 \end_layout
 
 \begin_layout Definition
@@ -598,14 +742,6 @@ locality
 \end_layout
 
 \begin_layout Subsection
-Hermite 插值
-\end_layout
-
-\begin_layout Section
-有限元插值
-\end_layout
-
-\begin_layout Subsection
 有限元离散
 \end_layout
 
@@ -773,7 +909,7 @@ locality
 \end_layout
 
 \begin_layout Subsection
-Lagrange 单元
+局部 Lagrange 插值
 \end_layout
 
 \begin_layout Definition
@@ -990,692 +1126,6 @@ u(\vec{x})\approx u^{h}(\vec{x})=\sum_{i=1}^{n}\hat{u}_{i}\phi_{i}(\vec{x})=\ip{
 
 \begin_layout Standard
 \begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-曲线段单元
-\end_layout
-
-\begin_layout Standard
-Given an arbitrary curve
-\begin_inset Formula 
-\[
-\vec{x}(s),\quad s\in[a,b]
-\]
-
-\end_inset
-
-in which 
-\begin_inset Formula $s$
-\end_inset
-
- is the 
-\noun on
-global parameter
-\noun default
-, there are two ways to interpolate on it:
-\end_layout
-
-\begin_layout Enumerate
-global interpolation on the entire curve;
-\end_layout
-
-\begin_layout Enumerate
-local interpolation on each segment of the curve.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The second way is better, since it exploits locality and avoids (severe)
- oscillation.
- 
-\end_layout
-
-\begin_layout Standard
-In the preprocessing step, the curve is divided into 
-\begin_inset Formula $E$
-\end_inset
-
- elements:
-\begin_inset Formula 
-\[
-\varOmega_{e}\coloneqq\left\{ \vec{x}(s):s\in[a_{e},b_{e}]\right\} 
-\]
-
-\end_inset
-
-in which
-\begin_inset Formula 
-\[
-a=a_{1}<b_{1}=a_{2}<\cdots<b_{E-1}=a_{E}<b_{E}=b
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For each query point 
-\begin_inset Formula $\vec{x}(s)$
-\end_inset
-
-, the first step is to find out which 
-\begin_inset Formula $\varOmega_{e}$
-\end_inset
-
- it belongs to, which can be done within
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\order{1}$
-\end_inset
-
- time, if the query point is given by 
-\begin_inset Formula $s$
-\end_inset
-
-, or
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\order{\lg E}$
-\end_inset
-
- time, if the query point is given by 
-\begin_inset Formula $\vec{x}$
-\end_inset
-
-, in which case we have to search it in a tree (see 
-\begin_inset CommandInset href
-LatexCommand href
-name "Computational Geometry"
-target "https://doi.org/10.1007/978-3-540-77974-2"
-literal "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The second step is to perfrom a coordinate transformation on each element:
-\begin_inset Formula 
-\[
-s=s_{e}(\eta),\quad\eta\in[-1,1]
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The last step is to perform a 
-\emph on
-local
-\emph default
- Laglange interpolation on 
-\begin_inset Formula $[-1,1]$
-\end_inset
-
-, which is covered by the next section.
-\end_layout
-
-\begin_layout Remark*
-There is another motivation to study Lagrange polynomials on this special
- interval: in 
-\begin_inset CommandInset href
-LatexCommand href
-name "Gauss--Legendre quadrature"
-target "https://en.wikipedia.org/wiki/Gaussian_quadrature"
-literal "false"
-
-\end_inset
-
-
-\begin_inset Index idx
-status collapsed
-
-\begin_layout Plain Layout
-quadrature!Gauss--Legendre ~
-\end_layout
-
-\end_inset
-
-, the points and weights are given on interval 
-\begin_inset Formula $[-1,1]$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-\begin_inset Formula $n$
-\end_inset
-
-th Order Element
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzpicture}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-coordinate (P0) at (0,0);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-coordinate (P1) at (6,0);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-coordinate (P2) at (2,0);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-coordinate (P3) at (4,0);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw (P0)--(P2);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw[dashed] (P2)--(P3);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-draw (P3)--(P1);
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fill (P0) circle[radius=2pt] node[above]{$k=0$} node[below]{$
-\backslash
-eta=-1$};
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fill (P1) circle[radius=2pt] node[above]{$1$} node[below]{$1$};
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fill (P2) circle[radius=2pt] node[above]{$2$} node[below]{$
-\backslash
-frac{2-n}{n}$};
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-fill (P3) circle[radius=2pt] node[above]{$n$} node[below]{$
-\backslash
-frac{n-2}{n}$};
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzpicture}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
-Suppose 
-\begin_inset Formula $[-1,1]$
-\end_inset
-
- is evenly divided by 
-\begin_inset Formula $(n+1)$
-\end_inset
-
- nodes:
-\begin_inset Formula 
-\[
-\eta_{0}=-1,\quad\eta_{1}=1,\quad\left\{ \eta_{k}=\frac{2}{n}(k-1)-1\right\} _{k=2}^{n}
-\]
-
-\end_inset
-
-The 
-\begin_inset Formula $k$
-\end_inset
-
-th Lagrange polynomial of order 
-\begin_inset Formula $n$
-\end_inset
-
- is
-\begin_inset Formula 
-\[
-L_{k}(\eta)=\prod_{\substack{i=0\\
-i\ne k
-}
-}^{n}\frac{\eta-\eta_{i}}{\eta_{k}-\eta_{i}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-1st Order Element
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}  
-\backslash
-begin{tikzpicture}   
-\backslash
-coordinate (P0) at (0,0);   
-\backslash
-coordinate (P1) at (6,0);   
-\backslash
-draw (P0)--(P1);   
-\backslash
-fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
-\backslash
-eta=-1$};   
-\backslash
-fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
-\backslash
-eta=1$}; 
-\backslash
-end{tikzpicture} 
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\ket{L(\eta)}=\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-1\right)/(-2)\\
-\left(\eta+1\right)\cancel{\left(\eta-1\right)}/(+2)
-\end{bmatrix}=\frac{1}{2}\begin{bmatrix}\begin{array}{rr}
-1 & -1\\
-1 & 1
-\end{array}\end{bmatrix}\begin{bmatrix}1\\
-\eta
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Python"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-# 2 */, 2 +-
-\end_layout
-
-\begin_layout Plain Layout
-
-L[0] = (1 - x) / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-L[1] = (x + 1) / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-# 1 */, 2 +-
-\end_layout
-
-\begin_layout Plain Layout
-
-x^half = x / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-L[0] = 0.5 - x^half
-\end_layout
-
-\begin_layout Plain Layout
-
-L[1] = 0.5 + x^half
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-2nd Order Element
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}  
-\backslash
-begin{tikzpicture}   
-\backslash
-coordinate (P0) at (0,0);   
-\backslash
-coordinate (P1) at (6,0);   
-\backslash
-coordinate (P2) at (3,0);   
-\backslash
-draw (P0)--(P1);   
-\backslash
-fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
-\backslash
-eta=-1$};   
-\backslash
-fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
-\backslash
-eta=1$};   
-\backslash
-fill (P2) circle[radius=2pt]     node[above]{$k=2$}     node[below]{$
-\backslash
-eta=0$}; 
-\backslash
-end{tikzpicture} 
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-0\right)\left(\eta-1\right)/(+2)\\
-\left(\eta+1\right)\left(\eta-0\right)\cancel{\left(\eta-1\right)}/(+2)\\
-\left(\eta+1\right)\cancel{\left(\eta-0\right)}\left(\eta-1\right)/(-1)
-\end{bmatrix}\\
- & =\frac{1}{2}\begin{bmatrix}\begin{array}{rrr}
- & -1 & 1\\
- & 1 & 1\\
-2 &  & -2
-\end{array}\end{bmatrix}\begin{bmatrix}1\\
-\eta\\
-\eta\eta
-\end{bmatrix}
-\end{aligned}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Python"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-# 3 */, 3 +-
-\end_layout
-
-\begin_layout Plain Layout
-
-x^square = x * x
-\end_layout
-
-\begin_layout Plain Layout
-
-L[0] = (x^square - x) / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-L[1] = (x^square + x) / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-L[2] = 1 - x^square
-\end_layout
-
-\begin_layout Plain Layout
-
-# 2 */, 3 +-
-\end_layout
-
-\begin_layout Plain Layout
-
-x^square = x * x
-\end_layout
-
-\begin_layout Plain Layout
-
-L[0] = (x^square - x) / 2
-\end_layout
-
-\begin_layout Plain Layout
-
-L[1] = L[0] + x  # reduce one *, but introduce a []
-\end_layout
-
-\begin_layout Plain Layout
-
-L[2] = 1 - x^square
-\end_layout
-
-\begin_layout Plain Layout
-
-# 2 */, 3 +-
-\end_layout
-
-\begin_layout Plain Layout
-
-x^square = x * x
-\end_layout
-
-\begin_layout Plain Layout
-
-L0 = (x^square - x) / 2  # introduce a temp variable to avoid []
-\end_layout
-
-\begin_layout Plain Layout
-
-L[0] = L0
-\end_layout
-
-\begin_layout Plain Layout
-
-L[1] = L0 + x
-\end_layout
-
-\begin_layout Plain Layout
-
-L[2] = 1 - x^square
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-3rd Order Element
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}  
-\backslash
-begin{tikzpicture}   
-\backslash
-coordinate (P0) at (0,0);   
-\backslash
-coordinate (P1) at (6,0);   
-\backslash
-coordinate (P2) at (2,0);   
-\backslash
-coordinate (P3) at (4,0);   
-\backslash
-draw (P0)--(P1);   
-\backslash
-fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
-\backslash
-eta=-1$};   
-\backslash
-fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
-\backslash
-eta=1$};   
-\backslash
-fill (P2) circle[radius=2pt]     node[above]{$k=2$}     node[below]{$
-\backslash
-eta=-
-\backslash
-frac{1}{3}$};   
-\backslash
-fill (P3) circle[radius=2pt]     node[above]{$k=3$}     node[below]{$
-\backslash
-eta=
-\backslash
-frac{1}{3}$}; 
-\backslash
-end{tikzpicture} 
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\frac{9}{-16}\cancel{\left(\eta+1\right)}\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
-\frac{9}{+16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\cancel{\left(\eta-1\right)}\\
-\frac{27}{+16}\left(\eta+1\right)\cancel{\left(\eta+\frac{1}{3}\right)}\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
-\frac{27}{-16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\cancel{\left(\eta-\frac{1}{3}\right)}\left(\eta-1\right)
-\end{bmatrix}\\
- & =\frac{1}{16}\begin{bmatrix}\begin{array}{rrrr}
--1 & 1 & 9 & -9\\
--1 & -1 & 9 & 9\\
-9 & -27 & -9 & 27\\
-9 & 27 & -9 & -27
-\end{array}\end{bmatrix}\begin{bmatrix}1\\
-\eta\\
-\eta\eta\\
-\eta\eta\eta
-\end{bmatrix}
-\end{aligned}
-\]
-
 \end_inset
 
 
@@ -2233,11 +1683,698 @@ z(r,s,t)
 \end_layout
 
 \begin_layout Section
-单纯形单元
+Lagrange 单元
 \end_layout
 
 \begin_layout Subsection
-三角形
+Lines
+\end_layout
+
+\begin_layout Standard
+Given an arbitrary curve
+\begin_inset Formula 
+\[
+\vec{x}(s),\quad s\in[a,b]
+\]
+
+\end_inset
+
+in which 
+\begin_inset Formula $s$
+\end_inset
+
+ is the 
+\noun on
+global parameter
+\noun default
+, there are two ways to interpolate on it:
+\end_layout
+
+\begin_layout Enumerate
+global interpolation on the entire curve;
+\end_layout
+
+\begin_layout Enumerate
+local interpolation on each segment of the curve.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second way is better, since it exploits locality and avoids (severe)
+ oscillation.
+ 
+\end_layout
+
+\begin_layout Standard
+In the preprocessing step, the curve is divided into 
+\begin_inset Formula $E$
+\end_inset
+
+ elements:
+\begin_inset Formula 
+\[
+\varOmega_{e}\coloneqq\left\{ \vec{x}(s):s\in[a_{e},b_{e}]\right\} 
+\]
+
+\end_inset
+
+in which
+\begin_inset Formula 
+\[
+a=a_{1}<b_{1}=a_{2}<\cdots<b_{E-1}=a_{E}<b_{E}=b
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each query point 
+\begin_inset Formula $\vec{x}(s)$
+\end_inset
+
+, the first step is to find out which 
+\begin_inset Formula $\varOmega_{e}$
+\end_inset
+
+ it belongs to, which can be done within
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\order{1}$
+\end_inset
+
+ time, if the query point is given by 
+\begin_inset Formula $s$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\order{\lg E}$
+\end_inset
+
+ time, if the query point is given by 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+, in which case we have to search it in a tree (see 
+\begin_inset CommandInset href
+LatexCommand href
+name "Computational Geometry"
+target "https://doi.org/10.1007/978-3-540-77974-2"
+literal "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The second step is to perfrom a coordinate transformation on each element:
+\begin_inset Formula 
+\[
+s=s_{e}(\eta),\quad\eta\in[-1,1]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The last step is to perform a 
+\emph on
+local
+\emph default
+ Laglange interpolation on 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+, which is covered by the next section.
+\end_layout
+
+\begin_layout Remark*
+There is another motivation to study Lagrange polynomials on this special
+ interval: in 
+\begin_inset CommandInset href
+LatexCommand href
+name "Gauss--Legendre quadrature"
+target "https://en.wikipedia.org/wiki/Gaussian_quadrature"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Index idx
+status collapsed
+
+\begin_layout Plain Layout
+quadrature!Gauss--Legendre ~
+\end_layout
+
+\end_inset
+
+, the points and weights are given on interval 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Line
+\begin_inset Formula $(n+1)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (P0) at (0,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (P1) at (6,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (P2) at (2,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+coordinate (P3) at (4,0);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (P0)--(P2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[dashed] (P2)--(P3);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (P3)--(P1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (P0) circle[radius=2pt] node[above]{$k=0$} node[below]{$
+\backslash
+eta=-1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (P1) circle[radius=2pt] node[above]{$1$} node[below]{$1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (P2) circle[radius=2pt] node[above]{$2$} node[below]{$
+\backslash
+frac{2-n}{n}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill (P3) circle[radius=2pt] node[above]{$n$} node[below]{$
+\backslash
+frac{n-2}{n}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ is evenly divided by 
+\begin_inset Formula $(n+1)$
+\end_inset
+
+ nodes:
+\begin_inset Formula 
+\[
+\eta_{0}=-1,\quad\eta_{1}=1,\quad\left\{ \eta_{k}=\frac{2}{n}(k-1)-1\right\} _{k=2}^{n}
+\]
+
+\end_inset
+
+The 
+\begin_inset Formula $k$
+\end_inset
+
+th Lagrange polynomial of order 
+\begin_inset Formula $n$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+L_{k}(\eta)=\prod_{\substack{i=0\\
+i\ne k
+}
+}^{n}\frac{\eta-\eta_{i}}{\eta_{k}-\eta_{i}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Line2
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}  
+\backslash
+begin{tikzpicture}   
+\backslash
+coordinate (P0) at (0,0);   
+\backslash
+coordinate (P1) at (6,0);   
+\backslash
+draw (P0)--(P1);   
+\backslash
+fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
+\backslash
+eta=-1$};   
+\backslash
+fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
+\backslash
+eta=1$}; 
+\backslash
+end{tikzpicture} 
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ket{L(\eta)}=\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-1\right)/(-2)\\
+\left(\eta+1\right)\cancel{\left(\eta-1\right)}/(+2)
+\end{bmatrix}=\frac{1}{2}\begin{bmatrix}\begin{array}{rr}
+1 & -1\\
+1 & 1
+\end{array}\end{bmatrix}\begin{bmatrix}1\\
+\eta
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# 2 */, 2 +-
+\end_layout
+
+\begin_layout Plain Layout
+
+L[0] = (1 - x) / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+L[1] = (x + 1) / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+# 1 */, 2 +-
+\end_layout
+
+\begin_layout Plain Layout
+
+x^half = x / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+L[0] = 0.5 - x^half
+\end_layout
+
+\begin_layout Plain Layout
+
+L[1] = 0.5 + x^half
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Line3
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}  
+\backslash
+begin{tikzpicture}   
+\backslash
+coordinate (P0) at (0,0);   
+\backslash
+coordinate (P1) at (6,0);   
+\backslash
+coordinate (P2) at (3,0);   
+\backslash
+draw (P0)--(P1);   
+\backslash
+fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
+\backslash
+eta=-1$};   
+\backslash
+fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
+\backslash
+eta=1$};   
+\backslash
+fill (P2) circle[radius=2pt]     node[above]{$k=2$}     node[below]{$
+\backslash
+eta=0$}; 
+\backslash
+end{tikzpicture} 
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\cancel{\left(\eta+1\right)}\left(\eta-0\right)\left(\eta-1\right)/(+2)\\
+\left(\eta+1\right)\left(\eta-0\right)\cancel{\left(\eta-1\right)}/(+2)\\
+\left(\eta+1\right)\cancel{\left(\eta-0\right)}\left(\eta-1\right)/(-1)
+\end{bmatrix}\\
+ & =\frac{1}{2}\begin{bmatrix}\begin{array}{rrr}
+ & -1 & 1\\
+ & 1 & 1\\
+2 &  & -2
+\end{array}\end{bmatrix}\begin{bmatrix}1\\
+\eta\\
+\eta\eta
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# 3 */, 3 +-
+\end_layout
+
+\begin_layout Plain Layout
+
+x^square = x * x
+\end_layout
+
+\begin_layout Plain Layout
+
+L[0] = (x^square - x) / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+L[1] = (x^square + x) / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+L[2] = 1 - x^square
+\end_layout
+
+\begin_layout Plain Layout
+
+# 2 */, 3 +-
+\end_layout
+
+\begin_layout Plain Layout
+
+x^square = x * x
+\end_layout
+
+\begin_layout Plain Layout
+
+L[0] = (x^square - x) / 2
+\end_layout
+
+\begin_layout Plain Layout
+
+L[1] = L[0] + x  # reduce one *, but introduce a []
+\end_layout
+
+\begin_layout Plain Layout
+
+L[2] = 1 - x^square
+\end_layout
+
+\begin_layout Plain Layout
+
+# 2 */, 3 +-
+\end_layout
+
+\begin_layout Plain Layout
+
+x^square = x * x
+\end_layout
+
+\begin_layout Plain Layout
+
+L0 = (x^square - x) / 2  # introduce a temp variable to avoid []
+\end_layout
+
+\begin_layout Plain Layout
+
+L[0] = L0
+\end_layout
+
+\begin_layout Plain Layout
+
+L[1] = L0 + x
+\end_layout
+
+\begin_layout Plain Layout
+
+L[2] = 1 - x^square
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Line4
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}  
+\backslash
+begin{tikzpicture}   
+\backslash
+coordinate (P0) at (0,0);   
+\backslash
+coordinate (P1) at (6,0);   
+\backslash
+coordinate (P2) at (2,0);   
+\backslash
+coordinate (P3) at (4,0);   
+\backslash
+draw (P0)--(P1);   
+\backslash
+fill (P0) circle[radius=2pt]      node[above]{$k=0$}     node[below]{$
+\backslash
+eta=-1$};   
+\backslash
+fill (P1) circle[radius=2pt]     node[above]{$k=1$}     node[below]{$
+\backslash
+eta=1$};   
+\backslash
+fill (P2) circle[radius=2pt]     node[above]{$k=2$}     node[below]{$
+\backslash
+eta=-
+\backslash
+frac{1}{3}$};   
+\backslash
+fill (P3) circle[radius=2pt]     node[above]{$k=3$}     node[below]{$
+\backslash
+eta=
+\backslash
+frac{1}{3}$}; 
+\backslash
+end{tikzpicture} 
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\ket{L(\eta)} & =\begin{bmatrix}\frac{9}{-16}\cancel{\left(\eta+1\right)}\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
+\frac{9}{+16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\left(\eta-\frac{1}{3}\right)\cancel{\left(\eta-1\right)}\\
+\frac{27}{+16}\left(\eta+1\right)\cancel{\left(\eta+\frac{1}{3}\right)}\left(\eta-\frac{1}{3}\right)\left(\eta-1\right)\\
+\frac{27}{-16}\left(\eta+1\right)\left(\eta+\frac{1}{3}\right)\cancel{\left(\eta-\frac{1}{3}\right)}\left(\eta-1\right)
+\end{bmatrix}\\
+ & =\frac{1}{16}\begin{bmatrix}\begin{array}{rrrr}
+-1 & 1 & 9 & -9\\
+-1 & -1 & 9 & 9\\
+9 & -27 & -9 & 27\\
+9 & 27 & -9 & -27
+\end{array}\end{bmatrix}\begin{bmatrix}1\\
+\eta\\
+\eta\eta\\
+\eta\eta\eta
+\end{bmatrix}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Triangles
 \end_layout
 
 \begin_layout Standard
@@ -2254,7 +2391,7 @@ element!triangular ~
 \end_layout
 
 \begin_layout Subsubsection
-1st Order Element
+Triangle3
 \end_layout
 
 \begin_layout Standard
@@ -2352,7 +2489,7 @@ so it can be used as a family of 1st order Lagrange polynomials:
 \end_layout
 
 \begin_layout Subsubsection
-2nd Order Element
+Triangle6
 \end_layout
 
 \begin_layout Standard
@@ -2484,7 +2621,7 @@ The partition of unity property can be verified by taking
 \end_layout
 
 \begin_layout Subsubsection
-3rd Order Elements
+Triangle10
 \end_layout
 
 \begin_layout Standard
@@ -2594,7 +2731,7 @@ in which
 \end_layout
 
 \begin_layout Subsection
-三棱锥（四面体）
+Tetrahedra
 \end_layout
 
 \begin_layout Standard
@@ -2614,12 +2751,8 @@ element!tetrahedral ~
 Similar to those on triangles.
 \end_layout
 
-\begin_layout Section
-直积单元
-\end_layout
-
 \begin_layout Subsection
-四边形
+Quadrangles
 \end_layout
 
 \begin_layout Standard
@@ -2639,8 +2772,77 @@ element!quadrilateral ~
 A 2D interval is the Cartesian product of two 1D intervals.
 \end_layout
 
+\begin_layout Subsubsection
+Quadrangle4 by Line2 
+\begin_inset Formula $\times$
+\end_inset
+
+ Line2
+\end_layout
+
+\begin_layout Subsubsection
+Quadrangle9 by Line3 
+\begin_inset Formula $\times$
+\end_inset
+
+ Line3
+\end_layout
+
+\begin_layout Subsubsection
+Quadrangle8/9 by Hierarchical Expansion
+\end_layout
+
+\begin_layout Standard
+二阶四边形有 Q8、Q9 两种方案，二者的 hierarchical 插值均为
+\begin_inset Formula 
+\[
+u^{h}(\xi,\eta)=\sum_{a=1}^{4}N_{a}^{Q}(\xi,\eta)\,u_{a}+\sum_{a=5}^{8}N_{a}^{Q}(\xi,\eta)\,\Delta u_{a}+\sum_{a=9}^{9}N_{a}^{Q}(\xi,\eta)\,\Delta\Delta u_{a},
+\]
+
+\end_inset
+
+其中基函数为
+\begin_inset Formula 
+\[
+N_{a}^{Q}=\begin{cases}
+(1+\xi_{a}\xi)(1+\eta_{a}\eta)/4, & a=1,2,3,4,\\
+(1-\xi^{2})(1+\eta_{a}\eta)/2, & a=5,7,\quad\xi_{a}=0,\\
+(1+\xi_{a}\xi)(1-\eta^{2})/2, & a=6,8,\quad\eta_{a}=0,\\
+(1-\xi^{2})(1-\eta^{2}), & a=9,\quad\xi_{a}=\eta_{a}=0,
+\end{cases}
+\]
+
+\end_inset
+
+系数分别为顶点值：
+\begin_inset Formula 
+\[
+u_{a}=u(\xi_{a},\eta_{a})\equiv\hat{u}_{a},\quad a=1,2,3,4,
+\]
+
+\end_inset
+
+边点值与 Q4 插值的偏差：
+\begin_inset Formula 
+\[
+\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b},\quad a=5,6,7,8,
+\]
+
+\end_inset
+
+内点值与 Q8 插值的偏差：
+\begin_inset Formula 
+\[
+\Delta\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b}-\sum_{b=5}^{8}N_{b}^{Q}(\xi_{a},\eta_{a})\,\Delta u_{b},\quad,a=9,
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-六面体
+Hexahedra
 \end_layout
 
 \begin_layout Standard
@@ -2660,8 +2862,154 @@ element!hexahedral ~
 A 3D interval is the Cartesian product of tree 1D intervals.
 \end_layout
 
+\begin_layout Subsubsection
+Hexahedron20/26/27 by Hierarchical Expansion
+\end_layout
+
+\begin_layout Standard
+顶点的 hierarchical 形函数为
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,5,6,7,8,
+\]
+
+\end_inset
+
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+u^{h,8}(\vec{r})=\sum_{a=1}^{8}u(\vec{r}_{a})\cdot N_{a}^{H}(\vec{r}),
+\]
+
+\end_inset
+
+此时 hierarchical 形函数亦即 Lagrange 形函数，故上述插值可记为
+\begin_inset Formula 
+\[
+u^{h,8}(\vec{r})=\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,3,4,5,6,7,8,\\
+N_{a}^{H8}(\vec{r})=N_{a}^{H}(\vec{r}), & a=1,2,3,4,5,6,7,8,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+引入边点，其 hierarchical 形函数为
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{4}\begin{cases}
+(1-\xi^{2})(1+\eta_{a}\eta)(1+\zeta_{a}\zeta), & a=9,11,13,15,\quad\xi_{a}=0,\\
+(1+\xi_{a}\xi)(1-\eta^{2})(1+\zeta_{a}\zeta), & a=10,12,14,16,\quad\eta_{a}=0,\\
+(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1-\zeta^{2}), & a=17,18,19,20,\quad\zeta_{a}=0,
+\end{cases}
+\]
+
+\end_inset
+
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,20}(\vec{r}) & =u^{h,8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-u^{h,8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{8}\hat{u}_{a}\cdot\left(N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=9}^{20}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值，可记为
+\begin_inset Formula 
+\[
+u^{h,20}(\vec{r})=\sum_{a=1}^{20}\hat{u}_{a}\cdot N_{a}^{H20}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,20,\\
+N_{a}^{H20}(\vec{r})=N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,8,\\
+N_{a}^{H20}(\vec{r})=N_{a}^{H}(\vec{r}), & a=9,10,\dots,20,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+进一步引入面点
+\begin_inset Formula 
+\[
+N_{a}^{H}=\frac{1}{2}\begin{cases}
+(1+\xi_{a}\xi)(1-\eta^{2})(1-\zeta^{2}), & a=21,22,\quad\eta_{a}=\zeta_{a}=0,\\
+(1-\xi^{2})(1+\eta_{a}\eta)(1-\zeta^{2}), & a=23,24,\quad\xi_{a}=\zeta_{a}=0,\\
+(1-\xi^{2})(1-\eta^{2})(1+\zeta_{a}\zeta), & a=25,26,\quad\xi_{a}=\eta_{a}=0,
+\end{cases}
+\]
+
+\end_inset
+
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,26}(\vec{r}) & =u^{h,20}(\vec{r})+\sum_{b=21}^{26}\left(u(\vec{r}_{b})-u^{h,20}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{20}\hat{u}_{a}\cdot\left(N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=21}^{26}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值
+\begin_inset Formula 
+\[
+u^{h,26}(\vec{r})=\sum_{a=1}^{26}\hat{u}_{a}\cdot N_{a}^{H26}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,26,\\
+N_{a}^{H26}(\vec{r})=N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,20,\\
+N_{a}^{H26}(\vec{r})=N_{a}^{H}(\vec{r}), & a=21,22,\dots,26,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+最后引入内点
+\begin_inset Formula 
+\[
+N_{a}^{H}=(1-\xi^{2})(1-\eta^{2})(1-\zeta^{2}),\quad a=27,\quad\xi_{a}=\eta_{a}=\zeta_{a}=0,
+\]
+
+\end_inset
+
+相应的 hierarchical 插值为
+\begin_inset Formula 
+\[
+\begin{aligned}u^{h,27}(\vec{r}) & =u^{h,26}(\vec{r})+\left(u(\vec{r}_{27})-u^{h,26}(\vec{r}_{27})\right)\cdot N_{27}^{H}(\vec{r})\\
+ & =\sum_{a=1}^{26}\hat{u}_{a}\cdot\left(N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r})\right)+\hat{u}_{27}\cdot N_{27}^{H}(\vec{r}),
+\end{aligned}
+\]
+
+\end_inset
+
+最后一行即 Lagrange 插值
+\begin_inset Formula 
+\[
+u^{h,27}(\vec{r})=\sum_{a=1}^{27}\hat{u}_{a}\cdot N_{a}^{H27}(\vec{r}),\quad\begin{cases}
+\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,27,\\
+N_{a}^{H27}(\vec{r})=N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r}), & a=1,2,\dots,26,\\
+N_{a}^{H27}(\vec{r})=N_{a}^{H}(\vec{r}), & a=27,
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-三棱柱
+Prisms
 \end_layout
 
 \begin_layout Standard
@@ -2681,28 +3029,37 @@ element!prismatic ~
 A prism is the Cartesian product of a triangle and a line.
 \end_layout
 
-\begin_layout Section
-退化单元
+\begin_layout Subsection
+Pyramids
 \end_layout
 
-\begin_layout Subsection
-四边形 
+\begin_layout Standard
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+element!pyramidal ~
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A pyramid can be viewed as a degenerated case of a hexahedron.
+\end_layout
+
+\begin_layout Subsubsection
+Quadrangle4 
 \begin_inset Formula $\to$
 \end_inset
 
- 三角形
+ Triangle3
 \end_layout
 
 \begin_layout Standard
 尽管网格生成模块一般不会通过退化四边形来获得三角形，但在三维问题中需确保来自金字塔单元的三角形，与来自四面体、三棱柱单元的三角形相协调。
-\end_layout
-
-\begin_layout Subsubsection
-Q4 
-\begin_inset Formula $\to$
-\end_inset
-
- T3
 \end_layout
 
 \begin_layout Standard
@@ -2856,60 +3213,11 @@ a\in\left\{ 1,2,3\right\} ,\\
 \end_layout
 
 \begin_layout Subsubsection
-Q8/Q9 
+Quadrangle8/9 
 \begin_inset Formula $\to$
 \end_inset
 
- T6
-\end_layout
-
-\begin_layout Standard
-二阶四边形有 Q8、Q9 两种方案，二者的 hierarchical 插值均为
-\begin_inset Formula 
-\[
-u^{h}(\xi,\eta)=\sum_{a=1}^{4}N_{a}^{Q}(\xi,\eta)\,u_{a}+\sum_{a=5}^{8}N_{a}^{Q}(\xi,\eta)\,\Delta u_{a}+\sum_{a=9}^{9}N_{a}^{Q}(\xi,\eta)\,\Delta\Delta u_{a},
-\]
-
-\end_inset
-
-其中基函数为
-\begin_inset Formula 
-\[
-N_{a}^{Q}=\begin{cases}
-(1+\xi_{a}\xi)(1+\eta_{a}\eta)/4, & a=1,2,3,4,\\
-(1-\xi^{2})(1+\eta_{a}\eta)/2, & a=5,7,\quad\xi_{a}=0,\\
-(1+\xi_{a}\xi)(1-\eta^{2})/2, & a=6,8,\quad\eta_{a}=0,\\
-(1-\xi^{2})(1-\eta^{2}), & a=9,\quad\xi_{a}=\eta_{a}=0,
-\end{cases}
-\]
-
-\end_inset
-
-系数分别为顶点值：
-\begin_inset Formula 
-\[
-u_{a}=u(\xi_{a},\eta_{a})\equiv\hat{u}_{a},\quad a=1,2,3,4,
-\]
-
-\end_inset
-
-边点值与 Q4 插值的偏差：
-\begin_inset Formula 
-\[
-\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b},\quad a=5,6,7,8,
-\]
-
-\end_inset
-
-内点值与 Q8 插值的偏差：
-\begin_inset Formula 
-\[
-\Delta\Delta u_{a}=u(\xi_{a},\eta_{a})-\sum_{b=1}^{4}N_{b}^{Q}(\xi_{a},\eta_{a})\,u_{b}-\sum_{b=5}^{8}N_{b}^{Q}(\xi_{a},\eta_{a})\,\Delta u_{b},\quad,a=9,
-\]
-
-\end_inset
-
-
+ Triangle6
 \end_layout
 
 \begin_layout Standard
@@ -2996,37 +3304,12 @@ N_{4'}^{T}=N_{5}^{Q}-\frac{1}{4}N_{9}^{Q},
  可得标准的 Lagrange 形函数。
 \end_layout
 
-\begin_layout Subsection
-六面体 
-\begin_inset Formula $\to$
-\end_inset
-
- 四棱锥（金字塔）
-\end_layout
-
-\begin_layout Standard
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-element!pyramidal ~
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A pyramid can be viewed as a degenerated case of a hexahedron.
-\end_layout
-
 \begin_layout Subsubsection
-H8 
+Hexahedron8 
 \begin_inset Formula $\to$
 \end_inset
 
- P5
+ Pyramid5
 \end_layout
 
 \begin_layout Standard
@@ -3057,153 +3340,11 @@ N_{a}^{H\to P}=\sum_{a=5}^{8}N_{a}^{H}=\frac{1+\zeta}{2}\sum_{a=5}^{8}\frac{(1+\
 \end_layout
 
 \begin_layout Subsubsection
-H20/H27 
+Hexahedron20/27 
 \begin_inset Formula $\to$
 \end_inset
 
- P13/P14
-\end_layout
-
-\begin_layout Standard
-顶点的 hierarchical 形函数为
-\begin_inset Formula 
-\[
-N_{a}^{H}=\frac{1}{8}(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1+\zeta_{a}\zeta),\quad a=1,2,3,4,5,6,7,8,
-\]
-
-\end_inset
-
-相应的 hierarchical 插值为
-\begin_inset Formula 
-\[
-u^{h,8}(\vec{r})=\sum_{a=1}^{8}u(\vec{r}_{a})\cdot N_{a}^{H}(\vec{r}),
-\]
-
-\end_inset
-
-此时 hierarchical 形函数亦即 Lagrange 形函数，故上述插值可记为
-\begin_inset Formula 
-\[
-u^{h,8}(\vec{r})=\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}),\quad\begin{cases}
-\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,3,4,5,6,7,8,\\
-N_{a}^{H8}(\vec{r})=N_{a}^{H}(\vec{r}), & a=1,2,3,4,5,6,7,8,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-引入边点，其 hierarchical 形函数为
-\begin_inset Formula 
-\[
-N_{a}^{H}=\frac{1}{4}\begin{cases}
-(1-\xi^{2})(1+\eta_{a}\eta)(1+\zeta_{a}\zeta), & a=9,11,13,15,\quad\xi_{a}=0,\\
-(1+\xi_{a}\xi)(1-\eta^{2})(1+\zeta_{a}\zeta), & a=10,12,14,16,\quad\eta_{a}=0,\\
-(1+\xi_{a}\xi)(1+\eta_{a}\eta)(1-\zeta^{2}), & a=17,18,19,20,\quad\zeta_{a}=0,
-\end{cases}
-\]
-
-\end_inset
-
-相应的 hierarchical 插值为
-\begin_inset Formula 
-\[
-\begin{aligned}u^{h,20}(\vec{r}) & =u^{h,8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-u^{h,8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
- & =\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r})+\sum_{b=9}^{20}\left(u(\vec{r}_{b})-\sum_{a=1}^{8}\hat{u}_{a}\cdot N_{a}^{H8}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
- & =\sum_{a=1}^{8}\hat{u}_{a}\cdot\left(N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=9}^{20}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
-\end{aligned}
-\]
-
-\end_inset
-
-最后一行即 Lagrange 插值，可记为
-\begin_inset Formula 
-\[
-u^{h,20}(\vec{r})=\sum_{a=1}^{20}\hat{u}_{a}\cdot N_{a}^{H20}(\vec{r}),\quad\begin{cases}
-\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,20,\\
-N_{a}^{H20}(\vec{r})=N_{a}^{H8}(\vec{r})-\sum_{b=9}^{20}N_{a}^{H8}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,8,\\
-N_{a}^{H20}(\vec{r})=N_{a}^{H}(\vec{r}), & a=9,10,\dots,20,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-进一步引入面点
-\begin_inset Formula 
-\[
-N_{a}^{H}=\frac{1}{2}\begin{cases}
-(1+\xi_{a}\xi)(1-\eta^{2})(1-\zeta^{2}), & a=21,22,\quad\eta_{a}=\zeta_{a}=0,\\
-(1-\xi^{2})(1+\eta_{a}\eta)(1-\zeta^{2}), & a=23,24,\quad\xi_{a}=\zeta_{a}=0,\\
-(1-\xi^{2})(1-\eta^{2})(1+\zeta_{a}\zeta), & a=25,26,\quad\xi_{a}=\eta_{a}=0,
-\end{cases}
-\]
-
-\end_inset
-
-相应的 hierarchical 插值为
-\begin_inset Formula 
-\[
-\begin{aligned}u^{h,26}(\vec{r}) & =u^{h,20}(\vec{r})+\sum_{b=21}^{26}\left(u(\vec{r}_{b})-u^{h,20}(\vec{r}_{b})\right)\cdot N_{b}^{H}(\vec{r})\\
- & =\sum_{a=1}^{20}\hat{u}_{a}\cdot\left(N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r})\right)+\sum_{b=21}^{26}\hat{u}_{b}\cdot N_{b}^{H}(\vec{r}),
-\end{aligned}
-\]
-
-\end_inset
-
-最后一行即 Lagrange 插值
-\begin_inset Formula 
-\[
-u^{h,26}(\vec{r})=\sum_{a=1}^{26}\hat{u}_{a}\cdot N_{a}^{H26}(\vec{r}),\quad\begin{cases}
-\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,26,\\
-N_{a}^{H26}(\vec{r})=N_{a}^{H20}(\vec{r})-\sum_{b=21}^{26}N_{a}^{H20}(\vec{r}_{b})\cdot N_{b}^{H}(\vec{r}), & a=1,2,\dots,20,\\
-N_{a}^{H26}(\vec{r})=N_{a}^{H}(\vec{r}), & a=21,22,\dots,26,
-\end{cases}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-最后引入内点
-\begin_inset Formula 
-\[
-N_{a}^{H}=(1-\xi^{2})(1-\eta^{2})(1-\zeta^{2}),\quad a=27,\quad\xi_{a}=\eta_{a}=\zeta_{a}=0,
-\]
-
-\end_inset
-
-相应的 hierarchical 插值为
-\begin_inset Formula 
-\[
-\begin{aligned}u^{h,27}(\vec{r}) & =u^{h,26}(\vec{r})+\left(u(\vec{r}_{27})-u^{h,26}(\vec{r}_{27})\right)\cdot N_{27}^{H}(\vec{r})\\
- & =\sum_{a=1}^{26}\hat{u}_{a}\cdot\left(N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r})\right)+\hat{u}_{27}\cdot N_{27}^{H}(\vec{r}),
-\end{aligned}
-\]
-
-\end_inset
-
-最后一行即 Lagrange 插值
-\begin_inset Formula 
-\[
-u^{h,27}(\vec{r})=\sum_{a=1}^{27}\hat{u}_{a}\cdot N_{a}^{H27}(\vec{r}),\quad\begin{cases}
-\hat{u}_{a}=u(\vec{r}_{a}), & a=1,2,\dots,27,\\
-N_{a}^{H27}(\vec{r})=N_{a}^{H26}(\vec{r})-N_{a}^{H26}(\vec{r}_{27})\cdot N_{27}^{H}(\vec{r}), & a=1,2,\dots,26,\\
-N_{a}^{H27}(\vec{r})=N_{a}^{H}(\vec{r}), & a=27,
-\end{cases}
-\]
-
-\end_inset
-
-
+ Pyramid13/14
 \end_layout
 
 \begin_layout Standard
