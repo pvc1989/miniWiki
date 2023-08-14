@@ -21,6 +21,41 @@ class Element(abc.ABC):
     def lagrange_shapes(n, x, y, z) -> np.ndarray:
         pass
 
+    @staticmethod
+    def p2n(p) -> int:
+        return (p + 1) * (p + 2) * (p + 3) // 6
+
+    @staticmethod
+    def taylor_basis(p, x, y, z) -> np.ndarray:
+        n = Element.p2n(p)
+        assert n in (1, 4, 10, 20, 35)
+        values = np.ndarray(n)
+        values[0] = 1
+        if n > 1:
+            values[1] = x
+            values[2] = y
+            values[3] = z
+        if n > 4:
+            values[4] = x * x
+            values[5] = x * y
+            values[6] = x * z
+            values[7] = y * y
+            values[8] = y * z
+            values[9] = z * z
+        if n > 10:
+            for i in range(10, 16):
+                values[i] = x * values[i - 6]
+            for i in range(16, 19):
+                values[i] = y * values[i - 9]
+            values[19] = z * values[9]
+        if n > 20:
+            for i in range(20, 30):
+                values[i] = x * values[i - 10]
+            for i in range(30, 34):
+                values[i] = y * values[i - 14]
+            values[34] = z * values[19]
+        return values
+
 
 class Hexahedron(Element):
 
@@ -231,6 +266,34 @@ class TestPyramid(unittest.TestCase):
                     for z in xyz:
                         shapes = Pyramid.lagrange_shapes(n, x, y, z)
                         self.assertAlmostEqual(1.0, np.sum(shapes))
+
+    def test_taylor_to_lagrange(self):
+        k = 11
+        xyz = np.random.rand(k) * 2 - 1
+        m = k**3
+        p = 4
+        n = Element.p2n(p)
+        lhs = np.ndarray((m, n))
+        n_node = 13
+        rhs = np.ndarray((m, n_node))
+        i = 0
+        for x in xyz:
+            for y in xyz:
+                for z in xyz:
+                    lhs[i] = Element.taylor_basis(p, x, y, z)
+                    rhs[i] = Pyramid.lagrange_shapes(n_node, x, y, z)
+                    i += 1
+        assert i == m
+        taylor_to_lagrange, res, rank, s = np.linalg.lstsq(lhs, rhs)
+        print(res)
+        a = lhs.T @ lhs
+        print(lhs.shape)
+        print(taylor_to_lagrange.shape)
+        print(rank, np.linalg.matrix_rank(a))
+        print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
+        b = lhs.T @ rhs
+        taylor_to_lagrange = np.linalg.solve(a, b)
+        print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
 
 
 if __name__ == '__main__':
