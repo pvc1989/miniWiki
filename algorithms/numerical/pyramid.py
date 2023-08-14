@@ -28,32 +28,24 @@ class Element(abc.ABC):
     @staticmethod
     def taylor_basis(p, x, y, z) -> np.ndarray:
         n = Element.p2n(p)
-        assert n in (1, 4, 10, 20, 35)
         values = np.ndarray(n)
         values[0] = 1
         if n > 1:
             values[1] = x
             values[2] = y
             values[3] = z
-        if n > 4:
-            values[4] = x * x
-            values[5] = x * y
-            values[6] = x * z
-            values[7] = y * y
-            values[8] = y * z
-            values[9] = z * z
-        if n > 10:
-            for i in range(10, 16):
-                values[i] = x * values[i - 6]
-            for i in range(16, 19):
-                values[i] = y * values[i - 9]
-            values[19] = z * values[9]
-        if n > 20:
-            for i in range(20, 30):
-                values[i] = x * values[i - 10]
-            for i in range(30, 34):
-                values[i] = y * values[i - 14]
-            values[34] = z * values[19]
+        if n == 4:
+            return values
+        for p_curr in range(2, p + 1):
+            n_curr = Element.p2n(p_curr)
+            n_prev = Element.p2n(p_curr - 1)
+            n_prev_prev = Element.p2n(p_curr - 2)
+            n_diff = n_prev - n_prev_prev
+            for i in range(n_prev, n_prev + n_diff):
+                values[i] = x * values[i - n_diff]
+            for i in range(n_prev + n_diff, n_curr - 1):
+                values[i] = y * values[i - n_diff - p_curr]
+            values[n_curr - 1] = z * values[n_prev - 1]
         return values
 
 
@@ -271,7 +263,7 @@ class TestPyramid(unittest.TestCase):
         k = 11
         xyz = np.random.rand(k) * 2 - 1
         m = k**3
-        p = 4
+        p = 5
         n = Element.p2n(p)
         lhs = np.ndarray((m, n))
         n_node = 13
