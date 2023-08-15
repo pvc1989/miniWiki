@@ -1,7 +1,7 @@
 import abc
 import unittest
 import numpy as np
-
+from scipy import sparse
 
 class Element(abc.ABC):
 
@@ -262,30 +262,55 @@ class TestPyramid(unittest.TestCase):
     def test_taylor_to_lagrange(self):
         k = 11
         xyz = np.random.rand(k) * 2 - 1
-        m = k**3
+        n_sample = k**3
         p = 5
-        n = Element.p2n(p)
-        lhs = np.ndarray((m, n))
-        n_node = 13
-        rhs = np.ndarray((m, n_node))
+        n_taylor = Element.p2n(p)
+        lhs = np.ndarray((n_sample, n_taylor))
+        n_lagrange = 13
+        rhs = np.ndarray((n_sample, n_lagrange))
         i = 0
         for x in xyz:
             for y in xyz:
                 for z in xyz:
                     lhs[i] = Element.taylor_basis(p, x, y, z)
-                    rhs[i] = Pyramid.lagrange_shapes(n_node, x, y, z)
+                    rhs[i] = Pyramid.lagrange_shapes(n_lagrange, x, y, z)
                     i += 1
-        assert i == m
+        assert i == n_sample
         taylor_to_lagrange, res, rank, s = np.linalg.lstsq(lhs, rhs)
-        print(res)
+        self.assertAlmostEqual(np.linalg.norm(res), 0)
+        self.assertEqual(lhs.shape, (n_sample, n_taylor))
+        self.assertEqual(taylor_to_lagrange.shape, (n_taylor, n_lagrange))
         a = lhs.T @ lhs
-        print(lhs.shape)
-        print(taylor_to_lagrange.shape)
-        print(rank, np.linalg.matrix_rank(a))
+        self.assertEqual(rank, np.linalg.matrix_rank(a))
         print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
-        b = lhs.T @ rhs
-        taylor_to_lagrange = np.linalg.solve(a, b)
+        taylor_to_lagrange = np.linalg.solve(a, lhs.T @ rhs)
         print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
+        taylor_to_lagrange_dok = sparse.dok_matrix((n_taylor, n_lagrange))
+        for i in range(n_taylor):
+            for j in range(n_lagrange):
+                val = taylor_to_lagrange[i, j]
+                if np.abs(val) > 1e-3:
+                    taylor_to_lagrange_dok[i, j] = np.round(val * 64) / 64
+                else:
+                    assert np.abs(val) < 1e-8, val
+        print(taylor_to_lagrange_dok.nnz, n_taylor * n_lagrange)
+        taylor_to_lagrange_dense = taylor_to_lagrange_dok.todense()
+        taylor_to_lagrange_csc = taylor_to_lagrange_dok.tocsc()
+        print(np.linalg.norm(lhs @ taylor_to_lagrange_dense - rhs))
+        print(np.linalg.norm(lhs @ taylor_to_lagrange_csc - rhs))
+        def test(lhs, matrix, rhs):
+            for i in range(1000):
+                diff = lhs @ matrix - rhs
+                assert np.linalg.norm(diff) < 1e-10
+        from timeit import default_timer as timer
+        start = timer()
+        test(lhs, taylor_to_lagrange_dense, rhs)
+        end = timer()
+        print('t_dense = ', end - start)
+        start = timer()
+        test(lhs, taylor_to_lagrange_csc, rhs)
+        end = timer()
+        print('t_csc = ', end - start)
 
 
 if __name__ == '__main__':
