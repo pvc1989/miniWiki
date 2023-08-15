@@ -48,6 +48,35 @@ class Element(abc.ABC):
             values[n_curr - 1] = z * values[n_prev - 1]
         return values
 
+    @staticmethod
+    def taylor_to_lagrange(Lagrange, n_lagrange, degree):
+        assert issubclass(Lagrange, Element)
+        k = 11
+        xyz = np.random.rand(k) * 2 - 1
+        n_sample = k**3
+        n_taylor = Element.p2n(degree)
+        lhs = np.ndarray((n_sample, n_taylor))
+        rhs = np.ndarray((n_sample, n_lagrange))
+        i = 0
+        for x in xyz:
+            for y in xyz:
+                for z in xyz:
+                    lhs[i] = Element.taylor_basis(degree, x, y, z)
+                    rhs[i] = Lagrange.lagrange_shapes(n_lagrange, x, y, z)
+                    i += 1
+        assert i == n_sample
+        taylor_to_lagrange = np.linalg.solve(lhs.T @ lhs, lhs.T @ rhs)
+        base = 2**(degree)
+        for i in range(n_taylor):
+            for j in range(n_lagrange):
+                val = taylor_to_lagrange[i, j]
+                if np.abs(val) > 1e-3:
+                    taylor_to_lagrange[i, j] = np.round(val * base) / base
+                else:
+                    assert np.abs(val) < 1e-8, val
+                    taylor_to_lagrange[i, j] = 0
+        return taylor_to_lagrange
+
 
 class Hexahedron(Element):
 
@@ -263,54 +292,46 @@ class TestPyramid(unittest.TestCase):
         k = 11
         xyz = np.random.rand(k) * 2 - 1
         n_sample = k**3
-        p = 5
-        n_taylor = Element.p2n(p)
+        degree = 5
+        n_taylor = Element.p2n(degree)
         lhs = np.ndarray((n_sample, n_taylor))
-        n_lagrange = 13
-        rhs = np.ndarray((n_sample, n_lagrange))
-        i = 0
-        for x in xyz:
-            for y in xyz:
-                for z in xyz:
-                    lhs[i] = Element.taylor_basis(p, x, y, z)
-                    rhs[i] = Pyramid.lagrange_shapes(n_lagrange, x, y, z)
-                    i += 1
-        assert i == n_sample
-        taylor_to_lagrange, res, rank, s = np.linalg.lstsq(lhs, rhs)
-        self.assertAlmostEqual(np.linalg.norm(res), 0)
-        self.assertEqual(lhs.shape, (n_sample, n_taylor))
-        self.assertEqual(taylor_to_lagrange.shape, (n_taylor, n_lagrange))
-        a = lhs.T @ lhs
-        self.assertEqual(rank, np.linalg.matrix_rank(a))
-        print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
-        taylor_to_lagrange = np.linalg.solve(a, lhs.T @ rhs)
-        print(np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
-        taylor_to_lagrange_dok = sparse.dok_matrix((n_taylor, n_lagrange))
-        for i in range(n_taylor):
-            for j in range(n_lagrange):
-                val = taylor_to_lagrange[i, j]
-                if np.abs(val) > 1e-3:
-                    taylor_to_lagrange_dok[i, j] = np.round(val * 64) / 64
-                else:
-                    assert np.abs(val) < 1e-8, val
-        print(taylor_to_lagrange_dok.nnz, n_taylor * n_lagrange)
-        taylor_to_lagrange_dense = taylor_to_lagrange_dok.todense()
-        taylor_to_lagrange_csc = taylor_to_lagrange_dok.tocsc()
-        print(np.linalg.norm(lhs @ taylor_to_lagrange_dense - rhs))
-        print(np.linalg.norm(lhs @ taylor_to_lagrange_csc - rhs))
-        def test(lhs, matrix, rhs):
-            for i in range(1000):
-                diff = lhs @ matrix - rhs
-                assert np.linalg.norm(diff) < 1e-10
-        from timeit import default_timer as timer
-        start = timer()
-        test(lhs, taylor_to_lagrange_dense, rhs)
-        end = timer()
-        print('t_dense = ', end - start)
-        start = timer()
-        test(lhs, taylor_to_lagrange_csc, rhs)
-        end = timer()
-        print('t_csc = ', end - start)
+        for n_lagrange in (5, 13, 14):
+            taylor_to_lagrange = Element.taylor_to_lagrange(Pyramid, n_lagrange, degree)
+            self.assertEqual(taylor_to_lagrange.shape, (n_taylor, n_lagrange))
+            self.assertEqual(n_lagrange,
+                np.linalg.matrix_rank(taylor_to_lagrange))
+            rhs = np.ndarray((n_sample, n_lagrange))
+            i = 0
+            for x in xyz:
+                for y in xyz:
+                    for z in xyz:
+                        lhs[i] = Element.taylor_basis(degree, x, y, z)
+                        rhs[i] = Pyramid.lagrange_shapes(n_lagrange, x, y, z)
+                        i += 1
+            assert i == n_sample
+            self.assertAlmostEqual(0,
+                np.linalg.norm(lhs @ taylor_to_lagrange - rhs))
+            taylor_to_lagrange_lstsq, res, rank, _ = np.linalg.lstsq(lhs, rhs, -1)
+            self.assertAlmostEqual(0, np.linalg.norm(res))
+            self.assertEqual(rank, n_taylor)
+            self.assertEqual(lhs.shape, (n_sample, n_taylor))
+            self.assertAlmostEqual(0,
+                np.linalg.norm(taylor_to_lagrange - taylor_to_lagrange_lstsq))
+            taylor_to_lagrange_csc = sparse.csc_matrix(taylor_to_lagrange)
+            print(taylor_to_lagrange_csc.nnz, n_taylor * n_lagrange)
+            def test(lhs, matrix, rhs):
+                for i in range(1000):
+                    diff = lhs @ matrix - rhs
+                    assert np.linalg.norm(diff) < 1e-10
+            from timeit import default_timer as timer
+            start = timer()
+            test(lhs, taylor_to_lagrange, rhs)
+            end = timer()
+            print('t_dense = ', end - start)
+            start = timer()
+            test(lhs, taylor_to_lagrange_csc, rhs)
+            end = timer()
+            print('t_csc = ', end - start)
 
 
 if __name__ == '__main__':
