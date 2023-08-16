@@ -7,35 +7,34 @@ title: 葵花宝典
 
 ## [数学](./mathematics/README.md)
 
-- [高等代数](./mathematics/algebra/README.lyx)
-- [实分析](./mathematics/real_analysis/README.lyx)
-- [复分析](./mathematics/complex/README.lyx)
-- [泛函分析](./mathematics/functional/README.lyx)
-- [常微分方程](./mathematics/ode/README.lyx)
-- [偏微分方程](./mathematics/pde/README.lyx)
-- [微分几何](./mathematics/geometry/README.lyx)
+- 高等代数
+- 实分析、复分析、泛函分析
+- 常微分方程、偏微分方程
+- 微分几何
 
 ## [物理](./physics/README.md)
 
-- [理论力学](./physics/mechanics/README.md)
-- [电动力学](./physics/electromagnetism/README.md)
+- [理论力学](./physics/classical/README.md)
+- [电动力学](./physics/maxwell/README.md)
 - [量子力学](./physics/quantum/README.md)
-- [统计力学](./physics/heat/README.lyx)
-- [流体力学](./physics/fluid/README.md)
+- 热力学与统计物理
+- [连续介质力学](./physics/continuum/README.md)
 
 ## [算法](./algorithms/README.md)
 
 - [数据结构](./algorithms/data_structures/README.md)
-- [数值计算](./algorithms/numerical/)
-- [优化方法](./algorithms/optimization/README.lyx)
+- 数值计算
+- 优化方法
 
-## 计算机基础
+## [Programming](./programming/README.md)
 
-### 组成原理
+### 计算机基础
+
+#### 组成原理
 
 - [CSAPP](./programming/csapp/README.md)
 
-### 操作系统
+#### 操作系统
 
 - [链接](./programming/csapp/7_linking.md)
 - [异常控制流](./programming/csapp/8_exceptional_control_flow.md)
@@ -45,61 +44,61 @@ title: 葵花宝典
 - [Linux](./programming/linux/README.md)
 - [Docker](./programming/docker/README.md)
 
-### 计算机网络
+#### 计算机网络
 
 - [网络编程](./programming/csapp/11_network_programming.md)
 - [SSH](./programming/linux/ssh.md)
 - [网页](./documenting/web/README.md)
 
-### 数据库系统
+#### 数据库系统
 
 - [数据模型](./programming/database/data_models.md)
 - [SQL](./programming/database/sql.md)
 
-## 软件开发
+### 软件开发
 
-### 高级语言
+#### 高级语言
 
 - [C/C++](./programming/languages/cpp/README.md)
 - [MATLAB/Octave](./programming/languages/octave.md)
 - [Python](./programming/languages/python.md)
 - 编译原理
 
-### 架构设计
+#### 架构设计
 
 - [UML](./programming/design/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
 - [设计原则](./programming/design/principles/README.md)
 - [设计模式](./programming/design/patterns/README.md)
 
-### 版本控制
+#### 版本控制
 
 - [Git](./programming/git.md) --- Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
 
-## 开源软件
+### 第三方库
 
-### 并行计算
+#### 并行计算
 
 - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
 
 - [MPI](./programming/mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 
-### CAD 建模
+#### CAD 建模
 
 - [SALOME](www.salome-platform.org)
 - [Open CASCADE](https://www.opencascade.com)
 
-### 网格相关
+#### 网格
 
 - [Gmsh](./programming/mesh/gmsh/README.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
 
 - [CGNS](./programming/mesh/cgns/README.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
 - [VTK](./programming/mesh/vtk/README.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
 
-### PDE 求解
+#### PDE 求解
 
-- [OpenFOAM](algorithms/openfoam/README.md)
+- [OpenFOAM](./programming/openfoam/README.md)
 
-## [文档](./documenting/README.md)
+## [Documenting](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)
   - [LyX](./documenting/latex/README.md#LyX)
   - [MathJax](./documenting/latex/README.md#MathJax)
@@ -119,9 +118,9 @@ title: 葵花宝典
 - [LyX](./documenting/latex/README.md#LyX)
   - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 LyX 文档。
   - 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
-  - 『[顶层 `README.lyx`](./README.lyx)』大致按逻辑顺序重新编排了章节（重复的只保留一份）。
+  - 『顶层 `README.lyx`』大致按逻辑顺序重新编排了章节（重复的只保留一份）。
 - [Markdown](./documenting/markdown.md)
-  - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此整理为 Markdown 文档。
+  - 《[Programming](#Programming)》《[Documenting](#Documenting)》含有大量代码，因此整理为 Markdown 文档。
   - 本仓库已启用 [GitHub Pages](https://docs.github.com/en/github/working-with-github-pages)（[首页](https://pvcstillingradschool.github.io/miniWiki/)），目前仅支持 Markdown 文档。
 
 ## 编译
@@ -130,7 +129,7 @@ title: 葵花宝典
 - 编译 LyX 文档（生成 PDF 文件）：
   1. 安装最新版的 [TeX Live](./documenting/latex/README.md#TeX-Live) 和 [LyX](./documenting/latex/README.md#LyX)，并开启[中文支持](./documenting/latex/README.md#LyX-中文支持)及[代码高亮](./documenting/latex/README.md#LyX-代码高亮)。
   1. 安装 [STIX](https://github.com/stipub/stixfonts) 及 [NewCM](https://ctan.org/tex-archive/fonts/newcomputermodern) 字体。
-  1. 如果要编译除『[顶层 `README.lyx`](./README.lyx)』以外的其他 LyX 或 TeX 文档，则需在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的『符号链接 (symbolic link)』：
+  1. 如果要编译除『顶层 `README.lyx`』以外的其他 LyX 或 TeX 文档，则需在本地 `$TEXMFHOME/tex/latex` 下创建一个指向 [`miniWiki/documenting/latex/pvcstyle.sty`](./documenting/latex/pvcstyle.sty) 的『符号链接 (symbolic link)』：
     
      |  操作系统  | `TEXMFHOME` 的默认值 |  创建符号链接的命令  |
      | :--------: | :------------------: | :------------------: |
@@ -155,7 +154,3 @@ title: 葵花宝典
   - 用中文标点修饰中文内容，例如 “……”『……』（……）〔……〕
   - 用英文标点修饰英文内容，e.g. "..." '...' (...) [...]
   - 数学环境内部使用英文标点，数学环境外部服从所属语言环境。
-- 【待补充】
-
-## 纠错
-移步 [Issues](https://github.com/pvcStillInGradSchool/miniWiki/issues)，尽量做到一个 issue 对应一个问题。
