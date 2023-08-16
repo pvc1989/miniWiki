@@ -309,8 +309,8 @@ Report or omit repeated lines.
     sed -e 's/find/replace/' -e 's/find/replace/' filename
 # Replace separator `/` by any other character not used in the find or replace patterns, e.g. `#`:
     sed 's#find#replace#' filename
-# [d]elete the line at the specific line number [i]n a file, overwriting the file:
-    sed -i '' 'line_numberd' filename
+# [d]elete the 11th (1-based) line [i]n a file, overwriting the file:
+    sed -i '' '11d' filename
 ```
 
 ### `awk`

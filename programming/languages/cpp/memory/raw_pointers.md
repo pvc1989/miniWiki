@@ -135,7 +135,7 @@ auto pa = new Array;
 
 ## 在给定位置构造对象
 
-与单个对象类似，数组版本的 `new` 会依次完成**分配内存 (allocate memory)**和**构造对象 (construct object)** 两个操作。对于动态数组，通常希望将这两个操作拆分开
+与单个对象类似，数组版本的 `new` 会依次完成**分配内存 (allocate memory)** 和**构造对象 (construct object)** 两个操作。对于动态数组，通常希望将这两个操作拆分开
 
 - *分配内存*可以通过 `new char[N]` 或 [`std::malloc()`](#malloc) 完成。
 - *构造对象*可以通过 **placement `new`** 完成。
