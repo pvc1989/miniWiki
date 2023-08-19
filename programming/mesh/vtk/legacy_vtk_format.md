@@ -110,10 +110,18 @@ type[n_cells - 1]
   - `n_ints` 表示存储结点连接关系所需的整数个数。
   - `n_points[i]` 表示第 `i` 个单元的结点个数。
   - `i, j, k, ...` 表示结点编号。
-    - [高阶单元编号方案](https://gitlab.kitware.com/vtk/vtk/uploads/d18be24480da192e4b70568f050d114f/VtkLagrangeNodeNumbering.pdf)
 - `CELL_TYPES` 后的参数依次为
   - `n_cells` 表示单元总数，必须与 `CELLS` 的 `n_cells` 一致。
   - `type[i]` 表示第 `i` 个单元的类型，详见 [`vtkCellType.h`](https://vtk.org/doc/nightly/html/vtkCellType_8h.html) 中的定义。
+
+### 线性单元
+![](https://raw.githubusercontent.com/Kitware/vtk-examples/gh-pages/src/VTKBook/Figures/Figure5-2.png)
+
+### 常用高阶单元
+![](https://raw.githubusercontent.com/Kitware/vtk-examples/gh-pages/src/VTKBook/Figures/Figure5-4.png)
+
+### 任意高阶单元
+![](https://gitlab.kitware.com/vtk/vtk/uploads/d18be24480da192e4b70568f050d114f/VtkLagrangeNodeNumbering.pdf)
 
 ## `POLYDATA`
 该类型表示最一般的数据集，由初等几何对象 `POINTS`, `VERTICES`, `LINES`,  `POLYGONS`, `TRIANGLE_STRIPS` 拼凑而成。

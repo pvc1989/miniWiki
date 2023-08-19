@@ -286,7 +286,7 @@ Elements_t
 │   ├── Name: ElementConnectivity
 │   └── Data: int[ElementDataSize]  // ElementDataSize :=
 │       // 同种单元 ElementSize * NPE(ElementType)
-│       // 多种单元 Sum(NPE(ElementType[n]) + 1)
+│       // 多种单元 Sum(NPE(ElementType[i]) + 1/* for ElementType[i] */)
 │       // NPE := number of nodes for the given ElementType
 └── DataArray_t  // 含多种单元时使用
     ├── Name: ElementStartOffset
@@ -342,9 +342,9 @@ ier = cgp_elements_read_data(int i_file, int i_base, int i_zone, int i_sect,
 
 其中
 
-- `cg_section_write()` 在给定的 `Zone_t` 对象下新建一个**单元片段 (element section)**，即 `Elements_t` 对象。
+- `cg_section_write()` 或 `cg_poly_section_write()` 在给定的 `Zone_t` 对象下新建一个**单元片段 (element section)**，即 `Elements_t` 对象。二者区别在于：前者用于只含一种单元的 sections，只需提供 `connectivity`；后者用于含多种单元的 sections，还需提供 `start_offset`。
 - 一个 `Zone_t` 对象下可以有多个 `Elements_t` 对象：
-  - 同一个 `Elements_t` 对象下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](file:///Users/master/code/mesh/cgns/doc/midlevel/general.html#typedefs) 的有效值之一。
+  - 同一个 `Elements_t` 对象下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](https://cgns.github.io/CGNS_docs_current/midlevel/general.html#typedefs) 的有效值之一。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有*连续*且*互异*的编号。
   - ⚠️ 若要用 [ParaView](../vtk/README.md#ParaView) 打开，则只应保留最高维的单元片段。
 - `first`、`last`

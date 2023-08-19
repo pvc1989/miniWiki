@@ -85,13 +85,13 @@ otherObject->SetExample(obj);                        // 使用
 
 - **数据对象 (data objects)** 用于表示信息。
 - **操作对象 (operation objects)** 或**处理对象 (process objects)** 用于操作数据，可分为
-  - **源 (source)** ：无输入、有输出。
-  - **汇 (sink)** 或**映射器 (mapper)** ：有输入、无输出。
-  - **滤镜 (filter)** ：有输入、有输出，以**端口 (port)** 与其他操作对象交互。
+  - **源 (source)**：无输入、有输出。
+  - **汇 (sink)** 或**映射器 (mapper)**：有输入、无输出。
+  - **滤镜 (filter)**：有输入、有输出，以**端口 (port)** 与其他操作对象交互。
 
 ## 数据表示（文件格式）
 
-详见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《VTK File Formats》一节，及《[The Visualization Toolkit](https://gitlab.kitware.com/vtk/textbook)》的《Basic Data Representation》一章。
+详见《[VTK User's Guide](https://www.kitware.com/products/books/VTKUsersGuide.pdf)》的《[VTK File Formats](https://docs.vtk.org/en/latest/design_documents/VTKFileFormats.html)》一节，及《[The Visualization Toolkit](https://gitlab.kitware.com/vtk/textbook)》的《Basic Data Representation》一章。
 
 ### 传统 VTK 格式
 
