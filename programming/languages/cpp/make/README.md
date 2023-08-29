@@ -247,7 +247,7 @@ library.o : library.c
 - **构建配置 (build configuration)**：由一组构建工具（编译器、链接器）的配置选项所构成的构建参数集。
 
 ## `cmake` 命令<a href id="cmake-cmd"></a>
-CMake 参与的构建过程可以分为以下两个阶段：
+CMake 参与的构建过程可以分为以下几个阶段：
 1. CMake 读取 `CMakeLists.txt` 文件，生成**本地构建工具 (native build tool)** (e.g. [`make`](#make-cmd)) 所需的**本地构建文件 (native build file)** (e.g. [`Makefile`](#Makefile))：
    ```shell
    cmake [<options>] -S <source-dir> -B <build-dir> # cmake 3.13.5+ 推荐用法
@@ -255,9 +255,15 @@ CMake 参与的构建过程可以分为以下两个阶段：
    cmake [<options>] <existing-build-dir> # 建议用 -B <existing-build-dir>
    ```
 2. *本地构建工具*读取*本地构建文件*，调用**本地工具链 (native tool chain)** 进行构建。这一步可借助 CMake 以跨平台的方式来完成：
-   
    ```shell
    cmake --build <build-dir> [<options>] [-- <build-tool-options>]
+   ```
+3. 安装到默认或指定路径：
+   ```shell
+   # 安装当前目录下的目标到默认路径
+   cmake --install .
+   # 安装当前目录下的目标到指定路径
+   cmake --install . --prefix <installdir>
    ```
 
 ### 选项
