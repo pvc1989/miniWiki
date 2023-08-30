@@ -109,6 +109,27 @@ cmake -D CGNS_ENABLE_PARALLEL=ON \
 
 下载或克隆 [CGNS 代码库](https://github.com/CGNS/CGNS)后，可在 `${CGNS_SOURCE_DIR}/src/Test_UserGuideCode/` 中找到所有示例的源文件。源文件头部的注释给出了独立构建各示例的方法；若要批量构建所有示例，可在 CMake 中开启 `CGNS_ENABLE_TESTS` 等选项，这样生成的可执行文件位于 `${CGNS_BUILD_DIR}/src/Test_UserGuideCode/` 中。
 
+## Python Module
+
+- [GitHub](https://github.com/pyCGNS/pyCGNS)
+- [CGNS](https://pycgns.github.io)
+  - [CGNS.MAP](https://pycgns.github.io/MAP/_index.html) is the translator to get CGNS/Python trees from a CGNS/HDF5 file and back, to save CGNS/Python trees as a CGNS/HDF5 file.
+  - [CGNS.PAT](https://pycgns.github.io/PAT/_index.html)tern provides the user with functions dedicated to CGNS/Python trees.
+    - [CGNS.PAT.cgnsutils](https://pycgns.github.io/PAT/_index.html#pat-cgnsutils) provides utility fonctions for raw CGNS/Python trees or nodes.
+    - [CGNS.PAT.cgnslib](https://pycgns.github.io/PAT/lib.html) is the Pythonish CGNSlib or MLL or Mid-level library.
+    - [CGNS.PAT.cgnskeywords](https://pycgns.github.io/PAT/_index.html#pat-cgnskeywords) contains TYPES, ENUMERATES, CONSTANTS, NAMES from CGNS/MLL.
+  - [CGNS.NAV](https://pycgns.github.io/NAV/_index.html)igator is a CGNS tree browser (aka `cg_look`).
+  - [CGNS.VAL](https://pycgns.github.io/VAL/_index.html)idator is a CGNS/Python tree checker.
+  - [CGNS.APP](https://pycgns.github.io/APP/_index.html)licationSampler module is an informal set of tools.
+
+
+```shell
+git clone https://github.com/pyCGNS/pyCGNS.git temp
+cd temp
+python setup.py build
+python setup.py install
+```
+
 # 基本模块
 
 ## `root`
