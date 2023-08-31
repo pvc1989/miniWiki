@@ -12,8 +12,19 @@ def copy(old_file):
     cgm.save(new_file, tree)
     return new_file
 
+
+def getNodesByType(tree, type):
+    paths = cgu.getPathsByTypeSet(tree, [type])
+    nodes = []
+    for path in paths:
+        nodes.append(cgu.getNodeByPath(tree, path))
+    return nodes
+
+
 def read(file):
     tree, links, paths = cgm.load(file)
+    for section in getNodesByType(tree, 'Elements_t'):
+        print(section)
     families = cgu.getAllFamilies(tree)
     print('Families:', families)
     for family in families:
