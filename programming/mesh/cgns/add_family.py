@@ -44,11 +44,33 @@ def add(old_file, families):
         print(family, bc_list)
     new_file = 'family_added.cgns'
     cgm.save(new_file, tree)
+    return new_file
+
+
+def rename(old_file):
+    tree, links, paths = cgm.load(old_file)
+    paths = cgu.getPathsByTypeSet(tree, ['CGNSBase_t'])
+    assert 1 == len(paths)
+    base = cgu.getNodeByPath(tree, paths[0])
+    families = getNodesByType(tree, 'Family_t')
+    for family in families:
+        family_name = family[0]
+        print(f'In (Family_t) {family_name}:')
+        path = cgu.getPathFromRoot(tree, family)
+        children = cgu.getChildrenByPath(tree, path)
+        for child in children:
+            if not cgu.checkNodeType(child, 'FamilyName_t'):
+                continue
+            old_name = child[0]
+            print(f'  Rename (FamilyName_t) {old_name} to FamilyParent')
+            cgu.setChildName(family, old_name, 'FamilyParent')
+    new_file = 'family_renamed.cgns'
+    cgm.save(new_file, tree)
 
 
 if __name__ == '__main__':
     old = sys.argv[1]
-    new = copy(old)
-    read(new)
-    add(new, ['Fluid', 'Wall', 'Left', 'Right'])
-    # read(new)
+    copied = copy(old)
+    read(copied)
+    added = add(copied, ['Fluid', 'Wall', 'Left', 'Right'])
+    renamed = rename(added)
