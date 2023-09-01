@@ -13,12 +13,31 @@ def copy(old_file):
     return new_file
 
 
-def getNodesByType(tree, type):
+def getNodesByType(tree, type) -> list:
     paths = cgu.getPathsByTypeSet(tree, [type])
     nodes = []
     for path in paths:
         nodes.append(cgu.getNodeByPath(tree, path))
     return nodes
+
+
+def getChildrenByType(node, type):
+    children = []
+    all_children = cgu.getNextChildSortByType(node)
+    for child in all_children:
+        if cgu.checkNodeType(child, type):
+            children.append(child)
+    return children
+
+
+def getUniqueChildByType(node, type):
+    children = getChildrenByType(node, type)
+    assert 1 == len(children)
+    return children[0]
+
+
+def getNodeName(node) -> str:
+    return node[0]
 
 
 def read(file):
@@ -34,9 +53,7 @@ def read(file):
 
 def add(old_file, families):
     tree, links, paths = cgm.load(old_file)
-    paths = cgu.getPathsByTypeSet(tree, ['CGNSBase_t'])
-    assert 1 == len(paths)
-    base = cgu.getNodeByPath(tree, paths[0])
+    base = getUniqueChildByType(tree, 'CGNSBase_t')
     for family in families:
         cgl.newFamily(base, family)
     for family in families:
@@ -49,19 +66,17 @@ def add(old_file, families):
 
 def rename(old_file):
     tree, links, paths = cgm.load(old_file)
-    paths = cgu.getPathsByTypeSet(tree, ['CGNSBase_t'])
-    assert 1 == len(paths)
-    base = cgu.getNodeByPath(tree, paths[0])
-    families = getNodesByType(tree, 'Family_t')
+    base = getUniqueChildByType(tree, 'CGNSBase_t')
+    families = getChildrenByType(base, 'Family_t')
     for family in families:
-        family_name = family[0]
+        family_name = getNodeName(family)
         print(f'In (Family_t) {family_name}:')
         path = cgu.getPathFromRoot(tree, family)
         children = cgu.getChildrenByPath(tree, path)
         for child in children:
             if not cgu.checkNodeType(child, 'FamilyName_t'):
                 continue
-            old_name = child[0]
+            old_name = getNodeName(child)
             print(f'  Rename (FamilyName_t) {old_name} to FamilyParent')
             cgu.setChildName(family, old_name, 'FamilyParent')
     new_file = 'family_renamed.cgns'
