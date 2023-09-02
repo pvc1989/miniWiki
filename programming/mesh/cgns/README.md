@@ -695,6 +695,14 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 - `grid_location == CGNS_ENUMV(FaceCenter)` 表示当前边界条件定义在*面单元*上，即 `cell_set` 是存储*面单元*编号的数组。
 - 调用 `cg_gridlocation_write()` 之前必须先用 `cg_goto()` 定位到所需的 `BC_t` 对象。
 
+# `Family_t`
+
+`Family_t` 可以是某个 `CGNSBase_t` 的直系 child，或其他 `Family_t` 的直系 child。
+
+为表示网格对象（`Zone_t` 或 `ZoneSubRegion_t` 或 `BC_t`）与 `Family_t` 的关联，可以为该网格对象定义一个名为 `FamilyName` 的 `FamilyName_t` 型 child。
+该 child 的值为字符串，表示其 parent 所关联的 `Family_t` 对象。
+若该字符串不含 `/`，则表示当前 `CGNSBase_t` 的直系 `Family_t` 型 child；否则（含若干 `/`）需给出形如 `/CGNSBaseName/<FamilyName1>/.../<FamilyNameN>` 的完整名称。
+
 # 多区网格
 
 # 动态数据
