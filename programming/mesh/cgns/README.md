@@ -703,6 +703,12 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 该 child 的值为字符串，表示其 parent 所关联的 `Family_t` 对象。
 若该字符串不含 `/`，则表示当前 `CGNSBase_t` 的直系 `Family_t` 型 child；否则（含若干 `/`）需给出形如 `/CGNSBaseName/<FamilyName1>/.../<FamilyNameN>` 的完整名称。
 
+## Gmsh
+
+在 [Gmsh](../gmsh/README.md) 输出的 CGNS 文件中，每个
+- 【Elementary Entity】对应于一个 `CGNSBase_t/Family_t` 及一个 `ZoneBC_t/BC_t`，后者含有一个指向前者的 `FamilyName_t` 型 child。
+- 【Physical Group】没有显式存储为 `CGNSBase_t/Family_t`，而是存储为上述 `Family_t` 的 `FamilyName_t` 型 child 的值。
+
 # 多区网格
 
 # 动态数据
