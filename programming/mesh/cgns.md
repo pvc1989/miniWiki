@@ -39,7 +39,7 @@ sudo apt install libopengl-dev libglu1-mesa-dev libgl1-mesa-dev
 sudo apt install libtcl8.6 tk8.6-dev
 ```
 
-⚠️ [Gmsh](../gmsh/README.md)、[VTK](../vtk/README.md) 只能打开比它们所依赖的 *CGNS 库*更*旧*的 *CGNS 文件*。
+⚠️ [Gmsh](./gmsh.md)、[VTK](./vtk.md) 只能打开比它们所依赖的 *CGNS 库*更*旧*的 *CGNS 文件*。
 
 ## 示例文件
 
@@ -367,7 +367,7 @@ ier = cgp_elements_read_data(int i_file, int i_base, int i_zone, int i_sect,
 - 一个 `Zone_t` 对象下可以有多个 `Elements_t` 对象：
   - 同一个 `Elements_t` 对象下的所有单元必须具有同一种 `element_type`，并且必须是枚举类型 [`ElementType_t`](https://cgns.github.io/CGNS_docs_current/midlevel/general.html#typedefs) 的有效值之一。
   - 同一个  `Zone_t` 下的所有单元（含所有维数）都必须有*连续*且*互异*的编号。
-  - ⚠️ 若要用 [ParaView](../vtk/README.md#ParaView) 打开，则只应保留最高维的单元片段。
+  - ⚠️ 若要用 [ParaView](./vtk.md#ParaView) 打开，则只应保留最高维的单元片段。
 - `first`、`last`
   - 在串行版本及 `cgp_section_write()` 中为当前 `Elements_t` 对象内的首、末单元的编号。
   - 在 `cgp_elements_write_data()` 及 `cgp_elements_write_data()` 中为当前进程所读写的首、末单元的编号。
@@ -705,7 +705,7 @@ ier = cg_gridlocation_read(GridLocation_t *grid_location);
 
 ## Gmsh
 
-在 [Gmsh](../gmsh/README.md) 输出的 CGNS 文件中，每个
+在 [Gmsh](./gmsh.md) 输出的 CGNS 文件中，每个
 - 【Elementary Entity】对应于一个 `CGNSBase_t/Family_t` 及一个 `ZoneBC_t/BC_t`，后者含有一个指向前者的 `FamilyName_t` 型 child。
 - 【Physical Group】没有显式存储为 `CGNSBase_t/Family_t`，而是存储为上述 `Family_t` 的 `FamilyName_t` 型 child 的值。
 
@@ -808,7 +808,7 @@ ier = cg_array_write("FlowSolutionPointers", CGNS_ENUMV(Character),
 
 - 在同一个 `FlowSolution_t` 内，不能既[顶点数据](#顶点数据)、又有[单元数据](#单元数据)。
 - 在同一个 `FlowSolutionPointers` 内，所有 `FlowSolution_t`(s) 必须有相同的  `GridLocation_t` 值。
-- 若要同时记录[顶点数据](#顶点数据)与[单元数据](#单元数据)，则应[平行于 `FlowSolutionPointers` 再创建一个 `FlowSolutionXXXPointers`](https://gitlab.kitware.com/paraview/paraview/-/issues/19838#note_732151)，这样两类数据都能被 [ParaView](../vtk/README.md#ParaView) 识别。示例文件 [`write_fixed_grid.cpp`](./write_fixed_grid.cpp) 演示了这种方法。
+- 若要同时记录[顶点数据](#顶点数据)与[单元数据](#单元数据)，则应[平行于 `FlowSolutionPointers` 再创建一个 `FlowSolutionXXXPointers`](https://gitlab.kitware.com/paraview/paraview/-/issues/19838#note_732151)，这样两类数据都能被 [ParaView](./vtk.md#ParaView) 识别。示例文件 [`write_fixed_grid.cpp`](./cgns/write_fixed_grid.cpp) 演示了这种方法。
 
 ## [网格作刚体运动](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#RigidGridMotion)
 
@@ -867,7 +867,7 @@ ArbitraryGridMotion_t< int IndexDimension,
 
 ## [网格拓扑发生改变](https://cgns.github.io/CGNS_docs_current/sids/timedep.html#ex:adaptedunstructuredmesh)
 
-**网格拓扑发生改变**意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应*网格拓扑发生变化*的各时间步，对应关系由其所属 `CGNSBase_t` 中的 `(DataArray_t) ZonePointers` 管理。示例文件 [`write_adaptive_grid.cpp`](./write_adaptive_grid.cpp) 演示了这种方法。
+**网格拓扑发生改变**意味着 `Elements_t`(s) 不再能复用，故需创建新的 `Zone_t` 以对应*网格拓扑发生变化*的各时间步，对应关系由其所属 `CGNSBase_t` 中的 `(DataArray_t) ZonePointers` 管理。示例文件 [`write_adaptive_grid.cpp`](./cgns/write_adaptive_grid.cpp) 演示了这种方法。
 
 ```c++
 CGNSBase_t "RemeshingCase" {
@@ -907,5 +907,5 @@ CGNSBase_t "RemeshingCase" {
 }
 ```
 
-另一种更通用的方法是创建  CGNS 文件序列，即各时间步分别对应一个 CGNS 文件。示例文件 [`write_file_series.cpp`](./write_file_series.cpp) 演示了这种方法。在 [ParaView](../vtk/README.md#ParaView) 中加载 CGNS 文件序列时，需勾选 `Ignore FlowSolutionPointers` 及 `Ignore Reader Time`，否则所有时间步会叠在一起显示。
+另一种更通用的方法是创建  CGNS 文件序列，即各时间步分别对应一个 CGNS 文件。示例文件 [`write_file_series.cpp`](./cgns/write_file_series.cpp) 演示了这种方法。在 [ParaView](./vtk.md#ParaView) 中加载 CGNS 文件序列时，需勾选 `Ignore FlowSolutionPointers` 及 `Ignore Reader Time`，否则所有时间步会叠在一起显示。
 

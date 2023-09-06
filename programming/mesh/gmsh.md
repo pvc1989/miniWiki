@@ -720,7 +720,7 @@ $EndComments
 
 结点和单元的标签不要求连续.
 
-下面以脚本文件 [`rectangle.geo`](./rectangle.geo) 生成的网格文件 [`rectangle.msh`](./rectangle.msh) 为例来说明 MSH 文件格式.
+下面以脚本文件 [`rectangle.geo`](./gmsh/rectangle.geo) 生成的网格文件 [`rectangle.msh`](./gmsh/rectangle.msh) 为例来说明 MSH 文件格式.
 
 ## `MeshFormat`
 ```cpp

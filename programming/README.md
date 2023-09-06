@@ -63,10 +63,10 @@ title: Programming
 
 ## 网格
 
-- [Gmsh](./mesh/gmsh/README.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
+- [Gmsh](./mesh/gmsh.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
 
-- [CGNS](./mesh/cgns/README.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
-- [VTK](./mesh/vtk/README.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
+- [CGNS](./mesh/cgns.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
+- [VTK](./mesh/vtk.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
 
 ## PDE 求解
 

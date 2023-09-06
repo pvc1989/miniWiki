@@ -6,8 +6,8 @@ title: 基于 VTK 的数据显示工具
 
 在不同的语境下，[VTK (Visualization ToolKit)](https://www.vtk.org) 可能表示：
 - 用于**数据显示 (Data Visualization)** 的 C++ 程序库（或 Python wrapper）。
-- 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./legacy_vtk_format.md)和[现代 XML 格式](#XML)。
-- [传统 VTK 格式](./legacy_vtk_format.md)文件的默认扩展名。
+- 用于记录数据的[文件格式](#文件格式)，包括[传统 VTK 格式](./vtk/legacy_vtk_format.md)和[现代 XML 格式](#XML)。
+- [传统 VTK 格式](./vtk/legacy_vtk_format.md)文件的默认扩展名。
 
 ## 面向对象设计
 
@@ -15,7 +15,7 @@ title: 基于 VTK 的数据显示工具
 
 VTK 中的所有类名都是以 `vtk` 起始的。为节省空间以突出继承关系，下图中省去了该字段（即 `DataSet` 应补全为 `vtkDataSet`）。
 
-[![](./classes.svg)](./classes.txt)
+[![](./vtk/classes.svg)](./vtk/classes.txt)
 
 ### 对象模型
 
@@ -95,7 +95,7 @@ otherObject->SetExample(obj);                        // 使用
 
 ### 传统 VTK 格式
 
-这种格式的[定义](./legacy_vtk_format.md)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
+这种格式的[定义](./vtk/legacy_vtk_format.md)较为简单，对于简单的应用，可以独立于 VTK 程序库实现一套 IO 模块。
 
 ### 现代 XML 格式<a name="XML"></a>
 这是一种支持**随机访问 (random access)** 和**并行读写 (parallel IO)** 的文件格式，以 `.vt[irsupm]` 为扩展名：
@@ -109,14 +109,14 @@ otherObject->SetExample(obj);                        // 使用
 | `vtp` | `vtkPolyData`         |
 | `vtm` | `vtkMultiBlockDataSet` |
 
-这种格式的定义比[传统 VTK 格式](./legacy_vtk_format.md)复杂，建议直接调用 VTK 程序库提供的 [API](#API)。
+这种格式的定义比[传统 VTK 格式](./vtk/legacy_vtk_format.md)复杂，建议直接调用 VTK 程序库提供的 [API](#API)。
 
 如果在本地部署 VTK 程序库有困难（无网络、无权限），可以考虑使用 [PyEVTK](https://bitbucket.org/pauloh/pyevtk)。
 它完全用 Python & Cython 实现，因此不依赖于 VTK 程序库。
 安装后即可在本地 Python 程序中 `import` 该模块，具体用法可以参照 `src/examples` 目录下的示例。
 
 ### Python 示例
-[`read.py`](./read.py) 和 [`write.py`](./write.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
+[`read.py`](./vtk/read.py) 和 [`write.py`](./vtk/write.py) 演示了如何用 `vtk` 模块提供的 API 读写 `vtkUnstructuredGrid`。
 ⚠️ 要运行该示例，必须先在本地部署 VTK 模块（可直接运行 [`pip install vtk`](https://pypi.org/project/vtk/) 安装）。
 
 运行以下命令
@@ -141,7 +141,7 @@ python3 ../read.py
 ### C++ 示例
 源代码仓库的 `Examples` 目录下有各个 VTK 模块的示例。
 
-这里将 `Examples/IO/Cxx⁩/DumpXMLFile.cxx` 简化为 [`read.cpp`](./read.cpp)。
+这里将 `Examples/IO/Cxx⁩/DumpXMLFile.cxx` 简化为 [`read.cpp`](./vtk/read.cpp)。
 - 手动构建较为繁琐，且依赖于本地 VTK 的安装位置（假设：头文件位于 `/usr/local/include/vtk-8.2`，库文件位于 `/usr/local/lib`）及版本号：
 ```shell
 mkdir build  # 在 read.cpp 所属目录下，创建 build 目录
@@ -155,7 +155,7 @@ c++ -o read read.o -L/usr/local/lib -lvtkCommonDataModel-8.2 \
   -lvtkIOImport-8.2 \
   -lvtksys-8.2
 ```
-- 推荐使用 CMake 构建，构建选项以跨平台的方式写在 [`CMakeLists.txt`](./CMakeLists.txt) 中，CMake 会自动查找头文件及库文件位置：
+- 推荐使用 CMake 构建，构建选项以跨平台的方式写在 [`CMakeLists.txt`](./vtk/CMakeLists.txt) 中，CMake 会自动查找头文件及库文件位置：
 ```shell
 mkdir build  # 在 read.cpp 所属目录下，创建 build 目录
 cd build
