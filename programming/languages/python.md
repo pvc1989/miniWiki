@@ -230,6 +230,13 @@ Python 中允许使用成对的单引号 `'...'` 或成对的双引号 `"..."` �
   '3.14,0,8'.split(',')     # ['3.14', '0', '8']
   '3.14 0 8'.split()        # ['3.14', '0', '8']
   ```
+- 去除前、后空格或字符：
+  ```python
+  '   spacious   '.lstrip() # 'spacious   '
+  '   spacious   '.rstrip() # '   spacious'
+  '   spacious   '.strip()  # 'spacious'
+  'www.example.com'.strip('cmowz.') # 'example'
+  ```
 - 合并字符串：
   ```python
   words = [str(x) for x in range(1000000)]  # a iterable container of strings
@@ -592,7 +599,7 @@ print(args)
 先生成统计文件：
 
 ```shell
-python -m cProfile [-o stats_file] (-m module | myscript.py)
+python -m cProfile -o stats_file (-m module | myscript.py)
 ```
 
 再打印统计结果：
