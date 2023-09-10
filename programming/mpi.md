@@ -6,7 +6,7 @@ title: MPI (Message Passing Interface)
 
 ## 操作系统
 
-假设有 `3` 台可以组网的计算机，分别在其上[安装 Linux 发行版](../linux/install/README.md)（例如 [Ubuntu](https://ubuntu.com/download/desktop)）。
+假设有 `3` 台可以组网的计算机，分别在其上[安装 Linux 发行版](../linux/install.md)（例如 [Ubuntu](https://ubuntu.com/download/desktop)）。
 
 - 为避免版本不一致带来的麻烦，建议所有主机安装同一版本。
 - 由于绝大多数操作可在命令行中完成，建议首次安装后执行以下命令：

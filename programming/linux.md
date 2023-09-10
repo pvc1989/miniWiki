@@ -2,7 +2,7 @@
 title: Linux
 ---
 
-# [安装](./linux/install/README.md)
+# [安装](./linux/install.md)
 
 # 文本编辑器
 
