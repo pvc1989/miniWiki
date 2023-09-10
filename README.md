@@ -32,7 +32,7 @@ title: 葵花宝典
 
 #### 组成原理
 
-- [CSAPP](./programming/csapp/README.md)
+- [CSAPP](./programming/csapp.md)
 
 #### 操作系统
 
@@ -41,8 +41,8 @@ title: 葵花宝典
 - [虚拟存储](./programming/9_virtual_memory.md)
 - [系统级读写](./programming/10_system_level_io.md)
 - [并发编程](./programming/12_concurrent_programming.md)
-- [Linux](./programming/linux/README.md)
-- [Docker](./programming/docker/README.md)
+- [Linux](./programming/linux.md)
+- [Docker](./programming/docker.md)
 
 #### 计算机网络
 
@@ -80,7 +80,7 @@ title: 葵花宝典
 
 - [Pthread](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
 
-- [MPI](./programming/mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
+- [MPI](./programming/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 
 #### CAD 建模
 
@@ -96,7 +96,7 @@ title: 葵花宝典
 
 #### PDE 求解
 
-- [OpenFOAM](./programming/openfoam/README.md)
+- [OpenFOAM](./programming/openfoam.md)
 
 ## [Documenting](./documenting/README.md)
 - [LaTeX](./documenting/latex/README.md)

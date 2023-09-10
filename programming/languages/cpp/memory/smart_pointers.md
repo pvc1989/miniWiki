@@ -488,7 +488,7 @@ auto sptrv = std::make_shared<std::vector<int>>(init_list);
 
 # `pImpl` 模式
 
-该模式又被称为[桥模式](../../patterns/bridge/README.md)，它完全符合[依赖倒置原则](../../principles/README.md#DIP)，甚至用 C 语言也可以实现。
+该模式又被称为[桥模式](../../patterns/bridge/README.md)，它完全符合[依赖倒置原则](../../principles.md#DIP)，甚至用 C 语言也可以实现。
 
 ## 隔离依赖关系
 

@@ -461,7 +461,7 @@ Numbers<> average_precision;  // Numbers<> 相当于 Numbers<int>
 
 # 实例化 (Instantiation)<a href id="instantiation"></a>
 
-C++ 程序的[构建](../make/README.md)过程可以笼统分为以下两步：
+C++ 程序的[构建](../make.md)过程可以笼统分为以下两步：
 1. **编译 (compile)**：由*编译器*将*源文件*转化为*目标文件*。
 2. **链接 (link)**：由*链接器*将一个或多个*目标文件*转化为一个*可执行文件*。
 

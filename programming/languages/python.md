@@ -700,5 +700,5 @@ if __name__ == '__main__':
     assert s.area(3) == 2 * 2 * 3
 ```
 
-抽象基类（接口）的『正确』用法，可参见《[设计原则](./principles/README.md)》及《[设计模式](./patterns/README.md)》。
+抽象基类（接口）的『正确』用法，可参见《[设计原则](./principles.md)》及《[设计模式](./patterns.md)》。
 

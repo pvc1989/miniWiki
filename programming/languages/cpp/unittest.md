@@ -37,7 +37,7 @@ title: 单元测试
 ## 断言
 
 **断言 (assertion)** 是所有测试的基础。
-Google Test 中的*断言*是用[**宏 (macro)**](../macro.md) 实现的，形式上与[**函数 (function)**](../function.md) 类似。
+Google Test 中的*断言*是用[**宏 (macro)**](./macro.md) 实现的，形式上与[**函数 (function)**](./function.md) 类似。
 每一种断言都有 `ASSERT_*` 和 `EXPECT_*` 两个版本：
 
 |         |    `ASSERT_*`    |     `EXPECT_*`      |
@@ -140,10 +140,10 @@ TEST(FactorialTest, PositiveInput) {
 在测试一个类（例如 `Foo`）时，不同的测试函数往往会在同一组数据上反复进行测试。
 为了提高代码复用率，可以将它们封装进一个 `::testing::Test` 的（名为 `FooTest` 的）派生类中：
 
-1. 在 `FooTest` 内部以 `protected` 为[默认访问级别](../class/class.md#默认访问级别)。
+1. 在 `FooTest` 内部以 `protected` 为[默认访问级别](./class/class.md#默认访问级别)。
 2. 将需要被重复使用的数据定义为 `FooTest` 的成员。
-3. 如果需要[申请动态资源](../memory/README.md)并重设数据，则应提供 `FooTest` 的[默认构造函数](../class/class.md#默认构造函数)或[重写](../class/inheritance.md#虚函数) `SetUp()` 方法。
-4. 如果需要[释放动态资源](../memory/README.md)，则应提供 `FooTest` 的[析构函数](../class/copy_control.md#析构函数)或[重写](../class/inheritance.md#虚函数)  `TearDown()` 方法。
+3. 如果需要[申请动态资源](./memory.md)并重设数据，则应提供 `FooTest` 的[默认构造函数](./class/class.md#默认构造函数)或[重写](./class/inheritance.md#虚函数) `SetUp()` 方法。
+4. 如果需要[释放动态资源](./memory.md)，则应提供 `FooTest` 的[析构函数](./class/copy_control.md#析构函数)或[重写](./class/inheritance.md#虚函数)  `TearDown()` 方法。
 5. 如果需要，定义其他方法。
 6. 定义测试函数时，用 `TEST_F()` 代替 `TEST()`，在测试函数内部可以直接使用 `FooTest` 的成员。
 
@@ -244,7 +244,7 @@ googletest
 │   └── ...
 ├── ...
 ```
-其中的 `CMakeLists.txt` 可以用来驱动 [CMake](../make/README.md#CMake)，这是目前最简单、最通用的自动构建方式。
+其中的 `CMakeLists.txt` 可以用来驱动 [CMake](./make.md#CMake)，这是目前最简单、最通用的自动构建方式。
 
 ### 构建为独立的库
 假设含有顶层 `CMakeLists.txt` 的**源文件目录 (source directory)** 为 `source-dir`，**构建目录 (build directory)** 为 `build-dir`，则构建过程如下：
@@ -308,7 +308,7 @@ cmake --build .
 
 # CTest
 
-利用 [CMake](../make/README.md#CMake) 函数可以在 `CMakeLists.txt` 中添加 CTest 测试：
+利用 [CMake](./make.md#CMake) 函数可以在 `CMakeLists.txt` 中添加 CTest 测试：
 
 1. 在*顶层 `CMakelists.txt`* 中调用 [`enable_testing()`](https://cmake.org/cmake/help/latest/command/enable_testing.html) 以开启测试。该函数调用必须位于 `add_test()` 及可能间接调用 `add_test()` 的 `add_subdirectory()` 之前。
 2. 在其他 `CMakelists.txt` 中按需调用 [`add_test()`](https://cmake.org/cmake/help/latest/command/add_test.html) 以添加测试：

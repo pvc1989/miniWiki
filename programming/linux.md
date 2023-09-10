@@ -2,11 +2,11 @@
 title: Linux
 ---
 
-# [安装](./install/README.md)
+# [安装](./linux/install/README.md)
 
 # 文本编辑器
 
-## [Vim](./vim.md)
+## [Vim](./linux/vim.md)
 
 Vim 是 Linux 系统下常用的一款 CLI 文本编辑器。
 打开终端 (`[Ctrl] + [Alt] + T`) 并尝试以下命令：
@@ -127,7 +127,7 @@ chsh -s $(which zsh)  # 更换 login shell
 # 退出当前 shell 并重新打开
 ```
 
-## [`ssh`](./ssh.md)
+## [`ssh`](./linux/ssh.md)
 
 ## 语法
 
@@ -496,7 +496,7 @@ cat /proc/meminfo | grep Mem
 若系统只提供了一个 shell 进程，则用户通常需要将*任务*在**前台 (foreground)** 与**后台 (background)** 之间来回切换，以便让多个任务同时运行。
 
 ⚠️ 这里的*前后台*是相对于*当前 shell 进程*而言的；若这个 shell 进程是远程主机提供的，则*退出 shell* 意味着退出所有后台任务（仍在后台的任务会阻断 shell 的退出）。
-《[利用 SSH 访问远程 Linux 主机](./ssh.md)》介绍了如何访问远程主机以及在*远程主机的后台*运行任务。
+《[利用 SSH 访问远程 Linux 主机](./linux/ssh.md)》介绍了如何访问远程主机以及在*远程主机的后台*运行任务。
 
 |     命令      |             功能              |
 | :-----------: | :---------------------------: |

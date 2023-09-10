@@ -78,7 +78,7 @@ apt  install hdf5-mpi # Ubuntu
 brew install hdf5-mpi # macOS
 ```
 
-或者先[手动构建 MPI](../mpi/README.md#编译运行)，再手动构建 HDF5。
+或者先[手动构建 MPI](../mpi.md#编译运行)，再手动构建 HDF5。
 以 Linux 下构建 HDF5-1.14.0 为例：
 
 1. 下载 [HDF5® Source Code](https://www.hdfgroup.org/downloads/hdf5/source-code)，并解压到自选位置。设置环境变量 `HDF5_SOURCE_DIR` 使其指向源文件根目录。

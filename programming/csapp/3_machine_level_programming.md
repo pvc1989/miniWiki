@@ -139,7 +139,7 @@ _main:                                  # @main
 100000f83: c3                           retq
 ```
 
-反汇编也可以在[**调试器 (debugger)**](../cpp/debug.md) 中完成：
+反汇编也可以在[**调试器 (debugger)**](../languages/cpp/debug.md) 中完成：
 
 ```shell
 gdb hello  # 进入调试环境，引导符变为 (gdb)
@@ -1326,7 +1326,7 @@ C 语言的**指针 (pointer)** 是对（虚拟）内存读写操作的一种抽
 
 ## 10.2. 使用 GDB 调试器
 
-见《[断点调试](../debug/README.md)》。
+见《[断点调试](../debug.md)》。
 
 ## 10.3. 越界访问与缓冲区溢出<a href id="buffer-overflow"></a>
 

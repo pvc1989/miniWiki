@@ -21,7 +21,7 @@ title: Unified Modeling Language (UML)
 双击 `plantuml.jar` 文件以启动 GUI，PlantUML 会扫描工作目录，并自动生成或更新 PNG 格式的 UML 图。
 
 ## CLI
-创建一个纯文本文件 [`Inheritance.txt`](./UML/Inheritance.txt)，内容为一条简单的类继承关系：
+创建一个纯文本文件 [`Inheritance.txt`](./uml/Inheritance.txt)，内容为一条简单的类继承关系：
 ```txt
 @startuml
 A <|-- B
@@ -44,4 +44,4 @@ java -jar ${PLANTUML_PATH}/plantuml.jar -tsvg Inheritance.txt
 
 | PNG | SVG |
 | :-: | :-: |
-| ![](./Inheritance.png) | ![](./Inheritance.svg)|
+| ![](./uml/Inheritance.png) | ![](./uml/Inheritance.svg)|

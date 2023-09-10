@@ -18,8 +18,8 @@ title: 动态内存管理
 - 运行前不知道对象的具体类型，例如**多态 (polymorphism)**。
 - 运行时在多个对象之间共享数据。
 
-## [原始指针](./raw_pointers.md)
+## [原始指针](./memory/raw_pointers.md)
 
-## [智能指针](./smart_pointers.md)
+## [智能指针](./memory/smart_pointers.md)
 
-## [内存检查](./check.md)
+## [内存检查](./memory/check.md)

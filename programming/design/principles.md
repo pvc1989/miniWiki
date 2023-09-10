@@ -318,7 +318,7 @@ int main() {
 
 下面的示例体现了*源代码依赖关系*和*接口所有权*的双重倒置：
 
-![](./inverted_dependency.svg)
+![](./principles/inverted_dependency.svg)
 
 - 在高层模块 `Application` 中，高层具体类 `TaskScheduler` 的 `addTask(), popTask()` 方法用到了高层接口 `PriorityQueue` 所提供的 `push(), top(), pop()` 服务；而实现这些服务所用到的数据结构及算法，并不需要暴露给 `TaskScheduler`。
 - 在中层模块 `Algorithm` 中，中层具体类 `BinaryHeap` 借助于中层接口 `Vector` 所提供的 `at()` 服务，给出了高层接口 `PriorityQueue` 的一种实现；而由中层接口 `Vector` 隐式提供的 `resize()` 服务，并不需要暴露给 `BinaryHeap`。

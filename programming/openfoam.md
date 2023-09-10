@@ -66,7 +66,7 @@ gcc: error: unrecognized command-line option '--showme:link'
 或者要修改部分选项，可以在 `source $WM_PROJECT_DIR/etc/bashrc` 后面*追加 (append)* 所要修改的选项（详见 `$WM_PROJECT_DIR/etc/bashrc` 中的注释），常用的有：
 
 - 【`WM_PROJECT_USER_DIR=<user_dir>`】将默认的 `/home/<user>/OpenFOAM/<user>-<version>`  替换为用户指定的 `<user_dir>`。
-- 【`WM_MPLIB=USERMPI`】用[本地搭建的 MPI 环境](../../programming/mpi/README.md)替换[系统自带的 Open MPI](#open-mpi)。根据 `$WM_PROJECT_DIR/etc/config.sh/mpi` 中的注释，用户需要在加载此项前设置好 `$WM_PROJECT_DIR/wmake/rules/General/mplibUSERMPI` 文件。
+- 【`WM_MPLIB=USERMPI`】用[本地搭建的 MPI 环境](../../programming/mpi.md)替换[系统自带的 Open MPI](#open-mpi)。根据 `$WM_PROJECT_DIR/etc/config.sh/mpi` 中的注释，用户需要在加载此项前设置好 `$WM_PROJECT_DIR/wmake/rules/General/mplibUSERMPI` 文件。
 
 示例：
 
@@ -165,7 +165,7 @@ touch result.foam  # 用 ParaView 查看结果
 
 演示算例：[Supersonic flow over a forward-facing step](https://www.openfoam.com/documentation/tutorial-guide/3-compressible-flow/3.2-supersonic-flow-over-a-forward-facing-step)
 
-⚠️ OpenFOAM 的并行，在算法层面基于[区域分解](../../programming/mpi/README.md#decomposition)，在软件层面基于[消息传递](../../programming/mpi/README.md)：
+⚠️ OpenFOAM 的并行，在算法层面基于[区域分解](../../programming/mpi.md#decomposition)，在软件层面基于[消息传递](../../programming/mpi.md)：
 - 以 Intel(R) Core(TM) i7-4790 CPU 为例，该处理器有 `4` 个**物理核心 (physical cores)**，利用**超线程 (hyperthreading)** 技术最多可以同时运行 `8` 个[线程](../../programming/csapp/12_concurrent_programming.md#thread)。
 - 但 OpenFOAM 未用到*超线程*，故*分块数量*（亦即*进程数量*）不应超过*物理核心数量*。
 

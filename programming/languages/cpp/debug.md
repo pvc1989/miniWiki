@@ -35,7 +35,7 @@ $ c++ -g hello.cpp -o hello
    set startup-with-shell off
    ```
 
-## 在 [Docker](../docker/README.md) 容器中使用 GDB
+## 在 [Docker](../docker.md) 容器中使用 GDB
 
 按一般流程创建容器、启动 GDB 环境后，运行『被调试程序 (debugee)』时会出错：
 
@@ -147,7 +147,7 @@ GDB、LLDB 均默认选用 ATT 格式；以下命令可用于更改此设定：
 (gdb/lldb) kill
 ```
 
-在 Unix-like 系统中，可用 [`ps` 或 `jobs`](../linux/README.md#进程管理) 查询进程号、进程名。
+在 Unix-like 系统中，可用 [`ps` 或 `jobs`](../linux.md#进程管理) 查询进程号、进程名。
 
 ## 断点
 
@@ -341,5 +341,5 @@ list -[<count>]      # List previous <count> lines
 
 # 调试 CMake 项目
 
-## [CMake Tools](../make/README.md#CMake-Tools)
+## [CMake Tools](./make.md#CMake-Tools)
 

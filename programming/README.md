@@ -6,7 +6,7 @@ title: Programming
 
 ## 组成原理
 
-- [CSAPP](./csapp/README.md)
+- [CSAPP](./csapp.md)
 
 ## 操作系统
 
@@ -15,8 +15,8 @@ title: Programming
 - [虚拟存储](./9_virtual_memory.md)
 - [系统级读写](./10_system_level_io.md)
 - [并发编程](./12_concurrent_programming.md)
-- [Linux](./linux/README.md)
-- [Docker](./docker/README.md)
+- [Linux](./linux.md)
+- [Docker](./docker.md)
 
 ## 计算机网络
 
@@ -33,16 +33,16 @@ title: Programming
 
 ## 高级语言
 
-- [C/C++](./languages/cpp/README.md)
+- [C/C++](./languages/cpp.md)
 - [MATLAB/Octave](./languages/octave.md)
 - [Python](./languages/python.md)
 - 编译原理
 
 ## 架构设计
 
-- [UML](./design/uml/README.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
-- [设计原则](./design/principles/README.md)
-- [设计模式](./design/patterns/README.md)
+- [UML](./design/uml.md) --- The Unified Modeling Language is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a system.
+- [设计原则](./design/principles.md)
+- [设计模式](./design/patterns.md)
 
 ## 版本控制
 
@@ -54,7 +54,7 @@ title: Programming
 
 - [Pthread](./csapp/12_concurrent_programming.md#parallel) --- POSIX threads
 
-- [MPI](./mpi/README.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
+- [MPI](./mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 
 ## CAD 建模
 
@@ -71,4 +71,4 @@ title: Programming
 
 ## PDE 求解
 
-- [OpenFOAM](./openfoam/README.md)
+- [OpenFOAM](./openfoam.md)
