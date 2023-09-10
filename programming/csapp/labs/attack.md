@@ -126,7 +126,7 @@ ret
 $ nasm -f elf64 -o exploit.o exploit.s
 $ objdump -d exploit.o
 ```
-得以下输出（⚠️ 汇编代码换成了 [ATT 格式](../../3_machine_level_programming.md#汇编代码格式)）：
+得以下输出（⚠️ 汇编代码换成了 [ATT 格式](../3_machine_level_programming.md#汇编代码格式)）：
 ```
 exploit.o:     file format elf64-x86-64
 

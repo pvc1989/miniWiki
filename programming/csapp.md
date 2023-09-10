@@ -116,12 +116,12 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 # [Lab Assignments](https://csapp.cs.cmu.edu/3e/labs.html)
 
-## 1. [Data Lab](./csapp/labs/data/README.md)
-## 2. [Bomb Lab](./csapp/labs/bomb/README.md)
-## 3. [Attack Lab](./csapp/labs/attack/README.md)
+## 1. [Data Lab](./csapp/labs/data.md)
+## 2. [Bomb Lab](./csapp/labs/bomb.md)
+## 3. [Attack Lab](./csapp/labs/attack.md)
 ## 4. Architecture Lab
-## 5. [Cache Lab](./csapp/labs/cache/README.md)
-## 6. [Shell Lab](./csapp/labs/shell/README.md)
-## 7. [Malloc Lab](./csapp/labs/malloc/README.md)
-## 8. [Proxy Lab](./csapp/labs/proxy/README.md)
+## 5. [Cache Lab](./csapp/labs/cache.md)
+## 6. [Shell Lab](./csapp/labs/shell.md)
+## 7. [Malloc Lab](./csapp/labs/malloc.md)
+## 8. [Proxy Lab](./csapp/labs/proxy.md)
 
