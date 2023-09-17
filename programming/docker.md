@@ -26,11 +26,6 @@ title: Docker
 
 镜像的可执行实例（类似于安装后的软件实例）。单个【镜像】/【安装包】可以在同一台主机上【生成多个容器】/【安装多个实例】，不同【名称的容器】/【位置的实例】运行时互不干扰。
 
-|                          容器                          |                     虚拟机                      |
-| :----------------------------------------------------: | :---------------------------------------------: |
-| ![](https://docs.docker.com/images/Container%402x.png) | ![](https://docs.docker.com/images/VM%402x.png) |
-
-
 # 常用命令
 
 ```shell
@@ -101,6 +96,7 @@ docker run -w WORK_DIR IMAGE
 docker run -v HOST_DIR:WORK_DIR IMAGE
 ```
 所谓『挂载 (mount)』是指『容器读写 `WORK_DIR`』等效于『宿主读写 `HOST_DIR`』。
+
 【常用场景】将宿主的当前目录挂载到容器的同名目录：
 
 ```shell
