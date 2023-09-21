@@ -1240,6 +1240,10 @@ b\coloneqq\vert f_{j}-f_{j+1}\vert+\vert f_{j}-2f_{j+1}+f_{j+2}\vert,\\
 
 \end_layout
 
+\begin_layout Standard
+用于有限体积、有限元型格式时，需在全场均匀采样；为避免识别出的间断区过宽，每个单元内至少取 3 个采样点。
+\end_layout
+
 \begin_layout Subsection
 基于控制面差值
 \end_layout
@@ -1316,7 +1320,7 @@ status open
 ：
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{+}}\left(u_{i}^{h}-u\right)=\vert\partial E_{i}^{+}\vert\cdot\order{h^{2p+1}}
+\int_{\partial E_{i}^{+}}\left(u_{i}^{h}-u\right)=\int_{\partial E_{i}^{+}}\order{h^{2p+1}}=\vert\partial E_{i}^{+}\vert\cdot\order{h^{2p+1}}
 \]
 
 \end_inset
@@ -1378,7 +1382,7 @@ literal "false"
  上计算两侧近似解之差的积分
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u\right)-\int_{\partial E_{j}^{+}}\left(u_{j}^{h}-u\right)
+\int_{\partial E_{i}^{-}\equiv\partial E_{j}^{+}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u\right)-\int_{\partial E_{j}^{+}}\left(u_{j}^{h}-u\right)
 \]
 
 \end_inset
@@ -1391,14 +1395,10 @@ literal "false"
 \begin_inset Formula $\partial E_{i}^{-}\equiv\partial E_{j}^{+}$
 \end_inset
 
- 附近光滑，则由引理可得 
-\begin_inset Formula $\int_{\partial E_{j}^{+}}\left(u_{j}^{h}-u\right)=\vert\partial E_{j}^{+}\vert\cdot\order{h^{2p+1}}$
-\end_inset
-
-，从而有
+ 附近光滑，则由引理可得
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{h^{p+1}}=\vert\partial E_{i}^{-}\vert\cdot\order{h^{p+1}}
+\int_{\partial E_{i}^{-}\equiv\partial E_{j}^{+}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{h^{p+1}}-\int_{\partial E_{i}^{+}}\order{h^{2p+1}}=\vert\partial E_{i}^{-}\vert\cdot\order{h^{p+1}}
 \]
 
 \end_inset
@@ -1422,7 +1422,7 @@ literal "false"
 ，从而有
 \begin_inset Formula 
 \[
-\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\cdot\order{1}
+\int_{\partial E_{i}^{-}\equiv\partial E_{i}^{+}}\left(u_{i}^{h}-u_{j}^{h}\right)=\int_{\partial E_{i}^{-}}\order{1}=\vert\partial E_{i}^{-}\vert\cdot\order{1}
 \]
 
 \end_inset
@@ -1462,7 +1462,7 @@ I_{i}=\frac{\left|\int_{\partial E_{i}^{-}}\left(u_{i}^{h}-u_{j}^{h}\right)\righ
 \begin_inset Formula $\left\Vert u_{i}^{h}\right\Vert $
 \end_inset
 
- 在一维取单元均值（作为 
+ 在一维取单元均值的绝对值（作为 
 \begin_inset Formula $\left\Vert u_{i}^{h}\right\Vert _{1}/\vert E_{i}\vert$
 \end_inset
 
@@ -1806,18 +1806,33 @@ name "subsec:KlocknerDetector"
 \end_layout
 
 \begin_layout Standard
-假设模态系数近似按 
+假设正交归一基上的模态系数近似按 
 \begin_inset Formula $\abs{\hat{u}_{n}}=c\,n^{-s}$
 \end_inset
 
- 衰减，其中 
-\begin_inset Formula $c,s$
+ 衰减，即模态能量按 
+\begin_inset Formula $E_{n}\equiv\abs{\hat{u}_{n}}^{2}=c^{2}\,n^{-2s}$
 \end_inset
 
- 由最小二乘法得到：
+ 衰减，其中 
+\begin_inset Formula $s,c$
+\end_inset
+
+ 为以下最小值问题的解：
 \begin_inset Formula 
 \[
-\min\sum_{n=1}^{p}\left(\lg c-s\lg n-\lg\abs{\hat{u}_{n}}\right)^{2},
+\min_{s,c}\sum_{n=1}^{p}\left(\lg c^{2}+s\lg n^{-2}-\lg E_{n}\right)^{2}\iff\min_{s,c}\sum_{n=1}^{p}\left(\lg c+s\lg n^{-1}-\lg\abs{\hat{u}_{n}}\right)^{2},
+\]
+
+\end_inset
+
+利用最小二乘法，可解得
+\begin_inset Formula 
+\[
+s=\frac{\sum_{n=1}^{p}(x_{n}-\bar{x})(y_{n}-\bar{y})}{\sum_{n=1}^{p}(x_{n}-\bar{x})^{2}}=\frac{\sum_{n=1}^{p}x_{n}y_{n}-p\bar{x}\bar{y}}{\sum_{n=1}^{p}x_{n}^{2}-p\bar{x}^{2}},\quad\begin{cases}
+x_{n}=\lg n^{-2},\\
+y_{n}=\lg E_{n},
+\end{cases}
 \]
 
 \end_inset
@@ -1838,15 +1853,7 @@ s\approx\begin{cases}
 \end_layout
 
 \begin_layout Standard
-为避免奇偶性导致某些系数过小，从而导致光滑度估计过于乐观，引入 skyline pessimization：
-\begin_inset Formula 
-\[
-\bar{u}_{n}=\max_{m\in\left\{ \min(n,p-1),\dots,p\right\} }\abs{\hat{u}_{m}},\quad n=1,2,\dots,p,
-\]
-
-\end_inset
-
-在此之前，为避免高频噪声主导光滑度估计，用以下 
+为避免高频噪声主导光滑度估计，用以下 
 \begin_inset Formula $\tilde{u}_{n}$
 \end_inset
 
@@ -1862,6 +1869,14 @@ s\approx\begin{cases}
 
 \end_inset
 
+即
+\begin_inset Formula 
+\[
+\tilde{E}_{n}=\hat{E}_{n}+\hat{E}\,b_{n}^{2},\quad n=1,2,\dots,p,
+\]
+
+\end_inset
+
 其中
 \begin_inset Formula 
 \[
@@ -1871,6 +1886,33 @@ b_{n}\coloneqq\frac{n^{-p}}{\sqrt{\sum_{m=1}^{p}\left(m^{-p}\right)^{2}}},\quad 
 \end_inset
 
 用于将能量理想地分布到各阶模态。
+\end_layout
+
+\begin_layout Standard
+为避免奇偶性导致某些系数过小，从而导致光滑度估计过于乐观，进一步引入 skyline pessimization：
+\begin_inset Formula 
+\[
+\check{u}_{n}=\max_{m\in\left\{ \min(n,p-1),\dots,p\right\} }\abs{\tilde{u}_{m}},\quad n=1,2,\dots,p,
+\]
+
+\end_inset
+
+即
+\begin_inset Formula 
+\[
+\check{E}_{n}=\begin{cases}
+\max(\tilde{E}_{p-1},\tilde{E}_{p}), & n=p-1,p;\\
+\max(\check{E}_{n+1},\tilde{E}_{n}), & n=p-2,\dots,1;
+\end{cases}
+\]
+
+\end_inset
+
+以此代入 
+\begin_inset Formula $s$
+\end_inset
+
+ 的计算。
 \end_layout
 
 \begin_layout Section
