@@ -208,6 +208,18 @@ ssh-add -l             # 列出已加入的私钥
 
 上述命令可置于 `~/.bashrc` 或 `~/.zshrc` 中，以便每次启动 shell 时自动加载。
 
+## [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)
+
+执行完以上步骤后，在本地 `~/.ssh/config` 文件中添加以下内容，即可免密连接到远程主机上的指定用户：
+
+```
+Host <connection-name>
+  HostName <remote-address>
+  Port 22
+  User <remote-user-name>
+  IdentityFile ~/.ssh/<private-key-name>
+```
+
 # 非默认端口
 
 在服务器的 `/etc/ssh/sshd_config` 文件中加入以下两行：
