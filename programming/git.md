@@ -238,6 +238,29 @@ git pull
 git push [remote] [branch]
 ```
 
+## 高级命令
+
+### 整理提交
+
+```shell
+git rebase -i HEAD~2
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup [-C | -c] <commit> = like "squash" but keep only the previous
+#                    commit's log message, unless -C is used, in which case
+#                    keep only this commit's message; -c is same as -C but
+#                    opens the editor
+```
+
+根据提示，可实现：
+- 交换提交顺序：重排各 `pick` 行。
+- 压缩到上方提交：只保留第一个 `pick`，其余改为 `s` 或 `f`。
+
+详见 [`git rebase -i` 命令详解](https://blog.csdn.net/the_power/article/details/104651772)。
+
 ## 忽略规则
 
 默认情况下，Git 会尝试跟踪一个仓库的各级目录下的所有文件。在软件开发过程中，经常会生成一些临时文件。如果想要让 Git 忽略这些文件，那么需要在仓库根目录下的 `.gitignore` 文件里列举出这些文件名（可以使用通配符，以使忽略规则作用到同一类文件）。[GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的 `.gitignore` 范例。
