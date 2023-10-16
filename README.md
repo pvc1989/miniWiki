@@ -82,6 +82,8 @@ title: 葵花宝典
 
 - [MPI](./programming/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 
+- [CUDA](./programming/cuda.md)
+
 #### CAD 建模
 
 - [SALOME](www.salome-platform.org)
