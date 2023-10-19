@@ -622,6 +622,16 @@ p.strip_dirs().sort_stats(SortKey.TIME).print_stats(20)
 | `'cumulative'` 或 `'cumtime'` | `SortKey.CUMULATIVE` | 累积耗时（含调用其他函数的时间） |
 |    `'time'` 或 `'tottime'`    |    `SortKey.TIME`    | 净耗时（不含调用其他函数的时间） |
 
+统计结果也可以图形方式呈现：
+
+```shell
+# 生成火焰图：
+pip install flameprof
+flameprof stats_file > stats.svg
+# 或在浏览器页面中交互式显示：
+pip install snakeviz
+snakeviz stats_file
+```
 
 ## [`timeit`](https://docs.python.org/3/library/timeit.html) for 测量运行时间
 
