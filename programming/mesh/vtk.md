@@ -279,6 +279,8 @@ foo.vtksN
 ```python
 # 构造矢量
 Velocity = (MomentumX*iHat + MomentumY*jHat + MomentumZ*kHat) / Density
-# 构造标量
+# 构造标量（三维空间）
 Pressure = 0.4 * (EnergyStagnationDensity - dot(Velocity, Velocity) * Density / 2)
+# 构造标量（一维空间）
+Pressure = 0.4 * (EnergyStagnationDensity - MomentumX * MomentumX / Density / 2)
 ```
