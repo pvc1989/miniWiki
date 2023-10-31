@@ -126,7 +126,7 @@ theorems-chap
 
 \end_inset
 
-可将一般三角形 
+可将一般单元 
 \begin_inset Formula $E$
 \end_inset
 
@@ -138,7 +138,7 @@ theorems-chap
 
 \end_inset
 
-化为标准三角形 
+化为标准单元 
 \begin_inset Formula $T$
 \end_inset
 
@@ -2792,6 +2792,18 @@ Energy Stable
 
 \end_inset
 
+即
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u^{h}+\divg\vec{f}^{\mathrm{D}}\vert\phi\rangle_{E}+\langle[f_{\nu}]\vert\phi\rangle_{\partial E},
+\]
+
+\end_inset
+
+其中面积分可视为 penalty 项。
+\end_layout
+
+\begin_layout Standard
 为提取出 
 \begin_inset Formula $\phi$
 \end_inset
@@ -2804,7 +2816,7 @@ Energy Stable
 \begin_inset Formula $E$
 \end_inset
 
- 上的积分，即寻找 
+ 上的积分，即寻找标量场 
 \begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
 \end_inset
 
@@ -2828,19 +2840,138 @@ Energy Stable
 \begin_inset Formula $\vec{f}^{\mathrm{C}}$
 \end_inset
 
- 只是一种形式化的表达式，并不需要实际求出。在结点处取值，即得半离散格式
+ 只是一种形式化的表达式，并不需要实际求出。在第 
+\begin_inset Formula $j$
+\end_inset
+
+ 单元的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 个求解点处取值，即得半离散格式
 \begin_inset Formula 
 \[
-\dv{\hat{u}_{j,k}}{t}+\overbrace{\sum_{m}\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}}^{\divg\vec{f}^{\mathrm{D}}}(\vec{x}_{j,k})+h(\vec{x}_{j,k})=0.
+\dv{\hat{u}_{j,k}}{t}+\overbrace{\sum_{m}\vec{f}(\hat{u}_{j,m})\vdot\grad L_{j,m}(\vec{x}_{j,k})}^{(\divg\vec{f}^{\mathrm{D}})_{j,k}}+\overbrace{h(\vec{x}_{j,k})}^{(\divg\vec{f}^{\mathrm{C}})_{j,k}}=0.
 \]
 
 \end_inset
 
-问题归结为 
-\begin_inset Formula $h$
+问题归结为标量场 
+\begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
 \end_inset
 
  的构造。
+\end_layout
+
+\begin_layout Paragraph
+LCP (Lifting Collocation Penalty) by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Wang_2009,Haga_2011"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+h(\vec{x},t)=\sum_{k=1}^{K}\hat{h}_{j,k}(t)\,L_{j,k}(\vec{x}),\quad\hat{h}_{j,k}(t)=\abs{E_{j}}^{-1}\sum_{S_{f}\in\partial V_{j}}\abs{S_{f}}\sum_{\vec{x}_{l}\in S_{f}}\alpha_{k,f,l}\,[f_{\nu}]_{f,l},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $S_{f}$
+\end_inset
+
+ 为单元 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $f$
+\end_inset
+
+ 段边界，
+\begin_inset Formula $\vec{x}_{l}$
+\end_inset
+
+ 为其上的第 
+\begin_inset Formula $l$
+\end_inset
+
+ 个通量点，
+\begin_inset Formula $\alpha_{k,f,l}$
+\end_inset
+
+ 为
+\color red
+提升系数 (lifting coefficient)
+\color inherit
+，需满足守恒条件
+\begin_inset Formula 
+\[
+w_{l}=\sum_{k}v_{k}\,\alpha_{k,f,l},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ 为体积分权，
+\begin_inset Formula $w_{l}$
+\end_inset
+
+ 为面积分权。
+\end_layout
+
+\begin_layout Standard
+以 DG 格式为例，在 
+\begin_inset Formula $\langle[f_{\nu}]\vert\phi\rangle_{\partial E_{j}}=\langle h\vert\phi\rangle_{E_{j}}$
+\end_inset
+
+ 中，依次用 
+\begin_inset Formula $L_{j,k}$
+\end_inset
+
+ 替换 
+\begin_inset Formula $\phi$
+\end_inset
+
+，得关于 
+\begin_inset Formula $\alpha_{k,f,l}$
+\end_inset
+
+ 的线性方程组
+\begin_inset Formula 
+\[
+\ip{\sum_{f}\sum_{l}[f_{\nu}]_{f,l}\,L_{f,l}}{L_{j,m}}_{\partial E_{j}}=\ip{\sum_{k}\hat{h}_{j,k}\,L_{j,k}}{L_{j,m}}_{E_{j}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $L_{f,l}$
+\end_inset
+
+ 为 
+\begin_inset Formula $S_{f}$
+\end_inset
+
+ 上的 Lagrange 基；若通量点与求解点重合，则可以 
+\begin_inset Formula $V_{j}$
+\end_inset
+
+ 上的 Lagrange 基 
+\begin_inset Formula $L_{j,l}$
+\end_inset
+
+ 替换之。
 \end_layout
 
 \begin_layout Paragraph
