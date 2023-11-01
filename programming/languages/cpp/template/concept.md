@@ -34,7 +34,7 @@ Val sum(Seq s, Val v) {
 
 ```cpp
 template<typename Seq, typename Val>
-	requires Sequence<Seq> && Value<Val>
+  requires Sequence<Seq> && Value<Val>
 Val sum(Seq s, Val v) {
   for (const auto& x : s)
     v += x;
@@ -430,7 +430,7 @@ void user_pre20(ranges::forward_range auto& r) {
   int cnt = 0;
   for (int x : r) {
     if (odd(x)) {
-    	cout << x << ' ';
+      cout << x << ' ';
       if (++cnt == 3) {
         break;
       }
@@ -439,3 +439,37 @@ void user_pre20(ranges::forward_range auto& r) {
 }
 ```
 
+遍历嵌套数据结构：
+
+```cpp
+#include <iostream>
+#include <map>
+#include <ranges>
+ 
+int main() {
+  auto name_to_game_to_score = std::map<std::string, std::map<std::string, int>>();
+  name_to_game_to_score["Bob"] = {
+      {"football", 10}, {"basketball", 20},
+  };
+  name_to_game_to_score["Alice"] = {
+      {"football", 30}, {"basketball", 40}, {"volleyball", 50},
+  };
+  auto range_of_score = name_to_game_to_score
+      | std::views::values  // range of std::map<std::string, int>
+      | std::views::join    // range of std::pair<std::string, int>
+      | std::views::values; // range of int
+  for (int score : range_of_score) {
+    std::cout << score << ' ';
+  }
+  std::cout << '\n';  // print 40 30 50 20 10
+  auto range_of_score_ptr = range_of_score
+      | std::views::transform([](int &i){ return &i; });
+  for (int *score_ptr : range_of_score_ptr) {
+    *score_ptr *= 10;
+  }
+  for (int score : range_of_score) {
+    std::cout << score << ' ';
+  }
+  std::cout << '\n';  // print 400 300 500 200 100
+}
+```
