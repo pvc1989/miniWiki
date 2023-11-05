@@ -153,8 +153,8 @@ theorems-chap
 其中
 \begin_inset Formula 
 \[
-U=J\,u,\quad\begin{bmatrix}F_{x}\\
-F_{y}
+U=J\,u,\quad\begin{bmatrix}F_{\xi}\\
+F_{\eta}
 \end{bmatrix}\coloneqq\underbrace{\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
 -\partial_{\xi}\,y & \partial_{\xi}\,x
 \end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f_{x}\\
@@ -290,7 +290,7 @@ f_{y}
 
 
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Proof
 上述证明可推广到三维。由导数变换公式
@@ -2701,6 +2701,30 @@ Energy Stable
 \begin_inset Formula $E$
 \end_inset
 
+ 上成立的必要条件为
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u+\divg\vec{f}\vert\phi\rangle_{E}=0,\quad\forall\phi\in\mathbb{P}_{K}(E).
+\]
+
+\end_inset
+
+分部积分一次，得
+\begin_inset Formula 
+\[
+\langle\partial_{t}\,u\vert\phi\rangle_{E}+\langle\vec{\nu}\vdot\vec{f}\vert\phi\rangle_{\partial E}-\langle\vec{f}\vert\grad\phi\rangle_{E}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+在单元 
+\begin_inset Formula $E$
+\end_inset
+
  上，以关于 
 \begin_inset Formula $(x,y)$
 \end_inset
@@ -2729,42 +2753,19 @@ Energy Stable
 \begin_inset Formula $\vec{f}^{\mathrm{D}}$
 \end_inset
 
-作为对 
+ 作为对域内通量 
 \begin_inset Formula $\vec{f}$
 \end_inset
 
- 的近似。
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\forall\phi\in\mathbb{P}_{K}(E)$
-\end_inset
-
-，该守恒律成立的必要条件为
-\begin_inset Formula 
-\[
-\langle\partial_{t}\,u^{h}+\divg\vec{f}^{\mathrm{D}}\vert\phi\rangle_{E}=0.
-\]
-
-\end_inset
-
-分部积分一次，得弱形式
-\begin_inset Formula 
-\[
-\langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle\vec{\nu}\vdot\vec{f}^{\mathrm{D}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{\mathrm{D}}\vert\grad\phi\rangle_{E}=0,
-\]
-
-\end_inset
-
-将 
-\begin_inset Formula $\vec{\nu}\vdot\vec{f}^{\mathrm{D}}\eqqcolon f_{\nu}^{\mathrm{D}}$
-\end_inset
-
- 用迎风型界面通量 
+ 的近似，以迎风型界面通量 
 \begin_inset Formula $f_{\nu}^{\mathrm{I}}$
 \end_inset
 
- 替换，得弱形式
+ 作为对法向通量 
+\begin_inset Formula $\vec{\nu}\vdot\vec{f}$
+\end_inset
+
+ 的近似，得弱形式
 \begin_inset Formula 
 \[
 \langle\partial_{t}\,u^{h}\vert\phi\rangle_{E}+\langle f_{\nu}^{\mathrm{I}}\vert\phi\rangle_{\partial E}-\langle\vec{f}^{\mathrm{D}}\vert\grad\phi\rangle_{E}=0.
@@ -2776,7 +2777,7 @@ Energy Stable
 \end_layout
 
 \begin_layout Standard
-再次分部积分，并记法向通量阶跃值
+对最后一项再次分部积分，并记法向通量阶跃值
 \begin_inset Formula 
 \[
 [f_{\nu}]\coloneqq f_{\nu}^{\mathrm{I}}-f_{\nu}^{\mathrm{D}},
@@ -2804,11 +2805,11 @@ Energy Stable
 \end_layout
 
 \begin_layout Standard
-为提取出 
-\begin_inset Formula $\phi$
+若存在标量场 
+\begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
 \end_inset
 
-，需将 
+ 使得 
 \begin_inset Formula $\partial E$
 \end_inset
 
@@ -2816,19 +2817,15 @@ Energy Stable
 \begin_inset Formula $E$
 \end_inset
 
- 上的积分，即寻找标量场 
-\begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
-\end_inset
-
- 使得
+ 上的积分，即
 \begin_inset Formula 
 \[
-\langle[f_{\nu}]\vert\phi\rangle_{\partial E}=\langle h\vert\phi\rangle_{E}=\langle\divg f^{\mathrm{C}}\vert\phi\rangle_{E},
+\langle[f_{\nu}]\vert\phi\rangle_{\partial E}=\langle h\vert\phi\rangle_{E}\equiv\langle\divg f^{\mathrm{C}}\vert\phi\rangle_{E},
 \]
 
 \end_inset
 
-从而有 FR 的加权残值形式：
+则有加权残值形式的 FR 格式：
 \begin_inset Formula 
 \[
 \langle\partial_{t}\,u^{h}+\divg\vec{f}^{\mathrm{R}}\vert\phi\rangle_{E}=0,\quad\vec{f}^{\mathrm{R}}=\vec{f}^{\mathrm{D}}+\vec{f}^{\mathrm{C}},
@@ -2856,7 +2853,7 @@ Energy Stable
 
 \end_inset
 
-问题归结为标量场 
+因此，FR 格式的构造归结为标量场 
 \begin_inset Formula $h\equiv\divg\vec{f}^{\mathrm{C}}$
 \end_inset
 
