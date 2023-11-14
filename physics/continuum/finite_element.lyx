@@ -2861,6 +2861,193 @@ Energy Stable
 \end_layout
 
 \begin_layout Paragraph
+直积单元
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f^{x}}{\partial x}+\frac{\partial f^{y}}{\partial y}+\frac{\partial f^{z}}{\partial z}=0,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+J\coloneqq\det(\underline{J})\impliedby\underline{J}\coloneqq\begin{bmatrix}\partial_{\xi}x & \partial_{\eta}x & \partial_{\zeta}x\\
+\partial_{\xi}y & \partial_{\eta}y & \partial_{\zeta}y\\
+\partial_{\xi}z & \partial_{\eta}z & \partial_{\zeta}z
+\end{bmatrix}\impliedby\begin{bmatrix}x\\
+y\\
+z
+\end{bmatrix}=\sum_{a}N_{a}(\xi,\eta,\zeta)\begin{bmatrix}x_{a}\\
+y_{a}\\
+z_{a}
+\end{bmatrix},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\tilde{u}(\xi,\eta,\zeta)\coloneqq J\,u(x,y,z),\quad\begin{bmatrix}f^{\xi}\\
+f^{\eta}\\
+f^{\zeta}
+\end{bmatrix}\coloneqq J\,\underline{J}^{-1}\begin{bmatrix}f^{x}\\
+f^{y}\\
+f^{z}
+\end{bmatrix}=J\begin{bmatrix}\partial_{x}\xi & \partial_{y}\xi & \partial_{z}\xi\\
+\partial_{x}\eta & \partial_{y}\eta & \partial_{z}\eta\\
+\partial_{x}\zeta & \partial_{y}\zeta & \partial_{z}\zeta
+\end{bmatrix}\begin{bmatrix}f^{x}\\
+f^{y}\\
+f^{z}
+\end{bmatrix},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}f^{\xi}\\
+f^{\eta}\\
+f^{\zeta}
+\end{bmatrix}=\begin{bmatrix}\vec{s}_{\xi}\\
+\vec{s}_{\eta}\\
+\vec{s}_{\zeta}
+\end{bmatrix}\vdot\vec{f}\impliedby\begin{bmatrix}\vec{s}_{\xi}\\
+\vec{s}_{\eta}\\
+\vec{s}_{\zeta}
+\end{bmatrix}\coloneqq\begin{bmatrix}J\,\grad\xi\\
+J\,\grad\eta\\
+J\,\grad\zeta
+\end{bmatrix}=J\begin{bmatrix}\partial_{x}\xi & \partial_{y}\xi & \partial_{z}\xi\\
+\partial_{x}\eta & \partial_{y}\eta & \partial_{z}\eta\\
+\partial_{x}\zeta & \partial_{y}\zeta & \partial_{z}\zeta
+\end{bmatrix},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial\tilde{u}}{\partial t}+\frac{\partial f^{\xi}}{\partial\xi}+\frac{\partial f^{\eta}}{\partial\eta}+\frac{\partial f^{\zeta}}{\partial\zeta}=0,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nodal expansion:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\tilde{u}\\
+f^{\xi}\\
+f^{\eta}\\
+f^{\zeta}
+\end{bmatrix}\approx\begin{bmatrix}\tilde{u}_{h}\\
+f_{h}^{\xi}\\
+f_{h}^{\eta}\\
+f_{h}^{\zeta}
+\end{bmatrix}=\sum_{i,j,k}\begin{bmatrix}\hat{\tilde{u}}_{i,j,k}\\
+\hat{f}_{i,j,k}^{\xi}\\
+\hat{f}_{i,j,k}^{\eta}\\
+\hat{f}_{i,j,k}^{\zeta}
+\end{bmatrix}l_{i}(\xi)\,l_{j}(\eta)\,l_{k}(\zeta),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{aligned}0 & =\dv{\hat{\tilde{u}}_{i,j,k}}{t}\\
+ & +\frac{\partial f_{h}^{\xi}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\xi}+\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=-1,\eta_{j},\zeta_{k}}\dv{g_{-1}(\xi_{i})}{\xi}+\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=+1,\eta_{j},\zeta_{k}}\dv{g_{+1}(\xi_{i})}{\xi}\\
+ & +\frac{\partial f_{h}^{\eta}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\eta}+\left[f_{*}^{\eta}-f_{h}^{\eta}\right]_{\xi_{i},\eta=-1,\zeta_{k}}\dv{g_{-1}(\eta_{j})}{\eta}+\left[f_{*}^{\eta}-f_{h}^{\eta}\right]_{\xi_{i},\eta=+1,\zeta_{k}}\dv{g_{+1}(\eta_{j})}{\eta}\\
+ & +\frac{\partial f_{h}^{\zeta}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=-1}\dv{g_{-1}(\zeta_{k})}{\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=+1}\dv{g_{+1}(\zeta_{k})}{\zeta}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+以 
+\begin_inset Formula $\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=\pm1,\eta_{j},\zeta_{k}}$
+\end_inset
+
+ 为例，物理空间中的单位外法向量为
+\begin_inset Formula 
+\[
+\vec{n}(\xi=\pm1,\eta_{j},\zeta_{k})=\frac{\pm\grad\xi}{\abs{\pm\grad\xi}}=\frac{\pm\vec{s}_{\xi}}{\abs{\vec{s}_{\xi}}},
+\]
+
+\end_inset
+
+内部通量的外法向分量为
+\begin_inset Formula 
+\[
+\vec{n}\vdot\vec{f}_{h}=\frac{\pm\vec{s}_{\xi}}{\abs{\vec{s}_{\xi}}}\vdot\vec{f}_{h}=\frac{\pm f_{h}^{\xi}}{\abs{\vec{s}_{\xi}}},
+\]
+
+\end_inset
+
+物理空间中的 Riemann 解为
+\begin_inset Formula 
+\[
+f_{*}^{n}=f_{*}\qty(u,u_{+},\vec{n}),
+\]
+
+\end_inset
+
+它与 
+\begin_inset Formula $\vec{n}\vdot\vec{f}_{h}$
+\end_inset
+
+ 应当有相同的变换关系，即
+\begin_inset Formula 
+\[
+f_{*}^{n}=\frac{\pm f_{*}^{\xi}}{\abs{\vec{s}_{\xi}}},
+\]
+
+\end_inset
+
+由此得
+\begin_inset Formula 
+\[
+\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=\pm1,\eta_{j},\zeta_{k}}=\left[\pm\abs{\vec{s}_{\xi}}f_{*}^{n}-\vec{s}_{\xi}\vdot\vec{f}_{h}\right]_{\xi=\pm1,\eta_{j},\zeta_{k}},
+\]
+
+\end_inset
+
+类似地
+\begin_inset Formula 
+\[
+\left[f_{*}^{\eta}-f_{h}^{\eta}\right]_{\xi_{i},\eta=\pm1,\zeta_{k}}=\left[\pm\abs{\vec{s}_{\eta}}f_{*}^{n}-\vec{s}_{\eta}\vdot\vec{f}_{h}\right]_{\xi_{i},\eta=\pm1,\zeta_{k}},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=\pm1}=\left[\pm\abs{\vec{s}_{\zeta}}f_{*}^{n}-\vec{s}_{\zeta}\vdot\vec{f}_{h}\right]_{\xi_{i},\eta_{j},\zeta=\pm1},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
 LCP (Lifting Collocation Penalty) by 
 \begin_inset CommandInset citation
 LatexCommand cite
