@@ -173,6 +173,7 @@ using conditional_t = typename conditional<B, T, F>::type;
 ```
 
 ## 从多个类型中选取一个
+
 目前 (C++17)，标准库没有提供从*多个类型*中选取一个的方法。
 如果将来有这样的方法（暂且命名为 `std::select`）被补充进标准库中，那么它大致应当支持如下用法：
 ```cpp
@@ -209,7 +210,38 @@ using select_t = typename select<N, Cases...>::type;
 }  // namespace std
 ```
 
+## 条件数据成员 (C++20)
+
+```cpp
+#include <type_traits>
+
+struct Empty { };
+
+template <bool C>
+struct A {
+  int *pi;  // 8
+  std::conditional_t<C, double, Empty> x;  // C ? 8 : 1
+};
+
+template <bool C>
+struct B {
+  int *pi;  // 8
+  [[no_unique_address]] std::conditional_t<C, double, Empty> x;  // C ? 8 : 0
+};
+
+int main() {
+  static_assert(sizeof(Empty) == 1);
+  static_assert(sizeof(A<true>) == 8 + 8);
+  static_assert(sizeof(B<true>) == 8 + 8);
+  static_assert(sizeof(A<false>) == 8 + 1 + 7/* padding */);
+  static_assert(sizeof(B<false>) == 8 + 0);
+}
+```
+
+See [Conditional Members](https://brevzin.github.io/c++/2021/11/21/conditional-members) and [`no_unique_address`](https://en.cppreference.com/w/cpp/language/attributes/no_unique_address) for details.
+
 # 递归
+
 元编程（编译期计算）中没有**变量 (variable)** 的概念，也没有**循环 (loop)** 机制，因此算法中用到的**迭代 (iteration)** 语义都必须通过**递归 (recursion)** 来实现的。
 
 ## 普通函数的递归
