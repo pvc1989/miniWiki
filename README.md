@@ -59,7 +59,7 @@ title: 葵花宝典
 
 #### 高级语言
 
-- [C/C++](./programming/languages/cpp/README.md)
+- [C/C++](./programming/languages/cpp.md)
 - [MATLAB/Octave](./programming/languages/octave.md)
 - [Python](./programming/languages/python.md)
 - 编译原理
