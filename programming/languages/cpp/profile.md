@@ -70,3 +70,20 @@ gprof -p myprog gmon.out > flat-report
 # 图形化报告：-q 或 --graph
 gprof -q myprog gmon.out > graph-report
 ```
+
+# Linux `perf`
+
+## [CPU Flame Graphs](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
+
+```shell
+git clone https://github.com/brendangregg/FlameGraph  # or download it from github
+cd FlameGraph
+FLAMEGRAPH=$PWD
+```
+
+```shell
+cd <directory-of-exe>
+perf record -g ./<exe> [argv]  # 生成 perf.data
+perf script | $FLAMEGRAPH/stackcollapse-perf.pl > out.perf-folded
+$FLAMEGRAPH/flamegraph.pl out.perf-folded > perf.svg
+```

@@ -81,6 +81,7 @@ title: C/C++
 
 - Google `gperftools`
 - GNU `gprof`
+- Linux `perf`
 
 ## [断点调试](./cpp/debug.md)
 
