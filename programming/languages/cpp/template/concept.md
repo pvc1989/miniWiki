@@ -471,5 +471,14 @@ int main() {
     std::cout << score << ' ';
   }
   std::cout << '\n';  // print 400 300 500 200 100
+  auto range_of_score_ref = range_of_score_ptr
+      | std::views::transform([](int *i) -> int & { return *i; });
+  for (int &score_ref : range_of_score_ref) {
+    score_ref /= 10;
+  }
+  for (int score : range_of_score) {
+    std::cout << score << ' ';
+  }
+  std::cout << '\n';  // print 40 30 50 20 10
 }
 ```
