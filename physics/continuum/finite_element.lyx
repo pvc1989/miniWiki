@@ -116,36 +116,42 @@ theorems-chap
 \begin_inset Formula $\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}$
 \end_inset
 
- 及相应的导数变换（下标表示求导）
+ 及相应的导数变换
 \begin_inset Formula 
 \[
-\begin{bmatrix}\partial_{\xi}\,\phi & \partial_{\eta}\,\phi\end{bmatrix}=\begin{bmatrix}\partial_{x}\,\phi & \partial_{y}\,\phi\end{bmatrix}\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\eta}\,x\\
-\partial_{\xi}\,y & \partial_{\eta}\,y
-\end{bmatrix}}_{\underline{J}},
+\begin{bmatrix}\partial_{\xi}\,\phi\\
+\partial_{\eta}\,\phi
+\end{bmatrix}=\underbrace{\begin{bmatrix}\partial_{\xi}\,x & \partial_{\xi}\,y\\
+\partial_{\eta}\,x & \partial_{\eta}\,y
+\end{bmatrix}}_{\underline{J}}\begin{bmatrix}\partial_{x}\,\phi\\
+\partial_{y}\,\phi
+\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,\vec{r}\\
+\partial_{\eta}\,\vec{r}
+\end{bmatrix}\vdot\partial_{\vec{r}}\,\phi,
 \]
 
 \end_inset
 
-可将一般单元 
+可将物理空间单元 
 \begin_inset Formula $E$
 \end_inset
 
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}\equiv\partial_{x}\,f_{x}+\partial_{y}\,f_{y},
+\partial_{t}\,u+\partial_{\vec{r}}\vdot\vec{f}=0,\quad\partial_{\vec{r}}\vdot\vec{f}=\partial_{x}\,f^{x}+\partial_{y}\,f^{y},
 \]
 
 \end_inset
 
-化为标准单元 
-\begin_inset Formula $T$
+化为参数空间单元 
+\begin_inset Formula $\mathcal{E}$
 \end_inset
 
  上的守恒律
 \begin_inset Formula 
 \[
-\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}\equiv\partial_{\xi}\,F_{\xi}+\partial_{\eta}\,F_{\eta},
+\partial_{t}\,U+\partial_{\vec{\rho}}\vdot\vec{F}=0,\quad\partial_{\vec{\rho}}\vdot\vec{F}=\partial_{\xi}\,F^{\xi}+\partial_{\eta}\,F^{\eta},
 \]
 
 \end_inset
@@ -153,20 +159,22 @@ theorems-chap
 其中
 \begin_inset Formula 
 \[
-U=J\,u,\quad\begin{bmatrix}F_{\xi}\\
-F_{\eta}
-\end{bmatrix}\coloneqq\underbrace{\begin{bmatrix}\partial_{\eta}\,y & -\partial_{\eta}\,x\\
--\partial_{\xi}\,y & \partial_{\xi}\,x
-\end{bmatrix}}_{J\,\underline{J}^{-1}\equiv\underline{J}^{*}}\begin{bmatrix}f_{x}\\
-f_{y}
-\end{bmatrix}.
+U=u\,\underbrace{\det(\underline{J})}_{J},\quad\begin{bmatrix}F^{\xi}\\
+F^{\eta}
+\end{bmatrix}=J\,\underbrace{\begin{bmatrix}\partial_{x}\,\xi & \partial_{y}\,\xi\\
+\partial_{x}\,\eta & \partial_{y}\,\eta
+\end{bmatrix}}_{\underline{J}^{-1}}\begin{bmatrix}f^{x}\\
+f^{y}
+\end{bmatrix}=J\begin{bmatrix}\partial_{\vec{r}}\,\xi\\
+\partial_{\vec{r}}\,\eta
+\end{bmatrix}\vdot\vec{f}.
 \]
 
 \end_inset
 
 
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Proof
 由导数变换公式
@@ -290,7 +298,7 @@ f_{y}
 
 
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Proof
 上述证明可推广到三维。由导数变换公式
@@ -515,19 +523,149 @@ y_{\xi} & y_{\eta} & y_{\zeta}
 
 \end_layout
 
+\begin_layout Subsubsection
+导数变换
+\end_layout
+
 \begin_layout Standard
-基于上述结果，有如下积分恒等式
+在参数空间单元 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+ 上引入关于参数坐标的多项式近似
 \begin_inset Formula 
 \[
-\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{J\,\partial_{\vec{r}}\vdot\vec{f}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E},
+U(\vec{\rho},t)=\sum_{l=1}^{N}\phi_{l}(\vec{\rho})\,\hat{U}_{l}(t),\quad\phi_{l}\in\mathbb{P}_{K}(\mathcal{E}),
 \]
 
 \end_inset
 
-对该式两端分别应用散度定理，得
+则 
+\begin_inset Formula $U$
+\end_inset
+
+ 关于参数坐标 
+\begin_inset Formula $\vec{\rho}\equiv(\xi,\eta)$
+\end_inset
+
+ 的一阶导数为
 \begin_inset Formula 
 \[
-\ip{U}{\vec{\nu}\vdot\vec{F}}_{\partial T}=\ip{U}{\partial_{\vec{\rho}}\vdot\vec{F}}_{T}=\ip{J\,u}{\partial_{\vec{r}}\vdot\vec{f}}_{E}=\ip{J\,u}{\vec{n}\vdot\vec{f}}_{\partial E},
+\begin{bmatrix}\partial_{\xi}\,U\\
+\partial_{\eta}\,U
+\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,J\,u\\
+\partial_{\eta}\,J\,u
+\end{bmatrix}=J\begin{bmatrix}\partial_{\xi}\,u\\
+\partial_{\eta}\,u
+\end{bmatrix}+\begin{bmatrix}\partial_{\xi}\,J\\
+\partial_{\eta}\,J
+\end{bmatrix}\underbrace{J^{-1}\,U}_{u},
+\]
+
+\end_inset
+
+由此可解出原始变量 
+\begin_inset Formula $u\equiv J^{-1}\,U$
+\end_inset
+
+ 关于物理坐标 
+\begin_inset Formula $\vec{r}\equiv(x,y)$
+\end_inset
+
+ 的一阶导数为
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{x}\,u\\
+\partial_{y}\,u
+\end{bmatrix}=\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\,u\\
+\partial_{\eta}\,u
+\end{bmatrix}=\underline{J}^{-1}\,J^{-1}\left(\begin{bmatrix}\partial_{\xi}\,U\\
+\partial_{\eta}\,U
+\end{bmatrix}-\begin{bmatrix}\partial_{\xi}\,J\\
+\partial_{\eta}\,J
+\end{bmatrix}J^{-1}\,U\right),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+为了计算二阶导数
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{xx}\,u & \partial_{xy}\,u\\
+\partial_{yx}\,u & \partial_{yy}\,u
+\end{bmatrix}=\begin{bmatrix}\partial_{x}\\
+\partial_{y}
+\end{bmatrix}\begin{bmatrix}\partial_{x}\,u & \partial_{y}\,u\end{bmatrix},
+\]
+
+\end_inset
+
+代入
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{x}\\
+\partial_{y}
+\end{bmatrix}=\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix},\quad\begin{bmatrix}\partial_{x}\,u & \partial_{y}\,u\end{bmatrix}=\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}-\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U,
+\]
+
+\end_inset
+
+得
+\begin_inset Formula 
+\[
+\begin{bmatrix}\partial_{xx}\,u & \partial_{xy}\,u\\
+\partial_{yx}\,u & \partial_{yy}\,u
+\end{bmatrix}=\underline{J}^{-1}\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}\left(\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}-\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\right),
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\left(\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}\right) & =\begin{bmatrix}\partial_{\xi}\,\partial_{\xi}\,U & \partial_{\xi}\,\partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}\\
+ & +\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\left(\pdv{\underline{J}^{-T}}{\xi}\,J^{-1}+\underline{J}^{-T}\left(\partial_{\xi}\,J^{-1}\right)\right),
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\partial_{\xi}\left(\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\right) & =\begin{bmatrix}\partial_{\xi}\,\partial_{\xi}\,J & \partial_{\xi}\,\partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\\
+ & +\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\left(\pdv{\underline{J}^{-T}}{\xi}\,J^{-2}\,U+\underline{J}^{-T}\,\pdv{J^{-2}}{\xi}\,U+\underline{J}^{-T}\,J^{-2}\,\pdv{U}{\xi}\right),
+\end{aligned}
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\pdv{\underline{J}^{-T}}{\xi}=\left(-\underline{J}^{-1}\,\pdv{\underline{J}}{\xi}\,\underline{J}^{-1}\right)^{T},\quad\pdv{J^{-1}}{\xi}=-J^{-2}\,\pdv{J}{\xi},\quad\pdv{J^{-2}}{\xi}=-2J^{-3}\,\pdv{J}{\xi},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\pdv{J}{\xi}=\pdv{\det(\underline{J})}{\xi}=\det(\underline{J})\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})=J\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi}),
 \]
 
 \end_inset
@@ -892,9 +1030,9 @@ name "eq:间断有限元：矩阵方程"
 \underline{r}_{j}(\underline{\hat{u}})\coloneqq\begin{bmatrix}\ip{\partial_{s}\,\phi_{j,1}}{f_{s}\qty(u_{j}^{h})}_{E_{j}}\\
 \vdots\\
 \ip{\partial_{s}\,\phi_{j,N}}{f_{s}\qty(u_{j}^{h})}_{E_{j}}
-\end{bmatrix}-\begin{bmatrix}\ip{b_{1}}{f_{n}^{h}\qty(u_{j}^{h},u_{j+}^{h},\vec{n})}_{\partial E_{j}}\\
+\end{bmatrix}-\begin{bmatrix}\ip{\phi_{j,1}}{f_{n}^{h}\qty(u_{j}^{h},u_{j+}^{h},\vec{n})}_{\partial E_{j}}\\
 \vdots\\
-\ip{b_{N}}{f_{n}^{h}\qty(u_{j}^{h},u_{j+}^{h},\vec{n})}_{\partial E_{j}}
+\ip{\phi_{j,N}}{f_{n}^{h}\qty(u_{j}^{h},u_{j+}^{h},\vec{n})}_{\partial E_{j}}
 \end{bmatrix}.
 \]
 
@@ -2251,7 +2389,7 @@ whose zeros in
 \end_inset
 
 ，故 
-\begin_inset Formula $g_{\pm1}\perp\mathbb{P}_{L}$
+\begin_inset Formula $g\perp\mathbb{P}_{L}$
 \end_inset
 
  相当于给出了 
@@ -2564,14 +2702,6 @@ literal "false"
 \begin_inset Formula 
 \[
 g_{+1}(\xi)=\frac{\mathrm{Le}_{N}(\xi)+\lambda\,\mathrm{Le}_{N-1}(\xi)+\mu\,\mathrm{Le}_{N+1}(\xi)}{2}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-g_{-1}(\xi)=g_{+1}(-\xi)=(-1)^{N}\frac{\mathrm{Le}_{N}(\xi)-\lambda\,\mathrm{Le}_{N-1}(\xi)-\mu\,\mathrm{Le}_{N+1}(\xi)}{2}
 \]
 
 \end_inset
@@ -2959,7 +3089,7 @@ f_{h}^{\zeta}
 \hat{f}_{i,j,k}^{\xi}\\
 \hat{f}_{i,j,k}^{\eta}\\
 \hat{f}_{i,j,k}^{\zeta}
-\end{bmatrix}l_{i}(\xi)\,l_{j}(\eta)\,l_{k}(\zeta),
+\end{bmatrix}\overbrace{l_{i}(\xi)\,l_{j}(\eta)\,l_{k}(\zeta)}^{L_{i,j,k}(\xi,\eta,\zeta)},
 \]
 
 \end_inset
@@ -2970,7 +3100,7 @@ f_{h}^{\zeta}
 \begin{aligned}0 & =\dv{\hat{\tilde{u}}_{i,j,k}}{t}\\
  & +\frac{\partial f_{h}^{\xi}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\xi}+\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=-1,\eta_{j},\zeta_{k}}\dv{g_{-1}(\xi_{i})}{\xi}+\left[f_{*}^{\xi}-f_{h}^{\xi}\right]_{\xi=+1,\eta_{j},\zeta_{k}}\dv{g_{+1}(\xi_{i})}{\xi}\\
  & +\frac{\partial f_{h}^{\eta}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\eta}+\left[f_{*}^{\eta}-f_{h}^{\eta}\right]_{\xi_{i},\eta=-1,\zeta_{k}}\dv{g_{-1}(\eta_{j})}{\eta}+\left[f_{*}^{\eta}-f_{h}^{\eta}\right]_{\xi_{i},\eta=+1,\zeta_{k}}\dv{g_{+1}(\eta_{j})}{\eta}\\
- & +\frac{\partial f_{h}^{\zeta}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=-1}\dv{g_{-1}(\zeta_{k})}{\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=+1}\dv{g_{+1}(\zeta_{k})}{\zeta}
+ & +\frac{\partial f_{h}^{\zeta}(\xi_{i},\eta_{j},\zeta_{k})}{\partial\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=-1}\dv{g_{-1}(\zeta_{k})}{\zeta}+\left[f_{*}^{\zeta}-f_{h}^{\zeta}\right]_{\xi_{i},\eta_{j},\zeta=+1}\dv{g_{+1}(\zeta_{k})}{\zeta},
 \end{aligned}
 \]
 
@@ -5819,7 +5949,7 @@ literal "true"
  测试过
 \begin_inset Formula 
 \[
-\Delta=d(\vec{c}_{i},\vec{c}_{j}),\quad\Delta=\vert(\vec{c}_{i}-\vec{c_{j}})\vdot\vec{n}_{ij}\vert,\quad\Delta=\frac{\vert E_{i}\vert+\vert E_{j}\vert}{2\vert(\partial E)_{ij}\vert},
+\Delta=d(\vec{c}_{i},\vec{c}_{j}),\quad\Delta=\vert(\vec{c}_{i}-\vec{c}_{j})\vdot\vec{n}_{ij}\vert,\quad\Delta=\frac{\vert E_{i}\vert+\vert E_{j}\vert}{2\vert(\partial E)_{ij}\vert},
 \]
 
 \end_inset
