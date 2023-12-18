@@ -159,15 +159,9 @@ theorems-chap
 其中
 \begin_inset Formula 
 \[
-U=u\,\underbrace{\det(\underline{J})}_{J},\quad\begin{bmatrix}F^{\xi}\\
-F^{\eta}
-\end{bmatrix}=J\,\underbrace{\begin{bmatrix}\partial_{x}\,\xi & \partial_{y}\,\xi\\
-\partial_{x}\,\eta & \partial_{y}\,\eta
-\end{bmatrix}}_{\underline{J}^{-1}}\begin{bmatrix}f^{x}\\
-f^{y}
-\end{bmatrix}=J\begin{bmatrix}\partial_{\vec{r}}\,\xi\\
-\partial_{\vec{r}}\,\eta
-\end{bmatrix}\vdot\vec{f}.
+U=u\,\underbrace{\det(\underline{J})}_{J},\quad\begin{bmatrix}F^{\xi} & F^{\eta}\end{bmatrix}=\begin{bmatrix}f^{x} & f^{y}\end{bmatrix}\,\underbrace{\begin{bmatrix}\partial_{x}\,\xi & \partial_{x}\,\eta\\
+\partial_{y}\,\xi & \partial_{y}\,\eta
+\end{bmatrix}}_{\underline{J}^{-1}}\,J.
 \]
 
 \end_inset
@@ -631,22 +625,58 @@ U(\vec{\rho},t)=\sum_{l=1}^{N}\phi_{l}(\vec{\rho})\,\hat{U}_{l}(t),\quad\phi_{l}
 其中
 \begin_inset Formula 
 \[
-\begin{aligned}\partial_{\xi}\left(\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}\right) & =\begin{bmatrix}\partial_{\xi}\,\partial_{\xi}\,U & \partial_{\xi}\,\partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}\\
- & +\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\left(\pdv{\underline{J}^{-T}}{\xi}\,J^{-1}+\underline{J}^{-T}\left(\partial_{\xi}\,J^{-1}\right)\right),
-\end{aligned}
+\begin{bmatrix}{\color{red}\partial_{\xi}}\\
+{\color{cyan}\partial_{\eta}}
+\end{bmatrix}\left(\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}\underline{J}^{-T}\,J^{-1}\right)=\begin{bmatrix}{\color{red}\partial_{\xi}}\,\partial_{\xi}\,U & {\color{red}\partial_{\xi}}\,\partial_{\eta}\,U\\
+{\color{cyan}\partial_{\eta}}\,\partial_{\xi}\,U & {\color{cyan}\partial_{\eta}}\,\partial_{\eta}\,U
+\end{bmatrix}\underline{J}^{-T}\,J^{-1}+\begin{bmatrix}\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}{\color{red}\partial_{\xi}}\qty(\underline{J}^{-T}\,J^{-1})\\
+\begin{bmatrix}\partial_{\xi}\,U & \partial_{\eta}\,U\end{bmatrix}{\color{cyan}\partial_{\eta}}\qty(\underline{J}^{-T}\,J^{-1})
+\end{bmatrix}
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{aligned}\partial_{\xi}\left(\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\right) & =\begin{bmatrix}\partial_{\xi}\,\partial_{\xi}\,J & \partial_{\xi}\,\partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\\
- & +\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\left(\pdv{\underline{J}^{-T}}{\xi}\,J^{-2}\,U+\underline{J}^{-T}\,\pdv{J^{-2}}{\xi}\,U+\underline{J}^{-T}\,J^{-2}\,\pdv{U}{\xi}\right),
+\begin{aligned}\begin{bmatrix}{\color{red}\partial_{\xi}}\\
+{\color{cyan}\partial_{\eta}}
+\end{bmatrix}\left(\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U\right)=\begin{bmatrix}{\color{red}\partial_{\xi}}\,\partial_{\xi}\,J & {\color{red}\partial_{\xi}}\,\partial_{\eta}\,J\\
+{\color{cyan}\partial_{\eta}}\,\partial_{\xi}\,J & {\color{cyan}\partial_{\eta}}\,\partial_{\eta}\,J
+\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U & +\begin{bmatrix}\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}{\color{red}\partial_{\xi}}\qty(\underline{J}^{-T}\,J^{-2}\,U)\\
+\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}{\color{cyan}\partial_{\eta}}\qty(\underline{J}^{-T}\,J^{-2}\,U)
+\end{bmatrix}\\
+=\begin{bmatrix}{\color{red}\partial_{\xi}}\,\partial_{\xi}\,J & {\color{red}\partial_{\xi}}\,\partial_{\eta}\,J\\
+{\color{cyan}\partial_{\eta}}\,\partial_{\xi}\,J & {\color{cyan}\partial_{\eta}}\,\partial_{\eta}\,J
+\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,U & +\begin{bmatrix}\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}{\color{red}\partial_{\xi}}\qty(\underline{J}^{-T}\,J^{-2})\\
+\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}{\color{cyan}\partial_{\eta}}\qty(\underline{J}^{-T}\,J^{-2})
+\end{bmatrix}U\\
+ & +\begin{bmatrix}\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,{\color{red}\partial_{\xi}}\,U\\
+\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2}\,{\color{cyan}\partial_{\eta}}\,U
+\end{bmatrix}
 \end{aligned}
+\]
+
+\end_inset
+
+可记
+\begin_inset Formula 
+\[
+\underline{A}=\underline{J}^{-T}\,J^{-1},\quad\underline{B}=\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}\underline{A},\quad\underline{C}=\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\underline{J}^{-T}\,J^{-2},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underline{D}=\begin{bmatrix}\partial_{\xi}\,\partial_{\xi}\,J & \partial_{\xi}\,\partial_{\eta}\,J\\
+\partial_{\eta}\,\partial_{\xi}\,J & \partial_{\eta}\,\partial_{\eta}\,J
+\end{bmatrix}\underline{J}^{-T}\,J^{-2}+\begin{bmatrix}\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\partial_{\xi}\qty(\underline{J}^{-T}\,J^{-2})\\
+\begin{bmatrix}\partial_{\xi}\,J & \partial_{\eta}\,J\end{bmatrix}\partial_{\eta}\qty(\underline{J}^{-T}\,J^{-2})
+\end{bmatrix},
 \]
 
 \end_inset
@@ -666,6 +696,23 @@ U(\vec{\rho},t)=\sum_{l=1}^{N}\phi_{l}(\vec{\rho})\,\hat{U}_{l}(t),\quad\phi_{l}
 \begin_inset Formula 
 \[
 \pdv{J}{\xi}=\pdv{\det(\underline{J})}{\xi}=\det(\underline{J})\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})=J\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi}),
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\pdv[2]{J}{\xi}{\eta} & =\pdv{\eta}(J\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi}))\\
+ & =\pdv{J}{\eta}\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})+J\pdv{\eta}\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})\\
+ & =\pdv{J}{\eta}\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})+J\tr\pdv{\eta}(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})\\
+ & =\pdv{J}{\eta}\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})+J\tr(\underline{J}^{-1}\,\pdv[2]{\underline{J}}{\xi}{\eta}+\pdv{\underline{J}^{-1}}{\eta}\pdv{\underline{J}}{\xi})\\
+ & =\pdv{J}{\eta}\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})+J\tr(\underline{J}^{-1}\,\pdv[2]{\underline{J}}{\xi}{\eta}-\underline{J}^{-1}\,\pdv{\underline{J}}{\eta}\,\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})\\
+ & =J\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\eta})\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\xi})+J\tr(\underline{J}^{-1}\,\pdv[2]{\underline{J}}{\xi}{\eta})-J\tr(\underline{J}^{-1}\,\pdv{\underline{J}}{\eta}\,\underline{J}^{-1}\,\pdv{\underline{J}}{\xi}),
+\end{aligned}
 \]
 
 \end_inset
