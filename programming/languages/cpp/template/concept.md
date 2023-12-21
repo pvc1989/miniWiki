@@ -87,6 +87,8 @@ concept EqualityComparable = requires (T a, T b) {
 };
 ```
 
+⚠️ `{ e } -> Concept` 相当于 `requires Concept<decltype((e))>`，需考虑 [`decltype` 引入的左值引用](./type_deduction.md#decltype)。
+
 显式判断：
 
 ```cpp
