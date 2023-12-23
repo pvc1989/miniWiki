@@ -595,6 +595,17 @@ AOApplicationToPetsc(
 
 ### `DM`: Domain Management
 
+# 开发工具
+
+## 性能分析
+
+- [使用 MPI 应用程序运行 perf](http://cn.voidcc.com/question/p-nexvhitv-be.html)
+
+## 单元测试
+
+- [Unit testing with MPI, googletest, and cmake](https://bbanerjee.github.io/ParSim/mpi/c++/mpi-unit-testing-googletests-cmake)
+- [An extension to Googletest with MPI](https://github.com/AdhocMan/gtest_mpi)
+
 # 参考资料
 
 - 实现
