@@ -318,6 +318,8 @@ add_test(NAME <name> COMMAND <command> [<arg>...]
          [CONFIGURATIONS <config>...]
          [WORKING_DIRECTORY <dir>]
          [COMMAND_EXPAND_LISTS])
+# dependsTest12 runs after baseTest1 and baseTest2, even if they fail:
+set_tests_properties(dependsTest12 PROPERTIES DEPENDS "baseTest1;baseTest2")
 ```
 
 构建完成后，即可用 [`ctest`](https://cmake.org/cmake/help/latest/manual/ctest.1.html) 命令运行测试：

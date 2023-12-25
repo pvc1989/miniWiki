@@ -468,6 +468,17 @@ target_link_libraries(<target> ... <item>... ...)
 1. 在命令行环境中，亦可用《[断点调试](./debug.md)》中介绍的 GDB / LLDB 命令进行调试。
    - 此方法不依赖于本节介绍的 VS Code 及 CMake Tools。
 
+### 测试
+
+若项目配置了 [CTest](./unittest.md#CTest)，则启用 CMake Tools 后，可一键运行所有测试。
+
+若遇到环境变量与交互式 shell 不一致的问题，可通过在 VS Code 的 Settings 中搜索 `ctest`，在 `Test Environment` 中设置相应环境变量解决，例如：
+
+```shell
+PATH=/home/user/.local/bin:/usr/local/bin:/usr/bin
+TERM=xterm-256color
+```
+
 # Ninja<a href id="Ninja"/>
 
 ## 参考资料
