@@ -5,11 +5,15 @@ title: 葵花宝典
 
 # 内容目录
 
-## [数学](./mathematics/README.md)
+## 数学
 
 - 高等代数
-- 实分析、复分析、泛函分析
-- 常微分方程、偏微分方程
+- 微积分、数学分析
+- 实变函数论、实分析
+- [复变函数论、复分析](./mathematics/complex_analysis.md)
+- 泛函分析
+- 常微分方程
+- 偏微分方程
 - 微分几何
 
 ## [物理](./physics/README.md)
