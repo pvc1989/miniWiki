@@ -140,9 +140,14 @@ title: 葵花宝典
      | Windows 10 |      `~/texmf`       | `mklink LINK TARGET` |
 
 - 编译 Markdown 文档（生成 HTML 文件）：
-  1. 打开命令行终端，安装 [prerequisites](https://help.github.com/en/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll#prerequisites)。
+  1. 打开命令行终端，安装 [Ruby](https://www.ruby-lang.org/en/documentation/installation) 及 [Bundler](https://bundler.io/guides/bundler_2_upgrade.html#installing-bundler-2)。
+     ```shell
+     $ brew install ruby@2.7
+     $ ruby --version
+     ```
   1. 进入本仓库根目录，在命令行中输入
      ```shell
+     $ bundle install
      $ bundle exec jekyll serve
      ```
   1. 生成的文件位于 `./_site/` 中。
