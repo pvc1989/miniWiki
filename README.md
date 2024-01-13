@@ -24,13 +24,13 @@ title: 葵花宝典
 - 热力学与统计物理
 - [连续介质力学](./physics/continuum/README.md)
 
-## [算法](./algorithms/README.md)
+## 算法
 
 - [数据结构](./algorithms/data_structures/README.md)
 - 数值计算
 - 优化方法
 
-## [Programming](./programming/README.md)
+## 编程
 
 ### 计算机基础
 
@@ -104,7 +104,7 @@ title: 葵花宝典
 
 - [OpenFOAM](./programming/openfoam.md)
 
-## [Documenting](./documenting/README.md)
+## 文档
 - [LaTeX](./documenting/latex/README.md)
   - [LyX](./documenting/latex/README.md#LyX)
   - [MathJax](./documenting/latex/README.md#MathJax)
