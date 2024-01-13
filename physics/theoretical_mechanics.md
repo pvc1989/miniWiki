@@ -1,5 +1,5 @@
 ---
-title: 理论力学
+title: 理论力学、分析力学
 ---
 
 # Newtonian 力学

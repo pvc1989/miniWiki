@@ -16,11 +16,11 @@ title: 葵花宝典
 - 偏微分方程
 - 微分几何
 
-## [物理](./physics/README.md)
+## 物理
 
-- [理论力学](./physics/classical/README.md)
-- [电动力学](./physics/maxwell/README.md)
-- [量子力学](./physics/quantum/README.md)
+- [理论力学、分析力学](./physics/theoretical_mechanics.md)
+- [电磁学、电动力学](./physics/electromagnetism.md)
+- [量子力学](./physics/quantum_mechanics.md)
 - 热力学与统计物理
 - [连续介质力学](./physics/continuum/README.md)
 
