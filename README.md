@@ -123,12 +123,12 @@ title: 葵花宝典
 
 ## 语言
 - [LyX](./documenting/latex/README.md#LyX)
-  - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此整理为 LyX 文档。
+  - 《[数学](#数学)》《[物理](#物理)》《[算法](#算法)》含有大量数学公式，因此以 LyX 文档为主。
   - 本页内的链接指向可单独编译的分卷，不同分卷可能含有重复的章节。
   - 『顶层 `README.lyx`』大致按逻辑顺序重新编排了章节（重复的只保留一份）。
 - [Markdown](./documenting/markdown.md)
-  - 《[Programming](#Programming)》《[Documenting](#Documenting)》含有大量代码，因此整理为 Markdown 文档。
-  - 本仓库已启用 [GitHub Pages](https://docs.github.com/en/github/working-with-github-pages)（[首页](https://pvcstillingradschool.github.io/miniWiki/)），目前仅支持 Markdown 文档。
+  - 《[编程](#编程)》《[文档](#文档)》含有大量代码，因此以 Markdown 文档为主。
+  - 本仓库已启用 [GitHub Pages](https://docs.github.com/en/pages)（[首页](https://pvc1989.github.io/miniWiki/)），目前仅支持 Markdown 文档。
 
 ## 编译
 

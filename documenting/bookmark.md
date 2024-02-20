@@ -3,7 +3,7 @@ title: 书签编辑器
 ---
 
 # PDF 书签编辑器
-## [PDFBookmarker](https://github.com/pvcStillInGradSchool/pdfbookmarker#pdfbookmarker)<a name="PDFBookmarker"></a>
+## [PDFBookmarker](https://github.com/pvc1989/pdfbookmarker)<a name="PDFBookmarker"></a>
 ### 用法示例
 ```bash
 # 将 toc.txt 中的目录添加到 book.pdf，另存为 new-book.pdf
@@ -22,7 +22,7 @@ python3 pdfbookmarker.py book.pdf toc.txt
 ++"1.1  第一节标题"|5
 ++"1.1  第二节标题"|9
 ```
-[PVC](https://github.com/pvcStillInGradSchool/pdfbookmarker) 在 [RussellLuo](https://github.com/RussellLuo/pdfbookmarker) 的基础上，增加了对页码偏移的支持：用独占一行的 `#n` 表示「自下一行起，页码值 `+n`」。
+[PVC](https://github.com/pvc1989/pdfbookmarker) 在 [RussellLuo](https://github.com/RussellLuo/pdfbookmarker) 的基础上，增加了对页码偏移的支持：用独占一行的 `#n` 表示「自下一行起，页码值 `+n`」。
 因此，以上目录文件可以等价地写为：
 
 ```txt

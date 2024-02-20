@@ -272,7 +272,7 @@ make testing
 ### METIS
 
 [Karypis/METIS](https://github.com/KarypisLab/METIS) 是由 [George Karypis](http://glaros.dtc.umn.edu) 开发的网格分区工具包。
-为便于导入 CMake 项目，[pvcStillinGradSchool/METIS](https://github.com/pvcStillinGradSchool/METIS) 在其基础上对 `CMakeLists.txt` 做了部分修改。
+为便于导入 CMake 项目，[pvc1989/METIS](https://github.com/pvc1989/METIS) 在其基础上对 `CMakeLists.txt` 做了部分修改。
 
 某些编译器会将『指针与数据格式不一致』视为错误，此时可在 `CMakeCache.txt` 中开启如下编译选项：
 
