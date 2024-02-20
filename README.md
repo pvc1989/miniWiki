@@ -21,7 +21,7 @@ title: 葵花宝典
 - [理论力学、分析力学](./physics/theoretical_mechanics.md)
 - [电磁学、电动力学](./physics/electromagnetism.md)
 - [量子力学](./physics/quantum_mechanics.md)
-- 热力学与统计物理
+- [热力学](./physics/thermodynamics.md)、[统计物理](./physics/statistical_physics.md)
 - [连续介质力学](./physics/continuum/README.md)
 
 ## 算法
