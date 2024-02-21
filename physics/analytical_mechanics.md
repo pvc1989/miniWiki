@@ -2,11 +2,9 @@
 title: 分析力学
 ---
 
-# Lagrangian 力学
+# 最小作用量原理
 
-## 最小作用量原理
-
-### 广义坐标（速度）
+## 广义坐标（速度）
 
 $$
 \underline{q}\coloneqq\begin{bmatrix}q_1 & \dots & q_n\end{bmatrix}
@@ -19,7 +17,7 @@ $$
 \eqqcolon\dv{}{t}\underline{q}
 $$
 
-### 作用量的 Lagrangian 形式
+## 作用量的 Lagrangian 形式
 
 $$
 \boxed{S\coloneqq\int_{t_1}^{t_2}L(\underline{q},\underline{\dot{q}},t)\dd{t}}
@@ -30,7 +28,7 @@ $$
 =\int_{t_1}^{t_2}\left(\pdv{L}{\underline{q}}\cdot\delta{\underline{q}}+\pdv{L}{\underline{\dot{q}}}\cdot\delta{\underline{\dot{q}}}\right)\dd{t}
 $$
 
-### Lagrange's 方程<a href name="lagrange-eqn"></a>
+## Lagrange's 方程<a href name="lagrange-eqn"></a>
 
 $$
 \int_{t_1}^{t_2}\pdv{L}{\underline{\dot{q}}}\cdot\delta{\underline{\dot{q}}}\dd{t}
@@ -50,9 +48,9 @@ $$
 
 则它们给出相同的 *Lagrange's 方程*，从而在力学上完全等价。
 
-## $L$ 的具体形式
+# $L$ 的具体形式
 
-### 自由质点
+## 自由质点
 
 $$
 L(\underline{q},\underline{\dot{q}},t)=L(v^{2})\qquad v^{2}\coloneqq\vec{v}\vdot\vec{v}
@@ -62,7 +60,7 @@ $$
 \boxed{L(\vec{v})=\frac{m}{2}v^{2}}
 $$
 
-### 封闭质点系
+## 封闭质点系
 
 $$
 L(\vec{r}_{1},\dots,\vec{r}_{n},\vec{v}_{1},\dots,\vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\vec{v}_{i}^{2}-V(\vec{r}_{1},\dots,\vec{r}_{n})
@@ -72,7 +70,7 @@ $$
 \boxed{L(\underline{q},\underline{\dot{q}},t)=\tfrac{1}{2}\underline{\dot{q}}\cdot\underline{A}(\underline{q})\cdot\underline{\dot{q}}-V(\underline{q})}
 $$
 
-### 外场的影响
+## 外场的影响
 
 单个质点：
 
@@ -86,9 +84,9 @@ $$
 L(\vec{r}_{1},\dots,\vec{r}_{n},\vec{v}_{1},\dots,\vec{v}_{n},t)=\sum_{i=1}^{n}\frac{m_{i}}{2}\vec{v}_{i}^{2}-V(\vec{r}_{1},\dots,\vec{r}_{n},t)
 $$
 
-## 对称性 $\Rightarrow$ 守恒律
+# 对称性 $\Rightarrow$ 守恒律
 
-### 时间均匀性 $\Rightarrow$ 能量守恒
+## 时间均匀性 $\Rightarrow$ 能量守恒
 
 $$
 \dv{L(\underline{q},\underline{\dot{q}})}{t}=\pdv{L}{\underline{q}}\cdot\dv{\underline{q}}{t}+\pdv{L}{\underline{\dot{q}}}\cdot\dv{\underline{\dot{q}}}{t}
@@ -99,7 +97,7 @@ $$
 \boxed{E\coloneqq\pdv{L}{\underline{\dot{q}}}\cdot\underline{\dot{q}}-L=\text{const}}
 $$
 
-### 空间均匀性 $\Rightarrow$ 动量守恒
+## 空间均匀性 $\Rightarrow$ 动量守恒
 
 全空间的任意无穷小平移 $\delta\vec{r}\eqqcolon\vec{\epsilon}$ 不改变系统的力学行为，即
 
@@ -111,7 +109,7 @@ $$
 \boxed{\vec{p}\coloneqq\sum_{i=1}^{n}\vec{p}_{i}\coloneqq\sum_{i=1}^{n}\pdv{L}{\vec{v}_{i}}=\sum_{i=1}^{n}m_{i}\vec{v}_{i}=\text{const}}
 $$
 
-### 空间各向同性 $\Rightarrow$ 角动量守恒
+## 空间各向同性 $\Rightarrow$ 角动量守恒
 
 全空间的任意无穷小旋转 $\delta\vec{\varphi}$ 不改变系统的力学行为，即
 
@@ -126,11 +124,9 @@ $$
 \boxed{\vec{L}\coloneqq\sum_{i=1}^{n}\vec{L}_{i}\coloneqq\sum_{i=1}^{n}\vec{r}_{i}\cross\vec{p}_{i}=\text{const}}
 $$
 
-# Hamiltonian 力学
+# Hamilton's 方程
 
-## Hamilton's 方程
-
-### Legendre's 变换
+## Legendre's 变换
 
 Lagrangian 函数 $L(\underline{q},\underline{\dot{q}},t)$ *关于广义速度的导数*被称为**广义动量**，即
 
@@ -158,7 +154,7 @@ $$
 其物理意义为系统的能量。
 上述由 $L(\underline{q},\underline{\dot{q}},t)$ 导出 $H(\underline{q},\underline{p},t)$ 的过程在数学上被称为 **Legendre's 变换**
 
-### Hamilton's 方程
+## Hamilton's 方程
 
 $H(\underline{q},\underline{p},t)$ 的全微分可写成
 
@@ -189,7 +185,7 @@ $$
 
 此方程只含一阶导数，且具有很好的对称性，在分析力学中居于核心地位，故又名**正则方程 (canonical equations)**。
 
-### 能量守恒<a href name="const-H"></a>
+## 能量守恒<a href name="const-H"></a>
 
 比较 $\dd{t}$ 两侧的系数，可得
 
@@ -209,9 +205,9 @@ $$
 
 即 *$H$ 不显含时间*。
 
-## 作用量的 Hamiltonian 形式
+# 作用量的 Hamiltonian 形式
 
-### 边界条件的作用
+## 边界条件的作用
 
 真实运动所对应的作用量 $S=\int_{t_1}^{t_2} L(\underline{q},\underline{\dot{q}},t)\dd{t}$ 可以被视为由始末时刻 $t_1,t_2$ 及位置 $\mathopen{\underline{q}}(t_1),\mathopen{\underline{q}}(t_2)$ 所确定的量，即
 
@@ -273,7 +269,7 @@ $$
 
 该式表明：真实轨道必须使右端表达式为全微分。
 
-### 微分与积分形式
+## 微分与积分形式
 
 特别地，若取定初始位置（即 $\mathopen{\delta}\mathopen{\underline{q}}(t_1)=0$）并省略 $t_2$ 的下标，则有
 
@@ -284,7 +280,7 @@ $$
 
 将 $\underline{p},\underline{q}$ 视为 $S$ 的独立变量，利用最小作用量原理 $\delta S=0$，可重新导出 [Hamilton's 方程](#hamilton-eqn)。
 
-### Maupertuis' 原理
+## Maupertuis' 原理
 
 只考虑满足[能量守恒](#const-H) $ H(\underline{p},\underline{q})=E $ 的系统。
 若取定初始时刻 $t_0$ 及始末位置 $\mathopen{\underline{q}}(t_0),\mathopen{\underline{q}}(t)$ 且允许终止时刻 $t$ 变化，则有
@@ -338,9 +334,9 @@ $$
 \end{aligned}
 $$
 
-## 正则变换
+# 正则变换
 
-### 正则变换条件
+## 正则变换条件
 
 一般的变量替换
 
@@ -368,7 +364,7 @@ $$
 的变换能够保持方程的正则性，因此该条件被称为**正则变换条件**，其中 $F=F(\underline{q},\underline{p},\underline{\tilde{q}},\underline{\tilde{p}},t)$ 被称为该变换的**生成函数**。
 这是因为，变换前后的作用量 $S,\tilde{S}$ 能分别导出 Hamilton's 方程，并且二者之差 $S-\tilde{S}=\left.F\right|_{t_1}^{t_2}$ 为不影响变分的常数。
 
-### 正则变换公式
+## 正则变换公式
 
 将正则变换条件
 
@@ -441,17 +437,17 @@ $$
 $$
 
 
-### 正则共轭变量
+## 正则共轭变量
 
-### Liouville's 定理
+## Liouville's 定理
 
 【引理】真实运动所引起的正则共轭变量 $\underline{q},\underline{p}$ 的变化，可以看作一系列正则变换累加的结果。
 
 **Liouville's 定理**：相空间中任意点集的测度不随这些点的（满足力学定律的真实）运动而变化。
 
-## Poisson 括号
+# Poisson 括号
 
-### 定义
+## 定义
 
 给定两个依赖于 $(\underline{p},\underline{q})$ 的函数 $f(\underline{p},\underline{q}),g(\underline{p},\underline{q})$，它们的 **Poisson 括号**是指
 
@@ -470,7 +466,7 @@ $$
 
 ⚠️ 某些文献将上述定义中的 $p,q$ 互换，所得结果与这里正好相差一个负号。这种差别不是实质性的，只要上下文保持一致即可。
 
-### 恒等式
+## 恒等式
 
 $$
 \{f,g\}=\{g,f\}\qquad\{f,1\}=0
@@ -493,7 +489,7 @@ $$
 \{q_i,q_k\}=0\qquad\{p_i,p_k\}=0\qquad\{p_i,q_k\}=\delta_{ik}
 $$
 
-### 运动积分
+## 运动积分
 
 **定理**：若 $f(\underline{p},\underline{q}),g(\underline{p},\underline{q})$ 均为运动积分，则 $\{f,g\}$ 亦为运动积分，即
 
@@ -501,7 +497,7 @@ $$
 \left(\dv{f}{t}=0\right)\land\left(\dv{g}{t}=0\right)\implies\dv{}{t}\{f,g\}=0
 $$
 
-### 正则变换条件
+## 正则变换条件
 
 $$
 \{f,g\}_{\underline{p},\underline{q}}=\{f,g\}_{\underline{\tilde{p}},\underline{\tilde{q}}}
@@ -511,7 +507,7 @@ $$
 \{\tilde{q}_{i},\tilde{q}_{k}\}_{\underline{p},\underline{q}}=0\qquad\{\tilde{p}_{i},\tilde{p}_{k}\}_{\underline{p},\underline{q}}=0\qquad\{\tilde{p}_{i},\tilde{q}_{k}\}_{\underline{p},\underline{q}}=\delta_{ik}
 $$
 
-## Hamilton--Jacobi 方程
+# Hamilton--Jacobi 方程
 
 $$
 \boxed{\frac{\partial S}{\partial t}+\mathopen{H}\left(\underline{q},\frac{\partial S}{\partial\underline{q}},t\right)=0}
