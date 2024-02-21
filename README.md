@@ -34,23 +34,57 @@ title: 葵花宝典
 
 ### 计算机基础
 
-#### 组成原理
+#### [CS:APP3e --- Computer Systems: A Programmer's Perspective 3/E](./programming/csapp.md)
 
-- [CSAPP](./programming/csapp.md)
+- 1. A Tour of Computer Systems
+- [2. Representing and Manipulating Information](./programming/csapp/2_bits_bytes_ints_floats.md)
+- [3. Machine-Level Representation of Programs](./programming/csapp/3_machine_level_programming.md)
+- 4. Processor Architecture
+- [5. Optimizing Program Performance](./programming/csapp/5_optimizing_performance.md)
+- [6. The Memory Hierarchy](./programming/csapp/6_memory_hierarchy.md)
+- [7. Linking](./programming/csapp/7_linking.md)
+- [8. Exceptional Control Flow](./programming/csapp/8_exceptional_control_flow.md)
+- [9. Virtual Memory](./programming/csapp/9_virtual_memory.md)
+- [11. Network Programming](./programming/csapp/11_network_programming.md)
+- [12. Concurrent Programming](./programming/csapp/12_concurrent_programming.md)
+
+#### 计算机组成原理
+
+- [王道计算机考研 计算机组成原理](https://www.bilibili.com/video/BV1BE411D7ii)
+- [CS:APP3e 2. Representing and Manipulating Information](./programming/csapp/2_bits_bytes_ints_floats.md)
+- [CS:APP3e 3. Machine-Level Representation of Programs](./programming/csapp/3_machine_level_programming.md)
+- CS:APP3e 4. Processor Architecture
+- [CS:APP3e 5. Optimizing Program Performance](./programming/csapp/5_optimizing_performance.md)
 
 #### 操作系统
 
-- [链接](./programming/csapp/7_linking.md)
-- [异常控制流](./programming/csapp/8_exceptional_control_flow.md)
-- [虚拟存储](./programming/9_virtual_memory.md)
-- [系统级读写](./programming/10_system_level_io.md)
-- [并发编程](./programming/12_concurrent_programming.md)
+- [王道计算机考研 操作系统](https://www.bilibili.com/video/BV1YE411D7nH)
 - [Linux](./programming/linux.md)
 - [Docker](./programming/docker.md)
 
+##### 进程管理
+
+- [CS:APP3e 8. Exceptional Control Flow](./programming/csapp/8_exceptional_control_flow.md)
+- [CS:APP3e 12. Concurrent Programming](./programming/csapp/12_concurrent_programming.md)
+
+##### 存储管理
+
+- [CS:APP3e 6. The Memory Hierarchy](./programming/csapp/6_memory_hierarchy.md)
+- [CS:APP3e 7. Linking](./programming/csapp/7_linking.md)
+- [CS:APP3e 9. Virtual Memory](./programming/csapp/9_virtual_memory.md)
+
+##### 文件管理
+- [CS:APP3e 9. Virtual Memory](./programming/csapp/9_virtual_memory.md)
+- [CS:APP3e 10. System-Level I/O](./programming/csapp/10_system_level_io.md)
+
+##### 读写管理
+- [CS:APP3e 10. System-Level I/O](./programming/csapp/10_system_level_io.md)
+
 #### 计算机网络
 
-- [网络编程](./programming/csapp/11_network_programming.md)
+- [王道计算机考研 计算机网络](https://www.bilibili.com/video/BV19E411D78Q)
+- [CS:APP3e 11. Network Programming](./programming/csapp/11_network_programming.md)
+- [计算机网络层次结构](./programming/csapp/network_hierarchy.md)
 - [SSH](./programming/linux/ssh.md)
 - [网页](./documenting/web/README.md)
 
