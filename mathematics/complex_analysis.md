@@ -76,7 +76,7 @@ $$
 z=\rho\cos\theta+\sqrt{-1}\rho\sin\theta,\quad(\rho,\theta)\in[0,\infty)\times(-\infty,\infty)
 $$
 
-- 模 $$ \rho\coloneqq\sqrt{zz^*} $$
+- 模 $$ |z|\equiv\rho\coloneqq\sqrt{zz^*} $$
 - 辐角 $$ \theta \coloneqq \arctan(y/x) $$
 - 辐角主值 $$ \theta\in[0,2\mathrm{\pi}) $$
 
@@ -99,6 +99,51 @@ $$
 $$
 
 ## 复数序列
+
+基于复数的模，可以定义距离
+
+$$
+d(p,q)\coloneqq\vert p-q\vert,\quad\forall(p,q)\in\mathbb{C}^{2}.
+&&
+
+### 序列的极限
+
+$$\forall \varepsilon>0,\exists N>0,\forall n > N,\abs{z_n - a} < \epsilon$$
+
+### Cauchy 收敛准则
+
+若 $$\forall \varepsilon>0,\exists N>0,\forall m > N \land n > N,\abs{z_m - z_n} < \epsilon$$，则该序列收敛。
+
+### 序列的聚点<a href id="limit_point"></a>
+
+若某序列的无穷子列收敛，则该子列的极限是原序列的一个***聚点***，又称***极限点***。
+
+注. 一个复数序列可以由多个*聚点*，但至多只能有一个*极限*。
+
+## 点集拓扑
+
+基于上述距离定义，可导出 $$ \mathbb{C} $$ 或 $$ \overline{\mathbb{C}} $$ 上的拓扑。
+
+### 点与点集的关系
+
+给定点 $$ z $$ 与点集 $$ D $$：
+
+- 邻域：
+- 内点：存在 $$ z $$ 的充分小邻域，其所有成员点都 $$ \in D $$。
+- 外点：存在 $$ z $$ 的充分小邻域，其所有成员点都 $$ \notin D $$。
+- 边界点：在 $$ z $$ 的任意邻域内，都既有内点、又有外点。
+
+### 点集的分类
+
+给定点集 $$ D $$：
+
+- 开集：$$ D $$ 的所有成员点都是 $$ D $$ 的内点。
+- 闭集：$$ D $$ 是某个开集的补集。
+- 闭包：$$ D $$ 与其所有[聚点](#limit_point)之集的并。
+- 连通性：$$ D $$ 内任意两点都可通过 $$ D $$ 的成员点相连。
+  - 单连通：所有闭合曲线都可以收缩到一点。
+  - 复连通：非单连通的连通集。
+- 区域：连通的开集。
 
 ## 复数级数
 
