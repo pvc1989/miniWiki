@@ -36,17 +36,17 @@ title: 葵花宝典
 
 #### [CS:APP3e --- Computer Systems: A Programmer's Perspective 3/E](./programming/csapp.md)
 
-- 1. A Tour of Computer Systems
-- [2. Representing and Manipulating Information](./programming/csapp/2_bits_bytes_ints_floats.md)
-- [3. Machine-Level Representation of Programs](./programming/csapp/3_machine_level_programming.md)
-- 4. Processor Architecture
-- [5. Optimizing Program Performance](./programming/csapp/5_optimizing_performance.md)
-- [6. The Memory Hierarchy](./programming/csapp/6_memory_hierarchy.md)
-- [7. Linking](./programming/csapp/7_linking.md)
-- [8. Exceptional Control Flow](./programming/csapp/8_exceptional_control_flow.md)
-- [9. Virtual Memory](./programming/csapp/9_virtual_memory.md)
-- [11. Network Programming](./programming/csapp/11_network_programming.md)
-- [12. Concurrent Programming](./programming/csapp/12_concurrent_programming.md)
+1. A Tour of Computer Systems
+2. [Representing and Manipulating Information](./programming/csapp/2_bits_bytes_ints_floats.md)
+3. [Machine-Level Representation of Programs](./programming/csapp/3_machine_level_programming.md)
+4. Processor Architecture
+5. [Optimizing Program Performance](./programming/csapp/5_optimizing_performance.md)
+6. [The Memory Hierarchy](./programming/csapp/6_memory_hierarchy.md)
+7. [Linking](./programming/csapp/7_linking.md)
+8. [Exceptional Control Flow](./programming/csapp/8_exceptional_control_flow.md)
+9. [Virtual Memory](./programming/csapp/9_virtual_memory.md)
+11. [Network Programming](./programming/csapp/11_network_programming.md)
+12. [Concurrent Programming](./programming/csapp/12_concurrent_programming.md)
 
 #### 计算机组成原理
 
