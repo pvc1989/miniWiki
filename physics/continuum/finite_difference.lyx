@@ -1294,7 +1294,15 @@ u_{j+s}=\sum_{r=0}^{\infty}\left.\frac{\partial^{r}u}{\partial x^{r}}\right|_{j}
 \begin_inset Formula $\partial_{x}u$
 \end_inset
 
- 项用某种空间离散格式代替，并将截断误差移到等式另一端，再省略下标 
+ 项用某种空间离散格式代替，对格式中出现的所有 
+\begin_inset Formula $u_{j+s}$
+\end_inset
+
+ 在 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ 处做 Taylor 展开，并将截断误差移到等式另一端，再省略下标 
 \begin_inset Formula $j$
 \end_inset
 
@@ -1320,7 +1328,7 @@ reference "eq:有限差分：空间格式：一般线性"
  代入线性单波方程，即得修正方程
 \begin_inset Formula 
 \begin{equation}
-\frac{\partial u^{h}}{\partial t}+a\frac{\partial u^{h}}{\partial x}=\sum_{r=1}^{\infty}b_{r}\frac{\partial^{2r}u^{h}}{\partial x^{2r}}+\sum_{r=1}^{\infty}a_{r}\frac{\partial^{2r+1}u^{h}}{\partial x^{2r+1}}\label{eq:有限差分：空间格式：修正方程}
+\frac{\partial u^{h}}{\partial t}+a\frac{\partial u^{h}}{\partial x}=\sum_{r=1}^{\infty}b_{r}(h)\frac{\partial^{2r}u^{h}}{\partial x^{2r}}+\sum_{r=1}^{\infty}a_{r}(h)\frac{\partial^{2r+1}u^{h}}{\partial x^{2r+1}}\label{eq:有限差分：空间格式：修正方程}
 \end{equation}
 
 \end_inset
@@ -1386,7 +1394,7 @@ u^{h}(x,t)=\exp(\beta t+\ii\kappa\alpha t)\underbrace{\exp(\ii\kappa x-\ii\kappa
 其中
 \begin_inset Formula 
 \[
-\alpha=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}a_{r},\quad\beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}b_{r}
+\alpha(h)=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}a_{r}(h),\quad\beta(h)=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}b_{r}(h),
 \]
 
 \end_inset
@@ -1529,6 +1537,26 @@ reference "eq:有限差分：空间格式：修正方程：精确解"
 \end_inset
 
 其实部表示色散误差，虚部表示耗散误差。
+\end_layout
+
+\begin_layout Standard
+修正波数由修正方程导出，二者都蕴含了空间格式的全部信息，包括精度的阶数：用格式的修正波数减去精确解的修正波数（令 
+\begin_inset Formula $\alpha=\beta=0$
+\end_inset
+
+ 即得），所得的差可以展开为 Taylor 级数：
+\begin_inset Formula 
+\[
+\tilde{\kappa}(h)-\tilde{\kappa}(0)=\ii\frac{\beta(h)}{a}-\frac{\alpha(h)}{a}\kappa=\sum_{r=1}^{\infty}C_{r}\,h^{r},
+\]
+
+\end_inset
+
+则 
+\begin_inset Formula $p\coloneqq\min_{r}C_{r}\ne0$
+\end_inset
+
+ 即为精度阶数。
 \end_layout
 
 \begin_layout Remark*
@@ -1695,6 +1723,18 @@ literal "true"
 
 \end_inset
 
+其右端项阶数为 
+\begin_inset Formula $\order{h}$
+\end_inset
+
+，即格式精度只有 
+\begin_inset Formula $1$
+\end_inset
+
+ 阶。
+\end_layout
+
+\begin_layout Standard
 采用模型问题-
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1730,22 +1770,6 @@ a-\alpha=a-\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{-h^{
 \[
 \beta=\sum_{r=1}^{\infty}\left(-\kappa^{2}\right)^{r}\underbrace{\frac{h^{2r}}{(2r)!}\frac{a}{h}}_{b_{r}}=\frac{a}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}=\kappa a\frac{\cos(\kappa h)-1}{\kappa h}.
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Paragraph
-修正波数
-\end_layout
-
-\begin_layout Standard
-由上述修正方程的精确解，可得修正波数与理想波数之比为
-\begin_inset Formula 
-\begin{equation}
-\frac{\tilde{\kappa}}{\kappa}=\frac{a-\alpha}{a}+\ii\frac{\beta}{\kappa a}=\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h}\label{eq:一阶迎风·修正波数}
-\end{equation}
 
 \end_inset
 
@@ -1789,6 +1813,30 @@ reference "eq:有限差分：空间格式：一阶向后"
 \end_inset
 
  的情形。
+\end_layout
+
+\begin_layout Paragraph
+修正波数
+\end_layout
+
+\begin_layout Standard
+由上述修正方程的精确解，可得修正波数为
+\begin_inset Formula 
+\begin{equation}
+\frac{\tilde{\kappa}}{\kappa}=\frac{a-\alpha}{a}+\ii\frac{\beta}{\kappa a}=\frac{\sin(\kappa h)}{\kappa h}+\ii\frac{\cos(\kappa h)-1}{\kappa h},\label{eq:一阶迎风·修正波数}
+\end{equation}
+
+\end_inset
+
+其与原方程精确解的修正波数之差
+\begin_inset Formula 
+\[
+\tilde{\kappa}(h)-\tilde{\kappa}(0)=\ii\frac{\beta}{a}-\frac{\alpha}{a}\kappa=\ii\frac{1}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r}}{(2r)!}+\frac{1}{h}\sum_{r=1}^{\infty}\left(-1\right)^{r}\frac{(\kappa h)^{2r+1}}{(2r+1)!}=\frac{-\kappa^{2}}{2}h+\order{h^{2}},
+\]
+
+\end_inset
+
+的首项再次给出格式精度。
 \end_layout
 
 \begin_layout Subsection
