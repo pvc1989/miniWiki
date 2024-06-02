@@ -5540,7 +5540,7 @@ H & =\min\qty(F,G),
 \end_layout
 
 \begin_layout Subsubsection
-FR 能量耗散率
+FR 能量耗散矩阵（物理坐标）
 \end_layout
 
 \begin_layout Standard
@@ -5718,8 +5718,9 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
  行的方阵，均可预先算出并缓存。故人工黏性导致的能量耗散率为
 \begin_inset Formula 
 \[
-\begin{aligned}\dv{t}\sum_{k=0}^{p}\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2} & =\dv{t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}w_{j,k}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}=\cdots\\
- & =\cdots+\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\ket{\hat{u}_{j}}+\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
+\begin{aligned}\dv{t}\sum_{k=0}^{p}\frac{1}{2}\Vert u_{j}^{\mathrm{D}}\Vert_{L_{2}(E_{j})}^{2} & =\dv{t}\sum_{k=0}^{p}\frac{1}{2}\hat{u}_{j,k}^{2}\,w_{j,k}=\bra{\hat{u}_{j}}\underline{W}_{j}\dv{t}\ket{\hat{u}_{j}}\\
+ & =\cdots+\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{B}_{j}-\underline{C}_{j}+\underline{D}_{j}\right)\ket{\hat{u}_{j}}\\
+ & +\nu_{j}\bra{\hat{u}_{j}}\underline{W}_{j}\left(\underline{E}_{j}\ket{\hat{u}_{j-1}}+\underline{F}_{j}\ket{\hat{u}_{j+1}}\right),
 \end{aligned}
 \]
 
@@ -5734,6 +5735,190 @@ f_{j}^{\mathrm{C}}(x,t)=\left(f_{j-1/2}^{\mathrm{I}}-f_{j-1/2}^{\mathrm{D}}\righ
 \end_inset
 
  构成的对角阵。
+\end_layout
+
+\begin_layout Subsubsection
+高维形式
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}+\frac{\partial f^{x}}{\partial x}+\frac{\partial f^{y}}{\partial y}=0,\quad\begin{bmatrix}f^{x}\\
+f^{y}
+\end{bmatrix}=\begin{bmatrix}f_{\text{ph.}}^{x}\\
+f_{\text{ph.}}^{y}
+\end{bmatrix}-\nu\begin{bmatrix}\partial_{x}\,u\\
+\partial_{y}\,u
+\end{bmatrix},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{(x,y)}_{\vec{r}}\mapsto\underbrace{(\xi,\eta)}_{\vec{\rho}}\implies\underline{J}=\begin{bmatrix}\partial_{\xi}\\
+\partial_{\eta}
+\end{bmatrix}\begin{bmatrix}x & y\end{bmatrix},\quad J=\det(\underline{J}),
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial U}{\partial t}+\frac{\partial F^{\xi}}{\partial\xi}+\frac{\partial F^{\eta}}{\partial\eta}=0,\quad U=J\,u,\quad\begin{bmatrix}F^{\xi} & F^{\eta}\end{bmatrix}=\begin{bmatrix}f^{x} & f^{y}\end{bmatrix}\,\underbrace{\begin{bmatrix}\partial_{x}\,\xi & \partial_{x}\,\eta\\
+\partial_{y}\,\xi & \partial_{y}\,\eta
+\end{bmatrix}}_{\underline{J}^{-1}}\,J,
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+U(\vec{\rho},t)\approx\begin{bmatrix}\phi_{1}(\vec{\rho}) & \cdots & \phi_{N}(\vec{\rho})\end{bmatrix}_{E}\begin{bmatrix}\hat{U}_{1}(t)\\
+\vdots\\
+\hat{U}_{N}(t)
+\end{bmatrix}_{E},\quad\vec{r}\in E,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+耗散矩阵
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{t}\begin{bmatrix}\hat{U}_{1}(t)\\
+\vdots\\
+\hat{U}_{N}(t)
+\end{bmatrix}_{E}=\left(\nu\text{-irrelevant}\right)+\nu\,\underline{D}_{E}\begin{bmatrix}\hat{U}_{1}(t)\\
+\vdots\\
+\hat{U}_{N}(t)
+\end{bmatrix}_{E}+\nu\sum_{E\cap E'}\underline{D}_{E'}\begin{bmatrix}\hat{U}_{1}(t)\\
+\vdots\\
+\hat{U}_{N'}(t)
+\end{bmatrix}_{E'},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $\underline{D}_{E}$
+\end_inset
+
+ 可以解析地推导，或数值地构造：用上述格式解线性扩散方程
+\begin_inset Formula 
+\[
+\frac{\partial u}{\partial t}=\frac{\partial}{\partial x}\left(\nu\frac{\partial u}{\partial x}\right)+\frac{\partial}{\partial y}\left(\nu\frac{\partial u}{\partial y}\right),\quad\nu=1,
+\]
+
+\end_inset
+
+令
+\begin_inset Formula 
+\[
+\begin{bmatrix}\hat{U}_{1}\\
+\vdots\\
+\hat{U}_{N'}
+\end{bmatrix}_{E'}=\begin{bmatrix}0\\
+\vdots\\
+0
+\end{bmatrix},\quad\forall E'\cap E\ne\varnothing;\quad\begin{bmatrix}\hat{U}_{1}\\
+\vdots\\
+\hat{U}_{N}
+\end{bmatrix}_{E}=\begin{bmatrix}\vdots\\
+0\\
+1\\
+0\\
+\vdots
+\end{bmatrix}\leftarrow k\text{th row},\quad k=1,\dots,N,
+\]
+
+\end_inset
+
+所得的 RHS of ODE 即为 
+\begin_inset Formula $\underline{D}_{E}$
+\end_inset
+
+ 的第 
+\begin_inset Formula $k$
+\end_inset
+
+ 列。
+\end_layout
+
+\begin_layout Paragraph
+动能耗散率
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+K(E)=\int\frac{1}{2}u^{2}\dd[2]{\vec{r}}=\int\frac{1}{2}\left(\frac{U}{J}\right)^{2}\dd[2]{\vec{r}}=\int\frac{J}{2}\left(\frac{U}{J}\right)^{2}\dd[2]{\vec{\rho}}=\int\frac{U^{2}}{2J}\dd[2]{\vec{\rho}}=\frac{1}{2}\langle\hat{U}\vert\,\underline{W}\,\vert\hat{U}\rangle,
+\]
+
+\end_inset
+
+其中
+\begin_inset Formula 
+\[
+\langle\hat{U}\vert=\begin{bmatrix}\hat{U}_{1}(t) & \cdots & \hat{U}_{N}(t)\end{bmatrix},\quad\vert\hat{U}\rangle=\begin{bmatrix}\hat{U}_{1}(t)\\
+\vdots\\
+\hat{U}_{N}(t)
+\end{bmatrix},
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underline{W}=\int\begin{bmatrix}\phi_{1}(\vec{\rho})\\
+\vdots\\
+\phi_{N}(\vec{\rho})
+\end{bmatrix}\frac{\begin{bmatrix}\phi_{1}(\vec{\rho}) & \cdots & \phi_{N}(\vec{\rho})\end{bmatrix}}{J(\vec{\rho})}\dd[2]{\vec{\rho}}\approx\begin{cases}
+\cdots, & \text{general basis},\\
+\mathrm{diag}\begin{bmatrix}\dfrac{w_{1}}{J(\vec{\rho}_{1})} & \cdots & \dfrac{w_{N}}{J(\vec{\rho}_{N})}\end{bmatrix}, & \text{Lagrange basis},
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dv{K}{t}=\dv{t}\frac{1}{2}\langle\hat{U}\vert\,\underline{W}\,\vert\hat{U}\rangle=\langle\hat{U}\vert\,\underline{W}\,\dv{t}\vert\hat{U}\rangle=\langle\hat{U}\vert\,\underline{W}\,\nu\,\underline{D}\,\vert\hat{U}\rangle+\cdots,
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+单元黏性值
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\nu=\frac{\Delta K}{G\,\tau},\quad G=\langle\hat{U}\vert\,\underline{W}\,\underline{D}\,\vert\hat{U}\rangle,
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
