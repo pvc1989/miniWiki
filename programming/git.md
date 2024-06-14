@@ -261,6 +261,27 @@ git rebase -i HEAD~2
 
 详见 [`git rebase -i` 命令详解](https://blog.csdn.net/the_power/article/details/104651772)。
 
+### 过滤仓库
+
+从现有仓库中，选择（若干）子目录，过滤掉与其无关的提交，以所得结果为新的仓库：
+
+1. 安装 [`git-filter-repo`](https://github.com/newren/git-filter-repo)：只需将其中的 [`git-filter-repo` 文件](https://github.com/newren/git-filter-repo/blob/main/git-filter-repo)置于 `$PATH` 下。
+1. 进入现有仓库，选择要保留的（若干）子目录，过滤
+   ```shell
+   $ git filter-repo --path FOLDER_1 [--path FOLDER_2]
+   ```
+1. 将子目录中的文件移到根目录：
+   ```shell
+   $ git filter-repo --subdirectory-filter FOLDER_1 [--subdirectory-filter FOLDER_2]
+   ```
+1. 将新的仓库推送到 GitHub：
+   ```shell
+   $ git remote add origin https://github.com/USERNAME/REPOSITORY-NAME.git
+   $ git push -u origin BRANCH-NAME
+   ```
+
+详见 [*Splitting a subfolder out into a new repository*](https://docs.github.com/en/get-started/using-git/splitting-a-subfolder-out-into-a-new-repository)。
+
 ## 忽略规则
 
 默认情况下，Git 会尝试跟踪一个仓库的各级目录下的所有文件。在软件开发过程中，经常会生成一些临时文件。如果想要让 Git 忽略这些文件，那么需要在仓库根目录下的 `.gitignore` 文件里列举出这些文件名（可以使用通配符，以使忽略规则作用到同一类文件）。[GitHub](https://github.com/github/gitignore) 给出了一些常用编程语言的 `.gitignore` 范例。
