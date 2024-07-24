@@ -186,10 +186,10 @@ title: 葵花宝典
   1. 进入本仓库根目录，在命令行中输入
      ```shell
      $ bundle install
-     $ bundle exec jekyll serve
+     $ bundle exec jekyll serve [--host HOST] [--port PORT] --incremental
      ```
   1. 生成的文件位于 `./_site/` 中。
-  1. 在浏览器中访问 [`http://127.0.0.1:4000/`](http://127.0.0.1:4000/) 或 [`http://localhost:4000/`](http://localhost:4000/)。
+  1. 在浏览器中访问 `http://HOST:PORT/miniWiki/`，其中 `HOST:PORT` 默认值为 `127.0.0.1:4000`。
 
 ## 排版
 
