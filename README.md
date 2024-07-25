@@ -186,6 +186,7 @@ title: 葵花宝典
   1. 进入本仓库根目录，在命令行中输入
      ```shell
      $ bundle install
+     $ bundle add webrick  # for ruby3.0+
      $ bundle exec jekyll serve [--host HOST] [--port PORT] --incremental
      ```
   1. 生成的文件位于 `./_site/` 中。
