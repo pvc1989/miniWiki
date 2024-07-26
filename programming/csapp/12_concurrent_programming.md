@@ -18,7 +18,7 @@ title: 并发编程
    - 子进程 `Child_2` 关闭 `listenfd(3)`
    - 主进程 `Server` 关闭 `connfd(5)`
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/conc4.pdf)
+![](./ics3/conc/conc4.svg)
 
 ## 1.1. `echoserverp.c`
 
@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
 - **事件 (event)**：服务端通过 `select()` 检测到 `d_k` 可用。
 - **迁移 (transition)**：服务端从 `d_k` 读取一行，通过 `check_clients()` 实现。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/state.pdf)
+![](./ics3/conc/state.svg)
 
 ```c
 #include "csapp.h"
@@ -274,7 +274,7 @@ void check_clients(pool_t *p) {
 
 |                    进程上下文切换                    |                       线程上下文切换                       |
 | :--------------------------------------------------: | :--------------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/ecf/switch.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/conc/concthreads.pdf) |
+| ![](./ics3/ecf/switch.svg) | ![](./ics3/conc/concthreads.svg) |
 
 线程执行模型与进程执行模型类似，但有以下区别：
 
@@ -442,7 +442,7 @@ int main() {
 
 假设 `cnt` 为一*内存变量*（与整个生命期在寄存器中度过的*寄存器变量*相对）：
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/badcntasm.pdf)
+![](./ics3/conc/badcntasm.svg)
 
 ## 5.1. 进程图<a href id="graph"></a>
 
@@ -459,7 +459,7 @@ int main() {
 - **不安全区 (unsafe region)**：$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$​ 线程的关键段。<a href id="unsafe"></a>
 - **不安全轨迹 (unsafe trajectory)**：经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/safetraj.pdf)
+![](./ics3/conc/safetraj.svg)
 
 ## 5.2. 信号量<a href id="semaphore"></a>
 
@@ -473,7 +473,7 @@ int main() {
   - 若某些线程在 `P(s)​` 中等待，则重启其中任意一个。
 - 【不变量】若 `s` 初值为 `1`，且[关键段](#critical)位于 `P(s)`与 `V(s)` 之间，则 `s >= 0` 始终成立。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/pgsem.pdf)
+![](./ics3/conc/pgsem.svg)
 
 POSIX  标准定义了以下接口：
 
@@ -649,7 +649,7 @@ void writer(void) {
 - **工人线程 (worker thread)** 作为消费者从上述缓冲区移出（套接字）描述符，再响应客户端发来的文字信息。
 - 通常，工人线程数量 $\ll$ 缓冲区容量
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/prethreaded.pdf)
+![](./ics3/conc/prethreaded.svg)
 
 ```c
 #include "csapp.h"
@@ -952,7 +952,7 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 
 ## 7.5. 死锁
 
-![](https://csapp.cs.cmu.edu/3e/ics3/conc/deadlock.pdf)
+![](./ics3/conc/deadlock.svg)
 
 **死锁 (deadlock)**：某些被暂停的线程等待着不可能发生的事件。
 

@@ -71,7 +71,7 @@ title: 异常控制流
 
 ### 中断
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/interrupt.pdf)
+![](./ics3/ecf/interrupt.svg)
 
 1. 执行指令 $I_\text{curr}$ 时，处理器收到读写设备（网络适配器、硬盘控制器、计时器）发来的信号。
 2. 待 $I_\text{curr}$ 执行完后，控制权转移到**中断处置器 (interrupt handler)**，并运行之。
@@ -79,7 +79,7 @@ title: 异常控制流
 
 ### 陷阱
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/trap.pdf)
+![](./ics3/ecf/trap.svg)
 
 1. 应用程序通过 `syscall` 指令调用系统子程序。
 2. 控制权转移到**陷阱处置器 (trap handler)**，并运行之。
@@ -87,7 +87,7 @@ title: 异常控制流
 
 ### 故障
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fault.pdf)
+![](./ics3/ecf/fault.svg)
 
 1. 执行指令 $I_\text{curr}$ 时，发生**故障 (fault)**。
 2. 控制权转移到**故障处置器 (fault handler)**，并运行之。
@@ -95,7 +95,7 @@ title: 异常控制流
 
 ### 终止
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/abort.pdf)
+![](./ics3/ecf/abort.svg)
 
 1. 执行指令 $I_\text{curr}$ 时，发生不可修复的**致命错误 (fatal error)**。
 2. 控制权转移到**终止处置器 (abort handler)**，并运行之。
@@ -195,7 +195,7 @@ Linux 允许用户模式的进程通过 `/proc` 文件系统访问内核数据�
 2. 恢复之前被抢占的进程的上下文
 3. 移交控制权
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/switch.pdf)
+![](./ics3/ecf/switch.svg)
 
 可能发生于
 
@@ -300,7 +300,7 @@ pid_t fork(void);
 - 构成 **DAG (Directed Acyclic Graph)**，表示（有从属关系的）不同进程的语句之间的偏序关系。
 - 实际执行顺序可能是所有结点的任何有效的**拓扑排序 (topological sort)**。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/fork2pgraph.pdf)
+![](./ics3/ecf/fork2pgraph.svg)
 
 ```c
 #include "csapp.h"
@@ -450,7 +450,7 @@ int execve(const char *filename, const char *argv[], const char *envp[]);
 
 该函数将 `filename` 所表示的程序加载到当前进程的上下文中，再运行之（将  `argv` 与 `envp` 转发给该程序的 `main()` 函数，再移交控制权）。若未出错，则不返回（由被加载的 `main()` 结束进程）；否则，返回 `-1`。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/stackinit.pdf)
+![](./ics3/ecf/stackinit.svg)
 
 其中 `argv` 与 `envp` 都是以 `NULL` 结尾的（字符串）指针数组。
 
@@ -715,7 +715,7 @@ sighandler_t signal(int signum, sighandler_t handler);
 - **捕获 (catch)**：调用处置器。
 - **处置 (handle)**：运行处置器（可以嵌套）。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/ecf/nestedhandlers.pdf)
+![](./ics3/ecf/nestedhandlers.svg)
 
 ## 5.4. 屏蔽信号
 

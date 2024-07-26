@@ -18,7 +18,7 @@ title: 网络编程
 3. 服务端向客户端发送**响应 (response)**，并等待下一个请求。
 4. 客户端处理该*响应*。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/cliservsteps.pdf)
+![](./ics3/netp/cliservsteps.svg)
 
 ## P2P (Peer-to-Peer)
 
@@ -55,7 +55,7 @@ title: 网络编程
 - **交换机 (switch)**：工作在*数据链路层*的网络设备，可看作多个网桥的集成设备。
 - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/bridge.pdf)
+![](./ics3/netp/bridge.svg)
 
 ## MAN
 
@@ -65,7 +65,7 @@ title: 网络编程
 
 **广域网 (wide area network, WAN)**：由多个局域网互连所形成的*大型*网络，可覆盖几十到几千公里。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/internet.pdf)
+![](./ics3/netp/internet.svg)
 
 - **路由器 (router)**：一种*网络层*的网络设备，在多个局域网及广域网之间转发数据。
   - **报文 (message)**：被传输的数据，被拆分为若干*分组*（又名*包*）逐个进行传输。
@@ -86,7 +86,7 @@ title: 网络编程
 - **internet packet** = **PH (packet header)** + *payload (Data)*
 - **LAN frame** = **FH (frame header)** + *payload（internet packet）*
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/intertrans.pdf)
+![](./ics3/netp/intertrans.svg)
 
 # 3. 因特网
 
@@ -170,11 +170,11 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 客户端的端口号不固定，由操作系统内核自动分配。
 - 服务端的端口号相对固定，列于 `/etc/services` 中。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/connection.pdf)
+![](./ics3/netp/connection.svg)
 
 # 4. 套接字接口<a href id="socket"></a>
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/sockoverview.pdf)
+![](./ics3/netp/sockoverview.svg)
 
 ## 4.1. 套接字地址结构
 
@@ -263,7 +263,7 @@ int accept(int listen_fd, SA *client_addr, int *client_addr);
 
 `getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），其中每个结点为 `struct addrinfo` 类型的对象：
 
-![](https://csapp.cs.cmu.edu/3e/ics3/netp/addrinfolist.pdf)
+![](./ics3/netp/addrinfolist.svg)
 
 - *客户端*依次用每个结点提供的信息尝试 `socket()` 及 `connect()`，直到成功返回。
 - *服务端*依次用每个结点提供的信息尝试 `socket()` 及 `bind()`，直到成功返回。

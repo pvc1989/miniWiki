@@ -781,7 +781,7 @@ L12: # default:
 - 始于 `0x7FFFFFFFFFFF` 并随着栈内数据的增加而减小。
 - 保存在 `%rsp` 中（注意与 `%rip` 区分，后者为*即将被执行的那条指令的地址*）。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/asm/frame-general.pdf)
+![](./ics3/asm/frame-general.svg)
 
 ## 7.2. 传递控制<a href id="pass-control"></a>
 
@@ -824,7 +824,7 @@ void multstore(long x, long y, long *dest) {
   - 从运行期栈弹出返回地址（此处为 `0x100000f6d`）。
   - 将 `%rip` 设为上述返回地址，即向主调函数交还控制权。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/asm/call-ret.pdf)
+![](./ics3/asm/call-ret.svg)
 
 ## 7.3. 传递数据<a href id="pass-data"></a>
 
@@ -1464,7 +1464,7 @@ echo:
 
 其中 `%fs:40` 可以理解为从内存中读取的随机值（几乎不可能被攻击者猜到）。该机制只引入了一点点（读取、比较 canary 的）性能开销，便（几乎）能阻断所有缓冲区溢出攻击。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/asm/buf-safe-frame.pdf)
+![](./ics3/asm/buf-safe-frame.svg)
 
 ### 限制可执行代码的地址范围
 

@@ -7,7 +7,7 @@ title: 虚拟内存
 - **物理地址 (physical address, PA)**：
 - **虚拟地址 (virtual address, VA)**：
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/virtualoverview.pdf)
+![](./ics3/vm/virtualoverview.svg)
 
 # 2. 地址空间
 
@@ -17,7 +17,7 @@ title: 虚拟内存
 
 ## 3.2. 页面表
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/pt.pdf)
+![](./ics3/vm/pt.svg)
 
 ## 3.3. 页面命中
 
@@ -25,7 +25,7 @@ title: 虚拟内存
 
 |                           之前                            |                           之后                           |
 | :-------------------------------------------------------: | :------------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissbefore.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/ptmissafter.pdf) |
+| ![](./ics3/vm/ptmissbefore.svg) | ![](./ics3/vm/ptmissafter.svg) |
 
 **页面故障 (page fault)**：假设 `VP[3]` 不在物理内存中，需从硬盘读取。步骤如下：
 
@@ -39,21 +39,21 @@ title: 虚拟内存
 
 # 4. 虚拟内存的管理功能
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/separatespaces.pdf)
+![](./ics3/vm/separatespaces.svg)
 
 # 5. 虚拟内存的保护功能<a href id="protect"></a>
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmprotect.pdf)
+![](./ics3/vm/vmprotect.svg)
 
 其中 `SUP` 表示以**监管者模式 (SUPervisor mode)** 即**内核模式 (kernel mode)** 运行。
 
 # 6. 地址翻译
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/addrtrans.pdf)
+![](./ics3/vm/addrtrans.svg)
 
 ## 6.1. 集成缓存器与虚拟内存
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/vmcache.pdf)
+![](./ics3/vm/vmcache.svg)
 
 - **MMU (Memory Management Unit)**
 - **PTE (Page Table Entry)**
@@ -63,7 +63,7 @@ title: 虚拟内存
 
 ## 6.3. 多级页面表
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/multiaddr.pdf)
+![](./ics3/vm/multiaddr.svg)
 
 ## 6.4. 地址翻译实例
 
@@ -71,19 +71,19 @@ title: 虚拟内存
 
 ## 7.1. Core i7 地址翻译
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/corei7addrtrans.pdf)
+![](./ics3/vm/corei7addrtrans.svg)
 
 ## 7.2. Linux 虚拟内存系统
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxrtimage.pdf) 
+![](./ics3/vm/linuxrtimage.svg) 
 
 ### Linux 虚拟内存管理
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxvm.pdf)
+![](./ics3/vm/linuxvm.svg)
 
 ### Linux 页面故障处置
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/linuxfault.pdf)
+![](./ics3/vm/linuxfault.svg)
 
 # 8. 内存映射<a href id="memory-map"></a>
 
@@ -93,7 +93,7 @@ title: 虚拟内存
 
 |                    两个进程共享数据                     |              进程 2 在私有 COW 页面写入数据              |
 | :-----------------------------------------------------: | :------------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/sharedobj2.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/privateobj2.pdf) |
+| ![](./ics3/vm/sharedobj2.svg) | ![](./ics3/vm/privateobj2.svg) |
 
 ## 8.2. `fork()` 再探
 
@@ -115,11 +115,11 @@ int munmap(void *start, size_t length);
 
 此函数从文件 `fd` 读取始于 `offset` 字节、长度为 `length` 字节的数据区块，映射到（可能）始于 `start` 的虚拟内存空间。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmapargs.pdf)
+![](./ics3/vm/mmapargs.svg)
 
 # 9. 动态内存分配
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/heapmap.pdf)
+![](./ics3/vm/heapmap.svg)
 
 **堆 (heap)**：虚拟内存中紧跟在“未初始化数据”后面的一区块连续区域
 
@@ -212,7 +212,7 @@ void* sbrk(intptr_t incr);
 
 ## 9.6. 隐式的空闲区块链表
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/implicitsplit.pdf)
+![](./ics3/vm/implicitsplit.svg)
 
 ### 9.7. 查找足够大的区块
 
@@ -279,11 +279,11 @@ static void *extend_heap(size_t words) {
 
 |                         Case 1                         |                         Case 2                         |
 | :----------------------------------------------------: | :----------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce1.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce2.pdf) |
+| ![](./ics3/vm/coalesce1.svg) | ![](./ics3/vm/coalesce2.svg) |
 
 |                         Case 3                         |                         Case 4                         |
 | :----------------------------------------------------: | :----------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce3.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/vm/coalesce4.pdf) |
+| ![](./ics3/vm/coalesce3.svg) | ![](./ics3/vm/coalesce4.svg) |
 
 ### 9.11. 利用边界标签合并
 
@@ -361,7 +361,7 @@ extern void mm_free(void *ptr);
 - **起始区块 (prologue block)**：长度为 8 B，只含*区块首部*及*区块尾部*。
 - **结尾区块 (epilogue block)**：长度为 4 B，只含*区块首部*，并标记为*已分配的*。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/mmimplicitlist.pdf)
+![](./ics3/vm/mmimplicitlist.svg)
 
 #### 尺寸常量、区块操作
 
@@ -511,11 +511,11 @@ void *mm_malloc(size_t size) {
 
 ## 10.1. 垃圾回收器基础
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/gcmem.pdf)
+![](./ics3/vm/gcmem.svg)
 
 ## 10.2. 标记-清扫
 
-![](https://csapp.cs.cmu.edu/3e/ics3/vm/marksweepex.pdf)
+![](./ics3/vm/marksweepex.svg)
 
 # 11. 与内存相关的 Bugs
 

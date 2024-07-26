@@ -16,7 +16,7 @@ title: 链接
 - 先将可执行文件中的代码及数据复制到内存中。
 - 再将控制权转移到该程序 `main()` 头部。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/linker.pdf)
+![](./ics3/link/linker.svg)
 
 # 2. 静态链接
 
@@ -27,7 +27,7 @@ title: 链接
   - **解析**：为每个符号**引用 (reference)** 关联唯一的符号**定义 (definition)**
 - **[搬迁 (relocation)](#relocate)**：为每个符号*定义*关联唯一的内存地址，将所有对该符号的*引用*修改为此地址。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/staticlibs.pdf)
+![](./ics3/link/staticlibs.svg)
 
 # 3. 目标文件
 
@@ -46,7 +46,7 @@ title: 链接
 
 # 4. 可搬迁目标文件<a href id="relocatable"></a>
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/elfrelo.pdf)
+![](./ics3/link/elfrelo.svg)
 
 - **ELF header**：词长 (word size)、字节顺序 (byte ordering)、ELF header 长度、目标文件类型、机器类型、section header table 的位置及所含 sections 的数量。
 - **`.text`**：可执行程序的机器码
@@ -120,7 +120,7 @@ typedef struct {
 
 - **Linux**：文件名后缀为 `.a`，意为 **a**rchive
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/staticlibs.pdf)
+![](./ics3/link/staticlibs.svg)
 
 链接规则：创建可执行文件时，从静态库中复制被引用的目标代码区块。
 
@@ -197,7 +197,7 @@ foreach section s {
 
 # 8. 可执行目标文件<a href id="executable"></a>
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/elfexec.pdf)
+![](./ics3/link/elfexec.svg)
 
 可执行目标文件的格式与[可搬迁目标文件](#relocatable)类似，但有以下区别：
 
@@ -213,7 +213,7 @@ foreach section s {
 2. 加载器从硬盘读取可执行文件，创建下图所示[虚拟内存](./9_virtual_memory.md)空间（只分配空间，不读取数据）。
 3. 运行系统文件 `crt1.o` 中 `_start()`，在其中调用标准库 `libc.so` 中的 `__libc_start_main()`，后者最终将控制权移交给应用程序的 `main()`。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/rtimage.pdf)
+![](./ics3/link/rtimage.svg)
 
 # 10. 动态链接共享库
 
@@ -223,7 +223,7 @@ foreach section s {
 | 可执行文件 |   链接后独立于库文件   |  链接后仍依赖于库文件  |
 | 库函数更新 |   必须重新编译、链接   |     支持运行时更新     |
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/sharedlibs.pdf)
+![](./ics3/link/sharedlibs.svg)
 
 ```shell
 gcc -shared -fpic -o libvector.so addvec.c multvec.c
@@ -318,7 +318,7 @@ int main() {
 - 加载时，动态链接器会将 `GOT[i]` 修改为其对应的全局数据的绝对地址（如 `GOT[3]` 被修改为 `&addcnt`）。
 - 运行时，通过解引用 `GOT[i]` 中的地址，间接访问全局数据（如 `addcnt++` 由 `(**GOT[3])++` 实现）。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/link/got.pdf)
+![](./ics3/link/got.svg)
 
 ## PIC 函数调用
 
@@ -341,7 +341,7 @@ int main() {
 
 |                      首次调用                       |                      后续调用                       |
 | :-------------------------------------------------: | :-------------------------------------------------: |
-| ![](https://csapp.cs.cmu.edu/3e/ics3/link/plt1.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/link/plt2.pdf) |
+| ![](./ics3/link/plt1.svg) | ![](./ics3/link/plt2.svg) |
 
 # 13. 库打桩
 

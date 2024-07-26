@@ -144,7 +144,7 @@ void combine4(vec_ptr v, data_t *dest) {
 
 ## 7.1. 基本操作
 
-![](https://csapp.cs.cmu.edu/3e/ics3/opt/processor.pdf)
+![](./ics3/opt/processor.svg)
 
 **指令控制单元 (instruction control unit, ICU)** 从[指令缓存](./6_memory_hierarchy.md#i-cache)中读取将要被执行的指令（通常大大超前于当前指令），将其**解码 (decode)** 为若干**初等操作 (primitive operation)** 并交由**执行单元 (execution unit, EU)** 去执行。
 
@@ -195,11 +195,11 @@ ICU 中的**退休单元 (retirement unit)** 用于确保乱序执行指令的�
 
 指令 `vmulsd` 被解码为 `load` 与 `mul` 两步操作，后者依赖于前者的结果。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb-flow.pdf)
+![](./ics3/opt/dpb-flow.svg)
 
 在所有操作中，计算浮点数乘积的 `mul` 操作耗时最长，且其他操作（如更新计数器 `%rdx` 的 `add`）可以同步（并行）执行，故由 `mul` 串联所得的**关键路径 (critical path)** 决定了该循环耗时的*下界*。
 
-![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb-flow-multiple.pdf)
+![](./ics3/opt/dpb-flow-multiple.svg)
 
 循环的 CPE 不小于 `mul` 的延迟 $L$，故称该下界为**延迟下界 (latency bound)**。
 
@@ -228,7 +228,7 @@ void combine5(vec_ptr v, data_t *dest) {
 }
 ```
 
-![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2-flow-multiple.pdf)
+![](./ics3/opt/dpb2-flow-multiple.svg)
 
 # 9. 增强并行
 
@@ -257,7 +257,7 @@ void combine6(vec_ptr v, data_t *dest) {
 
 |单步示意图|关键路径示意图|
 |:---:|:---:|
-| ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow.pdf) ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow-abstract.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2x2-flow-multiple.pdf) |
+| ![](./ics3/opt/dpb2x2-flow.svg) ![](./ics3/opt/dpb2x2-flow-abstract.svg) | ![](./ics3/opt/dpb2x2-flow-multiple.svg) |
 
 - 整数加法、乘法（即使溢出，也）满足交换律、结合律，故上述优化不改变计算结果，可由编译器自动完成。
 - 浮点数加法、乘法可能溢出，且不满足结合律，故上述优化可能改变计算结果，因此不会由编译器自动完成。
@@ -285,7 +285,7 @@ void combine7(vec_ptr v, data_t *dest) {
 
 |单步示意图|关键路径示意图|
 |:---:|:---:|
-| ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2a-flow.pdf) | ![](https://csapp.cs.cmu.edu/3e/ics3/opt/dpb2a-flow-multiple.pdf) |
+| ![](./ics3/opt/dpb2a-flow.svg) | ![](./ics3/opt/dpb2a-flow-multiple.svg) |
 
 该方法类似于 *$k\times 1$ 循环展开*，故名为 **$k\times 1a$ 循环展开**。
 其加速效果通常不如前一节的 *$k\times k$ 循环展开*可靠。
@@ -398,7 +398,7 @@ void write_read(long *src, long *dst, long n) {
 }
 ```
 
-![](https://csapp.cs.cmu.edu/3e/ics3/opt/load-store.pdf)
+![](./ics3/opt/load-store.svg)
 
 存储单元中的**存储缓冲区 (store buffer)** 用于保存将要被写入内存的数据及相应的地址。
 为避免不必要的内存访问，载入操作会先在该缓冲区内查找地址，因此有可能形成数据依赖（从而构成关键路径）。

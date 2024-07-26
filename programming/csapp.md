@@ -27,6 +27,9 @@ CMU [15-213/18-213: Introduction to Computer Systems (ICS)](https://www.cs.cmu.e
 
 # 全书目录
 
+> [*You may include them in your lectures with attribution*](https://csapp.cs.cmu.edu/3e/figures.html), said the authors.
+> Therefore, I incorporate the SVGs converted from their PDFs in the following pages.
+
 ## 1. 计算机系统速览
 
 ## 第一部分：程序的结构与执行（计组）

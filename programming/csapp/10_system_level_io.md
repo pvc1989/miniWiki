@@ -393,11 +393,11 @@ int main(int argc, char **argv) {
 
 # 8. 共享文件
 
-![](https://csapp.cs.cmu.edu/3e/ics3/io/filesharing.pdf)
+![](./ics3/io/filesharing.svg)
 
 ## [`fork()`](./8_exceptional_control_flow.md#fork) 再探
 
-![](https://csapp.cs.cmu.edu/3e/ics3/io/afterfork.pdf)
+![](./ics3/io/afterfork.svg)
 
 # 9. 读写重定向<a href id="dup2"></a>
 
@@ -409,7 +409,7 @@ int dup2(int oldfd, int newfd/* close if already open */);
 
 `dup2(4, 1)` **dup**licate `fd[4]` **to** `fd[1]`，结果如下：
 
-![](https://csapp.cs.cmu.edu/3e/ics3/io/dupafter.pdf)
+![](./ics3/io/dupafter.svg)
 
 # 10. Standard I/O<a href id="standard-io"></a>
 
@@ -455,7 +455,7 @@ int  fflush(FILE *output); /* undefined behavior for input */
 
 # 11. I/O 库的选择
 
-![](https://csapp.cs.cmu.edu/3e/ics3/io/iofunctions.pdf)
+![](./ics3/io/iofunctions.svg)
 
 - 一般场合尽量用 [Standard I/O](#standard-io)。
 - 不要用 `scanf()` 或 `rio_readlineb()` 读二进制文件。

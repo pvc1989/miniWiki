@@ -17,7 +17,7 @@ b \coloneqq (b_{m}\,b_{m-1}\cdots b_{1}\,b_{0}\,.\,b_{-1}\,b_{-2}\cdots b_{1-n}\
 = \sum_{k=-n}^m 2^k \times b_k
 $$
 
-![](https://csapp.cs.cmu.edu/3e/ics3/data/fractional-binary.pdf)
+![](./ics3/data/fractional-binary.svg)
 
 ## IEEE 754
 
@@ -32,7 +32,7 @@ $$
 - 单精度 $k+n=8+23$
 - 双精度 $k+n=11+52$
 
-![](https://csapp.cs.cmu.edu/3e/ics3/data/fp-formats.pdf)
+![](./ics3/data/fp-formats.svg)
 
 记 $b \coloneqq 2^{k-1} - 1$，则除特殊值外
 - $E(e) \coloneqq (e \mathbin{?} e : 1) - b$
@@ -40,7 +40,7 @@ $$
 
 根据 $e$ 的取值，可分为三种情形：
 
-![](https://csapp.cs.cmu.edu/3e/ics3/data/fp-cases.pdf)
+![](./ics3/data/fp-cases.svg)
 
 |            |        退化情形         |       常规情形       | 特殊值 |
 | :--------: | :---------------------: | :------------------: | :------: |
