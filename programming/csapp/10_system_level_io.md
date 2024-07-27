@@ -75,9 +75,13 @@ int open(char *filename, int flags, mode_t mode);
 
 ### `mode`
 
+只在 `flags` 含 `O_CREAT | O_TMPFILE` 时起作用。
+
 - `S_IRUSR, S_IWUSR, S_IXUSR` can be **r**ead/**w**rite/e**x**ecute by current **us**e**r**
 - `S_IRGRP, S_IWGRP, S_IXGRP` can be **r**ead/**w**rite/e**x**ecute by current **gr**ou**p**
 - `S_IROTH, S_IWOTH, S_IXOTH` can be **r**ead/**w**rite/e**x**ecute by **oth**ers
+
+每个进程有一个 `umask` 值，可由 `umask()` 设置。
 
 ```c
 #define DEF_MODE  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH/* rw-rw-rw- */
@@ -319,7 +323,7 @@ ssize_t rio_readnb(rio_t *rp, void *head, size_t n) {
 }
 ```
 
-# 6. 读取文件元数据
+# 6. 读取文件元数据<a href id="meta"></a>
 
 ## `stat()`
 
@@ -443,6 +447,8 @@ int main(int argc, char **argv) {
 
 ## [`fork()`](./8_exceptional_control_flow.md#fork) 再探
 
+子进程继承其 parent's open file table，表中每一项的引用计数加一：
+
 ![](./ics3/io/afterfork.svg)
 
 # 9. 读写重定向<a href id="dup2"></a>
@@ -457,7 +463,9 @@ int dup2(int oldfd, int newfd/* close if already open */);
 
 ![](./ics3/io/dupafter.svg)
 
-# 10. Standard I/O<a href id="standard-io"></a>
+# 10. [Standard I/O](https://en.cppreference.com/w/c/io)<a href id="standard-io"></a>
+
+C 标准库提供，将 file 及其对应的 buffer 抽象为 [FILE stream](https://en.cppreference.com/w/c/io/FILE)。
 
 ```c
 #include <stdio.h>
@@ -503,7 +511,10 @@ int  fflush(FILE *output); /* undefined behavior for input */
 
 ![](./ics3/io/iofunctions.svg)
 
-- 一般场合尽量用 [Standard I/O](#standard-io)。
-- 不要用 `scanf()` 或 `rio_readlineb()` 读二进制文件。
-- 读写[网络套接字](./11_network_programming.md#socket)用 [Robust I/O](#robust-io)。
-  - 格式化读写可以配合 [Standard I/O](#standard-io) 中的 `sscanf()` 及 `sprintf()` 完成。
+|            I/O 库            |                           适用场景                           |                             缺点                             |
+| :--------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|     [Unix I/O](#unix-io)     | [读取文件元数据](#meta)、[信号处置器](./8_exceptional_control_flow.md#signal)内部 | 难以处理 short count、[系统调用](./8_exceptional_control_flow.md#syscall)开销大 |
+| [Standard I/O](#standard-io) |                        终端、硬盘文件                        | 无法获取元数据、非[线程安全](./12_concurrent_programming.md#thread-safe)、不能读写[网络套接字](./11_network_programming.md#socket) |
+|   [Robust I/O](#robust-io)   |       [网络套接字](./11_network_programming.md#socket)       | 不支持格式化读写（需借助 [Standard I/O](#standard-io) 中的 `sscanf()` 及 `sprintf()` 完成） |
+
+⚠️ 不要用 `fgets()`、`scanf()` 或 `rio_readlineb()` 等读二进制文件。
