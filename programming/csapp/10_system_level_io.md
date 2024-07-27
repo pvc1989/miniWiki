@@ -18,7 +18,7 @@ title: 系统级读写
   - `1 == STDOUT_FILENO`
   - `2 == STDERR_FILENO`
 - 【**文件位置 (file position)**】内核维护的非负整数（字节数）
-  - 【**查找 (seek)**】跳至指定位置
+  - 【**查找 (seek)**】跳至指定位置，详见 [`lseek`](https://www.man7.org/linux/man-pages/man2/lseek.2.html)
   - 【**文件末尾 (end-of-file, EOF)**】*读取字节数*大于等于*剩余字节数*所触发的*事件*
 - 【**关闭文件 (close file)**】释放数据结构、返还描述符
 
@@ -26,12 +26,14 @@ title: 系统级读写
 
 ## 常规文件 (regular file)
 
-- 【**文本文件 (text file)**】只含 ASCII 或 Unicode 字符
-  - 【`\n`】LF (line feed)
-  - 【`\r`】CR (carriage return)
-- 【**二进制文件 (binary file)**】
+- 【**文本文件 (text file)**】只含 ASCII 或 Unicode 字符，可视为文本行序列，以换行符表示**行末尾 (end-of-line, EOL)**：
+  - 【`\n`】即 LF (line feed)，用于 Linux 及 macOS 系统
+  - 【`\r\n`】其中 `\r` 即 CR (carriage return)，用于 Windows 系统及网络
+- 【**二进制文件 (binary file)**】其他任意类型文件
 
 ## 目录 (directory)
+
+一种特殊的文件，其数据为一数组，数组元素为指向其他文件的链接。
 
 - 特殊目录
   - 【`.`】
@@ -52,7 +54,7 @@ title: 系统级读写
 
 # 3. 开关文件
 
-## 打开文件
+## [`open()`](https://www.man7.org/linux/man-pages/man2/open.2.html)
 
 ```c
 #include <sys/types.h>
@@ -78,14 +80,14 @@ int open(char *filename, int flags, mode_t mode);
 - `S_IROTH, S_IWOTH, S_IXOTH` can be **r**ead/**w**rite/e**x**ecute by **oth**ers
 
 ```c
-#define DEF_MODE  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH/* rw-r--r-- */
+#define DEF_MODE  S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH/* rw-rw-rw- */
 #define DEF_UMASK S_IWGRP|S_IWOTH                  /* ~DEF_UMASK == rwxr-xr-x */
 umask(DEF_UMASK); /* umask = DEF_UMASK */
 fd = Open("foo.txt", O_CREAT|O_TRUNC|O_WRONLY, DEF_MODE);
         /* set access permission bits to (DEF_MODE & ~DEF_UMASK) 即 rw-r--r-- */
 ```
 
-## 关闭文件
+## [`close()`](https://www.man7.org/linux/man-pages/man2/close.2.html)
 
 ```c
 #include <unistd.h>
@@ -94,23 +96,41 @@ int close(int fd);
 
 # 4. 读写文件
 
+## [`read()`](https://www.man7.org/linux/man-pages/man2/read.2.html)<a href id="unix-read"></a>
+
 ```c
 #include <unistd.h>
 ssize_t  read(int fd,       void *buf, size_t n);
     // Returns: number of bytes read    if OK, −1 on error, 0 on EOF
+```
+
+## [`write()`](https://www.man7.org/linux/man-pages/man2/write.2.html)<a href id="unix-write"></a>
+
+```c
+#include <unistd.h>
 ssize_t write(int fd, const void *buf, size_t n);
     // Returns: number of bytes written if OK, −1 on error
 ```
 
-【**不足计数 (short count)**】`read()` 及 `write()` 返回值小于传入的 `n`，可能发生于
+## Short Count
 
-- 读到文件末尾（检测到 EOF）
-- 从终端读入文本行
-- 读写[网络套接字](./11_network_programming.md#socket)或 Linux 管道
+`read()` 及 `write()` 的返回值（实际读写的字节数），可能小于传入的 `n`（请求读写的字节数）。
+
+不会发生于读（遇到 EOF 除外）写硬盘，但可能发生于
+
+1. 读到文件末尾，即检测到 EOF：
+   - 假设从 `fd` 的当前位置起还有 `20` 字节未读，则调用 `read(fd, buf, 50)` 返回 `20`，再调用 `read(fd, buf += 20, 50)` 返回 `0`，这两次的返回值都属于 short count。
+1. 从终端读入文本行：
+   - `read` 每次读入一行，返回该行的字节数。
+1. 读写[网络套接字](./11_network_programming.md#socket)：
+   - 小缓存或长延迟，使得单次调用 `read()` 或 `write()` 只能读写部分数据，因此 *robust* (network) applications 需多次调用 `read()` 或 `write()`。
+1. 读写 Linux 管道。
 
 # 5. Robust I/O<a href id="robust-io"></a>
 
 ## 5.1. 无缓冲读写
+
+接口与 [Unix I/O](#unix-io) 的 [`read()`](#unix-read) 及 [`write()`](#unix-write) 相同。
 
 适用于从[网络套接字](./11_network_programming.md#socket)读写二进制数据。
 
@@ -123,6 +143,10 @@ ssize_t rio_writen(int fd, void *usrbuf, size_t n);
 ```
 
 ### `rio_readn()`
+
+多次调用 [Unix I/O](#unix-io) 的 [`read()`](#unix-read)，直到请求的字节数都被读入，或遇到 EOF。
+
+Short count 只会出现在遇到 EOF 时。
 
 ```c
 ssize_t rio_readn (int fd, void *head, size_t n) {
@@ -147,6 +171,10 @@ ssize_t rio_readn (int fd, void *head, size_t n) {
 
 ### `rio_writen()`
 
+多次调用 [Unix I/O](#unix-io) 的 [`write()`](#unix-write)，直到请求的字节数都被写出。
+
+Short count 不会出现。
+
 ```c
 ssize_t rio_writen(int fd, void *head, size_t n) {
   size_t nleft = n;
@@ -166,7 +194,7 @@ ssize_t rio_writen(int fd, void *head, size_t n) {
 }
 ```
 
-## 5.2. 有缓冲读入
+## 5.2. 带缓冲读入
 
 【需求】[线程安全](./12_concurrent_programming.md#thread-safe)；支持交替读取文本行与二进制数据。
 
@@ -178,7 +206,11 @@ ssize_t rio_readnb   (rio_t *rp, void *usrbuf, size_t n);      /* read n bytes *
 void    rio_readinitb(rio_t *rp, int fd); /* once per fd */
 ```
 
+⚠️ 后缀 `b` 表示带缓冲的，不要与无缓冲读写混用。
+
 ### `rio_readinitb()`
+
+初始化用户 buffer（每次读一个 file 对应一个 buffer）：
 
 ```c
 #define RIO_BUFSIZE 8192
@@ -199,8 +231,11 @@ void rio_readinitb(rio_t *rp, int fd) {
 
 ### `rio_read()`
 
+与 [Unix I/O](#unix-io) 的 [`read()`](#unix-read) 接口相同，但先（尽量多地）读入缓冲区，再复制（指定片段）给用户。
+
+💡 用 `rio_read()` 可以减少直接调用 [`read()`](#unix-read) 的次数，后者开销巨大。
+
 ```c
-/* buffered version of Linux read() */
 static ssize_t rio_read(rio_t *rp, char *usrbuf/* user buffer */,
                         size_t n/* number of bytes requested by the user */) {
   int cnt;
@@ -227,12 +262,18 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf/* user buffer */,
 
 ### `rio_readlineb()`
 
+读取一行字符，满足以下条件之一时停止：
+
+1. 已读入 `maxlen` 字节
+1. 遇到 EOF
+1. 遇到 `\n`
+
 ```c
 ssize_t rio_readlineb(rio_t *rp, void *head, size_t maxlen) {
-  int n, rc/* rio count */;
+  int n/* 当前字符串长度 */, rc/* 单次读取字节数 */;
   char c, *pos = head;
 
-  for (n = 1; n < maxlen; n++) { 
+  for (n = 1/* 字符串总是以 `\0` 结尾，故长度至少为 1 */; n < maxlen; n++) { 
     if ((rc = rio_read(rp, &c, 1)) == 1) {
       *(pos++) = c;
       if (c == '\n') {
@@ -250,11 +291,16 @@ ssize_t rio_readlineb(rio_t *rp, void *head, size_t maxlen) {
       return -1;  /* Error */
   }
   *pos = 0;       /* end of string */
-  return n-1;
+  return n - 1;   /* 不计 `\0` */
 }
 ```
 
 ### `rio_readnb()`
+
+读取若干字节，满足以下条件之一时停止：
+
+1. 已读入 `n` 字节
+1. 遇到 EOF
 
 ```c
 ssize_t rio_readnb(rio_t *rp, void *head, size_t n) {
