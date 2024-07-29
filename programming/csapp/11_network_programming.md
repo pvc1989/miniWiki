@@ -205,7 +205,7 @@ struct sockaddr_in {
 };
 ```
 
-## 4.2. `socket()`
+## 4.2. [`socket()`](https://www.man7.org/linux/man-pages/man2/socket.2.html)
 
 *客户端*及*服务端*均用此函数获得（部分打开的）套接字。若成功则返回**套接字描述符 (socket descriptor)**，否则返回 `-1`。
 
@@ -218,7 +218,7 @@ int socket(int domain, int type, int protocol);
 socket_fd = Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 作为连接的一端 */, 0);
 ```
 
-## 4.3. `connect()`
+## 4.3. [`connect()`](https://www.man7.org/linux/man-pages/man2/connect.2.html)
 
 *客户端*用此函数向*服务端*发送连接请求并等待。若成功则返回 `0`，否则返回 `-1`。
 
@@ -230,7 +230,7 @@ int connect(int client_fd, const SA *server_addr,
 
 至此，*客户端*可通过在 `client_fd` 所表示的*文件（套接字）*上读写数据，实现与*服务端*的通信。
 
-## 4.4. `bind()`
+## 4.4. [`bind()`](https://www.man7.org/linux/man-pages/man2/bind.2.html)
 
 *服务端*用此函数将套接字描述符 `server_fd` 与套接字地址 `server_addr` 关联。
 若成功则返回 `0`，否则返回 `-1`。
@@ -241,7 +241,7 @@ int bind(int server_fd, const SA *server_addr,
          socklen_t server_addr_len/* sizeof(sockaddr_in) */);
 ```
 
-## 4.5. `listen()`
+## 4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html)
 
 - **活跃套接字 (active socket)**：`socket()` 默认返回的套接字类型，客户端可直接使用。
 - **监听套接字 (listening socket)**：专供服务端接收连接请求，记作 `listen_fd`。<a href id="listen"></a>
@@ -253,14 +253,14 @@ int bind(int server_fd, const SA *server_addr,
 int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
 ```
 
-## 4.6. `accept()`
+## 4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html)
 
 *服务端*用此函数等待*客户端*发来的连接请求。
 若成功，则返回异于 `listen_fd` 的 `connect_fd`，并获取客户端地址；否则返回 `-1`。
 
 ```c
 #include <sys/socket.h>
-int accept(int listen_fd, SA *client_addr, int *client_addr);
+int accept(int listen_fd, SA *client_addr, int *client_addr_len);
 ```
 
 至此，*服务端*可通过在 `connect_fd` 所表示的*文件（套接字）*上读写数据，实现与*客户端*的通信。
@@ -666,7 +666,7 @@ Connection closed by foreign host.
 
 ### 服务端向子进程传递其他信息
 
-CGI 标准定义了一些环境变量，用于传递信息：
+CGI 标准定义了一些环境变量，用于向子进程传递信息：
 
 - 【`QUERY_STRING`】程序实参
 - 【`SERVER_PORT`】服务器的[监听端口](#listen)
@@ -684,6 +684,8 @@ CGI 标准定义了一些环境变量，用于传递信息：
 
 
 ### `adder.c`
+
+由服务端子进程运行，负责解析 `QUERY_STRING`，计算求和结果，构建响应文本，将向 `stdout` 输出。
 
 ```c
 #include "csapp.h"
@@ -725,6 +727,8 @@ int main(void) {
 
 ## `main()`
 
+负责创建[监听套接字](#listen)套接字，等待服务请求，建立连接后将主要工作转交给 `doit()`。
+
 ```c
 int main(int argc, char **argv) {
   int listen_fd, connect_fd;
@@ -752,6 +756,8 @@ int main(int argc, char **argv) {
 ```
 
 ## `doit()`
+
+负责接收并解析请求，根据 `is_static` 选择提供静态或动态内容。
 
 ```c
 void doit(int fd) {
@@ -801,6 +807,8 @@ void doit(int fd) {
 
 ## `clienterror()`
 
+向客户端输出错误信息。
+
 ```c
 void clienterror(int fd, char *cause, char *errnum, 
                  char *shortmsg, char *longmsg) {
@@ -828,6 +836,8 @@ void clienterror(int fd, char *cause, char *errnum,
 
 ## `read_requesthdrs()`
 
+读取并（向服务端 `stdout`）打印请求头部。
+
 ```c
 void read_requesthdrs(rio_t *rp) {
   char buf[MAXLINE];
@@ -843,6 +853,8 @@ void read_requesthdrs(rio_t *rp) {
 ```
 
 ## `parse_uri()`
+
+解析 URI，返回 `is_static`。
 
 ```c
 int parse_uri(char *uri, char *filename, char *cgiargs) {
