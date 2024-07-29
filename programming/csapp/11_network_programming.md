@@ -26,7 +26,9 @@ title: 网络编程
 
 # 2. 计算机网络
 
-对一台主机而言，**网络 (newwork)** 相当于另一种读写设备。
+对一台主机而言，**网络适配器 (network adapter)** 相当于另一种读写设备。
+
+![](./ics3/netp/nethost.svg)
 
 ## PAN
 
@@ -36,11 +38,15 @@ title: 网络编程
 
 **局域网 (local area network, LAN)**：覆盖较小（数十到数千米）范围的网络。
 
+![](./ics3/netp/lan.svg)
+
 目前最流行的局域网技术为**以太网 (Ethernet)**。
 
 ### 以太网段
 
 **以太网段 (Ethernet segment)**：由多台主机通过*以太网线*（双绞线）连接到一台*集线器*所形成的*小型*网络，可覆盖一间或一层房屋。
+
+![](./ics3/netp/hub.svg)
 
 - **以太网线 (Ethernet wire)**：一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
 - **集线器 (hub)**：工作在*物理层*的网络设备，将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
@@ -51,11 +57,11 @@ title: 网络编程
 
 **桥接的以太网 (bridged Ethernet)**：由多个以太网段连接到多个网桥所形成的*中型*网络，可覆盖整栋建筑或整个校园。
 
+![](./ics3/netp/bridge.svg)
+
 - **网桥 (bridge)**：工作在*数据链路层*的网络设备，能够自动感知哪些主机可以连接到哪些端口，从而有选择地转发数据。
 - **交换机 (switch)**：工作在*数据链路层*的网络设备，可看作多个网桥的集成设备。
 - 网桥与网桥之间的带宽可达 1 Gb/s，网桥与集线器之间的带宽通常为 100 Mb/s。
-
-![](./ics3/netp/bridge.svg)
 
 ## MAN
 
@@ -84,7 +90,7 @@ title: 网络编程
 **互连网 (interconnected network, internet)**：由多个局域网、广域网经过*路由器*连接所形成的广域网，可覆盖全球。
 
 - **internet packet** = **PH (packet header)** + *payload (Data)*
-- **LAN frame** = **FH (frame header)** + *payload（internet packet）*
+- **LAN frame** = **FH (frame header)** + *payload (internet packet)*
 
 ![](./ics3/netp/intertrans.svg)
 
@@ -108,7 +114,7 @@ title: 网络编程
 
 - **ISP (Internet Service Provider)**：提供互联网服务的机构（企业），可分为主干 ISP、地区 ISP、本地 ISP。
 
-- **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备。
+- **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备，又称 **NAP (Network Access Point)**。
 
 ## 3.1. IP 地址
 
@@ -152,6 +158,8 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 顶级域名 `edu`，同级的域名还有 `gov`、`com` 等。
 - 二级域名 `cmu`，同级的域名还有 `mit`、`princeton` 等。
 - 三级域名 `cs`，同级的域名还有 `ee`、`art` 等。
+
+![](./ics3/netp/domainnames.svg)
 
 **域名系统 (domain name system, DNS)**：
 - 管理*域名*与 *IP 地址*之间映射关系的分布式数据库。
@@ -259,7 +267,7 @@ int accept(int listen_fd, SA *client_addr, int *client_addr);
 
 ## 4.7. 信息提取
 
-### `getaddrinfo()`
+### [`getaddrinfo()`](https://www.man7.org/linux/man-pages/man3/getaddrinfo.3.html)
 
 `getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），其中每个结点为 `struct addrinfo` 类型的对象：
 
@@ -294,9 +302,9 @@ void freeaddrinfo(struct addrinfo *result);
 const char *gai_strerror(int errcode);
 ```
 
-### `getnameinfo()`
+### [`getnameinfo()`](https://www.man7.org/linux/man-pages/man3/getnameinfo.3.html)
 
-`getnameinfo()` 与 `getaddrinfo()` 的功能相反。
+功能与 `getaddrinfo()` 相反，即由 `SA` 获得 `host` 或 `service`。
 
 ```c
 #include <sys/socket.h>
