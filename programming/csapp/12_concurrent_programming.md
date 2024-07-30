@@ -59,23 +59,25 @@ int main(int argc, char **argv) {
 }
 ```
 
-## 1.2. 进程的优缺点
+## 1.2. 基于进程的优缺点
 
 各进程有独立的虚拟内存空间，既是优点，也是缺点：
 
 - 【优点】各进程只能读写自己的虚拟内存空间，不会破坏其他进程的虚拟内存空间。
 - 【缺点】进程之间共享数据变得困难，必须显式地使用**进程间通信 (InterProcess Communication, IPC)**。高级 IPC 主要有三类：共享存储、消息传递、管道通信。
 
-# 2. 基于读写复用的并发
+# 2. 基于事件的并发
 
-## `select()`
+## [`select()`](https://www.man7.org/linux/man-pages/man2/select.2.html)<a href id="select"></a>
 
-【困难】不能并发地处理*连接请求*与*键盘输入*：
+在上述方案中，服务端（主进程）不能并发地处理*连接请求*与*键盘输入*：
 
 - 等待连接请求，会屏蔽键盘输入。
 - 等待键盘输入，会屏蔽连接请求。
 
-【方案】用 `select()` 实现**读写复用 (I/O multiplexing)**。
+【解决方案】用 `select()` 实现**读写复用 (I/O multiplexing)**。
+
+此函数令内核暂停当前进程，直到**读取集 (read set)** `fdset` 中的至少一个（文件或套接字）描述符进入**可用 (ready)** 状态（即读取操作会立即返回）这一**事件 (event)** 发生，将传入的*读取集* `fdset` 修改为**可用集 (ready set)**，并返回可用描述符的数量。
 
 ```c
 #include <sys/select.h>
@@ -86,7 +88,14 @@ FD_SET(int fd, fd_set *fdset);   /* Turn on bit `fd` in `fdset` */
 FD_ISSET(int fd, fd_set *fdset); /* Is bit `fd` in `fdset` on? */
 ```
 
-此函数令内核暂停当前进程，直到**读取集 (read set)** `fdset` 中的至少一个（文件或套接字）描述符进入**可用 (ready)** 状态（即读取操作会立即返回），将传入的*读取集* `fdset` 修改为**可用集 (ready set)**，并返回可用描述符的数量。
+服务端主程序
+- 维护 `fdset`，其元素为 `stdin`、`listen_fd` 及现有连接的 `connect_fd`s。
+- `select()` 函数发现有可用 `fd` 时返回。
+  1. 当服务端输入终端有输入时，`stdin` 可用，以 `command()` 处理之。
+  1. 当有新客户端发起连接请求时，`listen_fd` 可用，为其创建新的 `connect_fd` 并加入上述集合。
+  1. 当现有客户端发来的信息可读时，某个 `connect_fd` 可用，读取信息并响应之。
+
+⚠️ 在以下简化的示例中，创建完连接即响应，响应完即关闭连接，故相当于将后两种情形合二为一。将后两种情形分开处理的示例参见 [`echoservers.c`](#echoservers)。
 
 ```c
 #include "csapp.h"
@@ -135,7 +144,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-## 2.1. `echoservers.c`
+## 2.1. `echoservers.c`<a href id="echoservers"></a>
 
 **状态机 (state machine)**：服务端为客户端 `Client_k` 分配描述符 `d_k`
 
@@ -258,25 +267,27 @@ void check_clients(pool_t *p) {
 }
 ```
 
-## 2.2. 读写复用的优缺点
+## 2.2. 基于事件的优缺点
 
-- 【优点】容易对不同客户端提供差异化服务；容易共享数据；比进程上下文切换更高效。
+- 【优点】容易对不同客户端提供差异化服务；容易共享数据；比进程上下文切换更高效；调度策略可控。
 - 【缺点】粒度越细代码越复杂；易受不完整输入攻击；难以充分利用多核处理器。
 
 # 3. 基于线程的并发
 
-**线程 (thread)**：运行在某个[进程](./8_exceptional_control_flow.md#process)上下文中的一条逻辑控制流。<a href id="thread"></a>
+**线程 (thread)**：运行在某个[进程](./8_exceptional_control_flow.md#process)中的一条逻辑控制流。<a href id="thread"></a>
 
-- 各线程有其独享的***线程*上下文 (*thread* context)**（**线程号 (Thread ID, TID)**、运行期栈、通用寄存器、条件码）。
-- 各线程共享其所属的***进程*上下文 (*process* context)**（代码、数据、堆内存、共享库、打开的文件）。
+- 各线程有其私有的***线程*上下文 (*thread* context)**，包括**线程号 (Thread ID, TID)**、运行期栈、通用寄存器、条件码。
+- 各线程共享其所属的***进程*上下文 (*process* context)**，包括代码、数据、堆内存、共享库、打开的文件。
 
 ## 3.1. 线程执行模型
+
+线程执行模型与进程执行模型类似：
 
 |                    进程上下文切换                    |                       线程上下文切换                       |
 | :--------------------------------------------------: | :--------------------------------------------------------: |
 | ![](./ics3/ecf/switch.svg) | ![](./ics3/conc/concthreads.svg) |
 
-线程执行模型与进程执行模型类似，但有以下区别：
+但有以下区别：
 
 - 线程上下文比进程上下文小很多，因此切换起来更快。
 - 同一进程的各线程之间没有严格的主从关系。
@@ -284,25 +295,24 @@ void check_clients(pool_t *p) {
   - **同伴进程 (peer thread)**：除主线程外的其他线程。
   - **同伴池 (pool of peers)**：同一进程的所有线程。
 
-## 3.2. `pthread`
-
-详见 [`man pthread`](https://man7.org/linux/man-pages/man7/pthreads.7.html)。
+## 3.2. [`pthread`](https://man7.org/linux/man-pages/man7/pthreads.7.html)
 
 ```c
 #include "csapp.h"
-void *thread(void *vargp) { /* thread routine */
+void *f(void *vargp) { /* thread routine */
   printf("Hello, world!\n");
   return NULL;
 }
 int main() {
   pthread_t tid;
-  Pthread_create(&tid, NULL, thread, NULL); /* 创建同伴线程，在其中运行 thread() */
-  Pthread_join(tid, NULL); /* 等待同伴线程结束 */
+  Pthread_create(&tid, NULL, thread, NULL); /* 创建同伴线程，在其中运行 f() */
+  Pthread_join(tid, NULL); /* 直到同伴线程结束后才返回 */
   exit(0);
 }
 ```
 
-`thread()` 只能接收与返回 `void*`，若要传入或返回多个参数，需借助 `struct`。
+`f()` 只能接收与返回 `void*`，若要传入或返回多个参数，需借助 `struct`。
+在 `f()` 调用的函数必须是[线程安全的](#thread-safe)。
 
 ### 3.3. 创建线程
 
@@ -320,8 +330,8 @@ pthread_t pthread_self(void); /* 返回当前线程的 TID */
 
 - 【隐式结束】传给 `pthread_create()` 的 `f()` 运行完毕并返回。
 - 【显式结束】调用 `pthread_exit()` 结束当前线程。
-- 【结束进程】某个同伴线程调用 `exit()` 结束整个进程。
 - 【取消线程】因另一个线程调用 `pthread_cancel()` 而结束。
+- 【结束进程】某个同伴线程调用 `exit()` 结束整个*进程*。
 
 ```c
 #include <pthread.h>
@@ -336,16 +346,16 @@ int pthread_cancel(pthread_t tid);
 int pthread_join(pthread_t tid, void **thread_return);
 ```
 
-与[收割子进程](./8_exceptional_control_flow.md#收割子进程)的 `waitpid()` 类似，但 `pthread_join()` 只能收割特定的线程。
+与[收割子进程](./8_exceptional_control_flow.md#收割子进程)的 `waitpid()` 类似，但 `pthread_join()` 只能收割给定的线程。
 
 ### 3.6. 分离线程
 
 任何线程总是处于以下两种状态之一：
 
-- **可加入的 (joinable)**：可以被其他线程收割或取消，其内存资源在该线程被收割或取消时才被释放。（默认）
-- **分离的 (detached)**：不能被其他线程收割或取消，其内存资源在该线程结束时被系统自动释放。（推荐）
+- **可加入的 (joinable)**：可以被其他线程 `join` 或 `cancel`，其内存资源在该线程被 `join` 或 `cancel` 时才被释放。（默认）
+- **分离的 (detached)**：不能被其他线程 `join` 或 `cancel`，其内存资源在该线程结束时被系统自动释放。（推荐）
 
-为避免内存泄漏，任何可加入线程都应当被显式收割或取消，或通过以下函数转为分离的状态：
+为避免内存泄漏，任何可加入线程都应当被显式 `join` 或 `cancel`，或通过以下函数转为分离的状态：
 
 ```c
 #include <pthread.h>
@@ -364,7 +374,7 @@ int pthread_once(pthread_once_t *once_control,
 ```
 
 - 首次调用 `pthread_once()` 会运行 `init_routine()` 以初始化全局变量。
-- 用相同的 `once_control` 再次调用 `pthread_once()` 不会做任何事。
+- 以相同的 `once_control` 再次调用 `pthread_once()` 不会做任何事。
 
 ## 3.8. `echoservert.c`<a href id="echoserver-thread"></a>
 
@@ -373,7 +383,7 @@ int pthread_once(pthread_once_t *once_control,
 
 void echo(int connect_fd);
 
-void *thread(void *vargp) { /* Thread routine */
+void *f(void *vargp) { /* Thread routine */
   int connect_fd = *((int *)vargp);
   Pthread_detach(pthread_self());
   Free(vargp); /* Malloc'ed in main thread */
@@ -383,7 +393,7 @@ void *thread(void *vargp) { /* Thread routine */
 }
 
 int main(int argc, char **argv) {
-  int listen_fd, *connect_fdp;
+  int listen_fd, *connect_fd_ptr;
   socklen_t client_len;
   struct sockaddr_storage client_addr;
   pthread_t tid;
@@ -396,18 +406,24 @@ int main(int argc, char **argv) {
 
   while (1) {
     client_len = sizeof(struct sockaddr_storage);
-    connect_fdp = Malloc(sizeof(int)); /* 若存于主线程的栈，会造成两个同伴线程的竞争 */
-    *connect_fdp = Accept(listen_fd, (SA *)&client_addr, &client_len);
-    Pthread_create(&tid, NULL, thread, connect_fdp/* 指向 connect_fd */);
+    connect_fd_ptr = Malloc(sizeof(int));
+    /* 若用主线程栈中的 connect_fd，会造成两个同伴线程的竞争 */
+    *connect_fd_ptr = Accept(listen_fd, (SA *)&client_addr, &client_len);
+    Pthread_create(&tid, NULL, f, connect_fd_ptr);
   }
 }
 ```
+
+## 基于线程的优缺点
+
+- 【优点】开销比进程小；共享数据方便。
+- 【缺点】开销比[读写复用](#select)大；有数据竞争风险；调度基本不可控；难以测试（相同执行顺序难以复现）。
 
 # 4. 多线程共享变量
 
 **共享变量 (shared variable)**：被多个线程（直接或间接）访问的变量。
 
-- *寄存器*中的数据始终独享，*虚拟内存*中的数据可以共享。
+- *寄存器*中的数据始终私有，*虚拟内存*中的数据可以共享。
 - 各线程通常不访问其他线程的*栈区*，但栈区属于*虚拟内存*，故仍可共享。
 
 ```c
@@ -455,7 +471,7 @@ int main() {
 
 进程图有助于理解以下概念：
 - **关键段 (critical section)**：操纵共享变量的指令序列。<a href id="critical"></a>
-- **互斥 (mutual exclusion)**：任一线程执行关键段时，应当暂时独享对共享变量访问。
+- **互斥 (mutual exclusion)**：任一线程执行关键段时，应当暂时独占对共享变量访问。
 - **不安全区 (unsafe region)**：$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$​ 线程的关键段。<a href id="unsafe"></a>
 - **不安全轨迹 (unsafe trajectory)**：经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
 
@@ -607,7 +623,7 @@ int sbuf_remove(sbuf_t *sp) {
   - 实例：网购时查看库存的用户、读取网页缓存的线程。
   - 第一类读写问题：偏向读者，读者一般无需等待，除非有作者在写（上锁）。
 - **作者 (writer)**：
-  - 可以修改共享资源的线程，修改时只能独享对资源的访问权。
+  - 可以修改共享资源的线程，修改时只能独占对资源的访问权。
   - 实例：网购时正在下单的用户、更新网页缓存的线程。
   - 第二类读写问题：偏向作者，读者需等待所有（正在写或等待的）作者写完。
 
