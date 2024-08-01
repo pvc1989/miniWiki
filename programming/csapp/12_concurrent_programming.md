@@ -800,6 +800,8 @@ int main() {
 
 **并行程序 (parallel program)**：运行在**多核处理器 (multi-core processor)** 上的*并发程序*。
 
+![](./ics3/conc/concurrentsets.svg)
+
 【通用技巧】将原问题划分为若干子问题，各线程依据其 `tid` 计算相应的子问题。
 
 $$
@@ -807,6 +809,10 @@ $$
 $$
 
 ## `psum-mutex.c`
+
+原始思路：
+- 各线程每次算术计算都向全局变量累加。
+- 全局变量由[信号量](#semaphore)保护。
 
 ```c
 #include "csapp.h"
@@ -849,6 +855,10 @@ int main(int argc, char **argv) {
 
 ## `psum-array.c`
 
+初步改进的思路：
+- 同伴线程分别计算，只将最终计算结果写入全局数组的对应元素。
+- 主线程负责全局数组求和，得到最终结果。
+
 ```c
 #include "csapp.h"
 #define MAXTHREADS 32
@@ -890,6 +900,9 @@ int main(int argc, char **argv) {
 ```
 
 ## `psum-local.c`
+
+进一步改进的思路：
+- 用局部变量减少访存。
 
 ```c
 /* 同 psum-array.c */
