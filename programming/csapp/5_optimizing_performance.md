@@ -436,3 +436,5 @@ void write_read(long *src, long *dst, long n) {
 测速的局限性：
 - 小函数测不准。
 - 对输入数据敏感。
+
+# [全书目录](../csapp.md#全书目录)

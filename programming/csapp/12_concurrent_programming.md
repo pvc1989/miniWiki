@@ -1022,3 +1022,5 @@ int rand_r(unsigned int *nextp/* 指向调用侧的私有数据 */) {
 - 【解决】确保各线程对各锁的上锁顺序一致。
 
 ![](./ics3/conc/deadlock.svg)
+
+# [全书目录](../csapp.md#全书目录)
