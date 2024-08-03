@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 
 # 2. 基于事件的并发
 
-## [`select()`](https://www.man7.org/linux/man-pages/man2/select.2.html)<a href id="select"></a>
+## <a href id="select"></a>[`select()`](https://www.man7.org/linux/man-pages/man2/select.2.html)
 
 在上述方案中，服务端（主进程）不能并发地处理*连接请求*与*键盘输入*：
 
@@ -144,7 +144,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-## 2.1. `echoservers.c`<a href id="echoservers"></a>
+## <a href id="echoservers"></a>2.1. `echoservers.c`
 
 **状态机 (state machine)**：服务端为客户端 `Client_k` 分配描述符 `d_k`
 
@@ -274,7 +274,7 @@ void check_clients(pool_t *p) {
 
 # 3. 基于线程的并发
 
-**线程 (thread)**：运行在某个[进程](./8_exceptional_control_flow.md#process)中的一条逻辑控制流。<a href id="thread"></a>
+<a href id="thread"></a>**线程 (thread)**：运行在某个[进程](./8_exceptional_control_flow.md#process)中的一条逻辑控制流。
 
 - 各线程有其私有的***线程*上下文 (*thread* context)**，包括**线程号 (Thread ID, TID)**、运行期栈、通用寄存器、条件码。
 - 各线程共享其所属的***进程*上下文 (*process* context)**，包括代码、数据、堆内存、共享库、打开的文件。
@@ -295,7 +295,7 @@ void check_clients(pool_t *p) {
   - **同伴进程 (peer thread)**：除主线程外的其他线程。
   - **同伴池 (pool of peers)**：同一进程的所有线程。
 
-## 3.2. [`pthread`](https://man7.org/linux/man-pages/man7/pthreads.7.html)
+## <a href id="pthread"></a>3.2. [`pthread`](https://man7.org/linux/man-pages/man7/pthreads.7.html)
 
 ```c
 #include "csapp.h"
@@ -364,7 +364,7 @@ int pthread_detach(pthread_t tid);
 pthread_detach(pthread_self());
 ```
 
-### 3.7. 初始化线程<a href id="pthread_once"></a>
+### <a href id="pthread_once"></a>3.7. 初始化线程
 
 ```c
 #include <pthread.h>
@@ -376,7 +376,7 @@ int pthread_once(pthread_once_t *once_control,
 - 首次调用 `pthread_once()` 会运行 `init_routine()` 以初始化全局变量。
 - 以相同的 `once_control` 再次调用 `pthread_once()` 不会做任何事。
 
-## 3.8. `echoservert.c`<a href id="echoserver-thread"></a>
+## <a href id="echoserver-thread"></a>3.8. `echoservert.c`
 
 ```c
 #include "csapp.h"
@@ -463,7 +463,7 @@ int main() {
 
 ![](./ics3/conc/badcntasm.svg)
 
-## 5.1. 进程图<a href id="graph"></a>
+## <a href id="graph"></a>5.1. 进程图
 
 **进程图 (progress graph)**：
 
@@ -473,14 +473,14 @@ int main() {
 - （单核处理器）同一时刻只能执行一条指令，故轨迹的生长始终平行于某一坐标轴。
 
 进程图有助于理解以下概念：
-- **关键段 (critical section)**：操纵共享变量的指令序列。<a href id="critical"></a>
+- <a href id="critical"></a>**关键段 (critical section)**：操纵共享变量的指令序列。
 - **互斥 (mutual exclusion)**：任一线程执行关键段时，应当暂时独占对共享变量的访问。
-- **不安全区 (unsafe region)**：$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$​ 线程的关键段。<a href id="unsafe"></a>
+- <a href id="unsafe"></a>**不安全区 (unsafe region)**：$n$ 维空间内的开集（不含边界），在第 $k$ 坐标轴上的投影为第 $k$​ 线程的关键段。
 - **不安全轨迹 (unsafe trajectory)**：经过不安全区的轨迹，各线程对共享变量的访问会发生竞争。
 
 ![](./ics3/conc/safetraj.svg)
 
-## 5.2. 信号量<a href id="semaphore"></a>
+## <a href id="semaphore"></a>5.2. 信号量
 
 **信号量 (semaphore)**：用于**同步 (synchronize)** 并发程序的整型全局变量 `s`​，只能被以下两种操作修改（由🇳🇱计算机科学家 Dijkstra 发明，故以🇳🇱语命名）
 
@@ -497,7 +497,7 @@ int main() {
 
 ![](./ics3/conc/pgsem.svg)
 
-[POSIX semaphores](https://man7.org/linux/man-pages/man7/sem_overview.7.html)：
+[POSIX semaphores](https://man7.org/linux/man-pages/man7/sem_overview.7.html)（不属于 [POSIX threads](#pthread)）：
 
 ```c
 #include <semaphore.h>
@@ -764,6 +764,8 @@ void echo_cnt(int connect_fd) {
 
 ## `pthread_mutex_t`
 
+详见 [*Shared-memory programming with Pthreads*](https://doi.org/10.1016/B978-0-12-804605-0.00011-7)。
+
 ```c
 #include <pthread.h>
 
@@ -796,7 +798,7 @@ int main() {
 
 ## [`std::mutex`](../cpp/concurrency.md#mutex)
 
-# 6. 多线程并行<a href id="parallel"></a>
+# <a href id="parallel"></a>6. 多线程并行
 
 **并行程序 (parallel program)**：运行在**多核处理器 (multi-core processor)** 上的*并发程序*。
 
@@ -940,7 +942,7 @@ void *sum_array(void *vargp) {
 
 # 7. 其他并发问题
 
-## 7.1. 线程安全<a href id="thread-safe"></a>
+## <a href id="thread-safe"></a>7.1. 线程安全
 
 **线程安全 (thread-safe)**：反复运行并发的多线程函数总是给出相同结果。
 
@@ -977,7 +979,7 @@ char *ctime_ts(const time_t *timep, char *privatep) {
 }
 ```
 
-### 7.2. 再入函数<a href id="reentrant"></a>
+### <a href id="reentrant"></a>7.2. 再入函数
 
 **再入函数 (reentrant function)**：被多个线程调用时，不访问共享变量。
 
