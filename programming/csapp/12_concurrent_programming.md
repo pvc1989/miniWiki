@@ -671,6 +671,8 @@ void writer(void) {
 }
 ```
 
+[POSIX threads](#pthread) 提供了[读写锁](#rwlock)机制。
+
 ## 5.5. `echoservert-pre.c`
 
 [`echoservert.c`](#echoserver-thread) 在收到客户端请求后，创建新线程。
@@ -760,11 +762,11 @@ void echo_cnt(int connect_fd) {
 }
 ```
 
-# 其他互斥机制
+# 其他同步机制
 
-## `pthread_mutex_t`
+## [`pthread_mutex_t`](https://www.man7.org/linux/man-pages/man3/pthread_mutex_lock.3.html)
 
-详见 [*Shared-memory programming with Pthreads*](https://doi.org/10.1016/B978-0-12-804605-0.00011-7)。
+详见 *4.9 Mutexes* in [*Shared-memory programming with Pthreads*](https://doi.org/10.1016/B978-0-12-804605-0.00011-7)。
 
 ```c
 #include <pthread.h>
@@ -796,7 +798,61 @@ int main() {
 }
 ```
 
-## [`std::mutex`](../cpp/concurrency.md#mutex)
+## <a href id='rwlock'></a>[`pthread_rwlock_t`](https://www.man7.org/linux/man-pages/man3/pthread_rwlock_unlock.3p.html)
+
+详见 *4.9 Read--write locks* in [*Shared-memory programming with Pthreads*](https://doi.org/10.1016/B978-0-12-804605-0.00011-7)。
+
+```c
+#include <pthread.h>
+
+// With static initialization:
+static pthread_rwlock_t foo_rwlock = PTHREAD_RWLOCK_INITIALIZER;
+
+void foo() {
+  pthread_rwlock_rdlock(&foo_rwlock);
+  /* critical section for reading */
+  pthread_rwlock_unlock(&foo_rwlock);
+  /* ... */
+  pthread_rwlock_wrlock(&foo_rwlock);
+  /* critical section for writing */
+  pthread_rwlock_unlock(&foo_rwlock);
+}
+
+int main() {
+  /* use foo() */
+  pthread_rwlock_destroy(&foo_rwlock);
+}
+```
+
+## [`pthread_cond_t`](https://www.man7.org/linux/man-pages/man3/pthread_cond_init.3.html)
+
+详见 *4.6.3 Condition variables* in [*Shared-memory programming with Pthreads*](https://doi.org/10.1016/B978-0-12-804605-0.00011-7)。
+
+```c
+#include <pthread.h>
+
+static int counter = 0;
+static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t cond_var = PTHREAD_COND_INITIALIZER;
+
+void *thread() {
+  /* ... */
+  /* Barrier */
+  pthread_mutex_lock(&mutex);
+  counter++;
+  if (counter == thread_count) {
+    counter = 0;
+    pthread_cond_broadcast(&cond_var);
+    /* 或调用 (thread_count - 1) 次 pthread_cond_signal() */
+  } else {
+    while (pthread_cond_wait(&cond_var, &mutex));
+    /* 返回值非负，表示被 pthread_cond_broadcast()
+      或 pthread_cond_signal() 以外的事件唤醒 */
+  }
+  pthread_mutex_unlock(&mutex);
+  /* ... */
+}
+```
 
 # <a href id="parallel"></a>6. 多线程并行
 
