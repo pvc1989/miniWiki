@@ -84,8 +84,10 @@ title: 数据结构
 [递归实现](./graph.md#DFS-Recursive)、[邻接集合](./graph.md#邻接集合)、[应用](./graph.md#DFS-应用)（[环路检测](./graph.md#环路检测)、[拓扑排序](./graph.md#拓扑排序)、[数独求解器](./graph.md#数独求解器)）
 ## [最小展开树](./graph.md#最小展开树)
 [Kruskal](./graph.md#Kruskal)、[Prim](./graph.md#Prim)
-## [最短路径](./graph.md#最短路径)
+## [单源最短路径](./graph.md#单源最短路径)
 [Dijkstra](./graph.md#Dijkstra)、[Bellman–Ford](./graph.md#bellmanford)
+## [全源最短路径](./graph.md#全源最短路径)
+[矩阵乘幂类比](./graph.md#矩阵乘幂类比)、[Floyd–Warshall](./graph.md#floydwarshall)、[Johnson](./graph.md#johnson)
 ## [最大流、最小割](./graph.md#最大流、最小割)
 [Ford–Fulkerson](./graph.md#fordfulkerson)、[最大流–最小割定理](./graph.md#最大流–最小割定理)
 

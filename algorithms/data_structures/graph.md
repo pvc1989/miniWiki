@@ -249,7 +249,7 @@ def GetMinSpanTreeByPrim(vertices, edges, get_weight):
   return mst
 ```
 
-# 最短路径
+# 单源最短路径
 
 - VisuAlgo
   - [Single-Source Shortest Paths](https://visualgo.net/en/sssp)
@@ -388,6 +388,86 @@ LeetCode
 LeetCode
 - [743. Network Delay Time](https://leetcode.com/problems/network-delay-time/)
 - [787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/)
+
+# 全源最短路径
+
+对于只含非负边的图，可以对每个点调用 [Dijkstra](#dijkstra)。
+
+以下算法适用于含负边、但不含负环的图。
+
+## 矩阵乘幂类比
+
+令 $$l_{ij}^{(r)}$$ 表示 $$i\to j$$ 至多含 $$r$$ 条边的最短路径，则初始值
+
+$$
+l_{ij}^{(0)}=
+\begin{cases}
+0,&i=j,\\
+\infty,&i=j,\\
+\end{cases}
+$$
+
+递归地有
+
+$$
+l_{ij}^{(r)}=\min_{k=1}^{V}\qty(l_{ik}^{(r-1)}+w_{kj}),
+$$
+
+$$\forall r$$ 有 $$V\times V$$ 个值需要更新，故整体时间复杂度为 $$\order{V^4}$$.
+
+类比矩阵乘法，有如下对应关系：
+
+|                  矩阵乘法                   |                          最段路径                          |
+| :-----------------------------------------: | :--------------------------------------------------------: |
+| $$c_{ij}=\sum_{k=1}^{V}a_{ik}\cdot b_{kj}$$ | $$l_{ij}^{(r)}=\min_{k=1}^{V}\qty(l_{ik}^{(r-1)}+w_{kj})$$ |
+|                    $$a$$                    |                       $$l^{(r-1)}$$                        |
+|                    $$b$$                    |                           $$w$$                            |
+|                    $$c$$                    |                        $$l^{(r)}$$                         |
+|                  $$\sum$$                   |                          $$\min$$                          |
+|                  $$\cdot$$                  |                           $$+$$                            |
+
+故最短路径问题归结为矩阵乘幂：
+
+$$
+L^{(r)}=L^{(r-1)}\cdot W=\cdots=W^{r},
+$$
+
+利用[分治](./strategy.md#分而治之)策略，时间复杂度可降为 $$\order{V^3\lg V}$$.
+
+## Floyd–Warshall
+
+令 $$d_{ij}^{(k)}$$ 表示中间节点只含 $$1,\dots,k$$ 的最短路径，则初值及递归式分别为
+
+$$
+d_{ij}^{(k)}=
+\begin{cases}
+w_{ij},&k=0\\
+\min\qty(d_{ij}^{(k-1)},d_{ik}^{(k-1)}+d_{kj}^{(k-1)}),&k>0,\\
+\end{cases}
+$$
+
+$$\forall k$$ 有 $$V\times V$$ 个值需要更新，故整体时间复杂度为 $$\order{V^3}$$.
+
+## Johnson
+
+对于稀疏图，可以先用 [Bellman--Ford](#bellmanford) 改造为只含非负边的图，再用对每个 vertex 调用 [Dijkstra](#dijkstra)，故整体时间复杂度为 $$\order{V^2\lg V+VE}$$.
+
+图的改造方法如下：
+
+在 $$G$$ 外引入一点 $$s$$，令 $$\forall v\in V : w(s,v)=0$$，用 [Bellman--Ford](#bellmanford) 得到 $$\delta(s,v)$$，记作 $$h(v)$$。
+
+由最短路径的三角不等式性质可以得到：
+
+$$
+w(u,v)+h(u)-h(v)\ge0\impliedby\delta(s,v)\le\delta(s,u)+w(u,v).
+$$
+
+|      $$\hat{G}$$      |            $$(\hat{V},\hat{E})$$            |
+| :-------------------: | :-----------------------------------------: |
+|      $$\hat{V}$$      |                $$V\cup{s}$$                 |
+|      $$\hat{E}$$      |          $$E\cup\{(s,v):v\in V\}$$          |
+|   $$\hat{w}(u,v)$$    |            $$w(u,v)+h(u)-h(v)$$             |
+| $$\hat{\delta}(u,v)$$ | $$\hat{\delta}(u,v)=\delta(u,v)+h(u)-h(v)$$ |
 
 # 最大流、最小割
 
