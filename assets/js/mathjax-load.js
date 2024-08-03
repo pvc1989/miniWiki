@@ -1,21 +1,15 @@
 window.MathJax = {
+  loader: {load: ['[tex]/physics']},
   tex: {
+    packages: {'[+]': ['physics']},
     inlineMath: [['$', '$'], ['\\(', '\\)']],
     macros: {
       coloneqq: "\\mathrel{:=}",
       eqqcolon: "\\mathrel{=:}",
-      cross: "\\boldsymbol{\\times}",
-      vdot: "\\mathbin{\\boldsymbol{\\cdot}}",
-      grad: "\\boldsymbol{\\nabla}",
       divg: "\\grad\\vdot",
-      curl: "\\grad\\cross",
-      abs: ["\\left\\vert{#1}\\right\\vert", 1],
       Vec: ["\\vec{\\boldsymbol{#1}}", 1],
       VecVec: ["\\widetilde{\\boldsymbol{#1}}", 1],
-      dyad: ["\\mathinner{\\vert#1\\rangle\\!\\langle#1\\vert}", 1],
       Mat: ["\\mathinner{\\underline{#1}}", 1],
-      ip: ["\\mathinner{\\left\\langle#1\\middle\\vert#2\\right\\rangle}", 2],
-      dd: ["\\mathinner{\\mathopen{\\mathrm{d}}#1}", 1],
     },
   },
 };
