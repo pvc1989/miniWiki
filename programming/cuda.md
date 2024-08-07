@@ -112,6 +112,14 @@ if (block_dim == 1) {
 }
 ```
 
+## Fast Barrier
+
+CUDA 提供一种高效同步同一 `block` 内所有 `thread`s 的机制：
+
+```c
+__device__ void __syncthreads(void);
+```
+
 # Memory Hierarchy
 
 ## Device Memory
@@ -153,4 +161,71 @@ int main() {
   printf("sum == %d\n", sum);  // 在 host 中输出结果
   return 0; 
 }
+```
+
+## Warp Shuffle
+
+> `compuate capability >= 3.0`
+
+具有连续 `threadID` 且属于同一 `block` 的一组 `thread`s，以 SIMD 模式运行（不同 `warp`s 可以独立运行）。
+
+```c
+int warpSize  /* currently 32 */
+
+/* 当前 thread 在其所属 warp 内的编号： */
+int lane = threadID % warpSize;
+```
+
+同一 `warp` 内的`thread`s 可以读取其他 `thread`s 的寄存器：
+
+```c
+__device__ float __shfl_down_sync(
+    unsigned mask/* 参与 shuffle 的 threads, e.g. 0xFFFFFFFF */,
+    float val/* 当前 thread（即 lane = lane_caller）传入的值 */,
+    unsigned diff/* 返回 lane = lane_caller + diff 传入的 val */,
+    int witdh = warpSize)
+```
+
+⚠️ 若 `lane_caller + diff`
+- 未调用该函数，则返回值未定义⚠️
+- `> max_lane_in_this_warp`，则返回值未定义⚠️
+- `>= warpSize`，则返回当前 `thread` 传入的 `val`
+
+```c
+/* 所有 threads 都参与求和，只有 land = 0 的那个 thread 的返回值正确 */
+__device__ float WarpSum(float val) {
+  for (int diff = warpSize / 2; diff > 0; diff /= 2) {
+    var += __shfl_down_sync(0xFFFFFFFF, var, diff);
+  }
+  return var;
+}
+```
+
+## Shared Memory
+
+由同一 SM 内的 SPs 共享的高速缓存，逻辑上分为 32 `bank`s（`a[i]` 与 `a[i + 32]` 属于同一 `bank`）：
+- 若同一 `warp` 内的所有 `thread`s 访问的 `bank`s 都不相同，则可并行访问。
+- 若多个 `thread`s 访问同一 `bank` 内的相同地址，则可并行访问。
+- 若多个 `thread`s 访问同一 `bank` 内的不同地址，则必须串行化。
+
+```c
+/* 模仿 WarpSum，所有 threads 的返回值都正确 */
+__device__ float SharedSum(float vals[]) {
+  int my_lane = threadID() % warpSize;
+  for (int diff = warpSize / 2; diff > 0; diff /= 2) {
+    int source = (lane + diff) % warpSize;
+    vars[my_lane] += vars[source];  /* 以 SIMD 方式运行，没有竞争 */
+  }
+  return vars[my_lane];
+}
+```
+
+其中 `vals` 应显式定义在 shared memory 中：
+
+```c
+// 显式指定数组大小
+__shared__ float vals[32];
+
+// 运行期由 SharedSum<<< n_block, n_thread_per_block, n_byte >>> 指定数组大小
+extern __shared__ float vals[];
 ```
