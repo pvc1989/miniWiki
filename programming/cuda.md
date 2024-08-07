@@ -113,3 +113,44 @@ if (block_dim == 1) {
 ```
 
 # Memory Hierarchy
+
+## Device Memory
+
+```c
+__host__ __device__ cudaError_t cudaMalloc(void **devPtr, size_t size);
+
+__host__ __device__ cudaError_t cudaFree(void *ptr)
+
+/* 自带 sync */
+__host__ ​cudaError_t cudaMemcpy(void* dst, const void* src, size_t count,
+    cudaMemcpyKind kind/* cudaMemcpyHostToDevice or cudaMemcpyDeviceToHost */);
+```
+
+## Unified Memory
+
+```c
+__host__ cudaError_t cudaMallocManaged(void **devPtr, size_t size
+    unsigned flags = cudaMemAttachGlobal);
+```
+
+- 获得的内存可以被 host 或 device 使用，但需要被 `cudaFree()` 释放。
+- 只少需要 `compuate capability >= 3.0`，但若 `compuate capability < 6.0`，则不能同时被 host 与 device 访问。
+- 使用 unified memory 的 kernel 可能比只使用 device memory 的 kernel 慢。
+
+利用全局 `__managed__` 变量获得 kernel 计算结果：
+
+```c
+__managed__ ini sum;
+
+__global__ void Add(int x, int y) {
+  sum = x + y;  // 在 device 中更新
+}
+
+int main() {
+  sum = -5;  // 在 host 中初始化
+  Add<<< 1, 1 >>>(2, 5);
+  cudaDeviceSynchronize();
+  printf("sum == %d\n", sum);  // 在 host 中输出结果
+  return 0; 
+}
+```
