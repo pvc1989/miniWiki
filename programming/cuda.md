@@ -112,6 +112,46 @@ if (block_dim == 1) {
 }
 ```
 
+## [Atomic Functions](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#atomic-functions)
+
+定义：不可分的*读-改-写*操作。
+
+后缀决定该操作原子性的 [scope](https://nvidia.github.io/libcudacxx/extended_api/memory_model.html#thread-scopes)：
+- 不带后缀的版本，scope 为 `cuda::thread_scope_device`
+- 后缀为 `_block` 的版本，scope 为 `cuda::thread_scope_block`，需要 `compute capability >= 6.0`
+- 后缀为 `_system` 的版本，scope 为 `cuda::thread_scope_system`，需要 `compute capability >= 7.2`
+
+```c
+// compute capability >= 2.x
+__device__ float atomicAdd(float* address, float val);
+
+// compute capability >= 6.x
+__device__ double atomicAdd(double* address, double val);
+```
+
+```c
+// Compare-And-Swap
+T atomicCAS(T* addr, T comp, T val) {
+  // Effectively do the following in an atomic way.
+  T old = *addr;
+  *addr = (old == comp ? val : old);
+  return old;
+}
+```
+
+|     Name     |                     Effect                      |
+| :----------: | :---------------------------------------------: |
+| `atomicAdd`  |                 `*addr += val`                  |
+| `atomicSub`  |                 `*addr -= val`                  |
+| `atomicExch` |                  `*addr = val`                  |
+| `atomicMin`  |            `*addr = min(*addr, val)`            |
+| `atomicMax`  |            `*addr = max(*addr, val)`            |
+| `atomicInc`  |       `*addr < val ? ++*addr : *addr = 0`       |
+| `atomicDec`  | `*addr && *addr <= val ? --*addr : *addr = val` |
+| `atomicAdd`  |                 `*addr &= val`                  |
+|  `atomicOr`  |                 `*addr |= val`                  |
+| `atomicXor`  |                 `*addr ^= val`                  |
+
 ## Fast Barrier
 
 CUDA 提供一种高效同步同一 `block` 内所有 `thread`s 的机制：
