@@ -86,29 +86,21 @@ Hello, world from thread[0][0][0] in block[1][0][0]
 Hello, world from thread[1][0][0] in block[1][0][0]
 ```
 
-## Block ID
+## Thread and Block Indexing
+
+相当于对 C 数组 `T a[dim.z][dim.y][dim.x]` 按 `a[idx.z][idx.y][idx.x]` 索引的地址偏移。
 
 ```c
-// linear index of current block in its grid
-if (grid_dim == 1) {
-  return blockIdx.x;
-} else if (grid_dim == 2) {
-  return blockIdx.x + blockIdx.y * gridDim.x;
-} else if (grid_dim == 3) {
-  return blockIdx.x + blockIdx.y * gridDim.x + blockIdx.z * gridDim.y * gridDim.x;
+size_t _ID(dim3 idx, dim3 dim) {
+  return idx.x + (idx.y + idx.z * dim.y) * dim.x;
 }
-```
 
-## Thread ID
+size_t threadID() {
+  return _ID(threadIdx, blockDim);
+}
 
-```c
-// linear index of current thread in its block
-if (block_dim == 1) {
-  return threadIdx.x;
-} else if (block_dim == 2) {
-  return threadIdx.x + threadIdx.y * blockDim.x;
-} else if (block_dim == 3) {
-  return threadIdx.x + threadIdx.y * blockDim.x + threadIdx.z * blockDim.y * blockDim.x;
+size_t blockID() {
+  return _ID(blockIdx, gridDim);
 }
 ```
 
