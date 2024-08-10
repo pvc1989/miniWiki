@@ -11,10 +11,10 @@ title: 网络编程
 - **客户端 (client)**：请求资源、使用服务的进程。
   - **客户机 (client machine)**：运行客户端的机器。
 
-**交易 (transaction)** 是客户端与服务端交互的基本操作，含以下四步：
+**事务 (transaction)** 是客户端与服务端交互的基本操作，含以下四步：
 
 1. 客户端向服务端发送**请求 (request)**。
-2. 服务端处理该*请求*，处理过程中按需服务器上的资源。
+2. 服务端处理该*请求*，处理过程中按需使用服务器上的资源。
 3. 服务端向客户端发送**响应 (response)**，并等待下一个请求。
 4. 客户端处理该*响应*。
 
@@ -51,7 +51,7 @@ title: 网络编程
 - **以太网线 (Ethernet wire)**：一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
 - **集线器 (hub)**：工作在*物理层*的网络设备，将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
 - 每个以太网适配器都拥有一个 48-bit 的**物理地址 (physical/MAC address)**，以区别于其他适配器。
-- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**首部  (header)**。
+- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**首部 (header)**。
 
 ### 桥接的以太网
 
@@ -74,9 +74,9 @@ title: 网络编程
 ![](./ics3/netp/internet.svg)
 
 - **路由器 (router)**：一种*网络层*的网络设备，在多个局域网及广域网之间转发数据。
-  - **报文 (message)**：被传输的数据，被拆分为若干*分组*（又名*包*）逐个进行传输。
-  - **分组交换 (packet switching)**：路由器收到一个*包*后，先将其放入缓存，再根据*包头*中的*目标地址*从路由器的*转发表*中找到合适的出口，最后把包转发给下一个路由器。
-    - 早期的分组交换网络：**ARPA (Advanced Research Project Agency)** net
+  - **报文 (message)**：被传输的数据，被拆分为若干**分组 (packet)** 逐个进行传输。
+  - **分组交换 (packet switching)**：路由器收到一个 *packet* 后，先将其放入缓存，再根据 *packet header* 中的*目标地址*从路由器的*转发表*中找到合适的出口，最后把 *packet* 转发给下一个路由器。
+    - 早期的分组交换网络：ARPA (Advanced Research Project Agency) net
 - **协议 (protocol)**：运行在主机及路由器上的程序，用于协调不同局域网及广域网技术。
   - **命名格式 (naming scheme)**：定义格式统一的主机地址。
   - **发送机制 (delivery mechanism)**：定义数据打包的方式。
@@ -89,8 +89,8 @@ title: 网络编程
 
 **互连网 (interconnected network, internet)**：由多个局域网、广域网经过*路由器*连接所形成的广域网，可覆盖全球。
 
-- **internet packet** = **PH (packet header)** + *payload (Data)*
-- **LAN frame** = **FH (frame header)** + *payload (internet packet)*
+- **internet packet** = *(packet) header* + *payload (Data)*
+- **LAN frame** = *(frame) header* + *payload (internet packet)*
 
 ![](./ics3/netp/intertrans.svg)
 
@@ -98,7 +98,7 @@ title: 网络编程
 
 **全球 IP 互联网 (global IP internet)**，简称**互联网**或**因特网 (Internet)**，是所有*互连网*中最著名、最成功的一个。
 
-因特网中的每台主机都运行着遵循 **TCP/IP 协议** 的软件。
+因特网中的每台主机都运行着遵循 **TCP/IP 协议**的软件。
 
 - **IP (Internet Protocol)**：提供最基本的命名格式，以及主机到主机的**不可靠 (unreliable)** 传输机制。
 - **UDP (Unreliable Datagram Protocol)**：基于 IP 协议的简单扩展，提供进程到进程的*不可靠*传输。
@@ -106,9 +106,9 @@ title: 网络编程
 
 对于普通程序员，Internet 可以理解为由世界上所有具备以下性质的主机所构成的 internet：
 
-- *主机*被映射到 **IP 地址 (IP address)**。
-- *IP 地址*被映射到**因特网域名 (Internet domain name)**。
-- 一台主机上的进程可通过[连接](#connection)与另一台主机上的进程**通信 (communicate)**。
+- *主机*被映射到 [**IP 地址 (IP address)**](#IP-address)。
+- *IP 地址*被映射到[**因特网域名 (Internet domain name)**](#domain-name)。
+- 一台主机上的进程可通过[因特网连接](#connection)与另一台主机上的进程**通信 (communicate)**。
 
 常用名词缩写：
 
@@ -116,7 +116,7 @@ title: 网络编程
 
 - **IXP (Internet eXchange Point)**：允许两个网络直接相连并交换分组的设备，又称 **NAP (Network Access Point)**。
 
-## 3.1. IP 地址
+## <a href id="IP-address"></a>3.1. IP 地址
 
 IPv4 地址可以用 `uint32_t` 表示。由于历史的原因，它被封装在 `struct` 内：
 
@@ -139,7 +139,11 @@ uint32_t ntohl(uint32_t netlong);
 uint16_t ntohs(uint16_t netshort);
 ```
 
-**点分十进制记法 (dotted decimal notation)**：用 `.` 分割为四段的字符串，每段各表示一个取自 `[0, 256)` 的十进制整数，例如：地址 `(uint32_t) 0x8002c2f2` 可以用 `(char*) "128.2.194.242"` 表示。以下函数用于 IP 地址的字符串**表示格式 (`p`resentation format)** 与**网络格式 (`n`etwork format)** 之间的转换：
+IPv4 地址 的**点分十进制记法 (dotted decimal notation)**：用 `.` 分割为 4 段的字符串，每段各表示一个取自 `[0, 256)` 的 8-bit 整数，以十进制表示。例如：IPv4 地址 `(uint32_t) 0x8002c2f2` 可以用 `(char*) "128.2.194.242"` 表示。
+
+IPv6 地址 的**冒号十六进制记法 (colon hexadecimal notation)**：用 `.` 分割为 8 段的字符串，每段各表示一个取自 `[0, 65536)` 的 16-bit 整数，以十六进制表示。
+
+以下函数用于 IP 地址的字符串**表示格式 (`p`resentation format)** 与**网络格式 (`n`etwork format)** 之间的转换：
 
 ```c
 #include <arpa/inet.h>
@@ -151,7 +155,7 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 
 其中 `AF_INET` 表示 `void *` 指向 32-bit 的 IPv4 地址（若改为 `AF_INET6`，则表示 `void *` 指向 128-bit 的 IPv6 地址）。
 
-## 3.2. 因特网域名
+## <a href id="domain-name"></a>3.2. 因特网域名
 
 **域名 (domain name)**：用 `.` 隔开的一组单词（字符、数字、下划线），例如：`csapp.cs.cmu.edu` 为本书网站的域名，从右向左依次为
 
@@ -165,9 +169,9 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 - 管理*域名*与 *IP 地址*之间映射关系的分布式数据库。
 - 用 `nslookup` 命令可以查询已知域名所对应的 IP 地址（可能有零到多个）。
 
-## 3.3. 因特网连接
+## <a href id="connection"></a>3.3. 因特网连接
 
-**连接 (connection)**：<a href id="connection"></a>一对可以收发字节流的*进程*。
+**连接 (connection)**：一对可以收发字节流的*进程*。
 
 - **端到端 (end-to-end)**：建立在一对*进程*之间。
 - **全双工 (full duplex)**：可以在同一时刻双向传输。
@@ -214,23 +218,26 @@ struct sockaddr_in {
 #include <sys/socket.h>
 int socket(int domain, int type, int protocol);
 
-/* 建议用 getaddrinfo() 获得实参 */
-socket_fd = Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 作为连接的一端 */, 0);
+/* 典型用法： */
+int socket_fd =
+    Socket(AF_INET/* IPv4 */, SOCK_STREAM/* 作为连接的一端 */, 0);
 ```
 
-## 4.3. [`connect()`](https://www.man7.org/linux/man-pages/man2/connect.2.html)
+建议用 [`getaddrinfo()`](#getaddrinfo) 获得实参。
+
+## 4.3. [`connect()`](https://www.man7.org/linux/man-pages/man2/connect.2.html) --- only for client
 
 *客户端*用此函数向*服务端*发送连接请求并等待。若成功则返回 `0`，否则返回 `-1`。
 
 ```c
 #include <sys/socket.h>
 int connect(int client_fd, const SA *server_addr,
-            socklen_t addr_len/* sizeof(sockaddr_in) */);
+    socklen_t addr_len/* sizeof(sockaddr_in) */);
 ```
 
 至此，*客户端*可通过在 `client_fd` 所表示的*文件（套接字）*上读写数据，实现与*服务端*的通信。
 
-## 4.4. [`bind()`](https://www.man7.org/linux/man-pages/man2/bind.2.html)
+## 4.4. [`bind()`](https://www.man7.org/linux/man-pages/man2/bind.2.html) --- only for server
 
 *服务端*用此函数将套接字描述符 `server_fd` 与套接字地址 `server_addr` 关联。
 若成功则返回 `0`，否则返回 `-1`。
@@ -238,13 +245,13 @@ int connect(int client_fd, const SA *server_addr,
 ```c
 #include <sys/socket.h>
 int bind(int server_fd, const SA *server_addr,
-         socklen_t server_addr_len/* sizeof(sockaddr_in) */);
+    socklen_t server_addr_len/* sizeof(sockaddr_in) */);
 ```
 
-## 4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html)
+## 4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html) --- only for server
 
-- **活跃套接字 (active socket)**：`socket()` 默认返回的套接字类型，客户端可直接使用。
-- **监听套接字 (listening socket)**：专供服务端接收连接请求，记作 `listen_fd`。<a href id="listen"></a>
+- **活跃套接字 (active socket)** 是 `socket()` 默认返回的套接字类型，客户端可直接使用。
+- **监听套接字 (listening socket)** 专供服务端接收连接请求，记作 `listen_fd`。<a href id="listen"></a>
 
 *服务端*用此函数将*活跃套接字*转变为*监听套接字*。若成功则返回 `0`，否则返回 `-1`。
 
@@ -253,7 +260,7 @@ int bind(int server_fd, const SA *server_addr,
 int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
 ```
 
-## 4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html)
+## 4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html) --- only for server
 
 *服务端*用此函数等待*客户端*发来的连接请求。
 若成功，则返回异于 `listen_fd` 的 `connect_fd`，并获取客户端地址；否则返回 `-1`。
@@ -267,9 +274,9 @@ int accept(int listen_fd, SA *client_addr, int *client_addr_len);
 
 ## 4.7. 信息提取
 
-### [`getaddrinfo()`](https://www.man7.org/linux/man-pages/man3/getaddrinfo.3.html)
+### <a href id="getaddrinfo"></a>[`getaddrinfo()`](https://www.man7.org/linux/man-pages/man3/getaddrinfo.3.html)
 
-`getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），其中每个结点为 `struct addrinfo` 类型的对象：
+`getaddrinfo()` 返回一个链表（需用 `freeaddrinfo()` 释放），结点类型为 `struct addrinfo`：
 
 ![](./ics3/netp/addrinfolist.svg)
 
@@ -293,7 +300,7 @@ struct addrinfo {
 };
 
 int getaddrinfo(
-    const char *host/* 域名 或 点分十进制地址 */,
+    const char *host/* 域名 或 地址 */,
     const char *service/* 服务名 或 端口号 */,
     const struct addrinfo *hints/* NULL 或 只含前四项的 addrinfo */,
     struct addrinfo **result/* 输出链表 */
@@ -304,15 +311,16 @@ const char *gai_strerror(int errcode);
 
 ### [`getnameinfo()`](https://www.man7.org/linux/man-pages/man3/getnameinfo.3.html)
 
-功能与 `getaddrinfo()` 相反，即由 `SA` 获得 `host` 或 `service`。
+功能与 `getaddrinfo()` 相反，即由 `sockaddr` 获得 `host` 或 `service`。
 
 ```c
 #include <sys/socket.h>
 #include <netdb.h>
-int getnameinfo(const struct sockaddr *sa, socklen_t salen,
-                char *host, size_t hostlen,    /* 可以为空，即 NULL, 0 */
-                char *service, size_t servlen, /* 同上，但至多一行为空 */
-                int flags/* NI_NUMERICHOST | NI_NUMERICSERV */);
+int getnameinfo(
+    const struct sockaddr *sa, socklen_t salen,
+    char *host, size_t hostlen, /* 可以为空，即 host = NULL, hostlen = 0 */
+    char *service, size_t servlen, /* 同上，但至多一行为空 */
+    int flags/* NI_NUMERICHOST | NI_NUMERICSERV */);
 ```
 
 ### 示例：`hostname.c`
@@ -562,7 +570,7 @@ int main(int argc, char **argv) {
   - `adder` 为可执行文件，功能为加法。
   - `?` 之后为 `adder` 的实参列表，`&` 用于分隔实参。
 
-## 5.3. HTTP 交易
+## 5.3. HTTP 事务
 
 ### `telnet`
 
