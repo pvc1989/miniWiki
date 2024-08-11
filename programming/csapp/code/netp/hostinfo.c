@@ -8,8 +8,8 @@ int main(int argc, char **argv)
     int rc, flags;
 
     if (argc != 2) {
-	fprintf(stderr, "usage: %s <domain name>\n", argv[0]);
-	exit(0);
+        fprintf(stderr, "usage: %s <domain name>\n", argv[0]);
+        exit(0);
     }
 
     /* Get a list of addrinfo records */

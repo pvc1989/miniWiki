@@ -231,8 +231,8 @@ int socket_fd =
 
 ```c
 #include <sys/socket.h>
-int connect(int client_fd, const SA *server_addr,
-    socklen_t addr_len/* sizeof(sockaddr_in) */);
+int connect(int client_fd,
+    const SA *server_addr, socklen_t server_addr_len/* sizeof(sockaddr_in) */);
 ```
 
 至此，*客户端*可通过在 `client_fd` 所表示的*文件（套接字）*上读写数据，实现与*服务端*的通信。
@@ -244,8 +244,8 @@ int connect(int client_fd, const SA *server_addr,
 
 ```c
 #include <sys/socket.h>
-int bind(int server_fd, const SA *server_addr,
-    socklen_t server_addr_len/* sizeof(sockaddr_in) */);
+int bind(int server_fd,
+    const SA *server_addr, socklen_t server_addr_len/* sizeof(sockaddr_in) */);
 ```
 
 ## 4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html) --- only for server
@@ -257,7 +257,8 @@ int bind(int server_fd, const SA *server_addr,
 
 ```c
 #include <sys/socket.h>
-int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
+int listen(int active_fd,
+    int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
 ```
 
 ## 4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html) --- only for server
@@ -267,7 +268,8 @@ int listen(int active_fd, int backlog/* 队列大小（请求个数）提示，�
 
 ```c
 #include <sys/socket.h>
-int accept(int listen_fd, SA *client_addr, int *client_addr_len);
+int accept(int listen_fd,
+    SA *client_addr, int *client_addr_len);
 ```
 
 至此，*服务端*可通过在 `connect_fd` 所表示的*文件（套接字）*上读写数据，实现与*客户端*的通信。
@@ -323,7 +325,17 @@ int getnameinfo(
     int flags/* NI_NUMERICHOST | NI_NUMERICSERV */);
 ```
 
-### 示例：`hostname.c`
+### [`hostinfo.c`](./code/netp/hostinfo.c)
+
+用例：
+
+```shell
+$ ./hostinfo www.baidu.com
+182.61.200.6
+182.61.200.7
+```
+
+关键代码行：
 
 ```c
 #include "csapp.h"
@@ -332,39 +344,31 @@ int main(int argc, char **argv) {
   struct addrinfo *p, *listp, hints;
   char buf[MAXLINE];
   int rc, flags;
-
-  if (argc != 2) {
-    fprintf(stderr, "usage: %s <domain name>\n", argv[0]);
-    exit(0);
-  }
-
-  memset(&hints, 0, sizeof(struct addrinfo));                         
+  /* ... */
+  memset(&hints, 0, sizeof(struct addrinfo));
   hints.ai_family = AF_INET;       /* 只用 IPv4 */
   hints.ai_socktype = SOCK_STREAM; /* 只面向连接 */
-  if ((rc = getaddrinfo(argv[1], NULL, &hints, &listp)) != 0) {
-    fprintf(stderr, "getaddrinfo error: %s\n", gai_strerror(rc));
-    exit(1);
-  }
-
+  Getaddrinfo(argv[1], NULL, &hints, &listp);
   flags = NI_NUMERICHOST; /* 以十进制 IP 地址表示 host */
   for (p = listp; p; p = p->ai_next) { /* 遍历链表 */
     Getnameinfo(p->ai_addr, p->ai_addrlen, buf, MAXLINE, NULL, 0, flags);
     printf("%s\n", buf);
   }
-
-  Freeaddrinfo(listp);
-  exit(0);
+  /* ... */
 }
 ```
 
 ## 4.8. 辅助函数
 
-### `open_clientfd()`
+### [`open_clientfd()`](./code/src/csapp.c)
 
 此函数提供了对*客户端*调用 `getaddrinfo()`、`socket()`、`connect()` 的封装。
 
+关键代码行：
+
 ```c
 #include "csapp.h"
+
 int open_clientfd(char *hostname, char *port) {
   int clientfd, rc;
   struct addrinfo hints, *listp, *p;
@@ -375,7 +379,7 @@ int open_clientfd(char *hostname, char *port) {
   hints.ai_flags = AI_NUMERICSERV;  /* ... using a numeric port arg. */
   hints.ai_flags |= AI_ADDRCONFIG;  /* Recommended for connections */
   if ((rc = getaddrinfo(hostname, port, &hints, &listp)) != 0) {
-    fprintf(stderr, "getaddrinfo failed (%s:%s): %s\n", hostname, port, gai_strerror(rc));
+    fprintf(/* ... */);
     return -2;
   }
 
@@ -386,7 +390,7 @@ int open_clientfd(char *hostname, char *port) {
     if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1)
       break; /* 连接成功，则终止遍历 */
     if (close(clientfd) < 0) { /* 连接失败，则关闭文件，再尝试下一个 */
-      fprintf(stderr, "open_clientfd: close failed: %s\n", strerror(errno));
+      fprintf(/* ... */);
       return -1;
     }
   }
@@ -396,12 +400,15 @@ int open_clientfd(char *hostname, char *port) {
 }
 ```
 
-### `open_listenfd()`
+### [`open_listenfd()`](./code/src/csapp.c)
 
 此函数提供了对*服务端*调用 `getaddrinfo()`、`socket()`、`bind()`、`listen()` 的封装。
 
+关键代码行：
+
 ```c
 #include "csapp.h"
+
 int open_listenfd(char *port) {
   struct addrinfo hints, *listp, *p;
   int listenfd, rc, optval=1;
@@ -411,23 +418,23 @@ int open_listenfd(char *port) {
   hints.ai_flags = AI_ADDRCONFIG | AI_NUMERICSERV
       | AI_PASSIVE/* host=NULL, all ai_addr=*.*.*.* */;
   if ((rc = getaddrinfo(NULL, port, &hints, &listp)) != 0) {
-    fprintf(stderr, "getaddrinfo failed (port %s): %s\n", port, gai_strerror(rc));
+    fprintf(/* ... */);
     return -2;
   }
 
   for (p = listp; p; p = p->ai_next) {
     listenfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol);
-    if (listenfd < 0) 
+    if (listenfd < 0)
       continue;
 
     /* Eliminates "Address already in use" error from bind() */
     setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR,
-               (const void *)&optval , sizeof(int));
+        (const void *)&optval, sizeof(int));
 
     if (bind(listenfd, p->ai_addr, p->ai_addrlen) == 0)
       break;
     if (close(listenfd) < 0) {
-      fprintf(stderr, "open_listenfd close failed: %s\n", strerror(errno));
+      fprintf(/* .. */);
       return -1;
     }
   }
@@ -436,7 +443,7 @@ int open_listenfd(char *port) {
   if (!p)
     return -1;
 
-  if (listen(listenfd, LISTENQ) < 0) {
+  if (listen(listenfd, LISTENQ/* defined in csapp.h */) < 0) {
     close(listenfd);
     return -1;
   }
@@ -446,7 +453,9 @@ int open_listenfd(char *port) {
 
 ## 4.9. 示例：回显系统
 
-### `echoclient.c`
+### [`echoclient.c`](./code/netp/echoclient.c)
+
+关键代码行：
 
 ```c
 #include "csapp.h"
@@ -456,16 +465,10 @@ int main(int argc, char **argv) {
   char *host, *port, buf[MAXLINE];
   rio_t rio;
 
-  if (argc != 3) {
-    fprintf(stderr, "usage: %s <host> <port>\n", argv[0]);
-    exit(0);
-  }
-  host = argv[1];
-  port = argv[2];
+  /* ... */
 
-  clientfd = Open_clientfd(host, port);
+  clientfd = Open_clientfd(host/* argv[1] */, port/* argv[2] */);
   Rio_readinitb(&rio, clientfd);
-
   while (Fgets(buf, MAXLINE, stdin) != NULL) {
     Rio_writen(clientfd, buf, strlen(buf)); // 向服务端发送
     Rio_readlineb(&rio, buf, MAXLINE);      // 从服务端读取
@@ -476,9 +479,40 @@ int main(int argc, char **argv) {
 }
 ```
 
-### `echoserveri.c`
+### [`echoserveri.c`](./code/netp/echoserveri.c)
 
 **迭代型服务端 (iterative server)**：同一时间只能服务一个客户端，不同客户端要排成队列依次接受服务。
+
+关键代码行：
+
+```c
+#include "csapp.h"
+
+void echo(int connect_fd);  // implemented in echo.c
+
+int main(int argc, char **argv) {
+  int listenfd, connect_fd;
+  socklen_t client_len;
+  struct sockaddr_storage client_addr;  /* Enough space for any address */
+  char client_hostname[MAXLINE], client_port[MAXLINE];
+
+  /* ... */
+
+  listenfd = Open_listenfd(/* port */argv[1]);
+  while (1) {
+    client_len = sizeof(struct sockaddr_storage); 
+    connect_fd = Accept(listenfd, (SA *)&client_addr, &client_len);
+    Getnameinfo((SA *)&client_addr, client_len,
+        client_hostname, MAXLINE, client_port, MAXLINE, 0);
+    printf("Connected to (%s, %s)\n", client_hostname, client_port);
+    echo(connect_fd);
+    Close(connect_fd);
+  }
+  exit(0);
+}
+```
+
+### [`echo.c`](./code/netp/echo.c)
 
 ```c
 #include "csapp.h"
@@ -494,31 +528,6 @@ void echo(int connect_fd) {
     Rio_writen(connect_fd, buf, n);
   }
 }
-
-int main(int argc, char **argv) {
-  int listenfd, connect_fd;
-  socklen_t client_len;
-  struct sockaddr_storage client_addr;  /* Enough space for any address */
-  char client_hostname[MAXLINE], client_port[MAXLINE];
-
-  if (argc != 2) {
-    fprintf(stderr, "usage: %s <port>\n", argv[0]);
-    exit(0);
-  }
-
-  listenfd = Open_listenfd(argv[1]);
-  while (1) {
-    client_len = sizeof(struct sockaddr_storage); 
-    connect_fd = Accept(listenfd, (SA *)&client_addr, &client_len);
-    Getnameinfo((SA *)&client_addr, client_len,
-                client_hostname, MAXLINE, 
-                client_port, MAXLINE, 0);
-    printf("Connected to (%s, %s)\n", client_hostname, client_port);
-    echo(connect_fd);
-    Close(connect_fd);
-  }
-  exit(0);
-}
 ```
 
 ### 演示
@@ -533,7 +542,9 @@ int main(int argc, char **argv) {
 |    `server received 13 bytes`     | ← 处理信息 |                                |
 |                                   | 回显信息 → |         `hello, world`         |
 |                                   | 结束连接 → |            `Ctrl+D`            |
-|                                   | ← 等待连接 |                                |
+|                                   | 再次请求 → | `./echoclient localhost 23333` |
+| `Connected to (localhost, 51014)` | ← 建立连接 |                                |
+|                                   | 结束连接 → |            `Ctrl+D`            |
 |             `Ctrl+C`              | ← 停止服务 |                                |
 
 # 5. 网页服务器

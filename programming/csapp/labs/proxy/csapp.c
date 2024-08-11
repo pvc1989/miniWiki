@@ -504,7 +504,7 @@ char *Fgets(char *ptr, int n, FILE *stream)
     char *rptr;
 
     if (((rptr = fgets(ptr, n, stream)) == NULL) && ferror(stream))
-	app_error("Fgets error");
+        app_error("Fgets error");
 
     return rptr;
 }
@@ -514,7 +514,7 @@ FILE *Fopen(const char *filename, const char *mode)
     FILE *fp;
 
     if ((fp = fopen(filename, mode)) == NULL)
-	unix_error("Fopen error");
+        unix_error("Fopen error");
 
     return fp;
 }
@@ -1037,7 +1037,7 @@ int open_listenfd(char *port)
     /* Make it a listening socket ready to accept connection requests */
     if (listen(listenfd, LISTENQ) < 0) {
         close(listenfd);
-	return -1;
+        return -1;
     }
     return listenfd;
 }
