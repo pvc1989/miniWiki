@@ -51,7 +51,7 @@ title: 网络编程
 - **以太网线 (Ethernet wire)**：一端连接到主机上的（俗称*网卡*的）**以太网适配器 (Ethernet adapter)**，另一端连接到集线器上的**端口 (port)**。
 - **集线器 (hub)**：工作在*物理层*的网络设备，将每个端口上的数据被动地复制到其他所有端口。因此连接到同一台集线器上的所有主机，都能看到相同的数据。
 - 每个以太网适配器都拥有一个 48-bit 的**物理地址 (physical/MAC address)**，以区别于其他适配器。
-- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**首部 (header)**。
+- 一台主机向其他主机发送的最小数据块称作**帧 (frame)**，其内容除**有效载荷 (payload)** 外，还包括来源地址、目标地址、帧长度的**帧头 (frame header)**。
 
 ### 桥接的以太网
 
@@ -184,7 +184,7 @@ const char *inet_ntop(AF_INET, const void *src, char *dst, socklen_t size); /* r
 
 ![](./ics3/netp/connection.svg)
 
-# 4. 套接字接口<a href id="socket"></a>
+# <a href id="socket"></a>4. 套接字接口
 
 ![](./ics3/netp/sockoverview.svg)
 
@@ -248,10 +248,10 @@ int bind(int server_fd,
     const SA *server_addr, socklen_t server_addr_len/* sizeof(sockaddr_in) */);
 ```
 
-## 4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html) --- only for server
+## <a href id="listen"></a>4.5. [`listen()`](https://www.man7.org/linux/man-pages/man2/listen.2.html) --- only for server
 
 - **活跃套接字 (active socket)** 是 `socket()` 默认返回的套接字类型，客户端可直接使用。
-- **监听套接字 (listening socket)** 专供服务端接收连接请求，记作 `listen_fd`。<a href id="listen"></a>
+- **监听套接字 (listening socket)** 专供服务端接收连接请求，记作 `listen_fd`。
 
 *服务端*用此函数将*活跃套接字*转变为*监听套接字*。若成功则返回 `0`，否则返回 `-1`。
 
@@ -335,7 +335,7 @@ $ ./hostinfo www.baidu.com
 182.61.200.7
 ```
 
-关键代码行：
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -364,7 +364,7 @@ int main(int argc, char **argv) {
 
 此函数提供了对*客户端*调用 `getaddrinfo()`、`socket()`、`connect()` 的封装。
 
-关键代码行：
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -404,7 +404,7 @@ int open_clientfd(char *hostname, char *port) {
 
 此函数提供了对*服务端*调用 `getaddrinfo()`、`socket()`、`bind()`、`listen()` 的封装。
 
-关键代码行：
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -455,7 +455,7 @@ int open_listenfd(char *port) {
 
 ### [`echoclient.c`](./code/netp/echoclient.c)
 
-关键代码行：
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -483,7 +483,7 @@ int main(int argc, char **argv) {
 
 **迭代型服务端 (iterative server)**：同一时间只能服务一个客户端，不同客户端要排成队列依次接受服务。
 
-关键代码行：
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -553,26 +553,26 @@ void echo(int connect_fd) {
 
 **超文本传输协议 (HyperText Transfer Protocol, HTTP)**：提供**网页 (Web)** 服务的协议
 
-- **浏览器 (browser)**：HTTP 的客户端程序<a href id="browser"></a>
-- **内容 (content)**：HTTP 的客户端向服务器请求的数据
+- <a href id="browser"></a>**浏览器 (browser)**：HTTP 的客户端程序
+- [**内容 (content)**](#content)：HTTP 的客户端向服务器请求的数据
 
 [**超文本标记语言 (HyperText Markup Language, HTML)**](../../documenting/web/html.md)：
 
 - **页面 (page)**：HTML 的程序
 - **标签 (tag)**：HTML 的指令
 
-## 5.2. 网页内容
+## <a href id="content"></a>5.2. 网页内容
 
-**MIME (Multipurpose Internet Mail Extensions)**<a href id="mime"></a>
+<a href id="mime"></a>**MIME (Multipurpose Internet Mail Extensions)**
 
 网页内容分类
 - **静态内容 (static content)**：服务端传送给客户端的文件
 - **动态内容 (dynamic content)**：在服务端上计算得到后传输给客户端的数据
 
-**URL (universal resource locator)**：
+[**URL (Universal Resource Locator)**](https://developer.mozilla.org/en-US/docs/Glossary/URL)：
 
 - 【静态】`http://www.google.com:80/index.html`，其中
-  - `www.google.com` 为域名，`80` 为端口号（`http` 服务的默认端口号为 `80`，可省略）。
+  - `www.google.com` 为域名，`80` 为端口号（HTTP 服务的默认端口号为 `80`，可省略）。
   - `/` 表示*服务端所在主机*上用于存放*静态内容*的目录（如 `/usr/httpd/html/`）。
   - `index.html` 为静态内容文件，
 - 【动态】`http://bluefish.ics.cs.cmu.edu:8000/cgi-bin/adder?15000&213`，其中
@@ -583,7 +583,7 @@ void echo(int connect_fd) {
 
 ## 5.3. HTTP 事务
 
-### `telnet`
+### 用 `telnet` 请求 HTTP 服务
 
 在客户机的命令行终端内输入以下内容，以发起连接：
 
@@ -612,10 +612,11 @@ Host: csapp.cs.cmu.edu
 其中
 
 - 第一行称作**请求行 (request line)**，格式为 `method URI version`
+  - [**URI (Uniform Resource Identifier)**](https://developer.mozilla.org/en-US/docs/Glossary/URI)
   - 若客户端为[浏览器](#browser)，则 URI 为 URL 的后缀（位于域名、端口号之后的部分）。
   - 若客户端为[代理服务器](./labs/proxy/README.md)，则 URI 为整个 URL。
-- 第二行开始为**请求首部 (request header)**，格式为 `header_name: header_data`
-- 最后的空行表示页眉结尾。
+- <a href id="request_header"></a>第二行开始为**请求头 (request header)**，格式为 `header_name: header_data`
+- 最后的空行表示 *request header* 结束。
 
 ### HTTP 响应
 
@@ -636,9 +637,9 @@ Content-Type: text/html; charset=UTF-8
 
 其中
 
-- 第一行称作**响应行 (response line)**，格式为 `version status_code status_message`
-- 第二行开始为**响应首部 (response header)** 
-- 最后的空行表示首部结尾。
+- 第一行称作**响应行 (response line)**，格式为 `version status_code status_message`。
+- 第二行开始为**响应头 (response header)**。
+- 最后的空行表示 *response header* 结束。
 
 接下来，客户端显示网页的 HTML 源代码：
 
@@ -669,9 +670,9 @@ Connection closed by foreign host.
 
 客户端请求行中的 `GET` 方法将 URI 中的实参传送给服务端，其中
 
-- `?` 分隔文件名与实参。
-- `&` 分割实参列表，实参列表中不能含空格。
-- 实参本身含*空格*的，用特殊字符 `%20` 表示。
+- `?` 分隔*可执行文件*与*实参列表*。
+- `&` 分割实参列表中的各项。
+- `%20` 表示单项实参中的*空格*。
 
 ### 服务端向子进程传递实参
 
@@ -679,21 +680,23 @@ Connection closed by foreign host.
 
 - 用 `fork` 创建一个子进程。
 - 将 CGI 环境变量 `QUERY_STRING` 设为 `15000&213`。 
-- 用 `execve` 加载 `/cgi-bin/adder` 程序。
+- 用 `execve` 加载可执行文件 [`/cgi-bin/adder`](#adder)。
 
-详见 [`serve_dynamic()`](#)。
+详见 [`serve_dynamic()`](#serve_dynamic)。
 
 ### 服务端向子进程传递其他信息
 
 CGI 标准定义了一些环境变量，用于向子进程传递信息：
 
-- 【`QUERY_STRING`】程序实参
-- 【`SERVER_PORT`】服务器的[监听端口](#listen)
-- 【`REQUEST_METHOD`】可以为 `GET` 或 `POST`
-- 【`REMOTE_HOST`】客户端域名
-- 【`REMOTE_ADDR`】客户端 IP 地址
-- 【`CONTENT_TYPE`】仅供 `POST`，表示所请求对象的 [MIME](#mime) 类型
-- 【`CONTENT_LENGTH`】仅供 `POST`，表示所请求对象的字节数
+|     环境变量     |                         作用                          |
+| :--------------: | :---------------------------------------------------: |
+|  `QUERY_STRING`  |                       程序实参                        |
+|  `SERVER_PORT`   |              服务器的[监听端口](#listen)              |
+| `REQUEST_METHOD` |                    `GET` 或 `POST`                    |
+|  `REMOTE_HOST`   |              客户端[域名](#domain-name)               |
+|  `REMOTE_ADDR`   |             客户端 [IP 地址](#IP-address)             |
+|  `CONTENT_TYPE`  | 仅供 `POST` 使用，表示所请求对象的 [MIME](#mime) 类型 |
+| `CONTENT_LENGTH` |       仅供 `POST` 使用，表示所请求对象的字节数        |
 
 ### 子进程向客户端发送结果
 
@@ -701,10 +704,11 @@ CGI 标准定义了一些环境变量，用于向子进程传递信息：
 
 详见 [`serve_dynamic()`](#serve_dynamic)。
 
+### <a href id="adder"></a>[`adder.c`](./code/netp/tiny/cgi-bin/adder.c)
 
-### `adder.c`
+该程序由服务端子进程运行，负责解析 `QUERY_STRING`，计算求和结果，构建响应文本，将向 `stdout` 输出。
 
-由服务端子进程运行，负责解析 `QUERY_STRING`，计算求和结果，构建响应文本，将向 `stdout` 输出。
+关键代码：
 
 ```c
 #include "csapp.h"
@@ -716,37 +720,33 @@ int main(void) {
 
   /* Extract the two arguments */
   if ((buf = getenv("QUERY_STRING")) != NULL) {
-    p = strchr(buf, '&');
+    p = strchr(buf, '&');  // 返回第一个 '&' 的地址
     *p = '\0';
-    strcpy(arg1, buf);
-    strcpy(arg2, p+1);
-    n1 = atoi(arg1);
-    n2 = atoi(arg2);
+    strcpy(arg1, buf); n1 = atoi(arg1);
+    strcpy(arg2, p+1); n2 = atoi(arg2);
   }
 
   /* Make the response body */
-  sprintf(content, "Welcome to add.com: ");
-  sprintf(content, "%sThe Internet addition portal.\r\n<p>", content);
-  sprintf(content, "%sThe answer is: %d + %d = %d\r\n<p>", 
-          content, n1, n2, n1 + n2);
-  sprintf(content, "%sThanks for visiting!\r\n", content);
+  sprintf(content, /* ... */);
 
   /* Generate the HTTP response */
   printf("Connection: close\r\n");
   printf("Content-length: %d\r\n", (int)strlen(content));
   printf("Content-type: text/html\r\n\r\n");
   printf("%s", content);
-  fflush(stdout);
+  fflush(stdout);  // 子进程将 stdout 重定向到 connect_fd
 
   exit(0);
 }
 ```
 
-# 6. 示例：微型网页服务器
+## 6. 示例：[`tiny.c`](./code/netp/tiny/tiny.c)
 
-## `main()`
+### `main()`
 
-负责创建[监听套接字](#listen)套接字，等待服务请求，建立连接后将主要工作转交给 `doit()`。
+负责创建[监听套接字](#listen)套接字，等待服务请求，建立连接后将主要工作转交给 [`doit()`](#doit)。
+
+关键代码：
 
 ```c
 int main(int argc, char **argv) {
@@ -755,18 +755,14 @@ int main(int argc, char **argv) {
   socklen_t client_len;
   struct sockaddr_storage client_addr;
 
-  if (argc != 2) {
-    fprintf(stderr, "usage: %s <port>\n", argv[0]);
-    exit(1);
-  }
+  if (argc != 2) { /* ... */ }
 
   listen_fd = Open_listenfd(argv[1]);
   while (1) { // 迭代型服务端
     client_len = sizeof(client_addr);
     connect_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
     Getnameinfo((SA *)&client_addr, client_len,
-                hostname, MAXLINE,
-                port, MAXLINE, 0);
+        hostname, MAXLINE, port, MAXLINE, 0);
     printf("Accepted connection from (%s, %s)\n", hostname, port);
     doit(connect_fd); // 处理请求
     Close(connect_fd);
@@ -774,9 +770,13 @@ int main(int argc, char **argv) {
 }
 ```
 
-## `doit()`
+### <a href id="doit"></a>`doit()`
 
-负责接收并解析请求，根据 `is_static` 选择提供静态或动态内容。
+负责接收并解析单个请求，根据 [`parse_uri()`](#parse_uri) 返回值选择执行 [`serve_static()`](#serve_static) 或 [`serve_dynamic()`](#serve_dynamic)。
+
+若发现错误，则用 [`clienterror()`](#clienterror) 输出错误信息。
+
+关键代码：
 
 ```c
 void doit(int fd) {
@@ -796,7 +796,7 @@ void doit(int fd) {
                 "Tiny does not implement this method");
     return;
   }
-  read_requesthdrs(&rio); // 忽略请求首部
+  read_requesthdrs(&rio); // 打印到服务端 stdout
 
   is_static = parse_uri(uri, filename, cgiargs);
   if (stat(filename, &sbuf) < 0) {
@@ -806,27 +806,21 @@ void doit(int fd) {
   }
 
   if (is_static) {
-    if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
-      clienterror(fd, filename, "403", "Forbidden",
-                  "Tiny couldn't read the file");
-      return;
-    }
+    /* ... */
     serve_static(fd, filename, sbuf.st_size);
   }
   else {
-    if (!(S_ISREG(sbuf.st_mode)) || !(S_IXUSR & sbuf.st_mode)) {
-      clienterror(fd, filename, "403", "Forbidden",
-                  "Tiny couldn't run the CGI program");
-      return;
-    }
+    /* ... */
     serve_dynamic(fd, filename, cgiargs);
   }
 }
 ```
 
-## `clienterror()`
+### <a href id="clienterror"></a>`clienterror()`
 
 向客户端输出错误信息。
+
+关键代码：
 
 ```c
 void clienterror(int fd, char *cause, char *errnum, 
@@ -834,28 +828,22 @@ void clienterror(int fd, char *cause, char *errnum,
   char buf[MAXLINE];
 
   /* Print the HTTP response headers */
-  sprintf(buf, "HTTP/1.0 %s %s\r\n", errnum, shortmsg);
+  sprintf(buf, /* ... */);
   Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "Content-type: text/html\r\n\r\n");
-  Rio_writen(fd, buf, strlen(buf));
+  /* ... */
 
   /* Print the HTTP response body */
-  sprintf(buf, "<html><title>Tiny Error</title>");
+  sprintf(buf, /* ... */);
   Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "<body bgcolor=""ffffff"">\r\n");
-  Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "%s: %s\r\n", errnum, shortmsg);
-  Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "<p>%s: %s\r\n", longmsg, cause);
-  Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "<hr><em>The Tiny Web server</em>\r\n");
-  Rio_writen(fd, buf, strlen(buf));
+  /* ... */
 }
 ```
 
-## `read_requesthdrs()`
+### `read_requesthdrs()`
 
-读取并（向服务端 `stdout`）打印请求头部。
+读取并（向服务端 `stdout`）打印 [request header](#request_header)s。
+
+关键代码：
 
 ```c
 void read_requesthdrs(rio_t *rp) {
@@ -871,36 +859,30 @@ void read_requesthdrs(rio_t *rp) {
 }
 ```
 
-## `parse_uri()`
+### <a href id="parse_uri"></a>`parse_uri()`
 
 解析 URI，返回 `is_static`。
+
+关键代码：
 
 ```c
 int parse_uri(char *uri, char *filename, char *cgiargs) {
   char *ptr;
 
   if (!strstr(uri, "cgi-bin")) {  /* Static content */
-    strcpy(cgiargs, "");
-    strcpy(filename, "."); strcat(filename, uri);
-    if (uri[strlen(uri)-1] == '/')   /* use the default filename */
-      strcat(filename, "home.html"); /* which is `./home.html`   */
+    /* ... */
     return 1;
   }
   else {  /* Dynamic content */
-    ptr = index(uri, '?');
-    if (ptr) {
-      strcpy(cgiargs, ptr+1);
-      *ptr = '\0';
-    }
-    else 
-      strcpy(cgiargs, "");
-    strcpy(filename, "."); strcat(filename, uri);
+    /* ... */
     return 0;
   }
 }
 ```
 
-## `serve_static()`
+### <a href id="serve_static"></a>`serve_static()`
+
+关键代码：
 
 ```c
 void serve_static(int fd, char *filename, int filesize) {
@@ -911,12 +893,7 @@ void serve_static(int fd, char *filename, int filesize) {
   get_filetype(filename, filetype);
   sprintf(buf, "HTTP/1.0 200 OK\r\n");
   Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "Server: Tiny Web Server\r\n");
-  Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "Content-length: %d\r\n", filesize);
-  Rio_writen(fd, buf, strlen(buf));
-  sprintf(buf, "Content-type: %s\r\n\r\n", filetype);
-  Rio_writen(fd, buf, strlen(buf));
+  /* ... */
 
   /* Send response body to client */
   srcfd = Open(filename, O_RDONLY, 0);
@@ -927,7 +904,9 @@ void serve_static(int fd, char *filename, int filesize) {
 }
 ```
 
-## `serve_dynamic()`<a href id="serve_dynamic"></a>
+### <a href id="serve_dynamic"></a>`serve_dynamic()`
+
+关键代码：
 
 ```c
 void serve_dynamic(int fd, char *filename, char *cgiargs) {
