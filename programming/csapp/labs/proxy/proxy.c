@@ -113,30 +113,30 @@ int has_prefix(char const *line, char const *prefix) {
     return !strncmp(line, prefix, min(strlen(line), strlen(prefix)));
 }
 
-void forward_request(int client_fd, char const *method, char const *uri,
+void forward_request(int server_fd, char const *method, char const *uri,
         char const *hostname, char const *buf) {
     char line[MAXLINE];
-    rio_t rio; Rio_readinitb(&rio, client_fd);
+    rio_t rio; Rio_readinitb(&rio, server_fd);
 
     // Send the request line:
     sprintf(line, "%s %s HTTP/1.0\r\n", method, uri);
     printf("> %s", line);
-    Rio_writen(client_fd, line, strlen(line));
+    Rio_writen(server_fd, line, strlen(line));
     // Send the HOST header:
     sprintf(line, "Host: %s\r\n", hostname);
     printf("> %s", line);
-    Rio_writen(client_fd, line, strlen(line));
+    Rio_writen(server_fd, line, strlen(line));
     // Send the User-Agent header:
     printf("> %s", user_agent_hdr);
-    Rio_writen(client_fd, (void *)user_agent_hdr, strlen(user_agent_hdr));
+    Rio_writen(server_fd, (void *)user_agent_hdr, strlen(user_agent_hdr));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Connection: close");
     printf("> %s", line);
-    Rio_writen(client_fd, line, strlen(line));
+    Rio_writen(server_fd, line, strlen(line));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Proxy-Connection: close");
     printf("> %s", line);
-    Rio_writen(client_fd, line, strlen(line));
+    Rio_writen(server_fd, line, strlen(line));
     // Send other headers:
     char *ptr;
     do {
@@ -151,7 +151,7 @@ void forward_request(int client_fd, char const *method, char const *uri,
             printf("~ %s", line);
         } else {
             printf("> %s", line);
-            Rio_writen(client_fd, line, strlen(line));
+            Rio_writen(server_fd, line, strlen(line));
         }
         if (buf == ptr) {
             break;
@@ -163,19 +163,19 @@ void forward_request(int client_fd, char const *method, char const *uri,
     assert(buf == ptr);
 }
 
-void serve(int connfd) {
+void serve(int client_fd) {
     // Read the entire HTTP request from the client and check whether the it is valid.
     size_t n = 0;
     char buf[MAXLINE], *line = buf;
     rio_t rio;
 
-    Rio_readinitb(&rio, connfd);
+    Rio_readinitb(&rio, client_fd);
     // Read the first line:
     char method[MAXLINE], url[MAXLINE], version[MAXLINE];
     n = read_one_line(&rio, line);
     sscanf(line, "%s %s %s", method, url, version);
     if (strcasecmp(method, "GET")) {
-        clienterror(connfd, method, "501", "Not Implemented",
+        clienterror(client_fd, method, "501", "Not Implemented",
                     "Tiny Proxy does not implement this method");
         return;
     }
@@ -198,56 +198,54 @@ void serve(int connfd) {
     assert(strlen(buf) <= MAXLINE);
     printf("Length of the request: %ld\n", strlen(buf));
     // Connect to the appropriate web server.
-    int client_fd;
+    int server_fd;
     char *port = strchr(hostname, ':');
     if (port) {  // port explicitly given, use it
       *port++ = '\0';
     }
-    client_fd = Open_clientfd(hostname, port ? port : "80");
+    server_fd = Open_clientfd(hostname, port ? port : "80");
     if (port) {  // port explicitly given, use it
       *--port = ':';
     }
     printf("Connected to (%s)\n", hostname);
     // Request the object the client specified.
-    forward_request(client_fd, method, uri, hostname, buf);
-    Close(client_fd);
+    forward_request(server_fd, method, uri, hostname, buf);
+    Close(server_fd);
     // Read the server's response and forward it to the client.
     printf("Forward response from server (%s) to client\n", hostname);
     sprintf(buf, "HTTP/1.0 200 OK\r\n");
     printf("> %s", buf);
-    Rio_writen(connfd, buf, strlen(buf));
+    Rio_writen(client_fd, buf, strlen(buf));
     sprintf(buf, "Server: Tiny Proxy Server\r\n");
     printf("> %s", buf);
-    Rio_writen(connfd, buf, strlen(buf));
+    Rio_writen(client_fd, buf, strlen(buf));
     sprintf(buf, "Connection: close\r\n");
     printf("> %s", buf);
-    Rio_writen(connfd, buf, strlen(buf));
+    Rio_writen(client_fd, buf, strlen(buf));
     sprintf(buf, "\r\n");
     printf("> %s", buf);
-    Rio_writen(connfd, buf, strlen(buf));
+    Rio_writen(client_fd, buf, strlen(buf));
 }
 
 int main(int argc, char **argv)
 {
-    int listenfd, connfd;
-    socklen_t clientlen;
-    struct sockaddr_storage clientaddr;  /* Enough space for any address */
-    char client_hostname[MAXLINE], client_port[MAXLINE];
+    struct sockaddr_storage client_addr;  /* Enough space for any address */
+    socklen_t client_len = sizeof(struct sockaddr_storage);
+    char client_host[MAXLINE], client_port[MAXLINE];
 
     if (argc != 2) {
         fprintf(stderr, "usage: %s <port>\n", argv[0]);
         exit(0);
     }
 
-    listenfd = Open_listenfd(argv[1]);
+    int listen_fd = Open_listenfd(argv[1]);
     while (1) {
-        clientlen = sizeof(struct sockaddr_storage); 
-        connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
-        Getnameinfo((SA *) &clientaddr, clientlen, client_hostname, MAXLINE, 
-                    client_port, MAXLINE, 0);
-        printf("Connected to (%s, %s)\n", client_hostname, client_port);
-        serve(connfd);
-        Close(connfd);
+        int client_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
+        Getnameinfo((SA *) &client_addr, client_len,
+            client_host, MAXLINE, client_port, MAXLINE, 0);
+        printf("Connected to (%s, %s)\n", client_host, client_port);
+        serve(client_fd);
+        Close(client_fd);
     }
     exit(0);
 }
