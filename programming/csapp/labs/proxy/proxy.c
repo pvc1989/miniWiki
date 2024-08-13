@@ -105,6 +105,64 @@ int parse_url(char *url, char **uri, char *hostname, char *filename, char *cgiar
     return parse_uri(*uri, filename, cgiargs);
 }
 
+size_t min(size_t x, size_t y) {
+  return x < y ? x : y;
+}
+
+int has_prefix(char const *line, char const *prefix) {
+    return !strncmp(line, prefix, min(strlen(line), strlen(prefix)));
+}
+
+void forward_request(int client_fd, char const *method, char const *uri,
+        char const *hostname, char const *buf) {
+    char line[MAXLINE];
+    rio_t rio; Rio_readinitb(&rio, client_fd);
+
+    // Send the request line:
+    sprintf(line, "%s %s HTTP/1.0\r\n", method, uri);
+    printf("> %s", line);
+    Rio_writen(client_fd, line, strlen(line));
+    // Send the HOST header:
+    sprintf(line, "Host: %s\r\n", hostname);
+    printf("> %s", line);
+    Rio_writen(client_fd, line, strlen(line));
+    // Send the User-Agent header:
+    printf("> %s", user_agent_hdr);
+    Rio_writen(client_fd, (void *)user_agent_hdr, strlen(user_agent_hdr));
+    // Send the Connection header:
+    sprintf(line, "%s\r\n", "Connection: close");
+    printf("> %s", line);
+    Rio_writen(client_fd, line, strlen(line));
+    // Send the Connection header:
+    sprintf(line, "%s\r\n", "Proxy-Connection: close");
+    printf("> %s", line);
+    Rio_writen(client_fd, line, strlen(line));
+    // Send other headers:
+    char *ptr;
+    do {
+        ptr = strstr(buf, "\r\n");
+        size_t len = ptr - buf + 2;
+        strncpy(line, buf, len);
+        line[len] = '\0';
+        if (has_prefix(line, "GET") || has_prefix(line, "Host") ||
+                has_prefix(line, "User-Agent") ||
+                has_prefix(line, "Connection") ||
+                has_prefix(line, "Proxy-Connection")) {
+            printf("~ %s", line);
+        } else {
+            printf("> %s", line);
+            Rio_writen(client_fd, line, strlen(line));
+        }
+        if (buf == ptr) {
+            break;
+        }
+        buf = ptr + 2;
+    } while (1);
+    assert(strcmp(line, "\r\n") == 0);
+    assert(strcmp(buf, "\r\n") == 0);
+    assert(buf == ptr);
+}
+
 void serve(int connfd) {
     // Read the entire HTTP request from the client and check whether the it is valid.
     size_t n = 0;
@@ -140,10 +198,21 @@ void serve(int connfd) {
     assert(strlen(buf) <= MAXLINE);
     printf("Length of the request: %ld\n", strlen(buf));
     // Connect to the appropriate web server.
-
+    int client_fd;
+    char *port = strchr(hostname, ':');
+    if (port) {  // port explicitly given, use it
+      *port++ = '\0';
+    }
+    client_fd = Open_clientfd(hostname, port ? port : "80");
+    if (port) {  // port explicitly given, use it
+      *--port = ':';
+    }
+    printf("Connected to (%s)\n", hostname);
     // Request the object the client specified.
-
+    forward_request(client_fd, method, uri, hostname, buf);
+    Close(client_fd);
     // Read the server's response and forward it to the client.
+    printf("Forward response from server (%s) to client\n", hostname);
     sprintf(buf, "HTTP/1.0 200 OK\r\n");
     printf("> %s", buf);
     Rio_writen(connfd, buf, strlen(buf));
