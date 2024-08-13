@@ -22,6 +22,8 @@ int read_one_line(rio_t *rio, char *line) {
 /**
  * @brief Returns an error message to the client.
  * 
+ * Borrowed from `tiny.c`.
+ * 
  */
 void clienterror(int fd, char *cause, char *errnum, 
                  char *shortmsg, char *longmsg)
@@ -47,6 +49,62 @@ void clienterror(int fd, char *cause, char *errnum,
     Rio_writen(fd, buf, strlen(buf));
 }
 
+/**
+ * @brief Parse URI into filename and CGI args.
+ * 
+ * Borrowed from `tiny.c`.
+ * 
+ * @return 0 if dynamic content, 1 if static
+ */
+int parse_uri(char *uri, char *filename, char *cgiargs) 
+{
+    char *ptr;
+
+    /* `strstr(haystack, needle)` finds the first occurrence of `needle` in `haystack` */
+    if (!strstr(uri, "cgi-bin")) {  /* Static content */ //line:netp:parseuri:isstatic
+        strcpy(cgiargs, "");                             //line:netp:parseuri:clearcgi
+        strcpy(filename, ".");                           //line:netp:parseuri:beginconvert1
+        strcat(filename, uri);                           //line:netp:parseuri:endconvert1
+        if (uri[strlen(uri)-1] == '/')                   //line:netp:parseuri:slashcheck
+            strcat(filename, "home.html");               //line:netp:parseuri:appenddefault
+        return 1;
+    }
+    else {  /* Dynamic content */                        //line:netp:parseuri:isdynamic
+        ptr = index(uri, '?');                           //line:netp:parseuri:beginextract
+        if (ptr) {
+            strcpy(cgiargs, ptr+1);
+            *ptr = '\0';
+        }
+        else 
+            strcpy(cgiargs, "");                         //line:netp:parseuri:endextract
+        strcpy(filename, ".");                           //line:netp:parseuri:beginconvert2
+        strcat(filename, uri);                           //line:netp:parseuri:endconvert2
+        return 0;
+    }
+}
+
+/**
+ * @brief Parse URL into hostname, filename and CGI args
+ * 
+ * @return 0 if dynamic content, 1 if static
+ */
+int parse_url(char *url, char **uri, char *hostname, char *filename, char *cgiargs) 
+{
+    char *ptr;
+
+    assert(strncmp(url, "http", 4) == 0);
+
+    /* `strchr(str, ch)` finds the first occurrence of `ch` in `str` */
+    ptr = strchr(url, '/');
+    ptr += 2;
+    *uri = strchr(ptr, '/');
+    size_t len = *uri - ptr;
+    strncpy(hostname, ptr, len);
+    hostname[len] = '\0';
+
+    return parse_uri(*uri, filename, cgiargs);
+}
+
 void serve(int connfd) {
     // Read the entire HTTP request from the client and check whether the it is valid.
     size_t n = 0;
@@ -55,14 +113,24 @@ void serve(int connfd) {
 
     Rio_readinitb(&rio, connfd);
     // Read the first line:
-    char method[MAXLINE], uri[MAXLINE], version[MAXLINE];
+    char method[MAXLINE], url[MAXLINE], version[MAXLINE];
     n = read_one_line(&rio, line);
-    sscanf(line, "%s %s %s", method, uri, version);
+    sscanf(line, "%s %s %s", method, url, version);
     if (strcasecmp(method, "GET")) {
         clienterror(connfd, method, "501", "Not Implemented",
                     "Tiny Proxy does not implement this method");
         return;
     }
+    printf("* method = \"%s\"\n", method);
+    printf("* version = \"%s\"\n", version);
+    printf("* url = \"%s\"\n", url);
+    // Parse URL from GET request
+    char *uri, hostname[MAXLINE], filename[MAXLINE], cgiargs[MAXLINE];
+    int is_static = parse_url(url, &uri, hostname, filename, cgiargs);
+    printf("  * uri = \"%s\"\n", uri);
+    printf("    * hostname = \"%s\"\n", hostname);
+    printf("    * filename = \"%s\"\n", filename);
+    printf("    * cgiargs = \"%s\"\n", cgiargs);
     // Read other lines:
     do {
       line += n;  // n does not account '\0'
