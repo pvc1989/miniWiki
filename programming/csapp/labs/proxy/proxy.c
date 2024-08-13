@@ -10,12 +10,16 @@
 /* You won't lose style points for including this long line in your code */
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3\r\n";
 
-int read_one_line(rio_t *rio, char *line) {
-    int n = Rio_readlineb(rio, line, MAXLINE);
+void check_one_line(char const *line, ssize_t n) {
     assert(n >= 2);
     assert(line[n - 2] == '\r');
     assert(line[n - 1] == '\n');
-    printf("< %s", line);
+}
+
+int read_one_line(rio_t *rio, char *line) {
+    ssize_t n = Rio_readlineb(rio, line, MAXLINE);
+    check_one_line(line, n);
+    printf("[C >> P] %s", line);
     return n;
 }
 
@@ -116,26 +120,25 @@ int has_prefix(char const *line, char const *prefix) {
 void forward_request(int server_fd, char const *method, char const *uri,
         char const *hostname, char const *buf) {
     char line[MAXLINE];
-    rio_t rio; Rio_readinitb(&rio, server_fd);
 
     // Send the request line:
     sprintf(line, "%s %s HTTP/1.0\r\n", method, uri);
-    printf("> %s", line);
+    printf("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the HOST header:
     sprintf(line, "Host: %s\r\n", hostname);
-    printf("> %s", line);
+    printf("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the User-Agent header:
-    printf("> %s", user_agent_hdr);
+    printf("[P >> S] %s", user_agent_hdr);
     Rio_writen(server_fd, (void *)user_agent_hdr, strlen(user_agent_hdr));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Connection: close");
-    printf("> %s", line);
+    printf("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Proxy-Connection: close");
-    printf("> %s", line);
+    printf("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send other headers:
     char *ptr;
@@ -148,9 +151,9 @@ void forward_request(int server_fd, char const *method, char const *uri,
                 has_prefix(line, "User-Agent") ||
                 has_prefix(line, "Connection") ||
                 has_prefix(line, "Proxy-Connection")) {
-            printf("~ %s", line);
+            printf("[ignore] %s", line);
         } else {
-            printf("> %s", line);
+            printf("[P >> S] %s", line);
             Rio_writen(server_fd, line, strlen(line));
         }
         if (buf == ptr) {
@@ -163,16 +166,31 @@ void forward_request(int server_fd, char const *method, char const *uri,
     assert(buf == ptr);
 }
 
+void forward_response(rio_t *server_rio, int server_fd,
+        int client_fd, char *buf) {
+    ssize_t n;
+    // forward the headers
+    do {
+      n = Rio_readlineb(server_rio, buf, MAXLINE);
+      check_one_line(buf, n);
+      printf("[S >> C] %s", buf);
+      Rio_writen(client_fd, buf, n);
+    } while (n != 2);
+    // forward the HTML
+    while ((n = Rio_readlineb(server_rio, buf, MAXLINE))) {
+      printf("[S >> C] %s", buf);
+      Rio_writen(client_fd, buf, n);
+    }
+}
+
 void serve(int client_fd) {
     // Read the entire HTTP request from the client and check whether the it is valid.
     size_t n = 0;
     char buf[MAXLINE], *line = buf;
-    rio_t rio;
-
-    Rio_readinitb(&rio, client_fd);
+    rio_t client_rio; Rio_readinitb(&client_rio, client_fd);
     // Read the first line:
     char method[MAXLINE], url[MAXLINE], version[MAXLINE];
-    n = read_one_line(&rio, line);
+    n = read_one_line(&client_rio, line);
     sscanf(line, "%s %s %s", method, url, version);
     if (strcasecmp(method, "GET")) {
         clienterror(client_fd, method, "501", "Not Implemented",
@@ -192,7 +210,7 @@ void serve(int client_fd) {
     // Read other lines:
     do {
       line += n;  // n does not account '\0'
-      n = read_one_line(&rio, line);
+      n = read_one_line(&client_rio, line);
     } while (n != 2);
     assert(strcmp(line, "\r\n") == 0);
     assert(strlen(buf) <= MAXLINE);
@@ -209,22 +227,12 @@ void serve(int client_fd) {
     }
     printf("Connected to (%s)\n", hostname);
     // Request the object the client specified.
+    rio_t server_rio; Rio_readinitb(&server_rio, server_fd);
     forward_request(server_fd, method, uri, hostname, buf);
-    Close(server_fd);
     // Read the server's response and forward it to the client.
     printf("Forward response from server (%s) to client\n", hostname);
-    sprintf(buf, "HTTP/1.0 200 OK\r\n");
-    printf("> %s", buf);
-    Rio_writen(client_fd, buf, strlen(buf));
-    sprintf(buf, "Server: Tiny Proxy Server\r\n");
-    printf("> %s", buf);
-    Rio_writen(client_fd, buf, strlen(buf));
-    sprintf(buf, "Connection: close\r\n");
-    printf("> %s", buf);
-    Rio_writen(client_fd, buf, strlen(buf));
-    sprintf(buf, "\r\n");
-    printf("> %s", buf);
-    Rio_writen(client_fd, buf, strlen(buf));
+    forward_response(&server_rio, server_fd, client_fd, buf);
+    Close(server_fd);
 }
 
 int main(int argc, char **argv)
