@@ -60,9 +60,9 @@ void clienterror(int fd, char *cause, char *errnum,
  * 
  * @return 0 if dynamic content, 1 if static
  */
-int parse_uri(char *uri, char *filename, char *cgiargs) 
+int parse_uri(char const *uri, char *filename, char *cgiargs) 
 {
-    char *ptr;
+    char const *ptr;
 
     /* `strstr(haystack, needle)` finds the first occurrence of `needle` in `haystack` */
     if (!strstr(uri, "cgi-bin")) {  /* Static content */ //line:netp:parseuri:isstatic
@@ -77,12 +77,12 @@ int parse_uri(char *uri, char *filename, char *cgiargs)
         ptr = index(uri, '?');                           //line:netp:parseuri:beginextract
         if (ptr) {
             strcpy(cgiargs, ptr+1);
-            *ptr = '\0';
+            // *ptr = '\0';
         }
         else 
             strcpy(cgiargs, "");                         //line:netp:parseuri:endextract
         strcpy(filename, ".");                           //line:netp:parseuri:beginconvert2
-        strcat(filename, uri);                           //line:netp:parseuri:endconvert2
+        strncat(filename, uri, ptr - uri);                           //line:netp:parseuri:endconvert2
         return 0;
     }
 }
@@ -92,7 +92,7 @@ int parse_uri(char *uri, char *filename, char *cgiargs)
  * 
  * @return 0 if dynamic content, 1 if static
  */
-int parse_url(char *url, char **uri, char *hostname, char *filename, char *cgiargs) 
+int parse_url(char const *url, char const **uri, char *hostname, char *filename, char *cgiargs) 
 {
     char *ptr;
 
@@ -201,7 +201,8 @@ void serve(int client_fd) {
     printf("* version = \"%s\"\n", version);
     printf("* url = \"%s\"\n", url);
     // Parse URL from GET request
-    char *uri, hostname[MAXLINE], filename[MAXLINE], cgiargs[MAXLINE];
+    char const *uri;  // point to the first char after `<host>[:<port>]`
+    char hostname[MAXLINE], filename[MAXLINE], cgiargs[MAXLINE];
     int is_static = parse_url(url, &uri, hostname, filename, cgiargs);
     printf("  * uri = \"%s\"\n", uri);
     printf("    * hostname = \"%s\"\n", hostname);
