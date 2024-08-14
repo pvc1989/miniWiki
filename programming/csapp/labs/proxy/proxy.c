@@ -54,59 +54,24 @@ void clienterror(int fd, char *cause, char *errnum,
 }
 
 /**
- * @brief Parse URI into filename and CGI args.
- * 
- * Borrowed from `tiny.c`.
- * 
- * @return 0 if dynamic content, 1 if static
+ * @brief Parse the URI from the client into the hostname and the URI to the server.
+ * @return the address of the first char in the URI to the server
  */
-int parse_uri(char const *uri, char *filename, char *cgiargs) 
+char const *parse_uri(char const *uri_from_client, char *hostname) 
 {
-    char const *ptr;
+    char const *ptr, *uri_to_server;
 
-    /* `strstr(haystack, needle)` finds the first occurrence of `needle` in `haystack` */
-    if (!strstr(uri, "cgi-bin")) {  /* Static content */ //line:netp:parseuri:isstatic
-        strcpy(cgiargs, "");                             //line:netp:parseuri:clearcgi
-        strcpy(filename, ".");                           //line:netp:parseuri:beginconvert1
-        strcat(filename, uri);                           //line:netp:parseuri:endconvert1
-        if (uri[strlen(uri)-1] == '/')                   //line:netp:parseuri:slashcheck
-            strcat(filename, "home.html");               //line:netp:parseuri:appenddefault
-        return 1;
-    }
-    else {  /* Dynamic content */                        //line:netp:parseuri:isdynamic
-        ptr = index(uri, '?');                           //line:netp:parseuri:beginextract
-        if (ptr) {
-            strcpy(cgiargs, ptr+1);
-            // *ptr = '\0';
-        }
-        else 
-            strcpy(cgiargs, "");                         //line:netp:parseuri:endextract
-        strcpy(filename, ".");                           //line:netp:parseuri:beginconvert2
-        strncat(filename, uri, ptr - uri);                           //line:netp:parseuri:endconvert2
-        return 0;
-    }
-}
-
-/**
- * @brief Parse URL into hostname, filename and CGI args
- * 
- * @return 0 if dynamic content, 1 if static
- */
-int parse_url(char const *url, char const **uri, char *hostname, char *filename, char *cgiargs) 
-{
-    char *ptr;
-
-    assert(strncmp(url, "http", 4) == 0);
+    assert(strncmp(uri_from_client, "http", 4) == 0);
 
     /* `strchr(str, ch)` finds the first occurrence of `ch` in `str` */
-    ptr = strchr(url, '/');
+    ptr = strchr(uri_from_client, '/');
     ptr += 2;
-    *uri = strchr(ptr, '/');
-    size_t len = *uri - ptr;
+    uri_to_server = strchr(ptr, '/');
+    size_t len = uri_to_server - ptr;
     strncpy(hostname, ptr, len);
     hostname[len] = '\0';
 
-    return parse_uri(*uri, filename, cgiargs);
+    return uri_to_server;
 }
 
 size_t min(size_t x, size_t y) {
@@ -189,9 +154,9 @@ void serve(int client_fd) {
     char buf[MAXLINE], *line = buf;
     rio_t client_rio; Rio_readinitb(&client_rio, client_fd);
     // Read the first line:
-    char method[MAXLINE], url[MAXLINE], version[MAXLINE];
+    char method[MAXLINE], uri_from_client[MAXLINE], version[MAXLINE];
     n = read_one_line(&client_rio, line);
-    sscanf(line, "%s %s %s", method, url, version);
+    sscanf(line, "%s %s %s", method, uri_from_client, version);
     if (strcasecmp(method, "GET")) {
         clienterror(client_fd, method, "501", "Not Implemented",
                     "Tiny Proxy does not implement this method");
@@ -199,15 +164,12 @@ void serve(int client_fd) {
     }
     printf("* method = \"%s\"\n", method);
     printf("* version = \"%s\"\n", version);
-    printf("* url = \"%s\"\n", url);
-    // Parse URL from GET request
-    char const *uri;  // point to the first char after `<host>[:<port>]`
-    char hostname[MAXLINE], filename[MAXLINE], cgiargs[MAXLINE];
-    int is_static = parse_url(url, &uri, hostname, filename, cgiargs);
-    printf("  * uri = \"%s\"\n", uri);
-    printf("    * hostname = \"%s\"\n", hostname);
-    printf("    * filename = \"%s\"\n", filename);
-    printf("    * cgiargs = \"%s\"\n", cgiargs);
+    printf("* uri_from_client = \"%s\"\n", uri_from_client);
+    // Parse the URI from the client
+    char hostname[MAXLINE];
+    char const *uri_to_server = parse_uri(uri_from_client, hostname);
+    printf("  * hostname = \"%s\"\n", hostname);
+    printf("  * uri_to_server = \"%s\"\n", uri_to_server);
     // Read other lines:
     do {
       line += n;  // n does not account '\0'
@@ -229,7 +191,7 @@ void serve(int client_fd) {
     printf("Connected to (%s)\n", hostname);
     // Request the object the client specified.
     rio_t server_rio; Rio_readinitb(&server_rio, server_fd);
-    forward_request(server_fd, method, uri, hostname, buf);
+    forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
     printf("Forward response from server (%s) to client\n", hostname);
     forward_response(&server_rio, server_fd, client_fd, buf);
