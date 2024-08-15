@@ -20,7 +20,7 @@ title: 并发编程
 
 ![](./ics3/conc/conc4.svg)
 
-## 1.1. `echoserverp.c`
+## 1.1. [`echoserverp.c`](./code/conc/echoserverp.c)
 
 ```c
 #include "csapp.h"
@@ -61,10 +61,10 @@ int main(int argc, char **argv) {
 
 ## 1.2. 基于进程的优缺点
 
-各进程有独立的虚拟内存空间，既是优点，也是缺点：
+各进程有独立的[虚拟内存](./9_virtual_memory.md)空间，既是优点，也是缺点：
 
 - 【优点】各进程只能读写自己的虚拟内存空间，不会破坏其他进程的虚拟内存空间。
-- 【缺点】进程之间共享数据变得困难，必须显式地使用**进程间通信 (InterProcess Communication, IPC)**。高级 IPC 主要有三类：共享存储、消息传递、管道通信。
+- 【缺点】进程之间共享数据变得困难，必须显式地使用**跨进程通信 (InterProcess Communication, IPC)**。高级 IPC 主要有三类：共享存储、消息传递、管道通信。
 
 # 2. 基于事件的并发
 
@@ -144,19 +144,19 @@ int main(int argc, char **argv) {
 }
 ```
 
-## <a href id="echoservers"></a>2.1. `echoservers.c`
+## <a href id="echoservers"></a>2.1. [`echoservers.c`](./code/conc/echoservers.c)
 
-**状态机 (state machine)**：服务端为客户端 `Client_k` 分配描述符 `d_k`
+**状态机 (state machine)**：服务端由 [`accept()`](./11_network_programming.md#accept) 收到客户端 `Client_k` 发来的请求后，得到新的描述符 `d_k`，通过 [`add_client()`](#add_client) 将其加入 [`pool_t`](#pool_t) 型容器。
 
 - **状态 (state)**：服务端等待描述符 `d_k` 可用。
 - **事件 (event)**：服务端通过 `select()` 检测到 `d_k` 可用。
-- **迁移 (transition)**：服务端从 `d_k` 读取一行，通过 `check_clients()` 实现。
+- **迁移 (transition)**：服务端从 `d_k` 读取一行，通过 [`check_clients()`](#check_clients) 实现。
 
 ![](./ics3/conc/state.svg)
 
-```c
-#include "csapp.h"
+### <a href id="pool_t"></a>`pool_t`
 
+```c
 typedef struct { /* Represents a pool of connected descriptors */
   int max_fd;        /* Largest descriptor in read_set */   
   fd_set read_set;   /* Set of all active descriptors */
@@ -167,10 +167,23 @@ typedef struct { /* Represents a pool of connected descriptors */
   rio_t client_rio[FD_SETSIZE]; /* Set of active read buffers */
 } pool_t;
 
-void init_pool(int listen_fd, pool_t *p);
-void add_client(int connect_fd, pool_t *p);
-void check_clients(pool_t *p);
+void init_pool(int listen_fd, pool_t *p) {
+  /* Initially, there are no connected descriptors */
+  int i;
+  p->max_i = -1;
+  for (i = 0; i < FD_SETSIZE; i++)
+    p->client_fd[i] = -1;
 
+  /* Initially, listen_fd is the only member of read_set */
+  p->max_fd = listen_fd;
+  FD_ZERO(&p->read_set);
+  FD_SET(listen_fd, &p->read_set);
+}
+```
+
+### `main()`
+
+```c
 int byte_count = 0; /* Counts total bytes received by server */
 
 int main(int argc, char **argv) {
@@ -202,20 +215,11 @@ int main(int argc, char **argv) {
     check_clients(&pool);
   }
 }
+```
 
-void init_pool(int listen_fd, pool_t *p) {
-  /* Initially, there are no connected descriptors */
-  int i;
-  p->max_i = -1;
-  for (i = 0; i < FD_SETSIZE; i++)
-    p->client_fd[i] = -1;
+### <a href id="add_client"></a>`add_client()`
 
-  /* Initially, listen_fd is the only member of read_set */
-  p->max_fd = listen_fd;
-  FD_ZERO(&p->read_set);
-  FD_SET(listen_fd, &p->read_set);
-}
-
+```c
 void add_client(int connect_fd, pool_t *p) {
   int i;
   p->n_ready--;
@@ -238,7 +242,11 @@ void add_client(int connect_fd, pool_t *p) {
   if (i == FD_SETSIZE) /* Couldn't find an empty slot */
     app_error("add_client error: Too many clients");
 }
+```
 
+### <a href id="check_clients"></a>`check_clients()`
+
+```c
 void check_clients(pool_t *p) {
   int i, connect_fd, n;
   char buf[MAXLINE];

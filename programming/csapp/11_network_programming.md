@@ -261,7 +261,7 @@ int listen(int active_fd,
     int backlog/* 队列大小（请求个数）提示，通常为 1024 */);
 ```
 
-## 4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html) --- only for server
+## <a href id="accept"></a>4.6. [`accept()`](https://www.man7.org/linux/man-pages/man2/accept.2.html) --- only for server
 
 *服务端*用此函数等待*客户端*发来的连接请求。
 若成功，则返回异于 `listen_fd` 的 `connect_fd`，并获取客户端地址；否则返回 `-1`。
