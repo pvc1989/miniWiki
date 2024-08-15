@@ -10,6 +10,14 @@
 /* You won't lose style points for including this long line in your code */
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3\r\n";
 
+#define CONCURRENT
+
+#ifndef CONCURRENT
+#define PRINTF(...) (printf(__VA_ARGS__))
+#else
+#define PRINTF(...) ((void)0)
+#endif
+
 void check_one_line(char const *line, ssize_t n) {
     assert(n >= 2);
     assert(line[n - 2] == '\r');
@@ -19,7 +27,7 @@ void check_one_line(char const *line, ssize_t n) {
 int read_one_line(rio_t *rio, char *line) {
     ssize_t n = Rio_readlineb(rio, line, MAXLINE);
     check_one_line(line, n);
-    printf("[C >> P] %s", line);
+    PRINTF("[C >> P] %s", line);
     return n;
 }
 
@@ -88,22 +96,22 @@ void forward_request(int server_fd, char const *method, char const *uri,
 
     // Send the request line:
     sprintf(line, "%s %s HTTP/1.0\r\n", method, uri);
-    printf("[P >> S] %s", line);
+    PRINTF("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the HOST header:
     sprintf(line, "Host: %s\r\n", hostname);
-    printf("[P >> S] %s", line);
+    PRINTF("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the User-Agent header:
-    printf("[P >> S] %s", user_agent_hdr);
+    PRINTF("[P >> S] %s", user_agent_hdr);
     Rio_writen(server_fd, (void *)user_agent_hdr, strlen(user_agent_hdr));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Connection: close");
-    printf("[P >> S] %s", line);
+    PRINTF("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send the Connection header:
     sprintf(line, "%s\r\n", "Proxy-Connection: close");
-    printf("[P >> S] %s", line);
+    PRINTF("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send other headers:
     char *ptr;
@@ -116,9 +124,9 @@ void forward_request(int server_fd, char const *method, char const *uri,
                 has_prefix(line, "User-Agent") ||
                 has_prefix(line, "Connection") ||
                 has_prefix(line, "Proxy-Connection")) {
-            printf("[ignore] %s", line);
+            PRINTF("[ignore] %s", line);
         } else {
-            printf("[P >> S] %s", line);
+            PRINTF("[P >> S] %s", line);
             Rio_writen(server_fd, line, strlen(line));
         }
         if (buf == ptr) {
@@ -138,12 +146,12 @@ void forward_response(rio_t *server_rio, int server_fd,
     do {
       n = Rio_readlineb(server_rio, buf, MAXLINE);
       check_one_line(buf, n);
-      printf("[S >> C] %s", buf);
+      PRINTF("[S >> C] %s", buf);
       Rio_writen(client_fd, buf, n);
     } while (n != 2);
     // forward the HTML
     while ((n = Rio_readlineb(server_rio, buf, MAXLINE))) {
-      printf("[S >> C] %s", buf);
+      PRINTF("[S >> C] %s", buf);
       Rio_writen(client_fd, buf, n);
     }
 }
@@ -162,14 +170,14 @@ void serve(int client_fd) {
                     "Tiny Proxy does not implement this method");
         return;
     }
-    printf("* method = \"%s\"\n", method);
-    printf("* version = \"%s\"\n", version);
-    printf("* uri_from_client = \"%s\"\n", uri_from_client);
+    PRINTF("* method = \"%s\"\n", method);
+    PRINTF("* version = \"%s\"\n", version);
+    PRINTF("* uri_from_client = \"%s\"\n", uri_from_client);
     // Parse the URI from the client
     char hostname[MAXLINE];
     char const *uri_to_server = parse_uri(uri_from_client, hostname);
-    printf("  * hostname = \"%s\"\n", hostname);
-    printf("  * uri_to_server = \"%s\"\n", uri_to_server);
+    PRINTF("  * hostname = \"%s\"\n", hostname);
+    PRINTF("  * uri_to_server = \"%s\"\n", uri_to_server);
     // Read other lines:
     do {
       line += n;  // n does not account '\0'
@@ -177,7 +185,7 @@ void serve(int client_fd) {
     } while (n != 2);
     assert(strcmp(line, "\r\n") == 0);
     assert(strlen(buf) <= MAXLINE);
-    printf("Length of the request: %ld\n", strlen(buf));
+    PRINTF("Length of the request: %ld\n", strlen(buf));
     // Connect to the appropriate web server.
     int server_fd;
     char *port = strchr(hostname, ':');
@@ -188,12 +196,12 @@ void serve(int client_fd) {
     if (port) {  // port explicitly given, use it
       *--port = ':';
     }
-    printf("Connected to (%s)\n", hostname);
+    PRINTF("Connected to (%s)\n", hostname);
     // Request the object the client specified.
     rio_t server_rio; Rio_readinitb(&server_rio, server_fd);
     forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
-    printf("Forward response from server (%s) to client\n", hostname);
+    PRINTF("Forward response from server (%s) to client\n", hostname);
     forward_response(&server_rio, server_fd, client_fd, buf);
     Close(server_fd);
 }
@@ -240,7 +248,11 @@ int main(int argc, char **argv)
         Getnameinfo((SA *) &client_addr, client_len,
             client_host, MAXLINE, client_port, MAXLINE, 0);
         printf("Connected to (%s, %s)\n", client_host, client_port);
+#ifdef CONCURRENT
         serve_by_thread(client_fd);
+#else
+        serve_by_iteration(client_fd);
+#endif
     }
     exit(0);
 }
