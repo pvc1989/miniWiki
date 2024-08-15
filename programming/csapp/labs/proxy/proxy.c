@@ -198,6 +198,31 @@ void serve(int client_fd) {
     Close(server_fd);
 }
 
+void serve_by_iteration(int client_fd) {
+    serve(client_fd);
+    Close(client_fd);
+}
+
+/**
+ * @brief The routine run in a thread.
+ */
+void *routine(void *vargp) {
+    int client_fd = *((int *)vargp);
+    Pthread_detach(Pthread_self());
+    Free(vargp);
+    serve(client_fd);
+    Close(client_fd);
+    return NULL;
+}
+
+void serve_by_thread(int client_fd) {
+    int *client_fd_ptr = Malloc(sizeof(int));
+    *client_fd_ptr = client_fd;
+
+    pthread_t tid;
+    Pthread_create(&tid, NULL, routine, client_fd_ptr);
+}
+
 int main(int argc, char **argv)
 {
     struct sockaddr_storage client_addr;  /* Enough space for any address */
@@ -215,8 +240,7 @@ int main(int argc, char **argv)
         Getnameinfo((SA *) &client_addr, client_len,
             client_host, MAXLINE, client_port, MAXLINE, 0);
         printf("Connected to (%s, %s)\n", client_host, client_port);
-        serve(client_fd);
-        Close(client_fd);
+        serve_by_thread(client_fd);
     }
     exit(0);
 }
