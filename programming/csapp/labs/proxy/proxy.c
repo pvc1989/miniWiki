@@ -2,15 +2,18 @@
 #include <assert.h>
 
 #include "csapp.h"
+#include "lru.h"  // the LRU cache
 
 /* Recommended max cache and object sizes */
 #define MAX_CACHE_SIZE 1049000
 #define MAX_OBJECT_SIZE 102400
 
+static lru_t *lru = NULL;
+
 /* You won't lose style points for including this long line in your code */
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3\r\n";
 
-#define CONCURRENT
+// #define CONCURRENT
 
 #ifndef CONCURRENT
 #define PRINTF(...) (printf(__VA_ARGS__))
@@ -140,19 +143,41 @@ void forward_request(int server_fd, char const *method, char const *uri,
 }
 
 void forward_response(rio_t *server_rio, int server_fd,
-        int client_fd, char *buf) {
-    ssize_t n;
+        int client_fd, char const *uri, char *header) {
+    int n, content_length = -1;
+    char *line = header;
     // forward the headers
     do {
-      n = Rio_readlineb(server_rio, buf, MAXLINE);
-      check_one_line(buf, n);
-      PRINTF("[S >> C] %s", buf);
-      Rio_writen(client_fd, buf, n);
+      n = Rio_readlineb(server_rio, line, MAXLINE);
+      check_one_line(line, n);
+      PRINTF("[S >> C] %s", line);
+      if (content_length < 0 && line[0] == 'C') {
+          assert(strlen("Content-Length: ") == 16);
+          if (!strncasecmp(line, "Content-Length: ", 16)) {
+              content_length = atoi(line + 16);
+              PRINTF("content_length = %d\r\n", content_length);
+          }
+      }
+      line += n;
     } while (n != 2);
-    // forward the HTML
-    while ((n = Rio_readlineb(server_rio, buf, MAXLINE))) {
-      PRINTF("[S >> C] %s", buf);
-      Rio_writen(client_fd, buf, n);
+    int header_length = line - header;
+    Rio_writen(client_fd, header, header_length);
+    // forward the content
+    char *content;
+    int total_length = header_length + content_length;
+    if (total_length <= MAX_CACHE_SIZE) {
+        content = Malloc(total_length);
+        memcpy(content, header, header_length);
+        content += header_length;
+    } else {
+        content = Malloc(content_length);
+    }
+    n = Rio_readnb(server_rio, content, content_length);
+    assert(n == content_length);
+    Rio_writen(client_fd, content, n);
+    if (total_length <= MAX_OBJECT_SIZE) {
+        PRINTF("Cache the response.\n");
+        lru_emplace(lru, uri, content - header_length, total_length);
     }
 }
 
@@ -173,6 +198,14 @@ void serve(int client_fd) {
     PRINTF("* method = \"%s\"\n", method);
     PRINTF("* version = \"%s\"\n", version);
     PRINTF("* uri_from_client = \"%s\"\n", uri_from_client);
+    // Already cached?
+    item_t *item = lru_find(lru, uri_from_client);
+    if (item) {
+        PRINTF("Use the response from the cache.\n");
+        Rio_writen(client_fd,
+            (void *)item_data(item), item_size(item));
+        return;
+    }
     // Parse the URI from the client
     char hostname[MAXLINE];
     char const *uri_to_server = parse_uri(uri_from_client, hostname);
@@ -202,7 +235,7 @@ void serve(int client_fd) {
     forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
     PRINTF("Forward response from server (%s) to client\n", hostname);
-    forward_response(&server_rio, server_fd, client_fd, buf);
+    forward_response(&server_rio, server_fd, client_fd, uri_from_client, buf);
     Close(server_fd);
 }
 
@@ -242,6 +275,7 @@ int main(int argc, char **argv)
         exit(0);
     }
 
+    lru = lru_construct(MAX_CACHE_SIZE);
     int listen_fd = Open_listenfd(argv[1]);
     while (1) {
         int client_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
@@ -254,5 +288,7 @@ int main(int argc, char **argv)
         serve_by_iteration(client_fd);
 #endif
     }
+
+    lru_destruct(lru);
     exit(0);
 }

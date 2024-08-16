@@ -21,7 +21,7 @@ struct _item {
     char const *key;  // URI from a client
     struct {
       node_t *node;  // node in a `list`
-      char const *data;  // response from a server
+      char const *data;  // response from a server, must be Free-able
       int size;  // size of the response
     } value;
     UT_hash_handle hh;  /* makes this structure hashable */
@@ -41,7 +41,9 @@ struct _lru {
 
 // Macros:
 #define MAP_ERASE(map, item) \
-    HASH_DEL(map, item); Free(item)
+    HASH_DEL(map, item); \
+    Free((void *) item_data(item)); \
+    Free(item)
 
 #define LIST_ERASE(list, node) \
     DL_DELETE(list, node); Free(node)
@@ -77,6 +79,14 @@ void lru_destruct(lru_t *lru) {
 
 int lru_size(lru_t const *lru) {
     return lru->size;
+}
+
+char const *item_data(item_t const *item) {
+    return item->value.data;
+}
+
+int item_size(item_t const *item) {
+    return item->value.size;
 }
 
 item_t *lru_find(lru_t const *lru, char const *key) {
