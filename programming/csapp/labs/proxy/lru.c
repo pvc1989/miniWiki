@@ -79,11 +79,11 @@ int lru_size(lru_t const *lru) {
     return lru->size;
 }
 
-item_t *lru_find(lru_t *lru, char const *key) {
+item_t *lru_find(lru_t const *lru, char const *key) {
     // See http://troydhanson.github.io/uthash/userguide.html#_find_item for details.
     item_t *item = NULL;
     HASH_FIND_INT(lru->map, &key, item);
-    lru_sink(lru, item);
+    // lru_sink(lru, item);
     return item;
 }
 

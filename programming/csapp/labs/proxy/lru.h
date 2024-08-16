@@ -41,7 +41,7 @@ void lru_destruct(lru_t *lru);
 
 int lru_size(lru_t const *lru);
 
-item_t *lru_find(lru_t *lru, char const *key);
+item_t *lru_find(lru_t const *lru, char const *key);
 
 void lru_emplace(lru_t *lru, char const *key, char const *data, int size);
 

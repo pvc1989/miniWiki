@@ -14,12 +14,12 @@ int main() {
     lru_emplace(lru, "C", NULL, 256);
     assert(lru_size(lru) == 512);
     lru_print(lru);  // LRU = A(128) -> B(128) -> C(256) -> NULL
-    // test `lru_find` and `lru_sink` (implicitly)
-    lru_find(lru, "B");  // the one in the middle
+    // test `lru_find` and `lru_sink`
+    lru_sink(lru, lru_find(lru, "B"));  // the one in the middle
     lru_print(lru);  // LRU = A(128) -> C(256) -> B(128) -> NULL
-    lru_find(lru, "A");  // the one at the front
+    lru_sink(lru, lru_find(lru, "A"));  // the one at the front
     lru_print(lru);  // LRU = C(256) -> B(128) -> A(128) -> NULL
-    lru_find(lru, "A");  // the one at the back
+    lru_sink(lru, lru_find(lru, "A"));  // the one at the back
     lru_print(lru);  // LRU = C(256) -> B(128) -> A(128) -> NULL
     assert(lru_find(lru, "C") && lru_find(lru, "B")
         && lru_find(lru, "A") && !lru_find(lru, "D"));
