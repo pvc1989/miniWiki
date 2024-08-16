@@ -123,3 +123,10 @@ void lru_pop(lru_t *lru) {
         lru->list = new_head;
     }
 }
+
+void lru_print(lru_t const *lru) {
+    node_t *node;
+    printf("LRU = ");
+    DL_FOREACH(lru->list, node) printf("%s -> ", node->item->key);
+    printf("NULL\n");
+}

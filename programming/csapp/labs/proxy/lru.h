@@ -29,6 +29,8 @@ typedef struct _item item_t;
 /**
  * @brief LRU object based on `list` and `unordered_map`
  * 
+ * It keeps a list, in which the LRU (least-recently-used) node is at the front, while the the MRU (most-recently-used) node is at the back.
+ * 
  */
 struct _lru;
 typedef struct _lru lru_t;
@@ -44,3 +46,5 @@ void lru_emplace(lru_t *lru, char const *key, char const *data);
 void lru_sink(lru_t *lru, item_t *item);
 
 void lru_pop(lru_t *lru);
+
+void lru_print(lru_t const *lru);

@@ -8,19 +8,13 @@ CC = gcc
 CFLAGS = -g -Wall
 LDFLAGS = -lpthread
 
-all: proxy
+all: proxy lru_test
 
-csapp.o: csapp.c csapp.h
-	$(CC) $(CFLAGS) -c csapp.c
-
-proxy.o: proxy.c csapp.h
-	$(CC) $(CFLAGS) -c proxy.c
-
-lru.o: lru.c
-	$(CC) $(CFLAGS) -c lru.c
+lru_test: lru_test.o lru.o csapp.o
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 proxy: proxy.o csapp.o lru.o
-	$(CC) $(CFLAGS) proxy.o csapp.o lru.o -o proxy $(LDFLAGS)
+	$(CC) $(CFLAGS) $^ -o $@  $(LDFLAGS)
 
 # Creates a tarball in ../proxylab-handin.tar that you can then
 # hand in. DO NOT MODIFY THIS!
