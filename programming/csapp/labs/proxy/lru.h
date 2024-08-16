@@ -35,13 +35,15 @@ typedef struct _item item_t;
 struct _lru;
 typedef struct _lru lru_t;
 
-lru_t *lru_construct();
+lru_t *lru_construct(int capacity);
 
 void lru_destruct(lru_t *lru);
 
+int lru_size(lru_t const *lru);
+
 item_t *lru_find(lru_t *lru, char const *key);
 
-void lru_emplace(lru_t *lru, char const *key, char const *data);
+void lru_emplace(lru_t *lru, char const *key, char const *data, int size);
 
 void lru_sink(lru_t *lru, item_t *item);
 

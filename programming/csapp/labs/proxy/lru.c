@@ -20,8 +20,9 @@
 struct _item {
     char const *key;  // URI from a client
     struct {
-      char const *data;  // response from a server
       node_t *node;  // node in a `list`
+      char const *data;  // response from a server
+      int size;  // size of the response
     } value;
     UT_hash_handle hh;  /* makes this structure hashable */
 };
@@ -34,6 +35,8 @@ struct _node {
 struct _lru {
     item_t *map;
     node_t *list;
+    int capacity;  // max size of the sum of all item->value.data
+    int size;  // current size of the sum of all item->value.data
 };
 
 // Macros:
@@ -46,10 +49,12 @@ struct _lru {
 #define LIST_BACK(list) (list->prev)
 
 // Methods:
-lru_t *lru_construct() {
+lru_t *lru_construct(int capacity) {
     lru_t *lru = Malloc(sizeof(lru_t));
     lru->map = NULL;
     lru->list = NULL;
+    lru->capacity = capacity;
+    lru->size = 0;
     return lru;
 }
 
@@ -70,6 +75,10 @@ void lru_destruct(lru_t *lru) {
     Free(lru);
 }
 
+int lru_size(lru_t const *lru) {
+    return lru->size;
+}
+
 item_t *lru_find(lru_t *lru, char const *key) {
     // See http://troydhanson.github.io/uthash/userguide.html#_find_item for details.
     item_t *item = NULL;
@@ -78,11 +87,17 @@ item_t *lru_find(lru_t *lru, char const *key) {
     return item;
 }
 
-void lru_emplace(lru_t *lru, char const *key, char const *data) {
+void lru_emplace(lru_t *lru, char const *key, char const *data, int size) {
+    assert(size <= lru->capacity);
     // See http://troydhanson.github.io/uthash/userguide.html#_add_item for details.
     item_t *item = Malloc(sizeof(item_t));
     item->key = key;
     item->value.data = data;
+    item->value.size = size;
+    lru->size += size;
+    while (lru->size > lru->capacity) {
+        lru_pop(lru);  // evict the LRU item;
+    }
     assert(!lru_find(lru, key));
     HASH_ADD_INT(lru->map, key, item);
     // See http://troydhanson.github.io/uthash/utlist.html#_example for details.
@@ -110,6 +125,7 @@ void lru_sink(lru_t *lru, item_t *item) {
 
 void lru_pop(lru_t *lru) {
     node_t *old_head = lru->list;
+    lru->size -= old_head->item->value.size;
     // pop from the map
     MAP_ERASE(lru->map, old_head->item);
     // pop from the list
@@ -127,6 +143,7 @@ void lru_pop(lru_t *lru) {
 void lru_print(lru_t const *lru) {
     node_t *node;
     printf("LRU = ");
-    DL_FOREACH(lru->list, node) printf("%s -> ", node->item->key);
+    DL_FOREACH(lru->list, node)
+        printf("%s(%d) -> ", node->item->key, node->item->value.size);
     printf("NULL\n");
 }
