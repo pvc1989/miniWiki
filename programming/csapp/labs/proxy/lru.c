@@ -18,7 +18,7 @@
 // Types:
 
 struct _item {
-    char const *key;  // URI from a client
+    char *key;  // URI from a client
     struct {
       node_t *node;  // node in a `list`
       char const *data;  // response from a server, must be Free-able
@@ -42,6 +42,7 @@ struct _lru {
 // Macros:
 #define MAP_ERASE(map, item) \
     HASH_DEL(map, item); \
+    Free((void *) item_key(item)); \
     Free((void *) item_data(item)); \
     Free(item)
 
@@ -81,6 +82,10 @@ int lru_size(lru_t const *lru) {
     return lru->size;
 }
 
+char const *item_key(item_t const *item) {
+    return item->key;
+}
+
 char const *item_data(item_t const *item) {
     return item->value.data;
 }
@@ -92,7 +97,7 @@ int item_size(item_t const *item) {
 item_t *lru_find(lru_t const *lru, char const *key) {
     // See http://troydhanson.github.io/uthash/userguide.html#_find_item for details.
     item_t *item = NULL;
-    HASH_FIND_INT(lru->map, &key, item);
+    HASH_FIND_STR(lru->map, key, item);
     // lru_sink(lru, item);
     return item;
 }
@@ -101,7 +106,11 @@ void lru_emplace(lru_t *lru, char const *key, char const *data, int size) {
     assert(size <= lru->capacity);
     // See http://troydhanson.github.io/uthash/userguide.html#_add_item for details.
     item_t *item = Malloc(sizeof(item_t));
-    item->key = key;
+    int key_len = strlen(key);
+    item->key = Malloc(key_len + 1);
+    memcpy(item->key, key, key_len + 1);
+    assert(item->key[key_len] == '\0');
+    assert(strlen(item->key) == key_len);
     item->value.data = data;
     item->value.size = size;
     lru->size += size;
@@ -109,7 +118,7 @@ void lru_emplace(lru_t *lru, char const *key, char const *data, int size) {
         lru_pop(lru);  // evict the LRU item;
     }
     assert(!lru_find(lru, key));
-    HASH_ADD_INT(lru->map, key, item);
+    HASH_ADD_KEYPTR(hh, lru->map, item->key, key_len, item);
     // See http://troydhanson.github.io/uthash/utlist.html#_example for details.
     node_t *node = Malloc(sizeof(node_t));
     node->item = item;
