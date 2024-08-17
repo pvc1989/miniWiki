@@ -32,6 +32,10 @@ BASIC_LIST="home.html
             godzilla.jpg
             tiny"
 
+# List of missed text and binary files for the basic test
+MISSED_LIST="xyz.html
+            hello"
+
 # List of text files for the cache test
 CACHE_LIST="tiny.c
             home.html
@@ -173,6 +177,16 @@ do
         exit
     fi
 done
+for file in ${MISSED_LIST}
+do
+    if [ -e ./tiny/${file} ]
+    then
+        echo "Error: ./tiny/${file} should not be found."
+        exit
+    fi
+done
+BASIC_LIST+=" ${MISSED_LIST}"
+echo $BASIC_LIST
 
 # Make sure we have an existing executable proxy
 if [ ! -x ./proxy ]
