@@ -61,7 +61,8 @@ title: 系统级读写
 #include <sys/stat.h>
 #include <fcntl.h>
 int open(char *filename, int flags, mode_t mode);
-    // Returns: new file descriptor if OK, −1 on error
+/* Returns: new file descriptor if OK,
+            −1 on error */
 ```
 
 ### `flags`
@@ -104,8 +105,10 @@ int close(int fd);
 
 ```c
 #include <unistd.h>
-ssize_t  read(int fd,       void *buf, size_t n);
-    // Returns: number of bytes read    if OK, −1 on error, 0 on EOF
+ssize_t  read(int fd, void *buf, size_t n);
+/* Returns: number of bytes read if OK,
+            0 on EOF,
+            −1 on error */
 ```
 
 ## [`write()`](https://www.man7.org/linux/man-pages/man2/write.2.html)<a href id="unix-write"></a>
@@ -113,7 +116,8 @@ ssize_t  read(int fd,       void *buf, size_t n);
 ```c
 #include <unistd.h>
 ssize_t write(int fd, const void *buf, size_t n);
-    // Returns: number of bytes written if OK, −1 on error
+/* Returns: number of bytes written if OK,
+            −1 on error */
 ```
 
 ## Short Count
@@ -140,81 +144,87 @@ ssize_t write(int fd, const void *buf, size_t n);
 
 ```c
 #include "csapp.h"
-ssize_t rio_readn (int fd, void *usrbuf, size_t n);
-ssize_t rio_writen(int fd, void *usrbuf, size_t n);
-     /* Returns: number of bytes transferred if OK, −1 on error
-                        , 0 on EOF or `n == 0` (rio_readn only) */
+ssize_t rio_readn (int fd, void *user_buf, size_t n);
+ssize_t rio_writen(int fd, void *user_buf, size_t n);
+/* Returns: number of bytes transferred if OK,
+            0 on EOF or `n == 0` (rio_readn only)
+            −1 on error */
 ```
 
 ### `rio_readn()`
 
-多次调用 [Unix I/O](#unix-io) 的 [`read()`](#unix-read)，直到请求的字节数都被读入，或遇到 EOF。
-
-Short count 只会出现在遇到 EOF 时。
+【思路】多次调用 [Unix I/O](#unix-io) 的 [`read()`](#unix-read)，直到请求的字节数都被读入，或遇到 EOF（唯一可能出现 short count 的情形）。
 
 ```c
-ssize_t rio_readn (int fd, void *head, size_t n) {
-  size_t nleft = n;
-  ssize_t nread;
-  char *pos = head;
+ssize_t rio_readn(int fd, void *user_buf, size_t n_request) {
+  size_t n_left = n_request;
+  ssize_t n_read;
+  char *pos = user_buf;
 
-  while (nleft > 0) {
-    if ((nread = read(fd, pos, nleft)) < 0) {
+  while (n_left > 0) {
+    if ((n_read = read(fd, pos, n_left)) < 0) {
       if (errno == EINTR) /* Interrupted by sig handler return */
-        nread = 0;        /* and call `read()` again */
+        n_read = 0;       /* and call `read()` again */
       else
         return -1;        /* `errno` set by `read()` */ 
     }
-    else if (nread == 0)
+    else if (n_read == 0)
       break;              /* EOF */
-    nleft -= nread; pos += nread;
+    n_left -= n_read; pos += n_read;
   }
-  return (n - nleft);     /* short count only on EOF */
+  return (n_request - n_left); /* short count only on EOF */
 }
 ```
 
 ### `rio_writen()`
 
-多次调用 [Unix I/O](#unix-io) 的 [`write()`](#unix-write)，直到请求的字节数都被写出。
+【思路】多次调用 [Unix I/O](#unix-io) 的 [`write()`](#unix-write)，直到请求的字节数都被写出。
 
-Short count 不会出现。
+不会出现 short count。
 
 ```c
-ssize_t rio_writen(int fd, void *head, size_t n) {
-  size_t nleft = n;
-  ssize_t nwritten;
-  char *pos = head;
+ssize_t rio_writen(int fd, void *user_buf, size_t n_request) {
+  size_t n_left = n_request;
+  ssize_t n_written;
+  char *pos = user_buf;
 
-  while (nleft > 0) {
-    if ((nwritten = write(fd, pos, nleft)) <= 0) {
+  while (n_left > 0) {
+    if ((n_written = write(fd, pos, n_left)) <= 0) {
       if (errno == EINTR)  /* Interrupted by sig handler return */
-        nwritten = 0;      /* and call `write()` again */
+        n_written = 0;     /* and call `write()` again */
       else
         return -1;         /* `errno` set by `write()` */
     }
-    nleft -= nwritten; pos += nwritten;
+    n_left -= n_written; pos += n_written;
   }
-  return n;  /* never returns a short count */
+  return n_request;  /* never returns a short count */
 }
 ```
 
 ## 5.2. 带缓冲读入
 
-【需求】[线程安全](./12_concurrent_programming.md#thread-safe)；支持交替读取文本行与二进制数据。
+【需求】[线程安全](./12_concurrent_programming.md#thread-safe)；支持从同一文件交替读取文本行与二进制数据。
 
 ```c
 #include "csapp.h"
-ssize_t rio_readlineb(rio_t *rp, void *usrbuf, size_t maxlen); /* read 1 line */
-ssize_t rio_readnb   (rio_t *rp, void *usrbuf, size_t n);      /* read n bytes */
-    // Returns: number of bytes read if OK, 0 on EOF, −1 on error
+
+/* 初始化 internal buffer */
 void    rio_readinitb(rio_t *rp, int fd); /* once per fd */
+
+ssize_t rio_readlineb(rio_t *rp, void *user_buf, size_t n_request);
+    /* read n_request bytes, unless meet EOF or '\n' */
+ssize_t rio_readnb   (rio_t *rp, void *user_buf, size_t n_request);
+    /* read n_request bytes, unless meet EOF */
+/* Both returns: number of bytes read if OK,
+                 0 on EOF,
+                 −1 on error */
 ```
 
-⚠️ 后缀 `b` 表示带缓冲的，不要与无缓冲读写混用。
+⚠️ 后缀 `b` 表示带缓冲的，不要与无缓冲的 `rio_readn()` 混用。但对同一 `rio_t` 可以交替调用 `rio_readlineb()` 与 `rio_readnb()`。
 
 ### `rio_readinitb()`
 
-初始化用户 buffer（每次读一个 file 对应一个 buffer）：
+初始化 internal buffer（每打开一个 `fd`，需初始化一个 `rio_t` 对象）：
 
 ```c
 #define RIO_BUFSIZE 8192
@@ -237,11 +247,10 @@ void rio_readinitb(rio_t *rp, int fd) {
 
 与 [Unix I/O](#unix-io) 的 [`read()`](#unix-read) 接口相同，但先（尽量多地）读入缓冲区，再复制（指定片段）给用户。
 
-💡 用 `rio_read()` 可以减少直接调用 [`read()`](#unix-read) 的次数，后者开销巨大。
+💡 用 `rio_read()` 可以减少直接调用 [`read()`](#unix-read) 的次数，后者在用户态（而非内核态）程序中调用开销巨大。
 
 ```c
-static ssize_t rio_read(rio_t *rp, char *usrbuf/* user buffer */,
-                        size_t n/* number of bytes requested by the user */) {
+static ssize_t rio_read(rio_t *rp, char *user_buf, size_t n) {
   int cnt;
 
   while (rp->rio_cnt <= 0) {  /* Refill if buf is empty */
@@ -256,9 +265,9 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf/* user buffer */,
       rp->rio_bufpos = rp->rio_buf; /* Reset buffer ptr */
   }
 
-  /* Copy  bytes from `rp->rio_bufpos` to `usrbuf` */
+  /* Copy bytes from `rp->rio_bufpos` to `user_buf` */
   cnt = min(n, rp->rio_cnt);
-  memcpy(usrbuf, rp->rio_bufpos, cnt);
+  memcpy(user_buf, rp->rio_bufpos, cnt);
   rp->rio_bufpos += cnt; rp->rio_cnt -= cnt;
   return cnt;
 }
@@ -268,16 +277,16 @@ static ssize_t rio_read(rio_t *rp, char *usrbuf/* user buffer */,
 
 读取一行字符，满足以下条件之一时停止：
 
-1. 已读入 `maxlen` 字节
+1. 已读入 `n_request` 字节
 1. 遇到 EOF
 1. 遇到 `\n`
 
 ```c
-ssize_t rio_readlineb(rio_t *rp, void *head, size_t maxlen) {
+ssize_t rio_readlineb(rio_t *rp, void *user_buf, size_t n_request) {
   int n/* 当前字符串长度 */, rc/* 单次读取字节数 */;
-  char c, *pos = head;
+  char c, *pos = user_buf;
 
-  for (n = 1/* 字符串总是以 `\0` 结尾，故长度至少为 1 */; n < maxlen; n++) { 
+  for (n = 1/* 字符串总是以 '\0' 结尾，故长度至少为 1 */; n < n_request; n++) { 
     if ((rc = rio_read(rp, &c, 1)) == 1) {
       *(pos++) = c;
       if (c == '\n') {
@@ -295,7 +304,7 @@ ssize_t rio_readlineb(rio_t *rp, void *head, size_t maxlen) {
       return -1;  /* Error */
   }
   *pos = 0;       /* end of string */
-  return n - 1;   /* 不计 `\0` */
+  return n - 1;   /* 不计 '\0' */
 }
 ```
 
@@ -303,23 +312,23 @@ ssize_t rio_readlineb(rio_t *rp, void *head, size_t maxlen) {
 
 读取若干字节，满足以下条件之一时停止：
 
-1. 已读入 `n` 字节
+1. 已读入 `n_request` 字节
 1. 遇到 EOF
 
 ```c
-ssize_t rio_readnb(rio_t *rp, void *head, size_t n) {
-  size_t nleft = n;
-  ssize_t nread;
-  char *pos = head;
+ssize_t rio_readnb(rio_t *rp, void *user_buf, size_t n_request) {
+  size_t n_left = n_request;
+  ssize_t n_read;
+  char *pos = user_buf;
 
-  while (nleft > 0) {
-    if ((nread = rio_read(rp, pos, nleft)) < 0) 
+  while (n_left > 0) {
+    if ((n_read = rio_read(rp, pos, n_left)) < 0) 
       return -1;
-    else if (nread == 0)
-      break;              /* EOF */
-    nleft -= nread; pos += nread;
+    else if (n_read == 0)
+      break; /* EOF */
+    n_left -= n_read; pos += n_read;
   }
-  return (n - nleft);     /* return >= 0 */
+  return (n_request - n_left); /* within [0, n_request] */
 }
 ```
 
@@ -395,9 +404,12 @@ int main (int argc, char **argv) {
 #include <sys/types.h>
 #include <dirent.h>
 DIR *opendir(const char *name);
-    /* Returns: pointer to handle if OK, NULL on error */
+/* Returns: pointer to handle if OK,
+            NULL on error */
+
 int closedir(DIR *dirp);
-    /* Returns: 0 on success, −1 on error */
+/* Returns: 0 on success,
+            −1 on error */
 ```
 
 ## `readdir()`
@@ -409,8 +421,8 @@ struct dirent {
   char  d_name[256]; /* Filename */
 };
 struct dirent *readdir(DIR *dirp);
-    /* Returns: pointer to next directory entry if OK,
-                NULL if no more entries or error */
+/* Returns: pointer to next directory entry if OK,
+            NULL if no more entries or error */
 ```
 
 ⚠️ 只能通过检查 `errno` 是否被修改，来判断是出错，还是到达列表末尾。
@@ -456,7 +468,8 @@ int main(int argc, char **argv) {
 ```c
 #include <unistd.h>
 int dup2(int oldfd, int newfd/* close if already open */);
-    /* Returns: nonnegative descriptor if OK, −1 on error */
+/* Returns: nonnegative descriptor if OK,
+            −1 on error */
 ```
 
 `dup2(4, 1)` **dup**licate `fd[4]` **to** `fd[1]`，结果如下：

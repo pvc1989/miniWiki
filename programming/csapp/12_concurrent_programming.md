@@ -347,7 +347,7 @@ void pthread_exit(void *thread_return);
 int pthread_cancel(pthread_t tid);
 ```
 
-### 3.5. 收割线程
+### 3.5. `pthread_join()`
 
 ```c
 #include <pthread.h>
@@ -356,14 +356,14 @@ int pthread_join(pthread_t tid, void **thread_return);
 
 与[收割子进程](./8_exceptional_control_flow.md#收割子进程)的 `waitpid()` 类似，但 `pthread_join()` 只能收割给定的线程。
 
-### 3.6. 分离线程
+### 3.6. `pthread_detach()`
 
 任何线程总是处于以下两种状态之一：
 
-- **可加入的 (joinable)**：可以被其他线程 `join` 或 `cancel`，其内存资源在该线程被 `join` 或 `cancel` 时才被释放。（默认）
-- **分离的 (detached)**：不能被其他线程 `join` 或 `cancel`，其内存资源在该线程结束时被系统自动释放。（推荐）
+- **可加入的 (joinable)**：其内存资源在*其他线程*调用 `pthread_join()` 或 `pthread_cancel()` 时才被释放。（默认）
+- **分离的 (detached)**：其内存资源在*当前线程*结束时被系统自动释放。（推荐）
 
-为避免内存泄漏，任何可加入线程都应当被显式 `join` 或 `cancel`，或通过以下函数转为分离的状态：
+为避免内存泄漏，任何 joinable 线程都应当被*其他线程*调用 `pthread_join()` 或 `pthread_cancel()` 以释放资源，或调用以下函数使*当前线程*转为 detached 状态：
 
 ```c
 #include <pthread.h>
@@ -372,7 +372,7 @@ int pthread_detach(pthread_t tid);
 pthread_detach(pthread_self());
 ```
 
-### <a href id="pthread_once"></a>3.7. 初始化线程
+### <a href id="pthread_once"></a>3.7. `pthread_once()`
 
 ```c
 #include <pthread.h>
@@ -384,7 +384,7 @@ int pthread_once(pthread_once_t *once_control,
 - 首次调用 `pthread_once()` 会运行 `init_routine()` 以初始化全局变量。
 - 以相同的 `once_control` 再次调用 `pthread_once()` 不会做任何事。
 
-## <a href id="echoserver-thread"></a>3.8. `echoservert.c`
+## <a href id="echoserver-thread"></a>3.8. [`echoservert.c`](./code/conc/echoservert.c)
 
 ```c
 #include "csapp.h"
@@ -681,7 +681,7 @@ void writer(void) {
 
 [POSIX threads](#pthread) 提供了[读写锁](#rwlock)机制。
 
-## 5.5. `echoservert-pre.c`
+## 5.5. [`echoservert-pre.c`](./code/conc/echoservert_pre.c)
 
 [`echoservert.c`](#echoserver-thread) 在收到客户端请求后，创建新线程。
 为减少频繁创建线程的开销，可采用以下**预先创建线程 (prethreaded)** 方案：
