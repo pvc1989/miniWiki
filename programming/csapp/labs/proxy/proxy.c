@@ -17,8 +17,10 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64;
 
 #ifndef CONCURRENT
 #define PRINTF(...) (printf(__VA_ARGS__))
+#define LRU_PRINT(...) (lru_print(__VA_ARGS__))
 #else
 #define PRINTF(...) ((void)0)
+#define LRU_PRINT(...) ((void)0)
 #endif
 
 void check_one_line(char const *line, ssize_t n) {
@@ -27,10 +29,10 @@ void check_one_line(char const *line, ssize_t n) {
     assert(line[n - 1] == '\n');
 }
 
-int read_one_line(rio_t *rio, char *line) {
+int read_one_line(rio_t *rio, char const *side, char *line) {
     ssize_t n = Rio_readlineb(rio, line, MAXLINE);
     check_one_line(line, n);
-    PRINTF("[C >> P] %s", line);
+    PRINTF("[%s >> P] %s", side, line);
     return n;
 }
 
@@ -148,9 +150,8 @@ void forward_response(rio_t *server_rio, int server_fd,
     char *line = header;
     // forward the headers
     do {
-      n = Rio_readlineb(server_rio, line, MAXLINE);
-      check_one_line(line, n);
-      PRINTF("[S >> C] %s", line);
+      n = read_one_line(server_rio, "S", line);
+      PRINTF("[P >> C] %s", line);
       if (content_length < 0 && line[0] == 'C') {
           assert(strlen("Content-Length: ") == 16);
           if (!strncasecmp(line, "Content-Length: ", 16)) {
@@ -164,6 +165,9 @@ void forward_response(rio_t *server_rio, int server_fd,
     Rio_writen(client_fd, header, header_length);
     // forward the content
     char *content;
+    if (content_length < 0) {
+        // TODO: keep reading until EOF
+    }
     int total_length = header_length + content_length;
     if (total_length <= MAX_CACHE_SIZE) {
         content = Malloc(total_length);
@@ -176,7 +180,7 @@ void forward_response(rio_t *server_rio, int server_fd,
     assert(n == content_length);
     Rio_writen(client_fd, content, n);
     if (total_length <= MAX_OBJECT_SIZE) {
-        PRINTF("Cache the response.\n");
+        PRINTF("[cache] Store.\n");
         lru_emplace(lru, uri, content - header_length, total_length);
     }
 }
@@ -188,7 +192,7 @@ void serve(int client_fd) {
     rio_t client_rio; Rio_readinitb(&client_rio, client_fd);
     // Read the first line:
     char method[MAXLINE], uri_from_client[MAXLINE], version[MAXLINE];
-    n = read_one_line(&client_rio, line);
+    n = read_one_line(&client_rio, "C", line);
     sscanf(line, "%s %s %s", method, uri_from_client, version);
     if (strcasecmp(method, "GET")) {
         clienterror(client_fd, method, "501", "Not Implemented",
@@ -201,10 +205,17 @@ void serve(int client_fd) {
     // Already cached?
     item_t *item = lru_find(lru, uri_from_client);
     if (item) {
-        PRINTF("Use the response from the cache.\n");
+        PRINTF("[cache] Hit!\n");
+        PRINTF("[cache] Before sinking:\n");
+        LRU_PRINT(lru);
+        lru_sink(lru, item);
+        PRINTF("[cache] After sinking:\n");
+        LRU_PRINT(lru);
         Rio_writen(client_fd,
             (void *)item_data(item), item_size(item));
         return;
+    } else {
+        PRINTF("[cache] Miss!\n");
     }
     // Parse the URI from the client
     char hostname[MAXLINE];
@@ -214,7 +225,7 @@ void serve(int client_fd) {
     // Read other lines:
     do {
       line += n;  // n does not account '\0'
-      n = read_one_line(&client_rio, line);
+      n = read_one_line(&client_rio, "C", line);
     } while (n != 2);
     assert(strcmp(line, "\r\n") == 0);
     assert(strlen(buf) <= MAXLINE);
