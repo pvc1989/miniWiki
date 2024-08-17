@@ -18,9 +18,18 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64;
 #ifndef CONCURRENT
 #define PRINTF(...) (printf(__VA_ARGS__))
 #define LRU_PRINT(...) (lru_print(__VA_ARGS__))
+#define PTHREAD_PRINTF(...) (printf(__VA_ARGS__))
 #else
+static pthread_rwlock_t lru_rwlock = PTHREAD_RWLOCK_INITIALIZER;
 #define PRINTF(...) ((void)0)
 #define LRU_PRINT(...) ((void)0)
+
+static pthread_rwlock_t stdout_rwlock = PTHREAD_RWLOCK_INITIALIZER;
+#define PTHREAD_PRINTF(...) \
+    pthread_rwlock_wrlock(&stdout_rwlock); \
+    printf("[ThreadID = %ld] ", pthread_self()); \
+    printf(__VA_ARGS__); \
+    pthread_rwlock_unlock(&stdout_rwlock);
 #endif
 
 void check_one_line(char const *line, ssize_t n) {
@@ -176,8 +185,12 @@ void forward_response(int server_fd, int client_fd,
     if (size > MAX_CACHE_SIZE) {
         return;
     }
-    PRINTF("[cache] Store.\n");
-    lru_emplace(lru, uri_from_client, buf, size);
+    pthread_rwlock_wrlock(&lru_rwlock);
+    if (!lru_find(lru, uri_from_client)) {
+        lru_emplace(lru, uri_from_client, buf, size);
+    }
+    pthread_rwlock_unlock(&lru_rwlock);
+    PTHREAD_PRINTF("Cache updated.\n");
 }
 
 void serve(int client_fd) {
@@ -198,19 +211,30 @@ void serve(int client_fd) {
     PRINTF("* version = \"%s\"\n", version);
     PRINTF("* uri_from_client = \"%s\"\n", uri_from_client);
     // Already cached?
+    /* lru_find() is a read-only operation, so it only need a read-lock */
+    pthread_rwlock_rdlock(&lru_rwlock);
     item_t *item = lru_find(lru, uri_from_client);
     if (item) {
-        PRINTF("[cache] Hit!\n");
+        PTHREAD_PRINTF("Cache hit!\n");
         PRINTF("[cache] Before sinking:\n");
-        LRU_PRINT(lru);
-        lru_sink(lru, item);
-        PRINTF("[cache] After sinking:\n");
         LRU_PRINT(lru);
         Rio_writen(client_fd,
             (void *)item_data(item), item_size(item));
-        return;
     } else {
-        PRINTF("[cache] Miss!\n");
+        PTHREAD_PRINTF("Cache miss!\n");
+    }
+    pthread_rwlock_unlock(&lru_rwlock);
+    if (item) {  /* lru_sink(), which is a writing operation,
+        is called only if the item is found (cache hit) */
+        pthread_rwlock_wrlock(&lru_rwlock);
+        // The item might already be popped by another thread, so find it again:
+        if ((item = lru_find(lru, uri_from_client)) != NULL) {
+            lru_sink(lru, item);
+            PRINTF("[cache] After sinking:\n");
+            LRU_PRINT(lru);
+        }
+        pthread_rwlock_unlock(&lru_rwlock);
+        return;
     }
     // Parse the URI from the client
     char hostname[MAXLINE];
@@ -235,7 +259,7 @@ void serve(int client_fd) {
     if (port) {  // port explicitly given, use it
       *--port = ':';
     }
-    printf("Connected to server %s\n", hostname);
+    PTHREAD_PRINTF("Connected to server %s\n", hostname);
     // Request the object the client specified.
     forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
@@ -286,7 +310,7 @@ int main(int argc, char **argv)
         int client_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
         Getnameinfo((SA *) &client_addr, client_len,
             client_host, MAXLINE, client_port, MAXLINE, 0);
-        printf("Connected to client %s:%s\n", client_host, client_port);
+        PTHREAD_PRINTF("Connected to client %s:%s\n", client_host, client_port);
 #ifdef CONCURRENT
         serve_by_thread(client_fd);
 #else
@@ -295,5 +319,7 @@ int main(int argc, char **argv)
     }
 
     lru_destruct(lru);
+    pthread_rwlock_destroy(&lru_rwlock);
+    pthread_rwlock_destroy(&stdout_rwlock);
     exit(0);
 }
