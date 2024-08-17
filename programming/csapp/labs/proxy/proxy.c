@@ -13,7 +13,7 @@ static lru_t *lru = NULL;
 /* You won't lose style points for including this long line in your code */
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3\r\n";
 
-// #define CONCURRENT
+#define CONCURRENT
 
 #ifndef CONCURRENT
 #define PRINTF(...) (printf(__VA_ARGS__))
@@ -24,7 +24,10 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64;
 #endif
 
 void check_one_line(char const *line, ssize_t n) {
-    assert(n >= 2);
+    if (n < 2) {
+        PRINTF("%s\n", line);
+        return;
+    }
     assert(line[n - 2] == '\r');
     assert(line[n - 1] == '\n');
 }
@@ -144,45 +147,37 @@ void forward_request(int server_fd, char const *method, char const *uri,
     assert(buf == ptr);
 }
 
-void forward_response(rio_t *server_rio, int server_fd,
-        int client_fd, char const *uri, char *header) {
-    int n, content_length = -1;
-    char *line = header;
-    // forward the headers
-    do {
-      n = read_one_line(server_rio, "S", line);
-      PRINTF("[P >> C] %s", line);
-      if (content_length < 0 && line[0] == 'C') {
-          assert(strlen("Content-Length: ") == 16);
-          if (!strncasecmp(line, "Content-Length: ", 16)) {
-              content_length = atoi(line + 16);
-              PRINTF("content_length = %d\r\n", content_length);
-          }
-      }
-      line += n;
-    } while (n != 2);
-    int header_length = line - header;
-    Rio_writen(client_fd, header, header_length);
-    // forward the content
-    char *content;
-    if (content_length < 0) {
-        // TODO: keep reading until EOF
+void forward_response(int server_fd, int client_fd,
+        char const *uri_from_client, char *caller_buf) {
+    rio_t server_rio; Rio_readinitb(&server_rio, server_fd);
+    ssize_t size = 0;
+    /* Read at most MAX_OBJECT_SIZE bytes of the response. */
+    char buf[MAX_OBJECT_SIZE];
+    ssize_t n  // #bytes read in one call of Rio_readnb()
+        = Rio_readnb(&server_rio, buf, MAX_OBJECT_SIZE);
+    if (n == -1) {
+        PRINTF("Error in Rio_readnb()\n");
+        exit(-1);
     }
-    int total_length = header_length + content_length;
-    if (total_length <= MAX_CACHE_SIZE) {
-        content = Malloc(total_length);
-        memcpy(content, header, header_length);
-        content += header_length;
-    } else {
-        content = Malloc(content_length);
+    size += n;
+    // Send the part just read:
+    Rio_writen(client_fd, buf, size);
+    while ((n = Rio_readnb(&server_rio, caller_buf, MAXLINE)) != 0) {
+        // Large object, no cache, read and send the remaing part:
+        if (n == -1) {
+            PRINTF("Error in Rio_readnb()\n");
+            exit(-1);
+        }
+        assert(n > 0);
+        size += n;
+        Rio_writen(client_fd, caller_buf, n);
     }
-    n = Rio_readnb(server_rio, content, content_length);
-    assert(n == content_length);
-    Rio_writen(client_fd, content, n);
-    if (total_length <= MAX_OBJECT_SIZE) {
-        PRINTF("[cache] Store.\n");
-        lru_emplace(lru, uri, content - header_length, total_length);
+    PRINTF("size = %ld\n", size);
+    if (size > MAX_CACHE_SIZE) {
+        return;
     }
+    PRINTF("[cache] Store.\n");
+    lru_emplace(lru, uri_from_client, buf, size);
 }
 
 void serve(int client_fd) {
@@ -240,13 +235,12 @@ void serve(int client_fd) {
     if (port) {  // port explicitly given, use it
       *--port = ':';
     }
-    PRINTF("Connected to (%s)\n", hostname);
+    printf("Connected to server %s\n", hostname);
     // Request the object the client specified.
-    rio_t server_rio; Rio_readinitb(&server_rio, server_fd);
     forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
     PRINTF("Forward response from server (%s) to client\n", hostname);
-    forward_response(&server_rio, server_fd, client_fd, uri_from_client, buf);
+    forward_response(server_fd, client_fd, uri_from_client, buf);
     Close(server_fd);
 }
 
@@ -292,7 +286,7 @@ int main(int argc, char **argv)
         int client_fd = Accept(listen_fd, (SA *)&client_addr, &client_len);
         Getnameinfo((SA *) &client_addr, client_len,
             client_host, MAXLINE, client_port, MAXLINE, 0);
-        printf("Connected to (%s, %s)\n", client_host, client_port);
+        printf("Connected to client %s:%s\n", client_host, client_port);
 #ifdef CONCURRENT
         serve_by_thread(client_fd);
 #else

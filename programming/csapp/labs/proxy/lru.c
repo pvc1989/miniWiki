@@ -21,7 +21,7 @@ struct _item {
     char *key;  // URI from a client
     struct {
       node_t *node;  // node in a `list`
-      char const *data;  // response from a server, must be Free-able
+      char const *data;  // response from a server
       int size;  // size of the response
     } value;
     UT_hash_handle hh;  /* makes this structure hashable */
@@ -111,7 +111,8 @@ void lru_emplace(lru_t *lru, char const *key, char const *data, int size) {
     memcpy(item->key, key, key_len + 1);
     assert(item->key[key_len] == '\0');
     assert(strlen(item->key) == key_len);
-    item->value.data = data;
+    item->value.data = Malloc(size);
+    memcpy(item->value.data, data, size);
     item->value.size = size;
     lru->size += size;
     while (lru->size > lru->capacity) {
