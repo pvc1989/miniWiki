@@ -107,6 +107,21 @@ int has_prefix(char const *line, char const *prefix) {
     return !strncmp(line, prefix, min(strlen(line), strlen(prefix)));
 }
 
+int connect_to_server(char *hostname) {
+    // Connect to the appropriate web server.
+    int server_fd;
+    char *port = strchr(hostname, ':');
+    if (port) {  // port explicitly given, use it
+      *port++ = '\0';
+    }
+    server_fd = Open_clientfd(hostname, port ? port : "80");
+    if (port) {  // hostname modified, recover it
+      *--port = ':';
+    }
+    PTHREAD_PRINTF("Connected to server %s\n", hostname);
+    return server_fd;
+}
+
 void forward_request(int server_fd, char const *method, char const *uri,
         char const *hostname, char const *buf) {
     char line[MAXLINE];
@@ -131,7 +146,7 @@ void forward_request(int server_fd, char const *method, char const *uri,
     PRINTF("[P >> S] %s", line);
     Rio_writen(server_fd, line, strlen(line));
     // Send other headers:
-    char *ptr;
+    char const *ptr;
     do {
         ptr = strstr(buf, "\r\n");
         size_t len = ptr - buf + 2;
@@ -249,18 +264,8 @@ void serve(int client_fd) {
     assert(strcmp(line, "\r\n") == 0);
     assert(strlen(buf) <= MAXLINE);
     PRINTF("Length of the request: %ld\n", strlen(buf));
-    // Connect to the appropriate web server.
-    int server_fd;
-    char *port = strchr(hostname, ':');
-    if (port) {  // port explicitly given, use it
-      *port++ = '\0';
-    }
-    server_fd = Open_clientfd(hostname, port ? port : "80");
-    if (port) {  // port explicitly given, use it
-      *--port = ':';
-    }
-    PTHREAD_PRINTF("Connected to server %s\n", hostname);
     // Request the object the client specified.
+    int server_fd = connect_to_server(hostname);
     forward_request(server_fd, method, uri_to_server, hostname, buf);
     // Read the server's response and forward it to the client.
     PRINTF("Forward response from server (%s) to client\n", hostname);
