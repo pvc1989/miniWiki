@@ -5,7 +5,7 @@ title: Proxy Lab
 # Download
 
 - [`proxylab.pdf`](./proxy/proxylab.pdf) specifies the requirements.
-- [`proxylab-handout.tar`](https://csapp.cs.cmu.edu/3e/proxylab-handout.tar) provides the auto-grader and helper code.
+- [`proxylab-handout.tar`](https://csapp.cs.cmu.edu/3e/proxylab-handout.tar) provides the auto-grader and helper code (e.g. `csapp.h`, `csapp.c`, and the `tiny` folder).
 
 # Build and Run
 
@@ -89,6 +89,38 @@ void forward_response(int server_fd, int client_fd,
 The argument `uri_from_client` is not necessary here, but is useful for implementing the LRU cache.
 
 # 2. Dealing with multiple concurrent requests
+
+The test on this part
+- opens a blocking nop-server that never responds.
+- requests a file from the nop-server, which never returns.
+- requests a file from the Tiny server, which should return immediately.
+- requests a file from the proxy, which should return the same thing the Tiny server returns.
+
+## 2.1 Create-on-Request
+
+So, a simple create-on-request policy is enough for passing the test on this part:
+
+```c
+void *routine(void *vargp) {
+    int client_fd = *((int *)vargp);
+    Pthread_detach(Pthread_self());
+    Free(vargp);
+    serve(client_fd);
+    return NULL;
+}
+
+void serve_by_thread(int client_fd) {
+    int *client_fd_ptr = Malloc(sizeof(int));
+    *client_fd_ptr = client_fd;
+
+    pthread_t tid;
+    Pthread_create(&tid, NULL, routine, client_fd_ptr);
+}
+```
+
+## 2.2 Precreated threads (TODO)
+
+A more efficient but complicated version like [`echoservert-pre.c`](../12_concurrent_programming.md#echoservert-pre) in the textbook is also possible.
 
 # 3. Caching web objects
 

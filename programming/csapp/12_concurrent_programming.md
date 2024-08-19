@@ -681,7 +681,7 @@ void writer(void) {
 
 [POSIX threads](#pthread) 提供了[读写锁](#rwlock)机制。
 
-## 5.5. [`echoservert-pre.c`](./code/conc/echoservert_pre.c)
+## <a href id="echoservert-pre"></a>5.5. [`echoservert-pre.c`](./code/conc/echoservert_pre.c)
 
 [`echoservert.c`](#echoserver-thread) 在收到客户端请求后，创建新线程。
 为减少频繁创建线程的开销，可采用以下**预先创建线程 (prethreaded)** 方案：

@@ -249,6 +249,7 @@ void serve(int client_fd) {
             LRU_PRINT(lru);
         }
         pthread_rwlock_unlock(&lru_rwlock);
+        Close(client_fd);
         return;
     }
     // Parse the URI from the client
@@ -271,10 +272,6 @@ void serve(int client_fd) {
     PRINTF("Forward response from server (%s) to client\n", hostname);
     forward_response(server_fd, client_fd, uri_from_client, buf);
     Close(server_fd);
-}
-
-void serve_by_iteration(int client_fd) {
-    serve(client_fd);
     Close(client_fd);
 }
 
@@ -286,7 +283,6 @@ void *routine(void *vargp) {
     Pthread_detach(Pthread_self());
     Free(vargp);
     serve(client_fd);
-    Close(client_fd);
     return NULL;
 }
 
@@ -319,7 +315,7 @@ int main(int argc, char **argv)
 #ifdef CONCURRENT
         serve_by_thread(client_fd);
 #else
-        serve_by_iteration(client_fd);
+        serve(client_fd);
 #endif
     }
 
