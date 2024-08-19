@@ -124,3 +124,89 @@ A more efficient but complicated version like [`echoservert-pre.c`](../12_concur
 
 # 3. Caching web objects
 
+## 3.1 LRU based on [`uthash`](http://troydhanson.github.io/uthash/userguide.html) and [`utlist`](troydhanson.github.io/uthash/utlist.html)
+
+Types:
+
+```c
+struct _node;
+typedef struct _node node_t;
+
+struct _item;
+typedef struct _item item_t;
+
+struct _lru;
+typedef struct _lru lru_t;
+
+struct _item {
+    char *key;  // URI from a client
+    struct {
+      node_t *node;  // node in a `list`
+      char const *data;  // response from a server
+      int size;  // size of the response
+    } value;
+    UT_hash_handle hh;  /* makes this structure hashable */
+};
+
+struct _node {
+    item_t *item;
+    node_t *prev, *next; /* needed for doubly-linked lists */
+};
+
+struct _lru {
+    item_t *map;
+    node_t *list;
+    int capacity;  // max size of the sum of all item->value.data
+    int size;  // current size of the sum of all item->value.data
+};
+```
+
+Methods:
+
+```c
+lru_t *lru_construct(int capacity);
+void lru_destruct(lru_t *lru);
+
+item_t *lru_find(lru_t const *lru, char const *key);
+void lru_print(lru_t const *lru);
+
+void lru_emplace(lru_t *lru, char const *key, char const *data, int size);
+void lru_sink(lru_t *lru, item_t *item);
+void lru_pop(lru_t *lru);
+```
+
+## 3.2 Using [`pthread_rwlock_t`](../12_concurrent_programming.md#pthread_rwlock_t)
+
+`lru_find()` is read-only:
+
+```c
+pthread_rwlock_rdlock(&lru_rwlock);
+item_t *item = lru_find(lru, uri_from_client);
+if (item) {
+  /* .. */
+  Rio_writen(client_fd, item->value.data, item->value.size);
+}
+pthread_rwlock_unlock(&lru_rwlock);
+```
+
+`lru_emplace()` is a writing operation:
+
+```c
+pthread_rwlock_wrlock(&lru_rwlock);
+// The item might already been emplaced by another thread, so find it again:
+if (!lru_find(lru, uri_from_client)) {
+  lru_emplace(lru, uri_from_client, buf, size);
+}
+pthread_rwlock_unlock(&lru_rwlock);
+```
+
+`lru_sink()` is also a writing operation:
+
+```c
+pthread_rwlock_wrlock(&lru_rwlock);
+// The item might already been popped by another thread, so find it again:
+if ((item = lru_find(lru, uri_from_client)) != NULL) {
+    lru_sink(lru, item);
+}
+pthread_rwlock_unlock(&lru_rwlock);
+```

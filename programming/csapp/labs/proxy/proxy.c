@@ -201,6 +201,7 @@ void forward_response(int server_fd, int client_fd,
         return;
     }
     pthread_rwlock_wrlock(&lru_rwlock);
+    // The item might already been emplaced by another thread, so find it again:
     if (!lru_find(lru, uri_from_client)) {
         lru_emplace(lru, uri_from_client, buf, size);
     }
@@ -242,7 +243,7 @@ void serve(int client_fd) {
     if (item) {  /* lru_sink(), which is a writing operation,
         is called only if the item is found (cache hit) */
         pthread_rwlock_wrlock(&lru_rwlock);
-        // The item might already be popped by another thread, so find it again:
+        // The item might already been popped by another thread, so find it again:
         if ((item = lru_find(lru, uri_from_client)) != NULL) {
             lru_sink(lru, item);
             PRINTF("[cache] After sinking:\n");
