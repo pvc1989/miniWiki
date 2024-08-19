@@ -7,12 +7,31 @@ MapIter LRU::find(Key const &key) {
   return map_.find(key);
 }
 
+MapIterConst LRU::find(Key const &key) const {
+  return map_.find(key);
+}
+
 void LRU::print() const {
   std::printf("LRU = ");
   for (auto &[key, data] : list_) {
     std::printf("%s(%ld)\n   -> ", key->c_str(), data.size());
   }
   std::printf("NULL\n");
+}
+
+bool LRU::consistent() const {
+  assert(map_.size() == list_.size());
+  for (auto list_iter = list_.begin();
+      list_iter != list_.end(); ++list_iter) {
+    Key const &key = *(list_iter->key);
+    auto map_iter = map_.find(key);
+    if (map_iter == map_.end() ||
+        map_iter->first != key ||
+        map_iter->second != list_iter) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void LRU::emplace(Key const &key, char const *data, int size) {
@@ -27,6 +46,7 @@ void LRU::emplace(Key const &key, char const *data, int size) {
   while (this->size() > capacity()) {
     pop();  // evict the LRU item;
   }
+  assert(map_.size() == list_.size());
 }
 
 void LRU::sink(MapIter map_iter) {
@@ -35,6 +55,7 @@ void LRU::sink(MapIter map_iter) {
   auto &&item = std::move(*list_iter);
   list_.erase(list_iter);
   map_iter->second = list_.emplace(list_.end(), item);
+  assert(map_.size() == list_.size());
 }
 
 void LRU::pop() {
@@ -42,4 +63,5 @@ void LRU::pop() {
   size_ -= data.size();
   map_.erase(*key_ptr);
   list_.pop_front();
+  assert(map_.size() == list_.size());
 }

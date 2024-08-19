@@ -40,7 +40,11 @@ class LRU {
     return map_.end();
   }
 
+  MapIterConst find(Key const &key) const;
   MapIter find(Key const &key);
+
+  bool consistent() const;
+
   void print() const;
 
   void emplace(Key const &key, char const *data, int size);
