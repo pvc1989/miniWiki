@@ -21,7 +21,7 @@ struct _item {
     char *key;  // URI from a client
     struct {
       node_t *node;  // node in a `list`
-      char const *data;  // response from a server
+      char *data;  // response from a server
       int size;  // size of the response
     } value;
     UT_hash_handle hh;  /* makes this structure hashable */

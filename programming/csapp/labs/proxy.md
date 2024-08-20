@@ -142,7 +142,7 @@ struct _item {
     char *key;  // URI from a client
     struct {
       node_t *node;  // node in a `list`
-      char const *data;  // response from a server
+      char *data;  // response from a server
       int size;  // size of the response
     } value;
     UT_hash_handle hh;  /* makes this structure hashable */
@@ -173,6 +173,14 @@ void lru_print(lru_t const *lru);
 void lru_emplace(lru_t *lru, char const *key, char const *data, int size);
 void lru_sink(lru_t *lru, item_t *item);
 void lru_pop(lru_t *lru);
+```
+
+Tests:
+
+```c
+make lru_test
+./lru_test
+valgrind --leak-check=yes ./lru_test
 ```
 
 ## 3.2 Using [`pthread_rwlock_t`](../12_concurrent_programming.md#pthread_rwlock_t)
