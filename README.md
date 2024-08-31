@@ -73,13 +73,21 @@ title: 葵花宝典
   - [11. Network Programming](./programming/csapp/11_network_programming.md)
 - [CMU's 15-213: Introduction to Computer Systems](https://www.cs.cmu.edu/~213/)
   - [Proxy Lab](./programming/csapp/labs/proxy.md)
+- [Stanford's CS144: Computer Network](https://cs144.github.io)
 - [计算机网络层次结构](./programming/csapp/network_hierarchy.md)
 - [SSH](./programming/linux/ssh.md)
 
 #### 数据库系统
 
+- [CMU's 15-445: Database Systems](https://15445.courses.cs.cmu.edu/)
 - [数据模型](./programming/database/data_models.md)
 - [SQL](./programming/database/sql.md)
+
+#### 高性能计算
+
+- [MIT's MIT6.824: Distributed System](https://pdos.csail.mit.edu/6.824/)
+- [CMU's 15-418/Stanford's CS149: Parallel Computing](https://gfxcourses.stanford.edu/cs149/)
+- [Georgia Tech's CSE6220: Intro to High-Performance Computing](https://omscs.gatech.edu/cse-6220-intro-high-performance-computing)
 
 ### 软件开发
 
@@ -106,24 +114,25 @@ title: 葵花宝典
 
 - [Pthreads](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
 - [MPI](./programming/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
+- [CUDA](./programming/cuda.md) --- NVIDIA's GPU programming interface and toolkits.
 
-- [CUDA](./programming/cuda.md)
+#### 三维建模
 
-#### CAD 建模
+- [Open CASCADE Technology (OCCT)](https://dev.opencascade.org) --- A open-source C++ SDK for dealing with 3D CAD data.
 
-- [SALOME](https://www.salome-platform.org)
-- [Open CASCADE](https://www.opencascade.com)
-
-#### 网格
+#### 前后处理
 
 - [Gmsh](./programming/mesh/gmsh.md) --- Gmsh is an open source 3D finite element mesh generator with a built-in CAD engine and post-processor.
 - [CGNS](./programming/mesh/cgns.md) --- The CFD General Notation System (CGNS) provides a general, portable, and extensible standard for the storage and retrieval of computational fluid dynamics (CFD) analysis data.
 - [VTK](./programming/mesh/vtk.md) --- The Visualization Toolkit (VTK) is open source software for manipulating and displaying scientific data.
-- [Plot3D](./programming/mesh/plot3d.md)
+- [Plot3D](./programming/mesh/plot3d.md) --- A simple file format for CFD developed by NASA Ames Research Center.
 
-#### PDE 求解
+#### 求解器框架
 
-- [OpenFOAM](./programming/openfoam.md)
+- [OpenFOAM](./programming/openfoam.md) --- A C++ framework for  developing unstructured mesh generators and *second-order finite volume* solvers.
+- [DNDSR](https://github.com/harryzhou2000/DNDSR) --- A C++ framework for developing CFD solvers based on *compact high-order finite volume* schemes.
+- [FLEXI](https://github.com/flexi-framework/flexi) --- A Fortran framework for developing solvers based on the *discontinuous Galerkin (DG) spectral element method (SEM)* for the unsteady compressible Navier--Stokes equations and more.
+- [PyFR](https://www.pyfr.org) --- A open-source Python based framework for solving advection--diffusion type problems on streaming architectures using the *flux reconstruction (FR)* approach of Huynh.
 
 ## 文档
 - [LaTeX](./documenting/latex/README.md)
