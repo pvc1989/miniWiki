@@ -23,7 +23,8 @@ struct _pool {
 };
 
 /* Create an empty, bounded, shared FIFO buffer with n slots */
-void pool_init(pool_t *p, int n) {
+pool_t *pool_init(int n) {
+    pool_t *p = Malloc(sizeof(pool_t));
     p->buf = Calloc(n, sizeof(int));
     p->n = n;                   /* Buffer holds max of n items */
     p->front = p->rear = 0;     /* Empty buffer iff front == rear */
@@ -31,6 +32,7 @@ void pool_init(pool_t *p, int n) {
     pthread_once(&once, mutex_init);
     Sem_init(&p->slots, 0, n);  /* Initially, buf has n empty slots */
     Sem_init(&p->items, 0, 0);  /* Initially, buf has zero data items */
+    return p;
 }
 
 /* Clean up buffer p */

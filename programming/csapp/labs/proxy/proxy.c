@@ -3,6 +3,7 @@
 
 #include "csapp.h"
 #include "lru.h"  // the LRU cache
+#include "pool.h"  // the FD pool
 
 /* Recommended max cache and object sizes */
 #define MAX_CACHE_SIZE 1049000
@@ -13,9 +14,11 @@ static lru_t *lru = NULL;
 /* You won't lose style points for including this long line in your code */
 static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:10.0.3) Gecko/20120305 Firefox/10.0.3\r\n";
 
-#define CONCURRENT
+// #define CONCURRENT_BY_ONCEONLY_THREAD
+#define CONCURRENT_BY_REUSABLE_THREAD
 
-#ifndef CONCURRENT
+#if !defined(CONCURRENT_BY_ONCEONLY_THREAD) && \
+    !defined(CONCURRENT_BY_REUSABLE_THREAD)
 #define PRINTF(...) (printf(__VA_ARGS__))
 #define LRU_PRINT(...) (lru_print(__VA_ARGS__))
 #define PTHREAD_PRINTF(...) (printf(__VA_ARGS__))
@@ -276,10 +279,11 @@ void serve(int client_fd) {
     Close(client_fd);
 }
 
+#ifdef CONCURRENT_BY_ONCEONLY_THREAD
 /**
- * @brief The routine run in a thread.
+ * @brief The routine run in a once-only thread.
  */
-void *routine(void *vargp) {
+void *routine_in_onceonly_thread(void *vargp) {
     int client_fd = *((int *)vargp);
     Pthread_detach(Pthread_self());
     Free(vargp);
@@ -287,13 +291,32 @@ void *routine(void *vargp) {
     return NULL;
 }
 
-void serve_by_thread(int client_fd) {
+void serve_by_onceonly_thread(int client_fd) {
     int *client_fd_ptr = Malloc(sizeof(int));
     *client_fd_ptr = client_fd;
 
     pthread_t tid;
-    Pthread_create(&tid, NULL, routine, client_fd_ptr);
+    Pthread_create(&tid, NULL, routine_in_onceonly_thread, client_fd_ptr);
 }
+#endif  // CONCURRENT_BY_ONCEONLY_THREAD
+
+#ifdef CONCURRENT_BY_REUSABLE_THREAD
+#define NTHREADS  4
+#define POOLSIZE  16
+static pool_t *pool; /* Shared buffer of connected descriptors */
+
+/**
+ * @brief The routine run in a reusable thread.
+ */
+void *routine_in_reusable_thread(void *vargp) {
+    Pthread_detach(Pthread_self());
+    while (1) {
+        int connect_fd = pool_remove(pool);
+        serve(connect_fd);
+    }
+    return NULL;
+}
+#endif  // CONCURRENT_BY_REUSABLE_THREAD
 
 int main(int argc, char **argv)
 {
@@ -306,6 +329,13 @@ int main(int argc, char **argv)
         exit(0);
     }
 
+#ifdef CONCURRENT_BY_REUSABLE_THREAD
+    pool = pool_init(POOLSIZE);
+    pthread_t tid;
+    for (int i = 0; i < NTHREADS; i++)
+        Pthread_create(&tid, NULL, routine_in_reusable_thread, NULL);
+#endif  // CONCURRENT_BY_REUSABLE_THREAD
+
     lru = lru_construct(MAX_CACHE_SIZE);
     int listen_fd = Open_listenfd(argv[1]);
     while (1) {
@@ -313,8 +343,10 @@ int main(int argc, char **argv)
         Getnameinfo((SA *) &client_addr, client_len,
             client_host, MAXLINE, client_port, MAXLINE, 0);
         PTHREAD_PRINTF("Connected to client %s:%s\n", client_host, client_port);
-#ifdef CONCURRENT
-        serve_by_thread(client_fd);
+#ifdef CONCURRENT_BY_ONCEONLY_THREAD
+        serve_by_onceonly_thread(client_fd);
+#elif defined(CONCURRENT_BY_REUSABLE_THREAD)
+        pool_insert(pool, client_fd);
 #else
         serve(client_fd);
 #endif

@@ -118,9 +118,11 @@ void serve_by_thread(int client_fd) {
 }
 ```
 
-## 2.2 Precreated threads (TODO)
+## 2.2 Precreated threads
 
 A more efficient but complicated version like [`echoservert-pre.c`](../12_concurrent_programming.md#echoservert-pre) in the textbook is also possible.
+
+The binary `sem_t` for protecting the pool could be replaced by a `pthread_mutex_t`, which is used in my solution.
 
 # 3. Caching web objects
 

@@ -16,7 +16,7 @@ all: proxy lru_test lru_test_cpp
 lru_test: lru_test.o lru.o csapp.o
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-proxy: proxy.o csapp.o lru.o
+proxy: proxy.o csapp.o lru.o pool.o
 	$(CC) $(CFLAGS) $^ -o $@  $(LDFLAGS)
 
 $(CXXOBJS) : %.cpp.o : %.cpp
