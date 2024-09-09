@@ -279,3 +279,61 @@ __shared__ float vals[32];
 // 运行期由 SharedSum<<< n_block, n_thread_per_block, n_byte >>> 指定数组大小
 extern __shared__ float vals[];
 ```
+
+# Streams and (Grid Level) Concurrency
+
+CUDA API 分两类：
+- 【同步的】指调用后阻塞 host，直到该操作运行结束。
+- 【异步的】指调用后返回 host，实用其结果前需显式同步。
+
+## `cudaStream_t`
+
+【Stream】指由 host 发起、在 device 上运行的*异步*操作（含 host--device 数据迁移、kernel 启动等）序列。
+- 同一 stream 内部，操作按 host 指定的顺序执行。
+- 不同 streams 之间的操作没有严格顺序（除非人为引入依赖）。
+
+Streams 分两类：
+- 隐式声明的 NULL stream（默认）
+- 显式声明的 non-NULL stream（粗粒度并发所必需）
+
+典型用例：
+
+```c
+// 在 host 上分配 pinned (non-pageable) memory：
+cudaError_t cudaMallocHost(void **ptr, size_t size);
+cudaError_t cudaHostAlloc(void **pHost, size_t size, unsigned int flags);
+
+// 构造 cudaStream_t：
+cudaStream_t stream[kStreams];
+for (int i = 0; i < kStreams; i++) {
+  cudaStreamCreate(streams + i);
+}
+
+for (int i = 0; i < kStreams; i++) {
+  // 异步地 host-to-device 迁移数据：
+  cudaMemcpyAsync(device_mem, pinned_host_mem, n_byte,
+      cudaMemcpyHostToDevice, streams[i]);
+
+  // 启动 kernel：
+  MyKernel<<<grid, block, sharedMemSize, stream>>>(args);
+
+  // 异步地 device-to-host 迁移数据：
+  cudaMemcpyAsync(pinned_host_mem, device_mem, n_byte,
+      cudaMemcpyDeviceToHost, streams[i]);
+}
+
+for (int i = 0; i < kStreams; i++) {
+  // 显式同步：
+  cudaStreamSynchronize(streams[i]);
+      // 阻塞，直到该 stream 中的操作全部完成
+  cudaStreamQuery(streams[i]);
+      // 非阻塞，返回 cudaSuccess 或 cudaErrorNotReady
+}
+
+// 析构 cudaStream_t：
+for (int i = 0; i < kStreams; i++) {
+  cudaStreamDestroy(streams[i]);
+}
+```
+
+⚠️ 受 PCIe bus 限制，同一 device 上至多可同时执行 1 个 host-to-device、1 个 device-to-host 数据传输操作。
