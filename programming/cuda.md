@@ -337,3 +337,46 @@ for (int i = 0; i < kStreams; i++) {
 ```
 
 ⚠️ 受 PCIe bus 限制，同一 device 上至多可同时执行 1 个 host-to-device、1 个 device-to-host 数据传输操作。
+
+## `cudaEvent_t`
+
+【Event】指 stream 中的特定时间节点，可用于
+- 同步 stream 执行
+- 监控 device 进度
+
+典型用例：
+
+```c
+// 构造 cudaEvent_t：
+cudaEvent_t start, stop;
+cudaEventCreate(&start);
+cudaEventCreate(&stop);
+
+// 记录事件：
+cudaEventRecord(start, stream/* 缺省则为 0 */);
+/* ... 该 stream 中的其他操作 */
+cudaEventRecord(stop, stream/* 缺省则为 0 */);
+
+// 用 event 同步：
+cudaEventSynchronize(stop);
+// 获取时间差：
+float elapsedTime;  // 单位为 ms
+cudaEventElapsedTime(&elapsedTime, start, stop);  // 不必记录于同一 stream
+
+// 析构 cudaEvent_t：
+cudaEventDestroy(event);
+```
+
+其中 `cudaEventCreate(&event)` 等价于
+
+```c
+cudaEventCreateWithFlags(&event, cudaEventDefault);
+```
+
+这样创建的 `cudaEvent_t` 遇到 `cudaEventSynchronize(stop)` 时，会让 CPU 空转等待。
+
+为避免浪费 CPU 资源，第二个参数可以替换为
+
+- `cudaEventBlockingSync`，表示让渡 CPU 核心；
+- `cudaEventDisableTiming`，表示无需存储时间数据；
+- `cudaEventInterprocess`，表示创建跨进程事件。
