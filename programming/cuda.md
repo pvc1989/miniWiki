@@ -299,7 +299,7 @@ Streams 分两类：
 典型用例：
 
 ```c
-// 在 host 上分配 pinned (non-pageable) memory：
+// 在 host 上分配 pinned / non-pageable / page-locked memory：
 cudaError_t cudaMallocHost(void **ptr, size_t size);
 cudaError_t cudaHostAlloc(void **pHost, size_t size, unsigned int flags);
 
@@ -380,3 +380,26 @@ cudaEventCreateWithFlags(&event, cudaEventDefault);
 - `cudaEventBlockingSync`，表示让渡 CPU 核心；
 - `cudaEventDisableTiming`，表示无需存储时间数据；
 - `cudaEventInterprocess`，表示创建跨进程事件。
+
+## Stream 同步
+
+Streams 分类：
+- 同步的（隐式创建的 NULL/默认 stream），除 kernel 启动外的其他 CUDA 操作会阻塞 host。
+- 异步的（显式创建的 non-NULL streams），其中的 CUDA 操作不会阻塞 host。
+  - （默认）**blocking** streams，指*可能*被 NULL stream 中的操作所阻塞的 non-NULL streams。
+    ```c
+    // stream_0 为默认的 NULL stream，stream_[12] 均为 blocking streams
+    cudaStreamCreate(&stream_1);
+    cudaStreamCreateWithFlags(&stream, cudaStreamDefault);
+    kernel_1<<<1, 1, 0, stream_1>>>();
+    kernel_2<<<1, 1>>>();               // 等待 kernel_1 完成才启动
+    kernel_3<<<1, 1, 0, stream_2>>>();  // 等待 kernel_2 完成才启动
+    ```
+  - **non-blocking** streams，指*不会*被 NULL stream 中的操作所阻塞的 non-NULL streams。需通过以下方式创建：
+    ```c
+    cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking);
+    ```
+
+同步分类：
+- 【显式】如 `cudaDeviceSynchronize(void)`、`cudaStreamSynchronize(stream)`、`cudaEventSynchronize(event)`、`cudaEventWaitEvent(stream, event)` 等。
+- 【隐式】如 `cudaMallocHost()`、`cudaHostAlloc()` 等，及 `cudaMemcpy()` 等涉及 device 内存的操作。
