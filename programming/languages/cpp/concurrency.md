@@ -2,15 +2,30 @@
 title: 多线程并发
 ---
 
-# `<thread>`
+# <a href id="thread"></a>[`<thread>`](https://en.cppreference.com/w/cpp/thread/thread/thread)
+
+构造 `thread` 对象时，需传入可调用的 task，如函数、函数对象等：
+
+```cpp
+template< class F, class... Args >
+explicit thread( F&& f, Args&&... args );
+// 若 Args 中含 T &，为避免其被推断为 T，需借助 std::ref 或 std::cref
+```
+
+析构前，需显式调用以下二者之一：
+- `t.join()` 以阻塞调用线程，等待线程 `t` 执行完成；此后可使用其结果。
+- `t.detach()` 以允许线程 `t` 独立地执行；此后再调用 `t.join()` 会抛出异常。
+
+C++20 引入 [`std::jthread`](https://en.cppreference.com/w/cpp/thread/jthread)，其析构函数自带 `join()`。
+
+典型用例：
 
 ```cpp
 #include <algorithm>
+#include <functional>  // std::cref
 #include <iostream>
 #include <thread>
 #include <vector>
-
-std::mutex mtx;
 
 void f(std::vector<int> const &v, int *res) {
   *res = *std::max_element(v.begin(), v.end());
@@ -18,7 +33,7 @@ void f(std::vector<int> const &v, int *res) {
 }
 
 struct F {
-  std::vector<int> v_;
+  std::vector<int> const &v_;
   int *res_;
 
   F(std::vector<int> const &v, int *res)
@@ -31,13 +46,16 @@ struct F {
 };
 
 int main() {
-  auto v1 = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };
-  auto v2 = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };
+  auto v = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };  // 只读共享数据
   int x1, x2;
-  auto t1 = std::thread{f, v1, &x1};  //     f() executes in thread-1
-  auto t2 = std::thread{F{v2, &x2}};  // F{v2}() executes in thread-2
-  t1.join();  // wait for t1 to exit
-  t2.join();  // wait for t2 to exit
+
+  {
+    auto t1 = std::jthread{f, std::cref(v), &x1};  // f(v, &x1) 在 t1 中执行
+  }  // 退出作用域时 ~jthread() 自带 join()
+
+  auto t2 = std::thread{F{v, &x2}};  // F{v, &x2}() 在 t2 中执行
+  t2.join();  // 等待 t2 执行完成，并回收资源
+
   std::cout << std::endl;
 }
 ```
@@ -58,7 +76,7 @@ int main() {
   ...
   ```
 
-# `<mutex>`<a href id="mutex"></a>
+# <a href id="mutex"></a>`<mutex>`
 
 ## `unique_lock`
 
