@@ -76,7 +76,24 @@ int main() {
   ...
   ```
 
-# <a href id="mutex"></a>`<mutex>`
+# <a href id="mutex"></a>[`<mutex>`](https://en.cppreference.com/w/cpp/thread/mutex)
+
+`std::mutex` 提供*互斥的*、*非递归的*所有权机制。假设 `mtx` 为某一 `std::mutex` 对象：
+- 一个 `std::thread` 从其成功调用 `mtx.lock()` 或 `mtx.try_lock()` 起、至其调用 `mtx.unlock()` 为止，获得 `mtx` 的所有权。
+- 当 `mtx` 被某一 `std::thread` 占有时，若其他 `std::thread`s 尝试
+  - 调用 `mtx.lock()`，则被阻塞；
+  - 调用 `mtx.try_lock()`，则获得返回值 `false`。
+- 若某一 `std::mutex` 被析构时仍被某一 `std::thread` 占有，或某一 `std::thread` 终止时仍占有 某一 `std::mutex`，则行为未定义。
+
+`std::mutex` 通常不被直接访问，而是配合以下机制使用：
+- [`std::lock`](https://en.cppreference.com/w/cpp/thread/lock) 支持支持同时获得多个 [Lockable](https://en.cppreference.com/w/cpp/named_req/Lockable) 对象的所有权且避免死锁。
+- [`std::lock_guard`](https://en.cppreference.com/w/cpp/thread/lock_guard) 以 RAII 的方式获得某个 `mtx` 的所有权，构造时调用 `mtx.lock()`，析构时调用 `mtx.unlock()`。
+- [`std::scoped_lock`](https://en.cppreference.com/w/cpp/thread/scoped_lock) (C++17) 与 `std::lock_guard` 类似，但支持同时获得多个 `std::mutex`es 的所有权且避免死锁。
+- [`std::unique_lock`](https://en.cppreference.com/w/cpp/thread/unique_lock) 与 `std::lock_guard` 类似，但其[构造函数](https://en.cppreference.com/w/cpp/thread/unique_lock/unique_lock)支持附加实参：
+  - `std::defer_lock_t` 不获取所有权，待后续调用 `lock()`, `try_lock()`, `try_lock_for()`, `try_lock_until()` 之一；
+  - `std::try_to_lock_t` 非阻塞地尝试获取所有权，相当于构造时调用 `mtx.try_lock()`；
+  - `std::adopt_lock_t` 假设已获得所有权（否则其行为未定义），通常用于 RAII。
+- [`std::shared_lock`](https://en.cppreference.com/w/cpp/thread/shared_lock) (C++14/17) 与 `std::unique_lock` 类似，但要求支持 `mtx.lock_shared()` 及 `mtx.try_lock_shared()`。
 
 ## `unique_lock`
 
@@ -91,12 +108,12 @@ std::mutex mtx;
 
 void f(std::vector<int> const &v, int *res) {
   *res = *std::max_element(v.begin(), v.end());
-  auto ul = std::unique_lock<std::mutex>{mtx};
+  auto ul = std::unique_lock<std::mutex>{mtx};  // 隐式调用 mtx.lock()
   std::cout << "v.max = " << *res << std::endl;
-}
+}  // 隐式调用 mtx.unlock()
 
 struct F {
-  std::vector<int> v_;
+  std::vector<int> const &v_;
   int *res_;
 
   F(std::vector<int> const &v, int *res)
@@ -113,25 +130,34 @@ int main() {
   auto v1 = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };
   auto v2 = std::vector<int>{ 9, 10, 11, 12, 13, 14 };
   int x1, x2;
-  auto t1 = std::thread{f, v1, &x1};  //     f() executes in thread-1
-  auto t2 = std::thread{F{v2, &x2}};  // F{v2}() executes in thread-2
-  t1.join();  // wait for t1 to exit
-  t2.join();  // wait for t2 to exit
+  {
+    auto t1 = std::jthread{f, std::cref(v), &x1};
+    auto t2 = std::jthread{F{v2, &x2}};
+  }
 }
 ```
 
-## `defer_lock`
+## [`<shared_mutex>`](https://en.cppreference.com/w/cpp/header/shared_mutex) (C++14/17)
 
-```c++
-#include <mutex>
+- 若某一线程已获得*互斥的*所有权，则其他线程既不能获得*互斥的*所有权，也不能获得*共享的*所有权；
+- 若某一线程已获得*共享的*所有权，则其他线程仍不能获得*互斥的*所有权，但可以获得*共享的*所有权。
 
-std::mutex m1, m2;
+【典型用例】[读写锁](../../csapp/12_concurrent_programming.md#读者作者)：
 
-int main() {
-  auto ul1 = std::unique_lock<std::mutex>{m1, std::defer_lock};
-  auto ul2 = std::unique_lock<std::mutex>{m2, std::defer_lock};
+```cpp
+#include <shared_mutex>
+
+std::shared_mutex mtx;  // 可共享的 mutex (C++17)
+
+void read() {
+  /* 同一时间允许多个 threads 调用 read() */
+  std::shared_lock<std::shared_mutex> lck {mtx};
   // ...
-  std::lock(ul1, ul2);
+}
+
+void write() {
+  /* 同一时间只允许一个 thread 调用 write() */
+  std::unique_lock<std::shared_mutex> lck {mtx};
   // ...
 }
 ```
