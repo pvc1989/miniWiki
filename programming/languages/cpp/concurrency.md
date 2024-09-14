@@ -142,6 +142,8 @@ int main() {
 - 若某一线程已获得*互斥的*所有权，则其他线程既不能获得*互斥的*所有权，也不能获得*共享的*所有权；
 - 若某一线程已获得*共享的*所有权，则其他线程仍不能获得*互斥的*所有权，但可以获得*共享的*所有权。
 
+## Reader--Writer
+
 【典型用例】[读写锁](../../csapp/12_concurrent_programming.md#读者作者)：
 
 ```cpp
@@ -162,7 +164,25 @@ void write() {
 }
 ```
 
-# `<condition_variable>`
+# [`<condition_variable>`](https://en.cppreference.com/w/cpp/thread/condition_variable)
+
+`std::condition_variable` 主要提供两组操作
+- 【等待】包括 `wait()`, `wait_for()`, `wait_until()`
+- 【唤醒】包括 `notify_one()`, `notify_all()`
+
+其中 `wait(lck)` 用于阻塞当前线程，直到被其他线程 `notify_one()` 或 `notify_all()` 唤醒。
+等待过程中，会调用 `lck.unlock()`，以允许其他线程访问资源；唤醒后会调用 `lck.lock()`，以禁止其他线程访问资源。
+为避免***虚假唤醒 (spurious wakeup)***，可传入唤醒条件，即 `wait(lck, pred)`，相当于
+
+```cpp
+while (!pred()) {
+  wait(lck);
+}
+```
+
+## Consumer--Producer
+
+【典型用例】[生产--消费](../../csapp/12_concurrent_programming.md#生产者消费者)问题：
 
 ```c++
 #include <condition_variable>
@@ -178,35 +198,35 @@ std::condition_variable msg_cond;
 std::mutex              msg_mutex;
 ```
 
-## `wait`
+`wait()` 只接受 `unique_lock` 作为第一个实参。
 
 ```c++
 void Consume() {
   while (true) {
-    auto ul = std::unique_lock<std::mutex>{msg_mutex};
-    while (msg_cond.wait(ul))  // release `ul` until `!msg_queue.empty()`
-      /* do nothing */;
+    auto lck = std::unique_lock<std::mutex>{msg_mutex};
+    msg_cond.wait(lck,
+        /* 唤醒条件： */[]() { return !msg_queue.empty(); });
     // relock upon wakeup
     auto msg = msg_queue.front();
     msg_queue.pop();
-    ul.unlock();
+    lck.unlock();
     // parse msg ...
   }
 }
-```
 
-## `notify_one`
-
-```c++
 void Produce() {
   while (true) {
     auto msg = Message{/* ... */};
-    auto ul = std::unique_lock<std::mutex>{msg_mutex};
+    auto lck = std::scoped_lock<std::mutex>{msg_mutex};
     msg_queue.push(msg);
     msg_cond.notify_one();
   }
 }
 ```
+
+其中
+- `Consume` 中只能用 `unique_lock`，因为要将其传递给 `wait()`。
+- `Produce` 中可以用 `scoped_lock`，因为只需获得互斥访问权限。
 
 # `<future>`
 
