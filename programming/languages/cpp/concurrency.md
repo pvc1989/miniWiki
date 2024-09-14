@@ -2,7 +2,7 @@
 title: 多线程并发
 ---
 
-# <a href id="thread"></a>[`<thread>`](https://en.cppreference.com/w/cpp/thread/thread/thread)
+# <a href id="thread"></a>[`<thread>`](https://en.cppreference.com/w/cpp/header/thread) --- 支持多核并发的轻量级进程
 
 构造 `thread` 对象时，需传入可调用的 task，如函数、函数对象等：
 
@@ -76,7 +76,7 @@ int main() {
   ...
   ```
 
-# <a href id="mutex"></a>[`<mutex>`](https://en.cppreference.com/w/cpp/thread/mutex)
+# <a href id="mutex"></a>[`<mutex>`](https://en.cppreference.com/w/cpp/header/mutex) --- 保护共享资源免于竞争的互斥机制
 
 `std::mutex` 提供*互斥的*、*非递归的*所有权机制。假设 `mtx` 为某一 `std::mutex` 对象：
 - 一个 `std::thread` 从其成功调用 `mtx.lock()` 或 `mtx.try_lock()` 起、至其调用 `mtx.unlock()` 为止，获得 `mtx` 的所有权。
@@ -95,7 +95,7 @@ int main() {
   - `std::adopt_lock_t` 假设已获得所有权（否则其行为未定义），通常用于 RAII。
 - [`std::shared_lock`](https://en.cppreference.com/w/cpp/thread/shared_lock) (C++14/17) 与 `std::unique_lock` 类似，但要求支持 `mtx.lock_shared()` 及 `mtx.try_lock_shared()`。
 
-## `unique_lock`
+## `unique_lock<>`
 
 ```cpp
 #include <algorithm>
@@ -164,7 +164,7 @@ void write() {
 }
 ```
 
-# [`<condition_variable>`](https://en.cppreference.com/w/cpp/thread/condition_variable)
+# [`<condition_variable>`](https://en.cppreference.com/w/cpp/thread/condition_variable) --- 基于等待唤醒的线程间通信机制
 
 `std::condition_variable` 主要提供两组操作
 - 【等待】包括 `wait()`, `wait_for()`, `wait_until()`
@@ -228,12 +228,27 @@ void Produce() {
 - `Consume` 中只能用 `unique_lock`，因为要将其传递给 `wait()`。
 - `Produce` 中可以用 `scoped_lock`，因为只需获得互斥访问权限。
 
-# `<future>`
+# [`<semaphore>`](https://en.cppreference.com/w/cpp/header/semaphore) --- 限制访问数量的轻量级同步机制
 
-## `promise`
+# [`<future>`](https://en.cppreference.com/w/cpp/header/future) --- 基于共享状态的异步任务机制
+
+## `future<>` and `promise<>`
+
+支持在一对任务间通过共享状态（免锁地）传递数据。
+
+典型用例：
 
 ```cpp
-void Put(std::promise<X> &px) {  // a task: put the result in px
+void Get(std::future<X> &fx) {  // 获取 X-型 值
+  try {
+    auto x = fx.get();  // 可能需要等待 px.set_value() 完成
+    // use x ...
+  } catch (...) {
+    // handle the exception ...
+  }
+}
+
+void Put(std::promise<X> &px) {  // 设置 X-型 值
   try {
     auto res = X(/* ... */);
     // may throw an exception
@@ -245,20 +260,10 @@ void Put(std::promise<X> &px) {  // a task: put the result in px
 }
 ```
 
-## `future`
+## `packaged_task<>`
 
-```cpp
-void Get(std::future<X> &fx) {  // a task: get the result from fx
-  try {
-    auto x = fx.get();  // if necessary, wait for the value to get computed
-    // use x ...
-  } catch (...) {
-    // handle the exception ...
-  }
-}
-```
-
-## `packaged_task`
+提供对可调用对象（返回 `X` 型对象）的封装，以简化 `future<X>`/`promise<X>` 调用。
+其 `get_future()` 方法返回其对应的 `future<X>`。
 
 ```cpp
 #include <future>
@@ -276,8 +281,8 @@ int main() {
   using Task = decltype(accum);
   auto pt0 = std::packaged_task<Task>{accum};
   auto pt1 = std::packaged_task<Task>{accum};
-  auto f0 = std::future<double>{pt0.get_future()};
-  auto f1 = std::future<double>{pt1.get_future()};
+  auto f0 = pt0.get_future();  // 返回 future<double>
+  auto f1 = pt1.get_future();  // 返回 future<double>
   auto *head = &v[0];
   auto *half = head + v.size() / 2;
   auto *tail = head + v.size();
@@ -288,7 +293,12 @@ int main() {
 }
 ```
 
-## `async`
+## `async()`
+
+避免显式创建线程的任务级并发机制，由系统在运行期决定创建多少线程。
+
+- 【入参】返回 `X` 型对象的可调用对象（及其入参）
+- 【返回值】`future<X>` 型对象，用 `get()` 获取结果
 
 ```cpp
 #include <iostream>
@@ -305,6 +315,7 @@ int parallel_sum(RandomIt beg, RandomIt end) {
   RandomIt mid = beg + len/2;
   auto future = std::async(
       /* std::launch::async, */parallel_sum<RandomIt>, mid, end);
+  // 异步（非阻塞）地执行 parallel_sum(mid, end)
   int sum = parallel_sum(beg, mid);
   return sum + future.get();
 }
@@ -315,8 +326,7 @@ int main() {
 }
 ```
 
-
-# `<atomic>`
+# [`<atomic>`](https://en.cppreference.com/w/cpp/header/atomic) --- 支持免锁互斥的细粒度操作
 
 ## `volatile`
 
