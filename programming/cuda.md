@@ -104,6 +104,52 @@ Hello, world from thread[0][0][0] in block[1][0][0]
 Hello, world from thread[1][0][0] in block[1][0][0]
 ```
 
+其中 `__global__` 为**函数类型修饰符**，表示该函数被 host 调用（CC >= 3 也可被 device 调用）、在 device 上执行，且返回值类型必须是 `void`。
+除此之外，还有另外两种*函数类型修饰符*（可以同时使用）：
+- `__device__` 表示该函数只能被 device 调用、在 device 上执行。
+- `__host__` 表示该函数只能被 host 调用、在 host 上执行，可以缺省。
+
+## Error Code 
+
+绝大多数 CUDA 函数的返回值类型都是 `cudaError_t`，其值可用以下函数转换成字符串：
+
+```c
+char*  cudaGetErrorString(cudaError_t error);
+```
+
+[Cheng (2014)](https://www.wiley.com/en-us/Professional+CUDA+C+Programming-p-9781118739327) 提供了以下封装：
+
+```c
+#define CHECK(call) {
+  const cudaError_t error = call;
+  if (error != cudaSuccess) {
+    printf("Error: %s:%d, ", __FILE__, __LINE__);
+    printf("code:%d, reason: %s\n", error, cudaGetErrorString(error));
+    exit(1);
+  }
+}
+```
+
+## The `nvprof` Profiler
+
+CPU 计时器：
+
+```c
+#include <sys/time.h>
+
+double cpuSecond() {
+  struct timeval tp;
+  gettimeofday(&tp, NULL);
+  return ((double)tp.tv_sec + (double)tp.tv_usec*1.e-6);
+}
+```
+
+用 `nvprof`  统计调用次数及运行时间：
+
+```shell
+nvprof [nvprof_args] <app> <app_args>
+```
+
 ## Thread and Block Indexing
 
 相当于对 C 数组 `T a[dim.z][dim.y][dim.x]` 按 `a[idx.z][idx.y][idx.x]` 索引的地址偏移。
