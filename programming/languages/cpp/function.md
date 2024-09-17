@@ -86,3 +86,60 @@ int main() {
 }
 ```
 
+# [Coroutines](https://en.cppreference.com/w/cpp/language/coroutines) --- 允许挂起、恢复执行状态的函数
+
+## `co_await` --- 暂停执行、直到被恢复
+
+## `co_yield` --- 暂停执行、返回当前值
+
+```c
+#include <iostream>
+#include <generator>  // C++23
+
+/**
+ * @brief 生成（无穷多项）Fibonacci 序列
+ */
+std::generator<int> fib() {
+  int a = 0, b = 1;
+  while (true) {
+    co_yield b;  // 保存执行状态、返回当前值、等待下次调用
+    auto c = a + b;
+    a = b;
+    b = c;
+  }
+}
+
+/**
+ * @brief 打印 Fibonacci 序列的前 n 项
+ */
+void printFib(int n) {
+  int i = 1;
+  for (int x : fib()) {
+    std::printf("fib(%d) = %d\n", i, x);
+    if (i++ == n) {
+      break;
+    }
+  }
+}
+
+int main(int argc, char *argv[]) {
+  int n = std::atoi(argv[1]);
+  printFib(n);
+}
+```
+
+```shell
+> g++ -std=c++23 -O2 main.cpp && ./a.out 10
+fib(1) = 1
+fib(2) = 1
+fib(3) = 2
+fib(4) = 3
+fib(5) = 5
+fib(6) = 8
+fib(7) = 13
+fib(8) = 21
+fib(9) = 34
+fib(10) = 55
+```
+
+## `co_return` --- 结束执行、返回当前值
