@@ -164,7 +164,7 @@ void write() {
 }
 ```
 
-# [`<condition_variable>`](https://en.cppreference.com/w/cpp/thread/condition_variable) --- 基于等待唤醒的线程间通信机制
+# <a href id="cond_var"></a>[`<condition_variable>`](https://en.cppreference.com/w/cpp/thread/condition_variable) --- 基于等待、唤醒的线程间通信机制
 
 `std::condition_variable` 主要提供两组操作
 - 【等待】包括 `wait()`, `wait_for()`, `wait_until()`
@@ -327,6 +327,117 @@ int main() {
 ```
 
 # [`<atomic>`](https://en.cppreference.com/w/cpp/header/atomic) --- 支持免锁互斥的细粒度操作
+
+## `atomic<>`
+
+对于满足 [TriviallyCopyable](https://en.cppreference.com/w/cpp/named_req/TriviallyCopyable) 的简单类型 `T`，该模板的特化 `std::atomic<T>` 相当于定义了
+
+```cpp
+namespace std {
+
+template <class T>
+struct atomic {
+ private:
+  T t_;
+
+ public:
+  // 初始化：
+  atomic() noexcept = default;
+  constexpr atomic(T t) noexcept
+      : t_(t) {
+  }
+
+  // 禁止拷贝、移动：
+  atomic(const atomic &) = delete;
+  atomic& operator=(const atomic &) = delete;
+
+  // 原子地取值：
+  T load() const noexcept {
+    return t_;
+  }
+  T operator T() const noexcept {
+    return t_;
+  }
+
+  // 原子地存值：
+  void store(T t) noexcept {
+    t_ = t;
+  }
+  T operator=(T t) noexcept {
+    return t_ = t;
+  }
+
+  // 原子地存新值、取旧值：
+  T exchange(T t_new) noexcept {
+    T t_old = t_;
+    t_ = t_new;
+    return t_old;
+  }
+};
+
+}  // namespace std
+```
+
+C++20 引入了与 [`condition_variable`](#cond_var) 类似的接口：
+
+```cpp
+namespace std {
+
+template <class T>
+struct atomic {
+ public:
+  /* ... */
+
+  void wait(T t_old) const noexcept;
+      // 阻塞当前线程，直到 t_ != t_old
+
+  void notify_one() noexcept;
+      // 唤醒 任一 被 this->wait(t_old) 阻塞的线程
+
+  void notify_all() noexcept;
+      // 唤醒 所有 被 this->wait(t_old) 阻塞的线程
+};
+
+}  // namespace std
+```
+
+典型用例：
+
+```cpp
+#include <atomic>
+#include <chrono>
+#include <future>
+#include <iostream>
+#include <thread>
+
+using namespace std::chrono_literals;  // ms
+ 
+int main() {
+  constexpr int kTasks = 32;
+
+  std::atomic<bool> completed{false};
+  std::atomic<unsigned> todo_task_count{kTasks}, done_task_count{0};
+  std::future<void> task_futures[kTasks];
+
+  for (auto &task_future : task_futures) {
+    task_future = std::async([&]() {
+      std::this_thread::sleep_for(50ms);  // 假装做一些事
+
+      --todo_task_count;  // 原子地 --
+      ++done_task_count;  // 原子地 ++
+
+      if (todo_task_count.load() == 0) {
+        completed = true;  // 原子地赋值
+        completed.notify_one();  // 唤醒主线程
+      }
+    });
+  }
+
+  completed.wait(false);  // 阻塞主线程，直到 completed.load() == true
+
+  std::cout << "Tasks completed = " << done_task_count.load() << '\n';
+}
+```
 
 ## `volatile`
 
