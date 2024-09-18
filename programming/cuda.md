@@ -54,6 +54,60 @@ struct dim3 {
 };
 ```
 
+## Device Properties
+
+```c
+#include <cuda_runtime.h>
+
+int main() {
+    // ...
+    int deviceCount = 0;
+    cudaGetDeviceCount(&deviceCount);
+
+    int dev = 0;
+    cudaSetDevice(dev);
+
+    int driverVersion = 0;
+    cudaDriverGetVersion(&driverVersion);
+
+    int runtimeVersion = 0;
+    cudaRuntimeGetVersion(&runtimeVersion);
+
+    cudaDeviceProp deviceProp;
+    CHECK(cudaGetDeviceProperties(&deviceProp, dev));
+
+    // ...
+}
+```
+
+其中 [`cudaDeviceProp`](https://docs.nvidia.com/cuda/cuda-runtime-api/structcudaDeviceProp.html) 型变量的主要成员包括：
+
+| 类型 | 成员名 | 含义 | 典型值 (A100 80GB PCIe) |
+| :--: | :----: | :--: | :--: |
+| `int` | `clockRate` | (deprecated) clock frequency in kHz | 1.41 GHz |
+| `int` | `l2CacheSize` | size of L2 cache in bytes | 41943040 |
+| `int` | `major`, `minor` | major and minor compute capability | 12.2 |
+| `int` | `maxThreadsPerMultiProcessor` | maximum resident threads per multiprocessor | 2048 |
+| `int` | `maxThreadsPerBlock` | maximum number of threads per block | 1024 |
+| `int` | `memoryclockRate` | (deprecated) peak memory clock frequency in kHz | 1512 MHz |
+| `int` | `memoryBusWidth` | global memory bus width in bits | 5120-bit |
+| `int` | `multiProcessorCount` | number of multiprocessors on device | 108 |
+| `char[256]` | `name` | ASCII string identifying device | `"NVIDIA A100 80GB PCIe"` |
+| `int` | `regsPerBlock` | 32-bit registers available per block | 65536 |
+| `int` | `sharedMemPerBlock` | shared memory available per block in bytes | 49152 |
+| `size_t` | `totalGlobalMem` | global memory available on device in bytes | 79.15 GBytes |
+| `int` | `warpSize` | warp size in threads | 32 |
+
+也可以用 `nvidia-smi` 命令获取 GPU 信息：
+
+```shell
+# 显式已每个已安装 GPU 的 ID
+nvidia-smi -L
+
+# 显式 MEMORY | UTILIZATION | CLOCK 相关信息
+nvidia-smi -q -i 0 -d [ MEMORY | UTILIZATION | CLOCK ]
+```
+
 ## *Hello, world* in CUDA
 
 [`hello.cu`](./cuda/hello.cu) 关键行：
