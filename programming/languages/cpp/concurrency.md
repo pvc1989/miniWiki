@@ -230,6 +230,51 @@ void Produce() {
 
 # [`<semaphore>`](https://en.cppreference.com/w/cpp/header/semaphore) --- 限制访问数量的轻量级同步机制
 
+源于 Dijkstra 发明的 [P--V 操作](../../csapp/12_concurrent_programming.md#semaphore)。
+
+## `counting_semaphore<>`
+
+C++20 引入的类模板，相当于
+
+```cpp
+namespace std {
+
+template<std::ptrdiff_t LeastMaxValue = /* implementation-defined */>
+class counting_semaphore {
+ private:
+  std::ptrdiff_t counter;
+
+ public:
+  constexpr explicit counting_semaphore(std::ptrdiff_t desired)
+      : counter(desired) {
+  }
+
+  void acquire() {
+    if (counter > 0) {
+      counter--;  // 原子操作
+    } else {
+      block();  // 阻塞当前线程，直到被 release() 中的 unblock() 唤醒
+    }
+  }
+
+  void release(std::ptrdiff_t update = 1) {
+    counter += update;  // 原子操作
+    unblock();  // 唤醒任一被 acquire() 中的 block() 阻塞的线程
+  }
+
+};
+
+}  // namespace std
+```
+
+## `binary_semaphore`
+
+`counting_semaphore` 的特化版本，相当于
+
+```cpp
+using binary_semaphore = std::counting_semaphore<1>;
+```
+
 # [`<future>`](https://en.cppreference.com/w/cpp/header/future) --- 基于共享状态的异步任务机制
 
 ## `future<>` and `promise<>`
