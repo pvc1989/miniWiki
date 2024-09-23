@@ -76,6 +76,38 @@ int main() {
   ...
   ```
 
+## <a href id="syncstream"></a>[`<syncstream>`](https://en.cppreference.com/w/cpp/header/syncstream)
+
+为避免上述对 `std::cout` 的竞争，最简单的方式是用 C++20 引入的 `std::osyncstream` ：
+
+```cpp
+#include <iostream>
+#include <syncstream>
+#include <thread>
+#include <vector>
+
+void safe_print(int tid) {
+  auto oss = std::osyncstream(std::cout);
+  oss << tid;
+  oss << ": hello";
+  oss << std::endl;  // flush 不一定立即执行
+  oss << tid;
+  oss << ": world";
+  oss << std::endl;
+  // "<tid>: world\n" 总是紧跟 "<tid>: hello\n" 输出
+}
+
+int main(int argc, char *argv[]) {
+  {
+    std::vector<std::jthread> threads;
+    int n = std::atoi(argv[1]);
+    for (int i = 0; i < n; ++i) {
+      threads.emplace_back(safe_print, i);
+    }
+  }
+}
+```
+
 # <a href id="mutex"></a>[`<mutex>`](https://en.cppreference.com/w/cpp/header/mutex) --- 保护共享资源免于竞争的互斥机制
 
 `std::mutex` 提供*互斥的*、*非递归的*所有权机制。假设 `mtx` 为某一 `std::mutex` 对象：
