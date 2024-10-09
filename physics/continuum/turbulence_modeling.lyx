@@ -288,8 +288,8 @@ Kolmogorov 假设在如此宽的尺度范围中，存在一个独立于载能大
 \end_layout
 
 \begin_layout Standard
-剪应力 
-\begin_inset Formula $\tau$
+壁面附近，平均剪应力 
+\begin_inset Formula $\tau=\tau_{\mathrm{lam}}+\tau_{\mathrm{turb}}$
 \end_inset
 
  随距离 
@@ -304,30 +304,46 @@ Kolmogorov 假设在如此宽的尺度范围中，存在一个独立于载能大
 \end_layout
 
 \begin_layout Standard
-“摩擦速度 (friction velocity)”
+引入“摩擦速度 (friction velocity)”
 \begin_inset Formula 
 \[
-u_{\tau}\coloneqq\sqrt{\frac{\tau_{w}}{\rho}}
+u_{\tau}\coloneqq\sqrt{\frac{\tau_{w}}{\rho}}=\left(\nu\eval{\pdv{U}{y}}_{w}\right)^{1/2}
 \]
 
 \end_inset
 
-代表近壁速度尺度。
+代表近壁速度尺度。由量纲分析可得长度尺度
+\begin_inset Formula 
+\[
+\delta_{\tau}=\frac{\nu}{u_{\tau}}=\left(\frac{1}{\nu}\eval{\pdv{U}{y}}_{w}\right)^{-1/2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 假设平均速度梯度
 \begin_inset Formula 
 \[
-\frac{\partial U}{\partial y}=\frac{u_{\tau}}{y}F\qty(\frac{u_{\tau}\,y}{\nu})
+\frac{\partial U}{\partial y}=\frac{u_{\tau}}{y}\,F\qty(\frac{y}{\delta_{\tau}})
 \]
 
 \end_inset
 
-由实验数据可得
+由实验数据可得，当 
+\begin_inset Formula $y$
+\end_inset
+
+ 充分大时，
+\begin_inset Formula $F$
+\end_inset
+
+ 近似为常数：
 \begin_inset Formula 
 \[
-F\to\frac{1}{\kappa}\impliedby\frac{u_{\tau}\,y}{\nu}\to\infty
+F\approx\kappa^{-1}\impliedby y\gg1,
 \]
 
 \end_inset
@@ -336,22 +352,14 @@ F\to\frac{1}{\kappa}\impliedby\frac{u_{\tau}\,y}{\nu}\to\infty
 \begin_inset Formula $\kappa\approx0.41$
 \end_inset
 
- 为 Karman 常数。
-\end_layout
-
-\begin_layout Standard
-积分得“对数律”：
-\begin_inset Formula 
-\[
-\frac{U}{u_{\tau}}=\frac{1}{\kappa}\ln\frac{u_{\tau}\,y}{\nu}+C
-\]
-
+ 为 Karman 常数。在该近似成立的 
+\begin_inset Formula $y$
 \end_inset
 
-或
+ 值区间内积分，即得“对数律”
 \begin_inset Formula 
 \[
-\boxed{u^{+}=\frac{1}{\kappa}\ln y^{+}+C}
+\boxed{U^{+}=\kappa^{-1}\ln y^{+}+B},\quad\kappa\approx0.41,\quad B\approx5.0,
 \]
 
 \end_inset
@@ -359,12 +367,12 @@ F\to\frac{1}{\kappa}\impliedby\frac{u_{\tau}\,y}{\nu}\to\infty
 其中
 \begin_inset Formula 
 \[
-u^{+}\coloneqq\frac{U}{u_{\tau}},\quad y^{+}\coloneqq\frac{u_{\tau}\,y}{\nu}
+U^{+}\coloneqq\frac{U}{u_{\tau}},\quad y^{+}\coloneqq\frac{y}{\delta_{\tau}},
 \]
 
 \end_inset
 
-为无量纲速度、（到壁面的）无量纲距离。
+分别为无量纲速度、（到壁面的）无量纲距离。
 \end_layout
 
 \begin_layout Standard
@@ -380,7 +388,35 @@ u^{+}\coloneqq\frac{U}{u_{\tau}},\quad y^{+}\coloneqq\frac{u_{\tau}\,y}{\nu}
 \color red
 失效层 (defect layer)
 \color inherit
-。
+。或者按 White (2021) 的分法：
+\end_layout
+
+\begin_layout Description
+黏性子层 黏性剪切（层流应力）主导，
+\begin_inset Formula $y^{+}<5$
+\end_inset
+
+，近似满足 
+\begin_inset Formula $U^{+}=y^{+}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Description
+外层 湍流（雷诺）应力主导，
+\begin_inset Formula $y^{+}>30$
+\end_inset
+
+，满足对数律
+\end_layout
+
+\begin_layout Description
+重叠层 两种应力同等重要，满足速度失效律 
+\begin_inset Formula $(U_{\infty}-U)/u_{\tau}=G(y/\delta)$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -1163,6 +1199,33 @@ Boussinesq 假设存在
 \end_inset
 
  等。
+\end_layout
+
+\begin_layout Subsubsection
+Prandtl 混合长模型
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mu_{T}=\rho\,l^{2}\abs{\dv{U}{y}},
+\]
+
+\end_inset
+
+其中 
+\begin_inset Formula $l$
+\end_inset
+
+ 为“混合长 (mixed length)”，von Karman 建议取
+\begin_inset Formula 
+\[
+l=\kappa\,y,
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
