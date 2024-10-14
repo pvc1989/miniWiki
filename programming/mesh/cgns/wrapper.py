@@ -27,5 +27,13 @@ def getNodeName(node) -> str:
     return node[0]
 
 
+def getNodeData(node):
+    return node[1]
+
+
+def getNodeLabel(node) -> str:
+    return node[-1]
+
+
 if __name__ == '__main__':
     pass
