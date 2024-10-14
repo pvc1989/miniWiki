@@ -35,5 +35,10 @@ def getNodeLabel(node) -> str:
     return node[-1]
 
 
+def getDimensions(base) -> tuple[int, int]:
+    assert 'CGNSBase_t' == getNodeLabel(base)
+    return base[1][0], base[1][1]
+
+
 if __name__ == '__main__':
     pass
