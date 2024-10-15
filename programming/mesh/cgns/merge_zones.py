@@ -3,6 +3,7 @@ import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
 
+import numpy as np
 import argparse
 import wrapper
 
@@ -12,6 +13,8 @@ if __name__ == "__main__":
         prog = 'python3 merge_zones.py',
         description = 'Merge multiple structured `Zone_t`s into a single unstructured `Zone_t`.')
     parser.add_argument('--input', type=str, help='the CGNS file to be merged')
+    parser.add_argument('--output', type=str, default='new.cgns',
+        help='the merged CGNS file')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
@@ -57,7 +60,23 @@ if __name__ == "__main__":
                         xyz_to_count[xyz] = 0
                     xyz_to_count[xyz] += 1
         n_node += n_node_i * n_node_j * n_node_k
-    print(len(xyz_to_count), n_node)
-    assert False
-    # new_zone = cgl.newZone(new_base, 'Zone 1', zsize=[n_node, n_cell, n_rind], ztype='Unstructured')
-    # GridCoordinates (CoordinateX, ...)
+    print('before merging nodes: n_node =', n_node)
+    print('after merging nodes: n_node =', len(xyz_to_count))
+    n_node = len(xyz_to_count)
+    values_x = np.ndarray(n_node)
+    values_y = np.ndarray(n_node)
+    values_z = np.ndarray(n_node)
+    i_node = 0
+    for xyz in xyz_to_count.keys():
+        values_x[i_node] = xyz[X]
+        values_y[i_node] = xyz[Y]
+        values_z[i_node] = xyz[Z]
+        i_node += 1
+    n_cell = 0
+    n_rind = 0
+    new_zone = cgl.newZone(new_base, 'Zone 1', zsize=np.array([[n_node], [n_cell], [n_rind]]), ztype='Unstructured')
+    new_coords = cgl.newGridCoordinates(new_zone, 'GridCoordinates')
+    new_coords_x = cgl.newDataArray(new_coords, 'CoordinateX', values_x)
+    new_coords_y = cgl.newDataArray(new_coords, 'CoordinateY', values_y)
+    new_coords_z = cgl.newDataArray(new_coords, 'CoordinateZ', values_z)
+    cgm.save(args.output, new_tree)
