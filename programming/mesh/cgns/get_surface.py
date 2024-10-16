@@ -53,3 +53,40 @@ if __name__ == "__main__":
     assert 'CoordinateZ' == wrapper.getNodeName(coords_z)
     values_x, values_y, values_z = coords_x[1], coords_y[1], coords_z[1]
     assert (n_node,) == values_x.shape == values_y.shape == values_z.shape
+
+    # Elements_t level
+    sections = wrapper.getChildrenByType(old_zone, 'Elements_t')
+    print('n_section =', len(sections))
+    for section in sections:
+        element_type = wrapper.getUniqueChildByType(section, 'ElementType_t')
+        assert element_type is None
+        # TODO(gaomin): add ElementType_t(QUAD_4)
+        connectivity = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
+        assert wrapper.getNodeLabel(connectivity) == 'DataArray_t'
+        print(connectivity)
+        connectivity_list = wrapper.getNodeData(connectivity)
+        n_node_per_cell = 4  # FLEXI only supports `QUAD_4`
+        assert connectivity_list.shape == (n_node_per_cell * n_cell,)
+
+    # FlowSolution_t level
+    solution = wrapper.getUniqueChildByType(old_zone, 'FlowSolution_t')
+    assert wrapper.getUniqueChildByType(solution, 'GridLocation_t') is None
+    # TODO(gaomin): add GridLocation_t(Vertex)
+    type_values = wrapper.getNodeData(wrapper.getUniqueChildByName(solution, 'BCType'))
+    assert type_values.shape == (n_node,)
+
+    # filter cells by types
+    filtered_cells = list()
+    filtered_nodes = list()
+    for i_cell in range(n_cell):
+        first = n_node_per_cell * i_cell
+        type_i = type_values[connectivity_list[first] - 1]  # connectivity given in 1-based
+        for curr in range(first + 1, first + n_node_per_cell):
+            assert type_i == type_values[connectivity_list[curr] - 1]
+        if type_i == args.bctype:
+            filtered_cells.append(i_cell)
+            for curr in range(first, first + n_node_per_cell):
+                filtered_nodes.append(connectivity_list[curr] - 1)
+                # TODO(pvc): support non-duplicated nodes
+    print(f'{len(filtered_cells)} of {n_cell} cells filtered out')
+    print(f'{len(filtered_nodes)} of {n_node} nodes filtered out')

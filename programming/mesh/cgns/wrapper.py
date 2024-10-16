@@ -4,17 +4,36 @@ import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
 
 
-def getChildrenByType(node, type):
+def getChildrenByType(node, cgns_type):
     children = []
     all_children = cgu.getNextChildSortByType(node)
     for child in all_children:
-        if cgu.checkNodeType(child, type):
+        if cgu.checkNodeType(child, cgns_type):
             children.append(child)
     return children
 
 
-def getUniqueChildByType(node, type):
-    children = getChildrenByType(node, type)
+def getChildrenByName(node, name):
+    children = []
+    all_children = cgu.getNextChildSortByType(node)
+    for child in all_children:
+        if getNodeName(child) == name:
+            children.append(child)
+    return children
+
+
+def getUniqueChildByType(node, cgns_type):
+    children = getChildrenByType(node, cgns_type)
+    if 1 == len(children):
+        return children[0]
+    elif 0 == len(children):
+        return None
+    else:
+        assert False
+
+
+def getUniqueChildByName(node, name):
+    children = getChildrenByName(node, name)
     if 1 == len(children):
         return children[0]
     elif 0 == len(children):
