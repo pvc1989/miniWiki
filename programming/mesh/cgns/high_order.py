@@ -29,7 +29,10 @@ if __name__ == "__main__":
     cad_zone = wrapper.getUniqueChildByType(
         wrapper.getUniqueChildByType(cad_cgns, 'CGNSBase_t'), 'Zone_t')
     zone_size = wrapper.getNodeData(cad_zone)
+    n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
+    if args.verbose:
+        print(f'in CAD: n_node = {n_node}, n_cell = {n_cell}')
 
     cad_coords = wrapper.getChildrenByType(
         wrapper.getUniqueChildByType(cad_zone, 'GridCoordinates_t'), 'DataArray_t')
@@ -54,7 +57,37 @@ if __name__ == "__main__":
             centers[i_cell_global][Z] = np.sum(cad_coords_z[index]) / 3
             i_cell_global += 1
     assert i_cell_global == n_cell, i_cell_global
-    cad_tree = KDTree(centers)
+    cad_kdtree = KDTree(centers)
 
     # load the linear mesh
     mesh_cgns, _, _ = cgm.load(args.mesh)
+
+    mesh_zone = wrapper.getUniqueChildByType(
+        wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
+    zone_size = wrapper.getNodeData(mesh_zone)
+    n_node = zone_size[0][0]
+    n_cell = zone_size[0][1]
+    if args.verbose:
+        print(f'in mesh: n_node = {n_node}, n_cell = {n_cell}')
+
+    mesh_coords = wrapper.getChildrenByType(
+        wrapper.getUniqueChildByType(mesh_zone, 'GridCoordinates_t'), 'DataArray_t')
+    mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
+
+    section = wrapper.getUniqueChildByType(mesh_zone, 'Elements_t')
+    element_type = wrapper.getNodeData(section)
+    assert element_type[0] == 7  # QUAD_4
+    connectivity = wrapper.getNodeData(
+        wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+    for i_cell_mesh in range(n_cell):
+        first = i_cell_mesh * 4
+        index = connectivity[first : first + 4] - 1
+        # build the center
+        x = np.sum(mesh_coords_x[index]) / 4
+        y = np.sum(mesh_coords_y[index]) / 4
+        z = np.sum(mesh_coords_z[index]) / 4
+        xyz = (x, y, z)
+        # find the triangle in CAD
+        distance, i_cell_cad = cad_kdtree.query(xyz)
+        if args.verbose:
+            print(f'Quad[{i_cell_mesh}] tp Triangle[{i_cell_cad}] is {distance}')
