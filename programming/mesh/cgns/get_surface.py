@@ -13,7 +13,7 @@ if __name__ == "__main__":
         prog = 'python3 get_surface.py',
         description = 'Get elements and the nodes they used on surfaces specified by a given `FLEXI::BCType`.')
     parser.add_argument('--input', type=str, help='the CGNS file to be processed')
-    parser.add_argument('--output', type=str, default='surface.cgns',
+    parser.add_argument('--output', type=str, default='surface_quad4.cgns',
         help='the CGNS file containing elements and nodes on the specified surfaces')
     parser.add_argument('--bctype', type=int, default=3,
         help='the BCType of the specified surfaces')
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Zone_t level
     old_zone = wrapper.getUniqueChildByType(old_base, 'Zone_t')
     zone_name = wrapper.getNodeName(old_zone)
-    zone_size = old_zone[1]
+    zone_size = wrapper.getNodeData(old_zone)
     print('zone_size =', zone_size)
     assert zone_size.shape == (1, 3)
     n_node = zone_size[0][0]
@@ -55,21 +55,22 @@ if __name__ == "__main__":
     assert (n_node,) == values_x.shape == values_y.shape == values_z.shape
 
     # Elements_t level
-    sections = wrapper.getChildrenByType(old_zone, 'Elements_t')
-    print('n_section =', len(sections))
-    for section in sections:
-        element_type = wrapper.getUniqueChildByType(section, 'ElementType_t')
-        assert element_type is None
-        # TODO(gaomin): add ElementType_t(QUAD_4)
-        connectivity = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
-        assert wrapper.getNodeLabel(connectivity) == 'DataArray_t'
+    section = wrapper.getUniqueChildByType(old_zone, 'Elements_t')
+    element_type = wrapper.getUniqueChildByType(section, 'ElementType_t')
+    assert element_type is None
+    # TODO(gaomin): add ElementType_t(QUAD_4)
+    connectivity = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
+    assert wrapper.getNodeLabel(connectivity) == 'DataArray_t'
+    if args.verbose:
         print(connectivity)
-        connectivity_list = wrapper.getNodeData(connectivity)
-        n_node_per_cell = 4  # FLEXI only supports `QUAD_4`
-        assert connectivity_list.shape == (n_node_per_cell * n_cell,)
+    old_connectivity_list = wrapper.getNodeData(connectivity)
+    n_node_per_cell = 4  # FLEXI only supports `QUAD_4`
+    assert old_connectivity_list.shape == (n_node_per_cell * n_cell,)
 
     # FlowSolution_t level
     solution = wrapper.getUniqueChildByType(old_zone, 'FlowSolution_t')
+    if args.verbose:
+        print(solution)
     assert wrapper.getUniqueChildByType(solution, 'GridLocation_t') is None
     # TODO(gaomin): add GridLocation_t(Vertex)
     type_values = wrapper.getNodeData(wrapper.getUniqueChildByName(solution, 'BCType'))
@@ -80,13 +81,55 @@ if __name__ == "__main__":
     filtered_nodes = list()
     for i_cell in range(n_cell):
         first = n_node_per_cell * i_cell
-        type_i = type_values[connectivity_list[first] - 1]  # connectivity given in 1-based
+        type_i = type_values[old_connectivity_list[first] - 1]  # connectivity given in 1-based
         for curr in range(first + 1, first + n_node_per_cell):
-            assert type_i == type_values[connectivity_list[curr] - 1]
+            assert type_i == type_values[old_connectivity_list[curr] - 1]
         if type_i == args.bctype:
             filtered_cells.append(i_cell)
             for curr in range(first, first + n_node_per_cell):
-                filtered_nodes.append(connectivity_list[curr] - 1)
+                filtered_nodes.append(old_connectivity_list[curr] - 1)
                 # TODO(pvc): support non-duplicated nodes
     print(f'{len(filtered_cells)} of {n_cell} cells filtered out')
     print(f'{len(filtered_nodes)} of {n_node} nodes filtered out')
+    old_to_new = np.ndarray((n_node,), dtype=old_connectivity_list.dtype)
+    for i_new in range(len(filtered_nodes)):
+        i_old = filtered_nodes[i_new]
+        old_to_new[i_old] = i_new
+
+    # create new Zone_t
+    n_node = len(filtered_nodes)
+    n_cell = len(filtered_cells)
+    n_rind = 0
+    new_zone = cgl.newZone(new_base, wrapper.getNodeName(old_zone),
+        zsize=np.array([[n_node, n_cell, n_rind]]), ztype='Unstructured')
+    assert zone_size.shape == wrapper.getNodeData(new_zone).shape
+
+    # create new GridCoordinate_
+    new_coords = cgl.newGridCoordinates(new_zone, 'GridCoordinates')
+    cgl.newDataArray(new_coords, 'CoordinateX', values_x[filtered_nodes])
+    cgl.newDataArray(new_coords, 'CoordinateY', values_y[filtered_nodes])
+    cgl.newDataArray(new_coords, 'CoordinateZ', values_z[filtered_nodes])
+
+    # create new Elements_t
+    new_connectivity_list = np.ndarray((n_node_per_cell * n_cell,), dtype=old_connectivity_list.dtype)
+    for i_cell in range(n_cell):
+        new_first = n_node_per_cell * i_cell
+        old_first = n_node_per_cell * filtered_cells[i_cell]
+        for i in range(n_node_per_cell):
+            i_node_old = old_connectivity_list[old_first + i]
+            i_node_new = old_to_new[i_node_old - 1] + 1
+            # both i_node's are 1-based
+            new_connectivity_list[new_first + i] = i_node_new
+    assert 1 == np.min(new_connectivity_list) <= np.max(new_connectivity_list) == n_node
+    erange_old = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
+    erange_new = np.ndarray(erange_old.shape, erange_old.dtype)
+    erange_new[0] = 1
+    erange_new[1] = n_cell
+    cgl.newElements(new_zone, 'Elements', erange=erange_new, etype='QUAD_4',
+        econnectivity=new_connectivity_list)
+
+    if args.verbose:
+        print('\nnew_base=\n', new_base)
+
+    # write the new CGNSTree_t
+    cgm.save(args.output, new_tree)
