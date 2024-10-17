@@ -172,40 +172,36 @@ if __name__ == "__main__":
         x = (mesh_coords_x[old_first + 0] + mesh_coords_x[old_first + 1]) / 2
         y = (mesh_coords_y[old_first + 0] + mesh_coords_y[old_first + 1]) / 2
         z = (mesh_coords_z[old_first + 0] + mesh_coords_z[old_first + 1]) / 2
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree, cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        new_coords_x[i_node_next] = foot[X]
-        new_coords_y[i_node_next] = foot[Y]
-        new_coords_z[i_node_next] = foot[Z]
+        new_coords_x[i_node_next] = x
+        new_coords_y[i_node_next] = y
+        new_coords_z[i_node_next] = z
         i_node_next += 1
         new_connectivity[new_fisrt + 4] = i_node_next
         # build the mid-point on the right edge
         x = (mesh_coords_x[old_first + 1] + mesh_coords_x[old_first + 2]) / 2
         y = (mesh_coords_y[old_first + 1] + mesh_coords_y[old_first + 2]) / 2
         z = (mesh_coords_z[old_first + 1] + mesh_coords_z[old_first + 2]) / 2
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree, cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        new_coords_x[i_node_next] = foot[X]
-        new_coords_y[i_node_next] = foot[Y]
-        new_coords_z[i_node_next] = foot[Z]
+        new_coords_x[i_node_next] = x
+        new_coords_y[i_node_next] = y
+        new_coords_z[i_node_next] = z
         i_node_next += 1
         new_connectivity[new_fisrt + 5] = i_node_next
         # build the mid-point on the top edge
         x = (mesh_coords_x[old_first + 2] + mesh_coords_x[old_first + 3]) / 2
         y = (mesh_coords_y[old_first + 2] + mesh_coords_y[old_first + 3]) / 2
         z = (mesh_coords_z[old_first + 2] + mesh_coords_z[old_first + 3]) / 2
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree, cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        new_coords_x[i_node_next] = foot[X]
-        new_coords_y[i_node_next] = foot[Y]
-        new_coords_z[i_node_next] = foot[Z]
+        new_coords_x[i_node_next] = x
+        new_coords_y[i_node_next] = y
+        new_coords_z[i_node_next] = z
         i_node_next += 1
         new_connectivity[new_fisrt + 6] = i_node_next
         # build the mid-point on the left edge
         x = (mesh_coords_x[old_first + 3] + mesh_coords_x[old_first + 0]) / 2
         y = (mesh_coords_y[old_first + 3] + mesh_coords_y[old_first + 0]) / 2
         z = (mesh_coords_z[old_first + 3] + mesh_coords_z[old_first + 0]) / 2
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree, cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        new_coords_x[i_node_next] = foot[X]
-        new_coords_y[i_node_next] = foot[Y]
-        new_coords_z[i_node_next] = foot[Z]
+        new_coords_x[i_node_next] = x
+        new_coords_y[i_node_next] = y
+        new_coords_z[i_node_next] = z
         i_node_next += 1
         new_connectivity[new_fisrt + 7] = i_node_next
         # build the center point
@@ -213,10 +209,9 @@ if __name__ == "__main__":
         x = np.sum(mesh_coords_x[index]) / 4
         y = np.sum(mesh_coords_y[index]) / 4
         z = np.sum(mesh_coords_z[index]) / 4
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree, cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        new_coords_x[i_node_next] = foot[X]
-        new_coords_y[i_node_next] = foot[Y]
-        new_coords_z[i_node_next] = foot[Z]
+        new_coords_x[i_node_next] = x
+        new_coords_y[i_node_next] = y
+        new_coords_z[i_node_next] = z
         i_node_next += 1
         new_connectivity[new_fisrt + 8] = i_node_next
         print(f'QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
@@ -231,6 +226,21 @@ if __name__ == "__main__":
     mesh_coords[Y][1] = new_coords_y
     mesh_coords[Z][1] = new_coords_z
 
+    # update the coords
+    mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
+    # push nodes onto the wall
+    for i in range(n_node_new):
+        x = mesh_coords_x[i]
+        y = mesh_coords_y[i]
+        z = mesh_coords_z[i]
+        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree,
+            cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
+        mesh_coords_x[i] = foot[X]
+        mesh_coords_y[i] = foot[Y]
+        mesh_coords_z[i] = foot[Z]
+        print(f'QUAD_4[{i}] -> QUAD_9_shift[{i}]')
+
+    # update the cells
     cgu.removeChildByName(section, 'ElementConnectivity')
     cgl.newDataArray(section, 'ElementConnectivity', new_connectivity)
 
