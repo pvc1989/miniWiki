@@ -104,8 +104,8 @@ if __name__ == "__main__":
 
     # TODO(PVC): (args.target == corner) do not need cad_connectivity
     cad_connectivity = np.zeros(n_cell * 3, dtype=int) - 1
-    # assert cad_connectivity.shape == (n_cell * 3,)
-    # assert (cad_connectivity == -1).all()
+    assert cad_connectivity.shape == (n_cell * 3,)
+    assert (cad_connectivity == -1).all()
     sections = wrapper.getChildrenByType(cad_zone, 'Elements_t')
     print('n_section =', len(sections))
     i_cell_global = 0
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         if args.verbose and False:
             print(section)
         element_type = wrapper.getNodeData(section)
-        # assert element_type[0] == 5  # TRI_3
+        assert element_type[0] == 5  # TRI_3
         connectivity = wrapper.getNodeData(
             wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
         element_range = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
@@ -123,7 +123,7 @@ if __name__ == "__main__":
             print('element_range =', element_range, first_global, last_global)
         cad_connectivity[first_global * 3 : last_global * 3] = connectivity[:]
         n_cell_local = last_global - first_global
-        # assert n_cell_local == connectivity.shape[0] // 3
+        assert n_cell_local == connectivity.shape[0] // 3
         for i_cell_local in range(n_cell_local):
             first_local = i_cell_local * 3
             node_index_tuple = connectivity[first_local : first_local + 3] - 1
@@ -131,24 +131,21 @@ if __name__ == "__main__":
             cell_index = first_global + i_cell_local
             setKdtreePoints(cell_index, node_index_tuple)
             i_cell_global += 1
-    # assert i_cell_global == n_cell, i_cell_global
-    # assert (1 <= cad_connectivity).all() and (cad_connectivity <= n_node).all()
+    assert i_cell_global == n_cell, i_cell_global
+    assert (1 <= cad_connectivity).all() and (cad_connectivity <= n_node).all()
 
     section_names = []
     for section in sections:
         section_names.append(wrapper.getNodeName(section))
-    # assert len(section_names) == len(sections)
+    assert len(section_names) == len(sections)
     for name in section_names:
         cgu.removeChildByName(cad_zone, name)
-    # assert len(wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
+    assert len(wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
     cgl.newElements(cad_zone, 'SingleSection', etype='TRI_3', erange=np.array([1, n_cell]), econnectivity=cad_connectivity)
     print(len(wrapper.getChildrenByType(cad_zone, 'Elements_t')))
     cgm.save('cad-merged.cgns', cad_cgns)
 
     cad_kdtree = KDTree(kdtree_points)
-    for i in range(n_cell):
-        pass
-        # assert np.linalg.norm(kdtree_points[i] - cad_kdtree.data[i]) == 0
 
     # load the linear mesh
     mesh_cgns, _, _ = cgm.load(args.mesh)
@@ -167,7 +164,7 @@ if __name__ == "__main__":
 
     section = wrapper.getUniqueChildByType(mesh_zone, 'Elements_t')
     element_type = wrapper.getNodeData(section)
-    # assert element_type[0] == 7  # QUAD_4
+    assert element_type[0] == 7  # QUAD_4
     old_connectivity = wrapper.getNodeData(
         wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
@@ -234,7 +231,7 @@ if __name__ == "__main__":
             i_node_next += 1
             new_connectivity[new_fisrt + 8] = i_node_next
             print(f'QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
-        # assert i_node_next == n_node_new
+        assert i_node_next == n_node_new
         n_node = n_node_new
         if args.verbose:
             print(f'in quadratic mesh: n_node = {n_node}, n_cell = {n_cell}')
