@@ -2,11 +2,11 @@ import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
+import wrapper
 
 import numpy as np
 from scipy.spatial import KDTree
 import argparse
-import wrapper
 
 
 def getNearestPoint(point_p: np.ndarray, kdtree: KDTree) -> np.ndarray:
@@ -67,6 +67,13 @@ if __name__ == "__main__":
 
     if args.verbose:
         print(args)
+
+    output = args.output
+    if output is None:
+        i = args.cad.index('max=') + 4
+        j = args.cad[i:].index('_')
+        h_max = float(args.cad[i : i + j])
+        output = f'{args.mesh[:-5]}_order={args.order}_cad={h_max:3.1e}mm_shift={args.target}.cgns'
 
     X, Y, Z = 0, 1, 2
 
@@ -230,7 +237,7 @@ if __name__ == "__main__":
             new_coords_z[i_node_next] = z
             i_node_next += 1
             new_connectivity[new_fisrt + 8] = i_node_next
-            print(f'QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
+            print(f'Convert QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
         assert i_node_next == n_node_new
         n_node = n_node_new
         if args.verbose:
@@ -264,6 +271,7 @@ if __name__ == "__main__":
         mesh_coords_x[i] = x
         mesh_coords_y[i] = y
         mesh_coords_z[i] = z
-        print(f'i_node / n_node = {i} / {n_node}')
+        print(f'Shift i_node / n_node = {i} / {n_node}')
 
-    cgm.save(args.output, mesh_cgns)
+    if args.verbose:
+        print('write to ', output)
