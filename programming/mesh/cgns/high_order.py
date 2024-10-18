@@ -122,6 +122,7 @@ def getRefinedKdtree(cad_nodes: np.ndarray, cad_connectivity: np.ndarray,
     n_cad_cell = cad_connectivity.shape[0] // 3
     refined_points = []
     refined_tuples = []
+    cad_cell_data = np.ndarray((n_cad_cell,))
     n_gap = 4
     area_coords = np.arange(1, n_gap, 1) / n_gap
     for i_cad_cell in range(n_cad_cell):
@@ -129,13 +130,12 @@ def getRefinedKdtree(cad_nodes: np.ndarray, cad_connectivity: np.ndarray,
         node_index_tuple = cad_connectivity[first : first + 3] - 1
         corners = cad_nodes[node_index_tuple, :]
         assert corners.shape == (3, 3)
-        need_refinement = False
+        min_length = 1.0e+100
         for corner in corners:
             _, i_mesh_point = mesh_kdtree.query(corner)
-            if mesh_min_lengths[i_mesh_point] < 1:  # in inch
-                need_refinement = True
-                break
-        if not need_refinement:
+            min_length = min(min_length, mesh_min_lengths[i_mesh_point])
+        cad_cell_data[i_cad_cell] = min_length
+        if min_length > 1.0:
             continue
         print('add refined points in CAD cell', i_cad_cell)
         coord_a, coord_b, coord_c = corners[0, :], corners[1, :], corners[2, :]
@@ -152,14 +152,13 @@ def getRefinedKdtree(cad_nodes: np.ndarray, cad_connectivity: np.ndarray,
         # i, j, k = node_index_tuple
         # refined_tuples.append((i, j, k))
     print(len(refined_points), 'points added')
-    return KDTree(refined_points), refined_points, refined_tuples
+    return KDTree(refined_points), refined_points, refined_tuples, cad_cell_data
 
 
-def writePointsToVtu(name, xyz_tuples, ijk_tuples):
+def writePointsToVtu(prefix, name, xyz_tuples, ijk_tuples, cell_data):
     if isinstance(xyz_tuples, list):
         xyz_tuples = np.array(xyz_tuples)
     n_points = len(xyz_tuples)
-    # n_cells = len(ijk_tuples)
 
     grid = vtk.vtkUnstructuredGrid()
 
@@ -171,7 +170,17 @@ def writePointsToVtu(name, xyz_tuples, ijk_tuples):
         vtk_id_list = vtk_cell.GetPointIds()
         vtk_id_list.SetId(0, i)
         grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
+    grid.SetPoints(vtk_points)
 
+    vector_on_cells = vtk.vtkFloatArray()
+    vector_on_cells.SetName("MinimunLength")
+    vector_on_cells.SetNumberOfComponents(1)
+    n_cells = n_points
+    for c in range(n_cells):
+        grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
+        vector_on_cells.InsertNextTuple((cell_data[c],))
+    grid.GetCellData().SetVectors(vector_on_cells)
+    # n_cells = len(ijk_tuples)
     # for c in range(n_cells):
     #     vtk_cell = vtk.vtkTriangle()
     #     vtk_id_list = vtk_cell.GetPointIds()
@@ -184,10 +193,9 @@ def writePointsToVtu(name, xyz_tuples, ijk_tuples):
     #     vtk_id_list.SetId(0, c)
     #     grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
 
-    grid.SetPoints(vtk_points)
     writer = vtk.vtkXMLDataSetWriter()
     writer.SetInputData(grid)
-    output = f'refined_{name}.vtu'
+    output = f'{prefix}_{name}.vtu'
     print('writing to', output)
     writer.SetFileName(output)
     writer.SetDataModeToBinary()
@@ -272,27 +280,34 @@ if __name__ == "__main__":
     old_connectivity = wrapper.getNodeData(
         wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
-    mesh_coords_x, mesh_coords_y, mesh_coords_z
-    mesh_kdtree_points = np.ndarray((len(mesh_coords_x), 3))
-    mesh_kdtree_points[:, X] = mesh_coords_x
-    mesh_kdtree_points[:, Y] = mesh_coords_y
-    mesh_kdtree_points[:, Z] = mesh_coords_z
-    mesh_kdtree = KDTree(mesh_kdtree_points)
-    mesh_min_lengths = getMinimumLengths(mesh_kdtree)
+    # mesh_kdtree_points = np.ndarray((len(mesh_coords_x), 3))
+    # mesh_kdtree_points[:, X] = mesh_coords_x
+    # mesh_kdtree_points[:, Y] = mesh_coords_y
+    # mesh_kdtree_points[:, Z] = mesh_coords_z
+    # mesh_kdtree = KDTree(mesh_kdtree_points)
+    # mesh_min_lengths = getMinimumLengths(mesh_kdtree)
 
-    cad_nodes = np.ndarray((len(cad_coords_x), 3))
-    cad_nodes[:, X] = cad_coords_x
-    cad_nodes[:, Y] = cad_coords_y
-    cad_nodes[:, Z] = cad_coords_z
-    refined_kdtree, refined_points, refined_tuples = getRefinedKdtree(cad_nodes, cad_connectivity, mesh_kdtree, mesh_min_lengths)
-    def Refine(p: np.ndarray, q: np.ndarray) -> np.ndarray:
-        # capture refined_kdtree
-        d, i = refined_kdtree.query(p)
-        if np.linalg.norm(p - q) > d:
-            q = refined_kdtree.data[i]
-        return q
+    # cad_nodes = np.ndarray((len(cad_coords_x), 3))
+    # cad_nodes[:, X] = cad_coords_x
+    # cad_nodes[:, Y] = cad_coords_y
+    # cad_nodes[:, Z] = cad_coords_z
+    # refined_kdtree, refined_points, refined_tuples, cad_cell_data = \
+    #     getRefinedKdtree(cad_nodes, cad_connectivity, mesh_kdtree, mesh_min_lengths)
+    # def Refine(p: np.ndarray, q: np.ndarray) -> np.ndarray:
+    #     # capture refined_kdtree
+    #     d, i = refined_kdtree.query(p)
+    #     if np.linalg.norm(p - q) > d:
+    #         q = refined_kdtree.data[i]
+    #     return q
 
-    writePointsToVtu(args.cad, refined_points, refined_tuples)
+    # cad_solution = cgl.newFlowSolution(cad_zone, 'CellData', 'CellCenter')
+    # cgl.newDataArray(cad_solution, 'MinLength', cad_cell_data)
+    # cgm.save('valued_' + args.cad, cad_cgns)
+
+    # writePointsToVtu('refined', args.cad, refined_points, refined_tuples, cad_cell_data)
+    # writePointsToVtu('valued', args.cad, cad_nodes, None, cad_cell_data)
+
+    # exit()
 
     if args.order == 2:
         # add center and mid-edge points:
@@ -387,7 +402,8 @@ if __name__ == "__main__":
     # shift nodes to the (exactly or nearly) closest points on the wall
     for i in range(n_node):
         query_point = np.array([mesh_coords_x[i], mesh_coords_y[i], mesh_coords_z[i]])
-        x, y, z = Refine(query_point, getShiftedPoint(query_point))
+        # x, y, z = Refine(query_point, getShiftedPoint(query_point))
+        x, y, z = getShiftedPoint(query_point)
         mesh_coords_x[i] = x
         mesh_coords_y[i] = y
         mesh_coords_z[i] = z
