@@ -103,6 +103,44 @@ def getKdtreeFromCAD(setKdtreePoints: callable):
     return cad_connectivity, cad_kdtree
 
 
+def getMinimumLengths(kdtree: KDTree) -> np.ndarray:
+    coords = cad_kdtree.data
+    n_node = coords.shape[0]
+    assert coords.shape[1] == 3
+    min_lengths = np.ndarray((n_node), float)
+    for i_node in range(n_node):
+        distance_ij, j_node = kdtree.query(coords[i_node])
+        min_lengths[i_node] = distance_ij
+    return min_lengths
+
+
+def getRefinedKdtree(cad_kdtree: KDTree, cad_connectivity: np.ndarray,
+        mesh_kdtree: KDTree, mesh_min_lengths: np.ndarray) -> KDTree:
+    cad_nodes = cad_kdtree.data
+    n_cad_cell = cad_connectivity.shape[0] // 3
+    refined_points = []
+    n_gap = 5
+    area_coords = np.arange(1, n_gap, 1) / n_gap
+    for i_cad_cell in range(n_cad_cell):
+        first = i_cad_cell * 3
+        node_index_tuple = cad_connectivity[first : first + 3] - 1
+        corners = cad_nodes[node_index_tuple, :]
+        distance, i_mesh_point = mesh_kdtree.query(np.sum(corners) / 3)
+        if mesh_min_lengths[i_mesh_point] > 10:
+            continue
+        print('add refined points in CAD cell', i_cad_cell)
+        coord_a, coord_b, coord_c = corners[0], corners[1], corners[2]
+        for area_a in area_coords:
+            for area_b in area_coords:
+                area_c = 1. - area_a - area_b
+                if area_c <= 0:
+                    continue
+                new_point = coord_a * area_a + coord_b * area_b + coord_c * area_c
+                refined_points.append(new_point)
+    print(len(refined_points), 'points added')
+    return KDTree(refined_points)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = 'python3 high_order.py')
@@ -180,6 +218,22 @@ if __name__ == "__main__":
     assert element_type[0] == 7  # QUAD_4
     old_connectivity = wrapper.getNodeData(
         wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+
+    mesh_coords_x, mesh_coords_y, mesh_coords_z
+    mesh_kdtree_points = np.ndarray((len(mesh_coords_x), 3))
+    mesh_kdtree_points[:, X] = mesh_coords_x
+    mesh_kdtree_points[:, Y] = mesh_coords_y
+    mesh_kdtree_points[:, Z] = mesh_coords_z
+    mesh_kdtree = KDTree(mesh_kdtree_points)
+    mesh_min_lengths = getMinimumLengths(mesh_kdtree)
+    refined_kdtree = getRefinedKdtree(cad_kdtree, cad_connectivity, mesh_kdtree, mesh_min_lengths)
+    def Refine(p: np.ndarray, q: np.ndarray) -> np.ndarray:
+        # capture refined_kdtree
+        d, i = refined_kdtree.query(p)
+        if np.linalg.norm(p - q) > d:
+            q = refined_kdtree.data[i]
+        return q
+
 
     if args.order == 2:
         # add center and mid-edge points:
@@ -264,16 +318,17 @@ if __name__ == "__main__":
     mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
 
     if args.target == 'corner' or args.target == 'center':
-        getShiftedPoint = lambda x, y, z: getNearestPoint(np.array([x, y, z]), cad_kdtree)
+        getShiftedPoint = lambda query_point: getNearestPoint(query_point, cad_kdtree)
     elif args.target == 'foot':
-        getShiftedPoint = lambda x, y, z: getFootOnTriangle(np.array([x, y, z]), cad_kdtree,
+        getShiftedPoint = lambda query_point: getFootOnTriangle(query_point, cad_kdtree,
             cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
     else:
         assert False
 
     # shift nodes to the (exactly or nearly) closest points on the wall
     for i in range(n_node):
-        x, y, z = getShiftedPoint(mesh_coords_x[i], mesh_coords_y[i], mesh_coords_z[i])
+        query_point = np.array([mesh_coords_x[i], mesh_coords_y[i], mesh_coords_z[i]])
+        x, y, z = Refine(query_point, getShiftedPoint(query_point))
         mesh_coords_x[i] = x
         mesh_coords_y[i] = y
         mesh_coords_z[i] = z
