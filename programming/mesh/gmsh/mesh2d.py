@@ -11,6 +11,8 @@ if __name__ == "__main__":
         help='name (prefix) of the CGNS file containing the surface mesh')
     parser.add_argument('--h_max', type=float, default=200,
         help='maximum edge length')
+    parser.add_argument('--refine', type=int, default=12,
+        help='number of elements per 2 * pi rad')
     parser.add_argument('--skip', type=tuple, default=(213,),
         help='tags of faces to be skipped')
     parser.add_argument('--verbose', default=False, action='store_true')
@@ -27,6 +29,7 @@ if __name__ == "__main__":
     cad_points = gmsh.model.getEntities(0)
     print('n_cad_points =', len(cad_points))
     gmsh.model.mesh.set_size(cad_points, args.h_max)
+    gmsh.option.set_number('Mesh.MeshSizeFromCurvature', args.refine)
     gmsh.model.occ.synchronize()
 
     faces = gmsh.model.getEntities(2)
@@ -44,7 +47,10 @@ if __name__ == "__main__":
     gmsh.model.occ.synchronize()
 
     gmsh.model.mesh.generate(2)
-    gmsh.write(f'{args.output}_h_max={args.h_max:3.1e}.cgns')
+
+    output = f'{args.output}_hmax={args.h_max:3.1e}mm_refine={args.refine}.cgns'
+    print('writing to', output)
+    gmsh.write(output)
 
     if args.verbose:
         xmin, ymin, zmin, xmax, ymax, zmax = gmsh.model.occ.getBoundingBox(
