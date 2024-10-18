@@ -15,15 +15,21 @@ if __name__ == "__main__":
         prog = 'python3 scale.py',
         description = 'Scale the given mesh by a multiplying factor.')
     parser.add_argument('--input', type=str, help='the CGNS file to be processed')
-    parser.add_argument('--output', type=str, default='scaled.cgns',
+    parser.add_argument('--output', type=str, default=None,
         help='the CGNS file containing the scaled mesh')
-    parser.add_argument('--factor', type=float, default=inch_to_mm,
+    parser.add_argument('--factor', type=float, default=mm_to_inch,
         help='the scaling factor')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
         print(args)
+
+    output = args.output
+    if output is None:
+        assert args.input[-5:] == '.cgns'
+        input = args.input[:-5]
+        output = f'{input}_scaled.cgns'
 
     # CGNSTree_t level
     tree, links, paths = cgm.load(args.input)
@@ -53,4 +59,4 @@ if __name__ == "__main__":
     values_z *= args.factor
 
     # write the new CGNSTree_t
-    cgm.save(args.output, tree)
+    cgm.save(output, tree)
