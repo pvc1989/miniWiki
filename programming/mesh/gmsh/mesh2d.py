@@ -8,15 +8,17 @@ if __name__ == "__main__":
         description = 'Mesh the surfaces of a CAD model.')
     parser.add_argument('--input', type=str, help='the STEP file to be meshed')
     parser.add_argument('--output', type=str, default='surface_stl',
-        help='name of the CGNS file containing the surface mesh')
+        help='name (prefix) of the CGNS file containing the surface mesh')
     parser.add_argument('--h_max', type=float, default=200,
         help='maximum edge length')
+    parser.add_argument('--skip', type=tuple, default=(213,),
+        help='tags of faces to be skipped')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
         print(args)
-    
+
     gmsh.initialize(sys.argv)
     gmsh.model.add(args.output)
     v = gmsh.model.occ.import_shapes(args.input)
@@ -27,8 +29,22 @@ if __name__ == "__main__":
     gmsh.model.mesh.set_size(cad_points, args.h_max)
     gmsh.model.occ.synchronize()
 
+    faces = gmsh.model.getEntities(2)
+    tags = []
+    tags_to_be_skipped = args.skip
+    for dim, tag in faces:
+        if tag in tags_to_be_skipped:
+            continue
+        else:
+            tags.append(tag)
+    if args.verbose:
+        print(faces, 'n_face =', len(faces))
+        print(tags, 'n_tag =', len(tags))
+    gmsh.model.addPhysicalGroup(2, tags, name='SolidWall')
+    gmsh.model.occ.synchronize()
+
     gmsh.model.mesh.generate(2)
-    gmsh.write(f'{args.output}.cgns')
+    gmsh.write(f'{args.output}_h_max={args.h_max:3.1e}.cgns')
 
     if args.verbose:
         xmin, ymin, zmin, xmax, ymax, zmax = gmsh.model.occ.getBoundingBox(
