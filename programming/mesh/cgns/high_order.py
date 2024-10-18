@@ -9,6 +9,11 @@ import argparse
 import wrapper
 
 
+def getNearestPoint(point_p: np.ndarray, kdtree: KDTree) -> np.ndarray:
+    distance_to_center, i_cell = kdtree.query(point_p)
+    return kdtree.data[i_cell]
+
+
 def getFootOnTriangle(point_p: np.ndarray, kdtree: KDTree, connectivity: np.ndarray,
         x: np.ndarray, y: np.ndarray, z: np.ndarray) -> np.ndarray:
     # return point_p
@@ -55,6 +60,8 @@ if __name__ == "__main__":
     parser.add_argument('--mesh', type=str, help='the input linear mesh file')
     parser.add_argument('--output', type=str, help='the output high-order mesh file')
     parser.add_argument('--order', type=int, default=2, help='order of the output mesh')
+    parser.add_argument('--target', choices=['corner', 'center', 'foot'], default='corner',
+        help='which kind of point to be shifhted to')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
@@ -77,19 +84,36 @@ if __name__ == "__main__":
         wrapper.getUniqueChildByType(cad_zone, 'GridCoordinates_t'), 'DataArray_t')
     cad_coords_x, cad_coords_y, cad_coords_z = cad_coords[X][1], cad_coords[Y][1], cad_coords[Z][1]
 
+    if args.target == 'corner':
+        kdtree_points = np.zeros((n_cell * 3, 3), dtype=float)  # 3 point for each triangle
+        def setKdtreePoints(cell_index, node_index_tuple):
+            first = cell_index * 3
+            for i in range(3):
+                j = first + i
+                k = node_index_tuple[i]
+                kdtree_points[j] = cad_coords_x[k], cad_coords_y[k], cad_coords_z[k]
+    elif args.target == 'center' or args.target == 'foot':
+        kdtree_points = np.zeros((n_cell, 3), dtype=float)  # 1 point for each triangle
+        def setKdtreePoints(cell_index, node_index_tuple):
+            kdtree_points[cell_index] = (
+                np.sum(cad_coords_x[node_index_tuple]) / 3,
+                np.sum(cad_coords_y[node_index_tuple]) / 3,
+                np.sum(cad_coords_z[node_index_tuple]) / 3)
+    else:
+        assert False
+
+    # TODO(PVC): (args.target == corner) do not need cad_connectivity
     cad_connectivity = np.zeros(n_cell * 3, dtype=int) - 1
     # assert cad_connectivity.shape == (n_cell * 3,)
     # assert (cad_connectivity == -1).all()
     sections = wrapper.getChildrenByType(cad_zone, 'Elements_t')
     print('n_section =', len(sections))
-    centers = np.zeros((n_cell, 3), dtype=float)
     i_cell_global = 0
     for section in sections:
         if args.verbose and False:
             print(section)
         element_type = wrapper.getNodeData(section)
         # assert element_type[0] == 5  # TRI_3
-        # build DS for quick nearest neighbor query
         connectivity = wrapper.getNodeData(
             wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
         element_range = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
@@ -102,16 +126,10 @@ if __name__ == "__main__":
         # assert n_cell_local == connectivity.shape[0] // 3
         for i_cell_local in range(n_cell_local):
             first_local = i_cell_local * 3
-            index = connectivity[first_local : first_local + 3] - 1
+            node_index_tuple = connectivity[first_local : first_local + 3] - 1
             # assert (0 <= index).all() and (index < n_node).all()
-            # a, b, c = index
-            # centers[i_cell_global][X] = (cad_coords_x[a] + cad_coords_x[b] + cad_coords_x[c]) / 3            
-            # centers[i_cell_global][Y] = (cad_coords_y[a] + cad_coords_y[b] + cad_coords_y[c]) / 3
-            # centers[i_cell_global][Z] = (cad_coords_z[a] + cad_coords_z[b] + cad_coords_z[c]) / 3
-            curr_global = first_global + i_cell_local
-            centers[curr_global][X] = np.sum(cad_coords_x[index]) / 3
-            centers[curr_global][Y] = np.sum(cad_coords_y[index]) / 3
-            centers[curr_global][Z] = np.sum(cad_coords_z[index]) / 3
+            cell_index = first_global + i_cell_local
+            setKdtreePoints(cell_index, node_index_tuple)
             i_cell_global += 1
     # assert i_cell_global == n_cell, i_cell_global
     # assert (1 <= cad_connectivity).all() and (cad_connectivity <= n_node).all()
@@ -127,10 +145,10 @@ if __name__ == "__main__":
     print(len(wrapper.getChildrenByType(cad_zone, 'Elements_t')))
     cgm.save('cad-merged.cgns', cad_cgns)
 
-    cad_kdtree = KDTree(centers)
+    cad_kdtree = KDTree(kdtree_points)
     for i in range(n_cell):
         pass
-        # assert np.linalg.norm(centers[i] - cad_kdtree.data[i]) == 0
+        # assert np.linalg.norm(kdtree_points[i] - cad_kdtree.data[i]) == 0
 
     # load the linear mesh
     mesh_cgns, _, _ = cgm.load(args.mesh)
@@ -153,95 +171,102 @@ if __name__ == "__main__":
     old_connectivity = wrapper.getNodeData(
         wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
-    # add center and mid-edge points:
-    n_node_new = n_node + n_cell * 5  # TODO(PVC): remove duplicates
-    new_coords_x = np.ndarray((n_node_new,), dtype=mesh_coords_x.dtype)
-    new_coords_x[0 : n_node] = mesh_coords_x
-    new_coords_y = np.ndarray((n_node_new,), dtype=mesh_coords_y.dtype)
-    new_coords_y[0 : n_node] = mesh_coords_y
-    new_coords_z = np.ndarray((n_node_new,), dtype=mesh_coords_z.dtype)
-    new_coords_z[0 : n_node] = mesh_coords_z
-    i_node_next = n_node
-    new_connectivity = np.ndarray((old_connectivity.shape[0] * 9 // 4,),
-        dtype=old_connectivity.dtype)
-    for i_cell_mesh in range(n_cell):
-        old_first = i_cell_mesh * 4
-        new_fisrt = i_cell_mesh * 9
-        new_connectivity[new_fisrt : new_fisrt + 4] = old_connectivity[old_first : old_first + 4]
-        # build the mid-point on the bottom edge
-        x = (mesh_coords_x[old_first + 0] + mesh_coords_x[old_first + 1]) / 2
-        y = (mesh_coords_y[old_first + 0] + mesh_coords_y[old_first + 1]) / 2
-        z = (mesh_coords_z[old_first + 0] + mesh_coords_z[old_first + 1]) / 2
-        new_coords_x[i_node_next] = x
-        new_coords_y[i_node_next] = y
-        new_coords_z[i_node_next] = z
-        i_node_next += 1
-        new_connectivity[new_fisrt + 4] = i_node_next
-        # build the mid-point on the right edge
-        x = (mesh_coords_x[old_first + 1] + mesh_coords_x[old_first + 2]) / 2
-        y = (mesh_coords_y[old_first + 1] + mesh_coords_y[old_first + 2]) / 2
-        z = (mesh_coords_z[old_first + 1] + mesh_coords_z[old_first + 2]) / 2
-        new_coords_x[i_node_next] = x
-        new_coords_y[i_node_next] = y
-        new_coords_z[i_node_next] = z
-        i_node_next += 1
-        new_connectivity[new_fisrt + 5] = i_node_next
-        # build the mid-point on the top edge
-        x = (mesh_coords_x[old_first + 2] + mesh_coords_x[old_first + 3]) / 2
-        y = (mesh_coords_y[old_first + 2] + mesh_coords_y[old_first + 3]) / 2
-        z = (mesh_coords_z[old_first + 2] + mesh_coords_z[old_first + 3]) / 2
-        new_coords_x[i_node_next] = x
-        new_coords_y[i_node_next] = y
-        new_coords_z[i_node_next] = z
-        i_node_next += 1
-        new_connectivity[new_fisrt + 6] = i_node_next
-        # build the mid-point on the left edge
-        x = (mesh_coords_x[old_first + 3] + mesh_coords_x[old_first + 0]) / 2
-        y = (mesh_coords_y[old_first + 3] + mesh_coords_y[old_first + 0]) / 2
-        z = (mesh_coords_z[old_first + 3] + mesh_coords_z[old_first + 0]) / 2
-        new_coords_x[i_node_next] = x
-        new_coords_y[i_node_next] = y
-        new_coords_z[i_node_next] = z
-        i_node_next += 1
-        new_connectivity[new_fisrt + 7] = i_node_next
-        # build the center point
-        index = old_connectivity[old_first : old_first + 4] - 1
-        x = np.sum(mesh_coords_x[index]) / 4
-        y = np.sum(mesh_coords_y[index]) / 4
-        z = np.sum(mesh_coords_z[index]) / 4
-        new_coords_x[i_node_next] = x
-        new_coords_y[i_node_next] = y
-        new_coords_z[i_node_next] = z
-        i_node_next += 1
-        new_connectivity[new_fisrt + 8] = i_node_next
-        print(f'QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
-    # assert i_node_next == n_node_new
-    if args.verbose:
-        print(f'in quadratic mesh: n_node = {n_node_new}, n_cell = {n_cell}')
+    if args.order == 2:
+        # add center and mid-edge points:
+        n_node_new = n_node + n_cell * 5  # TODO(PVC): remove duplicates
+        new_coords_x = np.ndarray((n_node_new,), dtype=mesh_coords_x.dtype)
+        new_coords_x[0 : n_node] = mesh_coords_x
+        new_coords_y = np.ndarray((n_node_new,), dtype=mesh_coords_y.dtype)
+        new_coords_y[0 : n_node] = mesh_coords_y
+        new_coords_z = np.ndarray((n_node_new,), dtype=mesh_coords_z.dtype)
+        new_coords_z[0 : n_node] = mesh_coords_z
+        i_node_next = n_node
+        new_connectivity = np.ndarray((old_connectivity.shape[0] * 9 // 4,),
+            dtype=old_connectivity.dtype)
+        for i_cell_mesh in range(n_cell):
+            old_first = i_cell_mesh * 4
+            new_fisrt = i_cell_mesh * 9
+            new_connectivity[new_fisrt : new_fisrt + 4] = old_connectivity[old_first : old_first + 4]
+            # build the mid-point on the bottom edge
+            x = (mesh_coords_x[old_first + 0] + mesh_coords_x[old_first + 1]) / 2
+            y = (mesh_coords_y[old_first + 0] + mesh_coords_y[old_first + 1]) / 2
+            z = (mesh_coords_z[old_first + 0] + mesh_coords_z[old_first + 1]) / 2
+            new_coords_x[i_node_next] = x
+            new_coords_y[i_node_next] = y
+            new_coords_z[i_node_next] = z
+            i_node_next += 1
+            new_connectivity[new_fisrt + 4] = i_node_next
+            # build the mid-point on the right edge
+            x = (mesh_coords_x[old_first + 1] + mesh_coords_x[old_first + 2]) / 2
+            y = (mesh_coords_y[old_first + 1] + mesh_coords_y[old_first + 2]) / 2
+            z = (mesh_coords_z[old_first + 1] + mesh_coords_z[old_first + 2]) / 2
+            new_coords_x[i_node_next] = x
+            new_coords_y[i_node_next] = y
+            new_coords_z[i_node_next] = z
+            i_node_next += 1
+            new_connectivity[new_fisrt + 5] = i_node_next
+            # build the mid-point on the top edge
+            x = (mesh_coords_x[old_first + 2] + mesh_coords_x[old_first + 3]) / 2
+            y = (mesh_coords_y[old_first + 2] + mesh_coords_y[old_first + 3]) / 2
+            z = (mesh_coords_z[old_first + 2] + mesh_coords_z[old_first + 3]) / 2
+            new_coords_x[i_node_next] = x
+            new_coords_y[i_node_next] = y
+            new_coords_z[i_node_next] = z
+            i_node_next += 1
+            new_connectivity[new_fisrt + 6] = i_node_next
+            # build the mid-point on the left edge
+            x = (mesh_coords_x[old_first + 3] + mesh_coords_x[old_first + 0]) / 2
+            y = (mesh_coords_y[old_first + 3] + mesh_coords_y[old_first + 0]) / 2
+            z = (mesh_coords_z[old_first + 3] + mesh_coords_z[old_first + 0]) / 2
+            new_coords_x[i_node_next] = x
+            new_coords_y[i_node_next] = y
+            new_coords_z[i_node_next] = z
+            i_node_next += 1
+            new_connectivity[new_fisrt + 7] = i_node_next
+            # build the center point
+            index = old_connectivity[old_first : old_first + 4] - 1
+            x = np.sum(mesh_coords_x[index]) / 4
+            y = np.sum(mesh_coords_y[index]) / 4
+            z = np.sum(mesh_coords_z[index]) / 4
+            new_coords_x[i_node_next] = x
+            new_coords_y[i_node_next] = y
+            new_coords_z[i_node_next] = z
+            i_node_next += 1
+            new_connectivity[new_fisrt + 8] = i_node_next
+            print(f'QUAD_4[{i_cell_mesh}] -> QUAD_9[{i_cell_mesh}]')
+        # assert i_node_next == n_node_new
+        n_node = n_node_new
+        if args.verbose:
+            print(f'in quadratic mesh: n_node = {n_node}, n_cell = {n_cell}')
 
-    # write the new mesh out
-    zone_size[0][0] = n_node_new
-    element_type[0] = 9  # QUAD_9
-    mesh_coords[X][1] = new_coords_x
-    mesh_coords[Y][1] = new_coords_y
-    mesh_coords[Z][1] = new_coords_z
+        # update the cells
+        cgu.removeChildByName(section, 'ElementConnectivity')
+        cgl.newDataArray(section, 'ElementConnectivity', new_connectivity)
+
+        # write the new mesh out
+        zone_size[0][0] = n_node
+        element_type[0] = 9  # QUAD_9
+        mesh_coords[X][1] = new_coords_x
+        mesh_coords[Y][1] = new_coords_y
+        mesh_coords[Z][1] = new_coords_z
 
     # update the coords
     mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
-    # push nodes onto the wall
-    for i in range(n_node_new):
-        x = mesh_coords_x[i]
-        y = mesh_coords_y[i]
-        z = mesh_coords_z[i]
-        foot = getFootOnTriangle(np.array([x, y, z]), cad_kdtree,
-            cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
-        mesh_coords_x[i] = foot[X]
-        mesh_coords_y[i] = foot[Y]
-        mesh_coords_z[i] = foot[Z]
-        print(f'QUAD_4[{i}] -> QUAD_9_shift[{i}]')
 
-    # update the cells
-    cgu.removeChildByName(section, 'ElementConnectivity')
-    cgl.newDataArray(section, 'ElementConnectivity', new_connectivity)
+    if args.target == 'corner' or args.target == 'center':
+        getShiftedPoint = lambda x, y, z: getNearestPoint(np.array([x, y, z]), cad_kdtree)
+    elif args.target == 'foot':
+        getShiftedPoint = lambda x, y, z: getFootOnTriangle(np.array([x, y, z]), cad_kdtree,
+            cad_connectivity, cad_coords_x, cad_coords_y, cad_coords_z)
+    else:
+        assert False
+
+    # shift nodes to the (exactly or nearly) closest points on the wall
+    for i in range(n_node):
+        x, y, z = getShiftedPoint(mesh_coords_x[i], mesh_coords_y[i], mesh_coords_z[i])
+        mesh_coords_x[i] = x
+        mesh_coords_y[i] = y
+        mesh_coords_z[i] = z
+        print(f'i_node / n_node = {i} / {n_node}')
 
     cgm.save(args.output, mesh_cgns)
