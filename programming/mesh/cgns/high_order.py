@@ -122,7 +122,7 @@ def getRefinedKdtree(cad_nodes: np.ndarray, cad_connectivity: np.ndarray,
     n_cad_cell = cad_connectivity.shape[0] // 3
     refined_points = []
     refined_tuples = []
-    n_gap = 3
+    n_gap = 4
     area_coords = np.arange(1, n_gap, 1) / n_gap
     for i_cad_cell in range(n_cad_cell):
         first = i_cad_cell * 3
@@ -132,25 +132,25 @@ def getRefinedKdtree(cad_nodes: np.ndarray, cad_connectivity: np.ndarray,
         need_refinement = False
         for corner in corners:
             _, i_mesh_point = mesh_kdtree.query(corner)
-            if mesh_min_lengths[i_mesh_point] < 10:
+            if mesh_min_lengths[i_mesh_point] < 1:  # in inch
                 need_refinement = True
                 break
         if not need_refinement:
             continue
         print('add refined points in CAD cell', i_cad_cell)
         coord_a, coord_b, coord_c = corners[0, :], corners[1, :], corners[2, :]
-        # for area_a in area_coords:
-        #     for area_b in area_coords:
-        #         area_c = 1. - area_a - area_b
-        #         if area_c <= 0:
-        #             continue
-        #         new_point = coord_a * area_a + coord_b * area_b + coord_c * area_c
-        #         refined_points.append(new_point)
-        refined_points.append(coord_a)
-        refined_points.append(coord_b)
-        refined_points.append(coord_c)
-        i, j, k = node_index_tuple
-        refined_tuples.append((i, j, k))
+        for area_a in area_coords:
+            for area_b in area_coords:
+                area_c = 1. - area_a - area_b
+                if area_c <= 0.01:
+                    continue
+                new_point = coord_a * area_a + coord_b * area_b + coord_c * area_c
+                refined_points.append(new_point)
+        # refined_points.append(coord_a)
+        # refined_points.append(coord_b)
+        # refined_points.append(coord_c)
+        # i, j, k = node_index_tuple
+        # refined_tuples.append((i, j, k))
     print(len(refined_points), 'points added')
     return KDTree(refined_points), refined_points, refined_tuples
 
@@ -159,7 +159,7 @@ def writePointsToVtu(name, xyz_tuples, ijk_tuples):
     if isinstance(xyz_tuples, list):
         xyz_tuples = np.array(xyz_tuples)
     n_points = len(xyz_tuples)
-    n_cells = len(ijk_tuples)
+    # n_cells = len(ijk_tuples)
 
     grid = vtk.vtkUnstructuredGrid()
 
@@ -167,15 +167,22 @@ def writePointsToVtu(name, xyz_tuples, ijk_tuples):
     vtk_points.SetNumberOfPoints(n_points)
     for i in range(n_points):
         vtk_points.InsertPoint(i, xyz_tuples[i])
-
-    for c in range(n_cells):
-        vtk_cell = vtk.vtkTriangle()
+        vtk_cell = vtk.vtkVertex()
         vtk_id_list = vtk_cell.GetPointIds()
-        i, j, k = ijk_tuples[c]
         vtk_id_list.SetId(0, i)
-        vtk_id_list.SetId(1, j)
-        vtk_id_list.SetId(2, k)
         grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
+
+    # for c in range(n_cells):
+    #     vtk_cell = vtk.vtkTriangle()
+    #     vtk_id_list = vtk_cell.GetPointIds()
+    #     i, j, k = ijk_tuples[c]
+    #     vtk_id_list.SetId(0, i)
+    #     vtk_id_list.SetId(1, j)
+    #     vtk_id_list.SetId(2, k)
+    #     vtk_cell = vtk.vtkVertex()
+    #     vtk_id_list = vtk_cell.GetPointIds()
+    #     vtk_id_list.SetId(0, c)
+    #     grid.InsertNextCell(vtk_cell.GetCellType(), vtk_id_list)
 
     grid.SetPoints(vtk_points)
     writer = vtk.vtkXMLDataSetWriter()
@@ -285,8 +292,7 @@ if __name__ == "__main__":
             q = refined_kdtree.data[i]
         return q
 
-    writePointsToVtu(args.cad, cad_nodes, refined_tuples)
-    exit()
+    writePointsToVtu(args.cad, refined_points, refined_tuples)
 
     if args.order == 2:
         # add center and mid-edge points:
