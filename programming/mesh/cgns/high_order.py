@@ -9,6 +9,9 @@ from scipy.spatial import KDTree
 import argparse
 
 
+X, Y, Z = 0, 1, 2
+
+
 def getNearestPoint(point_p: np.ndarray, kdtree: KDTree) -> np.ndarray:
     distance_to_center, i_cell = kdtree.query(point_p)
     return kdtree.data[i_cell]
@@ -53,13 +56,60 @@ def getFootOnTriangle(point_p: np.ndarray, kdtree: KDTree, connectivity: np.ndar
     return foot
 
 
+def getKdtreeFromCAD(setKdtreePoints: callable):
+    # cad_coords already captured in setKdtreePoints
+    cad_connectivity = np.zeros(n_cell * 3, dtype=int) - 1
+    assert cad_connectivity.shape == (n_cell * 3,)
+    assert (cad_connectivity == -1).all()
+    sections = wrapper.getChildrenByType(cad_zone, 'Elements_t')
+    print('n_section =', len(sections))
+    i_cell_global = 0
+    for section in sections:
+        if args.verbose and False:
+            print(section)
+        element_type = wrapper.getNodeData(section)
+        assert element_type[0] == 5  # TRI_3
+        connectivity = wrapper.getNodeData(
+            wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+        element_range = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
+        first_global = element_range[0] - 1
+        last_global = element_range[1]  # inclusive to exclusive
+        if args.verbose:
+            print('element_range =', element_range, first_global, last_global)
+        cad_connectivity[first_global * 3 : last_global * 3] = connectivity[:]
+        n_cell_local = last_global - first_global
+        assert n_cell_local == connectivity.shape[0] // 3
+        for i_cell_local in range(n_cell_local):
+            first_local = i_cell_local * 3
+            node_index_tuple = connectivity[first_local : first_local + 3] - 1
+            # assert (0 <= index).all() and (index < n_node).all()
+            cell_index = first_global + i_cell_local
+            setKdtreePoints(cell_index, node_index_tuple)
+            i_cell_global += 1
+    assert i_cell_global == n_cell, i_cell_global
+    assert (1 <= cad_connectivity).all() and (cad_connectivity <= n_node).all()
+
+    # section_names = []
+    # for section in sections:
+    #     section_names.append(wrapper.getNodeName(section))
+    # assert len(section_names) == len(sections)
+    # for name in section_names:
+    #     cgu.removeChildByName(cad_zone, name)
+    # assert len(wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
+    # cgl.newElements(cad_zone, 'SingleSection', etype='TRI_3', erange=np.array([1, n_cell]), econnectivity=cad_connectivity)
+    # print(len(wrapper.getChildrenByType(cad_zone, 'Elements_t')))
+    # cgm.save('cad-merged.cgns', cad_cgns)
+    cad_kdtree = KDTree(kdtree_points)
+    return cad_connectivity, cad_kdtree
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = 'python3 high_order.py')
     parser.add_argument('--cad', type=str, help='the input CAD file (currently in CGNS)')
     parser.add_argument('--mesh', type=str, help='the input linear mesh file')
     parser.add_argument('--output', type=str, help='the output high-order mesh file')
-    parser.add_argument('--order', type=int, default=2, help='order of the output mesh')
+    parser.add_argument('--order', type=int, default=1, help='order of the output mesh')
     parser.add_argument('--target', choices=['corner', 'center', 'foot'], default='corner',
         help='which kind of point to be shifhted to')
     parser.add_argument('--verbose', default=False, action='store_true')
@@ -71,11 +121,9 @@ if __name__ == "__main__":
     output = args.output
     if output is None:
         i = args.cad.index('max=') + 4
-        j = args.cad[i:].index('_')
+        j = args.cad[i:].index('mm')
         h_max = float(args.cad[i : i + j])
         output = f'{args.mesh[:-5]}_order={args.order}_cad={h_max:3.1e}mm_shift={args.target}.cgns'
-
-    X, Y, Z = 0, 1, 2
 
     # load the CAD model
     cad_cgns, _, _ = cgm.load(args.cad)
@@ -110,49 +158,7 @@ if __name__ == "__main__":
         assert False
 
     # TODO(PVC): (args.target == corner) do not need cad_connectivity
-    cad_connectivity = np.zeros(n_cell * 3, dtype=int) - 1
-    assert cad_connectivity.shape == (n_cell * 3,)
-    assert (cad_connectivity == -1).all()
-    sections = wrapper.getChildrenByType(cad_zone, 'Elements_t')
-    print('n_section =', len(sections))
-    i_cell_global = 0
-    for section in sections:
-        if args.verbose and False:
-            print(section)
-        element_type = wrapper.getNodeData(section)
-        assert element_type[0] == 5  # TRI_3
-        connectivity = wrapper.getNodeData(
-            wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
-        element_range = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
-        first_global = element_range[0] - 1
-        last_global = element_range[1]  # inclusive to exclusive
-        if args.verbose:
-            print('element_range =', element_range, first_global, last_global)
-        cad_connectivity[first_global * 3 : last_global * 3] = connectivity[:]
-        n_cell_local = last_global - first_global
-        assert n_cell_local == connectivity.shape[0] // 3
-        for i_cell_local in range(n_cell_local):
-            first_local = i_cell_local * 3
-            node_index_tuple = connectivity[first_local : first_local + 3] - 1
-            # assert (0 <= index).all() and (index < n_node).all()
-            cell_index = first_global + i_cell_local
-            setKdtreePoints(cell_index, node_index_tuple)
-            i_cell_global += 1
-    assert i_cell_global == n_cell, i_cell_global
-    assert (1 <= cad_connectivity).all() and (cad_connectivity <= n_node).all()
-
-    section_names = []
-    for section in sections:
-        section_names.append(wrapper.getNodeName(section))
-    assert len(section_names) == len(sections)
-    for name in section_names:
-        cgu.removeChildByName(cad_zone, name)
-    assert len(wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
-    cgl.newElements(cad_zone, 'SingleSection', etype='TRI_3', erange=np.array([1, n_cell]), econnectivity=cad_connectivity)
-    print(len(wrapper.getChildrenByType(cad_zone, 'Elements_t')))
-    cgm.save('cad-merged.cgns', cad_cgns)
-
-    cad_kdtree = KDTree(kdtree_points)
+    cad_connectivity, cad_kdtree = getKdtreeFromCAD(setKdtreePoints)
 
     # load the linear mesh
     mesh_cgns, _, _ = cgm.load(args.mesh)
@@ -275,3 +281,4 @@ if __name__ == "__main__":
 
     if args.verbose:
         print('write to ', output)
+    cgm.save(output, mesh_cgns)
