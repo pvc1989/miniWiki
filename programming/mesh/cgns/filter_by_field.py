@@ -3,6 +3,7 @@ import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
 
+import sys
 import numpy as np
 import argparse
 import wrapper
@@ -10,26 +11,33 @@ import wrapper
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = 'python3 get_surface.py',
-        description = 'Get elements and the nodes they used on surfaces specified by a given `FLEXI::BCType`.')
-    parser.add_argument('--input', type=str, help='the CGNS file to be processed')
-    parser.add_argument('--output', type=str, default='surface_quad4.cgns',
-        help='the CGNS file containing elements and nodes on the specified surfaces')
-    parser.add_argument('--bctype', type=int, default=3,
-        help='the BCType of the specified surfaces')
+        prog = f'python3 {sys.argv[0][:-3]}.py',
+        description = 'Filter a CGNS file by a given field value.')
+    parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
+    parser.add_argument('--field', type=str, default='BCType', help='the field for filtering')
+    parser.add_argument('--value', type=int, default=3, help='the value to be keeped')
+    parser.add_argument('--output', type=str, help='the CGNS file containing points and cells on which field == value')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
         print(args)
 
+    output = args.output
+    if output is None:
+        output = f'{args.field}={args.value}_{args.input}'
+
     # CGNSTree_t level
     old_tree, links, paths = cgm.load(args.input)
+    if args.verbose:
+        print()
+        print(old_tree)
     new_tree = cgl.newCGNSTree()
 
     # CGNSBase_t level
     old_base = wrapper.getUniqueChildByType(old_tree, 'CGNSBase_t')
     cell_dim, phys_dim = wrapper.getDimensions(old_base)
+    print()
     print('cell_dim =', cell_dim)
     print('phys_dim =', phys_dim)
     new_base = cgl.newCGNSBase(new_tree,
@@ -62,6 +70,7 @@ if __name__ == "__main__":
     connectivity = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
     assert wrapper.getNodeLabel(connectivity) == 'DataArray_t'
     if args.verbose:
+        print()
         print(connectivity)
     old_connectivity_list = wrapper.getNodeData(connectivity)
     n_node_per_cell = 4  # FLEXI only supports `QUAD_4`
@@ -70,21 +79,23 @@ if __name__ == "__main__":
     # FlowSolution_t level
     solution = wrapper.getUniqueChildByType(old_zone, 'FlowSolution_t')
     if args.verbose:
+        print()
         print(solution)
     assert wrapper.getUniqueChildByType(solution, 'GridLocation_t') is None
     # TODO(gaomin): add GridLocation_t(Vertex)
-    type_values = wrapper.getNodeData(wrapper.getUniqueChildByName(solution, 'BCType'))
-    assert type_values.shape == (n_node,)
+    values = wrapper.getNodeData(wrapper.getUniqueChildByName(solution, args.field))
+    assert values.shape == (n_node,)
 
     # filter cells by types
     filtered_cells = list()
     filtered_nodes = list()
     for i_cell in range(n_cell):
         first = n_node_per_cell * i_cell
-        type_i = type_values[old_connectivity_list[first] - 1]  # connectivity given in 1-based
+        value_i = values[old_connectivity_list[first] - 1]  # connectivity given in 1-based
         for curr in range(first + 1, first + n_node_per_cell):
-            assert type_i == type_values[old_connectivity_list[curr] - 1]
-        if type_i == args.bctype:
+            # all nodes share the same value if 
+            assert value_i == values[old_connectivity_list[curr] - 1]
+        if value_i == args.value:
             filtered_cells.append(i_cell)
             for curr in range(first, first + n_node_per_cell):
                 filtered_nodes.append(old_connectivity_list[curr] - 1)
@@ -129,7 +140,11 @@ if __name__ == "__main__":
         econnectivity=new_connectivity_list)
 
     if args.verbose:
-        print('\nnew_base=\n', new_base)
+        print()
+        print(new_tree)
 
     # write the new CGNSTree_t
-    cgm.save(args.output, new_tree)
+    if args.verbose:
+        print()
+        print('write to ', output)
+    cgm.save(output, new_tree)
