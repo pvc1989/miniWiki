@@ -16,8 +16,8 @@ if __name__ == "__main__":
         prog = f'python3 {sys.argv[0][:-3]}.py',
         description='Shift the points in a given volume mesh by surface meshes.')
     parser.add_argument('--volume', type=str, help='the CGNS file of the volume mesh')
-    parser.add_argument('--surface_old', type=str, help='the CGNS file of the surface mesh extracted from the volume mesh')
-    parser.add_argument('--surface_new', type=str, help='the CGNS file of the shifted surface mesh, which the topology unchanged')
+    parser.add_argument('--surface', type=str, help='the CGNS file of the shifted surface mesh')
+    parser.add_argument('--index_map', type=str, help='the CSV file containing the volume-to-surface node index map')
     parser.add_argument('--output', type=str, help='the CGNS file of the shifted volume mesh')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
@@ -26,30 +26,27 @@ if __name__ == "__main__":
         print(args)
 
     # load the volume mesh to be shifted
-    vol_cgns, vol_zone, vol_zone_size = getUniqueZone(args.volume)
-    _, vol_xyz, vol_x, vol_y, vol_z = readPoints(vol_zone, vol_zone_size)
-    vol_point_size = vol_zone_size[0][0]
-
-    # load the unshifted surface mesh
-    _, surface_old_zone, surface_old_zone_size = getUniqueZone(args.surface_old)
-    _, surface_old_point_arr, _, _, _ = readPoints(surface_old_zone, surface_old_zone_size)
-    surface_old_kdtree = KDTree(surface_old_point_arr)
+    volume_cgns, volume_zone, volume_zone_size = getUniqueZone(args.volume)
+    _, volume_xyz, volume_x, volume_y, volume_z = readPoints(volume_zone, volume_zone_size)
+    volume_point_size = volume_zone_size[0][0]
 
     # load the shifted surface mesh
-    _, surface_new_zone, surface_new_zone_size = getUniqueZone(args.surface_new)
-    _, _, surface_new_x, surface_new_y, surface_new_z = readPoints(surface_new_zone, surface_new_zone_size)
+    _, surface_zone, surface_zone_size = getUniqueZone(args.surface)
+    _, surface_xyz, surface_x, surface_y, surface_z = readPoints(surface_zone, surface_zone_size)
+
+    # load the volume-to-surface node index map
+    volume_to_surface = np.loadtxt(args.index_map, dtype=int, delimiter=',')
 
     # shift volume points on surface
-    for i_volume in range(vol_point_size):
-        progress = f'[{i_volume} / {vol_point_size}]'
-        d_ij, j_surface = surface_old_kdtree.query(vol_xyz[i_volume])
-        if d_ij < 1e-11:
-            print(progress, 'Shifting point', i_volume, d_ij)
-            vol_x[i_volume] = surface_new_x[j_surface]
-            vol_y[i_volume] = surface_new_y[j_surface]
-            vol_z[i_volume] = surface_new_z[j_surface]
-        else:
-            print(progress, 'Skipping point', i_volume, d_ij)
+    for i_volume in range(volume_point_size):
+        j_surface = volume_to_surface[i_volume]
+        if j_surface < 0:
+            continue
+        d_ij = np.hypot(volume_xyz[i_volume], surface_xyz[j_surface])
+        print(f'[{i_volume / volume_point_size:.2f}] Shifting point[{i_volume}] by {d_ij}')
+        volume_x[i_volume] = surface_x[j_surface]
+        volume_y[i_volume] = surface_y[j_surface]
+        volume_z[i_volume] = surface_z[j_surface]
 
     # write the shifted mesh
     output = args.output
@@ -57,4 +54,4 @@ if __name__ == "__main__":
         output = f'shifted_{args.volume}'
     if args.verbose:
         print('write to ', output)
-    cgm.save(output, vol_cgns)
+    cgm.save(output, volume_cgns)
