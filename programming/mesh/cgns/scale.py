@@ -25,12 +25,6 @@ if __name__ == "__main__":
     if args.verbose:
         print(args)
 
-    output = args.output
-    if output is None:
-        assert args.input[-5:] == '.cgns'
-        input = args.input[:-5]
-        output = f'{input}_scaled.cgns'
-
     # CGNSTree_t level
     tree, links, paths = cgm.load(args.input)
 
@@ -59,4 +53,8 @@ if __name__ == "__main__":
     values_z *= args.factor
 
     # write the new CGNSTree_t
+    output = args.output
+    if output is None:
+        output = 'scaled_' + args.input
+    print('writing to', output)
     cgm.save(output, tree)

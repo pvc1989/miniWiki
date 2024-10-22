@@ -2,6 +2,7 @@ import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
+import sys
 
 
 def getChildrenByType(node, cgns_type):
@@ -59,5 +60,10 @@ def getDimensions(base) -> tuple[int, int]:
     return base[1][0], base[1][1]
 
 
+def printInfo(file_name: str):
+    cgns, _, _ = cgm.load(file_name)
+    print(cgns)
+
+
 if __name__ == '__main__':
-    pass
+    printInfo(sys.argv[1])

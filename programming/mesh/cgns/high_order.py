@@ -410,5 +410,5 @@ if __name__ == "__main__":
         print(f'Shift i_node / n_node = {i} / {n_node}')
 
     if args.verbose:
-        print('write to ', output)
+        print('writing to', output)
     cgm.save(output, mesh_cgns)

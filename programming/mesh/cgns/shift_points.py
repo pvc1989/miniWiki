@@ -51,5 +51,5 @@ if __name__ == "__main__":
 
     # write the shifted mesh
     if args.verbose:
-        print('write to ', output)
+        print('writing to', output)
     cgm.save(output, mesh_cgns)

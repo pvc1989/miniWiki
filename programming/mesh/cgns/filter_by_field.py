@@ -146,5 +146,5 @@ if __name__ == "__main__":
     # write the new CGNSTree_t
     if args.verbose:
         print()
-        print('write to ', output)
+        print('writing to', output)
     cgm.save(output, new_tree)

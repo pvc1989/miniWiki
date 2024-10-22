@@ -65,11 +65,11 @@ def getConnectivity(face_center: np.ndarray, boco_kdtrees, boco_connectivities) 
     assert False, min_distance
 
 
-def addZoneBC(zone, section, bc_name: str, bc_type: str):
+def addZoneBC(zone_bc, section, bc_name: str, bc_type: str):
     element_range = wrapper.getNodeData(
         wrapper.getUniqueChildByName(section, 'ElementRange'))
     bc_range = np.array([element_range])
-    new_boco = cgl.newBoundary(volume_zone, bname=bc_name, brange=bc_range,
+    new_boco = cgl.newBoundary(zone_bc, bname=bc_name, brange=bc_range,
         btype=bc_type, pttype='PointRange')
     cgl.newGridLocation(new_boco, 'FaceCenter')
 
@@ -142,8 +142,8 @@ if __name__ == "__main__":
             print(f'[{i_cell / n_volume_cell:.2f}] Is cell[{i_cell}] on some boundary? {on_boundary}')
     print(f'n_cell_on_boundary = {len(boco_cells)}')
 
-    bc_in_cell_data = cgl.newFlowSolution(volume_zone, 'FlowSolution', 'CellCenter')
-    cgl.newDataArray(bc_in_cell_data, 'BCType', boco_values)
+    # bc_in_cell_data = cgl.newFlowSolution(volume_zone, 'FlowSolution', 'CellCenter')
+    # cgl.newDataArray(bc_in_cell_data, 'BCType', boco_values)
 
     # build a kd-tree for each surface mesh
     print('building surface kd-trees')
@@ -187,6 +187,7 @@ if __name__ == "__main__":
     # build Elements_t and ZoneBC_t objects
     print('building Elements_t\'s and ZoneBC_t\'s')
     i_cell_next = n_volume_cell + 1  # again, 1-based
+    zone_bc = cgl.newZoneBC(volume_zone)
     for i_boco in range(n_boco):
         surf_connectivity = surf_connectivities[i_boco]
         n_face = len(surf_connectivity) // 4
@@ -196,12 +197,12 @@ if __name__ == "__main__":
         erange = np.array([first, last], dtype=int)
         section = cgl.newElements(volume_zone, name, 'QUAD_4', erange,
             econnectivity=np.array(surf_connectivity))
-        addZoneBC(volume_zone, section, name, args.bc_types[i_boco])
+        addZoneBC(zone_bc, section, name, args.bc_types[i_boco])
         i_cell_next = last + 1
 
     # write the BC-added mesh
     output = args.output
     if output is None:
         output = f'BCadded_{args.volume}'
-    print('write to ', output)
+    print('writing to', output)
     cgm.save(output, volume_cgns)

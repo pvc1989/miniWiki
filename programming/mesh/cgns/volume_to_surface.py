@@ -52,5 +52,5 @@ if __name__ == "__main__":
     if output is None:
         output = f'V2S_{args.surface[:8]}.csv'
     if args.verbose:
-        print('write to ', output)
+        print('writing to', output)
     np.savetxt(output, volume_to_surface, fmt='%d', delimiter=',')

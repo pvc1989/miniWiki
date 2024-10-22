@@ -126,5 +126,5 @@ if __name__ == "__main__":
     output = args.output
     if output is None:
         output = f'order={args.order}_{args.input}'
-    print('write to ', output)
+    print('writing to', output)
     cgm.save(output, mesh_cgns)

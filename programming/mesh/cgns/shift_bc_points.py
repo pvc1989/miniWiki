@@ -42,8 +42,8 @@ if __name__ == "__main__":
         j_surface = volume_to_surface[i_volume]
         if j_surface < 0:
             continue
-        d_ij = np.hypot(volume_xyz[i_volume], surface_xyz[j_surface])
-        print(f'[{i_volume / volume_point_size:.2f}] Shifting point[{i_volume}] by {d_ij}')
+        d_ij = np.linalg.norm(volume_xyz[i_volume] - surface_xyz[j_surface])
+        print(f'[{i_volume / volume_point_size:.2f}] Shifting point[{i_volume}] by {d_ij:.2e}')
         volume_x[i_volume] = surface_x[j_surface]
         volume_y[i_volume] = surface_y[j_surface]
         volume_z[i_volume] = surface_z[j_surface]
@@ -53,5 +53,5 @@ if __name__ == "__main__":
     if output is None:
         output = f'shifted_{args.volume}'
     if args.verbose:
-        print('write to ', output)
+        print('writing to', output)
     cgm.save(output, volume_cgns)
