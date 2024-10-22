@@ -65,12 +65,22 @@ def getConnectivity(face_center: np.ndarray, boco_kdtrees, boco_connectivities) 
     assert False, min_distance
 
 
+def addZoneBC(zone, section, bc_name: str, bc_type: str):
+    element_range = wrapper.getNodeData(
+        wrapper.getUniqueChildByName(section, 'ElementRange'))
+    bc_range = np.array([element_range])
+    new_boco = cgl.newBoundary(volume_zone, bname=bc_name, brange=bc_range,
+        btype=bc_type, pttype='PointRange')
+    cgl.newGridLocation(new_boco, 'FaceCenter')
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0][:-3]}.py',
         description='Add surface elements and BCs to a volume mesh.')
     parser.add_argument('--volume', type=str, help='the input volume mesh file')
     parser.add_argument('--output', type=str, help='the output mesh with surface elements and BCs')
+    parser.add_argument('--bc_names', type=str, nargs='+', help='list of BC names')
     parser.add_argument('--bc_types', type=str, nargs='+', help='list of BC types')
     parser.add_argument('--bc_grids', type=str, nargs='+', help='list of BC grids')
     parser.add_argument('--index_maps', type=str, nargs='+', help='list of volume-to-surface index map files')
@@ -105,7 +115,7 @@ if __name__ == "__main__":
     assert len(volume_connectivity) == n_volume_cell * 8
 
     # get the index set of boundary points
-    n_boco = len(args.bc_types)
+    n_boco = len(args.bc_names)
     assert n_boco == len(args.index_maps)
     boco_points = set()  # 0-based
     for i_boco in range(n_boco):
@@ -174,17 +184,19 @@ if __name__ == "__main__":
     for i_boco in range(n_boco):
         assert len(surf_connectivities[i_boco]) == boco_kdtrees[i_boco].n * 4
 
-    # build Elements_t objects
+    # build Elements_t and ZoneBC_t objects
+    print('building Elements_t\'s and ZoneBC_t\'s')
     i_cell_next = n_volume_cell + 1  # again, 1-based
     for i_boco in range(n_boco):
         surf_connectivity = surf_connectivities[i_boco]
         n_face = len(surf_connectivity) // 4
         first = i_cell_next
         last = i_cell_next + n_face - 1  # inclusive
-        name = f'{args.bc_types[i_boco]}Elements'
+        name = f'{args.bc_names[i_boco]}'
         erange = np.array([first, last], dtype=int)
-        cgl.newElements(volume_zone, name, 'QUAD_4', erange,
+        section = cgl.newElements(volume_zone, name, 'QUAD_4', erange,
             econnectivity=np.array(surf_connectivity))
+        addZoneBC(volume_zone, section, name, args.bc_types[i_boco])
         i_cell_next = last + 1
 
     # write the BC-added mesh
