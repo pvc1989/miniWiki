@@ -14,7 +14,9 @@ if __name__ == "__main__":
         prog = f'python3 {sys.argv[0][:-3]}.py',
         description='Shift the points in a given mesh to their given coordinates.')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
-    parser.add_argument('--coords', type=str, help='the CSV file of shifted coords')
+    parser.add_argument('--cad_points', type=str, help='the CSV file of points on CAD surfaces')
+    parser.add_argument('--stl_points', type=str, help='the CSV file of points on STL surfaces')
+    parser.add_argument('--x_cut', type=float, default=-1e100, help='the position of the cutting plane (x <= x_cut ? stl : cad)')
     parser.add_argument('--output', type=str, help='the output mesh file')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
@@ -35,19 +37,29 @@ if __name__ == "__main__":
     n_cell = mesh_zone_size[0][1]
     if args.verbose:
         print(f'n_node = {n_node}, n_cell = {n_cell}')
-    mesh_coords = wrapper.getChildrenByType(
+    mesh_points = wrapper.getChildrenByType(
         wrapper.getUniqueChildByType(mesh_zone, 'GridCoordinates_t'), 'DataArray_t')
-    mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
-    assert n_node == len(mesh_coords_x) == len(mesh_coords_y) == len(mesh_coords_z)
+    mesh_points_x, mesh_points_y, mesh_points_z = mesh_points[X][1], mesh_points[Y][1], mesh_points[Z][1]
+    assert n_node == len(mesh_points_x) == len(mesh_points_y) == len(mesh_points_z)
 
     # load the shifted coords
-    new_coords = np.loadtxt(args.coords, delimiter=',')
-    assert (n_node, 3) == new_coords.shape
+    cad_points = np.loadtxt(args.cad_points, delimiter=',')
+    assert (n_node, 3) == cad_points.shape
+
+    stl_points = np.loadtxt(args.stl_points, delimiter=',')
+    assert (n_node, 3) == stl_points.shape
 
     # update the coords
-    mesh_coords_x[:] = new_coords[:, X]
-    mesh_coords_y[:] = new_coords[:, Y]
-    mesh_coords_z[:] = new_coords[:, Z]
+    for i_node in range(n_node):
+        x = mesh_points_x[i_node]
+        if x < args.x_cut:
+            mesh_points_x[i_node] = stl_points[i_node, X]
+            mesh_points_y[i_node] = stl_points[i_node, Y]
+            mesh_points_z[i_node] = stl_points[i_node, Z]
+        else:
+            mesh_points_x[i_node] = cad_points[i_node, X]
+            mesh_points_y[i_node] = cad_points[i_node, Y]
+            mesh_points_z[i_node] = cad_points[i_node, Z]
 
     # write the shifted mesh
     if args.verbose:
