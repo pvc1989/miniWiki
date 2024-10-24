@@ -134,16 +134,17 @@ def project_points(cad_file: str, inch_csv: str, comm_rank: int, comm_size: int)
     if status != 1:
         raise Exception("Error reading STEP file.")
     step_reader.TransferRoots()
-    # one_shape = step_reader.OneShape()
-    one_shape = TopoDS_Shape()
-    for i_shape in range(step_reader.NbShapes()):
-        shape = step_reader.Shape(1 + i_shape)
-        log.write(f'Shape[{i_shape}] = {shape}\n')
-        faces = extract_faces(shape)
-        log.write(f'n_face = {len(faces)}\n')
-        if len(faces) > 0:
-            one_shape = remove_one_face(shape, faces[212])  # ignore the symmetry plane
-            log.write(f'n_face in new_shape = {len(extract_faces(one_shape))}\n')
+    one_shape = step_reader.OneShape()
+    # one_shape = TopoDS_Shape()
+    # for i_shape in range(step_reader.NbShapes()):
+    #     shape = step_reader.Shape(1 + i_shape)
+    #     log.write(f'Shape[{i_shape}] = {shape}\n')
+    #     faces = extract_faces(shape)
+    #     log.write(f'n_face = {len(faces)}\n')
+    # exit(-1)
+    #     if len(faces) > 0:
+    #         one_shape = remove_one_face(shape, faces[212])  # ignore the symmetry plane
+    #         log.write(f'n_face in new_shape = {len(extract_faces(one_shape))}\n')
     log.write(f'reading CSV file on rank {comm_rank}\n')
     old_coords = np.loadtxt(inch_csv, delimiter=',')
     assert old_coords.shape[1] == 3
@@ -170,7 +171,7 @@ def project_points(cad_file: str, inch_csv: str, comm_rank: int, comm_size: int)
         # point_on_shape, distance = project_by_faces(vertex, faces)
         i_local = i_global - first
         new_coords[i_local] = point_on_shape.X(), point_on_shape.Y(), point_on_shape.Z()
-        log.write(f'[{(i_local + 1) / n_node_local:.2f}] i = {i_global}, d = {distance:3.1e}\n')
+        log.write(f'[{(i_local + 1) / n_node_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
         log.flush()
 
     new_coords /= 25.4  # now, new_coords in inch
