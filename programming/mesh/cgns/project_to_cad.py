@@ -16,6 +16,8 @@ import numpy as np
 import argparse
 import sys
 from mpi4py import MPI
+import threading
+from concurrent.futures import ThreadPoolExecutor, wait
 
 
 def multiple_to_unique(multiple_points: np.ndarray) -> np.ndarray:
@@ -76,6 +78,28 @@ def unique_to_multiple(unique_points: np.ndarray) -> np.ndarray:
     return multiple_points
 
 
+def get_one_shape_from_cad(cad_file: str):
+    step_reader = STEPControl_Reader()
+    status = step_reader.ReadFile(cad_file)
+    if status != 1:
+        raise Exception("Error reading STEP file.")
+    step_reader.TransferRoots()
+    one_shape = step_reader.OneShape()
+    return one_shape
+
+
+def get_all_faces_from_cad(cad_file):
+    step_reader = STEPControl_Reader()
+    status = step_reader.ReadFile(cad_file)
+    if status != 1:
+        raise Exception("Error reading STEP file.")
+    step_reader.TransferRoots()
+    for i_shape in range(step_reader.NbShapes()):
+        shape = step_reader.Shape(1 + i_shape)
+        faces = extract_faces(shape)
+    return faces
+
+
 def get_bounding_box(shape: TopoDS_Shape):
     box = Bnd_Box()
     brepbndlib.Add(shape, box)
@@ -125,26 +149,12 @@ def project_by_faces(vertex: TopoDS_Vertex, faces: list[TopoDS_Face]) -> tuple[g
     return min_distance_point, min_distance
 
 
-def project_points(cad_file: str, inch_csv: str, comm_rank: int, comm_size: int) -> np.ndarray:
+def project_points_by_mpi_process(cad_file: str, inch_csv: str,
+        comm_rank: int, comm_size: int) -> np.ndarray:
     log = open(f'log_{comm_rank}.txt', 'w')
 
     log.write(f'reading CAD file on rank {comm_rank}\n')
-    step_reader = STEPControl_Reader()
-    status = step_reader.ReadFile(cad_file)
-    if status != 1:
-        raise Exception("Error reading STEP file.")
-    step_reader.TransferRoots()
-    one_shape = step_reader.OneShape()
-    # one_shape = TopoDS_Shape()
-    # for i_shape in range(step_reader.NbShapes()):
-    #     shape = step_reader.Shape(1 + i_shape)
-    #     log.write(f'Shape[{i_shape}] = {shape}\n')
-    #     faces = extract_faces(shape)
-    #     log.write(f'n_face = {len(faces)}\n')
-    # exit(-1)
-    #     if len(faces) > 0:
-    #         one_shape = remove_one_face(shape, faces[212])  # ignore the symmetry plane
-    #         log.write(f'n_face in new_shape = {len(extract_faces(one_shape))}\n')
+    one_shape = get_one_shape_from_cad(cad_file)
     log.write(f'reading CSV file on rank {comm_rank}\n')
     old_coords = np.loadtxt(inch_csv, delimiter=',')
     assert old_coords.shape[1] == 3
@@ -184,6 +194,49 @@ def project_points(cad_file: str, inch_csv: str, comm_rank: int, comm_size: int)
     return new_coords
 
 
+def project_points_by_thread(one_shape: TopoDS_Shape, old_coords: np.ndarray,
+    i_task: int, n_task: int):
+    log = open(f'log_{i_task}.txt', 'w')
+    assert old_coords.shape[1] == 3
+    old_coords *= 25.4  # old_coords in inch, convert it to mm
+
+    start = timer()
+
+    n_node_global = len(old_coords)
+    n_node_local = (n_node_global + n_task - 1) // n_task
+    first = n_node_local * i_task
+    last = n_node_local * (i_task + 1)
+    last = min(last, n_node_global)
+    if i_task + 1 == n_task:
+        n_node_local = last - first
+        assert last == n_node_global
+
+    new_coords = np.ndarray((n_node_local, 3), old_coords.dtype)
+
+    log.write(f'range[{i_task}] = [{first}, {last})\n')
+    for i_global in range(first, last):
+        x, y, z = old_coords[i_global]
+        vertex = BRepBuilderAPI_MakeVertex(gp_Pnt(x, y, z)).Vertex()
+        point_on_shape, distance = project_by_one_shape(vertex, one_shape)
+        i_local = i_global - first
+        new_coords[i_local] = point_on_shape.X(), point_on_shape.Y(), point_on_shape.Z()
+        log.write(f'[{(i_local + 1) / n_node_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
+        log.flush()
+
+    new_coords /= 25.4  # now, new_coords in inch
+
+    # tasks are partitioned to be independent, so no data racing
+    old_coords[first : last, :] = new_coords
+
+    np.savetxt(f'new_coords_{i_task}.csv', new_coords, delimiter=',')
+    end = timer()
+    log.write(f'on thread {threading.current_thread().ident}')
+    log.write(f'wall-clock cost = {end - start}')
+    log.close()
+
+    return new_coords
+
+
 def merge_new_coords(comm_size: int, n_unique_point: int) -> np.ndarray:
     first = 0
     merged_new_coords = np.ndarray((n_unique_point, 3))
@@ -205,28 +258,56 @@ if __name__ == "__main__":
     parser.add_argument('--cad', type=str, help='the STEP file of the CAD model')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the points to be projected')
     parser.add_argument('--output', type=str, help='the CSV file of the projected points')
+    parser.add_argument('--parallel',  type=str, choices=['mpi', 'futures'], help='parallel mechanism')
+    parser.add_argument('--n_thread',  type=int, help='number of threads for running futures')
+    parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_thread')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
-    size = comm.Get_size()
+    using_mpi = (args.parallel == 'mpi')
 
-    if args.verbose and rank == 0:
-        print(args)
+    if using_mpi:
+        comm = MPI.COMM_WORLD
+        rank = comm.Get_rank()
+        size = comm.Get_size()
+        if args.verbose and rank == 0:
+            print(args)
+    else:
+        pass
 
-    if rank == 0:
+    if not using_mpi or rank == 0:
         cgns, zone, zone_size = getUniqueZone(args.mesh)
         print(zone_size)
         _, xyz, x, y, z = readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
         unique_points = multiple_to_unique(xyz)
-    comm.Barrier()
 
-    project_points(args.cad, 'unique_points.csv', rank, size)
-    comm.Barrier()
+    if using_mpi:
+        comm.Barrier()
+        # TODO(PVC): read CAD and CSV by rank 0 and share them with other ranks
+        project_points_by_mpi_process(args.cad, 'unique_points.csv', rank, size)
+        comm.Barrier()
+    else:
+        one_shape = get_one_shape_from_cad(args.cad)
+        # old_coords = np.loadtxt('unique_points.csv', delimiter=',')
+        # assert (unique_points == old_coords).all()
+        executor = ThreadPoolExecutor(args.n_thread)
+        start = timer()
+        fs = []  # list of futures
+        for i_task in range(args.n_task):
+            fs.append(executor.submit(project_points_by_thread,
+                one_shape, unique_points, i_task, args.n_task))
+        wait(fs)
+        end = timer()
+        print(f'wall-clock cost: {(end - start):.2f}')
+        executor.shutdown()
 
-    if rank == 0:
+    if not using_mpi or rank == 0:
         merged_new_coords = merge_new_coords(size, len(unique_points))
         new_coords_multiple = unique_to_multiple(merged_new_coords)
         np.savetxt('new_coords_multiple.csv', new_coords_multiple, delimiter=',')
+
+    if not using_mpi:
+        old_coords_multiple = unique_to_multiple(merged_new_coords)
+        np.savetxt('old_coords_multiple.csv', old_coords_multiple, delimiter=',')
+        print(np.linalg.norm(new_coords_multiple - old_coords_multiple))
