@@ -194,11 +194,11 @@ def project_points_by_mpi_process(cad_file: str, inch_csv: str,
     return new_coords
 
 
-def project_points_by_thread(one_shape: TopoDS_Shape, old_coords: np.ndarray,
-    i_task: int, n_task: int):
+def project_points_by_thread(one_shape: TopoDS_Shape, unique_points: np.ndarray, i_task: int, n_task: int):
+    old_coords = unique_points
+
     log = open(f'log_{i_task}.txt', 'w')
     assert old_coords.shape[1] == 3
-    old_coords *= 25.4  # old_coords in inch, convert it to mm
 
     start = timer()
 
@@ -214,6 +214,10 @@ def project_points_by_thread(one_shape: TopoDS_Shape, old_coords: np.ndarray,
     new_coords = np.ndarray((n_node_local, 3), old_coords.dtype)
 
     log.write(f'range[{i_task}] = [{first}, {last})\n')
+    print(i_task, old_coords.shape, np.linalg.norm(old_coords))
+    log.write(f'old_coords.norm = {np.linalg.norm(old_coords)} mm\n')
+    log.flush()
+
     for i_global in range(first, last):
         x, y, z = old_coords[i_global]
         vertex = BRepBuilderAPI_MakeVertex(gp_Pnt(x, y, z)).Vertex()
@@ -226,7 +230,7 @@ def project_points_by_thread(one_shape: TopoDS_Shape, old_coords: np.ndarray,
     new_coords /= 25.4  # now, new_coords in inch
 
     # tasks are partitioned to be independent, so no data racing
-    old_coords[first : last, :] = new_coords
+    # old_coords[first : last, :] = new_coords
 
     np.savetxt(f'new_coords_{i_task}.csv', new_coords, delimiter=',')
     end = timer()
@@ -281,6 +285,8 @@ if __name__ == "__main__":
         _, xyz, x, y, z = readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
         unique_points = multiple_to_unique(xyz)
+        unique_points *= 25.4  # old_coords in inch, convert it to mm
+        print(f'unique_points.norm = {np.linalg.norm(unique_points)} mm')
 
     if using_mpi:
         comm.Barrier()
@@ -289,25 +295,28 @@ if __name__ == "__main__":
         comm.Barrier()
     else:
         one_shape = get_one_shape_from_cad(args.cad)
-        # old_coords = np.loadtxt('unique_points.csv', delimiter=',')
-        # assert (unique_points == old_coords).all()
         executor = ThreadPoolExecutor(args.n_thread)
         start = timer()
         fs = []  # list of futures
         for i_task in range(args.n_task):
-            fs.append(executor.submit(project_points_by_thread,
-                one_shape, unique_points, i_task, args.n_task))
-        wait(fs)
+            fs.append(executor.submit(project_points_by_thread, one_shape, unique_points, i_task, args.n_task))
+        done, not_done = wait(fs)
+        print('done:')
+        for x in done:
+            print(x)
+        print('done:')
+        for x in not_done:
+            print(x)
         end = timer()
         print(f'wall-clock cost: {(end - start):.2f}')
         executor.shutdown()
 
-    if not using_mpi or rank == 0:
+    if using_mpi and rank == 0:
         merged_new_coords = merge_new_coords(size, len(unique_points))
         new_coords_multiple = unique_to_multiple(merged_new_coords)
         np.savetxt('new_coords_multiple.csv', new_coords_multiple, delimiter=',')
 
     if not using_mpi:
-        old_coords_multiple = unique_to_multiple(merged_new_coords)
-        np.savetxt('old_coords_multiple.csv', old_coords_multiple, delimiter=',')
-        print(np.linalg.norm(new_coords_multiple - old_coords_multiple))
+        merged_new_coords = merge_new_coords(args.n_task, len(unique_points))
+        new_coords_multiple = unique_to_multiple(merged_new_coords)
+        np.savetxt('new_coords_multiple.csv', new_coords_multiple, delimiter=',')
