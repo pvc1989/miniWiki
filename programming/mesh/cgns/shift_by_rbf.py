@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy import sparse
 from scipy.spatial import KDTree
+import sys
 
 
 X, Y, Z = 0, 1, 2
@@ -31,11 +32,11 @@ def build_dok_matrix(points: np.ndarray, radius: float, verbose: bool) -> sparse
         dok_matrix[i_point, n_point + 1] = dok_matrix[n_point + 1, i_point] = point_i[X]
         dok_matrix[i_point, n_point + 2] = dok_matrix[n_point + 2, i_point] = point_i[Y]
         dok_matrix[i_point, n_point + 3] = dok_matrix[n_point + 3, i_point] = point_i[Z]
-        neighbors = kdtree.query(point_i, k=10, distance_upper_bound=radius)
-        for i in range(len(neighbors[0])):
-            distance_ij, j_point = neighbors[0][i], neighbors[1][i]
-            if distance_ij > radius:
-                break
+        j_neighbors = kdtree.query_ball_point(point_i, radius)
+        for j_point in j_neighbors:
+            point_j = kdtree.data[j_point]
+            distance_ij = np.linalg.norm(point_j - point_i)
+            assert distance_ij <= radius
             if verbose and n_point <= 100:
                 print(f'i = {i_point:2d}, j = {j_point:2d}, d_ij = {distance_ij:.2e}')
             dok_matrix[i_point, j_point] = distance_ij
@@ -46,8 +47,19 @@ def build_dok_matrix(points: np.ndarray, radius: float, verbose: bool) -> sparse
 
 
 if __name__ == '__main__':
-    n_point = 30
+    n_point = int(sys.argv[1])
     np.random.seed(123456789)
     points = np.random.rand(n_point, 3)
-    dok_matrix = build_dok_matrix(points, radius=0.5, verbose=True)
+    dok_matrix = build_dok_matrix(points, radius=0.1, verbose=True)
     print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point}')
+    csc_matrix = dok_matrix.tocsc()
+    u_bc = np.random.rand(n_point + 4)
+    u_bc[-4:] = 0
+    u_coeffs, exit_code = sparse.linalg.lgmres(csc_matrix, u_bc, maxiter=20000, rtol=1e-7)
+    print('exit_code =', exit_code)
+    print(np.linalg.norm(csc_matrix.dot(u_coeffs) - u_bc))
+    print(np.allclose(csc_matrix.dot(u_coeffs), u_bc))
+    den_matrix = dok_matrix.todense()
+    u_coeffs = np.linalg.solve(den_matrix, u_bc)
+    print(np.linalg.norm(den_matrix.dot(u_coeffs) - u_bc))
+    print(np.allclose(den_matrix.dot(u_coeffs), u_bc))
