@@ -119,7 +119,7 @@ if __name__ == "__main__":
     assert n_boco == len(args.index_maps)
     boco_points = set()  # 0-based
     for i_boco in range(n_boco):
-        vol_to_surf = np.loadtxt(args.index_maps[i_boco], dtype=int)
+        vol_to_surf = np.load(args.index_maps[i_boco])
         for i_vol in range(len(vol_to_surf)):
             if vol_to_surf[i_vol] >= 0:
                 boco_points.add(i_vol)

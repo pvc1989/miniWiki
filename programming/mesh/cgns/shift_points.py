@@ -14,8 +14,8 @@ if __name__ == "__main__":
         prog = f'python3 {sys.argv[0][:-3]}.py',
         description='Shift the points in a given mesh to their given coordinates.')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
-    parser.add_argument('--cad_points', type=str, help='the CSV file of points on CAD surfaces')
-    parser.add_argument('--stl_points', type=str, help='the CSV file of points on STL surfaces')
+    parser.add_argument('--cad_points', type=str, help='the NPY file of points on CAD surfaces')
+    parser.add_argument('--stl_points', type=str, help='the NPY file of points on STL surfaces')
     parser.add_argument('--x_cut', type=float, default=-1e100, help='the position of the cutting plane (x <= x_cut ? stl : cad)')
     parser.add_argument('--output', type=str, help='the output mesh file')
     parser.add_argument('--verbose', default=True, action='store_true')
@@ -43,10 +43,10 @@ if __name__ == "__main__":
     assert n_node == len(mesh_points_x) == len(mesh_points_y) == len(mesh_points_z)
 
     # load the shifted coords
-    cad_points = np.loadtxt(args.cad_points, delimiter=',')
+    cad_points = np.load(args.cad_points)
     assert (n_node, 3) == cad_points.shape
 
-    stl_points = np.loadtxt(args.stl_points, delimiter=',')
+    stl_points = np.load(args.stl_points)
     assert (n_node, 3) == stl_points.shape
 
     # update the coords

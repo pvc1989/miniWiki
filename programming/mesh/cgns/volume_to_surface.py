@@ -19,7 +19,7 @@ if __name__ == "__main__":
     parser.add_argument('--surface', type=str, help='the CGNS file of the surface mesh')
     parser.add_argument('--distance', type=float, default=1e-10,
         help='if the distance of two points is less than this value, then treated them as a single one')
-    parser.add_argument('--output', type=str, help='the CSV file containing the map')
+    parser.add_argument('--output', type=str, help='the NPY file containing the map')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # write the mesh
     output = args.output
     if output is None:
-        output = f'V2S_{args.surface[:8]}.csv'
+        output = f'V2S_{args.surface[:8]}.npy'
     if args.verbose:
         print('writing to', output)
-    np.savetxt(output, volume_to_surface, fmt='%d', delimiter=',')
+    np.save(output, volume_to_surface)

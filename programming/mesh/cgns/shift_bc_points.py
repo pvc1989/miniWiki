@@ -17,7 +17,7 @@ if __name__ == "__main__":
         description='Shift the points in a given volume mesh by surface meshes.')
     parser.add_argument('--volume', type=str, help='the CGNS file of the volume mesh')
     parser.add_argument('--surface', type=str, help='the CGNS file of the shifted surface mesh')
-    parser.add_argument('--index_map', type=str, help='the CSV file containing the volume-to-surface node index map')
+    parser.add_argument('--index_map', type=str, help='the NPY file containing the volume-to-surface node index map')
     parser.add_argument('--output', type=str, help='the CGNS file of the shifted volume mesh')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     _, surface_xyz, surface_x, surface_y, surface_z = readPoints(surface_zone, surface_zone_size)
 
     # load the volume-to-surface node index map
-    volume_to_surface = np.loadtxt(args.index_map, dtype=int, delimiter=',')
+    volume_to_surface = np.load(args.index_map)
 
     # shift volume points on surface
     for i_volume in range(volume_point_size):

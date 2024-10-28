@@ -46,14 +46,14 @@ def multiple_to_unique(multiple_points: np.ndarray) -> np.ndarray:
         coord = (xyz[0], xyz[1], xyz[2])
         i_old_to_i_new[i_old] = coord_to_i_new[coord]
     assert (0 <= i_old_to_i_new).all() and (i_old_to_i_new < n_new).all()
-    np.savetxt('i_old_to_i_new.csv', i_old_to_i_new, fmt='%d', delimiter=',')
+    np.save('i_old_to_i_new.npy', i_old_to_i_new)
 
     new_coords = np.ndarray((n_new, 3), old_coords.dtype)
     for coord, i_new in coord_to_i_new.items():
         new_coords[i_new] = coord
 
     unique_points = new_coords
-    np.savetxt('unique_points.csv', unique_points, delimiter=',')
+    np.save('unique_points.npy', unique_points)
     print('in multiple_to_unique:', n_new, n_old)
     return unique_points
 
@@ -61,12 +61,12 @@ def multiple_to_unique(multiple_points: np.ndarray) -> np.ndarray:
 def unique_to_multiple(unique_points: np.ndarray) -> np.ndarray:
     new_coords = unique_points
     n_new = len(new_coords)
-    i_old_to_i_new = np.loadtxt('i_old_to_i_new.csv', dtype=int, delimiter=',')
+    i_old_to_i_new = np.load('i_old_to_i_new.npy')
     n_old = len(i_old_to_i_new)
     print('in unique_to_multiple:', n_new, n_old)
     assert (0 <= i_old_to_i_new).all() and (i_old_to_i_new < n_new).all()
 
-    # new_coords = np.loadtxt('shifted_unique_coords.csv', delimiter=',')
+    # new_coords = np.load('shifted_unique_coords.npy')
     old_coords = np.ndarray((n_old, 3), dtype=new_coords.dtype)
 
     for i_old in range(n_old):
@@ -74,7 +74,7 @@ def unique_to_multiple(unique_points: np.ndarray) -> np.ndarray:
         old_coords[i_old] = new_coords[i_new]
 
     multiple_points = old_coords
-    np.savetxt('multiple_points.csv', multiple_points, delimiter=',')
+    np.save('multiple_points.npy', multiple_points)
     return multiple_points
 
 
@@ -149,14 +149,14 @@ def project_by_faces(vertex: TopoDS_Vertex, faces: list[TopoDS_Face]) -> tuple[g
     return min_distance_point, min_distance
 
 
-def project_points_by_mpi_process(cad_file: str, inch_csv: str,
+def project_points_by_mpi_process(cad_file: str, inch_npy: str,
         comm_rank: int, comm_size: int) -> np.ndarray:
     log = open(f'log_{comm_rank}.txt', 'w')
 
     log.write(f'reading CAD file on rank {comm_rank}\n')
     one_shape = get_one_shape_from_cad(cad_file)
-    log.write(f'reading CSV file on rank {comm_rank}\n')
-    old_coords = np.loadtxt(inch_csv, delimiter=',')
+    log.write(f'reading NPY file on rank {comm_rank}\n')
+    old_coords = np.load(inch_npy)
     assert old_coords.shape[1] == 3
     old_coords *= 25.4  # old_coords in inch, convert it to mm
 
@@ -186,7 +186,7 @@ def project_points_by_mpi_process(cad_file: str, inch_csv: str,
 
     new_coords /= 25.4  # now, new_coords in inch
 
-    np.savetxt(f'new_coords_{comm_rank}.csv', new_coords, delimiter=',')
+    np.save(f'new_coords_{comm_rank}.npy', new_coords)
     end = timer()
     log.write(f'wall-clock cost = {end - start}')
     log.close()
@@ -232,7 +232,7 @@ def project_points_by_thread(one_shape: TopoDS_Shape, unique_points: np.ndarray,
     # tasks are partitioned to be independent, so no data racing
     # old_coords[first : last, :] = new_coords
 
-    np.savetxt(f'new_coords_{i_task}.csv', new_coords, delimiter=',')
+    np.save(f'new_coords_{i_task}.npy', new_coords)
     end = timer()
     log.write(f'on thread {threading.current_thread().ident}')
     log.write(f'wall-clock cost = {end - start}')
@@ -245,13 +245,13 @@ def merge_new_coords(comm_size: int, n_unique_point: int) -> np.ndarray:
     first = 0
     merged_new_coords = np.ndarray((n_unique_point, 3))
     for comm_rank in range(comm_size):
-        part = np.loadtxt(f'new_coords_{comm_rank}.csv', delimiter=',')
+        part = np.load(f'new_coords_{comm_rank}.npy')
         last = first + len(part)
         merged_new_coords[first : last, :] = part
         print(f'merge rank = {comm_rank}: [{first}, {last})')
         first = last
     assert first == n_unique_point, (first, n_unique_point)
-    np.savetxt('new_coords_unique.csv', merged_new_coords, delimiter=',')
+    np.save('new_coords_unique.npy', merged_new_coords)
     return merged_new_coords
 
 
@@ -261,7 +261,7 @@ if __name__ == "__main__":
         description = 'Project points in CGNS file to the surface of a CAD model.')
     parser.add_argument('--cad', type=str, help='the STEP file of the CAD model')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the points to be projected')
-    parser.add_argument('--output', type=str, help='the CSV file of the projected points')
+    parser.add_argument('--output', type=str, help='the NPY file of the projected points')
     parser.add_argument('--parallel',  type=str, choices=['mpi', 'futures'], help='parallel mechanism')
     parser.add_argument('--n_thread',  type=int, help='number of threads for running futures')
     parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_thread')
@@ -290,8 +290,8 @@ if __name__ == "__main__":
 
     if using_mpi:
         comm.Barrier()
-        # TODO(PVC): read CAD and CSV by rank 0 and share them with other ranks
-        project_points_by_mpi_process(args.cad, 'unique_points.csv', rank, size)
+        # TODO(PVC): read CAD and NPY by rank 0 and share them with other ranks
+        project_points_by_mpi_process(args.cad, 'unique_points.npy', rank, size)
         comm.Barrier()
     else:
         one_shape = get_one_shape_from_cad(args.cad)
@@ -314,9 +314,9 @@ if __name__ == "__main__":
     if using_mpi and rank == 0:
         merged_new_coords = merge_new_coords(size, len(unique_points))
         new_coords_multiple = unique_to_multiple(merged_new_coords)
-        np.savetxt('new_coords_multiple.csv', new_coords_multiple, delimiter=',')
+        np.save('new_coords_multiple.npy', new_coords_multiple)
 
     if not using_mpi:
         merged_new_coords = merge_new_coords(args.n_task, len(unique_points))
         new_coords_multiple = unique_to_multiple(merged_new_coords)
-        np.savetxt('new_coords_multiple.csv', new_coords_multiple, delimiter=',')
+        np.save('new_coords_multiple.npy', new_coords_multiple)
