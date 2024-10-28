@@ -15,9 +15,10 @@ from timeit import default_timer as timer
 import numpy as np
 import argparse
 import sys
+import os
 from mpi4py import MPI
 import threading
-from concurrent.futures import ThreadPoolExecutor, wait
+from concurrent.futures import ProcessPoolExecutor, wait
 
 
 def multiple_to_unique(multiple_points: np.ndarray) -> np.ndarray:
@@ -194,8 +195,9 @@ def project_points_by_mpi_process(cad_file: str, inch_npy: str,
     return new_coords
 
 
-def project_points_by_thread(one_shape: TopoDS_Shape, unique_points: np.ndarray, i_task: int, n_task: int):
-    old_coords = unique_points
+def project_points_by_futures_process(i_task: int, n_task: int):
+    global one_shape
+    global old_coords
 
     log = open(f'log_{i_task}.txt', 'w')
     assert old_coords.shape[1] == 3
@@ -229,14 +231,14 @@ def project_points_by_thread(one_shape: TopoDS_Shape, unique_points: np.ndarray,
 
     new_coords /= 25.4  # now, new_coords in inch
 
-    # tasks are partitioned to be independent, so no data racing
-    # old_coords[first : last, :] = new_coords
-
     np.save(f'new_coords_{i_task}.npy', new_coords)
     end = timer()
-    log.write(f'on thread {threading.current_thread().ident}')
+    log.write(f'task {i_task} on process {os.getpid()} thread {threading.current_thread().ident}\n')
     log.write(f'wall-clock cost = {end - start}')
     log.close()
+
+    # tasks are partitioned to be independent, so no data racing
+    # old_coords[first : last, :] = new_coords
 
     return new_coords
 
@@ -263,8 +265,8 @@ if __name__ == "__main__":
     parser.add_argument('--mesh', type=str, help='the CGNS file of the points to be projected')
     parser.add_argument('--output', type=str, help='the NPY file of the projected points')
     parser.add_argument('--parallel',  type=str, choices=['mpi', 'futures'], help='parallel mechanism')
-    parser.add_argument('--n_thread',  type=int, help='number of threads for running futures')
-    parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_thread')
+    parser.add_argument('--n_worker',  type=int, help='number of workers for running futures')
+    parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_worker')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
@@ -276,8 +278,9 @@ if __name__ == "__main__":
         size = comm.Get_size()
         if args.verbose and rank == 0:
             print(args)
+        n_task = size
     else:
-        pass
+        n_task = args.n_task
 
     if not using_mpi or rank == 0:
         cgns, zone, zone_size = getUniqueZone(args.mesh)
@@ -294,12 +297,16 @@ if __name__ == "__main__":
         project_points_by_mpi_process(args.cad, 'unique_points.npy', rank, size)
         comm.Barrier()
     else:
+        global one_shape
+        global old_coords
+        old_coords = unique_points
         one_shape = get_one_shape_from_cad(args.cad)
-        executor = ThreadPoolExecutor(args.n_thread)
+        executor = ProcessPoolExecutor(args.n_worker)
         start = timer()
         fs = []  # list of futures
-        for i_task in range(args.n_task):
-            fs.append(executor.submit(project_points_by_thread, one_shape, unique_points, i_task, args.n_task))
+        for i_task in range(n_task):
+            fs.append(executor.submit(
+                project_points_by_futures_process, i_task, n_task))
         done, not_done = wait(fs)
         print('done:')
         for x in done:
@@ -311,12 +318,7 @@ if __name__ == "__main__":
         print(f'wall-clock cost: {(end - start):.2f}')
         executor.shutdown()
 
-    if using_mpi and rank == 0:
-        merged_new_coords = merge_new_coords(size, len(unique_points))
-        new_coords_multiple = unique_to_multiple(merged_new_coords)
-        np.save('new_coords_multiple.npy', new_coords_multiple)
-
-    if not using_mpi:
-        merged_new_coords = merge_new_coords(args.n_task, len(unique_points))
+    if not using_mpi or rank == 0:
+        merged_new_coords = merge_new_coords(n_task, len(unique_points))
         new_coords_multiple = unique_to_multiple(merged_new_coords)
         np.save('new_coords_multiple.npy', new_coords_multiple)
