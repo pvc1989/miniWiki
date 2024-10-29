@@ -21,10 +21,10 @@ def dimensional_rbf(vector: np.ndarray, radius: float):
     return dimensionaless_rbf(np.linalg.norm(vector) / radius)
 
 
-def build_dok_matrix(points: np.ndarray, radius: float, verbose: bool) -> sparse.dok_matrix:
-    assert points.shape[1] == 3
+def build_dok_matrix(kdtree: KDTree, radius: float, verbose: bool) -> sparse.dok_matrix:
+    points = kdtree.data
     n_point = len(points)
-    kdtree = KDTree(points)
+    assert points.shape[1] == 3
     dok_matrix = sparse.dok_matrix((n_point + 4, n_point + 4))
     for i_point in range(n_point):
         point_i = points[i_point]
@@ -46,13 +46,17 @@ def build_dok_matrix(points: np.ndarray, radius: float, verbose: bool) -> sparse
     return dok_matrix
 
 
-if __name__ == '__main__':
-    n_point = int(sys.argv[1])
+def test_on_random_points(n_point: int, radius: float, verbose: bool):
     np.random.seed(123456789)
     points = np.random.rand(n_point, 3)
-    dok_matrix = build_dok_matrix(points, radius=0.1, verbose=True)
-    print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point}')
+    kdtree = KDTree(points)
+    dok_matrix = build_dok_matrix(kdtree, radius, verbose)
+    sparsity = dok_matrix.nnz / (n_point * n_point)
+    print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point} = {sparsity:.2e}')
     csc_matrix = dok_matrix.tocsc()
+    csc_file_name = f'csc_matrix_{n_point}.npz'
+    sparse.save_npz(csc_file_name, csc_matrix)
+    csc_matrix = sparse.load_npz(csc_file_name)
     u_bc = np.random.rand(n_point + 4)
     u_bc[-4:] = 0
     u_coeffs, exit_code = sparse.linalg.lgmres(csc_matrix, u_bc, maxiter=20000, rtol=1e-7)
@@ -63,3 +67,8 @@ if __name__ == '__main__':
     u_coeffs = np.linalg.solve(den_matrix, u_bc)
     print(np.linalg.norm(den_matrix.dot(u_coeffs) - u_bc))
     print(np.allclose(den_matrix.dot(u_coeffs), u_bc))
+
+
+if __name__ == '__main__':
+    n_point = int(sys.argv[1])
+    test_on_random_points(n_point, radius=0.1, verbose=True)
