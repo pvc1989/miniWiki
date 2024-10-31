@@ -10,6 +10,7 @@ from OCC.Core.TopExp import TopExp_Explorer
 from OCC.Core.TopoDS import TopoDS_Shape, TopoDS_Face, TopoDS_Vertex
 
 from check_nodes import getUniqueZone, readPoints
+from merge_points import multiple_to_unique
 
 from timeit import default_timer as timer
 import numpy as np
@@ -21,60 +22,20 @@ import threading
 from concurrent.futures import ProcessPoolExecutor, wait
 
 
-def multiple_to_unique(multiple_points: np.ndarray) -> np.ndarray:
-    old_coords = multiple_points
-
-    print(old_coords[0, :])
-    print(old_coords[-1, :])
-
-    n_old = len(old_coords)
-
-    coord_to_i_new = dict()
-
-    i_new = 0
-    for xyz in old_coords:
-        x, y, z = xyz
-        coord = (x, y, z)
-        if coord not in coord_to_i_new:
-            coord_to_i_new[coord] = i_new
-            i_new += 1
-    assert i_new == len(coord_to_i_new)
-    n_new = i_new
-
-    i_old_to_i_new = np.ndarray((n_old,), dtype='int')
-    for i_old in range(n_old):
-        xyz = old_coords[i_old]
-        coord = (xyz[0], xyz[1], xyz[2])
-        i_old_to_i_new[i_old] = coord_to_i_new[coord]
-    assert (0 <= i_old_to_i_new).all() and (i_old_to_i_new < n_new).all()
-    np.save('i_old_to_i_new.npy', i_old_to_i_new)
-
-    new_coords = np.ndarray((n_new, 3), old_coords.dtype)
-    for coord, i_new in coord_to_i_new.items():
-        new_coords[i_new] = coord
-
-    unique_points = new_coords
-    np.save('unique_points.npy', unique_points)
-    print('in multiple_to_unique:', n_new, n_old)
-    return unique_points
-
-
 def unique_to_multiple(unique_points: np.ndarray) -> np.ndarray:
-    new_coords = unique_points
-    n_new = len(new_coords)
-    i_old_to_i_new = np.load('i_old_to_i_new.npy')
-    n_old = len(i_old_to_i_new)
-    print('in unique_to_multiple:', n_new, n_old)
-    assert (0 <= i_old_to_i_new).all() and (i_old_to_i_new < n_new).all()
+    n_unique = len(unique_points)
 
-    # new_coords = np.load('shifted_unique_coords.npy')
-    old_coords = np.ndarray((n_old, 3), dtype=new_coords.dtype)
+    # load the multiple_point_index-to-unique_point_index map
+    i_multiple_to_i_unique = np.load('i_multiple_to_i_unique.npy')
+    n_multiple = len(i_multiple_to_i_unique)
+    print('in unique_to_multiple:', n_unique, n_multiple)
+    assert (0 <= i_multiple_to_i_unique).all() and (i_multiple_to_i_unique < n_unique).all()
 
-    for i_old in range(n_old):
-        i_new = i_old_to_i_new[i_old]
-        old_coords[i_old] = new_coords[i_new]
-
-    multiple_points = old_coords
+    # build-save-return the multiple points
+    multiple_points = np.ndarray((n_multiple, 3), dtype=unique_points.dtype)
+    for i_multiple in range(n_multiple):
+        i_unique = i_multiple_to_i_unique[i_multiple]
+        multiple_points[i_multiple] = unique_points[i_unique]
     np.save('multiple_points.npy', multiple_points)
     return multiple_points
 
@@ -287,7 +248,8 @@ if __name__ == "__main__":
         print(zone_size)
         _, xyz, x, y, z = readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
-        unique_points = multiple_to_unique(xyz)
+        unique_points, i_multiple_to_i_unique = multiple_to_unique(
+            multiple_points=xyz, radius=1e-8, verbose=args.verbose)
         unique_points *= 25.4  # old_coords in inch, convert it to mm
         print(f'unique_points.norm = {np.linalg.norm(unique_points)} mm')
 
@@ -311,7 +273,7 @@ if __name__ == "__main__":
         print('done:')
         for x in done:
             print(x)
-        print('done:')
+        print('not_done:')
         for x in not_done:
             print(x)
         end = timer()
