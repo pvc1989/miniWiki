@@ -4,7 +4,7 @@ from scipy import sparse
 from scipy.spatial import KDTree
 import sys
 import argparse
-
+from timeit import default_timer as timer
 
 X, Y, Z = 0, 1, 2
 
@@ -22,7 +22,18 @@ def dimensional_rbf(vector: np.ndarray, radius: float):
     return dimensionaless_rbf(np.linalg.norm(vector) / radius)
 
 
-def build_dok_matrix(kdtree: KDTree, radius: float, verbose: bool) -> sparse.dok_matrix:
+def get_neighbors(kdtree: KDTree, point_i: np.ndarray, k_neighbor: int, radius: float) -> tuple[list[int], float]:
+    if k_neighbor > 0:
+        assert radius == 0.0, radius
+        d_neighbors, j_neighbors = kdtree.query(point_i, k_neighbor)
+        radius = d_neighbors[-1]
+    elif radius > 0:
+        assert k_neighbor == 0, k_neighbor
+        j_neighbors = kdtree.query_ball_point(point_i, radius)
+    return j_neighbors, radius
+
+
+def build_dok_matrix(kdtree: KDTree, k_neighbor: int, radius: float, verbose: bool) -> sparse.dok_matrix:
     points = kdtree.data
     n_point = len(points)
     assert points.shape[1] == 3
@@ -33,14 +44,14 @@ def build_dok_matrix(kdtree: KDTree, radius: float, verbose: bool) -> sparse.dok
         dok_matrix[i_point, n_point + 1] = dok_matrix[n_point + 1, i_point] = point_i[X]
         dok_matrix[i_point, n_point + 2] = dok_matrix[n_point + 2, i_point] = point_i[Y]
         dok_matrix[i_point, n_point + 3] = dok_matrix[n_point + 3, i_point] = point_i[Z]
-        j_neighbors = kdtree.query_ball_point(point_i, radius)
+        j_neighbors, radius_out = get_neighbors(kdtree, point_i, k_neighbor, radius)
         for j_point in j_neighbors:
             point_j = kdtree.data[j_point]
             distance_ij = np.linalg.norm(point_j - point_i)
-            assert distance_ij <= radius
+            assert distance_ij <= radius_out + 1e-10, (distance_ij, radius_out)
             if verbose and n_point <= 100:
                 print(f'i = {i_point:2d}, j = {j_point:2d}, d_ij = {distance_ij:.2e}')
-            dok_matrix[i_point, j_point] = distance_ij
+            dok_matrix[i_point, j_point] = dimensional_rbf(distance_ij, radius_out)
         if verbose:
             print(f'point[{i_point}] has {len(j_neighbors)} neighbors')
     if verbose and n_point <= 100:
@@ -57,7 +68,7 @@ def test_on_random_points(n_point: int, radius: float, verbose: bool):
     kdtree = KDTree(points)
     if verbose:
         print('building the dok_matrix ...')
-    dok_matrix = build_dok_matrix(kdtree, radius, verbose)
+    dok_matrix = build_dok_matrix(kdtree, 0, radius, verbose)
     sparsity = dok_matrix.nnz / (n_point * n_point)
     print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point} = {sparsity:.2e}')
     csc_matrix = dok_matrix.tocsc()
@@ -76,7 +87,7 @@ def test_on_random_points(n_point: int, radius: float, verbose: bool):
     print(np.allclose(den_matrix.dot(u_coeffs), u_bc))
 
 
-def build_rbf_matrix(old_points: np.ndarray, radius: float, verbose: bool) -> sparse.csc_matrix:
+def build_rbf_matrix(old_points: np.ndarray, k_neighbor: int, radius: float, verbose: bool) -> str:
     assert old_points.shape[1] == 3
     print('shape =', old_points.shape)
     n_point = len(old_points)
@@ -86,16 +97,22 @@ def build_rbf_matrix(old_points: np.ndarray, radius: float, verbose: bool) -> sp
     kdtree = KDTree(old_points)
     if verbose:
         print('building the dok_matrix ...')
-    dok_matrix = build_dok_matrix(kdtree, radius, verbose)
+    dok_matrix = build_dok_matrix(kdtree, k_neighbor, radius, verbose)
     sparsity = dok_matrix.nnz / (n_point * n_point)
     print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point} = {sparsity:.2e}')
     csc_matrix = dok_matrix.tocsc()
-    csc_file_name = f'csc_matrix_n={n_point}_r={radius:.2e}.npz'
+    if k_neighbor > 0:
+        assert radius == 0.0
+        csc_file_name = f'csc_matrix_n={n_point}_k={k_neighbor}.npz'
+    elif radius > 0:
+        assert k_neighbor == 0
+        csc_file_name = f'csc_matrix_n={n_point}_r={radius:.2e}.npz'
     sparse.save_npz(csc_file_name, csc_matrix)
-    return csc_matrix
+    return csc_file_name
 
 
-def solve_rbf_system(rbf_matrix: sparse.csc_matrix, rhs_columns: np.ndarray, radius: float, verbose: bool) -> np.ndarray:
+def solve_rbf_system(rbf_matrix_npz: str, rhs_columns: np.ndarray, verbose: bool) -> str:
+    rbf_matrix = sparse.load_npz(rbf_matrix_npz)
     n_point = len(rhs_columns)
     n_column = rhs_columns.shape[1]
     sol_columns = np.ndarray((n_point + 4, n_column))
@@ -103,12 +120,16 @@ def solve_rbf_system(rbf_matrix: sparse.csc_matrix, rhs_columns: np.ndarray, rad
         column_i = np.zeros((n_point + 4,))
         column_i[0 : n_point] = rhs_columns[:, i_column]
         if verbose:
-            print(f'solving column[{i_column}] ...')
+            print(f'\nsolving column[{i_column}] ...')
+        start = timer()
         sol_columns[:, i_column], exit_code = sparse.linalg.lgmres(
             rbf_matrix, column_i, maxiter=20000, atol=0.0, rtol=1e-7)
         print(f'column[{i_column}] solved with exit_code = {exit_code}')
-    sol_file_name = f'sol_columns_n={n_point}_r={radius:.2e}.npy'
+        end = timer()
+        print(f'costs {end - start:.2e} seconds')
+    sol_file_name = f'solved_{rbf_matrix_npz}'
     np.save(sol_file_name, sol_columns)
+    return sol_file_name
 
 
 if __name__ == '__main__':
@@ -118,7 +139,8 @@ if __name__ == '__main__':
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
     parser.add_argument('--old_points', type=str, help='the NPY file of boundary points before shifting')
     parser.add_argument('--new_points', type=str, help='the NPY file of boundary points after shifting')
-    parser.add_argument('--radius', type=float, help='the radius of the RBF basis')
+    parser.add_argument('--k_neighbor', type=int, default=0, help='number of neighbors in the support of the RBF basis')
+    parser.add_argument('--radius', type=float, default=0.0, help='the radius of the RBF basis')
     parser.add_argument('--output', type=str, help='the output mesh file')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
@@ -127,9 +149,8 @@ if __name__ == '__main__':
     new_points = np.load(args.new_points)
     assert old_points.shape == new_points.shape
 
-    # rbf_matrix = build_rbf_matrix(old_points, args.radius, args.verbose)
-    rbf_matrix = sparse.load_npz('./csc_matrix_n=270666_r=2.00e+00.npz')
-    rbf_coeffs = solve_rbf_system(rbf_matrix, new_points - old_points, args.radius, args.verbose)
+    rbf_matrix_npz = build_rbf_matrix(old_points, args.k_neighbor, args.radius, args.verbose)
+    rbf_solutions_npy = solve_rbf_system(rbf_matrix_npz, new_points - old_points, args.verbose)
 
     # n_point = int(sys.argv[1])
     # test_on_random_points(n_point, radius=0.1, verbose=True)
