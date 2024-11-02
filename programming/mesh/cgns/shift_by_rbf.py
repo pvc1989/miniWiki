@@ -5,6 +5,7 @@ from scipy.spatial import KDTree
 import sys
 import argparse
 from timeit import default_timer as timer
+from concurrent.futures import ProcessPoolExecutor, wait
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
@@ -140,52 +141,123 @@ def solve_rbf_system(rbf_matrix_npz: str, rhs_columns: np.ndarray, verbose: bool
     return sol_file_name
 
 
-def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndarray,
-        k_neighbor: int, radius: float, max_radius: float, verbose: bool):
-    if verbose:
-        print('loading the CGNS tree ...')
-    cgns, zone, zone_size = getUniqueZone(input)
-    _, _, coords_x, coords_y, coords_z = readPoints(zone, zone_size)
-    n_point = zone_size[0][0]
-    assert n_point == len(coords_x) == len(coords_y) == len(coords_z)
+def shift_points_by_futures_process(i_task: int, n_task: int, k_neighbor: int, radius: float, max_radius: float):
+    global kdtree
+    global u_rbf, v_rbf, w_rbf
+    global global_x, global_y, global_z
 
-    if verbose:
-        print('loading the RBF solution ...')
-    rbf_solutions = np.load(rbf_solutions_npy)
-    u_rbf = rbf_solutions[:, X]
-    v_rbf = rbf_solutions[:, Y]
-    w_rbf = rbf_solutions[:, Z]
+    log = open(f'log_{i_task}.txt', 'w')
 
-    if verbose:
-        print('building the KDTree ...')
-    kdtree = KDTree(bc_points)
+    start = timer()
 
-    for i_point in range(n_point):
-        x, y, z = coords_x[i_point], coords_y[i_point], coords_z[i_point]
+    n_global = len(global_x)
+    n_local = (n_global + n_task - 1) // n_task
+    first = n_local * i_task
+    last = n_local * (i_task + 1)
+    last = min(last, n_global)
+    if i_task + 1 == n_task:
+        n_local = last - first
+        assert last == n_global
+    log.write(f'range[{i_task}] = [{first}, {last})\n')
+    log.flush()
+
+    shift = np.zeros((n_local, 3), global_x.dtype)
+    for i_local in range(n_local):
+        i_global = i_local + first
+        x, y, z = global_x[i_global], global_y[i_global], global_z[i_global]
         if (x * x + y * y + z * z > max_radius * max_radius):
-            if verbose:
-                print(f'{i_point} skipped')
+            log.write(f'{i_global} skipped\n')
+            log.flush()
             continue
         point_i = np.array([x, y, z])
         j_neighbors, radius_out = get_neighbors(kdtree, point_i, k_neighbor, radius)
         u = u_rbf[-4] + np.dot(u_rbf[-3:], point_i)
         v = v_rbf[-4] + np.dot(v_rbf[-3:], point_i)
         w = w_rbf[-4] + np.dot(w_rbf[-3:], point_i)
-        for j_point in j_neighbors:
-            point_j = kdtree.data[j_point]
+        for j_global in j_neighbors:
+            point_j = kdtree.data[j_global]
             distance_ij = np.linalg.norm(point_j - point_i)
             assert distance_ij <= radius_out + 1e-10, (distance_ij, radius_out)
             phi_ij = dimensional_rbf(distance_ij, radius_out)
-            u += u_rbf[j_point] * phi_ij
-            v += v_rbf[j_point] * phi_ij
-            w += w_rbf[j_point] * phi_ij
-        coords_x[i_point] += u
-        coords_y[i_point] += v
-        coords_z[i_point] += w
-        if verbose:
-            print(f'{i_point} shifted')
+            u += u_rbf[j_global] * phi_ij
+            v += v_rbf[j_global] * phi_ij
+            w += w_rbf[j_global] * phi_ij
+        shift[i_local, :] = u, v, w
+        log.write(f'{i_global} shifted by ({u:.2e}, {v:.2e}, {w:.2e})\n')
+        log.flush()
+    end = timer()
+    log.write(f'wall-clock cost: {(end - start):.2f}\n')
+    log.close()
+    np.save(f'shift_{i_task}.npy', shift)
+    print(f'task {i_task} costs {(end - start):.2f} seconds')
+    return first, last
+
+
+def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndarray,
+        k_neighbor: int, radius: float, max_radius: float, verbose: bool):
+    if verbose:
+        print('loading the CGNS tree ...')
+    cgns, zone, zone_size = getUniqueZone(input)
+    global global_x, global_y, global_z
+    _, _, global_x, global_y, global_z = readPoints(zone, zone_size)
+    print(np.linalg.norm(global_x), np.linalg.norm(global_y), np.linalg.norm(global_z))
+    n_point = zone_size[0][0]
+    assert n_point == len(global_x) == len(global_y) == len(global_z)
+
+    if verbose:
+        print('loading the RBF solution ...')
+    rbf_solutions = np.load(rbf_solutions_npy)
+    global u_rbf, v_rbf, w_rbf
+    u_rbf = np.array(rbf_solutions[:, X])
+    v_rbf = np.array(rbf_solutions[:, Y])
+    w_rbf = np.array(rbf_solutions[:, Z])
+
+    if verbose:
+        print('building the KDTree ...')
+    global kdtree
+    kdtree = KDTree(bc_points)
+
+    executor = ProcessPoolExecutor(max_workers=16)
+    n_task = 1024
+    tasks = []
+    for i_task in range(n_task):
+        tasks.append(executor.submit(
+            shift_points_by_futures_process, i_task, n_task, k_neighbor, radius, max_radius))
+    done, not_done = wait(tasks)
+    print('done:')
+    for x in done:
+        print(x)
+    print('not_done:')
+    for x in not_done:
+        print(x)
     # write back the coords
-    cgm.save(f'shifted_{input}', cgns)
+    global_shift_x = np.ndarray((n_point,), global_x.dtype)
+    global_shift_y = np.ndarray((n_point,), global_x.dtype)
+    global_shift_z = np.ndarray((n_point,), global_x.dtype)
+    for i_task in range(n_task):
+        first, last = tasks[i_task].result()
+        print(i_task, first, last)
+        local_shift = np.load(f'shift_{i_task}.npy')
+        global_shift_x[first : last] = local_shift[:, X]
+        global_shift_y[first : last] = local_shift[:, Y]
+        global_shift_z[first : last] = local_shift[:, Z]
+    global_x += global_shift_x
+    global_y += global_shift_y
+    global_z += global_shift_z
+    print(np.linalg.norm(global_x), np.linalg.norm(global_y), np.linalg.norm(global_z))
+    output = f'shifted_{input}'
+    if verbose:
+        print(f'writing to {output} ... ')
+
+    # write the shifts as a vector field of point data
+    point_data = wrapper.getChildrenByType(zone, 'FlowSolution_t')
+    for data in point_data:
+        cgu.removeChildByName(zone, wrapper.getNodeName(data))
+    point_data = cgl.newFlowSolution(zone, 'FlowSolutionHelper', 'Vertex')
+    cgl.newDataArray(point_data, 'ShiftX', global_shift_x)
+    cgl.newDataArray(point_data, 'ShiftY', global_shift_y)
+    cgl.newDataArray(point_data, 'ShiftZ', global_shift_z)
+    cgm.save(output, cgns)
 
 
 if __name__ == '__main__':
@@ -207,7 +279,6 @@ if __name__ == '__main__':
 
     rbf_matrix_npz = build_rbf_matrix(old_points, args.k_neighbor, args.radius, args.verbose)
     rbf_solutions_npy = solve_rbf_system(rbf_matrix_npz, new_points - old_points, args.verbose)
-
     shift_interior_points(args.mesh, rbf_solutions_npy, old_points, args.k_neighbor, args.radius, 5.0e3, args.verbose)
 
     # n_point = int(sys.argv[1])
