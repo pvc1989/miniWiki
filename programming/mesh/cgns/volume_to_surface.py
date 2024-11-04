@@ -1,6 +1,4 @@
-import CGNS.MAP as cgm
 import wrapper
-from check_nodes import getUniqueZone, readPoints
 
 import sys
 import numpy as np
@@ -27,14 +25,14 @@ if __name__ == "__main__":
         print(args)
 
     # load the volume mesh
-    volume_cgns, volume_zone, volume_zone_size = getUniqueZone(args.volume)
-    _, volume_xyz, _, _, _ = readPoints(volume_zone, volume_zone_size)
+    volume_cgns, volume_zone, volume_zone_size = wrapper.getUniqueZone(args.volume)
+    volume_xyz, _, _, _ = wrapper.readPoints(volume_zone, volume_zone_size)
     volume_point_size = volume_zone_size[0][0]
     volume_to_surface = np.zeros((volume_point_size,), dtype=int) - 1
 
     # load the surface mesh
-    _, surface_zone, surface_zone_size = getUniqueZone(args.surface)
-    _, surface_point_arr, _, _, _ = readPoints(surface_zone, surface_zone_size)
+    _, surface_zone, surface_zone_size = wrapper.getUniqueZone(args.surface)
+    surface_point_arr, _, _, _ = wrapper.readPoints(surface_zone, surface_zone_size)
     surface_kdtree = KDTree(surface_point_arr)
 
     # look for the nearest point on the surface

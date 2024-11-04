@@ -10,9 +10,7 @@ from concurrent.futures import ProcessPoolExecutor, wait
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
 import wrapper
-from check_nodes import getUniqueZone, readPoints
 
 
 X, Y, Z = 0, 1, 2
@@ -197,9 +195,9 @@ def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndar
         k_neighbor: int, radius: float, max_radius: float, verbose: bool):
     if verbose:
         print('loading the CGNS tree ...')
-    cgns, zone, zone_size = getUniqueZone(input)
+    cgns, zone, zone_size = wrapper.getUniqueZone(input)
     global global_x, global_y, global_z
-    _, _, global_x, global_y, global_z = readPoints(zone, zone_size)
+    _, global_x, global_y, global_z = wrapper.readPoints(zone, zone_size)
     print(np.linalg.norm(global_x), np.linalg.norm(global_y), np.linalg.norm(global_z))
     n_point = zone_size[0][0]
     assert n_point == len(global_x) == len(global_y) == len(global_z)

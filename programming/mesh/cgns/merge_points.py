@@ -1,13 +1,8 @@
 import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
-
+import wrapper
 import numpy as np
 import argparse
-import wrapper
 import sys
-from check_nodes import getUniqueZone, readPoints
 from scipy.spatial import KDTree
 
 
@@ -68,8 +63,8 @@ if __name__ == "__main__":
         print(args)
 
     # get the unique Zone_t
-    cgns, zone, zone_size = getUniqueZone(args.input)
-    _, multiple_points, _, _, _ = readPoints(zone, zone_size)
+    cgns, zone, zone_size = wrapper.getUniqueZone(args.input)
+    multiple_points, _, _, _ = wrapper.readPoints(zone, zone_size)
     assert zone_size[0][0] == len(multiple_points)
     unique_points, i_multiple_to_i_unique = multiple_to_unique(multiple_points, args.radius, args.verbose)
     n_unique = len(unique_points)

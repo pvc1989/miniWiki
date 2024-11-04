@@ -1,6 +1,5 @@
 import CGNS.MAP as cgm
 import wrapper
-from check_nodes import getUniqueZone, readPoints
 
 import sys
 import numpy as np
@@ -26,13 +25,13 @@ if __name__ == "__main__":
         print(args)
 
     # load the volume mesh to be shifted
-    volume_cgns, volume_zone, volume_zone_size = getUniqueZone(args.volume)
-    _, volume_xyz, volume_x, volume_y, volume_z = readPoints(volume_zone, volume_zone_size)
+    volume_cgns, volume_zone, volume_zone_size = wrapper.getUniqueZone(args.volume)
+    volume_xyz, volume_x, volume_y, volume_z = wrapper.readPoints(volume_zone, volume_zone_size)
     volume_point_size = volume_zone_size[0][0]
 
     # load the shifted surface mesh
-    _, surface_zone, surface_zone_size = getUniqueZone(args.surface)
-    _, surface_xyz, surface_x, surface_y, surface_z = readPoints(surface_zone, surface_zone_size)
+    _, surface_zone, surface_zone_size = wrapper.getUniqueZone(args.surface)
+    surface_xyz, surface_x, surface_y, surface_z = wrapper.readPoints(surface_zone, surface_zone_size)
 
     # load the volume-to-surface node index map
     volume_to_surface = np.load(args.index_map)

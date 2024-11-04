@@ -9,7 +9,7 @@ from OCC.Core.TopAbs import TopAbs_FACE
 from OCC.Core.TopExp import TopExp_Explorer
 from OCC.Core.TopoDS import TopoDS_Shape, TopoDS_Face, TopoDS_Vertex
 
-from check_nodes import getUniqueZone, readPoints
+import wrapper
 from merge_points import multiple_to_unique
 
 from timeit import default_timer as timer
@@ -244,9 +244,9 @@ if __name__ == "__main__":
         n_task = args.n_task
 
     if not using_mpi or rank == 0:
-        cgns, zone, zone_size = getUniqueZone(args.mesh)
+        cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
         print(zone_size)
-        _, xyz, x, y, z = readPoints(zone, zone_size)
+        xyz, x, y, z = wrapper.readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
         unique_points, i_multiple_to_i_unique = multiple_to_unique(
             multiple_points=xyz, radius=1e-8, verbose=args.verbose)
