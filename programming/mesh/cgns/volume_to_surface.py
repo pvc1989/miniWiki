@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # write the mesh
     output = args.output
     if output is None:
-        output = f'V2S_{args.surface[:8]}.npy'
+        output = f'({args.volume[:-5]})-to-({args.surface[:-5]}).npy'
     if args.verbose:
         print('writing to', output)
     np.save(output, volume_to_surface)

@@ -134,7 +134,7 @@ def solve_rbf_system(rbf_matrix_npz: str, rhs_columns: np.ndarray, verbose: bool
         print(f'column[{i_column}] solved with exit_code = {exit_code}')
         end = timer()
         print(f'costs {end - start:.2e} seconds')
-    sol_file_name = f'solved_{rbf_matrix_npz}'
+    sol_file_name = f'solved_{rbf_matrix_npz[:-4]}.npy'
     np.save(sol_file_name, sol_columns)
     return sol_file_name
 
@@ -243,7 +243,13 @@ def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndar
     global_y += global_shift_y
     global_z += global_shift_z
     print(np.linalg.norm(global_x), np.linalg.norm(global_y), np.linalg.norm(global_z))
-    output = f'shifted_{input}'
+    if k_neighbor > 0:
+        assert radius == 0.0
+        suffix = f'k={k_neighbor}'
+    elif radius > 0:
+        assert k_neighbor == 0
+        suffix = f'r={radius:.2e}'
+    output = f'shifted_{input[:-5]}_{suffix}.cgns'
     if verbose:
         print(f'writing to {output} ... ')
 
