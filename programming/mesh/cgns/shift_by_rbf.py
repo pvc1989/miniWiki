@@ -16,17 +16,57 @@ import wrapper
 X, Y, Z = 0, 1, 2
 
 
-def dimensionaless_rbf(xi: float) -> float:
+def dimensionaless_rbf_0(xi: float) -> float:
+    return (1 - xi)**8 * (32 * (xi**3) + 25 * (xi**2) + 8 * xi + 1)
+
+
+def dimensionaless_rbf_1(xi: float) -> float:
+    return (1 - xi)**2
+
+
+def dimensionaless_rbf_2(xi: float) -> float:
+    return (1 - xi)**4 * (4 * xi + 1)
+
+
+def dimensionaless_rbf_3(xi: float) -> float:
+    return (1 - xi)**6 * (35 / 3 * (xi**2) + 6 * xi + 1)
+
+
+def dimensionaless_rbf_4(xi: float) -> float:
+    return  (1 - xi)**8 * (32 * (xi**3) + 25 * (xi**2) + 8 * xi + 1)
+
+
+def dimensionaless_rbf_5(xi: float) -> float:
+    return (1.0 - xi)**5
+
+
+def dimensionaless_rbf_6(xi: float) -> float:
     if xi < 1e-12:
         return 1
-    elif xi > 1.0:
-        return 0
-    else:
-        return 1 - 30 * (xi**2) - 10 * (xi**3) + 45 * (xi**4) - 6 * (xi**5) - 60 * (xi**3) * np.log(xi)
+    return 1 + 80 / 3 * (xi**2) - 40 * (xi**3) + 15 * (xi**4) - 8 / 3 * (xi**5) + 20 * (xi**2) * np.log(xi)
+
+
+def dimensionaless_rbf_7(xi: float) -> float:
+    if xi < 1e-12:
+        return 1
+    return 1 - 30 * (xi**2) - 10 * (xi**3) + 45 * (xi**4) - 6 * (xi**5) - 60 * (xi**3) * np.log(xi)
+
+
+def dimensionaless_rbf_8(xi: float) -> float:
+    if xi < 1e-12:
+        return 1
+    return 1 - 20 * (xi**2) + 80 * (xi**3) - 45 * (xi**4) - 16 * (xi**5) + 60 * (xi**4) * np.log(xi)
+
+
+def dimensionaless_rbf(xi: float) -> float:
+    return dimensionaless_rbf_2(xi)
 
 
 def dimensional_rbf(vector: np.ndarray, radius: float):
-    return dimensionaless_rbf(np.linalg.norm(vector) / radius)
+    xi = np.linalg.norm(vector) / radius
+    if xi >= 1:
+        return 0
+    return dimensionaless_rbf(xi)
 
 
 def get_neighbors(kdtree: KDTree, point_i: np.ndarray, k_neighbor: int, radius: float) -> tuple[list[int], float]:
@@ -276,6 +316,18 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=str, help='the output mesh file')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
+
+    x = np.linspace(0, 1, 101)
+    y = np.ndarray(x.shape)
+    rbfs = (dimensionaless_rbf_0, dimensionaless_rbf_1, dimensionaless_rbf_2, dimensionaless_rbf_3, dimensionaless_rbf_4, dimensionaless_rbf_5, dimensionaless_rbf_6, dimensionaless_rbf_7, dimensionaless_rbf_8)
+    for i_rbf in range(len(rbfs)):
+        rbf = rbfs[i_rbf]
+        for i in range(len(x)):
+            y[i] = rbf(x[i])
+        plt.plot(x, y, label=f'RBF_{i_rbf}')
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig('RBF.svg')
 
     old_points = np.load(args.old_points)
     new_points = np.load(args.new_points)
