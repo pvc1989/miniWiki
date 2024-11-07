@@ -19,7 +19,7 @@ def buildPointDict(point_x: np.ndarray, point_y: np.ndarray, point_z: np.ndarray
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Check whether all surface nodes are also volume nodes.')
     parser.add_argument('--volume', type=str, help='the CGNS file of volume')
     parser.add_argument('--surface', type=str, help='the CGNS file of surface')

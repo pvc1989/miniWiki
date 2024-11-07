@@ -12,7 +12,7 @@ X, Y, Z = 0, 1, 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Shift the points in a given volume mesh by surface meshes.')
     parser.add_argument('--volume', type=str, help='the CGNS file of the volume mesh')
     parser.add_argument('--surface', type=str, help='the CGNS file of the shifted surface mesh')

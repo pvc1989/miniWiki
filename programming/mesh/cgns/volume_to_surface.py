@@ -11,7 +11,7 @@ X, Y, Z = 0, 1, 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Build a volume_node_index-to-surface_node_index map.')
     parser.add_argument('--volume', type=str, help='the CGNS file of the volume mesh')
     parser.add_argument('--surface', type=str, help='the CGNS file of the surface mesh')

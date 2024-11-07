@@ -306,7 +306,7 @@ def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndar
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Shift interior points by RBF interpolation of boundary points.')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
     parser.add_argument('--old_points', type=str, help='the NPY file of boundary points before shifting')

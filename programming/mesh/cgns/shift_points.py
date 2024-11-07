@@ -11,7 +11,7 @@ X, Y, Z = 0, 1, 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Shift the points in a given mesh to their given coordinates.')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
     parser.add_argument('--cad_points', type=str, help='the NPY file of points on CAD surfaces')

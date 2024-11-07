@@ -13,7 +13,7 @@ X, Y, Z = 0, 1, 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Get the distance between each point and its k-th nearest neighbor.')
     parser.add_argument('--input', type=str, help='the CGNS file containing the coordinates of each point')
     parser.add_argument('--k_neighbor', type=int, default=2, help='number of neighbors in the support')

@@ -37,7 +37,7 @@ def get_aspect_ratio(points: np.ndarray, edges: np.ndarray) -> float:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Get the aspect ratio for each cell and write them as a field on cells.')
     parser.add_argument('--mesh', type=str, help='the CGNS file to be modified')
     parser.add_argument('--verbose', default=True, action='store_true')

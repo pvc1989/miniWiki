@@ -15,7 +15,7 @@ X, Y, Z = 0, 1, 2
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Increase the order of geometric approximation.')
     parser.add_argument('--input', type=str, help='the input linear mesh file')
     parser.add_argument('--output', type=str, help='the output high-order mesh file')

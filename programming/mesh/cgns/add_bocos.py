@@ -76,7 +76,7 @@ def addZoneBC(zone_bc, section, bc_name: str, bc_type: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description='Add surface elements and BCs to a volume mesh.')
     parser.add_argument('--volume', type=str, help='the input volume mesh file')
     parser.add_argument('--output', type=str, help='the output mesh with surface elements and BCs')

@@ -220,7 +220,7 @@ def merge_new_coords(comm_size: int, n_unique_point: int) -> np.ndarray:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Project points in CGNS file to the surface of a CAD model.')
     parser.add_argument('--cad', type=str, help='the STEP file of the CAD model')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the points to be projected')

@@ -51,7 +51,7 @@ def multiple_to_unique(multiple_points: np.ndarray, radius: float, verbose: bool
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Merge geometrically duplicated points in a single unstructured `Zone_t`.')
     parser.add_argument('--input', type=str, help='the CGNS file to be merged')
     parser.add_argument('--output', type=str, help='the merged CGNS file')

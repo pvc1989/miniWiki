@@ -69,7 +69,7 @@ def run_tasks_by_processes(n_process, n_task, n_scalar):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Demo the basic usage of the concurrent.futures module.')
     parser.add_argument('--n_thread',  type=int, default=0, help='number of threads for running futures')
     parser.add_argument('--n_process',  type=int, default=0, help='number of processes for running futures')

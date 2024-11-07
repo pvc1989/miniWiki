@@ -11,7 +11,7 @@ import wrapper
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0][:-3]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Filter a CGNS file by a given field value.')
     parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
     parser.add_argument('--field', type=str, default='BCType', help='the field for filtering')

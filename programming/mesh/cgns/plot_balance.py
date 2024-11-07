@@ -65,7 +65,7 @@ def plot_futures_balance(folder: str, n_task: int):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0]}.py',
+        prog = f'python3 {sys.argv[0]}',
         description = 'Plot the work balance of each worker.')
     parser.add_argument('--folder', type=str, help='the folder contains the logs')
     parser.add_argument('--n_core', type=int, default=0, help='number of cores used in mpi')
