@@ -179,7 +179,7 @@ def solve_rbf_system(rbf_matrix_npz: str, rhs_columns: np.ndarray, verbose: bool
     return sol_file_name
 
 
-def shift_points_by_futures_process(i_task: int, n_task: int, k_neighbor: int, radius: float, max_radius: float):
+def shift_points_by_futures_process(i_task: int, n_task: int, k_neighbor: int, radius: float):
     global kdtree
     global u_rbf, v_rbf, w_rbf
     global global_x, global_y, global_z
@@ -203,10 +203,6 @@ def shift_points_by_futures_process(i_task: int, n_task: int, k_neighbor: int, r
     for i_local in range(n_local):
         i_global = i_local + first
         x, y, z = global_x[i_global], global_y[i_global], global_z[i_global]
-        if (x * x + y * y + z * z > max_radius * max_radius):
-            log.write(f'{i_global} skipped\n')
-            log.flush()
-            continue
         point_i = np.array([x, y, z])
         j_neighbors, radius_out = get_neighbors(kdtree, point_i, k_neighbor, radius)
         u = u_rbf[-4] + np.dot(u_rbf[-3:], point_i)
@@ -232,7 +228,7 @@ def shift_points_by_futures_process(i_task: int, n_task: int, k_neighbor: int, r
 
 
 def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndarray,
-        k_neighbor: int, radius: float, max_radius: float, verbose: bool):
+        k_neighbor: int, radius: float, verbose: bool):
     if verbose:
         print('loading the CGNS tree ...')
     cgns, zone, zone_size = wrapper.getUniqueZone(input)
@@ -260,7 +256,7 @@ def shift_interior_points(input: str, rbf_solutions_npy: str, bc_points: np.ndar
     tasks = []
     for i_task in range(n_task):
         tasks.append(executor.submit(
-            shift_points_by_futures_process, i_task, n_task, k_neighbor, radius, max_radius))
+            shift_points_by_futures_process, i_task, n_task, k_neighbor, radius))
     done, not_done = wait(tasks)
     print('done:')
     for x in done:
@@ -335,7 +331,7 @@ if __name__ == '__main__':
 
     rbf_matrix_npz = build_rbf_matrix(old_points, args.k_neighbor, args.radius, args.verbose)
     rbf_solutions_npy = solve_rbf_system(rbf_matrix_npz, new_points - old_points, args.verbose)
-    shift_interior_points(args.mesh, rbf_solutions_npy, old_points, args.k_neighbor, args.radius, 5.0e3, args.verbose)
+    shift_interior_points(args.mesh, rbf_solutions_npy, old_points, args.k_neighbor, args.radius, args.verbose)
 
     # n_point = int(sys.argv[1])
     # test_on_random_points(n_point, radius=0.1, verbose=True)
