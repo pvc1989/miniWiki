@@ -65,6 +65,10 @@ cc -o test_math_so test_math.o -Wl,-rpath,${BUILD_DIR} -L${BUILD_DIR} -lmath
 cc -static -o test_math_a test_math.o -L${BUILD_DIR} -lmath
 ```
 
+可以用 `ldd A | grep B` 命令查看目标文件 `A` 所依赖的动态链接库 `libB.so` 的实际位置。
+
+⚠️ 若在 `-L` 指定的路径下找不到库文件，则会到环境变量 `LD_LIBRARY_PATH` 表示的系统路径下寻找。
+
 ⚠️ [在 macOS 下，无法创建 statically linked binaries](https://developer.apple.com/library/archive/qa/qa1118/_index.html)，因此无法实现第三种方式。
 
 ### 运行 (Run)
@@ -326,9 +330,10 @@ project(<PROJECT-NAME>
 option(<variable> "<help_text>" [value])
 ```
 
-添加头文件搜索路径：
+添加头文件、库文件搜索路径于系统路径之[后|前]：
 ```cmake
 include_directories([AFTER|BEFORE] [SYSTEM] dir1 [dir2 ...])
+link_directories([AFTER|BEFORE] directory1 [directory2 ...])
 ```
 
 添加含有子项目的子目录：
