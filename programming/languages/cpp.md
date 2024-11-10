@@ -46,6 +46,13 @@ title: C/C++
 
 ## [多线程并发](./cpp/concurrency.md)
 
+- [`thread`](./cpp/concurrency.md#thread)
+- [`mutex`](./cpp/concurrency.md#mutex)
+- [`condition_variable`](./cpp/concurrency.md#cond_var)
+- [`semaphore`](./cpp/concurrency.md#semaphore)
+- [`future`](./cpp/concurrency.md#future)
+- [`atomic`](./cpp/concurrency.md#atomic)
+
 # 抽象机制
 
 ## [`class`](https://en.cppreference.com/w/cpp/language/classes)

@@ -260,7 +260,7 @@ void Produce() {
 - `Consume` 中只能用 `unique_lock`，因为要将其传递给 `wait()`。
 - `Produce` 中可以用 `scoped_lock`，因为只需获得互斥访问权限。
 
-# [`<semaphore>`](https://en.cppreference.com/w/cpp/header/semaphore) --- 限制访问数量的轻量级同步机制
+# <a href id="semaphore"></a>[`<semaphore>`](https://en.cppreference.com/w/cpp/header/semaphore) --- 限制访问数量的轻量级同步机制
 
 源于 Dijkstra 发明的 [P--V 操作](../../csapp/12_concurrent_programming.md#semaphore)。
 
@@ -307,7 +307,7 @@ class counting_semaphore {
 using binary_semaphore = std::counting_semaphore<1>;
 ```
 
-# [`<future>`](https://en.cppreference.com/w/cpp/header/future) --- 基于共享状态的异步任务机制
+# <a href id="future"></a>[`<future>`](https://en.cppreference.com/w/cpp/header/future) --- 基于共享状态的异步任务机制
 
 ## `future<>` and `promise<>`
 
@@ -403,7 +403,13 @@ int main() {
 }
 ```
 
-# [`<atomic>`](https://en.cppreference.com/w/cpp/header/atomic) --- 支持免锁互斥的细粒度操作
+其中 `std::async()` 支持第一个实参为 ``std::launch` 型枚举值的版本：
+
+- `std::launch::async` 表示该任务*异步地*（在*另一*线程中）启动。
+- `std::launch:: deferred` 表示该任务*同步地*（在*当前*线程中）启动，且*可能*延迟到 `future.get()` 或 `future.wait()` 被调用时才启动。
+- 不指定该实参的版本，相当于制定了 `std::launch::async | std::launch:: deferred`，将选择权交给系统线程管理器（例如：当发生 oversubscription 或 thread exhaustion 时，选择 `std::launch:: deferred`）。
+
+# <a href id="atomic"></a>[`<atomic>`](https://en.cppreference.com/w/cpp/header/atomic) --- 支持免锁互斥的细粒度操作
 
 ## `atomic<>`
 
