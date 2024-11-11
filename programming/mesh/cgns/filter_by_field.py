@@ -3,6 +3,7 @@ import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
 
+import os
 import sys
 import numpy as np
 import argparse
@@ -13,22 +14,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Filter a CGNS file by a given field value.')
+    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
     parser.add_argument('--field', type=str, default='BCType', help='the field for filtering')
     parser.add_argument('--value', type=int, default=3, help='the value to be keeped')
-    parser.add_argument('--output', type=str, help='the CGNS file containing points and cells on which field == value')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
         print(args)
 
-    output = args.output
-    if output is None:
-        output = f'{args.field}={args.value}_{args.input}'
-
     # CGNSTree_t level
-    old_tree, links, paths = cgm.load(args.input)
+    old_tree, links, paths = cgm.load(f'{args.folder}/{args.input}')
     if args.verbose:
         print()
         print(old_tree)
@@ -144,7 +141,8 @@ if __name__ == "__main__":
         print(new_tree)
 
     # write the new CGNSTree_t
-    if args.verbose:
-        print()
-        print('writing to', output)
+    output_folder = f'{args.folder}/{args.field}={args.value}'
+    os.makedirs(output_folder, exist_ok=True)
+    output = f'{output_folder}/filtered.cgns'
+    print('writing to', output)
     cgm.save(output, new_tree)

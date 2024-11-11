@@ -3,13 +3,14 @@ import wrapper
 import numpy as np
 import argparse
 import sys
+import os
 from scipy.spatial import KDTree
 
 
 X, Y, Z = 0, 1, 2
 
 
-def multiple_to_unique(multiple_points: np.ndarray, radius: float, verbose: bool) -> tuple[np.ndarray, np.ndarray]:
+def multiple_to_unique(multiple_points: np.ndarray, folder: str, radius: float, verbose: bool) -> tuple[np.ndarray, np.ndarray]:
     assert multiple_points.shape[1] == 3
     n_multiple = len(multiple_points)
 
@@ -43,8 +44,8 @@ def multiple_to_unique(multiple_points: np.ndarray, radius: float, verbose: bool
         i_unique = i_multiple_to_i_unique[i_multiple]
         assert np.linalg.norm(multiple_points[i_multiple] - unique_points[i_unique]) < radius
 
-    np.save('i_multiple_to_i_unique.npy', i_multiple_to_i_unique)
-    np.save('unique_points.npy', unique_points)
+    np.save(f'{folder}/i_multiple_to_i_unique.npy', i_multiple_to_i_unique)
+    np.save(f'{folder}/unique_points.npy', unique_points)
     print('in multiple_to_unique:', n_unique, n_multiple)
     return unique_points, i_multiple_to_i_unique
 
@@ -53,8 +54,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Merge geometrically duplicated points in a single unstructured `Zone_t`.')
+    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be merged')
-    parser.add_argument('--output', type=str, help='the merged CGNS file')
     parser.add_argument('--radius', type=float, default=1e-8, help='radius of the ball within which two points are treated as duplicated')
     parser.add_argument('--verbose', default=True, action='store_true')
     args = parser.parse_args()
@@ -63,10 +64,10 @@ if __name__ == "__main__":
         print(args)
 
     # get the unique Zone_t
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.input)
+    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
     multiple_points, _, _, _ = wrapper.readPoints(zone, zone_size)
     assert zone_size[0][0] == len(multiple_points)
-    unique_points, i_multiple_to_i_unique = multiple_to_unique(multiple_points, args.radius, args.verbose)
+    unique_points, i_multiple_to_i_unique = multiple_to_unique(multiple_points, args.folder, args.radius, args.verbose)
     n_unique = len(unique_points)
 
     # update zone_size and GridCoordinates_t
@@ -92,8 +93,6 @@ if __name__ == "__main__":
         assert (1 <= connectivity).all() and (connectivity <= n_unique).all()
 
     # write the new mesh out
-    output = args.output
-    if output is None:
-        output = f'merged_{args.input}'
+    output = f'{args.folder}/merged.cgns'
     print('writing to', output)
     cgm.save(output, cgns)
