@@ -115,6 +115,7 @@ title: 葵花宝典
 #### 并行计算
 
 - [Pthreads](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
+- [OpenMP](./programming/parallel/openmp.md) --- The OpenMP API supports multi-platform shared-memory parallel programming in C/C++ and Fortran.
 - [MPI](./programming/parallel/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
 - [CUDA](./programming/parallel/cuda.md) --- NVIDIA's GPU programming interface and toolkits.
 
