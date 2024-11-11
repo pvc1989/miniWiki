@@ -63,6 +63,8 @@ title: 葵花宝典
   - [Malloc Lab](./programming/csapp/labs/malloc.md)
   - [Proxy Lab](./programming/csapp/labs/proxy.md)
 - [Linux](./programming/linux.md)
+  - [Vim](./programming/linux/vim.md)
+  - [SSH](./programming/linux/ssh.md)
 - [Docker](./programming/docker.md)
 
 #### 计算机网络
@@ -113,12 +115,12 @@ title: 葵花宝典
 #### 并行计算
 
 - [Pthreads](./programming/csapp/12_concurrent_programming.md#parallel) --- POSIX threads
-- [MPI](./programming/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
-- [CUDA](./programming/cuda.md) --- NVIDIA's GPU programming interface and toolkits.
+- [MPI](./programming/parallel/mpi.md) --- Message Passing Interface (MPI) is a standardized and portable message-passing standard designed to function on parallel computing architectures.
+- [CUDA](./programming/parallel/cuda.md) --- NVIDIA's GPU programming interface and toolkits.
 
 #### 三维建模
 
-- [Open CASCADE Technology (OCCT)](https://dev.opencascade.org) --- A open-source C++ SDK for dealing with 3D CAD data.
+- [Open CASCADE](./programming/cad/occ.md) --- A open-source C++ SDK for dealing with 3D CAD data.
 
 #### 前后处理
 

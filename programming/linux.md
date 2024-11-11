@@ -32,7 +32,7 @@ sudo apt install vim
 It is implemented by re-execing as either `bash`, `dash`, or `zsh` as determined by the symbolic link located at `/private/var/select/sh`.
 If `/private/var/select/sh` does not exist or does not point to a valid shell, `sh` will use one of the supported shells.
 
-## `bash`
+## `bash` --- Bourne-Again SHell
 
 ### 启动方式
 
@@ -103,7 +103,7 @@ alias ll='ls -lF'
 source ~/.bashrc
 ```
 
-## `zsh`
+## `zsh` --- Z SHell
 
 安装及配置：
 
@@ -127,7 +127,10 @@ chsh -s $(which zsh)  # 更换 login shell
 # 退出当前 shell 并重新打开
 ```
 
-## [`ssh`](./linux/ssh.md)
+## [`ssh` --- Secure SHell](./linux/ssh.md)
+
+- [传输文件](./linux/ssh.md#传输文件)
+- [免密访问](./linux/ssh.md#免密访问)
 
 ## 语法
 
