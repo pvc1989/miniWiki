@@ -15,9 +15,20 @@ double f(double x) {
 
 using F = decltype(f);
 
-double serial(F f, double a, double b, int n) {
+double serial_for(F f, double a, double b, int n) {
   auto h = (b - a) / n;
   auto riemann_sum = (f(a) + (b)) * h / 2;
+  for (int i = 1; i < n; ++i) {
+    riemann_sum += f(a + i * h) * h;
+  }
+  return riemann_sum;
+}
+
+double parallel_for(F f, double a, double b, int n, int n_thread) {
+  auto h = (b - a) / n;
+  auto riemann_sum = (f(a) + (b)) * h / 2;
+# pragma omp parallel for num_threads(n_thread) \
+      reduction(+: riemann_sum)
   for (int i = 1; i < n; ++i) {
     riemann_sum += f(a + i * h) * h;
   }
@@ -55,7 +66,7 @@ double thread_by_return(F f, double a, double b, int n_global) {
   auto a_local = a + h * first;
   auto b_local = a + h * last;
 
-  return serial(f, a_local, b_local, n_local);
+  return serial_for(f, a_local, b_local, n_local);
 }
 
 void thread_by_pointer(F f, double a, double b, int n_global, double *riemann_sum_global_ptr) {
@@ -101,8 +112,15 @@ int main(int argc, char *argv[]) {
   int n_thread = std::atoi(argv[2]);
 
   auto pi = std::numbers::pi;
-  std::printf("pi - serial() = %.2e\n", pi - 4 * serial(f, 0.0, 1.0, n_interval));
-  std::printf("pi - parallel_by_pointer() = %.2e\n", pi - 4 * parallel_by_pointer(f, 0.0, 1.0, n_interval, n_thread));
-  std::printf("pi - parallel_by_return() = %.2e\n", pi - 4 * parallel_by_return(f, 0.0, 1.0, n_interval, n_thread));
-  std::printf("pi - parallel_by_reduction() = %.2e\n", pi - 4 * parallel_by_reduction(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - serial_for() = %.2e\n",
+      pi - 4 * serial_for(f, 0.0, 1.0, n_interval));
+  std::printf("pi - parallel_for() = %.2e\n",
+      pi - 4 * parallel_for(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_pointer() = %.2e\n",
+      pi - 4 * parallel_by_pointer(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_return() = %.2e\n",
+      pi - 4 * parallel_by_return(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_reduction() = %.2e\n",
+      pi - 4 * parallel_by_reduction(f, 0.0, 1.0, n_interval, n_thread));
+
 }
