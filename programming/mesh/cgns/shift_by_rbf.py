@@ -13,6 +13,7 @@ import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import wrapper
+import parallel
 
 
 X, Y, Z = 0, 1, 2
@@ -157,13 +158,8 @@ def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, 
     start = time.time()
 
     n_global = len(global_x)
-    n_local = (n_global + n_task - 1) // n_task
-    first = n_local * i_task
-    last = n_local * (i_task + 1)
-    last = min(last, n_global)
-    if i_task + 1 == n_task:
-        n_local = last - first
-        assert last == n_global
+    first, last = parallel.get_range(i_task, n_task, n_global)
+    n_local = last - first
     log.write(f'range[{i_task}] = [{first}, {last})\n')
 
     k_neighbor = args.k_neighbor

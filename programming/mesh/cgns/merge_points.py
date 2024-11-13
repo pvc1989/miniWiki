@@ -3,13 +3,13 @@ import sys
 import os
 import shutil
 from concurrent.futures import ProcessPoolExecutor, wait
-# from timeit import default_timer as timer
 import time
 
 import numpy as np
 from scipy.spatial import KDTree
 import CGNS.MAP as cgm
 import wrapper
+import parallel
 
 X, Y, Z = 0, 1, 2
 
@@ -19,13 +19,8 @@ def multiple_to_minimum(temp_folder: str, radius: float, i_task: int, n_task: in
     global multiple_kdtree
 
     n_global = len(multiple_points)
-    n_local = (n_global + n_task - 1) // n_task
-    first = n_local * i_task
-    last = n_local * (i_task + 1)
-    last = min(last, n_global)
-    if i_task + 1 == n_task:
-        n_local = last - first
-        assert last == n_global
+    first, last = parallel.get_range(i_task, n_task, n_global)
+    n_local = last - first
 
     i_multiple_to_i_minimum = np.zeros((n_local,), dtype='int') - 1
 
@@ -59,7 +54,7 @@ def multiple_to_unique(zone: list, zone_size: np.ndarray, args: str) -> np.ndarr
     end = time.time()
     print(f'KDTree(multiple_points) costs {(end - start):.2f} seconds')
 
-    temp_folder = f'{args.folder}/temp{np.random.rand()}'
+    temp_folder = f'{args.folder}/temp{np.random.randint(0, 2**32)}'
     os.makedirs(temp_folder, exist_ok=True)
 
     executor = ProcessPoolExecutor(args.n_worker)

@@ -10,6 +10,7 @@ from OCC.Core.TopExp import TopExp_Explorer
 from OCC.Core.TopoDS import TopoDS_Shape, TopoDS_Face, TopoDS_Vertex
 
 import wrapper
+import parallel
 
 from timeit import default_timer as timer
 import numpy as np
@@ -105,16 +106,11 @@ def project_points_by_mpi_process(cad_file: str, folder: str,
 
     start = timer()
 
-    n_node_global = len(old_points)
-    n_node_local = (n_node_global + comm_size - 1) // comm_size
-    first = n_node_local * comm_rank
-    last = n_node_local * (comm_rank + 1)
-    last = min(last, n_node_global)
-    if comm_rank + 1 == comm_size:
-        n_node_local = last - first
-        assert last == n_node_global
+    n_global = len(old_points)
+    first, last = parallel.get_range(comm_rank, comm_size, n_global)
+    n_local = last - first
 
-    new_points = np.ndarray((n_node_local, 3), old_points.dtype)
+    new_points = np.ndarray((n_local, 3), old_points.dtype)
 
     log.write(f'range[{comm_rank}] = [{first}, {last})\n')
     for i_global in range(first, last):
@@ -124,7 +120,7 @@ def project_points_by_mpi_process(cad_file: str, folder: str,
         # point_on_shape, distance = project_by_faces(vertex, faces)
         i_local = i_global - first
         new_points[i_local] = point_on_shape.X(), point_on_shape.Y(), point_on_shape.Z()
-        log.write(f'[{(i_local + 1) / n_node_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
+        log.write(f'[{(i_local + 1) / n_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
         log.flush()
 
     new_points /= 25.4  # now, new_points in inch
@@ -146,16 +142,11 @@ def project_points_by_futures_process(folder: str, i_task: int, n_task: int):
 
     start = timer()
 
-    n_node_global = len(old_points)
-    n_node_local = (n_node_global + n_task - 1) // n_task
-    first = n_node_local * i_task
-    last = n_node_local * (i_task + 1)
-    last = min(last, n_node_global)
-    if i_task + 1 == n_task:
-        n_node_local = last - first
-        assert last == n_node_global
+    n_global = len(old_points)
+    first, last = parallel.get_range(i_task, n_task, n_global)
+    n_local = last - first
 
-    new_points = np.ndarray((n_node_local, 3), old_points.dtype)
+    new_points = np.ndarray((n_local, 3), old_points.dtype)
 
     log.write(f'range[{i_task}] = [{first}, {last})\n')
     print(i_task, old_points.shape, np.linalg.norm(old_points))
@@ -168,7 +159,7 @@ def project_points_by_futures_process(folder: str, i_task: int, n_task: int):
         point_on_shape, distance = project_by_one_shape(vertex, one_shape)
         i_local = i_global - first
         new_points[i_local] = point_on_shape.X(), point_on_shape.Y(), point_on_shape.Z()
-        log.write(f'[{(i_local + 1) / n_node_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
+        log.write(f'[{(i_local + 1) / n_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
         log.flush()
 
     new_points /= 25.4  # now, new_points in inch
