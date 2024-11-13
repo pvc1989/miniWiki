@@ -42,33 +42,57 @@ inline std::pair<int, int> get_range(int i_thread, int n_thread, int n_global) {
   return { first, last };
 }
 
-void thread_critical(F f, double a, double b, int n_global, double *riemann_sum_global_ptr) {
+double thread_by_return(F f, double a, double b, int n_global) {
   int i_thread = omp_get_thread_num();
   int n_thread = omp_get_num_threads();
 
   auto [first, last] = get_range(i_thread, n_thread, n_global);
   auto n_local = last - first;
 
-  if (!n_local) { return; }
+  if (!n_local) { return 0.0; }
 
   auto h = (b - a) / n_global;
   auto a_local = a + h * first;
   auto b_local = a + h * last;
 
-  // std::printf("%d %d %d %d\n", i_thread, first, last, n_local);
+  return serial(f, a_local, b_local, n_local);
+}
 
-  auto riemann_sum_local = serial(f, a_local, b_local, n_local);
+void thread_by_pointer(F f, double a, double b, int n_global, double *riemann_sum_global_ptr) {
+  auto riemann_sum_local = thread_by_return(f, a, b, n_global);
 
 # pragma omp critical
   *riemann_sum_global_ptr += riemann_sum_local;
 }
 
-double parallel(F f, double a, double b, int n, int n_thread) {
+double parallel_by_pointer(F f, double a, double b, int n, int n_thread) {
   auto riemann_sum_global = 0.0;
 
 # pragma omp parallel num_threads(n_thread)
-  thread_critical(f, a, b, n, &riemann_sum_global);
+  thread_by_pointer(f, a, b, n, &riemann_sum_global);
+ 
+  return riemann_sum_global;
+}
 
+double parallel_by_return(F f, double a, double b, int n, int n_thread) {
+  double riemann_sum_global = 0.0;  // shared
+# pragma omp parallel num_threads(n_thread)
+  {
+    double riemann_sum_local/* private */
+        = thread_by_return(f, a, b, n)/* f, a, b, n are shared, too */;
+#   pragma omp critical
+    riemann_sum_global += riemann_sum_local;
+  }
+  return riemann_sum_global;
+}
+
+double parallel_by_reduction(F f, double a, double b, int n, int n_thread) {
+  double riemann_sum_global = 0.0;
+  # pragma omp parallel num_threads(n_thread) \
+        reduction(+/* 规约运算 */: riemann_sum_global/* 规约变量 */)
+  {
+    riemann_sum_global += thread_by_return(f, a, b, n);
+  }
   return riemann_sum_global;
 }
 
@@ -78,5 +102,7 @@ int main(int argc, char *argv[]) {
 
   auto pi = std::numbers::pi;
   std::printf("pi - serial() = %.2e\n", pi - 4 * serial(f, 0.0, 1.0, n_interval));
-  std::printf("pi - parallel() = %.2e\n", pi - 4 * parallel(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_pointer() = %.2e\n", pi - 4 * parallel_by_pointer(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_return() = %.2e\n", pi - 4 * parallel_by_return(f, 0.0, 1.0, n_interval, n_thread));
+  std::printf("pi - parallel_by_reduction() = %.2e\n", pi - 4 * parallel_by_reduction(f, 0.0, 1.0, n_interval, n_thread));
 }
