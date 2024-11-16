@@ -110,3 +110,38 @@ double parallel_for(F f, double a, double b, int n, int n_thread) {
   return riemann_sum;
 }
 ```
+
+# [Tasking](./openmp/fibonacci.cpp)
+
+由主线程创建任务：
+
+```cpp
+# pragma omp parallel
+# pragma omp single
+  {
+#   pragma omp task
+    // the following code is executed by each task
+    // ...
+  }
+```
+
+由任一 task 创建 subtasks:
+
+```cpp
+int parallel_by_tasks(int n, std::vector<int> *dp) {
+  if (n < 2) {
+    return dp->at(n) = n;
+  }
+
+  int i = 0, j = 0;
+# pragma omp task shared(i) if(n > 30)
+  i = parallel_by_tasks(n - 1, dp);  // executed by a subtask
+
+  j = parallel_by_tasks(n - 2, dp);  // executed by the current task
+
+# pragma omp taskwait
+  dp->at(n) = i + j;  // use the subtask's result j
+
+  return dp->at(n);
+}
+```
