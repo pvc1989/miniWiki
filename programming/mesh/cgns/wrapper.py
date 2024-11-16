@@ -56,6 +56,20 @@ def getNodeLabel(node) -> str:
     return node[-1]
 
 
+def arr2str(arr) -> str:
+    """Convert a string defined as an `np.ndarray` to a standard Python `str`.
+
+    Some CGNS files, e.g. https://hiliftpw-ftp.larc.nasa.gov/HiLiftPW3/HL-CRM_Grids/Committee_Grids/C-HLCRM_Str1to1_GridPro/FullGap/CGNS/, use an `np.ndarray` of `bytes`s rather than a `BCType_t` object to store the type of a BC.
+    """
+    assert isinstance(arr, np.ndarray)
+    chars = []
+    for row in arr:
+        assert isinstance(row, bytes)
+        assert 1 == len(row)
+        chars.append(row.decode())
+    return "".join(chars)
+
+
 def getDimensions(base) -> tuple[int, int]:
     assert 'CGNSBase_t' == getNodeLabel(base)
     return base[1][0], base[1][1]

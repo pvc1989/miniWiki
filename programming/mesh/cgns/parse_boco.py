@@ -1,25 +1,6 @@
 import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
-import numpy as np
-import sys
 import argparse
 import wrapper
-
-
-def arr2str(arr) -> str:
-    """Convert a string defined as an `np.ndarray` to a standard Python `str`.
-
-    Some CGNS files, e.g. https://hiliftpw-ftp.larc.nasa.gov/HiLiftPW3/HL-CRM_Grids/Committee_Grids/C-HLCRM_Str1to1_GridPro/FullGap/CGNS/, use an `np.ndarray` of `bytes`s rather than a `BCType_t` object to store the type of a BC.
-    """
-    assert isinstance(arr, np.ndarray)
-    chars = []
-    for row in arr:
-        assert isinstance(row, bytes)
-        assert 1 == len(row)
-        chars.append(row.decode())
-    return "".join(chars)
 
 
 if __name__ == "__main__":
@@ -51,7 +32,7 @@ if __name__ == "__main__":
             boco_type_arr = wrapper.getNodeData(boco)
             if args.verbose:
                 print(f'  "{boco_name}" "{boco_type_arr}"')
-            boco_type = arr2str(boco_type_arr)
+            boco_type = wrapper.arr2str(boco_type_arr)
             if boco_type not in boco_type_to_names:
                 boco_type_to_names[boco_type] = list()
             assert isinstance(boco_type_to_names[boco_type], list)

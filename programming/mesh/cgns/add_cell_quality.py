@@ -29,8 +29,17 @@ if __name__ == "__main__":
 
     # read the cgns file
     cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
+    # get the existing FlowSolution_t<CellCenter> or create a new one if not found
+    cell_data = None
+    solutions = wrapper.getChildrenByType(zone, 'FlowSolution_t')
+    for solution in solutions:
+        location = wrapper.getUniqueChildByType(solution, 'GridLocation_t')
+        location_str = wrapper.arr2str(wrapper.getNodeData(location))
+        if location_str == 'CellCenter':
+            cell_data = solution
     # add the cell qualities as fields of cell data
-    cell_data = cgl.newFlowSolution(zone, 'CellQualities', 'CellCenter')
+    if cell_data is None:
+        cell_data = cgl.newFlowSolution(zone, 'CellQualities', 'CellCenter')
     cgl.newDataArray(cell_data, 'MinDetJac', min_det_jac)
     cgl.newDataArray(cell_data, 'MaxDetJac', max_det_jac)
     cgl.newDataArray(cell_data, 'RatioDetJac', ratio_det_jac)
