@@ -21,6 +21,9 @@ AB, AC, AD, BC, BD, CD = 4, 5, 6, 7, 8, 9
 ABC, ABD, ACD, BCD = 10, 11, 12, 13
 ABCD = 14
 
+A2, B2, C2 = 0, 1, 2
+AB2, AC2, BC2 = 3, 4, 5
+ABC2 = 6
 
 def get_area_and_normal(arrow_ab: np.ndarray, arrow_ac: np.ndarray) -> tuple[float, np.ndarray]:
     normal = np.cross(arrow_ab, arrow_ac)
@@ -144,6 +147,58 @@ def tetra_to_hexa(n_point_old: int, xyz_tetra: np.ndarray, conn_tetra: np.ndarra
     return xyz_hexa, conn_hexa + 1
 
 
+def get_quad_points_by_centroid(point_a: np.ndarray, point_b: np.ndarray,
+        point_c: np.ndarray, xyz_hexa_with_offset: np.ndarray):
+    # copy the corners
+    xyz_hexa_with_offset[A2] = point_a
+    xyz_hexa_with_offset[B2] = point_b
+    xyz_hexa_with_offset[C2] = point_c
+    # add the centroids on edges
+    xyz_hexa_with_offset[AB2] = (point_a + point_b) / 2
+    xyz_hexa_with_offset[AC2] = (point_a + point_c) / 2
+    xyz_hexa_with_offset[BC2] = (point_b + point_c) / 2
+    # add the centroid on face
+    xyz_hexa_with_offset[ABC2] = (point_a + point_b + point_c) / 3
+
+
+def add_quad(i_tri: int, n_point_old: int, xyz_tri_local: np.ndarray,
+        xyz_quad: np.ndarray, conn_quad: np.ndarray):
+    point_a = xyz_tri_local[A2]
+    point_b = xyz_tri_local[B2]
+    point_c = xyz_tri_local[C2]
+    # add new points
+    xyz_offset = i_tri * 7
+    get_quad_points_by_centroid(point_a, point_b, point_c,
+        xyz_quad[xyz_offset : xyz_offset + 7])
+    # add new connectivity
+    xyz_offset += n_point_old
+    conn_offset = i_tri * 3 * 4
+    conn_quad[conn_offset : conn_offset + 4] = np.array([
+        AC2, A2, AB2, ABC2 ]) + xyz_offset
+    conn_offset += 4
+    conn_quad[conn_offset : conn_offset + 4] = np.array([
+        AB2, B2, BC2, ABC2 ]) + xyz_offset
+    conn_offset += 4
+    conn_quad[conn_offset : conn_offset + 4] = np.array([
+        BC2, C2, AC2, ABC2 ]) + xyz_offset
+
+
+def tri_to_quad(n_point_old: int, xyz_tri: np.ndarray, conn_tri: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    n_tri = len(conn_tri) // 3
+    # each tri is converted to 3 quad
+    n_quad = n_tri * 3
+    conn_quad = -np.ones((n_quad * 4,), dtype=int)
+    # each tri has 3(corner) + 3(edge) + 1(face) points
+    xyz_quad = np.ndarray((n_tri * 7, 3))
+    for i_tri in range(n_tri):
+        first_tri = i_tri * 3
+        index_tri = conn_tri[first_tri : first_tri + 3] - 1
+        add_quad(i_tri, n_point_old, xyz_tri[index_tri],
+            xyz_quad, conn_quad)
+    assert (0 <= conn_quad).all(), conn_quad[-12:]
+    return xyz_quad, conn_quad + 1
+
+
 def merge_xyz_list(xyz_list, n_node) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     x_new = np.ndarray((n_node,))
     y_new = np.ndarray((n_node,))
@@ -175,6 +230,7 @@ if __name__ == '__main__':
     xyz, x, y, z = wrapper.readPoints(zone, zone_size)
 
     sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    n_face = 0  # faces are also cells, but not counted in zone_size[0][1]
     n_cell = 0
     i_cell_next = 1
     xyz_list = [xyz]
@@ -191,12 +247,19 @@ if __name__ == '__main__':
             n_cell_in_curr_section = len(conn_new) // 8
             n_cell += n_cell_in_curr_section
             # update the data in the Elements_t node
-            # print(section)
             wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('HEXA_8')
             conn_node[1] = conn_new
-            # print(section)
         elif cgk.ElementType_l[i_type] == 'TRI_3':
-            n_cell_in_curr_section = erange[1] - erange[0] + 1
+            xyz_new, conn_new = tri_to_quad(n_node, xyz, conn_old)
+            xyz_list.append(xyz_new)
+            n_node += len(xyz_new)
+            assert (1 <= conn_new).all() and (conn_new <= n_node).all(), (section, n_node, np.min(conn_new), np.max(conn_new))
+            n_cell_in_curr_section = len(conn_new) // 4
+            n_cell += n_cell_in_curr_section
+            n_face += n_cell_in_curr_section
+            # update the data in the Elements_t node
+            wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('QUAD_4')
+            conn_node[1] = conn_new
         else:
             assert False, (i_type, cgk.ElementType_l[i_type])
         print('[old]', wrapper.getNodeName(section), erange)
@@ -212,7 +275,7 @@ if __name__ == '__main__':
     cgl.newDataArray(new_coords, 'CoordinateY', y_new)
     cgl.newDataArray(new_coords, 'CoordinateZ', z_new)
     zone_size[0][0] = n_node
-    zone_size[0][1] = n_cell
+    zone_size[0][1] = n_cell - n_face
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')
 
