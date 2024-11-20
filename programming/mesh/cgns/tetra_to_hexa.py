@@ -42,12 +42,8 @@ def get_foot_on_edge(point_q: np.ndarray, point_a: np.ndarray, arrow_ab: np.ndar
     return point_a + arrow_ah
 
 
-def add_hexa_by_inscribed(i_tetra: int, n_point_old: int, xyz_tetra_local: np.ndarray,
-        xyz_hexa: np.ndarray, conn_hexa: np.ndarray):
-    point_a = xyz_tetra_local[A]
-    point_b = xyz_tetra_local[B]
-    point_c = xyz_tetra_local[C]
-    point_d = xyz_tetra_local[D]
+def get_hexa_points_by_inscribed(point_a: np.ndarray, point_b: np.ndarray,
+        point_c: np.ndarray, point_d: np.ndarray, xyz_hexa_with_offset: np.ndarray):
     arrow_ab = point_b - point_a
     arrow_ac = point_c - point_a
     arrow_ad = point_d - point_a
@@ -62,71 +58,60 @@ def add_hexa_by_inscribed(i_tetra: int, n_point_old: int, xyz_tetra_local: np.nd
     s_abcd = s_abc + s_abd + s_acd + s_bcd
     radius = 3 * v_abcd / (s_abcd)
     center = (s_abc * point_d + s_abd * point_c + s_acd * point_b + s_bcd * point_a) / s_abcd
-    # add new points
-    xyz_offset = i_tetra * 15
     # copy the corners
-    xyz_hexa[xyz_offset + A] = point_a
-    xyz_hexa[xyz_offset + B] = point_b
-    xyz_hexa[xyz_offset + C] = point_c
-    xyz_hexa[xyz_offset + D] = point_d
+    xyz_hexa_with_offset[A] = point_a
+    xyz_hexa_with_offset[B] = point_b
+    xyz_hexa_with_offset[C] = point_c
+    xyz_hexa_with_offset[D] = point_d
     # add the foot on edges
-    xyz_hexa[xyz_offset + AB] = get_foot_on_edge(center, point_a, arrow_ab)
-    xyz_hexa[xyz_offset + AC] = get_foot_on_edge(center, point_a, arrow_ac)
-    xyz_hexa[xyz_offset + AD] = get_foot_on_edge(center, point_a, arrow_ad)
-    xyz_hexa[xyz_offset + BC] = get_foot_on_edge(center, point_b, arrow_bc)
-    xyz_hexa[xyz_offset + BD] = get_foot_on_edge(center, point_b, arrow_bd)
-    xyz_hexa[xyz_offset + CD] = get_foot_on_edge(center, point_c, arrow_cd)
+    xyz_hexa_with_offset[AB] = get_foot_on_edge(center, point_a, arrow_ab)
+    xyz_hexa_with_offset[AC] = get_foot_on_edge(center, point_a, arrow_ac)
+    xyz_hexa_with_offset[AD] = get_foot_on_edge(center, point_a, arrow_ad)
+    xyz_hexa_with_offset[BC] = get_foot_on_edge(center, point_b, arrow_bc)
+    xyz_hexa_with_offset[BD] = get_foot_on_edge(center, point_b, arrow_bd)
+    xyz_hexa_with_offset[CD] = get_foot_on_edge(center, point_c, arrow_cd)
     # add the foot on faces
-    xyz_hexa[xyz_offset + ABC] = get_foot_on_face(center, point_a, n_abc)
-    xyz_hexa[xyz_offset + ABD] = get_foot_on_face(center, point_a, n_abd)
-    xyz_hexa[xyz_offset + ACD] = get_foot_on_face(center, point_a, n_acd)
-    xyz_hexa[xyz_offset + BCD] = get_foot_on_face(center, point_b, n_bcd)
+    xyz_hexa_with_offset[ABC] = get_foot_on_face(center, point_a, n_abc)
+    xyz_hexa_with_offset[ABD] = get_foot_on_face(center, point_a, n_abd)
+    xyz_hexa_with_offset[ACD] = get_foot_on_face(center, point_a, n_acd)
+    xyz_hexa_with_offset[BCD] = get_foot_on_face(center, point_b, n_bcd)
     # add the center
-    xyz_hexa[xyz_offset + ABCD] = center
-    # add new connectivity
-    xyz_offset += n_point_old
-    conn_offset = i_tetra * 4 * 8
-    conn_hexa[conn_offset : conn_offset + 8] = np.array([
-        AC, A, AB, ABC, ACD, AD, ABD, ABCD ]) + xyz_offset
-    conn_offset += 8
-    conn_hexa[conn_offset : conn_offset + 8] = np.array([
-        AB, B, BC, ABC, ABD, BD, BCD, ABCD ]) + xyz_offset
-    conn_offset += 8
-    conn_hexa[conn_offset : conn_offset + 8] = np.array([
-        BC, C, AC, ABC, BCD, CD, ACD, ABCD ]) + xyz_offset
-    conn_offset += 8
-    conn_hexa[conn_offset : conn_offset + 8] = np.array([
-        CD, D, AD, ACD, BCD, BD, ABD, ABCD ]) + xyz_offset
+    xyz_hexa_with_offset[ABCD] = center
 
 
-def add_hexa_by_centroid(i_tetra: int, n_point_old: int, xyz_tetra_local: np.ndarray,
+def get_hexa_points_by_centroid(point_a: np.ndarray, point_b: np.ndarray,
+        point_c: np.ndarray, point_d: np.ndarray, xyz_hexa_with_offset: np.ndarray):
+    # copy the corners
+    xyz_hexa_with_offset[A] = point_a
+    xyz_hexa_with_offset[B] = point_b
+    xyz_hexa_with_offset[C] = point_c
+    xyz_hexa_with_offset[D] = point_d
+    # add the centroids of edges
+    xyz_hexa_with_offset[AB] = (point_a + point_b) / 2
+    xyz_hexa_with_offset[AC] = (point_a + point_c) / 2
+    xyz_hexa_with_offset[AD] = (point_a + point_d) / 2
+    xyz_hexa_with_offset[BC] = (point_b + point_c) / 2
+    xyz_hexa_with_offset[BD] = (point_b + point_d) / 2
+    xyz_hexa_with_offset[CD] = (point_c + point_d) / 2
+    # add the centroids of faces
+    xyz_hexa_with_offset[ABC] = (point_a + point_b + point_c) / 3
+    xyz_hexa_with_offset[ABD] = (point_a + point_b + point_d) / 3
+    xyz_hexa_with_offset[ACD] = (point_a + point_c + point_d) / 3
+    xyz_hexa_with_offset[BCD] = (point_b + point_c + point_d) / 3
+    # add the centroid of cell
+    xyz_hexa_with_offset[ABCD] = (point_d + point_c + point_b + point_a) / 4
+
+
+def add_hexa(i_tetra: int, n_point_old: int, xyz_tetra_local: np.ndarray,
         xyz_hexa: np.ndarray, conn_hexa: np.ndarray):
     point_a = xyz_tetra_local[A]
     point_b = xyz_tetra_local[B]
     point_c = xyz_tetra_local[C]
     point_d = xyz_tetra_local[D]
-    center = (point_d + point_c + point_b + point_a) / 4
     # add new points
     xyz_offset = i_tetra * 15
-    # copy the corners
-    xyz_hexa[xyz_offset + A] = point_a
-    xyz_hexa[xyz_offset + B] = point_b
-    xyz_hexa[xyz_offset + C] = point_c
-    xyz_hexa[xyz_offset + D] = point_d
-    # add the foot on edges
-    xyz_hexa[xyz_offset + AB] = (point_a + point_b) / 2
-    xyz_hexa[xyz_offset + AC] = (point_a + point_c) / 2
-    xyz_hexa[xyz_offset + AD] = (point_a + point_d) / 2
-    xyz_hexa[xyz_offset + BC] = (point_b + point_c) / 2
-    xyz_hexa[xyz_offset + BD] = (point_b + point_d) / 2
-    xyz_hexa[xyz_offset + CD] = (point_c + point_d) / 2
-    # add the foot on faces
-    xyz_hexa[xyz_offset + ABC] = (point_a + point_b + point_c) / 3
-    xyz_hexa[xyz_offset + ABD] = (point_a + point_b + point_d) / 3
-    xyz_hexa[xyz_offset + ACD] = (point_a + point_c + point_d) / 3
-    xyz_hexa[xyz_offset + BCD] = (point_b + point_c + point_d) / 3
-    # add the center
-    xyz_hexa[xyz_offset + ABCD] = center
+    get_hexa_points_by_centroid(point_a, point_b, point_c, point_d,
+        xyz_hexa[xyz_offset : xyz_offset + 15])
     # add new connectivity
     xyz_offset += n_point_old
     conn_offset = i_tetra * 4 * 8
@@ -153,7 +138,8 @@ def tetra_to_hexa(n_point_old: int, xyz_tetra: np.ndarray, conn_tetra: np.ndarra
     for i_tetra in range(n_tetra):
         first_tetra = i_tetra * 4
         index_tetra = conn_tetra[first_tetra : first_tetra + 4] - 1
-        add_hexa_by_centroid(i_tetra, n_point_old, xyz_tetra[index_tetra], xyz_hexa, conn_hexa)
+        add_hexa(i_tetra, n_point_old, xyz_tetra[index_tetra],
+            xyz_hexa, conn_hexa)
     assert (0 <= conn_hexa).all(), conn_hexa[-64:]
     return xyz_hexa, conn_hexa + 1
 
@@ -213,11 +199,11 @@ if __name__ == '__main__':
             n_cell_in_curr_section = erange[1] - erange[0] + 1
         else:
             assert False, (i_type, cgk.ElementType_l[i_type])
-        print(wrapper.getNodeName(section), erange)
+        print('[old]', wrapper.getNodeName(section), erange)
         erange[0] = i_cell_next
         i_cell_next += n_cell_in_curr_section
         erange[1] = i_cell_next - 1
-        print(wrapper.getNodeName(section), erange)
+        print('[new]', wrapper.getNodeName(section), erange)
 
     x_new, y_new, z_new = merge_xyz_list(xyz_list, n_node)
     cgu.removeChildByName(zone, 'GridCoordinates')
@@ -230,5 +216,7 @@ if __name__ == '__main__':
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')
 
-    cgm.save(f'{args.input[:-5]}_splitted.cgns', cgns)
+    output = f'{args.input[:-5]}_splitted.cgns'
+    print(f'writing to {output}')
+    cgm.save(output, cgns)
     print(args)
