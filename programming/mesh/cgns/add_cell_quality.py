@@ -14,7 +14,8 @@ def measure(mesh_file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     all_hexa = cells[0]
     minDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'minDetJac')
     maxDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'maxDetJac')
-    return minDetJac, maxDetJac, maxDetJac / minDetJac
+    volume = gmsh.model.mesh.getElementQualities(all_hexa, 'volume')
+    return minDetJac, maxDetJac, volume
 
 
 if __name__ == "__main__":
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     parser.add_argument('--mesh', type=str, help='the input mesh')
     args = parser.parse_args()
     gmsh.initialize()
-    min_det_jac, max_det_jac, ratio_det_jac = measure(args.mesh)
+    min_det_jac, max_det_jac, volume = measure(args.mesh)
     gmsh.finalize()
 
     # read the cgns file
@@ -42,7 +43,7 @@ if __name__ == "__main__":
         cell_data = cgl.newFlowSolution(zone, 'CellQualities', 'CellCenter')
     cgl.newDataArray(cell_data, 'MinDetJac', min_det_jac)
     cgl.newDataArray(cell_data, 'MaxDetJac', max_det_jac)
-    cgl.newDataArray(cell_data, 'RatioDetJac', ratio_det_jac)
+    cgl.newDataArray(cell_data, 'Volume', volume)
     # write to the original file
     output = args.mesh[:-5] + '_with_quality.cgns'
     print(f'writing to {output} ...')
