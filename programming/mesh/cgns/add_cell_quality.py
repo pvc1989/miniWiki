@@ -1,5 +1,6 @@
 import argparse
 import sys
+import time
 
 import numpy as np
 import gmsh
@@ -12,9 +13,19 @@ def measure(mesh_file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     gmsh.merge(mesh_file)
     types, cells, nodes = gmsh.model.mesh.getElements(dim=3)
     all_hexa = cells[0]
+    start = time.time()
     minDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'minDetJac')
+    end = time.time()
+    print(f'minDetJac costs: {end - start:.2f}s')
+    start = time.time()
     maxDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'maxDetJac')
+    end = time.time()
+    print(f'maxDetJac costs: {end - start:.2f}s')
+    start = time.time()
     volume = gmsh.model.mesh.getElementQualities(all_hexa, 'volume')
+    end = time.time()
+    print(f'volume costs: {end - start:.2f}s')
+    start = time.time()
     return minDetJac, maxDetJac, volume
 
 
