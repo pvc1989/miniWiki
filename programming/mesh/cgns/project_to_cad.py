@@ -176,14 +176,16 @@ def project_points_by_futures_process(folder: str, i_task: int, n_task: int):
     return new_points
 
 
-def merge_new_points(folder: str, comm_size: int, n_point: int):
+def merge_new_points(folder: str, n_task: int, n_point: int):
     first = 0
     new_points_merged = np.ndarray((n_point, 3))
-    for comm_rank in range(comm_size):
-        part = np.load(f'{folder}/new_points_{comm_rank}.npy')
+    for i_task in range(n_task):
+        part = np.load(f'{folder}/new_points_{i_task}.npy')
         last = first + len(part)
         new_points_merged[first : last, :] = part
-        print(f'merge rank = {comm_rank}: [{first}, {last})')
+        print(f'merge rank = {i_task}: [{first}, {last})')
+        os.remove(f'{folder}/new_points_{i_task}.npy')
+        # os.remove(f'{folder}/log_{i_task}.txt')
         first = last
     assert first == n_point, (first, n_point)
     np.save(f'{folder}/new_points_merged.npy', new_points_merged)

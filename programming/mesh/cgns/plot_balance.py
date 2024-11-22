@@ -18,7 +18,9 @@ def plot_mpi_balance(folder: str, n_core: int):
     plt.xlabel('comm rank')
     plt.ylabel('time cost')
     plt.tight_layout()
-    plt.savefig(f'{folder}/balance_mpi.svg')
+    output = f'{folder}/balance_mpi.svg'
+    print('writing to', output)
+    plt.savefig(output)
 
 
 def plot_futures_balance(folder: str, n_task: int):
@@ -57,10 +59,14 @@ def plot_futures_balance(folder: str, n_task: int):
     plt.xlabel('process id')
     plt.ylabel('time cost')
     plt.tight_layout()
-    plt.savefig(f'{folder}/balance_stacked.svg')
+    output = f'{folder}/balance_stacked.svg'
+    print('writing to', output)
+    plt.savefig(output)
     # plot the cost of each process as a single bar
     plt.bar(process_to_cost.keys(), process_to_cost.values())
-    plt.savefig(f'{folder}/balance_single.svg')
+    output = f'{folder}/balance_single.svg'
+    print('writing to', output)
+    plt.savefig(output)
 
 
 if __name__ == "__main__":
