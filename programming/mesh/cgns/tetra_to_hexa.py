@@ -218,11 +218,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description='Split each tetrahedron to four hexahedra.')
-    parser.add_argument('--input', type=str, help='the mesh of tetrahedra')
+    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
+    parser.add_argument('--input', type=str, help='the CGNS file to be splitted')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.input)
+    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     # print(zone)
@@ -234,11 +235,13 @@ if __name__ == '__main__':
     n_cell = 0
     i_cell_next = 1
     xyz_list = [xyz]
+    erange_old_to_new = dict()
     for section in sections:
         i_type = wrapper.getNodeData(section)[0]
         conn_node = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
         conn_old = wrapper.getNodeData(conn_node)
         erange = wrapper.getNodeData(wrapper.getUniqueChildByType(section, 'IndexRange_t'))
+        erange_old = tuple(erange)
         if cgk.ElementType_l[i_type] == 'TETRA_4':
             xyz_new, conn_new = tetra_to_hexa(n_node, xyz, conn_old)
             xyz_list.append(xyz_new)
@@ -262,11 +265,23 @@ if __name__ == '__main__':
             conn_node[1] = conn_new
         else:
             assert False, (i_type, cgk.ElementType_l[i_type])
-        print('[old]', wrapper.getNodeName(section), erange)
         erange[0] = i_cell_next
         i_cell_next += n_cell_in_curr_section
         erange[1] = i_cell_next - 1
-        print('[new]', wrapper.getNodeName(section), erange)
+        erange_new = tuple(erange)
+        erange_old_to_new[erange_old] = erange_new
+        if args.verbose:
+            print('Elements_t', wrapper.getNodeName(section), erange_old, erange_new)
+
+    # update element ranges in ZoneBC_t
+    bocos = wrapper.getChildrenByType(wrapper.getUniqueChildByType(zone, 'ZoneBC_t'), 'BC_t')
+    for boco in bocos:
+        erange = wrapper.getNodeData(wrapper.getUniqueChildByType(boco, 'IndexRange_t'))
+        erange_old = tuple(erange[0])
+        erange_new = erange_old_to_new[erange_old]
+        erange[0] = np.array(erange_new)
+        if args.verbose:
+            print('BC_t', wrapper.getNodeName(boco), erange_old, erange_new)
 
     x_new, y_new, z_new = merge_xyz_list(xyz_list, n_node)
     cgu.removeChildByName(zone, 'GridCoordinates')
@@ -279,7 +294,7 @@ if __name__ == '__main__':
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')
 
-    output = f'{args.input[:-5]}_splitted.cgns'
-    print(f'writing to {output}')
+    output = f'{args.folder}/splitted.cgns'
+    print(f'writing to {output} ...')
     cgm.save(output, cgns)
     print(args)
