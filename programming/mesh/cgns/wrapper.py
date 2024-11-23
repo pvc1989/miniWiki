@@ -113,5 +113,22 @@ def removeSolutionsByLocation(zone, location):
             cgu.removeChildByName(zone, getNodeName(solution))
 
 
+def getSolutionByLocation(zone, location_given, solution_name):
+    """Get an existing FlowSolution_t with a given GridLocation_t or create a new one if not found.
+    """
+    the_solution = None
+    solutions = getChildrenByType(zone, 'FlowSolution_t')
+    for solution in solutions:
+        location = getUniqueChildByType(solution, 'GridLocation_t')
+        location_found = arr2str(getNodeData(location))
+        if location_found == location_given:
+            the_solution = solution
+            break
+    # add the cell qualities as fields of cell data
+    if the_solution is None:
+        the_solution = cgl.newFlowSolution(zone, solution_name, location_given)
+    return the_solution
+
+
 if __name__ == '__main__':
     printInfo(sys.argv[1])
