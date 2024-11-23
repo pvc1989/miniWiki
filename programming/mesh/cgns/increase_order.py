@@ -75,33 +75,7 @@ def get_new_type_info(old_type_val: int, order: int) -> tuple[str, int]:
     return new_type_str, new_type_npe
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        prog = f'python3 {sys.argv[0]}',
-        description='Increase the order of elements without merging new points.')
-    parser.add_argument('--folder', type=str, help='the working directory')
-    parser.add_argument('--input', type=str, help='the input linear mesh file')
-    parser.add_argument('--order', type=int, default=2, help='order of the output mesh')
-    parser.add_argument('--verbose', default=False, action='store_true')
-    args = parser.parse_args()
-
-    print(args)
-
-    # load the linear mesh
-    mesh_cgns, _, _ = cgm.load(f'{args.folder}/{args.input}')
-
-    mesh_zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
-    mesh_zone_size = wrapper.getNodeData(mesh_zone)
-    n_node_old = mesh_zone_size[0][0]
-    n_cell = mesh_zone_size[0][1]
-    print(f'before converting: n_node = {n_node_old}, n_cell = {n_cell}')
-
-    mesh_coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(mesh_zone, 'GridCoordinates_t'), 'DataArray_t')
-    mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
-
-    section = wrapper.getUniqueChildByType(mesh_zone, 'Elements_t')
+def add_points(section, xyz_old: np.ndarray, n_node_old: int, args) -> np.ndarray:
     element_type = wrapper.getNodeData(section)
 
     # get old and new type info
@@ -119,10 +93,10 @@ if __name__ == "__main__":
         wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
     # add new points and update connectivity:
-    n_node_new = n_node_old + n_cell * (new_type_npe - old_type_npe)
-    new_coords_x = np.resize(mesh_coords_x, n_node_new)
-    new_coords_y = np.resize(mesh_coords_y, n_node_new)
-    new_coords_z = np.resize(mesh_coords_z, n_node_new)
+    n_cell = len(old_connectivity) // old_type_npe
+    n_node_add = n_cell * (new_type_npe - old_type_npe)
+    n_node_new = n_node_old + n_node_add
+    xyz_new = np.ndarray((n_node_add, 3))
     i_node_next = n_node_old
     assert old_connectivity.shape == (n_cell * old_type_npe,)
     new_connectivity = np.resize(old_connectivity, n_cell * new_type_npe)
@@ -134,9 +108,7 @@ if __name__ == "__main__":
         new_connectivity[new_fisrt : new_fisrt + old_type_npe] = old_index
         for i_local in range(old_type_npe, new_type_npe):
             shape = old_shape_function(old_local_coords, new_local_coords[i_local])
-            new_coords_x[i_node_next] = np.dot(mesh_coords_x[old_index - 1], shape)
-            new_coords_y[i_node_next] = np.dot(mesh_coords_y[old_index - 1], shape)
-            new_coords_z[i_node_next] = np.dot(mesh_coords_z[old_index - 1], shape)
+            xyz_new[i_node_next - n_node_old] = np.dot(shape, xyz_old[old_index - 1])
             i_node_next += 1
             new_connectivity[new_fisrt + i_local] = i_node_next
         if args.verbose:
@@ -144,21 +116,46 @@ if __name__ == "__main__":
     assert i_node_next == n_node_new
     print(f'after converting: n_node = {n_node_new}, n_cell = {n_cell}')
 
-    # update the cells
-    cgu.removeChildByName(section, 'ElementConnectivity')
-    cgl.newDataArray(section, 'ElementConnectivity', new_connectivity)
-
-    # write the new mesh out
-    mesh_zone_size[0][0] = n_node_new
+    # update the connectivity of cells
     new_type_val = cgk.ElementType_l.index(new_type_str)
     assert get_type_info(new_type_val)[0] == new_type_str
     element_type[0] = new_type_val
-    mesh_coords[X][1] = new_coords_x
-    mesh_coords[Y][1] = new_coords_y
-    mesh_coords[Z][1] = new_coords_z
+    cgu.removeChildByName(section, 'ElementConnectivity')
+    cgl.newDataArray(section, 'ElementConnectivity', new_connectivity)
+
+    return xyz_new
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog = f'python3 {sys.argv[0]}',
+        description='Increase the order of elements without merging new points.')
+    parser.add_argument('--folder', type=str, help='the working directory')
+    parser.add_argument('--input', type=str, help='the input linear mesh file')
+    parser.add_argument('--order', type=int, default=2, help='order of the output mesh')
+    parser.add_argument('--verbose', default=False, action='store_true')
+    args = parser.parse_args()
+
+    print(args)
+
+    # load the linear mesh
+    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    n_node = zone_size[0][0]
+    n_cell = zone_size[0][1]
+    print(f'before converting: n_node = {n_node}, n_cell = {n_cell}')
+
+    xyz_old, _, _, _ = wrapper.readPoints(zone, zone_size)
+
+    xyz_list = [xyz_old]
+    sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    for section in sections:
+        xyz_new = add_points(section, xyz_old, n_node, args)
+        xyz_list.append(xyz_new)
+        n_node += len(xyz_new)
+    wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
 
     output_folder = f'{args.folder}/order={args.order}'
     os.makedirs(output_folder, exist_ok=True)
     output = f'{output_folder}/to_be_merged.cgns'
     print('writing to', output)
-    cgm.save(output, mesh_cgns)
+    cgm.save(output, cgns)

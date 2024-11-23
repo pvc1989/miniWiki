@@ -6,6 +6,9 @@ import sys
 import numpy as np
 
 
+X, Y, Z = 0, 1, 2
+
+
 def getChildrenByType(node, cgns_type):
     children = []
     all_children = cgu.getNextChildSortByType(node)
@@ -128,6 +131,26 @@ def getSolutionByLocation(zone, location_given, solution_name):
     if the_solution is None:
         the_solution = cgl.newFlowSolution(zone, solution_name, location_given)
     return the_solution
+
+
+def mergePointList(xyz_list: list[np.ndarray], n_node: int, zone, zone_size):
+    x_new = np.ndarray((n_node,))
+    y_new = np.ndarray((n_node,))
+    z_new = np.ndarray((n_node,))
+    first = 0
+    for xyz in xyz_list:
+        last = first + len(xyz)
+        x_new[first : last] = np.array(xyz[:, X])
+        y_new[first : last] = np.array(xyz[:, Y])
+        z_new[first : last] = np.array(xyz[:, Z])
+        first = last
+    assert first == n_node
+    cgu.removeChildByName(zone, 'GridCoordinates')
+    new_coords = cgl.newGridCoordinates(zone, 'GridCoordinates')
+    cgl.newDataArray(new_coords, 'CoordinateX', x_new)
+    cgl.newDataArray(new_coords, 'CoordinateY', y_new)
+    cgl.newDataArray(new_coords, 'CoordinateZ', z_new)
+    zone_size[0][0] = n_node
 
 
 if __name__ == '__main__':

@@ -1,15 +1,8 @@
 import numpy as np
-from matplotlib import pyplot as plt
-from scipy import sparse
-from scipy.spatial import KDTree
 import sys
 import argparse
-from timeit import default_timer as timer
-from concurrent.futures import ProcessPoolExecutor, wait
 
 import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
 import wrapper
 
@@ -199,21 +192,6 @@ def tri_to_quad(n_point_old: int, xyz_tri: np.ndarray, conn_tri: np.ndarray) -> 
     return xyz_quad, conn_quad + 1
 
 
-def merge_xyz_list(xyz_list, n_node) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    x_new = np.ndarray((n_node,))
-    y_new = np.ndarray((n_node,))
-    z_new = np.ndarray((n_node,))
-    first = 0
-    for xyz in xyz_list:
-        last = first + len(xyz)
-        x_new[first : last] = np.array(xyz[:, X])
-        y_new[first : last] = np.array(xyz[:, Y])
-        z_new[first : last] = np.array(xyz[:, Z])
-        first = last
-    assert first == n_node
-    return x_new, y_new, z_new
-
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
@@ -283,13 +261,7 @@ if __name__ == '__main__':
         if args.verbose:
             print('BC_t', wrapper.getNodeName(boco), erange_old, erange_new)
 
-    x_new, y_new, z_new = merge_xyz_list(xyz_list, n_node)
-    cgu.removeChildByName(zone, 'GridCoordinates')
-    new_coords = cgl.newGridCoordinates(zone, 'GridCoordinates')
-    cgl.newDataArray(new_coords, 'CoordinateX', x_new)
-    cgl.newDataArray(new_coords, 'CoordinateY', y_new)
-    cgl.newDataArray(new_coords, 'CoordinateZ', z_new)
-    zone_size[0][0] = n_node
+    wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
     zone_size[0][1] = n_cell - n_face
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')
