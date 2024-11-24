@@ -93,16 +93,16 @@ def project_by_faces(vertex: TopoDS_Vertex, faces: list[TopoDS_Face]) -> tuple[g
     return min_distance_point, min_distance
 
 
-def project_points_by_mpi_process(cad_file: str, folder: str,
+def project_points_by_mpi_process(args,
         comm_rank: int, comm_size: int) -> np.ndarray:
-    log = open(f'{folder}/log_{comm_rank}.txt', 'w')
+    log = open(f'{args.folder}/log_{comm_rank}.txt', 'w')
 
     log.write(f'reading CAD file on rank {comm_rank}\n')
-    one_shape = get_one_shape_from_cad(cad_file)
+    one_shape = get_one_shape_from_cad(args.cad)
     log.write(f'reading NPY file on rank {comm_rank}\n')
-    old_points = np.load(f'{folder}/unique_points.npy')
+    old_points = np.load(f'{args.folder}/unique_points.npy')
     assert old_points.shape[1] == 3
-    old_points *= 25.4  # old_points in inch, convert it to mm
+    old_points *= args.length_unit_ratio  # old_points in inch, convert it to mm
 
     start = timer()
 
@@ -123,9 +123,9 @@ def project_points_by_mpi_process(cad_file: str, folder: str,
         log.write(f'[{(i_local + 1) / n_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
         log.flush()
 
-    new_points /= 25.4  # now, new_points in inch
+    new_points /= args.length_unit_ratio  # now, new_points in inch
 
-    np.save(f'{folder}/new_points_{comm_rank}.npy', new_points)
+    np.save(f'{args.folder}/new_points_{comm_rank}.npy', new_points)
     end = timer()
     log.write(f'wall-clock cost = {end - start}')
     log.close()
@@ -133,11 +133,11 @@ def project_points_by_mpi_process(cad_file: str, folder: str,
     return new_points
 
 
-def project_points_by_futures_process(folder: str, i_task: int, n_task: int):
+def project_points_by_futures_process(args, i_task: int, n_task: int):
     global one_shape
     global old_points
 
-    log = open(f'{folder}/log_{i_task}.txt', 'w')
+    log = open(f'{args.folder}/log_{i_task}.txt', 'w')
     assert old_points.shape[1] == 3
 
     start = timer()
@@ -162,9 +162,9 @@ def project_points_by_futures_process(folder: str, i_task: int, n_task: int):
         log.write(f'[{(i_local + 1) / n_local:.4f}] i = {i_global}, d = {distance:3.1e}\n')
         log.flush()
 
-    new_points /= 25.4  # now, new_points in inch
+    new_points /= args.length_unit_ratio  # now, new_points in inch
 
-    np.save(f'{folder}/new_points_{i_task}.npy', new_points)
+    np.save(f'{args.folder}/new_points_{i_task}.npy', new_points)
     end = timer()
     log.write(f'task {i_task} on process {os.getpid()} thread {threading.current_thread().ident}\n')
     log.write(f'wall-clock cost = {end - start}')
@@ -202,6 +202,7 @@ if __name__ == "__main__":
     parser.add_argument('--parallel',  type=str, choices=['mpi', 'futures'], help='parallel mechanism')
     parser.add_argument('--n_worker',  type=int, help='number of workers for running futures')
     parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_worker')
+    parser.add_argument('--length_unit_ratio',  type=float, default=25.4, help='CGNS\'s length unit / CAD\' length unit')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
@@ -225,13 +226,13 @@ if __name__ == "__main__":
         print(zone_size)
         xyz, x, y, z = wrapper.readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
-        xyz *= 25.4  # old_points in inch, convert it to mm
+        xyz *= args.length_unit_ratio  # old_points in inch, convert it to mm
         print(f'xyz.norm = {np.linalg.norm(xyz)} mm')
 
     if using_mpi:
         comm.Barrier()
         # TODO(PVC): read CAD and NPY by rank 0 and share them with other ranks
-        project_points_by_mpi_process(args.cad, args.folder, rank, size)
+        project_points_by_mpi_process(args, rank, size)
         comm.Barrier()
     else:
         global one_shape
@@ -243,7 +244,7 @@ if __name__ == "__main__":
         fs = []  # list of futures
         for i_task in range(n_task):
             fs.append(executor.submit(
-                project_points_by_futures_process, args.folder, i_task, n_task))
+                project_points_by_futures_process, args, i_task, n_task))
         done, not_done = wait(fs)
         print('done:')
         for x in done:
