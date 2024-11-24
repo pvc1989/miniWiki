@@ -1,7 +1,5 @@
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
 
 import os
 import sys
