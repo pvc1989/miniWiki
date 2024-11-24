@@ -112,7 +112,13 @@ def build_dok_matrix(kdtree: KDTree, args: str) -> sparse.dok_matrix:
         print('matrix =\n', dok_matrix.todense())
     return dok_matrix
 
-def build_rbf_matrix(rbf_folder: str, old_points: np.ndarray) -> str:
+
+def build_rbf_matrix(rbf_folder: str, old_points: np.ndarray):
+    csc_file_name = f'{rbf_folder}/rbf_matrix.npz'
+    if os.path.exists(csc_file_name):
+        print(f'\n{csc_file_name} already exists')
+        return
+
     start = time.time()
     assert old_points.shape[1] == 3
     n_point = len(old_points)
@@ -123,13 +129,17 @@ def build_rbf_matrix(rbf_folder: str, old_points: np.ndarray) -> str:
     sparsity = dok_matrix.nnz / (n_point * n_point)
     print(f'nnz / (n * n) = {dok_matrix.nnz} / {n_point * n_point} = {sparsity:.2e}')
     csc_matrix = dok_matrix.tocsc()
-    csc_file_name = f'{rbf_folder}/rbf_matrix.npz'
     sparse.save_npz(csc_file_name, csc_matrix)
     end = time.time()
     print(f'building RBF matrix costs {end - start} seconds')
 
 
-def solve_rbf_system(rbf_folder: str, rhs_columns: np.ndarray) -> str:
+def solve_rbf_system(rbf_folder: str, rhs_columns: np.ndarray):
+    sol_file_name = f'{rbf_folder}/rbf_solutions.npy'
+    if os.path.exists(sol_file_name):
+        print(f'\n{sol_file_name} already exists')
+        return
+
     rbf_matrix = sparse.load_npz(f'{rbf_folder}/rbf_matrix.npz')
     n_point = len(rhs_columns)
     n_column = rhs_columns.shape[1]
@@ -144,7 +154,6 @@ def solve_rbf_system(rbf_folder: str, rhs_columns: np.ndarray) -> str:
         print(f'column[{i_column}] solved with exit_code = {exit_code}')
         end = time.time()
         print(f'costs {end - start:.2e} seconds')
-    sol_file_name = f'{rbf_folder}/rbf_solutions.npy'
     np.save(sol_file_name, sol_columns)
 
 
@@ -200,6 +209,11 @@ def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: str):
     n_cell = zone_size[0][1]
     assert n_point == len(global_x) == len(global_y) == len(global_z)
 
+    output = f'{rbf_folder}/shifted_{n_cell}cells_{n_point}points.cgns'
+    if os.path.exists(output):
+        print(f'\n{output} already exists')
+        return
+
     print('loading the RBF solution ...')
     rbf_solutions = np.load(f'{rbf_folder}/rbf_solutions.npy')
     global u_rbf, v_rbf, w_rbf
@@ -247,7 +261,6 @@ def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: str):
     cgl.newDataArray(point_data, 'ShiftY', global_shift_y)
     cgl.newDataArray(point_data, 'ShiftZ', global_shift_z)
 
-    output = f'{rbf_folder}/shifted_{n_cell}cells_{n_point}points.cgns'
     print(f'writing to {output} ... ')
     cgm.save(output, cgns)
 
