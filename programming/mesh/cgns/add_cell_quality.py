@@ -14,19 +14,20 @@ def measure(mesh_file: str) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     types, cells, nodes = gmsh.model.mesh.getElements(dim=3)
     all_hexa = cells[0]
     start = time.time()
-    minDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'minDetJac')
+    det_jac_min = gmsh.model.mesh.getElementQualities(all_hexa, 'minDetJac')
     end = time.time()
-    print(f'minDetJac costs: {end - start:.2f}s')
+    print(f'det_jac_min costs: {end - start:.2f}s')
     start = time.time()
-    maxDetJac = gmsh.model.mesh.getElementQualities(all_hexa, 'maxDetJac')
+    det_jac_max = gmsh.model.mesh.getElementQualities(all_hexa, 'maxDetJac')
+    det_jac_ratio = det_jac_min / det_jac_max
     end = time.time()
-    print(f'maxDetJac costs: {end - start:.2f}s')
+    print(f'det_jac_ratio costs: {end - start:.2f}s')
     start = time.time()
     volume = gmsh.model.mesh.getElementQualities(all_hexa, 'volume')
     end = time.time()
     print(f'volume costs: {end - start:.2f}s')
     start = time.time()
-    return minDetJac, maxDetJac, volume
+    return det_jac_min, det_jac_ratio, volume
 
 
 if __name__ == "__main__":
@@ -36,15 +37,19 @@ if __name__ == "__main__":
     parser.add_argument('--mesh', type=str, help='the input mesh')
     args = parser.parse_args()
     gmsh.initialize()
-    min_det_jac, max_det_jac, volume = measure(args.mesh)
+    det_jac_min, det_jac_ratio, volume = measure(args.mesh)
     gmsh.finalize()
+
+    print(f'{np.sum(det_jac_min <= 0)} cells have min(det(J)) < 0')
+    print(f'{np.sum(det_jac_ratio <= 0.01)} cells have min(det(J)) < max(det(J)) * 0.01')
+    print(f'{np.sum(volume <= 0)} cells have negative volume')
 
     # read the cgns file
     cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
     cell_data = wrapper.getSolutionByLocation(zone,
         'CellCenter', 'CellQualities')
-    cgl.newDataArray(cell_data, 'MinDetJac', min_det_jac)
-    cgl.newDataArray(cell_data, 'MaxDetJac', max_det_jac)
+    cgl.newDataArray(cell_data, 'DetJacMin', det_jac_min)
+    cgl.newDataArray(cell_data, 'DetJacRatio', det_jac_ratio)
     cgl.newDataArray(cell_data, 'Volume', volume)
     # write to the original file
     output = args.mesh[:-5] + '_with_quality.cgns'
