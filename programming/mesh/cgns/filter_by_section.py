@@ -6,8 +6,8 @@ import numpy as np
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
-import wrapper
-from wrapper import X, Y, Z
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 if __name__ == "__main__":
@@ -21,19 +21,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
-    xyz_old, _, _, _ = wrapper.readPoints(zone, zone_size)
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    xyz_old, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
     n_node = len(xyz_old)
     print(f'before filtering: n_node = {n_node}')
 
-    sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    sections = pycgns_wrapper.getChildrenByType(zone, 'Elements_t')
     i_node_set = set()
     for section in sections:
-        name = wrapper.getNodeName(section)
+        name = pycgns_wrapper.getNodeName(section)
         if name not in args.sections:
             continue
-        connectivity = wrapper.getNodeData(
-            wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+        connectivity = pycgns_wrapper.getNodeData(
+            pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
         for i_node in connectivity:
             i_node_set.add(i_node - 1)
 

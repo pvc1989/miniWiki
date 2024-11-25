@@ -1,6 +1,6 @@
 import CGNS.MAP as cgm
 import argparse
-import wrapper
+import pycgns_wrapper
 
 
 if __name__ == "__main__":
@@ -12,27 +12,27 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     tree, links, paths = cgm.load(args.input)
-    base = wrapper.getUniqueChildByType(tree, 'CGNSBase_t')
+    base = pycgns_wrapper.getUniqueChildByType(tree, 'CGNSBase_t')
 
     n_boco = 0
     boco_type_to_names = dict()
 
-    zones = wrapper.getChildrenByType(base, 'Zone_t')
+    zones = pycgns_wrapper.getChildrenByType(base, 'Zone_t')
     for zone in zones:
-        zone_name = wrapper.getNodeName(zone)
-        zone_bc = wrapper.getUniqueChildByType(zone, 'ZoneBC_t')
+        zone_name = pycgns_wrapper.getNodeName(zone)
+        zone_bc = pycgns_wrapper.getUniqueChildByType(zone, 'ZoneBC_t')
         if zone_bc is None:
             continue
         if args.verbose:
             print(f'"{zone_name}"')
-        bocos = wrapper.getChildrenByType(zone_bc, 'BC_t')
+        bocos = pycgns_wrapper.getChildrenByType(zone_bc, 'BC_t')
         for boco in bocos:
             n_boco += 1
-            boco_name = wrapper.getNodeName(boco)
-            boco_type_arr = wrapper.getNodeData(boco)
+            boco_name = pycgns_wrapper.getNodeName(boco)
+            boco_type_arr = pycgns_wrapper.getNodeData(boco)
             if args.verbose:
                 print(f'  "{boco_name}" "{boco_type_arr}"')
-            boco_type = wrapper.arr2str(boco_type_arr)
+            boco_type = pycgns_wrapper.arr2str(boco_type_arr)
             if boco_type not in boco_type_to_names:
                 boco_type_to_names[boco_type] = list()
             assert isinstance(boco_type_to_names[boco_type], list)

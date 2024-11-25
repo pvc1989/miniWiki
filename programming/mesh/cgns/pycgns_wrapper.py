@@ -1,10 +1,10 @@
+import sys
+
+import numpy as np
+
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
-import sys
-import numpy as np
-
 
 X, Y, Z = 0, 1, 2
 
@@ -96,7 +96,7 @@ def readPoints(zone, zone_size):
     n_node = zone_size[0][0]
     coords = getChildrenByType(
         getUniqueChildByType(zone, 'GridCoordinates_t'), 'DataArray_t')
-    X, Y, Z = 0, 1, 2
+    from pycgns_wrapper import X, Y, Z
     coords_x, coords_y, coords_z = coords[X][1], coords[Y][1], coords[Z][1]
     assert (n_node,) == coords_x.shape == coords_y.shape == coords_z.shape
     point_arr = np.ndarray((n_node, 3))

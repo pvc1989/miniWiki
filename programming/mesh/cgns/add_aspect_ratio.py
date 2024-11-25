@@ -1,14 +1,10 @@
 import numpy as np
 import argparse
 import sys
-from scipy.spatial import KDTree
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
-import wrapper
-
-
-X, Y, Z = 0, 1, 2
+import pycgns_wrapper
 
 
 hexa_edges_local = np.array([
@@ -46,17 +42,17 @@ if __name__ == "__main__":
     if args.verbose:
         print(args)
 
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
-    points, _, _, _ = wrapper.readPoints(zone, zone_size)
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.mesh)
+    points, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
 
     # load connectivity
     # TODO(PVC): support multi sections
     n_cell = zone_size[0][1]
-    section = wrapper.getUniqueChildByType(zone, 'Elements_t')
-    element_type = wrapper.getNodeData(section)
+    section = pycgns_wrapper.getUniqueChildByType(zone, 'Elements_t')
+    element_type = pycgns_wrapper.getNodeData(section)
     assert element_type[0] == 17  # HEXA_8
-    connectivity = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+    connectivity = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
     assert len(connectivity) == n_cell * 8
 
     # get the aspect ratio of each cell

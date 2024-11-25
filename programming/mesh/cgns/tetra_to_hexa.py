@@ -1,13 +1,12 @@
-import numpy as np
-import sys
 import argparse
+import sys
+
+import numpy as np
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnskeywords as cgk
-import wrapper
+import pycgns_wrapper
 
-
-X, Y, Z = 0, 1, 2
 
 A, B, C, D = 0, 1, 2, 3
 AB, AC, AD, BC, BD, CD = 4, 5, 6, 7, 8, 9
@@ -201,24 +200,24 @@ if __name__ == '__main__':
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
-    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     # print(zone)
     print(f'before splitting, n_node = {n_node}, n_cell = {n_cell}')
-    xyz, x, y, z = wrapper.readPoints(zone, zone_size)
+    xyz, x, y, z = pycgns_wrapper.readPoints(zone, zone_size)
 
-    sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    sections = pycgns_wrapper.getChildrenByType(zone, 'Elements_t')
     n_face = 0  # faces are also cells, but not counted in zone_size[0][1]
     n_cell = 0
     i_cell_next = 1
     xyz_list = [xyz]
     erange_old_to_new = dict()
     for section in sections:
-        i_type = wrapper.getNodeData(section)[0]
-        conn_node = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
-        conn_old = wrapper.getNodeData(conn_node)
-        erange = wrapper.getNodeData(wrapper.getUniqueChildByType(section, 'IndexRange_t'))
+        i_type = pycgns_wrapper.getNodeData(section)[0]
+        conn_node = pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity')
+        conn_old = pycgns_wrapper.getNodeData(conn_node)
+        erange = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByType(section, 'IndexRange_t'))
         erange_old = tuple(erange)
         if cgk.ElementType_l[i_type] == 'TETRA_4':
             xyz_new, conn_new = tetra_to_hexa(n_node, xyz, conn_old)
@@ -228,7 +227,7 @@ if __name__ == '__main__':
             n_cell_in_curr_section = len(conn_new) // 8
             n_cell += n_cell_in_curr_section
             # update the data in the Elements_t node
-            wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('HEXA_8')
+            pycgns_wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('HEXA_8')
             conn_node[1] = conn_new
         elif cgk.ElementType_l[i_type] == 'TRI_3':
             xyz_new, conn_new = tri_to_quad(n_node, xyz, conn_old)
@@ -239,7 +238,7 @@ if __name__ == '__main__':
             n_cell += n_cell_in_curr_section
             n_face += n_cell_in_curr_section
             # update the data in the Elements_t node
-            wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('QUAD_4')
+            pycgns_wrapper.getNodeData(section)[0] = cgk.ElementType_l.index('QUAD_4')
             conn_node[1] = conn_new
         else:
             assert False, (i_type, cgk.ElementType_l[i_type])
@@ -249,19 +248,19 @@ if __name__ == '__main__':
         erange_new = tuple(erange)
         erange_old_to_new[erange_old] = erange_new
         if args.verbose:
-            print('Elements_t', wrapper.getNodeName(section), erange_old, erange_new)
+            print('Elements_t', pycgns_wrapper.getNodeName(section), erange_old, erange_new)
 
     # update element ranges in ZoneBC_t
-    bocos = wrapper.getChildrenByType(wrapper.getUniqueChildByType(zone, 'ZoneBC_t'), 'BC_t')
+    bocos = pycgns_wrapper.getChildrenByType(pycgns_wrapper.getUniqueChildByType(zone, 'ZoneBC_t'), 'BC_t')
     for boco in bocos:
-        erange = wrapper.getNodeData(wrapper.getUniqueChildByType(boco, 'IndexRange_t'))
+        erange = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByType(boco, 'IndexRange_t'))
         erange_old = tuple(erange[0])
         erange_new = erange_old_to_new[erange_old]
         erange[0] = np.array(erange_new)
         if args.verbose:
-            print('BC_t', wrapper.getNodeName(boco), erange_old, erange_new)
+            print('BC_t', pycgns_wrapper.getNodeName(boco), erange_old, erange_new)
 
-    wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
+    pycgns_wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
     zone_size[0][1] = n_cell - n_face
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')

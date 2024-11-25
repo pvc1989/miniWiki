@@ -1,17 +1,19 @@
 import argparse
-import sys
 import os
+import sys
 import shutil
 from concurrent.futures import ProcessPoolExecutor, wait
 import time
 
 import numpy as np
 from scipy.spatial import KDTree
+
 import CGNS.MAP as cgm
-import wrapper
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
+
 import parallel
 
-X, Y, Z = 0, 1, 2
 
 
 def multiple_to_minimum(temp_folder: str, radius: float, i_task: int, n_task: int) -> tuple[str, int, int]:
@@ -40,7 +42,7 @@ def multiple_to_minimum(temp_folder: str, radius: float, i_task: int, n_task: in
 def multiple_to_unique(zone: list, zone_size: np.ndarray, args: str) -> np.ndarray:
     start = time.time()
     global multiple_points
-    multiple_points, _, _, _ = wrapper.readPoints(zone, zone_size)
+    multiple_points, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
     assert zone_size[0][0] == len(multiple_points)
     assert multiple_points.shape[1] == 3
     end = time.time()
@@ -142,8 +144,8 @@ if __name__ == "__main__":
 
     # get the unique Zone_t
     start = time.time()
-    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
-    wrapper.removeSolutionsByLocation(zone, 'Vertex')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    pycgns_wrapper.removeSolutionsByLocation(zone, 'Vertex')
     end = time.time()
     print(f'cgm.load() costs {(end - start):.2f} seconds')
 
@@ -154,8 +156,8 @@ if __name__ == "__main__":
     # update zone_size and GridCoordinates_t
     start = time.time()
     zone_size[0][0] = n_unique
-    coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'), 'DataArray_t')
+    coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'), 'DataArray_t')
     if args.verbose:
         print('\ncoords before merging:\n', coords)
     coords[X][1] = np.array(unique_points[:, X])
@@ -168,10 +170,10 @@ if __name__ == "__main__":
 
     # update Elements_t's
     start = time.time()
-    sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    sections = pycgns_wrapper.getChildrenByType(zone, 'Elements_t')
     for section in sections:
-        connectivity = wrapper.getNodeData(
-            wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+        connectivity = pycgns_wrapper.getNodeData(
+            pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
         n = len(connectivity)
         for i in range(n):
             connectivity[i] = i_multiple_to_i_unique[connectivity[i] - 1] + 1

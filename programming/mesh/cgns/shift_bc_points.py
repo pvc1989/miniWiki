@@ -1,13 +1,10 @@
-import CGNS.MAP as cgm
-import wrapper
-
-import sys
-import numpy as np
-from scipy.spatial import KDTree
 import argparse
+import sys
 
+import numpy as np
 
-X, Y, Z = 0, 1, 2
+import CGNS.MAP as cgm
+import pycgns_wrapper
 
 
 if __name__ == "__main__":
@@ -25,13 +22,13 @@ if __name__ == "__main__":
         print(args)
 
     # load the volume mesh to be shifted
-    volume_cgns, volume_zone, volume_zone_size = wrapper.getUniqueZone(args.volume)
-    volume_xyz, volume_x, volume_y, volume_z = wrapper.readPoints(volume_zone, volume_zone_size)
+    volume_cgns, volume_zone, volume_zone_size = pycgns_wrapper.getUniqueZone(args.volume)
+    volume_xyz, volume_x, volume_y, volume_z = pycgns_wrapper.readPoints(volume_zone, volume_zone_size)
     volume_point_size = volume_zone_size[0][0]
 
     # load the shifted surface mesh
-    _, surface_zone, surface_zone_size = wrapper.getUniqueZone(args.surface)
-    surface_xyz, surface_x, surface_y, surface_z = wrapper.readPoints(surface_zone, surface_zone_size)
+    _, surface_zone, surface_zone_size = pycgns_wrapper.getUniqueZone(args.surface)
+    surface_xyz, surface_x, surface_y, surface_z = pycgns_wrapper.readPoints(surface_zone, surface_zone_size)
 
     # load the volume-to-surface node index map
     volume_to_surface = np.load(args.index_map)

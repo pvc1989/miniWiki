@@ -1,11 +1,11 @@
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
+import argparse
 
 import numpy as np
-import argparse
-import wrapper
+
+import CGNS.MAP as cgm
+import CGNS.PAT.cgnslib as cgl
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 if __name__ == "__main__":
@@ -23,32 +23,31 @@ if __name__ == "__main__":
     new_tree = cgl.newCGNSTree()
 
     # CGNSBase_t level
-    old_base = wrapper.getUniqueChildByType(old_tree, 'CGNSBase_t')
-    cell_dim, phys_dim = wrapper.getDimensions(old_base)
+    old_base = pycgns_wrapper.getUniqueChildByType(old_tree, 'CGNSBase_t')
+    cell_dim, phys_dim = pycgns_wrapper.getDimensions(old_base)
     assert cell_dim == phys_dim == 3
     new_base = cgl.newCGNSBase(new_tree,
-        wrapper.getNodeName(old_base), cell_dim, phys_dim)
+        pycgns_wrapper.getNodeName(old_base), cell_dim, phys_dim)
 
     # Zone_t level
-    old_zones = wrapper.getChildrenByType(old_base, 'Zone_t')
+    old_zones = pycgns_wrapper.getChildrenByType(old_base, 'Zone_t')
     xyz_to_count = dict()
-    X, Y, Z = 0, 1, 2
-    I, J, K = 0, 1, 2
+    I, J, K = X, Y, Z
     n_node = 0
     for old_zone in old_zones:
-        zone_name = wrapper.getNodeName(old_zone)
+        zone_name = pycgns_wrapper.getNodeName(old_zone)
         zone_size = old_zone[1]
         assert zone_size.shape == (3, 3)
         n_node_i, n_cell_i, _ = zone_size[I]
         n_node_j, n_cell_j, _ = zone_size[J]
         n_node_k, n_cell_k, _ = zone_size[K]
-        coords = wrapper.getChildrenByType(
-            wrapper.getUniqueChildByType(old_zone, 'GridCoordinates_t'),
+        coords = pycgns_wrapper.getChildrenByType(
+            pycgns_wrapper.getUniqueChildByType(old_zone, 'GridCoordinates_t'),
             'DataArray_t')
         coords_x, coords_y, coords_z = coords[X], coords[Y], coords[Z]
-        assert 'CoordinateX' == wrapper.getNodeName(coords_x)
-        assert 'CoordinateY' == wrapper.getNodeName(coords_y)
-        assert 'CoordinateZ' == wrapper.getNodeName(coords_z)
+        assert 'CoordinateX' == pycgns_wrapper.getNodeName(coords_x)
+        assert 'CoordinateY' == pycgns_wrapper.getNodeName(coords_y)
+        assert 'CoordinateZ' == pycgns_wrapper.getNodeName(coords_z)
         values_x, values_y, values_z = coords_x[1], coords_y[1], coords_z[1]
         assert (n_node_i, n_node_j, n_node_k) == \
             values_x.shape == values_y.shape == values_z.shape

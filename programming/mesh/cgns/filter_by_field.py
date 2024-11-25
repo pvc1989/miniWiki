@@ -1,11 +1,13 @@
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-
+import argparse
 import os
 import sys
+
 import numpy as np
-import argparse
-import wrapper
+
+import CGNS.MAP as cgm
+import CGNS.PAT.cgnslib as cgl
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 if __name__ == "__main__":
@@ -30,55 +32,54 @@ if __name__ == "__main__":
     new_tree = cgl.newCGNSTree()
 
     # CGNSBase_t level
-    old_base = wrapper.getUniqueChildByType(old_tree, 'CGNSBase_t')
-    cell_dim, phys_dim = wrapper.getDimensions(old_base)
+    old_base = pycgns_wrapper.getUniqueChildByType(old_tree, 'CGNSBase_t')
+    cell_dim, phys_dim = pycgns_wrapper.getDimensions(old_base)
     print()
     print('cell_dim =', cell_dim)
     print('phys_dim =', phys_dim)
     new_base = cgl.newCGNSBase(new_tree,
-        wrapper.getNodeName(old_base), cell_dim, phys_dim)
+        pycgns_wrapper.getNodeName(old_base), cell_dim, phys_dim)
 
     # Zone_t level
-    old_zone = wrapper.getUniqueChildByType(old_base, 'Zone_t')
-    zone_name = wrapper.getNodeName(old_zone)
-    zone_size = wrapper.getNodeData(old_zone)
+    old_zone = pycgns_wrapper.getUniqueChildByType(old_base, 'Zone_t')
+    zone_name = pycgns_wrapper.getNodeName(old_zone)
+    zone_size = pycgns_wrapper.getNodeData(old_zone)
     print('zone_size =', zone_size)
     assert zone_size.shape == (1, 3)
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
-    coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(old_zone, 'GridCoordinates_t'),
+    coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(old_zone, 'GridCoordinates_t'),
         'DataArray_t')
-    X, Y, Z = 0, 1, 2
     coords_x, coords_y, coords_z = coords[X], coords[Y], coords[Z]
-    assert 'CoordinateX' == wrapper.getNodeName(coords_x)
-    assert 'CoordinateY' == wrapper.getNodeName(coords_y)
-    assert 'CoordinateZ' == wrapper.getNodeName(coords_z)
+    assert 'CoordinateX' == pycgns_wrapper.getNodeName(coords_x)
+    assert 'CoordinateY' == pycgns_wrapper.getNodeName(coords_y)
+    assert 'CoordinateZ' == pycgns_wrapper.getNodeName(coords_z)
     values_x, values_y, values_z = coords_x[1], coords_y[1], coords_z[1]
     assert (n_node,) == values_x.shape == values_y.shape == values_z.shape
 
     # Elements_t level
-    section = wrapper.getUniqueChildByType(old_zone, 'Elements_t')
-    element_type = wrapper.getUniqueChildByType(section, 'ElementType_t')
+    section = pycgns_wrapper.getUniqueChildByType(old_zone, 'Elements_t')
+    element_type = pycgns_wrapper.getUniqueChildByType(section, 'ElementType_t')
     assert element_type is None
     # TODO(gaomin): add ElementType_t(QUAD_4)
-    connectivity = wrapper.getUniqueChildByName(section, 'ElementConnectivity')
-    assert wrapper.getNodeLabel(connectivity) == 'DataArray_t'
+    connectivity = pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity')
+    assert pycgns_wrapper.getNodeLabel(connectivity) == 'DataArray_t'
     if args.verbose:
         print()
         print(connectivity)
-    old_connectivity_list = wrapper.getNodeData(connectivity)
+    old_connectivity_list = pycgns_wrapper.getNodeData(connectivity)
     n_node_per_cell = 4  # FLEXI only supports `QUAD_4`
     assert old_connectivity_list.shape == (n_node_per_cell * n_cell,)
 
     # FlowSolution_t level
-    solution = wrapper.getUniqueChildByType(old_zone, 'FlowSolution_t')
+    solution = pycgns_wrapper.getUniqueChildByType(old_zone, 'FlowSolution_t')
     if args.verbose:
         print()
         print(solution)
-    assert wrapper.getUniqueChildByType(solution, 'GridLocation_t') is None
+    assert pycgns_wrapper.getUniqueChildByType(solution, 'GridLocation_t') is None
     # TODO(gaomin): add GridLocation_t(Vertex)
-    values = wrapper.getNodeData(wrapper.getUniqueChildByName(solution, args.field))
+    values = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByName(solution, args.field))
     assert values.shape == (n_node,)
 
     # filter cells by types
@@ -106,9 +107,9 @@ if __name__ == "__main__":
     n_node = len(filtered_nodes)
     n_cell = len(filtered_cells)
     n_rind = 0
-    new_zone = cgl.newZone(new_base, wrapper.getNodeName(old_zone),
+    new_zone = cgl.newZone(new_base, pycgns_wrapper.getNodeName(old_zone),
         zsize=np.array([[n_node, n_cell, n_rind]]), ztype='Unstructured')
-    assert zone_size.shape == wrapper.getNodeData(new_zone).shape
+    assert zone_size.shape == pycgns_wrapper.getNodeData(new_zone).shape
 
     # create new GridCoordinate_
     new_coords = cgl.newGridCoordinates(new_zone, 'GridCoordinates')
@@ -127,7 +128,7 @@ if __name__ == "__main__":
             # both i_node's are 1-based
             new_connectivity_list[new_first + i] = i_node_new
     assert 1 == np.min(new_connectivity_list) <= np.max(new_connectivity_list) == n_node
-    erange_old = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
+    erange_old = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByName(section, 'ElementRange'))
     erange_new = np.ndarray(erange_old.shape, erange_old.dtype)
     erange_new[0] = 1
     erange_new[1] = n_cell

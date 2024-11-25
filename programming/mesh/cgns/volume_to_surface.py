@@ -1,12 +1,10 @@
-import wrapper
-
+import argparse
 import sys
+
 import numpy as np
 from scipy.spatial import KDTree
-import argparse
 
-
-X, Y, Z = 0, 1, 2
+import pycgns_wrapper
 
 
 if __name__ == "__main__":
@@ -25,14 +23,14 @@ if __name__ == "__main__":
         print(args)
 
     # load the volume mesh
-    volume_cgns, volume_zone, volume_zone_size = wrapper.getUniqueZone(args.volume)
-    volume_xyz, _, _, _ = wrapper.readPoints(volume_zone, volume_zone_size)
+    volume_cgns, volume_zone, volume_zone_size = pycgns_wrapper.getUniqueZone(args.volume)
+    volume_xyz, _, _, _ = pycgns_wrapper.readPoints(volume_zone, volume_zone_size)
     volume_point_size = volume_zone_size[0][0]
     volume_to_surface = np.zeros((volume_point_size,), dtype=int) - 1
 
     # load the surface mesh
-    _, surface_zone, surface_zone_size = wrapper.getUniqueZone(args.surface)
-    surface_point_arr, _, _, _ = wrapper.readPoints(surface_zone, surface_zone_size)
+    _, surface_zone, surface_zone_size = pycgns_wrapper.getUniqueZone(args.surface)
+    surface_point_arr, _, _, _ = pycgns_wrapper.readPoints(surface_zone, surface_zone_size)
     surface_kdtree = KDTree(surface_point_arr)
 
     # look for the nearest point on the surface

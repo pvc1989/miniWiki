@@ -9,7 +9,7 @@ from OCC.Core.TopAbs import TopAbs_FACE
 from OCC.Core.TopExp import TopExp_Explorer
 from OCC.Core.TopoDS import TopoDS_Shape, TopoDS_Face, TopoDS_Vertex
 
-import wrapper
+import pycgns_wrapper
 import parallel
 
 from timeit import default_timer as timer
@@ -222,9 +222,9 @@ if __name__ == "__main__":
         n_task = args.n_task
 
     if not using_mpi or rank == 0:
-        cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
+        cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.mesh)
         print(zone_size)
-        xyz, x, y, z = wrapper.readPoints(zone, zone_size)
+        xyz, x, y, z = pycgns_wrapper.readPoints(zone, zone_size)
         assert zone_size[0][0] == len(xyz) == len(x) == len(y) == len(z)
         xyz *= args.length_unit_ratio  # old_points in inch, convert it to mm
         print(f'xyz.norm = {np.linalg.norm(xyz)} mm')

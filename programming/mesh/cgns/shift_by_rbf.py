@@ -12,12 +12,10 @@ from concurrent.futures import ProcessPoolExecutor, wait
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
-import wrapper
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
+
 import parallel
-
-
-X, Y, Z = 0, 1, 2
-
 
 def dimensionaless_rbf_0(xi: float) -> float:
     return (1 - xi)**8 * (32 * (xi**3) + 25 * (xi**2) + 8 * xi + 1)
@@ -202,9 +200,9 @@ def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, 
 
 def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: str):
     print('\nloading the volume mesh ...')
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.mesh)
     global global_x, global_y, global_z
-    _, global_x, global_y, global_z = wrapper.readPoints(zone, zone_size)
+    _, global_x, global_y, global_z = pycgns_wrapper.readPoints(zone, zone_size)
     n_point = zone_size[0][0]
     n_cell = zone_size[0][1]
     assert n_point == len(global_x) == len(global_y) == len(global_z)
@@ -253,10 +251,7 @@ def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: str):
     global_z += global_shift_z
 
     # write the shifts as a vector field of point data
-    point_data = wrapper.getChildrenByType(zone, 'FlowSolution_t')
-    for data in point_data:
-        cgu.removeChildByName(zone, wrapper.getNodeName(data))
-    point_data = cgl.newFlowSolution(zone, 'FlowSolutionHelper', 'Vertex')
+    point_data = pycgns_wrapper.getSolutionByLocation(zone, 'Vertex', 'FlowSolutionHelper')
     cgl.newDataArray(point_data, 'ShiftX', global_shift_x)
     cgl.newDataArray(point_data, 'ShiftY', global_shift_y)
     cgl.newDataArray(point_data, 'ShiftZ', global_shift_z)

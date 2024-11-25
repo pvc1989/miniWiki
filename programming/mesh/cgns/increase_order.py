@@ -1,16 +1,15 @@
+import argparse
+import os
+import sys
+
+import numpy as np
+
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import CGNS.PAT.cgnskeywords as cgk
-import wrapper
-
-import numpy as np
-import argparse
-import sys
-import os
-
-
-X, Y, Z = 0, 1, 2
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 type_to_local_coords = dict()
@@ -76,7 +75,7 @@ def get_new_type_info(old_type_val: int, order: int) -> tuple[str, int]:
 
 
 def add_points(section, xyz_old: np.ndarray, n_node_old: int, args) -> np.ndarray:
-    element_type = wrapper.getNodeData(section)
+    element_type = pycgns_wrapper.getNodeData(section)
 
     # get old and new type info
     old_type_val = element_type[0]
@@ -89,8 +88,8 @@ def add_points(section, xyz_old: np.ndarray, n_node_old: int, args) -> np.ndarra
     assert new_type_npe == len(new_local_coords)
     old_shape_function = type_to_shape_functions[old_type_str]
 
-    old_connectivity = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+    old_connectivity = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
     # add new points and update connectivity:
     n_cell = len(old_connectivity) // old_type_npe
@@ -139,20 +138,20 @@ if __name__ == "__main__":
     print(args)
 
     # load the linear mesh
-    cgns, zone, zone_size = wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     print(f'before converting: n_node = {n_node}, n_cell = {n_cell}')
 
-    xyz_old, _, _, _ = wrapper.readPoints(zone, zone_size)
+    xyz_old, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
 
     xyz_list = [xyz_old]
-    sections = wrapper.getChildrenByType(zone, 'Elements_t')
+    sections = pycgns_wrapper.getChildrenByType(zone, 'Elements_t')
     for section in sections:
         xyz_new = add_points(section, xyz_old, n_node, args)
         xyz_list.append(xyz_new)
         n_node += len(xyz_new)
-    wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
+    pycgns_wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
 
     output_folder = f'{args.folder}/order={args.order}'
     os.makedirs(output_folder, exist_ok=True)

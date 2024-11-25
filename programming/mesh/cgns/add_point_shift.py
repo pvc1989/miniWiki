@@ -1,13 +1,12 @@
+import argparse
+import sys
+
+import numpy as np
+
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
-import wrapper
-
-import sys
-import numpy as np
-import argparse
-
-
-X, Y, Z = 0, 1, 2
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 if __name__ == "__main__":
@@ -24,15 +23,15 @@ if __name__ == "__main__":
 
     # load the mesh to be shifted
     mesh_cgns, _, _ = cgm.load(f'{args.folder}/{args.input}')
-    mesh_zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
-    mesh_zone_size = wrapper.getNodeData(mesh_zone)
+    mesh_zone = pycgns_wrapper.getUniqueChildByType(
+        pycgns_wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
+    mesh_zone_size = pycgns_wrapper.getNodeData(mesh_zone)
     n_node = mesh_zone_size[0][0]
     n_cell = mesh_zone_size[0][1]
     print(f'n_node = {n_node}, n_cell = {n_cell}')
 
     # read the original coords
-    _, old_x, old_y, old_z = wrapper.readPoints(mesh_zone, mesh_zone_size)
+    _, old_x, old_y, old_z = pycgns_wrapper.readPoints(mesh_zone, mesh_zone_size)
 
     # load the shifted coords
     cad_points = np.load(args.cad_points)
@@ -59,7 +58,7 @@ if __name__ == "__main__":
             new_z[i_node] = cad_points[i_node, Z]
 
     # write the shifts as a field of point data
-    point_data = wrapper.getSolutionByLocation(mesh_zone, 'Vertex', 'PointShift')
+    point_data = pycgns_wrapper.getSolutionByLocation(mesh_zone, 'Vertex', 'PointShift')
     cgl.newDataArray(point_data, 'ShiftX', new_x - old_x)
     cgl.newDataArray(point_data, 'ShiftY', new_y - old_y)
     cgl.newDataArray(point_data, 'ShiftZ', new_z - old_z)

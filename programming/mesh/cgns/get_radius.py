@@ -5,10 +5,7 @@ from scipy.spatial import KDTree
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
-import wrapper
-
-
-X, Y, Z = 0, 1, 2
+import pycgns_wrapper
 
 
 if __name__ == "__main__":
@@ -24,8 +21,8 @@ if __name__ == "__main__":
     if args.verbose:
         print(args)
 
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.input)
-    points, _, _, _ = wrapper.readPoints(zone, zone_size)
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
+    points, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
 
     assert points.shape[1] == 3
     kdtree = KDTree(points)
@@ -42,7 +39,7 @@ if __name__ == "__main__":
     print('r_max =', np.max(radius))
 
     # write the radius as a field of point data
-    wrapper.removeSolutionsByLocation(zone, 'Vertex')
+    pycgns_wrapper.removeSolutionsByLocation(zone, 'Vertex')
     point_data = cgl.newFlowSolution(zone, 'FlowSolutionHelper', 'Vertex')
     cgl.newDataArray(point_data, 'SupportRadius', radius)
 

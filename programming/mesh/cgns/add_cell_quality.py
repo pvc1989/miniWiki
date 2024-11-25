@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 import gmsh
-import wrapper
+import pycgns_wrapper
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnslib as cgl
 
@@ -45,8 +45,8 @@ if __name__ == "__main__":
     print(f'{np.sum(volume <= 0)} cells have negative volume')
 
     # read the cgns file
-    cgns, zone, zone_size = wrapper.getUniqueZone(args.mesh)
-    cell_data = wrapper.getSolutionByLocation(zone,
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.mesh)
+    cell_data = pycgns_wrapper.getSolutionByLocation(zone,
         'CellCenter', 'CellQualities')
     cgl.newDataArray(cell_data, 'DetJacMin', det_jac_min)
     cgl.newDataArray(cell_data, 'DetJacRatio', det_jac_ratio)

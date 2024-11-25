@@ -1,16 +1,13 @@
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
-import wrapper
-
 import numpy as np
 from scipy.spatial import KDTree
 import argparse
 import vtk
 
-
-X, Y, Z = 0, 1, 2
+import CGNS.MAP as cgm
+import CGNS.PAT.cgnslib as cgl
+import CGNS.PAT.cgnsutils as cgu
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 def getNearestPoint(point_p: np.ndarray, kdtree: KDTree) -> np.ndarray:
@@ -62,17 +59,17 @@ def getKdtreeFromCAD(setKdtreePoints: callable):
     cad_connectivity = np.zeros(n_cell * 3, dtype=int) - 1
     assert cad_connectivity.shape == (n_cell * 3,)
     assert (cad_connectivity == -1).all()
-    sections = wrapper.getChildrenByType(cad_zone, 'Elements_t')
+    sections = pycgns_wrapper.getChildrenByType(cad_zone, 'Elements_t')
     print('n_section =', len(sections))
     i_cell_global = 0
     for section in sections:
         if args.verbose and False:
             print(section)
-        element_type = wrapper.getNodeData(section)
+        element_type = pycgns_wrapper.getNodeData(section)
         assert element_type[0] == 5  # TRI_3
-        connectivity = wrapper.getNodeData(
-            wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
-        element_range = wrapper.getNodeData(wrapper.getUniqueChildByName(section, 'ElementRange'))
+        connectivity = pycgns_wrapper.getNodeData(
+            pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+        element_range = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByName(section, 'ElementRange'))
         first_global = element_range[0] - 1
         last_global = element_range[1]  # inclusive to exclusive
         if args.verbose:
@@ -92,13 +89,13 @@ def getKdtreeFromCAD(setKdtreePoints: callable):
 
     # section_names = []
     # for section in sections:
-    #     section_names.append(wrapper.getNodeName(section))
+    #     section_names.append(pycgns_wrapper.getNodeName(section))
     # assert len(section_names) == len(sections)
     # for name in section_names:
     #     cgu.removeChildByName(cad_zone, name)
-    # assert len(wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
+    # assert len(pycgns_wrapper.getChildrenByType(cad_zone, 'Elements_t')) == 0
     # cgl.newElements(cad_zone, 'SingleSection', etype='TRI_3', erange=np.array([1, n_cell]), econnectivity=cad_connectivity)
-    # print(len(wrapper.getChildrenByType(cad_zone, 'Elements_t')))
+    # print(len(pycgns_wrapper.getChildrenByType(cad_zone, 'Elements_t')))
     # cgm.save('cad-merged.cgns', cad_cgns)
     cad_kdtree = KDTree(kdtree_points)
     return cad_connectivity, cad_kdtree
@@ -226,16 +223,16 @@ if __name__ == "__main__":
 
     # load the CAD model
     cad_cgns, _, _ = cgm.load(args.cad)
-    cad_zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(cad_cgns, 'CGNSBase_t'), 'Zone_t')
-    cad_zone_size = wrapper.getNodeData(cad_zone)
+    cad_zone = pycgns_wrapper.getUniqueChildByType(
+        pycgns_wrapper.getUniqueChildByType(cad_cgns, 'CGNSBase_t'), 'Zone_t')
+    cad_zone_size = pycgns_wrapper.getNodeData(cad_zone)
     n_node = cad_zone_size[0][0]
     n_cell = cad_zone_size[0][1]
     if args.verbose:
         print(f'in CAD: n_node = {n_node}, n_cell = {n_cell}')
 
-    cad_coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(cad_zone, 'GridCoordinates_t'), 'DataArray_t')
+    cad_coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(cad_zone, 'GridCoordinates_t'), 'DataArray_t')
     cad_coords_x, cad_coords_y, cad_coords_z = cad_coords[X][1], cad_coords[Y][1], cad_coords[Z][1]
 
     if args.target == 'corner':
@@ -262,23 +259,23 @@ if __name__ == "__main__":
     # load the linear mesh
     mesh_cgns, _, _ = cgm.load(args.mesh)
 
-    mesh_zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
-    mesh_zone_size = wrapper.getNodeData(mesh_zone)
+    mesh_zone = pycgns_wrapper.getUniqueChildByType(
+        pycgns_wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
+    mesh_zone_size = pycgns_wrapper.getNodeData(mesh_zone)
     n_node = mesh_zone_size[0][0]
     n_cell = mesh_zone_size[0][1]
     if args.verbose:
         print(f'in linear mesh: n_node = {n_node}, n_cell = {n_cell}')
 
-    mesh_coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(mesh_zone, 'GridCoordinates_t'), 'DataArray_t')
+    mesh_coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(mesh_zone, 'GridCoordinates_t'), 'DataArray_t')
     mesh_coords_x, mesh_coords_y, mesh_coords_z = mesh_coords[X][1], mesh_coords[Y][1], mesh_coords[Z][1]
 
-    section = wrapper.getUniqueChildByType(mesh_zone, 'Elements_t')
-    element_type = wrapper.getNodeData(section)
+    section = pycgns_wrapper.getUniqueChildByType(mesh_zone, 'Elements_t')
+    element_type = pycgns_wrapper.getNodeData(section)
     assert element_type[0] == 7  # QUAD_4
-    old_connectivity = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+    old_connectivity = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
 
     # mesh_kdtree_points = np.ndarray((len(mesh_coords_x), 3))
     # mesh_kdtree_points[:, X] = mesh_coords_x

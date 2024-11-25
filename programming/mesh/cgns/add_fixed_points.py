@@ -1,19 +1,8 @@
-import numpy as np
-from matplotlib import pyplot as plt
-from scipy import sparse
-from scipy.spatial import KDTree
-import sys
 import argparse
-from timeit import default_timer as timer
-from concurrent.futures import ProcessPoolExecutor, wait
+import sys
 
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import wrapper
-
-
-X, Y, Z = 0, 1, 2
+import numpy as np
+from scipy.spatial import KDTree
 
 
 if __name__ == '__main__':

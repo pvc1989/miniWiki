@@ -1,16 +1,14 @@
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-import CGNS.PAT.cgnsutils as cgu
-import CGNS.PAT.cgnskeywords as cgk
-import wrapper
-
-import numpy as np
-from scipy.spatial import KDTree
 import argparse
 import sys
 
+import numpy as np
+from scipy.spatial import KDTree
 
-X, Y, Z = 0, 1, 2
+import CGNS.MAP as cgm
+import CGNS.PAT.cgnslib as cgl
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
+
 
 quad4_faces = (
     np.array([0, 3, 2, 1], dtype=int),
@@ -23,24 +21,23 @@ quad4_faces = (
 
 def getSurfaceKdtree(file_name: str) -> KDTree:
     cgns, _, _ = cgm.load(file_name)
-    zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(cgns, 'CGNSBase_t'), 'Zone_t')
-    zone_size = wrapper.getNodeData(zone)
+    zone = pycgns_wrapper.getUniqueChildByType(
+        pycgns_wrapper.getUniqueChildByType(cgns, 'CGNSBase_t'), 'Zone_t')
+    zone_size = pycgns_wrapper.getNodeData(zone)
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     # load coordinates
-    coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'),
+    coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'),
         'DataArray_t')
-    X, Y, Z = 0, 1, 2
     coords_x, coords_y, coords_z = coords[X][1], coords[Y][1], coords[Z][1]
     assert len(coords_x) == len(coords_y) == len(coords_z) == n_node
     # load connectivity
-    section = wrapper.getUniqueChildByType(zone, 'Elements_t')
-    element_type = wrapper.getNodeData(section)
+    section = pycgns_wrapper.getUniqueChildByType(zone, 'Elements_t')
+    element_type = pycgns_wrapper.getNodeData(section)
     assert element_type[0] == 7  # QUAD_4
-    connectivity = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
+    connectivity = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(section, 'ElementConnectivity'))
     assert len(connectivity) == n_cell * 4
     # build centers of cells
     centers = np.ndarray((n_cell, 3))
@@ -66,8 +63,8 @@ def getConnectivity(face_center: np.ndarray, boco_kdtrees, boco_connectivities) 
 
 
 def addZoneBC(zone_bc, section, bc_name: str, bc_type: str):
-    element_range = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(section, 'ElementRange'))
+    element_range = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(section, 'ElementRange'))
     bc_range = np.array([element_range])
     new_boco = cgl.newBoundary(zone_bc, bname=bc_name, brange=bc_range,
         btype=bc_type, pttype='PointRange')
@@ -91,27 +88,26 @@ if __name__ == "__main__":
 
     # load the volume mesh
     volume_cgns, _, _ = cgm.load(args.volume)
-    volume_zone = wrapper.getUniqueChildByType(
-        wrapper.getUniqueChildByType(volume_cgns, 'CGNSBase_t'), 'Zone_t')
-    volume_zone_size = wrapper.getNodeData(volume_zone)
+    volume_zone = pycgns_wrapper.getUniqueChildByType(
+        pycgns_wrapper.getUniqueChildByType(volume_cgns, 'CGNSBase_t'), 'Zone_t')
+    volume_zone_size = pycgns_wrapper.getNodeData(volume_zone)
     n_volume_node = volume_zone_size[0][0]
     n_volume_cell = volume_zone_size[0][1]
     print(f'in volume mesh: n_node = {n_volume_node}, n_cell = {n_volume_cell}')
 
     # load volume mesh coordiantes
-    coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(volume_zone, 'GridCoordinates_t'),
+    coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(volume_zone, 'GridCoordinates_t'),
         'DataArray_t')
-    X, Y, Z = 0, 1, 2
     coords_x, coords_y, coords_z = coords[X][1], coords[Y][1], coords[Z][1]
     assert len(coords_x) == len(coords_y) == len(coords_z) == n_volume_node
 
     # load volume mesh connectivity
-    volume_section = wrapper.getUniqueChildByType(volume_zone, 'Elements_t')
-    element_type = wrapper.getNodeData(volume_section)
+    volume_section = pycgns_wrapper.getUniqueChildByType(volume_zone, 'Elements_t')
+    element_type = pycgns_wrapper.getNodeData(volume_section)
     assert element_type[0] == 17  # HEXA_8
-    volume_connectivity = wrapper.getNodeData(
-        wrapper.getUniqueChildByName(volume_section, 'ElementConnectivity'))
+    volume_connectivity = pycgns_wrapper.getNodeData(
+        pycgns_wrapper.getUniqueChildByName(volume_section, 'ElementConnectivity'))
     assert len(volume_connectivity) == n_volume_cell * 8
 
     # get the index set of boundary points

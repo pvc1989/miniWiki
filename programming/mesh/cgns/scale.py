@@ -1,8 +1,8 @@
-import CGNS.MAP as cgm
-import CGNS.PAT.cgnslib as cgl
-
 import argparse
-import wrapper
+
+import CGNS.MAP as cgm
+import pycgns_wrapper
+from pycgns_wrapper import X, Y, Z
 
 
 # mesh uses inches, while CAD uses mm
@@ -29,21 +29,20 @@ if __name__ == "__main__":
     tree, links, paths = cgm.load(args.input)
 
     # CGNSBase_t level
-    base = wrapper.getUniqueChildByType(tree, 'CGNSBase_t')
-    cell_dim, phys_dim = wrapper.getDimensions(base)
+    base = pycgns_wrapper.getUniqueChildByType(tree, 'CGNSBase_t')
+    cell_dim, phys_dim = pycgns_wrapper.getDimensions(base)
 
     # Zone_t level
-    zone = wrapper.getUniqueChildByType(base, 'Zone_t')
-    zone_name = wrapper.getNodeName(zone)
-    zone_size = wrapper.getNodeData(zone)
+    zone = pycgns_wrapper.getUniqueChildByType(base, 'Zone_t')
+    zone_name = pycgns_wrapper.getNodeName(zone)
+    zone_size = pycgns_wrapper.getNodeData(zone)
     print('zone_size =', zone_size)
     assert zone_size.shape == (1, 3)
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
-    coords = wrapper.getChildrenByType(
-        wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'),
+    coords = pycgns_wrapper.getChildrenByType(
+        pycgns_wrapper.getUniqueChildByType(zone, 'GridCoordinates_t'),
         'DataArray_t')
-    X, Y, Z = 0, 1, 2
     coords_x, coords_y, coords_z = coords[X], coords[Y], coords[Z]
     values_x, values_y, values_z = coords_x[1], coords_y[1], coords_z[1]
     assert (n_node,) == values_x.shape == values_y.shape == values_z.shape

@@ -3,7 +3,7 @@ import CGNS.PAT.cgnslib as cgl
 
 import sys
 import argparse
-import wrapper
+import pycgns_wrapper
 
 import numpy as np
 from scipy.spatial import KDTree
@@ -29,12 +29,12 @@ if __name__ == "__main__":
     if args.verbose:
         print(args)
 
-    volume_cgns, volume_zone, volume_zone_size = wrapper.getUniqueZone(args.volume)
-    volume_arr, volume_x, volume_y, volume_z = wrapper.readPoints(volume_zone, volume_zone_size)
+    volume_cgns, volume_zone, volume_zone_size = pycgns_wrapper.getUniqueZone(args.volume)
+    volume_arr, volume_x, volume_y, volume_z = pycgns_wrapper.readPoints(volume_zone, volume_zone_size)
     volume_dict = buildPointDict(volume_x, volume_y, volume_z)
     volume_tree = KDTree(volume_arr)
-    surface_cgns, surface_zone, surface_zone_size = wrapper.getUniqueZone(args.surface)
-    _, surface_x, surface_y, surface_z = wrapper.readPoints(surface_zone, surface_zone_size)
+    surface_cgns, surface_zone, surface_zone_size = pycgns_wrapper.getUniqueZone(args.surface)
+    _, surface_x, surface_y, surface_z = pycgns_wrapper.readPoints(surface_zone, surface_zone_size)
     surface_dict = buildPointDict(surface_x, surface_y, surface_z)
 
     i = 0

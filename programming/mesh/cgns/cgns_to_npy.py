@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-import wrapper
+import pycgns_wrapper
 import argparse
 
 if __name__ == "__main__":
@@ -11,8 +11,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    tree, zone, zone_size = wrapper.getUniqueZone(args.input)
-    point_arr, _, _, _ = wrapper.readPoints(zone, zone_size)
+    tree, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
+    point_arr, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
     output = f'{args.input[:-5]}.npy'
     print(f'writing to "{output}" ...')
     np.save(output, point_arr)
