@@ -123,7 +123,11 @@ def getSolutionByLocation(zone, location_given, solution_name):
     solutions = getChildrenByType(zone, 'FlowSolution_t')
     for solution in solutions:
         location = getUniqueChildByType(solution, 'GridLocation_t')
-        location_found = arr2str(getNodeData(location))
+        if location is None:
+            # the `cgnslib.c` implementation of `cg_sol_write` does not create a new `GridLocation_t` node in this case
+            location_found = 'Vertex'
+        else:
+            location_found = arr2str(getNodeData(location))
         if location_found == location_given:
             the_solution = solution
             break
