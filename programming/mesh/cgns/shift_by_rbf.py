@@ -171,6 +171,8 @@ def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, 
 
     k_neighbor = args.k_neighbor
     radius = args.radius
+    lower_bound = args.lower_bound
+    upper_bound = args.upper_bound
     shift = np.zeros((n_local, 3), global_x.dtype)
     for i_local in range(n_local):
         i_global = i_local + first
@@ -188,6 +190,14 @@ def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, 
             u += u_rbf[j_global] * phi_ij
             v += v_rbf[j_global] * phi_ij
             w += w_rbf[j_global] * phi_ij
+        xyz_norm = np.linalg.norm(point_i)
+        if xyz_norm > upper_bound:
+            u = v = w = 0.0
+        elif xyz_norm > lower_bound:
+            scale = (upper_bound - xyz_norm) / (upper_bound - lower_bound)
+            u *= scale
+            v *= scale
+            w *= scale
         shift[i_local, :] = u, v, w
         log.write(f'{i_global} shifted by ({u:.2e}, {v:.2e}, {w:.2e})\n')
     end = time.time()
@@ -272,6 +282,8 @@ if __name__ == '__main__':
     parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_worker')
     parser.add_argument('--k_neighbor', type=int, default=0, help='number of neighbors in the support of the RBF basis')
     parser.add_argument('--radius', type=float, default=0.0, help='the radius of the RBF basis')
+    parser.add_argument('--lower_bound', type=float, default=5e3, help='the radius of the lower bound of the scaling region')
+    parser.add_argument('--upper_bound', type=float, default=5e4, help='the radius of the upper bound of the scaling region')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
