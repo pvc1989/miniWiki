@@ -39,7 +39,7 @@ def multiple_to_minimum(temp_folder: str, radius: float, i_task: int, n_task: in
     return output, first, last
 
 
-def multiple_to_unique(zone: list, zone_size: np.ndarray, args: str) -> np.ndarray:
+def multiple_to_unique(zone: list, zone_size: np.ndarray, args: argparse.Namespace) -> np.ndarray:
     start = time.time()
     global multiple_points
     multiple_points, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)

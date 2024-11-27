@@ -81,7 +81,7 @@ def get_neighbors(kdtree: KDTree, point_i: np.ndarray, k_neighbor: int, radius: 
     return j_neighbors, radius
 
 
-def build_dok_matrix(kdtree: KDTree, args: str) -> sparse.dok_matrix:
+def build_dok_matrix(kdtree: KDTree, args: argparse.Namespace) -> sparse.dok_matrix:
     points = kdtree.data
     n_point = len(points)
     assert points.shape[1] == 3
@@ -155,7 +155,7 @@ def solve_rbf_system(rbf_folder: str, rhs_columns: np.ndarray):
     np.save(sol_file_name, sol_columns)
 
 
-def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, args: str):
+def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, args: argparse.Namespace):
     global kdtree
     global u_rbf, v_rbf, w_rbf
     global global_x, global_y, global_z
@@ -198,7 +198,7 @@ def shift_points_by_futures_process(i_task: int, n_task: int, temp_folder: str, 
     return first, last
 
 
-def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: str):
+def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: argparse.Namespace):
     print('\nloading the volume mesh ...')
     cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.mesh)
     global global_x, global_y, global_z
