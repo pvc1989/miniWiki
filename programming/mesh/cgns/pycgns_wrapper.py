@@ -78,9 +78,42 @@ def getDimensions(base) -> tuple[int, int]:
     return base[1][0], base[1][1]
 
 
-def printInfo(file_name: str):
+def _print_node(node: list, prefix: str):
+    assert isinstance(node, list)
+
+    # collect non-trivial children of current node
+    children = []
+    for item in node:
+        if isinstance(item, list) and len(item):
+            children.append(item)
+
+    # print non-child item of current node
+    if len(node) > len(children):
+        # print the prefix
+        print(prefix, end='')
+
+        # print the type of current node
+        print(node[-1], end=', ')
+
+        # print other items of current node
+        for item in node[:-1]:
+            if isinstance(item, list):
+                if len(item):
+                    print('CHILD', end=', ')
+                else:
+                    print('EMPTY_CHILD', end=', ')
+            else:
+                print(item, end=', ')
+        print()
+
+    # recursively print the non-trivial children of current node
+    for child in children:
+        _print_node(child, prefix + '-')
+
+
+def printTree(file_name: str):
     cgns, _, _ = cgm.load(file_name)
-    print(cgns)
+    _print_node(cgns, '')
 
 
 def getUniqueZone(filename):
@@ -158,4 +191,4 @@ def mergePointList(xyz_list: list[np.ndarray], n_node: int, zone, zone_size):
 
 
 if __name__ == '__main__':
-    printInfo(sys.argv[1])
+    printTree(sys.argv[1])
