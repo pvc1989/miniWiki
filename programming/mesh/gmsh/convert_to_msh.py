@@ -97,7 +97,10 @@ if __name__ == "__main__":
         description = 'Convert a mesh (usually in other format) to the MSH format.')
     parser.add_argument('--folder', type=str, help='the working folder')
     parser.add_argument('--mesh', type=str, help='the input mesh')
-    parser.add_argument('--binary', default=False, action='store_true', help='output in binary format')
+    parser.add_argument('--format', choices=['msh1', 'msh2', 'msh22', 'msh3', 'msh4', 'msh40', 'msh41', 'msh'], default='msh2',
+        help='the output format')
+    parser.add_argument('--binary', default=False, action='store_true',
+        help='output in binary format')
     args = parser.parse_args()
     print(args)
 
@@ -127,7 +130,7 @@ if __name__ == "__main__":
 
     # gmsh.option.set_number('Mesh.SaveAll', 1)
     dot_pos = input.rfind('.')
-    output = f'{input[:dot_pos]}.msh'
+    output = f'{input[:dot_pos]}.{args.format}'
     print(f'\nwriting to {output} ...')
     gmsh.write(output)
 
