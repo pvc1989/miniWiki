@@ -14,6 +14,7 @@ import CGNS.PAT.cgnslib as cgl
 import CGNS.PAT.cgnsutils as cgu
 import pycgns_wrapper
 from pycgns_wrapper import X, Y, Z
+from flatten_symmetry import select_component, select_points
 
 import parallel
 
@@ -260,6 +261,12 @@ def shift_interior_points(rbf_folder: str, bc_points: np.ndarray, args: argparse
     global_y += global_shift_y
     global_z += global_shift_z
 
+    i_fixed = select_points(zone, args)
+    select_component(global_x, global_y, global_z,
+        args)[i_fixed] = 0
+    select_component(global_shift_x, global_shift_y, global_shift_z,
+        args)[i_fixed] = 0
+
     # write the shifts as a vector field of point data
     point_data = pycgns_wrapper.getSolutionByLocation(zone, 'Vertex', 'FlowSolutionHelper')
     cgl.newDataArray(point_data, 'ShiftX', global_shift_x)
@@ -275,6 +282,10 @@ if __name__ == '__main__':
         prog = f'python3 {sys.argv[0]}',
         description='Shift interior points by RBF interpolation of boundary points.')
     parser.add_argument('--mesh', type=str, help='the CGNS file of the mesh to be shifted')
+    parser.add_argument('--sections', type=str, nargs='+', default=['Symmetry'],
+        help='the given list of sections to be fixed')
+    parser.add_argument('--component', choices=['X', 'Y', 'Z'], default='Y',
+        help='the coordinate component to be fixed')
     parser.add_argument('--old_points', type=str, help='the NPY file of boundary points before shifting')
     parser.add_argument('--new_points', type=str, help='the NPY file of boundary points after shifting')
     parser.add_argument('--folder', type=str, help='the folder containing new_points and output')
