@@ -56,7 +56,7 @@ def multiple_to_unique(zone: list, zone_size: np.ndarray, args: argparse.Namespa
     end = time.time()
     print(f'KDTree(multiple_points) costs {(end - start):.2f} seconds')
 
-    temp_folder = f'{args.folder}/temp{np.random.randint(0, 2**32)}'
+    temp_folder = f'{pycgns_wrapper.folder(args.input)}/temp{np.random.randint(0, 2**32)}'
     os.makedirs(temp_folder, exist_ok=True)
 
     executor = ProcessPoolExecutor(args.n_worker)
@@ -118,8 +118,9 @@ def multiple_to_unique(zone: list, zone_size: np.ndarray, args: argparse.Namespa
     print(f'checking unique_points costs {(end - start):.2f} seconds')
 
     start = time.time()
-    np.save(f'{args.folder}/i_multiple_to_i_unique.npy', i_multiple_to_i_unique)
-    np.save(f'{args.folder}/unique_points.npy', unique_points)
+    output_folder = pycgns_wrapper.folder(args.input)
+    np.save(f'{output_folder}/i_multiple_to_i_unique.npy', i_multiple_to_i_unique)
+    np.save(f'{output_folder}/unique_points.npy', unique_points)
     end = time.time()
     print(f'saving unique_points costs {(end - start):.2f} seconds')
 
@@ -130,7 +131,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Merge geometrically duplicated points in a single unstructured `Zone_t`.')
-    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be merged')
     parser.add_argument('--radius', type=float, default=1e-8, help='radius of the ball within which two points are treated as duplicated')
     parser.add_argument('--n_worker',  type=int, help='number of workers for running futures')
@@ -144,7 +144,7 @@ if __name__ == "__main__":
 
     # get the unique Zone_t
     start = time.time()
-    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
     pycgns_wrapper.removeSolutionsByLocation(zone, 'Vertex')
     end = time.time()
     print(f'cgm.load() costs {(end - start):.2f} seconds')
@@ -183,7 +183,7 @@ if __name__ == "__main__":
 
     # write the new mesh out
     start = time.time()
-    output = f'{args.folder}/merged.cgns'
+    output = f'{pycgns_wrapper.folder(args.input)}/merged.cgns'
     print('writing to', output)
     cgm.save(output, cgns)
     end = time.time()

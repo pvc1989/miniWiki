@@ -195,12 +195,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description='Split each tetrahedron to four hexahedra.')
-    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be splitted')
     parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
-    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     # print(zone)
@@ -265,7 +264,7 @@ if __name__ == '__main__':
     # print(zone)
     print(f'after splitting, n_node = {n_node}, n_cell = {n_cell}')
 
-    output = f'{args.folder}/splitted.cgns'
+    output = f'{pycgns_wrapper.folder(args.input)}/splitted.cgns'
     print(f'writing to {output} ...')
     cgm.save(output, cgns)
     print(args)

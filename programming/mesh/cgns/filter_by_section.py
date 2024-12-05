@@ -14,14 +14,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Filter a CGNS file by a given list of sections.')
-    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
     parser.add_argument('--output', type=str, help='the output folder')
     parser.add_argument('--sections', type=str, nargs='+', help='the given list of sections')
     args = parser.parse_args()
     print(args)
 
-    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
     xyz_old, _, _, _ = pycgns_wrapper.readPoints(zone, zone_size)
     n_node = len(xyz_old)
     print(f'before filtering: n_node = {n_node}')
@@ -41,7 +40,8 @@ if __name__ == "__main__":
     n_node = len(xyz_new)
     print(f'after filtering: n_node = {n_node}')
 
-    output_folder = f'{args.folder}/{args.output}'
+    input_folder = pycgns_wrapper.folder(args.input)
+    output_folder = f'{input_folder}/{args.output}'
     os.makedirs(output_folder, exist_ok=True)
 
     output = f'{output_folder}/unique_points.npy'

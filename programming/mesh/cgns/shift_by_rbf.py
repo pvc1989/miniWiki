@@ -288,7 +288,6 @@ if __name__ == '__main__':
         help='the coordinate component to be fixed')
     parser.add_argument('--old_points', type=str, help='the NPY file of boundary points before shifting')
     parser.add_argument('--new_points', type=str, help='the NPY file of boundary points after shifting')
-    parser.add_argument('--folder', type=str, help='the folder containing new_points and output')
     parser.add_argument('--n_worker',  type=int, help='number of workers for running futures')
     parser.add_argument('--n_task',  type=int, help='number of tasks for running futures, usually >> n_worker')
     parser.add_argument('--k_neighbor', type=int, default=0, help='number of neighbors in the support of the RBF basis')
@@ -311,15 +310,17 @@ if __name__ == '__main__':
     plt.savefig('RBF.svg')
 
     old_points = np.load(args.old_points)
-    new_points = np.load(f'{args.folder}/{args.new_points}')
+    new_points = np.load(args.new_points)
     assert old_points.shape == new_points.shape
+
+    output_folder = pycgns_wrapper.folder(args.new_points)
 
     if args.k_neighbor > 0:
         assert args.radius == 0.0
-        rbf_folder = f'{args.folder}/k={args.k_neighbor}'
+        rbf_folder = f'{output_folder}/k={args.k_neighbor}'
     elif args.radius > 0:
         assert args.k_neighbor == 0
-        rbf_folder = f'{args.folder}/r={args.radius:.2e}'
+        rbf_folder = f'{output_folder}/r={args.radius:.2e}'
 
     os.makedirs(rbf_folder, exist_ok=True)
 

@@ -129,7 +129,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description='Increase the order of elements without merging new points.')
-    parser.add_argument('--folder', type=str, help='the working directory')
     parser.add_argument('--input', type=str, help='the input linear mesh file')
     parser.add_argument('--order', type=int, default=2, help='order of the output mesh')
     parser.add_argument('--verbose', default=False, action='store_true')
@@ -138,7 +137,7 @@ if __name__ == "__main__":
     print(args)
 
     # load the linear mesh
-    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(f'{args.folder}/{args.input}')
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
     n_node = zone_size[0][0]
     n_cell = zone_size[0][1]
     print(f'before converting: n_node = {n_node}, n_cell = {n_cell}')
@@ -153,7 +152,7 @@ if __name__ == "__main__":
         n_node += len(xyz_new)
     pycgns_wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
 
-    output_folder = f'{args.folder}/order={args.order}'
+    output_folder = f'{pycgns_wrapper.folder(args.input)}/order={args.order}'
     os.makedirs(output_folder, exist_ok=True)
     output = f'{output_folder}/to_be_merged.cgns'
     print('writing to', output)

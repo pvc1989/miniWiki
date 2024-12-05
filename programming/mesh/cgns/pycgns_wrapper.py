@@ -190,5 +190,14 @@ def mergePointList(xyz_list: list[np.ndarray], n_node: int, zone, zone_size):
     zone_size[0][0] = n_node
 
 
+def folder(input: str):
+    slash_pos = input.rfind('/')
+    print(slash_pos)
+    if slash_pos == -1:
+        return '.'
+    else:
+        return input[:slash_pos]
+
+
 if __name__ == '__main__':
     printTree(sys.argv[1])

@@ -36,7 +36,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Flatten the symmetry plane by setting coordinates in a given list of sections to 0.')
-    parser.add_argument('--folder', type=str, default='.', help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
     parser.add_argument('--sections', type=str, nargs='+', default=['Symmetry'],
         help='the given list of sections to be fixed')
@@ -45,8 +44,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    input = f'{args.folder}/{args.input}'
-    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(input)
+    cgns, zone, zone_size = pycgns_wrapper.getUniqueZone(args.input)
     _, coord_x, coord_y, coord_z = pycgns_wrapper.readPoints(zone, zone_size)
 
     coord = select_component(coord_x, coord_y, coord_z, args)
@@ -60,6 +58,6 @@ if __name__ == "__main__":
 
     print(f'after flattening: bound = [{np.min(coord[i_node_list])}, {np.max(coord[i_node_list])}]')
 
-    output = f'{input[:-5]}_flattened.cgns'
+    output = f'{pycgns_wrapper.folder(args.input)}/flattened.cgns'
     print(f'writing to {output} ...')
     cgm.save(output, cgns)

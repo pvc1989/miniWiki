@@ -13,7 +13,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description='Add the shift of each point as a vector field.')
-    parser.add_argument('--folder', type=str, help='the working folder containing input and output files')
     parser.add_argument('--input', type=str, help='the CGNS file of the mesh to be shifted')
     parser.add_argument('--cad_points', type=str, help='the NPY file of points on CAD surfaces')
     parser.add_argument('--stl_points', type=str, help='the NPY file of points on STL surfaces')
@@ -22,7 +21,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # load the mesh to be shifted
-    mesh_cgns, _, _ = cgm.load(f'{args.folder}/{args.input}')
+    mesh_cgns, _, _ = cgm.load(args.input)
     mesh_zone = pycgns_wrapper.getUniqueChildByType(
         pycgns_wrapper.getUniqueChildByType(mesh_cgns, 'CGNSBase_t'), 'Zone_t')
     mesh_zone_size = pycgns_wrapper.getNodeData(mesh_zone)
@@ -64,7 +63,7 @@ if __name__ == "__main__":
     cgl.newDataArray(point_data, 'ShiftZ', new_z - old_z)
 
     # write the shifted mesh
-    output = f'{args.folder}/shifted.cgns'
+    output = f'{pycgns_wrapper.folder(args.input)}/shifted.cgns'
     print('writing to', output)
     cgm.save(output, mesh_cgns)
 

@@ -98,8 +98,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
         description = 'Convert a mesh (usually in other format) to the MSH format.')
-    parser.add_argument('--folder', type=str, help='the working folder')
-    parser.add_argument('--mesh', type=str, help='the input mesh')
+    parser.add_argument('--mesh', type=str, help='the mesh to be converted')
     parser.add_argument('--format', choices=['msh1', 'msh2', 'msh22', 'msh3', 'msh4', 'msh40', 'msh41', 'msh'], default='msh2',
         help='the output format')
     parser.add_argument('--binary', default=False, action='store_true',
@@ -112,7 +111,7 @@ if __name__ == "__main__":
     if args.binary:
         gmsh.option.set_number('Mesh.Binary', 1)
 
-    input = f'{args.folder}/{args.mesh}'
+    input = args.mesh
     gmsh.merge(input)
 
     # In Gmsh, index start at 1 with empty name to account for unclassified elements.
