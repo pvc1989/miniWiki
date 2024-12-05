@@ -82,6 +82,9 @@ def update_groups(old_entity_to_group_name: dict, new_entity_to_old_entity: dict
             name = old_entity_to_group_name[old_entity]
         else:
             name = gmsh.model.get_entity_name(dim, new_tag)
+        # 'NacelleFin' conflicts with 'Nacelle' in FLEXI
+        if name == 'NacelleFin':
+            name = 'Fin'
         print(f'{prefix} add_physical_group({dim}, {[new_tag]}, {new_tag}, {name})')
         group_tag = gmsh.model.add_physical_group(dim, [new_tag], new_tag, name)
         assert new_tag == group_tag, (new_tag, group_tag)
