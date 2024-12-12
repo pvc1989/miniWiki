@@ -36,7 +36,7 @@ $$
 
 记 $b \coloneqq 2^{k-1} - 1$，则除特殊值外
 - $E(e) \coloneqq (e \mathbin{?} e : 1) - b$
-- $M(f) \coloneqq (e \mathbin{?} 1 : 0) - b$
+- $M(f) \coloneqq (e \mathbin{?} 1 : 0) + f$
 
 根据 $e$ 的取值，可分为三种情形：
 
