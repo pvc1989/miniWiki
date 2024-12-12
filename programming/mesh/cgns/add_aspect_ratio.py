@@ -22,6 +22,14 @@ def get_edges(connectivity: np.ndarray, edges_local: np.ndarray) -> np.ndarray:
     return edges_global
 
 
+def get_min_length(points: np.ndarray, edges: np.ndarray) -> float:
+    l_min = 1e100
+    for i, j in edges:
+        l = np.linalg.norm(points[i] - points[j])
+        l_min = np.minimum(l_min, l)
+    return l_min
+
+
 def get_aspect_ratio(points: np.ndarray, edges: np.ndarray) -> float:
     l_min, l_max = 1e100, 0.0
     for i, j in edges:
@@ -36,7 +44,7 @@ if __name__ == "__main__":
         prog = f'python3 {sys.argv[0]}',
         description = 'Get the aspect ratio for each cell and write them as a field on cells.')
     parser.add_argument('--mesh', type=str, help='the CGNS file to be modified')
-    parser.add_argument('--verbose', default=True, action='store_true')
+    parser.add_argument('--verbose', default=False, action='store_true')
     args = parser.parse_args()
 
     if args.verbose:
@@ -57,15 +65,19 @@ if __name__ == "__main__":
 
     # get the aspect ratio of each cell
     aspect_ratios = np.ndarray((n_cell,))
+    min_lengths = np.ndarray((n_cell,))
     for i_cell in range(n_cell):
-        if args.verbose:
+        if args.verbose and i_cell % 10000 == 0:
             print(i_cell, '/', n_cell)
         first = i_cell * 8
         last = first + 8
+        min_lengths[i_cell] = get_min_length(points,
+            get_edges(connectivity[first : last] - 1, hexa_edges_local))
         aspect_ratios[i_cell] = get_aspect_ratio(points,
             get_edges(connectivity[first : last] - 1, hexa_edges_local))
 
     # write the aspect ratios as a field of cell data
     point_data = cgl.newFlowSolution(zone, 'FlowSolutionCellHelper', 'CellCenter')
     cgl.newDataArray(point_data, 'AspectRatio', aspect_ratios)
+    cgl.newDataArray(point_data, 'MinLength', min_lengths)
     cgm.save(args.mesh, cgns)
