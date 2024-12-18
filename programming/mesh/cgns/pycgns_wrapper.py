@@ -192,7 +192,6 @@ def mergePointList(xyz_list: list[np.ndarray], n_node: int, zone, zone_size):
 
 def folder(input: str):
     slash_pos = input.rfind('/')
-    print(slash_pos)
     if slash_pos == -1:
         return '.'
     else:
