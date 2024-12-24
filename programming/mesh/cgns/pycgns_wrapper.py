@@ -78,6 +78,14 @@ def getDimensions(base) -> tuple[int, int]:
     return base[1][0], base[1][1]
 
 
+def setDimensions(base, cell_dim: int, phys_dim: int) -> tuple[int, int]:
+    assert 'CGNSBase_t' == getNodeLabel(base)
+    print(f'before setDimensions: {base[1]}')
+    base[1][0] = cell_dim
+    base[1][1] = phys_dim
+    print(f'after setDimensions: {base[1]}')
+
+
 def _print_node(node: list, prefix: str):
     assert isinstance(node, list)
 
