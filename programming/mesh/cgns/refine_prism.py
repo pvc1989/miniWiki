@@ -7,7 +7,17 @@ import CGNS.MAP as cgm
 import CGNS.PAT.cgnskeywords as cgk
 import CGNS.PAT.cgnslib as cgl
 
-from scipy.spatial import Delaunay
+from scipy.spatial import KDTree, Delaunay
+
+
+def unique(points: list, radius=1e-8):
+    points = np.array(points)
+    i_min_set = set()
+    kdtree = KDTree(points)
+    for i in range(len(points)):
+        neighbors = kdtree.query_ball_point(points[i], radius)
+        i_min_set.add(np.min(neighbors))
+    return points[list(i_min_set)]
 
 
 def refine(xyz, section, level: int, levels: np.ndarray):
@@ -34,8 +44,9 @@ def refine(xyz, section, level: int, levels: np.ndarray):
         xyz_new.append((xyz[conn_local[A]] + xyz[conn_local[B]]) / 2)
         xyz_new.append((xyz[conn_local[B]] + xyz[conn_local[C]]) / 2)
         xyz_new.append((xyz[conn_local[C]] + xyz[conn_local[A]]) / 2)
-    print(f'{n_refined} prisms refined in {pycgns_wrapper.getNodeName(section)}')
-    return np.array(xyz_new)
+    xyz_new = unique(xyz_new)
+    print(f'{n_refined} prisms refined by adding {len(xyz_new)} points in {pycgns_wrapper.getNodeName(section)}')
+    return xyz_new
 
 
 if __name__ == "__main__":
