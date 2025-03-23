@@ -5,6 +5,7 @@ import numpy as np
 
 import CGNS.MAP as cgm
 import CGNS.PAT.cgnskeywords as cgk
+import CGNS.PAT.cgnsutils as cgu
 import pycgns_wrapper
 
 
@@ -333,14 +334,26 @@ if __name__ == '__main__':
             print('Elements_t', pycgns_wrapper.getNodeName(section), erange_old, erange_new)
 
     # update element ranges in ZoneBC_t
-    bocos = pycgns_wrapper.getChildrenByType(pycgns_wrapper.getUniqueChildByType(zone, 'ZoneBC_t'), 'BC_t')
+    zone_bc = pycgns_wrapper.getUniqueChildByType(zone, 'ZoneBC_t')
+    bocos = pycgns_wrapper.getChildrenByType(zone_bc, 'BC_t')
+    to_be_removed = []
     for boco in bocos:
+        boco_name = pycgns_wrapper.getNodeName(boco)
+        if 'V_' in boco_name:
+            # Gmsh creates a 'V_'-prefixed BC_t for each physical volume, which is not used in our workflow.
+            to_be_removed.append(boco_name)
         erange = pycgns_wrapper.getNodeData(pycgns_wrapper.getUniqueChildByType(boco, 'IndexRange_t'))
         erange_old = tuple(erange[0])
         erange_new = erange_old_to_new[erange_old]
         erange[0] = np.array(erange_new)
         if args.verbose:
             print('BC_t', pycgns_wrapper.getNodeName(boco), erange_old, erange_new)
+
+    print(to_be_removed)
+    print(zone_bc)
+    for boco in to_be_removed:
+        cgu.removeChildByName(zone_bc, boco)
+    print(zone_bc)
 
     pycgns_wrapper.mergePointList(xyz_list, n_node, zone, zone_size)
     zone_size[0][1] = n_cell - n_face
