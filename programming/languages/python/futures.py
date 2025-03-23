@@ -7,8 +7,16 @@ import threading
 from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor, wait
 
 
+global_matrix = np.ndarray((3,3))
+
+
 def task_by_one_worker(i_task: int, matrix: np.ndarray) -> int:
-    norm = np.linalg.norm(matrix)
+    norm = 0.0
+    for i in range(len(matrix)):
+        for j in range(len(matrix)):
+            norm += matrix[i][j]**2
+    norm = np.sqrt(norm)
+    # Effectively np.linalg.norm(matrix), but intentionally made slow.
     sys.stdout.write(f'norm = {norm:.4e} from task {i_task} on process {os.getpid()} thread {threading.current_thread().ident}\n')
     return i_task
 
@@ -25,7 +33,7 @@ def task_by_one_process(i_task: int) -> int:
 def run_tasks_by_threads(n_thread, n_task, n_scalar):
     shared_matrix = np.random.rand(n_scalar, n_scalar)
     # heap data automatically shared by all threads in the same process
-    executor = ThreadPoolExecutor(n_thread)
+    executor = ThreadPoolExecutor(max_workers=n_thread)
     start = time.time()
     futures = []
     for i_task in range(n_task):
@@ -48,7 +56,7 @@ def run_tasks_by_processes(n_process, n_task, n_scalar):
     global global_matrix
     global_matrix = np.random.rand(n_scalar, n_scalar)
     # global data automatically shared by all children of the same process
-    executor = ProcessPoolExecutor(n_process)
+    executor = ProcessPoolExecutor(max_workers=n_process)
     start = time.time()
     futures = []
     for i_task in range(n_task):
@@ -77,6 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_scalar',  type=int, default=10000, help='number of scalars in the vector')
     args = parser.parse_args()
 
+    np.random.seed(123456789)
     if args.n_thread:
         run_tasks_by_threads(args.n_thread, args.n_task, args.n_scalar)
     elif args.n_process:
