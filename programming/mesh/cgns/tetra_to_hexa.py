@@ -219,9 +219,10 @@ def get_quad_points_from_general_tri(xyz_tri_local: np.ndarray, tri_npe: int,
         point_bc = (point_b + point_c) / 2
         point_abc = (point_a + point_b + point_c) / 3
     elif tri_npe == 6:
-        point_ab = tri_6_shapes(0.5, 0.5).dot(xyz_tri_local)
-        point_ac = tri_6_shapes(0.5, 0.0).dot(xyz_tri_local)
-        point_bc = tri_6_shapes(0.0, 0.5).dot(xyz_tri_local)
+        # In CGNS, (A, B, C, AB, BC, CA) = (0, 1, 2, 3, 4, 5)
+        point_ab = xyz_tri_local[3]
+        point_bc = xyz_tri_local[4]
+        point_ac = xyz_tri_local[5]
         point_abc = tri_6_shapes(1.0/3, 1.0/3).dot(xyz_tri_local)
     else:
         assert False
