@@ -35,12 +35,13 @@ def select_points(zone, args) -> list:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         prog = f'python3 {sys.argv[0]}',
-        description = 'Flatten the symmetry plane by setting coordinates in a given list of sections to 0.')
+        description = 'Flatten the symmetry plane by setting coordinates in a given list of sections to a given value')
     parser.add_argument('--input', type=str, help='the CGNS file to be filtered')
     parser.add_argument('--sections', type=str, nargs='+', default=['Symmetry'],
         help='the given list of sections to be fixed')
     parser.add_argument('--component', choices=['X', 'Y', 'Z'], default='Y',
         help='the coordinate component to be fixed')
+    parser.add_argument('--value', type=float, default=0.0, help='the specified coordinate value')
     args = parser.parse_args()
     print(args)
 
@@ -54,7 +55,7 @@ if __name__ == "__main__":
 
     print(f'before flattening: bound = [{np.min(coord[i_node_list])}, {np.max(coord[i_node_list])}]')
 
-    coord[i_node_list] = 0.0
+    coord[i_node_list] = args.value
 
     print(f'after flattening: bound = [{np.min(coord[i_node_list])}, {np.max(coord[i_node_list])}]')
 
