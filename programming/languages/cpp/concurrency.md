@@ -49,9 +49,8 @@ int main() {
   auto v = std::vector<int>{ 1, 2, 3, 4, 5, 6, 7, 8 };  // 只读共享数据
   int x1, x2;
 
-  {
-    auto t1 = std::jthread{f, std::cref(v), &x1};  // f(v, &x1) 在 t1 中执行
-  }  // 退出作用域时 ~jthread() 自带 join()
+  auto t1 = std::jthread{f, std::cref(v), &x1};  // f(v, &x1) 在 t1 中执行
+  // 退出作用域时 ~jthread() 自带 join()
 
   auto t2 = std::thread{F{v, &x2}};  // F{v, &x2}() 在 t2 中执行
   t2.join();  // 等待 t2 执行完成，并回收资源
@@ -115,10 +114,10 @@ int main(int argc, char *argv[]) {
 - 当 `mtx` 被某一 `std::thread` 占有时，若其他 `std::thread`s 尝试
   - 调用 `mtx.lock()`，则被阻塞；
   - 调用 `mtx.try_lock()`，则获得返回值 `false`。
-- 若某一 `std::mutex` 被析构时仍被某一 `std::thread` 占有，或某一 `std::thread` 终止时仍占有 某一 `std::mutex`，则行为未定义。
+- 若某一 `std::mutex` 被析构时仍被某一 `std::thread` 占有，或某一 `std::thread` 终止时仍占有某一 `std::mutex`，则行为未定义。
 
 `std::mutex` 通常不被直接访问，而是配合以下机制使用：
-- [`std::lock`](https://en.cppreference.com/w/cpp/thread/lock) 支持支持同时获得多个 [Lockable](https://en.cppreference.com/w/cpp/named_req/Lockable) 对象的所有权且避免死锁。
+- [`std::lock`](https://en.cppreference.com/w/cpp/thread/lock) 支持同时获得多个 [Lockable](https://en.cppreference.com/w/cpp/named_req/Lockable) 对象的所有权且避免死锁。
 - [`std::lock_guard`](https://en.cppreference.com/w/cpp/thread/lock_guard) 以 RAII 的方式获得某个 `mtx` 的所有权，构造时调用 `mtx.lock()`，析构时调用 `mtx.unlock()`。
 - [`std::scoped_lock`](https://en.cppreference.com/w/cpp/thread/scoped_lock) (C++17) 与 `std::lock_guard` 类似，但支持同时获得多个 `std::mutex`es 的所有权且避免死锁。
 - [`std::unique_lock`](https://en.cppreference.com/w/cpp/thread/unique_lock) 与 `std::lock_guard` 类似，但其[构造函数](https://en.cppreference.com/w/cpp/thread/unique_lock/unique_lock)支持附加实参：
@@ -163,7 +162,7 @@ int main() {
   auto v2 = std::vector<int>{ 9, 10, 11, 12, 13, 14 };
   int x1, x2;
   {
-    auto t1 = std::jthread{f, std::cref(v), &x1};
+    auto t1 = std::jthread{f, std::cref(v1), &x1};
     auto t2 = std::jthread{F{v2, &x2}};
   }
 }
@@ -286,6 +285,7 @@ class counting_semaphore {
       counter--;  // 原子操作
     } else {
       block();  // 阻塞当前线程，直到被 release() 中的 unblock() 唤醒
+      acquire();  // 伪代码，假设调用栈可以无限深
     }
   }
 
